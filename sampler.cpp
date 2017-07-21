@@ -28,7 +28,7 @@ VOID CALLBACK Interpreter::SamplerProc(PVOID , BOOLEAN TimerOrWaitFired)
 {
 	if (!TimerOrWaitFired)
 		return;
-	if (_InterlockedDecrement(&m_nInputPollCounter) == 0)
+	if (InterlockedDecrement(&m_nInputPollCounter) == 0)
 	{
 		NotifyAsyncPending();
 #if 0//def _DEBUG

@@ -241,7 +241,7 @@ bool Interpreter::QueueAPC(PAPCFUNC pfnAPC, DWORD dwClosure)
 	HANDLE hMain = MainThreadHandle();
 	if (hMain && ::QueueUserAPC(pfnAPC, hMain, dwClosure))
 	{
-		_InterlockedIncrement(&m_nAPCsPending);
+		InterlockedIncrement(&m_nAPCsPending);
 
 		// The async pending flag is modified in a thread safe manner
 		NotifyAsyncPending();
@@ -258,7 +258,7 @@ bool Interpreter::QueueAPC(PAPCFUNC pfnAPC, DWORD dwClosure)
 void Interpreter::BeginAPC()
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
-	_InterlockedDecrement(&m_nAPCsPending);
+	InterlockedDecrement(&m_nAPCsPending);
 }
 
 OverlappedCallPtr OverlappedCall::BeginMainThreadAPC(DWORD dwParam)
@@ -415,13 +415,13 @@ void OverlappedCall::Term()
 bool OverlappedCall::beStarted()
 {
 	// Can only transition to Resting state on startup if not terminated in the meantime
-	return _InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Running, Starting) == Starting;
+	return InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Running, Starting) == Starting;
 }
 
 OverlappedCall::States OverlappedCall::beTerminated()
 {
 	// Answer the previous state
-	return (States)_InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Terminated);
+	return (States)InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_state), Terminated);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -661,7 +661,7 @@ bool OverlappedCall::QueueTerminate()
 	}
 
 	// Ensure running and therefore able to receive termination request
-	_InterlockedExchange(&m_nSuspendCount, 0);
+	InterlockedExchange(&m_nSuspendCount, 0);
 	while (long(::ResumeThread(m_hThread)) > 0)
 		continue;
 
@@ -695,7 +695,7 @@ bool OverlappedCall::QueueSuspend()
 	// The resumption count records whether the thread is suspended, or has a suspend queued,
 	// so that we can avoid. The APC may not actually suspend the thread if a resume arrives
 	// in the meantime and inc's the count.
-	_InterlockedIncrement(&m_nSuspendCount);
+	InterlockedIncrement(&m_nSuspendCount);
 
 	// To avoid suspending the thread in the middle of a critical section we use APCs again
 	// so that can only be suspended when in an alertable wait state.
@@ -723,7 +723,7 @@ DWORD OverlappedCall::Resume()
 		::thinDump << hex << GetCurrentThreadId() << ": " << *this << "::ResumeThread()" << endl;
 	}
 	#endif
-	_InterlockedDecrement(&m_nSuspendCount);
+	InterlockedDecrement(&m_nSuspendCount);
 	return ResumeThread();
 }
 

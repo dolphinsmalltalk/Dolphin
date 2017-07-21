@@ -73,7 +73,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 	// We use an InterlockedExchange() to set the value to 0 so that the main thread
 	// can recognise that the timer has fired without race conditions
 
-	if (_InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&timerID), 0) != 0)
+	if (InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&timerID), 0) != 0)
 	{
 		// If not previously killed (which is very unlikely except in certain exceptional
 		// circumstances where the timer is killed at the exact moment it is about to fire)
@@ -165,7 +165,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 		if (newTimerID && newTimerID != UINT(-1))
 		{
 			// Unless timer has already fired, record the timer id so can cancel if necessary
-			_InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&timerID), newTimerID, -1);
+			InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&timerID), newTimerID, -1);
 			pop(argumentCount);		// No ref. counting required
 		}
 		else

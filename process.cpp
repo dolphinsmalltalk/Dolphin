@@ -190,11 +190,11 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			// interrupts are on or off.
 
 			// First switch over to the buffer
-			_InterlockedExchangePointer((PVOID*)(&m_pbAsyncPending), (PVOID)(&m_bAsyncPendingIOff));
+			InterlockedExchangePointer((PVOID*)(&m_pbAsyncPending), (PVOID)(&m_bAsyncPendingIOff));
 
 			// We must clear the async. pending flag, but if currently set we save that
-			if (_InterlockedExchange(&m_bAsyncPending, FALSE))
-				_InterlockedExchange(&m_bAsyncPendingIOff, TRUE);
+			if (InterlockedExchange(&m_bAsyncPending, FALSE))
+				InterlockedExchange(&m_bAsyncPendingIOff, TRUE);
 
 			// At this point the buffer should have the same value as the async. pending flag
 			// (unless the latter was false, and some thread has notified of pending async
@@ -208,10 +208,10 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 			ASSERT(m_pbAsyncPending == &m_bAsyncPendingIOff);
 
 			// First switch back to using the normal flag...
-			_InterlockedExchangePointer((PVOID*)&m_pbAsyncPending, (PVOID)(&m_bAsyncPending));
+			InterlockedExchangePointer((PVOID*)&m_pbAsyncPending, (PVOID)(&m_bAsyncPending));
 			// ... but if the async. events occurred while interrupts were disabled, make sure these are noticed
-			if (_InterlockedExchange(&m_bAsyncPendingIOff, FALSE))
-				_InterlockedExchange(&m_bAsyncPending, TRUE);
+			if (InterlockedExchange(&m_bAsyncPendingIOff, FALSE))
+				InterlockedExchange(&m_bAsyncPending, TRUE);
 		}
 	}
 	return bWasDisabled;
@@ -746,7 +746,7 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 		queueInterrupt(VMI_SINGLESTEP, Oop(m_registers.m_pActiveFrame) + 1);
 	}
 
-	LONG bAsyncPending = _InterlockedExchange(&m_bAsyncPending, FALSE);
+	LONG bAsyncPending = InterlockedExchange(&m_bAsyncPending, FALSE);
 
 	// Indicates interrupt was fired
 	BOOL bInterrupted = FALSE;
@@ -798,7 +798,7 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			// We leave the flag set if appropriate
 			if (!m_qInterrupts.isEmpty())
 			{
-				_InterlockedExchange(&m_bAsyncPending, TRUE);
+				InterlockedExchange(&m_bAsyncPending, TRUE);
 			}
 
 			// 2) Remove ref to process caused by queue (NOW DONE ABOVE @ 1)

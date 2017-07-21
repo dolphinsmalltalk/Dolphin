@@ -228,7 +228,7 @@ void Interpreter::ShutDown()
 	_ASSERTE(!m_bShutDown);
 	m_bShutDown = true;
 	// Nulling out the handle means that any further attempts to queue APCs, etc, will fail
-	HANDLE hThread = LPVOID(_InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_hThread), 0));
+	HANDLE hThread = LPVOID(InterlockedExchange(reinterpret_cast<SHAREDLONG*>(&m_hThread), 0));
 
 	TerminateSampler();
 

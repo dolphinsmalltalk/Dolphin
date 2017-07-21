@@ -93,7 +93,7 @@ inline void Interpreter::ResetInputPollCounter()
 	// one whole sampling interval to elapse. The use of a periodic timer avoids the cost of continually resetting
 	// the timer each time we process some input.
 	// **** N.B. If this is changed, then the same named macro in byteasm.asm must also be changed ***
-	_InterlockedExchange(&m_nInputPollCounter, 2);
+	InterlockedExchange(&m_nInputPollCounter, 2);
 }
 
 inline BOOL Interpreter::sampleInput()

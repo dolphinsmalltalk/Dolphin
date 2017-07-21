@@ -318,12 +318,12 @@ ostream& operator<<(ostream& stream, const OverlappedCall& oc);
 
 inline DWORD OverlappedCall::AddRef()
 {
-	return _InterlockedIncrement(&m_dwRefs);
+	return InterlockedIncrement(&m_dwRefs);
 }
 
 inline DWORD OverlappedCall::Release()
 {
-	DWORD dwRefs = _InterlockedDecrement(&m_dwRefs);
+	DWORD dwRefs = InterlockedDecrement(&m_dwRefs);
 	if (dwRefs == 0)
 		delete this;
 	return dwRefs;

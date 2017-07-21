@@ -179,7 +179,7 @@ inline void Interpreter::sendSelectorToClass(BehaviorOTE* classPointer, unsigned
 
 inline void	Interpreter::NotifyAsyncPending()
 {
-	_InterlockedExchange(m_pbAsyncPending, TRUE);
+	InterlockedExchange(m_pbAsyncPending, TRUE);
 }
 
 #define ACEAt(cache,offset) (reinterpret_cast<AtCacheEntry*>(reinterpret_cast<BYTE*>(&cache[0])+atCacheOffset))
