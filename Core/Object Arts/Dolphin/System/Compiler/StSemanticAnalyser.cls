@@ -39,8 +39,7 @@ addToFrameStatic: aLiteralNode
 	"When parsing static expressions we record all the symbols, literal arrays, and variables
 	that are referenced in the static expression so that these can be searched on later."
 	(value isSymbol or: [(value isKindOf: Array) or: [value isKindOf: VariableBinding]])
-		ifFalse: [^self].
-	self addLiteral: aLiteralNode value: value!
+		ifTrue: [self addLiteral: aLiteralNode value: value]!
 
 assignStaticVariable: anStVariableNode
 	self accessStaticVariable: anStVariableNode!
@@ -324,11 +323,6 @@ countOuterTemps
 			count := count + scope localCount].
 	^count!
 
-currentMethodClass
-	^inStaticExpression 
-		ifTrue: [methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]]
-		ifFalse: [methodClass]!
-
 currentScope
 	^currentScope!
 
@@ -512,14 +506,27 @@ visitMethodNode: aMethodNode
 	self removeScope!
 
 visitOptimizedNode: anOptimizedNode
-	| wasInStaticExpression outerAddToFrame |
+	| wasInStaticExpression outerAddToFrame outerScopes outerCurrentScope |
 	outerAddToFrame := addToFrame.
+	outerCurrentScope := currentScope.
+	outerScopes := scopes.
 	(wasInStaticExpression := inStaticExpression)
-		ifFalse: [addToFrame := [:literal | self addToFrameStatic: literal]].
+		ifFalse: 
+			["If entering a static expression the scope is different (static expressions
+			 are compiled in the context of the class side), and only some literals are
+			 retained in the frame."
+			addToFrame := [:literal | self addToFrameStatic: literal].
+			currentScope := StClassScope
+						methodClass: (methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]).
+			scopes := OrderedCollection new].
+	currentScope := scopes addLast: (StMethodScope forScopeNode: anOptimizedNode outer: currentScope).
 	inStaticExpression := true.
 	[super visitOptimizedNode: anOptimizedNode] ensure: 
-			[inStaticExpression := wasInStaticExpression.
-			addToFrame := outerAddToFrame]!
+			[self removeScope.
+			inStaticExpression := wasInStaticExpression.
+			addToFrame := outerAddToFrame.
+			currentScope := outerCurrentScope.
+			scopes := outerScopes]!
 
 visitReturnNode: aReturnNode
 	currentScope markFarReturn.
@@ -606,7 +613,6 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #checkTryBlock:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #compilationErrorClass!constants!private! !
 !StSemanticAnalyser categoriesFor: #countOuterTemps!helpers!private! !
-!StSemanticAnalyser categoriesFor: #currentMethodClass!accessing!private! !
 !StSemanticAnalyser categoriesFor: #currentScope!accessing!private! !
 !StSemanticAnalyser categoriesFor: #errorAssignConstant:!error handling!private! !
 !StSemanticAnalyser categoriesFor: #initialize!initializing!public! !
