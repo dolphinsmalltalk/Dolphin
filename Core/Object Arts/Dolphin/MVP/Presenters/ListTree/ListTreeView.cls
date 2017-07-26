@@ -1344,21 +1344,25 @@ parentsOf: anObject includesAny: aSet
 	(aSet includes: parent) ifTrue: [^ true].
 	^ self parentsOf: parent includesAny: aSet.!
 
-previousDisplayedSiblingOf: anObject in: aCollection
+previousDisplayedSiblingOf: anObject in: aSequenceableCollection
 	"private -- given a collection of siblings of anObject (not all of which are necessarily
 	displayed yet), answer the last sibling in the collection that is displayed, and which comes
 	before anObject.  May be nil if there is no such sibling"
 
-	| sibling comparator |
-
-	sibling := nil.
-	comparator := self searchPolicy.
-	aCollection do:
-		[:each |
-		(comparator compare: each with: anObject) ifTrue: [^ sibling].
-		(self isItemDisplayed: each) ifTrue: [sibling := each]].
-
-	^ sibling.!
+	| index |
+	index := self searchPolicy
+				nextIndexOf: anObject
+				in: aSequenceableCollection
+				from: 1
+				to: aSequenceableCollection size.
+	index - 1 to: 1
+		by: -1
+		do: 
+			[:i |
+			| each |
+			each := aSequenceableCollection at: i.
+			(self isItemDisplayed: each) ifTrue: [^each]].
+	^nil!
 
 refreshContents
 	"our display needs to be refreshed.  Overridden to force state images
