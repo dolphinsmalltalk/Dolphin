@@ -8,6 +8,7 @@ Implementation of Smalltalk interpreter
 
 #include "Ist.h"
 #include <float.h>
+#include <VersionHelpers.h>
 //#include "rc_vm.h"
 
 #ifndef _DEBUG
@@ -99,6 +100,8 @@ bool Interpreter::m_bShutDown;
 ATOM Interpreter::m_atomVMWndClass;
 HWND Interpreter::m_hWndVM;
 
+DWORD Interpreter::m_dwQueueStatusMask;
+
 //==========
 //Initialise
 //==========
@@ -166,6 +169,16 @@ HRESULT Interpreter::initializeBeforeLoad()
 	{
 		return ReportWin32Error(IDP_FAILTOCREATEVMWND, ::GetLastError());
 	}
+
+	// Use the same logic as is present in the image to determine the correct status flags for the platform
+	m_dwQueueStatusMask = 
+		(IsWindows8OrGreater()
+			? QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER
+			: IsWindowsXPOrGreater()
+				? QS_MOUSE | QS_KEY | QS_RAWINPUT
+				: QS_MOUSE | QS_KEY)
+		| (QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE);
+
 
 	OverlappedCall::Initialize();
 

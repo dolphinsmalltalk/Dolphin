@@ -104,7 +104,7 @@ inline BOOL Interpreter::sampleInput()
 	if ((SDWORD)m_nInputPollInterval > 0)
 	{
 		// Look for any input in the queue, not just for new stuff
-		if (((::GetQueueStatus(QS_ALLINPUT) >> 16) & QS_ALLINPUT) != 0)
+		if (((::GetQueueStatus(m_dwQueueStatusMask) >> 16) & m_dwQueueStatusMask) != 0)
 		{
 			// Note that we must signal the semaphore here because, even though
 			// we signal the wakeup event allowing the idle task to restart, the 

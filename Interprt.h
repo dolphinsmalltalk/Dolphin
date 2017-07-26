@@ -813,6 +813,7 @@ private:
 	// Win32 input queue management
 	static SHAREDLONG	m_nInputPollCounter;			// When this goes to zero, its time to poll for input
 	static LONG			m_nInputPollInterval;			// Poll counter reset to this after each message queue poll
+	static DWORD		m_dwQueueStatusMask;			// Input flags passed to GetQueueStatus to poll for arriving input events
 
 	#if defined(_DEBUG)
 		// List of VM referenced objects (generic mechanism for avoiding GC problems with
