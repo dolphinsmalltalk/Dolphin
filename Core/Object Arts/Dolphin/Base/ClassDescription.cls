@@ -64,11 +64,12 @@ addSharedPool: aPoolDictionary
 allGetters
 	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
 
-	^self withAllSuperclasses inject: Set new
-		into: 
-			[:getters :each | 
-			getters addAll: each getters.
-			getters]!
+	| getters |
+	getters := IdentitySet new.
+	self withAllSuperclassesDo: 
+			[:eachClass |
+			eachClass methodDictionary do: [:eachMethod | eachMethod isGetter ifTrue: [getters add: eachMethod]]].
+	^getters!
 
 allProtocols
 	"Answer a <collection> of all the <MethodProtocol>s implemented by the receiver's
@@ -417,11 +418,6 @@ displayOn: aStream
 
 	aStream nextPutAll: self name
 !
-
-getters
-	"Private - Answer a <Set> of the instance variable getter methods in the receiver"
-
-	^self methodDictionary values select: [:each | each isGetter]!
 
 includesCategory: category
 	"Answer whether the receiver includes the named category."
@@ -906,7 +902,6 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 !ClassDescription categoriesFor: #definition!development!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
-!ClassDescription categoriesFor: #getters!accessing!private! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!development!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!development!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
