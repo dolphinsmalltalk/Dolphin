@@ -13,6 +13,25 @@ OrderedCollectionTest comment: ''!
 collectionClass
 	^OrderedCollection!
 
+testFindFirst2
+	| subject |
+	subject := self collectionClass withAll: (1 to: 4).
+	subject removeFirst.
+	self assert: (subject findFirst: [:each | each = 2]) equals: 1.
+	self assert: (subject findFirst: [:each | each = 3]) equals: 2.
+	self assert: (subject findFirst: [:each | each = 4]) equals: 3.
+	self assert: (subject findFirst: [:each | each = 1]) equals: 0.
+	subject removeLast.
+	self assert: (subject findFirst: [:each | each = 2]) equals: 1.
+	self assert: (subject findFirst: [:each | each = 3]) equals: 2.
+	self assert: (subject findFirst: [:each | each = 4]) equals: 0.
+	self assert: (subject findFirst: [:each | each = 1]) equals: 0.
+	subject removeFirst.
+	self assert: (subject findFirst: [:each | each = 2]) equals: 0.
+	self assert: (subject findFirst: [:each | each = 3]) equals: 1.
+	self assert: (subject findFirst: [:each | each = 4]) equals: 0.
+	self assert: (subject findFirst: [:each | each = 1]) equals: 0!
+
 testFirst2
 	| subject |
 	subject := self collectionClass withAll: (1 to: 4).
@@ -295,6 +314,7 @@ testStrongTalkTests
 						addLast: 3;
 						yourself)! !
 !OrderedCollectionTest categoriesFor: #collectionClass!constants!private! !
+!OrderedCollectionTest categoriesFor: #testFindFirst2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
