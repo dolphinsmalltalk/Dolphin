@@ -102,7 +102,7 @@ StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #OSVERSIONINFO
+OSVERSIONINFOEX subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
