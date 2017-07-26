@@ -100,22 +100,17 @@ createSchematicWiring
 			send: #onAspectSelected
 			to: self!
 
-expandBatchAccessor: batchAccessor 
+expandBatchAccessor: batchAccessor
 	| newAccessors |
 	newAccessors := batchAccessor getBatchAccessors.
-	newAccessors notEmpty 
+	newAccessors notEmpty
 		ifTrue: 
 			[| variableNamesTree parentAccessor |
 			variableNamesTree := aspectTreePresenter model.
 			parentAccessor := variableNamesTree parentOf: batchAccessor.
-			"We disable events from the model while adding the next batch of accessors as otherwise
-			 the updating of the tree can make things very slow as it gets larger"
-			variableNamesTree noEventsDo: 
-					[variableNamesTree remove: batchAccessor.
-					newAccessors do: [:each | variableNamesTree add: each asChildOf: parentAccessor]].
-			variableNamesTree refreshTree: parentAccessor.
-			aspectTreePresenter selection: newAccessors first].
-	^self!
+			newAccessors do: [:each | variableNamesTree add: each asChildOf: parentAccessor].
+			aspectTreePresenter selection: newAccessors first.
+			variableNamesTree remove: batchAccessor]!
 
 inspecteeSelection
 	"Private - Answer the value associated with the currently selected object"
