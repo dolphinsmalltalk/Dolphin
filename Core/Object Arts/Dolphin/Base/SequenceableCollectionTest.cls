@@ -244,6 +244,27 @@ testEndsWith
 	self assert: (sequence endsWith: (self newUnsortedCollection: #($1 $2 $3 $4))) not.
 	self assert: (sequence endsWith: (self newUnsortedCollection: #($4 $1 $2 $3))) not!
 
+testFindFirst
+	| subject matchAll matchNone b c d matchB matchC |
+	matchAll := [:each | true].
+	matchNone := [:each | false].
+	subject := self newCollection: #().
+	self assert: (subject findFirst: matchAll) equals: 0.
+	self assert: (subject findFirst: matchNone) equals: 0.
+	subject := self newCollection: #($a).
+	self assert: (subject findFirst: matchAll) equals: 1.
+	self assert: (subject findFirst: matchNone) equals: 0.
+	subject := self newCollection: #($a $b).
+	subject := self newCollection: #($a $b $c).
+	b := subject at: 2.
+	c := subject at: 3.
+	d := self assimilate: $d.
+	matchB := [:each | each = b].
+	matchC := [:each | each = c].
+	self assert: (subject findFirst: matchB) equals: 2.
+	self assert: (subject findFirst: [:each | each = d]) equals: 0.
+	self assert: (subject findFirst: matchC) equals: 3!
+
 testFirst
 	| first |
 	self should: [(self newCollection: #()) first] raise: BoundsError.
@@ -664,6 +685,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testConcatenation!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testCopyFromTo!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testEndsWith!public!unit tests! !
+!SequenceableCollectionTest categoriesFor: #testFindFirst!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFirst!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFirstColon!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !

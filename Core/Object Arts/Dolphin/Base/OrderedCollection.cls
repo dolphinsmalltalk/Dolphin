@@ -174,6 +174,17 @@ do: operation
 
 	firstIndex to: lastIndex do: [:i | operation value: (self basicAt: i)]!
 
+findFirst: discriminator
+	"Answer the <integer> index of the first element of the receiver for which the 
+	<monadicValuable> argument, discriminator, evaluates to true. If there are 
+	no such elements, answer 0."
+
+	"Implementation Note: Override superclass to provide a more efficient implementation."
+
+	firstIndex to: lastIndex
+		do: [:i | (discriminator value: (self basicAt: i)) ifTrue: [^i - firstIndex + 1]].
+	^0!
+
 first
 	"Answer an <Object> which is the first element of the receiver. Raise an exception if the
 	receiver contains no elements."
@@ -471,6 +482,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
+!OrderedCollection categoriesFor: #findFirst:!public!searching! !
 !OrderedCollection categoriesFor: #first!accessing!public! !
 !OrderedCollection categoriesFor: #firstIndex:lastIndex:!accessing!private! !
 !OrderedCollection categoriesFor: #includes:!public!searching! !
