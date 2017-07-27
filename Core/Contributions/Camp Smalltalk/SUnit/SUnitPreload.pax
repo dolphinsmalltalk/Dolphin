@@ -11,20 +11,7 @@ package classNames
 	yourself.
 
 package methodNames
-	add: #Behavior -> #sunitAllSelectors;
-	add: #Behavior -> #sunitSelectors;
-	add: #BlockClosure -> #sunitEnsure:;
-	add: #BlockClosure -> #sunitOn:do:;
-	add: #Class -> #sunitName;
 	add: #Exception -> #sunitExitWith:;
-	add: #Object -> #sunitAddDependent:;
-	add: #Object -> #sunitChanged:;
-	add: #Object -> #sunitRemoveDependent:;
-	add: #String -> #sunitAsSymbol;
-	add: #String -> #sunitMatch:;
-	add: #String -> #sunitSubStrings;
-	add: #Symbol -> #sunitAsClass;
-	add: 'Exception class' -> #sunitSignalWith:;
 	yourself.
 
 package globalNames
@@ -69,77 +56,11 @@ SUnitDelay := Delay!
 
 "Loose Methods"!
 
-!Behavior methodsFor!
-
-sunitAllSelectors
-	^self allSelectors asSortedCollection asOrderedCollection!
-
-sunitSelectors
-	^self selectors asSortedCollection asOrderedCollection! !
-!Behavior categoriesFor: #sunitAllSelectors!Camp Smalltalk!public! !
-!Behavior categoriesFor: #sunitSelectors!Camp Smalltalk!public! !
-
-!BlockClosure methodsFor!
-
-sunitEnsure: aBlock 
-	^self ensure: aBlock!
-
-sunitOn: aSignal do: anExceptionBlock 
-	^self on: aSignal do: anExceptionBlock! !
-!BlockClosure categoriesFor: #sunitEnsure:!Camp Smalltalk!public! !
-!BlockClosure categoriesFor: #sunitOn:do:!Camp Smalltalk!public! !
-
-!Class methodsFor!
-
-sunitName
-	^self name! !
-!Class categoriesFor: #sunitName!Camp Smalltalk!public! !
-
 !Exception methodsFor!
 
 sunitExitWith: aValue
 	self return: aValue! !
 !Exception categoriesFor: #sunitExitWith:!Camp Smalltalk!handler responses!public! !
-
-!Exception class methodsFor!
-
-sunitSignalWith: aString
-	^self signal: aString! !
-!Exception class categoriesFor: #sunitSignalWith:!Camp Smalltalk!public! !
-
-!Object methodsFor!
-
-sunitAddDependent: anObject
-	self addDependent: anObject!
-
-sunitChanged: aspect
-	self changed: aspect!
-
-sunitRemoveDependent: anObject
-	self removeDependent: anObject! !
-!Object categoriesFor: #sunitAddDependent:!Camp Smalltalk!public! !
-!Object categoriesFor: #sunitChanged:!Camp Smalltalk!public! !
-!Object categoriesFor: #sunitRemoveDependent:!Camp Smalltalk!public! !
-
-!String methodsFor!
-
-sunitAsSymbol
-	^self asSymbol!
-
-sunitMatch: aString
-	^self match: aString!
-
-sunitSubStrings
-	^self subStrings! !
-!String categoriesFor: #sunitAsSymbol!Camp Smalltalk!public! !
-!String categoriesFor: #sunitMatch:!Camp Smalltalk!public! !
-!String categoriesFor: #sunitSubStrings!Camp Smalltalk!public! !
-
-!Symbol methodsFor!
-
-sunitAsClass
-	^SUnitNameResolver classNamed: self! !
-!Symbol categoriesFor: #sunitAsClass!Camp Smalltalk!public! !
 
 "End of package definition"!
 

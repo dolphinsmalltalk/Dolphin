@@ -27,7 +27,7 @@ assert: aBoolean description: aStringOrValuable resumable: resumableBoolean
 			description := self getDescription: aStringOrValuable.
 			self logFailure: description.
 			exception := resumableBoolean ifTrue: [TestResult resumableFailure] ifFalse: [TestResult failure].
-			exception sunitSignalWith: description]!
+			exception signal: description]!
 
 assert: actualObject equals: expectedObject
 	expectedObject = actualObject
@@ -44,8 +44,7 @@ comparingStringBetween: expectedObject and: actualObject
 
 debug
 	self resources do: [:res | res isAvailable ifFalse: [^res signalInitializationError]].
-	[(self class selector: testSelector) runCase] 
-		sunitEnsure: [self resources do: [:each | each reset]]!
+	[(self class selector: testSelector) runCase] ensure: [self resources do: [:each | each reset]]!
 
 debugAsFailure
 	| semaphore |
@@ -68,17 +67,18 @@ deny: aBoolean description: aStringOrValuable resumable: resumableBoolean
 		description: aStringOrValuable
 		resumable: resumableBoolean!
 
-executeShould: aBlock inScopeOf: anExceptionalEvent 
-	[[aBlock value]
-		sunitOn: anExceptionalEvent
-		do: [:ex | ^true]]
-			sunitOn: TestResult error
-			do: [:ex | ^false].
-	^false.!
+executeShould: aBlock inScopeOf: anExceptionalEvent
+	^
+	[aBlock value.
+	false]
+			on: anExceptionalEvent
+			do: [:ex | true]
+			on: TestResult error
+			do: [:ex | false]!
 
 fail: aString
 	self logFailure: aString.
-	TestResult failure sunitSignalWith: aString!
+	TestResult failure signal: aString!
 
 failureLog
 	"dialect-specific"
@@ -109,7 +109,7 @@ openDebuggerOnFailingTestMethod
 		performTest!
 
 performTest
-	self perform: testSelector sunitAsSymbol!
+	self perform: testSelector asSymbol!
 
 printOn: aStream
 	aStream
@@ -143,15 +143,16 @@ run: aResult
 	aResult runCase: self!
 
 runCase
-
+	
 	[self setUp.
-	self performTest] sunitEnsure: [self tearDown]!
+	self performTest] ensure: [self tearDown]!
 
 runCaseAsFailure: aSemaphore
+	
 	[self setUp.
-	self openDebuggerOnFailingTestMethod] sunitEnsure: [
-		self tearDown.
-		aSemaphore signal]!
+	self openDebuggerOnFailingTestMethod] ensure: 
+				[self tearDown.
+				aSemaphore signal]!
 
 selector
 	^testSelector!
@@ -188,7 +189,7 @@ shouldnt: aBlock raise: anExceptionalEvent description: aStringOrValuable
 		description: aStringOrValuable!
 
 signalFailure: aString
-	TestResult failure sunitSignalWith: aString!
+	TestResult failure signal: aString!
 
 tearDown! !
 !TestCase categoriesFor: #addDependentToHierachy:!Dependencies!public! !
@@ -234,7 +235,8 @@ tearDown! !
 !TestCase class methodsFor!
 
 allTestSelectors
-	^self sunitAllSelectors select: [:each | 'test*' sunitMatch: each]!
+	^self allSelectors asSortedCollection asOrderedCollection
+		select: [:each | (each beginsWith: 'test') and: [each numArgs isZero]]!
 
 buildSuite
 
@@ -298,7 +300,8 @@ suite
 	^self buildSuite!
 
 testSelectors
-	^self sunitSelectors select: [:each | 'test*' sunitMatch: each]!
+	^self selectors asSortedCollection asOrderedCollection
+		select: [:each | (each beginsWith: 'test') and: [each numArgs isZero]]!
 
 version
 	^'3.1'! !
