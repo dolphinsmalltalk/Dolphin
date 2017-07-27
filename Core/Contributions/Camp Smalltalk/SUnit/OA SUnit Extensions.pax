@@ -10,8 +10,11 @@ Extensions to the basic SUnit unit testing packages, including the ability to te
 package methodNames
 	add: #TestCase -> #<=;
 	add: #TestCase -> #=;
+	add: #TestCase -> #assert:isKindOf:;
+	add: #TestCase -> #assert:sameAs:;
 	add: #TestCase -> #debugWithResult;
 	add: #TestCase -> #debugWithResult:;
+	add: #TestCase -> #deny:sameAs:;
 	add: #TestCase -> #hash;
 	add: #TestCase -> #should:raise:matching:;
 	add: #TestCase -> #should:trigger:against:;
@@ -62,6 +65,21 @@ package!
 
 	^self class == aTestCase class and: [self selector == aTestCase selector]!
 
+assert: actualObject isKindOf: expectedType
+	(actualObject isKindOf: expectedType)
+		ifFalse: 
+			[self fail: ((String writeStream: 100)
+						nextPutAll: 'Expected a ';
+						print: expectedType;
+						nextPutAll: ' Actual: ';
+						print: actualObject class;
+						nextPutAll: '.';
+						contents)]!
+
+assert: actualObject sameAs: expectedObject
+	expectedObject == actualObject
+		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
+
 debugWithResult
 	| result |
 	result := TestResult new.
@@ -70,6 +88,15 @@ debugWithResult
 
 debugWithResult: aResult
 	aResult debugCase: self!
+
+deny: actualObject sameAs: expectedObject
+	expectedObject ~~ actualObject
+		ifFalse: 
+			[self fail: ((String writeStream: 100)
+						nextPutAll: 'Did not expect ';
+						print: actualObject;
+						nextPutAll: '.';
+						contents)]!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver. We use only the selector at the moment."
@@ -207,8 +234,11 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 		against: anObject! !
 !TestCase categoriesFor: #<=!comparing!public! !
 !TestCase categoriesFor: #=!comparing!public! !
+!TestCase categoriesFor: #assert:isKindOf:!converting!public! !
+!TestCase categoriesFor: #assert:sameAs:!converting!public! !
 !TestCase categoriesFor: #debugWithResult!public!Running! !
 !TestCase categoriesFor: #debugWithResult:!private!Running! !
+!TestCase categoriesFor: #deny:sameAs:!converting!public! !
 !TestCase categoriesFor: #hash!comparing!public! !
 !TestCase categoriesFor: #should:raise:matching:!Accessing!public! !
 !TestCase categoriesFor: #should:trigger:against:!Accessing!public! !
