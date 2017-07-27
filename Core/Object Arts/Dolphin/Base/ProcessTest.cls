@@ -10,24 +10,24 @@ ProcessTest comment: ''!
 !ProcessTest categoriesForClass!Unclassified! !
 !ProcessTest methodsFor!
 
-assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sourceProcess2 visited: anIdentitySet 
+assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sourceProcess2 visited: anIdentitySet
 	(anIdentitySet includes: copyBlockClosure) ifTrue: [^true].
 	anIdentitySet add: copyBlockClosure.
-	self assert: (copyBlockClosure isKindOf: BlockClosure).
-	self assert: (srcBlockClosure isKindOf: BlockClosure).
+	self assert: copyBlockClosure isKindOf: BlockClosure.
+	self assert: srcBlockClosure isKindOf: BlockClosure.
 	srcBlockClosure isClean
-		ifTrue: [self assert: copyBlockClosure == srcBlockClosure]
+		ifTrue: [self assert: copyBlockClosure sameAs: srcBlockClosure]
 		ifFalse: 
-			[self assert: copyBlockClosure ~~ srcBlockClosure.
-			self assert: copyBlockClosure initialIP = srcBlockClosure initialIP.
-			self assert: copyBlockClosure method == srcBlockClosure method.
-			self assert: copyBlockClosure argumentCount == srcBlockClosure argumentCount.
-			self 
+			[self deny: copyBlockClosure sameAs: srcBlockClosure.
+			self assert: copyBlockClosure initialIP equals: srcBlockClosure initialIP.
+			self assert: copyBlockClosure method sameAs: srcBlockClosure method.
+			self assert: copyBlockClosure argumentCount sameAs: srcBlockClosure argumentCount.
+			self
 				assert: ((copyBlockClosure outer isNil and: [srcBlockClosure outer isNil]) or: 
 							[| copyOuter srcOuter |
 							copyOuter := copyBlockClosure outer.
 							srcOuter := srcBlockClosure outer.
-							self 
+							self
 								assertOuterContext: copyOuter
 								in: copyProcess2
 								isCopyOf: srcOuter
@@ -109,38 +109,58 @@ assertDisparateEnvironments: copyProcess2 source: sourceProcess2
 assertExceptionHandler: copyExceptionHandler in: copyProcess2 isCopyOf: srcExceptionHandler in: sourceProcess2 visited: anIdentitySet
 	(anIdentitySet includes: copyExceptionHandler) ifTrue: [^true].
 	anIdentitySet add: copyExceptionHandler.
-	self 
+	self
 		assert: ((copyExceptionHandler outer isNil and: [srcExceptionHandler outer isNil]) or: 
-					[self 
+					[self
 						assertExceptionHandler: copyExceptionHandler outer
 						in: copyProcess2
 						isCopyOf: srcExceptionHandler outer
 						in: sourceProcess2
 						visited: anIdentitySet]).
-	self 
+	self
 		assertBlock: (copyExceptionHandler instVarNamed: 'protectedBlock')
 		in: copyProcess2
 		isCopyOf: (srcExceptionHandler instVarNamed: 'protectedBlock')
 		in: sourceProcess2
 		visited: anIdentitySet.
-	self 
+	self
 		assertBlock: (copyExceptionHandler instVarNamed: 'returnContinuation')
 		in: copyProcess2
 		isCopyOf: (srcExceptionHandler instVarNamed: 'returnContinuation')
 		in: sourceProcess2
 		visited: anIdentitySet.
-	self 
-		assertBlock: (copyExceptionHandler instVarNamed: 'handler')
-		in: copyProcess2
-		isCopyOf: (srcExceptionHandler instVarNamed: 'handler')
-		in: sourceProcess2
-		visited: anIdentitySet.
-	self 
-		assertObject: (copyExceptionHandler instVarNamed: 'selector')
-		in: copyProcess2
-		isOrIsCopyOf: (srcExceptionHandler instVarNamed: 'selector')
-		in: sourceProcess2
-		visited: anIdentitySet.
+	(srcExceptionHandler isKindOf: ExceptionHandlerSet)
+		ifTrue: 
+			[| copyHandlers srcHandlers |
+			self deny: copyExceptionHandler == srcExceptionHandler.
+			self assert: (copyExceptionHandler isKindOf: ExceptionHandlerSet).
+			srcHandlers := srcExceptionHandler instVarNamed: 'handlers'.
+			copyHandlers := copyExceptionHandler instVarNamed: 'handlers'.
+			copyHandlers with: srcHandlers
+				do: 
+					[:eachCopy :eachSrc |
+					self assert: eachCopy key == eachSrc key.
+					self assertBlock: eachCopy value in: copyProcess2 isCopyOf: eachSrc value in: sourceProcess2 visited: anIdentitySet.
+					"self
+						assertExceptionHandler: eachCopy
+						in: copyProcess2
+						isCopyOf: eachSrc
+						in: sourceProcess2
+						visited: anIdentitySet"]]
+		ifFalse: 
+			[self assert: (copyExceptionHandler isKindOf: ExceptionHandler).
+			self
+				assertBlock: (copyExceptionHandler instVarNamed: 'handler')
+				in: copyProcess2
+				isCopyOf: (srcExceptionHandler instVarNamed: 'handler')
+				in: sourceProcess2
+				visited: anIdentitySet.
+			self
+				assertObject: (copyExceptionHandler instVarNamed: 'selector')
+				in: copyProcess2
+				isOrIsCopyOf: (srcExceptionHandler instVarNamed: 'selector')
+				in: sourceProcess2
+				visited: anIdentitySet].
 	^true!
 
 assertObject: copyArg in: copyProcess2 isOrIsCopyOf: srcArg in: sourceProcess2 visited: anIdentitySet 
