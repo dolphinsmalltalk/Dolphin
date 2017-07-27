@@ -945,12 +945,6 @@ snapshot: fileName
 		type: 0
 		maxObjects: nil!
 
-startTime
-"
-	SessionManager current startTime.
-"
-	^KernelLibrary default getMyProcessCreationTime!
-
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether
 	this is a GUI or console session)."
@@ -1199,7 +1193,6 @@ windowsDirectory
 !SessionManager categoriesFor: #setenv:value:!accessing!public! !
 !SessionManager categoriesFor: #shutdown!operations-shutdown!public! !
 !SessionManager categoriesFor: #snapshot:!operations-saving!private! !
-!SessionManager categoriesFor: #startTime!accessing!public! !
 !SessionManager categoriesFor: #startUI!operations-startup!public! !
 !SessionManager categoriesFor: #startupArgs!accessing!private! !
 !SessionManager categoriesFor: #stderr!accessing!public! !

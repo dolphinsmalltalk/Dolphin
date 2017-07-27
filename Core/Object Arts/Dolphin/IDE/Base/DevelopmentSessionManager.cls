@@ -89,28 +89,38 @@ commandLineParser
 	-x - immediately exit
 	"
 
-	| startTime |
-	startTime := self startTime.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
+	| minorVersion |
+	minorVersion := self imageVersionMinor.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
 	^(super commandLineParser)
 		addOption: $u;
 		addOptionAllowingArgument: $d
-			whenPresentDo: [:rebasePath |
-				self inputState queueDeferredAction: [
-					startTime = self startTime ifTrue: [
-					Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
-					self saveImage]]];
+			whenPresentDo: 
+				[:rebasePath |
+				self inputState queueDeferredAction: 
+						[minorVersion = self imageVersionMinor
+							ifTrue: 
+								[Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
+								self saveImage.
+								minorVersion := self imageVersionMinor]]];
 		addOptionRequiringArgument: $f
-			whenPresentDo: [:fileInFile | 
-				self inputState queueDeferredAction: [
-					startTime = self startTime ifTrue: [SourceManager default fileIn: fileInFile]]];
+			whenPresentDo: 
+				[:fileInFile |
+				self inputState queueDeferredAction: 
+						[minorVersion = self imageVersionMinor
+							ifTrue: 
+								[SourceManager default fileIn: fileInFile.
+								minorVersion := self imageVersionMinor]]];
 		addOptionAllowingArgument: $i
-			whenPresentDo: [:newImageFile | 
-				self inputState queueDeferredAction: [
-					startTime = self startTime ifTrue: [self saveImage: (newImageFile ifNil: ['Dolphin'])]]];
-		addOption: $x 
-			whenPresentDo: [
-				self inputState queueDeferredAction: [
-					startTime = self startTime ifTrue: [self quit]]];
+			whenPresentDo: 
+				[:newImageFile |
+				self inputState queueDeferredAction: 
+						[minorVersion = self imageVersionMinor
+							ifTrue: 
+								[self saveImage: (newImageFile ifNil: ['Dolphin']).
+								minorVersion := self imageVersionMinor]]];
+		addOption: $x
+			whenPresentDo: 
+				[self inputState queueDeferredAction: [minorVersion = self imageVersionMinor ifTrue: [self quit]]];
 		yourself!
 
 dolphinNewsgroupUrl
