@@ -1552,6 +1552,30 @@ updateResourcesOf: aString do: aMonadicValuable
 	[aMonadicValuable value: hUpdate] ifCurtailed: [self endUpdateResource: hUpdate fDiscard: true].
 	(self endUpdateResource: hUpdate fDiscard: false) ifFalse: [self systemError]!
 
+verifyVersionInfo: lpVersionInformation dwTypeMask: dwTypeMask dwlConditionMask: dwlConditionMask
+	"Invoke the VerifyVersionInfo() function of the module wrapped by the receiver.
+	Helpstring: Compares a set of operating system version requirements to the corresponding values for the currently running version of the system
+
+		BOOL __stdcall VerifyVersionInfo(
+			[in, out]OSVERSIONINFOEX* lpVersionInformation,
+			[in]DWORD dwTypeMask,
+			[in]unsigned __int64 dwlConditionMask);"
+
+	<stdcall: bool VerifyVersionInfoA OSVERSIONINFOEX* dword qword>
+	^self invalidCall!
+
+verSetConditionMask: conditionMask typeMask: typeMask condition: condition
+	"Invoke the VerSetConditionMask() function of the module wrapped by the receiver.
+	Helpstring: Sets the bits of a 64-bit value to indicate the comparison operator to use for a specified operating system version attribute
+
+		unsigned __int64 __stdcall VerSetConditionMask(
+			[in]unsigned __int64 ConditionMask,
+			[in]DWORD TypeMask,
+			[in]BYTE Condition);"
+
+	<stdcall: qword VerSetConditionMask qword dword byte>
+	^self invalidCall!
+
 virtualAlloc: lpAddress dwSize: dwSize flAllocationType: flAllocationType flProtect: flProtect
 	"Invoke the VirtualAlloc() function of the module wrapped by the receiver.
 	Helpstring: Reserves or commits a region of pages in the virtual address space
@@ -1814,6 +1838,8 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #threadSetLastError:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #updateResource:lpType:lpName:wLanguage:lpData:cbData:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #updateResourcesOf:do:!operations!public! !
+!KernelLibrary categoriesFor: #verifyVersionInfo:dwTypeMask:dwlConditionMask:!**auto generated**!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #verSetConditionMask:typeMask:condition:!**auto generated**!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #virtualAlloc:dwSize:flAllocationType:flProtect:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public! !

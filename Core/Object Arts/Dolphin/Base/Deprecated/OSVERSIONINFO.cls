@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #OSVERSIONINFO
+OSVERSIONINFOEX subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
@@ -8,9 +8,9 @@ Win32Structure subclass: #OSVERSIONINFO
 OSVERSIONINFO guid: (GUID fromString: '{87b4c604-026e-11d3-9fd7-00a0cc3e4a32}')!
 OSVERSIONINFO comment: 'OSVERSIONINFO is an ExternalStructure class to represent the Win32 OSVERSIONINFOEX structure.
 
-OSVERSIONINFO is used to retrieve version information about the host OS on which an application is running.
+OSVERSIONINFO was used to retrieve version information about the host OS on which an application is running. However the Windows API GetVersionEx has been deprecated by Microsoft, and consequently the functions of this class that relied on information returned by GetVersionEx are deprecated. The Version Helper functions on VMLibrary should be used instead. 
 
-Please note that the Windows API GetVersionEx is now deprecated, and consequently this entire class is deprecated. The Win32 Version Helper functions should be used instead. These are all accessible through VMLibrary. However, rather than test for a specific OS version in class library methods, it is preferable to define a capability enquiry with an appropriate intention revealing name, e.g. see those in SystemMetrics.
+Note that rather than test for a specific OS version in class library methods, it is preferable to define a capability enquiry with an appropriate intention revealing name, e.g. see those in SystemMetrics. In other words, don''t check for the OS version info that supports the functionality you required from your application code you should use (or define and use) a query to test for the specific feature or functionality on which you depend.
 '!
 !OSVERSIONINFO categoriesForClass!External-Data-Structured-Win32! !
 !OSVERSIONINFO methodsFor!
@@ -33,31 +33,6 @@ calculateOsName
 			minor = 2 ifTrue: [^#win8].
 			^#win81].
 	^#win10!
-
-dwBuildNumber
-	"Answer the receiver's dwBuildNumber field as a Smalltalk object."
-
-	^(bytes dwordAtOffset: 12)!
-
-dwMajorVersion
-	"Answer the receiver's dwMajorVersion field as a Smalltalk object."
-
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMajorVersion)!
-
-dwMinorVersion
-	"Answer the receiver's dwMinorVersion field as a Smalltalk object."
-
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMinorVersion)!
-
-dwPlatformId
-	"Answer the receiver's dwPlatformId field as a Smalltalk object."
-
-	^bytes dwordAtOffset: ##(self offsetOf: #dwPlatformId)!
-
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
 
 hasThemes
 	^self isWinXPOrLater!
@@ -171,38 +146,8 @@ osName
 	pre-NT generation of OSs such as Windows 98."
 
 	osName isNil ifTrue: [osName := self calculateOsName].
-	^osName!
-
-szCSDVersion
-	"Answer the receiver's szCSDVersion field as a Smalltalk object."
-
-	^String fromAddress: bytes yourAddress + ##(self offsetOf: #szCSDVersion)!
-
-wProductType
-	"Answer the receiver's wProductType field as a Smalltalk object."
-
-	^bytes byteAtOffset: ##(self offsetOf: #wProductType)!
-
-wServicePackMajor
-	"Answer the receiver's wServicePackMajor field as a Smalltalk object."
-
-	^bytes wordAtOffset: ##(self offsetOf: #wServicePackMajor)!
-
-wServicePackMinor
-	"Answer the receiver's wServicePackMinor field as a Smalltalk object."
-
-	^bytes wordAtOffset: ##(self offsetOf: #wServicePackMinor)!
-
-wSuiteMask
-	"Answer the receiver's wSuiteMask field as a Smalltalk object."
-
-	^bytes wordAtOffset: ##(self offsetOf: #wSuiteMask)! !
+	^osName! !
 !OSVERSIONINFO categoriesFor: #calculateOsName!helpers!private! !
-!OSVERSIONINFO categoriesFor: #dwBuildNumber!accessing!public! !
-!OSVERSIONINFO categoriesFor: #dwMajorVersion!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #dwMinorVersion!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #dwPlatformId!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
 !OSVERSIONINFO categoriesFor: #hasThemes!accessing!private! !
 !OSVERSIONINFO categoriesFor: #isNT!public!testing! !
 !OSVERSIONINFO categoriesFor: #isNT4!public!testing! !
@@ -220,11 +165,6 @@ wSuiteMask
 !OSVERSIONINFO categoriesFor: #isWinXP!public!testing! !
 !OSVERSIONINFO categoriesFor: #isWinXPOrLater!public!testing! !
 !OSVERSIONINFO categoriesFor: #osName!accessing!public! !
-!OSVERSIONINFO categoriesFor: #szCSDVersion!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #wProductType!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #wServicePackMajor!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #wServicePackMinor!**compiled accessors**!public! !
-!OSVERSIONINFO categoriesFor: #wSuiteMask!**compiled accessors**!public! !
 
 !OSVERSIONINFO class methodsFor!
 
@@ -243,33 +183,9 @@ defineFields
 	"Define the fields of the Win32 OSVERSIONINFO structure.
 
 		OSVERSIONINFO compileDefinition
+	"
 
-		typedef struct _OSVERSIONINFOEX{  
-			DWORD dwOSVersionInfoSize; 
-			DWORD dwMajorVersion; 
-			DWORD dwMinorVersion; 
-			DWORD dwBuildNumber; 
-			DWORD dwPlatformId; 
-			TCHAR szCSDVersion[128]; 
-			WORD  wServicePackMajor;
-			WORD  wServicePackMinor;
-			WORD  wSuiteMask;
-			BYTE  wProductType;
-			BYTE  wReserved
-		} OSVERSIONINFOEX;"
-
-	self
-		defineField: #dwSize type: DWORDField writeOnly beOverride;
-		defineField: #dwMajorVersion type: DWORDField readOnly;
-		defineField: #dwMinorVersion type: DWORDField readOnly;
-		defineField: #dwBuildNumber type: DWORDField readOnly;
-		defineField: #dwPlatformId type: DWORDField readOnly;
-		defineField: #szCSDVersion type: (StringField length: 128) beReadOnly;
-		defineField: #wServicePackMajor type: WORDField readOnly;
-		defineField: #wServicePackMinor type: WORDField readOnly;
-		defineField: #wSuiteMask type: WORDField readOnly;
-		defineField: #wProductType type: BYTEField readOnly;
-		defineField: #wReserved type: BYTEField filler!
+	super defineFields!
 
 getCurrent
 	"Private - Get the current OSVERSIONINFO."
