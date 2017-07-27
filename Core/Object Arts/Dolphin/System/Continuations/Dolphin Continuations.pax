@@ -137,7 +137,7 @@ deepenProcessCopy: aProcessCopier
 
 deepenProcessCopy: aProcessCopier
 	super deepenProcessCopy: aProcessCopier.
-	handlers := handlers collect: [:each | aProcessCopier visit: each]! !
+	handlers := handlers collect: [:each | each key -> (aProcessCopier visit: each value)]! !
 !ExceptionHandlerSet categoriesFor: #deepenProcessCopy:!copying!private! !
 
 !Object methodsFor!
