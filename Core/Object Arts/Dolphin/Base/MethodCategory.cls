@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Category subclass: #MethodCategory
 	instanceVariableNames: ''
 	classVariableNames: 'Private Pseuds Public Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodCategory guid: (GUID fromString: '{87B4C502-026E-11D3-9FD7-00A0CC3E4A32}')!
+MethodCategory guid: (GUID fromString: '{87b4c502-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodCategory comment: 'MethodCategory is the class of objects used to classify the methods of classes in taxonomies that are generally unrelated to the class hierarchy.
 
 Instance Variables: (None)
@@ -70,6 +70,13 @@ isPrivacy
 
 	^false!
 
+isPseudoCategoryForClass: aClassDescription
+
+	"Return whether the receiver should be included as part of aClassDescription's set of pseduo method categories.
+	By default, pseudo categories are included for all classes"
+
+	^self isPseud!
+
 methodsInBehavior: aBehavior 
 	"Answer a <sequencedReadableCollection> of <CompiledMethods>s being all the methods in the <Behavior>
 	argument which are members of the receiver."
@@ -120,6 +127,7 @@ removeMethodSilently: method
 !MethodCategory categoriesFor: #contents!enumerating!public! !
 !MethodCategory categoriesFor: #includesMethod:!public!testing! !
 !MethodCategory categoriesFor: #isPrivacy!private!testing! !
+!MethodCategory categoriesFor: #isPseudoCategoryForClass:!public!testing! !
 !MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
 !MethodCategory categoriesFor: #removeClass:!public!removing! !
@@ -137,6 +145,19 @@ addPseud: category
 	self removeCategory: category.
 	Pseuds add: category.
 	^Table at: category name put: category.!
+
+addPseuds: aCollection
+	"Add the virtual method categories in aCollection to the global list of virtual categories
+	which may be associated with any class. Any samed name standard category
+	is removed from the system.
+	Much more performant than repeatedly sending addPseud: when adding multiple categories"
+
+	self removeCategories: aCollection.
+
+	^aCollection do: 
+		[ :category | 
+		Pseuds add: category.
+		Table at: category name put: category]!
 
 allMethodCategories
 	"Answer the set of all <methodCategory>s current registered in the system."
@@ -201,6 +222,10 @@ pseudoCategories
 
 	^Pseuds!
 
+pseudoCategoriesForClass: aClassDescription
+
+	^self pseudoCategories select: [ :each | each isPseudoCategoryForClass: aClassDescription]!
+
 pseudPrefix
 	"Private - Answer the <readableString> prefix to be prepended to the names of the
 	standard pseudo categories. N.B. The prefix should be short."
@@ -212,6 +237,27 @@ public
 
 	Public isNil ifTrue: [Public := self name: 'public'].
 	^Public!
+
+removeCategories: aCollection
+	"Remove the specified categories from all classes with which they are associated,
+	and also from the table of categories.
+	More performant than repeatedly sending removeCategory: when removing multiple categories"
+
+	| catNames |
+
+	catNames := Set new.
+	aCollection do: [ :each | catNames add: each asString].
+
+	"Make absolutely sure any standard category of the same name has been removed"
+	self environment allBehaviorsDo: [:c | | catalogue dead |
+		catalogue := c methodsCatalogue.
+		dead := OrderedCollection new.
+		catalogue keysDo: [ :e | (catNames includes: e name) ifTrue: [dead add: e]]. 
+		dead	do: [:k | catalogue removeKey: k]].
+
+	catNames do: 
+		[ :catName |
+		Pseuds remove: (Table removeKey: catName ifAbsent: []) ifAbsent: []]!
 
 removeCategory: category
 	"Remove the specified category from all classes with which it is associated,
@@ -256,6 +302,7 @@ uninitialize
 
 	Pseuds := Table := nil! !
 !MethodCategory class categoriesFor: #addPseud:!adding!public! !
+!MethodCategory class categoriesFor: #addPseuds:!adding!public! !
 !MethodCategory class categoriesFor: #allMethodCategories!accessing!public! !
 !MethodCategory class categoriesFor: #deprecatedMethods!instance creation!public! !
 !MethodCategory class categoriesFor: #initialize!initializing!private! !
@@ -264,8 +311,10 @@ uninitialize
 !MethodCategory class categoriesFor: #primitives!instance creation!public! !
 !MethodCategory class categoriesFor: #private!instance creation!public! !
 !MethodCategory class categoriesFor: #pseudoCategories!constants!public! !
+!MethodCategory class categoriesFor: #pseudoCategoriesForClass:!accessing!public! !
 !MethodCategory class categoriesFor: #pseudPrefix!constants!private! !
 !MethodCategory class categoriesFor: #public!instance creation!public! !
+!MethodCategory class categoriesFor: #removeCategories:!public!removing! !
 !MethodCategory class categoriesFor: #removeCategory:!public!removing! !
 !MethodCategory class categoriesFor: #removePseud:!public!removing! !
 !MethodCategory class categoriesFor: #setMethod:categories:!helpers!private! !

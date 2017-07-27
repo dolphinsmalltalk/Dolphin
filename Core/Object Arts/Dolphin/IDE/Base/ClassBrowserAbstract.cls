@@ -114,7 +114,7 @@ actualClassChainMethods
 	^dict values!
 
 addCategoriesOfMethod: aCompiledMethod
-	(aCompiledMethod realCategories difference: categoriesPresenter model asSet) 
+	(aCompiledMethod categories difference: categoriesPresenter model asSet) 
 		do: [:each | categoriesPresenter model addCategory: each]!
 
 addMethod: method toCategory: target 
@@ -1577,7 +1577,7 @@ onTipTextRequired: tool
 		ifTrue: 
 			[| cat |
 			cat := self category.
-			^cat == self allCategory 
+			^(cat == self allCategory or: [cat acceptsAdditions not])
 				ifTrue: ['New unclassified method']
 				ifFalse: ['New method in <1p>' expandMacrosWith: cat name]].
 	(cmd == #historyBack and: [history hasPast]) 

@@ -517,7 +517,7 @@ methodCategories
 	the receiver's methods are classified."
 
 	^(self realMethodCategories)
-		addAll: self methodCategoryClass pseudoCategories;
+		addAll: (self methodCategoryClass pseudoCategoriesForClass: self);
 		yourself!
 
 methodCategoryClass
