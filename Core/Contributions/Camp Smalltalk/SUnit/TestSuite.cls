@@ -11,8 +11,8 @@ TestSuite comment: ''!
 !TestSuite methodsFor!
 
 addDependentToHierachy: anObject
-	self sunitAddDependent: anObject.
-	self tests do: [ :each | each addDependentToHierachy: anObject]!
+	self addDependent: anObject.
+	self tests do: [:each | each addDependentToHierachy: anObject]!
 
 addTest: aTest
 	self tests add: aTest!
@@ -36,8 +36,8 @@ name: aString
 	name := aString!
 
 removeDependentFromHierachy: anObject
-	self sunitRemoveDependent: anObject.
-	self tests do: [ :each | each removeDependentFromHierachy: anObject]!
+	self removeDependent: anObject.
+	self tests do: [:each | each removeDependentFromHierachy: anObject]!
 
 resources
 	resources isNil ifTrue: [resources := self defaultResources].
@@ -50,14 +50,14 @@ run
 	| result |
 	result := TestResult new.
 	self resources do: [:res | res isAvailable ifFalse: [^res signalInitializationError]].
-	[self run: result] sunitEnsure: [self resources do: [:each | each reset]].
+	[self run: result] ensure: [self resources do: [:each | each reset]].
 	^result!
 
-run: aResult 
+run: aResult
 	self tests do: 
-		[:each | 
-		self sunitChanged: each.
-		each run: aResult]!
+			[:each |
+			self changed: each.
+			each run: aResult]!
 
 signalResourceErrorFor: res
 	^res signalInitializationError!

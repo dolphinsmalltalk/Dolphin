@@ -239,27 +239,22 @@ debugWithResult: aSymbol
 
 !TestResult methodsFor!
 
-debugCase: aTestCase 
+debugCase: aTestCase
 	"Same as runCase:, but must pass out an errors so caught by the debugger"
 
-	| testCasePassed |
-	testCasePassed := true.
 	
-	[
 	[aTestCase runCase.
-	true] sunitOn: self class failure
+	self addPass: aTestCase]
+			on: self class failure
 			do: 
-				[:signal | 
-				self failures add: aTestCase.
-				testCasePassed := false.
-				signal pass]] 
-			sunitOn: self class error
+				[:signal |
+				self addFailure: aTestCase.
+				signal pass]
+			on: self class error
 			do: 
-				[:signal | 
-				self errors add: aTestCase.
-				testCasePassed := false.
-				signal pass].
-	testCasePassed ifTrue: [self passed add: aTestCase]! !
+				[:signal |
+				self addError: aTestCase.
+				signal pass]! !
 !TestResult categoriesFor: #debugCase:!public!Running! !
 
 "End of package definition"!

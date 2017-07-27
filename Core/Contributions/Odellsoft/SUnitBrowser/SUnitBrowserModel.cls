@@ -222,12 +222,12 @@ runIndividualTestsWithResources: tests
 	"tests - a collection of either TestCases or TestSuites"
 
 	| resources |
-
 	resources := self resourcesFor: tests.
-
+	
 	[self
 		startResources: resources;
-		runIndividualTests: tests] sunitEnsure: [self stopResources: resources]!
+		runIndividualTests: tests]
+			ensure: [self stopResources: resources]!
 
 runSelected
 

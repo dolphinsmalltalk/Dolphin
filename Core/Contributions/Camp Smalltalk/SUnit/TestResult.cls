@@ -10,6 +10,15 @@ TestResult comment: ''!
 !TestResult categoriesForClass!SUnit! !
 !TestResult methodsFor!
 
+addError: aTestCase
+	self errors add: aTestCase!
+
+addFailure: aTestCase
+	self failures add: aTestCase!
+
+addPass: aTestCase
+	self passed add: aTestCase!
+
 correctCount
 	"depreciated - use #passedCount"
 	^self passedCount!
@@ -79,24 +88,19 @@ printOn: aStream
 		ifTrue: [aStream nextPut: $s].!
 
 runCase: aTestCase
-	| testCasePassed |
-
-	testCasePassed :=
-		[
-			[
-				aTestCase runCase.
-				true]
-					sunitOn: self class failure
-					do: [:signal |
-						self failures add: aTestCase.
-						signal sunitExitWith: false]]
-							sunitOn: self class error
-							do: [:signal |
-								self errors add: aTestCase.
-								signal sunitExitWith: false].
-
-	testCasePassed
-		ifTrue: [self passed add: aTestCase]!
+	
+	[aTestCase runCase.
+	self addPass: aTestCase]
+			on: self class failure
+			do: 
+				[:signal |
+				self addFailure: aTestCase.
+				signal sunitExitWith: false]
+			on: self class error
+			do: 
+				[:signal |
+				self addError: aTestCase.
+				signal sunitExitWith: false]!
 
 runCount
 	^self passedCount + self failureCount + self errorCount!
@@ -107,6 +111,9 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
+!TestResult categoriesFor: #addError:!public!Running! !
+!TestResult categoriesFor: #addFailure:!public!Running! !
+!TestResult categoriesFor: #addPass:!public!Running! !
 !TestResult categoriesFor: #correctCount!Accessing!public! !
 !TestResult categoriesFor: #defects!Accessing!public! !
 !TestResult categoriesFor: #errorCount!Accessing!public! !
@@ -147,11 +154,11 @@ new
 resumableFailure
 	^ResumableTestFailure!
 
-signalErrorWith: aString 
-	self error sunitSignalWith: aString!
+signalErrorWith: aString
+	self error signal: aString!
 
-signalFailureWith: aString 
-	self failure sunitSignalWith: aString! !
+signalFailureWith: aString
+	self failure signal: aString! !
 !TestResult class categoriesFor: #error!Exceptions!public! !
 !TestResult class categoriesFor: #exError!Exceptions!public! !
 !TestResult class categoriesFor: #failure!Exceptions!public! !
