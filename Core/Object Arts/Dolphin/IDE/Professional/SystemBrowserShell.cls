@@ -135,7 +135,22 @@ selectionEnvironment
 		ifFalse: [classEnvironment]!
 
 slideyPinNames
-	^super slideyPinNames , #('packagesSlidey')! !
+	^super slideyPinNames , #('packagesSlidey')!
+
+updateCategories
+	"Overridden to select the appropriate loose category when viewing a non-owned class"
+
+	| class package |
+
+	class := self actualClass.
+	self hasPackageSelected ifTrue: [package := self packages anyOne].
+	(class notNil and: [package notNil and: [package includesLooseMethodsFor: class]]) ifFalse: [^super updateCategories].
+
+	categoriesPresenter model list: self actualClassChainCategories asOrderedCollection.
+	categoriesPresenter expand: self allCategory.
+	(LooseMethodCategory forPackage: package) 
+		ifNil: [super updateCategories]
+		ifNotNil: [ :cat | categoriesPresenter selection: cat ifAbsent: [super updateCategories]]! !
 !SystemBrowserShell categoriesFor: #canSaveMethod!commands!private! !
 !SystemBrowserShell categoriesFor: #createComponents!initializing!public! !
 !SystemBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
@@ -151,6 +166,7 @@ slideyPinNames
 !SystemBrowserShell categoriesFor: #searchForPackage:!operations!public! !
 !SystemBrowserShell categoriesFor: #selectionEnvironment!accessing!public! !
 !SystemBrowserShell categoriesFor: #slideyPinNames!accessing!private! !
+!SystemBrowserShell categoriesFor: #updateCategories!private!updating! !
 
 !SystemBrowserShell class methodsFor!
 

@@ -60,6 +60,7 @@ package classNames
 	add: #KeyedAspect;
 	add: #KeyedAspectBatch;
 	add: #KeyedAspectBatchAccessor;
+	add: #LooseMethodCategory;
 	add: #MenuBarComposer;
 	add: #MenuBarPainter;
 	add: #MenuComposer;
@@ -241,6 +242,7 @@ package methodNames
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
 	add: #Package -> #icon;
+	add: #Package -> #includesLooseMethodsFor:;
 	add: #Package -> #publishedAspects;
 	add: #Package -> #searchForInTool:;
 	add: #PackageManager -> #getVersionInfoFor:;
@@ -718,6 +720,11 @@ VirtualMethodCategory subclass: #ChangedMethodsCategory
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+VirtualMethodCategory subclass: #LooseMethodCategory
+	instanceVariableNames: 'package'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'instances'!
 VirtualMethodCategory subclass: #MethodPrivacyCategory
 	instanceVariableNames: 'privacy'
 	classVariableNames: ''
@@ -3293,6 +3300,10 @@ icon
 	self isBaseImagePackage ifTrue: [^self class dolphinPackageIcon].
 	^super icon!
 
+includesLooseMethodsFor: aBehavior
+
+	^self methodNames anySatisfy: [ :each | (self behaviorFromName: each key ifAbsent: []) = aBehavior]!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
@@ -3310,6 +3321,7 @@ searchForInTool: aSmalltalkToolShell
 !Package categoriesFor: #defaultAbout!development!public! !
 !Package categoriesFor: #defaultAboutBitmap!constants!public! !
 !Package categoriesFor: #icon!public! !
+!Package categoriesFor: #includesLooseMethodsFor:!public!testing! !
 !Package categoriesFor: #publishedAspects!accessing!development!public! !
 !Package categoriesFor: #searchForInTool:!development!public! !
 
