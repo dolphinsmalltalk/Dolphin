@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #TestCase;
+	add: #TestCaseResult;
 	add: #TestResource;
 	add: #TestResult;
 	add: #TestSuite;
@@ -31,13 +32,18 @@ Object subclass: #TestCase
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Object subclass: #TestCaseResult
+	instanceVariableNames: 'case status duration signal stacktrace'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #TestResource
 	instanceVariableNames: 'name description'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
 Object subclass: #TestResult
-	instanceVariableNames: 'failures errors passed'
+	instanceVariableNames: 'results failures errors passed duration'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

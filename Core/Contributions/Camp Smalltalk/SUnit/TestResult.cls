@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestResult
-	instanceVariableNames: 'failures errors passed'
+	instanceVariableNames: 'results failures errors passed duration'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,14 +10,17 @@ TestResult comment: ''!
 !TestResult categoriesForClass!SUnit! !
 !TestResult methodsFor!
 
-addError: aTestCase
-	self errors add: aTestCase!
+addError: aTestCase signal: anException
+	results at: aTestCase put: (TestCaseResult case: aTestCase error: anException).
+	errors add: aTestCase!
 
-addFailure: aTestCase
-	self failures add: aTestCase!
+addFailure: aTestCase signal: anException
+	results at: aTestCase put: (TestCaseResult case: aTestCase failure: anException).
+	failures add: aTestCase!
 
-addPass: aTestCase
-	self passed add: aTestCase!
+addPass: aTestCase duration: anInteger
+	results at: aTestCase put: (TestCaseResult case: aTestCase duration: anInteger).
+	passed add: aTestCase!
 
 correctCount
 	"depreciated - use #passedCount"
@@ -28,51 +31,58 @@ defects
 		addAll: self failures;
 		yourself!
 
+duration
+	^duration!
+
+duration: anInteger
+	duration := anInteger!
+
 errorCount
-	^self errors size!
+	^errors size!
 
 errors
-	errors isNil ifTrue: [errors := OrderedCollection new].
 	^errors!
 
 failureCount
-	^self failures size!
+	^failures size!
 
 failures
-        failures isNil ifTrue: [failures := Set new].
-        ^failures!
+	^failures!
 
 hasErrors
-
-	^self errors size > 0!
+	^errors size > 0!
 
 hasFailures
-
-	^self failures size > 0!
+	^failures size > 0!
 
 hasPassed
 	^self runCount = self correctCount!
 
 initialize
-!
+	results := LookupTable new.
+	failures := Set new.
+	errors := OrderedCollection new.
+	passed := OrderedCollection new!
 
 isError: aTestCase
-
-	^self errors includes: aTestCase!
+	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result status == #error]!
 
 isFailure: aTestCase
-	^self failures includes: aTestCase!
+	^(results at: aTestCase ifAbsent: []) 
+		ifNil: [false]
+		ifNotNil: [:result | result status == #failure]!
 
 isPassed: aTestCase
-
-	^self passed includes: aTestCase!
+	^(results at: aTestCase ifAbsent: []) 
+		ifNil: [false]
+		ifNotNil: [:result | result status == #passed]
+!
 
 passed
-	passed isNil ifTrue: [passed := OrderedCollection new].
 	^passed!
 
 passedCount
-	^self passed size!
+	^passed size!
 
 printOn: aStream
 	aStream
@@ -87,23 +97,32 @@ printOn: aStream
 	self errorCount ~= 1
 		ifTrue: [aStream nextPut: $s].!
 
+results
+	^results!
+
 runCase: aTestCase
 	
-	[aTestCase runCase.
-	self addPass: aTestCase]
+	[| start stop |
+	start := Time microsecondClockValue.
+	aTestCase runCase.
+	stop := Time microsecondClockValue.
+	self addPass: aTestCase duration: stop - start]
 			on: self class failure
 			do: 
 				[:signal |
-				self addFailure: aTestCase.
+				self addFailure: aTestCase signal: signal.
 				signal sunitExitWith: false]
 			on: self class error
 			do: 
 				[:signal |
-				self addError: aTestCase.
+				self addError: aTestCase signal: signal.
 				signal sunitExitWith: false]!
 
 runCount
-	^self passedCount + self failureCount + self errorCount!
+	^results size!
+
+skippedCount
+	^0!
 
 tests
 	^(OrderedCollection new: self runCount)
@@ -111,11 +130,13 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
-!TestResult categoriesFor: #addError:!public!Running! !
-!TestResult categoriesFor: #addFailure:!public!Running! !
-!TestResult categoriesFor: #addPass:!public!Running! !
+!TestResult categoriesFor: #addError:signal:!private!Running! !
+!TestResult categoriesFor: #addFailure:signal:!private!Running! !
+!TestResult categoriesFor: #addPass:duration:!private!Running! !
 !TestResult categoriesFor: #correctCount!Accessing!public! !
 !TestResult categoriesFor: #defects!Accessing!public! !
+!TestResult categoriesFor: #duration!accessing!public! !
+!TestResult categoriesFor: #duration:!accessing!public! !
 !TestResult categoriesFor: #errorCount!Accessing!public! !
 !TestResult categoriesFor: #errors!Accessing!public! !
 !TestResult categoriesFor: #failureCount!Accessing!public! !
@@ -130,8 +151,10 @@ tests
 !TestResult categoriesFor: #passed!Accessing!public! !
 !TestResult categoriesFor: #passedCount!Accessing!public! !
 !TestResult categoriesFor: #printOn:!Printing!public! !
+!TestResult categoriesFor: #results!accessing!public! !
 !TestResult categoriesFor: #runCase:!public!Running! !
 !TestResult categoriesFor: #runCount!Accessing!public! !
+!TestResult categoriesFor: #skippedCount!Accessing!public! !
 !TestResult categoriesFor: #tests!Accessing!public! !
 
 !TestResult class methodsFor!
