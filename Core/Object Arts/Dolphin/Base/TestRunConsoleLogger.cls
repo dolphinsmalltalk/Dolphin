@@ -18,7 +18,7 @@ finishedCase: aTestCase result: aSymbol in: microsecondsInteger
 	self printRuntime: microsecondsInteger.
 	stream cr!
 
-finishedRun: aTestResult in: anInteger knownSlowTests: aCollection
+finishedRun: aTestResult knownSlowTests: aCollection
 	| passed |
 	passed := aTestResult hasPassed.
 	stream
@@ -26,7 +26,7 @@ finishedRun: aTestResult in: anInteger knownSlowTests: aCollection
 		cr;
 		nextPutAll: aTestResult printString;
 		nextPutAll: ' in '.
-	self printRuntime: anInteger.
+	self printRuntime: aTestResult duration.
 	stream cr.
 	passed
 		ifTrue: [self summarizeTimings: self slowTestThreshold * 1000 baseline: aCollection]
@@ -109,7 +109,7 @@ summarizeTimings: anInteger baseline: aCollection
 				print: each key;
 				cr]! !
 !TestRunConsoleLogger categoriesFor: #finishedCase:result:in:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #finishedRun:in:knownSlowTests:!helpers!logging!public! !
+!TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
 !TestRunConsoleLogger categoriesFor: #printRuntime:!helpers!private! !
 !TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !

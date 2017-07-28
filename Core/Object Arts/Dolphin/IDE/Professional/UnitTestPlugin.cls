@@ -106,8 +106,8 @@ displayColor: aColor
 	modePresenter view backcolor: aColor.
 	detailsPresenter view backcolor: aColor!
 
-displayDefects: aCollection 
-	defectsPresenter list: aCollection.
+displayDefects: aCollection
+	defectsPresenter list: aCollection asSortedCollection.
 	defectsPresenter view isEnabled: aCollection notEmpty!
 
 displayDetails: aString 

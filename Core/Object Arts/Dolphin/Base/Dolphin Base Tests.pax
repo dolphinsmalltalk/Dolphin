@@ -121,6 +121,7 @@ package methodNames
 	add: #SmalltalkSystem -> #regressionTestSuite;
 	add: #SmalltalkSystem -> #runRegressionTests;
 	add: #SmalltalkSystem -> #runRegressionTests:logTo:verbose:;
+	add: #SmalltalkSystem -> #writeJunitTestLog:result:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -150,6 +151,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
 	add: '..\ActiveX\Shell\Windows Shell';
+	add: '..\ActiveX\Components\XML DOM\XML DOM';
 	yourself).
 
 package!
@@ -717,7 +719,7 @@ regressionTestsLogFilename
 
 regressionTestSuite
 	| suite |
-	suite := TestSuite new.
+	suite := TestSuite named: 'RegressionTests'.
 	suite addTests: TestCase buildSuite allTests asSortedCollection.
 	^suite!
 
@@ -742,14 +744,103 @@ runRegressionTests
 					ensure: [logStream close]]!
 
 runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
-	^(CommandLineTestRunner new)
-		addLogger: (TestRunConsoleLogger on: logStream);
-		verbose: aBoolean;
-		runSuite: aTestSuite knownSlowTests: self baselinedSlowTests! !
+	| result |
+	result := (CommandLineTestRunner new)
+				addLogger: (TestRunConsoleLogger on: logStream);
+				verbose: aBoolean;
+				runSuite: aTestSuite knownSlowTests: self baselinedSlowTests.
+	self writeJunitTestLog: aTestSuite result: result.
+	^result!
+
+writeJunitTestLog: aTestSuite result: aTestResult
+	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName time |
+	suiteName := aTestSuite name ?? 'RegressionTests'.
+	doc := IXMLDOMDocument3 new.
+	suitesNode := doc addElement: 'testsuites'.
+	time := String writeStream.
+	aTestResult duration / 1.0e6 printOn: time decimalPlaces: 6.
+	(suitesNode attributes)
+		at: 'name' put: suiteName;
+		at: 'tests' put: aTestResult runCount displayString;
+		at: 'errors' put: aTestResult errorCount displayString;
+		at: 'failures' put: aTestResult failureCount displayString;
+		at: 'skipped' put: aTestResult skippedCount displayString;
+		at: 'time' put: time contents;
+		free.
+	currentId := classTests := classErrors := classFailures := classSkipped := classElapsed := 0.
+	currentClass := nil.
+	suiteNode := nil.
+	(aTestResult results asSortedCollection: [:a :b | a case <= b case]) do: 
+			[:each |
+			| caseNode |
+			each case class == currentClass
+				ifFalse: 
+					[suiteNode
+						ifNotNil: 
+							[time reset.
+							classElapsed / 1.0e6 printOn: time decimalPlaces: 6.
+							(suiteNode attributes)
+								at: 'name' put: currentClass name;
+								at: 'id' put: currentId displayString;
+								at: 'tests' put: classTests displayString;
+								at: 'errors' put: classErrors displayString;
+								at: 'failures' put: classFailures displayString;
+								at: 'skipped' put: classSkipped displayString;
+								at: 'time' put: time contents;
+								free.
+							suiteNode free].
+					currentClass := each case class.
+					classTests := classErrors := classFailures := classSkipped := classElapsed := 0.
+					suiteNode := suitesNode addElement: 'testsuite'.
+					currentId := currentId + 1].
+			classTests := classTests + 1.
+			classElapsed := classElapsed + each duration.
+			caseNode := suiteNode addElement: 'testcase'.
+			caseAttribs := caseNode attributes.
+			caseAttribs
+				at: 'name' put: each case selector;
+				at: 'classname' put: currentClass name.
+			each status == #passed
+				ifTrue: 
+					[time reset.
+					each duration / 1.0e6 printOn: time decimalPlaces: 6.
+					caseAttribs at: 'time' put: time contents]
+				ifFalse: 
+					[each status == #error
+						ifTrue: 
+							[| errorNode |
+							classErrors := classErrors + 1.
+							errorNode := caseNode addElement: 'error'.
+							(errorNode attributes)
+								at: 'type' put: each signal class name;
+								at: 'message' put: each signal description;
+								free.
+							errorNode text: each stacktrace.
+							errorNode free]
+						ifFalse: 
+							[each status == #failed
+								ifTrue: 
+									[| failureNode |
+									classFailures := classFailures + 1.
+									failureNode := caseNode addElement: 'failure'.
+									(failureNode attributes)
+										at: 'message' put: each signal description;
+										free.
+									failureNode text: each stacktrace.
+									failureNode free]]].
+			caseAttribs free.
+			caseNode free].
+	suitesNode free.
+	doc save: (File
+				composePath: SessionManager current imageBase
+				stem: suiteName
+				extension: 'xml').
+	doc free! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
+!SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!accessing!private! !
 
 "End of package definition"!
 
