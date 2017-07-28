@@ -15,6 +15,7 @@ Releases/
 *.~html
 *.adu
 Contributions/
+!Core/Contributions/
 Core/DolphinVM/
 Projects
 *.log
