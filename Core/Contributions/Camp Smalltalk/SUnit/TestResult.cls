@@ -23,7 +23,7 @@ addPass: aTestCase duration: anInteger
 	passed add: aTestCase!
 
 correctCount
-	"depreciated - use #passedCount"
+	#deprecated.	"use #passedCount"
 	^self passedCount!
 
 defects
@@ -56,7 +56,7 @@ hasFailures
 	^failures size > 0!
 
 hasPassed
-	^self runCount = self correctCount!
+	^self runCount = self passedCount!
 
 initialize
 	results := LookupTable new.
@@ -65,18 +65,15 @@ initialize
 	passed := OrderedCollection new!
 
 isError: aTestCase
-	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result status == #error]!
+	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #error]!
 
 isFailure: aTestCase
-	^(results at: aTestCase ifAbsent: []) 
+	^(results at: aTestCase ifAbsent: [])
 		ifNil: [false]
-		ifNotNil: [:result | result status == #failure]!
+		ifNotNil: [:result | result outcome == #failure]!
 
 isPassed: aTestCase
-	^(results at: aTestCase ifAbsent: []) 
-		ifNil: [false]
-		ifNotNil: [:result | result status == #passed]
-!
+	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #passed]!
 
 passed
 	^passed!
@@ -96,6 +93,9 @@ printOn: aStream
 		nextPutAll:' error'.
 	self errorCount ~= 1
 		ifTrue: [aStream nextPut: $s].!
+
+resultFor: aTestCase
+	^results at: aTestCase!
 
 results
 	^results!
@@ -130,32 +130,33 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
-!TestResult categoriesFor: #addError:signal:!private!Running! !
-!TestResult categoriesFor: #addFailure:signal:!private!Running! !
-!TestResult categoriesFor: #addPass:duration:!private!Running! !
-!TestResult categoriesFor: #correctCount!Accessing!public! !
-!TestResult categoriesFor: #defects!Accessing!public! !
+!TestResult categoriesFor: #addError:signal:!adding!private! !
+!TestResult categoriesFor: #addFailure:signal:!adding!private! !
+!TestResult categoriesFor: #addPass:duration:!adding!private! !
+!TestResult categoriesFor: #correctCount!accessing!public! !
+!TestResult categoriesFor: #defects!accessing!public! !
 !TestResult categoriesFor: #duration!accessing!public! !
 !TestResult categoriesFor: #duration:!accessing!public! !
-!TestResult categoriesFor: #errorCount!Accessing!public! !
-!TestResult categoriesFor: #errors!Accessing!public! !
-!TestResult categoriesFor: #failureCount!Accessing!public! !
-!TestResult categoriesFor: #failures!Accessing!public! !
-!TestResult categoriesFor: #hasErrors!public!Testing! !
-!TestResult categoriesFor: #hasFailures!public!Testing! !
-!TestResult categoriesFor: #hasPassed!public!Testing! !
-!TestResult categoriesFor: #initialize!Init / Release!public! !
-!TestResult categoriesFor: #isError:!public!Testing! !
-!TestResult categoriesFor: #isFailure:!public!Testing! !
-!TestResult categoriesFor: #isPassed:!public!Testing! !
-!TestResult categoriesFor: #passed!Accessing!public! !
-!TestResult categoriesFor: #passedCount!Accessing!public! !
-!TestResult categoriesFor: #printOn:!Printing!public! !
+!TestResult categoriesFor: #errorCount!accessing!public! !
+!TestResult categoriesFor: #errors!accessing!public! !
+!TestResult categoriesFor: #failureCount!accessing!public! !
+!TestResult categoriesFor: #failures!accessing!public! !
+!TestResult categoriesFor: #hasErrors!public!testing! !
+!TestResult categoriesFor: #hasFailures!public!testing! !
+!TestResult categoriesFor: #hasPassed!public!testing! !
+!TestResult categoriesFor: #initialize!initializing!public! !
+!TestResult categoriesFor: #isError:!public!testing! !
+!TestResult categoriesFor: #isFailure:!public!testing! !
+!TestResult categoriesFor: #isPassed:!public!testing! !
+!TestResult categoriesFor: #passed!accessing!public! !
+!TestResult categoriesFor: #passedCount!accessing!public! !
+!TestResult categoriesFor: #printOn:!printing!public! !
+!TestResult categoriesFor: #resultFor:!accessing!public! !
 !TestResult categoriesFor: #results!accessing!public! !
-!TestResult categoriesFor: #runCase:!public!Running! !
-!TestResult categoriesFor: #runCount!Accessing!public! !
-!TestResult categoriesFor: #skippedCount!Accessing!public! !
-!TestResult categoriesFor: #tests!Accessing!public! !
+!TestResult categoriesFor: #runCase:!public!running! !
+!TestResult categoriesFor: #runCount!accessing!public! !
+!TestResult categoriesFor: #skippedCount!accessing!public! !
+!TestResult categoriesFor: #tests!accessing!public! !
 
 !TestResult class methodsFor!
 

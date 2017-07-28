@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #CommandLineTestRunner
-	instanceVariableNames: 'results lastCase caseStart loggers verbose'
+	instanceVariableNames: 'results lastCase loggers verbose'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -13,7 +13,7 @@ CommandLineTestRunner comment: ''!
 addLogger: aTestRunLogger
 	loggers addLast: aTestRunLogger!
 
-finishRun: aTestSuite in: anInteger knownSlowTests: aCollection
+finishRun: aTestSuite knownSlowTests: aCollection
 	aTestSuite removeDependentFromHierachy: self.
 	aTestSuite resources do: [:each | each reset].
 	loggers do: [:each | each finishedRun: results knownSlowTests: aCollection]!
@@ -22,15 +22,10 @@ initialize
 	verbose := false.
 	loggers := OrderedCollection new!
 
-logFinishedCase: aTestCase runtime: microsecondsInteger
+logFinishedCase: aTestCase
 	| result |
-	result := self resultFor: aTestCase.
-	loggers do: 
-			[:each |
-			each
-				finishedCase: aTestCase
-				result: result
-				in: microsecondsInteger]!
+	result := results resultFor: aTestCase.
+	loggers do: [:each | each finishedCase: result]!
 
 logStartingCase: aTestCase
 	loggers do: [:each | each startingCase: aTestCase]!
@@ -45,17 +40,12 @@ result
 	^results!
 
 resultFor: aTestCase
-	(results isPassed: aTestCase) ifTrue: [^#passed].
-	(results isFailure: aTestCase) ifTrue: [^#failed].
-	(results isError: aTestCase) ifTrue: [^#error].
-	^#indeterminate!
+	^results resultFor: aTestCase!
 
 runSuite: aTestSuite
 	self runSuite: aTestSuite knownSlowTests: #()!
 
 runSuite: aTestSuite knownSlowTests: aCollection
-	| runStart |
-	runStart := Time microsecondClockValue.
 	self startRun: aTestSuite.
 	
 	[lastCase := nil.
@@ -64,14 +54,7 @@ runSuite: aTestSuite knownSlowTests: aCollection
 		update: nil
 		with: nil
 		from: aTestSuite]
-			ensure: 
-				[| runStop |
-				runStop := Time microsecondClockValue.
-				results duration: runStop - runStart.
-				self
-					finishRun: aTestSuite
-					in: 0
-					knownSlowTests: aCollection].
+			ensure: [self finishRun: aTestSuite knownSlowTests: aCollection].
 	^results!
 
 startRun: aTestSuite
@@ -82,34 +65,26 @@ startRun: aTestSuite
 	aTestSuite resources do: [:res | res isAvailable ifFalse: [res signalInitializationError]]!
 
 update: anObject with: argument from: originator
-	| stop |
-	stop := Time microsecondClockValue.
 	originator class == TestSuite
 		ifFalse: 
 			[^super
 				update: anObject
 				with: argument
 				from: originator].
-	lastCase isNil
-		ifFalse: 
-			[| time aTestCase |
-			time := stop - caseStart.
-			aTestCase := lastCase.
-			self logFinishedCase: aTestCase runtime: time].
+	lastCase isNil ifFalse: [self logFinishedCase: lastCase].
 	anObject isNil ifFalse: [self logStartingCase: anObject].
-	lastCase := anObject.
-	caseStart := Time microsecondClockValue!
+	lastCase := anObject!
 
-verbose: anObject
-	verbose := anObject! !
+verbose: aBoolean
+	verbose := aBoolean! !
 !CommandLineTestRunner categoriesFor: #addLogger:!initializing!private! !
-!CommandLineTestRunner categoriesFor: #finishRun:in:knownSlowTests:!operations!private! !
+!CommandLineTestRunner categoriesFor: #finishRun:knownSlowTests:!operations!private! !
 !CommandLineTestRunner categoriesFor: #initialize!initializing!private! !
-!CommandLineTestRunner categoriesFor: #logFinishedCase:runtime:!private!updating! !
+!CommandLineTestRunner categoriesFor: #logFinishedCase:!private!updating! !
 !CommandLineTestRunner categoriesFor: #logStartingCase:!logging!private! !
 !CommandLineTestRunner categoriesFor: #logStartingRun:!logging!private! !
 !CommandLineTestRunner categoriesFor: #newStdOutLogger!logging!private! !
-!CommandLineTestRunner categoriesFor: #result!Accessing!public! !
+!CommandLineTestRunner categoriesFor: #result!accessing!public! !
 !CommandLineTestRunner categoriesFor: #resultFor:!helpers!private! !
 !CommandLineTestRunner categoriesFor: #runSuite:!operations!public! !
 !CommandLineTestRunner categoriesFor: #runSuite:knownSlowTests:!operations!public! !

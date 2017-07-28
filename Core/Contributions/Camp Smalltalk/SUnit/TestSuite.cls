@@ -54,10 +54,13 @@ run
 	^result!
 
 run: aResult
-	self tests do: 
+	| start |
+	start := Time microsecondClockValue.
+	[self tests do: 
 			[:each |
 			self changed: each.
-			each run: aResult]!
+			each run: aResult]]
+		ensure: [aResult duration: Time microsecondClockValue - start]!
 
 signalResourceErrorFor: res
 	^res signalInitializationError!

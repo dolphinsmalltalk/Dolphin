@@ -1,16 +1,18 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestCaseResult
-	instanceVariableNames: 'case status duration signal stacktrace'
+	instanceVariableNames: 'case outcome duration signal stacktrace'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TestCaseResult guid: (GUID fromString: '{a233feef-eabb-4fa9-9cf3-09531d206233}')!
-TestCaseResult comment: ''!
-!TestCaseResult categoriesForClass!Kernel-Objects! !
+TestCaseResult comment: 'Represents the results of executing an individual <TestCase>'!
+!TestCaseResult categoriesForClass!SUnit! !
 !TestCaseResult methodsFor!
 
 case
+	"Answer the <TestCase> instance for which this object records results."
+
 	^case!
 
 duration
@@ -19,21 +21,26 @@ duration
 
 	^duration!
 
+outcome
+	"Answer the outcome of the testcase - one of #passed, #failed, #error, #skipped."
+
+	^outcome!
+
 setCase: aTestCase duration: anInteger
 	case := aTestCase.
-	status := #passed.
+	outcome := #passed.
 	duration := anInteger!
 
 setCase: aTestCase error: anException
 	case := aTestCase.
-	status := #error.
+	outcome := #error.
 	signal := anException.
 	stacktrace := anException stackTrace: 20.
 	duration := 0!
 
 setCase: aTestCase failure: aTestFailure
 	case := aTestCase.
-	status := #failed.
+	outcome := #failed.
 	signal := aTestFailure.
 	stacktrace := aTestFailure stackTrace: 20.
 	duration := 0!
@@ -47,18 +54,15 @@ signal
 stacktrace
 	"Answer the stacktrace capture when the test failed/errored, or nil if the test passed."
 
-	^stacktrace!
-
-status
-	^status! !
+	^stacktrace! !
 !TestCaseResult categoriesFor: #case!accessing!public! !
 !TestCaseResult categoriesFor: #duration!accessing!public! !
-!TestCaseResult categoriesFor: #setCase:duration:!accessing!initializing!private! !
-!TestCaseResult categoriesFor: #setCase:error:!accessing!initializing!private! !
-!TestCaseResult categoriesFor: #setCase:failure:!accessing!initializing!private! !
+!TestCaseResult categoriesFor: #outcome!accessing!public! !
+!TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
+!TestCaseResult categoriesFor: #setCase:error:!initializing!private! !
+!TestCaseResult categoriesFor: #setCase:failure:!initializing!private! !
 !TestCaseResult categoriesFor: #signal!accessing!public! !
 !TestCaseResult categoriesFor: #stacktrace!accessing!public! !
-!TestCaseResult categoriesFor: #status!accessing!public! !
 
 !TestCaseResult class methodsFor!
 
@@ -72,7 +76,7 @@ case: aTestCase error: anException
 case: aTestCase failure: anException
 	^self new
 		setCase: aTestCase failure: anException! !
-!TestCaseResult class categoriesFor: #case:duration:!public! !
-!TestCaseResult class categoriesFor: #case:error:!public! !
-!TestCaseResult class categoriesFor: #case:failure:!public! !
+!TestCaseResult class categoriesFor: #case:duration:!instance creation!public! !
+!TestCaseResult class categoriesFor: #case:error:!instance creation!public! !
+!TestCaseResult class categoriesFor: #case:failure:!instance creation!public! !
 
