@@ -89,18 +89,30 @@ commandLineParser
 	-x - immediately exit
 	"
 
+	| startupGUID |
+	startupGUID := self sessionId.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
 	^(super commandLineParser)
 		addOption: $u;
 		addOptionAllowingArgument: $d
 			whenPresentDo: 
 				[:rebasePath |
-				Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
-				self saveImage];
+				self inputState queueDeferredAction: 
+						[startupGUID == self sessionId
+							ifTrue: 
+								[Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
+								self saveImage]]];
 		addOptionRequiringArgument: $f
-			whenPresentDo: [:fileInFile | SourceManager default fileIn: fileInFile];
+			whenPresentDo: 
+				[:fileInFile |
+				self inputState
+					queueDeferredAction: [startupGUID == self sessionId ifTrue: [SourceManager default fileIn: fileInFile]]];
 		addOptionAllowingArgument: $i
-			whenPresentDo: [:newImageFile | self saveImage: (newImageFile ifNil: ['Dolphin'])];
-		addOption: $x whenPresentDo: [self quit];
+			whenPresentDo: 
+				[:newImageFile |
+				self inputState
+					queueDeferredAction: [startupGUID == self sessionId ifTrue: [self saveImage: (newImageFile ifNil: ['Dolphin'])]]];
+		addOption: $x
+			whenPresentDo: [self inputState queueDeferredAction: [startupGUID = self sessionId ifTrue: [self quit]]];
 		yourself!
 
 dolphinNewsgroupUrl

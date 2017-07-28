@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -632,6 +632,7 @@ onStartup: args
 
 	state := 0.
 	eventLogHandle := stdioStreams := consoleHandler := nil.
+	sessionId := GUID newUnique.
 
 	"Save away the Array of startup arguments, passed in by the VM, for later use"
 	startupArgs := args.
@@ -923,6 +924,11 @@ serverShutdown
 	(self isHeadless and: [self servers isEmpty])
 		ifTrue: [self exit]!
 
+sessionId
+	"A unique GUID reset at startup; used initially in DevelopmentSessionManager>>commandLineParser to avoid executing deferred actions on a restart"
+
+	^sessionId!
+
 setenv: nameString value: valueString
 	"Set the value of the specified environment variable."
 
@@ -1190,6 +1196,7 @@ windowsDirectory
 !SessionManager categoriesFor: #sentinelName!constants!public! !
 !SessionManager categoriesFor: #servers!accessing!private! !
 !SessionManager categoriesFor: #serverShutdown!operations-shutdown!private! !
+!SessionManager categoriesFor: #sessionId!accessing!public! !
 !SessionManager categoriesFor: #setenv:value:!accessing!public! !
 !SessionManager categoriesFor: #shutdown!operations-shutdown!public! !
 !SessionManager categoriesFor: #snapshot:!operations-saving!private! !
