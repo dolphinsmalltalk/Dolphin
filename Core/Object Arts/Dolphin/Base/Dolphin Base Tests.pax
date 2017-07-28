@@ -812,7 +812,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 							classErrors := classErrors + 1.
 							errorNode := caseNode addElement: 'error'.
 							(errorNode attributes)
-								at: 'type' put: each signal class name;
+"								at: 'type' put: each signal class name;"
 								at: 'message' put: each signal description;
 								free.
 							errorNode text: each stacktrace.
