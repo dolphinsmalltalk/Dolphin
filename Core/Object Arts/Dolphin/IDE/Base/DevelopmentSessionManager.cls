@@ -89,38 +89,30 @@ commandLineParser
 	-x - immediately exit
 	"
 
-	| minorVersion |
-	minorVersion := self imageVersionMinor.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
+	| startupGUID |
+	startupGUID := guid.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
 	^(super commandLineParser)
 		addOption: $u;
 		addOptionAllowingArgument: $d
 			whenPresentDo: 
 				[:rebasePath |
 				self inputState queueDeferredAction: 
-						[minorVersion = self imageVersionMinor
+						[startupGUID == guid
 							ifTrue: 
 								[Package manager rebaseBasePackagesTo: (rebasePath ifNil: ['.']).
-								self saveImage.
-								minorVersion := self imageVersionMinor]]];
+								self saveImage]]];
 		addOptionRequiringArgument: $f
 			whenPresentDo: 
 				[:fileInFile |
-				self inputState queueDeferredAction: 
-						[minorVersion = self imageVersionMinor
-							ifTrue: 
-								[SourceManager default fileIn: fileInFile.
-								minorVersion := self imageVersionMinor]]];
+				self inputState
+					queueDeferredAction: [startupGUID == guid ifTrue: [SourceManager default fileIn: fileInFile]]];
 		addOptionAllowingArgument: $i
 			whenPresentDo: 
 				[:newImageFile |
-				self inputState queueDeferredAction: 
-						[minorVersion = self imageVersionMinor
-							ifTrue: 
-								[self saveImage: (newImageFile ifNil: ['Dolphin']).
-								minorVersion := self imageVersionMinor]]];
+				self inputState
+					queueDeferredAction: [startupGUID == guid ifTrue: [self saveImage: (newImageFile ifNil: ['Dolphin'])]]];
 		addOption: $x
-			whenPresentDo: 
-				[self inputState queueDeferredAction: [minorVersion = self imageVersionMinor ifTrue: [self quit]]];
+			whenPresentDo: [self inputState queueDeferredAction: [startupGUID = guid ifTrue: [self quit]]];
 		yourself!
 
 dolphinNewsgroupUrl
