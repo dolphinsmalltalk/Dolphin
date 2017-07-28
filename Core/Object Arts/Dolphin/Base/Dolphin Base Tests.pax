@@ -121,6 +121,7 @@ package methodNames
 	add: #SmalltalkSystem -> #regressionTestSuite;
 	add: #SmalltalkSystem -> #runRegressionTests;
 	add: #SmalltalkSystem -> #runRegressionTests:logTo:verbose:;
+	add: #SmalltalkSystem -> #setTestAttributes:id:name:duration:tests:failures:errors:skipped:;
 	add: #SmalltalkSystem -> #writeJunitTestLog:result:;
 	yourself.
 
@@ -752,21 +753,40 @@ runRegressionTests: aTestSuite logTo: logStream verbose: aBoolean
 	self writeJunitTestLog: aTestSuite result: result.
 	^result!
 
+setTestAttributes: suitesNode id: idInteger name: suiteName duration: durationInteger tests: testsInteger failures: failuresInteger errors: errorsInteger skipped: skippedInteger
+	| stream attribs |
+	attribs := suitesNode attributes.
+	idInteger ifNotNil: [attribs at: 'id' put: idInteger].
+	stream := String writeStream.
+	durationInteger / 1.0e6 printOn: stream decimalPlaces: 6.
+	attribs
+		at: 'name' put: suiteName;
+		at: 'tests' put: testsInteger displayString;
+		at: 'errors' put: errorsInteger displayString;
+		at: 'failures' put: failuresInteger displayString;
+		at: 'skipped' put: skippedInteger displayString;
+		at: 'time' put: stream contents;
+		free!
+
 writeJunitTestLog: aTestSuite result: aTestResult
-	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName time |
+	| doc suitesNode currentId currentClass suiteNode classTests classErrors classFailures classSkipped classElapsed caseAttribs suiteName testsInteger errorsInteger failuresInteger skippedInteger durationInteger |
 	suiteName := aTestSuite name ?? 'RegressionTests'.
 	doc := IXMLDOMDocument3 new.
 	suitesNode := doc addElement: 'testsuites'.
-	time := String writeStream.
-	aTestResult duration / 1.0e6 printOn: time decimalPlaces: 6.
-	(suitesNode attributes)
-		at: 'name' put: suiteName;
-		at: 'tests' put: aTestResult runCount displayString;
-		at: 'errors' put: aTestResult errorCount displayString;
-		at: 'failures' put: aTestResult failureCount displayString;
-		at: 'skipped' put: aTestResult skippedCount displayString;
-		at: 'time' put: time contents;
-		free.
+	durationInteger := aTestResult duration.
+	testsInteger := aTestResult runCount.
+	errorsInteger := aTestResult errorCount.
+	failuresInteger := aTestResult failureCount.
+	skippedInteger := aTestResult skippedCount.
+	self
+		setTestAttributes: suitesNode
+		id: nil
+		name: suiteName
+		duration: durationInteger
+		tests: testsInteger
+		failures: failuresInteger
+		errors: errorsInteger
+		skipped: skippedInteger.
 	currentId := classTests := classErrors := classFailures := classSkipped := classElapsed := 0.
 	currentClass := nil.
 	suiteNode := nil.
@@ -777,17 +797,15 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				ifFalse: 
 					[suiteNode
 						ifNotNil: 
-							[time reset.
-							classElapsed / 1.0e6 printOn: time decimalPlaces: 6.
-							(suiteNode attributes)
-								at: 'name' put: currentClass name;
-								at: 'id' put: currentId displayString;
-								at: 'tests' put: classTests displayString;
-								at: 'errors' put: classErrors displayString;
-								at: 'failures' put: classFailures displayString;
-								at: 'skipped' put: classSkipped displayString;
-								at: 'time' put: time contents;
-								free.
+							[self
+								setTestAttributes: suiteNode
+								id: currentId
+								name: currentClass name
+								duration: classElapsed
+								tests: classTests
+								failures: classFailures
+								errors: classErrors
+								skipped: classSkipped.
 							suiteNode free].
 					currentClass := each case class.
 					classTests := classErrors := classFailures := classSkipped := classElapsed := 0.
@@ -802,7 +820,8 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				at: 'classname' put: currentClass name.
 			each status == #passed
 				ifTrue: 
-					[time reset.
+					[| time |
+					time := String writeStream.
 					each duration / 1.0e6 printOn: time decimalPlaces: 6.
 					caseAttribs at: 'time' put: time contents]
 				ifFalse: 
@@ -812,9 +831,9 @@ writeJunitTestLog: aTestSuite result: aTestResult
 							classErrors := classErrors + 1.
 							errorNode := caseNode addElement: 'error'.
 							(errorNode attributes)
-"								at: 'type' put: each signal class name;"
 								at: 'message' put: each signal description;
 								free.
+							"								at: 'type' put: each signal class name;"
 							errorNode text: each stacktrace.
 							errorNode free]
 						ifFalse: 
@@ -830,6 +849,17 @@ writeJunitTestLog: aTestSuite result: aTestResult
 									failureNode free]]].
 			caseAttribs free.
 			caseNode free].
+	"Add the summary information for the final class"
+	self
+		setTestAttributes: suiteNode
+		id: currentId
+		name: currentClass name
+		duration: classElapsed
+		tests: classTests
+		failures: classFailures
+		errors: classErrors
+		skipped: classSkipped.
+	suiteNode free.
 	suitesNode free.
 	doc save: (File
 				composePath: SessionManager current imageBase
@@ -840,6 +870,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
+!SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!accessing!private! !
 !SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!accessing!private! !
 
 "End of package definition"!
