@@ -16,12 +16,7 @@ addLogger: aTestRunLogger
 finishRun: aTestSuite in: anInteger knownSlowTests: aCollection
 	aTestSuite removeDependentFromHierachy: self.
 	aTestSuite resources do: [:each | each reset].
-	loggers do: 
-			[:each |
-			each
-				finishedRun: results
-				in: anInteger
-				knownSlowTests: aCollection]!
+	loggers do: [:each | each finishedRun: results knownSlowTests: aCollection]!
 
 initialize
 	verbose := false.
@@ -72,9 +67,10 @@ runSuite: aTestSuite knownSlowTests: aCollection
 			ensure: 
 				[| runStop |
 				runStop := Time microsecondClockValue.
+				results duration: runStop - runStart.
 				self
 					finishRun: aTestSuite
-					in: runStop - runStart
+					in: 0
 					knownSlowTests: aCollection].
 	^results!
 

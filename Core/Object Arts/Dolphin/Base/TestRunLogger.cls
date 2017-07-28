@@ -16,7 +16,7 @@ finishedCase: aTestCase result: aSymbol in: microsecondsInteger
 finishedCase: aTestCase runtime: anInteger
 	^self subclassResponsibility!
 
-finishedRun: aTestResult in: anInteger knownSlowTests: aCollection
+finishedRun: aTestResult knownSlowTests: aCollection
 	self subclassResponsibility!
 
 slowTestThreshold
@@ -31,7 +31,7 @@ startingRun: aTestSuite
 	^self subclassResponsibility! !
 !TestRunLogger categoriesFor: #finishedCase:result:in:!private! !
 !TestRunLogger categoriesFor: #finishedCase:runtime:!public! !
-!TestRunLogger categoriesFor: #finishedRun:in:knownSlowTests:!helpers!public! !
+!TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!public! !
 !TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
 !TestRunLogger categoriesFor: #startingCase:!public! !
 !TestRunLogger categoriesFor: #startingRun:!public! !
