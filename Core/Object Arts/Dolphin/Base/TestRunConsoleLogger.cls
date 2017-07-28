@@ -10,12 +10,11 @@ TestRunConsoleLogger comment: ''!
 !TestRunConsoleLogger categoriesForClass!Kernel-Objects! !
 !TestRunConsoleLogger methodsFor!
 
-finishedCase: aTestCase result: aSymbol in: microsecondsInteger
-	timings at: aTestCase put: microsecondsInteger.
+finishedCase: aTestCaseResult
 	stream
-		nextPutAll: aSymbol asUppercase;
+		nextPutAll: aTestCaseResult outcome asUppercase;
 		nextPutAll: ' in '.
-	self printRuntime: microsecondsInteger.
+	self printRuntime: aTestCaseResult duration.
 	stream cr!
 
 finishedRun: aTestResult knownSlowTests: aCollection
@@ -29,7 +28,11 @@ finishedRun: aTestResult knownSlowTests: aCollection
 	self printRuntime: aTestResult duration.
 	stream cr.
 	passed
-		ifTrue: [self summarizeTimings: self slowTestThreshold * 1000 baseline: aCollection]
+		ifTrue: 
+			[self
+				summarizeTimings: aTestResult
+				baseline: aCollection
+				threshold: self slowTestThreshold * 1000]
 		ifFalse: [self summarizeFailures: aTestResult].
 	stream flush!
 
@@ -51,9 +54,6 @@ startingCase: aTestCase
 		print: aTestCase;
 		nextPutAll: ' ... ';
 		flush!
-
-startingRun: aTestSuite
-	timings := Dictionary new!
 
 stream: anObject
 	stream := anObject!
@@ -85,11 +85,11 @@ summarizeFailures: aTestResult
 						print: each;
 						cr]]!
 
-summarizeTimings: anInteger baseline: aCollection
+summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	| laggards newLaggards |
-	laggards := (timings associations select: [:each | each value >= anInteger])
-				asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a value > b value]).
-	newLaggards := laggards reject: [:each | aCollection includes: each key].
+	laggards := (aTestResult results select: [:each | each duration >= anInteger])
+				asSortedCollectionUsing: (MergesortAlgorithm sortBlock: [:a :b | a duration > b duration]).
+	newLaggards := laggards reject: [:each | aCollection includes: each case].
 	newLaggards size > 0 ifFalse: [^self].
 	stream
 		print: newLaggards size;
@@ -103,19 +103,18 @@ summarizeTimings: anInteger baseline: aCollection
 	newLaggards do: 
 			[:each |
 			stream tab.
-			self printRuntime: each value.
+			self printRuntime: each duration.
 			stream
 				tab;
-				print: each key;
+				print: each case;
 				cr]! !
-!TestRunConsoleLogger categoriesFor: #finishedCase:result:in:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
+!TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
+!TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #printRuntime:!helpers!private! !
 !TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #startingRun:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
 !TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
-!TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:!helpers!private! !
+!TestRunConsoleLogger categoriesFor: #summarizeTimings:baseline:threshold:!helpers!private! !
 
 !TestRunConsoleLogger class methodsFor!
 

@@ -10,10 +10,7 @@ TestRunLogger comment: ''!
 !TestRunLogger categoriesForClass!Kernel-Objects! !
 !TestRunLogger methodsFor!
 
-finishedCase: aTestCase result: aSymbol in: microsecondsInteger
-	^self subclassResponsibility!
-
-finishedCase: aTestCase runtime: anInteger
+finishedCase: aSymbol
 	^self subclassResponsibility!
 
 finishedRun: aTestResult knownSlowTests: aCollection
@@ -28,11 +25,10 @@ startingCase: aTestCase
 	"By default, do nothing"!
 
 startingRun: aTestSuite
-	^self subclassResponsibility! !
-!TestRunLogger categoriesFor: #finishedCase:result:in:!private! !
-!TestRunLogger categoriesFor: #finishedCase:runtime:!public! !
-!TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!public! !
+! !
+!TestRunLogger categoriesFor: #finishedCase:!logging!public! !
+!TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
 !TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
-!TestRunLogger categoriesFor: #startingCase:!public! !
-!TestRunLogger categoriesFor: #startingRun:!public! !
+!TestRunLogger categoriesFor: #startingCase:!logging!public! !
+!TestRunLogger categoriesFor: #startingRun:!logging!public! !
 

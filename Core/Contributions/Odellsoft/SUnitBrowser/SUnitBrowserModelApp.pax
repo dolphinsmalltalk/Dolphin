@@ -226,7 +226,7 @@ step
 !TestCase categoriesFor: #isTestSuite!public!sunit browser model! !
 !TestCase categoriesFor: #name!public!sunit browser model! !
 !TestCase categoriesFor: #numberOfTests!public!sunit browser model! !
-!TestCase categoriesFor: #signature!Accessing!public! !
+!TestCase categoriesFor: #signature!accessing!public! !
 !TestCase categoriesFor: #step!public!sunit browser model! !
 
 !TestResource methodsFor!

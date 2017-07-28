@@ -234,21 +234,21 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 		against: anObject! !
 !TestCase categoriesFor: #<=!comparing!public! !
 !TestCase categoriesFor: #=!comparing!public! !
-!TestCase categoriesFor: #assert:isKindOf:!converting!public! !
-!TestCase categoriesFor: #assert:sameAs:!converting!public! !
-!TestCase categoriesFor: #debugWithResult!public!Running! !
-!TestCase categoriesFor: #debugWithResult:!private!Running! !
-!TestCase categoriesFor: #deny:sameAs:!converting!public! !
+!TestCase categoriesFor: #assert:isKindOf:!asserting!public! !
+!TestCase categoriesFor: #assert:sameAs:!asserting!public! !
+!TestCase categoriesFor: #debugWithResult!public!running! !
+!TestCase categoriesFor: #debugWithResult:!private!running! !
+!TestCase categoriesFor: #deny:sameAs:!public! !
 !TestCase categoriesFor: #hash!comparing!public! !
-!TestCase categoriesFor: #should:raise:matching:!Accessing!public! !
-!TestCase categoriesFor: #should:trigger:against:!Accessing!public! !
-!TestCase categoriesFor: #should:trigger:butNot:against:!Accessing!public! !
-!TestCase categoriesFor: #should:trigger:matching:against:!helpers!public! !
-!TestCase categoriesFor: #should:triggerAllOf:against:!Accessing!public! !
-!TestCase categoriesFor: #should:triggerAllOf:matching:against:!helpers!public! !
-!TestCase categoriesFor: #should:triggerAllOf:matching:butNoneOf:against:!helpers!public! !
-!TestCase categoriesFor: #shouldnt:trigger:against:!helpers!public! !
-!TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!helpers!public! !
+!TestCase categoriesFor: #should:raise:matching:!asserting!public! !
+!TestCase categoriesFor: #should:trigger:against:!asserting!public! !
+!TestCase categoriesFor: #should:trigger:butNot:against:!asserting!public! !
+!TestCase categoriesFor: #should:trigger:matching:against:!asserting!public! !
+!TestCase categoriesFor: #should:triggerAllOf:against:!asserting!public! !
+!TestCase categoriesFor: #should:triggerAllOf:matching:against:!asserting!public! !
+!TestCase categoriesFor: #should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
+!TestCase categoriesFor: #shouldnt:trigger:against:!asserting!public! !
+!TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!asserting!public! !
 
 !TestCase class methodsFor!
 
@@ -288,7 +288,7 @@ debugCase: aTestCase
 				[:signal |
 				self addError: aTestCase signal: signal.
 				signal pass]! !
-!TestResult categoriesFor: #debugCase:!public!Running! !
+!TestResult categoriesFor: #debugCase:!public!running! !
 
 "End of package definition"!
 

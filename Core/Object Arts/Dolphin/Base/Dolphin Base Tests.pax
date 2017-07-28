@@ -165,7 +165,7 @@ Object subclass: #CollectionCombinator
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #CommandLineTestRunner
-	instanceVariableNames: 'results lastCase caseStart loggers verbose'
+	instanceVariableNames: 'results lastCase loggers verbose'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -818,14 +818,14 @@ writeJunitTestLog: aTestSuite result: aTestResult
 			caseAttribs
 				at: 'name' put: each case selector;
 				at: 'classname' put: currentClass name.
-			each status == #passed
+			each outcome == #passed
 				ifTrue: 
 					[| time |
 					time := String writeStream.
 					each duration / 1.0e6 printOn: time decimalPlaces: 6.
 					caseAttribs at: 'time' put: time contents]
 				ifFalse: 
-					[each status == #error
+					[each outcome == #error
 						ifTrue: 
 							[| errorNode |
 							classErrors := classErrors + 1.
@@ -837,7 +837,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 							errorNode text: each stacktrace.
 							errorNode free]
 						ifFalse: 
-							[each status == #failed
+							[each outcome == #failed
 								ifTrue: 
 									[| failureNode |
 									classFailures := classFailures + 1.
@@ -870,8 +870,8 @@ writeJunitTestLog: aTestSuite result: aTestResult
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
-!SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!accessing!private! !
-!SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!accessing!private! !
+!SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
+!SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!helpers!private! !
 
 "End of package definition"!
 
