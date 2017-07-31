@@ -1595,6 +1595,7 @@ stripAndSaveNotifying: notifier
 
 	| path |
 	
+	[
 	["Check stub file exists before we get too far"
 	| stubFile developmentMethods messageMap |
 	stubFile := self checkedStubFilePath.
@@ -1690,13 +1691,13 @@ stripAndSaveNotifying: notifier
 	self finishedWithStripping.
 	self shrinkHashedCollections.
 	self shrinkSymbolTable]
-			on: Error
-			do: [:ex | self onError: ex]
 			on: Notification
 			do: 
 				[:ex |
 				self onNotification: ex notifier: notifier.
-				ex resume].
+				ex resume]]
+			on: Error
+			do: [:ex | self onError: ex].
 	self deferredSaveExecutable: path.
 	self finishedWithAll: #(#stripAndSaveNotifying:)!
 
