@@ -837,51 +837,10 @@ attemptToUpgradeBlock: aBlockClosure data: data
 				do: [:i | (newMethod at: i) == recompiledBlock ifTrue: [newMethod at: i put: data]]].
 	^recompiledBlock!
 
-convertBlockToClosure: anArray 
-	"Private - Convert an old-format block to a new format closure. The bytecodes are rewritten
-	to be compatible with the BlockClosure VM, but the result will be very inefficient since it
-	is assumed that all temps need to be shared, and arguments have to be copied into shared
-	temps. Ideally all old blocks (such as those in View resources) should be recompiled at the
-	earliest opportunity, certainly before application deployment as this upgrade will not be
-	available at runtime."
-
-	| answer method rewriter newMethod originalIP methodContext receiver |
-	answer := self basicNew.
-	method := anArray at: 4.
-	rewriter := self rewriterClass new.
-	newMethod := rewriter rewriteMethod: method.
-	"We must swap old and new methods so that any other ref. to the old method is also updated"
-	method become: newMethod.
-	originalIP := anArray at: 3.
-	methodContext := anArray at: 1.
-	receiver := methodContext receiver.
-	answer
-		outer: (self convertMethodContext: methodContext);
-		method: method;
-		receiver: receiver.
-	answer info: 0.
-	answer
-		argumentCount: (anArray at: 2);
-		initialIP: (rewriter blockMap at: originalIP).
-	^answer!
-
-convertMethodContext: aMethodContext 
-	"Private - Convert an old-format MethodContext to a new format Context."
-
-	| context size |
-	size := aMethodContext size.
-	context := Context basicNew: size.
-	context outer: 0.
-	1 to: size do: [:i | context at: i put: (aMethodContext at: i)].
-	^context!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon!
-
-rewriterClass
-	^BytecodeRewriter!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier binary filed versions."
@@ -917,10 +876,7 @@ stbVersion
 	^3! !
 !BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
 !BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #convertBlockToClosure:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #convertMethodContext:!binary filing!development!private! !
 !BlockClosure class categoriesFor: #icon!constants!public! !
-!BlockClosure class categoriesFor: #rewriterClass!binary filing!development!private! !
 !BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
 

@@ -45,11 +45,6 @@ Object subclass: #ByteCodeDispatcher
 	classVariableNames: 'FirstShowSpecialSend InstructionLengths Instructions RunStarts'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
-Object subclass: #BytecodeRewriter
-	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
-	classVariableNames: 'DispatchMap'
-	poolDictionaries: 'OpcodePool'
-	classInstanceVariableNames: ''!
 Object subclass: #Category
 	instanceVariableNames: 'name'
 	classVariableNames: 'PermanentCategories'
