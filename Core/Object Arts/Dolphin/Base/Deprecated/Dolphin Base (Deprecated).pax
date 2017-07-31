@@ -15,6 +15,7 @@ package classNames
 	add: #ConformantArrayPointerField;
 	add: #ConformantStructureArrayField;
 	add: #ConformantStructureArrayPointerField;
+	add: #MEMORY_BASIC_INFORMATION;
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
 	add: #STBSymbolProxy;
@@ -98,6 +99,11 @@ ArrayPointerField subclass: #ConformantArrayPointerField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
