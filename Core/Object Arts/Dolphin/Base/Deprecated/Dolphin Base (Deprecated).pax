@@ -51,6 +51,7 @@ package methodNames
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
 	add: #KernelLibrary -> #getVersionEx:;
+	add: #KernelLibrary -> #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:;
 	add: #Object -> #asDword;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
@@ -370,8 +371,14 @@ getVersionEx: anOSVERSIONINFO
 
 	<stdcall: bool GetVersionExA OSVERSIONINFO*>
 	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
+	^self invalidCall!
+
+writePrivateProfileString: lpszSection lpszEntry: lpszEntry lpszString: lpszString lpszFileName: lpszFileName
+	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
+	#deprecated.	"As explained on msdn, 'This function is provided only for compatibility with 16-bit versions of Windows. Applications should store initialization information in the registry.'"
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:!**auto generated**!public! !
 
 !Object methodsFor!
 

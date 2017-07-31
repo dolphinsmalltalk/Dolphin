@@ -1624,19 +1624,6 @@ writeFile: aHandle lpBuffer: anAddress nNumberOfBytesToWrite: anIntegerBytesToWr
 	<stdcall: bool WriteFile handle lpvoid dword lpvoid lpvoid>
 	^self invalidCall!
 
-writePrivateProfileString: lpszSection lpszEntry: lpszEntry lpszString: lpszString lpszFileName: lpszFileName 
-	"Invoke the WritePrivateProfileString() function of the module wrapped by the receiver.
-	Helpstring: Writes given string value to given entry within given section of INI file
-
-		BOOL__stdcall WritePrivateProfileString(
-			LPSTR lpszSection,
-			LPSTR lpszEntry,
-			LPSTR lpszString,
-			LPSTR lpszFileName);"
-
-	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
-	^self invalidCall!
-
 zeroMemory: pvDest length: cBytes
 	<stdcall: void RtlZeroMemory void* dword>
 	^self invalidCall! !
@@ -1772,7 +1759,6 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #writeFile:lpBuffer:nNumberOfBytesToWrite:lpNumberOfBytesWritten:lpOverlapped:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #zeroMemory:length:!public!win32 functions-memory management! !
 
 !KernelLibrary class methodsFor!
