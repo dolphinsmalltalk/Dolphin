@@ -100,15 +100,6 @@ defWindowProc: hWnd msg: msg wParam: wParam lParam: lParam
 	<stdcall: uintptr DefWindowProcA handle dword uintptr uintptr>
 	^self invalidCall!
 
-destroyIcon: hIcon
-	"Destroy the specified icon.
-		BOOL DestroyIcon(
-  			HICON hIcon 	// handle to icon to destroy
-		);"
-
-	<stdcall: bool DestroyIcon handle>
-	^self invalidCall!
-
 destroyWindow: aWindowHandle
 	"Destroys the specified window. WM_DESTROY and WM_NCDESTROY messages are sent
 	to the window to deactivate it, and remove the keyboard focus. The window's menu
@@ -145,56 +136,15 @@ enableWindow: aWindowHandle bEnable: aBoolean
 
 !
 
-enumWindows: aCallbackThunk lParam: lParam
-	"Enumerate all top-level windows on the screen by passing the handle of each window, in turn, to 
-	the callback function thunk aCallbackThunk. EnumWindows continues until the last top-level window 
-	is enumerated or the callback function returns false.
-
-		BOOL EnumWindows(
-			WNDENUMPROC lpEnumFunc,	// pointer to callback function
-			LPARAM lParam 	// application-defined value
-		);"
-
-	<stdcall: bool EnumWindows lpvoid dword>
-	^self invalidCall!
-
 getActiveWindow
 	"Answer the handle of Dolphin's active window (nil if none active)."
 
 	<stdcall: handle GetActiveWindow>
 	^self invalidCall!
 
-getAncestor: hwnd gaFlags: gaFlags
-	"Invoke the GetAncestor() function of the module wrapped by the receiver.
-	Helpstring: Retrieves a handle to an ancestor of the specified window.
-
-		HWND __stdcall GetAncestor(
-			[in]HWND HWND,
-			[in]UINT gaFlags);"
-
-	<stdcall: handle GetAncestor handle dword>
-	^self invalidCall!
-
 getAsyncKeyState: virtualKeyCodeInteger
 	<stdcall: sword GetAsyncKeyState sdword>
 	^self invalidCall!
-
-getCursor
-	"Retrieve the handle of the current system cursor.
-		HCURSOR GetCursor(VOID)."
-
-	<stdcall: handle GetCursor>
-	^self invalidCall!
-
-getDC
-	"Answer a DC for drawing on the desktop.
-	N.B. This is one half of the <dcSource> protocol, and must be matched with 
-	a call to #releaseDC: to delete the DC.
-		dc := self getDC.
-		self releaseDC: dc.
-	"
-
-	^self getWindowDC: self getDesktopWindow!
 
 getDesktopWindow
 	"Answer the handle of the desktop (ultimate parent) window. Answer that handle. 
@@ -319,37 +269,6 @@ getSystemMetrics: index
 	<stdcall: sdword GetSystemMetrics sdword>
 	^self invalidCall!
 
-getWindowDC: aWindowHandle
-	"Answer the handle of a display device context (DC) which can be used to draw
-	in the entire non-client area of the specified window. GetWindowDC assigns 
-	default attributes to the window device context each time it retrieves the 
-	device context. Previous attributes are lost. 
-
-		HDC GetWindowDC(HWND hWnd);"
-
-	<stdcall: handle GetWindowDC handle>
-	^self invalidCall!
-
-getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset 
-	"Answer various signed 32-bit integer values retrieved from the window with handle, aWindowHandle.
-	If an unsigned value is required, use getWindowULong:nIndex:
-
-		LONG GetWindowLong(
-			HWND hWnd, // handle of window 
-			int nIndex // offset of value to retrieve 
-		);
-
-	Valid offsets are in the range 0 to the number of bytes of extra window memory, minus the
-	size of an int (4), or one of the following values: 
-
-		GWL_EXSTYLE Extended window styles (WS_EX_XXX) 
-		GWL_STYLE Window styles (WS_XXX) 
-
-	Answers 0 if the function fails."
-
-	<stdcall: sdword GetWindowLongA handle sdword>
-	^self invalidCall!
-
 inSendMessage
 	<stdcall: bool InSendMessage>
 	^self invalidCall!
@@ -394,22 +313,6 @@ isCharUpper: aCharacter
 	<stdcall: bool IsCharUpperA char>
 	^self invalidCall!
 
-isChild: hWndParent hWnd: hWnd
-	"Answer whether the window identified by the handle, hWnd, is 
-	a child of the window identified by the handle, hWndParent."
-
-	<stdcall: bool IsChild handle handle>
-	^self invalidCall!
-
-isIconic: aWindowHandle
-	"Answer whether the specified window is iconic (minimized). 
-		BOOL IsIconic(
-			HWND hWnd 	// handle of window
-		);"
-
-	<stdcall: bool IsIconic handle>
-	^self invalidCall!
-
 isWindow: hWnd
 	"Answer whether the window handle, hWnd, is currently valid"
 
@@ -427,15 +330,6 @@ isWindowVisible: hWnd
 	"Answer whether the window with handle, hWnd, is currently visible (i.e. not hidden)."
 
 	<stdcall: bool IsWindowVisible handle>
-	^self invalidCall!
-
-isZoomed: aWindowHandle
-	"Answer wether a window is zoomed (maximized). See also #isIconic:.
-		BOOL IsZoomed(
-			HWND hWnd 	// handle of window
-		);"
-
-	<stdcall: bool IsZoomed handle>
 	^self invalidCall!
 
 killTimer: aWindowHandle uIDEvent: anInteger
@@ -459,20 +353,6 @@ loadCursor: anInstanceHandle lpCursorName: anIntegerID
 		);"
 
 	<stdcall: handle LoadCursorA handle lpvoid>
-	^self invalidCall!
-
-loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad: flags
-	"Load an icon, cursor, or bitmap.
-		HANDLE LoadImage(
-			HINSTANCE hinst, 	// handle of the instance that contains the image
-			LPCTSTR lpszName,	// name or identifier of image
-			UINT uType,		// type of image
-			int cxDesired,		// desired width
-			int cyDesired,		// desired height
-			UINT fuLoad		// load flags
-		);"
-
-	<stdcall: handle LoadImageA handle lpvoid dword sdword sdword dword>
 	^self invalidCall!
 
 loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIntegerLength
@@ -587,41 +467,6 @@ messageBoxIndirect: aMSGBOXPARAMS
 	<stdcall: sdword MessageBoxIndirectA MSGBOXPARAMS*>
 	^self invalidCall!
 
-msgWaitForMultipleObjects: countInteger pHandles: handles fWaitAll: aBoolean 
-		dwMilliseconds: millisecsInteger dwWakeMask: maskInteger
-	"Waits until when one of the following occurs: 
-		·	either any one of, or all of (the number of handles being specified 
-			by the argument, countInteger, and whether to wait for a single object
-			or all of the objects being specified by the argument, waitBoolean), 
-			the objects whose handles are specified by the argument, handles 
-			(which may be a single handle, or an (TBD) ExternalHandleArray) are 
-			in the signaled state; or
-		·	A Win32 message of a type which matches the type mask specified by
-			the argument, maskInteger, becomes available in the message queue (
-			uses the same flags as #getQueueStatus:); or
-		·	the number of milliseconds specified by the argument, millisecsInteger,
-			elapses.
-
-	MsgWaitForMultipleObjects should only be called when there are no further messages
-	waiting in the input queue, because it only detects the arrival of new messages.
-
-	N.B. Under NT, the handles in the argument, handles, must have SYNCHRONIZE access.
-
-	If successful, answer the event that cause the function to return. See Win32 documentation
-	for specific return values. If the function fails, answers -1. KernelLibrary>>getLastError
-	can be used to get extended error information
-
-		DWORD MsgWaitForMultipleObjects(
-			DWORD  nCount,				// number of handles in handle array  
-			LPHANDLE  pHandles,			// address of object-handle array 
-			BOOL  fWaitAll,				// wait for all or wait for one 
-			DWORD  dwMilliseconds,		// time-out interval in milliseconds 
-			DWORD  dwWakeMask 			// type of input events to wait for 
-		);"
-
-	<stdcall: sdword MsgWaitForMultipleObjects dword lpvoid bool dword dword>
-	^self invalidCall!
-
 msgWaitForMultipleObjectsEx: countInteger pHandles: handles 
 		dwMilliseconds: millisecsInteger 
 		dwWakeMask: maskInteger
@@ -726,40 +571,6 @@ postThreadMessage: anIntegerId msg: msg wParam: wParam lParam: lParam
 	<stdcall: bool PostThreadMessageA handle dword uintptr uintptr>
 	^self invalidCall !
 
-registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: anIntegerVk
-	"Define a hot key for the current thread.
-		BOOL RegisterHotKey(
-		  	HWND  hWnd,		// window to receive hot-key notification
-			int  id,			// identifier of hot key
-			UINT  fsModifiers,	// key-modifier flags
-			UINT  vk 			// virtual-key code
-		);"
-
-	<stdcall: bool RegisterHotKey handle sdword dword dword>
-	^self invalidCall!
-
-releaseDC: hDC
-	"Release the specified device context. This is the second half of the 'DC source' protocol,
-	and is intended to release the desktop DCs created by the receiver's implementation of #getDC.
-	Answer whether the DC was indeed released."
-
-	^(self 
-		releaseDC: self getDesktopWindow
-		hDC: hDC asParameter) == 1!
-
-releaseDC: hWnd hDC: hDC
-	"Releases a device context (DC) (if a common or window device context -
-	class and private DCs are unaffected).
-
-		int ReleaseDC(
-			HWND hWnd,	// handle of window 
-			HDC hDC 		// handle of device context  
-		);"
-
-	<stdcall: sdword ReleaseDC handle handle>
-	^self invalidCall
-!
-
 sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 	"The SendMessage function sends the specified message to a window or windows.
 	The function calls the window procedure for the specified window and does not
@@ -782,20 +593,6 @@ sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 	   );"
 
 	<stdcall: intptr SendMessageA handle dword uintptr uintptr>
-	^self invalidCall !
-
-sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
-	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
-	to pointer."
-
-	<stdcall: intptr SendMessageA handle dword uintptr lpvoid>
-	^self invalidCall !
-
-sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
-	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
-	and wParam to pointers."
-
-	<stdcall: intptr SendMessageA handle dword lpvoid lpvoid>
 	^self invalidCall !
 
 setActiveWindow: aHandle
@@ -884,16 +681,6 @@ showWindow: aWindowHandle nCmdShow: flags
 	<stdcall: bool ShowWindow handle sdword>
 	^self invalidCall!
 
-stringLower: aString
-	"Convert aString to lower case IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		LPTSTR CharLower(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: void CharLowerA lpvoid>
-	^self invalidCall!
-
 stringLowerA: aString 
 	"Convert aString to lower case IN PLACE. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel.
@@ -912,16 +699,6 @@ stringLowerW: aUnicodeString
 	LPWSTR CharLower(LPWSTR lpsz); // single character or pointer to string "
 
 	<stdcall: void CharLowerW lpvoid>
-	^self invalidCall!
-
-stringUpper: aString
-	"Convert aString to uppercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		LPTSTR CharUpper(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: void CharUpperA lpvoid>
 	^self invalidCall!
 
 stringUpperA: aString 
@@ -944,18 +721,6 @@ stringUpperW: aUnicodeString
 	<stdcall: void CharUpperW lpvoid>
 	^self invalidCall!
 
-systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
-	"
-	BOOL SystemParametersInfo(
-		UINT uiAction,	// system parameter to query or set
-		UINT uiParam,	// depends on action to be taken
-		PVOID pvParam,	// depends on action to be taken
-		UINT fWinIni 	// user profile update flag
-	);"
-
-	<stdcall: bool SystemParametersInfoA dword dword lpvoid dword>
-	^self invalidCall!
-
 translateMessage: aMSG
 	"Translates virtual-key messages into character messages, posting them to the message queue to
 	be read by subsequent calls to #getMessage:etc or #peekMessage:etc.
@@ -965,10 +730,6 @@ translateMessage: aMSG
 		);"
 
 	<stdcall: bool TranslateMessage MSG* >
-	^self invalidCall!
-
-unregisterHotKey: aWindowHandle id: anIntegerId
-	<stdcall: bool UnregisterHotKey handle sdword>
 	^self invalidCall!
 
 updateWindow: hWnd
@@ -999,16 +760,11 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 !UserLibrary categoriesFor: #defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
-!UserLibrary categoriesFor: #destroyIcon:!public!win32 functions-icon! !
 !UserLibrary categoriesFor: #destroyWindow:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #dispatchMessage:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #enableWindow:bEnable:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getActiveWindow!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #getAsyncKeyState:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #getCursor!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #getDC!operations!public! !
 !UserLibrary categoriesFor: #getDesktopWindow!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getDlgItem:nIDDlgItem:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #getKeyboardLayout:!public!win32 functions-keyboard input! !
@@ -1021,40 +777,28 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #getSysColor:!public!win32 functions-system information! !
 !UserLibrary categoriesFor: #getSysColorBrush:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #getSystemMetrics:!public!win32 functions-system information! !
-!UserLibrary categoriesFor: #getWindowDC:!public!win32 functions-device context! !
-!UserLibrary categoriesFor: #getWindowLong:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #inSendMessage!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #isCharAlpha:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #isCharAlphaNumeric:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #isCharLower:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #isCharUpper:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #isChild:hWnd:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #isIconic:!public!win32 functions-icon! !
 !UserLibrary categoriesFor: #isWindow:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #isWindowEnabled:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #isWindowVisible:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #isZoomed:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #killTimer:uIDEvent:!public!win32 functions-timer! !
 !UserLibrary categoriesFor: #loadCursor:lpCursorName:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
 !UserLibrary categoriesFor: #loadString:uID:lpBuffer:nBufferMax:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #mapVirtualKey:uMapType:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #messageBeep:!public!win32 functions-error! !
 !UserLibrary categoriesFor: #messageBox:text:caption:style:icon:instance:!displaying!private! !
 !UserLibrary categoriesFor: #messageBoxIndirect:!public!win32 functions-dialog box! !
-!UserLibrary categoriesFor: #msgWaitForMultipleObjects:pHandles:fWaitAll:dwMilliseconds:dwWakeMask:!public!win32 functions-synchronization! !
 !UserLibrary categoriesFor: #msgWaitForMultipleObjectsEx:pHandles:dwMilliseconds:dwWakeMask:dwFlags:!public!win32 functions-synchronization! !
 !UserLibrary categoriesFor: #overlappedMsgBoxIndirect:!private!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #peekMessage:hWnd:uMsgFilterMin:uMsgFilterMax:wRemoveMsg:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #postMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #postQuitMessage:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #postThreadMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
-!UserLibrary categoriesFor: #releaseDC:!operations!public! !
-!UserLibrary categoriesFor: #releaseDC:hDC:!public!win32 functions-device context! !
 !UserLibrary categoriesFor: #sendMessage:msg:wParam:lParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #setActiveWindow:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #setCursor:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #setDlgItemText:nIDDlgItem:lpString:!public!win32 functions-dialog box! !
@@ -1063,19 +807,13 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #setWindowDWORD:nIndex:dwNewDWORD:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setWindowText:lpString:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #showWindow:nCmdShow:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #stringLower:!booting!public! !
 !UserLibrary categoriesFor: #stringLowerA:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #stringLowerW:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringUpper:!booting!public! !
 !UserLibrary categoriesFor: #stringUpperA:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #stringUpperW:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #translateMessage:!public!win32 functions-message and message queue! !
-!UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #updateWindow:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #vkKeyScan:!public!win32 functions-keyboard input! !
-
-UserLibrary methodProtocol: #dcSource attributes: #(#readOnly) selectors: #(#getDC #releaseDC:)!
 
 !UserLibrary class methodsFor!
 

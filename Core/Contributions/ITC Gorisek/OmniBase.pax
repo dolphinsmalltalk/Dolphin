@@ -1815,7 +1815,7 @@ odbDeserialize: deserializer
 secondClockValue
 	"Answer the current value of the system millisecond clock"
 
-	^WinMMLibrary default timeGetTime // 1000! !
+	^self millisecondClockValue // 1000! !
 !Time class categoriesFor: #odbDeserialize:!OmniBase!public! !
 !Time class categoriesFor: #secondClockValue!OmniBase!public! !
 

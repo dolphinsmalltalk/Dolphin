@@ -19,20 +19,10 @@ https://msdn.microsoft.com/en-us/library/windows/desktop/ms646272(v=vs.85).aspx'
 !LASTINPUTINFO categoriesForClass!Unclassified! !
 !LASTINPUTINFO methodsFor!
 
-cbSize
-	"Answer the <Integer> value of the receiver's 'cbSize' field."
-
-	^bytes dwordAtOffset: 0!
-
-cbSize: anInteger
-	"Set the receiver's 'cbSize' field to the value of the argument, anInteger"
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: 0 put: anInteger!
-
-dwSize: anInteger
-	"Store the size of the structure into itself."
-
-	^self cbSize: anInteger!
 
 dwTime
 	"Answer the <Integer> value of the receiver's 'dwTime' field."
@@ -43,9 +33,7 @@ dwTime: anInteger
 	"Set the receiver's 'dwTime' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: ##(self offsetOf: #dwTime) put: anInteger! !
-!LASTINPUTINFO categoriesFor: #cbSize!**compiled accessors**!public! !
-!LASTINPUTINFO categoriesFor: #cbSize:!**compiled accessors**!public! !
-!LASTINPUTINFO categoriesFor: #dwSize:!initializing!public! !
+!LASTINPUTINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
 !LASTINPUTINFO categoriesFor: #dwTime!**compiled accessors**!public! !
 !LASTINPUTINFO categoriesFor: #dwTime:!**compiled accessors**!public! !
 
@@ -53,15 +41,16 @@ dwTime: anInteger
 
 defineFields
 	"
-self compileDefinition.
-typedef struct tagLASTINPUTINFO {
-	UINT  cbSize;		//	The size of the structure, in bytes. This member must be set to sizeof(LASTINPUTINFO)
-	DWORD dwTime;	//	The tick count when the last input event was received
-} LASTINPUTINFO, *PLASTINPUTINFO;
-"
+		self compileDefinition.
+
+		typedef struct tagLASTINPUTINFO {
+			UINT  cbSize;		//	The size of the structure, in bytes. This member must be set to sizeof(LASTINPUTINFO)
+			DWORD dwTime;	//	The tick count when the last input event was received
+		} LASTINPUTINFO, *PLASTINPUTINFO;
+	"
 
 	self
-		defineField: #cbSize type: DWORDField new;
+		defineField: #dwSize type: DWORDField writeOnly;
 		defineField: #dwTime type: DWORDField new;
 		yourself.! !
 !LASTINPUTINFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
