@@ -33,7 +33,6 @@ package methodNames
 	add: #KernelLibrary -> #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:;
 	add: #KernelLibrary -> #flushViewOfFile:dwNumberOfBytesToFlush:;
 	add: #KernelLibrary -> #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:;
-	add: #KernelLibrary -> #mapViewOfFileEx:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:lpBaseAddress:;
 	add: #KernelLibrary -> #openFileMapping:bInheritHandle:lpName:;
 	add: #KernelLibrary -> #unmapViewOfFile:;
 	yourself.
@@ -114,21 +113,6 @@ mapViewOfFile: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetH
 	<stdcall: MemoryMappedFileView MapViewOfFile dword dword dword dword dword>
 	^self invalidCall!
 
-mapViewOfFileEx: hFileMappingObject dwDesiredAccess: dwDesiredAccess dwFileOffsetHigh: dwFileOffsetHigh dwFileOffsetLow: dwFileOffsetLow dwNumberOfBytesToMap: dwNumberOfBytesToMap lpBaseAddress: lpBaseAddress 
-	"Invoke the MapViewOfFileEx() function of the module wrapped by the receiver.
-	Helpstring: Opens view of specified file mapping at suggested address
-
-		LPVOID __stdcall MapViewOfFileEx(
-			DWORD hFileMappingObject,
-			DWORD dwDesiredAccess,
-			DWORD dwFileOffsetHigh,
-			DWORD dwFileOffsetLow,
-			DWORD dwNumberOfBytesToMap,
-			void* lpBaseAddress);"
-
-	<stdcall: MemoryMappedFileView MapViewOfFileEx dword dword dword dword dword void*>
-	^self invalidCall!
-
 openFileMapping: dwDesiredAccess bInheritHandle: bInheritHandle lpName: lpName 
 	"Invoke the OpenFileMapping() function of the module wrapped by the receiver.
 	Helpstring: Opens existing mapping specified by lpName
@@ -153,7 +137,6 @@ unmapViewOfFile: lpBaseAddress
 !KernelLibrary categoriesFor: #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #mapViewOfFileEx:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:lpBaseAddress:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #openFileMapping:bInheritHandle:lpName:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #unmapViewOfFile:!public!win32 functions-memory management! !
 
