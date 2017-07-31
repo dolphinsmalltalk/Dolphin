@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #VMConstants put: (PoolConstantsDictionary named: #VMConstants)!
 VMConstants at: 'DoubleSize' put: 16r8!

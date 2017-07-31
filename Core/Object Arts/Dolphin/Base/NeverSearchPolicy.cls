@@ -5,7 +5,7 @@ SingletonSearchPolicy subclass: #NeverSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NeverSearchPolicy guid: (GUID fromString: '{F9B07491-78B3-4EF8-A7AF-AF9C2A556B1A}')!
+NeverSearchPolicy guid: (GUID fromString: '{f9b07491-78b3-4ef8-a7af-af9c2a556b1a}')!
 NeverSearchPolicy comment: ''!
 !NeverSearchPolicy categoriesForClass!Collections-Support! !
 !NeverSearchPolicy methodsFor!

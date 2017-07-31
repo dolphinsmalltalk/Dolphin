@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Mutex
 	instanceVariableNames: 'owner semaphore'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Mutex guid: (GUID fromString: '{87B4C4A4-026E-11D3-9FD7-00A0CC3E4A32}')!
+Mutex guid: (GUID fromString: '{87b4c4a4-026e-11d3-9fd7-00a0cc3e4a32}')!
 Mutex comment: 'Mutex is the class of process synchronisation objects which provide mutually exclusive access to critical sections, potentially permitting a single process to enter such critical sections multiple times recursively (in some other Smalltalk systems this class is in fact called, RecursionLock).
 
 If any process is in a Mutex, then no other process is permitted to enter that Mutex, but that process may re-enter.

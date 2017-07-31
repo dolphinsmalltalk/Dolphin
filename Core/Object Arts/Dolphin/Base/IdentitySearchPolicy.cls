@@ -5,7 +5,7 @@ SingletonSearchPolicy subclass: #IdentitySearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdentitySearchPolicy guid: (GUID fromString: '{123A1503-7CB8-11D3-93CA-00A024CA708A}')!
+IdentitySearchPolicy guid: (GUID fromString: '{123a1503-7cb8-11d3-93ca-00a024ca708a}')!
 IdentitySearchPolicy comment: 'IdentitySearchPolicy is for configuring pluggable collections and models to use identity based search and comparisons, i.e. using #== and #identityHash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as an <IdentitySet>.'!
 !IdentitySearchPolicy categoriesForClass!Collections-Support! !
 !IdentitySearchPolicy methodsFor!

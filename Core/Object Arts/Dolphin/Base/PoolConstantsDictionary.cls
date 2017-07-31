@@ -5,7 +5,7 @@ LookupTable variableSubclass: #PoolConstantsDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PoolConstantsDictionary guid: (GUID fromString: '{87B4C52E-026E-11D3-9FD7-00A0CC3E4A32}')!
+PoolConstantsDictionary guid: (GUID fromString: '{87b4c52e-026e-11d3-9fd7-00a0cc3e4a32}')!
 PoolConstantsDictionary comment: ''!
 !PoolConstantsDictionary categoriesForClass!Collections-Unordered!System-Support! !
 !PoolConstantsDictionary methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FILETIME subclass: #LocalFILETIME
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LocalFILETIME guid: (GUID fromString: '{87B4C623-026E-11D3-9FD7-00A0CC3E4A32}')!
+LocalFILETIME guid: (GUID fromString: '{87b4c623-026e-11d3-9fd7-00a0cc3e4a32}')!
 LocalFILETIME comment: 'LocalFILETIME is an ExternalStructure class to represent the Win32 FILETIMEs that are in local time, as opposed to the usual UTC of normal FILETIMEs. See <FILETIME> for further details.'!
 !LocalFILETIME categoriesForClass!External-Data-Structured-Win32! !
 !LocalFILETIME methodsFor!

@@ -5,7 +5,7 @@ Object subclass: #STBClassConversion
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBClassConversion guid: (GUID fromString: '{87B4C4C0-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBClassConversion guid: (GUID fromString: '{87b4c4c0-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBClassConversion comment: ''!
 !STBClassConversion categoriesForClass!System-Binary storage! !
 !STBClassConversion methodsFor!

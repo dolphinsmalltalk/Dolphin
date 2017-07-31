@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Notification subclass: #MethodCompileFailed
-	instanceVariableNames: 'compilerErrorNotification '
+	instanceVariableNames: 'compilerErrorNotification'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodCompileFailed guid: (GUID fromString: '{87B4C56F-026E-11D3-9FD7-00A0CC3E4A32}')!
+MethodCompileFailed guid: (GUID fromString: '{87b4c56f-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodCompileFailed comment: 'A MethodCompileFailed notification is signalled when a method compilation fails. Handlers can trap this if they wish to replace the original failed compilation with a stub method. This is useful so that the failed method source can be seen in the browsers or to retain category information. To install a stub method the handler should call #resumeWithStubMethod.'!
 !MethodCompileFailed categoriesForClass!System-Exception Handling! !
 !MethodCompileFailed methodsFor!

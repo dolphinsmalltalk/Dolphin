@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DeafObject
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DeafObject guid: (GUID fromString: '{87B4C47A-026E-11D3-9FD7-00A0CC3E4A32}')!
+DeafObject guid: (GUID fromString: '{87b4c47a-026e-11d3-9fd7-00a0cc3e4a32}')!
 DeafObject comment: 'DeafObject is a singleton class whose sole instance is deaf to all requests - i.e. it appears to understand all messages, but takes no action except to answer itself. This ensures that the results of all message sends to the DeafObject are also deaf. DeafObject can be useful for avoiding a proliferation of #isNil tests.
 
 N.B. DeafObject cannot be used to substitute for any object which has special significance to either the Compiler or the VM, a good example being <Boolean>s. The following expression will raise a ''Must be boolean'' error because it is not a true message send:

@@ -5,7 +5,7 @@ ExternalInteger subclass: #WORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WORD guid: (GUID fromString: '{87B4C5AD-026E-11D3-9FD7-00A0CC3E4A32}')!
+WORD guid: (GUID fromString: '{87b4c5ad-026e-11d3-9fd7-00a0cc3e4a32}')!
 WORD comment: '<WORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 WORD is used to represent unsigned 16-bit integers in conjunction with Win32 APIs. 

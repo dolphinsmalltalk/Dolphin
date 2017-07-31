@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RandomLinearCongruential subclass: #RandomParkMiller
 	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RandomParkMiller guid: (GUID fromString: '{A3EA36EC-2371-4039-BC76-4DC1FE8E69C6}')!
+RandomParkMiller guid: (GUID fromString: '{a3ea36ec-2371-4039-bc76-4dc1fe8e69c6}')!
 RandomParkMiller comment: '<RandomParkMiller> is a specialized <RandomLinearCongruential> stream that provides an optimised implementation of Park and Miller''s ''Minimum Standard''  linear congruential pseudo-random number generator (see ''Numerical Recipes in C'', 2nd Edition; Press, Flannery, Teukolsky and Vetterling; Cambridge University Press, 1992).
 
 RandomParkMiller differs from a generic RandomLinearCongruential generator initialised with the same constants in that it is implemented using floating point arithmetic. This makes it about twice as fast as the RandomLinearCongruential equivalent, because the latter uses large-integer arithmetic when initialised with the Park-Miller constants.'!

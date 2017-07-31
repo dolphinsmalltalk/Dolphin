@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #STBProxy
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBProxy guid: (GUID fromString: '{87B4C4C3-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBProxy guid: (GUID fromString: '{87b4c4c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBProxy comment: ''!
 !STBProxy categoriesForClass!System-Binary storage!System-Binary storage! !
 !STBProxy methodsFor!

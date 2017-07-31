@@ -5,7 +5,7 @@ Magnitude subclass: #Association
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Association guid: (GUID fromString: '{87B4C650-026E-11D3-9FD7-00A0CC3E4A32}')!
+Association guid: (GUID fromString: '{87b4c650-026e-11d3-9fd7-00a0cc3e4a32}')!
 Association comment: 'Association is a simple class to encapsulate the relationship between
 a key and a value. It is used for the elements of Dictionaries.'!
 !Association categoriesForClass!Collections-Support! !

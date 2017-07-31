@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #BoundsError
 	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-BoundsError guid: (GUID fromString: '{87B4C558-026E-11D3-9FD7-00A0CC3E4A32}')!
+BoundsError guid: (GUID fromString: '{87b4c558-026e-11d3-9fd7-00a0cc3e4a32}')!
 BoundsError comment: ''!
 !BoundsError categoriesForClass!Kernel-Exception Handling! !
 !BoundsError methodsFor!

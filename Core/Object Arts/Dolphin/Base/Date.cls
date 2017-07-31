@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Date
-	instanceVariableNames: 'days '
+	instanceVariableNames: 'days'
 	classVariableNames: 'DaysInMonth DaysUntilMonth DefaultLongPicture YearPivot'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Date guid: (GUID fromString: '{87B4C652-026E-11D3-9FD7-00A0CC3E4A32}')!
+Date guid: (GUID fromString: '{87b4c652-026e-11d3-9fd7-00a0cc3e4a32}')!
 Date comment: 'Date is the class whose instances represent days of the year. The base date (day 0) is 1st January 1901.
 
 Instance Variables:

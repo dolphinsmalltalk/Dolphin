@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Notification subclass: #RaisedNotificationSignal
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RaisedNotificationSignal guid: (GUID fromString: '{586EB660-437D-11D3-97AA-0080C8D59432}')!
+RaisedNotificationSignal guid: (GUID fromString: '{586eb660-437d-11d3-97aa-0080c8d59432}')!
 RaisedNotificationSignal comment: 'RaisedNotificationSignal is the class of Error whose instances are used to represent NotificationSignal instances when raised. That is it enables instance based notifications (NotificationSignals) to be raised within Dolphin''s class based exception framework.
 
 Instances Variables:

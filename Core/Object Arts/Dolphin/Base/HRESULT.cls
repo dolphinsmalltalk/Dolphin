@@ -5,7 +5,7 @@ ExternalInteger subclass: #HRESULT
 	classVariableNames: 'Facilities Fail'
 	poolDictionaries: 'FacilityCodes Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
-HRESULT guid: (GUID fromString: '{87B4C5AE-026E-11D3-9FD7-00A0CC3E4A32}')!
+HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
 HRESULT comment: ''!
 !HRESULT categoriesForClass!External-Data-Structured! !
 !HRESULT methodsFor!

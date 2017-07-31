@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 UINT_PTRArray subclass: #HandleArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HandleArray guid: (GUID fromString: '{1452D19C-BE37-42AA-838E-FF2156D8ED64}')!
+HandleArray guid: (GUID fromString: '{1452d19c-be37-42aa-838e-ff2156d8ed64}')!
 HandleArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of handles. Note that these could be 32 or 64-bit, depending on the host OS.'!
 !HandleArray categoriesForClass!External-Data-Structured! !
 !HandleArray methodsFor!

@@ -5,7 +5,7 @@ Signal subclass: #NotificationSignal
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NotificationSignal guid: (GUID fromString: '{87B4C6DE-026E-11D3-9FD7-00A0CC3E4A32}')!
+NotificationSignal guid: (GUID fromString: '{87b4c6de-026e-11d3-9fd7-00a0cc3e4a32}')!
 NotificationSignal comment: ''!
 !NotificationSignal categoriesForClass!Kernel-Exception Handling! !
 !NotificationSignal methodsFor!

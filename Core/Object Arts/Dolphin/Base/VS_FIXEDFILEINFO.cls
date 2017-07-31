@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #VS_FIXEDFILEINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VS_FIXEDFILEINFO guid: (GUID fromString: '{87B4C619-026E-11D3-9FD7-00A0CC3E4A32}')!
+VS_FIXEDFILEINFO guid: (GUID fromString: '{87b4c619-026e-11d3-9fd7-00a0cc3e4a32}')!
 VS_FIXEDFILEINFO comment: 'VS_FIXEDFILEINFO is an ExternalStructure class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the Windows version information library (Version.DLL) to access standard version information such as the product major and minor version numbers from the resources of exes and dlls.

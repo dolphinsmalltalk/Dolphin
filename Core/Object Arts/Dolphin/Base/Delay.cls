@@ -5,7 +5,7 @@ Object subclass: #Delay
 	classVariableNames: 'AccessProtect Current DefaultResolution HighestResolution ImageClock LowestResolution Pending Resolution TimingProcess TimingSemaphore'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Delay guid: (GUID fromString: '{87B4C47B-026E-11D3-9FD7-00A0CC3E4A32}')!
+Delay guid: (GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
 Delay addClassConstant: 'DefaultResolution' value: 15625!
 Delay comment: '<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMicroseconds:, #forMilliseconds:, and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 

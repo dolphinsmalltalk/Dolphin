@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #ClassRemovalError
-	instanceVariableNames: 'originalError '
+	instanceVariableNames: 'originalError'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ClassRemovalError guid: (GUID fromString: '{4ED2CCC0-5E2B-42A1-8BEF-A537219EFEC2}')!
+ClassRemovalError guid: (GUID fromString: '{4ed2ccc0-5e2b-42a1-8bef-a537219efec2}')!
 ClassRemovalError comment: ''!
 !ClassRemovalError categoriesForClass!System-Support! !
 !ClassRemovalError methodsFor!

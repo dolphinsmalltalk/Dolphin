@@ -5,7 +5,7 @@ SingletonSearchPolicy subclass: #SymbolStringSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SymbolStringSearchPolicy guid: (GUID fromString: '{EA77CBF2-0CBB-4FBE-AC7B-A9AC258F1D4A}')!
+SymbolStringSearchPolicy guid: (GUID fromString: '{ea77cbf2-0cbb-4fbe-ac7b-a9ac258f1d4a}')!
 SymbolStringSearchPolicy comment: 'SymbolStringSearchPolicy is for configuring pluggable collections and models of <String>s or <Symbol>s such that the same sequence of characters compare as equal, regardless of whether the sequence is stored in a Symbol or a String. Normally Symbols are not considered equal to Strings even when they contain the same characters.
 
 N.B. Unlike most other SearchPolicy classes, instances of this class are only appropriate for comparing and searching collections of Symbols and Strings (the objects to be compared must implement #hashCharacters and #trueCompare:).'!

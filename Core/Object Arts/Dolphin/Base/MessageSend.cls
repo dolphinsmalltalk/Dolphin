@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 MessageSendAbstract subclass: #MessageSend
 	instanceVariableNames: 'receiver'
 	classVariableNames: 'EmptySend'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MessageSend guid: (GUID fromString: '{87B4C662-026E-11D3-9FD7-00A0CC3E4A32}')!
+MessageSend guid: (GUID fromString: '{87b4c662-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageSend comment: 'A MessageSend is a fully closed <Message>, including receiver object, the message selector, and an array of sufficient arguments.
 
 When evaluated with additional arguments the supplied arguments supplant those stored in the MessageSend itself by replacement from the right.

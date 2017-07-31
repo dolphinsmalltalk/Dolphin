@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #MessageNotUnderstood
-	instanceVariableNames: 'receiver '
+	instanceVariableNames: 'receiver'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MessageNotUnderstood guid: (GUID fromString: '{87B4C55D-026E-11D3-9FD7-00A0CC3E4A32}')!
+MessageNotUnderstood guid: (GUID fromString: '{87b4c55d-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageNotUnderstood comment: ''!
 !MessageNotUnderstood categoriesForClass!Kernel-Exception Handling! !
 !MessageNotUnderstood methodsFor!

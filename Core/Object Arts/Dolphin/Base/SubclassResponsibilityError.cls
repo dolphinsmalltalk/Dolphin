@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #SubclassResponsibilityError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SubclassResponsibilityError guid: (GUID fromString: '{34505503-A094-4BD0-A9F3-542F3CFBEC32}')!
+SubclassResponsibilityError guid: (GUID fromString: '{34505503-a094-4bd0-a9f3-542f3cfbec32}')!
 SubclassResponsibilityError comment: ''!
 !SubclassResponsibilityError categoriesForClass!Unclassified! !
 !SubclassResponsibilityError methodsFor!

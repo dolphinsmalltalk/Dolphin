@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 FileLocator subclass: #AbsoluteFileLocator
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbsoluteFileLocator guid: (GUID fromString: '{0C174885-6AA9-43E4-98C3-A59915F5B3D7}')!
+AbsoluteFileLocator guid: (GUID fromString: '{0c174885-6aa9-43e4-98c3-a59915f5b3d7}')!
 AbsoluteFileLocator comment: 'An AbsoluteFileLocator is used to indicate the location of an external file that may be referenced within the image. 
 Instances of this class always locate files by their full absolute path.
 

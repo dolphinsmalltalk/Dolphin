@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #DOUBLEArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOUBLEArray guid: (GUID fromString: '{C0413E69-B874-4E6B-A120-709D0C760F0F}')!
+DOUBLEArray guid: (GUID fromString: '{c0413e69-b874-4e6b-a120-709d0c760f0f}')!
 DOUBLEArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of double-precision (64-bit) floating point numbers.'!
 !DOUBLEArray categoriesForClass!Unclassified! !
 !DOUBLEArray methodsFor!

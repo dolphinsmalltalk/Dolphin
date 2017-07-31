@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Locale
 	instanceVariableNames: 'lcid dateSeparator decimalSeparator listSeparator timeSeparator currencySymbol amDesignator pmDesignator dayNames monthNames'
 	classVariableNames: 'SystemDefault UserDefault'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Locale guid: (GUID fromString: '{87B4C49A-026E-11D3-9FD7-00A0CC3E4A32}')!
+Locale guid: (GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Locale comment: ''!
 !Locale categoriesForClass!System-Support! !
 !Locale methodsFor!

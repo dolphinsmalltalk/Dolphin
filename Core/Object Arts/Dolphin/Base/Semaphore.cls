@@ -5,7 +5,7 @@ LinkedList subclass: #Semaphore
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Semaphore guid: (GUID fromString: '{87B4C524-026E-11D3-9FD7-00A0CC3E4A32}')!
+Semaphore guid: (GUID fromString: '{87b4c524-026e-11d3-9fd7-00a0cc3e4a32}')!
 Semaphore comment: ''!
 !Semaphore categoriesForClass!Kernel-Processes! !
 !Semaphore methodsFor!

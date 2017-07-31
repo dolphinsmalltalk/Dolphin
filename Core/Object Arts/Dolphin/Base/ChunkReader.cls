@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ChunkReader
-	instanceVariableNames: 'chunkBlock endAction context '
+	instanceVariableNames: 'chunkBlock endAction context'
 	classVariableNames: 'Null'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ChunkReader guid: (GUID fromString: '{87B4C460-026E-11D3-9FD7-00A0CC3E4A32}')!
+ChunkReader guid: (GUID fromString: '{87b4c460-026e-11d3-9fd7-00a0cc3e4a32}')!
 ChunkReader comment: '
 	The source reader is delegated the task of reading chunks
 	from the input stream, and so can impose its own format.'!

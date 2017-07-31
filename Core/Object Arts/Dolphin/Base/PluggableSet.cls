@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Set variableSubclass: #PluggableSet
 	instanceVariableNames: 'searchPolicy'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PluggableSet guid: (GUID fromString: '{FAA6A208-2202-4D7E-B342-D9590B9BF6C8}')!
+PluggableSet guid: (GUID fromString: '{faa6a208-2202-4d7e-b342-d9590b9bf6c8}')!
 PluggableSet comment: 'PluggableSet is the class of <Set>s which support a pluggable <searchPolicy>, and which can thus be configured to behave in the same way as either standard <Set>s (equality search) or <IdentitySet>s (identity search), or indeed any user-defined search policy.
 
 Instance Variables:

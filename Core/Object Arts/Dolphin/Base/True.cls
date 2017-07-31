@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Boolean subclass: #True
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-True guid: (GUID fromString: '{87B4C4FE-026E-11D3-9FD7-00A0CC3E4A32}')!
+True guid: (GUID fromString: '{87b4c4fe-026e-11d3-9fd7-00a0cc3e4a32}')!
 True comment: 'The True class implements the behavior of the true (logical truth) object.
 
 Trueis a singleton whose sole instance is the object represented by the reserved word, true. true is an identity object (i.e. any reference to true will always answer true when compared with any other using the #== message).

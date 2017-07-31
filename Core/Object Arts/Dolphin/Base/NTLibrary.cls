@@ -62,6 +62,6 @@ openDefault
 	IsWine := lib wineGetVersion notNil.
 	^lib! !
 !NTLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
-!NTLibrary class categoriesFor: #isWine!testing!public! !
+!NTLibrary class categoriesFor: #isWine!public!testing! !
 !NTLibrary class categoriesFor: #openDefault!instance creation!private!realizing/unrealizing! !
 

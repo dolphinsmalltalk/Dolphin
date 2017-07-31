@@ -5,7 +5,7 @@ Magnitude subclass: #Time
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Time guid: (GUID fromString: '{87B4C655-026E-11D3-9FD7-00A0CC3E4A32}')!
+Time guid: (GUID fromString: '{87b4c655-026e-11d3-9fd7-00a0cc3e4a32}')!
 Time comment: 'Time is the class whose instances represent a time of day as the number of seconds since midnight.'!
 !Time categoriesForClass!Magnitude-General! !
 !Time methodsFor!

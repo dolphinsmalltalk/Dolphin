@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Random subclass: #RandomLinearCongruential
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RandomLinearCongruential guid: (GUID fromString: '{23D4B049-AE11-4FD4-872A-7FA0B04B2E6B}')!
+RandomLinearCongruential guid: (GUID fromString: '{23d4b049-ae11-4fd4-872a-7fa0b04b2e6b}')!
 RandomLinearCongruential comment: '<RandomLinearCongruential> is a specialized <Random> stream that provides generic implementation of the Linear Congruential class of pseudo-random number generators. 
 
 LCG generators are of the form:

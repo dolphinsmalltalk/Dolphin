@@ -5,7 +5,7 @@ SortAlgorithm subclass: #DefaultSortAlgorithm
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DefaultSortAlgorithm guid: (GUID fromString: '{4DA46CBC-7732-4A19-B7EF-7548A1C4506F}')!
+DefaultSortAlgorithm guid: (GUID fromString: '{4da46cbc-7732-4a19-b7ef-7548a1c4506f}')!
 DefaultSortAlgorithm comment: 'DefaultSortAlgorithm implements the default sorting algorithm and sort-ordering as a sorting strategy for use in conjunction with <SortedCollection>s.
 
 Currently DefaultSortAlgorithm is an implementation of the Introsort algorithm. This is a modified Quicksort that switches to Heapsort when it detects that quicksort is going quadratic. The sort-order relationship is fixed and always uses the #<= message to compare elements.

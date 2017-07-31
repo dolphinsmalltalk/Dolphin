@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Exception subclass: #Error
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-Error guid: (GUID fromString: '{0324FE53-AD83-11D2-86EB-0020AFAB8EFE}')!
+Error guid: (GUID fromString: '{0324fe53-ad83-11d2-86eb-0020afab8efe}')!
 Error comment: ''!
 !Error categoriesForClass!Kernel-Exception Handling! !
 !Error methodsFor!

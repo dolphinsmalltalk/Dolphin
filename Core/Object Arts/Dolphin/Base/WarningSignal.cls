@@ -5,7 +5,7 @@ NotificationSignal subclass: #WarningSignal
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WarningSignal guid: (GUID fromString: '{9B47C071-B28D-4461-A804-607F147269BC}')!
+WarningSignal guid: (GUID fromString: '{9b47c071-b28d-4461-a804-607f147269bc}')!
 WarningSignal comment: ''!
 !WarningSignal categoriesForClass!Kernel-Exception Handling! !
 !WarningSignal methodsFor!

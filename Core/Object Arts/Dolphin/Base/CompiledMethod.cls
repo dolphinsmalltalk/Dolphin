@@ -5,7 +5,7 @@ CompiledCode variableSubclass: #CompiledMethod
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompiledMethod guid: (GUID fromString: '{87B4C544-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompiledMethod guid: (GUID fromString: '{87b4c544-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompiledMethod comment: 'CompiledMethod is the class of CompiledCode objects representing actual methods of objects, as opposed to unbound expressions (see CompiledExpression).
 
 '!

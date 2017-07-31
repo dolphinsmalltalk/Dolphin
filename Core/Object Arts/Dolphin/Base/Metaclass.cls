@@ -5,7 +5,7 @@ ClassDescription subclass: #Metaclass
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Metaclass guid: (GUID fromString: '{87B4C4FC-026E-11D3-9FD7-00A0CC3E4A32}')!
+Metaclass guid: (GUID fromString: '{87b4c4fc-026e-11d3-9fd7-00a0cc3e4a32}')!
 Metaclass comment: 'Metaclass is the class of objects which represent the classes of the Classes of the system.
 In other words, every class in the system (e.g. Integer) is the sole instance of an instance of Metaclass
 (e.g. Integer class), they are not instances of Class (which, in fact, has no instances). A class object''s 

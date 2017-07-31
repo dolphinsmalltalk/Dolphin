@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 StructureArrayPointerField subclass: #PointerArrayPointerField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PointerArrayPointerField guid: (GUID fromString: '{3A78C2FD-CF0B-4F89-BE59-BF48CEA436FA}')!
+PointerArrayPointerField guid: (GUID fromString: '{3a78c2fd-cf0b-4f89-be59-bf48cea436fa}')!
 PointerArrayPointerField comment: ''!
 !PointerArrayPointerField categoriesForClass!External-Data-Types! !
 !PointerArrayPointerField methodsFor!

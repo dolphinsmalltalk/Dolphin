@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #INT_PTRArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-INT_PTRArray guid: (GUID fromString: '{23B3BFA9-80D2-4211-A5CC-5E739D62812B}')!
+INT_PTRArray guid: (GUID fromString: '{23b3bfa9-80d2-4211-a5cc-5e739d62812b}')!
 INT_PTRArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of machine word sized signed integers.'!
 !INT_PTRArray categoriesForClass!External-Data-Structured! !
 !INT_PTRArray methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 UIntPtrBytes variableByteSubclass: #ExternalHandle
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalHandle guid: (GUID fromString: '{87B4C518-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalHandle guid: (GUID fromString: '{87b4c518-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalHandle comment: ''!
 !ExternalHandle categoriesForClass!External-Data-Unstructured! !
 !ExternalHandle methodsFor!

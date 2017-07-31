@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Exception subclass: #Notification
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-Notification guid: (GUID fromString: '{87B4C556-026E-11D3-9FD7-00A0CC3E4A32}')!
+Notification guid: (GUID fromString: '{87b4c556-026e-11d3-9fd7-00a0cc3e4a32}')!
 Notification comment: 'Notification is the class of exceptional conditions which are not considered errors.'!
 !Notification categoriesForClass!Kernel-Exception Handling! !
 !Notification methodsFor!

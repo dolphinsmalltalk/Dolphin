@@ -5,7 +5,7 @@ Object subclass: #SourceFiler
 	classVariableNames: 'SourceOnlyMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SourceFiler guid: (GUID fromString: '{847F25F1-CD60-490C-817F-3F0F2CEFD567}')!
+SourceFiler guid: (GUID fromString: '{847f25f1-cd60-490c-817f-3f0f2cefd567}')!
 SourceFiler addClassConstant: 'SourceOnlyMask' value: 1!
 SourceFiler comment: ''!
 !SourceFiler categoriesForClass!Development!System-Support! !

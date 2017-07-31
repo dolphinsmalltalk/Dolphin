@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #MSGBOXPARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-MSGBOXPARAMS guid: (GUID fromString: '{87B4C600-026E-11D3-9FD7-00A0CC3E4A32}')!
+MSGBOXPARAMS guid: (GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
 MSGBOXPARAMS comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 
 MSGBOXPARAMS is used to contain configuration details for Message Boxes.

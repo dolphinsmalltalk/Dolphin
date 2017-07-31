@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #SWORDArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SWORDArray guid: (GUID fromString: '{87B4C5A8-026E-11D3-9FD7-00A0CC3E4A32}')!
+SWORDArray guid: (GUID fromString: '{87b4c5a8-026e-11d3-9fd7-00a0cc3e4a32}')!
 SWORDArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of 16-bit signed integers.'!
 !SWORDArray categoriesForClass!External-Data-Structured! !
 !SWORDArray methodsFor!

@@ -5,7 +5,7 @@ BYTE subclass: #SBYTE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SBYTE guid: (GUID fromString: '{8F5BCC94-0245-4D91-A473-ACC6BDB8F294}')!
+SBYTE guid: (GUID fromString: '{8f5bcc94-0245-4d91-a473-acc6bdb8f294}')!
 SBYTE comment: '<SBYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
 SBYTE is used to represent signed 8-bit integers in conjunction with Win32 APIs. 

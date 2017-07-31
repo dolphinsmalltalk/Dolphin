@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Boolean subclass: #False
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-False guid: (GUID fromString: '{87B4C4FD-026E-11D3-9FD7-00A0CC3E4A32}')!
+False guid: (GUID fromString: '{87b4c4fd-026e-11d3-9fd7-00a0cc3e4a32}')!
 False comment: 'The False class implements the behaviour of the false (logical false) object.
 
 False is a singleton whose sole instance is the object represented by the reserved word, false. (i.e. any reference to false will always answer true when compared with any other using the #== message).

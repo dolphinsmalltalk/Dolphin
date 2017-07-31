@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MethodProtocol
-	instanceVariableNames: 'name comment selectors flags '
+	instanceVariableNames: 'name comment selectors flags'
 	classVariableNames: 'ANSIMask Protocols ReadOnlyMask StubAddedSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MethodProtocol guid: (GUID fromString: '{87B4C503-026E-11D3-9FD7-00A0CC3E4A32}')!
+MethodProtocol guid: (GUID fromString: '{87b4c503-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodProtocol comment: 'MethodProtocol is a meta-information class which groups a set of selectors to form a cohesive unit of behavior which is independent of the class hierarchy. A class is said to conform to a MethodProtocol if it implements each of the selectors in the protocol, and if it claims to support the protocol, i.e. implementation of the set of selectors is a necessary but not sufficient condition because the implementation of the selectors must be as specified by the protocol. The precise semantics of the protocol are not formally specified by instances of this class, and cannot be tested by it, therefore if the programmer asserts that a class conforms to a protocol and it implements all the necessary selectors, that is deemed sufficient for conformance. A class automatically conforms to any protocols to which its superclasses conform.
 
 If a method implementing a required protocol selector is removed from a class then the system automatically removes the protocol from the list supported by that class. Conversely if a protocol is extended by the addition of new selectors then this may result in the addition of stub method implementations to all conforming classes which do not currently respond to that selector. These stub methods raise an error when invoked and may be located by browsing the ''not yet implemented'' pseudo-category.

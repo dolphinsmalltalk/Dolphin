@@ -5,7 +5,7 @@ PositionableStream subclass: #ReadStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ReadStream guid: (GUID fromString: '{87B4C6FA-026E-11D3-9FD7-00A0CC3E4A32}')!
+ReadStream guid: (GUID fromString: '{87b4c6fa-026e-11d3-9fd7-00a0cc3e4a32}')!
 ReadStream comment: 'Class ReadStream is a concrete subclass of PositionableStream that represents
 an accessor that can only read elements from a collection.'!
 !ReadStream categoriesForClass!Collections-Streams! !

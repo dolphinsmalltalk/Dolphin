@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 STBInFiler subclass: #STBValidatingInFiler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBValidatingInFiler guid: (GUID fromString: '{5F22EB11-9EED-40DF-B02F-FE697B4CBE7E}')!
+STBValidatingInFiler guid: (GUID fromString: '{5f22eb11-9eed-40df-b02f-fe697b4cbe7e}')!
 STBValidatingInFiler comment: 'STBValidatingInFiler is a specialisation of STBInFiler that is capable of validating the classes of objects appearing in a STB input stream before the objects are actually allowed to be loaded.  This is important since STB is generally considered to be an insecure storage mechanism as it can allow arbitrary classes and blocks of code to be imported. Hence the STBValidatingInFiler is useful in situations where it is important to guarantee that only "safe" objects can be loaded (e.g. DolphinSure certificates need to be secure and yet are often stored using STB streams).  
 
 After instantiating an instance of STBValidatingInFiler, it can be configured with a validation block (using #validationBlock:) that takes a symbolic class name as a single parameter.  The block can be used to indicate whether instances of this class should be considered to be safe in the context of the input stream.  If the block evaluates to true the object load will be allowed whereas if it evaluates to false the load will be denied by signalling a STBError.'!
