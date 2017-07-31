@@ -505,17 +505,6 @@ getComputerName: buffer nSize: pBufSize
 
 !
 
-getCPInfo: codepage lpCPInfo: lpCPInfo
-	"Invoke the GetCPInfo() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the current original equipment manufacturer (OEM) code-page identifier for the system
-
-		BOOL __stdcall GetCPInfo(
-			UINT codepage,
-			CPINFO* lpCPInfo);"
-
-	<stdcall: bool GetCPInfo dword CPINFO*>
-	^self invalidCall!
-
 getCurrentProcess
 	"Answer handle of the Dolphin process.
 
@@ -1663,7 +1652,6 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !

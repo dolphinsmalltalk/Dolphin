@@ -15,6 +15,7 @@ package classNames
 	add: #ConformantArrayPointerField;
 	add: #ConformantStructureArrayField;
 	add: #ConformantStructureArrayPointerField;
+	add: #CPINFO;
 	add: #MEMORY_BASIC_INFORMATION;
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
@@ -50,6 +51,7 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
+	add: #KernelLibrary -> #getCPInfo:lpCPInfo:;
 	add: #KernelLibrary -> #getVersionEx:;
 	add: #KernelLibrary -> #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:;
 	add: #Object -> #asDword;
@@ -100,6 +102,11 @@ ArrayPointerField subclass: #ConformantArrayPointerField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalStructure subclass: #CPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -363,6 +370,17 @@ lowSWord
 
 !KernelLibrary methodsFor!
 
+getCPInfo: codepage lpCPInfo: lpCPInfo
+	"Invoke the GetCPInfo() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the current original equipment manufacturer (OEM) code-page identifier for the system
+
+		BOOL __stdcall GetCPInfo(
+			UINT codepage,
+			CPINFO* lpCPInfo);"
+
+	<stdcall: bool GetCPInfo dword CPINFO*>
+	^self invalidCall!
+
 getVersionEx: anOSVERSIONINFO 
 	"Populate the argument with extended OS version information. Answers whether the request succeeded.
 		BOOL GetVersionEx(
@@ -377,6 +395,7 @@ writePrivateProfileString: lpszSection lpszEntry: lpszEntry lpszString: lpszStri
 	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
 	#deprecated.	"As explained on msdn, 'This function is provided only for compatibility with 16-bit versions of Windows. Applications should store initialization information in the registry.'"
 	^self invalidCall! !
+!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:!**auto generated**!public! !
 

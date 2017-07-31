@@ -1060,11 +1060,6 @@ ExternalStructure subclass: #_FPIEEE_VALUE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #CPINFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalStructure subclass: #DOUBLE
 	instanceVariableNames: ''
 	classVariableNames: ''
