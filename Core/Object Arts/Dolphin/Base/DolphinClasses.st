@@ -276,7 +276,7 @@ Object subclass: #SearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId traceStream'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!

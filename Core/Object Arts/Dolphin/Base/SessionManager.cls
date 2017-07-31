@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId traceStream'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -1023,7 +1023,22 @@ tertiaryStartup
 trace: aString
 	"Append aString to the trace device."
 
-	KernelLibrary default outputDebugString: aString!
+	(self traceStream)
+		nextPutAll: aString;
+		flush!
+
+traceLine: aString
+	"Append aString to the trace stream and start a new line."
+
+	(self traceStream)
+		nextPutAll: aString;
+		cr;
+		flush!
+
+traceStream
+	"Answer a <puttableStream> onto the session's trace output device."
+
+	^Smalltalk at: #Trace ifAbsent: [DeafObject current]!
 
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
@@ -1212,6 +1227,8 @@ windowsDirectory
 !SessionManager categoriesFor: #systemDirectory!accessing!public! !
 !SessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
 !SessionManager categoriesFor: #trace:!operations-logging!public! !
+!SessionManager categoriesFor: #traceLine:!operations-logging!public! !
+!SessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
 !SessionManager categoriesFor: #unhandledException:!exceptions!private! !
 !SessionManager categoriesFor: #unregisterConsoleCtrlHandler!operations!private! !
 !SessionManager categoriesFor: #unregisterServer:!accessing!public! !

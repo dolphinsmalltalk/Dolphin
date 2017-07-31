@@ -40,7 +40,7 @@ package!
 
 Stream subclass: #DebugTraceStream
 	instanceVariableNames: 'buffer bufferProtect'
-	classVariableNames: ''
+	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

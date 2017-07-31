@@ -689,20 +689,6 @@ tertiaryStartup
 	self mainShellClass onStartup.
 	self processCommandLine!
 
-trace: aString
-	"Append aString to the trace stream."
-
-	(self traceStream)
-		nextPutAll: aString;
-		flush!
-
-traceLine: aString 
-	"Append aString to the trace stream and start a new line."
-
-	(self traceStream)
-		nextPutAll: aString;
-		cr!
-
 traceStream
 	^(self isHeadless not and: [Transcript notNil])
 		ifTrue: [Transcript]
@@ -825,8 +811,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #splashShowAtStartup:!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #stashBootInfo!helpers!public! !
 !DevelopmentSessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
-!DevelopmentSessionManager categoriesFor: #trace:!operations-logging!public! !
-!DevelopmentSessionManager categoriesFor: #traceLine:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #traceStream!accessing!private! !
 !DevelopmentSessionManager categoriesFor: #unhandledException:!exceptions!private! !
 !DevelopmentSessionManager categoriesFor: #versionInfo!accessing-version!public! !
