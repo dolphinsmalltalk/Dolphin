@@ -31,18 +31,19 @@ addItem: anAssociation to: aLookupTable elapsedTime: anInteger
 		incrementTallyActive;
 		incrementTimeActiveBy: anInteger!
 
-addSample: aCollection elapsedTime: anInteger 
+addSample: aCollection elapsedTime: anInteger
 	"Add the frames from aCollection to the tree starting at root. For each frame
 	the node finds a clild of the current node corresponding to the frame (creating one if 
 	necessary), updates its values and answers the new node. We can also check here for 
 	the ip of the active (top) frame being 1. If it is we need to remove it as it causes confusion 
 	as the sample really represents the state at the end of the previous frame"
 
-	| leaf frames |
-	frames := aCollection reverse.
-	frames last ip = 1 ifTrue: [frames removeLast].
-	leaf := frames inject: root into: [:node :each | node addFrame: each elapsedTime: anInteger].
-	samples add: (ProfilerSample 
+	| leaf |
+	leaf := root.
+	aCollection size to: (aCollection first ip = 1 ifTrue: [2] ifFalse: [1])
+		by: -1
+		do: [:i | leaf := leaf addFrame: (aCollection at: i) elapsedTime: anInteger].
+	samples add: (ProfilerSample
 				root: root
 				leaf: leaf
 				elapsedTime: anInteger)!
