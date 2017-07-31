@@ -3009,7 +3009,6 @@ initializeControl
 	foldMarginColor ifNotNil: [self setFoldMarginColor].
 	foldMarginHiColor ifNotNil: [self setFoldMarginHiColor].
 	foldFlags ifNotNil: [self setFoldFlags].
-	self isFoldingEnabled ifTrue: [self setFoldProperty: true].
 	keyBindings ifNotNil: [self updateKeyBindings].
 	foldTextTagStyle ifNotNil: [self setFoldTextTagStyle]!
 
@@ -5483,7 +5482,7 @@ sciClearRepresentation: encodedCharacterString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_CLEARREPRESENTATION
-				wParam: encodedCharacterString
+				wpParam: encodedCharacterString
 				lParam: 0]!
 
 sciClearTabStops: lineInteger
@@ -5577,7 +5576,7 @@ sciDescribeProperty: nameString description: descriptionString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_DESCRIBEPROPERTY
-				wParam: nameString
+				wpParam: nameString
 				lpParam: descriptionString]!
 
 sciDistanceToSecondaryStyles
@@ -5626,7 +5625,7 @@ sciEncodedFromUTF8: utf8String encoded: encodedString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_ENCODEDFROMUTF8
-				wParam: utf8String
+				wpParam: utf8String
 				lpParam: encodedString]!
 
 sciEnsureVisible: lineInteger
@@ -6405,7 +6404,7 @@ sciGetProperty: keyString value: valueString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPROPERTY
-				wParam: keyString
+				wpParam: keyString
 				lpParam: valueString]!
 
 sciGetPropertyExpanded: keyString value: valueString
@@ -6418,7 +6417,7 @@ sciGetPropertyExpanded: keyString value: valueString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPROPERTYEXPANDED
-				wParam: keyString
+				wpParam: keyString
 				lpParam: valueString]!
 
 sciGetPropertyInt: keyString defaultValue: defaultValueInteger
@@ -6431,7 +6430,7 @@ sciGetPropertyInt: keyString defaultValue: defaultValueInteger
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETPROPERTYINT
-				wParam: keyString
+				wpParam: keyString
 				lParam: defaultValueInteger]!
 
 sciGetPunctuationChars
@@ -6515,7 +6514,7 @@ sciGetRepresentation: encodedCharacterString representation: representationStrin
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETREPRESENTATION
-				wParam: encodedCharacterString
+				wpParam: encodedCharacterString
 				lpParam: representationString]!
 
 sciGetSearchFlags
@@ -7349,7 +7348,7 @@ sciPropertyType: nameString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_PROPERTYTYPE
-				wParam: nameString
+				wpParam: nameString
 				lParam: 0]!
 
 sciRegisterImage: typeInteger xpmData: xpmDataString
@@ -8127,7 +8126,7 @@ sciSetProperty: keyString value: valueString
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETPROPERTY
-				wParam: keyString
+				wpParam: keyString
 				lpParam: valueString]!
 
 sciSetPunctuationChars: charactersString
@@ -8194,7 +8193,7 @@ sciSetRepresentation: encodedCharacterString representation: representationStrin
 			[ScintillaLibrary default
 				directFunction: this
 				msg: SCI_SETREPRESENTATION
-				wParam: encodedCharacterString
+				wpParam: encodedCharacterString
 				lpParam: representationString]!
 
 sciSetSavePoint
@@ -9523,12 +9522,14 @@ setFoldMarginHiColor
 		ifNil: [self sciSetFoldMarginHiColour: false fore: nil]
 		ifNotNil: [self sciSetFoldMarginHiColour: true fore: foldMarginHiColor asRGB]!
 
-setFoldProperty: aBoolean 
-	self isOpen 
+setFoldProperty: aBoolean
+	self isOpen
 		ifTrue: 
-			["The HTML lexer uses an additional property"
-			#('fold' 'fold.html') 
-				do: [:each | self sciSetProperty: each yourAddress value: aBoolean asParameter displayString]]!
+			[| propValue |
+			propValue := aBoolean asParameter displayString.
+			"The HTML lexer uses an additional property"
+			#todo.	"The properties may vary by lexer and should be user configurable too."
+			#('fold' 'fold.html') do: [:each | self sciSetProperty: each value: propValue]]!
 
 setFoldTextTagStyle
 	| style |
@@ -9581,15 +9582,17 @@ setIndicatorStyles: aCollection
 	indicatorStyles := newStylesByName.
 	self updateIndicatorStyles!
 
-setLexerLanguage: aSymbol 
-	aSymbol == #container 
+setLexerLanguage: aSymbol
+	aSymbol == #container
 		ifTrue: [self sciSetLexer: SCLEX_CONTAINER]
 		ifFalse: 
-			[aSymbol == #automatic 
+			[aSymbol == #automatic
 				ifTrue: [self sciSetLexer: SCLEX_AUTOMATIC]
 				ifFalse: 
 					[self sciSetLexerLanguage: aSymbol.
-					self lexer ~~ aSymbol ifTrue: [self error: 'Unrecognised language: ' , aSymbol printString]]]!
+					self lexer ~~ aSymbol ifTrue: [self error: 'Unrecognised language: ' , aSymbol printString]].
+			"The fold properties must be set after the lexer has been set."
+			self isFoldingEnabled ifTrue: [self setFoldProperty: true]]!
 
 setLine: lineInteger state: stateInteger 
 	"Associate extra line state information with a particular line."

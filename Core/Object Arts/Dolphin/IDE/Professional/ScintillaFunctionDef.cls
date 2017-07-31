@@ -161,11 +161,11 @@ emitNullNullFunctionOn: aWriteStream
 		wParam: 0
 		lParam: 0!
 
-emitScintillaCallOn: aPuttableStream wParam: wParam lParam: lParam 
+emitScintillaCallOn: aPuttableStream wParam: wParam lParam: lParam
 	aPuttableStream
 		nextPutAll: 'ScintillaLibrary default directFunction: this msg: ';
 		nextPutAll: constName;
-		nextPutAll: ' wParam: ';
+		nextPutAll: (wParamType byRef ifTrue: [' wpParam: '] ifFalse: [' wParam: ']);
 		display: wParam;
 		space;
 		display: wParamType toScintilla;
