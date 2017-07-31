@@ -18,6 +18,10 @@ directFunction: sciThis msg: msg wParam: wParam lpParam: lpParam
 	<stdcall: intptr Scintilla_DirectFunction handle dword uintptr void*>
 	^self invalidCall!
 
+directFunction: sciThis msg: msg wpParam: wParam lpParam: lpParam 
+	<stdcall: intptr Scintilla_DirectFunction handle dword void* void*>
+	^self invalidCall!
+
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver.
 	The arguments than can be inserted into the string are:
@@ -31,6 +35,7 @@ versionFormatString
 	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
 !ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
 !ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
+!ScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lpParam:!operations!private! !
 !ScintillaLibrary categoriesFor: #versionFormatString!constants!private! !
 
 !ScintillaLibrary class methodsFor!

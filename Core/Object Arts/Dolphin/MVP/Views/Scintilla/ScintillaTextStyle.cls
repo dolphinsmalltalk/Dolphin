@@ -53,7 +53,7 @@ Class Variables:
 !ScintillaTextStyle categoriesForClass!MVP-Views-Support! !
 !ScintillaTextStyle methodsFor!
 
-= anObject 
+= anObject
 	"Answer whether the receiver and the <Object> argument are considered equivalent. A pair of
 	<ScintillaTextStyle>s are only considered equivalent if all attributes are equal."
 
@@ -63,8 +63,9 @@ Class Variables:
 							[self forecolor = anObject forecolor and: 
 									[self backcolor = anObject backcolor and: 
 											[self fontName = anObject fontName and: 
-													[self pointSize = anObject pointSize 
-														and: [self characterSet = anObject characterSet and: [self case = anObject case]]]]]]]]!
+													[self centiPointSize = anObject centiPointSize and: 
+															[self weight = anObject weight
+																and: [self characterSet = anObject characterSet and: [self case = anObject case]]]]]]]]]!
 
 backcolor
 	^backcolor!
@@ -74,7 +75,7 @@ backcolor: aColorOrNil
 	backcolor := aColorOrNil!
 
 basicId
-	^id ifNil: [name ifNotNil: [id := PredefinedStyleNames lookup: name]]!
+	^id ifNil: [name ifNotNil: [self setPredefinedId]]!
 
 case
 	^case!
@@ -267,11 +268,16 @@ mergeFont: aFont
 name
 	^name ifNil: ['style', self id displayString]!
 
-name: anObject 
+name: anObject
 	name = anObject ifTrue: [^self].
-	name := anObject isInteger 
-				ifTrue: [id := anObject]
-				ifFalse: [anObject  isEmpty ifFalse: [anObject asSymbol]]!
+	anObject isInteger
+		ifTrue: [name := id := anObject]
+		ifFalse: 
+			[(anObject isNil or: [anObject isEmpty])
+				ifTrue: [name := id := nil]
+				ifFalse: 
+					[name := anObject asSymbol.
+					self setPredefinedId]]!
 
 pointSize
 	^centiPointSize 
@@ -292,6 +298,9 @@ restyleFont: aFont
 	self weight ifNotNil: [:w | aFont weight: w].
 	self isUnderlined ifNotNil: [:isUnderlined | aFont isUnderlined: isUnderlined].
 	self characterSet ifNotNil: [:set | aFont characterSet: set]!
+
+setPredefinedId
+	^id := PredefinedStyleNames lookup: name!
 
 setThreeStateFlag: anInteger value: aBooleanOrNil
 	| state |
@@ -368,6 +377,7 @@ weight: anInteger
 !ScintillaTextStyle categoriesFor: #pointSize!accessing!public! !
 !ScintillaTextStyle categoriesFor: #pointSize:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #restyleFont:!accessing!public! !
+!ScintillaTextStyle categoriesFor: #setPredefinedId!accessing!private! !
 !ScintillaTextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
 !ScintillaTextStyle categoriesFor: #storeableProperties!development!printing!private! !
 !ScintillaTextStyle categoriesFor: #view!accessing!private! !
