@@ -114,11 +114,6 @@ crtab: anInteger
 		cr;
 		tab: anInteger!
 
-display: anObject
-	"Ask anObject to append its end-user textual description to the receiver."
-
-	anObject displayOn: self!
-
 externalType
 	"Answer a <symbol> which names the external stream type of the receiver."
 
@@ -321,11 +316,6 @@ position: anInteger
 		offset: anInteger
 		origin: SEEK_SET!
 
-print: anObject
-	"Ask anObject to append its textual description to the receiver"
-
-	anObject printOn: self!
-
 reset
 	"Set the receiver's position reference to the beginning of the collection"
 
@@ -387,7 +377,6 @@ tab: anInteger
 !StdioFileStream categoriesFor: #cr!accessing!public! !
 !StdioFileStream categoriesFor: #crtab!accessing!public! !
 !StdioFileStream categoriesFor: #crtab:!accessing!public! !
-!StdioFileStream categoriesFor: #display:!printing!public! !
 !StdioFileStream categoriesFor: #externalType!accessing!public! !
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
 !StdioFileStream categoriesFor: #finalize!finalizing!private! !
@@ -410,7 +399,6 @@ tab: anInteger
 !StdioFileStream categoriesFor: #peekFor:!accessing!public! !
 !StdioFileStream categoriesFor: #position!accessing!public! !
 !StdioFileStream categoriesFor: #position:!positioning!public! !
-!StdioFileStream categoriesFor: #print:!printing!public! !
 !StdioFileStream categoriesFor: #reset!positioning!public! !
 !StdioFileStream categoriesFor: #setStream:isText:name:!initializing!private! !
 !StdioFileStream categoriesFor: #setToEnd!positioning!public! !
