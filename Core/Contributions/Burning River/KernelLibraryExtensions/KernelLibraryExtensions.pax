@@ -24,7 +24,6 @@ package methodNames
 	add: #KernelLibrary -> #getExitCodeThread:lpExitCode:;
 	add: #KernelLibrary -> #getLogicalDriveStrings:buffer:;
 	add: #KernelLibrary -> #setFileAttributes:value:;
-	add: #KernelLibrary -> #waitForSingleObject:waitForMilliseconds:;
 	yourself.
 
 package globalNames
@@ -92,23 +91,11 @@ setFileAttributes: aFileName value: attributes
 			DWORD dwFileAttributes		// attributes );"
 
 	<stdcall: bool SetFileAttributesA lpstr dword>
-	^self invalidCall!
-
-waitForSingleObject: hHandle waitForMilliseconds: timeout
-	"Wait for the specified handle to be signalled or the timeout to expire.
-
-	DWORD WaitForSingleObject(
-		HANDLE hHandle,			// handle to object
-		DWORD dwMilliseconds		// time-out interval
-	);"
-
-	<overlap stdcall: dword WaitForSingleObject handle dword>
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #getExitCodeProcess:lpExitCode:!public! !
 !KernelLibrary categoriesFor: #getExitCodeThread:lpExitCode:!public! !
 !KernelLibrary categoriesFor: #getLogicalDriveStrings:buffer:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #setFileAttributes:value:!public! !
-!KernelLibrary categoriesFor: #waitForSingleObject:waitForMilliseconds:!public!win32 functions-handles and objects! !
 
 "End of package definition"!
 

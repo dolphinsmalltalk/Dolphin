@@ -193,7 +193,7 @@ isAlive
 
 	| waitResult |
 
-	waitResult := KernelLibrary default waitForSingleObject: pi hProcess waitForMilliseconds: 0.
+	waitResult := KernelLibrary default waitForSingleObject: pi hProcess dwMilliseconds: 0.
 	waitResult = WAIT_TIMEOUT ifTrue: [ ^true ].
 	^false
 !
@@ -263,7 +263,7 @@ waitForCompletion
 	| waitResult |
 
 	waitResult := KernelLibrary default
-					waitForSingleObject: pi hProcess waitForMilliseconds: self millisecondsToWait.
+					waitForSingleObject: pi hProcess dwMilliseconds: self millisecondsToWait.
 	waitResult = WAIT_FAILED
 		ifTrue: [ self kill;
 			  	  close.

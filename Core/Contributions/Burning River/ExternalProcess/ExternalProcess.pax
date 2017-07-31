@@ -21,15 +21,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 			script.  This classes structure definition is apparently not compiled in
 			the base image.'.
 
-package basicScriptAt: #preinstall put: '"In Dolphin 6 the PROCESS_INFORMATION class definition was not compiled when the base image was built"
-PROCESS_INFORMATION compileDefinition.
-Win32Constants at: ''STILL_ACTIVE'' ifAbsentPut: [ 259 ].'.
+package basicScriptAt: #preinstall put: 'Win32Constants at: ''STILL_ACTIVE'' ifAbsentPut: [ 259 ].'.
 
 package classNames
 	add: #ExternalProcess;
 	add: #ExternalProcessExecuteError;
 	add: #ExternalProcessWaitFailure;
 	add: #ExternalProcessWaitTimeout;
+	add: #PROCESS_INFORMATION;
+	add: #STARTUPINFO;
+	yourself.
+
+package methodNames
+	add: #KernelLibrary -> #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -68,11 +72,51 @@ Notification subclass: #ExternalProcessWaitTimeout
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+Win32Structure subclass: #PROCESS_INFORMATION
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #STARTUPINFO
+	instanceVariableNames: 'title desktop stdin stdout stderr'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
 
 "Loose Methods"!
+
+!KernelLibrary methodsFor!
+
+createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThreadAttributes: ta
+	bInheritsHandles: ih dwCreationFlags: flags lpEnvironment: env lpCurrentDirectory: cd
+	lpStartupInfo: si lpProcessInformation: pi
+
+	"The CreateProcess function creates a new process and its primary thread. 
+	The new process runs the specified executable file. 
+
+	BOOL CreateProcess(
+		LPCTSTR lpApplicationName,  // name of executable module
+		LPTSTR lpCommandLine,       // command line string
+		LPSECURITY_ATTRIBUTES lpProcessAttributes,  // process security attributes
+		LPSECURITY_ATTRIBUTES lpThreadAttributes,   // thread security attributes
+		BOOL bInheritHandles,  // handle inheritance flag
+		DWORD dwCreationFlags, // creation flags
+		LPVOID lpEnvironment,  // pointer to new environment block
+		LPCTSTR lpCurrentDirectory,   // pointer to current directory name
+		LPSTARTUPINFO lpStartupInfo,  // pointer to STARTUPINFO
+		LPPROCESS_INFORMATION lpProcessInformation  // pointer to PROCESS_INFORMATION
+	);
+
+ 	Please see Win32 SDK help for more information."
+
+	<stdcall: bool CreateProcessA lpstr lpstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES*
+		bool dword lpvoid lpstr STARTUPINFO* PROCESS_INFORMATION*>
+
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
 
 "End of package definition"!
 

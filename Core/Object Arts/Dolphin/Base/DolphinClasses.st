@@ -281,7 +281,7 @@ Object subclass: #SearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -1265,11 +1265,6 @@ Win32Structure subclass: #FILETIME
 	classVariableNames: 'UnixEpoch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #MEMORY_BASIC_INFORMATION
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #MSG
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1285,18 +1280,8 @@ Win32Structure subclass: #OSVERSIONINFOEX
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #PROCESS_INFORMATION
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #SECURITY_ATTRIBUTES
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #STARTUPINFO
-	instanceVariableNames: 'title desktop stdin stdout stderr'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
