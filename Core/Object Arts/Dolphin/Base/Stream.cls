@@ -33,6 +33,11 @@ contentsSpecies
 
 	^Array!
 
+display: anObject
+	"Ask anObject to append its end-user textual description to the receiver."
+
+	anObject displayOn: self!
+
 do: aMonadicValuable 
 	"Evaluate the <monadicValuable> argument for each of the receiver's future sequence values,
 	terminating only when there are no more future sequence values (i.e. the stream is at an
@@ -116,6 +121,11 @@ nextOrNil
 
 	^self atEnd ifFalse: [self next]!
 
+print: anObject
+	"Ask anObject to append its textual description to the receiver"
+
+	anObject printOn: self!
+
 skipThrough: anObject 
 	"Set the receivers position reference to be past the next occurrence of the argument,
 	anObject, in the collection. Answer the receiver, or nil if no such occurrence existed."
@@ -156,6 +166,7 @@ upToEnd
 !Stream categoriesFor: #atEnd!public!testing! !
 !Stream categoriesFor: #close!operations!public! !
 !Stream categoriesFor: #contentsSpecies!accessing!private! !
+!Stream categoriesFor: #display:!printing!public! !
 !Stream categoriesFor: #do:!enumerating!public! !
 !Stream categoriesFor: #errorEndOfStream!exceptions!public! !
 !Stream categoriesFor: #isReadable!public!testing! !
@@ -166,6 +177,7 @@ upToEnd
 !Stream categoriesFor: #nextAvailable:!accessing!public! !
 !Stream categoriesFor: #nextMatchFor:!accessing!public! !
 !Stream categoriesFor: #nextOrNil!accessing!public! !
+!Stream categoriesFor: #print:!printing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
 !Stream categoriesFor: #skipTo:!positioning!public! !
 !Stream categoriesFor: #upTo:!accessing!public! !

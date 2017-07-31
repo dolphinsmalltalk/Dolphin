@@ -52,11 +52,6 @@ crtab: tabCount
 
 	self cr; tab: tabCount!
 
-display: anObject
-	"Ask anObject to append its end-user textual description to the receiver."
-
-	anObject displayOn: self!
-
 growCollection
 	"Private - Increase the size of the streamed over collection
 	to accomodate more elements."
@@ -172,11 +167,6 @@ position: anInteger
 	readLimit := readLimit max: position.
 	super position: anInteger!
 
-print: anObject
-	"Ask anObject to append its textual description to the receiver"
-
-	anObject printOn: self!
-
 reset
 	readLimit := readLimit max: position.
 	position := 0!
@@ -207,7 +197,6 @@ tab: tabCount
 !WriteStream categoriesFor: #cr!accessing!public! !
 !WriteStream categoriesFor: #crtab!accessing!public! !
 !WriteStream categoriesFor: #crtab:!accessing!public! !
-!WriteStream categoriesFor: #display:!printing!public! !
 !WriteStream categoriesFor: #growCollection!operations!private! !
 !WriteStream categoriesFor: #initialize!initializing!private! !
 !WriteStream categoriesFor: #isWriteable!public!testing! !
@@ -221,7 +210,6 @@ tab: tabCount
 !WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
-!WriteStream categoriesFor: #print:!printing!public! !
 !WriteStream categoriesFor: #reset!positioning!public! !
 !WriteStream categoriesFor: #setToEnd!positioning!public! !
 !WriteStream categoriesFor: #space!constants!public! !
