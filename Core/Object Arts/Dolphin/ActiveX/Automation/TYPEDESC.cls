@@ -60,7 +60,7 @@ buildClassDesc
 	vt == VT_SAFEARRAY ifTrue: [^SAFEARRAY -> 1].
 	vt == VT_USERDEFINED
 		ifTrue: [^owner isNil ifTrue: [ExternalStructure -> 1] ifFalse: [self typeInfo classDesc]].
-	^(VARIANT classForVT: vt) -> (VTIndirections at: vt)!
+	^(VARIANT classForVT: vt) -> (VTIndirections at: vt+1)!
 
 classDesc
 	"Private - Answer a Dolphin class and indirection count pair which can be used to
@@ -251,11 +251,11 @@ defineFields
 initialize
 	VTIndirections := Array new: VT_CLSID+1 withAll: 0.
 	VTIndirections
-		at: VT_DISPATCH put: 1;
-		at: VT_UNKNOWN put: 1;
-		at: VT_SAFEARRAY put: 1;
-		at: VT_LPSTR put: 1;
-		at: VT_LPWSTR put: 1! !
+		at: VT_DISPATCH+1 put: 1;
+		at: VT_UNKNOWN+1 put: 1;
+		at: VT_SAFEARRAY+1 put: 1;
+		at: VT_LPSTR+1 put: 1;
+		at: VT_LPWSTR+1 put: 1! !
 !TYPEDESC class categoriesFor: #defineFields!initializing!public! !
 !TYPEDESC class categoriesFor: #initialize!class initialization!public! !
 
