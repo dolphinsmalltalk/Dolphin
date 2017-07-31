@@ -212,6 +212,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #InputState -> #getLastInputInfo;
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
@@ -223,6 +224,8 @@ package methodNames
 	add: #ResourceIdentifier -> #fixupIcon;
 	add: #ResourceIdentifier -> #loadWithContext:;
 	add: #ResourceIdentifier -> #loadWithContext:forEdit:;
+	add: #ShlwapiLibrary -> #colorHLSToRGB:wLuminance:wSaturation:;
+	add: #ShlwapiLibrary -> #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:;
 	add: #String -> #copyToClipboard;
 	add: #String -> #setTextInto:;
 	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
@@ -243,6 +246,7 @@ package methodNames
 	add: #UserLibrary -> #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:;
 	add: #UserLibrary -> #deleteMenu:uPosition:uFlags:;
 	add: #UserLibrary -> #destroyAcceleratorTable:;
+	add: #UserLibrary -> #destroyIcon:;
 	add: #UserLibrary -> #destroyMenu:;
 	add: #UserLibrary -> #drawEdge:qrc:edge:grfFlags:;
 	add: #UserLibrary -> #drawFocusRect:lprc:;
@@ -256,24 +260,27 @@ package methodNames
 	add: #UserLibrary -> #endDialog:nResult:;
 	add: #UserLibrary -> #endPaint:lpPaint:;
 	add: #UserLibrary -> #enumClipboardFormats:;
+	add: #UserLibrary -> #enumWindows:lParam:;
 	add: #UserLibrary -> #fillRect:lprc:hbr:;
 	add: #UserLibrary -> #findWindow:lpWindowName:;
 	add: #UserLibrary -> #flashWindow:bInvert:;
 	add: #UserLibrary -> #flashWindowEx:;
 	add: #UserLibrary -> #frameRect:lprc:hbr:;
+	add: #UserLibrary -> #getAncestor:gaFlags:;
 	add: #UserLibrary -> #getCapture;
 	add: #UserLibrary -> #getClassName:lpClassName:nMaxCount:;
 	add: #UserLibrary -> #getClientRect:lpRect:;
 	add: #UserLibrary -> #getClipboardData:;
 	add: #UserLibrary -> #getClipboardFormatName:lpszFormatName:cchMaxCount:;
+	add: #UserLibrary -> #getCursor;
 	add: #UserLibrary -> #getCursorPos:;
+	add: #UserLibrary -> #getDC;
 	add: #UserLibrary -> #getDC:;
 	add: #UserLibrary -> #getDCEx:hrgnClip:flags:;
 	add: #UserLibrary -> #getFocus;
 	add: #UserLibrary -> #getForegroundWindow;
 	add: #UserLibrary -> #getIconInfo:piconinfo:;
 	add: #UserLibrary -> #getLastActivePopup:;
-	add: #UserLibrary -> #getLastInputInfo;
 	add: #UserLibrary -> #getLastInputInfo:;
 	add: #UserLibrary -> #getMenuInfo:lpcmi:;
 	add: #UserLibrary -> #getNextDlgGroupItem:hCtl:bPrevious:;
@@ -284,6 +291,8 @@ package methodNames
 	add: #UserLibrary -> #getTopWindow:;
 	add: #UserLibrary -> #getUpdateRect:lpRect:bErase:;
 	add: #UserLibrary -> #getWindow:uCmd:;
+	add: #UserLibrary -> #getWindowDC:;
+	add: #UserLibrary -> #getWindowLong:nIndex:;
 	add: #UserLibrary -> #getWindowLongPtr:nIndex:;
 	add: #UserLibrary -> #getWindowPlacement:lpwndpl:;
 	add: #UserLibrary -> #getWindowRect:lpRect:;
@@ -296,11 +305,15 @@ package methodNames
 	add: #UserLibrary -> #invalidate:lpRect:bErase:;
 	add: #UserLibrary -> #invalidateRgn:hRgn:bErase:;
 	add: #UserLibrary -> #invertRect:lprc:;
+	add: #UserLibrary -> #isChild:hWnd:;
 	add: #UserLibrary -> #isClipboardFormatAvailable:;
 	add: #UserLibrary -> #isDialogMessage:lpMsg:;
+	add: #UserLibrary -> #isIconic:;
+	add: #UserLibrary -> #isZoomed:;
 	add: #UserLibrary -> #loadAccelerators:lpTableName:;
 	add: #UserLibrary -> #loadCursorFromFile:;
 	add: #UserLibrary -> #loadIcon:lpIconName:;
+	add: #UserLibrary -> #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:;
 	add: #UserLibrary -> #loadMenu:lpMenuName:;
 	add: #UserLibrary -> #lockWindowUpdate:;
 	add: #UserLibrary -> #makeDragList:;
@@ -311,13 +324,18 @@ package methodNames
 	add: #UserLibrary -> #redrawWindow:lprcUpdate:hrgnUpdate:flags:;
 	add: #UserLibrary -> #registerClass:;
 	add: #UserLibrary -> #registerClipboardFormat:;
+	add: #UserLibrary -> #registerHotKey:id:fsModifiers:vk:;
 	add: #UserLibrary -> #registerWindowMessage:;
 	add: #UserLibrary -> #releaseCapture;
+	add: #UserLibrary -> #releaseDC:;
+	add: #UserLibrary -> #releaseDC:hDC:;
 	add: #UserLibrary -> #removeMenu:uPosition:uFlags:;
 	add: #UserLibrary -> #removeProp:lpString:;
 	add: #UserLibrary -> #screenToClient:lpPoint:;
 	add: #UserLibrary -> #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:;
 	add: #UserLibrary -> #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:;
+	add: #UserLibrary -> #sendMessage:msg:wParam:lpParam:;
+	add: #UserLibrary -> #sendMessage:msg:wpParam:lpParam:;
 	add: #UserLibrary -> #setCapture:;
 	add: #UserLibrary -> #setClassLong:nIndex:dwNewLong:;
 	add: #UserLibrary -> #setClipboardData:hMem:;
@@ -339,10 +357,12 @@ package methodNames
 	add: #UserLibrary -> #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:;
 	add: #UserLibrary -> #showCursor:;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
+	add: #UserLibrary -> #systemParametersInfo:uiParam:pvParam:fWinIni:;
 	add: #UserLibrary -> #trackMouseEvent:;
 	add: #UserLibrary -> #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:;
 	add: #UserLibrary -> #translateAccelerator:haccl:lpmsg:;
 	add: #UserLibrary -> #unregisterClass:hInstance:;
+	add: #UserLibrary -> #unregisterHotKey:id:;
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
 	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
@@ -1292,16 +1312,24 @@ icon
 
 !InputState methodsFor!
 
+getLastInputInfo
+	| lastInputInfo |
+	lastInputInfo := LASTINPUTINFO new.
+	^(UserLibrary default getLastInputInfo: lastInputInfo)
+		ifTrue: [lastInputInfo dwTime]
+		ifFalse: [UserLibrary default systemError]!
+
 userSessionIdleMs
-"
-	(Delay forSeconds: 1) wait. SessionManager inputState userSessionIdleMs.
-"
+	"Answer the <integer> number of milliseconds that the user session has been idle.
+		(Delay forSeconds: 1) wait. SessionManager inputState userSessionIdleMs.
+	"
+
 	| currentTime lastInputTime |
 	currentTime := KernelLibrary default getTickCount.
-	lastInputTime := UserLibrary default getLastInputInfo.
+	lastInputTime := self getLastInputInfo.
 	currentTime < lastInputTime ifTrue: [^currentTime].	"In case of 49.7-day wrap, we understate the idle time"
-	^currentTime - lastInputTime
-! !
+	^currentTime - lastInputTime! !
+!InputState categoriesFor: #getLastInputInfo!helpers!private! !
 !InputState categoriesFor: #userSessionIdleMs!idling!public! !
 
 !KernelLibrary methodsFor!
@@ -1398,6 +1426,36 @@ loadWithContext: context forEdit: aBoolean
 !ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
 !ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
 !ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
+
+!ShlwapiLibrary methodsFor!
+
+colorHLSToRGB: wHue wLuminance: wLuminance wSaturation: wSaturation 
+	"Invoke the ColorHLSToRGB() function of the module wrapped by the receiver.
+	Helpstring: Converts colors from hue-luminance-saturation (HLS) format to RGB format.
+
+	COLORREF ColorHLSToRGB(      
+		WORD wHue,
+		WORD wLuminance,
+		WORD wSaturation
+		);"
+
+	<stdcall: dword ColorHLSToRGB word word word>
+	^self invalidCall!
+
+colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSaturation
+	"Invoke the ColorRGBToHLS() function of the module wrapped by the receiver.
+	Helpstring: Converts colors from RGB to hue-luminance-saturation (HLS) format
+
+		void __stdcall ColorRGBToHLS(
+			COLORREF clrRGB,
+			WORD* pwHue,
+			WORD* pwLuminance,
+			WORD* pwSaturation);"
+
+	<stdcall: void ColorRGBToHLS dword word* word* word*>
+	^self invalidCall! !
+!ShlwapiLibrary categoriesFor: #colorHLSToRGB:wLuminance:wSaturation:!**auto generated**!public! !
+!ShlwapiLibrary categoriesFor: #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:!**auto generated**!public! !
 
 !String methodsFor!
 
@@ -1628,6 +1686,15 @@ destroyAcceleratorTable: hAcceleratorTable
 	<stdcall: bool DestroyAcceleratorTable handle>
 	^self invalidCall!
 
+destroyIcon: hIcon
+	"Destroy the specified icon.
+		BOOL DestroyIcon(
+  			HICON hIcon 	// handle to icon to destroy
+		);"
+
+	<stdcall: bool DestroyIcon handle>
+	^self invalidCall!
+
 destroyMenu: hMenu
 	"Destroy the specified menu.
 		BOOL DestroyMenu(
@@ -1786,6 +1853,19 @@ enumClipboardFormats: knownFormat
 	<stdcall: dword EnumClipboardFormats dword>
 	^self invalidCall!
 
+enumWindows: aCallbackThunk lParam: lParam
+	"Enumerate all top-level windows on the screen by passing the handle of each window, in turn, to 
+	the callback function thunk aCallbackThunk. EnumWindows continues until the last top-level window 
+	is enumerated or the callback function returns false.
+
+		BOOL EnumWindows(
+			WNDENUMPROC lpEnumFunc,	// pointer to callback function
+			LPARAM lParam 	// application-defined value
+		);"
+
+	<stdcall: bool EnumWindows lpvoid dword>
+	^self invalidCall!
+
 fillRect: hdc lprc: aRECT hbr: hBrush
 	"Fill a rectangle using the specified brush. Left and top borders are inclusive, 
 	right and bottom exclusive.
@@ -1827,6 +1907,17 @@ frameRect: hdc lprc: aRECT hbr: hBrush
 		);"
 
 	<stdcall: bool FrameRect handle RECT* handle>
+	^self invalidCall!
+
+getAncestor: hwnd gaFlags: gaFlags
+	"Invoke the GetAncestor() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a handle to an ancestor of the specified window.
+
+		HWND __stdcall GetAncestor(
+			[in]HWND HWND,
+			[in]UINT gaFlags);"
+
+	<stdcall: handle GetAncestor handle dword>
 	^self invalidCall!
 
 getCapture
@@ -1881,6 +1972,13 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 	<stdcall: sdword GetClipboardFormatNameA dword lpstr sdword>
 	^self invalidCall!
 
+getCursor
+	"Retrieve the handle of the current system cursor.
+		HCURSOR GetCursor(VOID)."
+
+	<stdcall: handle GetCursor>
+	^self invalidCall!
+
 getCursorPos: aPOINT
 	"Retrieve the cursor's position, in screen coordinates. Answer whether the request succeeds.
 		BOOL GetCursorPos(
@@ -1889,6 +1987,16 @@ getCursorPos: aPOINT
 
 	<stdcall: bool GetCursorPos POINTL* >
 	^self invalidCall!
+
+getDC
+	"Answer a DC for drawing on the desktop.
+	N.B. This is one half of the <dcSource> protocol, and must be matched with 
+	a call to #releaseDC: to delete the DC.
+		dc := self getDC.
+		self releaseDC: dc.
+	"
+
+	^self getWindowDC: self getDesktopWindow!
 
 getDC: aWindowHandle
 	"Answer the handle of a display device context (DC) which can be used to draw
@@ -1943,17 +2051,6 @@ getLastActivePopup: aHandle
 
 	<stdcall: handle GetLastActivePopup handle>
 	^self invalidCall!
-
-getLastInputInfo
-"
-	UserLibrary default getLastInputInfo.
-"
-	| flag lastInputInfo lastInputTime |
-	lastInputInfo := LASTINPUTINFO new.
-	flag := UserLibrary default getLastInputInfo: lastInputInfo.
-	flag ifFalse: [self error: 'Error obtaining last input time'].
-	lastInputTime := lastInputInfo dwTime.
-	^lastInputTime!
 
 getLastInputInfo: plii
 	"Retrieves the time of the last input event.
@@ -2054,6 +2151,37 @@ getWindow: hWnd uCmd: flags
 		);"
 
 	<stdcall: handle GetWindow handle dword>
+	^self invalidCall!
+
+getWindowDC: aWindowHandle
+	"Answer the handle of a display device context (DC) which can be used to draw
+	in the entire non-client area of the specified window. GetWindowDC assigns 
+	default attributes to the window device context each time it retrieves the 
+	device context. Previous attributes are lost. 
+
+		HDC GetWindowDC(HWND hWnd);"
+
+	<stdcall: handle GetWindowDC handle>
+	^self invalidCall!
+
+getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset 
+	"Answer various signed 32-bit integer values retrieved from the window with handle, aWindowHandle.
+	If an unsigned value is required, use getWindowULong:nIndex:
+
+		LONG GetWindowLong(
+			HWND hWnd, // handle of window 
+			int nIndex // offset of value to retrieve 
+		);
+
+	Valid offsets are in the range 0 to the number of bytes of extra window memory, minus the
+	size of an int (4), or one of the following values: 
+
+		GWL_EXSTYLE Extended window styles (WS_EX_XXX) 
+		GWL_STYLE Window styles (WS_XXX) 
+
+	Answers 0 if the function fails."
+
+	<stdcall: sdword GetWindowLongA handle sdword>
 	^self invalidCall!
 
 getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset 
@@ -2211,6 +2339,13 @@ invertRect: hdc lprc: aRECT
 	<stdcall: bool InvertRect handle RECT* >
 	^self invalidCall!
 
+isChild: hWndParent hWnd: hWnd
+	"Answer whether the window identified by the handle, hWnd, is 
+	a child of the window identified by the handle, hWndParent."
+
+	<stdcall: bool IsChild handle handle>
+	^self invalidCall!
+
 isClipboardFormatAvailable: format
   	"Answer whether the clipboard contains data in the specified format. 
 	
@@ -2228,6 +2363,24 @@ isDialogMessage: aHandle lpMsg: aMSG
 		);"
 
 	<stdcall: bool IsDialogMessageA handle MSG* >
+	^self invalidCall!
+
+isIconic: aWindowHandle
+	"Answer whether the specified window is iconic (minimized). 
+		BOOL IsIconic(
+			HWND hWnd 	// handle of window
+		);"
+
+	<stdcall: bool IsIconic handle>
+	^self invalidCall!
+
+isZoomed: aWindowHandle
+	"Answer wether a window is zoomed (maximized). See also #isIconic:.
+		BOOL IsZoomed(
+			HWND hWnd 	// handle of window
+		);"
+
+	<stdcall: bool IsZoomed handle>
 	^self invalidCall!
 
 loadAccelerators: anExternalHandle lpTableName: anIntegerOrString
@@ -2265,6 +2418,20 @@ loadIcon: anInstanceHandle lpIconName: anIntegerID
 	<stdcall: handle LoadIconA handle lpvoid>
 	^self invalidCall
 !
+
+loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad: flags
+	"Load an icon, cursor, or bitmap.
+		HANDLE LoadImage(
+			HINSTANCE hinst, 	// handle of the instance that contains the image
+			LPCTSTR lpszName,	// name or identifier of image
+			UINT uType,		// type of image
+			int cxDesired,		// desired width
+			int cyDesired,		// desired height
+			UINT fuLoad		// load flags
+		);"
+
+	<stdcall: handle LoadImageA handle lpvoid dword sdword sdword dword>
+	^self invalidCall!
 
 loadMenu: anExternalHandle lpMenuName: anIntegerOrString
 	"Load the specified menu from the resources of the application identified
@@ -2368,6 +2535,18 @@ registerClipboardFormat: formatName
 	<stdcall: dword RegisterClipboardFormatA lpstr>
 	^self invalidCall!
 
+registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: anIntegerVk
+	"Define a hot key for the current thread.
+		BOOL RegisterHotKey(
+		  	HWND  hWnd,		// window to receive hot-key notification
+			int  id,			// identifier of hot key
+			UINT  fsModifiers,	// key-modifier flags
+			UINT  vk 			// virtual-key code
+		);"
+
+	<stdcall: bool RegisterHotKey handle sdword dword dword>
+	^self invalidCall!
+
 registerWindowMessage: aString
 	"Defines a new window message that is guaranteed to be unique system wide.
 
@@ -2384,6 +2563,28 @@ releaseCapture
   
 	<stdcall: bool ReleaseCapture>
 	^self invalidCall!
+
+releaseDC: hDC
+	"Release the specified device context. This is the second half of the 'DC source' protocol,
+	and is intended to release the desktop DCs created by the receiver's implementation of #getDC.
+	Answer whether the DC was indeed released."
+
+	^(self 
+		releaseDC: self getDesktopWindow
+		hDC: hDC asParameter) == 1!
+
+releaseDC: hWnd hDC: hDC
+	"Releases a device context (DC) (if a common or window device context -
+	class and private DCs are unaffected).
+
+		int ReleaseDC(
+			HWND hWnd,	// handle of window 
+			HDC hDC 		// handle of device context  
+		);"
+
+	<stdcall: sdword ReleaseDC handle handle>
+	^self invalidCall
+!
 
 removeMenu: aMenu uPosition: idOrPos uFlags: flags
 	"Delete a menu item from the specified menu. If the menu item activates a pop-up menu, 
@@ -2452,6 +2653,20 @@ sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: w
 
 	<stdcall: uintptr SendDlgItemMessageA handle sdword dword uintptr intptr>
 	^self invalidCall!
+
+sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
+	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
+	to pointer."
+
+	<stdcall: intptr SendMessageA handle dword uintptr lpvoid>
+	^self invalidCall !
+
+sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
+	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
+	and wParam to pointers."
+
+	<stdcall: intptr SendMessageA handle dword lpvoid lpvoid>
+	^self invalidCall !
 
 setCapture: aWindowHandle
 	"Set the mouse capture to the specified window. Once a window has captured the mouse, it receivers all
@@ -2720,6 +2935,18 @@ subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	<stdcall: bool SubtractRect RECT* RECT* RECT*>
 	^self invalidCall!
 
+systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
+	"
+	BOOL SystemParametersInfo(
+		UINT uiAction,	// system parameter to query or set
+		UINT uiParam,	// depends on action to be taken
+		PVOID pvParam,	// depends on action to be taken
+		UINT fWinIni 	// user profile update flag
+	);"
+
+	<stdcall: bool SystemParametersInfoA dword dword lpvoid dword>
+	^self invalidCall!
+
 trackMouseEvent: lpEventTrack 
 	"Invoke the TRACKMOUSEEVENT() function of the module wrapped by the receiver.
 	Helpstring: Posts messages when the mouse pointer leaves a window or hovers over a window for a specified amount of time.
@@ -2774,6 +3001,10 @@ unregisterClass: classAtomOrStringName hInstance: instanceHandle
 		);"
 
 	<stdcall: bool UnregisterClassA lpvoid handle>
+	^self invalidCall!
+
+unregisterHotKey: aWindowHandle id: anIntegerId
+	<stdcall: bool UnregisterHotKey handle sdword>
 	^self invalidCall!
 
 validate: hWnd lpRect: aRECT
@@ -2835,6 +3066,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
+!UserLibrary categoriesFor: #destroyIcon:!public!win32 functions-icon! !
 !UserLibrary categoriesFor: #destroyMenu:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
@@ -2848,24 +3080,27 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
 !UserLibrary categoriesFor: #findWindow:lpWindowName:!public!win32 functions-filled shape! !
 !UserLibrary categoriesFor: #flashWindow:bInvert:!public!win32 functions-error handling! !
 !UserLibrary categoriesFor: #flashWindowEx:!public!win32 functions-error handling! !
 !UserLibrary categoriesFor: #frameRect:lprc:hbr:!public!win32 functions-filled shape! !
+!UserLibrary categoriesFor: #getAncestor:gaFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #getCapture!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getClientRect:lpRect:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getClipboardData:!public!win32 functions-clipboard! !
 !UserLibrary categoriesFor: #getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #getCursor!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
+!UserLibrary categoriesFor: #getDC!operations!public! !
 !UserLibrary categoriesFor: #getDC:!public!win32 functions-device context! !
 !UserLibrary categoriesFor: #getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
 !UserLibrary categoriesFor: #getFocus!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getIconInfo:piconinfo:!public!win32 functions-icon! !
 !UserLibrary categoriesFor: #getLastActivePopup:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getLastInputInfo!public! !
 !UserLibrary categoriesFor: #getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
 !UserLibrary categoriesFor: #getMenuInfo:lpcmi:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #getNextDlgGroupItem:hCtl:bPrevious:!public!win32 functions-window! !
@@ -2876,6 +3111,8 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #getTopWindow:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getUpdateRect:lpRect:bErase:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #getWindow:uCmd:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowDC:!public!win32 functions-device context! !
+!UserLibrary categoriesFor: #getWindowLong:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getWindowLongPtr:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getWindowPlacement:lpwndpl:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
@@ -2888,11 +3125,15 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #invertRect:lprc:!public!win32 functions-filled shape! !
+!UserLibrary categoriesFor: #isChild:hWnd:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #isClipboardFormatAvailable:!public!win32 functions-clipboard! !
 !UserLibrary categoriesFor: #isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
+!UserLibrary categoriesFor: #isIconic:!public!win32 functions-icon! !
+!UserLibrary categoriesFor: #isZoomed:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
 !UserLibrary categoriesFor: #loadCursorFromFile:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #loadIcon:lpIconName:!public!win32 functions-icon! !
+!UserLibrary categoriesFor: #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
 !UserLibrary categoriesFor: #loadMenu:lpMenuName:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #lockWindowUpdate:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #makeDragList:!public!win32 functions-list box! !
@@ -2903,13 +3144,18 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #redrawWindow:lprcUpdate:hrgnUpdate:flags:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #registerClass:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #registerClipboardFormat:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #registerWindowMessage:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #releaseCapture!public!win32 functions-mouse input! !
+!UserLibrary categoriesFor: #releaseDC:!operations!public! !
+!UserLibrary categoriesFor: #releaseDC:hDC:!public!win32 functions-device context! !
 !UserLibrary categoriesFor: #removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #removeProp:lpString:!public!win32 functions-window property! !
 !UserLibrary categoriesFor: #screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
 !UserLibrary categoriesFor: #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
+!UserLibrary categoriesFor: #sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
+!UserLibrary categoriesFor: #sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #setCapture:!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setClipboardData:hMem:!public!win32 functions-clipboard! !
@@ -2931,10 +3177,12 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
+!UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !
 !UserLibrary categoriesFor: #unregisterClass:hInstance:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !

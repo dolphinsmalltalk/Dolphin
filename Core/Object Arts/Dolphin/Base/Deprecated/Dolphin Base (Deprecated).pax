@@ -59,6 +59,7 @@ package methodNames
 	add: #Package -> #script:put:;
 	add: #ShlwapiLibrary -> #pathStripPath:;
 	add: #String -> #asDword;
+	add: #WinMMLibrary -> #timeGetTime;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
 	add: 'ExternalCallback class' -> #receiver:selector:;
@@ -443,6 +444,14 @@ asDword
 	#deprecated.
 	^self yourAddress! !
 !String categoriesFor: #asDword!converting!public! !
+
+!WinMMLibrary methodsFor!
+
+timeGetTime
+	<stdcall: dword timeGetTime>
+	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
+	^self invalidCall! !
+!WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
 
 "End of package definition"!
 
