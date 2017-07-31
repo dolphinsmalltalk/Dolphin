@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #STARTUPINFO
 	instanceVariableNames: 'title desktop stdin stdout stderr'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STARTUPINFO guid: (GUID fromString: '{F44C9146-2B3F-11D3-8368-7A8B5A000000}')!
+STARTUPINFO guid: (GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
 STARTUPINFO comment: ''!
 !STARTUPINFO categoriesForClass!External-Data-Structured-Win32! !
 !STARTUPINFO methodsFor!

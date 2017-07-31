@@ -157,33 +157,6 @@ createMutex: lpMutexAttributes bInitialOwner: bInitialOwner lpName: lpName
 	<stdcall: handle CreateMutexA void* bool lpstr>
 	^self invalidCall!
 
-createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThreadAttributes: ta
-	bInheritsHandles: ih dwCreationFlags: flags lpEnvironment: env lpCurrentDirectory: cd
-	lpStartupInfo: si lpProcessInformation: pi
-
-	"The CreateProcess function creates a new process and its primary thread. 
-	The new process runs the specified executable file. 
-
-	BOOL CreateProcess(
-		LPCTSTR lpApplicationName,  // name of executable module
-		LPTSTR lpCommandLine,       // command line string
-		LPSECURITY_ATTRIBUTES lpProcessAttributes,  // process security attributes
-		LPSECURITY_ATTRIBUTES lpThreadAttributes,   // thread security attributes
-		BOOL bInheritHandles,  // handle inheritance flag
-		DWORD dwCreationFlags, // creation flags
-		LPVOID lpEnvironment,  // pointer to new environment block
-		LPCTSTR lpCurrentDirectory,   // pointer to current directory name
-		LPSTARTUPINFO lpStartupInfo,  // pointer to STARTUPINFO
-		LPPROCESS_INFORMATION lpProcessInformation  // pointer to PROCESS_INFORMATION
-	);
-
- 	Please see Win32 SDK help for more information."
-
-	<stdcall: bool CreateProcessA lpstr lpstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES*
-		bool dword lpvoid lpstr STARTUPINFO* PROCESS_INFORMATION*>
-
-	^self invalidCall!
-
 debugBreak
 	"Invoke the DebugBreak() function of the module wrapped by the receiver.
 	Helpstring: Break into a debugger
@@ -1679,7 +1652,6 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #debugBreak!**auto generated**!public!win32 functions-debugging! !
 !KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
