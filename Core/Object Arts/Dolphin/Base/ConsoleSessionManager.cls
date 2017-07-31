@@ -93,6 +93,11 @@ startUI
 
 	self inputState consoleStartup!
 
+traceStream
+	"Answer a <puttableStream> onto the session's trace output device."
+
+	^self stderr!
+
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
 	Depending on the user response and the resumability of the exception, either 
@@ -116,6 +121,7 @@ unhandledException: anException
 !ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
 !ConsoleSessionManager categoriesFor: #openConsoleStreams!operations!public! !
 !ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
+!ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
 !ConsoleSessionManager categoriesFor: #unhandledException:!exceptions!private! !
 
 !ConsoleSessionManager class methodsFor!

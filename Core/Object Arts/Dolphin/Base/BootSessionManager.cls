@@ -236,9 +236,11 @@ shellOpened: aShell
 !
 
 shutdown
-	"Perform shutdown operations before the VM puts out the lights."
+	"Perform shutdown operations before the VM puts out the lights. Note that if the boot
+	session is successful, this will never be reached since the BootSessionManager will have
+	been replaced with a DevelopmentSessionManager before the booted image exits."
 
-	self trace: 'Shutting down boot session', String lineDelimiter.
+	self traceLine: 'Shutting down boot session'.
 	super shutdown!
 
 snapshot
@@ -253,13 +255,10 @@ startUI
 
 	self inputState consoleStartup!
 
-trace: aString
-	"Append aString to the trace device.
-	Use the stderr stream if available, otherwise the OS debug trace device (implemented in superclass)"
+traceStream
+	"Answer a <puttableStream> onto the session's trace output device."
 
-	stdioStreams isNil
-		ifTrue: [super trace: aString]
-		ifFalse: [self stderr nextPutAll: aString; flush]!
+	^stdioStreams isNil ifTrue: [super traceStream] ifFalse: [self stderr]!
 
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
@@ -304,7 +303,7 @@ updateBootImage
 !BootSessionManager categoriesFor: #shutdown!operations-shutdown!public! !
 !BootSessionManager categoriesFor: #snapshot!operations-saving!private! !
 !BootSessionManager categoriesFor: #startUI!operations-startup!public! !
-!BootSessionManager categoriesFor: #trace:!operations-logging!public! !
+!BootSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
 !BootSessionManager categoriesFor: #unhandledException:!exceptions!private! !
 !BootSessionManager categoriesFor: #updateBootImage!operations-startup!public! !
 

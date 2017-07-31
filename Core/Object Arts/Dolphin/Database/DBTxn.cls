@@ -78,12 +78,13 @@ transcriptMessage: aString
 	session's trace device. In a development session this is the Transcript,
 	and in a runtime session it is typically the debug trace device."
 
-	creator notNil ifTrue: [
-		SessionManager current trace: 
-			(String writeStream
-				print: self; space; 
-				nextPutAll: aString; cr;
-				contents)]! !
+	creator notNil
+		ifTrue: 
+			[(SessionManager current traceStream)
+				print: self;
+				space;
+				nextPutAll: aString;
+				cr]! !
 !DBTxn categoriesFor: #beReadOnly!accessing!public! !
 !DBTxn categoriesFor: #beReadWrite!accessing!public! !
 !DBTxn categoriesFor: #commit!operations!public! !

@@ -2,7 +2,7 @@
 
 Stream subclass: #DebugTraceStream
 	instanceVariableNames: 'buffer bufferProtect'
-	classVariableNames: ''
+	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DebugTraceStream guid: (GUID fromString: '{42675a9e-7ef6-4e38-8ff1-c6cd5d1563cc}')!
@@ -68,6 +68,11 @@ initialize
 	buffer := String writeStream.
 	bufferProtect := Mutex new.!
 
+isEmpty
+	"Answer whether the sets of both past and future sequence values are empty."
+
+	^false!
+
 isWriteable
 	"Answer whether the receiver can be written to (i.e. it implements the 
 	puttableStream protocol)."
@@ -113,12 +118,12 @@ print: anObject
 space
 	"Append a space to the receiver."
 
-	self nextPutAll: ' '!
+	self nextPutAll: $\x20!
 
 tab
 	"Store a tab character as the next element of the receiver."
 
-	self nextPutAll: String tab!
+	self nextPutAll: $\t!
 
 tab: tabCount
 	"Append the specified number of tabs to the receiver."
@@ -133,6 +138,7 @@ tab: tabCount
 !DebugTraceStream categoriesFor: #display:!printing!public! !
 !DebugTraceStream categoriesFor: #flush!accessing!public! !
 !DebugTraceStream categoriesFor: #initialize!initializing!private! !
+!DebugTraceStream categoriesFor: #isEmpty!public! !
 !DebugTraceStream categoriesFor: #isWriteable!public!testing! !
 !DebugTraceStream categoriesFor: #next!accessing!public! !
 !DebugTraceStream categoriesFor: #next:put:!operations!public! !
@@ -144,17 +150,17 @@ tab: tabCount
 !DebugTraceStream categoriesFor: #tab!accessing!public! !
 !DebugTraceStream categoriesFor: #tab:!accessing!public! !
 
+DebugTraceStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
+
 !DebugTraceStream class methodsFor!
 
 current
-	^Trace!
+	^Current!
 
 initialize
-	Trace := self basicNew initialize!
-
-uninitialize
-	Trace := nil.! !
+	Current := self basicNew initialize.
+	Trace := Current
+! !
 !DebugTraceStream class categoriesFor: #current!instance creation!public! !
 !DebugTraceStream class categoriesFor: #initialize!initializing!public! !
-!DebugTraceStream class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 
