@@ -70,7 +70,6 @@ package methodNames
 	add: #Dictionary -> #replaceAll:with:;
 	add: #Exception -> #exitWith:;
 	add: #Exception -> #itcDescription;
-	add: #Exception -> #printTraceOn:depth:;
 	add: #Exception -> #signalWithMessage:;
 	add: #FileStream -> #isFileStream;
 	add: #Integer -> #asDecimalOrFloat;
@@ -651,25 +650,10 @@ exitWith: anObject
 itcDescription
 	^self description!
 
-printTraceOn: puttableStream depth: depth 
-	"Write the receiver's description, and a stack trace from the point
-	where the receiver was raised to puttableStream. This is intended for logging 
-	error details.
-	N.B. This only works where the receiver was signalled within the active process, 
-	because Exceptions do not record the process in which they are signalled."
-
-	puttableStream
-		print: self;
-		cr;
-		cr;
-		nextPutAll: (self stackTrace: depth);
-		cr!
-
 signalWithMessage: aString 
 	^self signal: aString! !
 !Exception categoriesFor: #exitWith:!handler responses!public! !
 !Exception categoriesFor: #itcDescription!displaying!public! !
-!Exception categoriesFor: #printTraceOn:depth:!printing!public! !
 !Exception categoriesFor: #signalWithMessage:!displaying!public! !
 
 !Exception class methodsFor!

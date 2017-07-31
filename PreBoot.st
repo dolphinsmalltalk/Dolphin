@@ -198,3 +198,22 @@ Object subclass: #InputState
 	classInstanceVariableNames: 'maxIdleSleep'!
 
 SessionManager inputState instVarAt: 10 put: 16rFF!
+
+!StackFrame methodsFor!
+
+callstackDo: aMonadicValuable depth: anInteger
+	| frame i |
+	frame := self.
+	i := anInteger.
+	[i ~~ 0 and: [frame notNil and: [frame method selector notNil]]] whileTrue: 
+			[aMonadicValuable value: frame.
+			frame := frame sender.
+			i := i - 1]!
+
+printStackOn: aPuttableStream depth: anInteger
+	self callstackDo: 
+			[:frame |
+			aPuttableStream
+				display: frame;
+				cr]
+		depth: anInteger! !

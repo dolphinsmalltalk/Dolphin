@@ -3643,16 +3643,14 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 				resumable: aBoolean].
 	traceStream := String writeStream: 512.
 	
-	[self
-		stackFramesFrom: aStackFrame
-		depth: 50
-		do: 
+	[aStackFrame callstackDo: 
 			[:frame |
 			frame method selector == #wmPaint:wParam:lParam:
 				ifTrue: [frame receiver validate	"prevent recusive paint walkback"].
 			traceStream
 				display: frame;
-				cr]]
+				cr]
+		depth: 50]
 			on: Error
 			do: [:e | e notify].
 
@@ -4601,14 +4599,14 @@ debugIpFor: debugMethod
 	interp next.
 	^interp ip!
 
-findIP: anInteger inTextMap: aTextMap 
-    	"Private - Answer the index of the source map entry corresponding to the
+findIP: anInteger inTextMap: aTextMap
+	"Private - Answer the index of the source map entry corresponding to the
     	specified <integer> ip. The key of each text map entry identifies the first IP of the code generated for the range
 	of source which is held as the <interval> value."
-    
-    	| i size |
-    	i := 1.
-    	size := aTextMap size.
+
+	| i size |
+	i := 1.
+	size := aTextMap size.
 	[i < size and: [anInteger > (aTextMap at: i) key]] whileTrue: [i := i + 1].
 	^i!
 

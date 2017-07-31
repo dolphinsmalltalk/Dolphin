@@ -84,16 +84,13 @@ profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean
 				sampleSet update].
 	^answer!
 
-sampleProcess: aProcess forSet: aProfilerSampleSet elapsedTime: anInteger ignoring: ignoreInteger 
+sampleProcess: aProcess forSet: aProfilerSampleSet elapsedTime: anInteger ignoring: ignoreInteger
 	"Add the required stack frames to the sample set"
 
 	| topFrame size |
 	topFrame := aProcess topFrame.
 	size := (aProcess stackDepthFrom: topFrame) - ignoreInteger.
-	size > 0 
-		ifTrue: 
-			[aProfilerSampleSet addSample: (aProcess stackFramesFrom: aProcess topFrame depth: size)
-				elapsedTime: anInteger]!
+	size > 0 ifTrue: [aProfilerSampleSet addSample: (topFrame getFrames: size) elapsedTime: anInteger]!
 
 samplingInterval: anInteger 
 	"Set the sampling interval, the delay between samples being taken, to anInteger"

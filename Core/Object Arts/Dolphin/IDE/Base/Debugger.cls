@@ -1008,7 +1008,7 @@ populateStackModel
 
 	"Suppress selection reset event caused by refreshing the list"
 
-	stackPresenter noEventsDo: [stackPresenter list: (process stackFramesFrom: topFrame depth: depth)].
+	stackPresenter noEventsDo: [stackPresenter list: (topFrame getFrames: depth)].
 	stackPresenter selectionOrNil: topFrame!
 
 prevIPOfFrame: aStackFrame 

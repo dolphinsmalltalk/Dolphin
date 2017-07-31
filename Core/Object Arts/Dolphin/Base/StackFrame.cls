@@ -145,6 +145,19 @@ bp: anInteger
 
 	self basicBP: (process spOfIndex: anInteger)!
 
+callstackDo: aMonadicValuable depth: anInteger
+	"Private - Walk the stack starting from this frame, to the maximum depth specificed by the <integer>
+	argument (or the entire stack if anInteger < 0), evaluating the <monadicValuable> argument
+	for each visited."
+
+	| frame i |
+	frame := self.
+	i := anInteger.
+	[i ~~ 0 and: [frame notNil and: [frame method selector notNil]]] whileTrue: 
+			[aMonadicValuable value: frame.
+			frame := frame sender.
+			i := i - 1]!
+
 debugPrintString
 	^self basicPrintString!
 
@@ -202,6 +215,16 @@ frameSize
 	"Private - Answer the size of a real stack frame (in Oops)."
 
 	^FrameSize!
+
+getFrames: anInteger
+	"Return the stack of frames starting from this one and back in sequence through
+	the callers to the maximum depth specificed by the <integer> argument (or the entire stack
+	if anInteger < 0)."
+
+	| answer |
+	answer := Array writeStream: 40.
+	self callstackDo: [:frame | answer nextPut: frame] depth: anInteger.
+	^answer contents!
 
 getOuter: anInteger 
 	| answer |
@@ -326,6 +349,14 @@ printOn: aStream
 		nextPutAll: ' @ ';
 		print: index!
 
+printStackOn: aPuttableStream depth: anInteger
+	self callstackDo: 
+			[:frame |
+			aPuttableStream
+				display: frame;
+				cr]
+		depth: anInteger!
+
 process
 	"Private - Answer the process for which the receiver is representing a stack frame"
 	
@@ -382,6 +413,12 @@ sp: anIntegerIndex
 
 	self basicSP: (process spOfIndex: anIntegerIndex)!
 
+stackTrace: anInteger
+	| stackStream |
+	stackStream := String writeStream: 25 * ((anInteger max: 0) min: 20).
+	[self printStackOn: stackStream depth: anInteger] on: Error do: [:e | e notify].
+	^stackStream contents!
+
 temp: depthInteger at: indexInteger 
 	"Private - Answer the stack temporary indexed, anInteger, from the receivers stack frame."
 
@@ -428,12 +465,14 @@ textMap
 !StackFrame categoriesFor: #basicSP:!accessing!private! !
 !StackFrame categoriesFor: #bp!accessing!private! !
 !StackFrame categoriesFor: #bp:!accessing!private! !
+!StackFrame categoriesFor: #callstackDo:depth:!private! !
 !StackFrame categoriesFor: #debugPrintString!public! !
 !StackFrame categoriesFor: #displayOn:!printing!public! !
 !StackFrame categoriesFor: #environment!accessing!private! !
 !StackFrame categoriesFor: #environment:!accessing!private! !
 !StackFrame categoriesFor: #frameAddress!accessing!private! !
 !StackFrame categoriesFor: #frameSize!constants!private! !
+!StackFrame categoriesFor: #getFrames:!public! !
 !StackFrame categoriesFor: #getOuter:!accessing!private! !
 !StackFrame categoriesFor: #hash!comparing!public! !
 !StackFrame categoriesFor: #homeContext!accessing!private! !
@@ -452,6 +491,7 @@ textMap
 !StackFrame categoriesFor: #method:!accessing!private! !
 !StackFrame categoriesFor: #outer!accessing!private! !
 !StackFrame categoriesFor: #printOn:!public! !
+!StackFrame categoriesFor: #printStackOn:depth:!public! !
 !StackFrame categoriesFor: #process!accessing!private! !
 !StackFrame categoriesFor: #process:!accessing!private! !
 !StackFrame categoriesFor: #receiver!accessing!private! !
@@ -461,6 +501,7 @@ textMap
 !StackFrame categoriesFor: #setProcess:index:!initializing!private! !
 !StackFrame categoriesFor: #sp!accessing!private! !
 !StackFrame categoriesFor: #sp:!accessing!private! !
+!StackFrame categoriesFor: #stackTrace:!printing!private! !
 !StackFrame categoriesFor: #temp:at:!accessing!private! !
 !StackFrame categoriesFor: #tempNames!accessing!development!private! !
 !StackFrame categoriesFor: #temps!accessing!development!private! !

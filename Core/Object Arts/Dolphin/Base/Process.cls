@@ -538,49 +538,11 @@ spOfIndex: anInteger
 
 	^(self yourAddress bitShift: -1) + ((anInteger + self class instSize - 1) * 2)!
 
-stackFramesFrom: startFrame depth: anInteger 
-	"Private - Answer a <sequencedReadableCollection> containing up to the first anInteger stack 
-	frames below the <StackFrame>, startFrame, in the receiver's stack (inclusive)."
-
-	| answer |
-	answer := OrderedCollection new: (anInteger min: 50).
-	self 
-		stackFramesFrom: startFrame
-		depth: anInteger
-		do: [:frame | answer addLast: frame].
-	^answer!
-
-stackFramesFrom: aStackFrame depth: depth do: operation 
-	"Private - Evaluate the <monadicValuable> operation for each of the receiver's stack frames
-	up to a depth of <integer> depth (inclusive, maximum), below aStackFrame."
-
-	| frame i |
-	frame := aStackFrame.
-	i := 0.
-	[i < depth and: [frame notNil and: [frame method selector notNil]]] whileTrue: 
-			[operation value: frame.
-			frame := frame sender.
-			i := i + 1]!
-
 stackTrace: anInteger
 	"Private - Answer a <readableString> containing a stack trace to the depth specified by the <integer>
 	argument."
 
-	^self stackTraceFrom: self topFrame depth: anInteger!
-
-stackTraceFrom: aStackFrame depth: anInteger 
-	"Private - Answer a <readableString> containing a stack trace up to the <integer> depth, anInteger,
-	or 50 frames, whichever is the smaller."
-
-	| stackStream |
-	stackStream := String writeStream: 25 * (anInteger min: 50).
-	
-	[(self stackFramesFrom: aStackFrame depth: anInteger) 
-		do: [:frame | frame displayOn: stackStream]
-		separatedBy: [stackStream cr]] 
-			on: Error
-			do: [:e | e notify].
-	^stackStream contents!
+	^self topFrame stackTrace: anInteger!
 
 state
 	"Private - Answer a symbol identifying the receiver's state."
@@ -765,10 +727,7 @@ topFrame
 !Process categoriesFor: #shutdown!private!states-changing! !
 !Process categoriesFor: #size!accessing!public! !
 !Process categoriesFor: #spOfIndex:!private!stack frames! !
-!Process categoriesFor: #stackFramesFrom:depth:!helpers!private! !
-!Process categoriesFor: #stackFramesFrom:depth:do:!helpers!private! !
 !Process categoriesFor: #stackTrace:!helpers!private! !
-!Process categoriesFor: #stackTraceFrom:depth:!helpers!private! !
 !Process categoriesFor: #state!private!states-changing! !
 !Process categoriesFor: #stbSaveOn:!binary filing!public! !
 !Process categoriesFor: #suspend!public!states-changing! !
