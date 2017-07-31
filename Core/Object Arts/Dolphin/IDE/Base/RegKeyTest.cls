@@ -108,7 +108,15 @@ testParentPath
 			self assert: key2 parentKey parentPath = 'Software\Object Arts'.
 			self assert: key2 parentKey pathFromRoot  = ('Software\Object Arts\', keyName).
 			key2 := key at: keyName, '\Leaf'].
-! !
+!
+
+testScintillaTextStyleSerialization
+	| styles rehydratedStyles |
+	styles := SmalltalkWorkspace textStyles asArray.
+	styles storeUnderRegKey: testKey as: 'testScintillaTextStyleSerialization'.
+	rehydratedStyles := Object fromRegKey: (testKey at: 'testScintillaTextStyleSerialization').
+	self deny: rehydratedStyles sameAs: styles.
+	self assert: rehydratedStyles equals: styles! !
 !RegKeyTest categoriesFor: #setUp!private!unit tests! !
 !RegKeyTest categoriesFor: #tearDown!private!unit tests! !
 !RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
@@ -116,4 +124,5 @@ testParentPath
 !RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
 !RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
 !RegKeyTest categoriesFor: #testParentPath!public!unit tests! !
+!RegKeyTest categoriesFor: #testScintillaTextStyleSerialization!public!unit tests! !
 
