@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 QWORD subclass: #LARGE_INTEGER
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-LARGE_INTEGER guid: (GUID fromString: '{87B4C630-026E-11D3-9FD7-00A0CC3E4A32}')!
+LARGE_INTEGER guid: (GUID fromString: '{87b4c630-026e-11d3-9fd7-00a0cc3e4a32}')!
 LARGE_INTEGER comment: '<LARGE_INTEGER> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 LARGE_INTEGER is used to represent signed 64-bit integers in conjunction with Win32 APIs. 

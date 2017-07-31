@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TIME_ZONE_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TIME_ZONE_INFORMATION guid: (GUID fromString: '{CEB846CE-F4DB-48FE-9FEC-02E637CBC4B4}')!
+TIME_ZONE_INFORMATION guid: (GUID fromString: '{ceb846ce-f4db-48fe-9fec-02e637cbc4b4}')!
 TIME_ZONE_INFORMATION comment: ''!
 !TIME_ZONE_INFORMATION categoriesForClass!Unclassified! !
 !TIME_ZONE_INFORMATION methodsFor!

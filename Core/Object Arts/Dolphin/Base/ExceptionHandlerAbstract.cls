@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExceptionHandlerAbstract
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
 	classVariableNames: 'RetryCookie'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExceptionHandlerAbstract guid: (GUID fromString: '{87B4C484-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExceptionHandlerAbstract guid: (GUID fromString: '{87b4c484-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExceptionHandlerAbstract comment: ''!
 !ExceptionHandlerAbstract categoriesForClass!Kernel-Exception Handling! !
 !ExceptionHandlerAbstract methodsFor!

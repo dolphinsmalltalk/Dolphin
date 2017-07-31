@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ArithmeticError subclass: #ZeroDivide
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ZeroDivide guid: (GUID fromString: '{87B4C563-026E-11D3-9FD7-00A0CC3E4A32}')!
+ZeroDivide guid: (GUID fromString: '{87b4c563-026e-11d3-9fd7-00a0cc3e4a32}')!
 ZeroDivide comment: 'ZeroDivide is the class of <Error> for representing attempts at integer division by zero.
 Floating point division by zero exceptions are raised as instances of <FloatingPointException>.
 

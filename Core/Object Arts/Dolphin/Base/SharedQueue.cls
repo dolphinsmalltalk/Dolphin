@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SharedQueue
-	instanceVariableNames: 'accessProtect valueAvailable contents '
+	instanceVariableNames: 'accessProtect valueAvailable contents'
 	classVariableNames: 'AbsentCookie'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-SharedQueue guid: (GUID fromString: '{87B4C4B8-026E-11D3-9FD7-00A0CC3E4A32}')!
+SharedQueue guid: (GUID fromString: '{87b4c4b8-026e-11d3-9fd7-00a0cc3e4a32}')!
 SharedQueue comment: ''!
 !SharedQueue categoriesForClass!Kernel-Objects! !
 !SharedQueue methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #VersionInfo
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VersionInfo guid: (GUID fromString: '{87B4C4CB-026E-11D3-9FD7-00A0CC3E4A32}')!
+VersionInfo guid: (GUID fromString: '{87b4c4cb-026e-11d3-9fd7-00a0cc3e4a32}')!
 VersionInfo comment: 'VersionInfo is a wrapper class to simplify access to Win32 DLL and EXE version information.
 
 For example:

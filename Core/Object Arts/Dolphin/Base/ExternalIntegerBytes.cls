@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ByteArray variableByteSubclass: #ExternalIntegerBytes
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalIntegerBytes guid: (GUID fromString: '{F5016870-059B-445B-A045-9E17EF13BEEC}')!
+ExternalIntegerBytes guid: (GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
 ExternalIntegerBytes comment: ''!
 !ExternalIntegerBytes categoriesForClass!External-Data-Unstructured! !
 !ExternalIntegerBytes methodsFor!

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalCallback subclass: #MessageCallback
 	instanceVariableNames: 'receiver selector closure'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MessageCallback guid: (GUID fromString: '{87B4C578-026E-11D3-9FD7-00A0CC3E4A32}')!
+MessageCallback guid: (GUID fromString: '{87b4c578-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageCallback comment: ''!
 !MessageCallback categoriesForClass!System-Support! !
 !MessageCallback methodsFor!

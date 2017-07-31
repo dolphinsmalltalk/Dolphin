@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CompiledMethod variableSubclass: #CompileFailedMethod
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CompileFailedMethod guid: (GUID fromString: '{87B4C545-026E-11D3-9FD7-00A0CC3E4A32}')!
+CompileFailedMethod guid: (GUID fromString: '{87b4c545-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompileFailedMethod comment: 'In certain situations (package loading, method dropping etc) a method compilation will fail and yet a stub CompileFailedMethod is still installed in the class. This stub is useful since it allows the original method source to be accessible via the browsers and allows category information to be maintained for the failed method.
 
 If you want to locate all of these compilation failures remaining in your image siimply evaluate:

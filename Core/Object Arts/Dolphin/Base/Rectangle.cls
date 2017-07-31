@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Rectangle
 	instanceVariableNames: 'origin corner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Rectangle guid: (GUID fromString: '{87B4C4AD-026E-11D3-9FD7-00A0CC3E4A32}')!
+Rectangle guid: (GUID fromString: '{87b4c4ad-026e-11d3-9fd7-00a0cc3e4a32}')!
 Rectangle comment: 'Instances of Rectangle represent a rectangular areas in a two dimensional Cartesian coordinate system. A Rectangle contains two Points; origin, which specifies the top left corner, and corner, which indicates the bottom right corner of the region described. 
 
 A Rectangle is typically created by sending the method #corner: to an instance of Point, although a number of other instance creation class methods are also provided:

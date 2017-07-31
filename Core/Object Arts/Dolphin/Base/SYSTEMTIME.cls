@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #SYSTEMTIME
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SYSTEMTIME guid: (GUID fromString: '{87B4C612-026E-11D3-9FD7-00A0CC3E4A32}')!
+SYSTEMTIME guid: (GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
 SYSTEMTIME comment: ''!
 !SYSTEMTIME categoriesForClass!Win32-Structs! !
 !SYSTEMTIME methodsFor!

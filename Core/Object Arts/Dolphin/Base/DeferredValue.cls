@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DeferredValue
 	instanceVariableNames: 'valueAvailable value exception'
 	classVariableNames: 'ValuePending'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DeferredValue guid: (GUID fromString: '{B2986BE9-3666-4CD8-8D87-C7E456F6DD95}')!
+DeferredValue guid: (GUID fromString: '{b2986be9-3666-4cd8-8d87-c7e456f6dd95}')!
 DeferredValue comment: 'A DeferredValue is a <niladicValuable> which is evaluated asynchronously in a background process, but which supplies its value synchronously on request, i.e. it blocks any sender of #value until the value is available.
 
 Instances of DeferredValue are typically created by sending the #deferredValue (calculate in background process forked at same priority as active process) and #deferredValueAt: (calculate in a background process at the specified priority) messages, but there is a class side instance creation protocol (#evaluate:[|with|#with:with:|withArguments:]at: which can be used to defer the calculation of other valuables.

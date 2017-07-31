@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DeadObject
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DeadObject guid: (GUID fromString: '{87B4C479-026E-11D3-9FD7-00A0CC3E4A32}')!
+DeadObject guid: (GUID fromString: '{87b4c479-026e-11d3-9fd7-00a0cc3e4a32}')!
 DeadObject comment: 'DeadObject is a singleton whose sole instance is used to mark the slots previously occuppied by dead objects in objects with weak references. This class serves no other purpose than to provide a unique ''Corpse'' object which prints in a recognisable form.
 
 N.B. It is not a good idea to create a new current DeadObject as this may break existing weak collection and/or confuse the VM.

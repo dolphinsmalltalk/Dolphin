@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 RelativeFileLocator subclass: #FolderRelativeFileLocator
 	instanceVariableNames: 'basePath'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-FolderRelativeFileLocator guid: (GUID fromString: '{E16E8B7E-EAC8-41ED-95F3-742C2FC7264A}')!
+FolderRelativeFileLocator guid: (GUID fromString: '{e16e8b7e-eac8-41ed-95f3-742c2fc7264a}')!
 FolderRelativeFileLocator comment: 'FolderRelativeFileLocator is the class of <FileLocator>s that can be used to map between an absolute path and a path relative to a configurable base directory.
 FolderRelativeFileLocators use absolute paths for files outside the local directory hierarchy below the base directory, and relative paths within their local directory hierarchy.
 

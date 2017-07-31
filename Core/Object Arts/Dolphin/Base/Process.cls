@@ -5,7 +5,7 @@ Link variableSubclass: #Process
 	classVariableNames: 'DefaultFPEMask DefaultMaxStack DefaultStack'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-Process guid: (GUID fromString: '{87B4C64E-026E-11D3-9FD7-00A0CC3E4A32}')!
+Process guid: (GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Process comment: 'A Process represents an individual thread of execution in the image.
 
 Note that the name "Process" is historic - a Smalltalk Process is much more similar to a "thread" than a true process, since all Processes share the same execution context (the image). Dolphin''s processes do not map directly onto native threads, but are "green" threads. The multi-threading system is implemented internally by the VM and image, with all "green" threads running within a single Win32 thread. This means that a call to a long running (or blocking) external API call will block the entire system, so a facility is provided to "overlap" such calls. This is done by marking the external method with the "overlap" annotation, in which case the VM will perform the call on a separate native thread. For the duration of the overlapped operation the calling Process is blocked, but other Processes in the image will continue to run. 

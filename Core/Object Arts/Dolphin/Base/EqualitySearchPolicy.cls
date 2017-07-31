@@ -5,7 +5,7 @@ SingletonSearchPolicy subclass: #EqualitySearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-EqualitySearchPolicy guid: (GUID fromString: '{1086B60A-DA69-4D8D-82DF-BE610BA9D062}')!
+EqualitySearchPolicy guid: (GUID fromString: '{1086b60a-da69-4d8d-82df-be610ba9d062}')!
 EqualitySearchPolicy comment: 'EqualitySearchPolicy is for configuring pluggable collections and models to use equality based search and comparisons, i.e. using #= and #hash, etc. Using an instance of this search policy a <PluggableSet> will behave in the same way as a <Set>.'!
 !EqualitySearchPolicy categoriesForClass!Collections-Support! !
 !EqualitySearchPolicy methodsFor!

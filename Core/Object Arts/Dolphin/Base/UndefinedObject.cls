@@ -5,7 +5,7 @@ Object subclass: #UndefinedObject
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UndefinedObject guid: (GUID fromString: '{87B4C4C9-026E-11D3-9FD7-00A0CC3E4A32}')!
+UndefinedObject guid: (GUID fromString: '{87b4c4c9-026e-11d3-9fd7-00a0cc3e4a32}')!
 UndefinedObject comment: 'UndefinedObject is the singleton class of the distinguished object, <nil>.
 
 <nil> is the initial value of all new variables (instance or otherwise), and hence a  primary purpose of UndefinedObject is to provide a means of detecting errors, especially those resulting from the failure to correctly initialize variables.

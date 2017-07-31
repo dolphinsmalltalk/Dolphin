@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #UINT_PTRArray
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UINT_PTRArray guid: (GUID fromString: '{685F8656-E2D9-4365-8469-EFAEB39FB86C}')!
+UINT_PTRArray guid: (GUID fromString: '{685f8656-e2d9-4365-8469-efaeb39fb86c}')!
 UINT_PTRArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of machine word sized unsigned integers.'!
 !UINT_PTRArray categoriesForClass!External-Data-Structured! !
 !UINT_PTRArray methodsFor!

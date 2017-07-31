@@ -1,11 +1,11 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Message
-	instanceVariableNames: 'selector args '
+	instanceVariableNames: 'selector args'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Message guid: (GUID fromString: '{87B4C49E-026E-11D3-9FD7-00A0CC3E4A32}')!
+Message guid: (GUID fromString: '{87b4c49e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Message comment: ''!
 !Message categoriesForClass!Kernel-Methods! !
 !Message methodsFor!

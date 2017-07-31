@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 SourceManager subclass: #VeryBasicSourceManager
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-VeryBasicSourceManager guid: (GUID fromString: '{87B4C6E3-026E-11D3-9FD7-00A0CC3E4A32}')!
+VeryBasicSourceManager guid: (GUID fromString: '{87b4c6e3-026e-11d3-9fd7-00a0cc3e4a32}')!
 VeryBasicSourceManager comment: 'VeryBasicSourceManager provides the simplest possible external source code control aid for single developer systems. Files that are seen to be checked in are mde write protected; checked out files are write enabled.'!
 !VeryBasicSourceManager categoriesForClass!Development! !
 !VeryBasicSourceManager methodsFor!

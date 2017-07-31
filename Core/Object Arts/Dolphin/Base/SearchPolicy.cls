@@ -5,7 +5,7 @@ Object subclass: #SearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SearchPolicy guid: (GUID fromString: '{123A1501-7CB8-11D3-93CA-00A024CA708A}')!
+SearchPolicy guid: (GUID fromString: '{123a1501-7cb8-11d3-93ca-00a024ca708a}')!
 SearchPolicy comment: 'SearchPolicy is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity. SearchPolicy itself implements an equality based policy using #= and #hash, etc.
 
 SearchPolicy is the canonical implementation of the <searchPolicy> and <comparisonPolicy> protocols (the latter is really a subset of the former).

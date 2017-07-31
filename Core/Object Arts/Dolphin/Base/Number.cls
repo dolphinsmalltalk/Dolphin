@@ -5,7 +5,7 @@ ArithmeticValue subclass: #Number
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Number guid: (GUID fromString: '{87B4C657-026E-11D3-9FD7-00A0CC3E4A32}')!
+Number guid: (GUID fromString: '{87b4c657-026e-11d3-9fd7-00a0cc3e4a32}')!
 Number comment: 'Number is the abstract class which defines the common protocol of all numeric objects.
 
 Its messages support standard arithmetic operations and comparisons, which are mostly implemented by subclasses.'!

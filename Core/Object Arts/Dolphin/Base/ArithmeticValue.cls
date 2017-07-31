@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #ArithmeticValue
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArithmeticValue guid: (GUID fromString: '{87B4C64F-026E-11D3-9FD7-00A0CC3E4A32}')!
+ArithmeticValue guid: (GUID fromString: '{87b4c64f-026e-11d3-9fd7-00a0cc3e4a32}')!
 ArithmeticValue comment: ''!
 !ArithmeticValue categoriesForClass!Magnitude-General! !
 !ArithmeticValue methodsFor!

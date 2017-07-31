@@ -5,7 +5,7 @@ MessageBoxAbstract subclass: #MessageBox
 	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-MessageBox guid: (GUID fromString: '{87B4C49F-026E-11D3-9FD7-00A0CC3E4A32}')!
+MessageBox guid: (GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
 MessageBox comment: 'MessageBox provides a convenient wrapping aound the standard Windows Message Box. It can be used to pose questions, and report information, warnings, or errors.
 
 Note that MessageBox is deliberately implemented using low-level Windows APIs in order to be independent of the MVP subsystem.

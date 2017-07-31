@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #StructurePointer
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StructurePointer guid: (GUID fromString: '{E3B2FB6A-4EA0-48F6-BD97-5F65C176FB00}')!
+StructurePointer guid: (GUID fromString: '{e3b2fb6a-4ea0-48f6-bd97-5f65c176fb00}')!
 StructurePointer comment: ''!
 !StructurePointer categoriesForClass!External-Data-Structured! !
 !StructurePointer methodsFor!

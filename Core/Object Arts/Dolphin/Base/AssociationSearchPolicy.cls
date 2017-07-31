@@ -5,7 +5,7 @@ EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AssociationSearchPolicy guid: (GUID fromString: '{F7FA3E66-A3EC-48A8-A083-DEFDF8679834}')!
+AssociationSearchPolicy guid: (GUID fromString: '{f7fa3e66-a3ec-48a8-a083-defdf8679834}')!
 AssociationSearchPolicy comment: 'AssocationSearchPolicy is a specialized <EqualitySearchPolicy> for searching homogeneous collections of Associations by equality.
 
 Association has traditionally implemented #hash as the has of its key only, and this leads to poor lookup performance in a standard <Set> where there are a lot of Associations with equal keys. This search policy can be used with <PluggableSet> and <PluggableLookupTable> to ameliorate this problem.'!

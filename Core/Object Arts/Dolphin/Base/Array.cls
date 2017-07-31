@@ -5,7 +5,7 @@ ArrayedCollection variableSubclass: #Array
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Array guid: (GUID fromString: '{87B4C510-026E-11D3-9FD7-00A0CC3E4A32}')!
+Array guid: (GUID fromString: '{87b4c510-026e-11d3-9fd7-00a0cc3e4a32}')!
 Array comment: 'Array is the class of <ArrayedCollection>s whose elements are arbitraty <Object>s.
 
 Array complies with the ANSI protocols:

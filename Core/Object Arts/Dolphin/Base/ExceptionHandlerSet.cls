@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExceptionHandlerAbstract subclass: #ExceptionHandlerSet
 	instanceVariableNames: 'handlers'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExceptionHandlerSet guid: (GUID fromString: '{87B4C576-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExceptionHandlerSet guid: (GUID fromString: '{87b4c576-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExceptionHandlerSet comment: ''!
 !ExceptionHandlerSet categoriesForClass!Kernel-Exception Handling! !
 !ExceptionHandlerSet methodsFor!

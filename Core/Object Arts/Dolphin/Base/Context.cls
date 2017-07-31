@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #Context
-	instanceVariableNames: 'outer block '
+	instanceVariableNames: 'outer block'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Context guid: (GUID fromString: '{4FB74AA3-F021-4955-A690-E1A29440AF80}')!
+Context guid: (GUID fromString: '{4fb74aa3-f021-4955-a690-e1a29440af80}')!
 Context comment: ''!
 !Context categoriesForClass!Kernel-Processes! !
 !Context methodsFor!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #_BehaviorMasks put: (PoolConstantsDictionary named: #_BehaviorMasks)!
 _BehaviorMasks at: '_BasicSpecMask' put: 16r7FFF!

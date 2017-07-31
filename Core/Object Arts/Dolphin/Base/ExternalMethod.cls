@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 CompiledMethod variableSubclass: #ExternalMethod
 	instanceVariableNames: ''
 	classVariableNames: 'ArgsLenIndex ArgumentStartIndex CallingConventionIndex ReturnParmIndex ReturnTypeIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalMethod guid: (GUID fromString: '{87B4C546-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExternalMethod guid: (GUID fromString: '{87b4c546-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExternalMethod comment: 'ExternalMethod is the class of primitive <CompiledMethod>s which represent native, or external, function calls, such as those in the Win32 API. ExternalMethods mediate between the dynamically typed Smalltalk world of objects and the static value based world of C prevailing elsewhere.
 
 The first literal of each ExternalMethod holds a <ByteArray> which contains a descriptor for the function call. The byte array format is understood by the <ExternalDescriptor> class, but essentially there are details of the return and argument types, the name of function, and space to cache the procedure address.

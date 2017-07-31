@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 UINT_PTRArray subclass: #PointerArray
 	instanceVariableNames: 'elementClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-PointerArray guid: (GUID fromString: '{FAC953E0-DFD2-4E68-8C31-879BBA4C50C4}')!
+PointerArray guid: (GUID fromString: '{fac953e0-dfd2-4e68-8c31-879bba4c50c4}')!
 PointerArray comment: 'Specialized <ExternalArray> to represent contiguous single-dimensioned arrays of pointers to arbitrary <ExternalStructure>s.
 
 Instance Variables:

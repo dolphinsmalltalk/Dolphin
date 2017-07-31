@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Category
 	instanceVariableNames: 'name'
 	classVariableNames: 'PermanentCategories'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Category guid: (GUID fromString: '{87B4C45F-026E-11D3-9FD7-00A0CC3E4A32}')!
+Category guid: (GUID fromString: '{87b4c45f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Category comment: 'The abstract Category class is used to organize <Class> and <CompiledMethod> objects into subgroupings independent of the implementation hierarchy. This structuring is for the benefit of the user navigating through thousands of classes and methods in the Dolphin Smalltalk development system, and has no run-time significance.
 
 Instance Variables:

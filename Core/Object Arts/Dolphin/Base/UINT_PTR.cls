@@ -5,7 +5,7 @@ ExternalInteger subclass: #UINT_PTR
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UINT_PTR guid: (GUID fromString: '{5B2EFC4B-7560-43B0-930F-70DC94F37D05}')!
+UINT_PTR guid: (GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
 UINT_PTR comment: ''!
 !UINT_PTR categoriesForClass!External-Data-Structured! !
 !UINT_PTR methodsFor!

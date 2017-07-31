@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExceptionSet
 	instanceVariableNames: 'selectors'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExceptionSet guid: (GUID fromString: '{87B4C485-026E-11D3-9FD7-00A0CC3E4A32}')!
+ExceptionSet guid: (GUID fromString: '{87b4c485-026e-11d3-9fd7-00a0cc3e4a32}')!
 ExceptionSet comment: 'ExceptionSet is a system class forming part of the Dolphin exception handling system''s implementation. It is used to collect together multiple <exceptionSelector>s specified in a comma separated list as the first argument to a #on:do: message to a <niladicBlock>.'!
 !ExceptionSet categoriesForClass!Kernel-Exception Handling! !
 !ExceptionSet methodsFor!

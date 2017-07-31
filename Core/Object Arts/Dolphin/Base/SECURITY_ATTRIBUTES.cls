@@ -5,7 +5,7 @@ Win32Structure subclass: #SECURITY_ATTRIBUTES
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-SECURITY_ATTRIBUTES guid: (GUID fromString: '{F44C9145-2B3F-11D3-8368-7A8B5A000000}')!
+SECURITY_ATTRIBUTES guid: (GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
 SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct

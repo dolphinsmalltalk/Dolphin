@@ -5,7 +5,7 @@ SequenceableCollection subclass: #Interval
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Interval guid: (GUID fromString: '{87B4C50D-026E-11D3-9FD7-00A0CC3E4A32}')!
+Interval guid: (GUID fromString: '{87b4c50d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Interval comment: '<Interval>s represent a finite arithmetic progressions, that is a <sequencedReadableCollection> of numbers across a specified range and with a specified step between each element.
 
 Instance Variables:

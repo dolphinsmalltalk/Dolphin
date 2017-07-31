@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #WIN32_FIND_DATA
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-WIN32_FIND_DATA guid: (GUID fromString: '{87B4C61A-026E-11D3-9FD7-00A0CC3E4A32}')!
+WIN32_FIND_DATA guid: (GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
 WIN32_FIND_DATA comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
 
 See File class for example usage.'!

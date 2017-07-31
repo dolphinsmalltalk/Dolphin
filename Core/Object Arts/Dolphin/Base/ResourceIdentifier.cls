@@ -5,7 +5,7 @@ Object subclass: #ResourceIdentifier
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ResourceIdentifier guid: (GUID fromString: '{6235654D-3F88-48C0-80D9-90230E9EDE77}')!
+ResourceIdentifier guid: (GUID fromString: '{6235654d-3f88-48c0-80d9-90230e9ede77}')!
 ResourceIdentifier comment: ''!
 !ResourceIdentifier categoriesForClass!MVP-Resources! !
 !ResourceIdentifier methodsFor!

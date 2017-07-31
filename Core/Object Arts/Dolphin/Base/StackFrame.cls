@@ -5,7 +5,7 @@ Object subclass: #StackFrame
 	classVariableNames: 'BPOffset EnvOffset FrameSize IPOffset MethodOffset ReturnOffset SPOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StackFrame guid: (GUID fromString: '{87B4C4BE-026E-11D3-9FD7-00A0CC3E4A32}')!
+StackFrame guid: (GUID fromString: '{87b4c4be-026e-11d3-9fd7-00a0cc3e4a32}')!
 StackFrame addClassConstant: 'BPOffset' value: 5!
 StackFrame addClassConstant: 'EnvOffset' value: 1!
 StackFrame addClassConstant: 'FrameSize' value: 6!

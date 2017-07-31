@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Error subclass: #HRESULTError
 	instanceVariableNames: 'errorInfo'
 	classVariableNames: 'FacilityClasses'
 	poolDictionaries: 'FacilityCodes'
 	classInstanceVariableNames: ''!
-HRESULTError guid: (GUID fromString: '{87B4C55A-026E-11D3-9FD7-00A0CC3E4A32}')!
+HRESULTError guid: (GUID fromString: '{87b4c55a-026e-11d3-9fd7-00a0cc3e4a32}')!
 HRESULTError comment: ''!
 !HRESULTError categoriesForClass!System-Exception Handling! !
 !HRESULTError methodsFor!

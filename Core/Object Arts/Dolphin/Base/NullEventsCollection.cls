@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 EventsCollection variableSubclass: #NullEventsCollection
 	instanceVariableNames: ''
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NullEventsCollection guid: (GUID fromString: '{9D0AD247-C847-4473-9195-BE26BEA0567B}')!
+NullEventsCollection guid: (GUID fromString: '{9d0ad247-c847-4473-9195-be26bea0567b}')!
 NullEventsCollection comment: 'NullEventsCollection is a special events collection used when a receiver has no event subscriptions. Its purpose is to increase performance for this common case.'!
 !NullEventsCollection categoriesForClass!Kernel-Objects! !
 !NullEventsCollection methodsFor!

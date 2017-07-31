@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Random subclass: #RandomCRT
 	instanceVariableNames: 'next'
 	classVariableNames: ''
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
-RandomCRT guid: (GUID fromString: '{F895D18E-E50F-4651-8A7D-9D04137DD05E}')!
+RandomCRT guid: (GUID fromString: '{f895d18e-e50f-4651-8a7d-9d04137dd05e}')!
 RandomCRT comment: ''!
 !RandomCRT categoriesForClass!Collections-Streams! !
 !RandomCRT methodsFor!

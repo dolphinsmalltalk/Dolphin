@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Link
-	instanceVariableNames: 'nextLink '
+	instanceVariableNames: 'nextLink'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Link guid: (GUID fromString: '{87B4C498-026E-11D3-9FD7-00A0CC3E4A32}')!
+Link guid: (GUID fromString: '{87b4c498-026e-11d3-9fd7-00a0cc3e4a32}')!
 Link comment: 'Links are records of a reference to another Link, and are used to represent the linked elements of a <LinkedList>.
 
 Link is an abstract base class which should be subclasses to hold objects of the appropriate type.'!

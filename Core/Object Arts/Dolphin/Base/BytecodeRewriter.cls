@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #BytecodeRewriter
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
-BytecodeRewriter guid: (GUID fromString: '{37E0086F-1CCB-4FD0-A9C1-EF51056FACB4}')!
+BytecodeRewriter guid: (GUID fromString: '{37e0086f-1ccb-4fd0-a9c1-ef51056facb4}')!
 BytecodeRewriter comment: 'BytecodeRewrite is a private system utility class for upgrading Dolphin 5 methods stored in STB files to be compatible with Dolphin 6. Note that the translation is not optimal, and where possible methods (blocks) saved in resources should be recompiled.'!
 !BytecodeRewriter categoriesForClass!Unclassified! !
 !BytecodeRewriter methodsFor!

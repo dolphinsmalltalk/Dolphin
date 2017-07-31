@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.2"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #TimeStamp
-	instanceVariableNames: 'date time '
+	instanceVariableNames: 'date time'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TimeStamp guid: (GUID fromString: '{87B4C656-026E-11D3-9FD7-00A0CC3E4A32}')!
+TimeStamp guid: (GUID fromString: '{87b4c656-026e-11d3-9fd7-00a0cc3e4a32}')!
 TimeStamp comment: 'TimeStamp is the class whose instances represent times of a particular day (i.e. a combination of a Date and Time).
 This class is likely to be replaced by the forthcoming ANSI compliant DateAndTime class.'!
 !TimeStamp categoriesForClass!Magnitude-General! !

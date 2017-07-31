@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 PluggableSortAlgorithm subclass: #IntrosortAlgorithm
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IntrosortAlgorithm guid: (GUID fromString: '{80197D56-08BE-4A10-A209-700B5452C610}')!
+IntrosortAlgorithm guid: (GUID fromString: '{80197d56-08be-4a10-a209-700b5452c610}')!
 IntrosortAlgorithm comment: 'IntrosortAlgorithm implements David Musser''s introspective sort algorithm as a sorting strategy for use in conjunction with <SortedCollection>s.
 
 Introsort is not a new sorting algorithm, but rather hybrid of two others. It exhibits high-performance of Quicksort on average, but without the latter''s worst cases. It achieves this by using Quicksort as its default algorithm, but switching to Heapsort when it appears that quicksort is going quadratic. It is still not as fast as Heapsort on Quicksorts worst cases, because Quicksort wastes some time before the advisability of switching to Heapsort is detected, but it is a reasonable compromise.

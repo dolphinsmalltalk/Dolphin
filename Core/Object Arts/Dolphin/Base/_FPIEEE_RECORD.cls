@@ -5,7 +5,7 @@ ExternalStructure subclass: #_FPIEEE_RECORD
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-_FPIEEE_RECORD guid: (GUID fromString: '{87B4C590-026E-11D3-9FD7-00A0CC3E4A32}')!
+_FPIEEE_RECORD guid: (GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
 _FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
 !_FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
 !_FPIEEE_RECORD methodsFor!

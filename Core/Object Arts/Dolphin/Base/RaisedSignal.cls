@@ -5,7 +5,7 @@ Error subclass: #RaisedSignal
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RaisedSignal guid: (GUID fromString: '{87B4C55F-026E-11D3-9FD7-00A0CC3E4A32}')!
+RaisedSignal guid: (GUID fromString: '{87b4c55f-026e-11d3-9fd7-00a0cc3e4a32}')!
 RaisedSignal comment: ''!
 !RaisedSignal categoriesForClass!Kernel-Exception Handling! !
 !RaisedSignal methodsFor!

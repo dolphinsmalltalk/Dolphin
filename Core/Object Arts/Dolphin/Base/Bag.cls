@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Collection subclass: #Bag
-	instanceVariableNames: 'contents '
+	instanceVariableNames: 'contents'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Bag guid: (GUID fromString: '{87B4C509-026E-11D3-9FD7-00A0CC3E4A32}')!
+Bag guid: (GUID fromString: '{87b4c509-026e-11d3-9fd7-00a0cc3e4a32}')!
 Bag comment: 'A Bag is a variable sized, unordered, collection which is extensible and contractible, but not accesssible using external keys. Bag is similar to Set, but can contain duplicate elements (which it counts). Elements are considered to  be duplicates if they compare as equal using #=.
 
 Bag conforms to the ANSI protocols:

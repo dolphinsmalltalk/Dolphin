@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6.1"!
+"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArray subclass: #GenericExternalArray
 	instanceVariableNames: 'elementClass owner'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GenericExternalArray guid: (GUID fromString: '{A784C4D3-DD39-4844-B096-400529D9295C}')!
+GenericExternalArray guid: (GUID fromString: '{a784c4d3-dd39-4844-b096-400529d9295c}')!
 GenericExternalArray comment: 'GenericExternalArray is an abstract class of <ExternalArray>s that can be used to represent single-dimensioned arrays of more than one type.
 
 Instance Variables:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Model
 	instanceVariableNames: 'events'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Model guid: (GUID fromString: '{87B4C4A3-026E-11D3-9FD7-00A0CC3E4A32}')!
+Model guid: (GUID fromString: '{87b4c4a3-026e-11d3-9fd7-00a0cc3e4a32}')!
 Model comment: 'Model is an abstract class whose subclasses implement the <model> protocol and represent domain level data that is likely to be observed by other objects. The Model hierarchy is part of the MVP framework although <model> classes may well be used outside of this framework. 
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.

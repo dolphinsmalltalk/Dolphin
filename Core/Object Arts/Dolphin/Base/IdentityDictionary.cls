@@ -5,7 +5,7 @@ LookupTable variableSubclass: #IdentityDictionary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IdentityDictionary guid: (GUID fromString: '{87B4C52D-026E-11D3-9FD7-00A0CC3E4A32}')!
+IdentityDictionary guid: (GUID fromString: '{87b4c52d-026e-11d3-9fd7-00a0cc3e4a32}')!
 IdentityDictionary comment: 'IdentityDictionaries are <LookupTable>s which use identity (#== and #identityHash) for key comparison.
 
 IdentityDictionary conforms to the following ANSI protocols:

@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Bytecode
 	instanceVariableNames: 'instruction args jumpTarget ip'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Bytecode guid: (GUID fromString: '{189ED4BC-E69B-44E3-8815-7B6D0BDF24B6}')!
+Bytecode guid: (GUID fromString: '{189ed4bc-e69b-44e3-8815-7b6d0bdf24b6}')!
 Bytecode comment: 'BytecodeRewrite is a private system utility class that supports the <BytecodeRewriter>.'!
 !Bytecode categoriesForClass!Kernel-Objects! !
 !Bytecode methodsFor!

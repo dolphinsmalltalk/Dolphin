@@ -5,7 +5,7 @@ WeakSet variableSubclass: #WeakIdentitySet
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-WeakIdentitySet guid: (GUID fromString: '{87B4C539-026E-11D3-9FD7-00A0CC3E4A32}')!
+WeakIdentitySet guid: (GUID fromString: '{87b4c539-026e-11d3-9fd7-00a0cc3e4a32}')!
 WeakIdentitySet comment: ''!
 !WeakIdentitySet categoriesForClass!Collections-Unordered!Collections-Weak! !
 !WeakIdentitySet methodsFor!

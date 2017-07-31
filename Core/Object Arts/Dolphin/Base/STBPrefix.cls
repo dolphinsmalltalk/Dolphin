@@ -5,7 +5,7 @@ Object subclass: #STBPrefix
 	classVariableNames: 'BytesMask CharacterMask ClassPrefixMask DataPrefix DataPrefixMask IndexShift InstSizeMask InstSizeShift LiteralPrefixMask LocatorLenShift MaxPredefinedRef NonZeroVersionMask ProxyMask ProxyPrefix SmallIntegerMask VariableMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-STBPrefix guid: (GUID fromString: '{87B4C4C2-026E-11D3-9FD7-00A0CC3E4A32}')!
+STBPrefix guid: (GUID fromString: '{87b4c4c2-026e-11d3-9fd7-00a0cc3e4a32}')!
 STBPrefix addClassConstant: 'BytesMask' value: 16!
 STBPrefix addClassConstant: 'CharacterMask' value: 4!
 STBPrefix addClassConstant: 'ClassPrefixMask' value: 4!
