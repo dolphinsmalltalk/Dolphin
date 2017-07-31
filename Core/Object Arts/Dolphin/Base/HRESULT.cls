@@ -20,12 +20,12 @@ asUnsignedInteger
 
 	^bytes dwordAtOffset: 0!
 
-displayOn: aStream 
+displayOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
 	| buf len |
 	buf := String new: 255.
-	len := KernelLibrary default 
+	len := KernelLibrary default
 				formatMessage: ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS)
 				lpSource: 0
 				dwMessageId: self asInteger
@@ -33,7 +33,7 @@ displayOn: aStream
 				lpBuffer: buf
 				nSize: buf basicSize
 				arguments: 0.
-	len == 0 
+	len == 0
 		ifTrue: 
 			[aStream
 				nextPutAll: 'Unrecognised HRESULT - ';
@@ -41,17 +41,18 @@ displayOn: aStream
 		ifFalse: 
 			["Windows appends trailing line delimiter, and breaks up the text into lines too, 
 			so we remove them."
-			| lines |
+			| lines first |
 			lines := buf lines.
-			lines 
+			first := true.
+			lines
 				from: 1
 				to: lines size - 1
 				do: 
-					[:l | 
+					[:l |
+					first ifTrue: [first := false] ifFalse: [aStream space].
 					aStream
 						nextPutAll: l;
-						space].
-			aStream pop]!
+						space]]!
 
 errorCode
 	"Answer the Win32 status code extracted from the receiver's code."
