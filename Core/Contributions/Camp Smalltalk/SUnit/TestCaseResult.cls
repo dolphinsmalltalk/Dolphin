@@ -35,14 +35,14 @@ setCase: aTestCase error: anException
 	case := aTestCase.
 	outcome := #error.
 	signal := anException.
-	stacktrace := anException stackTrace: 20.
+	stacktrace := anException stackTrace: -1.
 	duration := 0!
 
 setCase: aTestCase failure: aTestFailure
 	case := aTestCase.
 	outcome := #failed.
 	signal := aTestFailure.
-	stacktrace := aTestFailure stackTrace: 20.
+	stacktrace := aTestFailure stackTrace: -1.
 	duration := 0!
 
 signal
