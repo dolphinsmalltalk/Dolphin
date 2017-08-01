@@ -28,6 +28,7 @@ package classNames
 	add: #StAssignmentToken;
 	add: #StBinarySelectorToken;
 	add: #StBlockNode;
+	add: #StBraceArrayNode;
 	add: #StCascadeNode;
 	add: #StExternalArgTypeNode;
 	add: #StExternalCallNode;
@@ -89,8 +90,8 @@ package!
 "Class Definitions"!
 
 Object subclass: #SmalltalkParser
-	instanceVariableNames: 'scanner currentToken nextToken emptyStatements errorBlock methodNode st80Syntax comments methodClass source'
-	classVariableNames: 'MaxPrimIndex MaxVfn'
+	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
+	classVariableNames: 'AllowEmptyStatements MaxPrimIndex MaxVfn'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 Object subclass: #SmalltalkScanner
@@ -165,6 +166,11 @@ StValueNode subclass: #StAssignmentNode
 	classInstanceVariableNames: ''!
 StValueNode subclass: #StBlockNode
 	instanceVariableNames: 'left right colons body arguments bar'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StValueNode subclass: #StBraceArrayNode
+	instanceVariableNames: 'left statements periods right'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

@@ -48,6 +48,12 @@ for: aValue do: doBlock separatedBy: separatorBlock
 			separatorBlock value].
 	doBlock value: aValue last!
 
+formatArray: anArrayNode
+	anArrayNode statements do: [:each | self visitNode: each]
+		separatedBy: 
+			[codeStream nextPutAll: '. '.
+			self newLine]!
+
 formatMessage: aMessageNode cascade: cascadeBoolean
 	| selectorParts arguments multiLine formattedArgs indentFirst firstArgLength length argumentCount |
 	selectorParts := aMessageNode selectorParts.
@@ -134,7 +140,7 @@ formatMethodPatternFor: aMethodNode
 						space.
 					self visitArgumentNode: (arguments at: i)]]!
 
-formatStatementCommentFor: aNode
+formatStatementCommentsFor: aNode
 	| source |
 	source := aNode source.
 	source isNil ifTrue: [^self].
@@ -155,23 +161,24 @@ formatStatementsFor: aSequenceNode
 			[:i |
 			self visitNode: (statements at: i).
 			codeStream nextPut: $..
-			self formatStatementCommentFor: (statements at: i).
+			self formatStatementCommentsFor: (statements at: i).
 			self newLine].
 	self visitNode: statements last.
 	aSequenceNode parent
 		ifNotNil: [:parent | (parent isMethod and: [self class periodsAtEndOfMethod]) ifTrue: [codeStream nextPut: $.]].
-	self formatStatementCommentFor: statements last!
+	self formatStatementCommentsFor: statements last!
 
 formatTemporariesFor: aSequenceNode
 	| temps |
 	temps := aSequenceNode temporaries.
 	temps isEmpty ifTrue: [^self].
-	codeStream nextPutAll: '| '.
-	temps do: 
-			[:each |
-			self visitArgumentNode: each.
-			self space].
-	codeStream nextPut: $|.
+	self bracketWith: '|'
+		around: 
+			[self space.
+			temps do: 
+					[:each |
+					self visitArgumentNode: each.
+					self space]].
 	self newLine!
 
 indentWhile: aBlock
@@ -201,11 +208,12 @@ needsParenthesisFor: aNode
 	aNode isValue ifFalse: [^false].
 	parent := aNode parent.
 	parent isNil ifTrue: [^false].
-	(aNode isMessage and: [parent isMessage and: [parent receiver == aNode]])
-		ifTrue: 
-			[| grandparent |
-			grandparent := parent parent.
-			(grandparent notNil and: [grandparent isCascade]) ifTrue: [^true]].
+	(aNode isMessage
+		and: [parent isMessage and: [parent receiver == aNode and: [aNode isUnary not]]])
+			ifTrue: 
+				[| grandparent |
+				grandparent := parent parent.
+				(grandparent notNil and: [grandparent isCascade]) ifTrue: [^true]].
 	aNode precedence < parent precedence ifTrue: [^false].
 	aNode isAssignment & parent isAssignment ifTrue: [^false].
 	aNode isAssignment | aNode isCascade ifTrue: [^true].
@@ -302,12 +310,15 @@ visitCascadeNode: aCascadeNode
 				separatedBy: [codeStream nextPut: $;]]!
 
 visitLiteralArrayNode: aRBArrayLiteralNode
-	codeStream nextPutAll: (aRBArrayLiteralNode isForByteArray ifTrue: ['#['] ifFalse: ['#(']).
-	self
-		for: aRBArrayLiteralNode contents
-		do: [:each | self visitNode: each]
-		separatedBy: [self space].
-	codeStream nextPut: (aRBArrayLiteralNode isForByteArray ifTrue: [$]] ifFalse: [$)])!
+	| brackets |
+	codeStream nextPut: $#.
+	brackets := aRBArrayLiteralNode isForByteArray ifTrue: ['[]'] ifFalse: ['()'].
+	self bracketWith: brackets
+		around: 
+			[self
+				for: aRBArrayLiteralNode contents
+				do: [:each | self visitNode: each]
+				separatedBy: [self space]]!
 
 visitLiteralNode: aLiteralNode
 	aLiteralNode token formatOn: codeStream source: aLiteralNode source!
@@ -322,11 +333,9 @@ visitMessageNode: aMessageNode
 		around: [self formatMessage: aMessageNode cascade: false]!
 
 visitNode: aNode
-	| parenthesis |
-	parenthesis := self needsParenthesisFor: aNode.
-	parenthesis ifTrue: [codeStream nextPut: $(].
-	aNode acceptVisitor: self.
-	parenthesis ifTrue: [codeStream nextPut: $)]!
+	(self needsParenthesisFor: aNode)
+		ifTrue: [self bracketWith: '()' around: [aNode acceptVisitor: self]]
+		ifFalse: [aNode acceptVisitor: self]!
 
 visitOptimizedNode: anOptimizedNode
 	codeStream nextPutAll: '##('.
@@ -344,8 +353,8 @@ visitReturnNode: aReturnNode
 	self visitNode: aReturnNode value!
 
 visitSequenceNode: aSequenceNode
-	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self formatTemporariesFor: aSequenceNode.
+	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self tagBeforeTemporaries
 		ifFalse: 
 			[| parent |
@@ -355,12 +364,13 @@ visitSequenceNode: aSequenceNode
 !RBFormatter categoriesFor: #acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
 !RBFormatter categoriesFor: #firstLineLength!accessing!public! !
 !RBFormatter categoriesFor: #for:do:separatedBy:!enumerating!private! !
+!RBFormatter categoriesFor: #formatArray:!private! !
 !RBFormatter categoriesFor: #formatMessage:cascade:!formatting!private! !
 !RBFormatter categoriesFor: #formatMessageSelector:withArguments:multiline:!formatting!private! !
 !RBFormatter categoriesFor: #formatMethodBodyFor:!private!visitor/double dispatching! !
 !RBFormatter categoriesFor: #formatMethodCommentFor:indentBefore:!formatting!private! !
 !RBFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!RBFormatter categoriesFor: #formatStatementCommentFor:!formatting!private! !
+!RBFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
 !RBFormatter categoriesFor: #formatStatementsFor:!formatting!private! !
 !RBFormatter categoriesFor: #formatTemporariesFor:!formatting!private! !
 !RBFormatter categoriesFor: #indentWhile:!helpers!private! !

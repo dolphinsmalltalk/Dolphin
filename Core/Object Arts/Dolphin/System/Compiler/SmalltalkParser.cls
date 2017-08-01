@@ -1,11 +1,13 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkParser
-	instanceVariableNames: 'scanner currentToken nextToken emptyStatements errorBlock methodNode st80Syntax comments methodClass source'
-	classVariableNames: 'MaxPrimIndex MaxVfn'
+	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
+	classVariableNames: 'AllowEmptyStatements MaxPrimIndex MaxVfn'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
+SmalltalkParser addClassConstant: 'MaxPrimIndex' value: 192!
+SmalltalkParser addClassConstant: 'MaxVfn' value: 1024!
 SmalltalkParser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
@@ -42,6 +44,9 @@ atEnd
 blockNodeClass
 	^StBlockNode!
 
+braceArrayNodeClass
+	^StBraceArrayNode!
+
 canHaveStatementsAfterReturn
 	#rbFix. "Dolphin can have statements after the return"
 	^true!
@@ -74,7 +79,6 @@ externalReferenceTypeFor: anInteger
 	^(ExternalDescriptor referenceTypeFor: anInteger) ifNil: [ExtCallArgLPPVOID]!
 
 initialize
-	emptyStatements := false.
 	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
 	st80Syntax := false!
 
@@ -241,6 +245,21 @@ parseBlockArgsInto: node
 
 parseBlockParameter
 	^self parseVariableNode: self parameterNodeClass!
+
+parseBraceArray
+	| start node |
+	start := currentToken start.
+	self step.
+	node := self braceArrayNodeClass new.
+	node left: start.
+	self parseStatementList: false into: node.
+	(currentToken isSpecial and: [currentToken value = $}])
+		ifFalse: 
+			[self parserError: CErrBraceNotClosed range: (start to: self errorPosition - 1)
+			"Error ignored, no recovery needed as reached EOF looking for a closing brace"].
+	node right: currentToken stop.
+	self step.
+	^node!
 
 parseCascadedMessageFor: aStVariableNode 
 	currentToken isIdentifier ifTrue: [^self parseUnaryMessageWith: aStVariableNode].
@@ -682,8 +701,11 @@ parsePrimitiveObject
 			[^currentToken isForByteArray ifTrue: [self parseLiteralByteArray] ifFalse: [self parseLiteralArray]].
 	currentToken isSpecial
 		ifTrue: 
-			[currentToken value == $[ ifTrue: [^self parseBlock].
-			currentToken value == $( ifTrue: [^self parseParenthesizedExpression]].
+			[| char |
+			char := currentToken value.
+			char == $[ ifTrue: [^self parseBlock].
+			char == $( ifTrue: [^self parseParenthesizedExpression].
+			char == ${ ifTrue: [^self parseBraceArray]].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	self parserError: CErrInvalExprStart.
 	"Attempt to recover by treating it as an identifier, the AST will be invalid of course"
@@ -722,21 +744,26 @@ parserError: anInteger range: anInterval extras: anArray
 		range: anInterval
 		extras: anArray!
 
-parseStatementList: tagBoolean into: sequenceNode 
+parseStatementList: tagBoolean into: sequenceNode
 	| statements end periods node firstReturn |
 	end := false.
 	statements := OrderedCollection new.
 	periods := OrderedCollection new.
 	self addCommentsTo: sequenceNode.
 	tagBoolean ifTrue: [self parseTag].
-	[self atEnd or: [currentToken isSpecial and: ['])}' identityIncludes: currentToken value]]] 
+	AllowEmptyStatements
+		ifTrue: 
+			[[currentToken isSpecial: $.] whileTrue: 
+					[periods add: currentToken start.
+					self step]].
+	[self atEnd or: [currentToken isSpecial and: ['])}' identityIncludes: currentToken value]]]
 		whileFalse: 
-			[end 
+			[end
 				ifTrue: 
 					[self parserError: CErrUnterminatedStatement range: node sourceInterval.
 					"Attempt to recover..,"
 					end := false].
-			(currentToken isSpecial: $^) 
+			(currentToken isSpecial: $^)
 				ifTrue: 
 					[| returnPosition |
 					returnPosition := currentToken start.
@@ -748,7 +775,7 @@ parseStatementList: tagBoolean into: sequenceNode
 				ifFalse: 
 					[node := self parseAssignment.
 					statements add: node].
-			(currentToken isSpecial: $.) 
+			(currentToken isSpecial: $.)
 				ifTrue: 
 					[periods add: currentToken start.
 					self step.
@@ -756,12 +783,12 @@ parseStatementList: tagBoolean into: sequenceNode
 				ifFalse: 
 					["An unterminated statement can only occur at the end of a statement list"
 					end := true].
-			emptyStatements 
+			AllowEmptyStatements
 				ifTrue: 
 					[[currentToken isSpecial: $.] whileTrue: 
 							[periods add: currentToken start.
 							self step]]].
-	(firstReturn notNil and: [firstReturn < statements size]) 
+	(firstReturn notNil and: [firstReturn < statements size])
 		ifTrue: 
 			[self parserError: CWarnUnreachable
 				range: ((statements at: firstReturn + 1) start to: statements last stop)].
@@ -1040,6 +1067,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #assignmentNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #atEnd!public!testing! !
 !SmalltalkParser categoriesFor: #blockNodeClass!constants!private! !
+!SmalltalkParser categoriesFor: #braceArrayNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
 !SmalltalkParser categoriesFor: #cascadeNodeClass!constants!private! !
 !SmalltalkParser categoriesFor: #errorBlock!accessing!error handling!public! !
@@ -1065,6 +1093,7 @@ variableNodeClass
 !SmalltalkParser categoriesFor: #parseBlock!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBlockArgsInto:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseBlockParameter!parsing!private! !
+!SmalltalkParser categoriesFor: #parseBraceArray!parsing!private! !
 !SmalltalkParser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
 !SmalltalkParser categoriesFor: #parseCascadeMessage!parsing!private! !
 !SmalltalkParser categoriesFor: #parseExpression:!parsing!public! !
@@ -1126,6 +1155,12 @@ variableNodeClass
 
 !SmalltalkParser class methodsFor!
 
+allowEmptyStatements
+	^AllowEmptyStatements!
+
+allowEmptyStatements: aBoolean
+	AllowEmptyStatements := aBoolean!
+
 errorClass
 	^CompilerErrorNotification!
 
@@ -1134,8 +1169,10 @@ initialize
 		self initialize
 	"
 
-	MaxPrimIndex := 192.
-	MaxVfn := 1024!
+	self addClassConstant: 'MaxPrimIndex' value: 192.
+	self addClassConstant: 'MaxVfn' value: 1024.
+	"By default Dolphin treats empty statements as a syntax error"
+	AllowEmptyStatements := false!
 
 new
 	^super new initialize!
@@ -1223,6 +1260,8 @@ parseMethodPattern: aString
 
 warningClass
 	^CompilerWarningNotification! !
+!SmalltalkParser class categoriesFor: #allowEmptyStatements!accessing!public! !
+!SmalltalkParser class categoriesFor: #allowEmptyStatements:!accessing!public! !
 !SmalltalkParser class categoriesFor: #errorClass!constants!public! !
 !SmalltalkParser class categoriesFor: #initialize!development!initializing!public! !
 !SmalltalkParser class categoriesFor: #new!instance creation!public! !

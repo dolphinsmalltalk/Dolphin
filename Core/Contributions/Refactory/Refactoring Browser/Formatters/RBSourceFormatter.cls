@@ -16,9 +16,17 @@ Instance Variables:
 !RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
 !RBSourceFormatter methodsFor!
 
+bracketWith: bracketString around: aBlock 
+	bracketString isEmpty ifTrue: [^aBlock value].
+	codeStream nextPut: bracketString first.
+	^aBlock ensure: [codeStream nextPut: bracketString last]!
+
 format: aNode
 	self visitNode: aNode.
 	^codeStream contents!
+
+formatArray: anArrayNode 
+	^self subclassResponsibility!
 
 formatExternalCallName: aStExternalCallNode 
 	| name |
@@ -31,6 +39,9 @@ formatMethodBodyFor: aMethodNode
 	^self subclassResponsibility!
 
 formatMethodPatternFor: aMethodNode 
+	^self subclassResponsibility!
+
+formatStatementCommentsFor: aStatementNode
 	^self subclassResponsibility!
 
 formatTagFor: aMethodNode 
@@ -58,6 +69,9 @@ newLine
 
 space
 	codeStream space!
+
+visitArrayNode: anArrayNode
+	self bracketWith: '{}' around: [self formatArray: anArrayNode]!
 
 visitExternalArgTypeNode: anStExternalArgTypeNode
 	| typeOrdinal |
@@ -96,16 +110,20 @@ visitPrimitiveNode: anStPrimitiveNode
 
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
+!RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
 !RBSourceFormatter categoriesFor: #format:!operations!public! !
+!RBSourceFormatter categoriesFor: #formatArray:!private! !
 !RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
 !RBSourceFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
 !RBSourceFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
+!RBSourceFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
 !RBSourceFormatter categoriesFor: #formatTagFor:!formatting!private! !
 !RBSourceFormatter categoriesFor: #indent:!formatting!private! !
 !RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
 !RBSourceFormatter categoriesFor: #initialize!initializing!private! !
 !RBSourceFormatter categoriesFor: #newLine!formatting!private! !
 !RBSourceFormatter categoriesFor: #space!formatting!private! !
+!RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
 !RBSourceFormatter categoriesFor: #visitExternalArgTypeNode:!public!visitor/double dispatching! !
 !RBSourceFormatter categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
 !RBSourceFormatter categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !

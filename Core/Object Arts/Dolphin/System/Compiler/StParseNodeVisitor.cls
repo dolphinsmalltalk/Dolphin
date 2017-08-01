@@ -27,6 +27,9 @@ visitArgumentNode: anStParameterNode
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection do: [:each | self visitArgumentNode: each]!
 
+visitArrayNode: anStBraceArrayNode
+	anStBraceArrayNode children do: [:each | self visitNode: each]!
+
 visitAssignmentNode: anAssignmentNode
 	self visitNode: anAssignmentNode variable.
 	self visitNode: anAssignmentNode value!
@@ -114,6 +117,7 @@ visitVariableNode: aVariableNode
 !StParseNodeVisitor categoriesFor: #tagBeforeTemporaries!public!testing! !
 !StParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
+!StParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitBlockNode:!public!visiting! !
 !StParseNodeVisitor categoriesFor: #visitCascadeNode:!public!visiting! !

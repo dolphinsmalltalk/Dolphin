@@ -184,6 +184,21 @@ testAllSearches
 	classSearches 
 		do: [:searches | searches do: [:each | self assert: each answer isEmpty]]!
 
+testArray
+	| tree allowEmpty |
+	allowEmpty := RBParser allowEmptyStatements.
+	RBParser allowEmptyStatements: true.
+	
+	[#(#('{}' 0 0) #('{.}' 0 1) #('{..}' 0 2) #('{foo. bar}' 2 1) #('{foo. bar.}' 2 2) #('{foo. bar. .}' 2 3) #('{. foo. bar}' 2 2) #('{foo.. bar}' 2 2))
+		do: 
+			[:each |
+			tree := RBParser parseExpression: each first.
+			self assert: tree statements size equals: each second.
+			self assert: tree periods size equals: each last.
+			self assert: tree left equals: 1.
+			self assert: tree right equals: each first size]]
+			ensure: [RBParser allowEmptyStatements: allowEmpty]!
+
 testBestNodeFor
 	| tree |
 	tree := self treeWithEverything.
@@ -746,6 +761,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 !ParserTest categoriesFor: #parseError:!private! !
 !ParserTest categoriesFor: #setUp!accessing!public! !
 !ParserTest categoriesFor: #testAllSearches!public!unit tests! !
+!ParserTest categoriesFor: #testArray!public!unit tests! !
 !ParserTest categoriesFor: #testBestNodeFor!public! !
 !ParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
 !ParserTest categoriesFor: #testCascadeReplacement!public!unit tests! !
