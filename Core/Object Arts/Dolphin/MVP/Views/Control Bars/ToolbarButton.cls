@@ -29,8 +29,6 @@ bitmap: aBitmap
 	"Set aBitmap (or a shared copy of it) as the bitmap for the receiver."
 
 	bitmap := aBitmap asSharedCopy.
-	"We always want toolbar button bitmaps to do colour mapping or they look nasty, especially under Win2K."
-	bitmap setMap3DColors: true.
 	self update!
 
 bitmap: aBitmap index: anInteger commandDescription: aCommandDescription
