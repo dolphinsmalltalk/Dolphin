@@ -542,6 +542,24 @@ testErrorsBlockTempsNotClosed
 		line: 1
 		code: CErrBlockArgListNotClosed!
 
+testErrorsBraceArrayNotClosed
+	| text start |
+	text := '| a | {#() .1. a. ''a''. 1.0 .'.
+	self
+		parseExprError: text
+		range: ((text indexOf: ${) to: text size)
+		line: 1
+		code: CErrBraceNotClosed.
+	text := '{#().
+		1.
+		 {''a''. 1.0. '.
+	start := text lastIndexOf: ${.
+	self
+		parseExprError: text
+		range: (start to: text size)
+		line: 3
+		code: CErrBraceNotClosed!
+
 testErrorsDuplicateArg
 	| source start |
 	source := '[:arg1 :arg1 | ^arg1]'.
@@ -1794,49 +1812,50 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsArrayNotClosed!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsArrayNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignBlockArgument!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignClass!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsAssignConstant!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsAssignMethodArgument!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadCascade!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadExtCallTypes!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadMessagePattern!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBadSuper!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBadTokenInArray!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBlockArgNameMissing!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBadTokenInArray!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBlockArgNameMissing!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBlockNotClosed!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsBlockTempsNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateArg!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateTemp!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsBraceArrayNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateArg!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsDuplicateTemp!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExpectFnName!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsExpectMessage!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsExpectMessage!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExpectVariableName!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExtArgCountMismatch!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExtTypeIndirections!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsExtTypes!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsIfNotNil!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsIllegalByteArrays!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectChar!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectConst!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsLexicalStringNotClosed!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectChar!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectConst!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalStringNotClosed!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLiteralArray!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLiteralByteArray!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsNegateNonNumber!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsOptimizedExpressionNotClosed!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsPrimitives!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsPrimitives!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsPrimitivesCloseTagRecovery!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningPseudo!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningSpecialLiterals!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsStringNotClosed!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsSupersendFromObject!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testErrorsTempsNotClosed!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningPseudo!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsRedefiningSpecialLiterals!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsStringNotClosed!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsSupersendFromObject!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsTempsNotClosed!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsTooManyArgs!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsTooManyTemps!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsTooManyTempsInOptimizedBlock!public!unit tests! !
@@ -1857,8 +1876,8 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningInstVar!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningStatic!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningTemp!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!exceptions!public!unit tests! !
-!AbstractParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!exceptions!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonNiladicArg!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNil!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNotNilNonMonadicArg!public!unit tests! !

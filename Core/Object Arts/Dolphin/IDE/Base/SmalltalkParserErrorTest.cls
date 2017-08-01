@@ -364,9 +364,9 @@ writtenNotReadRange: aString
 !SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!private! !
 !SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
 !SmalltalkParserErrorTest categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!exceptions!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalInvalidQualifier!exceptions!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!exceptions!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalInvalidQualifier!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !

@@ -185,6 +185,32 @@ testBlockWithAllTempTypes
 	value2 := block1 value: 3 value: 5.
 	self assert: value2 = (value1 * 20)!
 
+testBraceArrays
+	| text array |
+	self assert: (self evaluateExpression: '{}') equals: #().
+	self assert: (self evaluateExpression: '{{{ {}. {{}. 1}. {2. {}} }}}')
+		equals: #(#(#(#() #(#() 1) #(2 #())))).
+	self assert: (self
+				evaluateExpression: '| stringConst | stringConst := ''12345''. {SmallInteger maximum. stringConst.1.2345.{2 log. Object}}')
+		equals: (Array
+				with: SmallInteger maximum
+				with: '12345'
+				with: 1.2345
+				with: (Array with: 2 log with: Object)).
+	text := String writeStream.
+	array := Array writeStream.
+	text nextPut: ${.
+	500 timesRepeat: 
+			[| g |
+			g := GUID newUnique.
+			array nextPut: g.
+			g storeOn: text.
+			text nextPut: $.].
+	text nextPut: $}.
+	array := array contents.
+	text := text contents.
+	self assert: (Compiler evaluate: text) equals: array!
+
 testByteArraysInLiteralArrays
 	"#980"
 
@@ -1468,6 +1494,7 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #test1054!public!unit tests! !
 !CompilerTest categoriesFor: #testBlockTempsMap!public!unit tests! !
 !CompilerTest categoriesFor: #testBlockWithAllTempTypes!public!unit tests! !
+!CompilerTest categoriesFor: #testBraceArrays!public!unit tests! !
 !CompilerTest categoriesFor: #testByteArraysInLiteralArrays!public!unit tests! !
 !CompilerTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testCompileTimeExpressions!public!unit tests! !

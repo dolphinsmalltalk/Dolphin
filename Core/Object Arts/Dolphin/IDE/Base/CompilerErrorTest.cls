@@ -165,8 +165,8 @@ writtenNotReadRange: aString
 !CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsBadPools!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!exceptions!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!exceptions!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
 !CompilerErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
 
