@@ -21,7 +21,7 @@ Instance Variables:
 basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
 
-	anObject isNil ifTrue: [^self writeInteger: 0].
+	anObject isNil ifTrue: [^self writeNil].
 	"If anObject has been registered as a global then we wrap it up as an STBGlobalObjectProxy
 	and output that instead."
 	(self objectIsGlobal: anObject) ifTrue: [^self putGlobal: anObject].
@@ -114,6 +114,9 @@ register: anObject asGlobal: aSymbol
 	(anObject isNil
 		ifTrue: [globalNils]
 		ifFalse: [globals at: anObject ifAbsentPut: [OrderedCollection new]]) add: aSymbol!
+
+removeOverrideFor: anObject
+	anObject isNil ifFalse: [proxyOverrides removeKey: anObject ifAbsent: []]!
 
 reset
 	"Private - Reset the instance.
@@ -209,6 +212,9 @@ writeInteger: anInteger
 
 	stream nextSDWORDPut: anInteger!
 
+writeNil
+	self writeInteger: 0!
+
 writeObject: anObject as: objectToSave withPrefix: anSTBPrefix
 	"Private - Represent anObject on the stream as objectToSave giving it a prefix of anSTBPrefix."
 
@@ -234,6 +240,7 @@ writePreambleFor: anObject
 !STBOutFiler categoriesFor: #refForObject:!private!searching! !
 !STBOutFiler categoriesFor: #register:!accessing!private! !
 !STBOutFiler categoriesFor: #register:asGlobal:!globals!public! !
+!STBOutFiler categoriesFor: #removeOverrideFor:!proxies!public! !
 !STBOutFiler categoriesFor: #reset!initializing!private! !
 !STBOutFiler categoriesFor: #resetStream!initializing!private! !
 !STBOutFiler categoriesFor: #saveObject:!operations!public! !
@@ -244,6 +251,7 @@ writePreambleFor: anObject
 !STBOutFiler categoriesFor: #writeClass:withPrefix:!operations!private! !
 !STBOutFiler categoriesFor: #writeInstanceVariables:!operations!private! !
 !STBOutFiler categoriesFor: #writeInteger:!helpers!private! !
+!STBOutFiler categoriesFor: #writeNil!operations!private! !
 !STBOutFiler categoriesFor: #writeObject:as:withPrefix:!operations!private! !
 !STBOutFiler categoriesFor: #writePreambleFor:!binary filing!public! !
 
