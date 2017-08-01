@@ -59,6 +59,13 @@ testOrder
 					self assert: guid2 asInteger > guid1 asInteger.
 					self deny: guid1 = guid2]]!
 
+testStoreOn
+	| subject stored |
+	subject := GUID newUnique.
+	stored := subject storeString.
+	self assert: (Compiler evaluate: stored) equals: subject.
+	self assert: (Compiler evaluate: GUID null storeString) equals: GUID null!
+
 testUniqueness
 	| generated size |
 	size := 5000.
@@ -75,5 +82,6 @@ testUniqueness
 !GUIDTest categoriesFor: #testNewUnique!public!testing! !
 !GUIDTest categoriesFor: #testNull!public!testing! !
 !GUIDTest categoriesFor: #testOrder!public!testing! !
+!GUIDTest categoriesFor: #testStoreOn!public!testing / printing! !
 !GUIDTest categoriesFor: #testUniqueness!public!testing! !
 

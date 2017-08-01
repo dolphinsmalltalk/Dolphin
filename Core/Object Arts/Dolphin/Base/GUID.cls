@@ -148,6 +148,17 @@ species
 
 	^GUID!
 
+storeOn: aStream
+	"Append to the <puttableStream> argument, target, an expression which when 
+	evaluated will answer a collection similar to the receiver."
+
+	aStream
+		print: self class;
+		space;
+		nextPutAll: #fromString:;
+		space;
+		print: self asString!
+
 stringSize
 	"Answer the number of characters in a GUID string."
 
@@ -171,6 +182,7 @@ value: guidBytes
 !GUID categoriesFor: #printOn:!development!printing!public! !
 !GUID categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
 !GUID categoriesFor: #species!accessing!public! !
+!GUID categoriesFor: #storeOn:!printing!public! !
 !GUID categoriesFor: #stringSize!constants!public! !
 !GUID categoriesFor: #value:!accessing!public! !
 
