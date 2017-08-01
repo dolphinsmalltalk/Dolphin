@@ -38,19 +38,20 @@ addBitmap: aBitmap index: anIntegerIndex
 	| start |
 	start := bitmapsStart at: aBitmap
 				ifAbsentPut: 
-					[| addBitmap size |
-					aBitmap setMap3DColors: true.
+					[| gdiBitmap addBitmap size |
+					gdiBitmap := aBitmap asBitmap.
+					gdiBitmap setMap3DColors: true.
 					(addBitmap := TBADDBITMAP new)
 						hInst: 0;
-						nID: aBitmap asParameter.
+						nID: gdiBitmap asParameter.
 					"If the extent reported by the bitmap is not correct, then the start index will be out,
 					 so watch out for caching duff old extent (see Bitmap>>loadFromInstance)."
-					size := aBitmap extent x // self bitmapSize x.
+					size := gdiBitmap extent x // self bitmapSize x.
 
 					"#305 We must make sure that the bitmap is not selected into a DC or the result will
 					be a blank image in the list. This won't damage the bitmap in any way because the canvas
 			`		can always be lazily recreated."
-					aBitmap freeDC.
+					gdiBitmap freeDC.
 
 					self tbAddBitmap: addBitmap size: size].
 	^start + anIntegerIndex!

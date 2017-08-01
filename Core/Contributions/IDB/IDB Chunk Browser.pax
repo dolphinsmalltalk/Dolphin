@@ -64,6 +64,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
 	add: 'IDB Common';
 	add: 'IDB Method History';
 	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
