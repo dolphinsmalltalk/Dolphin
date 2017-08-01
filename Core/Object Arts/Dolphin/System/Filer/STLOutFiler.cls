@@ -57,7 +57,10 @@ writeClass: aClass withLocator: locatorString
 writeInteger: anInteger 
 	"Private - Write anInteger to the stream."
 
-	stream nextPut: anInteger! !
+	stream nextPut: anInteger!
+
+writeNil
+	stream nextPut: nil! !
 !STLOutFiler categoriesFor: #putCharacter:!helpers!private! !
 !STLOutFiler categoriesFor: #putLiteral:!private! !
 !STLOutFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
@@ -65,6 +68,7 @@ writeInteger: anInteger
 !STLOutFiler categoriesFor: #tryPutLiteral:!private! !
 !STLOutFiler categoriesFor: #writeClass:withLocator:!operations!private! !
 !STLOutFiler categoriesFor: #writeInteger:!helpers!private! !
+!STLOutFiler categoriesFor: #writeNil!operations!private! !
 
 !STLOutFiler class methodsFor!
 
