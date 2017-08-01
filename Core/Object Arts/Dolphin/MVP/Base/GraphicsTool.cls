@@ -186,10 +186,9 @@ stbSaveOn: anSTBOutFiler
 	Only sub-instances of the receiver that are capable of persistency, i.e.
 	they hold enough information to re-create themselves, can be filed out."
 
-	self isPersistent
-		ifFalse: [self error: 'Cannot #stbSaveOn: ', self printString].
-
-	super stbSaveOn: anSTBOutFiler! !
+	self isPersistent ifFalse: [self error: 'Cannot #stbSaveOn: ' , self printString].
+	anSTBOutFiler override: handle with: nil.
+	[super stbSaveOn: anSTBOutFiler] ensure: [anSTBOutFiler removeOverrideFor: handle]! !
 !GraphicsTool categoriesFor: #asParameter!converting!public! !
 !GraphicsTool categoriesFor: #basicFree!private!realizing/unrealizing! !
 !GraphicsTool categoriesFor: #basicHandle!accessing!public! !
