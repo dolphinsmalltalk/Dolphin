@@ -679,6 +679,27 @@ newFixed: aSmallInteger
 	<primitive: 76>
 	^self primitiveFailed!
 
+newFromStack: aSmallInteger
+	"Private - Answer an instance of the receiver with the specified number of instance
+	variables (indexed and fixed), populated from that many entries on the stack. "
+
+	"N.B. This method is part of the implementation of brace arrays, and is intended for use by
+	the compiler. If used incorrectly it will corrupt the stack and will likely cause the
+	program to fail. The primitive will pop anInteger arguments from the stack in order to
+	populate the new object. If that exact number of arguments has not been previously pushed,
+	then either extra stack content will be left behind, or preceding content will be eaten
+	into. When the method returns this will probably cause a crash."
+
+	"Primitive failure reasons: 
+		0 - the receiver is not a <Behaviour>
+		1 - the receiver is a byte class
+		2 - the receiver is not indexable and the argument is greater than the number of fixed fields
+		3 - the argument is not a <SmallInteger>
+		4- the argument is negative"
+
+	<primitive: 190>
+	^self primitiveFailed!
+
 primAllInstances
 	"Private - Answer an <Array> of all the instances of the receiver which currently exist in the system. 
 	This may include currently unreferenced objects, unless a full garbage collection has just been 
@@ -1181,6 +1202,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #new:!instance creation!public! !
 !Behavior categoriesFor: #new:max:!instance creation!private! !
 !Behavior categoriesFor: #newFixed:!instance creation!public! !
+!Behavior categoriesFor: #newFromStack:!instance creation!public! !
 !Behavior categoriesFor: #primAllInstances!instances!private! !
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !

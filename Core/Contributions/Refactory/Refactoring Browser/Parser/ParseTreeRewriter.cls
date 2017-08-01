@@ -105,6 +105,9 @@ tree
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection collect: [:each | self visitArgumentNode: each]!
 
+visitArrayNode: anArrayNode
+	anArrayNode statements: (anArrayNode statements collect: [:each | self visitNode: each])!
+
 visitAssignmentNode: anAssignmentNode
 	anAssignmentNode variable: (self visitNode: anAssignmentNode variable).
 	anAssignmentNode value: (self visitNode: anAssignmentNode value)!
@@ -182,6 +185,7 @@ visitSequenceNode: aSequenceNode
 !ParseTreeRewriter categoriesFor: #replaceTree:withTree:when:!public!replacing! !
 !ParseTreeRewriter categoriesFor: #tree!accessing!public! !
 !ParseTreeRewriter categoriesFor: #visitArgumentNodes:!public!visiting! !
+!ParseTreeRewriter categoriesFor: #visitArrayNode:!public!visiting! !
 !ParseTreeRewriter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
 !ParseTreeRewriter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
 !ParseTreeRewriter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
