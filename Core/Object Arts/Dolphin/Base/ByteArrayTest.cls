@@ -49,6 +49,25 @@ testDwordAtOffsetPut
 	self should: [array dwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array dwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
 
+testFromHexString
+	| hex expected |
+	hex := String writeStream.
+	expected := ByteArray writeStream.
+	0 to: 255
+		do: 
+			[:each |
+			expected nextPut: each.
+			each < 16 ifTrue: [hex nextPut: $0].
+			each
+				printOn: hex
+				base: 16
+				showRadix: false].
+	hex := hex contents.
+	expected := expected contents.
+	self assert: (ByteArray fromHexString: hex) equals: expected.
+	self assert: (ByteArray fromHexString: '') equals: #[].
+	#(' 0' '1 ' 'ff' 'GH' '1') do: [:each | self should: [ByteArray fromHexString: each] raise: Error]!
+
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
 
@@ -137,6 +156,7 @@ wordValues
 !ByteArrayTest categoriesFor: #dwordValues!constants!private! !
 !ByteArrayTest categoriesFor: #testBasicDwordAtOffsetPut!public!unit tests! !
 !ByteArrayTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
+!ByteArrayTest categoriesFor: #testFromHexString!public! !
 !ByteArrayTest categoriesFor: #testMixedConcatenation!public! !
 !ByteArrayTest categoriesFor: #testSbyteAtOffset!public!unit tests! !
 !ByteArrayTest categoriesFor: #testSbyteAtOffsetPut!public!unit tests! !

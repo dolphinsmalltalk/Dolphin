@@ -734,16 +734,19 @@ fromAddress: anAddress length: anInteger
 fromHexString: aString
 	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."
 
-	| answer size |
+	| answer size digits |
 	size := aString size / 2.
 	size isInteger ifFalse: [self error: 'Invalid hex string (odd length)'].
 	answer := self new: size.
-	1 to: size do: [:i | | j |
-		j := (i * 2)-1.
-		answer at: i put: ((aString at: j) digitValue * 16) + ((aString at: j+1) digitValue)].
-	^answer
-			
-!
+	digits := #[0 1 2 3 4 5 6 7 8 9 0 0 0 0 0 0 0 10 11 12 13 14 15].
+	1 to: size
+		do: 
+			[:i |
+			| j |
+			answer at: i
+				put: (digits at: (aString basicAt: (j := i * 2) - 1) - ##($0 codePoint - 1)) * 16
+						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
+	^answer!
 
 icon
 	"Answers an Icon that can be used to represent this class"
