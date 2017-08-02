@@ -137,20 +137,18 @@ printOn: aStream
 selector
 	^selector ifNil: [selector := self buildSelector]!
 
-selector: aSelector 
+selector: aSelector
 	| keywords numArgs |
 	keywords := aSelector keywords.
 	numArgs := aSelector argumentCount.
-	numArgs == arguments size 
-		ifFalse: 
-			[self 
-				error: 'Attempting to assign selector with wrong number of arguments.'].
-	selectorParts := numArgs == 0 
-				ifTrue: [Array with: (StIdentifierToken value: keywords first start: nil)]
+	numArgs == arguments size
+		ifFalse: [self error: 'Attempting to assign selector with wrong number of arguments.'].
+	selectorParts := numArgs == 0
+				ifTrue: [{StIdentifierToken value: keywords first start: nil}]
 				ifFalse: 
-					[keywords first last == $: 
+					[keywords first last == $:
 						ifTrue: [keywords collect: [:each | StKeywordToken value: each start: nil]]
-						ifFalse: [Array with: (StBinarySelectorToken value: aSelector start: nil)]].
+						ifFalse: [{StBinarySelectorToken value: aSelector start: nil}]].
 	selector := aSelector!
 
 selectorParts

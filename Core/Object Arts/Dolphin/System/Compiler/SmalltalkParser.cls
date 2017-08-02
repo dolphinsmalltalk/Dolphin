@@ -161,21 +161,21 @@ parseBinaryMessage
 			whileTrue: [node := self parseBinaryMessageWith: node].
 	^node!
 
-parseBinaryMessageWith: aNode 
+parseBinaryMessageWith: aNode
 	| binaryToken |
 	binaryToken := currentToken.
 	self step.
-	^self messageNodeClass 
+	^self messageNodeClass
 		receiver: aNode
-		selectorParts: (Array with: binaryToken)
-		arguments: (Array with: self parseUnaryMessage)!
+		selectorParts: {binaryToken}
+		arguments: {self parseUnaryMessage}!
 
 parseBinaryPattern
 	| binaryToken node args |
 	binaryToken := currentToken.
 	self step.
-	args := Array with: self parseMethodParameter.
-	node := self methodNodeClass selectorParts: (Array with: binaryToken) arguments: args.
+	args := {self parseMethodParameter}.
+	node := self methodNodeClass selectorParts: {binaryToken} arguments: args.
 	node addComments: args last comments.
 	args last comments: nil.
 	^node!
@@ -294,15 +294,15 @@ parseCascadeMessage
 				node := self cascadeNodeClass messages: messages semicolons: semicolons].
 	^node!
 
-parseExpression: aString 
+parseExpression: aString
 	| body method |
-	method := self methodNodeClass 
-				selectorParts: (Array with: (scanner identifierTokenClass value: 'doIt' start: nil))
+	method := self methodNodeClass
+				selectorParts: {scanner identifierTokenClass value: 'doIt' start: nil}
 				arguments: #().
 	method source: aString.
 	body := self parseStatementsOf: method allowTag: false.
 	method body: body.
-	self atEnd 
+	self atEnd
 		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: self source size)].
 	^body!
 
@@ -595,20 +595,19 @@ parseLiteralByteArrayObject
 
 parseMessagePattern
 	currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
-	^currentToken isIdentifier 
+	^currentToken isIdentifier
 		ifTrue: [self parseUnaryPattern]
 		ifFalse: 
-			[currentToken isKeyword 
+			[currentToken isKeyword
 				ifTrue: [self parseKeywordPattern]
 				ifFalse: 
-					[currentToken isBinary 
+					[currentToken isBinary
 						ifTrue: [self parseBinaryPattern]
 						ifFalse: 
 							[self parserError: CErrBadSelector.
 							"Error ignored, attempt to recover by
 							constructing a dummy pattern and method node..."
-							self methodNodeClass selectorParts: (Array with: (scanner identifierTokenClass value: '' start: 1))
-								arguments: #()]]]!
+							self methodNodeClass selectorParts: {scanner identifierTokenClass value: '' start: 1} arguments: #()]]]!
 
 parseMethod
 	methodNode := self parseMessagePattern.
@@ -734,7 +733,10 @@ parserError: anInteger range: anInterval
 		extras: #()!
 
 parserError: anInteger range: anInterval extra: anObject
-	^self parserError: anInteger range: anInterval extras: (Array with: anObject)!
+	^self
+		parserError: anInteger
+		range: anInterval
+		extras: {anObject}!
 
 parserError: anInteger range: anInterval extras: anArray 
 	^self 
@@ -899,20 +901,20 @@ parseUnaryMessage
 	self addCommentsTo: node.
 	^node!
 
-parseUnaryMessageWith: aNode 
+parseUnaryMessageWith: aNode
 	| selector |
 	selector := currentToken.
 	self step.
-	^self messageNodeClass 
+	^self messageNodeClass
 		receiver: aNode
-		selectorParts: (Array with: selector)
+		selectorParts: {selector}
 		arguments: #()!
 
 parseUnaryPattern
 	| selector |
 	selector := currentToken.
 	self step.
-	^self methodNodeClass selectorParts: (Array with: selector) arguments: #()!
+	^self methodNodeClass selectorParts: {selector} arguments: #()!
 
 parseVariableNode: anStVariableNodeClass
 	| token node |
