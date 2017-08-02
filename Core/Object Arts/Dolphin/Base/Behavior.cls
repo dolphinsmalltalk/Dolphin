@@ -1205,7 +1205,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #new:!instance creation!public! !
 !Behavior categoriesFor: #new:max:!instance creation!private! !
 !Behavior categoriesFor: #newFixed:!instance creation!public! !
-!Behavior categoriesFor: #newFromStack:!instance creation!public! !
+!Behavior categoriesFor: #newFromStack:!instance creation!must not strip!private! !
 !Behavior categoriesFor: #primAllInstances!instances!private! !
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
