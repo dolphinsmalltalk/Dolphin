@@ -832,8 +832,8 @@ writeJunitTestLog: aTestSuite result: aTestResult
 							errorNode := caseNode addElement: 'error'.
 							(errorNode attributes)
 								at: 'message' put: each signal description;
+								at: 'type' put: each signal class name;
 								free.
-							"								at: 'type' put: each signal class name;"
 							errorNode text: each stacktrace.
 							errorNode free]
 						ifFalse: 
@@ -844,6 +844,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 									failureNode := caseNode addElement: 'failure'.
 									(failureNode attributes)
 										at: 'message' put: each signal description;
+										at: 'type' put: each signal class name;
 										free.
 									failureNode text: each stacktrace.
 									failureNode free]]].
