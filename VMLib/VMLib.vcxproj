@@ -136,7 +136,6 @@
     <ClCompile Include="..\ObjMemInit.cpp" />
     <ClCompile Include="..\oleprim.cpp" />
     <ClCompile Include="..\PerformPrim.cpp" />
-    <ClCompile Include="..\PointPrim.cpp" />
     <ClCompile Include="..\primitiv.cpp" />
     <ClCompile Include="..\Process.cpp" />
     <ClCompile Include="..\RaiseThreadException.c">

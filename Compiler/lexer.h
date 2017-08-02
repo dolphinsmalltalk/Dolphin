@@ -38,7 +38,7 @@ protected:
 			SmallIntegerConst, LargeIntegerConst, FloatingConst, ScaledDecimalConst, CharConst, 
 			SymbolConst, TrueConst, FalseConst, NilConst,
 			ArrayBegin, ByteArrayBegin, StringConst, ExprConstBegin, Special,
-			Binary, Return, Assignment, CloseParen, CloseStatement, CloseSquare, Cascade, Eof 
+			Binary, Return, Assignment, CloseParen, CloseStatement, CloseSquare, CloseBrace, Cascade, Eof 
 	};
 	
 public:

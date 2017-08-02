@@ -282,11 +282,10 @@ extern primitiveHookWindowCreate:near32
 primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIPAIXZ
 extern primitiveSmallIntegerPrintString:near32
 
-; Note that this isn't really MakePoint anymore, in fact it will make any pointer object
-; of length 2, storing the two args on the stack as the inst. vars (either fixed or first
-; two indexed, if indexed).
-primitiveNewInitializedObject EQU ?primitiveMakePoint@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveNewInitializedObject EQU ?primitiveNewInitializedObject@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
 extern primitiveNewInitializedObject:near32
+primitiveNewFromStack EQU ?primitiveNewFromStack@Interpreter@@CIPAIXZ
+extern primitiveNewFromStack:near32
 
 primitiveLargeIntegerDivide EQU ?primitiveLargeIntegerDivide@Interpreter@@CIPAIXZ
 extern primitiveLargeIntegerDivide:near32
@@ -579,7 +578,7 @@ DWORD		primitiveIndirectSDWORDAt						; case 186  Will be primitiveIndirectIntPt
 DWORD		primitiveIndirectSDWORDAtPut					; case 187  Will be primitiveIndirectIntPtrAtPut
 DWORD		primitiveReplacePointers						; case 188
 DWORD		primitiveMicrosecondClockValue					; case 189
-DWORD		unusedPrimitive									; case 190
+DWORD		primitiveNewFromStack							; case 190
 DWORD		unusedPrimitive									; case 191
 DWORD		unusedPrimitive									; case 192
 

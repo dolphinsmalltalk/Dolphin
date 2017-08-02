@@ -117,8 +117,7 @@ bool Lexer::IsASingleBinaryChar(char ch) const
 	{
 	case '[':
 	case '(':
-	case ')':
-	case ']':
+	case '{':
 	case '#':
 		return true;
 	}
@@ -621,6 +620,11 @@ Lexer::TokenType Lexer::NextToken()
 		else if (ch == ']')
 		{
 			m_tokenType = CloseSquare;
+		}
+
+		else if (ch == '}')
+		{
+			m_tokenType = CloseBrace;
 		}
 
 		else if (ch == ';')

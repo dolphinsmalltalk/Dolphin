@@ -530,7 +530,8 @@ private:
 	static Oop* __fastcall primitiveFloatDivide();
 	static Oop* __fastcall primitiveTruncated();
 
-	static Oop* __fastcall primitiveMakePoint(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveNewInitializedObject(CompiledMethod&, unsigned argCount);
+	static Oop* __fastcall primitiveNewFromStack();
 
 	static Oop* __fastcall primitiveSize();
    	

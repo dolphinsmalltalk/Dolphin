@@ -1440,10 +1440,10 @@ int Compiler::ParseTemporaries()
 	return nTempsAdded;
 }
 
-void Compiler::ParseStatements(TokenType closingToken)
+int Compiler::ParseStatements(TokenType closingToken, bool popResults)
 {
 	if (!m_ok || ThisToken() == closingToken || AtEnd())
-		return;
+		return 0;
 
 	// TEMPORARY: This nop may later be used as an insertion point for copying arguments from the
 	// stack into env temps. The reason for having a Nop is to avoid any jump target confusion, 
@@ -1452,6 +1452,7 @@ void Compiler::ParseStatements(TokenType closingToken)
 	_ASSERTE(m_codePointer == 0);
 	GenNop();
 
+	int count = 0;
 	while (m_ok)
 	{
 		int statementStart = ThisTokenRange().m_start;
@@ -1460,10 +1461,12 @@ void Compiler::ParseStatements(TokenType closingToken)
 		if (ThisToken() == CloseStatement)
 		{
 			// Statements are to be concatenated and previous
-			// result ignored.
+			// result ignored (except for brace arrays)
 			foundPeriod = true;
 			NextToken();
 		}
+
+		count = count + 1;
 
 		if (ThisToken() == closingToken)
 			break;
@@ -1472,8 +1475,14 @@ void Compiler::ParseStatements(TokenType closingToken)
 
 		if (m_ok && !foundPeriod)
 			CompileError(TEXTRANGE(statementStart, LastTokenRange().m_stop), CErrUnterminatedStatement);
-		GenPopStack();
+
+		if (popResults)
+		{
+			GenPopStack();
+		}
 	}
+
+	return count;
 }
 
 // ParseBlockStatements() differs from ParseStatements() in the empty block
@@ -1629,12 +1638,40 @@ void Compiler::ParseBinaryTerm(int textPosition)
 
 	case '[':
 		ParseBlock(textPosition);
-	break;
+		break;
+
+	case '{':
+		ParseBraceArray(textPosition);
+		break;
 
 	default:
 		CompileError(CErrInvalExprStart);
 		break;
 	};
+}
+
+void Compiler::ParseBraceArray(int textPosition)
+{
+	NextToken();
+
+	int count = ParseStatements(CloseBrace, false);
+
+	if (m_ok)
+	{
+		GenPushStaticVariable("Smalltalk.Array", TEXTRANGE(textPosition, textPosition));
+		GenInteger(count, ThisTokenRange());
+		GenMessage("newFromStack:", 1, textPosition);
+	}
+
+	if (ThisToken() == CloseBrace)
+	{
+		NextToken();
+	}
+	else
+	{
+		if (m_ok)
+			CompileError(TEXTRANGE(textPosition, ThisTokenRange().m_stop), CErrBraceNotClosed);
+	}
 }
 
 void Compiler::ParseTerm(int textPosition)

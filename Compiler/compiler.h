@@ -209,13 +209,14 @@ private:
 	void ParseMessagePattern();
 	void ParseArgument();
 	int ParseTemporaries();
-	void ParseStatements(TokenType);
+	int ParseStatements(TokenType, bool popResults = true);
 	void ParseBlockStatements();
 	void ParseStatement();
 	void ParseExpression();
 	void ParseAssignment(const Str&, const TEXTRANGE&);
 	void ParseTerm(int textPosition);
 	void ParseBinaryTerm(int textPosition);
+	void ParseBraceArray(int textPosition);
 	void ParseContinuation(int exprMark, int textPosition);
 	int ParseKeyContinuation(int exprMark, int textPosition);
 	int ParseBinaryContinuation(int exprMark, int textPosition);
