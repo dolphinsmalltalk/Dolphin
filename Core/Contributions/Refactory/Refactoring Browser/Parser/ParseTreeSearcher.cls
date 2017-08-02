@@ -36,15 +36,13 @@ answer
 answer: anObject
 	answer := anObject!
 
-canMatchMethod: aCompiledMethod 
+canMatchMethod: aCompiledMethod
 	| msgs |
-	#rbFix.	"Use a more efficient implementation that avoids repeatedly enumerating the sent messages"
 	msgs := self messages.
 	^msgs isEmpty or: 
-			[| sent |
-			sent := aCompiledMethod messages.
-			msgs anySatisfy: [:each | sent includes: each]]
-	"self messages anySatisfy: [:each | aCompiledMethod sendsSelector: each]]"!
+			[| symbols |
+			symbols := aCompiledMethod allSymbolLiterals.
+			msgs anySatisfy: [:each | symbols includes: each]]!
 
 context
 	^context!
