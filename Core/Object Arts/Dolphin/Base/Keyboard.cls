@@ -280,9 +280,8 @@ keyNameFromVKey: anInteger
 		Keyboard keyNameFromVKey: 16r23
 	"
 
-	^self
-		keyNameFromVKey: anInteger 
-		ifNone: [self error: 'invalid virtual key ', anInteger displayString]!
+	^self keyNameFromVKey: anInteger
+		ifNone: [self error: ('invalid virtual key <1d>' expandMacrosWith: anInteger)]!
 
 keyNameFromVKey: anInteger ifNone: exceptionHandler 
 	"Private - Answer the name of the specified virtual key code,
@@ -304,12 +303,12 @@ uninitialize
 
 	DefaultInstance := nil.!
 
-virtualKey: aString 
+virtualKey: aString
 	"Answer the <integer> virtual key code corresponding to the key with
 	English name, aString."
 
 	^VirtualKeys at: aString asUppercase
-		ifAbsent: [self error: 'Unrecognised virtual key: ''' , aString , '''']!
+		ifAbsent: [self error: ('Unrecognised virtual key: <1p>' expandMacrosWith: aString)]!
 
 vKeyToScanCode: anInteger 
 	"Private - Answer the scan code corresponding to the virtual key code, anInteger, or 0 if

@@ -146,7 +146,7 @@ callback: anInteger withArgumentsAt: anAddress cookie: cookie
 		return: ([(ExternalCallback callback: anInteger withArgumentsAt: anAddress) asUIntPtr] 
 				ifCurtailed: [self unwindCallback: cookie])!
 
-cannotReturn: anObject 
+cannotReturn: anObject
 	"Private - Sent when the VM is unable to return anObject from the current active block
 	because it's home method has already returned, or is homed in another process. This happens 
 	when a block which contains a ^-return is stored into a variable, and is evaluated at some point
@@ -157,8 +157,8 @@ cannotReturn: anObject
 	stack frame) then it is advisable to Kill the offending process, as further walkbacks
 	will occur if it is terminated normally."
 
-	^self 
-		error: 'Cannot return ' , anObject basicPrintString , ' to expired context or across Processes'!
+	^self error: ('Cannot return <1s> to expired context or across Processes'
+				expandMacrosWith: anObject basicPrintString)!
 
 constWrite: exceptionRecordBytes 
 	"Private - The VM generated a GP Fault interrupt. The argument is the relevant 
@@ -523,11 +523,11 @@ unregisterCOMStubs
 
 	comStubs := nil!
 
-unusedInterrupt: interruptArg 
+unusedInterrupt: interruptArg
 	"Private - The current active process has been sent an unknown interrupt, raise an error."
 
 	self enableInterrupts.
-	self error: 'Unknown interrupt with ' , interruptArg printString!
+	self error: ('Unknown interrupt with <1p>' expandMacrosWith: interruptArg)!
 
 unwindCallback: cookie 
 	"Private - Unwind (i.e. abnormally terminate) the most recent callback of the current

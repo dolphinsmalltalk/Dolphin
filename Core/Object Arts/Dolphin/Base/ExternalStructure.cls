@@ -563,7 +563,7 @@ byteSize: anInteger
 	"Private - Set the size (in bytes) of the structure the receiver represents"
 
 	(anInteger between: 0 and: 2 ** 15 - 1) 
-		ifFalse: [self error: 'Invalid structure size ' , anInteger displayString].
+		ifFalse: [self error: ('Invalid structure size <1d>' expandMacrosWith: anInteger)].
 	self extraInstanceSpec: anInteger!
 
 changedByteSizeFrom: oldByteSize

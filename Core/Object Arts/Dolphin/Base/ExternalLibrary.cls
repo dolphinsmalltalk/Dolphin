@@ -228,7 +228,7 @@ invalidCall
 			failureCode == 2
 				ifTrue: 
 					["VM has detected an attempt to return an ExternalStructure of an uninitialized class (i.e. basicByteSize is zero)"
-					^self error: 'Returned ExternalStructure type not initialized: ' , descriptor returnType]].
+					^self error: ('Returned ExternalStructure type not initialized: <1s>' expandMacrosWith: descriptor returnType)]].
 
 	"All arguments were apparently valid (assuming the Smalltalk validation matches the VM's),
 	it must have been some system or unknown error."

@@ -142,10 +142,10 @@ isValidKey: aString
 							each == $_ or: [each isLetter]]
 						ifFalse: [each == $_ or: [each isAlphaNumeric]]]]!
 
-keyString: anObject 
+keyString: anObject
 	| answer |
 	answer := anObject asString.
-	(self isValidKey: answer) ifFalse: [^self error: 'Invalid key: ' , answer].
+	(self isValidKey: answer) ifFalse: [^self error: ('Invalid key: <1p>' expandMacrosWith: answer)].
 	^answer!
 
 name

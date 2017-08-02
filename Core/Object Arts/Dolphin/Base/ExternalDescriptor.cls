@@ -519,17 +519,16 @@ parseDescriptor: aString
 	descriptor at: 2 put: argCount.
 	^Array with: descriptor with: literals!
 
-parseDoubleIndirection: assoc typeName: typeName 
+parseDoubleIndirection: assoc typeName: typeName
 	| pointerType |
 	pointerType := assoc value.
 	"If indirection type is #lppvoid or an indirection class, then cannot doubly indirect it"
 	(pointerType = ExtCallArgLPPVOID or: 
-			[pointerType isInteger not and: 
-					[assoc key == ExtCallArgSTRUCT 
-						and: [(self class environment at: pointerType) isIndirection]]]) 
+			[pointerType isInteger not
+				and: [assoc key == ExtCallArgSTRUCT and: [(self class environment at: pointerType) isIndirection]]])
 		ifTrue: 
-			[^self error: typeName 
-						, ': Only one further level of indirection to an indirection type is possible'].
+			[^self error: ('<1s>: Only one further level of indirection to an indirection type is possible'
+						expandMacrosWith: typeName)].
 	^ExtCallArgLPPVOID -> nil!
 
 parsePointerToStruct: anAssociation
@@ -543,14 +542,14 @@ parsePointerToStruct: anAssociation
 				ifNotNil: [:unkClass | (structClass includesBehavior: unkClass) ifTrue: [ExtCallArgCOMPTR] ifFalse: [ExtCallArgLP]])
 					-> structClass]!
 
-parseSingleIndirection: anAssociation 
+parseSingleIndirection: anAssociation
 	| pointerType |
 	pointerType := anAssociation value.
-	pointerType isNil 
+	pointerType isNil
 		ifTrue: 
-			[^self error: (self nameOf: anAssociation key type: anAssociation value) 
-						, ' cannot be further indirected'].
-	^pointerType isInteger not 
+			[^self error: ('<1s> cannot be further indirected'
+						expandMacrosWith: (self nameOf: anAssociation key type: anAssociation value))].
+	^pointerType isInteger not
 		ifTrue: [self parsePointerToStruct: anAssociation]
 		ifFalse: [pointerType -> nil]!
 

@@ -635,7 +635,7 @@ errorAt: index put: value
 errorCantHold: anObject
 	"Raise an error that the receiver cannot hold anObject (as it is of the wrong type)"
 
-	^self error: 'Can''t hold ', anObject printString!
+	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)!
 
 errorInstVarAt: anInteger put: anObject 
 	^anInteger isInteger 
@@ -1090,8 +1090,9 @@ primitiveFailed
 
 	| proc |
 	proc := Processor activeProcess.
-	^self error: 'Primitive ', proc topFrame sender method printString, ' failed (', 
-					proc primitiveFailureCode displayString, ')'!
+	^self
+		error: ('Primitive <1p> failed (<2d>)' expandMacrosWithArguments: {proc topFrame sender method. 
+					proc primitiveFailureCode})!
 
 printOn: target
 	"Append, to the <puttableStream>, target, a string whose characters are a 
@@ -1275,7 +1276,8 @@ shouldNotImplement
 
 	| method |
 	method := Processor activeProcess topFrame sender method.
-	^self error: self class name, ' should not implement ', method selector printString!
+	^self
+		error: ('<1p> should not implement <2p>' expandMacrosWithArguments: {self class. method selector})!
 
 size
 	"Answer the number of indexed variables in the receiver (0 for non-indexable objects,

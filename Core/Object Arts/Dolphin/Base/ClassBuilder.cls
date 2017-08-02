@@ -714,7 +714,7 @@ validateClassForRename
 
 	self validateClass.
 	((FixedLayout includes: currentClass) or: [FixedInitialLayout includes: currentClass])
-		ifTrue: [self error: currentClass name, ' must not be renamed.'].!
+		ifTrue: [self error: ('<1p> must not be renamed.' expandMacrosWith: currentClass) ].!
 
 validateClassInstanceVars
 	"Private - Ensure that the proposed changes do not result in a duplicate name
@@ -731,7 +731,7 @@ validateClassName
 	"Private - Ensure that the proposed class name is valid."
 
 	(self class isValidClassName: className)
-		ifFalse: [self error: 'Invalid class name ', className]!
+		ifFalse: [self error: ('Invalid class name <1s>' expandMacrosWith: className)]!
 
 validateClassVarsForCreate
 	"Private - Ensure that the proposed class variable name list does not
@@ -805,9 +805,8 @@ validateForRename
 	self
 		validateClassForRename;
 		validateClassName.
-
 	(self environment includesKey: className)
-		ifTrue: [self error: className, ' already exists.']!
+		ifTrue: [self error: ('<1s> already exists.' expandMacrosWith: className)]!
 
 validateInstanceSpec
 	"Private - Validate and complete the instanceSpec inst var."
@@ -822,7 +821,7 @@ validateInstanceSpecForModify
 
 	self validateInstanceSpec.
 	(self fundamentalTypeIsBeingChanged and: [currentClass isMeta not and: [self isFixedType]])
-		ifTrue: [self error: 'You may not change the subclass type of ', currentClass name]
+		ifTrue: [self error: ('You may not change the subclass type of <1p>' expandMacrosWith: currentClass)]
 	!
 
 validateInstanceVarsForCreate
@@ -845,9 +844,9 @@ validateInstanceVarsForModify
 	currentClass isMeta 
 		ifFalse: 
 			[(self isFixedLayout and: [currentClass instVarNames ~= proposedInstVarArray]) 
-				ifTrue: [self error: 'You must not change the instance variable layout of ' , currentClass name].
+				ifTrue: [self error: ('You must not change the instance variable layout of <1p>' expandMacrosWith: currentClass)].
 			(self isFixedInitialLayout and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1]) 
-				ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
+				ifTrue: [self error: ('New inst vars must come after those already in <1p>' expandMacrosWith: currentClass)]].
 	currentClass allSubclasses 
 		do: [:cls | cls instVarNames do: [:name | self class validateInstVarName: name using: instVarSet]]!
 
@@ -914,11 +913,11 @@ validateSuperclassForModify
 	that the superclass of a metaclass is not changed directly."
 
 	self superclassIsBeingChanged ifFalse: [^self].
-	currentClass isMeta 
+	currentClass isMeta
 		ifTrue: [self error: 'It is invalid to directly change the superclass of a metaclass.'].
 	self validateSuperclassIsSubclassable.
-	(superclass notNil and: [superclass isKindOf: currentClass]) 
-		ifTrue: [self error: superclass name , ' is a subclass of the class being changed.']!
+	(superclass notNil and: [superclass isKindOf: currentClass])
+		ifTrue: [self error: ('<1p> is a subclass of the class being changed.' expandMacrosWith: superclass)]!
 
 validateSuperclassIsSubclassable
 	"Private - Ensure that the superclass is a subclassable object."
@@ -1230,9 +1229,9 @@ validateClassVarName: aString using: aCollection
 	reserved word and does not duplicate a name defined in aCollecton."
 
 	(self isValidIdentifier: aString) 
-		ifFalse: [self error: 'Proposed class variable ''' , aString , ''' is invalid as a local identifier.'].
+		ifFalse: [self error: ('Proposed class variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
 	(aCollection includes: aString) 
-		ifTrue: [self error: 'Proposed class variable ''' , aString , ''' is multiply defined.'].
+		ifTrue: [self error: ('Proposed class variable <1p> is multiply defined.' expandMacrosWith: aString)].
 	aString first isUppercase ifTrue: [^self].
 	aString first == $_ 
 		ifTrue: 
@@ -1241,10 +1240,9 @@ validateClassVarName: aString using: aCollection
 					[:c | 
 					c current isOAD 
 						ifFalse: 
-							[Warning signal: 'Identifiers beginning with an underscore, such as ' , aString 
-										, ', are reserved for system use']]].
+							[Warning signal: ('Identifiers beginning with an underscore, such as <1p>, are reserved for system use' expandMacrosWith: aString)]]].
 	Warning 
-		signal: 'Proposed class variable ''' , aString , ''' should start with an uppercase letter.'!
+		signal: ('Proposed class variable <1p> should start with an uppercase letter.' expandMacrosWith: aString)!
 
 validateClassVars: classVarsArray againstSuperclass: aClass
 	"Private - Ensure that the proposed class variable name list does not
@@ -1276,7 +1274,7 @@ validateInstanceSpec: anInstanceSpec size: anInteger superclass: proposedSupercl
 		ifTrue: [spec := self validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass].
 	fixedSize := anInteger + (self instSizeOf: proposedSuperclass).
 	fixedSize > _SizeMask
-		ifTrue: [	self error: 'Classes are allowed a maximum of ', _SizeMask displayString, ' instance variables.'].
+		ifTrue: [self error: ('Classes are allowed a maximum of <1d> instance variables.' expandMacrosWith: _SizeMask)].
 	^spec bitOr: fixedSize!
 
 validateInstanceVars: instVarsArray againstSuperclass: aClass
@@ -1294,15 +1292,17 @@ validateInstanceVars: instVarsArray againstSuperclass: aClass
 	^instVarSet
 !
 
-validateInstVarName: aString using: aCollection 
+validateInstVarName: aString using: aCollection
 	"Private - Ensure that the proposed instance variable name is not a
 	reserved word and does not duplicate a name defined in aColecton."
 
-	(self isValidIdentifier: aString) 
+	(self isValidIdentifier: aString)
 		ifFalse: 
-			[self error: 'Proposed instance variable ''' , aString , ''' is invalid as a local identifier.'].
-	(aCollection includes: aString) 
-		ifTrue: [self error: 'Proposed instance variable ''' , aString , ''' is multiply defined.']!
+			[self
+				error: ('Proposed instance variable <1p> is invalid as a local identifier.' expandMacrosWith: aString)].
+	(aCollection includes: aString)
+		ifTrue: 
+			[self error: ('Proposed instance variable <1p> is multiply defined.' expandMacrosWith: aString)]!
 
 validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass
 	"Private - Answer a validated instance spec. Signal an exception if spec is

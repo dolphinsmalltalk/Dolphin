@@ -244,7 +244,7 @@ errorValueNotFound: aValue
 	"Private - Report that an attempt was made to look up the key for a value which was not
 	in receiver"
 
-	^self error: 'value not found: ', aValue printString
+	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
 !
 
 findElementOrNil: anAssociation

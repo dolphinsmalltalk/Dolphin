@@ -431,7 +431,7 @@ priority
 	^priority
 !
 
-priority: anInteger 
+priority: anInteger
 	"Set the receiver's priority to anInteger and Answer the previous priority. Note that 
 	if the receiver is the currently active process, the new priority is lower, and there 
 	are higher-priority processes ready to run, the active process will be preempted.
@@ -443,10 +443,9 @@ priority: anInteger
 		1 -	anInteger is not in the range of permissible priorities (1..highest priority)."
 
 	<primitive: 92>
-	^((anInteger isMemberOf: SmallInteger) 
-		and: [anInteger between: 1 and: Processor highestPriority]) 
-			ifTrue: [self primitiveFailed]
-			ifFalse: [self error: 'Invalid Process priority ' , priority printString]!
+	^((anInteger isMemberOf: SmallInteger) and: [anInteger between: 1 and: Processor highestPriority])
+		ifTrue: [self primitiveFailed]
+		ifFalse: [self error: ('Invalid Process priority <1p>' expandMacrosWith: priority)]!
 
 queueInterrupt: anInteger
 	"Queue an interrupt with the specified number for the receiver (which can be in any resumable state)

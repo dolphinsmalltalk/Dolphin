@@ -256,10 +256,9 @@ at: anInteger put: aCharacter
 		2 -	aCharacter is not a Character."
 
 	<primitive: 64>
-	^(aCharacter isKindOf: Character) 
+	^(aCharacter isKindOf: Character)
 		ifTrue: [self errorAt: anInteger put: aCharacter]
-		ifFalse: [self error: 'can''t hold ', aCharacter class name,'''s']
-!
+		ifFalse: [self error: ('can''t hold <1p>''s' expandMacrosWith: aCharacter class)]!
 
 basicCopy
 	"Private - Answer a copy of the receiver. Not to be overridden
@@ -346,36 +345,29 @@ expandMacros
 
 	^self expandMacrosWithArguments: #()!
 
-expandMacrosWith: anObject 
+expandMacrosWith: anObject
 	"Expand the receiver with replacable arguments.
 	See #formatWithArguments: for further details."
 
-	^self expandMacrosWithArguments: (Array with: anObject)!
+	^self expandMacrosWithArguments: {anObject}!
 
-expandMacrosWith: anObject with: anotherObject 
+expandMacrosWith: anObject with: anotherObject
 	"Expand the receiver with replacable arguments.
 	See #formatWithArguments: for further details."
 
-	^self expandMacrosWithArguments: (Array with: anObject with: anotherObject)!
+	^self expandMacrosWithArguments: {anObject. anotherObject}!
 
 expandMacrosWith: anObject with: anotherObject with: thirdObject 
 	"Expand the receiver with replacable arguments.
 	See #formatWithArguments: for further details."
 
-	^self expandMacrosWithArguments: (Array
-			with: anObject
-			with: anotherObject
-			with: thirdObject)!
+	^self expandMacrosWithArguments: {anObject. anotherObject. thirdObject}!
 
 expandMacrosWith: anObject with: anotherObject with: thirdObject with: fourthObject 
 	"Expand the receiver with replacable arguments.
 	See #formatWithArguments: for further details."
 
-	^self expandMacrosWithArguments: (Array
-			with: anObject
-			with: anotherObject
-			with: thirdObject
-			with: fourthObject)!
+	^self expandMacrosWithArguments: {anObject. anotherObject. thirdObject. fourthObject}!
 
 expandMacrosWithArguments: anArray 
 	"Expand the receiver with replacable arguments.
