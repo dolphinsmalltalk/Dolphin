@@ -80,19 +80,6 @@ defines: aName
 displayOn: aStream
 	aStream nextPutAll: 'Method'!
 
-equalTo: anObject withMapping: aDictionary 
-	self class = anObject class ifFalse: [^false].
-	(self selector = anObject selector 
-		and: [self body equalTo: anObject body withMapping: aDictionary]) 
-			ifFalse: [^false].
-	1 to: self arguments size
-		do: 
-			[:i | 
-			((self arguments at: i) equalTo: (anObject arguments at: i)
-				withMapping: aDictionary) ifFalse: [^false].
-			aDictionary removeKey: (self arguments at: i) name].
-	^self tag = anObject tag!
-
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
 
@@ -211,7 +198,6 @@ uses: aNode
 !StMethodNode categoriesFor: #childrenDo:!accessing!public! !
 !StMethodNode categoriesFor: #defines:!public!testing! !
 !StMethodNode categoriesFor: #displayOn:!printing!public! !
-!StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StMethodNode categoriesFor: #hash!comparing!public! !
 !StMethodNode categoriesFor: #isExternalCall!public!testing! !
 !StMethodNode categoriesFor: #isInlined!public!testing! !

@@ -72,17 +72,6 @@ childrenDo: aMonadicValuable
 	aMonadicValuable value: self receiver.
 	self arguments do: aMonadicValuable!
 
-equalTo: anObject withMapping: aDictionary 
-	self class = anObject class ifFalse: [^false].
-	((self receiver equalTo: anObject receiver withMapping: aDictionary)
-		and: [self selector = anObject selector]) ifFalse: [^false].
-	1 to: self arguments size
-		do: 
-			[:i | 
-			((self arguments at: i) equalTo: (anObject arguments at: i)
-				withMapping: aDictionary) ifFalse: [^false]].
-	^true!
-
 hash
 	^(self receiver hash bitXor: self selector hash) 
 		bitXor: (self arguments isEmpty 
@@ -206,7 +195,6 @@ value
 !StMessageNode categoriesFor: #bestNodeFor:!public!querying! !
 !StMessageNode categoriesFor: #buildSelector!helpers!private! !
 !StMessageNode categoriesFor: #childrenDo:!accessing!public! !
-!StMessageNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StMessageNode categoriesFor: #hash!comparing!public! !
 !StMessageNode categoriesFor: #isBinary!public!testing! !
 !StMessageNode categoriesFor: #isCascaded!public!testing! !

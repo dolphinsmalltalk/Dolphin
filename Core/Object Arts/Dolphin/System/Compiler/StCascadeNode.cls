@@ -52,16 +52,6 @@ childrenDo: aMonadicValuable
 directlyUses: aNode 
 	^messages last = aNode and: [self isDirectlyUsed]!
 
-equalTo: anObject withMapping: aDictionary 
-	self class = anObject class ifFalse: [^false].
-	self messages size == anObject messages size ifFalse: [^false].
-	1 to: self messages size
-		do: 
-			[:i | 
-			((self messages at: i) equalTo: (anObject messages at: i)
-				withMapping: aDictionary) ifFalse: [^false]].
-	^true!
-
 hash
 	^self messages hash!
 
@@ -124,7 +114,6 @@ whichNodeIsContainedBy: anInterval
 !StCascadeNode categoriesFor: #children!accessing!public! !
 !StCascadeNode categoriesFor: #childrenDo:!accessing!public! !
 !StCascadeNode categoriesFor: #directlyUses:!public!testing! !
-!StCascadeNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StCascadeNode categoriesFor: #hash!comparing!public! !
 !StCascadeNode categoriesFor: #isCascade!public!testing! !
 !StCascadeNode categoriesFor: #messages!accessing!public! !
