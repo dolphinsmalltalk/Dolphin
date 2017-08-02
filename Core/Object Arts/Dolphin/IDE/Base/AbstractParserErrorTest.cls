@@ -1745,27 +1745,26 @@ testWarningUnoptimizedLoopsNonNiladicReceiver
 				code: CWarnExpectNiladicBlockReceiver]!
 
 testWarningUnreferencedTemp
-	#(#testWarningUnreferencedTempBlock #testWarningUnreferencedTempMethod #testWarningUnreferencedTempOptimizedBlock) 
+	#(#testWarningUnreferencedTempBlock #testWarningUnreferencedTempMethod #testWarningUnreferencedTempOptimizedBlock #testWarningUnreferencedTempBraceArray)
 		do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				parseMethodWarning: each
 				rangeBlock: 
-					[:source | 
+					[:source |
 					| start |
 					start := source lastIndexOf: $a.
 					start to: start]
 				code: CWarnUnreferencedTemp]!
 
 testWarningWrittenNotRead
-	#(#testWarningWrittenNotReadMethodTemp #testWarningWrittenNotReadBlockTemp #testWarningWrittenNotReadFullBlock)
+	#(#testWarningWrittenNotReadMethodTemp #testWarningWrittenNotReadBlockTemp #testWarningWrittenNotReadFullBlock #testWarningWrittenNotReadBraceArray)
 		do: 
 			[:each |
 			self
 				parseMethodWarning: each
 				rangeBlock: [:source | self writtenNotReadRange: source]
-				code: CWarnWrittenNotRead].
-	^self!
+				code: CWarnWrittenNotRead]!
 
 traceException: ex source: aString 
 	Transcript

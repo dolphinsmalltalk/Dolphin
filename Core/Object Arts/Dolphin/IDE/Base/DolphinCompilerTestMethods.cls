@@ -403,6 +403,10 @@ testWarningUnreferencedTempBlock
 	b := c := 1.
 	b + c]!
 
+testWarningUnreferencedTempBraceArray
+	| c a b |
+	^{b := c := 1. b + c}!
+
 testWarningUnreferencedTempMethod
 	| c a b |
 	b := c := 1.
@@ -427,6 +431,13 @@ testWarningWrittenNotReadBlockTemp
 	
 	^[| _tmp |
 	_tmp := 1]!
+
+testWarningWrittenNotReadBraceArray
+	| tmp1 _tmp |
+	tmp1 := 1.
+	_tmp := 2.
+	^{ tmp1 }
+!
 
 testWarningWrittenNotReadFullBlock
 	| _tmp |
@@ -549,11 +560,13 @@ testWarnUnimplementedAbstractMethod
 !DolphinCompilerTestMethods categoriesFor: #testWarningRedefiningStaticAsTemp!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningUnreachable!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempBlock!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempBraceArray!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempMethod!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningUnreferencedTempOptimizedBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningUsesFalse!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningUsesTrue!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBlockTemp!public!unit tests! !
+!DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadBraceArray!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadFullBlock!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarningWrittenNotReadMethodTemp!public!unit tests! !
 !DolphinCompilerTestMethods categoriesFor: #testWarnMsgUnimplementedByConst!public!unit tests! !

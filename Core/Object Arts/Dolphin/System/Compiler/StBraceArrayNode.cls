@@ -19,6 +19,12 @@ Instance Variables
 acceptVisitor: anStParseNodeVisitor
 	^anStParseNodeVisitor visitArrayNode: self!
 
+children
+	^statements!
+
+childrenDo: aMonadicValuable
+	self statements do: aMonadicValuable!
+
 left
 	^left!
 
@@ -53,6 +59,8 @@ statements: anOrderedCollection
 stopWithoutParentheses
 	^right! !
 !StBraceArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StBraceArrayNode categoriesFor: #children!accessing!public! !
+!StBraceArrayNode categoriesFor: #childrenDo:!accessing!enumerating!public! !
 !StBraceArrayNode categoriesFor: #left!accessing!public! !
 !StBraceArrayNode categoriesFor: #left:!accessing!public! !
 !StBraceArrayNode categoriesFor: #periods!accessing!public! !
