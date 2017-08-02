@@ -107,8 +107,10 @@ containsInstruction: discriminator
 dispatchAll
 	"Private - Interpret the receiver's method sending messages for each instruction to the client."
 
+	| count |
+	count := byteCodes basicSize.
 	self reset.
-	[self atEnd] whileFalse: [self dispatchNext]!
+	[ip > count] whileFalse: [self dispatchNext]!
 
 dispatchNext
 	"Private - Dispatch the next instruction in the receiver's method to the interpreter."
@@ -172,26 +174,20 @@ indexOfIP: anInteger
 	[ip < anInteger] whileTrue: [i := i + 1. self next].
 	^i!
 
-instruction: aSymbol do: aDyadicValuable 
-	instructionLength == 1 
+instruction: aSymbol do: aDyadicValuable
+	instructionLength == 1
 		ifTrue: 
 			[^aDyadicValuable value: aSymbol
-				value: (aSymbol last == $: 
-						ifTrue: [Array with: byteCode - (RunStarts at: aSymbol)]
-						ifFalse: [#()])].
-	instructionLength == 2 
-		ifTrue: [^aDyadicValuable value: aSymbol value: (Array with: (byteCodes at: ip - 1))].
-	instructionLength == 3 
+				value: (aSymbol last == $: ifTrue: [{byteCode - (RunStarts at: aSymbol)}] ifFalse: [#()])].
+	instructionLength == 2 ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 1}].
+	instructionLength == 3
 		ifTrue: 
 			[^aDyadicValuable value: aSymbol
-				value: (Array with: (byteCodes at: ip - 2) with: (byteCodes at: ip - 1))].
-	^instructionLength == 4 
+				value: {byteCodes at: ip - 2. byteCodes at: ip - 1}].
+	^instructionLength == 4
 		ifTrue: 
 			[aDyadicValuable value: aSymbol
-				value: (Array 
-						with: (byteCodes at: ip - 3)
-						with: (byteCodes at: ip - 2)
-						with: (byteCodes at: ip - 1))]
+				value: {byteCodes at: ip - 3. byteCodes at: ip - 2. byteCodes at: ip - 1}]
 		ifFalse: 
 			[| args argc |
 			argc := instructionLength - 1.
@@ -208,13 +204,15 @@ instructions
 	self instructionsDo: [:selector :args | answer add: (selector -> args)].
 	^answer!
 
-instructionsDo: operation 
+instructionsDo: operation
 	"Evaluate the dyadic valuable, operation, for each instruction in the receiver, passing 
 	the instruction symbolic name (a keyword selector) and an array of arguments (which should not be
 	modified)."
 
+	| count |
 	self reset.
-	[self atEnd] whileFalse: [self nextInstructionDo: operation]!
+	count := byteCodes basicSize.
+	[ip > count] whileFalse: [self instruction: (Instructions at: self next + 1) do: operation]!
 
 interpreter: anInstructionInterpreter 
 	"Private - Set the receiver's interpreter client. The client is sent messages (the
@@ -347,6 +345,24 @@ sendsSpecialSelector: anInteger
 specialMessages
 	"Private - Answer the set of special message sends in the byte code stream."
 
+	| answer vmlib count |
+	answer := IdentitySet new: 4.
+	vmlib := VMLibrary default.
+	self reset.
+	count := byteCodes basicSize.
+	[ip > count] whileFalse: 
+			[| op |
+			op := Instructions at: self next + 1.
+			op == #shortSpecialSend:
+				ifTrue: [answer add: (vmlib selectorOfSpecialSend: byteCode - ShortSpecialSend)]
+				ifFalse: 
+					[op == #shortSpecialSendEx:
+						ifTrue: [answer add: (vmlib selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx)]]].
+	^answer!
+
+specialMessages1
+	"Private - Answer the set of special message sends in the byte code stream."
+
 	| answer vmlib |
 	answer := IdentitySet new.
 	vmlib := VMLibrary default.
@@ -355,6 +371,24 @@ specialMessages
 			op == #shortSpecialSend:
 				ifTrue: [answer add: (vmlib selectorOfSpecialSend: args first)]
 				ifFalse: [op == #shortSpecialSendEx: ifTrue: [answer add: (vmlib selectorOfSpecialSendEx: args first)]]].
+	^answer!
+
+specialMessages2
+	"Private - Answer the set of special message sends in the byte code stream."
+
+	| answer vmlib count |
+	answer := IdentitySet new.
+	vmlib := VMLibrary default.
+	self reset.
+	count := byteCodes basicSize.
+	[ip > count] whileFalse: 
+			[| op |
+			op := Instructions at: self next + 1.
+			op == #shortSpecialSend:
+				ifTrue: [answer add: (vmlib selectorOfSpecialSend: byteCode - ShortSpecialSend)]
+				ifFalse: 
+					[op == #shortSpecialSendEx:
+						ifTrue: [answer add: (vmlib selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx)]]].
 	^answer!
 
 writesInstVarAt: anInteger 
@@ -415,6 +449,8 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #sendsSpecialSelector:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #specialMessages!accessing!private! !
+!ByteCodeDispatcher categoriesFor: #specialMessages1!accessing!private! !
+!ByteCodeDispatcher categoriesFor: #specialMessages2!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #writesInstVarAt:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #writesStatic:!public!testing! !
 
@@ -453,7 +489,7 @@ initialize
 			runLength := each first.
 			runLength > 1 ifTrue: [runStarts at: instruction put: instructions size].
 			runLength timesRepeat: [instructions add: instruction]].
-	self assert: [Instructions size = 256].
+	self assert: [instructions size = 256].
 	self addClassConstant: 'Instructions' value: instructions asArray.
 	RunStarts := runStarts.
 	self addClassConstant: 'InstructionLengths'

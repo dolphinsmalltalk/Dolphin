@@ -39,9 +39,7 @@ checkLiteral: aLiteral
 		ifFalse: [aLiteral class == Array ifTrue: [aLiteral do: [:each | self checkLiteral: each]]]!
 
 compiledMethod
-	^compiledMethod notNil
-		ifTrue: [compiledMethod]
-		ifFalse: [compiledMethod := class compiledMethodAt: selector]!
+	^compiledMethod ifNil: [compiledMethod := class compiledMethodAt: selector]!
 
 computeLiterals
 	literalSemaphore := Semaphore new.
