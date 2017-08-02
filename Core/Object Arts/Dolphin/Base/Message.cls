@@ -71,7 +71,7 @@ hash
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
-	^Array with: self selector!
+	^{self selector}!
 
 numArgs
 	^self argumentCount!
@@ -169,11 +169,11 @@ selector: aSymbol
 
 	^self selector: aSymbol arguments: #()!
 
-selector: aSymbol argument: anObject 
+selector: aSymbol argument: anObject
 	"Answer a new instance of the receiver with selector, aSymbol, and argument, 
 	anObject"
 
-	^self selector: aSymbol arguments: (Array with: anObject)!
+	^self selector: aSymbol arguments: {anObject}!
 
 selector: aSymbol arguments: anArray 
 	"Answer a new instance of the receiver with selector, aSymbol, and arguments, anArray"

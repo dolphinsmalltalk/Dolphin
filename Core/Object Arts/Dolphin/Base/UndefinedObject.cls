@@ -163,12 +163,12 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 		modifyOrCreate!
 
 subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	^(self 
+	^(self
 		newClassBuilder: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
 		poolDictionaries: poolDictString)
-		categoryNames: (Array with: aCategoryOrString);
+		categoryNames: {aCategoryOrString};
 		modifyOrCreate!
 
 subclass: aClassSymbol
