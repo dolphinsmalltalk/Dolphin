@@ -206,24 +206,25 @@ maxLineSize
 needsParenthesisFor: aNode
 	| parent |
 	aNode isValue ifFalse: [^false].
-	parent := aNode parent.
-	parent isNil ifTrue: [^false].
-	(aNode isMessage
-		and: [parent isMessage and: [parent receiver == aNode and: [aNode isUnary not]]])
-			ifTrue: 
-				[| grandparent |
-				grandparent := parent parent.
-				(grandparent notNil and: [grandparent isCascade]) ifTrue: [^true]].
+	parent := aNode parent ifNil: [^false].
+	parent isDynamicArray ifTrue: [^false].
+	(aNode isMessage and: [parent isMessage and: [parent receiver == aNode and: [aNode isUnary not]]])
+		ifTrue: 
+			[| grandparent |
+			grandparent := parent parent.
+			(grandparent notNil and: [grandparent isCascade]) ifTrue: [^true]].
 	aNode precedence < parent precedence ifTrue: [^false].
-	aNode isAssignment & parent isAssignment ifTrue: [^false].
-	aNode isAssignment | aNode isCascade ifTrue: [^true].
+	(aNode isAssignment and: [parent isAssignment]) ifTrue: [^false].
+	(aNode isAssignment or: [aNode isCascade]) ifTrue: [^true].
 	aNode precedence == 0 ifTrue: [^false].
 	aNode isMessage ifFalse: [^true].
 	aNode precedence = parent precedence ifFalse: [^true].
 	aNode isUnary ifTrue: [^false].
 	aNode isKeyword ifTrue: [^true].
 	parent receiver == aNode ifFalse: [^true].
-	^self precedenceOf: parent selector greaterThan: aNode selector!
+	^self precedenceOf: parent selector greaterThan: aNode selector
+
+!
 
 newLine
 	firstLineLength isNil ifTrue: [firstLineLength := codeStream position].
