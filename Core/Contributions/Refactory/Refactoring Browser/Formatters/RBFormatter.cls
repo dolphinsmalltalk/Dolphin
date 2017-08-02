@@ -49,10 +49,26 @@ for: aValue do: doBlock separatedBy: separatorBlock
 	doBlock value: aValue last!
 
 formatArray: anArrayNode
-	anArrayNode statements do: [:each | self visitNode: each]
-		separatedBy: 
-			[codeStream nextPutAll: '. '.
-			self newLine]!
+	| formattedArgs multiline length |
+	formattedArgs := Array writeStream: anArrayNode statements size.
+	multiline := false.
+	length := 0.
+	self indent: 1
+		around: 
+			[anArrayNode statements do: 
+					[:each |
+					| formatter string |
+					formatter := self copy.
+					string := formatter format: each.
+					formattedArgs nextPut: string.
+					length := length + string size + 2.
+					multiline := multiline or: [formatter isMultiLine]].
+			formattedArgs := formattedArgs collection.
+			multiline := multiline or: [length + 1 + self lineLength > self maxLineSize].
+			formattedArgs do: [:each | codeStream nextPutAll: each]
+				separatedBy: 
+					[codeStream nextPut: $..
+					multiline ifTrue: [self newLine] ifFalse: [self space]]]!
 
 formatMessage: aMessageNode cascade: cascadeBoolean
 	| selectorParts arguments multiLine formattedArgs indentFirst firstArgLength length argumentCount |
