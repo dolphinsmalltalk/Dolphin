@@ -72,11 +72,14 @@ addSubclass: aClass
 
 	| subs |
 	aClass superclass == self
-		ifFalse: [ ^self error: 'I am not ', aClass printString, 's superclass' ].
+		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
 	subs := self subclasses.
-	(subs identityIndexOf: aClass) == 0 ifTrue: [
-		"Maintain the array in sorted order as saves sorting on access"
-		subclasses := (subs asSortedCollection add: aClass; yourself) asArray]!
+	(subs identityIndexOf: aClass) == 0
+		ifTrue: 
+			["Maintain the array in sorted order as saves sorting on access"
+			subclasses := (subs asSortedCollection
+						add: aClass;
+						yourself) asArray]!
 
 addToSuper
 	"Private - Add the receiver to its superclasses' subclass collection."

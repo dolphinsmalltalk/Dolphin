@@ -510,7 +510,7 @@ errorFileCorrupt
 	"Private - Filing in the receivers owned objects has failed because the
 	file is corrupt."
 
-	self error: 'FileIn of ', self name, ' package has failed, file is corrupt'!
+	self error: ('FileIn of <1s> package has failed, file is corrupt' expandMacrosWith: self name)!
 
 fileInClassDefinitions: aFileStream 
 	"Private - Load all package classes from the filestream up to the end marker.
@@ -2586,7 +2586,7 @@ errorInvalidPACFile: pathString
 	"Private - Raise an <Error> to the effect that the file with the specified path is
 	not a valid .PAC file."
 
-	^self error: 'Invalid PAC file: ', pathString!
+	^self error: ('Invalid PAC file: <1s>' expandMacrosWith: pathString)!
 
 errorInvalidPAXFile: pathString 
 	"Private - Raise an <Error> to the effect that the file with the specified path is

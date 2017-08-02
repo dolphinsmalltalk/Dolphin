@@ -66,7 +66,7 @@ anyOne
 	"Answer an arbitrary element of the collection. Raise an error if the collection is empty."
 
 	self do: [:each | ^each].
-	^self error: 'collection is empty'!
+	^self errorEmptyCollection!
 
 anySatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
@@ -341,8 +341,7 @@ errorEmptyCollection
 errorNotKeyed
 	"Private - Generate an error to the effect that the receiver is not a keyed Collection"
 
-	^self error: self class name, 's do not respond to keyed accessing messages'
-!
+	^self error: ('<1p>s do not respond to keyed accessing messages' expandMacrosWith: self class)!
 
 fold: aDyadicValuable 
 	"Evaluate the <dyadicValuable> argument, operation, across the elements of the receiver

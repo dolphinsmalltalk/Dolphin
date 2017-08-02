@@ -241,11 +241,14 @@ copySourceFilesTo: path
 	"Private - Copy the various Smalltalk sources files to a new root name"
 
 	self flushChanges.
-	[ File
+	
+	[File
 		copy: self sourcesFileName to: (self sourcesFileNameFromPath: path);
-		copy: self changesFileName to: (self changesFileNameFromPath: path)
-	] on: HRESULTError do: [:e |
-		self error: 'Failed to copy sources to ', path, '(', e osErrorMessage, ')']!
+		copy: self changesFileName to: (self changesFileNameFromPath: path)]
+			on: HRESULTError
+			do: 
+				[:e |
+				self error: ('Failed to copy sources to <1s> (<2s>)' expandMacrosWith: path with: e osErrorMessage)]!
 
 createSources: filePath
 	"Private - This will create a sources and changes file for the current image. Does not

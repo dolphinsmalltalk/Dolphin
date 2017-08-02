@@ -623,7 +623,7 @@ valueFailed: anInteger
 
 	^self argumentCount == anInteger
 		ifTrue: [super primitiveFailed]
-		ifFalse: [self error: 'Block expects ', self argumentCount printString, ' argument(s)']!
+		ifFalse: [self error: ('Block expects <1p> argument(s)' expandMacrosWith: self argumentCount)]!
 
 valueOnUnwind: aTwoArgBlock 
 	"Private - Evaluate the receiver, and should it exit by a non-local return to its home method's sender

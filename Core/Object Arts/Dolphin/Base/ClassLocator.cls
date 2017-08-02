@@ -46,7 +46,7 @@ errorClassCircularityDetected
 	"Private - Signal an error indicating there exists a circular class dependency
 	in involving the class identified by the receiver."
 
-	self error: 'A circular class dependency has been encountered involving class ', key!
+	self error: ('A circular class dependency has been encountered involving class <1s>' expandMacrosWith: key)!
 
 errorClassNotFound
 	"Private - Signal an error indicating that a particular was not found in the image and 

@@ -518,19 +518,19 @@ errorFirstObject: target
 	"Private - Report an error to the effect that an attempt was made to access the object
 	before the argument, target, where the latter is the last element of the receiver."
 
-	^self error: target printString, ' is my first object'!
+	^self error: ('<1p> is my first object' expandMacrosWith: target)!
 
 errorLastObject: target
 	"Private - Report an error to the effect that an attempt was made to access the object
 	after the argument, target, where the latter is the last element of the receiver."
 
-	^self error: target printString, ' is my last object'!
+	^self error: ('<1p> is my last object' expandMacrosWith: target)!
 
 errorValueNotFound: aValue
 	"Private - Report that an attempt was made to look up the key for a value which was not
 	in receiver"
 
-	^self error: 'value not found: ', aValue printString
+	^self error: ('value not found: <1p>' expandMacrosWith: aValue)
 !
 
 fifth

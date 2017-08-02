@@ -178,8 +178,8 @@ primitiveFailed
 
 	| proc |
 	proc := Processor activeProcess.
-	^self error: 'Primitive ', proc topFrame sender method printString, ' failed (', 
-					proc primitiveFailureCode displayString, ')'! !
+	^self error: ('Primitive <1p> failed (<2d>) '
+		expandMacrosWithArguments: {proc topFrame sender method. proc primitiveFailureCode})! !
 !ProtoObject categoriesFor: #~~!comparing!public! !
 !ProtoObject categoriesFor: #==!comparing!public! !
 !ProtoObject categoriesFor: #allReferences!enumerating!public! !
