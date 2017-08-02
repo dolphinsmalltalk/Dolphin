@@ -812,25 +812,8 @@ testErrorsInvalidExpressionStart
 		code: CErrInvalExprStart!
 
 testErrorsLexicalBadChar
-	"VW binding char"
-
-	| text start badChar |
-	text := '"A VW binding"
-		{Smalltalk.Object}'.
-	badChar := ${.
-	start := text indexOf: badChar.
-	self
-		lexicalError: text
-		range: (start to: start)
-		line: 2
-		code: LErrBadChar.
-	"VW binding char in const expression"
-	self
-		lexicalError: ('#(<1s>)' expandMacrosWith: badChar)
-		range: (3 to: 3)
-		line: 1
-		code: LErrBadChar.
 	"Non-ascii letters"
+
 	(Array with: (Character value: 128)) , ((Character byteCharacterSet select: [:each | each isLetter])
 				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 		do: 
