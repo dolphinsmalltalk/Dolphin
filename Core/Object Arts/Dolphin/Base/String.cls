@@ -906,7 +906,7 @@ subStrings: separatorOrSeparators
 		convert the separator string to an array of <Character>."
 	^separatorOrSeparators _separateSubStringsIn: self!
 
-subStringsAnsi: separators 
+subStringsAnsi: separators
 	"Answer an array containing the substrings of the receiver separated by occurrences
 	of any of the <Character>s in the <collection> argument, separators.
 	Repeated separators produce empty strings in the array (cf. #subStrings).
@@ -916,14 +916,14 @@ subStringsAnsi: separators
 	size := self size.
 	size == 0 ifTrue: [^Array new].
 	end := self indexOfAnyOf: separators startingAt: 1.
-	end == 0 ifTrue: [^Array with: self].
+	end == 0 ifTrue: [^{self}].
 	answer := Array writeStream: 5.
 	start := 1.
 	
 	[answer nextPut: (self copyFrom: start to: end - 1).
 	start := end + 1.
 	end := self indexOfAnyOf: separators startingAt: start.
-	end == 0] 
+	end == 0]
 			whileFalse.
 	"Copy any remaining chars after the last separator"
 	start <= size ifTrue: [answer nextPut: (self copyFrom: start to: size)].

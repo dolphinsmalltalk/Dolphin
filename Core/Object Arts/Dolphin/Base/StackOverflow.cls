@@ -13,7 +13,7 @@ StackOverflow comment: 'Exception signalled when the VM detects an unrecoverable
 _descriptionArguments
 	"Answer the arguments to be substituted into the receiver's Win32 description format String."
 
-	^Array with: self hresult displayString!
+	^{self hresult displayString}!
 
 defaultAction
 	"Perform the default action for the receiver if it is not handled

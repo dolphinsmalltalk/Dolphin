@@ -76,10 +76,7 @@ isKeyPressed: virtualKeyCodeInteger
 isModifierDown
 	"Answer whether the any of the keyboard modifier keys (Ctrl, Alt, Shift) are down."
 
-	^##(Array 
-		with: VK_CONTROL
-		with: VK_SHIFT
-		with: VK_MENU) anySatisfy: [:each | self isKeyDown: each]!
+	^##({VK_CONTROL. VK_SHIFT. VK_MENU}) anySatisfy: [:each | self isKeyDown: each]!
 
 isShiftDown
 	"Answer whether the <SHIFT> key is down."

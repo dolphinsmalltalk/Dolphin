@@ -67,20 +67,19 @@ triggerEvent: anEventSymbol
 	^(self at: anEventSymbol ifAbsent: [[]]) value
 !
 
-triggerEvent: aSymbol with: anObject 
+triggerEvent: aSymbol with: anObject
 	"Private - Evaluate the sequence of MessageSends registered for the event named by
 	the <Symbol> argument, with a single argument, anObject..
 	 Answer the result of the last evaluation, or nil if none."
 
-	^(self at: aSymbol ifAbsent: [[:arg | nil]]) valueWithArguments: (Array with: anObject)!
+	^(self at: aSymbol ifAbsent: [[:arg | nil]]) valueWithArguments: {anObject}!
 
-triggerEvent: aSymbol with: anObject with: anotherObject 
+triggerEvent: aSymbol with: anObject with: anotherObject
 	"Private - Evaluate the sequence of MessageSends registered for the event named by
 	the <Symbol> argument, with the pair of arguments, anObject, and, anotherObject.
 	 Answer the result of the last evaluation, or nil if none."
 
-	^(self at: aSymbol ifAbsent: [[:arg1 :arg2 | nil]]) 
-		valueWithArguments: (Array with: anObject with: anotherObject)!
+	^(self at: aSymbol ifAbsent: [[:arg1 :arg2 | nil]]) valueWithArguments: {anObject. anotherObject}!
 
 triggerEvent: aSymbol withArguments: anArray
 	"Private - Evaluate the sequence of MessageSends registered for the event named by

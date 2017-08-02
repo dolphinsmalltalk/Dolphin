@@ -13,10 +13,7 @@ CRTError comment: 'Exception to represent C-runtime library errors.'!
 _descriptionArguments
 	"Answer the arguments to be substituted into the receiver's Win32 description format String."
 
-	^Array 
-		with: self errno
-		with: self messageText
-		with: self strerror!
+	^{self errno. self messageText. self strerror}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

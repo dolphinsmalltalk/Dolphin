@@ -25,10 +25,10 @@ alignment
 	^self byteSize!
 
 autoGenCategories
-	^Array with: ExternalStructure autoGenCategory
-		with: (self isNonBrowsable
-				ifTrue: [self class methodCategoryClass private]
-				ifFalse: [self class methodCategoryClass public])!
+	^{ExternalStructure autoGenCategory.
+		self isNonBrowsable
+			ifTrue: [self class methodCategoryClass private]
+			ifFalse: [self class methodCategoryClass public]}!
 
 autoGenComment
 	"Private - Answer a suitable piece of comment to warn the user that a

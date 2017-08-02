@@ -131,9 +131,9 @@ evaluate: operation with: arg1 at: priority
 	asynchronously at the specified <integer> priority, and which when evaluated will 
 	synchronously supply the result."
 
-	^self	
-		evaluate: operation 
-		withArguments: (Array with: arg1)
+	^self
+		evaluate: operation
+		withArguments: {arg1}
 		at: priority!
 
 evaluate: operation with: arg1 with: arg2 at: priority
@@ -141,9 +141,9 @@ evaluate: operation with: arg1 with: arg2 at: priority
 	asynchronously at the specified <integer> priority, and which when evaluated will 
 	synchronously supply the result."
 
-	^self	
-		evaluate: operation 
-		withArguments: (Array with: arg1 with: arg2) 
+	^self
+		evaluate: operation
+		withArguments: {arg1. arg2}
 		at: priority!
 
 evaluate: operation withArguments: args at: priority

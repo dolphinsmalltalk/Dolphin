@@ -154,14 +154,13 @@ amMarker
 
 	^Locale default amDesignator!
 
-dateAndTimeNow 
+dateAndTimeNow
 	"Answer an Array whose first element is the current local Date and whose
 	second element is the current local Time."
 
 	| localTime |
 	localTime := SYSTEMTIME now.
-	^Array with: (Date fromSYSTEMTIME: localTime)
-		with: (self fromSYSTEMTIME: localTime)!
+	^{Date fromSYSTEMTIME: localTime. self fromSYSTEMTIME: localTime}!
 
 defaultFormat
 	"Private - Answer a collection of the time formats for the default user locale."

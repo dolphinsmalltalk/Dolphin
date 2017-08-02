@@ -329,7 +329,7 @@ changeProcessEventsBy: countChange
 		processEvents := 0].
 	^processEvents!
 
-classRepackaged: aClass from: source to: destination 
+classRepackaged: aClass from: source to: destination
 	"Private - Trigger class repackaging notifications."
 
 	"When a class is repackaged (or removed), we reset all pre-reqs as it may affect not just
@@ -341,11 +341,7 @@ classRepackaged: aClass from: source to: destination
 		membershipChanged: source;
 		membershipChanged: destination;
 		resetPrerequisites;
-		trigger: #classRepackaged:from:to:
-			withArguments: (Array 
-					with: aClass
-					with: source
-					with: destination)!
+		trigger: #classRepackaged:from:to: withArguments: {aClass. source. destination}!
 
 clearCachedInformation
 	"Private - Clear down all cached information such as prerequisites."
@@ -425,7 +421,7 @@ getLooseMethods
 	self packages do: [:each | loose atAll: each methodNames put: each].
 	^loose!
 
-globalRepackaged: globalName from: source to: destination 
+globalRepackaged: globalName from: source to: destination
 	"Private - The global variable named by the <Symbol>, globalName, 
 	has been repackaged. The operation is now complete and the package
 	system in a consistent state so this is an appropriate point to pdate change 
@@ -436,11 +432,7 @@ globalRepackaged: globalName from: source to: destination
 		membershipChanged: source;
 		membershipChanged: destination;
 		resetPrerequisites;
-		trigger: #globalRepackaged:from:to:
-			withArguments: (Array 
-					with: globalName
-					with: source
-					with: destination)!
+		trigger: #globalRepackaged:from:to: withArguments: {globalName. source. destination}!
 
 includesPackage: aPackage 
 	"Answer whether the receiver manages the specified <Package>."
@@ -698,13 +690,10 @@ membershipChanged: aPackage at: aNiladicValuable
 memberUpdatedIn: aPackage 
 	self memberOf: aPackage updatedAt: [Package sourceManager changesFileSize]!
 
-methodRepackaged: aCompiledMethod from: sourcePackage to: destinationPackage 
+methodRepackaged: aCompiledMethod from: sourcePackage to: destinationPackage
 	self assert: [sourcePackage ~~ destinationPackage].
 	self trigger: #methodRepackaged:from:to:
-		withArguments: (Array 
-				with: aCompiledMethod
-				with: sourcePackage
-				with: destinationPackage)!
+		withArguments: {aCompiledMethod. sourcePackage. destinationPackage}!
 
 moveLooseMethod: aCompiledMethod from: sourcePackage to: destinationPackage 
 	"Private - Move the loose <CompiledMethod> argument from the <Package>,
@@ -1112,18 +1101,14 @@ resetPrerequisites
 	self isProcessingEvents ifTrue: [
 		self trigger: #prerequisitesReset]!
 
-resourceRepackaged: aResourceIdentifier from: source to: destination 
+resourceRepackaged: aResourceIdentifier from: source to: destination
 	"Private - Trigger resource repackaging notifications."
 
 	self assert: [source ~~ destination].
 	self
 		membershipChanged: source;
 		membershipChanged: destination;
-		trigger: #resourceRepackaged:from:to:
-			withArguments: (Array 
-					with: aResourceIdentifier
-					with: source
-					with: destination)!
+		trigger: #resourceRepackaged:from:to: withArguments: {aResourceIdentifier. source. destination}!
 
 setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
@@ -1350,8 +1335,7 @@ newSystemPackage
 	inst := self current.
 	self assert: [inst packages isEmpty].
 	(dolphin := Package name: self systemPackageName)
-		basicComment: 
-'Dolphin Smalltalk Base System.
+		basicComment: 'Dolphin Smalltalk Base System.
 Copyright (c) Object Arts Ltd. 1997-2016';
 		basicScriptAt: #preinstall put: 'Error signal: ''Cannot replace the system package'''.
 	all := self environment allClasses.
@@ -1359,10 +1343,9 @@ Copyright (c) Object Arts Ltd. 1997-2016';
 	globalNames := Smalltalk keys.
 	globalNames removeAll: (all collect: [:aClass | aClass name]).
 	globalNames do: [:globalName | inst addGlobalNamed: globalName to: dolphin].
-	dolphin untracedGlobals: (Array with: #Transcript).
+	dolphin untracedGlobals: {#Transcript}.
 	dolphin isChanged: false.
-	^dolphin
-!
+	^dolphin!
 
 reset
 	"Reset the receivers singleton current instance and SystemPackage."

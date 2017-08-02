@@ -13,10 +13,8 @@ Win32Fault comment: ''!
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 
-	^super _descriptionArguments , (Array 
-				with: self exceptionName
-				with: exceptionRecord ExceptionAddress
-				with: exceptionRecord moduleFileName)!
+	^super _descriptionArguments
+		, {self exceptionName. exceptionRecord ExceptionAddress. exceptionRecord moduleFileName}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

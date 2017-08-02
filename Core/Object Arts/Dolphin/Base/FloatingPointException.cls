@@ -16,7 +16,7 @@ _descriptionArguments
 
 	| record |
 	record := self _ieeeRecord.
-	^super _descriptionArguments , (Array with: record causeDescription with: record operationName)!
+	^super _descriptionArguments , {record causeDescription. record operationName}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

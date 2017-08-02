@@ -24,12 +24,7 @@ N.B. The inherited''''tag'''' instance variable is used to hold the <integer> er
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 
-	^Array 
-		with: self severityName
-		with: self methodClass displayString
-		with: self selector
-		with: self line
-		with: self errorMessage!
+	^{self severityName. self methodClass displayString. self selector. self line. self errorMessage}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
@@ -69,8 +64,7 @@ errorMessage
 		ifNotNil: 
 			[:format |
 			format
-				expandMacrosWithArguments: (Array with: (self source copyFrom: self range start to: self range stop))
-						, extras]!
+				expandMacrosWithArguments: {self source copyFrom: self range start to: self range stop} , extras]!
 
 extra
 	#deprecated.
@@ -198,15 +192,15 @@ classForCode: anInteger
 				ifFalse: 
 					[anInteger < CInfoFirst ifTrue: [CompilerWarningNotification] ifFalse: [CompilerInfoNotification]]]!
 
-code: codeInteger in: aString for: aClass selector: aSymbol position: posInteger line: lineInteger range: anInterval extras: anArray 
-	^self 
+code: codeInteger in: aString for: aClass selector: aSymbol position: posInteger line: lineInteger range: anInterval extras: anArray
+	^self
 		code: codeInteger
 		in: aString
 		for: aClass
 		selector: aSymbol
 		position: posInteger
 		line: lineInteger
-		ranges: (Array with: anInterval)
+		ranges: {anInterval}
 		extras: anArray!
 
 code: codeInteger in: aString for: aClass selector: aSymbol position: posInteger line: lineInteger ranges: aCollectionOfInterval extras: anArray 

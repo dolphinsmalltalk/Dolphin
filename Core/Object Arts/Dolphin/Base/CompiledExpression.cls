@@ -57,19 +57,18 @@ isExpression
 owningPackage
 	^self methodClass owningPackage!
 
-storeSourceString: aString evaluationPools: anArray logged: aBoolean 
+storeSourceString: aString evaluationPools: anArray logged: aBoolean
 	"Private - Ask the receiver's source manager to record its expression 
 	source, aString, logging the evaluation to the change log if requested."
 
 	| pools |
 	aBoolean ifTrue: [self class sourceManager logEvaluate: aString].
-	pools := anArray notNil 
+	pools := anArray notNil
 				ifTrue: 
 					[| nonEmptyPools |
 					nonEmptyPools := anArray reject: [:each | each isEmpty].
 					nonEmptyPools notEmpty ifTrue: [nonEmptyPools]].
-	self 
-		sourceDescriptor: (pools isNil ifTrue: [aString] ifFalse: [Array with: aString with: pools])!
+	self sourceDescriptor: (pools isNil ifTrue: [aString] ifFalse: [{aString. pools}])!
 
 value
 	"Evaluate the expression with nil as 'self'."

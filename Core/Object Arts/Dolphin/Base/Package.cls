@@ -1553,12 +1553,12 @@ removeGlobalNamed: globalName
 	self manager addGlobalNamed: globalName to: nil.
 	^globalName!
 
-removeLooseMethod: aCompiledMethod 
+removeLooseMethod: aCompiledMethod
 	"Private - Remove the <CompiledMethod> argument which is directly owned by the receiver
 	(i.e. a loose method) from this package. Do not fire any events."
 
 	self assert: [(self includesClass: aCompiledMethod methodClass) not].
-	self removeMethodNames: (Array with: (self nameForMethod: aCompiledMethod))!
+	self removeMethodNames: {self nameForMethod: aCompiledMethod}!
 
 removeMethod: method
 	"Remove the <CompiledMethod>, method, from the list of loose methods owned by 
@@ -2030,10 +2030,7 @@ trace: trace prerequisite: aPackage from: from to: to type: type
 
 	aPackage == self ifTrue: [^self].
 	(trace at: (aPackage ifNil: [_Uncommitted]) ifAbsentPut: [OrderedCollection new: 16])
-		addLast: (Array
-				with: from
-				with: to
-				with: type)!
+		addLast: {from. to. type}!
 
 tracePrerequisiteGlobals: trace packagedGlobals: globalLookup
 	"Private - Trace the prerequisites of the receiver that come about because of

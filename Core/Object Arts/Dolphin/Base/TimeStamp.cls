@@ -69,8 +69,7 @@ date: aDate
 dateAndTime
 	"Answer a two element Array containing the date and time."
 
-	^Array with: self date with: self time
-!
+	^{self date. self time}!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."

@@ -123,7 +123,7 @@ open: pathString withAlias: aliasString
 	N.B. The register of instances is weak. If the library instance is not referenced
 	from elsewhere, then the alias will be lost and will need to be re-registered."
 
-	^self open: pathString withAliases: (Array with: aliasString)!
+	^self open: pathString withAliases: {aliasString}!
 
 open: aString withAliases: aCollection
 	"Register the <collection> of <readableString>s, aCollection, as aliases for the 

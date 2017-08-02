@@ -909,20 +909,20 @@ foldLiteralStrings
 	literalStrings := Set new.
 	total := 0.
 	self allMethodsDo: 
-			[:each | 
+			[:each |
 			each whileMutableDo: 
 					[1 to: each literalCount
 						do: 
-							[:i | 
+							[:i |
 							| literal |
 							literal := each literalAt: i.
-							literal class == String 
+							literal class == String
 								ifTrue: 
 									[total := total + 1.
 									literalStrings add: literal.
 									each literalAt: i put: (literalStrings find: literal)]]]].
 	after := literalStrings size.
-	^Array with: total with: after!
+	^{total. after}!
 
 icon
 	"Answers an Icon that can be used to represent this class"

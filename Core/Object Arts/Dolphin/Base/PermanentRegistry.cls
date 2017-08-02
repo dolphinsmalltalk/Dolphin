@@ -36,14 +36,13 @@ grow
 
 	| capacity |
 	capacity := registry size.
-	registry := registry, (capacity+2 to: capacity*2), (Array with: freeHead).
-	freeHead := capacity+1
-!
+	registry := registry , (capacity + 2 to: capacity * 2) , {freeHead}.
+	freeHead := capacity + 1!
 
 initialize: anInteger
 	"Private - Initialize the receiver with the specified initial capacity."
 
-	registry := (2 to: anInteger), ##(Array with: 0).
+	registry := (2 to: anInteger) , ##({0}).
 	freeHead := 1!
 
 removeAtIndex: anInteger
