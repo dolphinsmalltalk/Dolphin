@@ -50,11 +50,6 @@ childrenDo: aMonadicValuable
 directlyUses: aNode 
 	^aNode = value ifTrue: [true] ifFalse: [self isDirectlyUsed]!
 
-equalTo: anObject withMapping: aDictionary 
-	^self class = anObject class and: 
-			[(self variable equalTo: anObject variable withMapping: aDictionary) 
-				and: [self value equalTo: anObject value withMapping: aDictionary]]!
-
 hash
 	^self variable hash bitXor: self value hash!
 
@@ -109,7 +104,6 @@ variable: aVariableNode value: aValueNode position: anInteger
 !StAssignmentNode categoriesFor: #bestNodeFor:!public!querying! !
 !StAssignmentNode categoriesFor: #childrenDo:!accessing!public! !
 !StAssignmentNode categoriesFor: #directlyUses:!public!testing! !
-!StAssignmentNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StAssignmentNode categoriesFor: #hash!comparing!public! !
 !StAssignmentNode categoriesFor: #isAssignment!public!testing! !
 !StAssignmentNode categoriesFor: #needsParenthesis!public!testing! !

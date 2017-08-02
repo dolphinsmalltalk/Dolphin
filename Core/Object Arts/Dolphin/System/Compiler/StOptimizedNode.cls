@@ -41,10 +41,6 @@ body: stmtsNode
 childrenDo: aMonadicValuable 
 	aMonadicValuable value: body!
 
-equalTo: anObject withMapping: aDictionary 
-	^self class = anObject class 
-		and: [self body equalTo: anObject body withMapping: aDictionary]!
-
 evaluateStatements
 	| s |
 	methodClass isNil ifTrue: [^nil].
@@ -112,7 +108,6 @@ value: anObject
 !StOptimizedNode categoriesFor: #body!accessing!public! !
 !StOptimizedNode categoriesFor: #body:!accessing!public! !
 !StOptimizedNode categoriesFor: #childrenDo:!accessing!public! !
-!StOptimizedNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StOptimizedNode categoriesFor: #evaluateStatements!helpers!private! !
 !StOptimizedNode categoriesFor: #hash!comparing!public! !
 !StOptimizedNode categoriesFor: #initialize!public! !

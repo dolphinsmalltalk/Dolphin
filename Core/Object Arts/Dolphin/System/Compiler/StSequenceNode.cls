@@ -37,35 +37,6 @@ Instance Variables:
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitSequenceNode: self!
 
-addNodeFirst: aNode 
-	aNode parent: self.
-	statements := (statements asOrderedCollection)
-				addFirst: aNode;
-				yourself!
-
-addNodes: aCollection 
-	aCollection do: [:each | each parent: self].
-	(statements notEmpty and: [statements last isReturn]) 
-		ifTrue: [self error: 'Cannot add statement after return node'].
-	statements := (statements asOrderedCollection)
-				addAll: aCollection;
-				yourself!
-
-addNodesFirst: aCollection 
-	aCollection do: [:each | each parent: self].
-	statements := (statements asOrderedCollection)
-				addAllFirst: aCollection;
-				yourself!
-
-addReturn
-	| node |
-	statements isEmpty ifTrue: [^nil].
-	statements last isReturn ifTrue: [^statements last].
-	node := StReturnNode value: statements last.
-	statements at: statements size put: node.
-	node parent: self.
-	^node!
-
 allDefinedVariableNodesDo: aMonadicValuable 
 	self temporaries do: aMonadicValuable.
 	self childrenDo: [:each | each allDefinedVariableNodesDo: aMonadicValuable]!
@@ -93,29 +64,8 @@ defines: aName
 directlyUses: aNode 
 	^false!
 
-equalTo: anObject withMapping: aDictionary 
-	self class = anObject class ifFalse: [^false].
-	self statements size == anObject statements size ifFalse: [^false].
-	1 to: self statements size
-		do: 
-			[:i | 
-			((self statements at: i) equalTo: (anObject statements at: i)
-				withMapping: aDictionary) ifFalse: [^false]].
-	aDictionary values asSet size = aDictionary size ifFalse: [^false].	"Not a one-to-one mapping"
-	self temporaries
-		do: [:each | aDictionary removeKey: each name ifAbsent: []].
-	^true!
-
 hash
-	^self temporaries hash bitXor: (self statements isEmpty 
-				ifTrue: [0]
-				ifFalse: [self statements first hash])!
-
-indexOfNode: aNode 
-	"Try to find the node by first looking for ==, and then for ="
-
-	^(1 to: statements size) detect: [:each | (statements at: each) == aNode]
-		ifNone: [statements indexOf: aNode]!
+	^(self hashForCollection: self temporaries) bitXor: (self hashForCollection: self statements)!
 
 isLast: aNode 
 	| last |
@@ -210,19 +160,13 @@ whichNodeIsContainedBy: anInterval
 	^node! !
 !StSequenceNode categoriesFor: #=!comparing!public! !
 !StSequenceNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StSequenceNode categoriesFor: #addNodeFirst:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodes:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addNodesFirst:!adding nodes!public! !
-!StSequenceNode categoriesFor: #addReturn!accessing!public! !
 !StSequenceNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
 !StSequenceNode categoriesFor: #allTemporaryVariableNodesDo:!accessing!public! !
 !StSequenceNode categoriesFor: #bestNodeFor:!public!querying! !
 !StSequenceNode categoriesFor: #childrenDo:!accessing!public! !
 !StSequenceNode categoriesFor: #defines:!public!testing! !
 !StSequenceNode categoriesFor: #directlyUses:!public!testing! !
-!StSequenceNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StSequenceNode categoriesFor: #hash!comparing!public! !
-!StSequenceNode categoriesFor: #indexOfNode:!helpers!private! !
 !StSequenceNode categoriesFor: #isLast:!public!testing! !
 !StSequenceNode categoriesFor: #isSequence!public!testing! !
 !StSequenceNode categoriesFor: #lastIsReturn!public!testing! !

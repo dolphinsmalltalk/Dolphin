@@ -33,27 +33,45 @@ package methodNames
 	add: #RBConfigurableFormatter -> #visitPatternWrapperBlockNode:;
 	add: #RBFormatter -> #visitPatternWrapperBlockNode:;
 	add: #StAbstractVariableNode -> #copyInContext:;
+	add: #StAbstractVariableNode -> #equalTo:withMapping:;
 	add: #StAbstractVariableNode -> #references:;
 	add: #StAbstractVariableNode -> #replaceSourceFrom:;
 	add: #StAbstractVariableNode -> #replaceSourceWith:;
 	add: #StAssignmentNode -> #copyInContext:;
+	add: #StAssignmentNode -> #equalTo:withMapping:;
 	add: #StAssignmentNode -> #match:inContext:;
 	add: #StAssignmentNode -> #replaceNode:withNode:;
 	add: #StAssignmentNode -> #replaceSourceWith:;
 	add: #StBlockNode -> #copyInContext:;
+	add: #StBlockNode -> #equalTo:withMapping:;
 	add: #StBlockNode -> #match:inContext:;
 	add: #StBlockNode -> #references:;
 	add: #StBlockNode -> #replaceNode:withNode:;
+	add: #StBraceArrayNode -> #addNode:;
+	add: #StBraceArrayNode -> #addNode:before:;
+	add: #StBraceArrayNode -> #addNodeFirst:;
+	add: #StBraceArrayNode -> #addNodes:;
+	add: #StBraceArrayNode -> #addNodes:before:;
+	add: #StBraceArrayNode -> #addNodesFirst:;
+	add: #StBraceArrayNode -> #copyInContext:;
+	add: #StBraceArrayNode -> #equalTo:withMapping:;
+	add: #StBraceArrayNode -> #indexOfNode:;
+	add: #StBraceArrayNode -> #match:inContext:;
+	add: #StBraceArrayNode -> #references:;
+	add: #StBraceArrayNode -> #replaceNode:withNode:;
 	add: #StCascadeNode -> #copyInContext:;
+	add: #StCascadeNode -> #equalTo:withMapping:;
 	add: #StCascadeNode -> #match:inContext:;
 	add: #StCascadeNode -> #replaceNode:withNode:;
 	add: #StLiteralArrayNode -> #copyInContext:;
+	add: #StLiteralArrayNode -> #equalTo:withMapping:;
 	add: #StLiteralArrayNode -> #match:inContext:;
 	add: #StLiteralArrayNode -> #replaceNode:withNode:;
 	add: #StLiteralNode -> #replaceSourceFrom:;
 	add: #StLiteralNode -> #replaceSourceWith:;
 	add: #StLiteralValueNode -> #copyInContext:;
 	add: #StMessageNode -> #copyInContext:;
+	add: #StMessageNode -> #equalTo:withMapping:;
 	add: #StMessageNode -> #isContainmentReplacement:;
 	add: #StMessageNode -> #match:inContext:;
 	add: #StMessageNode -> #replaceContainmentSourceWith:;
@@ -67,6 +85,7 @@ package methodNames
 	add: #StMethodNode -> #changeSourceSelectors:arguments:;
 	add: #StMethodNode -> #clearReplacements;
 	add: #StMethodNode -> #copyInContext:;
+	add: #StMethodNode -> #equalTo:withMapping:;
 	add: #StMethodNode -> #initialize;
 	add: #StMethodNode -> #map:to:;
 	add: #StMethodNode -> #mappingFor:;
@@ -77,6 +96,7 @@ package methodNames
 	add: #StMethodNode -> #renameSelector:andArguments:;
 	add: #StMethodNode -> #replaceNode:withNode:;
 	add: #StOptimizedNode -> #copyInContext:;
+	add: #StOptimizedNode -> #equalTo:withMapping:;
 	add: #StOptimizedNode -> #match:inContext:;
 	add: #StOptimizedNode -> #replaceNode:withNode:;
 	add: #StParseNodeVisitor -> #visitPatternBlockNode:;
@@ -86,6 +106,7 @@ package methodNames
 	add: #StProgramNode -> #clearReplacements;
 	add: #StProgramNode -> #copyInContext:;
 	add: #StProgramNode -> #copyList:inContext:;
+	add: #StProgramNode -> #equalTo:withMapping:;
 	add: #StProgramNode -> #mappingFor:;
 	add: #StProgramNode -> #match:inContext:;
 	add: #StProgramNode -> #matchList:against:inContext:;
@@ -100,15 +121,22 @@ package methodNames
 	add: #StProgramNode -> #selfMessages;
 	add: #StProgramNode -> #superMessages;
 	add: #StReturnNode -> #copyInContext:;
+	add: #StReturnNode -> #equalTo:withMapping:;
 	add: #StReturnNode -> #match:inContext:;
 	add: #StReturnNode -> #replaceNode:withNode:;
 	add: #StSequenceNode -> #addNode:;
 	add: #StSequenceNode -> #addNode:before:;
+	add: #StSequenceNode -> #addNodeFirst:;
+	add: #StSequenceNode -> #addNodes:;
 	add: #StSequenceNode -> #addNodes:before:;
+	add: #StSequenceNode -> #addNodesFirst:;
+	add: #StSequenceNode -> #addReturn;
 	add: #StSequenceNode -> #addSelfReturn;
 	add: #StSequenceNode -> #addTemporariesNamed:;
 	add: #StSequenceNode -> #addTemporaryNamed:;
 	add: #StSequenceNode -> #copyInContext:;
+	add: #StSequenceNode -> #equalTo:withMapping:;
+	add: #StSequenceNode -> #indexOfNode:;
 	add: #StSequenceNode -> #match:inContext:;
 	add: #StSequenceNode -> #references:;
 	add: #StSequenceNode -> #removeDeadCode;
@@ -400,6 +428,10 @@ parseRewriteMethod: aString onError: aBlock
 copyInContext: aDictionary
 	^self class named: self name!
 
+equalTo: anObject withMapping: aDictionary 
+	^self class = anObject class and: 
+			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]!
+
 references: aVariableName 
 	^self name = aVariableName!
 
@@ -415,6 +447,7 @@ replaceSourceWith: aNode
 				to: self stop
 				with: aNode formattedCode)! !
 !StAbstractVariableNode categoriesFor: #copyInContext:!matching!public! !
+!StAbstractVariableNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StAbstractVariableNode categoriesFor: #references:!public!testing! !
 !StAbstractVariableNode categoriesFor: #replaceSourceFrom:!public!replacing! !
 !StAbstractVariableNode categoriesFor: #replaceSourceWith:!public!replacing! !
@@ -426,6 +459,11 @@ copyInContext: aDictionary
 		variable: (variable copyInContext: aDictionary);
 		value: (value copyInContext: aDictionary);
 		yourself!
+
+equalTo: anObject withMapping: aDictionary 
+	^self class = anObject class and: 
+			[(self variable equalTo: anObject variable withMapping: aDictionary) 
+				and: [self value equalTo: anObject value withMapping: aDictionary]]!
 
 match: aNode inContext: aDictionary 
 	aNode class == self class ifFalse: [^false].
@@ -461,6 +499,7 @@ replaceSourceWith: aNode
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)! !
 !StAssignmentNode categoriesFor: #copyInContext:!matching!public! !
+!StAssignmentNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StAssignmentNode categoriesFor: #match:inContext:!matching!public! !
 !StAssignmentNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 !StAssignmentNode categoriesFor: #replaceSourceWith:!public!replacing! !
@@ -472,6 +511,19 @@ copyInContext: aDictionary
 		arguments: (self copyList: arguments inContext: aDictionary);
 		body: (body copyInContext: aDictionary);
 		yourself!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	self arguments size = anObject arguments size ifFalse: [^false].
+	1 to: self arguments size
+		do: 
+			[:i | 
+			((self arguments at: i) equalTo: (anObject arguments at: i)
+				withMapping: aDictionary) ifFalse: [^false]].
+	(self body equalTo: anObject body withMapping: aDictionary)
+		ifFalse: [^false].
+	self arguments do: [:each | aDictionary removeKey: each name].
+	^true!
 
 match: aNode inContext: aDictionary 
 	aNode class == self class ifFalse: [^false].
@@ -489,9 +541,98 @@ replaceNode: aNode withNode: anotherNode
 	self arguments: (arguments 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
 !StBlockNode categoriesFor: #copyInContext:!matching!public! !
+!StBlockNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StBlockNode categoriesFor: #match:inContext:!matching!public! !
 !StBlockNode categoriesFor: #references:!public!testing! !
 !StBlockNode categoriesFor: #replaceNode:withNode:!public!replacing! !
+
+!StBraceArrayNode methodsFor!
+
+addNode: aNode
+	statements := statements asOrderedCollection
+				add: aNode;
+				yourself.
+	aNode parent: self.
+	^aNode!
+
+addNode: aNode before: anotherNode
+	| index |
+	aNode isReturn ifTrue: [self error: 'Cannot add return node'].
+	index := self indexOfNode: anotherNode.
+	index == 0 ifTrue: [^self addNode: aNode].
+	statements := statements asOrderedCollection
+				add: aNode beforeIndex: index;
+				yourself.
+	aNode parent: self.
+	^aNode!
+
+addNodeFirst: aNode
+	statements := statements asOrderedCollection
+				addFirst: aNode;
+				yourself.
+	aNode parent: self.
+	^aNode!
+
+addNodes: aCollection
+	statements := statements asOrderedCollection
+				addAll: aCollection;
+				yourself.
+	aCollection do: [:each | each parent: self].
+	^aCollection!
+
+addNodes: aCollection before: anotherNode
+	aCollection do: [:each | self addNode: each before: anotherNode].
+	^aCollection!
+
+addNodesFirst: aCollection
+	statements := statements asOrderedCollection
+				addAllFirst: aCollection;
+				yourself.
+	aCollection do: [:each | each parent: self].
+	^aCollection!
+
+copyInContext: aDictionary
+	^self class statements: (self copyList: statements inContext: aDictionary)!
+
+equalTo: anObject withMapping: aDictionary
+	self class = anObject class ifFalse: [^false].
+	self statements size = anObject statements size ifFalse: [^false].
+	self statements with: anObject statements
+		do: [:first :second | (first equalTo: second withMapping: aDictionary) ifFalse: [^false]].
+	aDictionary values asSet size = aDictionary size ifFalse: [^false].
+	^true!
+
+indexOfNode: aNode
+	"Try to find the node by first looking for ==, and then for ="
+
+	| index |
+	(index := statements identityIndexOf: aNode) == 0 ifTrue: [index := statements indexOf: aNode].
+	^index!
+
+match: aNode inContext: aDictionary
+	aNode class = self class ifFalse: [^false].
+	^self
+		matchList: statements
+		against: aNode statements
+		inContext: aDictionary!
+
+references: aVariableName 
+	^statements anySatisfy: [:each | each references: aVariableName]!
+
+replaceNode: aNode withNode: anotherNode
+	self statements: (statements collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!StBraceArrayNode categoriesFor: #addNode:!adding nodes!public! !
+!StBraceArrayNode categoriesFor: #addNode:before:!adding nodes!public! !
+!StBraceArrayNode categoriesFor: #addNodeFirst:!adding nodes!public! !
+!StBraceArrayNode categoriesFor: #addNodes:!adding nodes!public! !
+!StBraceArrayNode categoriesFor: #addNodes:before:!adding nodes!public! !
+!StBraceArrayNode categoriesFor: #addNodesFirst:!adding nodes!public! !
+!StBraceArrayNode categoriesFor: #copyInContext:!matching!public! !
+!StBraceArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!StBraceArrayNode categoriesFor: #indexOfNode:!helpers!private! !
+!StBraceArrayNode categoriesFor: #match:inContext:!matching!public! !
+!StBraceArrayNode categoriesFor: #references:!public!testing! !
+!StBraceArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
 !StCascadeNode methodsFor!
 
@@ -499,6 +640,16 @@ copyInContext: aDictionary
 	^(self class new)
 		messages: (self copyList: messages inContext: aDictionary);
 		yourself!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	self messages size == anObject messages size ifFalse: [^false].
+	1 to: self messages size
+		do: 
+			[:i | 
+			((self messages at: i) equalTo: (anObject messages at: i)
+				withMapping: aDictionary) ifFalse: [^false]].
+	^true!
 
 match: aNode inContext: aDictionary 
 	aNode class == self class ifFalse: [^false].
@@ -511,6 +662,7 @@ replaceNode: aNode withNode: anotherNode
 	self messages: (messages 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
 !StCascadeNode categoriesFor: #copyInContext:!matching!public! !
+!StCascadeNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StCascadeNode categoriesFor: #match:inContext:!matching!public! !
 !StCascadeNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
@@ -522,6 +674,17 @@ copyInContext: aDictionary
 		contents: (self copyList: contents inContext: aDictionary)
 		stopPosition: nil
 		isByteArray: isByteArray!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	self isForByteArray = anObject isForByteArray ifFalse: [^false].
+	self contents size = anObject contents size ifFalse: [^false].
+	1 to: self contents size
+		do: 
+			[:i | 
+			((self contents at: i) equalTo: (anObject contents at: i) withMapping: aDictionary) 
+				ifFalse: [^false]].
+	^true!
 
 match: aNode inContext: aDictionary 
 	aNode class == self class ifFalse: [^false].
@@ -535,6 +698,7 @@ replaceNode: aNode withNode: anotherNode
 	self contents: (contents 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
 !StLiteralArrayNode categoriesFor: #copyInContext:!matching!public! !
+!StLiteralArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StLiteralArrayNode categoriesFor: #match:inContext:!matching!public! !
 !StLiteralArrayNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
@@ -568,6 +732,17 @@ copyInContext: aDictionary
 		selectorParts: (selectorParts collect: [:each | each removePositions]);
 		arguments: (arguments collect: [:each | each copyInContext: aDictionary]);
 		yourself!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	((self receiver equalTo: anObject receiver withMapping: aDictionary)
+		and: [self selector = anObject selector]) ifFalse: [^false].
+	1 to: self arguments size
+		do: 
+			[:i | 
+			((self arguments at: i) equalTo: (anObject arguments at: i)
+				withMapping: aDictionary) ifFalse: [^false]].
+	^true!
 
 isContainmentReplacement: aNode 
 	^(self mappingFor: self receiver) = aNode 
@@ -650,6 +825,7 @@ replaceSourceWithMessageNode: aNode
 											ifTrue: [' ' , new value]
 											ifFalse: [new value]))]]! !
 !StMessageNode categoriesFor: #copyInContext:!matching!public! !
+!StMessageNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StMessageNode categoriesFor: #isContainmentReplacement:!private-replacing!public! !
 !StMessageNode categoriesFor: #match:inContext:!matching!public! !
 !StMessageNode categoriesFor: #replaceContainmentSourceWith:!private-replacing!public! !
@@ -703,6 +879,19 @@ copyInContext: aDictionary
 		body: (body copyInContext: aDictionary);
 		source: (aDictionary at: '-source-');
 		yourself!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	(self selector = anObject selector 
+		and: [self body equalTo: anObject body withMapping: aDictionary]) 
+			ifFalse: [^false].
+	1 to: self arguments size
+		do: 
+			[:i | 
+			((self arguments at: i) equalTo: (anObject arguments at: i)
+				withMapping: aDictionary) ifFalse: [^false].
+			aDictionary removeKey: (self arguments at: i) name].
+	^self tag = anObject tag!
 
 initialize
 	replacements := SortedCollection sortBlock: 
@@ -772,6 +961,7 @@ replaceNode: aNode withNode: anotherNode
 !StMethodNode categoriesFor: #changeSourceSelectors:arguments:!private!replacing! !
 !StMethodNode categoriesFor: #clearReplacements!public!replacing! !
 !StMethodNode categoriesFor: #copyInContext:!matching!public! !
+!StMethodNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StMethodNode categoriesFor: #initialize!initializing!public! !
 !StMethodNode categoriesFor: #map:to:!public!replacing! !
 !StMethodNode categoriesFor: #mappingFor:!public!replacing! !
@@ -787,6 +977,10 @@ replaceNode: aNode withNode: anotherNode
 copyInContext: aDictionary 
 	^self class body: (body copyInContext: aDictionary)!
 
+equalTo: anObject withMapping: aDictionary 
+	^self class = anObject class 
+		and: [self body equalTo: anObject body withMapping: aDictionary]!
+
 match: aNode inContext: aDictionary 
 	aNode class == self class ifFalse: [^false].
 	^body match: aNode body inContext: aDictionary!
@@ -794,6 +988,7 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	body == aNode ifTrue: [self body: anotherNode]! !
 !StOptimizedNode categoriesFor: #copyInContext:!matching!public! !
+!StOptimizedNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StOptimizedNode categoriesFor: #match:inContext:!matching!public! !
 !StOptimizedNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
@@ -842,6 +1037,9 @@ copyList: matchNodes inContext: aDictionary
 			object := each copyInContext: aDictionary.
 			newNodes addAll: object].
 	^newNodes!
+
+equalTo: aNode withMapping: aDictionary 
+	^self = aNode!
 
 mappingFor: aNode
 	| method |
@@ -962,6 +1160,7 @@ superMessages
 !StProgramNode categoriesFor: #clearReplacements!public!replacing! !
 !StProgramNode categoriesFor: #copyInContext:!matching!public! !
 !StProgramNode categoriesFor: #copyList:inContext:!matching!public! !
+!StProgramNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StProgramNode categoriesFor: #mappingFor:!accessing!public! !
 !StProgramNode categoriesFor: #match:inContext:!matching!public! !
 !StProgramNode categoriesFor: #matchList:against:inContext:!matching!public! !
@@ -983,6 +1182,10 @@ copyInContext: aDictionary
 		value: (value copyInContext: aDictionary);
 		yourself!
 
+equalTo: anObject withMapping: aDictionary 
+	^self class = anObject class 
+		and: [self value equalTo: anObject value withMapping: aDictionary]!
+
 match: aNode inContext: aDictionary 
 	aNode class == self class ifFalse: [^false].
 	^value match: aNode value inContext: aDictionary!
@@ -990,30 +1193,66 @@ match: aNode inContext: aDictionary
 replaceNode: aNode withNode: anotherNode 
 	value == aNode ifTrue: [self value: anotherNode]! !
 !StReturnNode categoriesFor: #copyInContext:!matching!public! !
+!StReturnNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StReturnNode categoriesFor: #match:inContext:!matching!public! !
 !StReturnNode categoriesFor: #replaceNode:withNode:!public!replacing! !
 
 !StSequenceNode methodsFor!
 
-addNode: aNode 
-	aNode parent: self.
-	(statements notEmpty and: [statements last isReturn]) 
+addNode: aNode
+	(statements notEmpty and: [statements last isReturn])
 		ifTrue: [self error: 'Cannot add statement after return node'].
-	statements := (statements asOrderedCollection)
+	statements := statements asOrderedCollection
 				add: aNode;
-				yourself!
+				yourself.
+	aNode parent: self.
+	^aNode!
 
-addNode: aNode before: anotherNode 
+addNode: aNode before: anotherNode
 	| index |
 	index := self indexOfNode: anotherNode.
-	index = 0 ifTrue: [^self addNode: aNode].
-	statements := (statements asOrderedCollection)
+	index == 0 ifTrue: [^self addNode: aNode].
+	statements := statements asOrderedCollection
 				add: aNode beforeIndex: index;
 				yourself.
-	aNode parent: self!
+	aNode parent: self.
+	^aNode!
 
-addNodes: aCollection before: anotherNode 
-	aCollection do: [:each | self addNode: each before: anotherNode]!
+addNodeFirst: aNode
+	statements := statements asOrderedCollection
+				addFirst: aNode;
+				yourself.
+	aNode parent: self.
+	^aNode!
+
+addNodes: aCollection
+	(statements notEmpty and: [statements last isReturn])
+		ifTrue: [self error: 'Cannot add statement after return node'].
+	statements := statements asOrderedCollection
+				addAll: aCollection;
+				yourself.
+	aCollection do: [:each | each parent: self].
+	^aCollection!
+
+addNodes: aCollection before: anotherNode
+	aCollection do: [:each | self addNode: each before: anotherNode].
+	^aCollection!
+
+addNodesFirst: aCollection
+	statements := statements asOrderedCollection
+				addAllFirst: aCollection;
+				yourself.
+	aCollection do: [:each | each parent: self].
+	^aCollection!
+
+addReturn
+	| node |
+	statements isEmpty ifTrue: [^nil].
+	statements last isReturn ifTrue: [^statements last].
+	node := StReturnNode value: statements last.
+	statements at: statements size put: node.
+	node parent: self.
+	^node!
 
 addSelfReturn
 	| node |
@@ -1035,6 +1274,26 @@ copyInContext: aDictionary
 		temporaries: (self copyList: temporaries inContext: aDictionary);
 		statements: (self copyList: statements inContext: aDictionary);
 		yourself!
+
+equalTo: anObject withMapping: aDictionary 
+	self class = anObject class ifFalse: [^false].
+	self statements size == anObject statements size ifFalse: [^false].
+	1 to: self statements size
+		do: 
+			[:i | 
+			((self statements at: i) equalTo: (anObject statements at: i)
+				withMapping: aDictionary) ifFalse: [^false]].
+	aDictionary values asSet size = aDictionary size ifFalse: [^false].	"Not a one-to-one mapping"
+	self temporaries
+		do: [:each | aDictionary removeKey: each name ifAbsent: []].
+	^true!
+
+indexOfNode: aNode
+	"Try to find the node by first looking for ==, and then for ="
+
+	| index |
+	(index := statements identityIndexOf: aNode) == 0 ifTrue: [index := statements indexOf: aNode].
+	^index!
 
 match: aNode inContext: aDictionary 
 	self class == aNode class ifFalse: [^false].
@@ -1086,11 +1345,17 @@ replaceNode: aNode withNodes: aCollection
 	statements := newStatements! !
 !StSequenceNode categoriesFor: #addNode:!adding nodes!public! !
 !StSequenceNode categoriesFor: #addNode:before:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addNodeFirst:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addNodes:!adding nodes!public! !
 !StSequenceNode categoriesFor: #addNodes:before:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addNodesFirst:!adding nodes!public! !
+!StSequenceNode categoriesFor: #addReturn!accessing!public! !
 !StSequenceNode categoriesFor: #addSelfReturn!adding nodes!public! !
 !StSequenceNode categoriesFor: #addTemporariesNamed:!adding nodes!public! !
 !StSequenceNode categoriesFor: #addTemporaryNamed:!adding nodes!public! !
 !StSequenceNode categoriesFor: #copyInContext:!matching!public! !
+!StSequenceNode categoriesFor: #equalTo:withMapping:!comparing!public! !
+!StSequenceNode categoriesFor: #indexOfNode:!helpers!private! !
 !StSequenceNode categoriesFor: #match:inContext:!matching!public! !
 !StSequenceNode categoriesFor: #references:!public!testing! !
 !StSequenceNode categoriesFor: #removeDeadCode!public!replacing! !

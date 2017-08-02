@@ -34,17 +34,6 @@ contents: aRBLiteralNodeCollection
 	contents := aRBLiteralNodeCollection.
 	contents do: [:each | each parent: self]!
 
-equalTo: anObject withMapping: aDictionary 
-	self class = anObject class ifFalse: [^false].
-	self isForByteArray = anObject isForByteArray ifFalse: [^false].
-	self contents size = anObject contents size ifFalse: [^false].
-	1 to: self contents size
-		do: 
-			[:i | 
-			((self contents at: i) equalTo: (anObject contents at: i) withMapping: aDictionary) 
-				ifFalse: [^false]].
-	^true!
-
 isForByteArray
 	^isByteArray!
 
@@ -78,7 +67,6 @@ value
 !StLiteralArrayNode categoriesFor: #childrenDo:!accessing!public! !
 !StLiteralArrayNode categoriesFor: #contents!accessing!public! !
 !StLiteralArrayNode categoriesFor: #contents:!accessing!public! !
-!StLiteralArrayNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StLiteralArrayNode categoriesFor: #isForByteArray!public!testing! !
 !StLiteralArrayNode categoriesFor: #postCopy!copying!public! !
 !StLiteralArrayNode categoriesFor: #startPosition:contents:stopPosition:isByteArray:!initializing!public! !

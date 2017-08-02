@@ -30,10 +30,6 @@ childrenDo: aMonadicValuable
 containsReturn
 	^true!
 
-equalTo: anObject withMapping: aDictionary 
-	^self class = anObject class 
-		and: [self value equalTo: anObject value withMapping: aDictionary]!
-
 hash
 	^self value hash!
 
@@ -65,7 +61,6 @@ value: valueNode
 !StReturnNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StReturnNode categoriesFor: #childrenDo:!accessing!public! !
 !StReturnNode categoriesFor: #containsReturn!public!testing! !
-!StReturnNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StReturnNode categoriesFor: #hash!comparing!public! !
 !StReturnNode categoriesFor: #isReturn!public!testing! !
 !StReturnNode categoriesFor: #postCopy!copying!public! !

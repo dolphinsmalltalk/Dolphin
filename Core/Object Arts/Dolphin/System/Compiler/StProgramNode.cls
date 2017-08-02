@@ -162,9 +162,6 @@ equalTo: aNode exceptForVariables: variableNameCollection
 			(key = value or: [variableNameCollection includes: key]) ifFalse: [^false]].
 	^true!
 
-equalTo: aNode withMapping: aDictionary 
-	^self = aNode!
-
 evaluatedFirst: aNode 
 	self childrenDo: 
 			[:each | 
@@ -177,6 +174,9 @@ formattedCode
 
 formatterClass
 	^self class formatterClass!
+
+hashForCollection: aCollection
+	^aCollection isEmpty ifTrue: [0] ifFalse: [aCollection first hash]!
 
 intersectsInterval: anInterval 
 	^(anInterval first between: self start and: self stop) 
@@ -195,6 +195,9 @@ isDirectlyUsed
 	"This node is directly used as an argument, receiver, or part of an assignment."
 
 	^parent isNil ifTrue: [false] ifFalse: [parent directlyUses: self]!
+
+isDynamicArray
+	^false!
 
 isEvaluatedFirst
 	"Return true if we are the first thing evaluated in this statement."
@@ -406,15 +409,16 @@ whoDefines: aName
 !StProgramNode categoriesFor: #displayOn:!printing!public! !
 !StProgramNode categoriesFor: #do:!enumerating!public! !
 !StProgramNode categoriesFor: #equalTo:exceptForVariables:!comparing!public! !
-!StProgramNode categoriesFor: #equalTo:withMapping:!comparing!public! !
 !StProgramNode categoriesFor: #evaluatedFirst:!public!testing! !
 !StProgramNode categoriesFor: #formattedCode!accessing!public! !
 !StProgramNode categoriesFor: #formatterClass!accessing!public! !
+!StProgramNode categoriesFor: #hashForCollection:!comparing!private! !
 !StProgramNode categoriesFor: #intersectsInterval:!public!testing! !
 !StProgramNode categoriesFor: #isAssignment!public!testing! !
 !StProgramNode categoriesFor: #isBlock!public!testing! !
 !StProgramNode categoriesFor: #isCascade!public!testing! !
 !StProgramNode categoriesFor: #isDirectlyUsed!public!testing! !
+!StProgramNode categoriesFor: #isDynamicArray!public!testing! !
 !StProgramNode categoriesFor: #isEvaluatedFirst!public!testing! !
 !StProgramNode categoriesFor: #isImmediateNode!public!testing! !
 !StProgramNode categoriesFor: #isLast:!public!testing! !
