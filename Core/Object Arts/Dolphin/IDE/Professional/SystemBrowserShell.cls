@@ -130,8 +130,13 @@ searchForPackage: aPackage
 selectionEnvironment
 	| classEnvironment |
 	classEnvironment := super selectionEnvironment.
-	^classEnvironment isSystem 
-		ifTrue: [classEnvironment forPackages: self packages]
+	^classEnvironment isSystem
+		ifTrue: 
+			[| pkgs |
+			pkgs := self packages.
+			Package manager packages asSet = pkgs asSet
+				ifTrue: [classEnvironment]
+				ifFalse: [classEnvironment forPackages: pkgs]]
 		ifFalse: [classEnvironment]!
 
 slideyPinNames
