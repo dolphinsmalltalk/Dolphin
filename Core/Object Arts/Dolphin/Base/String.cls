@@ -473,40 +473,33 @@ first: anInteger
 		to: anInteger
 		startingAt: 1!
 
-formatWith: anObject 
+formatWith: anObject
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
 	Win32 format string (see Win32 help)) with substituations from the remaining argument(s).
 	See #formatWithArguments: for further details."
 
-	^self formatWithArguments: (Array with: anObject)!
+	^self formatWithArguments: {anObject}!
 
-formatWith: anObject1 with: anObject2 
+formatWith: anObject1 with: anObject2
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
 	Win32 format string (see Win32 help)) with substituations from the remaining argument(s).
 	See #formatWithArguments: for further details."
 
-	^self formatWithArguments: (Array with: anObject1 with: anObject2)!
+	^self formatWithArguments: {anObject1. anObject2}!
 
-formatWith: anObject1 with: anObject2 with: anObject3 
+formatWith: anObject1 with: anObject2 with: anObject3
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
 	Win32 format string (see Win32 help)) with substituations from the remaining argument(s).
 	See #formatWithArguments: for further details."
 
-	^self formatWithArguments: (Array 
-				with: anObject1
-				with: anObject2
-				with: anObject3)!
+	^self formatWithArguments: {anObject1. anObject2. anObject3}!
 
-formatWith: anObject1 with: anObject2 with: anObject3 with: anObject4 
+formatWith: anObject1 with: anObject2 with: anObject3 with: anObject4
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
 	Win32 format string (see Win32 help)) with substituations from the remaining argument(s).
 	See #formatWithArguments: for further details."
 
-	^self formatWithArguments: (Array 
-				with: anObject1
-				with: anObject2
-				with: anObject3
-				with: anObject4)!
+	^self formatWithArguments: {anObject1. anObject2. anObject3. anObject4}!
 
 formatWithArguments: aCollection 
 	"Answer a <readableString> which is a message formatted from the receiver, assumed to be a

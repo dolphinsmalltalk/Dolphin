@@ -147,9 +147,7 @@ new: anInteger withAll: anObject
 	"Answer a new instance of the receiver with anInteger elements which are all 
 	the argument, anObject."
 
-	^anInteger == 0 
-		ifTrue: [self new]
-		ifFalse: [self runs: (Array with: anInteger) values: (Array with: anObject)]!
+	^anInteger == 0 ifTrue: [self new] ifFalse: [self runs: {anInteger} values: {anObject}]!
 
 runs: runsArray values: valuesArray
 	"Answer a new instance of the receiver with the specified runs and values.
@@ -159,34 +157,23 @@ runs: runsArray values: valuesArray
 		runs: runsArray values: valuesArray!
 
 with: element1
-	^self runs: #(1) values: (Array with: element1)!
+	^self runs: #(1) values: {element1}!
 
 with: element1 with: element2
-	^self runs: #(1 1) values: (Array with: element1 with: element2)!
+	^self runs: #(1 1)
+		values: {element1. element2}!
 
 with: element1 with: element2 with: element3
 	^self runs: #(1 1 1)
-		values: (Array
-				with: element1
-				with: element2
-				with: element3)!
+		values: {element1. element2. element3}!
 
 with: element1 with: element2 with: element3 with: element4
 	^self runs: #(1 1 1 1)
-		values: (Array
-				with: element1
-				with: element2
-				with: element3
-				with: element4)!
+		values: {element1. element2. element3. element4}!
 
 with: element1 with: element2 with: element3 with: element4 with: element5
 	^self runs: #(1 1 1 1 1)
-		values: (Array
-				with: element1
-				with: element2
-				with: element3
-				with: element4
-				with: element5)!
+		values: {element1. element2. element3. element4. element5}!
 
 withAll: aCollection
 	| runs values runLength current |

@@ -113,7 +113,7 @@ value: anObject
 	large number of parameterization cases where blocks would otherwise
 	be required."
 
-	^self valueWithArguments: (Array with: anObject)!
+	^self valueWithArguments: {anObject}!
 
 value: arg1 value: arg2
 	"Answer the result of sending the receiver.
@@ -123,17 +123,17 @@ value: arg1 value: arg2
 	be required. In any case we must override this because the superclass
 	implementation is wrong for us."
 
-	^self valueWithArguments: (Array with: arg1 with: arg2)!
+	^self valueWithArguments: {arg1. arg2}!
 
 value: arg1 value: arg2 value: arg3
 	"Answer the result of sending the receiver with three arguments"
 
-	^self valueWithArguments: (Array with: arg1 with: arg2 with: arg3)!
+	^self valueWithArguments: {arg1. arg2. arg3}!
 
 value: arg1 value: arg2 value: arg3 value: arg4
 	"Answer the result of sending the receiver with four arguments"
 
-	^self valueWithArguments: (Array with: arg1 with: arg2 with: arg3 with: arg4)!
+	^self valueWithArguments: {arg1. arg2. arg3. arg4}!
 
 valueWithArguments: triggerArguments
 	"Executes the receiver with the specified <Array> of arguments. If insufficient arguments are
@@ -181,10 +181,10 @@ receiver: anObject selector: aSymbol argument: aParameter
 	"Answer a new instance of the receiver with the receiver, anObject, selector, 
 	aSymbol, and argument, anObject"
 
-	^self 
+	^self
 		receiver: anObject
 		selector: aSymbol
-		arguments: (Array with: aParameter)!
+		arguments: {aParameter}!
 
 receiver: anObject selector: aSymbol arguments: anArray 
 	"Answer a new instance of the receiver with the receiver, anObject, selector, 

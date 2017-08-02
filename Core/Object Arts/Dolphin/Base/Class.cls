@@ -128,7 +128,7 @@ categories
 	"Answer a <Array> of <ClassCategory>s in which the receiver is included.
 	This will always contains at least one entry ('Unclassified' if there are no others)."
 
-	^classCategories ifNil: [Array with: self classCategoryClass unclassified]!
+	^classCategories ifNil: [{self classCategoryClass unclassified}]!
 
 categories: aCollection 
 	"Set the Categories of the receiver to those in the specified <collection> of <ClassCategory>s.
@@ -170,7 +170,7 @@ category: category
 	<ClassCategory> named by the <readableString>, category.
 	The receiver is removed from any existing categories."
 
-	self categories: (Array with: (self classCategoryClass name: category asString))!
+	self categories: {self classCategoryClass name: category asString}!
 
 changeIndex
 	^self propertyAt: #changeIndex ifAbsent: []!
@@ -619,12 +619,12 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 	otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
 	Primarily present for backwards compatibility with Smalltalk-80."
 
-	^(self 
+	^(self
 		newClassBuilder: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
 		poolDictionaries: poolDictString)
-		categoryNames: (Array with: aCategoryOrString);
+		categoryNames: {aCategoryOrString};
 		modifyOrCreate!
 
 subclass: aClassSymbol
@@ -679,13 +679,13 @@ variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVar
 	otherwise modify the class with name aClassSymbol to have the indicated features and answer 
 	it. Primarily present for backwards compatibility with Smalltalk-80."
 
-	^(self 
+	^(self
 		newClassBuilder: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
 		poolDictionaries: poolDictString)
 		beBytes;
-		categoryNames: (Array with: aCategoryOrString);
+		categoryNames: {aCategoryOrString};
 		modifyOrCreate!
 
 variableByteSubclass: aClassSymbol
@@ -723,13 +723,13 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 	subclass, otherwise modify the class with name aClassSymbol to have the indicated features and 
 	answer it. Primarily intended for backwards compatibility with Smalltalk-80."
 
-	^(self 
+	^(self
 		newClassBuilder: aClassSymbol
 		instanceVariableNames: instVarString
 		classVariableNames: classVarString
 		poolDictionaries: poolDictString)
 		beVariable;
-		categoryNames: (Array with: aCategoryOrString);
+		categoryNames: {aCategoryOrString};
 		modifyOrCreate!
 
 variableSubclass: aClassSymbol

@@ -1007,7 +1007,10 @@ perform: selector with: argument1
 		0 -	The number of arguments expected with the selector is not one."
 
 	<primitive: 83>
-	^Error perform: selector failedFor: self withArgs: (Array with: argument1)!
+	^Error
+		perform: selector
+		failedFor: self
+		withArgs: {argument1}!
 
 perform: selector with: argument1 with: argument2
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
@@ -1018,7 +1021,10 @@ perform: selector with: argument1 with: argument2
 		0 -	The number of arguments expected with the selector is not two."
 
 	<primitive: 83>
-	^Error perform: selector failedFor: self withArgs: (Array with: argument1 with: argument2)!
+	^Error
+		perform: selector
+		failedFor: self
+		withArgs: {argument1. argument2}!
 
 perform: selector with: argument1 with: argument2 with: argument3
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
@@ -1029,7 +1035,10 @@ perform: selector with: argument1 with: argument2 with: argument3
 		0 -	The number of arguments expected with the selector is not three."
 
 	<primitive: 83>
-	^Error perform: selector failedFor: self withArgs: (Array with: argument1 with: argument2 with: argument3)!
+	^Error
+		perform: selector
+		failedFor: self
+		withArgs: {argument1. argument2. argument3}!
 
 perform: selector with: argument1 with: argument2 with: argument3 with: argument4
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
@@ -1040,8 +1049,10 @@ perform: selector with: argument1 with: argument2 with: argument3 with: argument
 		0 -	The number of arguments expected with the selector is not four."
 
 	<primitive: 83>
-	^Error perform: selector failedFor: self 
-		withArgs: (Array with: argument1 with: argument2 with: argument3 with: argument4)!
+	^Error
+		perform: selector
+		failedFor: self
+		withArgs: {argument1. argument2. argument3. argument4}!
 
 perform: selector withArguments: arguments
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 
