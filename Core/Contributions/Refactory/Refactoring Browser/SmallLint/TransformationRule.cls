@@ -142,6 +142,26 @@ betweenAnd
 		methods: false
 		name: '"a >= b and: [a <= c]" -> "a between: b and: c"'!
 
+braceArrays
+	^self rewrite: #(
+			#('Array with: ``@arg'
+			"->"
+			'{``@arg}')
+			#('Array with: ``@arg1 with: ``@arg2'
+			"->"
+			'{``@arg1. ``@arg2}')
+			#('Array with: ``@arg1 with: ``@arg2 with: ``@arg3'
+			"->"
+			'{``@arg1. ``@arg2. ``@arg3}')
+			#('Array with: ``@arg1 with: ``@arg2 with: ``@arg3 with: ``@arg4'
+			"->"
+			'{``@arg1. ``@arg2. ``@arg3. ``@arg4}')
+			#('Array with: ``@arg1 with: ``@arg2 with: ``@arg3 with: ``@arg4 with: ``@arg5'
+			"->"
+			'{``@arg1. ``@arg2. ``@arg3. ``@arg4. ``@arg5}'))
+		methods: false
+		name: 'Replace Array class>>with:+ with brace arrays'!
+
 cascadedNextPutAlls
 	^self
 		rewrite: #(
@@ -362,6 +382,7 @@ unwindBlocks
 !TransformationRule class categoriesFor: #assignmentInIfTrue!public!transformations! !
 !TransformationRule class categoriesFor: #atIfAbsent!public!transformations! !
 !TransformationRule class categoriesFor: #betweenAnd!public!transformations! !
+!TransformationRule class categoriesFor: #braceArrays!public!transformations! !
 !TransformationRule class categoriesFor: #cascadedNextPutAlls!public!transformations! !
 !TransformationRule class categoriesFor: #detectIfNone!public!transformations! !
 !TransformationRule class categoriesFor: #equalNil!public!transformations! !
