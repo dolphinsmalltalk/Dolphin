@@ -52,16 +52,16 @@ statements: anOrderedCollection
 
 stopWithoutParentheses
 	^right! !
-!StBraceArrayNode categoriesFor: #acceptVisitor:!public! !
-!StBraceArrayNode categoriesFor: #left!public! !
-!StBraceArrayNode categoriesFor: #left:!public! !
-!StBraceArrayNode categoriesFor: #periods!public! !
-!StBraceArrayNode categoriesFor: #periods:!public! !
+!StBraceArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StBraceArrayNode categoriesFor: #left!accessing!public! !
+!StBraceArrayNode categoriesFor: #left:!accessing!public! !
+!StBraceArrayNode categoriesFor: #periods!accessing!public! !
+!StBraceArrayNode categoriesFor: #periods:!accessing!public! !
 !StBraceArrayNode categoriesFor: #precedence!constants!public! !
-!StBraceArrayNode categoriesFor: #right!public! !
-!StBraceArrayNode categoriesFor: #right:!public! !
-!StBraceArrayNode categoriesFor: #startWithoutParentheses!public! !
-!StBraceArrayNode categoriesFor: #statements!public! !
-!StBraceArrayNode categoriesFor: #statements:!public! !
-!StBraceArrayNode categoriesFor: #stopWithoutParentheses!public! !
+!StBraceArrayNode categoriesFor: #right!accessing!public! !
+!StBraceArrayNode categoriesFor: #right:!accessing!public! !
+!StBraceArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
+!StBraceArrayNode categoriesFor: #statements!accessing!public! !
+!StBraceArrayNode categoriesFor: #statements:!accessing!public! !
+!StBraceArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
 
