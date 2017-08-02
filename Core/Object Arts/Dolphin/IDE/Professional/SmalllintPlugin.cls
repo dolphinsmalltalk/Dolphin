@@ -31,11 +31,11 @@ methodFilterForRule: aLintRule inEnvironment: aBrowserEnvironment
 					run.
 			aLintRule failedMethods notEmpty]]!
 
-runRule: aLintRule 
+runRule: aLintRule
 	| checker env |
 	env := self browserEnvironment.
 	checker := self checkerForRule: aLintRule environment: env.
-	^env numberClasses > 20 
+	^env numberClasses > 20
 		ifTrue: 
 			[| progress |
 			progress := ProgressDialog create.
@@ -43,14 +43,14 @@ runRule: aLintRule
 				caption: 'Running Rule... ';
 				text: aLintRule name.
 			progress operation: 
-					[:progressPresenter | 
+					[:progressPresenter |
 					| checkedSoFar numberSelectors |
 					numberSelectors := env numberSelectors.
-					checkedSoFar := 0.
+					checkedSoFar := 0.0.
 					checker
 						methodBlock: 
 								[checkedSoFar := checkedSoFar + 1.
-								progressPresenter value: checkedSoFar / numberSelectors * 100];
+								progressPresenter value: (checkedSoFar / numberSelectors * 100) asInteger];
 						run].
 			progress showModal]
 		ifFalse: [Cursor wait showWhile: [checker run]]!
