@@ -125,7 +125,9 @@ basicPrimaryStartup
 	ExternalCallback onStartup.	"Old callbacks will be invalid"
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
-	MemoryManager current onStartup	"Start (if necessary) finalization/bereavement processing, etc"!
+	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"
+	sessionId := GUID newUnique.		"Allow deferred tasks to know if they passed a startup boundary"
+!
 
 basicSecondaryStartup
 	"Perform secondary startup operations which initialize non-critical
@@ -632,7 +634,6 @@ onStartup: args
 
 	state := 0.
 	eventLogHandle := stdioStreams := consoleHandler := nil.
-	sessionId := GUID newUnique.
 
 	"Save away the Array of startup arguments, passed in by the VM, for later use"
 	startupArgs := args.
