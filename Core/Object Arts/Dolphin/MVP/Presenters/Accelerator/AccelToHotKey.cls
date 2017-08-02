@@ -66,16 +66,14 @@ initialize
 		AccelToHotKey initialize
 	"
 
-	ModifierMap :=
-		(Array 
-			with: HOTKEYF_CONTROL -> FCONTROL
-			with: HOTKEYF_SHIFT -> FSHIFT
-			with: HOTKEYF_ALT -> FALT
-			"There is no representation for extended keys, but we need one so
+	ModifierMap := {HOTKEYF_CONTROL -> FCONTROL.
+				HOTKEYF_SHIFT -> FSHIFT.
+				HOTKEYF_ALT -> FALT.
+				HOTKEYF_EXT -> 16r100}
+	"There is no representation for extended keys, but we need one so
 			as not to lose that attribute when translating to/from virtual keys.
 			By copying across this bit to the scan code after conversion from a
-			virtual key code, we get the right scan code."
-			with: HOTKEYF_EXT -> 16r100)! !
+			virtual key code, we get the right scan code."! !
 !AccelToHotKey class categoriesFor: #accelToHotKeyModifiers:!initializing!private! !
 !AccelToHotKey class categoriesFor: #hotKeyToAccelModifiers:!initializing!private! !
 !AccelToHotKey class categoriesFor: #initialize!development!initializing!private! !

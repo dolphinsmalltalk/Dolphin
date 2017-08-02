@@ -23,9 +23,7 @@ _descriptionArguments
 	to avoid the fragile base class problem where subclasses may 
 	inadvertantly override a superclass method."
 
-	^Array 
-		with: self messageText displayString 	"...just in case the messageText is not a String"
-		with: self tag displayString!
+	^{self messageText displayString. self tag displayString}	"...just in case the messageText is not a String"!
 
 _descriptionFormat
 	"Answer a <readableString> whose contents are a Win32 format string to be used 

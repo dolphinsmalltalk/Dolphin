@@ -16,10 +16,7 @@ _descriptionArguments
 	"Answer the set of arguments to be substitued into the receiver's descriptionFormat
 	String."
 
-	^super _descriptionArguments, 
-		(Array 
-			with: argument basicPrintString
-			with: type displayString)!
+	^super _descriptionArguments , {argument basicPrintString. type displayString}!
 
 _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description.

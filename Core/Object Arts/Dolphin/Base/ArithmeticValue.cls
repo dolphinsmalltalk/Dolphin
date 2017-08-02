@@ -309,17 +309,15 @@ quoAndRem: aNumber
 	operation, if both are needed it is often more efficient to use this 
 	method (assuming that the particular subclass implements it more efficiently!!)"
 
-	^Array with: (self quo: aNumber) with: (self rem: aNumber)!
+	^{self quo: aNumber. self rem: aNumber}!
 
-quoAndRemFromInteger: anInteger 
+quoAndRemFromInteger: anInteger
 	"Private - Answer the quotient and remainder resulting from division of 
 	the argument, anInteger, by the receiver, with truncation towards zero."
 
 	| quo |
 	quo := self quotientFromInteger: anInteger.
-	^Array with: quo with: (anInteger - (quo * self))
-	
-!
+	^{quo. anInteger - (quo * self)}!
 
 quotientFromInteger: anInteger 
 	"Private - Answer the quotient resulting from division of the argument, anInteger, by

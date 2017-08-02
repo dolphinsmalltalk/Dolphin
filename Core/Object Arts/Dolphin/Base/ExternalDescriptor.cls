@@ -491,7 +491,7 @@ parseCallingConvention: aStream
 
 	^self conventionFromName: aStream nextWord!
 
-parseDescriptor: aString 
+parseDescriptor: aString
 	"Parse a literal string which describes an external function in the standard
 	Dolphin format. This is very simplistic pending Smalltalk compiler support."
 
@@ -512,12 +512,12 @@ parseDescriptor: aString
 			argType := self parseArgDesc: stream nextWord.
 			argCount := argCount + 1.
 			descriptor add: argType key.
-			argType value notNil 
+			argType value notNil
 				ifTrue: 
 					[descriptor add: literals size.
 					literals add: argType value]].
 	descriptor at: 2 put: argCount.
-	^Array with: descriptor with: literals!
+	^{descriptor. literals}!
 
 parseDoubleIndirection: assoc typeName: typeName
 	| pointerType |

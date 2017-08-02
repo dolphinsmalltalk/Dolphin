@@ -544,8 +544,7 @@ composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 
 	can be nil if necessary. The path can include the drive letter."
 
-	^self makePath: (Array with: nil with: aPathString with: aStemString with: anExtensionString)
-	!
+	^self makePath: {nil. aPathString. aStemString. anExtensionString}!
 
 composePath: path subPath: subpath
 	"Composes a full pathname from path and subpath components."
@@ -1250,11 +1249,7 @@ splitPath: aString
 			["CRT function includes leading period on extension, which we don't"
 			ext := ext trimNulls.
 			(ext notEmpty and: [ext first == $.]) ifTrue: [ext := ext copyFrom: 2].
-			Array
-				with: drive trimNulls
-				with: dir trimNulls
-				with: fname trimNulls
-				with: ext]
+			{drive trimNulls. dir trimNulls. fname trimNulls. ext}]
 		ifFalse: [CRTError signalWith: errno]!
 
 splitPathFrom: aPathnameString

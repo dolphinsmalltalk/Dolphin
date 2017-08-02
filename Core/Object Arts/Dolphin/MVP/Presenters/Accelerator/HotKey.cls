@@ -24,11 +24,8 @@ currentModifiers
 
 	| kb |
 	kb := Keyboard default.
-	^(Array 
-		with: VK_SHIFT -> HOTKEYF_SHIFT
-		with: VK_CONTROL -> HOTKEYF_CONTROL
-		with: VK_MENU -> HOTKEYF_ALT) inject: 0
-			into: [:mask :each | (kb isKeyDown: each key) ifTrue: [mask bitOr: each value] ifFalse: [mask]]!
+	^{VK_SHIFT -> HOTKEYF_SHIFT. VK_CONTROL -> HOTKEYF_CONTROL. VK_MENU -> HOTKEYF_ALT} inject: 0
+		into: [:mask :each | (kb isKeyDown: each key) ifTrue: [mask bitOr: each value] ifFalse: [mask]]!
 
 defaultExtent
 	"Private - Answer the default size of the receiver. This is used only to

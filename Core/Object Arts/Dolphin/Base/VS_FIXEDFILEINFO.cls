@@ -45,11 +45,7 @@ formatFileVersionString: format
 	| major minor |
 	major := self dwFileVersionMS.
 	minor := self dwFileVersionLS.
-	^format formatWithArguments: (Array 
-				with: major highWord
-				with: major lowWord
-				with: minor highWord
-				with: minor lowWord)!
+	^format formatWithArguments: {major highWord. major lowWord. minor highWord. minor lowWord}!
 
 formatProductVersionString: format
 	"Answer a version string formatted as per the Win32 format string, format."
@@ -57,11 +53,7 @@ formatProductVersionString: format
 	| major minor |
 	major := self dwProductVersionMS.
 	minor := self dwProductVersionLS.
-	^format formatWithArguments: (Array 
-				with: major highWord
-				with: major lowWord
-				with: minor highWord
-				with: minor lowWord)!
+	^format formatWithArguments: {major highWord. major lowWord. minor highWord. minor lowWord}!
 
 productVersionString
 	"Answer a String in the form N.N.N.N which specifies the version number of the product."

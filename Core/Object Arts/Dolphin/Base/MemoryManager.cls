@@ -274,7 +274,7 @@ initialize
 	bereavements := Semaphore new.
 	self registerObjects!
 
-instanceStats: anArrayOrNil 
+instanceStats: anArrayOrNil
 	"Answer an <LookupTable>, containing counts of the number of instances and the approximate storage used by all instances of a set of classes.
 	If the argument is nil, then the table contains the statistics for every class in the system. Note that this will also include metaclass instances. If the
 	argument is a collection of classes then the table will contain statistics for only those classes."
@@ -284,7 +284,7 @@ instanceStats: anArrayOrNil
 	triplets := self primInstanceStats: (anArrayOrNil ifNotNil: [anArrayOrNil asArray]).
 	1 to: triplets size
 		by: 3
-		do: [:i | answer at: (triplets at: i) put: (Array with: (triplets at: i + 1) with: (triplets at: i + 2))].
+		do: [:i | answer at: (triplets at: i) put: {triplets at: i + 1. triplets at: i + 2}].
 	^answer!
 
 maxObjects

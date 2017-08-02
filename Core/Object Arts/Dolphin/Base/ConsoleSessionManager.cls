@@ -82,10 +82,7 @@ openConsoleStreams
 	stdioStreams isNil ifFalse: [^self].
 	"Note that all the stdio streams should be in text/translating mode"
 	vm := VMLibrary default.
-	stdioStreams := (Array 
-				with: vm stdin
-				with: vm stdout
-				with: vm stderr) collect: [:each | StdioFileStream fromHandle: each]!
+	stdioStreams := {vm stdin. vm stdout. vm stderr} collect: [:each | StdioFileStream fromHandle: each]!
 
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether

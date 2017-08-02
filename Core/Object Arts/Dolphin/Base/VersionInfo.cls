@@ -56,18 +56,17 @@ fixedInfo
 		ifTrue: [fixedInfo := self getFixedInfo].
 	^fixedInfo!
 
-formatVersionString: format 
+formatVersionString: format
 	"Answer a version string formatted as per the Win32 format string, format."
 
 	| major minor |
 	major := self productMajor.
 	minor := self productMinor.
-	^format formatWithArguments: (Array 
-				with: self productName
-				with: major highWord
-				with: major lowWord
-				with: minor highWord
-				with: minor lowWord)!
+	^format formatWithArguments: {self productName.
+				major highWord.
+				major lowWord.
+				minor highWord.
+				minor lowWord}!
 
 getFixedInfo
 	"Private - Answer a <VS_FIXEDFILEINFO> containing the standard (fixed)

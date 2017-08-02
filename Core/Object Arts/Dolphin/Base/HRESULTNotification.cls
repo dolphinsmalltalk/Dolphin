@@ -15,7 +15,7 @@ _descriptionArguments
 
 	| hresult |
 	hresult := self hresult.
-	^Array with: hresult with: hresult displayString with: hresult facility!
+	^{hresult. hresult displayString. hresult facility}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

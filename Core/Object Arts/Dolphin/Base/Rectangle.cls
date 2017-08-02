@@ -50,22 +50,22 @@ area
 
 	^self width * self height!
 
-areasOutside: aRectangle 
+areasOutside: aRectangle
 	"Answer a <collection> of <Rectangle>s describing areas of the receiver outside the
 	<Rectangle> argument."
 
 	| areas yOrigin yCorner |
-	(self intersects: aRectangle) ifFalse: [^Array with: self].
+	(self intersects: aRectangle) ifFalse: [^{self}].
 	areas := OrderedCollection new: 4.
 	yOrigin := self top.
-	aRectangle top > yOrigin 
+	aRectangle top > yOrigin
 		ifTrue: [areas addLast: (origin corner: corner x @ (yOrigin := aRectangle top))].
 	yCorner := self bottom.
-	aRectangle bottom < yCorner 
+	aRectangle bottom < yCorner
 		ifTrue: [areas addLast: (self left @ (yCorner := aRectangle bottom) corner: corner)].
-	aRectangle left > self left 
+	aRectangle left > self left
 		ifTrue: [areas addLast: (self left @ yOrigin corner: aRectangle left @ yCorner)].
-	aRectangle right < self right 
+	aRectangle right < self right
 		ifTrue: [areas addLast: (aRectangle right @ yOrigin corner: self right @ yCorner)].
 	^areas!
 

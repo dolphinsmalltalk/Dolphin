@@ -39,20 +39,25 @@ _separateSubStringsIn: tokens
 	| start answer size end |
 	size := tokens size.
 	size == 0 ifTrue: [^Array new].
-	end := tokens nextIndexOf: self from: 1 to: size.
-	end == 0 ifTrue: [^Array with: tokens].
+	end := tokens
+				nextIndexOf: self
+				from: 1
+				to: size.
+	end == 0 ifTrue: [^{tokens}].
 	answer := Array writeStream: 5.
 	start := 1.
-	[
-		answer nextPut: (tokens copyFrom: start to: end - 1).
-		start := end + 1.
-		end := tokens nextIndexOf: self from: start to: size.
-		end == 0
-	] whileFalse.
+	
+	[answer nextPut: (tokens copyFrom: start to: end - 1).
+	start := end + 1.
+	end := tokens
+				nextIndexOf: self
+				from: start
+				to: size.
+	end == 0]
+			whileFalse.
 	"Copy any remaining chars after the last separator"
 	start <= size ifTrue: [answer nextPut: (tokens copyFrom: start to: size)].
-	^answer contents
-!
+	^answer contents!
 
 < aCharacter
 	"Answer whether the receiver is less than the parameter aCharacter."

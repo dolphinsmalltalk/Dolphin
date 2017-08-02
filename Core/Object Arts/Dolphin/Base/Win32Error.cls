@@ -13,11 +13,7 @@ Win32Error comment: ''!
 _descriptionArguments
 	"Answer the arguments to be substituted into the receiver's Win32 description format String."
 
-	^Array 
-		with: self statusCode 
-		with: self messageText 
-		with: self osErrorMessage
-!
+	^{self statusCode. self messageText. self osErrorMessage}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."

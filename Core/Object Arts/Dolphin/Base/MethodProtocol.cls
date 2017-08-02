@@ -120,7 +120,7 @@ addSelector: selector
 	(by adding a dummy implementation if necessary), and that their implementing
 	methods are recorded in the protocol."
 
-	self addAllSelectors: (Array with: selector)!
+	self addAllSelectors: {selector}!
 
 ansi
 	"Set the receiver to be marked as an ANSI standard protocol as defined in the American National

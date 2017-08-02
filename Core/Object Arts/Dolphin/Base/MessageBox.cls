@@ -69,12 +69,7 @@ assertStylesValid
 	Cancel button, but it does enable the close box on the caption (and will respond to the
 	ESCape key), and the result in that case is #cancel."
 
-	self assert: 
-			[##(Array 
-				with: MB_YESNOCANCEL
-				with: MB_OKCANCEL
-				with: MB_YESNO
-				with: MB_OK) includes: self buttonStyleValue].
+	self assert: [##({MB_YESNOCANCEL. MB_OKCANCEL. MB_YESNO. MB_OK}) includes: self buttonStyleValue].
 	self assert: 
 			[| val |
 			val := self iconStyleFlag.
@@ -444,7 +439,7 @@ initialize
 				yourself.
 	"at: IDTIMEOUT put: #timeout;"
 	SuppressibleMask := 16r10.
-	ButtonStyles := (IdentityDictionary new)
+	ButtonStyles := IdentityDictionary new
 				at: #ok put: MB_OK;
 				at: #okCancel put: MB_OKCANCEL;
 				at: #abortRetryIgnore put: MB_ABORTRETRYIGNORE;
@@ -455,27 +450,15 @@ initialize
 				shrink;
 				yourself.
 	ButtonsForStyle := (Array new: 7)
-				at: MB_OK + 1 put: (Array with: IDOK);
-				at: MB_OKCANCEL + 1 put: (Array with: IDOK with: IDCANCEL);
-				at: MB_ABORTRETRYIGNORE + 1
-					put: (Array 
-							with: IDABORT
-							with: IDRETRY
-							with: IDCANCEL);
-				at: MB_YESNOCANCEL + 1
-					put: (Array 
-							with: IDYES
-							with: IDNO
-							with: IDCANCEL);
-				at: MB_YESNO + 1 put: (Array with: IDYES with: IDNO);
-				at: MB_RETRYCANCEL + 1 put: (Array with: IDRETRY with: IDCANCEL);
-				at: MB_CANCELTRYCONTINUE + 1
-					put: (Array 
-							with: IDCANCEL
-							with: IDTRYAGAIN
-							with: IDCONTINUE);
+				at: MB_OK + 1 put: {IDOK};
+				at: MB_OKCANCEL + 1 put: {IDOK. IDCANCEL};
+				at: MB_ABORTRETRYIGNORE + 1 put: {IDABORT. IDRETRY. IDCANCEL};
+				at: MB_YESNOCANCEL + 1 put: {IDYES. IDNO. IDCANCEL};
+				at: MB_YESNO + 1 put: {IDYES. IDNO};
+				at: MB_RETRYCANCEL + 1 put: {IDRETRY. IDCANCEL};
+				at: MB_CANCELTRYCONTINUE + 1 put: {IDCANCEL. IDTRYAGAIN. IDCONTINUE};
 				yourself.
-	ModeStyles := (IdentityDictionary new)
+	ModeStyles := IdentityDictionary new
 				at: #application put: MB_APPLMODAL;
 				at: #task put: MB_TASKMODAL;
 				at: #system put: MB_SYSTEMMODAL;

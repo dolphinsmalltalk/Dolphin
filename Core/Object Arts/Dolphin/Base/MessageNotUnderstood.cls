@@ -14,7 +14,7 @@ _descriptionArguments
 	"Answer an string describing the extra information supplied when the receiver
 	was raised. Here we answer the classic does not understand error."
 
-	^Array with: self receiver basicClass name with: self selector printString!
+	^{self receiver basicClass name. self selector printString}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver.

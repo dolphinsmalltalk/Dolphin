@@ -17,7 +17,7 @@ _indexOfAnyInString: aString startingAt: anInteger
 	aString from: anInteger keysAndValuesDo: [:i :elem | (self includes: elem) ifTrue: [^i]].
 	^0!
 
-_separateSubStringsIn: aReadableString 
+_separateSubStringsIn: aReadableString
 	"Private - Answer an Array containing the substrings in aReadableString separated
 	by the elements of the receiver (which must be Characters)."
 
@@ -25,14 +25,14 @@ _separateSubStringsIn: aReadableString
 	size := aReadableString size.
 	size == 0 ifTrue: [^Array new].
 	end := aReadableString indexOfAnyOf: self startingAt: 1.
-	end == 0 ifTrue: [^Array with: aReadableString].
+	end == 0 ifTrue: [^{aReadableString}].
 	answer := Array writeStream: 5.
 	start := 1.
 	
 	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
 	start := end + 1.
 	end := aReadableString indexOfAnyOf: self startingAt: start.
-	end == 0] 
+	end == 0]
 			whileFalse.
 	"Copy any remaining chars after the last separator"
 	start <= size ifTrue: [answer nextPut: (aReadableString copyFrom: start to: size)].

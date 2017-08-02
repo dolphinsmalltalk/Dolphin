@@ -394,7 +394,7 @@ quoAndRem: aNumber
 	<primitive: 33>
 	^aNumber quoAndRemFromInteger: self!
 
-quoAndRemFromInteger: anInteger 
+quoAndRemFromInteger: anInteger
 	"Private - Answer a two element Array containing the quotient and remainder
 	resulting from dividing the integer receiver into the argument, anInteger.
 	Truncation is towards zero. 
@@ -404,9 +404,9 @@ quoAndRemFromInteger: anInteger
 	in absolute magnitude than any SmallInteger, EXCEPT the special case of the
 	largest negative SmallInteger the absolute value of which is a LargeInteger."
 
-	^(anInteger == VMConstants.SmallIntegerMin and: [self = ##(VMConstants.SmallIntegerMin negated)]) 
-		ifTrue: [Array with: -1 with: 0]
-		ifFalse: [Array with: 0 with: anInteger]!
+	^(anInteger == VMConstants.SmallIntegerMin and: [self = ##(VMConstants.SmallIntegerMin negated)])
+		ifTrue: [{-1. 0}]
+		ifFalse: [{0. anInteger}]!
 
 rem: operand
 	"Answer the <number> remainder resulting from division of the receiver by

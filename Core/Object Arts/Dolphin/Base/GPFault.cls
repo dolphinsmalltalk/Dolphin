@@ -15,9 +15,8 @@ _descriptionArguments
 
 	| info |
 	info := exceptionRecord information.
-	^super _descriptionArguments 
-		, (Array with: ((info at: 1) == 0 ifTrue: ['Reading'] ifFalse: ['Writing'])
-				with: (info at: 2) asExternalAddress)
+	^super _descriptionArguments
+		, {(info at: 1) == 0 ifTrue: ['Reading'] ifFalse: ['Writing']. (info at: 2) asExternalAddress}
 	"7"
 	"8"!
 
