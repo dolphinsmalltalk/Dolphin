@@ -217,3 +217,32 @@ printStackOn: aPuttableStream depth: anInteger
 				display: frame;
 				cr]
 		depth: anInteger! !
+
+!KernelLibrary methodsFor!
+
+getFileSizeEx: hfile lpFileSize: lpFileSize
+	<stdcall: bool GetFileSizeEx handle sqword*>
+	^self invalidCall!
+
+setFilePointerEx: hfile liDistanceToMove: liDistanceToMove lpNewFilePointer: lpNewFilePointer dwMoveMethod: dwMoveMethod
+	<stdcall: bool SetFilePointerEx handle sqword sqword* dword>
+	^self invalidCall! !
+
+Object subclass: #File
+	instanceVariableNames: 'handle spec flags shareFlags pointerBuf'
+	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
+	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
+	classInstanceVariableNames: ''!
+
+!File methodsFor!
+
+seek: offsetInteger sense: senseFlag
+	pointerBuf := ByteArray newFixed: 8.
+	^(KernelLibrary default
+		setFilePointerEx: handle
+		liDistanceToMove: offsetInteger
+		lpNewFilePointer: pointerBuf
+		dwMoveMethod: senseFlag) ifTrue: [
+			pointerBuf sqwordAtOffset: 0] ifFalse: [self signalOsError: false]! !
+
+File class removeSelector: #initialize!
