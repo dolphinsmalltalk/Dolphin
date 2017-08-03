@@ -346,32 +346,23 @@ securityAttributes
 	^nil!
 
 seek: offsetInteger sense: senseFlag
-	"Move the receiver's file pointer to position anInteger
-	relative to the postition indicated by senseFlag.
-
-	senseFlag
-		must be one of (FILE_BEGIN, FILE_CURRENT, FILE_END).
-
-	Answer the absolute integer position achieved or
+	"Move the receiver's file pointer to the <integer> position, offsetInteger, relative to the
+	postition indicated by the <integer> code senseFlagInteger. The sense flag must be one
+	FILE_BEGIN, FILE_CURRENT, or FILE_END. Answer the absolute integer position achieved, or
 	signal a FileException if the operation fails."
 
-	| result high |
-	high := (ByteArray newFixed: 4)
-				dwordAtOffset: 0 put: (offsetInteger bitShift: -32);
-				yourself.
-	result := KernelLibrary default
-				setFilePointer: handle
-				lDistanceToMove: (16rFFFFFFFF bitAnd: offsetInteger)
-				lpDistanceToMoveHigh: high
-				dwMoveMethod: senseFlag.
-	"N.B. If you step through this in the debugger you may get a false error because the 
-	SetFilePointer API relies on the GetLastError() code to differentiate between
-	 a legitimate file pointer low-word value and an error. As you step in the debugger 
-	the error code will be altered by other API calls, and so it may no longer be zero
-	when tested."
-	^(16rFFFFFFFF = result and: [KernelLibrary default getLastError ~~ 0])
-		ifTrue: [self signalOsError: false]
-		ifFalse: [((high sdwordAtOffset: 0) bitShift: 32) bitOr: result]!
+	"Note that it is not an error to advance the file position beyond the end of file, even for
+	a file opened in read-only mode."
+
+	^(KernelLibrary default
+		setFilePointerEx: handle
+		liDistanceToMove: offsetInteger
+		lpNewFilePointer: pointerBuf
+		dwMoveMethod: senseFlag) ifTrue: [
+			"Although the theoretical NTFS file size limit is 2**64 - 1024, this API is
+			limited to 2**63-1. Note that the lpNewFilePointer parameter is actually
+			signed, although it should never be negative."
+			pointerBuf sqwordAtOffset: 0] ifFalse: [self signalOsError: false]!
 
 setHandle: anExternalHandle flags: anInteger 
 	"Private - Set the handle inst var to aHandle."

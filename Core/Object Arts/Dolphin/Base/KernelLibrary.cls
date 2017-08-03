@@ -1324,20 +1324,17 @@ setEvent: hEvent
 	<stdcall: bool SetEvent handle>
 	^self invalidCall!
 
-setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
-	"Moves the file pointer of an open file. 
+setFilePointerEx: hfile liDistanceToMove: liDistanceToMove lpNewFilePointer: lpNewFilePointer dwMoveMethod: dwMoveMethod
+	"Invoke the SetFilePointerEx() function of the module wrapped by the receiver.
+	Helpstring: Moves the file pointer of the specified file.
 
-	DWORD SetFilePointer(
-		HANDLE hFile, 					// handle of file 
-		LONG lDistanceToMove, 			// number of bytes to move file pointer 
-		PLONG lpDistanceToMoveHigh, 	// address of high-order word of distance to move  
-		DWORD dwMoveMethod 			// how to move 
-		);"
+		BOOL __stdcall SetFilePointerEx(
+			[in]HANDLE HFILE,
+			[in]LARGE_INTEGER liDistanceToMove,
+			[out]LARGE_INTEGER* lpNewFilePointer,
+			[in]DWORD dwMoveMethod);"
 
-	"Implementation Note: The lDistanceToMove parameter is treated as an unsigned integer
-	as we always treat it as the low 32-bits of a 64-bit integer."
-
-	<stdcall: dword SetFilePointer handle dword lpvoid dword>
+	<stdcall: bool SetFilePointerEx handle sqword sqword* dword>
 	^self invalidCall!
 
 setLastError: anInteger
@@ -1660,7 +1657,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !
@@ -1723,7 +1720,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !
-!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:!**auto generated**!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setLastError:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #setStdHandle:hHandle:!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setVolumeLabel:lpVolumeName:!public!win32 functions-file system! !
