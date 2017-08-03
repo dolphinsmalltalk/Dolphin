@@ -561,6 +561,9 @@ private:
 		static Oop* __fastcall primitiveSWORDAtPut();
 	#endif
 
+	static Oop* __fastcall primitiveQWORDAt();
+	static Oop* __fastcall primitiveSQWORDAt();
+
 	// Floating point number accessors
 	static Oop* __fastcall primitiveSinglePrecisionFloatAt();
 	static Oop* __fastcall primitiveSinglePrecisionFloatAtPut();

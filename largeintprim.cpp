@@ -2355,3 +2355,52 @@ ArrayOTE* __stdcall liDivExport(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 }
 	
 #endif
+
+
+Oop* __fastcall Interpreter::primitiveQWORDAt()
+{
+	Oop* const sp = m_registers.m_stackPointer - 1;
+	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*sp);
+	const Oop oopOffset = sp[1];
+	if (ObjectMemoryIsIntegerObject(oopOffset))
+	{
+		SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(oopOffset);
+		if (static_cast<SMALLINTEGER>(offset) >= 0 && offset + sizeof(ULONGLONG) <= oteReceiver->bytesSize())
+		{
+			VariantByteObject* pBytes = oteReceiver->m_location;
+			Oop result = Integer::NewUnsigned64(*(ULONGLONG*)(pBytes->m_fields + offset));
+
+			*sp = result;
+			ObjectMemory::AddToZct(result);
+			return sp;
+		}
+		else
+			return primitiveFailure(PrimitiveFailureBoundsError);
+	}
+
+	return primitiveFailure(PrimitiveFailureNonInteger);
+}
+
+Oop* __fastcall Interpreter::primitiveSQWORDAt()
+{
+	Oop* const sp = m_registers.m_stackPointer - 1;
+	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*sp);
+	const Oop oopOffset = sp[1];
+	if (ObjectMemoryIsIntegerObject(oopOffset))
+	{
+		SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(oopOffset);
+		if (static_cast<SMALLINTEGER>(offset) >= 0 && offset + sizeof(LONGLONG) <= oteReceiver->bytesSize())
+		{
+			VariantByteObject* pBytes = oteReceiver->m_location;
+			Oop result = Integer::NewSigned64(*(LONGLONG*)(pBytes->m_fields + offset));
+
+			*sp = result;
+			ObjectMemory::AddToZct(result);
+			return sp;
+		}
+		else
+			return primitiveFailure(PrimitiveFailureBoundsError);
+	}
+
+	return primitiveFailure(PrimitiveFailureNonInteger);
+}

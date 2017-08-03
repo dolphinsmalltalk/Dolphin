@@ -244,7 +244,7 @@ MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointe
 
 #pragma code_seg(INTERP_SEG)
 
-extern "C" DWORD primitivesTable[192];
+extern "C" DWORD primitivesTable[PRIMITIVE_MAX];
 
 inline DWORD LookupMethodPrimitive(MethodOTE* oteMethod)
 {

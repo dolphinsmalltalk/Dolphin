@@ -131,6 +131,11 @@ extern primitiveIndirectSWORDAtPut:near32
 extern primitiveByteAtAddress:near32
 extern primitiveByteAtAddressPut:near32
 
+primitiveQWORDAt EQU ?primitiveQWORDAt@Interpreter@@CIPAIXZ
+extern primitiveQWORDAt:near32
+primitiveSQWORDAt EQU ?primitiveSQWORDAt@Interpreter@@CIPAIXZ
+extern primitiveSQWORDAt:near32
+
 ; Imports from ExternalCall.asm
 extern primitiveDLL32Call:near32
 extern primitiveVirtualCall:near32
@@ -579,8 +584,41 @@ DWORD		primitiveIndirectSDWORDAtPut					; case 187  Will be primitiveIndirectInt
 DWORD		primitiveReplacePointers						; case 188
 DWORD		primitiveMicrosecondClockValue					; case 189
 DWORD		primitiveNewFromStack							; case 190
-DWORD		unusedPrimitive									; case 191
-DWORD		unusedPrimitive									; case 192
+DWORD		primitiveQWORDAt								; case 191
+DWORD		primitiveSQWORDAt								; case 192
+DWORD		unusedPrimitive									; case 193
+DWORD		unusedPrimitive									; case 194
+DWORD		unusedPrimitive									; case 195
+DWORD		unusedPrimitive									; case 196
+DWORD		unusedPrimitive									; case 197
+DWORD		unusedPrimitive									; case 198
+DWORD		unusedPrimitive									; case 199
+DWORD		unusedPrimitive									; case 200
+DWORD		unusedPrimitive									; case 201
+DWORD		unusedPrimitive									; case 202
+DWORD		unusedPrimitive									; case 203
+DWORD		unusedPrimitive									; case 204
+DWORD		unusedPrimitive									; case 205
+DWORD		unusedPrimitive									; case 206
+DWORD		unusedPrimitive									; case 207
+DWORD		unusedPrimitive									; case 208
+DWORD		unusedPrimitive									; case 209
+DWORD		unusedPrimitive									; case 210
+DWORD		unusedPrimitive									; case 211
+DWORD		unusedPrimitive									; case 212
+DWORD		unusedPrimitive									; case 213
+DWORD		unusedPrimitive									; case 214
+DWORD		unusedPrimitive									; case 215
+DWORD		unusedPrimitive									; case 216
+DWORD		unusedPrimitive									; case 217
+DWORD		unusedPrimitive									; case 218
+DWORD		unusedPrimitive									; case 219
+DWORD		unusedPrimitive									; case 220
+DWORD		unusedPrimitive									; case 221
+DWORD		unusedPrimitive									; case 222
+DWORD		unusedPrimitive									; case 223
+DWORD		unusedPrimitive									; case 224
+
 
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)

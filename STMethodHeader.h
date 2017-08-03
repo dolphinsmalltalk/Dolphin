@@ -23,7 +23,7 @@ typedef enum {
 	PRIMITIVE_RETURN_INSTVAR = 6,
 	PRIMITIVE_SET_INSTVAR = 7,
 	PRIMITIVE_RETURN_STATIC_ZERO=8,
-	PRIMITIVE_MAX = 192		// Theoretical maximum is 255, but table is smaller
+	PRIMITIVE_MAX = 224		// Theoretical maximum is 255, but table is smaller
 } STPrimitives;
 
 typedef struct STMethodHeader
