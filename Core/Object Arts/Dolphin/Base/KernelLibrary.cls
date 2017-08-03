@@ -605,15 +605,15 @@ getFileAttributes: aFileName
 	<stdcall: sdword GetFileAttributesA lpstr>
 	^self invalidCall!
 
-getFileSize: aHandle lpFileSizeHigh: aDWORD
-	"Answers the low-order dword of the size, in bytes, of the specified file. 
+getFileSizeEx: hfile lpFileSize: lpFileSize
+	"Invoke the GetFileSizeEx() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the size, in bytes, of the specified file
 
-		DWORD GetFileSize(
-			HANDLE hFile, // handle of file to get size of
-			LPDWORD lpFileSizeHigh, // address of high-order word for file size if required.
-		);"
+		BOOL __stdcall GetFileSizeEx(
+			[in]HANDLE HFILE,
+			[out]LARGE_INTEGER* lpFileSize);"
 
-	<stdcall: dword GetFileSize handle lpvoid >
+	<stdcall: bool GetFileSizeEx handle sqword*>
 	^self invalidCall!
 
 getFileTime: hFile 
@@ -1660,7 +1660,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getFileAttributes:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getFileSizeEx:lpFileSize:!**auto generated**!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFileTime:lpCreationTime:lpLastAccessTime:lpLastWriteTime:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !

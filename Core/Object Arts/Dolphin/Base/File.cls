@@ -1,11 +1,13 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #File
-	instanceVariableNames: 'handle spec flags shareFlags'
-	classVariableNames: 'CheckModes NoCheckModes OpenFlagsMask ShareModes'
+	instanceVariableNames: 'handle spec flags shareFlags pointerBuf'
+	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
+File addClassConstant: 'AccessFlagsMask' value: -8!
+File addClassConstant: 'OpenFlagsMask' value: 7!
 File comment: ''!
 !File categoriesForClass!System-Support! !
 !File methodsFor!
@@ -13,8 +15,7 @@ File comment: ''!
 accessFlags
 	"Private - Answer the Win32 access mode flags."
 
-	^flags bitAnd: OpenFlagsMask bitInvert
-!
+	^flags bitAnd: AccessFlagsMask!
 
 asParameter
 	"Answer the external representation of the receiver."
@@ -376,7 +377,8 @@ setHandle: anExternalHandle flags: anInteger
 	"Private - Set the handle inst var to aHandle."
 
 	handle := anExternalHandle.
-	flags := anInteger!
+	flags := anInteger.
+	pointerBuf := ByteArray newFixed: 8!
 
 setToEnd
 	"Move the receiver's file pointer to the end of the file.
@@ -399,12 +401,11 @@ signalOsError: aBoolean
 	^FileException signalOn: self resumable: aBoolean!
 
 size
-	"Answer the size of the file in bytes or
-	signal a FileException if the operation fails."
+	"Answer the size of the file in bytes or signal a <FileException> if the operation fails."
 
-	| result |
-	result := KernelLibrary default getFileSize: handle lpFileSizeHigh: nil.
-	^16rFFFFFFFF = result ifFalse: [result] ifTrue: [self signalOsError: false]!
+	^(KernelLibrary default getFileSizeEx: handle lpFileSize: pointerBuf)
+		ifTrue: [pointerBuf qwordAtOffset: 0]
+		ifFalse: [self signalOsError: false]!
 
 size: anInteger 
 	"Set the size of the file to the <integer> argument number of bytes
@@ -840,22 +841,25 @@ initialize
 		File initialize
 
 		OpenFlagsMask		Mask to extract the open mode flags.
+		AccessFlagsMask	Mask to extract the access mode flags.
 		ShareModes		Map between portable share mode symbols and Win32 flag values.
 		CheckModes	 	Map between portable access mode symbols and Win32 flag values 
 						with error checking.
 		NoCheckModes		Ditto, without error checking."
 
-	OpenFlagsMask := 2r111.
-	ShareModes := ##(
+	self addClassConstant: 'OpenFlagsMask' value: 2r111.
+	self addClassConstant: 'AccessFlagsMask' value: 2r111 bitInvert.
+
+	self addClassConstant: 'ShareModes' value: ##(
 		IdentityDictionary new
 			at: #read			put: FILE_SHARE_READ;
-			at: #write		put: FILE_SHARE_WRITE;
+			at: #write			put: FILE_SHARE_WRITE;
 			at: #readWrite		put: FILE_SHARE_READ | FILE_SHARE_WRITE;
 			at: #exclusive		put: 0;
 			shrink;
 			yourself).
 	
-	CheckModes := ##(
+	self addClassConstant: 'CheckModes' value: ##(
 		IdentityDictionary new
 			at: #read			put: OPEN_EXISTING | GENERIC_READ;
 			at: #create		put: CREATE_NEW | GENERIC_READ | GENERIC_WRITE;
@@ -866,7 +870,7 @@ initialize
 			shrink;
 			yourself).
 
-	NoCheckModes := ##(
+	self addClassConstant: 'NoCheckModes' value: ##(
 		IdentityDictionary new
 			"No check read is a bit of a nonsense, but ..."
 			at: #read			put: OPEN_ALWAYS | GENERIC_READ;
