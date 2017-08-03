@@ -379,13 +379,16 @@ printSuffixOn: aStream
 
 	aStream nextPut: $]!
 
-qwordAtOffset: offset
-	"Answer an <integer> representing the unsigned 8 byte integer at 
-	<integer> offset (i.e. zero relative), offset, in the receiver."
+qwordAtOffset: anInteger
+	"Answer an <integer> representing the unsigned 8 byte integer at the specified <integer> offset (i.e. zero
+	relative), in the receiver.
 
-	#todo "Add a primitive (easy)".
-	^((self dwordAtOffset: offset+4) bitShift: 32) +
-		(self dwordAtOffset: offset)!
+	Primitive failure reasons:
+		0 -	anInteger is not a SmallInteger
+		1 -	anInteger is out of bounds (not in the range 1..receiver's size - 8)."
+
+	<primitive: 191>
+	^((self dwordAtOffset: anInteger + 4) bitShift: 32) + (self dwordAtOffset: anInteger)!
 
 qwordAtOffset: offset put: value
 	"Replace the unsigned 8 byte integer at <integer> offset (i.e. zero relative), offset,
@@ -517,11 +520,15 @@ sdwordAtOffset: anInteger put: anObject
 	^anObject!
 
 sqwordAtOffset: anInteger
-	"Answer the signed 8 byte integer at offset (i.e. zero relative) 
-	anInteger in the receiver."
+	"Answer the signed 8-byte integer at the specified <integer> offset (i.e. zero relative) in
+	the receiver."
 
-	^((self sdwordAtOffset: anInteger+4) bitShift: 32) +
-		(self dwordAtOffset: anInteger)!
+	"Primitive failure reasons:
+		0 -	anInteger is not a SmallInteger
+		1 -	anInteger is out of bounds (not in the range 1..receiver's size - 8)."
+
+	<primitive: 192>
+	^((self sdwordAtOffset: anInteger + 4) bitShift: 32) + (self dwordAtOffset: anInteger)!
 
 sqwordAtOffset: offset put: value
 	"Replace the signed 64-bit integer at the specified <integer> offset (i.e. zero relative)

@@ -146,8 +146,8 @@ Object subclass: #ExternalStructure
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
 Object subclass: #File
-	instanceVariableNames: 'handle spec flags shareFlags'
-	classVariableNames: 'CheckModes NoCheckModes OpenFlagsMask ShareModes'
+	instanceVariableNames: 'handle spec flags shareFlags pointerBuf'
+	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 Object subclass: #FileLocator
@@ -276,7 +276,7 @@ Object subclass: #SearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId traceStream'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!

@@ -1433,6 +1433,64 @@ testPrimitiveYourAddress
 	self assert: (method value: nil withArguments: #()) equals: 0.
 !
 
+testQwordAtOffset
+	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
+
+	| bytes actual |
+	bytes := #[].
+	self should: [bytes qwordAtOffset: 0] raise: BoundsError.
+	bytes := #[1 2 3 4 5 6 7].
+	self should: [bytes qwordAtOffset: 0] raise: BoundsError.
+	bytes := #[1 2 3 4 5 6 7 8].
+	self should: [bytes qwordAtOffset: -1] raise: BoundsError.
+	self should: [bytes qwordAtOffset: 1] raise: BoundsError.
+	self should: [bytes qwordAtOffset: nil] raise: Error.
+	self assert: (bytes qwordAtOffset: 0) equals: 16r807060504030201.
+	"Misaligned"
+	bytes := bytes copyWith: 16rAB.
+	self assert: (bytes qwordAtOffset: 1) equals: 16rAB08070605040302.
+	"SmallIntegers"
+	bytes := ByteArray fromHexString: 'FFFFFFFF0000000000000000'.
+	self assert: (bytes qwordAtOffset: 4) equals: 0.
+	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
+	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
+	self assert: (bytes qwordAtOffset: 0) sameAs: 16r3FFFFFFF.
+	"Overflows SmallInteger"
+	bytes := ByteArray fromHexString: '0000004000000000'.
+	actual := bytes qwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual equals: 16r40000000.
+	"Largest 4-byte large integer"
+	bytes := ByteArray fromHexString: 'FFFFFF7F00000000'.
+	actual := bytes qwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 4.
+	self assert: actual equals: 16r7FFFFFFF.
+	"Smallest 8-byte large integer"
+	bytes := ByteArray fromHexString: '0000008000000000'.
+	actual := bytes qwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: 16r80000000.
+	"Largest 8-byte large integer"
+	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFF7F'.
+	actual := bytes qwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: 16r7FFFFFFFFFFFFFFF.
+	"Smallest 12-byte large integer"
+	bytes := ByteArray fromHexString: '0000000000000080'.
+	actual := bytes qwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 12.
+	self assert: actual equals: 16r8000000000000000.
+	"Largest value"
+	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
+	actual := bytes qwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 12.
+	self assert: actual equals: 16rFFFFFFFFFFFFFFFF!
+
 testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
@@ -1452,6 +1510,64 @@ testSignedFromUnsigned
 					self assert: signed isImmutable]].
 	self should: [VMLibrary default signedFromUnsigned: 16r100000000] raise: Error.
 	self should: [VMLibrary default signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
+
+testSqwordAtOffset
+	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
+
+	| bytes actual |
+	bytes := #[].
+	self should: [bytes sqwordAtOffset: 0] raise: BoundsError.
+	bytes := #[1 2 3 4 5 6 7].
+	self should: [bytes sqwordAtOffset: 0] raise: BoundsError.
+	bytes := #[1 2 3 4 5 6 7 8].
+	self should: [bytes sqwordAtOffset: -1] raise: BoundsError.
+	self should: [bytes sqwordAtOffset: 1] raise: BoundsError.
+	self should: [bytes sqwordAtOffset: nil] raise: Error.
+	self assert: (bytes sqwordAtOffset: 0) equals: 16r0807060504030201.
+	"Misaligned"
+	bytes := bytes copyWith: 16rAB.
+	self assert: (bytes sqwordAtOffset: 1) equals: -16r54F7F8F9FAFBFCFE.
+	"SmallIntegers"
+	bytes := ByteArray fromHexString: 'FFFFFFFF0000000000000000'.
+	self assert: (bytes sqwordAtOffset: 4) equals: 0.
+	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
+	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
+	self assert: (bytes sqwordAtOffset: 0) sameAs: 16r3FFFFFFF.
+	bytes := ByteArray fromHexString: '000000C0FFFFFFFF'.
+	self assert: (bytes sqwordAtOffset: 0) sameAs: -16r40000000.
+	"Overflows SmallInteger (any value in lower 32-bits is treated as positive)"
+	bytes := ByteArray fromHexString: '0000004000000000'.
+	actual := bytes sqwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual equals: 16r40000000.
+	"Largest 4-byte large integer"
+	bytes := ByteArray fromHexString: 'FFFFFF7F00000000'.
+	actual := bytes sqwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 4.
+	self assert: actual equals: 16r7FFFFFFF.
+	"Smallest 8-byte large integer"
+	bytes := ByteArray fromHexString: '0000008000000000'.
+	actual := bytes sqwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: 16r80000000.
+	"Largest 8-byte large positive integer"
+	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFF7F'.
+	actual := bytes sqwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: 16r7FFFFFFFFFFFFFFF.
+	"Largest 8-byte large negative integer"
+	bytes := ByteArray fromHexString: '0000000000000080'.
+	actual := bytes sqwordAtOffset: 0.
+	self assert: actual isKindOf: LargeInteger.
+	self assert: actual byteSize equals: 8.
+	self assert: actual equals: -16r8000000000000000.
+	"Largest value, smallest negative (-1)"
+	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
+	actual := bytes sqwordAtOffset: 0.
+	self assert: actual sameAs: -1!
 
 testVMPointersImmutable
 	| vmPointers |
@@ -1567,7 +1683,9 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
+!VMTest categoriesFor: #testQwordAtOffset!public!unit tests! !
 !VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
+!VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
 
