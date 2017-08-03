@@ -173,7 +173,7 @@ next
 	buffer reset.
 	tokenStart := stream position.
 	token := characterType == #eof
-				ifTrue: [StToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
+				ifTrue: [StEofToken start: tokenStart + 1	"The EOF token should occur after the end of input"]
 				ifFalse: [self scanToken].
 	self stripSeparators.
 	token comments: comments.
@@ -263,7 +263,7 @@ scanAnySymbol
 	characterType == #alphabetic ifTrue: [^self scanSymbol].
 	characterType == #binary 
 		ifTrue: [^self scanBinary: self literalTokenClass].
-	^StToken new!
+	^StEofToken new!
 
 scanBinary: aClass
 	"Private - Although this does now permit binary selectors to be any length, as mandated by the ANSI

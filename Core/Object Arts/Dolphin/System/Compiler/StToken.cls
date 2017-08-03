@@ -6,7 +6,11 @@ Object subclass: #StToken
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StToken guid: (GUID fromString: '{91b3208a-a4b2-4319-952d-c260cd7ab80f}')!
-StToken comment: ''!
+StToken comment: 'StToken is the abstract superclass of <SmalltalkScanner>tokens.
+
+Instance Variables:
+	sourcePointer	<Integer>	The starting position in the original source code of this token.
+'!
 !StToken categoriesForClass!System-Compiler! !
 !StToken methodsFor!
 
@@ -34,7 +38,7 @@ isBinary: aString
 	^false!
 
 isEof
-	^self class == ##(self)!
+	^false!
 
 isIdentifier
 	^false!
@@ -64,7 +68,7 @@ isSpecial: aCharacter
 	^false!
 
 length
-	^0!
+	^self subclassResponsibility!
 
 printOn: aStream 
 	aStream

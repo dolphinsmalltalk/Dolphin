@@ -30,6 +30,7 @@ package classNames
 	add: #StBlockNode;
 	add: #StBraceArrayNode;
 	add: #StCascadeNode;
+	add: #StEofToken;
 	add: #StExternalArgTypeNode;
 	add: #StExternalCallNode;
 	add: #StIdentifierToken;
@@ -240,6 +241,11 @@ StLiteralNode subclass: #StLiteralValueNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StToken subclass: #StAssignmentToken
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StToken subclass: #StEofToken
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
