@@ -976,67 +976,66 @@ testErrorsPrimitives
 	| source mark |
 	source := 'blah <primitive: a>'.
 	mark := source lastIndexOf: $a.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectPrimIdx
 		range: (mark to: mark).
 	source := 'blah <primitive:>'.
 	mark := source lastIndexOf: $>.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectPrimIdx
 		range: (mark to: mark).
 	source := 'blah <primitive: 1.0>'.
 	mark := source lastIndexOf: $1.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectPrimIdx
 		range: (mark to: mark + 2).
 	source := 'blah <primitive: 1'.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectCloseTag
 		range: (source size + 1 to: source size).
 	source := ' blah <primitive: 1<'.
 	mark := source lastIndexOf: $<.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectCloseTag
 		range: (mark to: mark).
 	source := 'blah <primitive: 1 a'.
 	mark := source lastIndexOf: $a.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectCloseTag
 		range: (mark to: mark).
 	source := 'blah <stdcall: void a '.
 	mark := source lastIndexOf: $a.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectCloseTag
 		range: (source size + 1 to: source size).
 	source := 'blah <primitive: 256>'.
 	mark := source lastIndexOf: $2.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadPrimIdx
 		range: (mark to: mark + 2).
-	source := 'blah <primitive: ' , ((SmalltalkParser classPool at: 'MaxPrimIndex') + 1) displayString 
-				, '>'.
+	source := 'blah <primitive: ' , (VMConstants.MaxPrimitive + 1) displayString , '>'.
 	mark := source lastIndexOf: $:.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadPrimIdx
 		range: (mark + 2 to: mark + 4).
 	source := 'blah <blah: void blah>'.
 	mark := source indexOf: $<.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadPrimCallType
 		range: (mark + 1 to: mark + 5).
 	source := 'blah <overlaped cdecl: void blah>'.
 	mark := source indexOf: $<.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadPrimCallType
 		range: (mark + 1 to: mark + 9)!
@@ -1298,26 +1297,26 @@ testErrorsVirtualCalls
 	| source mark idx |
 	source := 'blah <virtual cdecl: void blah>'.
 	mark := source lastIndexOf: $b.
-	self 
+	self
 		parseMethodError: source
 		code: CErrExpectVfn
 		range: (mark to: mark + 3).
 	source := 'blah <virtual cdecl: void -1>'.
 	mark := source lastIndexOf: $-.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadVfn
 		range: (mark to: mark + 1).
 	source := 'blah <virtual cdecl: void 0>'.
 	mark := source lastIndexOf: $0.
-	self 
+	self
 		parseMethodError: source
 		code: CErrBadVfn
 		range: (mark to: mark).
-	idx := ((SmalltalkParser bindingFor: 'MaxVfn') value + 1) displayString.
+	idx := (VMConstants.MaxVirtualFunction + 1) displayString.
 	source := 'blah <virtual cdecl: void ' , idx , '>'.
-	mark := source lastIndexOf: $ .
-	self 
+	mark := source lastIndexOf: $\x20.
+	self
 		parseMethodError: source
 		code: CErrBadVfn
 		range: (mark + 1 to: mark + idx size)!

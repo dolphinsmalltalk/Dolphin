@@ -91,7 +91,7 @@ package!
 
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
-	classVariableNames: 'AllowEmptyStatements MaxPrimIndex MaxVfn'
+	classVariableNames: 'AllowEmptyStatements'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 Object subclass: #SmalltalkScanner
