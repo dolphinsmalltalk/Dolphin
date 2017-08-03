@@ -2,12 +2,10 @@
 
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
-	classVariableNames: 'AllowEmptyStatements MaxPrimIndex MaxVfn'
+	classVariableNames: 'AllowEmptyStatements'
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 SmalltalkParser guid: (GUID fromString: '{f15a9f2f-3a15-47cd-8ef9-0534b6f91c17}')!
-SmalltalkParser addClassConstant: 'MaxPrimIndex' value: 192!
-SmalltalkParser addClassConstant: 'MaxVfn' value: 1024!
 SmalltalkParser comment: 'Instance Variables:
 	scanner		<SmalltalkScanner> performing lexical analysis over the source text
 	currentToken	<StToken>
@@ -405,7 +403,7 @@ parseExternalCall: startInteger isVirtual: aBoolean
 					[self parserError: CErrExpectVfn.
 					"Error ignored, attempt to recover."
 					vfnIndex := 1].
-			(vfnIndex between: 1 and: MaxVfn) 
+			(vfnIndex between: 1 and: VMConstants.MaxVirtualFunction) 
 				ifFalse: 
 					[self parserError: CErrBadVfn
 					"Error ignored, continue"].
@@ -867,7 +865,7 @@ parseTag: startInteger
 								start: startInteger;
 								yourself].
 					primitiveIndex := currentToken value.
-					(primitiveIndex between: 1 and: MaxPrimIndex) ifFalse: [self parserError: CErrBadPrimIdx].
+					(primitiveIndex between: 1 and: VMConstants.MaxPrimitive) ifFalse: [self parserError: CErrBadPrimIdx].
 					self step.
 					(StPrimitiveNode primitiveIndex: primitiveIndex)
 						start: startInteger;
@@ -1171,8 +1169,6 @@ initialize
 		self initialize
 	"
 
-	self addClassConstant: 'MaxPrimIndex' value: 192.
-	self addClassConstant: 'MaxVfn' value: 1024.
 	"By default Dolphin treats empty statements as a syntax error"
 	AllowEmptyStatements := false!
 
