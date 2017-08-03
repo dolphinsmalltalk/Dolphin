@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MemoryManager
-	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize'
+	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
 	classVariableNames: 'Current GCInterval'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -253,6 +253,12 @@ gcInterval
 
 	^gcInterval!
 
+getEvents
+	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
+	has no events registered for it"
+
+	^events!
+
 hospiceOverflow: interruptArg 
 	"Private - The VM has detected that the finalization queue has reached its high water mark.
 	Boost the priority of the finalizer thread so that it will run the next time thread
@@ -420,6 +426,12 @@ resetGCStats
 	lastGCTime := lastGCDuration := 0.
 	gcInterval := GCInterval!
 
+setEvents: anEventsCollectionOrNil
+	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
+	Answer the receiver."
+
+	events := anEventsCollectionOrNil!
+
 undertaker
 	"Private - Answer the value undertaker <Process>."
 
@@ -463,6 +475,7 @@ undertakerMain
 !MemoryManager categoriesFor: #forkFinalizer!finalizing!private! !
 !MemoryManager categoriesFor: #forkUndertaker!finalizing!private! !
 !MemoryManager categoriesFor: #gcInterval!accessing!private! !
+!MemoryManager categoriesFor: #getEvents!events!private! !
 !MemoryManager categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
 !MemoryManager categoriesFor: #initialize!development!initializing!private! !
 !MemoryManager categoriesFor: #instanceStats:!enquiries!public! !
@@ -479,6 +492,7 @@ undertakerMain
 !MemoryManager categoriesFor: #primInstanceStats:!enquiries!private! !
 !MemoryManager categoriesFor: #registerObjects!initializing!private! !
 !MemoryManager categoriesFor: #resetGCStats!initializing!private! !
+!MemoryManager categoriesFor: #setEvents:!events!private! !
 !MemoryManager categoriesFor: #undertaker!accessing!private! !
 !MemoryManager categoriesFor: #undertaker:!finalizing!private! !
 !MemoryManager categoriesFor: #undertakerMain!finalizing!private! !
