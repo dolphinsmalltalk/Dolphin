@@ -139,8 +139,7 @@ test64BitSeek
 	"As the 64-bit offset is signed, the maximum seek offset is 2^63-1"
 	self 
 		should: [f seek: 2 ** 63 sense: FILE_BEGIN]
-		raise: FileException
-		matching: [:ex | ex statusCode = 131	"ERROR_NEGATIVE_SEEK"].
+		raise: Error.
 	"Test the condition where the low-word of the return is 16rFFFFFFFF, so GetLastError() is needed to disambiguate from an error condition."
 	dist := 2 ** 32 - 1.
 	pointer := f seek: dist sense: FILE_BEGIN.
