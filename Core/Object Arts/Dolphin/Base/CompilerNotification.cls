@@ -66,10 +66,6 @@ errorMessage
 			format
 				expandMacrosWithArguments: {self source copyFrom: self range start to: self range stop} , extras]!
 
-extra
-	#deprecated.
-	^extras isEmpty ifFalse: [extras any]!
-
 extras
 	^extras!
 
@@ -161,7 +157,6 @@ source
 !CompilerNotification categoriesFor: #displayOn:!displaying!public! !
 !CompilerNotification categoriesFor: #errorCode!accessing!public! !
 !CompilerNotification categoriesFor: #errorMessage!accessing!public! !
-!CompilerNotification categoriesFor: #extra!accessing!public! !
 !CompilerNotification categoriesFor: #extras!accessing!public! !
 !CompilerNotification categoriesFor: #line!accessing!public! !
 !CompilerNotification categoriesFor: #methodClass!accessing!public! !
