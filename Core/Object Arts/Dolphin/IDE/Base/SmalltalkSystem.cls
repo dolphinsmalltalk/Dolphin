@@ -2133,9 +2133,7 @@ methodCategorizationPolicy
 methodExplorerClass
 	"Answer the class of browser to be used for browsing methods in the development system."
 
-	methodExplorerClass isNil 
-		ifTrue: [methodExplorerClass := self environment at: #MethodExplorerShell].
-	^methodExplorerClass!
+	^methodExplorerClass ifNil: [methodExplorerClass := MethodExplorerShell]!
 
 methodExplorerClass: toolClass 
 	"Set the class of browser to be used for browsing methods in the development system."
