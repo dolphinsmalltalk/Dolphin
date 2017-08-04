@@ -19,3 +19,4 @@ Contributions/
 Core/DolphinVM/
 Projects
 *.log
+RegressionTests.xml
