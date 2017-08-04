@@ -1,14 +1,30 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #File
-	instanceVariableNames: 'handle spec flags shareFlags pointerBuf'
+	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
 	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
 File addClassConstant: 'AccessFlagsMask' value: -8!
 File addClassConstant: 'OpenFlagsMask' value: 7!
-File comment: ''!
+File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
+
+Instance Variables:
+	handle		<ExternalHandle>. The Win32 file handle.
+	spec			<String>. The file path.
+	flags			<Integer>. Win32 file open and access mode flags.
+	shareFlags	<Integer>. Win32 file sharing mode flags.
+	intBuffer		<ByteArray>. Buffer passed to API functions to receive integer output values.
+
+Class Variables:
+	CheckModes		<IdentityDictionary>
+	OpenFlagsMask		<Integer>
+	NoCheckModes		<IdentityDictionary>
+	AccessFlagsMask	<Integer>
+	ShareModes		<IdentityDictionary>
+
+'!
 !File categoriesForClass!System-Support! !
 !File methodsFor!
 
@@ -267,23 +283,19 @@ read: aByteObject
 		count: aByteObject basicSize
 !
 
-read: anAddress count: bytesToReadInteger 
+read: anAddress count: bytesToReadInteger
 	"Read a maximum of bytesToReadInteger bytes into anAddress from the file.
 
 	It is not an error to read zero bytes.
-	Answer the number of bytes read or signal a FileException if the operaion fails."
+	Answer the number of bytes read or signal a <FileException> if the operation fails."
 
-	| bytesRead |
 	bytesToReadInteger == 0 ifTrue: [^0].
-	bytesRead := ByteArray newFixed: 4.
-	^(KernelLibrary default 
+	^(KernelLibrary default
 		readFile: handle
 		lpBuffer: anAddress
 		nNumberOfBytesToRead: bytesToReadInteger
-		lpNumberOfBytesRead: bytesRead
-		lpOverlapped: nil) 
-			ifTrue: [bytesRead dwordAtOffset: 0]
-			ifFalse: [self signalOsError: false]!
+		lpNumberOfBytesRead: intBuffer
+		lpOverlapped: nil) ifTrue: [intBuffer dwordAtOffset: 0] ifFalse: [self signalOsError: false]!
 
 read: aStringOrByteArray startingAt: startIndex count: bytesToReadInteger
 	"Read a maximum of bytesToReadInteger bytes from the file starting with aStringOrByteArray at: startIndex.
@@ -357,19 +369,21 @@ seek: offsetInteger sense: senseFlag
 	^(KernelLibrary default
 		setFilePointerEx: handle
 		liDistanceToMove: offsetInteger
-		lpNewFilePointer: pointerBuf
-		dwMoveMethod: senseFlag) ifTrue: [
-			"Although the theoretical NTFS file size limit is 2**64 - 1024, this API is
+		lpNewFilePointer: intBuffer
+		dwMoveMethod: senseFlag)
+			ifTrue: 
+				["Although the theoretical NTFS file size limit is 2**64 - 1024, this API is
 			limited to 2**63-1. Note that the lpNewFilePointer parameter is actually
 			signed, although it should never be negative."
-			pointerBuf sqwordAtOffset: 0] ifFalse: [self signalOsError: false]!
+				intBuffer sqwordAtOffset: 0]
+			ifFalse: [self signalOsError: false]!
 
-setHandle: anExternalHandle flags: anInteger 
+setHandle: anExternalHandle flags: anInteger
 	"Private - Set the handle inst var to aHandle."
 
 	handle := anExternalHandle.
 	flags := anInteger.
-	pointerBuf := ByteArray newFixed: 8!
+	intBuffer := ByteArray newFixed: 8!
 
 setToEnd
 	"Move the receiver's file pointer to the end of the file.
@@ -394,8 +408,8 @@ signalOsError: aBoolean
 size
 	"Answer the size of the file in bytes or signal a <FileException> if the operation fails."
 
-	^(KernelLibrary default getFileSizeEx: handle lpFileSize: pointerBuf)
-		ifTrue: [pointerBuf qwordAtOffset: 0]
+	^(KernelLibrary default getFileSizeEx: handle lpFileSize: intBuffer)
+		ifTrue: [intBuffer qwordAtOffset: 0]
 		ifFalse: [self signalOsError: false]!
 
 size: anInteger 
@@ -418,23 +432,19 @@ write: aStringOrByteArray
 		write: aStringOrByteArray
 		count: aStringOrByteArray basicSize.!
 
-write: aStringOrByteArrayOrAddress count: bytesToWriteInteger 
+write: aStringOrByteArrayOrAddress count: bytesToWriteInteger
 	"Write bytesToWriteInteger bytes from aStringOrByteArrayOrAddress to the file.
 
 	It is not an error to write zero bytes.
-	Answer the number of bytes written or signal a FileException if the operaion fails."
+	Answer the number of bytes written or signal a <FileException> if the operation fails."
 
-	| bytesWritten |
 	bytesToWriteInteger == 0 ifTrue: [^0].
-	bytesWritten := ByteArray newFixed: 4.
-	^(KernelLibrary default 
+	^(KernelLibrary default
 		writeFile: handle
 		lpBuffer: aStringOrByteArrayOrAddress
 		nNumberOfBytesToWrite: bytesToWriteInteger
-		lpNumberOfBytesWritten: bytesWritten
-		lpOverlapped: nil) 
-			ifTrue: [bytesWritten dwordAtOffset: 0]
-			ifFalse: [self signalOsError: false]!
+		lpNumberOfBytesWritten: intBuffer
+		lpOverlapped: nil) ifTrue: [intBuffer dwordAtOffset: 0] ifFalse: [self signalOsError: false]!
 
 write: aStringOrByteArray startingAt: startIndex count: bytesToWriteInteger
 	"Write bytesToWriteInteger bytes to the file starting with aStringOrByteArray at: startIndex.
@@ -1037,6 +1047,42 @@ pathDelimiters
 
 	^'/\'!
 
+readAllBytes: aString
+	"Open the file at the specified path, read and answer all of the binary data it contains.
+	The file is guaranteed to be closed, even if an exception occurs."
+
+	| file |
+	file := self
+				open: aString
+				mode: #read
+				check: true
+				share: #read.
+	^
+	[| size buffer |
+	size := file size.
+	buffer := ByteArray newFixed: size.
+	file read: buffer count: size.
+	buffer]
+			ensure: [file close]!
+
+readAllText: aString
+	"Open the file at the specified path, read and answer all of the text it contains. The file
+	is guaranteed to be closed, even if an exception occurs."
+
+	| file |
+	file := self
+				open: aString
+				mode: #read
+				check: true
+				share: #read.
+	^
+	[| size buffer |
+	size := file size.
+	buffer := String newFixed: size.
+	file read: buffer count: size.
+	buffer]
+			ensure: [file close]!
+
 relativePathOf: aPathString to: aBasePathString 
 	"Answers the relative path of aPathString relative to aBasePathString.
 	Note that if the last component of aBasePathString is to be considered a directory
@@ -1389,6 +1435,8 @@ workingDirectory: aString
 !File class categoriesFor: #pathBuffer!helpers!public! !
 !File class categoriesFor: #pathDelimiter!constants!public! !
 !File class categoriesFor: #pathDelimiters!constants!public! !
+!File class categoriesFor: #readAllBytes:!file operations!public! !
+!File class categoriesFor: #readAllText:!file operations!public! !
 !File class categoriesFor: #relativePathOf:to:!filename manipulation!public! !
 !File class categoriesFor: #removeDirectory:!file operations!public! !
 !File class categoriesFor: #removeExtension:!filename manipulation!public! !

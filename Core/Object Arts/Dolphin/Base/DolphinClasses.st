@@ -146,7 +146,7 @@ Object subclass: #ExternalStructure
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
 Object subclass: #File
-	instanceVariableNames: 'handle spec flags shareFlags pointerBuf'
+	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
 	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -1667,7 +1667,7 @@ WriteStream subclass: #ReadWriteStream
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize'
-	classVariableNames: 'DirtyBufferMask'
+	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
