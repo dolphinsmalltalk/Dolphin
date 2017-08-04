@@ -269,24 +269,6 @@ replaceLiteral: literal with: newLiteral
 		withTree: (RBLiteralNode value: newLiteral).
 	^rewriteRule!
 
-replaceLiteral: literal with: newLiteral inToken: literalToken 
-	| value |
-	value := literalToken realValue.
-	(value class = literal class and: [value = literal]) 
-		ifTrue: [^RBLiteralToken value: newLiteral].
-	(value class == Array or: [value class == ByteArray]) 
-		ifTrue: 
-			[^RBLiteralToken 
-				value: (literalToken value collect: 
-							[:each | 
-							self 
-								replaceLiteral: literal
-								with: newLiteral
-								inToken: each])
-				start: nil
-				stop: nil].
-	^literalToken!
-
 replaceStatements: code with: newCode in: aParseTree onInterval: anInterval 
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
@@ -327,7 +309,6 @@ variable: aVarName getter: getMethod setter: setMethod receiver: aString
 !ParseTreeRewriter class categoriesFor: #replace:with:in:onInterval:!accessing!public! !
 !ParseTreeRewriter class categoriesFor: #replace:with:method:!instance creation!public! !
 !ParseTreeRewriter class categoriesFor: #replaceLiteral:with:!instance creation!public! !
-!ParseTreeRewriter class categoriesFor: #replaceLiteral:with:inToken:!helpers!public! !
 !ParseTreeRewriter class categoriesFor: #replaceStatements:with:in:onInterval:!accessing!public! !
 !ParseTreeRewriter class categoriesFor: #variable:getter:setter:!instance creation!public! !
 !ParseTreeRewriter class categoriesFor: #variable:getter:setter:receiver:!instance creation!public! !
