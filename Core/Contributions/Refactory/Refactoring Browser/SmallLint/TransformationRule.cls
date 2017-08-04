@@ -365,6 +365,14 @@ superSends
 		superSends;
 		yourself!
 
+testCaseAssertEquals
+	"TestCase>>assert:equals: provides a better diagnostic on failure."
+
+	^self
+		rewrite: #(#('self assert: ``@expr = ``@expected' 'self assert: ``@expr equals: ``@expected'))
+		methods: false
+		name: 'Use TestCase>>assert:equals: instead of TestCase>>assert: with #='!
+
 unwindBlocks
 	#rbFix.	"Remove #valueNowOrOnUnwindDo: and #valueOnUnwindDo: rewrite rules"
 	^self
@@ -396,5 +404,6 @@ unwindBlocks
 !TransformationRule class categoriesFor: #showWhileBlocks!public!transformations! !
 !TransformationRule class categoriesFor: #streamLiterals!public!transformations! !
 !TransformationRule class categoriesFor: #superSends!public!transformations! !
+!TransformationRule class categoriesFor: #testCaseAssertEquals!public!transformations! !
 !TransformationRule class categoriesFor: #unwindBlocks!public!transformations! !
 

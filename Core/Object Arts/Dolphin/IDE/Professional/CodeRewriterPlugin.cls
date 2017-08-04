@@ -119,7 +119,7 @@ transform
 	| rules |
 	rules := (MethodCategory name: 'transformations') 
 				methodsInBehavior: TransformationRule class.
-	rules := rules collect: [:each | TransformationRule perform: each selector].
+	rules := (rules collect: [:each | TransformationRule perform: each selector]) asSortedCollection: [:a :b | a displayString < b displayString].
 	(ChoicePrompter choices: rules caption: 'Choose Transformation...') 
 		ifNotNil: [:rule | self runTransformation: rule]! !
 !CodeRewriterPlugin categoriesFor: #browseRuleResults:!helpers!private! !
