@@ -50,8 +50,7 @@ test1065
 				next: data size
 				putAll: data
 				startingAt: 1] ensure: [stream close].
-			stream := FileStream read: tempFileName text: false.
-			written := [stream contents] ensure: [stream close].
+			written := File readAllBytes: tempFileName.
 			self
 				assert: data = written
 				description: 'Failed on write of ' , i printString , ' bytes'
@@ -69,30 +68,28 @@ testFileTimes
 testReset
 	"#1724"
 
-	| temp stream content |
-	temp := File temporaryFilename.
-	stream := FileStream write: temp.
+	| stream content |
+	stream := self tempWriteStream.
 	stream next: 3 put: $A.
 	stream reset.
 	content := stream upToEnd.
 	self assert: content = 'AAA'.
 	self assert: stream atEnd.
 	stream close.
-	stream := FileStream write: temp.
+	stream := self tempWriteStream.
 	stream next: 9999 put: $A.
 	stream reset.
 	content := stream upToEnd.
 	self assert: (content size = 9999 and: [content allSatisfy: [:each | each = $A]]).
 	self assert: stream atEnd.
-	stream close.
-	File delete: temp!
+	stream close!
 
 testSingleByteOverflow
 	"Test that overflowing the FileStream buffer by a single byte and letting the FileStream be finalized
 	doesn't lose the last byte."
 
 	| stream weak |
-	stream := self streamClass write: tempFileName.
+	stream := self tempWriteStream.
 	"Write bufSize-1 characters - buffer should be dirty but not yet flushed"
 	stream next: self streamClass bufferSize - 1 put: $1.
 	self assert: stream isBufferDirty.
@@ -111,7 +108,7 @@ testSingleByteOverflow
 	"Forcibly finalize"
 	MemoryManager current administerLastRites.
 	stream := self streamClass read: tempFileName text: true.
-	self assert: stream size = (FileStream bufferSize + 1).
+	self assert: stream size = (FileStream.PageSize + 1).
 	stream next: self streamClass bufferSize - 2.
 	self assert: stream next = $1.
 	self assert: stream next = $2.
@@ -124,5 +121,5 @@ testSingleByteOverflow
 !FileStreamTest categoriesFor: #test1065!public!unit tests! !
 !FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
 !FileStreamTest categoriesFor: #testReset!public!unit tests! !
-!FileStreamTest categoriesFor: #testSingleByteOverflow!private!unit tests! !
+!FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
 
