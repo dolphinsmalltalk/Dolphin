@@ -334,22 +334,17 @@ raisedTo: operand
 
 	^self subclassResponsibility	!
 
-raisedToInteger: operand
-	"Answer the receiver raised to the <integer> power, operand."
- 
+raisedToInteger: anInteger
+	"Answer the receiver raised to the specified <integer> power."
+
 	| i answer |
-	operand == 0 ifTrue: [^self class one].
-	operand == 1 ifTrue: [^self].
-	operand isInteger
-		ifFalse: [ ^self error: 'expected integer argument' ].
-	operand negative ifTrue: [^(self raisedToInteger: operand negated) reciprocal].
-	i := 2.
-	[i < operand] whileTrue: [i := i + i].
+	anInteger negative ifTrue: [^(self raisedToInteger: anInteger negated) reciprocal].
+	i := 1 bitShift: anInteger highBit - 1.
 	answer := self class one.
-	[i > 0] whileTrue: [
-		answer := answer * answer.
-		(operand bitAnd: i) == 0 ifFalse: [answer := answer * self].
-		i := i bitShift: -1].
+	[i > 0] whileTrue: 
+			[answer := answer * answer.
+			(anInteger bitAnd: i) == 0 ifFalse: [answer := answer * self].
+			i := i bitShift: -1].
 	^answer!
 
 reciprocal

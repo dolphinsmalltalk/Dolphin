@@ -292,6 +292,15 @@ icon
 
 	^##(self) defaultIcon!
 
+maxPrecision
+	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The
+	theoretical limit of the implementation is unbounded, but we impose an arbitrary limit to
+	prevent accidentally causing pathologically long computations. The ANSI standard specifies a
+	minimum upper on bound on the precision of ScaledDecimals of 30, so 9999 ought to be
+	sufficient for most purposes."
+
+	^9999!
+
 newFromNumber: aNumber scale: scaleInteger
 	"Answer a new instance of me."
 
@@ -314,6 +323,7 @@ zero
 		scale: 0
 ! !
 !ScaledDecimal class categoriesFor: #icon!constants!public! !
+!ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
 !ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
 !ScaledDecimal class categoriesFor: #one!instance creation!public! !
 !ScaledDecimal class categoriesFor: #zero!instance creation!public! !

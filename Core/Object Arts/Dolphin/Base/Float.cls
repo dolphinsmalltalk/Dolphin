@@ -2,10 +2,11 @@
 
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
-	classVariableNames: 'EMin FpClassInfinite FpClassNaN FpClassNegative FpClassStrictlyPositive FpClassZero Ln2 MinValLogBase2 Precision SignificantDifference'
+	classVariableNames: 'EMax EMin FpClassInfinite FpClassNaN FpClassNegative FpClassStrictlyPositive FpClassZero Ln2 MinValLogBase2 Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
+Float addClassConstant: 'EMax' value: 1023!
 Float addClassConstant: 'EMin' value: -1022!
 Float addClassConstant: 'FpClassInfinite' value: 516!
 Float addClassConstant: 'FpClassNaN' value: 3!
@@ -901,7 +902,7 @@ emax
 	#fmax by the expression on p141 of the ANSI Smalltalk standard, 
 	but the IEEE 754 double-precision value for emax is +1023."
 
-	^1023!
+	^EMax!
 
 emin
 	"Answer an <integer> representing the smallest exponent of the characterized floating point
@@ -958,6 +959,7 @@ initialize
 	"
 
 	self addClassConstant: 'EMin' value: -1022.
+	self addClassConstant: 'EMax' value: 1023.
 	self addClassConstant: 'Ln2' value: 0.6931471805599453.
 	self addClassConstant: 'MinValLogBase2' value: -1074.
 	self addClassConstant: 'Precision' value: 53.
@@ -973,6 +975,17 @@ initialize
 	self addClassConstant: 'FpClassZero' value: CRTConstants._FPCLASS_NZ | CRTConstants._FPCLASS_PZ.
 	self addClassConstant: 'FpClassNaN' value: CRTConstants._FPCLASS_QNAN | CRTConstants._FPCLASS_SNAN.
 	#(#FloatD #FloatE #FloatQ) do: [:each | Smalltalk at: each ifAbsentPut: [self]]!
+
+maxExponent
+	"Private - The maximum allowed decimal exponent (power of 10) in the literal Float form."
+
+	^308!
+
+maxLiteralIntegerExponent
+	"Private - The maximum allowed exponent (power of 10) in the literal integer form '<int>e<powerOf10>'
+	when the result will be converted to a Float."
+
+	^self maxExponent!
 
 negativeZero
 	"Answer the IEEE 754 representation for negative zero"
@@ -1061,6 +1074,8 @@ zero
 !Float class categoriesFor: #fminNormalized!constants!public! !
 !Float class categoriesFor: #icon!constants!public! !
 !Float class categoriesFor: #initialize!development!initializing!private! !
+!Float class categoriesFor: #maxExponent!constants!private! !
+!Float class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
 !Float class categoriesFor: #negativeZero!public! !
 !Float class categoriesFor: #new!instance creation!public! !
 !Float class categoriesFor: #one!instance creation!public! !
