@@ -181,7 +181,7 @@ isSameMethod: aCompiledMethod1 as: aCompiledMethod2
 killVisitTimer
 	self view killTimer: 1!
 
-methods: aBrowserEnvironment 
+methods: aBrowserEnvironment
 	self browseMethodsIn: aBrowserEnvironment!
 
 onMethodSelected
@@ -209,10 +209,13 @@ onTipTextRequired: tool
 
 onTreeSelectionChanged
 	self killVisitTimer.
-	historyTree selectionOrNil 
-		ifNil: [browserPresenter list: #()]
+	historyTree selectionOrNil
+		ifNil: 
+			[self caption: self class displayString.
+			browserPresenter list: #()]
 		ifNotNil: 
-			[:env | 
+			[:env |
+			self caption: env label.
 			browserPresenter methods: env.
 			self selectFirstMethod]!
 
