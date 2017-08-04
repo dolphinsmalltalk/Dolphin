@@ -31,7 +31,7 @@ isActive
 	^self value ifNotNil: [:state | state asBoolean not]!
 
 isActive: aBooleanOrNil
-	self value: aBooleanOrNil ifNotNil: [aBooleanOrNil not asInteger]!
+	self value: (aBooleanOrNil ifNotNil: [aBooleanOrNil not asInteger])!
 
 printFields: aCollection on: aStream limit: anInteger
 	self Present ifTrue: [aStream nextPutAll: (self isActive ifTrue: ['Active'] ifFalse: ['Inactive'])]!
