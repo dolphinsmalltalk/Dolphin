@@ -979,6 +979,14 @@ testQuoRem3
 			"And the remainders should be less than the denominator"
 			self assert: r < v]!
 
+testRaisedToInteger
+	| subject |
+	subject := 20 factorial.
+	self assert: (subject raisedToInteger: 0) equals: 1.
+	self assert: (subject raisedToInteger: 1) equals: subject.
+	self assert: (subject raisedToInteger: 3) equals: subject * subject * subject.
+	self assert: (subject raisedToInteger: -2) equals: 1 / (subject * subject)!
+
 testRem
 	#(-16rFFFFFFFFFFFFFFFFFFFFFFFF -16rFFFFFFFFFFFFFFF -16rFFFFFFFF ##(SmallInteger maximum + 1) ##(SmallInteger
 		maximum + 2) 16rFFFFFFFF 16rFFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFFFFFFFFFF)
@@ -1058,6 +1066,7 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testQuoRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem2!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testQuoRem3!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testRaisedToInteger!public! !
 !LargeIntegerTest categoriesFor: #testRem!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubtractSmall!public!unit tests! !
 

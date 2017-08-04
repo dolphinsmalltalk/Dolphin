@@ -104,15 +104,15 @@ asFloat
 
 	"Check for gradual underflow, in which case we should use less bits"
 	floatExponent := exponent + hq.
-	floatExponent >= Float emin ifFalse: [nBits := nBits + floatExponent - Float emin].
+	floatExponent >= Float.EMin ifFalse: [nBits := nBits + floatExponent - Float.EMin].
 
 	"Use exactly nBits."
-	hq > nBits 
+	hq > nBits
 		ifTrue: 
 			[exponent := exponent + hq - nBits.
 			r := (q bitAnd: (1 bitShift: hq - nBits) - 1) * b + r.
 			q := q bitShift: nBits - hq].
-	hq < nBits 
+	hq < nBits
 		ifTrue: 
 			[exponent := exponent + hq - nBits.
 			q1 := (r bitShift: nBits - hq) quo: b.

@@ -71,8 +71,25 @@ scannerClass
 
 testErrorsLexicalBadNumber
 	self
-		lexicalError: ' 1.0e500 '
+		lexicalError: ' 1.0e310 '
 		range: (2 to: 8)
+		line: 1
+		code: LErrBadNumber.
+	self
+		lexicalError: '0.1e309'
+		range: (1 to: 7)
+		line: 1
+		code: LErrBadNumber.
+	"Exponent too large in literal integer"
+	self
+		lexicalError: ' 1e1000000 '
+		range: (2 to: 10)
+		line: 1
+		code: LErrBadNumber.
+	"Scale too large in literal ScaledDecimal"
+	self
+		lexicalError: '  1s999999 '
+		range: (3 to: 10)
 		line: 1
 		code: LErrBadNumber!
 

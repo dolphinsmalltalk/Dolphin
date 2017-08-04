@@ -479,6 +479,25 @@ testPrintStringAndReadBack
 			f printOn: str significantFigures: 17.
 			self assert: (Float readFrom: str contents readStream) equals: f]!
 
+testRaisedToInteger
+	self assert: (2.0 raisedToInteger: 0) equals: 1.0.
+	self assert: (2.0 raisedToInteger: 1) equals: 2.0.
+	self assert: (2.0 raisedToInteger: 4) equals: 16.0.
+	self assert: (0.0 raisedToInteger: 0) equals: 1.0.
+	self assert: (0.0 raisedToInteger: 2) equals: 0.0.
+	self should: [0.0 raisedToInteger: -1] raise: ZeroDivide.
+	self assert: (2.0 raisedToInteger: -1) equals: 0.5.
+	self assert: (2.0 raisedToInteger: -4) equals: 0.0625.
+	self assert: (-0.0 raisedToInteger: 0) equals: 1.0.
+	self assert: (-0.0 raisedToInteger: 3) equals: 0.0.
+	self assert: (-0.0 raisedToInteger: 2) equals: 0.0.
+	self should: [-0.0 raisedToInteger: -1] raise: ZeroDivide.
+	self assert: (-2.0 raisedToInteger: 0) equals: 1.0.
+	self assert: (-2.0 raisedToInteger: 1) equals: -2.0.
+	self assert: (-2.0 raisedToInteger: 4) equals: 16.0.
+	self assert: (-2.0 raisedToInteger: -1) equals: -0.5.
+	self assert: (-2.0 raisedToInteger: -4) equals: 0.0625!
+
 testReadFrom
 	308 to: -316
 		do: 
@@ -561,6 +580,7 @@ ulp: aFloat
 !FloatTest categoriesFor: #testPrintOnDecimalPlaces!public!unit tests! !
 !FloatTest categoriesFor: #testPrintString!public!unit tests! !
 !FloatTest categoriesFor: #testPrintStringAndReadBack!public!unit tests! !
+!FloatTest categoriesFor: #testRaisedToInteger!public! !
 !FloatTest categoriesFor: #testReadFrom!public! !
 !FloatTest categoriesFor: #testSign!public!unit tests! !
 !FloatTest categoriesFor: #testUnderflow!public!unit tests! !

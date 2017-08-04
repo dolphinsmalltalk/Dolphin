@@ -249,6 +249,31 @@ testQuo
 	self assert: (7 quo: 2+1) == 2.
 	self assert: (-7 quo: 2) == -3.!
 
+testRaisedToInteger
+	self assert: (2 raisedToInteger: 0) equals: 1.
+	self assert: (2 raisedToInteger: 1) equals: 2.
+	self assert: (2 raisedToInteger: 4) equals: 16.
+	self assert: (0 raisedToInteger: 0) equals: 1.
+	self assert: (0 raisedToInteger: 1) equals: 0.
+	self assert: (0 raisedToInteger: 2) equals: 0.
+	self should: [0 raisedToInteger: -1] raise: ZeroDivide.
+	self assert: (2 raisedToInteger: -1) equals: 1 / 2.
+	self assert: (2 raisedToInteger: -4) equals: 1 / 16.
+	self assert: (-3 raisedToInteger: 0) equals: 1.
+	self assert: (-3 raisedToInteger: 1) equals: -3.
+	self assert: (-3 raisedToInteger: 2) equals: 9.
+	self assert: (-3 raisedToInteger: 3) equals: -27.
+	self assert: (-3 raisedToInteger: -2) equals: 1 / 9.
+	self assert: (-3 raisedToInteger: -3) equals: -1 / 27.
+	self should: [10 raisedToInteger: 1.0] raise: Error.
+	self assert: (SmallInteger maximum raisedToInteger: 1) equals: SmallInteger maximum.
+	self assert: (SmallInteger maximum raisedToInteger: 2)
+		equals: SmallInteger maximum * SmallInteger maximum.
+	self assert: (SmallInteger minimum raisedToInteger: 2)
+		equals: SmallInteger minimum * SmallInteger minimum.
+	self assert: (SmallInteger minimum raisedToInteger: -2)
+		equals: 1 / (SmallInteger minimum * SmallInteger minimum)!
+
 testReciprocal
 
 	self assert: (7 reciprocal = (Fraction numerator: 1 denominator: 7))!
@@ -290,6 +315,7 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testPrintString!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testPrintStringRadix!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testQuo!public!unit tests! !
+!SmallIntegerTest categoriesFor: #testRaisedToInteger!public! !
 !SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
