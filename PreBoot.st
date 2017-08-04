@@ -229,7 +229,7 @@ setFilePointerEx: hfile liDistanceToMove: liDistanceToMove lpNewFilePointer: lpN
 	^self invalidCall! !
 
 Object subclass: #File
-	instanceVariableNames: 'handle spec flags shareFlags pointerBuf'
+	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
 	classVariableNames: 'AccessFlagsMask CheckModes NoCheckModes OpenFlagsMask ShareModes'
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -237,12 +237,31 @@ Object subclass: #File
 !File methodsFor!
 
 seek: offsetInteger sense: senseFlag
-	pointerBuf := ByteArray newFixed: 8.
+	intBuffer:= ByteArray newFixed: 8.
 	^(KernelLibrary default
 		setFilePointerEx: handle
 		liDistanceToMove: offsetInteger
-		lpNewFilePointer: pointerBuf
+		lpNewFilePointer: intBuffer
 		dwMoveMethod: senseFlag) ifTrue: [
-			pointerBuf sqwordAtOffset: 0] ifFalse: [self signalOsError: false]! !
+			intBuffer sqwordAtOffset: 0] ifFalse: [self signalOsError: false]! !
 
 File class removeSelector: #initialize!
+FileStream class removeSelector: #initialize!
+
+!FileStream methodsFor!
+
+beDirty
+	flags := flags bitOr: 3!
+
+nextPut: anIntegerOrCharacter
+	self primitiveNextPut: anIntegerOrCharacter.
+	flags := flags bitOr: 3.
+	^anIntegerOrCharacter!
+
+updateLimits
+	(flags anyMask: 1)
+		ifTrue: 
+			[| absolute |
+			flags := flags bitAnd: 1 bitInvert.
+			readLimit < position ifTrue: [readLimit := position].
+			logicalFileSize < (absolute := self position) ifTrue: [logicalFileSize := absolute]]! !
