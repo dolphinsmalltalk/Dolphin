@@ -29,6 +29,7 @@ package methodNames
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #Class -> #addClassVarName:;
+	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
 	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
 	add: #CRTLibrary -> #_gcvt:count:buffer:;
@@ -178,6 +179,13 @@ addClassVarName: aString
 	#deprecated.	"Use addClassVarNamed:"
 	^self addClassVarNamed: aString! !
 !Class categoriesFor: #addClassVarName:!class variables!public! !
+
+!CompilerNotification methodsFor!
+
+extra
+	#deprecated.
+	^extras isEmpty ifFalse: [extras anyOne]! !
+!CompilerNotification categoriesFor: #extra!accessing!public! !
 
 !CRTLibrary methodsFor!
 
