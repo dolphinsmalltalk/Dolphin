@@ -46,6 +46,17 @@ addSelectionsByIndex: aCollection
 	force it here"
 	self onSelChanged!
 
+anchorIndex
+	"Answer the 1-based <integer> index of the anchor (the item from which a multiple selection
+	will start), or 0 if none."
+
+	"N.B. The ListView documentation calls this concept the 'selection mark', while that for the
+	older ListBox refers to it as the 'anchor'. Since they behave the same, we standardize on
+	what seems like the shorter, clearer name. For subclasses that do not support multiple
+	selections, this will always be zero."
+
+	^0!
+
 basicAdd: anObject atIndex: anInteger 
 	"Private - Adds an item to the list view at the index given by anInteger"
 
@@ -571,6 +582,7 @@ updateSelectionCache
 !ListControlView categoriesFor: #addSelections:!public!selection! !
 !ListControlView categoriesFor: #addSelections:ifAbsent:!public!selection! !
 !ListControlView categoriesFor: #addSelectionsByIndex:!public!selection! !
+!ListControlView categoriesFor: #anchorIndex!public!selection! !
 !ListControlView categoriesFor: #basicAdd:atIndex:!adding!private! !
 !ListControlView categoriesFor: #basicClear!private!removing! !
 !ListControlView categoriesFor: #basicRefreshContents!private!updating! !

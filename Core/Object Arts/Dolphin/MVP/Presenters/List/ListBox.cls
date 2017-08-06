@@ -18,9 +18,10 @@ Class Variables:
 !ListBox methodsFor!
 
 anchorIndex
-	"Answer the 1-based index of the anchor (the item from which a multiple selection will start)."
+	"Answer the 1-based <integer> index of the anchor (the item from which a multiple selection
+	will start), or 0 if none."
 
-	^(self sendMessage: LB_GETANCHORINDEX) + 1.!
+	^(self sendMessage: LB_GETANCHORINDEX) + 1!
 
 anchorIndex: anInteger
 	"Private - Set the 1-based index of the anchor (the item from which a multiple selection will start)."

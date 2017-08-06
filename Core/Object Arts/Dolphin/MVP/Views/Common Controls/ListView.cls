@@ -117,14 +117,10 @@ allColumns
 	^columns!
 
 anchorIndex
-	"Answer the one-based <integer> index of the item
-	from which a multiple selection will start, or 0 if there is none.
-	
-	N.B. The ListView documentation calls this concept the 'selection mark',
-	while that for the older ListBox refers to it as the 'anchor'. Since they behave the same,
-	we standardize on what seems like the shorter, clearer name."
+	"Answer the one-based <integer> index of the item from which a multiple selection will
+	start, or 0 if there is none."
 
-	^(self sendMessage: LVM_GETSELECTIONMARK) + 1.!
+	^(self sendMessage: LVM_GETSELECTIONMARK) + 1!
 
 anchorIndex: anInteger
 	"Set the one-based <integer> index of the item from which
