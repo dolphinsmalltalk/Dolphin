@@ -15,21 +15,6 @@ backgroundColor
 
 	^Color red!
 
-bitmapOfPaintView: aContainerView 
-	| answer ncCanvas extent |
-	extent := aContainerView extent.
-	answer := Bitmap displayCompatibleWithExtent: extent.
-	aContainerView update.
-	ncCanvas := aContainerView nonClientCanvas.
-	
-	[answer canvas 
-		bitBlt: ncCanvas
-		rectangle: (0 @ 0 extent: extent)
-		to: 0 @ 0
-		rop: SRCCOPY] 
-			ensure: [ncCanvas free].
-	^answer!
-
 bitmapOfPrintView: aContainerView 
 	^Bitmap fromView: aContainerView!
 
@@ -199,7 +184,6 @@ waitForScreenUpdate
 			[SessionManager current inputState pumpMessages.
 			Processor sleep: 100]"! !
 !AbstractContainerViewTest categoriesFor: #backgroundColor!private! !
-!AbstractContainerViewTest categoriesFor: #bitmapOfPaintView:!helpers!private! !
 !AbstractContainerViewTest categoriesFor: #bitmapOfPrintView:!helpers!private! !
 !AbstractContainerViewTest categoriesFor: #borderColor!private! !
 !AbstractContainerViewTest categoriesFor: #borderRectangleOf:!private! !
