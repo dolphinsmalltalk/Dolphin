@@ -34,7 +34,6 @@ assertClassesInSync
 
 assertCurrentCardInSync
 	| card |
-	cardsPresenter view update.
 	card := self currentCard.
 	"PB should think the current card is up to date"
 	self assert: (shell isCardUpToDate: card).
@@ -70,7 +69,6 @@ assertMethodsInSync
 	(shell isCardUpToDate: #methods) 
 		ifTrue: 
 			[| methods |
-			methodsPresenter view update.
 			methods := OrderedCollection new.
 			shell packages do: [:each | methods addAll: each methods].
 			self assert: (methodsPresenter model noDifference: methods)]
@@ -252,8 +250,7 @@ setUp
 
 showClassesPane
 	classesPresenter ensureVisible.
-	self assert: self currentCard == #classes.
-	classesPresenter view update!
+	self assert: self currentCard == #classes!
 
 tearDown
 	super tearDown.
@@ -490,13 +487,11 @@ testRepackageMethods
 	self assertMethodsInSync.
 	self showClassesPane.
 	packageB addMethod: methodAC.
-	classesPresenter view update.
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync.
 	resourcesPresenter ensureVisible.
 	packageB addMethod: methodBA.
-	classesPresenter view update.
 	self assertMethodsInSync.
 	methodsPresenter ensureVisible.
 	self assertMethodsInSync! !

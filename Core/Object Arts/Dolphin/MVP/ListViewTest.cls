@@ -81,8 +81,7 @@ mouseDownEventOnItem: itemIndex buttons: anArray
 setColumns: cols 
 	| list |
 	(presenter view)
-		columnsList: cols;
-		update.
+		columnsList: cols.
 	list := self getColumns.
 	self 
 		assert: (list collect: [:each | each text]) asArray = (cols collect: [:each | each text]) asArray.

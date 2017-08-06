@@ -19,9 +19,11 @@ getItemText: anObject
 	^treeView getItemText: (treeView handleFromObject: anObject)!
 
 paintTree
-	(presenter view)
-		invalidate;
-		update!
+	false
+		ifTrue: 
+			[(presenter view)
+				invalidate;
+				update]!
 
 refreshTree: aSymbol
 	| tvItem child root text |
