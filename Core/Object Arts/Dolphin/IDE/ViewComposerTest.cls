@@ -116,8 +116,8 @@ testCutCopyPaste
 testDragResourceOverEmptyArena
 	| session |
 	vc onDragOverArena: (session := self dragResourceFor: Shell).
-	self assert: session operation == #copy.
-	self assert: session suggestedTarget == vc arena!
+	self assert: session operation sameAs: #copy.
+	self assert: session suggestedTarget sameAs: vc arena!
 
 testDropResourceLinkOverShell
 	"Drop a Checkbox link onto a shell"
@@ -125,15 +125,15 @@ testDropResourceLinkOverShell
 	| ddSession |
 	vc newShellView.
 	ddSession := self doArenaDropOf: TextPresenter operation: #link.
-	self assert: (vc primarySelection isKindOf: ReferenceView).
-	self assert: vc primarySelection resourceIdentifier = (ResourceIdentifier class: TextPresenter).
+	self assert: vc primarySelection isKindOf: ReferenceView.
+	self assert: vc primarySelection resourceIdentifier equals: (ResourceIdentifier class: TextPresenter).
 	ddSession!
 
 testDropResourceOverEmptyArena
 	"Drop a shell onto an empty arena"
 
 	self doArenaDropOf: Shell operation: #copy.
-	self assert: (vc composingView isKindOf: ShellView)!
+	self assert: vc composingView isKindOf: ShellView!
 
 testDropResourceOverHierarchy
 	"Drop a Checkbox onto a shell"
