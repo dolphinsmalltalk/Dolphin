@@ -12,9 +12,12 @@ package methodNames
 	add: #TestCase -> #=;
 	add: #TestCase -> #assert:isKindOf:;
 	add: #TestCase -> #assert:sameAs:;
+	add: #TestCase -> #assertIsNil:;
 	add: #TestCase -> #debugWithResult;
 	add: #TestCase -> #debugWithResult:;
+	add: #TestCase -> #deny:equals:;
 	add: #TestCase -> #deny:sameAs:;
+	add: #TestCase -> #denyIsNil:;
 	add: #TestCase -> #hash;
 	add: #TestCase -> #should:raise:matching:;
 	add: #TestCase -> #should:trigger:against:;
@@ -80,6 +83,15 @@ assert: actualObject sameAs: expectedObject
 	expectedObject == actualObject
 		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
 
+assertIsNil: anObject
+	anObject
+		ifNotNil: 
+			[self fail: (String writeStream
+						nextPutAll: 'Expected nil, not ';
+						print: anObject;
+						nextPutAll: '.';
+						contents)]!
+
 debugWithResult
 	| result |
 	result := TestResult new.
@@ -89,14 +101,28 @@ debugWithResult
 debugWithResult: aResult
 	aResult debugCase: self!
 
+deny: actualObject equals: expectedObject
+	expectedObject ~= actualObject
+		ifFalse: 
+			[self fail: (String writeStream
+						nextPutAll: 'Unexpectedly equal to ';
+						print: expectedObject;
+						nextPutAll: ' Actual: ';
+						print: actualObject;
+						nextPutAll: '.';
+						contents)]!
+
 deny: actualObject sameAs: expectedObject
 	expectedObject ~~ actualObject
 		ifFalse: 
-			[self fail: ((String writeStream: 100)
+			[self fail: (String writeStream
 						nextPutAll: 'Did not expect ';
 						print: actualObject;
 						nextPutAll: '.';
 						contents)]!
+
+denyIsNil: anObject
+	anObject ifNil: [self fail: 'Expected non-nil result']!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver. We use only the selector at the moment."
@@ -236,9 +262,12 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 !TestCase categoriesFor: #=!comparing!public! !
 !TestCase categoriesFor: #assert:isKindOf:!asserting!public! !
 !TestCase categoriesFor: #assert:sameAs:!asserting!public! !
+!TestCase categoriesFor: #assertIsNil:!asserting!public! !
 !TestCase categoriesFor: #debugWithResult!public!running! !
 !TestCase categoriesFor: #debugWithResult:!private!running! !
+!TestCase categoriesFor: #deny:equals:!asserting!public! !
 !TestCase categoriesFor: #deny:sameAs:!public! !
+!TestCase categoriesFor: #denyIsNil:!asserting!public! !
 !TestCase categoriesFor: #hash!comparing!public! !
 !TestCase categoriesFor: #should:raise:matching:!asserting!public! !
 !TestCase categoriesFor: #should:trigger:against:!asserting!public! !
