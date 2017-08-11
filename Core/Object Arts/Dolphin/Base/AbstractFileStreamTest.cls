@@ -63,6 +63,32 @@ tempWriteStream
 
 	^self streamClass write: tempFileName text: true!
 
+test1065
+	| r |
+	r := Random new.
+	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
+			[:i |
+			| data stream written |
+			data := ((1 to: i) collect: [:each | (r next * 256) truncated]) asByteArray.
+			stream := self streamClass write: tempFileName text: false.
+			
+			[stream
+				next: data size
+				putAll: data
+				startingAt: 1] ensure: [stream close].
+			written := File readAllBytes: tempFileName.
+			self
+				assert: data = written
+				description: 'Failed on write of ' , i printString , ' bytes'
+				resumable: true]!
+
+test64BitPosition
+	| stream actual position|
+	stream := self tempWriteStream.
+	position := 2**33-1.
+	stream position: position.
+	self assert: stream position equals: position!
+
 testAppend
 	| stream stream2 actual |
 	stream := self tempWriteStream.
@@ -101,7 +127,7 @@ testNextPutAllStartingAt
 				next: size
 				putAll: dataToWrite
 				startingAt: each first.
-			self assert: fs position = each last.
+			self assert: fs position equals: each last.
 			self assertBufferEmptyOrDirty: fs size: size.
 			self assert: ((each last >= initialData size and: [fs atEnd])
 						or: [fs next = (initialData at: each last + 1)])]
@@ -113,7 +139,7 @@ testNextPutAllStartingAt
 			each last <= initialData size
 				ifTrue: [expected := expected , (initialData copyFrom: each last + 1)].
 			contents := File readAllBytes: tempFileName.
-			self assert: contents = expected]!
+			self assert: contents equals: expected]!
 
 testNextPutAllStartingAt2
 	| r initialData dataToWrite |
@@ -134,12 +160,12 @@ testNextPutAllStartingAt2
 				next: each first - 1
 				putAll: initialData
 				startingAt: 1.
-			self assert: fs position = (each first - 1).
+			self assert: fs position equals: each first - 1.
 			fs
 				next: each last - each first + 1
 				putAll: dataToWrite
 				startingAt: each first.
-			self assert: fs position = each last.
+			self assert: fs position equals: each last.
 			self assertBufferEmptyOrDirty: fs.
 			each last <= initialData size
 				ifTrue: 
@@ -155,7 +181,7 @@ testNextPutAllStartingAt2
 			each last <= initialData size
 				ifTrue: [expected := expected , (initialData copyFrom: each last + 1)].
 			contents := File readAllBytes: tempFileName.
-			self assert: contents = expected]!
+			self assert: contents equals: expected]!
 
 testPositionAfterWrite
 	| stream actual |
@@ -235,6 +261,25 @@ testRandomWriteOnePage
 	self assert: (actual at: pos - 100 + 1) equals: $b.
 	self assert: (actual occurrencesOf: $\0) equals: FileStream.PageSize - 1 - 2!
 
+testReset
+	"#1724"
+
+	| stream content |
+	stream := self tempWriteStream.
+	stream next: 3 put: $A.
+	stream reset.
+	content := stream upToEnd.
+	self assert: content = 'AAA'.
+	self assert: stream atEnd.
+	stream close.
+	stream := self tempWriteStream.
+	stream next: 9999 put: $A.
+	stream reset.
+	content := stream upToEnd.
+	self assert: (content size = 9999 and: [content allSatisfy: [:each | each = $A]]).
+	self assert: stream atEnd.
+	stream close!
+
 testRewindAfterWrite
 	| stream actual |
 	stream := self tempWriteStream.
@@ -267,12 +312,15 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #tempReadStream!private!unit tests! !
 !AbstractFileStreamTest categoriesFor: #tempReadWriteStream!private!unit tests! !
 !AbstractFileStreamTest categoriesFor: #tempWriteStream!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #test1065!public!unit tests! !
+!AbstractFileStreamTest categoriesFor: #test64BitPosition!public! !
 !AbstractFileStreamTest categoriesFor: #testAppend!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testNextPutAllStartingAt!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testNextPutAllStartingAt2!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testPositionAfterWrite!public! !
 !AbstractFileStreamTest categoriesFor: #testPositionPastEnd!public! !
 !AbstractFileStreamTest categoriesFor: #testRandomWriteOnePage!public! !
+!AbstractFileStreamTest categoriesFor: #testReset!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testRewindAfterWrite!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testTruncate!public!unit tests! !
 
