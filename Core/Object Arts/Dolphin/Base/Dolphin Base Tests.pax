@@ -43,7 +43,6 @@ package classNames
 	add: #FalseTest;
 	add: #FileLocatorTest;
 	add: #FileStreamTest;
-	add: #FileSystemWatcherTest;
 	add: #FileTest;
 	add: #FILETIMETest;
 	add: #FLOATArrayTest;
@@ -140,7 +139,6 @@ package setPrerequisites: (IdentitySet new
 	add: 'Dolphin Additional Sort Algorithms';
 	add: '..\System\Base64\Dolphin Base64';
 	add: 'Dolphin Command-line Parser';
-	add: '..\System\Win32\Dolphin File System Watcher';
 	add: '..\System\Filer\Dolphin Literal Filer';
 	add: '..\MVP\Base\Dolphin MVP Base';
 	add: '..\MVP\Models\Tree\Dolphin Tree Models';
@@ -260,11 +258,6 @@ DolphinTest subclass: #FalseTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FileLocatorTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #FileSystemWatcherTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
