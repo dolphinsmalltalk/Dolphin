@@ -133,6 +133,9 @@ dropTarget
 
 	^dropTarget!
 
+dropTarget: anObject
+	dropTarget := anObject!
+
 dropTargetDrop
 	"Private - Instruct the current drop target to perform a drop."
 
@@ -407,6 +410,7 @@ supportedOperations: ops
 !DragDropSession categoriesFor: #dragSource:!accessing!public! !
 !DragDropSession categoriesFor: #dragSourceCut!drag & drop-source!private! !
 !DragDropSession categoriesFor: #dropTarget!accessing!public! !
+!DragDropSession categoriesFor: #dropTarget:!accessing!private! !
 !DragDropSession categoriesFor: #dropTargetDrop!drag & drop-drop target protocol!drag & drop-target!private! !
 !DragDropSession categoriesFor: #dropTargetEnter!drag & drop-target!private! !
 !DragDropSession categoriesFor: #dropTargetLeave!drag & drop-target!private! !

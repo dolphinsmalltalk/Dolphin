@@ -11,18 +11,27 @@ ViewComposerTest comment: ''!
 !ViewComposerTest methodsFor!
 
 doArenaDropOf: subPresenterType operation: aSymbol
-	| overShell ddSession expectedTarget |
+	| overShell ddSession |
+	self denyIsNil: aSymbol.
 	ddSession := self dragResourceFor: subPresenterType.
 	aSymbol ifNotNil: [ddSession defaultOperation: aSymbol].
 	overShell := vc arena mapPoint: 50 @ 50 to: View desktop.
-	expectedTarget := vc composingView ?? vc arena.
-	self assert: (View fromPoint: overShell) sameAs: expectedTarget.
-	"We need to send two drag events as the VC waits for a drag-move after drag-enter before setting up for the drop."
-	ddSession continueTrackingAt: overShell from: ddSession dragPoint.
-	ddSession continueTrackingAt: overShell + 1 from: ddSession dragPoint.
+	"To avoid any dependency on the state of the runtime environment (such as the desktop being
+	locked, or there being other Windows on top of the VC), we simulate the dragging over the VC
+	arena"
+	ddSession
+		dragPoint: overShell;
+		dropTarget: vc arena;
+		dropTargetEnter;
+		giveFeedback.
+	ddSession
+		dropTargetOver;
+		giveFeedback.
 	self assert: ddSession operation equals: aSymbol.
-	self assert: ddSession suggestedTarget sameAs: expectedTarget.
-	ddSession endTrackingAt: overShell.
+	ddSession
+		dropTargetDrop;
+		dropTarget: nil;
+		endTrackingAt: 0 @ 0.
 	^ddSession!
 
 dragResourceFor: resourceName
