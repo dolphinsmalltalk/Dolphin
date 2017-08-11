@@ -25,7 +25,22 @@ testNextLineCrOnly
 			"CRT I/O stream in translated text mode does not recognise single CR as a line ending"
 			self assert: stream nextLine equals: chars.
 			self assert: stream atEnd.
-			self closeTempStream: stream]! !
+			self closeTempStream: stream]!
+
+testNextLineUpToEof
+	#(0 1 2 127 128 129 255 256 257) do: 
+			[:each |
+			| subject f expected actual |
+			f := self tempWriteStream.
+			1 to: each do: [:i | f nextPut: (Character value: i % 95 + 31)].
+			expected := f contents.
+			f close.
+			self assert: expected size equals: each.
+			subject := self tempReadStream.
+			actual := subject nextLine.
+			self assert: actual equals: expected.
+			subject close]! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
+!StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 

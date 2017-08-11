@@ -32,6 +32,7 @@ package methodNames
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
 	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
+	add: #CRTLibrary -> #_filelength:;
 	add: #CRTLibrary -> #_gcvt:count:buffer:;
 	add: #CRTLibrary -> #_i64toa:string:radix:;
 	add: #CRTLibrary -> #_ltoa:string:radix:;
@@ -41,12 +42,16 @@ package methodNames
 	add: #CRTLibrary -> #fopen:mode:;
 	add: #CRTLibrary -> #fread:size:count:stream:;
 	add: #CRTLibrary -> #freopen:mode:stream:;
+	add: #CRTLibrary -> #fseek:offset:origin:;
+	add: #CRTLibrary -> #ftell:;
 	add: #CRTLibrary -> #getenv:;
 	add: #CRTLibrary -> #memcpy:src:count:;
 	add: #CRTLibrary -> #memmove:src:count:;
 	add: #CRTLibrary -> #strcat:strSource:;
 	add: #CRTLibrary -> #strerror:;
 	add: #CRTLibrary -> #strncpy:strSource:count:;
+	add: #CRTLibrary -> #thread_chmod:pmode:;
+	add: #CRTLibrary -> #thread_errno;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #Integer -> #digitSize;
@@ -199,6 +204,10 @@ _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 	#deprecated.	"This function is considered insecure and should not be used - see MSDN"
 	^self invalidCall!
 
+_filelength: handleInteger
+	<cdecl: sdword _filelength sdword>
+	^self invalidCall!
+
 _gcvt: aFloat count: anInteger buffer: aString
 	<cdecl: char* _gcvt double sdword char*>
 	#deprecated.	"Insecure - use _gcvt_s"
@@ -244,6 +253,16 @@ freopen: pathString mode: modeString stream: anExternalHandle
 	#deprecated.	"Insecured - see MSDN"
 	^self invalidCall!
 
+fseek: aFILE offset: offsetInteger origin: originInteger
+	<cdecl: sdword fseek handle sdword sdword>
+	#deprecated. "Use _fseeki64:offset:origin:"
+	^self invalidCall!
+
+ftell: aFILE
+	<cdecl: sdword ftell handle>
+	#deprecated.	"Use #_ftelli64:"
+	^self invalidCall!
+
 getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	#deprecated.	"Insecure - see MSDN"
@@ -272,9 +291,20 @@ strerror: errno
 strncpy: strDest strSource: strSource count: count
 	<cdecl: lpvoid strncpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+thread_chmod: aFilenameString pmode: aModeInteger
+	<overlap cdecl: sdword _chmod lpstr sdword>
+	#deprecated. "Use CRTLibraryNonBlocking>>chmod:pmode:"
+	^self invalidCall!
+
+thread_errno
+	<overlap cdecl: sdword _errno>
+	#deprecated. "Use CRTLibraryNonBlocking>>errno"
 	^self invalidCall! !
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
@@ -284,12 +314,16 @@ strncpy: strDest strSource: strSource count: count
 !CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 
 !ExternalCallback class methodsFor!
 
