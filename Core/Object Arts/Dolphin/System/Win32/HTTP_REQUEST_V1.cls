@@ -25,8 +25,8 @@ struct tagHTTP_REQUEST_V1 {
 	[helpstring("An HTTP verb associated with this request. This member can be one of the values from the HTTP_VERB enumeration.")] HTTP_VERB Verb;
 	[nonbrowsable, helpstring("The length of the verb string if the Verb field is HttpVerbUnknown. In bytes not including the NUL")] USHORT UnknownVerbLength;
 	[nonbrowsable, helpstring("The length of the raw (uncooked) URL in bytes not including the NUL")] USHORT RawUrlLength;
-	[helpstring("Pointer to the verb string if the Verb field is HttpVerbUnknown."), string, size_is("UnknownVerbLength")] LPCSTR pUnknownVerb;
-	[nonbrowsable, helpstring("Pointer to the raw (uncooked) URL"), string, size_is("RawUrlLength")] LPCSTR pRawUrl;
+	[helpstring("Pointer to the verb string if the Verb field is HttpVerbUnknown."), size_is("UnknownVerbLength"), string] LPCSTR pUnknownVerb;
+	[nonbrowsable, helpstring("Pointer to the raw (uncooked) URL"), size_is("RawUrlLength"), string] LPCSTR pRawUrl;
 	[helpstring("The canonicalized Unicode URL")] HTTP_COOKED_URL CookedUrl;
 	[helpstring("Local and remote transport addresses for the connection.")] HTTP_TRANSPORT_ADDRESS Address;
 	[helpstring("The request headers.")] HTTP_REQUEST_HEADERS Headers;
@@ -356,8 +356,8 @@ defineFields
 			[helpstring('An HTTP verb associated with this request. This member can be one of the values from the HTTP_VERB enumeration.')] HTTP_VERB Verb;
 			[nonbrowsable, helpstring('The length of the verb string if the Verb field is HttpVerbUnknown. In bytes not including the NUL')] USHORT UnknownVerbLength;
 			[nonbrowsable, helpstring('The length of the raw (uncooked) URL in bytes not including the NUL')] USHORT RawUrlLength;
-			[helpstring('Pointer to the verb string if the Verb field is HttpVerbUnknown.'), string, size_is('UnknownVerbLength')] LPCSTR pUnknownVerb;
-			[nonbrowsable, helpstring('Pointer to the raw (uncooked) URL'), string, size_is('RawUrlLength')] LPCSTR pRawUrl;
+			[helpstring('Pointer to the verb string if the Verb field is HttpVerbUnknown.'), size_is('UnknownVerbLength'), string] LPCSTR pUnknownVerb;
+			[nonbrowsable, helpstring('Pointer to the raw (uncooked) URL'), size_is('RawUrlLength'), string] LPCSTR pRawUrl;
 			[helpstring('The canonicalized Unicode URL')] HTTP_COOKED_URL CookedUrl;
 			[helpstring('Local and remote transport addresses for the connection.')] HTTP_TRANSPORT_ADDRESS Address;
 			[helpstring('The request headers.')] HTTP_REQUEST_HEADERS Headers;

@@ -19,8 +19,8 @@ typedef [uuid(98a27339-73e3-4d54-baf2-915b818916b1), helpstring("Structure defin
 struct tagHTTP_UNKNOWN_HEADER {
 	[nonbrowsable] USHORT NameLength;
 	[nonbrowsable] USHORT RawValueLength;
-	[helpstring("The header name (minus the '':'' character)"), string, size_is("NameLength")] LPCSTR pName;
-	[helpstring("The header value."), string, size_is("RawValueLength")] LPCSTR pRawValue;
+	[helpstring("The header name (minus the '':'' character)"), size_is("NameLength"), string] LPCSTR pName;
+	[helpstring("The header value."), size_is("RawValueLength"), string] LPCSTR pRawValue;
 } HTTP_UNKNOWN_HEADER;
 '!
 !HTTP_UNKNOWN_HEADER categoriesForClass!Win32-Structs! !
@@ -88,8 +88,8 @@ defineFields
 		struct tagHTTP_UNKNOWN_HEADER {
 			[nonbrowsable] USHORT NameLength;
 			[nonbrowsable] USHORT RawValueLength;
-			[helpstring('The header name (minus the ':' character)'), string, size_is('NameLength')] LPCSTR pName;
-			[helpstring('The header value.'), string, size_is('RawValueLength')] LPCSTR pRawValue;
+			[helpstring('The header name (minus the ':' character)'), size_is('NameLength'), string] LPCSTR pName;
+			[helpstring('The header value.'), size_is('RawValueLength'), string] LPCSTR pRawValue;
 		} HTTP_UNKNOWN_HEADER;
 "
 

@@ -21,7 +21,7 @@ struct tagHTTP_RESPONSE_V1 {
 	[helpstring("The raw HTTP protocol version number.")] HTTP_VERSION Version;
 	[helpstring("The HTTP status code (e.g., 200).")] USHORT StatusCode;
 	[nonbrowsable] USHORT ReasonLength;
-	[helpstring("The HTTP reason (e.g., ''OK''). This MUST not contain non-ASCII characters (i.e., all chars must be in range 0x20-0x7E)."), string, size_is("ReasonLength")] LPCSTR pReason;
+	[helpstring("The HTTP reason (e.g., ''OK''). This MUST not contain non-ASCII characters (i.e., all chars must be in range 0x20-0x7E)."), size_is("ReasonLength"), string] LPCSTR pReason;
 	[helpstring("The response headers.")] HTTP_RESPONSE_HEADERS Headers;
 	[nonbrowsable] USHORT EntityChunkCount;
 	[helpstring("pEntityChunks points to an array of EntityChunkCount HTTP_DATA_CHUNKs."), size_is("EntityChunkCount")] HTTP_DATA_CHUNK* pEntityChunks;
@@ -167,7 +167,7 @@ defineFields
 			[helpstring('The raw HTTP protocol version number.')] HTTP_VERSION Version;
 			[helpstring('The HTTP status code (e.g., 200).')] USHORT StatusCode;
 			[nonbrowsable] USHORT ReasonLength;
-			[helpstring('The HTTP reason (e.g., 'OK'). This MUST not contain non-ASCII characters (i.e., all chars must be in range 0x20-0x7E).'), string, size_is('ReasonLength')] LPCSTR pReason;
+			[helpstring('The HTTP reason (e.g., 'OK'). This MUST not contain non-ASCII characters (i.e., all chars must be in range 0x20-0x7E).'), size_is('ReasonLength'), string] LPCSTR pReason;
 			[helpstring('The response headers.')] HTTP_RESPONSE_HEADERS Headers;
 			[nonbrowsable] USHORT EntityChunkCount;
 			[helpstring('pEntityChunks points to an array of EntityChunkCount HTTP_DATA_CHUNKs.'), size_is('EntityChunkCount')] HTTP_DATA_CHUNK* pEntityChunks;
