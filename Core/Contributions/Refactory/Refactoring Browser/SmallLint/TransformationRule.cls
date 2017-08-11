@@ -365,13 +365,21 @@ superSends
 		superSends;
 		yourself!
 
-testCaseAssertEquals
-	"TestCase>>assert:equals: provides a better diagnostic on failure."
+testCaseAsserts
+	"Replace TestCase>>assert: with more specific assertions that provide better diagnostics on failure."
 
 	^self
-		rewrite: #(#('self assert: ``@expr = ``@expected' 'self assert: ``@expr equals: ``@expected'))
+		rewrite: #(
+			#('self assert: ``@expr = ``@expected' "->" 'self assert: ``@expr equals: ``@expected')
+			#('self assert: ``@expr ~= ``@expected' "->" 'self deny:``@expr equals: ``@expected')
+			#('self assert: ``@expr == ``@expected' "->" 'self assert: ``@expr sameAs:``@expected')
+			#('self assert: ``@expr ~~ ``@expected' "->" 'self deny: ``@expr sameAs:``@expected')
+			#('self assert: (``@expr isKindOf: ``@expected)' "->" 'self assert: ``@expr isKindOf: ``@expected')
+			#('self assert: ``@expr isNil' "->" 'self assertIsNil: ``@expr')
+			#('self assert: ``@expr notNil' "->" 'self denyIsNil: ``@expr')
+		)
 		methods: false
-		name: 'Use TestCase>>assert:equals: instead of TestCase>>assert: with #='!
+		name: 'Use more intention-revealing TestCase assert methods'!
 
 unwindBlocks
 	#rbFix.	"Remove #valueNowOrOnUnwindDo: and #valueOnUnwindDo: rewrite rules"
@@ -404,6 +412,6 @@ unwindBlocks
 !TransformationRule class categoriesFor: #showWhileBlocks!public!transformations! !
 !TransformationRule class categoriesFor: #streamLiterals!public!transformations! !
 !TransformationRule class categoriesFor: #superSends!public!transformations! !
-!TransformationRule class categoriesFor: #testCaseAssertEquals!public!transformations! !
+!TransformationRule class categoriesFor: #testCaseAsserts!public!transformations! !
 !TransformationRule class categoriesFor: #unwindBlocks!public!transformations! !
 
