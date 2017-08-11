@@ -116,6 +116,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #SmalltalkSystem -> #baselinedSlowTests;
 	add: #SmalltalkSystem -> #regressionTestsLogFilename;
 	add: #SmalltalkSystem -> #regressionTestSuite;
 	add: #SmalltalkSystem -> #runRegressionTests;
@@ -705,6 +706,16 @@ TestRunLogger subclass: #TestRunConsoleLogger
 
 !SmalltalkSystem methodsFor!
 
+baselinedSlowTests
+	| laggards |
+	laggards := Set new.
+	#(#(#ReferenceFinderTest #(#testAllPaths #testAllPathsToInstance #testNotFound)) #(#BrowserEnvironmentTest #(#testOrEnvironment)) #(#IdeaSpaceShellTest #(#testSaveRestore)) #(#RenameClassTest #(#testModelRenameClass)))
+		do: 
+			[:each |
+			Smalltalk at: each first
+				ifPresent: [:test | each second do: [:selector | laggards add: (test selector: selector)]]].
+	^laggards!
+
 regressionTestsLogFilename
 	"Answer the name of the file in which to log test results, or nil to have the output sent to stdout"
 
@@ -860,6 +871,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				stem: suiteName
 				extension: 'xml').
 	doc free! !
+!SmalltalkSystem categoriesFor: #baselinedSlowTests!accessing!public! !
 !SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
 !SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
 !SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
