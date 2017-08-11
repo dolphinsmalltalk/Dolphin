@@ -626,7 +626,7 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 
 	self assert: 
 			["Instances of the receiver describe fields that are embedded fixed arrays (not pointers to array, and not conformant arrays)."
-			anInteger == 1].
+			anInteger <= 1].
 	self
 		printArrayField: aVARDESC
 		type: extClass arrayType
@@ -5548,7 +5548,6 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 	aVARDESC tdesc arrayDesc
 		ifNil: 
 			["a [string] type in the IDL, e.g. an LPSTR, our could be an array of chars, or pointer to array of chars."
-			self assert: [anInteger > 0].
 			(aVARDESC isConformant ifTrue: [ArrayPointerField] ifFalse: [PointerField])
 				printVariable: aVARDESC
 				type: (anInteger < 2 ifTrue: [self] ifFalse: [self pointerType])

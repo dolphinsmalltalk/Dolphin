@@ -6,6 +6,7 @@ OLEStructure subclass: #TYPEDESC
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 TYPEDESC guid: (GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
+TYPEDESC addClassConstant: 'VTIndirections' value: #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]!
 TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
 The TYPEDESC structure describes the type of a variable, function parameter, or return value, and is one of the key structures in the type library model.
@@ -249,13 +250,16 @@ defineFields
 			offset: 0!
 
 initialize
-	VTIndirections := Array new: VT_CLSID+1 withAll: 0.
-	VTIndirections
-		at: VT_DISPATCH+1 put: 1;
-		at: VT_UNKNOWN+1 put: 1;
-		at: VT_SAFEARRAY+1 put: 1;
-		at: VT_LPSTR+1 put: 1;
-		at: VT_LPWSTR+1 put: 1! !
+	"
+		self initialize
+	"
+
+	self addClassConstant: 'VTIndirections'
+		value: ((ByteArray new: VT_CLSID + 1 withAll: 0)
+				at: VT_DISPATCH + 1 put: 1;
+				at: VT_UNKNOWN + 1 put: 1;
+				at: VT_SAFEARRAY + 1 put: 1;
+				yourself)! !
 !TYPEDESC class categoriesFor: #defineFields!initializing!public! !
 !TYPEDESC class categoriesFor: #initialize!class initialization!public! !
 
