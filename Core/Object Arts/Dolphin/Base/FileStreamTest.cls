@@ -37,25 +37,6 @@ streamOn: aString
 	stream close.
 	^self streamClass read: name text: true!
 
-test1065
-	| r |
-	r := Random new.
-	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
-			[:i |
-			| data stream written |
-			data := ((1 to: i) collect: [:each | (r next * 256) truncated]) asByteArray.
-			stream := self streamClass write: tempFileName text: false.
-			
-			[stream
-				next: data size
-				putAll: data
-				startingAt: 1] ensure: [stream close].
-			written := File readAllBytes: tempFileName.
-			self
-				assert: data = written
-				description: 'Failed on write of ' , i printString , ' bytes'
-				resumable: true]!
-
 testFileTimes
 	"Tests that file accesor exists and that #lastWriteTime works (for patch #1397)"
 
@@ -64,25 +45,6 @@ testFileTimes
 	stream := self streamClass write: tempFileName.
 	file := stream file.
 	self assert: file lastWriteTime asInteger >= now asInteger!
-
-testReset
-	"#1724"
-
-	| stream content |
-	stream := self tempWriteStream.
-	stream next: 3 put: $A.
-	stream reset.
-	content := stream upToEnd.
-	self assert: content = 'AAA'.
-	self assert: stream atEnd.
-	stream close.
-	stream := self tempWriteStream.
-	stream next: 9999 put: $A.
-	stream reset.
-	content := stream upToEnd.
-	self assert: (content size = 9999 and: [content allSatisfy: [:each | each = $A]]).
-	self assert: stream atEnd.
-	stream close!
 
 testSingleByteOverflow
 	"Test that overflowing the FileStream buffer by a single byte and letting the FileStream be finalized
@@ -118,8 +80,6 @@ testSingleByteOverflow
 !FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
 !FileStreamTest categoriesFor: #streamClass!helpers!private! !
 !FileStreamTest categoriesFor: #streamOn:!helpers!private! !
-!FileStreamTest categoriesFor: #test1065!public!unit tests! !
 !FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
-!FileStreamTest categoriesFor: #testReset!public!unit tests! !
 !FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
 
