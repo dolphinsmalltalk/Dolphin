@@ -15,7 +15,11 @@ doArenaDropOf: subPresenterType operation: aSymbol
 	ddSession := self dragResourceFor: subPresenterType.
 	aSymbol ifNotNil: [ddSession defaultOperation: aSymbol].
 	overShell := vc arena mapPoint: 50 @ 50 to: View desktop.
+	"We need to send two drag events as the VC waits for a drag-move after drag-enter before setting up for the drop."
 	ddSession continueTrackingAt: overShell from: ddSession dragPoint.
+	ddSession continueTrackingAt: overShell + 1 from: ddSession dragPoint.
+	self assert: ddSession operation equals: aSymbol.
+	self assert: ddSession suggestedTarget equals: vc composingView ?? vc arena.
 	ddSession endTrackingAt: overShell.
 	^ddSession!
 
