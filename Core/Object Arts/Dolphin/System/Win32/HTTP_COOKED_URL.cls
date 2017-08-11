@@ -21,10 +21,10 @@ struct tagHTTP_COOKED_URL {
 	[nonbrowsable, readonly, helpstring("Size, in bytes, of the data pointed to by the pHost member, not including a terminating null character.")] USHORT HostLength;
 	[nonbrowsable, readonly, helpstring("Size, in bytes, of the data pointed to by the pAbsPath member, not including a terminating null character.")] USHORT AbsPathLength;
 	[nonbrowsable, readonly, helpstring("Size, in bytes, of the data pointed to by the pQueryString member, not including a terminating null character.")] USHORT QueryStringLength;
-	[readonly, helpstring("Pointer to the scheme element at the beginning of the URL (must be either ''http://...'' or ''https://...'')."), string, size_is("FullUrlLength/2")] LPCWSTR pFullUrl;
-	[readonly, helpstring("Pointer to the first character in the host element, immediately following the double slashes at the end of the scheme element."), string, size_is("HostLength>>1")] LPCWSTR pHost;
-	[readonly, helpstring("Pointer to the third forward slash (''/'') in the string. In a UrlPrefix string, this is the slash immediately preceding the relativeUri element."), string, size_is("AbsPathLength>>1")] LPCWSTR pAbsPath;
-	[readonly, helpstring("Pointer to the first question mark (?) in the string, or NULL if there is none."), string, size_is("QueryStringLength>>1")] LPCWSTR pQueryString;
+	[readonly, helpstring("Pointer to the scheme element at the beginning of the URL (must be either ''http://...'' or ''https://...'')."), size_is("FullUrlLength/2"), string] LPCWSTR pFullUrl;
+	[readonly, helpstring("Pointer to the first character in the host element, immediately following the double slashes at the end of the scheme element."), size_is("HostLength>>1"), string] LPCWSTR pHost;
+	[readonly, helpstring("Pointer to the third forward slash (''/'') in the string. In a UrlPrefix string, this is the slash immediately preceding the relativeUri element."), size_is("AbsPathLength>>1"), string] LPCWSTR pAbsPath;
+	[readonly, helpstring("Pointer to the first question mark (?) in the string, or NULL if there is none."), size_is("QueryStringLength>>1"), string] LPCWSTR pQueryString;
 } HTTP_COOKED_URL;
 '!
 !HTTP_COOKED_URL categoriesForClass!Win32-Structs! !
@@ -95,10 +95,10 @@ defineFields
 			[nonbrowsable, readonly, helpstring('Size, in bytes, of the data pointed to by the pHost member, not including a terminating null character.')] USHORT HostLength;
 			[nonbrowsable, readonly, helpstring('Size, in bytes, of the data pointed to by the pAbsPath member, not including a terminating null character.')] USHORT AbsPathLength;
 			[nonbrowsable, readonly, helpstring('Size, in bytes, of the data pointed to by the pQueryString member, not including a terminating null character.')] USHORT QueryStringLength;
-			[readonly, helpstring('Pointer to the scheme element at the beginning of the URL (must be either 'http://...' or 'https://...').'), string, size_is('FullUrlLength/2')] LPCWSTR pFullUrl;
-			[readonly, helpstring('Pointer to the first character in the host element, immediately following the double slashes at the end of the scheme element.'), string, size_is('HostLength>>1')] LPCWSTR pHost;
-			[readonly, helpstring('Pointer to the third forward slash ('/') in the string. In a UrlPrefix string, this is the slash immediately preceding the relativeUri element.'), string, size_is('AbsPathLength>>1')] LPCWSTR pAbsPath;
-			[readonly, helpstring('Pointer to the first question mark (?) in the string, or NULL if there is none.'), string, size_is('QueryStringLength>>1')] LPCWSTR pQueryString;
+			[readonly, helpstring('Pointer to the scheme element at the beginning of the URL (must be either 'http://...' or 'https://...').'), size_is('FullUrlLength/2'), string] LPCWSTR pFullUrl;
+			[readonly, helpstring('Pointer to the first character in the host element, immediately following the double slashes at the end of the scheme element.'), size_is('HostLength>>1'), string] LPCWSTR pHost;
+			[readonly, helpstring('Pointer to the third forward slash ('/') in the string. In a UrlPrefix string, this is the slash immediately preceding the relativeUri element.'), size_is('AbsPathLength>>1'), string] LPCWSTR pAbsPath;
+			[readonly, helpstring('Pointer to the first question mark (?) in the string, or NULL if there is none.'), size_is('QueryStringLength>>1'), string] LPCWSTR pQueryString;
 		} HTTP_COOKED_URL;
 "
 

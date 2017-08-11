@@ -27,9 +27,9 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 	[helpstring("The type of context in the PackedContext member.")] ULONG PackedContextType;
 	[helpstring("The security context for the authentication type."), size_is("PackedContextLength")] void* PackedContext;
 	[nonbrowsable, helpstring("The length, in bytes, of the pMutualAuthData member.")] ULONG MutualAuthDataLength;
-	[helpstring("The Base64 encoded mutual authentication data used in the WWW-Authenticate header."), string, size_is("MutualAuthDataLength")] PCHAR pMutualAuthData;
+	[helpstring("The Base64 encoded mutual authentication data used in the WWW-Authenticate header."), size_is("MutualAuthDataLength"), string] PCHAR pMutualAuthData;
 	[nonbrowsable, helpstring("For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.")] USHORT PackageNameLength;
-	[string, size_is("PackageNameLength>>1")] LPWSTR pPackageName;
+	[size_is("PackageNameLength>>1"), string] LPWSTR pPackageName;
 } HTTP_REQUEST_AUTH_INFO;
 '!
 !HTTP_REQUEST_AUTH_INFO categoriesForClass!Win32-Structs! !
@@ -216,9 +216,9 @@ defineFields
 			[helpstring('The type of context in the PackedContext member.')] ULONG PackedContextType;
 			[helpstring('The security context for the authentication type.'), size_is('PackedContextLength')] void* PackedContext;
 			[nonbrowsable, helpstring('The length, in bytes, of the pMutualAuthData member.')] ULONG MutualAuthDataLength;
-			[helpstring('The Base64 encoded mutual authentication data used in the WWW-Authenticate header.'), string, size_is('MutualAuthDataLength')] PCHAR pMutualAuthData;
+			[helpstring('The Base64 encoded mutual authentication data used in the WWW-Authenticate header.'), size_is('MutualAuthDataLength'), string] PCHAR pMutualAuthData;
 			[nonbrowsable, helpstring('For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.')] USHORT PackageNameLength;
-			[string, size_is('PackageNameLength>>1')] LPWSTR pPackageName;
+			[size_is('PackageNameLength>>1'), string] LPWSTR pPackageName;
 		} HTTP_REQUEST_AUTH_INFO;
 "
 

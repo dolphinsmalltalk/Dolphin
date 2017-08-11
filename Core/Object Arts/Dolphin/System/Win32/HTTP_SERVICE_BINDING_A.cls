@@ -18,7 +18,7 @@ IDL definition follows:
 typedef [uuid(88ca7833-a66a-4e2f-98bc-cd2313254b15), helpstring("Provides Service Principle Name (SPN) in ASCII.")]
 struct tagHTTP_SERVICE_BINDING_A {
 	HTTP_SERVICE_BINDING_BASE;
-	[helpstring("A pointer to a buffer that represents the SPN."), string, size_is("BufferSize")] PCHAR Buffer;
+	[helpstring("A pointer to a buffer that represents the SPN."), size_is("BufferSize"), string] PCHAR Buffer;
 	[nonbrowsable, helpstring("The length, in bytes, of the string in Buffer.")] ULONG BufferSize;
 } HTTP_SERVICE_BINDING_A;
 '!
@@ -60,7 +60,7 @@ defineFields
 		typedef [uuid(88ca7833-a66a-4e2f-98bc-cd2313254b15), helpstring('Provides Service Principle Name (SPN) in ASCII.')]
 		struct tagHTTP_SERVICE_BINDING_A {
 			HTTP_SERVICE_BINDING_BASE;
-			[helpstring('A pointer to a buffer that represents the SPN.'), string, size_is('BufferSize')] PCHAR Buffer;
+			[helpstring('A pointer to a buffer that represents the SPN.'), size_is('BufferSize'), string] PCHAR Buffer;
 			[nonbrowsable, helpstring('The length, in bytes, of the string in Buffer.')] ULONG BufferSize;
 		} HTTP_SERVICE_BINDING_A;
 "

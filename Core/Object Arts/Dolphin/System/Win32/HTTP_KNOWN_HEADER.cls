@@ -18,7 +18,7 @@ IDL definition follows:
 typedef [uuid(787c501e-95b2-4a23-9f7c-2dd856b8d51d), helpstring("Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID.")]
 struct tagHTTP_KNOWN_HEADER {
 	[nonbrowsable] USHORT RawValueLength;
-	[string, size_is("RawValueLength")] LPCSTR pRawValue;
+	[size_is("RawValueLength"), string] LPCSTR pRawValue;
 } HTTP_KNOWN_HEADER;
 '!
 !HTTP_KNOWN_HEADER categoriesForClass!Win32-Structs! !
@@ -60,7 +60,7 @@ defineFields
 		typedef [uuid(787c501e-95b2-4a23-9f7c-2dd856b8d51d), helpstring('Structure defining format of a known HTTP header. Name is from HTTP_HEADER_ID.')]
 		struct tagHTTP_KNOWN_HEADER {
 			[nonbrowsable] USHORT RawValueLength;
-			[string, size_is('RawValueLength')] LPCSTR pRawValue;
+			[size_is('RawValueLength'), string] LPCSTR pRawValue;
 		} HTTP_KNOWN_HEADER;
 "
 
