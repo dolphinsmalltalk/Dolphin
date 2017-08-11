@@ -1908,28 +1908,28 @@ idlAttributesAndId
 idlCustomAttributes
 	| attrs |
 	attrs := Array writeStream.
-	self customAttributes keysAndValuesDo: 
-			[:eachKey :eachValue |
+	self customAttributes associations asSortedCollection do: 
+			[:each |
 			| attr |
 			attr := String writeStream.
-			eachKey isSymbol
+			each key isSymbol
 				ifTrue: 
-					[attr display: eachKey.
-					(eachValue isEmpty or: 
+					[attr display: each key.
+					(each value isEmpty or: 
 							["Doesn't seem to be possible to actually set the value of a custom attribute to VT_EMPTY, to we treat an empty string as no argument"
-							eachValue value = ''])
+							each value value = ''])
 						ifFalse: 
 							[attr nextPut: $(.
-							eachValue printIDLOn: attr.
+							each value printIDLOn: attr.
 							attr nextPut: $)]]
 				ifFalse: 
 					[attr
 						nextPutAll: 'custom(';
-						nextPutAll: eachKey idlString.
-					eachValue isEmpty
+						nextPutAll: each key idlString.
+					each value isEmpty
 						ifFalse: 
 							[attr nextPutAll: ', '.
-							eachValue printIDLOn: attr.
+							each value printIDLOn: attr.
 							attr nextPutAll: $)]].
 			attrs nextPut: attr contents].
 	^attrs contents!
