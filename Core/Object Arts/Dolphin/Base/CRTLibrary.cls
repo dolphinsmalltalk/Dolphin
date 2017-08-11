@@ -87,7 +87,7 @@ _eof: handleInteger
 _errno
 	"Answer a pointer to the errno variable."
 
-	<cdecl: sdword _errno>
+	<cdecl: void* _errno>
 	^self invalidCall!
 
 _fdopen: anInteger mode: aString
@@ -99,8 +99,8 @@ _fdopen: anInteger mode: aString
 	<cdecl: handle _fdopen sdword lpstr>
 	^self invalidCall!
 
-_filelength: handleInteger
-	<cdecl: sdword _filelength sdword>
+_filelengthi64: handleInteger
+	<cdecl: sqword _filelengthi64 sdword>
 	^self invalidCall!
 
 _fileno: aFILE
@@ -119,6 +119,16 @@ _fpclass: aFloat
 	<cdecl: sdword _fpclass double>
 	^self invalidCall!
 
+_fseeki64: aFILE offset: offsetInteger origin: originInteger
+	<cdecl: sdword _fseeki64 handle sqword sdword>
+	^self invalidCall!
+
+_ftelli64: anExternalHandle 
+	"Answer the <integer> position (zero-based) of the CRT FILE stream."
+
+	<cdecl: sqword _ftelli64 handle>
+	^self invalidCall!
+
 _gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
 	<cdecl: sdword _gcvt_s char* intptr double sdword>
 	^self invalidCall!
@@ -132,6 +142,10 @@ _getcwd: aString maxlen: anInteger
 	buffer, aString."
 
 	<cdecl: lpstr _getcwd lpstr sdword>
+	^self invalidCall!
+
+_isatty: anInteger
+	<cdecl: bool _isatty sdword>
 	^self invalidCall!
 
 _logb: aFloat
@@ -269,6 +283,10 @@ ceil: aFloat
 	<cdecl: double ceil double>
 	^self invalidCall!
 
+chmod: aFilenameString pmode: aModeInteger
+	<cdecl: sdword _chmod lpstr sdword>
+	^self invalidCall!
+
 close
 	"The C-runtime library cannot be closed."
 
@@ -290,7 +308,7 @@ decimalSeparator
 errno
 	"Answer the <integer> value of the last recorded CRT error."
 
-	^self _errno asExternalAddress sdwordAtOffset: 0!
+	^self _errno sdwordAtOffset: 0!
 
 exp: aFloat
 	"Answer the exponential of the argument, aFloat.
@@ -315,19 +333,19 @@ fclose: anAddress
 	^self invalidCall!
 
 feof: stream
-	<cdecl: sdword feof handle>
+	<cdecl: bool feof handle>
 	^self invalidCall!
 
 fflush: anExternalAddress 
 	<cdecl: sdword fflush handle>
 	^self invalidCall!
 
-fgetc: aFILE 
-	<overlap cdecl: sdword fgetc handle>
+fgetc: aFILE
+	<cdecl: sdword fgetc handle>
 	^self invalidCall!
 
 fgets: buf n: bufsize stream: aFILE
-	<overlap cdecl: lpstr fgets lpstr sdword handle>
+	<cdecl: lpstr fgets lpstr sdword handle>
 	^self invalidCall!
 
 floor: aFloat
@@ -347,22 +365,12 @@ fputc: charValue stream: aFILE
 	^self invalidCall!
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
-	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
+	<cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall!
 
 frexp: x expptr: expptr
 
 	<cdecl: double frexp double sdword*>
-	^self invalidCall!
-
-fseek: aFILE offset: offsetInteger origin: originInteger
-	<cdecl: sdword fseek handle sdword sdword>
-	^self invalidCall!
-
-ftell: aFILE
-	"Answer the <integer> position (zero-based) of the CRT FILE stream."
-
-	<cdecl: sdword ftell handle>
 	^self invalidCall!
 
 fwrite: data size: sizeInteger count: countInteger stream: aFILE 
@@ -561,14 +569,6 @@ tan: aFloat
 	<cdecl: double tan double>
 	^self invalidCall!
 
-thread_chmod: aFilenameString pmode: aModeInteger
-	<overlap cdecl: sdword _chmod lpstr sdword>
-	^self invalidCall!
-
-thread_errno
-	<overlap cdecl: sdword _errno>
-	^self invalidCall!
-
 ungetc: c stream: stream
 	"Pushes the character with integer code point, c, back onto the FILE*, stream."
 
@@ -590,13 +590,16 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_filelengthi64:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_fileno:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_fseeki64:offset:origin:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #_ftelli64:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-directory control!public! !
+!CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
@@ -615,6 +618,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #decimalSeparator!enquiries!private! !
@@ -631,8 +635,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #initialize!initializing!private! !
 !CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
@@ -661,8 +663,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
 
@@ -674,10 +674,16 @@ fileName
 
 	^File splitStemFrom: (self default fileName)!
 
+nonblocking
+	"Answer the instance of the receiver to use for overlapped invocations of CRT library functions."
+
+	^CRTLibraryNonBlocking default!
+
 open
 	"Answer a new instance of the receiver to represent the CRT DLL."
 
 	^(self fromHandle: VMLibrary default crtHandle) initialize! !
 !CRTLibrary class categoriesFor: #fileName!constants!public! !
+!CRTLibrary class categoriesFor: #nonblocking!accessing!public! !
 !CRTLibrary class categoriesFor: #open!instance creation!public! !
 

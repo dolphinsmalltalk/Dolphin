@@ -404,7 +404,7 @@ testForkedBlockHomeFrame
 	[self assert: (Processor activeProcess topFrame homeFrame) isNil] fork. Processor sleep: 10!
 
 testOverlappedErrno
-	self assert: (CRTLibrary default thread_chmod: '' pmode: 0) < 0.
+	self assert: (CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
 	self assert: Processor activeProcess errno = 2!
 
 testOverlappedLastError

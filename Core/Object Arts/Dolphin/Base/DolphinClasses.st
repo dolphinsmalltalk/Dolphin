@@ -1045,6 +1045,11 @@ PermanentLibrary subclass: #VMLibrary
 	classVariableNames: 'Registry RegistryKeys WinVerOrGreaterMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+CRTLibrary subclass: #CRTLibraryNonBlocking
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1646,8 +1651,8 @@ SequencedStream subclass: #PositionableStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream isText name oldFd'
-	classVariableNames: ''
+	instanceVariableNames: 'stream flags name oldFd fd crtlib'
+	classVariableNames: 'DeviceMask ReadOnlyMask TextMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 PositionableStream subclass: #ReadStream

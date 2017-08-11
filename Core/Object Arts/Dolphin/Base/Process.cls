@@ -142,7 +142,7 @@ errno
 	"Answer the value of the C runtime 'errno' global variable saved on completion of the last
 	overlapped call made from the receiver."
 
-	^CRTLibrary default thread_errno asExternalAddress sdwordAtOffset: 0!
+	^CRTLibrary nonblocking errno!
 
 exceptionEnvironment
 	"Private - Answer the receiver's exception environment (a LIFO stack of ExceptionHandlers).
