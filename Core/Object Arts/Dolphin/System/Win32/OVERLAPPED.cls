@@ -33,44 +33,44 @@ struct tagOVERLAPPED {
 !OVERLAPPED methodsFor!
 
 hEvent
-	"Answer the receiver's hEvent field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'hEvent' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #hEvent)) asExternalHandle!
 
-hEvent: anObject
-	"Set the receiver's hEvent field to the value of anObject."
+hEvent: anExternalHandle
+	"Set the receiver's 'hEvent' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hEvent) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #hEvent) put: anExternalHandle!
 
 Internal
-	"Answer the receiver's Internal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Internal' field."
 
 	^bytes uintPtrAtOffset: 0!
 
 InternalHigh
-	"Answer the receiver's InternalHigh field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'InternalHigh' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #InternalHigh)!
 
 Offset
-	"Answer the receiver's Offset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Offset' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #Offset)!
 
-Offset: anObject
-	"Set the receiver's Offset field to the value of anObject."
+Offset: anInteger
+	"Set the receiver's 'Offset' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Offset) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #Offset) put: anInteger!
 
 OffsetHigh
-	"Answer the receiver's OffsetHigh field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'OffsetHigh' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #OffsetHigh)!
 
-OffsetHigh: anObject
-	"Set the receiver's OffsetHigh field to the value of anObject."
+OffsetHigh: anInteger
+	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #OffsetHigh) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #OffsetHigh) put: anInteger! !
 !OVERLAPPED categoriesFor: #hEvent!**compiled accessors**!public! !
 !OVERLAPPED categoriesFor: #hEvent:!**compiled accessors**!public! !
 !OVERLAPPED categoriesFor: #Internal!**compiled accessors**!public! !
@@ -85,29 +85,30 @@ OffsetHigh: anObject
 defineFields
 	"Define the fields of the OVERLAPPED structure.
 
-	OVERLAPPED  compileDefinition
+	OVERLAPPED compileDefinition
 
-		typedef [uuid(301C9A7A-D4B4-42D5-895D-E658D212DF5B), helpstring('Contains information used in asynchronous (or overlapped) input and output (I/O).')]
+		typedef [uuid(301c9a7a-d4b4-42d5-895d-e658d212df5b), helpstring('Contains information used in asynchronous (or overlapped) input and output (I/O).')]
 		struct tagOVERLAPPED {
-			[helpstring('The status code for the I/O request.')] ULONG_PTR Internal;
-			[helpstring('The number of bytes transferred for the I/O request.')] ULONG_PTR InternalHigh;
+			[readonly, helpstring('The status code for the I/O request.')] ULONG_PTR Internal;
+			[readonly, helpstring('The number of bytes transferred for the I/O request.')] ULONG_PTR InternalHigh;
 			union {
 				struct {
-					[helpstring('The low - order portion of the file position at which to start the I / O request, as specified by the user.')] unsigned long Offset;
-					[helpstring('The high-order portion of the file position at which to start the I/O request, as specified by the user.')] unsigned long OffsetHigh;
+					[helpstring('The low - order portion of the file position at which to start the I / O request, as specified by the user.')] DWORD Offset;
+					[helpstring('The high-order portion of the file position at which to start the I/O request, as specified by the user.')] DWORD OffsetHigh;
 				};
-				[helpstring('Reserved for system use; do not use after initialization to zero.')] void* Pointer;
+				[hidden, helpstring('Reserved for system use; do not use after initialization to zero.'), custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] void* Pointer;
 			};
 			[helpstring('A handle to the event that will be set to a signaled state by the system when the operation has completed.')] HANDLE hEvent;
 		} OVERLAPPED;
 "
 
 	self
-		defineField: #Internal type: UINT_PTRField new beReadOnly;
-		defineField: #InternalHigh type: UINT_PTRField new beReadOnly;
-		defineField: #Offset type: DWORDField new;
-		defineField: #OffsetHigh type: DWORDField new;
-		defineField: #Pointer type: LPVOIDField filler;
-		defineField: #hEvent type: HANDLEField new! !
-!OVERLAPPED class categoriesFor: #defineFields!initializing!public! !
+		defineField: #Internal type: UINT_PTRField new beReadOnly offset: 0;
+		defineField: #InternalHigh type: UINT_PTRField new beReadOnly offset: 4;
+		defineField: #Offset type: DWORDField new offset: 8;
+		defineField: #OffsetHigh type: DWORDField new offset: 12;
+		defineField: #Pointer type: LPVOIDField new beFiller offset: 8;
+		defineField: #hEvent type: HANDLEField new offset: 16.
+	self byteSize: 20! !
+!OVERLAPPED class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 
