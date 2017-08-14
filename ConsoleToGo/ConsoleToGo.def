@@ -35,13 +35,16 @@ uncompress
 	_eof
 	_errno
 	_fdopen
-	_filelength
+	_filelengthi64
 	_fileno
 	_finite
 	_fpclass
+	_fseeki64
+	_ftelli64
 	_gcvt_s
 	_get_osfhandle
 	_getcwd
+	_isatty
 	_logb
 	_makepath_s
 	_open_osfhandle
@@ -73,8 +76,6 @@ uncompress
 	fputc
 	fread_s
 	frexp
-	fseek
-	ftell
 	fwrite
 	iswcntrl
 	iswprint
