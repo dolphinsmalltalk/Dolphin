@@ -34,6 +34,19 @@ dwProductVersionMS
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwProductVersionMS)!
 
+fileVersion
+	"Answer the 64-bit <integer> file version."
+
+	^(self dwFileVersionMS << 32) + self dwFileVersionLS!
+
+fileVersionComponents
+	"Answer a four element <Array> of <Integer> representing the file version components in order from major to minor."
+
+	| major minor |
+	major := self dwFileVersionMS.
+	minor := self dwFileVersionLS.
+	^{major highWord. major lowWord. minor highWord. minor lowWord}!
+
 fileVersionString
 	"Answer a String in the form N.N.N.N which specifies the version number of the product."
 
@@ -42,10 +55,7 @@ fileVersionString
 formatFileVersionString: format
 	"Answer a version string formatted as per the Win32 format string, format."
 
-	| major minor |
-	major := self dwFileVersionMS.
-	minor := self dwFileVersionLS.
-	^format formatWithArguments: {major highWord. major lowWord. minor highWord. minor lowWord}!
+	^format formatWithArguments: self fileVersionComponents!
 
 formatProductVersionString: format
 	"Answer a version string formatted as per the Win32 format string, format."
@@ -72,6 +82,8 @@ versionAtOffset: anInteger put: anArray
 !VS_FIXEDFILEINFO categoriesFor: #dwFileVersionMS!**compiled accessors**!public! !
 !VS_FIXEDFILEINFO categoriesFor: #dwProductVersionLS!**compiled accessors**!public! !
 !VS_FIXEDFILEINFO categoriesFor: #dwProductVersionMS!**compiled accessors**!public! !
+!VS_FIXEDFILEINFO categoriesFor: #fileVersion!accessing!public! !
+!VS_FIXEDFILEINFO categoriesFor: #fileVersionComponents!operations!public! !
 !VS_FIXEDFILEINFO categoriesFor: #fileVersionString!accessing!public! !
 !VS_FIXEDFILEINFO categoriesFor: #formatFileVersionString:!operations!public! !
 !VS_FIXEDFILEINFO categoriesFor: #formatProductVersionString:!operations!public! !
