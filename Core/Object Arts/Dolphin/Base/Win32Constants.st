@@ -254,6 +254,7 @@ Win32Constants at: 'FILE_LIST_DIRECTORY' put: 16r1!
 Win32Constants at: 'FILE_SHARE_DELETE' put: 16r4!
 Win32Constants at: 'FILE_SHARE_READ' put: 16r1!
 Win32Constants at: 'FILE_SHARE_WRITE' put: 16r2!
+Win32Constants at: 'FILE_SUPPORTS_SPARSE_FILES' put: 16r40!
 Win32Constants at: 'FILE_TYPE_CHAR' put: 16r2!
 Win32Constants at: 'FILE_TYPE_DISK' put: 16r1!
 Win32Constants at: 'FILE_TYPE_PIPE' put: 16r3!
@@ -272,6 +273,7 @@ Win32Constants at: 'FORMAT_MESSAGE_FROM_HMODULE' put: 16r800!
 Win32Constants at: 'FORMAT_MESSAGE_FROM_STRING' put: 16r400!
 Win32Constants at: 'FORMAT_MESSAGE_FROM_SYSTEM' put: 16r1000!
 Win32Constants at: 'FORMAT_MESSAGE_IGNORE_INSERTS' put: 16r200!
+Win32Constants at: 'FSCTL_SET_SPARSE' put: 16r900C4!
 Win32Constants at: 'FSHIFT' put: 16r4!
 Win32Constants at: 'FVIRTKEY' put: 16r1!
 Win32Constants at: 'FW_BOLD' put: 16r2BC!

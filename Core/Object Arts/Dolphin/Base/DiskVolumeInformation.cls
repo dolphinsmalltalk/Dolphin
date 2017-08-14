@@ -158,31 +158,26 @@ getDiskStats
 getVolumeInformation
 	"Private - Call the Win32 GetVolumeInformation() API to retrieve the label, etc."
 
-	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer
-		fileSystemFlagsBuffer fileSystemNameBuffer |
-
+	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
 	volumeNameBuffer := File pathBuffer.
-	volumeSerialNumber := DWORD new.
-	maximumComponentLengthBuffer := DWORD new.
-	fileSystemFlagsBuffer := DWORD new.
-	fileSystemNameBuffer := String new: 32.
-
+	volumeSerialNumber := DWORDBytes new.
+	maximumComponentLengthBuffer := DWORDBytes new.
+	fileSystemFlagsBuffer := DWORDBytes new.
+	fileSystemNameBuffer := File pathBuffer.
 	(KernelLibrary default
 		getVolumeInformation: self rootPath
 		lpVolumeNameBuffer: volumeNameBuffer
-		nVolumeNameSize: volumeNameBuffer size
+		nVolumeNameSize: volumeNameBuffer byteSize
 		lpVolumeSerialNumber: volumeSerialNumber
 		lpMaximumComponentLength: maximumComponentLengthBuffer
-		lpFileSystemFlags: fileSystemFlags
+		lpFileSystemFlags: fileSystemFlagsBuffer
 		lpFileSystemNameBuffer: fileSystemNameBuffer
-		nFileSystemNameSize: fileSystemNameBuffer size) 
-			ifFalse: [KernelLibrary default systemError].
-
+		nFileSystemNameSize: fileSystemNameBuffer byteSize) ifFalse: [KernelLibrary default systemError].
 	label := volumeNameBuffer trimNulls.
 	serialNumber := volumeSerialNumber value.
 	maxComponentLength := maximumComponentLengthBuffer value.
 	fileSystemFlags := fileSystemFlagsBuffer value.
-	fileSystemName := fileSystemNameBuffer trimNulls.!
+	fileSystemName := fileSystemNameBuffer trimNulls!
 
 label
 	"Answer the <readableString> disk volume label. If the disk is not labelled 
@@ -245,6 +240,11 @@ setPath: pathString
 
 	path := pathString!
 
+supportsSparseFiles
+	"Answer whether the file system supports sparse files."
+
+	^self fileSystemFlags allMask: Win32Constants.FILE_SUPPORTS_SPARSE_FILES!
+
 totalBytes
 	"Answer the value of the receiver's ''totalBytes'' instance variable."
 
@@ -284,6 +284,7 @@ totalFreeBytes
 !DiskVolumeInformation categoriesFor: #sectorsPerCluster!accessing!public! !
 !DiskVolumeInformation categoriesFor: #serialNumber!accessing!public! !
 !DiskVolumeInformation categoriesFor: #setPath:!initializing!private! !
+!DiskVolumeInformation categoriesFor: #supportsSparseFiles!accessing!public! !
 !DiskVolumeInformation categoriesFor: #totalBytes!accessing!public! !
 !DiskVolumeInformation categoriesFor: #totalClusters!accessing!public! !
 !DiskVolumeInformation categoriesFor: #totalFreeBytes!accessing!public! !
