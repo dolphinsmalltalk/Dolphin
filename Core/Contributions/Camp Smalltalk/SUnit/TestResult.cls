@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TestResult
-	instanceVariableNames: 'results failures errors passed duration'
+	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -21,6 +21,11 @@ addFailure: aTestCase signal: anException
 addPass: aTestCase duration: anInteger
 	results at: aTestCase put: (TestCaseResult case: aTestCase duration: anInteger).
 	passed add: aTestCase!
+
+addSkip: aTestCase signal: anException 
+	results at: aTestCase put: (TestCaseResult case: aTestCase skipped: anException).
+	skipped add: aTestCase
+!
 
 correctCount
 	#deprecated.	"use #passedCount"
@@ -56,13 +61,14 @@ hasFailures
 	^failures size > 0!
 
 hasPassed
-	^self runCount = self passedCount!
+	^self hasErrors not and: [self hasFailures not]!
 
 initialize
 	results := LookupTable new.
 	failures := Set new.
 	errors := OrderedCollection new.
-	passed := OrderedCollection new!
+	passed := OrderedCollection new.
+	skipped := OrderedCollection new!
 
 isError: aTestCase
 	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #error]!
@@ -75,6 +81,9 @@ isFailure: aTestCase
 isPassed: aTestCase
 	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #passed]!
 
+isSkipped: aTestCase
+	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #skipped]!
+
 passed
 	^passed!
 
@@ -83,16 +92,19 @@ passedCount
 
 printOn: aStream
 	aStream
-		nextPutAll: self runCount printString;
-		nextPutAll: ' run, ';
-		nextPutAll: self passedCount printString;
-		nextPutAll: ' passed, ';
-		nextPutAll: self failureCount printString;
-		nextPutAll: ' failed, ';
-		nextPutAll: self errorCount printString;
-		nextPutAll:' error'.
-	self errorCount ~= 1
-		ifTrue: [aStream nextPut: $s].!
+		print: self runCount;
+		nextPutAll: ' run'.
+	#(#(#passed) #(#skipped) #(#failures 'failed') #(#errors 'error(s)')) do: 
+			[:each |
+			| cases |
+			cases := self perform: each first.
+			cases isEmpty
+				ifFalse: 
+					[aStream
+						nextPutAll: ', ';
+						print: cases size;
+						space;
+						display: each last]]!
 
 resultFor: aTestCase
 	^results at: aTestCase!
@@ -116,13 +128,21 @@ runCase: aTestCase
 			do: 
 				[:signal |
 				self addError: aTestCase signal: signal.
+				signal sunitExitWith: false]
+			on: self class skip
+			do: 
+				[:signal |
+				self addSkip: aTestCase signal: signal.
 				signal sunitExitWith: false]!
 
 runCount
 	^results size!
 
+skipped
+	^skipped!
+
 skippedCount
-	^0!
+	^skipped size!
 
 tests
 	^(OrderedCollection new: self runCount)
@@ -133,6 +153,7 @@ tests
 !TestResult categoriesFor: #addError:signal:!adding!private! !
 !TestResult categoriesFor: #addFailure:signal:!adding!private! !
 !TestResult categoriesFor: #addPass:duration:!adding!private! !
+!TestResult categoriesFor: #addSkip:signal:!adding!private! !
 !TestResult categoriesFor: #correctCount!accessing!public! !
 !TestResult categoriesFor: #defects!accessing!public! !
 !TestResult categoriesFor: #duration!accessing!public! !
@@ -148,6 +169,7 @@ tests
 !TestResult categoriesFor: #isError:!public!testing! !
 !TestResult categoriesFor: #isFailure:!public!testing! !
 !TestResult categoriesFor: #isPassed:!public!testing! !
+!TestResult categoriesFor: #isSkipped:!public!testing! !
 !TestResult categoriesFor: #passed!accessing!public! !
 !TestResult categoriesFor: #passedCount!accessing!public! !
 !TestResult categoriesFor: #printOn:!printing!public! !
@@ -155,6 +177,7 @@ tests
 !TestResult categoriesFor: #results!accessing!public! !
 !TestResult categoriesFor: #runCase:!public!running! !
 !TestResult categoriesFor: #runCount!accessing!public! !
+!TestResult categoriesFor: #skipped!accessing!public! !
 !TestResult categoriesFor: #skippedCount!accessing!public! !
 !TestResult categoriesFor: #tests!accessing!public! !
 
@@ -182,7 +205,10 @@ signalErrorWith: aString
 	self error signal: aString!
 
 signalFailureWith: aString
-	self failure signal: aString! !
+	self failure signal: aString!
+
+skip
+	^TestSkip! !
 !TestResult class categoriesFor: #error!Exceptions!public! !
 !TestResult class categoriesFor: #exError!Exceptions!public! !
 !TestResult class categoriesFor: #failure!Exceptions!public! !
@@ -190,4 +216,5 @@ signalFailureWith: aString
 !TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
 !TestResult class categoriesFor: #signalErrorWith:!Exceptions!public! !
 !TestResult class categoriesFor: #signalFailureWith:!Exceptions!public! !
+!TestResult class categoriesFor: #skip!Exceptions!public! !
 

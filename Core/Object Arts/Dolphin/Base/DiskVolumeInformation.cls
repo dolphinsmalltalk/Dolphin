@@ -179,6 +179,11 @@ getVolumeInformation
 	fileSystemFlags := fileSystemFlagsBuffer value.
 	fileSystemName := fileSystemNameBuffer trimNulls!
 
+isSparseFileCapable
+	"Answer whether the file system supports sparse files."
+
+	^self fileSystemFlags allMask: Win32Constants.FILE_SUPPORTS_SPARSE_FILES!
+
 label
 	"Answer the <readableString> disk volume label. If the disk is not labelled 
 	this will be an empty <String>."
@@ -240,11 +245,6 @@ setPath: pathString
 
 	path := pathString!
 
-supportsSparseFiles
-	"Answer whether the file system supports sparse files."
-
-	^self fileSystemFlags allMask: Win32Constants.FILE_SUPPORTS_SPARSE_FILES!
-
 totalBytes
 	"Answer the value of the receiver's ''totalBytes'' instance variable."
 
@@ -276,6 +276,7 @@ totalFreeBytes
 !DiskVolumeInformation categoriesFor: #getDiskFreeSpaceEx!helpers!private! !
 !DiskVolumeInformation categoriesFor: #getDiskStats!helpers!private! !
 !DiskVolumeInformation categoriesFor: #getVolumeInformation!helpers!private! !
+!DiskVolumeInformation categoriesFor: #isSparseFileCapable!accessing!public! !
 !DiskVolumeInformation categoriesFor: #label!accessing!public! !
 !DiskVolumeInformation categoriesFor: #label:!accessing!public! !
 !DiskVolumeInformation categoriesFor: #maxComponentLength!accessing!public! !
@@ -284,7 +285,6 @@ totalFreeBytes
 !DiskVolumeInformation categoriesFor: #sectorsPerCluster!accessing!public! !
 !DiskVolumeInformation categoriesFor: #serialNumber!accessing!public! !
 !DiskVolumeInformation categoriesFor: #setPath:!initializing!private! !
-!DiskVolumeInformation categoriesFor: #supportsSparseFiles!accessing!public! !
 !DiskVolumeInformation categoriesFor: #totalBytes!accessing!public! !
 !DiskVolumeInformation categoriesFor: #totalClusters!accessing!public! !
 !DiskVolumeInformation categoriesFor: #totalFreeBytes!accessing!public! !

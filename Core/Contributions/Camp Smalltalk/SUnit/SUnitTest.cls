@@ -10,8 +10,7 @@ SUnitTest comment: ''!
 !SUnitTest categoriesForClass!SUnitTests! !
 !SUnitTest methodsFor!
 
-assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount
-
+assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount skipped: anInteger
 	self
 		assert: aResult runCount = aRunCount;
 		assert: aResult passedCount = aPassedCount;
@@ -38,6 +37,9 @@ setRun
 setUp
 	hasSetup := true!
 
+skipped
+	self skip: 'Don''t care'!
+
 testAssert
 	self assert: true.
 	self deny: false!
@@ -48,13 +50,14 @@ testDefects
 	suite addTest: (error := self class selector: #error).
 	suite addTest: (failure := self class selector: #fail).
 	result := suite run.
-	self assert: result defects asArray = (Array with: error with: failure).
+	self assert: result defects asArray equals: {error. failure}.
 	self
 		assertForTestResult: result
 		runCount: 2
 		passed: 0
 		failed: 1
-		errors: 1!
+		errors: 1
+		skipped: 0!
 
 testDialectLocalizedException
 	self should: [TestResult signalFailureWith: 'Foo'] raise: TestResult failure.
@@ -70,7 +73,8 @@ testError
 		runCount: 1
 		passed: 0
 		failed: 0
-		errors: 1!
+		errors: 1
+		skipped: 0!
 
 testException
 	self should: [self error: 'foo'] raise: TestResult error!
@@ -84,7 +88,8 @@ testFail
 		runCount: 1
 		passed: 0
 		failed: 1
-		errors: 0!
+		errors: 0
+		skipped: 0!
 
 testIsNotRerunOnDebug
 	| case |
@@ -112,7 +117,8 @@ testResult
 		runCount: 1
 		passed: 1
 		failed: 0
-		errors: 0!
+		errors: 0
+		skipped: 0!
 
 testRunning
 	(SUnitDelay forMicroseconds: 20) wait!
@@ -120,6 +126,18 @@ testRunning
 testShould
 	self should: [true].
 	self shouldnt: [false]!
+
+testSkip
+	| case result |
+	case := self class selector: #skipped.
+	result := case run.
+	self
+		assertForTestResult: result
+		runCount: 1
+		passed: 0
+		failed: 0
+		errors: 0
+		skipped: 1!
 
 testSuite
 	| suite result |
@@ -133,8 +151,9 @@ testSuite
 		runCount: 3
 		passed: 1
 		failed: 1
-		errors: 1! !
-!SUnitTest categoriesFor: #assertForTestResult:runCount:passed:failed:errors:!helpers!public! !
+		errors: 1
+		skipped: 0! !
+!SUnitTest categoriesFor: #assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
 !SUnitTest categoriesFor: #error!helpers!private! !
 !SUnitTest categoriesFor: #fail!helpers!private! !
 !SUnitTest categoriesFor: #hasRun!Accessing!public! !
@@ -142,6 +161,7 @@ testSuite
 !SUnitTest categoriesFor: #noop!helpers!private! !
 !SUnitTest categoriesFor: #setRun!helpers!private! !
 !SUnitTest categoriesFor: #setUp!public!Running! !
+!SUnitTest categoriesFor: #skipped!helpers!private! !
 !SUnitTest categoriesFor: #testAssert!public!Testing! !
 !SUnitTest categoriesFor: #testDefects!public!Testing! !
 !SUnitTest categoriesFor: #testDialectLocalizedException!public!Testing! !
@@ -154,6 +174,7 @@ testSuite
 !SUnitTest categoriesFor: #testResult!public!Testing! !
 !SUnitTest categoriesFor: #testRunning!public!Testing! !
 !SUnitTest categoriesFor: #testShould!public!Testing! !
+!SUnitTest categoriesFor: #testSkip!public!Testing! !
 !SUnitTest categoriesFor: #testSuite!public!Testing! !
 
 !SUnitTest class methodsFor!

@@ -11,6 +11,10 @@ DiskVolumeInformationTest comment: ''!
 !DiskVolumeInformationTest methodsFor!
 
 testFileSystemFlags
-	self deny: DiskVolumeInformation forSystemPath fileSystemFlags equals: 0! !
+	| subject |
+	subject := DiskVolumeInformation forSystemPath.
+	self deny: subject fileSystemFlags equals: 0.
+	self skipUnless: [subject fileSystemName = 'NTFS'].
+	self assert: subject isSparseFileCapable! !
 !DiskVolumeInformationTest categoriesFor: #testFileSystemFlags!public! !
 

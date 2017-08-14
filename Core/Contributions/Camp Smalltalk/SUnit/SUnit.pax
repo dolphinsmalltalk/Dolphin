@@ -9,6 +9,7 @@ package classNames
 	add: #TestCaseResult;
 	add: #TestResource;
 	add: #TestResult;
+	add: #TestSkip;
 	add: #TestSuite;
 	yourself.
 
@@ -43,12 +44,17 @@ Object subclass: #TestResource
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
 Object subclass: #TestResult
-	instanceVariableNames: 'results failures errors passed duration'
+	instanceVariableNames: 'results failures errors passed skipped duration'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #TestSuite
 	instanceVariableNames: 'tests resources name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Notification subclass: #TestSkip
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

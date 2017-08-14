@@ -73,7 +73,7 @@ displayMode: aString
 displayPass
 	self displayGreen.
 	self displayMode: 'Pass'.
-	self displayDetails: result runCount printString , ' run' , self timeSinceLastPassAsString.
+	self displayDetails: result printString , self timeSinceLastPassAsString.
 	lastPass := Time now!
 
 displayRed

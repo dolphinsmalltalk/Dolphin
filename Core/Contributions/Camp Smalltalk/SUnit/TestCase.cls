@@ -191,6 +191,22 @@ shouldnt: aBlock raise: anExceptionalEvent description: aStringOrValuable
 signalFailure: aString
 	TestResult failure signal: aString!
 
+skip
+	"Don't run this test, and don't mark it as failure"
+
+	TestSkip signal!
+
+skip: aComment
+	"Don't run this test, and don't mark it as failure"
+
+	TestSkip signal: aComment!
+
+skipUnless: aBooleanOrBlock
+	" If the assumption in aBooleanOrBlock is not true, abandon the running test
+	and mark it as passed. "
+
+	aBooleanOrBlock value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']!
+
 tearDown! !
 !TestCase categoriesFor: #addDependentToHierachy:!dependencies!public! !
 !TestCase categoriesFor: #assert:!asserting!public! !
@@ -230,6 +246,9 @@ tearDown! !
 !TestCase categoriesFor: #shouldnt:raise:!asserting!public! !
 !TestCase categoriesFor: #shouldnt:raise:description:!asserting!public! !
 !TestCase categoriesFor: #signalFailure:!asserting!public! !
+!TestCase categoriesFor: #skip!asserting!public! !
+!TestCase categoriesFor: #skip:!asserting!public! !
+!TestCase categoriesFor: #skipUnless:!asserting!public! !
 !TestCase categoriesFor: #tearDown!public!running! !
 
 !TestCase class methodsFor!
