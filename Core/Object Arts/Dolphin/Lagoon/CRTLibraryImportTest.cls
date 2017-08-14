@@ -14,6 +14,20 @@ devOnlyCrtFunctions
 	^(MethodCategory deprecatedMethods methodsInBehavior: CRTLibrary)
 		collect: [:each | each functionName]!
 
+minimumVmVersion
+	"The minimum VM version on which to run this test specified as a 64-bit integer. This allows
+	for the VM to temporarily fall behind the CRT imports in the image, as without this
+	capability sequencing the changes to image and VM requires multiple steps. "
+
+	"The procedure is:
+		1) Add/change CRTLibrary methods 
+		2) Advance version number beyond the current VM version (e.g. increment the build version number, the least significant of those below)
+		3) Commit changes to Dolphin repo.
+		4) Update the .def files for the stubs in the DolphinVM solution.
+		5) Commit changes to the DolphinVM repo."
+
+	^#(2016 7 0 46) inject: 0 into: [:sum :each | (sum << 16) + each]!
+
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!
 
@@ -21,6 +35,7 @@ testStubCrtExports
 	"Ensure that .def files include proper CRTLibrary imports (#183)."
 
 	| expected |
+	self skipUnless: [VMLibrary default versionInfo fixedInfo fileVersion >=  self minimumVmVersion].
 	expected := self devOnlyCrtFunctions.
 	self stubNames do: 
 			[:eachStubName |
@@ -45,6 +60,7 @@ testStubCrtExports
 					desc contents]]
 					ensure: [l close]]! !
 !CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
+!CRTLibraryImportTest categoriesFor: #minimumVmVersion!accessing!public! !
 !CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
 !CRTLibraryImportTest categoriesFor: #testStubCrtExports!public!unit tests! !
 
