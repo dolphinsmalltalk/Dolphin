@@ -24,6 +24,7 @@ package classNames
 	add: #DateTest;
 	add: #DefaultSortAlgorithmTest;
 	add: #DictionaryTest;
+	add: #DiskVolumeInformationTest;
 	add: #DolphinCollectionTest;
 	add: #DolphinTest;
 	add: #DolphinTestClassResource;
@@ -209,6 +210,11 @@ DolphinTest subclass: #ClassBuilderTests
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #DateTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #DiskVolumeInformationTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -796,7 +802,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 	suiteNode := nil.
 	(aTestResult results asSortedCollection: [:a :b | a case <= b case]) do: 
 			[:each |
-			| caseNode |
+			| caseNode outcome |
 			each case class == currentClass
 				ifFalse: 
 					[suiteNode
@@ -822,36 +828,45 @@ writeJunitTestLog: aTestSuite result: aTestResult
 			caseAttribs
 				at: 'name' put: each case selector;
 				at: 'classname' put: currentClass name.
-			each outcome == #passed
+			outcome := each outcome.
+			outcome == #passed
 				ifTrue: 
 					[| time |
 					time := String writeStream.
 					each duration / 1.0e6 printOn: time decimalPlaces: 6.
-					caseAttribs at: 'time' put: time contents]
-				ifFalse: 
-					[each outcome == #error
-						ifTrue: 
-							[| errorNode |
-							classErrors := classErrors + 1.
-							errorNode := caseNode addElement: 'error'.
-							(errorNode attributes)
-								at: 'message' put: each signal description;
-								at: 'type' put: each signal class name;
-								free.
-							errorNode text: each stacktrace.
-							errorNode free]
-						ifFalse: 
-							[each outcome == #failed
-								ifTrue: 
-									[| failureNode |
-									classFailures := classFailures + 1.
-									failureNode := caseNode addElement: 'failure'.
-									(failureNode attributes)
-										at: 'message' put: each signal description;
-										at: 'type' put: each signal class name;
-										free.
-									failureNode text: each stacktrace.
-									failureNode free]]].
+					caseAttribs at: 'time' put: time contents].
+			outcome == #error
+				ifTrue: 
+					[| errorNode |
+					classErrors := classErrors + 1.
+					errorNode := caseNode addElement: 'error'.
+					errorNode attributes
+						at: 'message' put: each signal description;
+						at: 'type' put: each signal class name;
+						free.
+					errorNode text: each stacktrace.
+					errorNode free].
+			outcome == #failed
+				ifTrue: 
+					[| failureNode |
+					classFailures := classFailures + 1.
+					failureNode := caseNode addElement: 'failure'.
+					failureNode attributes
+						at: 'message' put: each signal description;
+						at: 'type' put: each signal class name;
+						free.
+					failureNode text: each stacktrace.
+					failureNode free].
+			outcome == #skipped
+				ifTrue: 
+					[| skippedNode |
+					classSkipped := classSkipped + 1.
+					skippedNode := caseNode addElement: 'skipped'.
+					skippedNode attributes
+						at: 'message' put: each signal description;
+						free.
+					skippedNode text: each stacktrace.
+					skippedNode free].
 			caseAttribs free.
 			caseNode free].
 	"Add the summary information for the final class"

@@ -143,7 +143,9 @@ displayPass
 	self icon: (Icon fromFile: 'UnitTestPluginPass.ico').
 	self displayColor: self class passColor.
 	self displayMode: 'Pass'.
-	self displayDetails: result runCount printString , ' run'!
+	self
+		displayDetails: ((result skippedCount > 0 ifTrue: ['<1d> run (<2d> skipped)'] ifFalse: ['<1d> run'])
+				expandMacrosWithArguments: {result runCount. result skippedCount})!
 
 displayReset
 	self displayColor: self class noTestsColor.

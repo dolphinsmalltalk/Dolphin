@@ -316,7 +316,12 @@ debugCase: aTestCase
 			do: 
 				[:signal |
 				self addError: aTestCase signal: signal.
-				signal pass]! !
+				signal pass]
+			on: self class skip
+			do: 
+				[:signal |
+				self addSkip: aTestCase signal: signal.
+				signal return]! !
 !TestResult categoriesFor: #debugCase:!public!running! !
 
 "End of package definition"!
