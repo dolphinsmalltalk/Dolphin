@@ -24,6 +24,9 @@ closeTempStream: aStream
 
 	aStream close!
 
+maxPosition
+	^self subclassResponsibility!
+
 readWriteStreamOnString: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -83,11 +86,12 @@ test1065
 				resumable: true]!
 
 test64BitPosition
-	| stream actual position|
+	| stream |
 	stream := self tempWriteStream.
-	position := 2**33-1.
-	stream position: position.
-	self assert: stream position equals: position!
+	{2 ** 33 - 1. self maxPosition} do: 
+			[:position |
+			stream position: position.
+			self assert: stream position equals: position]!
 
 testAppend
 	| stream stream2 actual |
@@ -305,6 +309,7 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #blockWriteIntervals!private!unit tests! !
 !AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #maxPosition!public! !
 !AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #setUp!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !

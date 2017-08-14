@@ -10,6 +10,9 @@ StdioFileStreamTest comment: ''!
 !StdioFileStreamTest categoriesForClass!Unclassified! !
 !StdioFileStreamTest methodsFor!
 
+maxPosition
+	^2 ** 63 - 1!
+
 streamClass
 	^StdioFileStream!
 
@@ -40,6 +43,7 @@ testNextLineUpToEof
 			actual := subject nextLine.
 			self assert: actual equals: expected.
 			subject close]! !
+!StdioFileStreamTest categoriesFor: #maxPosition!public! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !

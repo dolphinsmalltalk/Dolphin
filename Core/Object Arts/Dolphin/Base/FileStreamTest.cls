@@ -25,6 +25,11 @@ assertBufferEmptyOrDirty: fs size: size
 			self 
 				assert: ((fs isBufferDirty and: [pos > 0]) or: [fs isBufferDirty not and: [pos == 0]])]!
 
+maxPosition
+	"Seems to be a minor bug that we can't position a FileStream onto the last page of a 2^63-1 sized file, although not really an issue in practice."
+
+	^2 ** 63 - 1 - FileStream.PageSize!
+
 streamClass
 	^FileStream!
 
@@ -78,6 +83,7 @@ testSingleByteOverflow
 	self closeTempStream: stream! !
 !FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !
 !FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
+!FileStreamTest categoriesFor: #maxPosition!public! !
 !FileStreamTest categoriesFor: #streamClass!helpers!private! !
 !FileStreamTest categoriesFor: #streamOn:!helpers!private! !
 !FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
