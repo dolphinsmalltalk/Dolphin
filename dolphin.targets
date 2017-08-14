@@ -11,7 +11,7 @@
       <Output TaskParameter="Lines" PropertyName="GitTag"/>
     </ReadLinesFromFile>
     <PropertyGroup>
-	  <DolphinVersion>$([System.Datetime]::Now.Year).$(GitTag.SubString(1, $([MSBuild]::Subtract($(GitTag.IndexOf('-')), 1))))</DolphinVersion>
+	  <DolphinVersion>2016.$(GitTag.SubString(1, $([MSBuild]::Subtract($(GitTag.IndexOf('-')), 1))))</DolphinVersion>
     </PropertyGroup>
     <Message Importance="Normal" Text="Building Dolphin version $(DolphinVersion)" />
     <Delete Files="$(IntDir)version.txt"/>
