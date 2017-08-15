@@ -110,8 +110,7 @@ testVeryLargeSparseFile
 	subject position: max.
 	subject nextPutAll: 'End'.
 	self assert: subject size equals: max + 3.
-	subject close.
-	subject := self tempReadStream.
+	subject reset.
 	self assert: (subject next: 9) equals: 'Beginning'.
 	empty := String new: FileStream.PageSize.
 	self assert: (subject next: FileStream.PageSize) equals: empty.
