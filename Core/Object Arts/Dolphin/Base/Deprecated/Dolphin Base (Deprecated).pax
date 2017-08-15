@@ -206,6 +206,7 @@ _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 
 _filelength: handleInteger
 	<cdecl: sdword _filelength sdword>
+	#deprecated.
 	^self invalidCall!
 
 _gcvt: aFloat count: anInteger buffer: aString
