@@ -36,9 +36,6 @@ beBinary
 
 	collection := collection asByteArray!
 
-beDirty
-	flags := flags bitOr: 3!
-
 beText
 	"Treat the elements of the stream as Characters."
 
@@ -407,7 +404,6 @@ writePage
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
 !FileStream categoriesFor: #atEnd!public!testing! !
 !FileStream categoriesFor: #beBinary!modes!public! !
-!FileStream categoriesFor: #beDirty!buffer!private! !
 !FileStream categoriesFor: #beText!modes!public! !
 !FileStream categoriesFor: #close!operations!public! !
 !FileStream categoriesFor: #contents!accessing!public! !
