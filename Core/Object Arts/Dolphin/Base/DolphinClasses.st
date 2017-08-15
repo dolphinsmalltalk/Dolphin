@@ -1672,7 +1672,7 @@ WriteStream subclass: #ReadWriteStream
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize'
-	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask PageSize'
+	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

@@ -184,6 +184,23 @@ deleteFile: aStringFileName
 	<stdcall: bool DeleteFileA lpstr>
 	^self invalidCall!
 
+deviceIoControl: hDevice dwIoControlCode: dwIoControlCode lpInBuffer: lpInBuffer nInBufferSize: nInBufferSize lpOutBuffer: lpOutBuffer nOutBufferSize: nOutBufferSize lpBytesReturned: lpBytesReturned lpoverlapped: lpoverlapped
+	"Invoke the DeviceIoControl() function of the module wrapped by the receiver.
+	Helpstring: Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
+
+		BOOL __stdcall DeviceIoControl(
+			[in]HANDLE hDevice,
+			[in]DWORD dwIoControlCode,
+			[in]LPVOID lpInBuffer,
+			[in]DWORD nInBufferSize,
+			[out]LPVOID lpOutBuffer,
+			[in]DWORD nOutBufferSize,
+			[out]unsigned long* lpBytesReturned,
+			[in, out]LPOVERLAPPED LPOVERLAPPED);"
+
+	<stdcall: bool DeviceIoControl handle dword void* dword void* dword dword* void*>
+	^self invalidCall!
+
 duplicateHandle: sourceProcHandle hSourceHandle: sourceHandle hTargetProcessHandle: targetProcHandle 
 	lpTargetHandle: targetHandle dwDesiredAccess: accessFlagsInteger bInheritHandle: inheritBool
 	dwOptions: optionsFlagInteger
@@ -886,26 +903,19 @@ getUserDefaultLCID
 	<stdcall: dword GetUserDefaultLCID>
 	^self invalidCall!
 
-getVolumeInformation: lpRootPathName
-	lpVolumeNameBuffer: lpVolumeNameBuffer
-	nVolumeNameSize: nVolumeNameSize
-	lpVolumeSerialNumber: lpVolumeSerialNumber
-	lpMaximumComponentLength: lpMaximumComponentLength
-	lpFileSystemFlags: lpFileSystemFlags
-	lpFileSystemNameBuffer: lpFileSystemNameBuffer
-	nFileSystemNameSize: nFileSystemNameSize
+getVolumeInformation: lpRootPathName lpVolumeNameBuffer: lpVolumeNameBuffer nVolumeNameSize: nVolumeNameSize lpVolumeSerialNumber: lpVolumeSerialNumber lpMaximumComponentLength: lpMaximumComponentLength lpFileSystemFlags: lpFileSystemFlags lpFileSystemNameBuffer: lpFileSystemNameBuffer nFileSystemNameSize: nFileSystemNameSize
+	"Invoke the GetVolumeInformation() function of the module wrapped by the receiver.
+	Helpstring: Gets information about a disk including volume name, serial number, maximum component length, and file system name
 
-	"
-		BOOL GetVolumeInformation(
-			LPCTSTR lpRootPathName,
-			LPTSTR lpVolumeNameBuffer,
+		BOOL __stdcall GetVolumeInformation(
+			LPCSTR lpRootPathName,
+			LPSTR lpVolumeNameBuffer,
 			DWORD nVolumeNameSize,
-			LPDWORD lpVolumeSerialNumber, 
-			LPDWORD lpMaximumComponentLength,
-			LPDWORD lpFileSystemFlags,
-			LPTSTR lpFileSystemNameBuffer,
-			DWORD nFileSystemNameSize);
-	"
+			DWORD* lpVolumeSerialNumber,
+			DWORD* lpMaximumComponentLength,
+			DWORD* lpFileSystemFlags,
+			LPSTR lpFileSystemNameBuffer,
+			DWORD nFileSystemNameSize);"
 
 	<stdcall: bool GetVolumeInformationA lpstr lpstr dword dword* dword* dword* lpstr dword>
 	^self invalidCall!
@@ -1627,6 +1637,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #debugBreak!**auto generated**!public!win32 functions-debugging! !
 !KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
 !KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #endUpdateResource:fDiscard:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #enumDateFormats:locale:dwFlags:!public!win32 functions-natural language support! !
@@ -1682,7 +1693,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-natural language support! !
-!KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!public!win32 functions-file system! !
+!KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #globalLock:!public!win32 functions-memory management! !
