@@ -40,7 +40,8 @@ fileVersion
 	^(self dwFileVersionMS << 32) + self dwFileVersionLS!
 
 fileVersionComponents
-	"Answer a four element <Array> of <Integer> representing the file version components in order from major to minor."
+	"Answer a four element <Array> of <Integer> representing the file version components in
+	order from major to minor."
 
 	| major minor |
 	major := self dwFileVersionMS.
@@ -83,7 +84,7 @@ versionAtOffset: anInteger put: anArray
 !VS_FIXEDFILEINFO categoriesFor: #dwProductVersionLS!**compiled accessors**!public! !
 !VS_FIXEDFILEINFO categoriesFor: #dwProductVersionMS!**compiled accessors**!public! !
 !VS_FIXEDFILEINFO categoriesFor: #fileVersion!accessing!public! !
-!VS_FIXEDFILEINFO categoriesFor: #fileVersionComponents!operations!public! !
+!VS_FIXEDFILEINFO categoriesFor: #fileVersionComponents!accessing!public! !
 !VS_FIXEDFILEINFO categoriesFor: #fileVersionString!accessing!public! !
 !VS_FIXEDFILEINFO categoriesFor: #formatFileVersionString:!operations!public! !
 !VS_FIXEDFILEINFO categoriesFor: #formatProductVersionString:!operations!public! !
