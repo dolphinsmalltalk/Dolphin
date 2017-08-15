@@ -21,19 +21,19 @@ testNextLineCrOnly
 
 	#('a' 'ab' 'abc') do: 
 			[:each |
-			| chars stream |
+			| chars |
 			chars := each , (String with: Character cr) , each.
-			stream := self streamOn: chars.
-			stream reset.
+			subject := self streamOn: chars.
+			subject reset.
 			"CRT I/O stream in translated text mode does not recognise single CR as a line ending"
-			self assert: stream nextLine equals: chars.
-			self assert: stream atEnd.
-			self closeTempStream: stream]!
+			self assert: subject nextLine equals: chars.
+			self assert: subject atEnd.
+			subject close]!
 
 testNextLineUpToEof
 	#(0 1 2 127 128 129 255 256 257) do: 
 			[:each |
-			| subject f expected actual |
+			| f expected actual |
 			f := self tempWriteStream.
 			1 to: each do: [:i | f nextPut: (Character value: i % 95 + 31)].
 			expected := f contents.
@@ -43,7 +43,7 @@ testNextLineUpToEof
 			actual := subject nextLine.
 			self assert: actual equals: expected.
 			subject close]! !
-!StdioFileStreamTest categoriesFor: #maxPosition!public! !
+!StdioFileStreamTest categoriesFor: #maxPosition!constants!public! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !

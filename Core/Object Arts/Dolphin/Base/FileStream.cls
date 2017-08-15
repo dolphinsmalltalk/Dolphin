@@ -2,13 +2,14 @@
 
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize'
-	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask PageSize'
+	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileStream guid: (GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
 FileStream addClassConstant: 'BufferUpdatedMask' value: 3!
 FileStream addClassConstant: 'DirtyBufferMask' value: 2!
 FileStream addClassConstant: 'LimitsChangedMask' value: 1!
+FileStream addClassConstant: 'OwnsFileMask' value: 256!
 FileStream addClassConstant: 'PageSize' value: 8192!
 FileStream comment: 'FileStream is a specialized <ReadWriteStream> for streaming over binary and text files.
 
@@ -35,20 +36,20 @@ beBinary
 
 	collection := collection asByteArray!
 
+beDirty
+	flags := flags bitOr: 3!
+
 beText
 	"Treat the elements of the stream as Characters."
 
 	collection := collection asString!
 
 close
-	"Write any outstanding changes to the file and close it."
+	"Write any outstanding changes to the file and, if the file is owned by this stream, close it."
 
-	file notNil ifFalse: [^self].
 	self
-		flush;
-		beUnfinalizable.
-	file close.
-	file := nil!
+		beUnfinalizable;
+		free!
 
 contents
 	"Answer the contents of the file. For a read-only file answer
@@ -80,19 +81,17 @@ file: aStreamableFile
 
 	file := aStreamableFile!
 
-finalize
-	"Private - The receiver is about to be GC'd, flush any updates to the underlying medium."
-
-	self flush.
-	"Note that we can't actually close the File, because we don't know that we opened it."
-	file := nil
-
-!
-
 flush
 	"Flush any buffered modifications to the file."
 
 	(flags anyMask: DirtyBufferMask) ifTrue: [self writePage]!
+
+free
+	file notNil
+		ifTrue: 
+			[self flush.
+			self ownsFile ifTrue: [file close].
+			file := nil]!
 
 fullFlush
 	"Flush any buffered modifications to the file and
@@ -286,6 +285,12 @@ nextPutAll: aCollection
 
 	^aCollection appendToStream: self!
 
+ownsFile
+	^flags anyMask: OwnsFileMask!
+
+ownsFile: aBoolean
+	flags := flags mask: OwnsFileMask set: true!
+
 position
 	"Answer the absolute (zero-based) position of the file pointer."
 
@@ -323,7 +328,14 @@ readPageFor: anInteger
 	pageBase := (anInteger bitAnd: ##((PageSize - 1) bitInvert)) + 1.
 	readLimit := file
 				position: pageBase - 1;
-				read: collection count: PageSize!
+				read: collection count: PageSize.
+	readLimit == PageSize
+		ifFalse: 
+			["Zero out the remainder of the buffer to clear any data read for the
+			 previously visited page. This is necessary in case we position beyond the
+			 current end of file and write some data - we don't want stale data from the
+			 previous page showing through."
+			KernelLibrary default zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
 
 reset
 	self position: 0!
@@ -395,14 +407,15 @@ writePage
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
 !FileStream categoriesFor: #atEnd!public!testing! !
 !FileStream categoriesFor: #beBinary!modes!public! !
+!FileStream categoriesFor: #beDirty!buffer!private! !
 !FileStream categoriesFor: #beText!modes!public! !
 !FileStream categoriesFor: #close!operations!public! !
 !FileStream categoriesFor: #contents!accessing!public! !
 !FileStream categoriesFor: #externalType!accessing!public! !
 !FileStream categoriesFor: #file!accessing!public! !
 !FileStream categoriesFor: #file:!accessing!private! !
-!FileStream categoriesFor: #finalize!finalizing!private! !
 !FileStream categoriesFor: #flush!buffer!public! !
+!FileStream categoriesFor: #free!operations!public! !
 !FileStream categoriesFor: #fullFlush!buffer!public! !
 !FileStream categoriesFor: #growCollection!operations!private! !
 !FileStream categoriesFor: #initialize!initializing!private! !
@@ -420,6 +433,8 @@ writePage
 !FileStream categoriesFor: #nextOrNil!accessing!public! !
 !FileStream categoriesFor: #nextPut:!accessing!public! !
 !FileStream categoriesFor: #nextPutAll:!accessing!public! !
+!FileStream categoriesFor: #ownsFile!accessing!public! !
+!FileStream categoriesFor: #ownsFile:!accessing!public! !
 !FileStream categoriesFor: #position!accessing!public! !
 !FileStream categoriesFor: #position:!accessing!positioning!public! !
 !FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
@@ -453,6 +468,8 @@ initialize
 	self addClassConstant: 'DirtyBufferMask' value: 16r2.
 	"Flags set when a write to the buffer occurs (both the above flags)."
 	self addClassConstant: 'BufferUpdatedMask' value: 16r3.
+	"Flag set if the file is owned by a FileStream and should be closed by it."
+	self addClassConstant: 'OwnsFileMask' value: 16r100.
 
 	"The size of buffer used to hold part of the file contents in memory - chosen to be a
 	reasonably efficient compromise for serial and random I/O."
@@ -489,12 +506,13 @@ open: aString mode: aSymbol check: checkBoolean text: textBoolean
 	By default we share for read only."
 
 	| answer |
-	answer := self on: (File 
+	answer := self on: (File
 						open: aString
 						mode: aSymbol
 						check: checkBoolean
 						share: #readWrite)
 				text: textBoolean.
+	answer ownsFile: true.
 	aSymbol == #append ifTrue: [answer setToEnd].
 	^answer.
 	#todo	"Default sharing should be #read, but causes problems with boot"!

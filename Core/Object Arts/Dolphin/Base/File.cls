@@ -54,6 +54,23 @@ basicFree
 	handle := nil.
 	(KernelLibrary default closeHandle: fh) ifFalse: [self signalOsError: false]!
 
+beSparse
+	"Instruct Windows to store the file in sparse form. This allows very very large files to be
+	stored if they have large empty (zero) regions. This will throw an error if the file system
+	does not support sparse files, or if the file has not been opened with write permissions."
+
+	| bytesReturnedBuf |
+	bytesReturnedBuf := DWORDBytes new.
+	(KernelLibrary default
+		deviceIoControl: self asParameter
+		dwIoControlCode: FSCTL_SET_SPARSE
+		lpInBuffer: nil
+		nInBufferSize: 0
+		lpOutBuffer: nil
+		nOutBufferSize: 0
+		lpBytesReturned: bytesReturnedBuf
+		lpoverlapped: nil) ifFalse: [KernelLibrary default systemError]!
+
 checkBoundsOf: aStringOrByteArray startingAt: startIndex for: bytesToTransferInteger
 	"Private - Signal a FileException if the bounds of the transfer are out of range."
 
@@ -471,6 +488,7 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #asParameter!converting!public! !
 !File categoriesFor: #atEnd!public!testing! !
 !File categoriesFor: #basicFree!private!realizing/unrealizing! !
+!File categoriesFor: #beSparse!converting!public! !
 !File categoriesFor: #checkBoundsOf:startingAt:for:!helpers!private! !
 !File categoriesFor: #close!operations!public! !
 !File categoriesFor: #creationTime!accessing!public! !

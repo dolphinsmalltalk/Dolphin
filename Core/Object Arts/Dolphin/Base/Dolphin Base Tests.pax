@@ -650,7 +650,7 @@ PositionableStreamTest subclass: #WriteStreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReadWriteStreamTest subclass: #AbstractFileStreamTest
-	instanceVariableNames: 'tempFileName'
+	instanceVariableNames: 'tempFileName subject'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
