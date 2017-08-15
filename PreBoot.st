@@ -265,3 +265,22 @@ updateLimits
 			flags := flags bitAnd: 1 bitInvert.
 			readLimit < position ifTrue: [readLimit := position].
 			logicalFileSize < (absolute := self position) ifTrue: [logicalFileSize := absolute]]! !
+
+(FileStream compiledMethodAt: #beDirty) loseSource!
+
+SequencedStream subclass: #StdioFileStream
+	instanceVariableNames: 'stream flags name oldFd fd crtlib'
+	classVariableNames: 'DeviceMask ReadOnlyMask TextMask'
+	poolDictionaries: 'CRTConstants'
+	classInstanceVariableNames: ''!
+
+!StdioFileStream methodsFor!
+
+setStream: anExternalHandle flags: anInteger name: aString
+	stream := anExternalHandle.
+	flags := anInteger.
+	crtlib := CRTLibrary default.
+	fd := crtlib _fileno: stream.
+	name := aString! !
+
+SessionManager current stdioStreams do: [:each | each setStream: each asParameter flags: 16r80 name: nil]!
