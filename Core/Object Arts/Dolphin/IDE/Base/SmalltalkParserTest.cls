@@ -22,29 +22,57 @@ scannerClass
 
 testCharacterScanning
 	| subject tok |
+	subject := self scannerClass on: '$a$b$\t$\$  $c' readStream.
+	tok := subject next.
+	self assertToken: tok isChar: $a.
+	self assert: tok sourceInterval equals: (1 to: 2).
+	tok := subject next.
+	self assertToken: tok isChar: $b.
+	self assert: tok sourceInterval equals: (3 to: 4).
+	tok := subject next.
+	self assertToken: tok isChar: Character tab.
+	self assert: tok sourceInterval equals: (5 to: 7).
+	tok := subject next.
+	self assertToken: tok isChar: $\.
+	self assert: tok sourceInterval equals: (8 to: 9).
+	tok := subject next.
+	self assertToken: tok isChar: Character space.
+	self assert: tok sourceInterval equals: (10 to: 11).
+	tok := subject next.
+	self assertToken: tok isChar: $c.
+	self assert: tok sourceInterval equals: (13 to: 14).
 	0 to: 255
 		do: 
 			[:i |
-			| char ch |
+			| char ch source interval |
 			ch := Character value: i.
 			subject := self scannerClass on: ch printString readStream.
 			char := subject next.
 			self assertToken: char isChar: ch.
 			self assert: subject next isEof.
-			subject := self scannerClass on: ('$\x' , i asHexString) readStream.
+			source := ' $\x<1s> ' expandMacrosWith: i asHexString.
+			subject := self scannerClass on: source readStream.
 			char := subject next.
 			self assertToken: char isChar: ch.
+			interval := char sourceInterval.
+			self assert: interval equals: (2 to: source size - 1).
 			self assert: subject next isEof].
-	subject := self scannerClass on: '$\.' readStream.
-	self assertToken: subject next isChar: (Character value: 92).
+	subject := self scannerClass on: ' $\. ' readStream.
+	tok := subject next.
+	self assertToken: tok isChar: (Character value: 92).
+	self assert: tok sourceInterval equals: (2 to: 3).
 	self assert: (subject next isSpecial: $.).
 	subject := self scannerClass on: '$\c' readStream.
-	self assertToken: subject next isChar: (Character value: 92).
+	tok := subject next.
+	self assertToken: tok isChar: (Character value: 92).
+	self assert: tok sourceInterval equals: (1 to: 2).
 	tok := subject next.
 	self assert: tok isIdentifier.
 	self assert: tok value equals: 'c'.
 	subject := self scannerClass on: '$\xAG' readStream.
-	self assertToken: subject next isChar: (Character value: 16rA).
+	tok := subject next.
+	self assertToken: tok isChar: (Character value: 16rA).
+	self assert: tok sourceInterval equals: (1 to: 4).
 	tok := subject next.
 	self assert: tok isIdentifier.
 	self assert: tok value equals: 'G'!
