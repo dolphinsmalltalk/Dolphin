@@ -377,10 +377,9 @@ scanLiteralArrayToken
 	^token!
 
 scanLiteralCharacter
-	| token stop value |
+	| token value |
 	self step.	"$"
 	self atEnd ifTrue: [^self characterExpected].
-	stop := stream position.
 	value := currentCharacter.
 	self step.	"char"
 	"Extended syntax for special characters?"
@@ -402,7 +401,7 @@ scanLiteralCharacter
 	token := self literalTokenClass
 				value: value
 				start: tokenStart
-				stop: stop.
+				stop: self previousStepPosition.
 	^token!
 
 scanLiteralString
