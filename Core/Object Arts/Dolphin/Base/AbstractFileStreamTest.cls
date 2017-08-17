@@ -2,7 +2,7 @@
 
 ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	instanceVariableNames: 'tempFileName subject'
-	classVariableNames: ''
+	classVariableNames: 'RandomData1 RandomData2'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractFileStreamTest guid: (GUID fromString: '{fc7d3bee-d1b0-477d-a33c-33ee6cfb0339}')!
@@ -24,8 +24,26 @@ closeTempStream: aStream
 
 	aStream close!
 
+initializeRandomTestData
+	| r bytes |
+	r := RandomCRT new.
+	bytes := ByteArray writeStream: 32769.
+	32000 timesRepeat: [bytes nextPut: (r next * 256) truncated].
+	RandomData1 := bytes contents.
+	bytes reset.
+	32769 timesRepeat: [bytes nextPut: (r next * 256) truncated].
+	RandomData2 := bytes contents!
+
 maxPosition
 	^self subclassResponsibility!
+
+randomData1
+	RandomData1 isNil ifTrue: [self initializeRandomTestData].
+	^RandomData1!
+
+randomData2
+	RandomData2 isNil ifTrue: [self initializeRandomTestData].
+	^RandomData2!
 
 readWriteStreamOnString: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
@@ -120,22 +138,25 @@ testAppend
 	self assert: actual equals: 'hello world'!
 
 testNextPutAllStartingAt
-	| r initialData dataToWrite |
-	r := Random new.
-	initialData := ((1 to: 32000) collect: [:each | (r next * 256) truncated]) asByteArray.
-	dataToWrite := ((1 to: 32769) collect: [:each | (r next * 256) truncated]) asByteArray.
-	self blockWriteIntervals do: 
+	| initialData dataToWrite file |
+	initialData := self randomData1.
+	dataToWrite := self randomData2.
+	file := File
+				open: tempFileName
+				mode: #truncate
+				check: false.
+	
+	[self blockWriteIntervals do: 
 			[:each |
-			| f expected written contents size |
-			f := File
-						open: tempFileName
-						mode: #truncate
-						check: false.
-			[f write: initialData] ensure: [f close].
+			| expected written actual size |
+			file
+				size: 0;
+				write: initialData.
+			subject := self streamClass on: file text: false.
+			subject reset.
 			"Verify it was written correctly in the first place"
-			written := File readAllBytes: tempFileName.
+			written := subject upToEnd.
 			self assert: written equals: initialData.
-			subject := self tempReadWriteStream.
 			subject position: each first - 1.
 			size := each last - each first + 1.
 			subject
@@ -153,23 +174,30 @@ testNextPutAllStartingAt
 						, (dataToWrite copyFrom: each first to: each last).
 			each last <= initialData size
 				ifTrue: [expected := expected , (initialData copyFrom: each last + 1)].
-			contents := File readAllBytes: tempFileName.
-			self assert: contents equals: expected]!
+			actual := ByteArray newFixed: file size.
+			file
+				reset;
+				read: actual.
+			self assert: actual equals: expected]]
+			ensure: 
+				[file
+					size: 0;
+					close]!
 
 testNextPutAllStartingAt2
-	| r initialData dataToWrite |
-	r := Random new.
-	initialData := ((1 to: 32000) collect: [:each | (r next * 256) truncated]) asByteArray.
-	dataToWrite := ((1 to: 32769) collect: [:each | (r next * 256) truncated]) asByteArray.
-	self blockWriteIntervals do: 
-			[:each |
-			| expected contents |
-			"truncate the file"
-			(File
+	| initialData dataToWrite file |
+	initialData := self randomData1.
+	dataToWrite := self randomData2.
+	file := File
 				open: tempFileName
 				mode: #truncate
-				check: false) close.
-			subject := self tempReadWriteStream.
+				check: false.
+	self blockWriteIntervals do: 
+			[:each |
+			| expected actual |
+			"truncate the file"
+			file size: 0.
+			subject := self streamClass on: file text: false.
 			subject
 				next: each first - 1
 				putAll: initialData
@@ -194,8 +222,11 @@ testNextPutAllStartingAt2
 						, (dataToWrite copyFrom: each first to: each last).
 			each last <= initialData size
 				ifTrue: [expected := expected , (initialData copyFrom: each last + 1)].
-			contents := File readAllBytes: tempFileName.
-			self assert: contents equals: expected]!
+			actual := ByteArray newFixed: file size.
+			file
+				reset;
+				read: actual.
+			self assert: actual equals: expected]!
 
 testPositionAfterWrite
 	| actual |
@@ -321,7 +352,10 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #blockWriteIntervals!constants!private! !
 !AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #initializeRandomTestData!initializing!private! !
 !AbstractFileStreamTest categoriesFor: #maxPosition!constants!public! !
+!AbstractFileStreamTest categoriesFor: #randomData1!constants!private! !
+!AbstractFileStreamTest categoriesFor: #randomData2!constants!private! !
 !AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #setUp!public!running! !
 !AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !

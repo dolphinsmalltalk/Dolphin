@@ -58,10 +58,10 @@ seed
 
 	^seed!
 
-seed: anInteger
-	"Set the seed of the Random stream to anInteger (or 1 if zero)."
+seed: aNumber
+	"Set the seed of the Random stream to aNumber (or 1 if zero)."
 
-	seed := anInteger max: 1!
+	seed := aNumber max: 1!
 
 skip: anInteger
 	"Set the receiver's position reference to be the current position plus
