@@ -43,7 +43,7 @@ attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean
 	specified read/write and text/binary modes (usual Smalltalk FileStream conventions for the
 	interpretation of the mode and text parameters applies)."
 
-	| newFd crt readOnly handle f mode |
+	| newFd crt handle f mode |
 	crt := CRTLibrary default.
 	"1: Preserve the existing file descriptor (fd) for later restoration by dup'ing it"
 	oldFd := crt _dup: fdInteger.
@@ -190,7 +190,7 @@ next
 	though feof() remains true. To avoid this contradictory behaviour we test up front for feof() (via #atEnd)
 	and do not attempt to read further input."
 
-	self atEnd
+	(crtlib feof: stream)
 		ifFalse: 
 			[| ch |
 			ch := crtlib fgetc: stream.
@@ -408,7 +408,16 @@ tab
 tab: anInteger 
 	"Append the specified number of tabs to the receiver."
 
-	anInteger timesRepeat: [self tab]! !
+	anInteger timesRepeat: [self tab]!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
+	the current position to the end)."
+
+	"Implementation Note: Override to provide a more efficient implementation (#atEnd test is
+	very slow on StdioFileStreams)."
+
+	^self next: self size - self position! !
 !StdioFileStream categoriesFor: #asParameter!converting!public! !
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
 !StdioFileStream categoriesFor: #attach:toFd:mode:text:!initializing!private! !
@@ -452,6 +461,7 @@ tab: anInteger
 !StdioFileStream categoriesFor: #space!constants!public! !
 !StdioFileStream categoriesFor: #tab!accessing!public! !
 !StdioFileStream categoriesFor: #tab:!accessing!public! !
+!StdioFileStream categoriesFor: #upToEnd!accessing!public! !
 
 StdioFileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
 StdioFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
@@ -504,6 +514,51 @@ newStream: anExternalHandle flags: anInteger name: aString
 		setStream: anExternalHandle
 		flags: anInteger
 		name: aString!
+
+on: aFile
+	"Answer an intance of the receiver attached to the open file aFile."
+
+	^self on: aFile text: true!
+
+on: aFile text: aBoolean
+	"Answer an intance of the receiver attached to the open file aFile, in binary or text mode
+	depending on the argument, aBoolean."
+
+	| kernel oshandle proc crt fd handle mode f |
+	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
+	"Because _fclose will close the underlying file, we must duplicate the File handle or we
+	will end up closing a File we may not own."
+	oshandle := ExternalHandle new.
+	kernel := KernelLibrary default.
+	proc := kernel getCurrentProcess.
+	(kernel
+		duplicateHandle: proc
+		hSourceHandle: aFile asParameter
+		hTargetProcessHandle: proc
+		lpTargetHandle: oshandle
+		dwDesiredAccess: 0
+		bInheritHandle: false
+		dwOptions: Win32Constants.DUPLICATE_SAME_ACCESS) ifFalse: [KernelLibrary default systemError].
+	crt := CRTLibrary default.
+	fd := crt _open_osfhandle: oshandle flags: 0.
+	aFile isWriteable
+		ifTrue: 
+			[mode := 'r+'.
+			f := 0]
+		ifFalse: 
+			[mode := 'r'.
+			f := ReadOnlyMask].
+	aBoolean
+		ifTrue: 
+			[mode := mode copyWith: $t.
+			f := f bitOr: TextMask]
+		ifFalse: [mode := mode copyWith: $b].
+	handle := crt _fdopen: fd mode: mode.
+	handle isNil ifTrue: [CRTError signal].
+	^self
+		newStream: handle
+		flags: f
+		name: aFile name!
 
 read: aString 
 	"Answer a new text mode instance of the receiver whose future sequence values consist
@@ -645,6 +700,8 @@ write: aString text: aBoolean
 !StdioFileStream class categoriesFor: #fromHandle:!instance creation!public! !
 !StdioFileStream class categoriesFor: #initialize!development!initializing!public! !
 !StdioFileStream class categoriesFor: #newStream:flags:name:!instance creation!private! !
+!StdioFileStream class categoriesFor: #on:!instance creation!public! !
+!StdioFileStream class categoriesFor: #on:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:type:!instance creation!public! !
