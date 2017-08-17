@@ -227,6 +227,7 @@ Win32Constants at: 'DT_TOP' put: 16r0!
 Win32Constants at: 'DT_VCENTER' put: 16r4!
 Win32Constants at: 'DT_WORD_ELLIPSIS' put: 16r40000!
 Win32Constants at: 'DT_WORDBREAK' put: 16r10!
+Win32Constants at: 'DUPLICATE_SAME_ACCESS' put: 16r2!
 Win32Constants at: 'DWL_MSGRESULT' put: 16r0!
 Win32Constants at: 'EDGE_BUMP' put: 16r9!
 Win32Constants at: 'EDGE_ETCHED' put: 16r6!
