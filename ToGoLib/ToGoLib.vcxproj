@@ -323,7 +323,6 @@
     <MASM Include="..\constobj.asm" />
     <MASM Include="..\ExternalBytes.asm" />
     <MASM Include="..\ExternalCall.asm" />
-    <MASM Include="..\flotprimasm.asm" />
     <MASM Include="..\primasm.asm" />
     <MASM Include="..\SmallIntPrim.asm" />
   </ItemGroup>

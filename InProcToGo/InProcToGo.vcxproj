@@ -201,7 +201,6 @@
     <None Include="..\constobj.asm" />
     <None Include="..\ExternalBytes.asm" />
     <None Include="..\ExternalCall.asm" />
-    <None Include="..\flotprimasm.asm" />
     <None Include="..\Interprt.inl" />
     <None Include="..\InterprtPrim.inl" />
     <None Include="..\InterprtProc.inl" />
