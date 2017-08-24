@@ -1,0 +1,89 @@
+| package |
+package := Package name: 'FBench'.
+package paxVersion: 1;
+	basicComment: '        John Walker''s Floating Point Benchmark, derived from...
+
+        Marinchip Interactive Lens Design System
+
+                                     John Walker   December 1980
+
+        By John Walker
+           http://www.fourmilab.ch/
+
+        This program may be used, distributed, and modified freely as
+        long as the origin information is preserved.
+
+        This is a complete optical design raytracing algorithm,
+        stripped of its user interface and recast into Smalltalk-80.
+        It not only determines execution speed on an extremely
+        floating point (including trig function) intensive real-world
+        application, it allows checking accuracy on an algorithm that
+        is exquisitely sensitive to errors.  The performance of this
+        program is typically far more sensitive to changes in the
+        efficiency of the trigonometric library routines than the
+        average floating point program.
+
+        Ported from the Pascal language implementation in October 2007
+        by John Walker.
+    
+
+      Fixed decimal floating point formatting:
+            <number> toDecimal: width places: decimals
+
+    Fbench new benchmark: 4573170 " 1000 "'.
+
+
+package classNames
+	add: #Fbench;
+	yourself.
+
+package methodNames
+	add: #Number -> #toDecimal:places:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Fbench
+	instanceVariableNames: 'testcase paraxial radiusOfCurvature objectDistance rayHeight axisSlopeAngle fromIndex toIndex currentSurfaces clearAperture niter odSa odCline odFline aberrLspher aberrOsc aberrLchrom maxLspher maxOsc maxLchrom'
+	classVariableNames: 'ALine BLine CLine DLine ELine FLine GprimeLine HLine spectralLine'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Number methodsFor!
+
+toDecimal: width places: places
+            | nabs sgn whole frac fracs fnum fracpart |
+            nabs := self abs.
+            nabs := nabs + (0.5 * (0.1 raisedToInteger: (places))).
+            sgn := self sign.
+            whole := (nabs integerPart) floor.
+            frac := nabs fractionPart.
+            fracs := (frac asScaledDecimal: places) displayString.
+            fracpart := ''.
+            3 to: (fracs size) do: [ :i | fracpart := fracpart , ((fracs at: i) displayString) ].
+            fnum := (((sgn < 0) ifTrue: [ '-' ] ifFalse: [ ' ' ]) displayString) ,
+                (whole displayString), '.', (fracpart displayString).
+            [(fnum size) < width] whileTrue: [ fnum := ' ' , fnum ].
+            ^fnum
+        ! !
+!Number categoriesFor: #toDecimal:places:!public! !
+
+"End of package definition"!
+
