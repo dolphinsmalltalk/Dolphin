@@ -2,7 +2,8 @@
 ;; ISTASM.INC
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-.586
+.686
+.XMM
 .MODEL FLAT
 OPTION CASEMAP:NONE
 OPTION NOLJMP
@@ -358,28 +359,18 @@ Process	STRUCT 2t
 	m_primitiveFailureCode	Oop				?			; SmallInteger?
 	m_primitiveFailureData	Oop				?			; Any
 	m_fpeMask				Oop				?			; SmallInteger
-	m_tls					POTE			?			; Array
+	m_waitOverlap			POTE			?			; Semaphore
 	m_thread				Oop				?
 	m_exceptionEnv			POTE			?
+	m_alreadyPrinnted		Oop				?
 	m_reserved1				Oop				?
-	m_reserved2				Oop				?
 	m_debugger				POTE			?
 	m_name					Oop				?
-	m_reserved3				Oop				?
+	m_reserved2				Oop				?
 	m_stack					Oop				0t DUP (?)
 Process	ENDS
 
 PProcess TYPEDEF 	PTR Process
-
-
-;ProcessorScheduler	STRUCT 2t
-;	m_processLists			POTE			?
-;	m_activeProcess			POTE			?
-;	m_pendingReturns		POTE			?
-;	m_comStubs				POTE			?
-;	m_unused				Oop				?
-;	m_pendingTerms			POTE			?
-;ProcessorScheduler	ENDS
 
 ExternalStructure STRUCT 2t
 	m_contents			Oop				?
@@ -439,19 +430,6 @@ VariableBindingObj STRUCT 2t
 	m_key			Oop			?
 	m_value			Oop			?
 VariableBindingObj ENDS
-
-; N.B. This must be kept up to date with the structure in Interprt.h
-MethodCacheEntry STRUCT
-	; Seems to be better not to store the selector in the method cache
-	selector				POTE		?
-	classPointer			POTE		?
-	method					POTE		?
-	primAddress				DWORD		?
-MethodCacheEntry ENDS
-
-
-METHODCACHE EQU ?methodCache@Interpreter@@0PAUMethodCacheEntry@1@A
-extern  METHODCACHE:PTR MethodCacheEntry
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ member imports

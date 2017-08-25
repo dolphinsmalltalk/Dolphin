@@ -244,8 +244,9 @@ bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeade
 				VirtualObject* vObj = static_cast<VirtualObject*>(obj);
 				VirtualObjectHeader* pObjHeader = vObj->getHeader();
 
-				imageFile.write(pObjHeader, sizeof(VirtualObjectHeader));
-				dwDataSize += sizeof(VirtualObjectHeader);
+				// We only write the max allocation size from the header. The rest of the info (fxstate) is not preserved across image saves.
+				imageFile.write(pObjHeader, sizeof(MWORD));
+				dwDataSize += sizeof(MWORD);
 			}
 
 			MWORD bytesToWrite = ote->sizeOf();

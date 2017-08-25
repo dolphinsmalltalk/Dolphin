@@ -496,7 +496,7 @@ static void DumpProcess(ProcessOTE* oteProc, ostream& logStream)
 			<< ", callbacks " << pProc->CallbackDepth() << endl;
 		logStream << "last failure " << pProc->PrimitiveFailureCode()
 			<< ":" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
-			<< ", FPE mask " << pProc->FpeMask()
+			<< ", FP control " << hex << pProc->FpControl()
 			<< ", thread " << pProc->Thread();
 	}
 	logStream << '}' << endl;

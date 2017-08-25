@@ -107,8 +107,54 @@ primitiveFloatEQ EQU ?primitiveFloatEqual@Interpreter@@CIPAIXZ
 extern primitiveFloatEQ:near32
 primitiveFloatLT EQU ?primitiveFloatLessThan@Interpreter@@CIPAIXZ
 extern primitiveFloatLT:near32
+primitiveFloatLE EQU ?primitiveFloatLessOrEqual@Interpreter@@CIPAIXZ
+extern primitiveFloatLE:near32
 primitiveFloatGT EQU ?primitiveFloatGreaterThan@Interpreter@@CIPAIXZ
 extern primitiveFloatGT:near32
+primitiveFloatGE EQU ?primitiveFloatGreaterOrEqual@Interpreter@@CIPAIXZ
+extern primitiveFloatGE:near32
+primitiveFloatSin EQU ?primitiveFloatSin@Interpreter@@CIPAIXZ
+extern primitiveFloatSin:near32
+primitiveFloatCos EQU ?primitiveFloatCos@Interpreter@@CIPAIXZ
+extern primitiveFloatCos:near32
+primitiveFloatTan EQU ?primitiveFloatTan@Interpreter@@CIPAIXZ
+extern primitiveFloatTan:near32
+primitiveFloatArcSin EQU ?primitiveFloatArcSin@Interpreter@@CIPAIXZ
+extern primitiveFloatArcSin:near32
+primitiveFloatArcCos EQU ?primitiveFloatArcCos@Interpreter@@CIPAIXZ
+extern primitiveFloatArcCos:near32
+primitiveFloatArcTan EQU ?primitiveFloatArcTan@Interpreter@@CIPAIXZ
+extern primitiveFloatArcTan:near32
+primitiveFloatArcTan2 EQU ?primitiveFloatArcTan2@Interpreter@@CIPAIXZ
+extern primitiveFloatArcTan2:near32
+primitiveFloatExp EQU ?primitiveFloatExp@Interpreter@@CIPAIXZ
+extern primitiveFloatExp:near32
+primitiveFloatLog EQU ?primitiveFloatLog@Interpreter@@CIPAIXZ
+extern primitiveFloatLog:near32
+primitiveFloatSqrt EQU ?primitiveFloatSqrt@Interpreter@@CIPAIXZ
+extern primitiveFloatSqrt:near32
+primitiveFloatLog10 EQU ?primitiveFloatLog10@Interpreter@@CIPAIXZ
+extern primitiveFloatLog10:near32
+primitiveFloatTimesTwoPower EQU ?primitiveFloatTimesTwoPower@Interpreter@@CIPAIXZ
+extern primitiveFloatTimesTwoPower:near32
+primitiveFloatAbs EQU ?primitiveFloatAbs@Interpreter@@CIPAIXZ
+extern primitiveFloatAbs:near32
+primitiveFloatRaisedTo EQU ?primitiveFloatRaisedTo@Interpreter@@CIPAIXZ
+extern primitiveFloatRaisedTo:near32
+primitiveFloatFloor EQU ?primitiveFloatFloor@Interpreter@@CIPAIXZ
+extern primitiveFloatFloor:near32
+primitiveFloatCeiling EQU ?primitiveFloatCeiling@Interpreter@@CIPAIXZ
+extern primitiveFloatCeiling:near32
+primitiveFloatExponent EQU ?primitiveFloatExponent@Interpreter@@CIPAIXZ
+extern primitiveFloatExponent:near32
+primitiveFloatNegated EQU ?primitiveFloatNegated@Interpreter@@CIPAIXZ
+extern primitiveFloatNegated:near32
+primitiveFloatClassify EQU ?primitiveFloatClassify@Interpreter@@CIPAIXZ
+extern primitiveFloatClassify:near32
+primitiveFloatFractionPart EQU ?primitiveFloatFractionPart@Interpreter@@CIPAIXZ
+extern primitiveFloatFractionPart:near32
+primitiveFloatIntegerPart EQU ?primitiveFloatIntegerPart@Interpreter@@CIPAIXZ
+extern primitiveFloatIntegerPart:near32
 
 ; Imports from ExternalBytes.asm
 extern primitiveAddressOf:near32
@@ -436,13 +482,13 @@ DWORD		primitiveBitXor									; case 42	Float>>#-
 DWORD		primitiveBitShift								; case 43	Float>>#<
 DWORD		primitiveSmallIntegerPrintString				; case 44	Float>>#> in Smalltalk-80
 DWORD		primitiveFloatGT								; case 45	Float>>#<= in Smalltalk-80
-DWORD		unusedPrimitive									; case 46	Float>>#>= in Smalltalk-80
-DWORD		unusedPrimitive									; case 47	Float>>#= in Smalltalk-80
+DWORD		primitiveFloatGE								; case 46	Float>>#>= in Smalltalk-80
+DWORD		primitiveFloatEQ								; case 47	Float>>#= in Smalltalk-80
 DWORD		primitiveAsyncDLL32CallThunk					; case 48	Float>>#~= in Smalltalk-80
 DWORD		primitiveBasicAt								; case 49	Float>>#* in Smalltalk-80
 DWORD		primitiveBasicAtPut								; case 50	Float>>#/ in Smalltalk-80
 DWORD		primitiveStringCollates							; case 51	Float>>#truncated
-DWORD		primitiveStringNextIndexOfFromTo								; case 52	Float>>#fractionPart in Smalltalk-80
+DWORD		primitiveStringNextIndexOfFromTo				; case 52	Float>>#fractionPart in Smalltalk-80
 DWORD		primitiveQuo									; case 53	Float>>#exponent in Smalltalk-80
 DWORD		primitiveHighBit								; case 54	Float>>#timesTwoPower: in Smalltalk-80
 DWORD		primitiveStringCompare							; case 55	Not used in Smalltalk-80
@@ -586,28 +632,28 @@ DWORD		primitiveMicrosecondClockValue					; case 189
 DWORD		primitiveNewFromStack							; case 190
 DWORD		primitiveQWORDAt								; case 191
 DWORD		primitiveSQWORDAt								; case 192
-DWORD		unusedPrimitive									; case 193
-DWORD		unusedPrimitive									; case 194
-DWORD		unusedPrimitive									; case 195
-DWORD		unusedPrimitive									; case 196
-DWORD		unusedPrimitive									; case 197
-DWORD		unusedPrimitive									; case 198
-DWORD		unusedPrimitive									; case 199
-DWORD		unusedPrimitive									; case 200
-DWORD		unusedPrimitive									; case 201
-DWORD		unusedPrimitive									; case 202
-DWORD		unusedPrimitive									; case 203
-DWORD		unusedPrimitive									; case 204
-DWORD		unusedPrimitive									; case 205
-DWORD		unusedPrimitive									; case 206
-DWORD		unusedPrimitive									; case 207
-DWORD		unusedPrimitive									; case 208
-DWORD		unusedPrimitive									; case 209
-DWORD		unusedPrimitive									; case 210
-DWORD		unusedPrimitive									; case 211
-DWORD		unusedPrimitive									; case 212
-DWORD		unusedPrimitive									; case 213
-DWORD		unusedPrimitive									; case 214
+DWORD		primitiveFloatSin								; case 193
+DWORD		primitiveFloatTan								; case 194
+DWORD		primitiveFloatCos								; case 195
+DWORD		primitiveFloatArcSin							; case 196
+DWORD		primitiveFloatArcTan							; case 197
+DWORD		primitiveFloatArcCos							; case 198
+DWORD		primitiveFloatArcTan2							; case 199
+DWORD		primitiveFloatLog								; case 200
+DWORD		primitiveFloatExp								; case 201
+DWORD		primitiveFloatSqrt								; case 202
+DWORD		primitiveFloatLog10								; case 203
+DWORD		primitiveFloatTimesTwoPower						; case 204
+DWORD		primitiveFloatAbs								; case 205
+DWORD		primitiveFloatRaisedTo							; case 206
+DWORD		primitiveFloatFloor								; case 207
+DWORD		primitiveFloatCeiling							; case 208
+DWORD		primitiveFloatExponent							; case 209
+DWORD		primitiveFloatNegated							; case 210
+DWORD		primitiveFloatClassify							; case 211
+DWORD		primitiveFloatFractionPart						; case 212
+DWORD		primitiveFloatIntegerPart						; case 213
+DWORD		primitiveFloatLE								; case 214
 DWORD		unusedPrimitive									; case 215
 DWORD		unusedPrimitive									; case 216
 DWORD		unusedPrimitive									; case 217
@@ -618,7 +664,37 @@ DWORD		unusedPrimitive									; case 221
 DWORD		unusedPrimitive									; case 222
 DWORD		unusedPrimitive									; case 223
 DWORD		unusedPrimitive									; case 224
-
+DWORD		unusedPrimitive									; case 225
+DWORD		unusedPrimitive									; case 226
+DWORD		unusedPrimitive									; case 227
+DWORD		unusedPrimitive									; case 228
+DWORD		unusedPrimitive									; case 229
+DWORD		unusedPrimitive									; case 230
+DWORD		unusedPrimitive									; case 231
+DWORD		unusedPrimitive									; case 232
+DWORD		unusedPrimitive									; case 233
+DWORD		unusedPrimitive									; case 234
+DWORD		unusedPrimitive									; case 235
+DWORD		unusedPrimitive									; case 236
+DWORD		unusedPrimitive									; case 237
+DWORD		unusedPrimitive									; case 238
+DWORD		unusedPrimitive									; case 239
+DWORD		unusedPrimitive									; case 240
+DWORD		unusedPrimitive									; case 241
+DWORD		unusedPrimitive									; case 242
+DWORD		unusedPrimitive									; case 243
+DWORD		unusedPrimitive									; case 244
+DWORD		unusedPrimitive									; case 245
+DWORD		unusedPrimitive									; case 246
+DWORD		unusedPrimitive									; case 247
+DWORD		unusedPrimitive									; case 248
+DWORD		unusedPrimitive									; case 249
+DWORD		unusedPrimitive									; case 250
+DWORD		unusedPrimitive									; case 251
+DWORD		unusedPrimitive									; case 252
+DWORD		unusedPrimitive									; case 253
+DWORD		unusedPrimitive									; case 254
+DWORD		unusedPrimitive									; case 255
 
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)

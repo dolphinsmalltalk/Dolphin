@@ -232,6 +232,7 @@ MWORD* __stdcall AllocateVirtualSpace(MWORD maxBytes, MWORD initialBytes)
 	initialBytes = _ROUND2(initialBytes + sizeof(VirtualObjectHeader), dwPageSize);
 	ASSERT(initialBytes % dwPageSize == 0);
 
+	// Note that VirtualAlloc initializes the committed memory to zeroes.
 	pLocation = static_cast<VirtualObjectHeader*>(::VirtualAlloc(pLocation, initialBytes, MEM_COMMIT, PAGE_READWRITE));
 	if (!pLocation)
 		// This is also continuable

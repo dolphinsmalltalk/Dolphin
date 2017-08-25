@@ -14,6 +14,10 @@
 
 #pragma code_seg(FPPRIM_SEG)
 
+// Since we are generally flushing back to Smalltalk objects in memory between FP operations, we don't need /Fp:precise
+#pragma float_control(precise, off)
+
+#include <intrin.h>
 #include <string.h>
 #include <math.h>
 #include <float.h>
@@ -31,7 +35,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Primitive Helper routines
 
-#ifdef _DEBUG
+#if 1//def _DEBUG
 	int __cdecl _matherr( struct _exception *except )
 	{
 		_asm int 3;
@@ -78,34 +82,32 @@ Oop* __fastcall Interpreter::primitiveAsFloat()
 	return sp;
 }
 
-// We need to be careful here - C semantics for truncation are too
-// crude; we must check that the receiver is representable in 30
-// or 31 bits
-Oop* __fastcall Interpreter::primitiveTruncated()
+template <class Op> __forceinline static Oop* primitiveTruncationOp(Op& op)
 {
-	Oop* const sp = m_registers.m_stackPointer;
+	Oop* const sp = Interpreter::m_registers.m_stackPointer;
 
-	// This primitive should only be called from the Float class and so does not
-	// check that the receiver is a float
 	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(*sp);
-	ASSERT(isAFloat(Oop(oteFloat)));
 	Float* floatReceiver = oteFloat->m_location;
 
-	double fValue = floatReceiver->m_fValue;
+	double fValue = op(floatReceiver->m_fValue);
 
 	if (fValue < MinSmallInteger || fValue > MaxSmallInteger)
 	{
-		// It's going to have to be a LargeInteger...
+		// It may to have to be a LargeInteger...
 		if (fValue > double(_I64_MIN) && fValue < double(_I64_MAX))
 		{
 			// ... representable in 64-bits
 			LONGLONG liTrunc = static_cast<LONGLONG>(fValue);
 			Oop truncated = Integer::NewSigned64(liTrunc);
+			// The truncated value might actually be a SmallInteger, e.g. (SmallInteger maximum + 0.1) truncated
 			*sp = truncated;
 			ObjectMemory::AddToZct(truncated);
 		}
 		else
-			return primitiveFailure(1);
+		{
+			// Too large, have to handle it in Smalltalk
+			return NULL;
+		}
 	}
 	else
 	{
@@ -114,10 +116,46 @@ Oop* __fastcall Interpreter::primitiveTruncated()
 	}
 
 	return sp;
+
+}
+
+
+Oop* __fastcall Interpreter::primitiveTruncated()
+{
+	struct op {
+		double operator() (const double& x) const { return x; }
+	};
+
+	return primitiveTruncationOp(op());
+}
+
+
+Oop* __fastcall Interpreter::primitiveFloatFloor()
+{
+	struct op {
+		double operator() (const double& x) const { return floor(x); }
+	};
+
+	return primitiveTruncationOp(op());
+}
+
+Oop* __fastcall Interpreter::primitiveFloatCeiling()
+{
+	struct op {
+		double operator() (const double& x) const { return ceil(x); }
+	};
+
+	return primitiveTruncationOp(op());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 //	Float comparison primitives
+
+// For comparison, we do need precise so that NaN comparisons are performed correctly
+// When precise is turned off the compiler generates code for the conditional operator
+// statements that defaults the result to true.
+// These is no significant performance impact of using precise for these comparisons.
+#pragma float_control(precise, on, push)
 
 template <class P1, class P2> __forceinline static Oop* primitiveFloatCompare(P1 &pred, P2& predMixed)
 {
@@ -165,40 +203,37 @@ Oop* Interpreter::primitiveFloatGreaterThan()
 	return primitiveFloatCompare(op_greater<double, double>(), op_greater<double, SMALLINTEGER>());
 }
 
+
+template <class T1, class T2> struct op_lessOrEqual {
+	bool operator() (const T1& x, const T2& y) const { return x<=y; }
+};
+
+Oop* Interpreter::primitiveFloatLessOrEqual()
+{
+	return primitiveFloatCompare(op_lessOrEqual<double, double>(), op_lessOrEqual<double, SMALLINTEGER>());
+}
+
+template <class T1, class T2> struct op_greaterOrEqual {
+	bool operator() (const T1& x, const T2& y) const { return x>=y; }
+};
+
+Oop* Interpreter::primitiveFloatGreaterOrEqual()
+{
+	return primitiveFloatCompare(op_greaterOrEqual<double, double>(), op_greaterOrEqual<double, SMALLINTEGER>());
+}
+
+template <class T1, class T2> struct op_equal {
+	bool operator() (const T1& x, const T2& y) const { return x==y; }
+};
+
 Oop* Interpreter::primitiveFloatEqual()
 {
-	Oop* const sp = Interpreter::m_registers.m_stackPointer;
-
-	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
-	Oop oopArg = *sp;
-	if ((Oop)oteReceiver != oopArg)
-	{
-		if (!ObjectMemoryIsIntegerObject(oopArg))
-		{
-			FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
-			if (oteArg->m_oteClass == Pointers.ClassFloat)
-			{
-				*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == oteArg->m_location->m_fValue
-					? Pointers.True : Pointers.False);
-			}
-			else
-			{
-				return NULL;
-			}
-		}
-		else
-		{
-			*(sp - 1) = reinterpret_cast<Oop>(oteReceiver->m_location->m_fValue == ObjectMemoryIntegerValueOf(oopArg)
-				? Pointers.True : Pointers.False);
-		}
-	}
-	else
-	{
-		*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
-	}
-
-	return sp - 1;
+	// Note that we can't optimise this for identical without allowing for the NaN case. Not really worth it.
+	return primitiveFloatCompare(op_equal<double, double>(), op_equal<double, SMALLINTEGER>());
 }
+
+#pragma float_control(pop)
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //	Float arithmetic primitives
@@ -214,7 +249,7 @@ Oop* Interpreter::primitiveFloatEqual()
 // The conditions are also arranged so that the conditional forward jumps are taken in the less
 // common case, which reduces branch misprediction overhead.
 
-template <class O1, class O2> __forceinline static Oop* primitiveFloatArithOp(O1 &op, O2& opMixed)
+template <class O1, class O2> __forceinline static Oop* primitiveFloatBinaryOp(O1 &op, O2& opMixed)
 {
 	Oop* sp = Interpreter::m_registers.m_stackPointer;
 	Oop oopArg = *sp--;
@@ -252,7 +287,7 @@ template <class T1, class T2> struct op_add {
 
 Oop* Interpreter::primitiveFloatAdd()
 {
-	return primitiveFloatArithOp(op_add<double, double>(), op_add<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(op_add<double, double>(), op_add<double, SMALLINTEGER>());
 }
 
 template <class T1, class T2> struct op_sub {
@@ -261,7 +296,7 @@ template <class T1, class T2> struct op_sub {
 
 Oop* Interpreter::primitiveFloatSubtract()
 {
-	return primitiveFloatArithOp(op_sub<double, double>(), op_sub<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(op_sub<double, double>(), op_sub<double, SMALLINTEGER>());
 }
 
 template <class T1, class T2> struct op_mul {
@@ -270,7 +305,7 @@ template <class T1, class T2> struct op_mul {
 
 Oop* Interpreter::primitiveFloatMultiply()
 {
-	return primitiveFloatArithOp(op_mul<double, double>(), op_mul<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(op_mul<double, double>(), op_mul<double, SMALLINTEGER>());
 }
 
 template <class T1, class T2> struct op_div {
@@ -279,7 +314,209 @@ template <class T1, class T2> struct op_div {
 
 Oop* Interpreter::primitiveFloatDivide()
 {
-	return primitiveFloatArithOp(op_div<double, double>(), op_div<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(op_div<double, double>(), op_div<double, SMALLINTEGER>());
+}
+
+template <class O1> __forceinline static Oop* primitiveFloatUnaryOp(O1 &op)
+{
+	Oop* sp = Interpreter::m_registers.m_stackPointer;
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
+	Float* receiver = oteReceiver->m_location;
+
+	FloatOTE* oteResult = Float::New();
+	oteResult->m_location->m_fValue = op(receiver->m_fValue);
+
+	*sp = reinterpret_cast<Oop>(oteResult);
+	ObjectMemory::AddToZct((OTE*)oteResult);
+	return sp;
+}
+
+Oop* Interpreter::primitiveFloatSin()
+{
+	struct op {
+		double operator() (const double& x) const { return sin(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatCos()
+{
+	struct op {
+		double operator() (const double& x) const { return cos(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatTan()
+{
+	struct op {
+		double operator() (const double& x) const { return tan(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatArcSin()
+{
+	struct op {
+		double operator() (const double& x) const { return asin(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatArcCos()
+{
+	struct op {
+		double operator() (const double& x) const { return acos(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatArcTan()
+{
+	struct op {
+		double operator() (const double& x) const { return atan(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+template <class T1, class T2> struct op_atan2 {
+	double operator() (const T1& y, const T2& x) const { return atan2(y, x); }
+};
+
+Oop* Interpreter::primitiveFloatArcTan2()
+{
+	return primitiveFloatBinaryOp(op_atan2<double, double>(), op_atan2<double, SMALLINTEGER>());
+}
+
+Oop* Interpreter::primitiveFloatExp()
+{
+	struct op {
+		double operator() (const double& x) const { return exp(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatLog()
+{
+	struct op {
+		double operator() (const double& x) const { return log(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatLog10()
+{
+	struct op {
+		double operator() (const double& x) const { return log10(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatSqrt()
+{
+	struct op {
+		double operator() (const double& x) const { return sqrt(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatTimesTwoPower()
+{
+	Oop* sp = Interpreter::m_registers.m_stackPointer;
+	Oop oopArg = *sp--;
+
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		SMALLINTEGER arg = ObjectMemoryIntegerValueOf(oopArg);
+
+		FloatOTE* oteResult = Float::New();
+		FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
+		// Compiler doesn't have an intrinsic form for ldexp(), and the lib functions uses old x87 instructions
+		oteResult->m_location->m_fValue = ldexp(oteReceiver->m_location->m_fValue, arg);
+		// exp2(1074) overflows when printing Float.FMin
+		//oteResult->m_location->m_fValue = oteReceiver->m_location->m_fValue * exp2(arg);
+
+		*sp = reinterpret_cast<Oop>(oteResult);
+		ObjectMemory::AddToZct((OTE*)oteResult);
+		return sp;
+	}
+	else
+		return NULL;
+}
+
+Oop* Interpreter::primitiveFloatAbs()
+{
+	struct op {
+		double operator() (const double& x) const { return fabs(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+template <class T1, class T2> struct op_pow {
+	double operator() (const T1& x, const T2& y) const { return pow(x, y); }
+};
+
+Oop* Interpreter::primitiveFloatRaisedTo()
+{
+	return primitiveFloatBinaryOp(op_pow<double, double>(), op_pow<double, SMALLINTEGER>());
+}
+
+Oop* __fastcall Interpreter::primitiveFloatExponent()
+{
+	Oop* sp = Interpreter::m_registers.m_stackPointer;
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
+	double fValue = oteReceiver->m_location->m_fValue;
+	SMALLINTEGER exponent = ilogb(fValue);
+	*sp = ObjectMemoryIntegerObjectOf(exponent);
+	return sp;
+}
+
+Oop* Interpreter::primitiveFloatNegated()
+{
+	struct op {
+		double operator() (const double& x) const { return _chgsign(x); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatFractionPart()
+{
+	struct op {
+		double operator() (const double& x) const { double integerPart;  return modf(x, &integerPart); }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatIntegerPart()
+{
+	struct op {
+		double operator() (const double& x) const { double integerPart;  modf(x, &integerPart); return integerPart; }
+	};
+
+	return primitiveFloatUnaryOp(op());
+}
+
+Oop* Interpreter::primitiveFloatClassify()
+{
+	Oop* sp = Interpreter::m_registers.m_stackPointer;
+	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
+	double fValue = oteReceiver->m_location->m_fValue;
+	SMALLINTEGER classification = _fpclass(fValue);
+	*sp = ObjectMemoryIntegerObjectOf(classification);
+	return sp;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

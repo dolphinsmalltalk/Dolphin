@@ -97,6 +97,9 @@ void InterpreterRegisters::FetchContextRegisters()
 {
 	HARDASSERT(!m_pActiveProcess->IsWaiting());
 
+	// Set up the correct floating point exception mask
+	m_pActiveProcess->RestoreFP();
+
 	// We cache a pointer to the method to speed up accesses to arg count, bytes, etc
 	m_pMethod = m_pActiveFrame->m_method->m_location;
 	LoadIPFromFrame();
@@ -645,19 +648,11 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 	sendSelectorArgumentCount(Pointers.vmiSelector, 4);
 }
 
-void Interpreter::ResetFP()
-{
-	DWORD fpeMask = actualActiveProcess()->FpeMask();
-	_clearfp();
-	unsigned int old;
-	_controlfp_s(&old, fpeMask, _MCW_EM);
-}
-
 // Perform a pending process switch to the argument Process (the current active Processes state is saved
 // and the machine registers set up for the new process)
 // Note that switchTo() must be able to handle the case where the process to be switched to is the
 // same as the one currently running.
-void Interpreter::switchTo(ProcessOTE* oteProcess, bool bInitFP)
+void Interpreter::switchTo(ProcessOTE* oteProcess)
 {
 	HARDASSERT(ObjectMemory::fetchClassOf(Oop(oteProcess)) == Pointers.ClassProcess);
 
@@ -690,12 +685,6 @@ void Interpreter::switchTo(ProcessOTE* oteProcess, bool bInitFP)
 		// Important to get the real active process here
 		ObjectMemory::storePointerWithValue(reinterpret_cast<POTE&>(scheduler()->m_activeProcess), reinterpret_cast<POTE>(oteProcess));
 		m_registers.NewActiveProcess(oteProcess);
-
-		if (bInitFP)
-		{
-			// Set up the correct floating point exception mask
-			ResetFP();
-		}
 
 		// When we return to the byte code loop, we'll continue with the new contexts previously
 		// suspended context

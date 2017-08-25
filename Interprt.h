@@ -413,8 +413,6 @@ public:
 	static Process* actualActiveProcess();
 
 private:
-	static void ResetFP();
-
 	static SemaphoreOTE* pendingCallbacksPointer();
 	static Semaphore* pendingCallbacks();
 
@@ -426,7 +424,7 @@ private:
 	static BOOL __fastcall yield();
 	static BOOL	__fastcall FireAsyncEvents();
 	static BOOL __fastcall CheckProcessSwitch();
-	static void switchTo(ProcessOTE* processPointer, bool bInitFP=true);
+	static void switchTo(ProcessOTE* processPointer);
 	
 	#ifdef _DEBUG
 		static int highestWaitingPriority();
@@ -524,11 +522,34 @@ private:
 	static Oop* __fastcall primitiveFloatAdd();
 	static Oop* __fastcall primitiveFloatSubtract();
 	static Oop* __fastcall primitiveFloatLessThan();
+	static Oop* __fastcall primitiveFloatLessOrEqual();
 	static Oop* __fastcall primitiveFloatGreaterThan();
+	static Oop* __fastcall primitiveFloatGreaterOrEqual();
 	static Oop* __fastcall primitiveFloatEqual();
 	static Oop* __fastcall primitiveFloatMultiply();
 	static Oop* __fastcall primitiveFloatDivide();
 	static Oop* __fastcall primitiveTruncated();
+	static Oop* __fastcall primitiveFloatSin();
+	static Oop* __fastcall primitiveFloatCos();
+	static Oop* __fastcall primitiveFloatTan();
+	static Oop* __fastcall primitiveFloatArcSin();
+	static Oop* __fastcall primitiveFloatArcCos();
+	static Oop* __fastcall primitiveFloatArcTan();
+	static Oop* __fastcall primitiveFloatArcTan2();
+	static Oop* __fastcall primitiveFloatExp();
+	static Oop* __fastcall primitiveFloatLog();
+	static Oop* __fastcall primitiveFloatLog10();
+	static Oop* __fastcall primitiveFloatSqrt();
+	static Oop* __fastcall primitiveFloatTimesTwoPower();
+	static Oop* __fastcall primitiveFloatAbs();
+	static Oop* __fastcall primitiveFloatRaisedTo();
+	static Oop* __fastcall primitiveFloatFloor();
+	static Oop* __fastcall primitiveFloatCeiling();
+	static Oop* __fastcall primitiveFloatExponent();
+	static Oop* __fastcall primitiveFloatNegated();
+	static Oop* __fastcall primitiveFloatFractionPart();
+	static Oop* __fastcall primitiveFloatIntegerPart();
+	static Oop* __fastcall primitiveFloatClassify();
 
 	static Oop* __fastcall primitiveNewInitializedObject(CompiledMethod&, unsigned argCount);
 	static Oop* __fastcall primitiveNewFromStack();
@@ -721,7 +742,7 @@ private:
 		const SymbolOTE*	selector;
 		const BehaviorOTE* 	classPointer;
 		MethodOTE* 			method;
-		DWORD				primAddress;
+		intptr_t			primAddress;
 	};
 
 	static MethodCacheEntry methodCache[MethodCacheSize];

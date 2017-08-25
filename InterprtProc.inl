@@ -104,6 +104,7 @@ inline void InterpreterRegisters::LoadSPFromFrame()
 
 inline void InterpreterRegisters::StoreContextRegisters()
 {
+	m_pActiveProcess->SaveFP();
 	StoreIPInFrame();
 	StoreSPInFrame();
 }

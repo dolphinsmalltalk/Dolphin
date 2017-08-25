@@ -56,7 +56,7 @@ extern "C" void __fastcall callPrimitiveValue(unsigned, unsigned numArgs);
 #endif
 
 #ifdef _DEBUG
-	#define MAXCACHEMISSES 500000
+	#define MAXCACHEMISSES 100000
 	DWORD cacheHits = 0;
 	static DWORD cacheMisses = 0;
 
@@ -244,9 +244,9 @@ MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointe
 
 #pragma code_seg(INTERP_SEG)
 
-extern "C" DWORD primitivesTable[PRIMITIVE_MAX];
+extern "C" intptr_t primitivesTable[PRIMITIVE_MAX];
 
-inline DWORD LookupMethodPrimitive(MethodOTE* oteMethod)
+inline intptr_t LookupMethodPrimitive(MethodOTE* oteMethod)
 {
 	CompiledMethod* pMethod = oteMethod->m_location;
 	return primitivesTable[pMethod->m_header.primitiveIndex];
@@ -851,7 +851,7 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 			}
 		}
 
-		if (cacheHits != 0 || cacheMisses != 0)
+		if (AtPutCacheHits != 0 || AtPutCacheMisses != 0)
 		{
 			char buf[256];
 			_snprintf(buf, sizeof(buf)-1, "%u AtPut cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",

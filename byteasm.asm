@@ -487,13 +487,25 @@ _byteCodePairs DD	65536 DUP (0)
 public _byteCodePairs
 ENDIF
 
+; N.B. This must be kept up to date with the structure in Interprt.h
+MethodCacheEntry STRUCT
+	selector				POTE		?
+	classPointer			POTE		?
+	method					POTE		?
+	primAddress				DWORD		?
+MethodCacheEntry ENDS
+
 ;ALIGN 16
 ;METHODCACHE MethodCacheEntry 1024 DUP (<>,<>,<>,<>)
 ;public METHODCACHE
 
+METHODCACHE EQU ?methodCache@Interpreter@@0PAUMethodCacheEntry@1@A
+extern METHODCACHE:MethodCacheEntry
+
 ;ALIGN 16
 ;_AtCache AtCacheEntry AtCacheEntries DUP (<>,<>,<>,<>)
 ;_AtPutCache AtCacheEntry AtCacheEntries DUP (<>,<>,<>,<>)
+
 ;public _AtCache
 ;public _AtPutCache
 

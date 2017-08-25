@@ -15,19 +15,41 @@
 #pragma once
 
 #include "STObject.h"
+#include <intrin.h>
 
 namespace ST
 {
 	class VirtualObjectHeader
 	{
 		MWORD	m_dwMaxAlloc;
+		MWORD	m_reserved1;
+		MWORD	m_reserved2;
+		BOOL	m_bFxSaved;
+		BYTE	m_fxSaveArea[512];
 
 	public:
 		void	setCurrentAllocation(MWORD size) { ASSERT(size == getCurrentAllocation()); size; }
 		MWORD	getCurrentAllocation();
-		void	addPage() { /*getObj()->m_size += dwPageSize;*/ }
+		
 		MWORD	getMaxAllocation() { return m_dwMaxAlloc; }
 		void	setMaxAllocation(MWORD dwSize) { m_dwMaxAlloc = dwSize; }
+
+		void	fxSave() 
+		{ 
+			m_bFxSaved = TRUE;
+			_fxsave(m_fxSaveArea); 
+		}
+
+		bool fxRestore() 
+		{
+			if (m_bFxSaved)
+			{
+				_fxrstor(m_fxSaveArea);
+				return true;
+			}
+			else
+				return false;
+		}
 	};
 
 	inline MWORD VirtualObjectHeader::getCurrentAllocation()

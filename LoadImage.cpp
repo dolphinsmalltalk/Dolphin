@@ -295,21 +295,12 @@ HRESULT ObjectMemory::LoadObject(OTE* ote, ibinstream& imageFile, const ImageHea
 	// Allocate space for the object, and copy into that space
 	if (ote->heapSpace() == OTEFlags::VirtualSpace)
 	{
-		ASSERT(sizeof(VirtualObjectHeader) == sizeof(MWORD));
-
-		//MWORD dwMaxAlloc = byteSize;
-		//
-		//// The byteSize we just read is the max. size of the virtual allocation, now lets read
-		//// the actual size
-		//if (!imageFile.read(&byteSize, nRead))
-		//	return ImageReadError(imageFile);
-
-		VirtualObjectHeader vObjHeader;
-		if (!imageFile.read(&vObjHeader, sizeof(vObjHeader)))
+		MWORD dwMaxAlloc;
+		if (!imageFile.read(&dwMaxAlloc, sizeof(MWORD)))
 			return ImageReadError(imageFile);
-		nRead += sizeof(vObjHeader);
+		nRead += sizeof(MWORD);
 
-		ote->m_location = reinterpret_cast<POBJECT>(AllocateVirtualSpace(vObjHeader.getMaxAllocation(), byteSize));
+		ote->m_location = reinterpret_cast<POBJECT>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
 		#ifdef OAD
 			TRACESTREAM << "Allocated virtual space at " << ote->m_location
 				<< ", max " << dec << vObjHeader.getMaxAllocation() << 
@@ -425,8 +416,10 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 	}
 
 	// Patch any badly created or corrupted processes
-	if (!ObjectMemoryIsIntegerObject(m_fpeMask))
-		m_fpeMask = ObjectMemoryIntegerObjectOf(_EM_INEXACT);
+	if (!ObjectMemoryIsIntegerObject(m_fpControl))
+	{
+		m_fpControl = ObjectMemoryIntegerObjectOf(_DN_SAVE | _RC_NEAR | _PC_64 | _EM_INEXACT | _EM_UNDERFLOW | _EM_OVERFLOW | _EM_DENORMAL);
+	}
 
 	Oop* pFramePointer = &m_suspendedFrame;
 	Oop framePointer = *pFramePointer;

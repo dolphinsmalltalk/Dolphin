@@ -273,12 +273,17 @@ inline void Interpreter::initializeCaches()
 {
 	// If either of these two assertions fails, update the method cache size
 	// in ISTASM.INC (METHODCACHEDWORDS), change the constants, and rebuild
-	// You may also need to change
+	// You may also need to change the cache hashing/lookup code
 	ASSERT(sizeof(OTE) == 16);
 	ASSERT(sizeof(MethodCacheEntry) == sizeof(OTE));
 	ASSERT(MethodCacheSize == 1024);
 
 	ASSERT(sizeof(AtCacheEntry) == sizeof(OTE));
+
+	// Caches should be 16-byte aligned
+	ASSERT(((intptr_t)methodCache & 0xF) == 0);
+	ASSERT(((intptr_t)AtCache & 0xF) == 0);
+	ASSERT(((intptr_t)AtPutCache & 0xF) == 0);
 
 	flushCaches();
 }
@@ -288,11 +293,6 @@ inline void Interpreter::initializeCaches()
 #endif
 
 ///////////////////////////////////
-
-/*OTE* NewLinkedList()
-{
-	return ObjectMemory::instantiateClassWithPointers(Pointers.ClassLinkedList);
-}*/
 
 #ifdef _DEBUG
 #pragma code_seg(DEBUG_SEG)
@@ -615,7 +615,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 
 int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 {
-	ResetFP();
+	actualActiveProcess()->ResetFP();
 	AbandonStepping();
 	if (isInPrimitive())
 	{
@@ -693,9 +693,6 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			// This avoids any synchronisation issues, and means that in general, we
 			// don't have to code defensively where exceptions might be raised.
 			action = EXCEPTION_CONTINUE_EXECUTION;
-
-			// Flesh out the new stack page
-			pBase->addPage();
 
 #ifdef _DEBUG
 			// Let's see whether we got the rounding correct!

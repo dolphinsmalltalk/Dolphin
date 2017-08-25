@@ -47,18 +47,19 @@ namespace ST
 		Oop				m_callbackDepth;
 		Oop				m_primitiveFailureCode;
 		Oop				m_primitiveFailureData;
-		Oop				m_fpeMask;
+		Oop				m_fpControl;
 		SemaphoreOTE*	m_waitOverlap;
 		Oop				m_thread;
 
 	private:
-		// Process contains these extra fields after this point, but we do not access them
+		// Process contains these additional fields after this point, but we do not access them from the VM
 		OTE* m_exceptionEnvironment;
 		Oop m__alreadyPrinted;
 		Oop m_reserved1;
 		OTE* m_debugger;
 		OTE* m_name;			// Note this can be an Oop, but normally isn't
 		Oop m_reserved2;
+
 	public:
 		Oop m_stack[];
 
@@ -129,10 +130,35 @@ namespace ST
 		}
 		void ClearSuspendedFrame();
 
-		DWORD FpeMask() const
+		DWORD FpControl() const
 		{
-			return integerValueOf(m_fpeMask);
+			ASSERT(isIntegerObject(m_fpControl));
+			return integerValueOf(m_fpControl);
 		}
+
+		void ResetFP() const
+		{
+			_clearfp();
+			// Note that we use _control87 to allow for control over the denormal exception mask. Denormal exceptions are masked by default 
+			// on x86, and _controlfp_s does not allow this to be changed. We also want to mask denormal exceptions by default, but also
+			// want to allow this to be changed for experimentation and testing.
+			_control87(FpControl(), _MCW_DN | _MCW_EM | _MCW_IC | _MCW_PC | _MCW_RC);
+		}
+
+		void RestoreFP() const
+		{
+			VirtualObjectHeader* header = getHeader();
+			if (!header->fxRestore())
+			{
+				ResetFP();
+			}
+		}
+
+		void SaveFP()
+		{
+			getHeader()->fxSave();
+		}
+
 		SMALLUNSIGNED Priority() const
 		{
 			HARDASSERT(isIntegerObject(m_priority));
