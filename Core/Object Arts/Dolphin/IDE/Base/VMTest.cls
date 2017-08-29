@@ -1690,7 +1690,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
-!VMTest categoriesFor: #testFPStatus!helpers!public! !
+!VMTest categoriesFor: #testFPStatus!public!unit tests! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
 !VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableBasicAtPut!public!unit tests! !
