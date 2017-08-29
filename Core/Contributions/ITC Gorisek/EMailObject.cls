@@ -104,21 +104,21 @@ createFrom: aString messageStart: anIndex
 				ifFalse: [boundary := '--' , (boundary copyFrom: 10 to: boundary size)]]!
 
 CRLF
-	^[String with: 13 asCharacter with: 10 asCharacter] cachedValue!
+	^##(String with: 13 asCharacter with: 10 asCharacter)!
 
 CRLFHTAB
 	^
-	[String 
+	##(String 
 		with: 13 asCharacter
 		with: 10 asCharacter
-		with: 9 asCharacter] cachedValue!
+		with: 9 asCharacter)!
 
 CRLFSPACE
 	^
-	[String 
+	##(String 
 		with: 13 asCharacter
 		with: 10 asCharacter
-		with: 32 asCharacter] cachedValue!
+		with: 32 asCharacter)!
 
 decodeMessage
 	contentEncoding isNil ifTrue: [^content].

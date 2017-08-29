@@ -31,7 +31,6 @@ package classNames
 package methodNames
 	add: #ArrayedCollection -> #replaceAll:with:;
 	add: #Behavior -> #basicAllInstances;
-	add: #BlockClosure -> #cachedValue;
 	add: #BlockClosure -> #generateOn:;
 	add: #BlockClosure -> #isBlockClosure;
 	add: #BlockClosure -> #itcDeferredValue;
@@ -89,7 +88,6 @@ package methodNames
 	add: #Number -> #itcRoundTo:;
 	add: #Object -> #addToBeFinalized;
 	add: #Object -> #asDateFromDDMMYYYYString;
-	add: #Object -> #cachedValue;
 	add: #Object -> #isBlockClosure;
 	add: #Object -> #isDictionaryOrLookupTable;
 	add: #Object -> #isFileStream;
@@ -329,19 +327,6 @@ basicAllInstances
 
 !BlockClosure methodsFor!
 
-cachedValue
-	"See implementors of #cachedValue.
-	This is used for lazy intialization and caching of expressions results
-	For example, if you use:
-
-			[10000 factorial] cachedValue
-
-	in the method this will be evaluated only once.
-	"
-
-	self argumentCount = 0 ifFalse: [self error: 'Invalid number of block arguments'].
-	^self become: self value!
-
 generateOn: htmlStream 
 	self argumentCount = 0 ifTrue: [self value] ifFalse: [self value: htmlStream]!
 
@@ -358,7 +343,6 @@ itcDeferredValue
 	supply the result."
 
 	^ItcDeferredValue evaluate: self at: Processor activePriority! !
-!BlockClosure categoriesFor: #cachedValue!not restartable!public!unwinding! !
 !BlockClosure categoriesFor: #generateOn:!not restartable!public!unwinding! !
 !BlockClosure categoriesFor: #isBlockClosure!not restartable!public!unwinding! !
 !BlockClosure categoriesFor: #itcDeferredValue!not restartable!public!unwinding! !
@@ -814,18 +798,6 @@ addToBeFinalized
 asDateFromDDMMYYYYString
 	^nil!
 
-cachedValue
-	"See implementors of #cachedValue.
-	This is used for lazy intialization and caching of expressions results
-	For example, if you use:
-
-			[10000 factorial] cachedValue
-
-	in the method this will be evaluated only once.
-	"
-
-	^self!
-
 isBlockClosure
 	^false!
 
@@ -883,7 +855,6 @@ sestej: selectors
 	^sum! !
 !Object categoriesFor: #addToBeFinalized!comparing!public! !
 !Object categoriesFor: #asDateFromDDMMYYYYString!comparing!public! !
-!Object categoriesFor: #cachedValue!comparing!public! !
 !Object categoriesFor: #isBlockClosure!constants!public! !
 !Object categoriesFor: #isDictionaryOrLookupTable!public!testing! !
 !Object categoriesFor: #isFileStream!public!testing! !
