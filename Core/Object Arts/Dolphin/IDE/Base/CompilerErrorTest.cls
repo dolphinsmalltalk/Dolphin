@@ -65,6 +65,10 @@ printLiterals: anInteger on: aPuttableStream
 			(i := i + 1) = anInteger ifTrue: [^self]].
 	self halt!
 
+skipUnlessCompilerSupportsCodePointErrors
+	self
+		skipUnless: [VMLibrary default versionInfo fileVersion >= (self versionFromParts: #(2016 7 0 49))]!
+
 tempWarningRangeIn: aString
 	| start |
 	start := aString indexOf: $$.
@@ -100,6 +104,14 @@ testErrorsBadPools
 				code: CErrBadPools
 				line: 1
 				source: source]!
+
+testErrorsLexicalBadCodePoint
+	self skipUnlessCompilerSupportsCodePointErrors.
+	super testErrorsLexicalBadCodePoint!
+
+testErrorsLexicalExpectCodePoint
+	self skipUnlessCompilerSupportsCodePointErrors.
+	super testErrorsLexicalExpectCodePoint!
 
 testErrorsLexicalExpectExtendedLiteral
 	"Invalid const"
@@ -159,9 +171,12 @@ writtenNotReadRange: aString
 !CompilerErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
 !CompilerErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
 !CompilerErrorTest categoriesFor: #printLiterals:on:!helpers!private! !
+!CompilerErrorTest categoriesFor: #skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
 !CompilerErrorTest categoriesFor: #tempWarningRangeIn:!helpers!private! !
 !CompilerErrorTest categoriesFor: #testErrorsBadContext!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsBadPools!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
+!CompilerErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 !CompilerErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !

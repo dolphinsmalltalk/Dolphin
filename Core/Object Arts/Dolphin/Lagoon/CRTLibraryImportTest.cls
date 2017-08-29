@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-TestCase subclass: #CRTLibraryImportTest
+DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -26,7 +26,7 @@ minimumVmVersion
 		4) Update the .def files for the stubs in the DolphinVM solution.
 		5) Commit changes to the DolphinVM repo."
 
-	^#(2016 7 0 48) inject: 0 into: [:sum :each | (sum << 16) + each]!
+	^self versionFromParts: #(2016 7 0 48)!
 
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!
@@ -35,7 +35,7 @@ testStubCrtExports
 	"Ensure that .def files include proper CRTLibrary imports (#183)."
 
 	| expected |
-	self skipUnless: [VMLibrary default versionInfo fixedInfo fileVersion >=  self minimumVmVersion].
+	self skipUnless: [VMLibrary default versionInfo fileVersion >= self minimumVmVersion].
 	expected := self devOnlyCrtFunctions.
 	self stubNames do: 
 			[:eachStubName |

@@ -16,14 +16,14 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\Base\Dolphin';
-	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
+	add: '..\Base\Dolphin Base Tests';
 	yourself).
 
 package!
 
 "Class Definitions"!
 
-TestCase subclass: #CRTLibraryImportTest
+DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -42,6 +42,11 @@ fileInfo: bytes
 
 	fileInfo := bytes!
 
+fileVersion
+	"Answer the 64-bit <integer> file version."
+
+	^self fixedInfo fileVersion!
+
 fileVersionString
 	"Answer a String in the form N.N.N.N which specifies the version number of the file."
 
@@ -138,6 +143,7 @@ specialBuild
 !VersionInfo categoriesFor: #comments!accessing!public! !
 !VersionInfo categoriesFor: #fileDescription!accessing!public! !
 !VersionInfo categoriesFor: #fileInfo:!accessing!private! !
+!VersionInfo categoriesFor: #fileVersion!public! !
 !VersionInfo categoriesFor: #fileVersionString!accessing!public! !
 !VersionInfo categoriesFor: #fixedInfo!accessing!public! !
 !VersionInfo categoriesFor: #formatVersionString:!operations!public! !

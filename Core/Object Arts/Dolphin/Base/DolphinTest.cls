@@ -78,7 +78,10 @@ shouldRaiseZeroDivide: aBlock
 	aBlock 
 		on: ZeroDivide do: [:e | raised := true]
 		on: HRESULTError do: [:e | e hresult asInteger = -2147352558 ifTrue: [raised := true]].
-	self assert: raised! !
+	self assert: raised!
+
+versionFromParts: versionNumbers
+	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
 !DolphinTest categoriesFor: #assertIs:deepCopyOf:!public!unit tests! !
 !DolphinTest categoriesFor: #assertIs:deepCopyOf:visited:!private!unit tests! !
 !DolphinTest categoriesFor: #compare:to:epsilon:!comparing!public! !
@@ -90,6 +93,7 @@ shouldRaiseZeroDivide: aBlock
 !DolphinTest categoriesFor: #methodContextClass!constants!private! !
 !DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
 !DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
+!DolphinTest categoriesFor: #versionFromParts:!public!unit tests! !
 
 !DolphinTest class methodsFor!
 
