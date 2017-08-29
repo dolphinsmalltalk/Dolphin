@@ -10,30 +10,26 @@ StOptimizedToken comment: ''!
 !StOptimizedToken categoriesForClass!System-Compiler! !
 !StOptimizedToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptOptimizedToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitOptimizedToken: self!
 
 isOptimized
 	^true!
 
 length
-	^stopPosition - self start + 1!
-
-start: startInteger stop: stopInteger 
-	sourcePointer := startInteger.
-	stopPosition := stopInteger! !
+	^stopPosition - self start + 1! !
 !StOptimizedToken categoriesFor: #acceptVisitor:!public!visitor! !
 !StOptimizedToken categoriesFor: #isOptimized!public!testing! !
 !StOptimizedToken categoriesFor: #length!accessing!private! !
-!StOptimizedToken categoriesFor: #start:stop:!initializing!private! !
 
 !StOptimizedToken class methodsFor!
 
-start: anInteger 
-	^self start: anInteger stop: anInteger + 2!
-
-start: startInteger stop: stopInteger 
-	^self new start: startInteger stop: stopInteger! !
-!StOptimizedToken class categoriesFor: #start:!instance creation!public! !
-!StOptimizedToken class categoriesFor: #start:stop:!instance creation!public! !
+start: anInteger comments: aCollectionOrNil stop: stopInteger
+	<primitive: 157>
+	^self new
+		start: anInteger;
+		comments: aCollectionOrNil;
+		stop: stopInteger;
+		yourself! !
+!StOptimizedToken class categoriesFor: #start:comments:stop:!instance creation!public! !
 

@@ -81,9 +81,11 @@ SmalltalkParseErrorCodes at: 'CWarnUnreferencedTemp' put: 16r3EF!
 SmalltalkParseErrorCodes at: 'CWarnUsesBooleanClass' put: 16r3F9!
 SmalltalkParseErrorCodes at: 'CWarnWrittenNotRead' put: 16r3F2!
 SmalltalkParseErrorCodes at: 'LErrBadChar' put: 16r1!
+SmalltalkParseErrorCodes at: 'LErrBadCodePoint' put: 16rC!
 SmalltalkParseErrorCodes at: 'LErrBadNumber' put: 16rA!
 SmalltalkParseErrorCodes at: 'LErrCommentNotClosed' put: 16r2!
 SmalltalkParseErrorCodes at: 'LErrExpectChar' put: 16r7!
+SmalltalkParseErrorCodes at: 'LErrExpectCodePoint' put: 16rB!
 SmalltalkParseErrorCodes at: 'LErrExpectConst' put: 16r4!
 SmalltalkParseErrorCodes at: 'LErrExpectExtendedLiteral' put: 16r5!
 SmalltalkParseErrorCodes at: 'LErrExpectMetaVariable' put: 16r6!

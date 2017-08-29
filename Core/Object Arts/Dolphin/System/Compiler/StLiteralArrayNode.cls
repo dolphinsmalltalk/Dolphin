@@ -37,6 +37,9 @@ contents: aRBLiteralNodeCollection
 isForByteArray
 	^isByteArray!
 
+isLiteralArray
+	^true!
+
 postCopy
 	super postCopy.
 	self contents: (contents collect: [:each | each copy]).
@@ -56,11 +59,12 @@ stopWithoutParentheses
 
 value
 	| array |
-	array := (isByteArray ifTrue: [ByteArray] ifFalse: [Array]) 
-				new: contents size.
-	1 to: contents size
-		do: [:each | array at: each put: (contents at: each) value].
-	^array! !
+	array := self valueClass new: contents size.
+	1 to: contents size do: [:each | array at: each put: (contents at: each) value].
+	^array!
+
+valueClass
+	^isByteArray ifTrue: [ByteArray] ifFalse: [Array]! !
 !StLiteralArrayNode categoriesFor: #=!comparing!public! !
 !StLiteralArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StLiteralArrayNode categoriesFor: #children!accessing!public! !
@@ -68,11 +72,13 @@ value
 !StLiteralArrayNode categoriesFor: #contents!accessing!public! !
 !StLiteralArrayNode categoriesFor: #contents:!accessing!public! !
 !StLiteralArrayNode categoriesFor: #isForByteArray!public!testing! !
+!StLiteralArrayNode categoriesFor: #isLiteralArray!public!testing! !
 !StLiteralArrayNode categoriesFor: #postCopy!copying!public! !
 !StLiteralArrayNode categoriesFor: #startPosition:contents:stopPosition:isByteArray:!initializing!public! !
 !StLiteralArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
 !StLiteralArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
 !StLiteralArrayNode categoriesFor: #value!accessing!public! !
+!StLiteralArrayNode categoriesFor: #valueClass!accessing!public! !
 
 !StLiteralArrayNode class methodsFor!
 
@@ -84,13 +90,12 @@ startPosition: startInteger contents: anArray stopPosition: stopInteger isByteAr
 			isByteArray: aBoolean;
 		yourself!
 
-value: aValue 
-	^(self new)
+value: aValue
+	^self
 		startPosition: nil
-			contents: (aValue asArray collect: [:each | StLiteralNode value: each])
-			stopPosition: nil
-			isByteArray: aValue class ~~ Array;
-		yourself! !
+		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
+		stopPosition: nil
+		isByteArray: aValue class ~~ Array! !
 !StLiteralArrayNode class categoriesFor: #startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
 !StLiteralArrayNode class categoriesFor: #value:!instance creation!public! !
 

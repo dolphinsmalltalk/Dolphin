@@ -33,7 +33,7 @@ needsParenthesis
 	^self subclassResponsibility!
 
 parentheses
-	^parentheses ifNil: [#()]!
+	^parentheses ?? #()!
 
 start
 	^parentheses isNil 

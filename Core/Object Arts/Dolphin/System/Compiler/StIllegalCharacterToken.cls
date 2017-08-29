@@ -10,8 +10,8 @@ StIllegalCharacterToken comment: ''!
 !StIllegalCharacterToken categoriesForClass!System-Compiler! !
 !StIllegalCharacterToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptIllegalCharacterToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitIllegalCharacterToken: self!
 
 length
 	^1! !

@@ -10,8 +10,8 @@ StLiteralArrayToken comment: ''!
 !StLiteralArrayToken categoriesForClass!Unclassified! !
 !StLiteralArrayToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptLiteralArrayToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitLiteralArrayToken: self!
 
 isForByteArray
 	^value last == $[!

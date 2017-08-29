@@ -15,9 +15,10 @@ length
 
 printOn: aStream
 	super printOn: aStream.
-	aStream nextPut: $(.
-	value printOn: aStream.
-	aStream nextPutAll: ')'!
+	aStream
+		nextPut: $(;
+		print: value;
+		nextPut: $)!
 
 value
 	^value!
@@ -27,11 +28,16 @@ value: anObject
 !StValueToken categoriesFor: #length!accessing!private! !
 !StValueToken categoriesFor: #printOn:!printing!public! !
 !StValueToken categoriesFor: #value!accessing!public! !
-!StValueToken categoriesFor: #value:!accessing!public! !
+!StValueToken categoriesFor: #value:!initializing!private! !
 
 !StValueToken class methodsFor!
 
-value: aString start: anInteger
-	^(self start: anInteger) value: aString! !
-!StValueToken class categoriesFor: #value:start:!instance creation!public! !
+start: anInteger comments: aCollectionOrNil value: aString
+	<primitive: 157>
+	^self new
+		start: anInteger;
+		comments: aCollectionOrNil;
+		value: aString;
+		yourself! !
+!StValueToken class categoriesFor: #start:comments:value:!instance creation!public! !
 

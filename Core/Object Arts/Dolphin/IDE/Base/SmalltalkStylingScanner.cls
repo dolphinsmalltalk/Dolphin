@@ -12,155 +12,49 @@ SmalltalkStylingScanner comment: 'SmalltalkStylingScanner is a <SmalltalkScanner
 !SmalltalkStylingScanner categoriesForClass!Development! !
 !SmalltalkStylingScanner methodsFor!
 
-constantExpected
-	^self literalErrorToken: #'' start: self previousStepPosition!
+newFloatToken: significandInteger precision: precisionInteger exponent: exponentInteger
+	"Private -Return a new literal number token with a <Float> value. We don't need the actual
+	<Float> value for styling purposes, so can avoid the final cost of computing it, which may
+	not be cheap if the exponent is large."
 
-lexicalError: anInteger range: anInterval 
-	"Private - Evaluate the error block passing it an appropriately initialised <exception>.
-	If the block returns, signal the exception."
-
-	"Implementation Note: The error is ignored, and recovered from."
-
-	!
-
-newNumberToken: numberClass 
-	| stop |
-	stop := self previousStepPosition.
-	^(self numberTokenClass 
-		value: nil
+	^self numberTokenClass
 		start: tokenStart
-		stop: stop
-		source: (stream copyFrom: tokenStart to: stop))
-		numberClass: numberClass;
-		yourself!
+		comments: nil
+		value: significandInteger sign asFloat
+		stop: self previousStepPosition!
 
-numberTokenClass
-	^StNumberStylingToken!
+newIntegerToken: significandInteger exponent: exponentInteger
+	"Private -Return a new literal number token with an integer value. We don't need the actual
+	<Integer> value for styling purposes, so can avoid the final cost of computing it by largely 
+	ignoring the exponent (if any)."
 
-readIntegerOfRadix: anInteger
-	| value |
-	value := nil.
-	[self atEnd] whileFalse: 
-			[| digit |
-			((digit := currentCharacter digitValue) < anInteger and: [digit >= 0])
-				ifTrue: 
-					[self step.
-					"We don't need the actual value for styling purposes, so can save on computing it"
-					value := 0]
-				ifFalse: [^value]].
-	^value!
+	^StNumberLiteralToken
+		start: tokenStart
+		comments: nil
+		value: (exponentInteger negative ifTrue: [significandInteger sign / 2] ifFalse: [significandInteger])
+		stop: self previousStepPosition!
 
-scanExponentInteger
-	"Allow plus prefix on exponent, e.g. 2e+16, although not strictly Smalltalk syntax."
+newScaledDecimalToken: significandInteger precision: precisionInteger scale: scaleInteger
+	"Private -Return a new literal number token with a <ScaledDecimal> value. We don't need the
+	actual value for styling purposes, so can avoid the final cost of computing it, which may
+	not be insignificant since this involves exponentiation and fractional arithmetic."
 
-	| pos isNegative |
-	pos := stream position.
-	self step.
-	((isNegative := currentCharacter == $-) or: [currentCharacter == $+]) ifTrue: [self step].
-	(self readIntegerOfRadix: 10) notNil
-		ifTrue: 
-			[isNegative
-				ifTrue: 
-					[| exp |
-					exp := stream copyFrom: pos + 2 to: self previousStepPosition.
-					(exp allSatisfy: [:each | each == $0]) ifFalse: [^Fraction]]]
-		ifFalse: [self stepBackTo: pos].
-	^Integer!
+	^self numberTokenClass
+		start: tokenStart
+		comments: nil
+		value: (significandInteger negative ifTrue: [-1s] ifFalse: [1s])
+		stop: self previousStepPosition!
 
-scanNumber
-	| numberClass start |
-	currentCharacter == $-
-		ifTrue: 
-			["isNegative := true."
-			self step].
-	start := stream position.
-	(self readIntegerOfRadix: 10)
-		ifNil: 
-			["This should not happen since we have previously detected a digit"
-			^self error: 'internal error'].
-	self atEnd ifTrue: [^self newNumberToken: Integer].
-	"The type of number is determined by what we find next"
-	numberClass := Integer.
-	currentCharacter == $.
-		ifTrue: [numberClass := self scanSmalltalkReal]
-		ifFalse: 
-			[currentCharacter == $r
-				ifTrue: 
-					[| radix |
-					radix := Integer readPositiveFrom: (stream copyFrom: start to: self previousStepPosition) readStream
-								radix: 10.
-					(radix between: 2 and: 36)
-						ifTrue: 
-							[| pos |
-							pos := stream position.
-							self step.
-							(self readIntegerOfRadix: radix) notNil
-								ifTrue: [currentCharacter == $e ifTrue: [numberClass := self scanExponentInteger]]
-								ifFalse: [self stepBackTo: pos]]]
-				ifFalse: 
-					[currentCharacter == $s
-						ifTrue: 
-							[self step.	"s will always be part of token, regardless if there is a scale value"
-							self readIntegerOfRadix: 10.
-							numberClass := ScaledDecimal]
-						ifFalse: 
-							["Also support St-80 format integer of the form 1e5, not valid ANSI syntax though"
-							currentCharacter == $e ifTrue: [numberClass := self scanExponentInteger]]]].
-	^self newNumberToken: numberClass!
+reportError: anInteger at: posInteger line: lineInteger range: anInterval extras: anArray
+	"Private - Report a lexical error."
 
-scanSmalltalkReal
-	(self classify: stream peek) == #digit
-		ifFalse: 
-			["Trailing full stop on integer"
-			^Integer].
-	self step.
-	self readIntegerOfRadix: 10.
+	"Implementation Note: The error is effectively ignored, and the scanner will recover by
+	creating an appropriate 'error' token which is of the correct type (if possible) so that the
+	styling/auto-completion remain as useful as possible."
 
-	"Process any exponent..."
-	(currentCharacter == $e or: [currentCharacter == $d or: [currentCharacter == $q]])
-		ifTrue: 
-			[| exponentStart |
-			exponentStart := stream position.
-			self step.	"Skip the exponent character"
-			"Allow plus prefix on the exponent, although not ANSI Smalltalk syntax"
-			(currentCharacter == $- or: [currentCharacter == $+]) ifTrue: [self step].
-			(self readIntegerOfRadix: 10) isNil
-				ifTrue: 
-					["Found Float with trailing exponent character which is not
-					 part of the number, e.g. 1.5e From ANSI standard p 28: 'An
-					 exponentLetter must be followed by an explicit exponent'"
-					self stepBackTo: exponentStart]]
-		ifFalse: 
-			[currentCharacter == $s
-				ifTrue: 
-					[self step.	"Skip the $s"
-					self readIntegerOfRadix: 10.
-					^ScaledDecimal]].
-	^Float!
-
-skipIntegerOfRadix: radix 
-	| found |
-	found := false.
-	[self atEnd] whileFalse: 
-			[| digit |
-			((digit := currentCharacter digitValue) < radix and: [digit >= 0]) 
-				ifTrue: 
-					[self step.
-					found := true]
-				ifFalse: [^found]].
-	^found!
-
-stepBackTo: exponentStart 
-	stream position: exponentStart - 1.
-	self step! !
-!SmalltalkStylingScanner categoriesFor: #constantExpected!public! !
-!SmalltalkStylingScanner categoriesFor: #lexicalError:range:!error handling!private! !
-!SmalltalkStylingScanner categoriesFor: #newNumberToken:!private! !
-!SmalltalkStylingScanner categoriesFor: #numberTokenClass!public! !
-!SmalltalkStylingScanner categoriesFor: #readIntegerOfRadix:!private!scanning! !
-!SmalltalkStylingScanner categoriesFor: #scanExponentInteger!public!scanning! !
-!SmalltalkStylingScanner categoriesFor: #scanNumber!public!scanning! !
-!SmalltalkStylingScanner categoriesFor: #scanSmalltalkReal!public!scanning! !
-!SmalltalkStylingScanner categoriesFor: #skipIntegerOfRadix:!public!scanning! !
-!SmalltalkStylingScanner categoriesFor: #stepBackTo:!private! !
+	! !
+!SmalltalkStylingScanner categoriesFor: #newFloatToken:precision:exponent:!helpers!private! !
+!SmalltalkStylingScanner categoriesFor: #newIntegerToken:exponent:!helpers!private! !
+!SmalltalkStylingScanner categoriesFor: #newScaledDecimalToken:precision:scale:!helpers!private! !
+!SmalltalkStylingScanner categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
 

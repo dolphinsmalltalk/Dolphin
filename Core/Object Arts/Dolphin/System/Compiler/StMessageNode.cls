@@ -43,7 +43,7 @@ argumentCount
 	^self arguments size!
 
 arguments
-	^arguments ifNil: [#()]!
+	^arguments ?? #()!
 
 arguments: argCollection 
 	arguments := argCollection.
@@ -156,11 +156,24 @@ selector: aSelector
 	numArgs == arguments size
 		ifFalse: [self error: 'Attempting to assign selector with wrong number of arguments.'].
 	selectorParts := numArgs == 0
-				ifTrue: [{StIdentifierToken value: keywords first start: nil}]
+				ifTrue: [{StIdentifierToken
+							start: nil
+							comments: nil
+							value: keywords first}]
 				ifFalse: 
 					[keywords first last == $:
-						ifTrue: [keywords collect: [:each | StKeywordToken value: each start: nil]]
-						ifFalse: [{StBinarySelectorToken value: aSelector start: nil}]].
+						ifTrue: 
+							[keywords collect: 
+									[:each |
+									StKeywordToken
+										start: nil
+										comments: nil
+										value: each]]
+						ifFalse: 
+							[{StBinarySelectorToken
+									start: nil
+									comments: nil
+									value: aSelector}]].
 	selector := aSelector!
 
 selectorParts

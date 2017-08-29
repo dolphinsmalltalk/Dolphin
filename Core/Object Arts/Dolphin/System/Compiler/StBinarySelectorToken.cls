@@ -10,8 +10,8 @@ StBinarySelectorToken comment: ''!
 !StBinarySelectorToken categoriesForClass!System-Compiler! !
 !StBinarySelectorToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptBinarySelectorToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitBinarySelectorToken: self!
 
 isBinary
 	^true!

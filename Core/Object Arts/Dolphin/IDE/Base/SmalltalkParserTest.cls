@@ -20,6 +20,19 @@ parserClass
 scannerClass
 	^SmalltalkScanner!
 
+scanNonNumericEnd: aString class: tokenClass
+	| expected stream extra scanner actual next |
+	stream := aString readStream.
+	expected := Number readSmalltalkSyntaxFrom: stream.
+	extra := stream upToEnd.
+	stream reset.
+	scanner := self scannerClass on: stream.
+	actual := scanner next.
+	self assert: actual isKindOf: tokenClass.
+	self assert: actual value equals: expected.
+	next := scanner next.
+	self assert: (extra beginsWith: next value)!
+
 testCharacterScanning
 	| subject tok |
 	subject := self scannerClass on: '$a$b$\t$\$  $c' readStream.
@@ -175,14 +188,37 @@ testExternalCalls
 			[:eachArg :eachType |
 			self assert: eachArg typeOrdinal = eachType.
 			self assert: eachArg indirections = 0.
-			self assert: eachArg structClass isNil]! !
+			self assert: eachArg structClass isNil]!
+
+testFloatScanning
+	Float reset.
+	#('5.1234' '0.0' '0.5' '1.2e1' '1.2d2' '1.2e-1' '1.2e+1' '1.2d-2' '1.2d+2' '1.0e308' '1.0e+308' '2.2250738585072014e-308' '1.7976931348623158e308' '1.7976931348623158e+308' '0.5e0' '0.5d0' '0.5q0' '0.5e+0' '0.5d+0' '0.5q+0' '0.5e-0' '0.5d-0' '0.5q-0')
+		do: 
+			[:each |
+			| token expected actual |
+			expected := Number readFrom: each readStream.
+			token := (self scannerClass on: each readStream) next.
+			actual := token value.
+			self assert: actual isKindOf: Float.
+			self assert: actual equals: expected].
+
+	"Integer terminated by a period, not a float"
+	self assert: (self scannerClass on: '5.' readStream) next value sameAs: 5.
+	self assert: (self scannerClass on: '1.0e-316' readStream) next value equals: 10.0 ** -316.
+
+	"Test termination on non-numeric character - these expressions are in error"
+	#('5.1234a' '0.5e' '1.5e2e3' '1.5e2e-3' '1.5e-Integer zero' '1.5e-' '1.5e+' '1.7976931348623158+e308')
+		do: [:each | self scanNonNumericEnd: each class: StNumberLiteralToken].
+	self scanNonNumericEnd: '5.F' class: StNumberLiteralToken! !
 !SmalltalkParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
 !SmalltalkParserTest categoriesFor: #parserClass!constants!private! !
 !SmalltalkParserTest categoriesFor: #scannerClass!constants!private! !
+!SmalltalkParserTest categoriesFor: #scanNonNumericEnd:class:!public! !
 !SmalltalkParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testExpressionSolver!public! !
 !SmalltalkParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !
 !SmalltalkParserTest categoriesFor: #testExternalCalls!public!unit tests! !
+!SmalltalkParserTest categoriesFor: #testFloatScanning!public!unit tests! !
 
 !SmalltalkParserTest class methodsFor!
 

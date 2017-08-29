@@ -35,7 +35,7 @@ DiffBrowser compare: text1 with:  text2
 scannerClass
 	^SmalltalkStylingScanner!
 
-scanNumeric: aString class: aClass 
+scanNumeric: aString class: aClass
 	| result1 expected scanner token stream trailing |
 	stream := aString readStream.
 	expected := Number readFrom: stream.
@@ -44,20 +44,17 @@ scanNumeric: aString class: aClass
 						reset;
 						yourself).
 	token := scanner next.
-	self assert: (token numberClass includesBehavior: aClass).
+	self assert: (token valueClass includesBehavior: aClass).
 	result1 := token value.
-	self assert: result1 = expected.
-	aClass == ScaledDecimal 
-		ifTrue: 
-			[self assert: result1 scale = expected scale.
-			self assert: result1 = expected].
-	trailing isEmpty 
+	self assert: (result1 class == expected class or: [result1 isInteger and: [expected isInteger]]).
+	self assert: result1 sign equals: expected sign.
+	trailing isEmpty
 		ifTrue: [self assert: scanner atEnd]
 		ifFalse: 
 			[| trailing2 |
 			stream pop.
 			trailing2 := stream upToEnd.
-			self assert: trailing = trailing2]!
+			self assert: trailing equals: trailing2]!
 
 setUp
 	super setUp.

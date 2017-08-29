@@ -13,19 +13,20 @@ Instance Variables:
 !RBPatternMessageNode categoriesForClass!Refactory-Parser! !
 !RBPatternMessageNode methodsFor!
 
-copyInContext: aDictionary 
+copyInContext: aDictionary
 	| selectors |
 	self isList ifTrue: [^aDictionary at: self].
-	selectors := self isSelectorList 
+	selectors := self isSelectorList
 				ifTrue: [(aDictionary at: selectorParts first value) keywords]
 				ifFalse: [selectorParts collect: [:each | aDictionary at: each value]].
-	^(RBMessageNode new)
+	^RBMessageNode new
 		receiver: (receiver copyInContext: aDictionary);
 		selectorParts: (selectors collect: 
-						[:each | 
-						(each last == $: ifTrue: [RBKeywordToken] ifFalse: [RBIdentifierToken]) 
-							value: each
-							start: nil]);
+						[:each |
+						(each last == $: ifTrue: [RBKeywordToken] ifFalse: [RBIdentifierToken])
+							start: nil
+							comments: nil
+							value: each]);
 		arguments: (self copyList: arguments inContext: aDictionary);
 		yourself!
 

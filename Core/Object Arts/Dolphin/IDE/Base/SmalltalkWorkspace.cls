@@ -193,7 +193,7 @@ classForToken: anAssociation
 						shrink;
 						yourself).
 			^lookup lookup: text].
-	style == #literalNumber ifTrue: [^(SmalltalkStylingScanner on: text readStream) next numberClass].
+	style == #literalNumber ifTrue: [^(SmalltalkStylingScanner on: text readStream) next valueClass].
 	style == #literalString ifTrue: [^String].
 	style == #literalSymbol ifTrue: [^Symbol].
 	style == #literalCharacter ifTrue: [^Character].
@@ -705,14 +705,17 @@ highlightCompilationErrors: anInteger
 		indicators: indicators;
 		annotations: annotations!
 
-identifierAt: anInteger 
+identifierAt: anInteger
 	| style |
 	style := (view styleAt: anInteger) name.
-	^(#(#identifier #tempDecl #argDecl) identityIncludes: style) 
+	^(#(#identifier #tempDecl #argDecl) identityIncludes: style)
 		ifTrue: 
 			[| range |
 			range := view tokenRangeAt: anInteger.
-			StIdentifierToken value: (view plainTextRange: range) start: range start]!
+			StIdentifierToken
+				start: range start
+				comments: nil
+				value: (view plainTextRange: range)]!
 
 identifiersStartingWith: aString maxItems: anInteger
 	"Private - Build and answer a colleciton of identifiers that are potential completions for

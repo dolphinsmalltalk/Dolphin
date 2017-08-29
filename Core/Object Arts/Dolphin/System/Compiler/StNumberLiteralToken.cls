@@ -10,24 +10,37 @@ StNumberLiteralToken comment: ''!
 !StNumberLiteralToken categoriesForClass!Unclassified! !
 !StNumberLiteralToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptNumberLiteralToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitNumberLiteralToken: self!
 
 forgetNegative
 	value := value negated.
 	source := source copyFrom: 2.
-	sourcePointer := sourcePointer + 1!
+	start := start + 1!
 
-formatOn: aStream source: aString 
-	"For numbers, retain the original source form as unless it is a plain integer it may have
-	been deliberatey expressed in a particular format by the user."
+formatOn: aStream source: aString
+	"For numbers, we attempt to retain the original source form as unless it is a plain integer
+	it may have been deliberately expressed in a particular format by the user."
 
 	source ifNil: [self value printOn: aStream] ifNotNil: [aStream nextPutAll: source]!
 
 isNegative
-	^self source first == $-!
+	^self value negative!
+
+isNumberLiteralToken
+	^true!
+
+printOn: aStream
+	aStream
+		space;
+		nextPutAll: self class name;
+		nextPut: $(.
+	self formatOn: aStream source: nil.
+	aStream nextPut: $)!
 
 source
+	"Answer the original source code for the number."
+
 	^source!
 
 source: aString 
@@ -36,17 +49,21 @@ source: aString
 !StNumberLiteralToken categoriesFor: #forgetNegative!helpers!private! !
 !StNumberLiteralToken categoriesFor: #formatOn:source:!printing!public! !
 !StNumberLiteralToken categoriesFor: #isNegative!public!testing! !
+!StNumberLiteralToken categoriesFor: #isNumberLiteralToken!public!testing! !
+!StNumberLiteralToken categoriesFor: #printOn:!public! !
 !StNumberLiteralToken categoriesFor: #source!accessing!public! !
-!StNumberLiteralToken categoriesFor: #source:!accessing!public! !
+!StNumberLiteralToken categoriesFor: #source:!initializing!private! !
 
 !StNumberLiteralToken class methodsFor!
 
-value: aNumber start: anInteger stop: stopInteger source: sourceString 
-	^(self 
-		value: aNumber
-		start: anInteger
-		stop: stopInteger)
+start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger source: sourceString
+	<primitive: 157>
+	^self new
+		start: startInteger;
+		comments: aCollectionOrNil;
+		value: aString;
+		stop: stopInteger;
 		source: sourceString;
 		yourself! !
-!StNumberLiteralToken class categoriesFor: #value:start:stop:source:!instance creation!public! !
+!StNumberLiteralToken class categoriesFor: #start:comments:value:stop:source:!public! !
 
