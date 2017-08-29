@@ -424,10 +424,7 @@ fullBindingFor: aString
 			env := Smalltalk.
 			count := parts size.
 			1 to: count - 1
-				do: 
-					[:i |
-					env := env lookup: (parts at: i).
-					env isNil ifTrue: [^nil]].
+				do: [:i | (env bindingFor: (parts at: i)) ifNil: [^nil] ifNotNil: [:assoc | env := assoc value]].
 			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
 
