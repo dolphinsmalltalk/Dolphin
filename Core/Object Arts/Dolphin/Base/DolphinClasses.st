@@ -1630,11 +1630,6 @@ Stream subclass: #SequencedStream
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Random subclass: #RandomCRT
-	instanceVariableNames: 'next'
-	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
-	classInstanceVariableNames: ''!
 Random subclass: #RandomLinearCongruential
 	instanceVariableNames: 'multiplier increment modulus'
 	classVariableNames: ''

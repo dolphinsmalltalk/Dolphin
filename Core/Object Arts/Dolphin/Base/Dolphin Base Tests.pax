@@ -141,8 +141,10 @@ package setPrerequisites: (IdentitySet new
 	add: 'Dolphin Additional Sort Algorithms';
 	add: '..\System\Base64\Dolphin Base64';
 	add: 'Dolphin Command-line Parser';
+	add: '..\System\Random\Dolphin CRT Random Stream';
 	add: '..\System\Filer\Dolphin Literal Filer';
 	add: '..\MVP\Base\Dolphin MVP Base';
+	add: '..\System\Random\Dolphin Random Stream';
 	add: '..\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\DolphinSure\DolphinSure';

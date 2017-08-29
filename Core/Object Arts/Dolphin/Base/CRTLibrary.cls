@@ -468,10 +468,6 @@ pow: xFloat y: yFloat
 	<cdecl: double pow double double>
 	^self invalidCall!
 
-rand
-	<cdecl: sdword rand>
-	^self invalidCall!
-
 rewind: aFILE
 	"Rewind to the beginning of the CRT FILE*.
 	Implementation Note: As with other FILE routines, treat the stream argument as an opaque handle."
@@ -499,11 +495,6 @@ sqrt: aFloat
 
 	<cdecl: double sqrt double>
 	^self invalidCall!
-
-srand: anInteger 
-	<cdecl: void srand dword>
-	^self invalidCall!
-
 strcat_s: destString bufferSize: anInteger strSource: sourceString
 	<cdecl: sdword strcat_s lpstr intptr lpstr>
 	^self invalidCall!
@@ -648,12 +639,10 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #rand!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #rewind:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
 !CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #srand:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
