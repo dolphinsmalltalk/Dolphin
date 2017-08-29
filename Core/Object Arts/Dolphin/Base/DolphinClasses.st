@@ -1021,7 +1021,7 @@ ExternalLibrary subclass: #WinMMLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PermanentLibrary subclass: #CRTLibrary
-	instanceVariableNames: 'decimalSeparator'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1351,9 +1351,9 @@ InstructionInterpreter subclass: #MessageSendCollector
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
-	classVariableNames: 'DefaultFPEMask DefaultMaxStack DefaultStack'
-	poolDictionaries: 'CRTConstants'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'
+	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #ArithmeticValue
 	instanceVariableNames: ''
@@ -1397,7 +1397,7 @@ ArithmeticValue subclass: #Point
 	classInstanceVariableNames: ''!
 Number variableByteSubclass: #Float
 	instanceVariableNames: ''
-	classVariableNames: 'EMax EMin FpClassInfinite FpClassNaN FpClassNegative FpClassStrictlyPositive FpClassZero Ln2 MinValLogBase2 Precision SignificantDifference'
+	classVariableNames: 'EMax EMin EMinDenormalized FMax FMin FMinDenormalized FpClassDenormal FpClassFinite FpClassInfinite FpClassNaN FpClassNegative FpClassNormal FpClassStrictlyPositive FpClassZero Infinity InvalidOperationFlag Ln2 MantissaHighBit MantissaMask NaN NegativeInfinity Precision SignificantDifference'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number subclass: #Fraction

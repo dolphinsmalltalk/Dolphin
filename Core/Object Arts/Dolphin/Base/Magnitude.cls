@@ -26,7 +26,7 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 	"Answer whether the receiver is less than or equal to the <magnitude>, operand.
 	Implemented in terms of #<, which must be implemented by subclasses."
 
-	^(operand < self) not!
+	^(operand isNaN or: [operand < self]) not!
 
 = aMagnitude
 	"Answer whether the receiver is equivalent to the argument, aMagnitude."
@@ -43,7 +43,7 @@ Subclasses of Magnitude must implement the following comparing protocol (at the 
 	"Answer whether the receiver is greater than or equal to the <magnitude>, operand.
 	Implemented in terms of #<, which must be implemented by subclasses."
 
-	^(self < operand) not!
+	^(operand isNaN or: [self < operand]) not!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -57,6 +57,11 @@ hash
 	necessarily vice-versa). Like #=, and #<, must be implemented by subclasses."
 
 	^self subclassResponsibility!
+
+isNaN
+	"Answer whether the receiver is Not a Number."
+
+	^false!
 
 max: operand
 	"Answer the greater of the receiver and the <magnitude>, operand.
@@ -80,6 +85,7 @@ min: operand
 !Magnitude categoriesFor: #>=!comparing!public! !
 !Magnitude categoriesFor: #between:and:!comparing!public! !
 !Magnitude categoriesFor: #hash!comparing!public! !
+!Magnitude categoriesFor: #isNaN!public!testing! !
 !Magnitude categoriesFor: #max:!comparing!public! !
 !Magnitude categoriesFor: #min:!comparing!public! !
 

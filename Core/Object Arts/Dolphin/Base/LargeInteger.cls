@@ -64,7 +64,7 @@ LargeInteger includes high performance primitive implementations for the common 
 	"Answer whether the receiver is less than the <number>, operand."
 
 	<primitive: 23>
-	^super < operand!
+	^operand greaterThanInteger: self!
 
 <= operand
 	"Answer whether the receiver is less than or equal to the <number>, operand."
@@ -82,7 +82,7 @@ LargeInteger includes high performance primitive implementations for the common 
 	"Answer whether the receiver is greater than the <number>, operand."
 
 	<primitive: 24>
-	^super > operand!
+	^operand < self!
 
 >= aNumber
 	"Answer whether the receiver is greater than or equal to aNumber."

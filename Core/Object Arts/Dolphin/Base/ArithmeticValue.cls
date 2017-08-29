@@ -143,9 +143,14 @@ addToScaledDecimal: operand
 	^operand retry: #+ coercing: self!
 
 ceiling
-	"Answer the integer nearest the receiver toward positive infinity."
+	"Answer the <integer> nearest the receiver toward positive infinity
+	(i.e. the smallest <integer> greater than or equal to the receiver)."
 
-	^self subclassResponsibility!
+	| anInteger |
+	anInteger := self // 1.
+	^anInteger = self 
+		ifTrue: [anInteger]
+		ifFalse: [anInteger + 1]!
 
 coerce: anArithmeticValue
 	"Private - Coerce anArithmeticValue (which must be of a lower generality than the receiver) to be the 
@@ -194,9 +199,10 @@ divideIntoScaledDecimal: operand
 	^operand retry: #/ coercing: self!
 
 floor
-	"Answer the integer nearest the receiver toward negative infinity."
+	"Answer the <integer> nearest the receiver toward negative infinity
+	(i.e. the largest integer less than or equal to the receiver)."
 
-	^self subclassResponsibility!
+	^self // 1!
 
 generality
 	"Private - Answer the Smalltalk generality of the receiver, used for performing type conversions"
@@ -338,6 +344,7 @@ raisedToInteger: anInteger
 	"Answer the receiver raised to the specified <integer> power."
 
 	| i answer |
+	anInteger == 0 ifTrue: [^1].
 	anInteger negative ifTrue: [^(self raisedToInteger: anInteger negated) reciprocal].
 	i := 1 bitShift: anInteger highBit - 1.
 	answer := self class one.
@@ -388,7 +395,7 @@ rounded
 	"Answer the <integer> nearest the receiver according to the following rule:
 		N rounded = the nearest integer I = N + (N sign * (1/2)) truncated toward zero"
 
-	^((self class zero + self sign)/2 + self) truncated!
+	^((self class zero + self sign) / 2 + self) truncated!
 
 roundTo: factor
 	"Answer the multiple of the <number> argument, factor, that is nearest the receiver"

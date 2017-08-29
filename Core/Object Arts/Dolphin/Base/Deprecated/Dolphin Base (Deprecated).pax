@@ -33,23 +33,46 @@ package methodNames
 	add: #CRTLibrary -> #_controlfp:mask:;
 	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
 	add: #CRTLibrary -> #_filelength:;
+	add: #CRTLibrary -> #_finite:;
+	add: #CRTLibrary -> #_fpclass:;
 	add: #CRTLibrary -> #_gcvt:count:buffer:;
+	add: #CRTLibrary -> #_gcvt_s:bufferSize:value:digits:;
 	add: #CRTLibrary -> #_i64toa:string:radix:;
+	add: #CRTLibrary -> #_logb:;
 	add: #CRTLibrary -> #_ltoa:string:radix:;
 	add: #CRTLibrary -> #_makepath:drive:dir:fname:ext:;
 	add: #CRTLibrary -> #_putenv:;
 	add: #CRTLibrary -> #_splitpath:drive:dir:fname:ext:;
+	add: #CRTLibrary -> #acos:;
+	add: #CRTLibrary -> #asin:;
+	add: #CRTLibrary -> #atan:;
+	add: #CRTLibrary -> #atan:x:;
+	add: #CRTLibrary -> #ceil:;
+	add: #CRTLibrary -> #cos:;
+	add: #CRTLibrary -> #exp:;
+	add: #CRTLibrary -> #fabs:;
+	add: #CRTLibrary -> #floor:;
 	add: #CRTLibrary -> #fopen:mode:;
 	add: #CRTLibrary -> #fread:size:count:stream:;
 	add: #CRTLibrary -> #freopen:mode:stream:;
+	add: #CRTLibrary -> #frexp:expptr:;
 	add: #CRTLibrary -> #fseek:offset:origin:;
 	add: #CRTLibrary -> #ftell:;
 	add: #CRTLibrary -> #getenv:;
+	add: #CRTLibrary -> #ldexp:exp:;
+	add: #CRTLibrary -> #log:;
+	add: #CRTLibrary -> #log10:;
+	add: #CRTLibrary -> #log2:;
 	add: #CRTLibrary -> #memcpy:src:count:;
 	add: #CRTLibrary -> #memmove:src:count:;
+	add: #CRTLibrary -> #modf:intptr:;
+	add: #CRTLibrary -> #pow:y:;
+	add: #CRTLibrary -> #sin:;
+	add: #CRTLibrary -> #sqrt:;
 	add: #CRTLibrary -> #strcat:strSource:;
 	add: #CRTLibrary -> #strerror:;
 	add: #CRTLibrary -> #strncpy:strSource:count:;
+	add: #CRTLibrary -> #tan:;
 	add: #CRTLibrary -> #thread_chmod:pmode:;
 	add: #CRTLibrary -> #thread_errno;
 	add: #ExternalStructure -> #do:;
@@ -65,6 +88,7 @@ package methodNames
 	add: #Object -> #asDword;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
+	add: #Process -> #fpeMask;
 	add: #ShlwapiLibrary -> #pathStripPath:;
 	add: #String -> #asDword;
 	add: #WinMMLibrary -> #timeGetTime;
@@ -209,14 +233,34 @@ _filelength: handleInteger
 	#deprecated.
 	^self invalidCall!
 
+_finite: aFloat
+	<cdecl: bool _finite double>
+	#deprecated.
+	^self invalidCall!
+
+_fpclass: aFloat
+	<cdecl: sdword _fpclass double>
+	#deprecated.
+	^self invalidCall!
+
 _gcvt: aFloat count: anInteger buffer: aString
 	<cdecl: char* _gcvt double sdword char*>
 	#deprecated.	"Insecure - use _gcvt_s"
 	^self invalidCall!
 
+_gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
+	<cdecl: sdword _gcvt_s char* intptr double sdword>
+	#deprecated.
+	^self invalidCall!
+
 _i64toa: aSmallInteger string: aString radix: anInteger
 	<cdecl: lpstr _i64toa sqword lpstr sdword>
 	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+_logb: aFloat
+	<cdecl: double _logb double>
+	#deprecated.
 	^self invalidCall!
 
 _ltoa: aSmallInteger string: aString radix: anInteger
@@ -239,6 +283,51 @@ _splitpath: path drive: drive dir: dir fname: fname ext: ext
 	#deprecated.	"Insecure - use _splitpath_s"
 	^self invalidCall!
 
+acos: aFloat
+	<cdecl: double acos double>
+	#deprecated.
+	^self invalidCall!
+
+asin: aFloat
+	<cdecl: double asin double>
+	#deprecated.
+	^self invalidCall!
+
+atan: aFloat
+	<cdecl: double atan double>
+	#deprecated.
+	^self invalidCall!
+
+atan: yFloat x: xFloat
+	<cdecl: double atan2 double double>
+	#deprecated.
+	^self invalidCall!
+
+ceil: aFloat
+	<cdecl: double ceil double>
+	#deprecated.
+	^self invalidCall!
+
+cos: aFloat
+	<cdecl: double cos double>
+	#deprecated.
+	^self invalidCall!
+
+exp: aFloat
+	<cdecl: double exp double>
+	#deprecated.
+	^self invalidCall!
+
+fabs: aFloat
+	<cdecl: double fabs double>
+	#deprecated.
+	^self invalidCall!
+
+floor: aFloat
+	<cdecl: double floor double>
+	#deprecated.
+	^self invalidCall!
+
 fopen: nameString mode: modeString
 	<cdecl: handle fopen lpstr lpstr>
 	#deprecated.	"Insecure - use fopen_s"
@@ -252,6 +341,11 @@ fread: buffer size: size count: count stream: aFILE
 freopen: pathString mode: modeString stream: anExternalHandle
 	<cdecl: handle freopen char* char* handle>
 	#deprecated.	"Insecured - see MSDN"
+	^self invalidCall!
+
+frexp: x expptr: expptr
+	<cdecl: double frexp double sdword*>
+	#deprecated.
 	^self invalidCall!
 
 fseek: aFILE offset: offsetInteger origin: originInteger
@@ -269,6 +363,25 @@ getenv: varname
 	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
+ldexp: aFloat exp: anInteger
+	<cdecl: double ldexp double sdword>
+	#deprecated.
+	^self invalidCall!
+
+log: aFloat
+	<cdecl: double log double>
+	#deprecated.
+	^self invalidCall!
+
+log10: aFloat
+	<cdecl: double log10 double>
+	#deprecated.
+	^self invalidCall!
+
+log2: aFloat
+	<cdecl: double log2 double>
+	^self invalidCall!
+
 memcpy: dest src: src count: count
 	<cdecl: lpvoid memcpy lpvoid lpvoid intptr>
 	#deprecated.	"Insecure - see MSDN"
@@ -277,6 +390,26 @@ memcpy: dest src: src count: count
 memmove: dest src: src count: count
 	<cdecl: void* memmove void* void* intptr>
 	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+modf: aFloat intptr: intFloatOut
+	<cdecl: double modf double lpvoid>
+	#deprecated.
+	^self invalidCall!
+
+pow: xFloat y: yFloat
+	<cdecl: double pow double double>
+	#deprecated.
+	^self invalidCall!
+
+sin: aFloat
+	<cdecl: double sin double>
+	#deprecated.
+	^self invalidCall!
+
+sqrt: aFloat
+	<cdecl: double sqrt double>
+	#deprecated.
 	^self invalidCall!
 
 strcat: strDestination strSource: strSource
@@ -294,6 +427,11 @@ strncpy: strDest strSource: strSource count: count
 	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
+tan: aFloat
+	<cdecl: double tan double>
+	#deprecated.
+	^self invalidCall!
+
 thread_chmod: aFilenameString pmode: aModeInteger
 	<overlap cdecl: sdword _chmod lpstr sdword>
 	#deprecated. "Use CRTLibraryNonBlocking>>chmod:pmode:"
@@ -306,23 +444,46 @@ thread_errno
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
+!CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
+!CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #log2:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
+!CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
 
@@ -481,6 +642,13 @@ script: scriptSymbol put: aString
 	self scriptAt: scriptSymbol put: aString! !
 !Package categoriesFor: #script:!operations!public! !
 !Package categoriesFor: #script:put:!operations!public! !
+
+!Process methodsFor!
+
+fpeMask
+	#deprecated.	"Use Float class>>exceptionMask, or #fpControl"
+	^fpControl bitAnd: CRTConstants._MCW_EM! !
+!Process categoriesFor: #fpeMask!accessing!public! !
 
 !ShlwapiLibrary methodsFor!
 

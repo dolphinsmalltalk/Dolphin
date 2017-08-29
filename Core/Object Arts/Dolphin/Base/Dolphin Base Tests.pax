@@ -282,7 +282,7 @@ DolphinTest subclass: #FILETIMETest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FloatTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'fpeMask'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

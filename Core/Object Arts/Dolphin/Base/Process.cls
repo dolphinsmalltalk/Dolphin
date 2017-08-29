@@ -1,11 +1,14 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpeMask threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
-	classVariableNames: 'DefaultFPEMask DefaultMaxStack DefaultStack'
-	poolDictionaries: 'CRTConstants'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'
+	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Process guid: (GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Process addClassConstant: 'DefaultFpControl' value: 524295!
+Process addClassConstant: 'DefaultMaxStack' value: 131072!
+Process addClassConstant: 'DefaultStack' value: 1!
 Process comment: 'A Process represents an individual thread of execution in the image.
 
 Note that the name "Process" is historic - a Smalltalk Process is much more similar to a "thread" than a true process, since all Processes share the same execution context (the image). Dolphin''s processes do not map directly onto native threads, but are "green" threads. The multi-threading system is implemented internally by the VM and image, with all "green" threads running within a single Win32 thread. This means that a call to a long running (or blocking) external API call will block the entire system, so a facility is provided to "overlap" such calls. This is done by marking the external method with the "overlap" annotation, in which case the VM will perform the call on a separate native thread. For the duration of the overlapped operation the calling Process is blocked, but other Processes in the image will continue to run. 
@@ -27,25 +30,25 @@ In general it is not a good idea to manipulate the contents of a live process di
 
 Instance Variables:
 	suspendedFrame 		<Integer> address of suspendedFrame when in states ready, waiting, or suspended, otherwise nil.
-	priority 					<Integer> priority level (see ProcessorScheduler).
-	myList 					<LinkedList> on which the process is currently queued if in states ready or waiting, otherwise nil.
+	priority 				<Integer> priority level (see ProcessorScheduler).
+	myList 				<LinkedList> on which the process is currently queued if in states ready or waiting, otherwise nil.
 	callbackDepth 			<Integer> number of callbacks which have not yet been returned from (i.e. nested depth).
 	primitiveFailureCode		<Integer> code reported by last primitive failure.
 	primitiveFailureData 		<Object> argument supplied by last primitive failure. Value depends on primitive and failure reason.
-	fpeMask 				<Integer> floating point exception mask specifying which FP exceptions to mask. See Intel/CRT docs.
-	tls 						Reserved for future use.
-	thread 					Pointer to overlapped call control block. For VM use only.
+	fpControl 				<Integer> floating point control flags. See Intel/CRT docs.
+	threadSync			<Semaphore> used for overlapped call synchronisationby the VM.
+	thread 				Pointer to overlapped call control block. For VM use only.
 	exceptionEnvironment	List of active exception frames <ExceptionHandler> in LIFO order.
 	_alreadyPrinted			<IdentitySet> of objects which have already printed in a recursive #printOn:
-	errno					<integer>. C runtime library error code recorded after last overlapped external call
+	_reserved1			Reserved for future use.
 	debugger 				<debugEventHandler> associated with the Process, if any. Used as a destination for debug events.
-	name 					The <Object> ''name'' of the process. Usually a <String> or <CompiledMethod>.
-	lastError 				<integer>. Win32 GetLastError() code recorded after last overlapped external call.
+	name 				The <Object> ''name'' of the process. Usually a <String> or <CompiledMethod>.
+	_reserved2			Reserved for future use.
 
 Class Variables:
-	DefaultFPEMask			<Integer> default floating point exception mask used to initialize fpeMask instance variable.
+	DefaultFpControl		<Integer> default floating point control flags to initialize fpControl instance variable.
 	DefaultMaxStack 		<Integer> maximum stack depth (size up to which a Process may grow - virtual memory reserved).
-	DefaultStack				<Integer> initial stack depth (initial virtual memory committed).'!
+	DefaultStack			<Integer> initial stack depth (initial virtual memory committed).'!
 !Process categoriesForClass!Kernel-Processes! !
 !Process methodsFor!
 
@@ -166,28 +169,21 @@ finalize
 
 	self terminate!
 
-fpeMask
-	"Answer the current floating point exception mask for the receiver.
-	This mask is set whenever the process is running (by the VM).
-	Note that the mask determines which exceptions are masked out, rather
-	than generated."
+fpControl
+	"Answer the current floating point control word for the receiver. This is an <integer>
+	combination of flags from the CRT FP control word enumerations:
+		_DN_xxx	- Denormal control (mask _MCW_DN)
+		_EM_xxx 	- Exception masking (mask _MCW_EM)
+		_IC_xxx	- Infinity control (mask _MCW_IC)set
+		_PC_xxx	- Precision control (mask _MCW_PC)
+		_RC_xxx	- Rounding control (mask _MCW_RC)
+	See the CRT documentation on MSDN for further details."
 
-	^fpeMask!
+	^fpControl!
 
 fpeMask: anInteger
-	"Set the current floating point exception mask for the receiver.
-	Answer the old mask (not the receiver as is normal for a set method).
-	If the receiver is the current active process, then the current
-	FP exception mask is established. The mask is recorded for future
-	switching by the VM on context switches.
-	Note that the mask determines which exceptions are masked out, rather
-	than generated."
-
-	| oldMask |
-	oldMask := fpeMask.
-	fpeMask := anInteger.
-	self isActive ifTrue: [Float reset].
-	^oldMask!
+	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
+	^self setFpControl: anInteger mask: CRTConstants._MCW_EM!
 
 frameAtAddress: spInteger
 	"Private - Answer a frame representing the real stack frame at the specified SP (a
@@ -230,7 +226,7 @@ initialize
 
 	_alreadyPrinted := IdentitySet new.
 	callbackDepth := priority := 0.
-	(fpeMask := Processor activeProcess fpeMask) isNil ifTrue: [fpeMask := DefaultFPEMask].
+	fpControl := Processor activeProcess fpControl ?? DefaultFpControl.
 	self beFinalizable!
 
 interruptWith: aBlock
@@ -464,6 +460,13 @@ queueInterrupt: anInteger with: anObject
 	<primitive: 98>
 	^self primitiveFailed!
 
+resetFloatingPoint
+	CRTLibrary default
+		_clearfp;
+		_control87: fpControl
+			mask: ##(CRTConstants._MCW_DN | CRTConstants._MCW_EM | CRTConstants._MCW_IC | CRTConstants._MCW_PC
+					| CRTConstants._MCW_RC)!
+
 resume
 	"Change the state of the receiver from Suspended to Ready (by placing
 	it at the end of the Processor's queue for the receiver's priority).
@@ -499,6 +502,31 @@ resumeUnconditionally
 
 	<primitive: 87>
 	myList isNil ifTrue: [^self primitiveFailed]!
+
+setFpControl: flagsInteger mask: maskInteger
+	"Set the current floating point control word for the receiver. If the receiver is the
+	current active process, then the processor control word is updated. Once set the VM will
+	maintain isolated fp state for each Process. The mask should be one or more of:
+		_MCW_DN	- Denormal control (flags _DN_xxx)
+		_MCW_EM	- Exception masking (flags _EM_xxx)
+		_MCW_IC	- Infinity control (flags _IC_xxx)
+		_MCW_PC	- Precision control (flags _PC_xxx)
+		_MCW_RC	- Rounding control (mask _RC_xxx)
+
+	Note that you can unmask some FP exceptions that are masked by default such as _EM_DENORMAL
+	and _EM_INEXACT, it is unwise to do so for anything other than short well tested blocks of code as 
+	this may cause any Floating point code in external libraries that is not written to expect these 
+	exceptions (e.g. in Windows controls) to fail in unexpected ways. Unmasking _EM_INEXACT, in
+	particular, will quickly kill a development image."
+
+	| current |
+	current := fpControl.
+	fpControl := (current bitAnd: maskInteger bitInvert) bitOr: (flagsInteger bitAnd: maskInteger).
+	self isActive
+		ifTrue: 
+			["Set it whether or not it is different from the current control value as some external code could have changed it."
+			self resetFloatingPoint].
+	^current!
 
 setPriority: anInteger 
 	priority := anInteger!
@@ -686,8 +714,9 @@ topFrame
 !Process categoriesFor: #exceptionEnvironment!accessing!debugger-step over!public! !
 !Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !
 !Process categoriesFor: #finalize!finalizing!private! !
-!Process categoriesFor: #fpeMask!accessing!public! !
-!Process categoriesFor: #fpeMask:!accessing!public! !
+!Process categoriesFor: #fpControl!accessing!public! !
+!Process categoriesFor: #fpeMask:!accessing!private! !
+!Process categoriesFor: #fpStatus!accessing!public! !
 !Process categoriesFor: #frameAtAddress:!private!stack frames! !
 !Process categoriesFor: #frameAtIndex:!private!stack frames! !
 !Process categoriesFor: #frameClass!private!stack frames! !
@@ -719,9 +748,11 @@ topFrame
 !Process categoriesFor: #priority:!accessing!public! !
 !Process categoriesFor: #queueInterrupt:!interrupts!public! !
 !Process categoriesFor: #queueInterrupt:with:!interrupts!public! !
+!Process categoriesFor: #resetFloatingPoint!helpers!private! !
 !Process categoriesFor: #resume!public!states-changing! !
 !Process categoriesFor: #resume:!public!states-changing! !
 !Process categoriesFor: #resumeUnconditionally!public!states-changing! !
+!Process categoriesFor: #setFpControl:mask:!accessing!public! !
 !Process categoriesFor: #setPriority:!accessing!private! !
 !Process categoriesFor: #shutdown!private!states-changing! !
 !Process categoriesFor: #size!accessing!public! !
@@ -777,22 +808,58 @@ initialize
 							which fit on one OS page, because the VM adjusts it to account for 
 							Process' fixed instance variables, and overhead.
 		DefaultMaxStack	-	The maximum size to which the stack of new Processes can grow before
-							the VM signals a stack overflow. Processes grow by a page each time 
+							the VM signals a stack overflow. Processes grow by a number of pages each time 
 							a stack overflow occurs, from the initial size, up to this maximum.
 							This value should be large enough to allow useful work to be done by 
 							recursive methods, but not so large that programming errors go 
 							undetected, It is unlikely that a stack need be large than 32768, 
 							and for those instances, specific instantiation is recommended.
+		DefaultFpControl	-	Default floating point control word - see msdn documentation for the
+							CRT function _controlfp_s().
 
 	Evaluate me to initialize:
 		Process initialize
 	"
 
-	DefaultStack := 1.			"Let the VM work out the minimum size (will be an OS page)"
-	DefaultMaxStack := (128*4*1024)/4. 	"Grow to 128K slots (512Kb) before overflow."
+	self addClassConstant: 'DefaultStack' value: 1.	"Let the VM work out the minimum size (will be at least one OS page)"
+	self addClassConstant: 'DefaultMaxStack' value: 128 * 4 * 1024 / 4.	"Grow to 128K slots (512Kb) before overflow."
 
-	"Floating point Inexact and Underflow exceptions will be masked (i.e. not raised) by default"
-	self addClassConstant: 'DefaultFPEMask' value: _EM_DENORMAL | _EM_INEXACT | _EM_UNDERFLOW.!
+	"Floating point Inexact and Underflow exceptions will be masked (i.e. not raised) by default.
+	As specified by ISO 10967, clause 6, a compliant implementation can support a number of 
+	alternate means for applications to detect FP errors:
+		a) Notification by recording in indicators (see clause 6.2.1).
+		b) Notification by alteration of control flow (see clause 6.2.2).
+		c) Notification by termination with message (see clause 6.2.3). 
+
+	These alternates are supported in Dolphin as follows:
+	a) Indicators are accessed via Float class>>statusFlags, e.g. after detecting an infinite result.
+	b) Implemented by raising of exceptions, depending on the Float class>>exceptionMask setting.
+	c) A special case of (b), depending on how the application handles exceptions."
+
+	"Note that alternative (a), is 'required', and is 'expected to be the default'. In order to
+	support this it is necessary to provide a means for an application to examine 'indicators'
+	after performing floating point operations, which most Smalltalk implementations do not. The
+	Dolphin VM ensures that isolated FP state is maintained for each running Process, and the
+	CRT _statusfp function can be called to retrieve the current status indicators after FP operations 
+	are performed, either in primitives, or external library calls. The default exception mask now masks
+	out the continuable error cases in order to comply with the expectation that notification
+	through indicators be the default notification mechanism. For example, should an FP
+	operation cause overflow, then the result will be Float.Infinity (or
+	Float.NegativeInfinity), and the CRTConstants._EM_OVERFLOW mask will be set in 
+	Float statusFlags."
+
+	"We still provide notification through alteration of control flow (i.e. the raising of
+	exceptions) for division by zero, and invalid operations such as taking the square root of a
+	negative number. We've chosen to unmask these error cases because they generally indicate
+	logic errors in a program, and so exceptions are raised for these errors by default. This
+	can be overridden in any individual process (or for a block of computation) by setting the
+	FP exception mask appropriately. When these conditions are also masked, Float.NaN values
+	will be returned from the FP operation as continuation values."
+	self addClassConstant: 'DefaultFpControl'
+		value: CRTConstants._RC_NEAR | CRTConstants._IC_PROJECTIVE | CRTConstants._DN_SAVE
+				| CRTConstants._PC_64 | CRTConstants._EM_DENORMAL
+				| CRTConstants._EM_INEXACT | CRTConstants._EM_UNDERFLOW
+				| CRTConstants._EM_OVERFLOW!
 
 new
 	"Private - Answer a new instance of the receiver. In order to create a runnable process,

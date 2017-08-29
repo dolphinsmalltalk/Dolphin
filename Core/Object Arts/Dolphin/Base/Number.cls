@@ -35,6 +35,11 @@ arcTan
 
 	^self asFloat arcTan!
 
+arcTan: aNumber
+	"Answer the arc-tangent of the receiver/aNumber in radians."
+
+	^self asFloat arcTan: aNumber!
+
 asFloat
 	"Answer the receiver represented as the nearest possible <Float>.
 	 Implementation Note: Dolphin only supports double precision floating 
@@ -92,16 +97,6 @@ asScaledDecimal: scale
 		scale: scale
 !
 
-ceiling
-	"Answer the <integer> nearest the receiver toward positive infinity
-	(i.e. the smallest <integer> greater than or equal to the receiver)."
-
-	| anInteger |
-	anInteger := self // 1.
-	^anInteger = self 
-		ifTrue: [anInteger]
-		ifFalse: [anInteger + 1]!
-
 copy
 	"Answer a copy of the receiver (by default a copy which shares the receiver's 
 	instance variables). Numbers are immutable, so we answer the receiver itself."
@@ -140,12 +135,6 @@ exp
 	This is the inverse of #ln."
 
 	^self asFloat exp!
-
-floor
-	"Answer the <integer> nearest the receiver toward negative infinity
-	(i.e. the largest integer less than or equal to the receiver)."
-
-	^self // 1!
 
 floorLog: operand
 	"Answer an <integer> which is the logarithm to the <number> base, operand,
@@ -278,6 +267,7 @@ to: stop do: operation
 !Number categoriesFor: #arcCos!mathematical!public! !
 !Number categoriesFor: #arcSin!mathematical!public! !
 !Number categoriesFor: #arcTan!mathematical!public! !
+!Number categoriesFor: #arcTan:!mathematical!public! !
 !Number categoriesFor: #asFloat!converting!public! !
 !Number categoriesFor: #asFloatD!converting!public! !
 !Number categoriesFor: #asFloatE!converting!public! !
@@ -287,7 +277,6 @@ to: stop do: operation
 !Number categoriesFor: #asPoint!converting!public! !
 !Number categoriesFor: #asPoint3D!converting!public! !
 !Number categoriesFor: #asScaledDecimal:!converting!public! !
-!Number categoriesFor: #ceiling!public!truncation and round off! !
 !Number categoriesFor: #copy!copying!public! !
 !Number categoriesFor: #cos!mathematical!public! !
 !Number categoriesFor: #degreesToRadians!converting!public! !
@@ -295,7 +284,6 @@ to: stop do: operation
 !Number categoriesFor: #divideByZero!exceptions!private! !
 !Number categoriesFor: #even!public!testing! !
 !Number categoriesFor: #exp!mathematical!public! !
-!Number categoriesFor: #floor!public!truncation and round off! !
 !Number categoriesFor: #floorLog:!mathematical!public! !
 !Number categoriesFor: #fractionPart!accessing!public! !
 !Number categoriesFor: #hashBits!comparing!private! !
@@ -482,7 +470,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 	<gettableStream>, aStream. The <integer>, integerPart, has already been read from the stream
 	and we are currently positioned immediately after the decimal point."
 
-	| nextChar precision fractionalPart start mantissa specifiedPrecision |
+	| nextChar precision fractionalPart start significand impliedPrecision |
 	start := aStream position.
 	"Attempt to read positive fractional part"
 	(fractionalPart := self readIntegerFrom: aStream radix: 10) isNil
@@ -491,14 +479,14 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			 onto the stream"
 			aStream pop.
 			^anInteger].
-	precision := specifiedPrecision := aStream position - start.
+	precision := impliedPrecision := aStream position - start.
 
 	"So as to not accumulate round off errors the mantissa is kept in integer form."
 	fractionalPart = 0
 		ifTrue: 
-			[mantissa := anInteger.
+			[significand := anInteger.
 			precision := 0]
-		ifFalse: [mantissa := anInteger * (10 raisedToInteger: precision) + fractionalPart].
+		ifFalse: [significand := anInteger * (10 raisedToInteger: precision) + fractionalPart].
 
 	"Process any exponent..."
 	((nextChar := aStream peek) == $e or: [nextChar == $d or: [nextChar == $q]])
@@ -510,12 +498,12 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 				ifTrue: 
 					[exponent > Float maxExponent ifTrue: [self errorExponentTooLarge: exponent].
 					^exponent >= precision
-						ifTrue: [(mantissa * (10 raisedToInteger: exponent - precision)) asFloat]
+						ifTrue: [(significand * (10 raisedToInteger: exponent - precision)) asFloat]
 						ifFalse: 
 							["Note that the fraction does not need to be
 							 normalized before #asFloat conversion,
 							 which will be faster than Integer>>gcd: "
-							(Fraction numerator: mantissa denominator: (10 raisedToInteger: exponent negated + precision))
+							(Fraction numerator: significand denominator: (10 raisedToInteger: exponent negated + precision))
 								asFloat]].
 
 			"Found Float with trailing exponent character which is not part of the
@@ -528,15 +516,15 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 					[aStream next.	"Skip the $s"
 					^self
 						readScaledDecimalFrom: aStream
-						mantissa: mantissa / (10 raisedToInteger: precision)
-						precision: specifiedPrecision]].
+						mantissa: significand / (10 raisedToInteger: precision)
+						precision: impliedPrecision]].
 
 	"Normal Float, such as 2.5 (perhaps with trailing exponent character)"
 	^precision = 0
-		ifTrue: [mantissa asFloat]
+		ifTrue: [significand asFloat]
 		ifFalse: 
 			["Again the fraction does not need to be normalized before conversion"
-			(Fraction numerator: mantissa denominator: (10 raisedToInteger: precision)) asFloat]!
+			(Fraction numerator: significand denominator: (10 raisedToInteger: precision)) asFloat]!
 
 readSmalltalkSyntaxFrom: aStream
 	"Private - Instantiate a new sub-instance of the receiver from aStream and answer it.

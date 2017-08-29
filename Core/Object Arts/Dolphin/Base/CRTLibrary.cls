@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #CRTLibrary
-	instanceVariableNames: 'decimalSeparator'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -60,8 +60,8 @@ _close: anInteger
 	<cdecl: sdword _close sdword>
 	^self invalidCall!
 
-_controlfp_s: currentControl newControl: newInteger mask: maskInteger
-	<cdecl: sdword _controlfp_s dword* dword dword>
+_control87: newInteger mask: maskInteger
+	<cdecl: sdword _control87 dword dword>
 	^self invalidCall!
 
 _dup: anInteger 
@@ -109,16 +109,6 @@ _fileno: aFILE
 	<cdecl: sdword _fileno handle>
 	^self invalidCall!
 
-_finite: aFloat
-	"Answer whether the argument is finite floating point number."
-
-	<cdecl: bool _finite double>
-	^self invalidCall!
-
-_fpclass: aFloat
-	<cdecl: sdword _fpclass double>
-	^self invalidCall!
-
 _fseeki64: aFILE offset: offsetInteger origin: originInteger
 	<cdecl: sdword _fseeki64 handle sqword sdword>
 	^self invalidCall!
@@ -127,10 +117,6 @@ _ftelli64: anExternalHandle
 	"Answer the <integer> position (zero-based) of the CRT FILE stream."
 
 	<cdecl: sqword _ftelli64 handle>
-	^self invalidCall!
-
-_gcvt_s: aString bufferSize: sizeInteger value: aFloat digits: digitsInteger
-	<cdecl: sdword _gcvt_s char* intptr double sdword>
 	^self invalidCall!
 
 _get_osfhandle: anInteger
@@ -146,12 +132,6 @@ _getcwd: aString maxlen: anInteger
 
 _isatty: anInteger
 	<cdecl: bool _isatty sdword>
-	^self invalidCall!
-
-_logb: aFloat
-	"Answer the exponent of the argument, aFloat."
-
-	<cdecl: double _logb double>
 	^self invalidCall!
 
 _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
@@ -198,6 +178,10 @@ _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteg
 	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
 	^self invalidCall!
 
+_statusfp
+	<cdecl: dword _statusfp>
+	^self invalidCall!
+
 _stricmp: string1 string2: string2
 	"Answer the result of a case insensitive string comparison between string1 and string2,
 	answer <0, 0, or >0 according to whether string1 is lexicographically less than, 
@@ -235,52 +219,12 @@ _strrev: aString
 	^self invalidCall
 !
 
-acos: aFloat
-	"Answer the arccosine of the argument, aFloat.
-
-		double acos( double x );"
-
-	<cdecl: double acos double>
-	^self invalidCall!
-
-asin: aFloat
-	"Answer the arcsine of the argument, aFloat.
-
-		double asin( double x );"
-
-	<cdecl: double asin double>
-	^self invalidCall!
-
-atan: aFloat
-	"Answer the arctangent of the argument, aFloat.
-
-		double atan( double x );"
-
-	<cdecl: double atan double>
-	^self invalidCall!
-
-atan: yFloat x: xFloat
-	"Answer the arctangent of the argument, aFloat.
-
-		double atan2( double y, double x );"
-
-	<cdecl: double atan2 double double>
-	^self invalidCall!
-
 atoi: aString
 	"Convert a String to an integer.
 
 		int atoi( const char *string );"
 
 	<cdecl: sdword atoi lpstr>
-	^self invalidCall!
-
-ceil: aFloat
-	"Answer the integer nearest the aFloat toward positive infinity.
-
-		double floor( double x );"
-
-	<cdecl: double ceil double>
 	^self invalidCall!
 
 chmod: aFilenameString pmode: aModeInteger
@@ -292,38 +236,10 @@ close
 
 	^false!
 
-cos: aFloat
-	"Answer the cosine of the argument, aFloat.
-
-		double cos( double x );"
-
-	<cdecl: double cos double>
-	^self invalidCall!
-
-decimalSeparator
-	"Private - Answer the decimal separator String used by the CRT in the current locale."
-
-	^decimalSeparator!
-
 errno
 	"Answer the <integer> value of the last recorded CRT error."
 
 	^self _errno sdwordAtOffset: 0!
-
-exp: aFloat
-	"Answer the exponential of the argument, aFloat.
-
-		double exp( double x );"
-
-	<cdecl: double exp double>
-	^self invalidCall!
-
-fabs: aFloat
-	"Answer the absolute value of the double precision floating-point argument, aFloat
-		double fabs( double x );"
-
-	<cdecl: double fabs double>
-	^self invalidCall!
 
 fclose: anAddress
 	"Closes the specified stream. Answers 0 if successful.
@@ -348,14 +264,6 @@ fgets: buf n: bufsize stream: aFILE
 	<cdecl: lpstr fgets lpstr sdword handle>
 	^self invalidCall!
 
-floor: aFloat
-	"Answer the integer nearest the aFloat toward negative infinity.
-
-		double floor( double x );"
-
-	<cdecl: double floor double>
-	^self invalidCall!
-
 fopen_s: pFile filename: nameString mode: modeString
 	<cdecl: sdword fopen_s handle* lpstr lpstr>
 	^self invalidCall!
@@ -366,11 +274,6 @@ fputc: charValue stream: aFILE
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
-	^self invalidCall!
-
-frexp: x expptr: expptr
-
-	<cdecl: double frexp double sdword*>
 	^self invalidCall!
 
 fwrite: data size: sizeInteger count: countInteger stream: aFILE 
@@ -415,27 +318,6 @@ iswspace: aCharacter
 	^self invalidCall
 !
 
-ldexp: aFloat exp: anInteger
-	"Answer xFloat * (2 ** exp)
-
-		double ldexp( double x, int exp );"
-
-	<cdecl: double ldexp double sdword>
-	^self invalidCall!
-
-log: aFloat
-	"Answer the natural logarithm of the argument, aFloat."
-
-	<cdecl: double log double>
-	^self invalidCall!
-
-log10: aFloat
-	"Answer the base 10 logarithm of the double precision
-	floating point argument, aFloat."
-
-	<cdecl: double log10 double>
-	^self invalidCall!
-
 memcmp: buf1 buf2: buf2 count: count
 	"Compare the first count bytes in two buffers, answering <0 if buf1 is < buf2, 0 if equal,
 	and >0 if buf2 > buf1.
@@ -451,21 +333,6 @@ memset: dest c: c count: count
 	"
 
 	<cdecl: sdword memset lpvoid sdword intptr>
-	^self invalidCall!
-
-modf: aFloat intptr: intFloatOut
-	"Splits aFloat into fractional and integer parts. Answer the fractional part.
-
-		double modf( double x, double *intptr );"
-
-	<cdecl: double modf double lpvoid>
-	^self invalidCall
-!
-
-pow: xFloat y: yFloat
-	"Answer xFloat raised to the power of yFloat."
-
-	<cdecl: double pow double double>
 	^self invalidCall!
 
 rewind: aFILE
@@ -484,17 +351,6 @@ setlocale: category locale: localeString
 	^self invalidCall
 !
 
-sin: aFloat
-	"Answer the Sine of the argument, aFloat."
-
-	<cdecl: double sin double>
-	^self invalidCall!
-
-sqrt: aFloat
-	"Answer the square root of the argument, aFloat."
-
-	<cdecl: double sqrt double>
-	^self invalidCall!
 strcat_s: destString bufferSize: anInteger strSource: sourceString
 	<cdecl: sdword strcat_s lpstr intptr lpstr>
 	^self invalidCall!
@@ -544,21 +400,7 @@ strpbrk: string strCharSet: strCharSet
 synchronizeLocale
 	"Private - Synchronize the CRT's locale with the OS locale setting."
 
-	| buf |
-	self setlocale: 0 locale: ''.
-	buf := String newFixed: 10.
-	self
-		_gcvt_s: buf
-		bufferSize: buf size + 1
-		value: 0.0
-		digits: 2.
-	decimalSeparator := buf copyFrom: 2 to: 2!
-
-tan: aFloat
-	"Answer the Tangent of the argument, aFloat."
-
-	<cdecl: double tan double>
-	^self invalidCall!
+	self setlocale: 0 locale: ''!
 
 ungetc: c stream: stream
 	"Pushes the character with integer code point, c, back onto the FILE*, stream."
@@ -575,7 +417,7 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_clearfp!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_close:!CRT functions-low level I/O!public! !
-!CRTLibrary categoriesFor: #_controlfp_s:newControl:mask:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_control87:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_dup:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_dup2:handle2:!CRT functions-low level I/O!public! !
 !CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
@@ -583,15 +425,11 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_fdopen:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_filelengthi64:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_fileno:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_fseeki64:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_ftelli64:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
@@ -599,50 +437,33 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #_setmode:mode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_statusfp!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_stricmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #decimalSeparator!enquiries!private! !
 !CRTLibrary categoriesFor: #errno!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fclose:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #feof:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fflush:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #initialize!initializing!private! !
 !CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #rewind:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
-!CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
@@ -651,7 +472,6 @@ wcscspn: aUnicodeString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
-!CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
 
