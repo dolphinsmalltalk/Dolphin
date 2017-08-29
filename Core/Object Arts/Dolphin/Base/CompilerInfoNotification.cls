@@ -10,14 +10,16 @@ CompilerInfoNotification comment: 'CompilerInfoNotification is a resumable excep
 !CompilerInfoNotification categoriesForClass!System-Exception Handling! !
 !CompilerInfoNotification methodsFor!
 
+severityName
+	^#Note! !
+!CompilerInfoNotification categoriesFor: #severityName!displaying!public! !
+
+!CompilerInfoNotification class methodsFor!
+
 severity
 	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
 	sorting compilation issues by severity."
 
-	^0!
-
-severityName
-	^#Note! !
-!CompilerInfoNotification categoriesFor: #severity!constants!public! !
-!CompilerInfoNotification categoriesFor: #severityName!displaying!public! !
+	^0! !
+!CompilerInfoNotification class categoriesFor: #severity!constants!public! !
 

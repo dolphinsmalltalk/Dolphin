@@ -46,149 +46,6 @@ Pure lexical analysis has the drawback that it isn''t able to distinguish betwee
 !SmalltalkStyler categoriesForClass!Kernel-Objects! !
 !SmalltalkStyler methodsFor!
 
-acceptAssignmentToken: aStAssignmentToken 
-	^#assignment!
-
-acceptBinarySelectorToken: aStBinarySelectorToken 
-	| lastStyle selector |
-	self atStart ifTrue: [^self initialBinaryStyle: aStBinarySelectorToken].
-	self isInArray ifTrue: [^#literalSymbol].
-	selector := aStBinarySelectorToken value.
-	selector == #| ifTrue: [^self styleForBar].
-	lastStyle := self lastStyle.
-	selector == #< 
-		ifTrue: 
-			[^(lastStyle == #unarySelector or: [lastStyle == #argDecl or: [lastStyle == #tempCloseBar]]) 
-				ifTrue: 
-					[inTag := true.
-					#tag]
-				ifFalse: [#binaryMessage]].
-	"The scanner may have wrongly interpreted adjacent temp open/close bars as a binary
-	selector. If it has we must emit appropriate bar styling, and then hack the token to include
-	only the last bar."
-	selector == #'||' 
-		ifTrue: 
-			[lastStyle == #blockArgDecl 
-				ifTrue: 
-					[self applyStyle: #tempCloseBar toNext: 1.
-					aStBinarySelectorToken start: aStBinarySelectorToken start + 1.
-					^#tempOpenBar].
-			(lastStyle == #tempCloseBar or: 
-					[lastStyle == #argDecl 
-						or: [lastStyle == #unarySelector or: [lastStyle == #specialCharacter and: [self lastToken = '##(']]]]) 
-				ifTrue: 
-					[self applyStyle: #tempOpenBar toNext: 1.
-					aStBinarySelectorToken start: aStBinarySelectorToken start + 1.
-					^#tempCloseBar]].
-	(selector == #||| and: [lastStyle == #blockArgDecl]) 
-		ifTrue: 
-			[self
-				applyStyle: #tempCloseBar toNext: 1;
-				applyStyle: #tempOpenBar toNext: 1.
-			aStBinarySelectorToken start: aStBinarySelectorToken stop.
-			^#tempCloseBar].
-	^#binaryMessage!
-
-acceptIdentifierToken: aStIdentifierToken 
-	| lastStyle |
-	self atStart ifTrue: [^self initialUnaryStyle].
-	self isInArray ifTrue: [^#literalSymbol].
-	lastStyle := self lastStyle.
-	lastStyle == #specialCharacter 
-		ifTrue: 
-			[| char |
-			char := self lastCharacter.
-			char == $: ifTrue: [^#blockArgDecl].
-			(char == $) or: [char == $; or: [char = $]]]) ifTrue: [^#unaryMessage].
-			^#identifier].
-	^##((IdentityDictionary new)
-		at: #identifier put: #unaryMessage;
-		at: #unaryMessage put: #unaryMessage;
-		at: #literalPseudo put: #unaryMessage;
-		at: #literalString put: #unaryMessage;
-		at: #literalNumber put: #unaryMessage;
-		at: #literalCharacter put: #unaryMessage;
-		at: #literalSymbol put: #unaryMessage;
-		at: #literalBytes put: #unaryMessage;
-		at: #tempOpenBar put: #tempDecl;
-		at: #tempDecl put: #tempDecl;
-		at: #keywordSelector put: #argDecl;
-		at: #binarySelector put: #argDecl;
-		at: #literalArray put: #unaryMessage;
-		shrink;
-		yourself) at: lastStyle ifAbsent: [#identifier]!
-
-acceptIllegalCharacterToken: aStIllegalCharacterToken 
-	^#illegal!
-
-acceptKeywordToken: aStKeywordToken 
-	self atStart ifTrue: [^self initialKeywordStyle].
-	self isInArray ifTrue: [^#literalSymbol].
-	^(self lastStyle == #argDecl or: [self lastIsSpecial: $!!]) 
-		ifTrue: [#keywordSelector]
-		ifFalse: [#keywordMessage]!
-
-acceptLiteralArrayToken: aStLiteralArrayToken 
-	^aStLiteralArrayToken isForByteArray 
-		ifTrue: [#literalBytes]
-		ifFalse: 
-			[arrayDepth := arrayDepth + 1.
-			stack addLast: aStLiteralArrayToken.
-			#literalArray]!
-
-acceptLiteralToken: aStLiteralToken 
-	self atStart ifTrue: [^self initialLiteralStyle: aStLiteralToken].
-	^aStLiteralToken textStyle!
-
-acceptNumberLiteralToken: aStNumberLiteralToken 
-	self atStart ifTrue: [^#literalNumber].
-	self lastIsLiteralByte ifTrue: [^#literalBytes].
-	self isInArray ifTrue: [^#literalNumber].
-	"Handle 'x-1' ambiguity: invalid: binary selector, block arg decl, keyword selector, literal
-	array start, static start, temp decl, temp open must be a literal if previous was keyword
-	message, period, hat, assignment, binary message, arg decl, close temp, unary selector can
-	be a message if previous was: literal (of any sort), identifier, special: paren, special:
-	block paren, unaryMessage"
-	(aStNumberLiteralToken isNegative and: 
-			[(#(#identifier #literalPseudo #literalNumber #literalString #literalCharacter #literalArray #literalBytes #literalSymbol #unaryMessage) 
-				identityIncludes: self lastStyle) or: [self lastIsStyle: #specialCharacter chars: '])']]) 
-		ifTrue: 
-			[self applyStyle: #binaryMessage toNext: 1.
-			aStNumberLiteralToken start: aStNumberLiteralToken start + 1].
-	^#literalNumber!
-
-acceptOptimizedToken: aStOptimizedToken 
-	stack addLast: aStOptimizedToken.
-	^#specialCharacter!
-
-acceptSpecialCharacterToken: aStSpecialCharacterToken 
-	"Special case for Smalltalk-80 literal syntax, which allows nested arrays in literal arrays to be unquoted."
-
-	| char |
-	char := aStSpecialCharacterToken value.
-	char == $( 
-		ifTrue: 
-			[^self isInArray 
-				ifTrue: 
-					[stack addLast: (StLiteralArrayToken value: '(' start: aStSpecialCharacterToken start).
-					arrayDepth := arrayDepth + 1.
-					#literalArray]
-				ifFalse: 
-					[stack addLast: aStSpecialCharacterToken.
-					#specialCharacter]].
-	char == $) 
-		ifTrue: 
-			[(stack removeLastIfAbsent: []) 
-				ifNotNil: 
-					[:token | 
-					token isLiteralArrayToken 
-						ifTrue: 
-							[arrayDepth := arrayDepth - 1.
-							^#literalArray]].
-			^#specialCharacter].
-	(char == $] and: [self lastIsLiteralByte]) ifTrue: [^#literalBytes].
-	^#specialCharacter!
-
 applyStyle: aSymbol toNext: anInteger 
 	anInteger < 1 ifTrue: [^self].
 	(arrayDepth > 0 or: [aSymbol == #literalArray]) 
@@ -262,7 +119,7 @@ initialKeywordStyle
 	^self subclassResponsibility!
 
 initialLiteralStyle: aStLiteralToken 
-	^aStLiteralToken value literalTextStyle!
+	^aStLiteralToken textStyle!
 
 initialUnaryStyle
 	^self subclassResponsibility!
@@ -384,17 +241,156 @@ tokenBefore: anInteger
 				start == 0 ifTrue: [^nil]].
 	stop := start.
 	[(start := start - 1) == 0 or: [(view styleIdAt: start) ~~ id]] whileFalse.
-	^(start + 1 to: stop) -> (view styleWithId: id) name! !
-!SmalltalkStyler categoriesFor: #acceptAssignmentToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptBinarySelectorToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptIdentifierToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptIllegalCharacterToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptKeywordToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptLiteralArrayToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptLiteralToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptNumberLiteralToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptOptimizedToken:!public!visitor/double dispatching! !
-!SmalltalkStyler categoriesFor: #acceptSpecialCharacterToken:!public!visitor/double dispatching! !
+	^(start + 1 to: stop) -> (view styleWithId: id) name!
+
+visitAssignmentToken: aStAssignmentToken
+	^#assignment!
+
+visitBinarySelectorToken: aStBinarySelectorToken
+	| lastStyle selector |
+	self atStart ifTrue: [^self initialBinaryStyle: aStBinarySelectorToken].
+	self isInArray ifTrue: [^#literalSymbol].
+	selector := aStBinarySelectorToken value.
+	selector == #| ifTrue: [^self styleForBar].
+	lastStyle := self lastStyle.
+	selector == #<
+		ifTrue: 
+			[^(lastStyle == #unarySelector or: [lastStyle == #argDecl or: [lastStyle == #tempCloseBar]])
+				ifTrue: 
+					[inTag := true.
+					#tag]
+				ifFalse: [#binaryMessage]].
+	"The scanner may have wrongly interpreted adjacent temp open/close bars as a binary
+	selector. If it has we must emit appropriate bar styling, and then hack the token to include
+	only the last bar."
+	selector == #'||'
+		ifTrue: 
+			[lastStyle == #blockArgDecl
+				ifTrue: 
+					[self applyStyle: #tempCloseBar toNext: 1.
+					aStBinarySelectorToken start: aStBinarySelectorToken start + 1.
+					^#tempOpenBar].
+			(lastStyle == #tempCloseBar or: 
+					[lastStyle == #argDecl
+						or: [lastStyle == #unarySelector or: [lastStyle == #specialCharacter and: [self lastToken = '##(']]]])
+				ifTrue: 
+					[self applyStyle: #tempOpenBar toNext: 1.
+					aStBinarySelectorToken start: aStBinarySelectorToken start + 1.
+					^#tempCloseBar]].
+	(selector == #||| and: [lastStyle == #blockArgDecl])
+		ifTrue: 
+			[self
+				applyStyle: #tempCloseBar toNext: 1;
+				applyStyle: #tempOpenBar toNext: 1.
+			aStBinarySelectorToken start: aStBinarySelectorToken stop.
+			^#tempCloseBar].
+	^#binaryMessage!
+
+visitErrorToken: aStErrorToken
+	^#illegal!
+
+visitIdentifierToken: aStIdentifierToken
+	| lastStyle |
+	self atStart ifTrue: [^self initialUnaryStyle].
+	self isInArray ifTrue: [^#literalSymbol].
+	lastStyle := self lastStyle.
+	lastStyle == #specialCharacter
+		ifTrue: 
+			[| char |
+			char := self lastCharacter.
+			char == $: ifTrue: [^#blockArgDecl].
+			(char == $) or: [char == $; or: [char = $]]]) ifTrue: [^#unaryMessage].
+			^#identifier].
+	^##(IdentityDictionary new
+		at: #identifier put: #unaryMessage;
+		at: #unaryMessage put: #unaryMessage;
+		at: #literalPseudo put: #unaryMessage;
+		at: #literalString put: #unaryMessage;
+		at: #literalNumber put: #unaryMessage;
+		at: #literalCharacter put: #unaryMessage;
+		at: #literalSymbol put: #unaryMessage;
+		at: #literalBytes put: #unaryMessage;
+		at: #tempOpenBar put: #tempDecl;
+		at: #tempDecl put: #tempDecl;
+		at: #keywordSelector put: #argDecl;
+		at: #binarySelector put: #argDecl;
+		at: #literalArray put: #unaryMessage;
+		shrink;
+		yourself) at: lastStyle ifAbsent: [#identifier]!
+
+visitIllegalCharacterToken: anStIllegalCharacterToken
+	^#illegal!
+
+visitKeywordToken: aStKeywordToken
+	self atStart ifTrue: [^self initialKeywordStyle].
+	self isInArray ifTrue: [^#literalSymbol].
+	^(self lastStyle == #argDecl or: [self lastIsSpecial: $!!])
+		ifTrue: [#keywordSelector]
+		ifFalse: [#keywordMessage]!
+
+visitLiteralArrayToken: aStLiteralArrayToken
+	^aStLiteralArrayToken isForByteArray
+		ifTrue: [#literalBytes]
+		ifFalse: 
+			[arrayDepth := arrayDepth + 1.
+			stack addLast: aStLiteralArrayToken.
+			#literalArray]!
+
+visitLiteralToken: aStLiteralToken
+	self atStart ifTrue: [^self initialLiteralStyle: aStLiteralToken].
+	^aStLiteralToken textStyle!
+
+visitNumberLiteralToken: aStNumberLiteralToken
+	self atStart ifTrue: [^#literalNumber].
+	self lastIsLiteralByte ifTrue: [^#literalBytes].
+	self isInArray ifTrue: [^#literalNumber].
+	"Handle 'x-1' ambiguity: invalid: binary selector, block arg decl, keyword selector, literal
+	array start, static start, temp decl, temp open must be a literal if previous was keyword
+	message, period, hat, assignment, binary message, arg decl, close temp, unary selector can
+	be a message if previous was: literal (of any sort), identifier, special: paren, special:
+	block paren, unaryMessage"
+	(aStNumberLiteralToken isNegative and: 
+			[(#(#identifier #literalPseudo #literalNumber #literalString #literalCharacter #literalArray #literalBytes #literalSymbol #unaryMessage)
+				identityIncludes: self lastStyle) or: [self lastIsStyle: #specialCharacter chars: '])']])
+		ifTrue: 
+			[self applyStyle: #binaryMessage toNext: 1.
+			aStNumberLiteralToken start: aStNumberLiteralToken start + 1].
+	^#literalNumber!
+
+visitOptimizedToken: aStOptimizedToken
+	stack addLast: aStOptimizedToken.
+	^#specialCharacter!
+
+visitSpecialCharacterToken: aStSpecialCharacterToken
+	"Special case for Smalltalk-80 literal syntax, which allows nested arrays in literal arrays to be unquoted."
+
+	| char |
+	char := aStSpecialCharacterToken value.
+	char == $(
+		ifTrue: 
+			[^self isInArray
+				ifTrue: 
+					[stack addLast: (StLiteralArrayToken
+								start: aStSpecialCharacterToken start
+								comments: nil
+								value: '(').
+					arrayDepth := arrayDepth + 1.
+					#literalArray]
+				ifFalse: 
+					[stack addLast: aStSpecialCharacterToken.
+					#specialCharacter]].
+	char == $)
+		ifTrue: 
+			[(stack removeLastIfAbsent: [])
+				ifNotNil: 
+					[:token |
+					token isLiteralArrayToken
+						ifTrue: 
+							[arrayDepth := arrayDepth - 1.
+							^#literalArray]].
+			^#specialCharacter].
+	(char == $] and: [self lastIsLiteralByte]) ifTrue: [^#literalBytes].
+	^#specialCharacter! !
 !SmalltalkStyler categoriesFor: #applyStyle:toNext:!helpers!private! !
 !SmalltalkStyler categoriesFor: #atStart!private!testing! !
 !SmalltalkStyler categoriesFor: #colorComments:startingAt:!operations!private! !
@@ -423,8 +419,19 @@ tokenBefore: anInteger
 !SmalltalkStyler categoriesFor: #styleForToken:!helpers!private! !
 !SmalltalkStyler categoriesFor: #stylingStartBefore:in:!helpers!private! !
 !SmalltalkStyler categoriesFor: #tokenBefore:!helpers!private! !
+!SmalltalkStyler categoriesFor: #visitAssignmentToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitBinarySelectorToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitErrorToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitIdentifierToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitIllegalCharacterToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitKeywordToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitLiteralArrayToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitLiteralToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitNumberLiteralToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitOptimizedToken:!public!visiting! !
+!SmalltalkStyler categoriesFor: #visitSpecialCharacterToken:!public!visiting! !
 
-SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#acceptAssignmentToken: #acceptBinarySelectorToken: #acceptIdentifierToken: #acceptKeywordToken: #acceptLiteralArrayToken: #acceptLiteralToken: #acceptNumberLiteralToken: #acceptOptimizedToken: #acceptSpecialCharacterToken:)!
+SmalltalkStyler methodProtocol: #stTokenVisitor attributes: #(#readOnly) selectors: #(#visitAssignmentToken: #visitBinarySelectorToken: #visitErrorToken: #visitIdentifierToken: #visitIllegalCharacterToken: #visitKeywordToken: #visitLiteralArrayToken: #visitLiteralToken: #visitNumberLiteralToken: #visitOptimizedToken: #visitSpecialCharacterToken:)!
 
 !SmalltalkStyler class methodsFor!
 

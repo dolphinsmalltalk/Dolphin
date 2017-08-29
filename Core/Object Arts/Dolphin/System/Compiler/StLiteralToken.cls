@@ -10,8 +10,8 @@ StLiteralToken comment: ''!
 !StLiteralToken categoriesForClass!System-Compiler! !
 !StLiteralToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptLiteralToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitLiteralToken: self!
 
 formatOn: aStream source: aString 
 	(value isKindOf: Symbol) 
@@ -46,13 +46,14 @@ sourceInterval
 
 	^self start to: stopPosition!
 
+stop
+	^stopPosition!
+
 stop: anInteger
 	stopPosition := anInteger!
 
-value: aString start: anInteger stop: stopInteger 
-	value := aString.
-	sourcePointer := anInteger.
-	stopPosition := stopInteger! !
+valueClass
+	^self value basicClass! !
 !StLiteralToken categoriesFor: #acceptVisitor:!public!visitor! !
 !StLiteralToken categoriesFor: #formatOn:source:!printing!public! !
 !StLiteralToken categoriesFor: #formattedFrom:!printing!public! !
@@ -61,27 +62,32 @@ value: aString start: anInteger stop: stopInteger
 !StLiteralToken categoriesFor: #length!accessing!private! !
 !StLiteralToken categoriesFor: #realValue!accessing!public! !
 !StLiteralToken categoriesFor: #sourceInterval!accessing!public! !
-!StLiteralToken categoriesFor: #stop:!accessing!public! !
-!StLiteralToken categoriesFor: #value:start:stop:!initializing!private! !
+!StLiteralToken categoriesFor: #stop!accessing!public! !
+!StLiteralToken categoriesFor: #stop:!initializing!private! !
+!StLiteralToken categoriesFor: #valueClass!accessing!public! !
 
 !StLiteralToken class methodsFor!
 
-value: anObject 
+start: startInteger comments: aCollectionOrNil value: aString stop: stopInteger
+	<primitive: 157>
+	^self new
+		start: startInteger;
+		comments: aCollectionOrNil;
+		value: aString;
+		stop: stopInteger;
+		yourself
+!
+
+value: anObject
 	| literal |
-	literal := anObject class == Array 
+	literal := anObject class == Array
 				ifTrue: [anObject collect: [:each | self value: each]]
 				ifFalse: [anObject].
-	^self 
-		value: literal
+	^self
 		start: nil
-		stop: nil!
-
-value: aString start: anInteger stop: stopInteger 
-	^(self new)
-		value: aString
-			start: anInteger
-			stop: stopInteger;
-		yourself! !
+		comments: nil
+		value: literal
+		stop: nil! !
+!StLiteralToken class categoriesFor: #start:comments:value:stop:!instance creation!public! !
 !StLiteralToken class categoriesFor: #value:!instance creation!public! !
-!StLiteralToken class categoriesFor: #value:start:stop:!instance creation!public! !
 

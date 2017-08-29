@@ -10,8 +10,8 @@ StIdentifierToken comment: ''!
 !StIdentifierToken categoriesForClass!System-Compiler! !
 !StIdentifierToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptIdentifierToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitIdentifierToken: self!
 
 isIdentifier
 	^true!

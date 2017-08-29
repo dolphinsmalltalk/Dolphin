@@ -10,8 +10,8 @@ StAssignmentToken comment: ''!
 !StAssignmentToken categoriesForClass!System-Compiler! !
 !StAssignmentToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptAssignmentToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitAssignmentToken: self!
 
 isAssignment
 	^true!

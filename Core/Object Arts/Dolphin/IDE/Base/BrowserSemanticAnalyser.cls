@@ -98,7 +98,7 @@ targetOfMessage: aStMessageNode
 	| receiver |
 	receiver := aStMessageNode receiver.
 	receiver isVariable ifTrue: [^receiver variable ifNotNil: [:var | var valueClass]].
-	receiver isLiteralNode ifTrue: [^receiver value basicClass].
+	receiver isLiteralNode ifTrue: [^receiver valueClass].
 	^nil!
 
 visitMessageNode: aMessageNode

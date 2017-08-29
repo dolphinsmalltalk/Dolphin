@@ -24,16 +24,19 @@ addArgumentWithNameBasedOn: aString to: aRBBlockNode
 	aRBBlockNode 
 		arguments: (aRBBlockNode arguments copyWith: (RBVariableNode named: name))!
 
-constructLookupNodeFor: aString in: aRBBlockNode 
+constructLookupNodeFor: aString in: aRBBlockNode
 	| argumentNode |
-	argumentNode := RBLiteralNode literalToken: (RBLiteralToken 
-						value: aString
+	argumentNode := RBLiteralValueNode literalToken: (RBLiteralToken
 						start: nil
+						comments: nil
+						value: aString
 						stop: nil).
-	^RBMessageNode 
+	^RBMessageNode
 		receiver: (RBVariableNode named: 'self')
 		selector: #lookupMatchFor:in:
-		arguments: (Array with: argumentNode with: aRBBlockNode arguments last)!
+		arguments: (Array with: argumentNode with: aRBBlockNode arguments last)
+
+!
 
 copyInContext: aDictionary 
 	^self replacingBlock value: aDictionary!

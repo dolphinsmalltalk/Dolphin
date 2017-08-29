@@ -10,8 +10,8 @@ StKeywordToken comment: ''!
 !StKeywordToken categoriesForClass!System-Compiler! !
 !StKeywordToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptKeywordToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitKeywordToken: self!
 
 isKeyword
 	^true!

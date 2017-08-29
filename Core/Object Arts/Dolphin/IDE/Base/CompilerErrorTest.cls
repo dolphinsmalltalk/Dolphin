@@ -79,9 +79,6 @@ testErrorsBadContext
 	CErrBadContext!
 
 testErrorsBadPools
-	"This error is untested because it is difficult to produce - the compiler will only raise it if the #allInstVarNames implementation
-	on the class returns an invalid array - this would require building a special class for this purpose, and I don't think it is worth it."
-
 	| source |
 	source := 'xyz'.
 	self

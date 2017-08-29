@@ -312,7 +312,7 @@ testWarningReadNotWrittenMethodTemp
 testWarningReadNotWrittenOptimizedBlockTemp
 	1 to: 5 do: [:each |
 		| "$"_tmp"$" |
-		"@"_tmp"@" ifTrue: [^1]]!
+		"@"_tmp"@" ifTrue: [^each]]!
 
 testWarningRedefiningArgInOptimizedBlock: a 
 	a = 1 
@@ -324,9 +324,10 @@ testWarningRedefiningArgInOptimizedBlock: a
 
 testWarningRedefiningBlockArgInBlock
 	^[:a | 
-	[:b | 
+	[:b |
 	| a |
-	a = 2] value: a]!
+	a := 2.
+	a + b] value: a]!
 
 testWarningRedefiningInstVarAsArg: iv1
 	^iv1!
@@ -389,7 +390,7 @@ testWarningRedefiningStaticAsBlockTemp: ab x: b
 testWarningRedefiningStaticAsTemp
 	| Object |
 	Object := 1.
-	^1
+	^Object
 	!
 
 testWarningUnreachable
@@ -465,7 +466,7 @@ testWarnMsgUnimplementedBySelf
 
 testWarnMsgUnimplementedBySuper
 	1 asParameter.
-	super wibblyWobblySillySelectorThatNoOneCouldPossiblyImplementIHope.
+	super testWarnMsgUnimplementedBySuper.
 	self asParameter!
 
 testWarnNiladicExceptionHandler

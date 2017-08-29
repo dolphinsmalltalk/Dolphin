@@ -48,17 +48,18 @@ parsePatternBlock: aClass
 	^node!
 
 parsePrimitiveLiteral
-	(currentToken isIdentifier and: [currentToken isPatternVariable]) 
+	(currentToken isIdentifier and: [currentToken isPatternVariable])
 		ifTrue: 
 			[| node |
 			node := self variableNodeClass identifierToken: currentToken.
-			node isLiteralNode 
+			node isLiteralNode
 				ifTrue: 
 					[self step.
 					^node].
-			currentToken := RBLiteralToken 
-						value: currentToken value asSymbol
+			currentToken := RBLiteralToken
 						start: currentToken start
+						comments: nil
+						value: currentToken value asSymbol
 						stop: currentToken stop].
 	^super parsePrimitiveLiteral!
 

@@ -20,7 +20,6 @@ Instance Variables:
 N.B. The inherited''''tag'''' instance variable is used to hold the <integer> error code, but the inherited ''''messageText'''' instance variable is unused.'''!
 !CompilerNotification categoriesForClass!System-Exception Handling! !
 !CompilerNotification methodsFor!
-
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 
@@ -141,7 +140,7 @@ severity
 	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
 	sorting compilation issues by severity."
 
-	^self subclassResponsibility!
+	^self class severity!
 
 severityName
 	^self severityClass name!
@@ -150,7 +149,7 @@ source
 	"Answer the <readableString> of code which caused this notification to be raised while it
 	was being compiled."
 
-	^source ifNil: ['']! !
+	^source ?? ''! !
 !CompilerNotification categoriesFor: #_descriptionArguments!displaying!public! !
 !CompilerNotification categoriesFor: #_descriptionFormat!displaying!public! !
 !CompilerNotification categoriesFor: #code:in:for:selector:position:line:ranges:extras:!initializing!private! !
@@ -211,7 +210,7 @@ code: codeInteger in: aString for: aClass selector: aSymbol position: posInteger
 		yourself!
 
 errorFormats
-	^ErrorFormats ifNil: [ErrorFormats := LookupTable new]!
+	^ErrorFormats ifNil: [LookupTable new]!
 
 icon
 	"Answer the default icon for the receiver and its instances."
@@ -223,9 +222,9 @@ initialize
 	self initialize
 	"
 
-	| codes |
-	ErrorFormats := LookupTable new.
-	ErrorFormats
+	| formats codes |
+	formats := LookupTable new.
+	formats
 		at: LErrBadChar put: 'illegal character ''<1d>''';
 		at: LErrCommentNotClosed put: 'comment not closed';
 		at: LErrStringNotClosed put: 'literal string not closed';
@@ -235,10 +234,12 @@ initialize
 		at: LErrExpectChar put: 'character expected';
 		at: LErrInvalidQualifier put: 'invalid identifier in qualified reference';
 		at: LErrQualifiedRefNotClosed put: 'qualified reference not closed';
-		at: LErrBadNumber put: 'illegal number'.
+		at: LErrBadNumber put: 'illegal number';
+		at: LErrExpectCodePoint put: 'hex code point expected';
+		at: LErrBadCodePoint put: 'code point <1s> out of range'.
 
 	"'Unmatched ' in string literal.'"
-	ErrorFormats
+	formats
 		at: CErrTempListNotClosed put: 'temporary list not closed';
 		at: CErrInvalExprStart put: 'invalid expression start';
 		at: CErrNonsenseAtMethodEnd put: 'nonsense at end of method';
@@ -292,7 +293,7 @@ initialize
 		at: CErrRedefiningArg put: 'redefining argument <1p>';
 		at: CErrStaticExprNotClosed put: 'static expression not closed';
 		yourself.
-	ErrorFormats
+	formats
 		at: CWarnRedefiningArg put: 'redefining argument <1p>';
 		at: CWarnRedefiningTemp put: 'redefining temporary variable <1p>';
 		at: CWarnRedefiningInstVar put: 'redefining instance variable <1p>';
@@ -313,14 +314,21 @@ initialize
 		at: CWarnUnimplementedAbstractMethod put: 'subclass <4p> does not implement <3p>';
 		at: CWarnUsesBooleanClass put: 'references boolean class <1p> rather than its instance <2p>';
 		yourself.
-	ErrorFormats
+	formats
 		at: CInfoUnreferencedArg put: 'unreferenced argument <1p>';
 		at: CInfoSupersendsOther put: 'supersends other message <2p>';
 		at: CInfoHardBreakpoint put: 'contains hardcoded breakpoint';
 		yourself.
 	codes := Smalltalk at: #SmalltalkParseErrorCodes.
-	codes keysAndValuesDo: [:eachKey :each | self assert: [ErrorFormats includesKey: each]].
-	ErrorFormats keysDo: [:each | self assert: [codes includes: each]]! !
+	codes keysAndValuesDo:  [:eachKey :each | self assert: [formats includesKey: each]].
+	formats keysDo:  [:each | self assert: [codes includes: each]].
+	self addClassConstant: 'ErrorFormats' value: formats!
+
+severity
+	"Answer an integer severity level; 2 for errors, 1 for warnings, and 0 for info. Useful for
+	sorting compilation issues by severity."
+
+	^self subclassResponsibility! !
 !CompilerNotification class categoriesFor: #beep!parping!public! !
 !CompilerNotification class categoriesFor: #classForCode:!private! !
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
@@ -328,4 +336,5 @@ initialize
 !CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
 !CompilerNotification class categoriesFor: #icon!constants!public! !
 !CompilerNotification class categoriesFor: #initialize!initializing!public! !
+!CompilerNotification class categoriesFor: #severity!constants!public! !
 

@@ -43,25 +43,43 @@ lexicalQualifiedRefError: aString code: anInteger range: anInterval
 		lexicalErrorFrom: 
 			[(SmalltalkScanner on: aString readStream)
 				environment: mockEnv;
-				separatorsInLiterals: true;
 				yourself]
 		range: anInterval
 		line: 1
 		code: anInteger!
 
-parseExpression: aString in: aClass 
-	^BrowserSemanticAnalyser 
-		analyzeParseTree: (SmalltalkParser parseExpression: aString in: aClass)
-		for: aClass
-		context: nil
-		pools: #()!
+parseExpression: aString in: aClass
+	| ast errors |
+	errors := OrderedCollection new.
+	ast := SmalltalkParser
+				parseExpression: aString
+				in: aClass
+				onError: [:err | errors addLast: err].
+	^errors isEmpty
+		ifTrue: 
+			[BrowserSemanticAnalyser
+				analyzeParseTree: ast
+				for: aClass
+				context: nil
+				pools: #()]
+		ifFalse: [ast]!
 
 parseMethod: aString in: aClass
-	^BrowserSemanticAnalyser
-		analyzeParseTree: (self parserClass parseMethod: aString in: aClass)
-		for: aClass
-		context: nil
-		pools: #()!
+	| ast errors |
+	errors := OrderedCollection new.
+	ast := self parserClass
+				parseMethod: aString
+				in: aClass
+				onError: [:err | errors addLast: err].
+	"Don't perform semantic analysis if there are syntax errors"
+	^errors isEmpty
+		ifTrue: 
+			[BrowserSemanticAnalyser
+				analyzeParseTree: ast
+				for: aClass
+				context: nil
+				pools: #()]
+		ifFalse: [ast]!
 
 parserClass
 	^SmalltalkParser!
@@ -69,14 +87,32 @@ parserClass
 scannerClass
 	^SmalltalkScanner!
 
+testErrorsBadCodePoint
+	#('$\x100' '$\xFFFFFFFF') do: 
+			[:each |
+			self
+				parseExprError: each
+				range: (1 to: each size)
+				line: 1
+				code: LErrBadCodePoint]!
+
+testErrorsExpectCodePoint
+	#('$\x ' '$\x!! ' '$\xG') do: 
+			[:each |
+			self
+				parseExprError: each
+				range: (1 to: 4)
+				line: 1
+				code: LErrExpectCodePoint]!
+
 testErrorsLexicalBadNumber
 	self
-		lexicalError: ' 1.0e310 '
+		lexicalError: ' 1.0e309'
 		range: (2 to: 8)
 		line: 1
 		code: LErrBadNumber.
 	self
-		lexicalError: '0.1e309'
+		lexicalError: '0.1e310'
 		range: (1 to: 7)
 		line: 1
 		code: LErrBadNumber.
@@ -91,6 +127,13 @@ testErrorsLexicalBadNumber
 		lexicalError: '  1s999999 '
 		range: (3 to: 10)
 		line: 1
+		code: LErrBadNumber.
+	"Scale too large in literal ScaledDecimal with fraction"
+	self
+		lexicalError: '
+1.2s999999 '
+		range: (3 to: 12)
+		line: 2
 		code: LErrBadNumber!
 
 testErrorsLexicalInvalidQualifier
@@ -381,6 +424,8 @@ writtenNotReadRange: aString
 !SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!private! !
 !SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
 !SmalltalkParserErrorTest categoriesFor: #scannerClass!constants!private! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
+!SmalltalkParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalInvalidQualifier!public!unit tests! !
 !SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!public!unit tests! !

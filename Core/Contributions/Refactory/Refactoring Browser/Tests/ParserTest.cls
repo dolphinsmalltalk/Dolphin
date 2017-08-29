@@ -694,11 +694,10 @@ testSmallDictionary
 
 testTokens
 	| tokens scanner |
-	scanner := RBScanner on: '#foo foo: bar := [ ##( + foo::bar::baz' readStream. 
-	scanner namespaceCharacter: $:.
+	scanner := RBScanner on: '#foo foo: bar := [ ##( + foo.bar.baz' readStream. 
 	tokens := scanner contents.
 	tokens printString.
-	tokens with: #(4 4 3 2 1 3 1 13)
+	tokens with: #(4 4 3 2 1 3 1 11)
 		do: [:token :length | self assert: token length = length]!
 
 treeWithEverything

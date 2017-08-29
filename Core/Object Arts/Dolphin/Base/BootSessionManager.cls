@@ -30,7 +30,8 @@ initializeSystemPackage
 	all safe to re-run. Therefore we must do this selectively."
 
 	STBPrefix initialize.
-	Delay initializeTimingSemaphore!
+	Delay initializeTimingSemaphore.
+	CompilerNotification initialize!
 
 keepAlive
 	"We stay alive until explicitly terminated."

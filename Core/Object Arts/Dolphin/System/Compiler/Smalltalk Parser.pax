@@ -16,7 +16,7 @@ These modifications are Copyright (c) Object Arts Ltd, 2002.
 
 The parser remains compatible with the RBParser, and so can be used in conjunction with the RB refactoring engine. Note that the majority of RB specific methods and classes have been extracted to the RBParser package, which also contains global aliases mapping the class names used in the RB to the corresponding classes in this package.'.
 
-package basicPackageVersion: '6.1'.
+package basicPackageVersion: '7.0'.
 
 
 package classNames
@@ -96,7 +96,7 @@ Object subclass: #SmalltalkParser
 	poolDictionaries: 'ExtCallArgTypes SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 Object subclass: #SmalltalkScanner
-	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable separatorsInLiterals extendedLiterals comments errorBlock nameSpaceCharacter line errorHandler environment'
+	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable comments line errorHandler environment'
 	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -111,7 +111,7 @@ Object subclass: #StProgramNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #StToken
-	instanceVariableNames: 'sourcePointer comments'
+	instanceVariableNames: 'start comments'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

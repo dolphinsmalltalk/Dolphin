@@ -59,8 +59,7 @@ checkCompileError: ex range: anInterval code: anInteger line: lineInteger source
 					[(lineInteger < 0 or: [ex line < 0 or: [ex line = lineInteger]]) and: 
 							[| msgString |
 							msgString := (self errorFormats at: anInteger)
-										expandMacrosWithArguments: (Array with: (aString copyFrom: ex range start to: ex range stop))
-												, ex extras.
+										expandMacrosWithArguments: {aString copyFrom: ex range start to: ex range stop} , ex extras.
 							ex errorMessage = msgString]]]!
 
 compilationErrorClass
@@ -116,21 +115,36 @@ parseExprError: aString in: aClass range: anInterval line: lineInteger code: anI
 		raise: self compilationErrorClass
 		matching: 
 			[:ex |
-			self traceException: ex source: aString.
-			self
+			(self
 				checkCompileError: ex
 				range: anInterval
 				code: anInteger
 				line: lineInteger
-				source: aString]!
+				source: aString) or: 
+						["Trace the actual error to help with diagnosis"
+						self traceException: ex source: aString.
+                        false]]!
 
 parseExprError: aString range: anInterval line: lineInteger code: anInteger
+	| errors |
+	errors := OrderedCollection new.
+	[self parseExpression: aString in: self class]
+		on: self compilationWarningClass
+		do: [:ex | ex resume]
+		on: self compilationErrorClass
+		do: 
+			[:ex |
+			errors addLast: ex.
+			ex exit: nil].
 	self
-		parseExprError: aString
-		in: self class
-		range: anInterval
-		line: lineInteger
-		code: anInteger!
+		assert: (errors anySatisfy: 
+					[:each |
+					self
+						checkCompileError: each
+						range: anInterval
+						code: anInteger
+						line: lineInteger
+						source: aString])!
 
 parseExpression: aString 
 	^self parseExpression: aString in: self class!
@@ -142,20 +156,22 @@ parseMethod: aString in: aClass
 	^self subclassResponsibility!
 
 parseMethod: aString notificationClass: notificationClass in: aClass range: anInterval code: anInteger
-	| result |
 	self
-		should: [result := self parseMethod: aString in: aClass]
+		should: [self parseMethod: aString in: aClass]
 		raise: notificationClass
 		matching: 
 			[:ex |
-			"Useful for debugging to know what the notification actually was"
-			self traceException: ex source: aString.
-			self
+			(self
 				checkCompileError: ex
 				range: anInterval
 				code: anInteger
 				line: -1
-				source: aString]!
+				source: aString) or: 
+						[((ex isKindOf: CompilerNotification) not or: [ex class severity >= notificationClass severity])
+							ifTrue: 
+								["Useful for debugging to know what the notification actually was"
+								self traceException: ex source: aString].
+						false]]!
 
 parseMethodError: aString code: anInteger range: anInterval 
 	^self 
@@ -368,7 +384,7 @@ testErrorsBadExtCallTypes
 		code: CErrBadPrimCallType
 		range: (mark + 1 to: mark + 9).
 	"Not a keyword"
-	source := 'blah <12 void blah>'.
+	source := 'blah <12 cdecl: void blah>'.
 	mark := source indexOf: $<.
 	self 
 		parseMethodError: source
@@ -709,7 +725,7 @@ testErrorsExtTypes
 		code: CErrInvalidStructArg
 		range: (mark to: mark + 4).
 	"Non-class global"
-	source := 'blah: x _: y <cdecl: void blah Win32Constants>'.
+	source := 'blah: x _: y <cdecl: void blah Win32Constants sdword>'.
 	mark := source lastIndexOf: $W.
 	self 
 		parseMethodError: source
@@ -842,6 +858,24 @@ testErrorsLexicalBadChar
 				line: 1
 				code: LErrBadChar]!
 
+testErrorsLexicalBadCodePoint
+	#('$\x100' '$\xFFFFFFFF') do: 
+			[:each |
+			| delimited end |
+			end := each size.
+			self
+				parseExprError: each
+				range: (1 to: end)
+				line: 1
+				code: LErrBadCodePoint.
+			delimited := String lineDelimiter , each , String lineDelimiter.
+			end := end + String lineDelimiter size.
+			self
+				parseExprError: delimited
+				range: (String lineDelimiter size + 1 to: end)
+				line: 2
+				code: LErrBadCodePoint]!
+
 testErrorsLexicalCommentNotClosed
 	self
 		lexicalError: '"blah blah ...'
@@ -850,13 +884,38 @@ testErrorsLexicalCommentNotClosed
 		code: LErrCommentNotClosed!
 
 testErrorsLexicalExpectChar
-	#('$' '$\x' '$\xG' '$\x100' '$\xFFFFFFFF') do: 
+	"Incomplete literal character at end of file."
+
+	self
+		parseExprError: '$'
+		range: (1 to: 1)
+		line: 1
+		code: LErrExpectChar.
+	self
+		parseExprError: String lineDelimiter , '$'
+		range: (3 to: 3)
+		line: 2
+		code: LErrExpectChar!
+
+testErrorsLexicalExpectCodePoint
+	#('$\x' '$\x ' '$\xG') do: 
 			[:each |
+			| delimited end |
+			end := each size.
 			self
 				parseExprError: each
-				range: (1 to: each size)
+				range: (1 to: end)
 				line: 1
-				code: LErrExpectChar]!
+				code: LErrExpectCodePoint.
+			delimited := String lineDelimiter , each.
+			end := delimited size.
+			"eof in the middle of the token is a special test case"
+			each last = $x ifFalse: [delimited := delimited , String lineDelimiter].
+			self
+				parseExprError: delimited
+				range: (String lineDelimiter size + 1 to: end)
+				line: 2
+				code: LErrExpectCodePoint]!
 
 testErrorsLexicalExpectConst
 	"Invalid symbol"
@@ -1719,11 +1778,11 @@ testWarningUnoptimizedLoopsNonNiladicReceiver
 	#('whileTrue' 'whileFalse' 'repeat' 'whileTrue: []' 'whileFalse: []') do: 
 			[:each | 
 			| stem |
-			stem := 'x 1 '.
+			stem := 'x self '.
 			source := stem , each.
 			self 
 				parseMethodWarning: source
-				in: Object
+				in: BlockClosure
 				range: (stem size + 1 to: stem size + each subStrings first size)
 				code: CWarnExpectNiladicBlockReceiver.
 			"Variable as receiver - the expression is valid, but can't be optimized"
@@ -1765,10 +1824,12 @@ testWarningWrittenNotRead
 				rangeBlock: [:source | self writtenNotReadRange: source]
 				code: CWarnWrittenNotRead]!
 
-traceException: ex source: aString 
+traceException: ex source: aString
 	Transcript
+		print: self;
+		nextPutAll: ': code ';
 		print: ex errorCode;
-		nextPutAll: ': ';
+		nextPutAll: ', range ';
 		print: ex range;
 		space;
 		display: ex description;
@@ -1837,8 +1898,10 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testErrorsIncorrectNumberOfNotNilBlockArgs!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsInvalidExpressionStart!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadChar!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalBadCodePoint!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalCommentNotClosed!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectChar!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectCodePoint!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalExpectConst!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLexicalStringNotClosed!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testErrorsLiteralArray!public!unit tests! !

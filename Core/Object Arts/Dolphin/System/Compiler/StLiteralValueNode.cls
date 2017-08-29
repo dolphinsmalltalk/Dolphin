@@ -31,7 +31,10 @@ token
 	^token!
 
 value
-	^token realValue! !
+	^token realValue!
+
+valueClass
+	^token value class! !
 !StLiteralValueNode categoriesFor: #=!comparing!public! !
 !StLiteralValueNode categoriesFor: #acceptVisitor:!public!visitor! !
 !StLiteralValueNode categoriesFor: #literalToken:!accessing!private! !
@@ -39,6 +42,7 @@ value
 !StLiteralValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !
 !StLiteralValueNode categoriesFor: #token!accessing!public! !
 !StLiteralValueNode categoriesFor: #value!accessing!public! !
+!StLiteralValueNode categoriesFor: #valueClass!accessing!public! !
 
 !StLiteralValueNode class methodsFor!
 

@@ -10,8 +10,8 @@ StSpecialCharacterToken comment: ''!
 !StSpecialCharacterToken categoriesForClass!System-Compiler! !
 !StSpecialCharacterToken methodsFor!
 
-acceptVisitor: aTokenVisitor 
-	^aTokenVisitor acceptSpecialCharacterToken: self!
+acceptVisitor: aTokenVisitor
+	^aTokenVisitor visitSpecialCharacterToken: self!
 
 isSpecial
 	^true!
