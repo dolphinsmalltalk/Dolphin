@@ -3492,23 +3492,11 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 		return Nil();
 
 	POTE resultPointer = Nil();
-	char* prevLocale = NULL;
 	int crtFlag;
 	__try
 	{
 		crtFlag = _CrtSetDbgFlag( _CRTDBG_REPORT_FLAG );
 		_CrtSetDbgFlag( crtFlag /*| _CRTDBG_CHECK_ALWAYS_DF */);
-		
-#ifdef USE_VM_DLL
-		prevLocale = setlocale(LC_ALL, NULL);
-		if (prevLocale[0] == 'C' && prevLocale[1] == 0)
-			prevLocale = NULL;
-		else
-		{
-			prevLocale = _strdup(prevLocale);
-			setlocale(LC_ALL, "C");
-		}
-#endif
 		
 		__try
 		{
@@ -3538,13 +3526,6 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 	}
 	__finally
 	{
-#ifdef USE_VM_DLL
-		if (prevLocale != NULL)
-		{
-			setlocale(LC_ALL, prevLocale);
-			free(prevLocale);
-		}
-#endif
 		_CrtSetDbgFlag(crtFlag);
 	}
 	

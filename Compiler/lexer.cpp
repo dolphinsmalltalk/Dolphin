@@ -44,10 +44,12 @@ Lexer::Lexer()
 	m_token = NULL;
 	m_tokenType = None;
 	tp = NULL;
+	m_locale = _create_locale(LC_ALL, "C");
 }
 
 Lexer::~Lexer()
 {
+	_free_locale(m_locale);
 	delete[] m_token;
 }
 
@@ -158,6 +160,19 @@ void Lexer::SkipComments()
 inline bool issign(char ch)
 {
 	return ch == '-' || ch == '+';
+}
+
+double Lexer::ThisTokenFloat() const
+{
+	_CRT_DOUBLE result;
+	int retval = _atodbl_l(&result, m_token, m_locale);
+	if (retval != 0)
+	{
+		// Most likely overflow or underflow. _atodbl will have set an appropriate continuation value
+		const_cast<Lexer*>(this)->CompileError((int)LErrBadNumber);
+	}
+
+	return result.x;
 }
 
 void Lexer::ScanFloat()

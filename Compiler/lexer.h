@@ -190,6 +190,8 @@ private:
 	
 	TEXTRANGE m_thisTokenRange;
 	TEXTRANGE m_lastTokenRange;
+
+	_locale_t m_locale;
 };
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -213,11 +215,6 @@ inline const char* Lexer::ThisTokenText() const
 inline long Lexer::ThisTokenInteger() const
 {
 	return m_integer; 
-}
-
-inline double Lexer::ThisTokenFloat() const
-{
-	return atof(m_token);
 }
 
 inline bool Lexer::ThisTokenIsAssignment() const
