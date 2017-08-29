@@ -435,17 +435,61 @@ testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some
 	subsequently invoked method, even when interrupts are off."
 
-	self
+	| mask receiver |
+	mask := Float exceptionMask.
+	Float exceptionMask: (mask maskClear: CRTConstants._EM_OVERFLOW).
+	receiver := 2.0.
+	
+	[self
 		should: 
 			[Processor enableAsyncEvents: false.
-			200 factorial asFloat]
+			(receiver timesTwoPower: Float emax) * 5.0]
 		raise: FloatingPointException
 		matching: 
 			[:fpe |
 			self
 				isFault: fpe
-				raisedIn: CRTLibrary >> #ldexp:exp:
-				receiver: CRTLibrary default]!
+				raisedIn: Float >> #timesTwoPower:
+				receiver: receiver]]
+			ensure: [Float exceptionMask: mask]!
+
+testFPStatus
+	"Tests that FP status notifications are isolated to individual Smalltalk processes and are preserved across context switches."
+
+	| value sem1 sem2 oldMask mainStatus1 status1 status2 mainStatus2 |
+	sem1 := Semaphore new.
+	sem2 := Semaphore new.
+	Float reset.
+	
+	[Float exceptionMask: _MCW_EM.
+	value := Float.FMax * Float.FMax.
+	status1 := Float statusFlags.
+	sem1 signal.
+	sem2 wait.
+
+	"Status flags should be the same, despite switching away to another process that performs other invalid FP ops"
+	status2 := Float statusFlags.
+	Float reset.
+	sem1 signal]
+			forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
+	sem1 wait.
+	self assert: value isInfinite.
+	oldMask := Float exceptionMask.
+	
+	[Float exceptionMask: _MCW_EM.
+	mainStatus1 := Float statusFlags.
+	self assert: mainStatus1 equals: 0.
+	self assert: (status1 anyMask: CRTConstants._SW_OVERFLOW).
+	value := 100.0 / 0.
+	mainStatus1 := Float statusFlags.
+	sem2 signal.
+	sem1 wait.
+	mainStatus2 := Float statusFlags]
+			ensure: [Float exceptionMask: oldMask].
+	self assert: (mainStatus1 anyMask: CRTConstants._SW_ZERODIVIDE).
+	self assert: mainStatus2 equals: mainStatus1.
+	self assert: status2 equals: status1.
+	self assert: value isInfinite!
 
 testGPFTrap
 
@@ -1646,6 +1690,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
+!VMTest categoriesFor: #testFPStatus!helpers!public! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
 !VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
 !VMTest categoriesFor: #testImmutableBasicAtPut!public!unit tests! !

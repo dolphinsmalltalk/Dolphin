@@ -78,54 +78,50 @@ addToInteger: anInteger
 		denominator: denominator!
 
 asFloat
-	"Answer a <Float> approximating the receiver. Note that some precision may be lost - the
-	result will be the closest floating point number to the receiver calculated using the IEEE
-	754 round-to-nearest-even mode."
+	"Answer a Float that closely approximates the value of the receiver. This implementation
+	will answer the closest floating point number to the receiver. In case of a tie, it will use
+	the IEEE 754 round to nearest even mode. In case of overflow, it will answer +/- Float
+	infinity, or, if the overflow exceptions is unmasked, raise a FloatingPointException."
 
-	| a b q r exponent floatExponent nBits ha hb hq q1 |
+	| a b mantissa exponent hasTruncatedBits lostBit n ha hb hm |
 	a := numerator abs.
-	b := denominator abs.
+	b := denominator.	"denominator is always positive"
 	ha := a highBit.
 	hb := b highBit.
 
-	"If both numerator and denominator can be represented exactly, then fastest thing to do is
-	to use hardwired float division."
-	nBits := Float precision + 1.
-	(ha < nBits and: [hb < nBits]) ifTrue: [^numerator asFloat / denominator asFloat].
+	"Number of bits to keep in mantissa plus one to handle rounding."
+	n := 1 + Float.Precision.
 
-	"Try and obtain a mantissa with 54 bits by integer division. This is 53 bits of IEEE 754
-	mantissa plus 1 bit for rounding. First guess is rough, we might get one more bit or one
-	less."
-	exponent := ha - hb - nBits.
-	exponent > 0 ifTrue: [b := b bitShift: exponent] ifFalse: [a := a bitShift: exponent negated].
-	q := a quo: b.
-	r := a - (q * b).
-	hq := q highBit.
+	"If both numerator and denominator are represented exactly in floating point number,
+	then fastest thing to do is to use hardwired float division."
+	(ha < n and: [hb < n]) ifTrue: [^numerator asFloat / denominator asFloat].
 
-	"Check for gradual underflow, in which case we should use less bits"
-	floatExponent := exponent + hq.
-	floatExponent >= Float.EMin ifFalse: [nBits := nBits + floatExponent - Float.EMin].
+	"Shift the fraction by a power of two exponent so as to obtain a mantissa with n bits.
+	First guess is rough, the mantissa might have n+1 bits."
+	exponent := ha - hb - n.
+	exponent >= 0 ifTrue: [b := b bitShift: exponent] ifFalse: [a := a bitShift: exponent negated].
+	mantissa := a quo: b.
+	hasTruncatedBits := a > (mantissa * b).
+	hm := mantissa highBit.
 
-	"Use exactly nBits."
-	hq > nBits
+	"Check for gradual underflow, in which case the mantissa will loose bits.
+	Keep at least one bit to let underflow preserve the sign of zero."
+	lostBit := Float.EMin - (exponent + hm - 1).
+	lostBit > 0 ifTrue: [n := n - lostBit max: 1].
+
+	"Remove excess bits in the mantissa."
+	hm > n
 		ifTrue: 
-			[exponent := exponent + hq - nBits.
-			r := (q bitAnd: (1 bitShift: hq - nBits) - 1) * b + r.
-			q := q bitShift: nBits - hq].
-	hq < nBits
-		ifTrue: 
-			[exponent := exponent + hq - nBits.
-			q1 := (r bitShift: nBits - hq) quo: b.
-			q := (q bitShift: nBits - hq) bitAnd: q1.
-			r := (r bitShift: nBits - hq) - (q1 * b)].
+			[exponent := exponent + hm - n.
+			hasTruncatedBits := hasTruncatedBits or: [mantissa anyBitSetFrom: 1 to: hm - n].
+			mantissa := mantissa bitShift: n - hm].
 
-
-	"Check if we should round upward. The case of exact half (q bitAnd: 1) = 1 & (r isZero) will
-	be handled by Integer>>asFloat."
-	((q bitAnd: 1) isZero or: [r isZero]) ifFalse: [q := q + 1].
-
-	"Finally build the float"
-	^(self positive ifTrue: [q asFloat] ifFalse: [q asFloat negated]) timesTwoPower: exponent!
+	"Check if mantissa must be rounded upward.
+	The case of tie (mantissa odd & hasTruncatedBits not)
+	will be handled by Integer>>asFloat."
+	(hasTruncatedBits and: [mantissa odd]) ifTrue: [mantissa := mantissa + 1].
+	^(self positive ifTrue: [mantissa asFloat] ifFalse: [mantissa asFloat negated])
+		timesTwoPower: exponent!
 
 asFraction
 	"Answer a Fraction approximating the receiver."
@@ -204,13 +200,13 @@ greaterThanInteger: anInteger
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	"Implementation Note: This should be the same hash value as the equivalent <Integer> of <Float>"
+	"Implementation Note: This should be the same hash value as the equivalent <Integer>, if
+	integral, or <Float>, if exactly representable as a Float."
 
-	^denominator = 1 
-		ifTrue: [numerator hash]
-		ifFalse: 
-			[[self asFloat hash] on: FloatingPointException
-				do: [:ex | numerator hash bitXor: denominator hash]]!
+	| float |
+	denominator = 1 ifTrue: [^numerator hash].
+	float := [self asFloat] on: FloatingPointException do: [:ex | Float.Infinity].
+	^float isFinite ifTrue: [float hash] ifFalse: [numerator hash bitXor: denominator hash]!
 
 isFraction
 	"Answer true if receiver is an instance of class Fraction, else answer false."

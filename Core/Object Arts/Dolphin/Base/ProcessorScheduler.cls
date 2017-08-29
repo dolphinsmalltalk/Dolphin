@@ -234,7 +234,7 @@ fpException: ieeeExceptionBytes
 		ifTrue: [ZeroDivide dividend: ieeeRecord operand1 value]
 		ifFalse: [FloatingPointException signalWith: ieeeRecord]!
 
-fpStackFault: exceptionRecordBytes 
+fpStackFault: exceptionRecordBytes
 	"Private - The VM generated an interrupt because it detected a floating point stack over or
 	underflow. The argument is the relevant Win32 EXCEPTION_RECORD.
 	Note that the VM will have reinitialized the floating point stack to avoid repeated FP
@@ -244,7 +244,7 @@ fpStackFault: exceptionRecordBytes
 	previous user of the FP stack."
 
 	| exceptionRecord |
-	Float reset.
+	activeProcess resetFloatingPoint.
 	self enableInterrupts.
 	exceptionRecord := EXCEPTION_RECORD fromBytes: exceptionRecordBytes.
 	Win32Fault signal: 'Floating point stack under/overflow' with: exceptionRecord!

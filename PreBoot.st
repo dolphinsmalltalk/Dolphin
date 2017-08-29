@@ -285,8 +285,22 @@ setStream: anExternalHandle flags: anInteger name: aString
 
 SessionManager current stdioStreams do: [:each | each setStream: each asParameter flags: 16r80 name: nil]!
 
+Process instanceVariableString: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'!
+
+CRTConstants at: '_EM_INEXACT' put: 1!
+
+!Magnitude methodsFor!
+isNaN
+	^false! !
+
 Process class removeSelector: #initialize!
 
 Process addClassConstant: 'DefaultFPEMask' value: CRTConstants._EM_DENORMAL | CRTConstants._EM_INEXACT | CRTConstants._EM_UNDERFLOW!
 
-Processor activeProcess fpeMask: Process.DefaultFPEMask!
+Processor activeProcess fpeMask: Process.DefaultFPEMask | CRTConstants._EM_OVERFLOW | CRTConstants._EM_INVALID!
+	
+| infinity |
+infinity := Float fmax * 2.
+Float addClassConstant: 'Infinity' value: infinity.
+Float addClassConstant: 'NegativeInfinity' value: infinity negated.
+Float addClassConstant: 'NaN' value: infinity - infinity!

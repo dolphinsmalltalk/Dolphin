@@ -26,7 +26,7 @@ minimumVmVersion
 		4) Update the .def files for the stubs in the DolphinVM solution.
 		5) Commit changes to the DolphinVM repo."
 
-	^#(2016 7 0 46) inject: 0 into: [:sum :each | (sum << 16) + each]!
+	^#(2016 7 0 48) inject: 0 into: [:sum :each | (sum << 16) + each]!
 
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!
