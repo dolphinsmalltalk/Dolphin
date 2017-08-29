@@ -792,7 +792,7 @@ initialize
 	DefaultMaxStack := (128*4*1024)/4. 	"Grow to 128K slots (512Kb) before overflow."
 
 	"Floating point Inexact and Underflow exceptions will be masked (i.e. not raised) by default"
-	DefaultFPEMask := _EM_INEXACT | _EM_UNDERFLOW.!
+	self addClassConstant: 'DefaultFPEMask' value: _EM_DENORMAL | _EM_INEXACT | _EM_UNDERFLOW.!
 
 new
 	"Private - Answer a new instance of the receiver. In order to create a runnable process,

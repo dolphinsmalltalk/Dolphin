@@ -231,7 +231,7 @@ testFloatCharacterization
 	self assert: Float epsilon equals: (Float radix raisedTo: 1 - Float precision).
 	Float denormalized
 		ifTrue: 
-			[self assert: Float fminDenormalized equals: (Float radix raisedTo: Float emin - Float precision)].
+			[self assert: Float fminDenormalized equals: (Float radix raisedTo: Float emin - Float precision + 1)].
 	self assert: Float fminNormalized equals: (Float radix raisedTo: Float emin).
 	self assert: Float fmax
 		equals: (1 - (Float radix raisedTo: Float precision negated))

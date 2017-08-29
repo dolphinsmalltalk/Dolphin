@@ -284,3 +284,9 @@ setStream: anExternalHandle flags: anInteger name: aString
 	name := aString! !
 
 SessionManager current stdioStreams do: [:each | each setStream: each asParameter flags: 16r80 name: nil]!
+
+Process class removeSelector: #initialize!
+
+Process addClassConstant: 'DefaultFPEMask' value: CRTConstants._EM_DENORMAL | CRTConstants._EM_INEXACT | CRTConstants._EM_UNDERFLOW!
+
+Processor activeProcess fpeMask: Process.DefaultFPEMask!

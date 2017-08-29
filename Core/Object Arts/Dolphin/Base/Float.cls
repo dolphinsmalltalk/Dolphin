@@ -940,7 +940,7 @@ fminDenormalized
 	"Answer a <Float> representing the smallest denormalized value
 	allowed by the characterized floating point representation."
 
-	^##(1.0 timesTwoPower: MinValLogBase2)!
+	^1.0 timesTwoPower: MinValLogBase2!
 
 fminNormalized
 	"Answer a <Float> representing the smallest normalized value
