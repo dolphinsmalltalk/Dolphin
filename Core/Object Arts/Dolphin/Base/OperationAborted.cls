@@ -13,6 +13,6 @@ OperationAborted comment: 'Generic exception that can be signalled when the user
 messageText
 	"Answer the <readableString> message text for the receiver."
 
-	^messageText ifNil: ['Operation aborted']! !
+	^messageText ?? 'Operation aborted'! !
 !OperationAborted categoriesFor: #messageText!accessing!public! !
 

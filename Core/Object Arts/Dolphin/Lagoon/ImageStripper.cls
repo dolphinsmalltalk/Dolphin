@@ -1190,7 +1190,7 @@ preStripScript
 	such as removing classes from the development category if one wishes to preserve them
 	or perhaps forcibly removing stubborn methods."
 
-	^preStripScript ifNil: ['']!
+	^preStripScript ?? ''!
 
 preStripScript: aString 
 	"Set the pre-image stripping script which allows for custom image stripping actions."

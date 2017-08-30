@@ -250,40 +250,40 @@ parseTree
 promptToSaveChanges
 	^parentPresenter promptToSaveChanges!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the
 	<CommandQuery>."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	#reformatMenu == selector 
+	#reformatMenu == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: self isReadOnly not.
 			^true].
-	(#(#accept #reformatAccept) identityIncludes: selector) 
+	(#(#accept #reformatAccept) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: self canSaveMethod.
 			^true].
-	#reformatSource == selector 
+	#reformatSource == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (self isReadOnly not and: [self textLength > 0]).
 			^true].
-	(#(#browseDefinitions #browseReferences) identityIncludes: selector) 
+	(#(#browseDefinitions #browseReferences) identityIncludes: selector)
 		ifTrue: 
 			[| message |
 			message := self selectedMessage.
 			aCommandQuery
 				isEnabled: true;
-				text: (aCommandQuery commandDescription menuText expandMacrosWith: (message ifNil: ['...'])).
+				text: (aCommandQuery commandDescription menuText expandMacrosWith: message ?? '...').
 			^true].
-	#browseMessage == selector 
+	#browseMessage == selector
 		ifTrue: 
 			[| text node |
 			node := self selectedMessageNode.
 			(node isNil or: 
 					[| target |
 					target := self targetOfMessage: node.
-					target isNil or: [(text := target lookupMethod: node selector) isNil]]) 
+					target isNil or: [(text := target lookupMethod: node selector) isNil]])
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					text := 'Message']

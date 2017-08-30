@@ -404,7 +404,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 				ifTrue: [0]
 				ifFalse: 
 					["#2107: getActiveWindow may return nil, e.g. in a headless app with no windows"
-					anExternalHandle ifNil: [UserLibrary default getActiveWindow ifNil: [0]]].
+					anExternalHandle ifNil: [UserLibrary default getActiveWindow ?? 0]].
 	struct := MSGBOXPARAMS new.
 	dwStyle := styleInteger.
 	struct lpszText: textString.

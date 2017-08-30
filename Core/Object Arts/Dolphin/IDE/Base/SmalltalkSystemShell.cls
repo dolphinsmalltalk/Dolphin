@@ -411,7 +411,7 @@ hotKey
 	"Answer the hot key that can be used to bring the system shell into the foreground even when
 	minimised or if another application is active."
 
-	^HotKey ifNil: [0]!
+	^HotKey ?? 0!
 
 hotKey: anInteger 
 	"Set the hot key that can be used to bring the system shell into the foreground even when

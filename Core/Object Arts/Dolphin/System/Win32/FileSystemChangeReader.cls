@@ -74,7 +74,7 @@ directory: aString
 	self changeWatchProperty: [directory := aString]!
 
 filters
-	^filters ifNil: [#('*')]!
+	^filters ?? #('*')!
 
 filters: anArrayOfStrings 
 	filters := anArrayOfStrings isEmpty ifFalse: [anArrayOfStrings asArray]!

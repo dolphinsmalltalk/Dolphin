@@ -260,7 +260,7 @@ registerAsToolWith: aSmalltalkSystem
     	without amendment."!
 
 treeHasGridLines
-	^treeHasGridLines ifNil: [false]!
+	^treeHasGridLines ?? false!
 
 treeHasGridLines: anObject
 	treeHasGridLines := anObject!

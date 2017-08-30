@@ -114,7 +114,7 @@ queryCommand: aCommandQuery
 	^super queryCommand: aCommandQuery!
 
 subclasses
-	^subclassesPresenter model value ifNil: [#()]!
+	^subclassesPresenter model value ?? #()!
 
 subclassName
 	^namePresenter value!

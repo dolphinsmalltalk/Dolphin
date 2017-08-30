@@ -14,7 +14,7 @@ canIntercept
 	^self subclassResponsibility!
 
 cause
-	^cause ifNil: [#unknown]!
+	^cause ?? #unknown!
 
 cause: aSymbol
 	"Record the cause of the selection changing, one of:
@@ -31,7 +31,7 @@ newSelection: anObject
 	self newSelections: (Array with: anObject)!
 
 newSelections
-	^newSelections ifNil: [#()]!
+	^newSelections ?? #()!
 
 newSelections: anArray
 	newSelections := anArray!
@@ -43,7 +43,7 @@ oldSelection: anObject
 	self oldSelections: (Array with: anObject)!
 
 oldSelections
-	^oldSelections ifNil: [#()]!
+	^oldSelections ?? #()!
 
 oldSelections: anArray
 	oldSelections := anArray!

@@ -29,7 +29,7 @@ hash
 helpId
 	"Answer an integer ID used to associate the receicer with pop-up help"
 
-	^helpId ifNil: [-1]!
+	^helpId ?? -1!
 
 icon
 	"Answers the <Icon> for the receiver"

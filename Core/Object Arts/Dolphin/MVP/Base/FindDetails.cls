@@ -95,8 +95,8 @@ isWrapAround: aBoolean
 pattern
 	^pattern!
 
-pattern: aString 
-	pattern := aString ifNil: ['']!
+pattern: aString
+	pattern := aString ?? ''!
 
 regularExpression
 	| regexp |
