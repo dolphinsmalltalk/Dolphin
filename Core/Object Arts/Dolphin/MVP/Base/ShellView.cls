@@ -978,7 +978,7 @@ state
 		yourself!
 
 svFlags
-	^svFlags ifNil: [0]!
+	^svFlags ?? 0!
 
 topShell
 	"Answer the eventual top shell located in the parent chain of the receiver."

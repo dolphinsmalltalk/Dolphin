@@ -101,7 +101,7 @@ eraseBackground: aCanvas around: aRectangle
 	aCanvas fillRectangle: self clientRectangle color: bkColor!
 
 imageBorder
-	^imageBorder ifNil: [#none]!
+	^imageBorder ?? #none!
 
 imageBorder: aSymbol
 	"Can be
@@ -182,8 +182,7 @@ isWholeBackgroundErased: aBoolean
 	ivFlags := self ivFlags mask: EraseWholeMask set: aBoolean!
 
 ivFlags
-#todo "Temporary until VC2 view resaved".
-	^ivFlags ifNil: [0]!
+	^ivFlags ?? 0!
 
 normal: imageExtent in: displayRect
 	"Modified ImageView's #normal ... answer a new Rectangle instance"

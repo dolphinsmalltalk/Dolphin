@@ -166,12 +166,12 @@ displayValue
 
 	^self privGetRichText!
 
-displayValue: aRichString 
+displayValue: aRichString
 	"Private - Set the displayed contents or the receiver to the text argument,
 	(either a RichText, or a String, or nil)."
 
 	| newValue |
-	newValue := aRichString ifNil: [''].
+	newValue := aRichString ?? ''.
 	self displayValue = newValue ifFalse: [self text: newValue]!
 
 enLink: anExternalAddress 

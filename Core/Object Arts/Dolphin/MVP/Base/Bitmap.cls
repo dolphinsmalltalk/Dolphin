@@ -403,10 +403,10 @@ getPaletteEntries
 	"Answer a <StructureArray> of <PALETTEENTRY>s describing the receiver's colour palette."
 
 	| len colors palEntries |
-	colors := self getColorTable ifNil: [#()].
+	colors := self getColorTable ?? #().
 	len := colors size.
 	palEntries := StructureArray length: len elementClass: PALETTEENTRY.
-	palEntries 
+	palEntries
 		replaceFrom: 1
 		to: len
 		with: colors

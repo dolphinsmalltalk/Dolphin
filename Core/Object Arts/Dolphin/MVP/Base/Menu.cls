@@ -144,7 +144,7 @@ commandDescription
 commandString
 	"Answer a String representation of the receiver's command."
 
-	^name ifNil: ['']!
+	^name ?? ''!
 
 commandString: aString 
 	"Sets the receiver's command from the <readableString> representation, aString."

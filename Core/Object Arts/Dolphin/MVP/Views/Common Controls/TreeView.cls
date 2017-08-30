@@ -922,7 +922,7 @@ selectionFromPoint: pos
 	"Private - Answer the <integer> selection that would occur if a mouse click at the
 	<Point>, pos, was passed to the control."
 
-	^(self itemFromPoint: pos) ifNil: [0]!
+	^(self itemFromPoint: pos) ?? 0!
 
 selectionIfNone: aBlock
 	"Answer the selected object in the receiver or the

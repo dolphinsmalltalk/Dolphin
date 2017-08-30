@@ -130,14 +130,14 @@ categories
 
 	^classCategories ifNil: [{self classCategoryClass unclassified}]!
 
-categories: aCollection 
+categories: aCollection
 	"Set the Categories of the receiver to those in the specified <collection> of <ClassCategory>s.
 	Remove from any other categories."
 
 	| unclassified newCategories oldCategories |
 	unclassified := self classCategoryClass unclassified.
 	newCategories := aCollection reject: [:c | c = unclassified].
-	oldCategories := self classCategories ifNil: [#()].
+	oldCategories := self classCategories ?? #().
 	(newCategories symmetricDifference: oldCategories) notEmpty ifFalse: [^self].
 	self classCategories: newCategories.
 	self isChanged: true.
@@ -555,7 +555,7 @@ sharedPoolNames
 	dictionaries that are specified locally in the receiver (pools are inherited in Dolphin), in
 	order of precedence."
 
-	^sharedPools ifNil: [#()]!
+	^sharedPools ?? #()!
 
 sourceDescriptor
 	"Answer the source descriptor for the receiver's comment."

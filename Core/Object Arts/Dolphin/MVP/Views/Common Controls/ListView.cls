@@ -555,7 +555,7 @@ errorInCommonControlCall: index
 			(index between: 0 and: size - 1) ifFalse: [^self errorSubscriptBounds: index]].
 	^self errorInCommonControlCall!
 
-findItem: aString startingAt: anInteger wrap: aBoolean 
+findItem: aString startingAt: anInteger wrap: aBoolean
 	"Private - Perform a search for the first item starting with the <readableString>,
 	partialName, beginning with the item at <integer> index, start, potentially wrapping
 	round to the start depending on the <boolean>, wrap. i.e. an incremental search.
@@ -563,28 +563,28 @@ findItem: aString startingAt: anInteger wrap: aBoolean
 
 	| items getText len |
 	items := self list.
-	getText := (self isReportMode and: [columns notEmpty]) 
+	getText := (self isReportMode and: [columns notEmpty])
 				ifTrue: 
 					[| column |
-					column := self columnAtIndex: (lastClickedColIndex ifNil: [1]).
+					column := self columnAtIndex: lastClickedColIndex ?? 1.
 					column getTextBlock notNil ifTrue: [column] ifFalse: [self]]
 				ifFalse: [self].
 	len := aString size.
-	items 
+	items
 		from: anInteger
 		to: items size
 		keysAndValuesDo: 
-			[:index :each | 
+			[:index :each |
 			| text |
 			text := getText textFromRow: each.
 			((text leftString: len) sameAs: aString) ifTrue: [^index]].
-	aBoolean 
+	aBoolean
 		ifTrue: 
-			[items 
+			[items
 				from: 1
 				to: anInteger - 1
 				keysAndValuesDo: 
-					[:index :each | 
+					[:index :each |
 					| text |
 					text := getText textFromRow: each.
 					((text leftString: len) sameAs: aString) ifTrue: [^index]]].

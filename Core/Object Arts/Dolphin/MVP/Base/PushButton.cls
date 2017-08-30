@@ -177,7 +177,7 @@ isMultiline: boolean
 note
 	"Answer the note (sub-text) associated with the Command Link button, if any."
 
-	^note ifNil: ['']!
+	^note ?? ''!
 
 note: aString 
 	"Set the note (sub-text) associated with the Command Link button. Has no visual effect if

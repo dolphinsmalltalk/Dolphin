@@ -174,7 +174,7 @@ behaviors
 comment
 	"Answer a <readableString> describing the the receiver."
 
-	^comment ifNil: ['']!
+	^comment ?? ''!
 
 comment: blah
 	"Set the receiver's comment to the <readableString>, blah.

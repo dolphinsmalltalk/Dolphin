@@ -489,7 +489,7 @@ autoCompletionAcceptChars
 	"Answer a <String> of characters that, when typed, will accept the current selection in an
 	auto-completion list."
 
-	^autoCFillups ifNil: ['']!
+	^autoCFillups ?? ''!
 
 autoCompletionAcceptChars: aString 
 	"Set the <String> of characters that, when typed, will cause the auto-completion list to
@@ -501,7 +501,7 @@ autoCompletionAcceptChars: aString
 autoCompletionCancelChars
 	"Answer the <String> of character that, when typed, will cancel an auto-completion list."
 
-	^autoCStops ifNil: ['']!
+	^autoCStops ?? ''!
 
 autoCompletionCancelChars: aString 
 	"Set the <String> of characters that, when typed, will cancel an auto-completion list."
@@ -2937,7 +2937,7 @@ indicators
 	"Answer a <collection> of <ScintillaIndicator>s, being the indicators (e.g. squiggly
 	underlines) associated with ranges of text in the receiver."
 
-	^indicators ifNil: [#()]!
+	^indicators ?? #()!
 
 indicators: aCollectionOfScintillaIndicator 
 	"Set the indicators (e.g. squiggly underlines) associated with ranges of text in the
@@ -2958,11 +2958,11 @@ indicatorStyles
 	^(indicatorStyles ifNil: [#()] ifNotNil: [:value | value values]) 
 		asSortedCollection: ScintillaAttribute sortByIdBlock!
 
-indicatorStyles: aCollection 
+indicatorStyles: aCollection
 	"Set the receiver's collection of indicators to the <collection> of
 	<ScintillaIndicatorStyle>s argument."
 
-	self setIndicatorStyles: (aCollection ifNil: [#()])!
+	self setIndicatorStyles: aCollection ?? #()!
 
 indicatorsUnder: aPoint 
 	^self indicatorsAt: (self charCloseToPosition: aPoint)!

@@ -945,7 +945,7 @@ additionalAccelerators
 	^self getAdditionalAccelerators ifNil: [self defaultAdditionalAccelerators]!
 
 commandQueryHandlers
-	^self getCommandQueryHandlers ifNil: [#()]!
+	^self getCommandQueryHandlers ?? #()!
 
 create
 	"Answers an instance of the receiver with a default view"

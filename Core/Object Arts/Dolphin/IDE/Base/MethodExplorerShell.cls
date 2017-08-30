@@ -57,24 +57,24 @@ buildHistoryFutureMenu
 		text: 'Forward';
 		yourself!
 
-buildHistoryMenu: visits command: cmdSelector 
+buildHistoryMenu: visits command: cmdSelector
 	"Private - Answer a dynamically created past visit history menu."
 
 	| popup lastEnv subMenu methods |
 	popup := Menu new.
 	lastEnv := nil.
 	visits keysAndValuesDo: 
-			[:i :each | 
+			[:i :each |
 			| env method |
 			env := each key.
-			env == lastEnv 
+			env == lastEnv
 				ifFalse: 
 					[methods := IdentitySet new.
 					subMenu := popup addSubmenu: env displayString.
 					lastEnv := env].
-			method := each value ifNil: ['(none)'].
+			method := each value ?? '(none)'.
 			"We only want to add each method to the menu once"
-			(methods includes: method) 
+			(methods includes: method)
 				ifFalse: 
 					[subMenu addCommand: (Message selector: cmdSelector argument: i) description: method displayString.
 					methods add: method].
