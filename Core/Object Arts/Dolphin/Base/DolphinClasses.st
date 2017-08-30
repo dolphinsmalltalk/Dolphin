@@ -1620,23 +1620,8 @@ STBCollectionProxy subclass: #STBSortedCollectionProxy
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Stream subclass: #Random
-	instanceVariableNames: 'seed'
-	classVariableNames: 'DefaultGeneratorClass'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Stream subclass: #SequencedStream
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Random subclass: #RandomLinearCongruential
-	instanceVariableNames: 'multiplier increment modulus'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-RandomLinearCongruential subclass: #RandomParkMiller
-	instanceVariableNames: 'quo rem'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
