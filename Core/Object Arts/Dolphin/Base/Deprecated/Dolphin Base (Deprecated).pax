@@ -380,6 +380,7 @@ log10: aFloat
 
 log2: aFloat
 	<cdecl: double log2 double>
+	#deprecated.
 	^self invalidCall!
 
 memcpy: dest src: src count: count

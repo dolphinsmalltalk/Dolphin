@@ -293,14 +293,20 @@ CRTConstants at: '_EM_INEXACT' put: 1!
 isNaN
 	^false! !
 
-Process class removeSelector: #initialize!
+(Array with: Process class with: Process) do: [:each | each removeSelector: #initialize]!
 
 Process addClassConstant: 'DefaultFPEMask' value: CRTConstants._EM_DENORMAL | CRTConstants._EM_INEXACT | CRTConstants._EM_UNDERFLOW!
-
 Processor activeProcess fpeMask: Process.DefaultFPEMask | CRTConstants._EM_OVERFLOW | CRTConstants._EM_INVALID!
-	
+#(#fpeMask #fpeMask:) do: [:each | Process removeSelector: each]!
+
+#(#absPrintExactlyOn:base:decimalPlaces:showTrailingFractionalZeros: #absPrintExactlyOn:base:) do: [:each | Float removeSelector: each]!
+Float class removeSelector: #fminDenormalized!
+
 | infinity |
 infinity := Float fmax * 2.
 Float addClassConstant: 'Infinity' value: infinity.
 Float addClassConstant: 'NegativeInfinity' value: infinity negated.
 Float addClassConstant: 'NaN' value: infinity - infinity!
+
+#(#decimalSeparator #synchronizeLocale) do: [:each | CRTLibrary removeSelector: each]!
+
