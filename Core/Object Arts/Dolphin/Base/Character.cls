@@ -230,7 +230,9 @@ isLiteral
 	"Answer whether the receiver has a literal representation which is directly recognised by
 	the Compiler."
 
-	^asciiValue > 31 and: [asciiValue ~= 127]!
+	"In Dolphin this is always true because we have an escaped code point literal form."
+
+	^true!
 
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
@@ -282,8 +284,7 @@ isWhitespace
 	^self isSeparator!
 
 printOn: aStream
-	"Append the ASCII representation of the receiver to aStream as a developer would want to see
-	it."
+	"Append the literal representation of the receiver to the <puttableStream> argument."
 
 	aStream nextPut: $$.
 	(asciiValue > 32 and: [asciiValue ~= 127])
