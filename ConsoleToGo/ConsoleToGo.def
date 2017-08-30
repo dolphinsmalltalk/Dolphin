@@ -29,7 +29,7 @@ uncompress
 	_chmod
 	_clearfp
 	_close
-	_controlfp_s
+	_control87
 	_dup
 	_dup2
 	_eof
@@ -37,15 +37,11 @@ uncompress
 	_fdopen
 	_filelengthi64
 	_fileno
-	_finite
-	_fpclass
 	_fseeki64
 	_ftelli64
-	_gcvt_s
 	_get_osfhandle
 	_getcwd
 	_isatty
-	_logb
 	_makepath_s
 	_open_osfhandle
 	_rotl
@@ -53,46 +49,30 @@ uncompress
 	_setmode
 	_spawnvp
 	_splitpath_s
+	_statusfp
 	_stricmp
 	_stricoll
 	_strnicmp
 	_strrev
-	acos
-	asin
-	atan
-	atan2
 	atoi
-	ceil
-	cos
-	exp
-	fabs
 	fclose
 	feof
 	fflush
 	fgetc
 	fgets
-	floor
 	fopen_s
 	fputc
 	fread_s
-	frexp
 	fwrite
 	iswcntrl
 	iswprint
 	iswpunct
 	iswspace
-	ldexp
-	log
-	log10
 	memcmp
 	memset
-	modf
-	pow
 	rand
 	rewind
 	setlocale
-	sin
-	sqrt
 	srand
 	strcat_s
 	strcmp
@@ -101,7 +81,6 @@ uncompress
 	strncmp
 	strncpy_s
 	strpbrk
-	tan
 	ungetc
 	wcscspn
 
