@@ -179,7 +179,7 @@ ln
 	^self asFloat ln!
 
 log
-	"Answer the log to the base 10 of the receiver"
+	"Answer the common logarithm (log to the base 10) of the receiver"
 
 	^self asFloat log!
 
@@ -340,11 +340,12 @@ maxLiteralIntegerExponent
 	computations, for example by accidentally evaluating the string representation of a Guid like 
 	this one: 5e967948-0810-11d4-a876-0050da643bf9."
 
-	"There is no real physical limit (other than memory), but calculating a literal
-	integer. For most practical purposes integers of 10,000 or so decimal digits ought to be
-	sufficient!!"
+	"There is no real physical limit (other than memory), but calculating a literal integer can
+	be slow for large 'e'. For most practical purposes integers of 2000 or so decimal digits ought to be
+	sufficient bearing in mind that the absolute maximum decimal exponent of a 64-bit Float is
+	308!!"
 
-	^9999!
+	^2000!
 
 new
 	"Answer a new instance of the receiver.
@@ -389,7 +390,7 @@ readExponentIntegerFrom: aStream initialInteger: anInteger
 			[:exponent |
 			exponent > self maxLiteralIntegerExponent
 				ifTrue: [self errorExponentTooLarge: exponent]
-				ifFalse: [anInteger * (10 raisedToInteger: exponent)]]!
+				ifFalse: [anInteger * exponent exp10]]!
 
 readFractionFrom: aStream initialInteger: anInteger 
 	"Private - A partially recognised Fraction has been read from the <gettableStream>, aStream,
@@ -456,7 +457,7 @@ readScaledDecimalFrom: aStream mantissa: aNumber precision: anInteger
 	| scale |
 	(scale := self readIntegerFrom: aStream radix: 10) isNil
 		ifTrue: 
-			["Implied precision, .e.g. 2.50s"
+			["Implied scale based on the precision specified for the fractional part, .e.g. 2.50s"
 			scale := anInteger].
 	scale > ScaledDecimal maxPrecision
 		ifTrue: 
@@ -470,7 +471,7 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 	<gettableStream>, aStream. The <integer>, integerPart, has already been read from the stream
 	and we are currently positioned immediately after the decimal point."
 
-	| nextChar precision fractionalPart start significand impliedPrecision |
+	| nextChar precision fractionalPart start significand impliedScale |
 	start := aStream position.
 	"Attempt to read positive fractional part"
 	(fractionalPart := self readIntegerFrom: aStream radix: 10) isNil
@@ -479,14 +480,14 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 			 onto the stream"
 			aStream pop.
 			^anInteger].
-	precision := impliedPrecision := aStream position - start.
+	precision := impliedScale := aStream position - start.
 
 	"So as to not accumulate round off errors the mantissa is kept in integer form."
 	fractionalPart = 0
 		ifTrue: 
 			[significand := anInteger.
 			precision := 0]
-		ifFalse: [significand := anInteger * (10 raisedToInteger: precision) + fractionalPart].
+		ifFalse: [significand := anInteger * precision exp10 + fractionalPart].
 
 	"Process any exponent..."
 	((nextChar := aStream peek) == $e or: [nextChar == $d or: [nextChar == $q]])
@@ -498,13 +499,12 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 				ifTrue: 
 					[exponent > Float maxExponent ifTrue: [self errorExponentTooLarge: exponent].
 					^exponent >= precision
-						ifTrue: [(significand * (10 raisedToInteger: exponent - precision)) asFloat]
+						ifTrue: [(significand * (exponent - precision) exp10) asFloat]
 						ifFalse: 
 							["Note that the fraction does not need to be
 							 normalized before #asFloat conversion,
 							 which will be faster than Integer>>gcd: "
-							(Fraction numerator: significand denominator: (10 raisedToInteger: exponent negated + precision))
-								asFloat]].
+							(Fraction numerator: significand denominator: (exponent negated + precision) exp10) asFloat]].
 
 			"Found Float with trailing exponent character which is not part of the
 			number, e.g. 1.5e From ANSI standard p 28: 'An exponentLetter must be
@@ -516,15 +516,15 @@ readSmalltalkRealFrom: aStream initialInteger: anInteger
 					[aStream next.	"Skip the $s"
 					^self
 						readScaledDecimalFrom: aStream
-						mantissa: significand / (10 raisedToInteger: precision)
-						precision: impliedPrecision]].
+						mantissa: significand / precision exp10
+						precision: impliedScale]].
 
 	"Normal Float, such as 2.5 (perhaps with trailing exponent character)"
 	^precision = 0
 		ifTrue: [significand asFloat]
 		ifFalse: 
 			["Again the fraction does not need to be normalized before conversion"
-			(Fraction numerator: significand denominator: (10 raisedToInteger: precision)) asFloat]!
+			(Fraction numerator: significand denominator: precision exp10) asFloat]!
 
 readSmalltalkSyntaxFrom: aStream
 	"Private - Instantiate a new sub-instance of the receiver from aStream and answer it.

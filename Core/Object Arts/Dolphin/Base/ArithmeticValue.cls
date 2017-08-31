@@ -343,15 +343,14 @@ raisedTo: operand
 raisedToInteger: anInteger
 	"Answer the receiver raised to the specified <integer> power."
 
-	| i answer |
-	anInteger == 0 ifTrue: [^1].
-	anInteger negative ifTrue: [^(self raisedToInteger: anInteger negated) reciprocal].
-	i := 1 bitShift: anInteger highBit - 1.
-	answer := self class one.
-	[i > 0] whileTrue: 
+	| bit answer |
+	anInteger <= 0
+		ifTrue: [^anInteger == 0 ifTrue: [1] ifFalse: [(self raisedToInteger: anInteger negated) reciprocal]].
+	bit := 1 bitShift: anInteger highBit - 1.
+	answer := self.
+	[(bit := bit bitShift: -1) > 0] whileTrue: 
 			[answer := answer * answer.
-			(anInteger bitAnd: i) == 0 ifFalse: [answer := answer * self].
-			i := i bitShift: -1].
+			(anInteger anyMask: bit) ifTrue: [answer := answer * self]].
 	^answer!
 
 reciprocal

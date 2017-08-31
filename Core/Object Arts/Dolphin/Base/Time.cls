@@ -271,7 +271,7 @@ pmMarker
 
 	^Locale default pmDesignator!
 
-readFrom: aStream 
+readFrom: aStream
 	"Answers a new instance of the receiver read from aStream according to
 	aFormatStringOrNil"
 
@@ -282,22 +282,22 @@ readFrom: aStream
 	hours := Integer readFrom: aStream radix: 10.
 	separator := aStream peek.
 	rounded := 0.
-	(separator isNil or: [separator isLetter]) 
+	(separator isNil or: [separator isLetter])
 		ifFalse: 
 			[aStream next.
 			minutes := Integer readFrom: aStream radix: 10.
-			(aStream peekFor: separator) 
+			(aStream peekFor: separator)
 				ifTrue: 
 					[seconds := Integer readFrom: aStream radix: 10.
-					(aStream peekFor: separator) 
+					(aStream peekFor: separator)
 						ifTrue: [milliseconds := Integer readFrom: aStream radix: 10]
 						ifFalse: 
-							[(aStream peekFor: $.) 
+							[(aStream peekFor: $.)
 								ifTrue: 
 									[| start |
 									start := aStream position.
 									milliseconds := Integer readFrom: aStream radix: 10.
-									milliseconds isNil 
+									milliseconds isNil
 										ifTrue: 
 											["Actually just seconds with a trailing full stop"
 											milliseconds := 0.
@@ -305,20 +305,20 @@ readFrom: aStream
 										ifFalse: 
 											[| precision |
 											precision := aStream position - start - 3.
-											milliseconds == 0 
+											milliseconds == 0
 												ifFalse: 
-													[milliseconds := (milliseconds / (10 raisedToInteger: precision)) asInteger.
+													[milliseconds := (milliseconds / precision exp10) asInteger.
 													rounded := 1]]]]]].
 	aStream skipWhile: [:c | c == $\x20].
 	am := self amMarker.
-	(am notEmpty and: [am skipOver: aStream ignoreCase: true]) 
+	(am notEmpty and: [am skipOver: aStream ignoreCase: true])
 		ifTrue: 
 			[((0 to: 12) includes: hours) ifFalse: [^self errorInvalidFormat].
 			hours := hours % 12]
 		ifFalse: 
 			[| pm |
 			pm := self pmMarker.
-			(pm notEmpty and: [pm skipOver: aStream ignoreCase: true]) 
+			(pm notEmpty and: [pm skipOver: aStream ignoreCase: true])
 				ifTrue: 
 					[((0 to: 12) includes: hours) ifFalse: [^self errorInvalidFormat].
 					hours < 12 ifTrue: [hours := hours + 12]]].

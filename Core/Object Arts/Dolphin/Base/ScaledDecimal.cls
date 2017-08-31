@@ -100,22 +100,22 @@ denominator
 	^fraction denominator
 !
 
-displayOn: target 
+displayOn: target
 	"Append, to the <puttableStream, aStream, a String whose characters are a 
 	representation of the receiver as a user would want to see it."
 
 	| scaler quoRem num denom scaled |
-	scaler := 10 raisedToInteger: scale.
+	scaler := scale exp10.
 	num := fraction numerator.
 	denom := fraction denominator.
 	scaled := (num * scaler + (denom bitShift: -1)) // denom.
-	num negative 
+	num negative
 		ifTrue: 
 			[target nextPut: $-.
 			scaled := scaled negated].
 	quoRem := scaled quoAndRem: scaler.
 	(quoRem at: 1) printOn: target.
-	scale > 0 
+	scale > 0
 		ifTrue: 
 			[target nextPut: $..
 			scale timesRepeat: 
@@ -276,7 +276,7 @@ truncated
 !ScaledDecimal categoriesFor: #negated!arithmetic!public! !
 !ScaledDecimal categoriesFor: #numerator!accessing!public! !
 !ScaledDecimal categoriesFor: #printOn:!printing!public! !
-!ScaledDecimal categoriesFor: #raisedToInteger:!mathematical functions!public! !
+!ScaledDecimal categoriesFor: #raisedToInteger:!mathematical!public! !
 !ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
 !ScaledDecimal categoriesFor: #scale!accessing!public! !
 !ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !

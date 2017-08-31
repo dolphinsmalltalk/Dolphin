@@ -94,6 +94,18 @@ testEven
 			self assert: each even.
 			self deny: (each + 1) even]!
 
+testExp10
+	| expected |
+	self assert: -2 exp10 equals: 1 / 100.
+	self assert: -1 exp10 equals: 1 / 10.
+	self assert: 0 exp10 equals: 1.
+	expected := 10.
+	1 to: 50
+		do: 
+			[:i |
+			self assert: i exp10 equals: expected.
+			expected := expected * 10]!
+
 testGcd
 
 	self assert: (55 gcd: 30) == 5
@@ -250,9 +262,15 @@ testQuo
 	self assert: (-7 quo: 2) == -3.!
 
 testRaisedToInteger
-	self assert: (2 raisedToInteger: 0) equals: 1.
-	self assert: (2 raisedToInteger: 1) equals: 2.
-	self assert: (2 raisedToInteger: 4) equals: 16.
+	| expected subject |
+	subject := 10.
+	self assert: (subject raisedToInteger: 0) equals: 1.
+	expected := subject.
+	1 to: 10
+		do: 
+			[:i |
+			self assert: (10 raisedToInteger: i) equals: expected.
+			expected := expected * subject].
 	self assert: (0 raisedToInteger: 0) equals: 1.
 	self assert: (0 raisedToInteger: 1) equals: 0.
 	self assert: (0 raisedToInteger: 2) equals: 0.
@@ -299,6 +317,7 @@ testSubtract
 !SmallIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testDivide!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testEven!public!unit tests! !
+!SmallIntegerTest categoriesFor: #testExp10!public! !
 !SmallIntegerTest categoriesFor: #testGcd!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testHighBit!public!unit tests! !
 !SmallIntegerTest categoriesFor: #testIntegerDivide!public!unit tests! !
