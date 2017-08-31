@@ -122,7 +122,7 @@ displayFail
 	self icon: (Icon fromFile: 'UnitTestPluginFail.ico').
 	self displayColor: self class failColor.
 	self displayMode: 'Fail'.
-	self displayDetails: result printString.
+	self displayDetails: result displayString.
 	self ensureVisible!
 
 displayMode: aString 
@@ -143,9 +143,7 @@ displayPass
 	self icon: (Icon fromFile: 'UnitTestPluginPass.ico').
 	self displayColor: self class passColor.
 	self displayMode: 'Pass'.
-	self
-		displayDetails: ((result skippedCount > 0 ifTrue: ['<1d> run (<2d> skipped)'] ifFalse: ['<1d> run'])
-				expandMacrosWithArguments: {result runCount. result skippedCount})!
+	self displayDetails: result displayString!
 
 displayReset
 	self displayColor: self class noTestsColor.

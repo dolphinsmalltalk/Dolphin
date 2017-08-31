@@ -26,6 +26,9 @@ outcome
 
 	^outcome!
 
+printDurationOn: aPuttableStream
+	TestResult printDuration: duration on: aPuttableStream!
+
 setCase: aTestCase duration: anInteger
 	case := aTestCase.
 	outcome := #passed.
@@ -51,6 +54,7 @@ stacktrace
 !TestCaseResult categoriesFor: #case!accessing!public! !
 !TestCaseResult categoriesFor: #duration!accessing!public! !
 !TestCaseResult categoriesFor: #outcome!accessing!public! !
+!TestCaseResult categoriesFor: #printDurationOn:!printing!public! !
 !TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
 !TestCaseResult categoriesFor: #setCase:outcome:signal:!initializing!private! !
 !TestCaseResult categoriesFor: #signal!accessing!public! !
