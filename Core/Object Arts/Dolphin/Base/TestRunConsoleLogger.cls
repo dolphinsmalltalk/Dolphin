@@ -14,7 +14,7 @@ finishedCase: aTestCaseResult
 	stream
 		nextPutAll: aTestCaseResult outcome asUppercase;
 		nextPutAll: ' in '.
-	self printRuntime: aTestCaseResult duration.
+	aTestCaseResult printDurationOn: stream.
 	stream cr!
 
 finishedRun: aTestResult knownSlowTests: aCollection
@@ -23,10 +23,8 @@ finishedRun: aTestResult knownSlowTests: aCollection
 	stream
 		nextPutAll: (passed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
 		cr;
-		nextPutAll: aTestResult printString;
-		nextPutAll: ' in '.
-	self printRuntime: aTestResult duration.
-	stream cr.
+		print: aTestResult;
+		cr.
 	passed
 		ifTrue: 
 			[self
@@ -35,19 +33,6 @@ finishedRun: aTestResult knownSlowTests: aCollection
 				threshold: self slowTestThreshold * 1000]
 		ifFalse: [self summarizeFailures: aTestResult].
 	stream flush!
-
-printRuntime: microsecondsInteger
-	| mS |
-	mS := microsecondsInteger / 1000.0.
-	mS < 1000.0
-		ifTrue: 
-			[mS printOn: stream decimalPlaces: (mS < 1.0 ifTrue: [3] ifFalse: [0]).
-			stream nextPutAll: ' mS']
-		ifFalse: 
-			[| secs |
-			secs := mS / 1000.0.
-			secs printOn: stream decimalPlaces: (secs < 10.0 ifTrue: [1] ifFalse: [0]).
-			stream nextPutAll: ' s']!
 
 startingCase: aTestCase
 	stream
@@ -94,7 +79,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	stream
 		print: newLaggards size;
 		nextPutAll: ' test(s) took '.
-	self printRuntime: anInteger.
+	aTestResult class printDuration: anInteger on: stream.
 	stream
 		nextPutAll: ' or more to run, not including ';
 		print: aCollection size;
@@ -103,14 +88,13 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	newLaggards do: 
 			[:each |
 			stream tab.
-			self printRuntime: each duration.
+			each printDurationOn: stream.
 			stream
 				tab;
 				print: each case;
 				cr]! !
 !TestRunConsoleLogger categoriesFor: #finishedCase:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #finishedRun:knownSlowTests:!logging!public! !
-!TestRunConsoleLogger categoriesFor: #printRuntime:!helpers!private! !
 !TestRunConsoleLogger categoriesFor: #startingCase:!logging!public! !
 !TestRunConsoleLogger categoriesFor: #stream:!accessing!private! !
 !TestRunConsoleLogger categoriesFor: #summarizeFailures:!helpers!private! !
