@@ -126,6 +126,12 @@ productVersion
 	^VMLibrary default defaultProductDetails at: 3
 !
 
+quit: anInteger
+	"Private - Force a close down of the session with the specified exit code."
+
+	self onExit == true ifTrue: [self primQuit: anInteger].
+	^false	"cancelled"!
+
 reloadSystemPackage
 	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses classesBefore |
 	basePackage := PackageManager systemPackage.
@@ -296,6 +302,7 @@ updateBootImage
 !BootSessionManager categoriesFor: #productDetails!accessing!private!product! !
 !BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
 !BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
+!BootSessionManager categoriesFor: #quit:!operations-shutdown!private! !
 !BootSessionManager categoriesFor: #reloadSystemPackage!operations-startup!public! !
 !BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
 !BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
