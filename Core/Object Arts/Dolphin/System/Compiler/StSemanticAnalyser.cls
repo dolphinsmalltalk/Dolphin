@@ -49,7 +49,10 @@ assignVariable: anStVariableNode
 		ifNotNil: 
 			[:var |
 			var isConstant
-				ifTrue: [self errorAssignConstant: anStVariableNode]
+				ifTrue: 
+					[self errorAssignConstant: anStVariableNode.
+					"If an argument, record the illegal assignment as a read to suppress unreferenced argument warning"
+					var isArgument ifTrue: [var addRead: anStVariableNode fromScope: currentScope]]
 				ifFalse: 
 					[var addAssignment: anStVariableNode fromScope: currentScope.
 					var isStaticVariable ifTrue: [self assignStaticVariable: anStVariableNode]].
@@ -585,7 +588,8 @@ visitVariableNode: aStVariableNode
 			var addRead: aStVariableNode fromScope: currentScope.
 			var isTempVariable
 				ifTrue: 
-					[(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
+					[#todo.	"Report read-before-written after visiting entire AST and only if the temp is written somewhere, i.e. if read-not-written, should not get read-before-written warning."
+					(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
 						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aStVariableNode]]
 				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]! !
 !StSemanticAnalyser categoriesFor: #accessStaticVariable:!helpers!private! !
