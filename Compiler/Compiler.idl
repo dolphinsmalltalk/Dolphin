@@ -41,7 +41,9 @@ library CompilerLib
 		LErrExpectChar,
 		LErrInvalidQualifier,
 		LErrQualifiedRefNotClosed,
-		LErrBadNumber
+		LErrBadNumber,
+		LErrExpectCodePoint,
+		LErrBadCodePoint
 	} LexErrors;
 
 	typedef enum ParseErrors {

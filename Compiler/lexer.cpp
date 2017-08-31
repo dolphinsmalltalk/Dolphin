@@ -727,11 +727,17 @@ void Lexer::ScanLiteralCharacter()
 			{
 				Step();
 				int codePoint = ReadHexCodePoint();
-				if (codePoint < 0 || codePoint > 255)
+				if (codePoint < 0)
 				{
 					m_thisTokenRange.m_stop = CharPosition();
 					int pos = CharPosition();
-					CompileError(LErrExpectChar);
+					CompileError(LErrExpectCodePoint);
+				}
+				else if (codePoint > 255)
+				{
+					m_thisTokenRange.m_stop = CharPosition();
+					int pos = CharPosition();
+					CompileError(LErrBadCodePoint);
 				}
 				else
 				{
