@@ -2,7 +2,7 @@
 
 Object subclass: #Fbench
 	instanceVariableNames: 'testcase paraxial radiusOfCurvature objectDistance rayHeight axisSlopeAngle fromIndex toIndex currentSurfaces clearAperture niter odSa odCline odFline aberrLspher aberrOsc aberrLchrom maxLspher maxOsc maxLchrom'
-	classVariableNames: 'ALine BLine CLine DLine ELine FLine GprimeLine HLine spectralLine'
+	classVariableNames: 'ALine BLine CLine DLine ELine FLine GprimeLine HLine SpectralLine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Fbench guid: (GUID fromString: '{47d6aa87-0382-4770-930e-eb112b33d638}')!
@@ -15,7 +15,7 @@ benchmark: iterations
            the argument and display the results of the last run for
            comparison against the expected results.  "
 
-	| trun stdout |
+	| trun stdout fpeMask |
 	stdout := Transcript.
 	niter := iterations.
 	stdout
@@ -32,7 +32,9 @@ adjust iteration count so the benchmark runs about five minutes.
 ';
 		cr;
 		flush.
-	trun := Time microsecondsToRun: [self traceDesign].
+	fpeMask := Float exceptionMask.
+	false ifTrue: [Float exceptionMask: CRTConstants._MCW_EM].
+	trun := [Time microsecondsToRun: [self traceDesign]] ensure: [Float exceptionMask: fpeMask].
 	stdout
 		display: 'Completed in ';
 		display: trun;
@@ -73,14 +75,14 @@ adjust iteration count so the benchmark runs about five minutes.
 		flush!
 
 init
-            niter := 1.             " Number of iterations "
+	niter := 1.	" Number of iterations "
 
-            "  The test case used in this program is the design for a 4 inch
+	"  The test case used in this program is the design for a 4 inch
                f/12 achromatic telescope objective used as the example in Wyld's
                classic work on ray tracing by hand, given in Amateur Telescope
                Making, Volume 3 (Volume 2 in the 1996 reprint edition).  "
 
-            "  The first index of the testcase array is the surface number.
+	"  The first index of the testcase array is the surface number.
                For each surface, its properties are given by the following
                array element:
 
@@ -88,49 +90,29 @@ init
                     2  Index of refraction (1 for air space)
                     3  Dispersion (Abbe number (V))
                     4  Edge thickness (0 for last surface)  "
+	testcase := Array new: 4.
+	testcase := #(#(27.05 1.5137 63.6 0.52) #(-16.68 1.0 0.0 0.138) #(-16.68 1.6164 36.7 0.38) #(-78.1 1.0 0.0 0.0)).
+	currentSurfaces := 4.
+	clearAperture := 4.0.
+	odSa := Array new: 2.
+	odSa at: 1 put: (Array new: 2).
+	odSa at: 2 put: (Array new: 2).
 
-            testcase := Array new: 4.
-            testcase := #(
-                (  27.05 1.5137 63.6 0.52  )
-                ( -16.68 1.0     0.0 0.138 )
-                ( -16.68 1.6164 36.7 0.38  )
-                ( -78.1  1.0     0.0 0.0   )
-            ).
-            currentSurfaces := 4.
-            clearAperture := 4.0.
+	"  Spectral line mnemonics  "
+	ALine := 1.
+	BLine := 2.
+	CLine := 3.
+	DLine := 4.
+	ELine := 5.
+	FLine := 6.
+	GprimeLine := 7.
+	HLine := 8.
 
-            odSa := Array new: 2.
-            odSa at: 1 put: (Array new: 2).
-            odSa at: 2 put: (Array new: 2).
-
-            "  Spectral line mnemonics  "
-
-            ALine := 1.
-            BLine := 2.
-            CLine := 3.
-            DLine := 4.
-            ELine := 5.
-            FLine := 6.
-            GprimeLine := 7.
-            HLine := 8.
-
-            "  Wavelengths of standard spectral lines in Angstroms
+	"  Wavelengths of standard spectral lines in Angstroms
                    (Not all are used in this program)  "
-
-            spectralLine := Array new: 8.
-            spectralLine := #(
-                7621.0          " A "
-                6869.955        " B "
-                6562.816        " C "
-                5895.944        " D "
-                5269.557        " E "
-                4861.344        " F "
-                4340.477        " G' "
-                3968.494        " H "
-            ).
-
-            paraxial := false.
-        !
+	SpectralLine := Array new: 8.
+	SpectralLine := #(7621.0 6869.955 6562.816 5895.944 5269.557 4861.344 4340.477 3968.494).	" A "	" B "	" C "	" D "	" E "	" F "	" G' "	" H "
+	paraxial := false!
 
 "  Ray trace the design given in testcase and analyse the results  "
 
@@ -172,31 +154,26 @@ init
             ].
         !
 
-"  Perform ray trace in specific spectral line  "
+traceLine: line rayHeight: rayH
+	"  Perform ray trace in specific spectral line  "
 
-        traceLine: line rayHeight: rayH
-
-            objectDistance := 0.0.
-            rayHeight := rayH.
-            fromIndex := 1.0.
-
-            1 to: currentSurfaces do: [ :i |
-                radiusOfCurvature := ((testcase at: i) at: 1).
-                toIndex := ((testcase at: i) at: 2).
-
-                (toIndex > 1.0) ifTrue: [
-                    toIndex := toIndex + ((((spectralLine at: DLine) -
-                        (spectralLine at: line)) /
-                        ((spectralLine at: CLine) - (spectralLine at: FLine))) *
-                        ((((testcase at: i) at: 2) - 1.0) / ((testcase at: i) at: 3))).
-                ].
-                self transitSurface.
-                fromIndex := toIndex.
-                (i < currentSurfaces) ifTrue: [
-                    objectDistance := objectDistance - ((testcase at: i) at: 4).
-                ]
-            ].
-        !
+	objectDistance := 0.0.
+	rayHeight := rayH.
+	fromIndex := 1.0.
+	1 to: currentSurfaces
+		do: 
+			[:i |
+			radiusOfCurvature := (testcase at: i) at: 1.
+			toIndex := (testcase at: i) at: 2.
+			toIndex > 1.0
+				ifTrue: 
+					[toIndex := toIndex
+								+ (((SpectralLine at: DLine) - (SpectralLine at: line))
+										/ ((SpectralLine at: CLine) - (SpectralLine at: FLine))
+											* ((((testcase at: i) at: 2) - 1.0) / ((testcase at: i) at: 3)))].
+			self transitSurface.
+			fromIndex := toIndex.
+			i < currentSurfaces ifTrue: [objectDistance := objectDistance - ((testcase at: i) at: 4)]]!
 
 transitSurface
 	"     Calculate passage through surface

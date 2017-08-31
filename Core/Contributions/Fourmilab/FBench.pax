@@ -57,7 +57,7 @@ package!
 
 Object subclass: #Fbench
 	instanceVariableNames: 'testcase paraxial radiusOfCurvature objectDistance rayHeight axisSlopeAngle fromIndex toIndex currentSurfaces clearAperture niter odSa odCline odFline aberrLspher aberrOsc aberrLchrom maxLspher maxOsc maxLchrom'
-	classVariableNames: 'ALine BLine CLine DLine ELine FLine GprimeLine HLine spectralLine'
+	classVariableNames: 'ALine BLine CLine DLine ELine FLine GprimeLine HLine SpectralLine'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
