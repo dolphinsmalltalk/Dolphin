@@ -985,7 +985,8 @@ testRaisedToInteger
 	self assert: (subject raisedToInteger: 0) equals: 1.
 	self assert: (subject raisedToInteger: 1) equals: subject.
 	self assert: (subject raisedToInteger: 3) equals: subject * subject * subject.
-	self assert: (subject raisedToInteger: -2) equals: 1 / (subject * subject)!
+	self assert: (subject raisedToInteger: -2) equals: 1 / (subject * subject).
+	self assert: (10 raisedToInteger: 255) printString size equals: 256!
 
 testRem
 	#(-16rFFFFFFFFFFFFFFFFFFFFFFFF -16rFFFFFFFFFFFFFFF -16rFFFFFFFF ##(SmallInteger maximum + 1) ##(SmallInteger

@@ -325,23 +325,24 @@ numberFromNumeric
 	string NUMERIC to a <ScaledDecimal> (ODBC converts NUMERIC
 	fields to strings by default, but NUMERIC is a decimal type)."
 
-         | integerPart number fractionPart scale char isNegative stream |
-	stream := ReadStream on: buffer from: 1 to: self length.
+	| integerPart number fractionPart scale char isNegative stream |
+	stream := ReadStream
+				on: buffer
+				from: 1
+				to: self length.
 	integerPart := 0.
 	scale := 0.
 	isNegative := stream peekFor: ##($- codePoint).
-	[stream atEnd or: [(char := stream next) == ##($. codePoint)]] whileFalse: [
-		integerPart := integerPart * 10 + (char - ##($0 codePoint))].
+	[stream atEnd or: [(char := stream next) == ##($. codePoint)]]
+		whileFalse: [integerPart := integerPart * 10 + (char - ##($0 codePoint))].
 	fractionPart := 0.
-	[stream atEnd] whileFalse: [
-		char := stream next.
-		fractionPart := fractionPart * 10 + (char - ##($0 codePoint)).
-		scale := scale + 1].
-	number := (fractionPart / (10 raisedToInteger: scale)) + integerPart.
-         isNegative ifTrue: [number := number negated].
-         ^ScaledDecimal 
-		newFromNumber: number
-		scale: scale!
+	[stream atEnd] whileFalse: 
+			[char := stream next.
+			fractionPart := fractionPart * 10 + (char - ##($0 codePoint)).
+			scale := scale + 1].
+	number := fractionPart / scale exp10 + integerPart.
+	isNegative ifTrue: [number := number negated].
+	^ScaledDecimal newFromNumber: number scale: scale!
 
 numberToNumeric: aNumber
 	"Private - Convert the argument to a 'C' string stored in the receiver for passing to ODBC (probably as a

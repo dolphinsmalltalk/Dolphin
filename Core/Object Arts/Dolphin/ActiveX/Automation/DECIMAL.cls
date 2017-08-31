@@ -71,7 +71,7 @@ value
 	sign := self sign == 0 ifTrue: [1] ifFalse: [-1].
 	hi32 := self hi32.
 	lo64 := self lo64.
-	^((hi32 bitShift: 64) + lo64) * sign / (10 raisedToInteger: scale) asScaledDecimal: scale!
+	^((hi32 bitShift: 64) + lo64) * sign / scale exp10 asScaledDecimal: scale!
 
 value: val
 	"Set the receiver's value to the <ScaledDecimal>, val."
@@ -79,10 +79,10 @@ value: val
 	| scale intVal |
 	scale := val scale.
 	self scale: scale.
-	intVal := val positive 
+	intVal := val positive
 				ifTrue: 
 					[self sign: 0.
-					val * (10 raisedToInteger: scale)]
+					val * scale exp10]
 				ifFalse: 
 					[self sign: 128.
 					val * (-10 raisedToInteger: scale)].

@@ -345,6 +345,17 @@ even
 
 	^(self bitAnd: 1) == 0!
 
+exp10
+	"Answer an <integer> which is base-10 exponent of the receiver (i.e. 10 raised to the power
+	of the receiver)."
+
+	"There is a small benefit in exploiting the fact that 10^N = 5^N * 2^N, at least when N is
+	large. This is really only worthwhile because the LargeInteger multiplication primitive is
+	not as efficient as it could be and so there is a small benefit in multiplying smaller
+	numbers and then performing one bitshift to add the trailing zeroes."
+
+	^self < 20 ifTrue: [10 raisedToInteger: self] ifFalse: [(5 raisedToInteger: self) bitShift: self]!
+
 factorial
 	"Answer the <integer> factorial of the receiver. It is an error for the receiver to be
 	negative."
@@ -466,7 +477,9 @@ highBit
 	representation of the receiver.
 	N.B. This operation is not defined for negative integers."
 
-	^self highByte highBit + (self digitLength - 1 bitShift: 3)!
+	| digits |
+	digits := self digitLength.
+	^(self byteAt: digits) highBit + (digits - 1 bitShift: 3)!
 
 highByte
 	"Private - Answer the most significant radix-256 digit of the receiver."
@@ -761,6 +774,7 @@ truncated
 !Integer categoriesFor: #divideIntoFraction:!double dispatch!private! !
 !Integer categoriesFor: #divideIntoInteger:!double dispatch!private! !
 !Integer categoriesFor: #even!public!testing! !
+!Integer categoriesFor: #exp10!mathematical!public! !
 !Integer categoriesFor: #factorial!factorization!public! !
 !Integer categoriesFor: #factorial2p!factorization!private! !
 !Integer categoriesFor: #factorialIterative!factorization!private! !

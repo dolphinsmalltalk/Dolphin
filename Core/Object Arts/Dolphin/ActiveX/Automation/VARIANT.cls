@@ -243,15 +243,16 @@ decimal
 	value, and a byte each for scale and sign, with the top
 	two bytes unused."
 
-	^self isByRef 
+	^self isByRef
 		ifTrue: [^DECIMAL fromAddress: self refAddress]
-		ifFalse: [ | sign scale hi32 lo64 |
-			#todo "Use DECIMAL to do this".
+		ifFalse: 
+			[| sign scale hi32 lo64 |
+			#todo.	"Use DECIMAL to do this"
 			scale := bytes byteAtOffset: 2.
 			sign := (bytes byteAtOffset: 3) == 0 ifTrue: [1] ifFalse: [-1].
 			hi32 := bytes dwordAtOffset: 4.
 			lo64 := bytes qwordAtOffset: 8.
-			(((hi32 bitShift: 64) + lo64) * sign) / (10 raisedToInteger: scale) asScaledDecimal: scale]!
+			((hi32 bitShift: 64) + lo64) * sign / scale exp10 asScaledDecimal: scale]!
 
 decimal: val
 	"Set the Variant Decimal value of the receiver to the
@@ -262,17 +263,16 @@ decimal: val
 	| scale intVal |
 	scale := val scale.
 	bytes byteAtOffset: 2 put: scale.
-	intVal := val * (10 raisedToInteger: scale).
-	val positive 
+	intVal := val * scale exp10.
+	val positive
 		ifTrue: [bytes byteAtOffset: 3 put: 0]
-		ifFalse: [
-			bytes byteAtOffset: 3 put: 128.
+		ifFalse: 
+			[bytes byteAtOffset: 3 put: 128.
 			intVal := intVal negated].
 	intVal := intVal asInteger.
 	bytes dwordAtOffset: 4 put: (intVal bitShift: -64).
 	bytes qwordAtOffset: 8 put: (intVal bitAnd: 16rFFFFFFFFFFFFFFFF).
-	self vt: VT_DECIMAL
-!
+	self vt: VT_DECIMAL!
 
 detach
 	"Detach the receiver from the underlying VARIANT (useful for passing
