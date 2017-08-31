@@ -335,6 +335,10 @@ size
 	^1!
 
 source
+	"Answer the source code string which was parsed to create the AST of which the receiver is a
+	part, i.e. this is the source code text for the whole method or expression, not just the
+	receiving node."
+
 	^parent notNil ifTrue: [parent source] ifFalse: [nil]!
 
 sourceInterval

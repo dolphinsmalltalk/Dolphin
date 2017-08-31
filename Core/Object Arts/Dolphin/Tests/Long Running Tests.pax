@@ -13,6 +13,7 @@ package methodNames
 	add: #CompilerTest -> #testTempMapOuterDepthExhaustive;
 	add: #CompilerTest -> #testTextMapsExhaustive;
 	add: #DefaultSortAlgorithmTest -> #testBigStringSort;
+	add: #FormatterTest -> #testSmokeTestAll;
 	add: #HeapsortAlgorithmTest -> #testBigStringSort;
 	add: #IntrosortAlgorithmTest -> #testBigStringSort;
 	add: #MergesortAlgorithmTest -> #testBigStringSort;
@@ -33,6 +34,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Base\Dolphin Base Tests';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	yourself).
 
 package!
@@ -190,6 +192,13 @@ testTextMapsExhaustive
 testBigStringSort
 	self bigStringSort! !
 !DefaultSortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+
+!FormatterTest methodsFor!
+
+testSmokeTestAll
+	self smokeTestAllMethodsOfHierarchy: Object.
+	self smokeTestAllMethodsOfHierarchy: Object class! !
+!FormatterTest categoriesFor: #testSmokeTestAll!public!tests! !
 
 !HeapsortAlgorithmTest methodsFor!
 

@@ -4776,7 +4776,7 @@ displayOn: aStream
 
 textStyle
 	^self value literalTextStyle! !
-!StLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
+!StLiteralToken categoriesFor: #textStyle!constants!public! !
 
 !StLiteralValueNode methodsFor!
 
@@ -4796,7 +4796,7 @@ displayOn: aStream
 
 textStyle
 	^#literalNumber! !
-!StNumberLiteralToken categoriesFor: #textStyle!public!visitor/double dispatching! !
+!StNumberLiteralToken categoriesFor: #textStyle!constants!public! !
 
 !StOptimizedNode methodsFor!
 

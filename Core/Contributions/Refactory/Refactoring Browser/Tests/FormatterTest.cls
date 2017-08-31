@@ -10,19 +10,19 @@ FormatterTest comment: ''!
 !FormatterTest categoriesForClass!Browser-Testing! !
 !FormatterTest methodsFor!
 
-runMethodTestFor: method 
+runMethodTestFor: method
 	| result tree |
 	tree := RBParser parseMethod: method.
 	result := RBFormatter1 new format: tree.
-	self assert: result = method!
+	self assert: result equals: method!
 
-runTestForPairs: pairs 
+runTestForPairs: pairs
 	pairs do: 
-			[:each | 
+			[:each |
 			| result tree |
 			tree := RBParser parseExpression: each first.
 			result := RBFormatter1 format: tree.
-			self assert: result = each last]!
+			self assert: result equals: each last]!
 
 setUp
 	settings := Dictionary new.
@@ -41,12 +41,28 @@ setUp
 	RBConfigurableFormatter maxLineLength: 10000.
 	RBConfigurableFormatter periodsAsTerminators: false!
 
+smokeTestAllMethodsOfHierarchy: baseClass
+	baseClass allMethodsDo: 
+			[:each |
+			| tree |
+			tree := each parseTree.
+			self assert: tree equals: (RBParser parseMethod: (RBFormatter1 format: tree))]!
+
+smokeTestForMethodsOfClasses: aCollectionOfClasses
+	aCollectionOfClasses do: 
+			[:class |
+			class selectors do: 
+					[:sel |
+					| tree |
+					tree := class parseTreeFor: sel.
+					self assert: tree equals: (RBParser parseMethod: (RBFormatter1 format: tree))]]!
+
 tearDown
 	settings 
 		keysAndValuesDo: [:key :value | (RBFormatter1 bindingFor: key) value: value]!
 
 testAllSettingsInitialized
-	settings keysAndValuesDo: [:eachKey :eachValue | self assert: eachValue notNil]!
+	settings keysAndValuesDo: [:eachKey :eachValue | self denyIsNil: eachValue]!
 
 testAssignments
 	self runTestForPairs: #(#('x := 3') #('x := y := z') #('(x := y) size'))!
@@ -59,7 +75,7 @@ testBeginningNewLines
 	RBFormatter1 newLinesAfterTemporaries: 3.
 	RBFormatter1 indentString: ''.
 	result := RBFormatter1 new format: tree.
-	self assert: result = method!
+	self assert: result equals: method!
 
 testBinaryMessage
 	self 
@@ -135,14 +151,12 @@ testFormatVariable
 
 testIndent
 	| result tree method |
-	method := 
-'test
-	^self size'. 
-
+	method := 'test
+	^self size'.
 	tree := RBParser parseMethod: method.
 	RBFormatter1 indentString: (String with: Character tab).
 	result := RBFormatter1 new format: tree.
-	self assert: result = method!
+	self assert: result equals: method!
 
 testKeywordMessage
 	self 
@@ -183,13 +197,13 @@ testMethod
 ^self error') #('foo: x
 bar: y
 baz: z
-^self')) 
+^self'))
 		do: 
-			[:each | 
+			[:each |
 			| result tree |
 			tree := RBParser parseMethod: each first.
 			result := RBFormatter1 format: tree.
-			self assert: result = each last]!
+			self assert: result equals: each last]!
 
 testMethodComment
 	RBFormatter1 indentString: (String with: Character tab).
@@ -199,13 +213,13 @@ testMethodComment
 
 	^self size') #('test
 	self foo.	"Comment 1"
-	self bar	"Comment 2"')) 
+	self bar	"Comment 2"'))
 		do: 
-			[:each | 
+			[:each |
 			| result tree |
 			tree := RBParser parseMethod: each first.
 			result := RBFormatter1 format: tree.
-			self assert: result = each last]!
+			self assert: result equals: each last]!
 
 testNoNewlineCascadeMessages
 	RBFormatter1 newLineAfterCascade: false.
@@ -265,19 +279,15 @@ x := y + 3.
 ^x'))!
 
 testSmokeTest
-	Refactoring withAllSubclasses do: 
-			[:class | 
-			class selectors do: 
-					[:sel | 
-					| tree |
-					tree := class parseTreeFor: sel.
-					self assert: tree = (RBParser parseMethod: (RBFormatter1 format: tree))]]!
+	self smokeTestAllMethodsOfHierarchy: Refactoring!
 
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
 !FormatterTest categoriesFor: #runMethodTestFor:!private! !
 !FormatterTest categoriesFor: #runTestForPairs:!private! !
 !FormatterTest categoriesFor: #setUp!public!running! !
+!FormatterTest categoriesFor: #smokeTestAllMethodsOfHierarchy:!public!tests! !
+!FormatterTest categoriesFor: #smokeTestForMethodsOfClasses:!helpers!private! !
 !FormatterTest categoriesFor: #tearDown!public!running! !
 !FormatterTest categoriesFor: #testAllSettingsInitialized!public!unit tests! !
 !FormatterTest categoriesFor: #testAssignments!public!tests! !

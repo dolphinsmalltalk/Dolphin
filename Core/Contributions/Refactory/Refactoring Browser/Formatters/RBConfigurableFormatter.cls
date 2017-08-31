@@ -27,12 +27,25 @@ addNewLinesBeforeStatementStartingAt: anInteger
 						ifFalse: [0]).
 	newLines = 0 ifTrue: [self space] ifFalse: [self newLines: newLines]!
 
-currentLineLength
-	^codeStream position - lineStart!
-
 format: aParseTree 
 	originalSource := aParseTree source.
 	^super format: aParseTree!
+
+formatArray: anArrayNode
+	(anArrayNode statements allSatisfy: [:each | each isKindOf: StLiteralValueNode])
+		ifTrue: 
+			[| current |
+			anArrayNode statements do: 
+					[:each |
+					current := each.
+					self visitNode: each]
+				separatedBy: 
+					[(self isLineTooLong: current formattedCode)
+						ifTrue: 
+							[codeStream nextPut: $..
+							self newLine]
+						ifFalse: [codeStream nextPutAll: '. ']]]
+		ifFalse: [self formatSequenceNodeStatementsFor: anArrayNode]!
 
 formatBinaryMessage: aMessageNode 
 	self space.
@@ -216,9 +229,6 @@ indentAround: aBlock
 initialize
 	super initialize.
 	lookaheadCode := IdentityDictionary new!
-
-isLineTooLong: aString 
-	^self currentLineLength + aString size >= MaxLineLength!
 
 isMultilineBlock: aBlockNode 
 	^aBlockNode isBlock and: [self willBeMultiline: aBlockNode]!
@@ -406,8 +416,8 @@ writeString: aString
 	index > 0 
 		ifTrue: [lineStart := codeStream position - (aString size - index)]! !
 !RBConfigurableFormatter categoriesFor: #addNewLinesBeforeStatementStartingAt:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #currentLineLength!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #format:!operations!public! !
+!RBConfigurableFormatter categoriesFor: #formatArray:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #formatBinaryMessage:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #formatBlock:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #formatBlockArgumentsFor:!formatting!private! !
@@ -424,7 +434,6 @@ writeString: aString
 !RBConfigurableFormatter categoriesFor: #formatTemporariesFor:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #indentAround:!formatting!private! !
 !RBConfigurableFormatter categoriesFor: #initialize!initializing!private! !
-!RBConfigurableFormatter categoriesFor: #isLineTooLong:!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #isMultilineBlock:!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #isMultiLineMessage:!helpers!private! !
 !RBConfigurableFormatter categoriesFor: #needsParenthesisFor:!helpers!private! !
