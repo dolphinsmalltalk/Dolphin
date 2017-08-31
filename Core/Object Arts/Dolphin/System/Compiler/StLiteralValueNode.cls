@@ -18,6 +18,9 @@ StLiteralValueNode comment: ''!
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitLiteralNode: self!
 
+formattedCode
+	^self token formattedFrom: self source!
+
 literalToken: aLiteralToken 
 	token := aLiteralToken!
 
@@ -37,6 +40,7 @@ valueClass
 	^token value class! !
 !StLiteralValueNode categoriesFor: #=!comparing!public! !
 !StLiteralValueNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StLiteralValueNode categoriesFor: #formattedCode!accessing!public! !
 !StLiteralValueNode categoriesFor: #literalToken:!accessing!private! !
 !StLiteralValueNode categoriesFor: #startWithoutParentheses!accessing!public! !
 !StLiteralValueNode categoriesFor: #stopWithoutParentheses!accessing!public! !

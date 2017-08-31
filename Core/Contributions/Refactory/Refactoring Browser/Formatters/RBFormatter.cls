@@ -14,11 +14,11 @@ RBFormatter comment: 'RBFormatter is an <StParseNodeVisitor> for pretty printing
 acceptBlockNode: aBlockNode startBlockString: startBlockString endBlockString: endBlockString
 	| seqNode multiline formattedBody formatter |
 	seqNode := aBlockNode body.
-	formatter := (self copy)
+	formatter := self copy
 				lineStart: 0;
 				yourself.
 	formattedBody := formatter format: seqNode.
-	multiline := self lineLength + formattedBody size > self maxLineSize or: [formatter isMultiLine].
+	multiline := self currentLineLength + formattedBody size > self maxLineLength or: [formatter isMultiLine].
 	multiline ifTrue: [self newLine].
 	codeStream nextPutAll: startBlockString.
 	aBlockNode arguments do: 
@@ -64,7 +64,7 @@ formatArray: anArrayNode
 					length := length + string size + 2.
 					multiline := multiline or: [formatter isMultiLine]].
 			formattedArgs := formattedArgs collection.
-			multiline := multiline or: [length + 1 + self lineLength > self maxLineSize].
+			multiline := multiline or: [length + 1 + self currentLineLength > self maxLineLength].
 			formattedArgs do: [:each | codeStream nextPutAll: each]
 				separatedBy: 
 					[codeStream nextPut: $..
@@ -84,7 +84,7 @@ formatMessage: aMessageNode cascade: cascadeBoolean
 				do: 
 					[:i |
 					| formatter string |
-					formatter := (self copy)
+					formatter := self copy
 								lineStart: (selectorParts at: i) length negated;
 								yourself.
 					string := formatter format: (arguments at: i).
@@ -92,11 +92,8 @@ formatMessage: aMessageNode cascade: cascadeBoolean
 					i == 1 ifTrue: [firstArgLength := formatter firstLineLength].
 					length := length + string size.
 					multiLine := multiLine or: [formatter isMultiLine]]].
-	multiLine := multiLine or: [length + 1 + self lineLength > self maxLineSize].
-	indentFirst := cascadeBoolean not and: 
-					[multiLine and: 
-							[(self startMessageSendOnNewLine: aMessageNode)
-								or: [self lineLength + selectorParts first length + 2 + firstArgLength > self maxLineSize]]].
+	multiLine := multiLine or: [length + 1 + self currentLineLength > self maxLineLength].
+	indentFirst := cascadeBoolean not and: [multiLine and: [(self startMessageSendOnNewLine: aMessageNode) or: [self currentLineLength + selectorParts first length + 2 + firstArgLength > self maxLineLength]]].
 	indentFirst ifTrue: [self newLine] ifFalse: [cascadeBoolean ifFalse: [codeStream space]].
 	self
 		formatMessageSelector: selectorParts
@@ -206,18 +203,11 @@ isMultiLine
 lastLineLength
 	^codeStream position - (lineStart max: 0)!
 
-lineLength
-	^codeStream position - lineStart!
-
 lineStart: aPosition
 	lineStart := aPosition!
 
 maximumArgumentsPerLine
 	^self class maximumArgumentsPerLine!
-
-maxLineSize
-	#rbFix.	"Refactor to class variable so configurable"
-	^self class maxLineLength!
 
 needsParenthesisFor: aNode
 	| parent |
@@ -267,7 +257,7 @@ newLinesFor: aString startingAt: anIndex
 
 postCopy
 	super postCopy.
-	lineStart := self lineLength negated.
+	lineStart := self currentLineLength negated.
 	codeStream := WriteStream on: (String new: 60).
 	firstLineLength := nil.
 	^self!
@@ -381,7 +371,7 @@ visitSequenceNode: aSequenceNode
 !RBFormatter categoriesFor: #acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
 !RBFormatter categoriesFor: #firstLineLength!accessing!public! !
 !RBFormatter categoriesFor: #for:do:separatedBy:!enumerating!private! !
-!RBFormatter categoriesFor: #formatArray:!private! !
+!RBFormatter categoriesFor: #formatArray:!formatting!private! !
 !RBFormatter categoriesFor: #formatMessage:cascade:!formatting!private! !
 !RBFormatter categoriesFor: #formatMessageSelector:withArguments:multiline:!formatting!private! !
 !RBFormatter categoriesFor: #formatMethodBodyFor:!private!visitor/double dispatching! !
@@ -393,10 +383,8 @@ visitSequenceNode: aSequenceNode
 !RBFormatter categoriesFor: #indentWhile:!helpers!private! !
 !RBFormatter categoriesFor: #isMultiLine!accessing!public! !
 !RBFormatter categoriesFor: #lastLineLength!accessing!public! !
-!RBFormatter categoriesFor: #lineLength!accessing!private! !
 !RBFormatter categoriesFor: #lineStart:!accessing!private! !
 !RBFormatter categoriesFor: #maximumArgumentsPerLine!constants!public! !
-!RBFormatter categoriesFor: #maxLineSize!constants!private! !
 !RBFormatter categoriesFor: #needsParenthesisFor:!helpers!private! !
 !RBFormatter categoriesFor: #newLine!helpers!private! !
 !RBFormatter categoriesFor: #newLinesFor:startingAt:!formatting!private! !

@@ -21,6 +21,9 @@ bracketWith: bracketString around: aBlock
 	codeStream nextPut: bracketString first.
 	^aBlock ensure: [codeStream nextPut: bracketString last]!
 
+currentLineLength
+	^codeStream position - lineStart!
+
 format: aNode
 	self visitNode: aNode.
 	^codeStream contents!
@@ -63,6 +66,12 @@ initialize
 	super initialize.
 	indent := lineStart := 0.
 	codeStream := WriteStream on: (String new: 256)!
+
+isLineTooLong: aString
+	^self currentLineLength + aString size >= self maxLineLength!
+
+maxLineLength
+	^self class maxLineLength!
 
 newLine
 	^self subclassResponsibility!
@@ -111,6 +120,7 @@ visitPrimitiveNode: anStPrimitiveNode
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
 !RBSourceFormatter categoriesFor: #bracketWith:around:!helpers!private! !
+!RBSourceFormatter categoriesFor: #currentLineLength!accessing!private! !
 !RBSourceFormatter categoriesFor: #format:!operations!public! !
 !RBSourceFormatter categoriesFor: #formatArray:!private! !
 !RBSourceFormatter categoriesFor: #formatExternalCallName:!formatting!private! !
@@ -121,6 +131,8 @@ visitVariableNode: aVariableNode
 !RBSourceFormatter categoriesFor: #indent:!formatting!private! !
 !RBSourceFormatter categoriesFor: #indent:around:!formatting!private! !
 !RBSourceFormatter categoriesFor: #initialize!initializing!private! !
+!RBSourceFormatter categoriesFor: #isLineTooLong:!helpers!private! !
+!RBSourceFormatter categoriesFor: #maxLineLength!constants!private! !
 !RBSourceFormatter categoriesFor: #newLine!formatting!private! !
 !RBSourceFormatter categoriesFor: #space!formatting!private! !
 !RBSourceFormatter categoriesFor: #visitArrayNode:!public!visiting! !
