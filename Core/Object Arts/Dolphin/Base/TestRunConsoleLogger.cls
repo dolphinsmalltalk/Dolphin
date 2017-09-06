@@ -23,7 +23,7 @@ finishedRun: aTestResult knownSlowTests: aCollection
 	stream
 		nextPutAll: (passed ifTrue: ['PASSED'] ifFalse: ['FAILED']);
 		cr;
-		print: aTestResult;
+		display: aTestResult;
 		cr.
 	passed
 		ifTrue: 
