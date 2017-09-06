@@ -414,7 +414,7 @@ scanLiteralCharacter
 	stop := stream position.
 	self atEnd
 		ifTrue: 
-			[value := $0.
+			[value := $\0.
 			self lexicalError: LErrExpectChar]
 		ifFalse: 
 			[value := currentCharacter.
@@ -433,7 +433,7 @@ scanLiteralCharacter
 													["eof or non-hex digit"
 													stop := stream position.
 													self lexicalError: LErrExpectCodePoint.
-													$0]
+													$\0]
 												ifNotNil: 
 													[:codePoint |
 													stop := self previousStepPosition.
@@ -442,7 +442,7 @@ scanLiteralCharacter
 														ifTrue: 
 															["Code point out of range"
 															self lexicalError: LErrBadCodePoint range: (tokenStart to: stop).
-															$0]
+															$\0]
 														ifFalse: [Character value: codePoint]]]]
 						ifNotNil: 
 							[:char |
