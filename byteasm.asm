@@ -3738,6 +3738,9 @@ BEGINBYTECODE shortSpecialSendAt
 	jnc		sendToClass								; Index not an integer
 	jle		sendToClass
 
+	test	[eax].m_flags, MASK m_pointer		; Test pointer bit of object table entry
+	jz		byteObjectAt		
+
 	cmp		ecx, [Pointers.ClassArray]
 	jne		sendToClass
 
@@ -3759,6 +3762,34 @@ BEGINBYTECODE shortSpecialSendAt
 
 	mov		eax, [eax+edx-OOPSIZE]				; Load Oop of element at required index
 	mov		[_SP], eax							; And overwrite receiver in stack with it
+
+	DispatchNext
+
+byteObjectAt:
+	ASSUME	eax:PTR OTE							; ECX is Oop of receiver, but not needed
+	ASSUME	edx:DWORD							; EDX is the index
+	ASSUME	ecx:PTR OTE							; EAX is the Oop of the receiver's class
+
+	cmp		ecx, [Pointers.ClassByteArray]
+	jne		sendToClass
+
+	mov		ecx, [eax].m_location				; Load object address into eax
+	ASSUME	ecx:PTR ByteArray					; EAX points at receiver
+
+	mov		eax, [eax].m_size					
+	ASSUME	eax:DWORD
+	and		eax, 7fffffffh						; Mask out the immutability bit
+	
+	cmp		edx, eax							; Index out of bounds (>= size) ?
+	ja		boundsError				; 
+	
+	movzx	eax, BYTE PTR[ecx+edx-1]			; Load required byte, zero extending
+
+	sub		_SP, OOPSIZE
+	MPrefetch
+
+	lea		eax, [eax+eax+1]					; Convert to SmallInteger
+	mov		[_SP], eax							; Overwrite receiver with result. 
 
 	DispatchNext
 
@@ -3795,6 +3826,9 @@ BEGINBYTECODE shortSpecialSendAtPut
 	jnc		sendToClass			 					; Non-SmallInteger?
 	jle		sendToClass								; Index is <= 0?
 
+	test	[eax].m_flags, MASK m_pointer		; Test pointer bit of object table entry
+	jz		byteObjectAtPut
+
 	cmp		ecx, [Pointers.ClassArray]
 	jne		sendToClass
 
@@ -3811,7 +3845,7 @@ BEGINBYTECODE shortSpecialSendAtPut
 	mov		edx, [_SP]								; Load value to write into EDX
 	ASSUME	edx:PTR OTE
 	
-	jg		boundsError								; No, out of bounds (not unsigned comparison is correct here in case of large EDX that would go negative when shifted)
+	jg		sendToToS								; No, out of bounds (not unsigned comparison is correct here in case of large EDX that would go negative when shifted)
 
 	; We must inc ref. count, as we are storing into a heap allocated object here
 	CountUpOopIn <d>
@@ -3832,12 +3866,49 @@ BEGINBYTECODE shortSpecialSendAtPut
 	
 	DispatchNext
 
+byteObjectAtPut:
+	ASSUME	eax:PTR OTE						; EAX is byte object Oop
+	ASSUME	ecx:PTR OTE						; ECX is byte object's class Oop
+	ASSUME	edx:DWORD						; EDX is index
+
+	cmp		ecx, [Pointers.ClassByteArray]
+	jne		sendToClass
+
+	cmp		edx, [eax].m_size				; Compare index+HEADERSIZE with object size (latter -ve if immutable)
+	jg		sendToClass						; Index out of bounds (>= size)
+
+	mov		ecx, [eax].m_location			; Load object address into eax
+	ASSUME	ecx:PTR ByteArray				; EAX is pointer to byte object
+	mov		eax, [_SP]						; Load value to store/return
+	ASSUME	eax:Oop
+
+	add		ecx, edx
+	ASSUME	ecx:PTR BYTE
+
+	mov		edx, eax						; Preserve value to return later in edx
+	ASSUME	edx:Oop
+
+	sar		eax, 1							; Convert to real integer value
+	jnc		sendToToS						; Not a SmallInteger
+
+	cmp		eax, 0FFh						; Too large?
+	ja		sendToToS						; Used unsigned comparison for 0<=ecx<=255
+
+	mov		[ecx-1], al						; Store byte into receiver
+	ASSUME	ecx:NOTHING
+	
+	MPrefetch
+	mov		[_SP-OOPSIZE*2], edx			; Overwrite receiver with value for return (still in EDX)
+	sub		_SP, OOPSIZE*2
+
+	DispatchNext
+
 sendToSmallInteger:
 	ASSUME	eax:SDWORD								; EAX is a SmallInteger
 	mov		ecx, [Pointers.ClassSmallInteger]
 	jmp		sendToClass
 
-boundsError:
+sendToToS:
 	mov		eax, [_SP-OOPSIZE*2]
 	ASSUME	eax:PTR OTE
 	mov		ecx, [eax].m_oteClass
