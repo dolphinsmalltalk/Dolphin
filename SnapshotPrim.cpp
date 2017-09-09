@@ -72,9 +72,6 @@ Oop* __fastcall Interpreter::primitiveSnapshot(CompiledMethod&, unsigned argCoun
 	// load and the pool members, though not on the free list at present, are marked as free entries
 	// in the object table
 
-	// ZCT is reconciled, so objects may be deleted
-	flushAtCaches();
-
 	// Store the active frame of the active process before saving so available on image reload
 	// We're not actually suspending the process now, but it appears like that to the snapshotted
 	// image on restarting

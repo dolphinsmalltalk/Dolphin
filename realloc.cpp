@@ -269,8 +269,6 @@ VariantObject* ObjectMemory::resize(PointersOTE* ote, MWORD newPointers, bool bR
 //		pNewBody = resize(reinterpret_cast<BytesOTE*>(ote), newSize);
 //	}
 //
-//	// The AtCaches could have been invalidated by the change of size of the object
-//	Interpreter::purgeObjectFromCaches(ote);
 //	return pNewBody;
 //}
 

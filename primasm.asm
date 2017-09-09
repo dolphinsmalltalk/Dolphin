@@ -47,8 +47,8 @@ INCLUDE IstAsm.Inc
 ; state
 CallContextPrim MACRO mangledName
 	call	mangledName						;; Transfer control to primitive 
-	LoadIPRegister
-	LoadBPRegister							;; _SP is always reloaded after executing a primitive
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		_BP, [BASEPOINTER]				;; _SP is always reloaded from EAX after executing a primitive
 	ret
 ENDM
 
@@ -78,9 +78,6 @@ longjmp				PROTO C :DWORD, :DWORD
 extern primitiveReturn:near32
 extern activateBlock:near32
 extern shortReturn:near32
-
-extern _AtCache:AtCacheEntry
-extern _AtPutCache:AtCacheEntry
 
 extern primitiveReturnSelf:near32
 extern primitiveReturnTrue:near32
@@ -496,8 +493,8 @@ DWORD		primitiveStringCollate							; case 56
 DWORD		primitiveIsKindOf								; case 57	Not used in Smalltalk-80
 DWORD		primitiveAllSubinstances						; case 58	Not used in Smalltalk-80
 DWORD		primitiveNextIndexOfFromTo						; case 59	Not used in Smalltalk-80
-DWORD		primitiveAtCached								; case 60	LargeInteger>>#digitAt: and Object>>#at:
-DWORD		primitiveAtPutCached							; case 61	
+DWORD		primitiveBasicAt								; case 60	Note that the #at: primitive is now the same as #basicAt:
+DWORD		primitiveBasicAtPut								; case 61	
 DWORD		primitiveSize									; case 62	LargeInteger>>#digitLength
 DWORD		primitiveStringAt								; case 63	
 DWORD		primitiveStringAtPut							; case 64
@@ -992,460 +989,6 @@ isBytes:
 	ASSUME	ecx:NOTHING
 ENDPRIMITIVE primitiveSize
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;  BOOL __fastcall Interpreter::primitiveAtCached()
-;;
-;; Primitive for getting elements of indexed objects using the AtCache
-;; Not that this is organized so as to be optimal when the array is not in
-;; the cache, which is expected to be the normal case (otherwise the at: bytecode
-;; should have been able to do the job).
-;;
-BEGINPRIMITIVE primitiveAtCached
-	mov		eax, DWORD PTR [_SP-OOPSIZE]	; Load receiver OTE from stack into EAX
-	ASSUME	eax:PTR OTE
-
-	mov		edx, DWORD PTR [_SP]			; Load argument into EDX
-
-	mov		ecx, eax						; Get receiver Oop into ECX (where it remains)
-	ASSUME	ecx:PTR OTE
-	and		eax, AtCacheMask				; Mask off index to AtCache size (must be power of 2)
-	ASSUME	eax:DWORD						; EAX is now an offset into the AtCache
-											; This simple because sizeof(OTE) != sizeof(AtCacheEntry)
-
-	sar		edx, 1
-	jnc		localPrimitiveFailure0			; Index not an integer
-
-	sub		edx, 1							; Convert 1 based index to zero based offset
-	js		localPrimitiveFailure0			; Index out of bounds (<= 0)
-
-	; Is the array already in the AtCache?
-	; Note that we don't need to scale eax at all because it is an Oop and OTEs are 16-bytes,
-	; the same size as an AtCacheEntry
-	cmp	_AtCache[eax].oteArray, ecx
-	
-	je	accessCachedObject					; If not in cache, must set up before can access entry
-
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; Object not in cache, so put it there
-
-	ASSUME	eax:DWORD		; EAX is the offset into the AtCache
-	ASSUME	ecx:PTR OTE		; ECX is the receiver
-	ASSUME	edx:DWORD		; EDX is the requested zero-based offset (which we musn't overwrite)
-
-	push	edi									; preserve edi
-	push	ebx									; and ebx
-
-	mov		ebx, [ecx].m_size
-	ASSUME	ebx:DWORD							; EBX is now byte size of object
-	
-	mov		edi, [ecx].m_location				; Get pointer to object into edi
-	ASSUME edi:PTR Object
-	
-	and		ebx, 7fffffffh						; Mask out the immutability bit
-
-	test	[ecx].m_flags, MASK m_pointer		; Test pointer bit of object table entry
-	jz		updateAtCacheForByteArray
-
-updateAtCacheForPointerObject:
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	ASSUME	eax:DWORD		; EAX is the offset into the AtCache
-	ASSUME	ecx:PTR OTE		; ECX is the Oop of the receiver
-	ASSUME	edx:DWORD		; EDX is the requested zero-based offset (which we musn't overwrite)
-	ASSUME	ebx:DWORD		; EBX is the byte size of the object
-	ASSUME	edi:PTR Object	; EDI points to the body of the receiver
-
-	mov		ecx, [ecx].m_oteClass				; Get class of object into ecx (need to know number of named inst vars)
-	ASSUME	ecx:PTR OTE							;
-
-	shr		ebx, 2								; Adjust byte size to word size
-
-	mov		ecx, [ecx].m_location
-	ASSUME	ecx:PTR Behavior
-
-	lea		eax, _AtCache[eax]
-	ASSUME	eax:PTR AtCacheEntry				; EAX now points at the AtCacheEntry to populate
-
-	mov		ecx, [ecx].m_instanceSpec			; Load Instancespecification into ecx
-	ASSUME	ecx:DWORD
-
-	and		ecx, MASK m_fixedFields				; Mask off flags
-	shr		ecx, 1								; Convert from SmallInteger
-
-	sub		ebx, ecx							; EBX = max zero-based word subscript
-
-	; Don't want to update the cache in any way if its going to fail, so first check in bounds
-	cmp		edx, ebx							; Below upper bound?
-	jge		localPrimitiveFailure1WithPop		; N.B. Comparing zero-based offset against max one-based index
-
-	; Get base address of indexable part of object into edi
-	lea		edi, DWORD PTR [edi+ecx*4]
-	mov		ecx, DWORD PTR [_SP-OOPSIZE]		; Reload receiver OTE from stack into ECX
-
-	mov		[eax].maxIndex, ebx					; Save down the maximum index
-	xor		ebx, ebx
-	mov		[eax].elemType, ebx					; AtCachePointers = 0
-	mov		[eax].oteArray, ecx					; Store OTE into AtCache entry's first slot
-
-	pop		ebx									; Restore ebx
-
-	; Store address of elements into AtCache entry
-	mov		[eax].pElements, edi
-
-	mov		eax, [edi+edx*OOPSIZE]				; Get the Oop to push
-	ASSUME	eax:DWORD
-
-	pop		edi
-
-	; Overwrite the receiver
-	mov		[_SP-OOPSIZE], eax
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-
-	ret
-
-LocalPrimitiveFailure 0
-
-updateAtCacheForByteArray:
-	ASSUME	eax:DWORD		; EAX is the offset into the AtCache
-	ASSUME	ecx:PTR OTE		; ECX is the Oop of the receiver
-	ASSUME	edx:DWORD		; EDX is the requested zero-based offset (which we musn't overwrite)
-	ASSUME	ebx:DWORD		; EBX is the byte size of the object
-	ASSUME	edi:PTR Object	; EDI points to the body of the receiver
-
-	; Don't want to update the cache in any way if its going to fail, so first check in bounds
-	cmp		edx, ebx							; Below upper bound?
-	jge		localPrimitiveFailure1WithPop		; N.B. Comparing zero-based offset against max one-based index		
-
-	; Note that we don't need to scale eax at all because it is an Oop and OTEs are 16-bytes,
-	; the same size as an AtCacheEntry
-	mov		_AtCache[eax].maxIndex, ebx
-
-	mov		ebx, AtCacheBytes
-	
-	mov		_AtCache[eax].oteArray, ecx			; Store OTE into AtCache entry's first slot
-	mov		_AtCache[eax].elemType, ebx
-	; Store address of elements into AtCache entry
-	mov		_AtCache[eax].pElements, edi
-
-	movzx	ecx, BYTE PTR[edi+edx]				; Load required byte, zero extending
-	
-	pop		ebx									; Restore ebx
-	pop		edi									; Restore edi
-
-	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-
-	; Overwrite the receiver in the stack
-	mov		[_SP-OOPSIZE], ecx
-
-	ret
-
-accessCachedObject:
-
-	; index greater than upper bound?
-	cmp		edx, _AtCache[eax].maxIndex			; Below upper bound?
-	jge		localPrimitiveFailure1				; N.B. Comparing zero-based offset against max one-based index		
-
-	; Is it pointers?
-	cmp		_AtCache[eax].elemType, AtCacheBytes
-	mov		eax, _AtCache[eax].pElements
-	ASSUME	eax:NOTHING							; Got pointer to elements (as yet unknown type) in EAX
-	jge		byteObjectAtCached					; Contains bytes? Yes, skip to byte access code
-
-	ASSUME	eax:PTR Oop
-
-	mov		eax, [eax+edx*OOPSIZE]
-	ASSUME	eax:Oop
-
-	; Overwrite the receiver
-	mov		[_SP-OOPSIZE], eax
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-
-	ret
-
-localPrimitiveFailure1WithPop:
-	pop		ebx									; Restore ebx
-	pop		edi									; Restore edi
-
-LocalPrimitiveFailure 1
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-byteObjectAtCached:
-	ASSUME eax:PTR BYTE
-	ASSUME ecx:PTR OTE							; ECX is the receiver
-
-IFDEF _DEBUG
-	jg		stringAt
-ENDIF
-
-	movzx	ecx, BYTE PTR[eax+edx]				; Load required byte, zero extending
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], ecx					; Overwrite the receiver
-
-	ret
-
-IFDEF _DEBUG
-stringAt:
-	; Should not get here
-	int 3
-	xor		eax, eax
-	ret
-ENDIF
-
-ENDPRIMITIVE primitiveAtCached
-
-	
-BEGINPRIMITIVE primitiveAtPutCached
-	mov		eax, DWORD PTR [_SP-OOPSIZE*2]	; Load receiver OTE from stack into EAX
-	ASSUME	eax:PTR OTE
-
-	mov		edx, DWORD PTR [_SP-OOPSIZE]	; Load index argument into EDX
-
-	mov		ecx, eax						; Get receiver Oop into ECX (where it remains)
-	and		eax, AtCacheMask				; Mask off index to AtCache size (must be power of 2)
-
-	sar		edx, 1
-	jnc		localPrimitiveFailure0			; Index not an integer
-	
-	sub		edx, 1							; Convert 1 based index to zero based offset
-	js		localPrimitiveFailure0			; Index out of bounds (<= 0)
-
-	; Is the array already in the AtPutCache?
-	cmp	_AtPutCache[eax].oteArray, ecx
-	je	accessCachedObject					; If not in cache, must set up before can access entry
-
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; Object not in cache, so put it there
-	; EAX is the offset into the AtCache
-	; ECX is the receiver
-	; EDX is the requested zero-based offset (which we musn't overwrite)
-
-	; Get pointer flag from OTE
-	ASSUME ecx:PTR OTE
-
-	push	edi									; preserve edi
-	push	ebx									; and ebx
-
-	test	[ecx].m_flags, MASK m_pointer		; Test pointer bit of object table entry
-
-	mov		ebx, [ecx].m_size					; Load size into ebx
-												; N.B. The immutability bit is NOT masked out
-
-	mov		edi, [ecx].m_location				; Get pointer to object into edi
-	ASSUME edi:PTR Object
-
-	jz		updateAtPutCacheForByteArray
-
-updateAtPutCacheForPointerObject:
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; EAX is the offset into the AtCache
-	; ECX is the Oop of the receiver
-		ASSUME	ecx:PTR OTE
-	; EDX is the requested zero-based offset (which we musn't overwrite)
-	; EBX is the byte size of the object
-	; EDI points to the body of the receiver
-		ASSUME edi:PTR Object
-
-	mov		ecx, [ecx].m_oteClass				; Get class of object into ecx (need to know number of named inst vars)
-
-	sar		ebx, 2								; Adjust byte size to word size
-
-	mov		ecx, [ecx].m_location
-	ASSUME	ecx:PTR Behavior
-
-	lea		eax, _AtPutCache[eax]
-	ASSUME	eax:PTR AtCacheEntry
-
-	mov		ecx, [ecx].m_instanceSpec			; Load Instancespecification into ecx
-	ASSUME	ecx:DWORD
-
-	and		ecx, MASK m_fixedFields				; Mask off flags
-	shr		ecx, 1								; Convert from SmallInteger
-
-	sub		ebx, ecx							; EBX = max zero-based word subscript
-
-	; Don't want to update the cache in any way if its going to fail, so first check in bounds
-	cmp		edx, ebx							; Below upper bound?
-	jge		localPrimitiveFailure1WithPop		; N.B. Comparing zero-based offset against max one-based index
-
-	; Get base address of indexable part of object into edi
-	lea		edi, DWORD PTR [edi+ecx*4]
-	mov		ecx, DWORD PTR [_SP-OOPSIZE*2]		; Reload receiver OTE from stack into ECX
-
-	mov		[eax].maxIndex, ebx					; Save down the maximum index
-	xor		ebx, ebx
-	mov		[eax].elemType, ebx					; AtCachePointers = 0
-	mov		[eax].oteArray, ecx					; Store OTE into AtCache entry's first slot
-
-	mov		ebx, ecx							; Preserve receiver for later
-
-	; Store address of elements into AtCache entry
-	mov		[eax].pElements, edi
-
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; Now do the xchg of the new Oop argument and the existing element at the address
-	;	EDI = pointer to elements	(needs to be popped yet)
-	;	EAX = pointer into AtPutCache
-	;	EBX = OTE of receiver
-	;	ECX = OTE of receiver
-	;	EDX is the requested zero-based offset (still)
-
-	; Load old value into eax (in order to adjust ref. count)
-	mov		ecx, [edi+edx*OOPSIZE]				; Load overwritten value into ECX
-	mov		eax, [_SP]							; Reload new value from stack top
-	mov		[edi+edx*OOPSIZE], eax				; Overwrite
-	CountUpOopIn <a>
-	mov		edi, eax							; Preserve argument for later 
-
-	CountDownOopIn <c>							; Count down overwritten value, potentially moving into Zct
-	
-	; count down destroys eax, ecx, and edx, but not edi(arg) and ebx(receiver)
-	
-	mov		eax, edi							; Reload new value into eax
-
-	pop		ebx									; Restore ebx to value on entry
-	pop		edi									; Ditto edi
-
-	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-
-	ret	
-
-LocalPrimitiveFailure 0
-
-updateAtPutCacheForByteArray:
-	ASSUME	edx:DWORD							; The desired index
-	ASSUME	ebx:DWORD							; The size
-	ASSUME	edi:PTR ByteArray					; Pointer to the object being accessed
-	ASSUME	ecx:PTR OTE							; The receiver
-
-	; Don't want to update the cache in any way if its going to fail, so first check in bounds
-	cmp		edx, ebx							; Below upper bound?
-	jge		localPrimitiveFailure1WithPop		; N.B. Comparing zero-based offset against max one-based index		
-
-	mov		_AtPutCache[eax].maxIndex, ebx
-	ASSUME	ebx:NOTHING							; ebx no longer needed
-
-	mov		ebx, [_SP]							; Load new value into EBX
-
-	mov		_AtPutCache[eax].oteArray, ecx		; Store OTE into AtCache entry's first slot
-
-	mov		_AtPutCache[eax].elemType, AtCacheBytes
-	; Store address of elements into AtCache entry
-	mov		_AtPutCache[eax].pElements, edi
-
-	mov		eax, ebx							; Load SmallInteger argument in ebx
-
-	; Argument tests can unfortunately fail after updating cache (but should be very rare)
-	sar		eax, 1								; Convert to real integer value
-	jnc		localPrimitiveFailure2WithPop		; Not a SmallInteger
-
-	cmp		eax, 0FFh
-	ja		localPrimitiveFailure2WithPop		; Used unsigned comparison for 0<=ecx<=255
-
-	; Write down the actual byte value
-	mov		BYTE PTR[edi+edx], al
-	
-	mov		eax, ebx
-
-	pop		ebx
-	pop		edi
-
-	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-
-	ret	
-
-localPrimitiveFailure1WithPop:
-	pop		ebx
-	pop		edi
-
-LocalPrimitiveFailure 1
-
-localPrimitiveFailure2WithPop:
-	pop		ebx
-	pop		edi
-
-LocalPrimitiveFailure 2
-
-accessCachedObject:
-	; Note that we won't normally get here unless the primitive methods is #perform:'d, since
-	; the at bytecode handler will handle all cases where the target is already in the cache
-	; Because of this it doesn't matter quite so much that these be highly optimized
-
-	; index greater than upper bound?
-	cmp		edx, _AtPutCache[eax].maxIndex	; Below upper bound?
-	jge		localPrimitiveFailure1				; N.B. Comparing zero-based offset against max one-based index		
-
-	; Is it pointers?
-	cmp		_AtPutCache[eax].elemType, AtCacheBytes
-	mov		eax, _AtPutCache[eax].pElements
-	ASSUME	eax:NOTHING							; Got pointer to elements (as yet unknown type) in EAX
-	jge		cachedByteObjectAtPut				; Contains bytes? Yes, skip to byte access code
-
-	ASSUME	eax:PTR Oop
-	
-	lea		edx, [eax+edx*OOPSIZE]				; Get pointer to element into edx
-
-	; Now do the xchg of the new Oop argument and the existing element at the address
-
-	mov		ecx, [_SP]							; Reload value to write
-	ASSUME	ecx:PTR OTE
-
-	mov		eax, [edx]							; Get old element value
-	mov		[edx], ecx							; Store new element value 
-	
-	CountDownOopIn <a>							; Count down overwritten value (destroys registers)
-
-	; count down destroys eax, ecx, and edx
-	mov		eax, [_SP]							; Reload new value into eax
-	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver into ecx
-
-	CountUpOopIn <a>							; Because arg stored into a heap object, count goes up by one
-	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-
-	ret	
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-cachedByteObjectAtPut:
-	ASSUME eax:PTR BYTE							; 
-	ASSUME ecx:PTR OTE							; ECX is the receiver
-	ASSUME edx:DWORD							; EDX is offset
-
-	IFDEF _DEBUG
-		jg		cachedStringAtPut
-	ENDIF
-
-	add		eax, edx							; Make eax a pointer to the byte to be overwritten
-	mov		edx, [_SP]							; Load SmallInteger argument into edx
-
-	sar		edx, 1								; Convert to real integer value
-	jnc		localPrimitiveFailure2				; Not a SmallInteger
-
-	cmp		edx, 0FFh
-	ja		localPrimitiveFailure2				; Used unsigned comparison for 0<=ecx<=255
-
-	; Write down the actual byte value
-	mov		BYTE PTR[eax], dl
-	
-	lea		eax, [edx+edx+1]					; Regenerate SmallInteger argument
-
-	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-
-	ret	
-
-IFDEF _DEBUG
-cachedStringAtPut:
-	; Should not get here
-	int 3
-	xor		eax, eax
-	ret
-ENDIF
-
-ENDPRIMITIVE primitiveAtPutCached
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; String/variable byte objects primitives
@@ -1457,56 +1000,28 @@ ENDPRIMITIVE primitiveAtPutCached
 ; classes.
 ;
 BEGINPRIMITIVE primitiveStringAt
-	mov		eax, DWORD PTR [_SP-OOPSIZE]	; Load receiver OTE from stack into EAX
+	mov		eax, DWORD PTR [_SP-OOPSIZE]		; Load receiver OTE from stack into EAX
 	ASSUME	eax:PTR OTE
 
-	mov		edx, DWORD PTR [_SP]			; Load argument into EDX
+	mov		edx, DWORD PTR [_SP]				; Load argument into EDX
 
-	mov		ecx, eax						; Get receiver Oop into ECX (where it remains)
-	and		eax, AtCacheMask				; Mask off index to AtCache size (must be power of 2)
-
+	mov		ecx, eax							; Get receiver Oop into ECX (where it remains)
 	sar		edx, 1
-	jnc		localPrimitiveFailure0			; Index not an integer
+	jnc		localPrimitiveFailure0				; Index not an integer
+	jle		localPrimitiveFailure1				; Index <= 0?
 
-	sub		edx, 1							; Convert 1 based index to zero based offset
-	js		localPrimitiveFailure1			; Index out of bounds (<= 0)
+	ASSUME  ecx:PTR OTE
+	mov		eax, [ecx].m_location
+	mov		ecx, [ecx].m_size
+	and		ecx, 7fffffffh						; Mask out the immutability bit
+	cmp		edx, ecx
 
-	; Is the string already in the AtCache?
-	cmp		_AtCache[eax].oteArray, ecx
-	je		accessCachedObject				; If not in cache, must set up before can access entry
-
-	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; Object not in cache, so update the cache with its details. Note that we do
-	; this (optimistically) before checking the index, etc
-	;	EAX is the offset into the AtCache
-	;	ECX is the receiver
-	;	EDX is the requested zero-based offset (which we musn't overwrite)
-
-	mov		_AtCache[eax].oteArray, ecx				; Store OTE into AtCache entry's first slot
-
-	push	ebx										; preserve ebx
-
-	mov		ebx, [ecx].m_size						; Load size of string into ECX
-	and		ebx, 7fffffffh							; Mask out the immutability bit
-	mov		_AtCache[eax].maxIndex, ebx				; And store that into AtCache as maxIndex
-	mov		ebx, [ecx].m_location					; Get pointer to string into edi
-	ASSUME ebx:PTR String
-	mov		_AtCache[eax].elemType, AtCacheString	; Mark the entry as a string entry
-	mov		_AtCache[eax].pElements, ebx			; Store address of chars into AtCache entry
-	
-	pop		ebx										; Restore ebx
-
-accessCachedObject:
-
-	; index greater than upper bound?
-	cmp		edx, _AtCache[eax].maxIndex			; Below upper bound?
-	mov		eax, _AtCache[eax].pElements		; Preload EAX to point at chars in anticipation of being in bounds
 	ASSUME	eax:PTR BYTE						; 
-	jge		localPrimitiveFailure1				; N.B. Comparing zero-based offset against max one-based index		
+	jg		localPrimitiveFailure1
 
 	ASSUME ecx:NOTHING							; ECX is the receiver, but no longer needed
 
-	movzx	edx, BYTE PTR[eax+edx]				; Load the character value from the string
+	movzx	edx, BYTE PTR[eax+edx-1]				; Load the character value from the string
 	mov		eax, [OBJECTTABLE]
 
 	shl		edx, 4								; Multiply edx by OTENTRYSIZE (16) (unfortunately not a valid scale value for LEA)
@@ -1535,16 +1050,14 @@ BEGINPRIMITIVE primitiveStringAtPut
 	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0				; No, primitive failure
-
-	sub		edx, 1								; Convert 1 based index to zero based offset
-	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
+	jle		localPrimitiveFailure1							; Index out of bounds (<= 0)
 
 	mov		eax, [ecx].m_location				; Load object address into eax
 
 	cmp		edx, [ecx].m_size					; Compare offset with object size (if immutable size < 0, so will fail)
-	jge		localPrimitiveFailure1				; Index out of bounds (>= size)
+	jg		localPrimitiveFailure1				; Index out of bounds (>= size)
 
-	add		eax, edx							; eax now contains pointer to destination
+	add		eax, edx							; eax now contains pointer to destination (offset by 1 due to 1-based Smalltalk indexing)
 
 	mov		ecx, [_SP]							; Load value argument receiver into ecx
 	test	cl, 1
@@ -1566,7 +1079,7 @@ BEGINPRIMITIVE primitiveStringAtPut
 	ASSUME	ecx:DWORD							; ecx now contains SmallInteger code pointer of character
 
 	shr		ecx, 1								; Convert codePoint from SmallInteger
-	mov		BYTE PTR [eax], cl					; to give 0 based code
+	mov		BYTE PTR [eax-1], cl				; to give 0 based code
 
 	mov		eax, [_SP]							; Relod char (not ref. counted)
 	mov		[_SP-OOPSIZE*2], eax				; ...and overwrite with value for return
@@ -1584,7 +1097,7 @@ ENDPRIMITIVE primitiveStringAtPut
 ;;
 ;;  BOOL __fastcall Interpreter::primitiveBasicAt()
 ;;
-;; Primitive for getting elements of indexed objects without using AtCache
+;; Primitive for getting elements of indexed objects
 ;;
 ;; The receiver MUST not be a SmallInteger, or a crash will result when attempting
 ;; the line marked with a '*'
@@ -1596,14 +1109,11 @@ BEGINPRIMITIVE primitiveBasicAt
 
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0				; Arg not a SmallInteger, primitive failure 0
-
-	sub		edx, 1								; Convert 1 based index to zero based offset
+	jle		localPrimitiveFailure1
 
 	mov		eax, [ecx].m_oteClass				; Get class Oop from OTE into EAX for later use
 	ASSUME	eax:PTR OTE
 
-	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
-	     	
 	test	[ecx].m_flags, MASK m_pointer		; Test pointer bit of object table entry
 	jz		byteObjectAt						; Contains bytes? Yes, skip to byte access code
 
@@ -1635,25 +1145,17 @@ pointerAt:
 	mov		ecx, [_SP-OOPSIZE]					; Reload receiver into ecx
 	ASSUME 	ecx:PTR OTE
 
-	jae		localPrimitiveFailure1					; No, out of bounds
+	ja		localPrimitiveFailure1				; No, out of bounds
 
 	mov		eax, [ecx].m_location				; Reload address of receiver into eax
 	
-	mov		eax, [eax+edx*OOPSIZE]				; Load Oop of element at required index
+	mov		eax, [eax+edx*OOPSIZE-OOPSIZE]		; Load Oop of element at required index
 	mov		[_SP-OOPSIZE], eax					; And overwrite receiver in stack with it
 	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 
 	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-
-ENDPRIMITIVE primitiveBasicAt
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-ALIGN 4		; Sufficient to align on 4 byte boundary as first instruction is only 2 bytes
-byteObjectAt PROC
+	
+byteObjectAt:
 	ASSUME	ecx:PTR OTE							; ECX is Oop of receiver, but not needed
 	ASSUME	edx:DWORD							; EDX is the index
 	ASSUME	eax:PTR OTE							; EAX is the Oop of the receiver's class
@@ -1665,20 +1167,19 @@ byteObjectAt PROC
 	and		ecx, 7fffffffh						; Mask out the immutability bit
 	
 	cmp		edx, ecx							; Index out of bounds (>= size) ?
-	jae		localPrimitiveFailure1				; 
+	ja		localPrimitiveFailure1				; 
 	
-	movzx	ecx, BYTE PTR[eax+edx]				; Load required byte, zero extending
+	movzx	ecx, BYTE PTR[eax+edx-1]			; Load required byte, zero extending
 
 	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with result. No need to count as SmallInteger
-
-	; eax now contains a SmallInteger, so it cannot be zero (i.e. success indication is returned)
+	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with result. 
 	ret
 
+LocalPrimitiveFailure 0
 LocalPrimitiveFailure 1
 
-byteObjectAt ENDP
+ENDPRIMITIVE primitiveBasicAt
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -1692,11 +1193,10 @@ BEGINPRIMITIVE primitiveInstVarAt
 	sar		edx, 1								; Argument is a SmallInteger?
    	ASSUME	ecx:PTR OTE							; ecx is pointer to receiver for rest of primitive
 	jnc		localPrimitiveFailure0				; Arg not a SmallInteger, primitive failure 0
+	jle		localPrimitiveFailure1				; Arg <= 0?
 
-	sub		edx, 1								; Convert 1 based index to zero based offset
 	mov		eax, [ecx].m_location				; Load object address into eax *Will fail if receiver is SmallInteger*
 	ASSUME	eax:PTR VariantObject
-	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
 				     	
 	test	[ecx].m_flags, MASK m_pointer		; Test pointer bit of object table entry
 	jz		byteObjectAt						; Contains pointers? No, skip to byte access code
@@ -1705,13 +1205,34 @@ BEGINPRIMITIVE primitiveInstVarAt
 	mov		ecx, [ecx].m_size					; Load byte size into ECX
 	and		ecx, 7fffffffh						; Mask out immutability (sign) bit
 	shr		ecx, 2								; Div 4 gives pointer count
-	cmp		edx, ecx							; offset < size?
-	jae		localPrimitiveFailure1				; No, out of bounds (>=)
+	cmp		edx, ecx							; index <= size?
+	ja		localPrimitiveFailure1				; No, out of bounds (>=)
 
-	mov		ecx, [eax].m_elements[edx*OOPSIZE]	; Load Oop from inst var
+	mov		ecx, [eax].m_elements[edx*OOPSIZE-OOPSIZE]	; Load Oop from inst var
 	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with inst var value
 
+	ret
+
+byteObjectAt:
+	ASSUME	ecx:PTR OTE							; ECX is Oop of receiver, but not needed
+	ASSUME	edx:DWORD							; EDX is the index
+	ASSUME	eax:PTR OTE							; EAX is the Oop of the receiver's class
+
+	mov		eax, [ecx].m_location				; Load object address into eax
+	ASSUME	eax:PTR ByteArray					; EAX points at receiver
+
+	mov		ecx, [ecx].m_size					
+	and		ecx, 7fffffffh						; Mask out the immutability bit
+	
+	cmp		edx, ecx							; Index out of bounds (> size) ?
+	ja		localPrimitiveFailure1				; 
+	
+	movzx	ecx, BYTE PTR[eax+edx-1]			; Load required byte, zero extending
+
+	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
+	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
+	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with result. 
 	ret
 
 LocalPrimitiveFailure 0
@@ -1729,26 +1250,22 @@ ENDPRIMITIVE primitiveInstVarAt
 ;; SmallInteger for the primitive to succeed.
 ;;
 BEGINPRIMITIVE primitiveBasicAtPut
-	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
 	mov		ecx, [_SP-OOPSIZE*2]				; Access receiver under arguments
+	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
 	ASSUME	ecx:PTR OTE
 
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0 				; No, primitive failure
-
-	sub		edx, 1								; Convert 1 based index to zero based offset
-
-	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
+	jle		localPrimitiveFailure1				; Index <= 0?
 
 	test	[ecx].m_flags, MASK m_pointer		; Pointer object?
-	mov		eax, [ecx].m_location				; Load object address into eax
 	jz		byteObjectAtPut						; No, skip to code for storing bytes
 
 	mov		eax, [ecx].m_oteClass				; Get class Oop	from OTE into eax
 	ASSUME	eax:PTR OTE
-
+	
 	mov		ecx, [ecx].m_size					; Load size into ecx (negative if immutable)
-	ASSUME	ecx:DWORD
+	ASSUME	ecx:SDWORD
 	sar		ecx, 2								; ecx = total Oop size
 
 	mov		eax, [eax].m_location				; Load address of class object into eax
@@ -1761,31 +1278,69 @@ BEGINPRIMITIVE primitiveBasicAtPut
 	shr		eax, 1								; Convert from SmallInteger
 	add		edx, eax							; Add fixed offset for inst vars to offset argument
 
-	cmp		edx, ecx							; Index <= size (still in ecx)?
-	ASSUME	edx:NOTHING							; edx no longer needed for index
-	
-	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver into ecx for later
-	ASSUME	ecx:PTR OTE
+	mov		eax, [_SP-OOPSIZE*2]				; Reload receiver under arguments
+	ASSUME	eax:PTR OTE
 
-	jge		localPrimitiveFailure1				; No, out of bounds
-	
-	mov		eax, [ecx].m_location				; Reload address of receiver into eax
+	cmp		edx, ecx							; Index <= size (still in ecx)?
+
+	mov		eax, [eax].m_location				; Reload address of receiver into eax
 	ASSUME	eax:PTR VariantObject
 	
-	lea		eax, [eax+edx*OOPSIZE]	
-	mov		edx, [_SP]							; Reload value to write
+	jg		localPrimitiveFailure1				; No, out of bounds
+		
+	lea		eax, [eax+edx*OOPSIZE-OOPSIZE]	
 
+	mov		edx, [_SP]							; Reload value to write
+	ASSUME	edx:PTR OTE
+
+	; We must inc ref. count, as we are storing into a heap allocated object here
+	CountUpOopIn <d>
+
+	; Exchange Oop of overwritten value with new value
 	mov		ecx, [eax]				 			; Load value to overwrite into ECX
 	mov		[eax], edx							; and overwrite with new value in edx
-	CountDownOopIn <c>							; Count down overwritten value
+
+	; Must count down overwritten value, as it was in a heap object slot
+	CountDownOopIn <c>		
 
 	; count down destroys eax, ecx, and edx
+
 	mov		eax, [_SP]							; Reload new value into eax again
-	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver (again)
 	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
 
-	CountUpOopIn <a>							; Must count up argument because written into a heap object
 	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
+	ret
+
+byteObjectAtPut:
+	ASSUME	ecx:PTR OTE						; ECX is byte object Oop
+	ASSUME	edx:DWORD						; EDX is index
+
+	mov		eax, [ecx].m_location			; Load object address into eax
+	ASSUME	eax:PTR ByteArray				; EAX is pointer to byte object
+
+	cmp		edx, [ecx].m_size				; Compare index+HEADERSIZE with object size (latter -ve if immutable)
+	jg		localPrimitiveFailure1			; Index out of bounds (>= size)
+
+	mov		ecx, [_SP]						; Load value to store/return
+
+	add		eax, edx
+	ASSUME	eax:PTR BYTE
+	ASSUME	edx:NOTHING						; EDX is now free
+
+	mov		edx, ecx
+	ASSUME	ecx:DWORD
+	sar		ecx, 1							; Convert to real integer value
+	jnc		localPrimitiveFailure2			; Not a SmallInteger
+
+	cmp		ecx, 0FFh						; Too large?
+	ja		localPrimitiveFailure2			; Used unsigned comparison for 0<=ecx<=255
+
+	mov		[eax-1], cl						; Store byte into receiver
+	ASSUME	eax:NOTHING
+
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	mov		[_SP-OOPSIZE*2], edx			; ...and overwrite with value for return (still in EAX)
+
 	ret
 
 LocalPrimitiveFailure 0
@@ -1793,45 +1348,6 @@ LocalPrimitiveFailure 1
 LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveBasicAtPut
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Helper
-
-ALIGN 8
-byteObjectAtPut PROC
-	ASSUME	ecx:PTR OTE						; ECX is byte object Oop
-	ASSUME	edx:DWORD						; EDX is index
-	ASSUME	eax:PTR ByteArray				; EAX is point to byte object
-
-	cmp		edx, [ecx].m_size				; Compare offset+HEADERSIZE with object size (latter -ve if immutable)
-	jge		localPrimitiveFailure1			; Index out of bounds (>= size)
-
-	add		eax, edx
-	ASSUME	eax:PTR BYTE
-	ASSUME	edx:NOTHING						; EDX is now free
-
-	mov		edx, [_SP]						; Load value to store from stack top
-	ASSUME	edx:DWORD
-
-	sar		edx, 1							; Convert to real integer value
-	jnc		localPrimitiveFailure2			; Not a SmallInteger
-
-	cmp		edx, 0FFh						; Too large?
-	ja		localPrimitiveFailure2			; Used unsigned comparison for 0<=ecx<=255
-
-	mov		[eax], dl						; Store byte into receiver
-	ASSUME	eax:NOTHING
-
-	mov		ecx, [_SP]						; Reload value to store from stack top
-	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
-	mov		[_SP-OOPSIZE*2], ecx			; ...and overwrite with value for return (still in EAX)
-
-	ret
-
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-
-byteObjectAtPut ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -1846,10 +1362,9 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 
 	sar		edx, 1								; Argument is a SmallInteger?
 	jnc		localPrimitiveFailure0				; No, primitive failure
+	jle		localPrimitiveFailure1
 
-	sub		edx, 1								; Convert 1 based index to zero based offset
 	mov		eax, [ecx].m_location				; Load object address into eax
-	js		localPrimitiveFailure1				; Index out of bounds (<= 0)
 
 	test	[ecx].m_flags, MASK m_pointer
 	jz		byteObjectAtPut						; Skip to code for storing bytes
@@ -1861,9 +1376,9 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 	sar		ecx, 2								; ecx = total Oop size
 
 	cmp		edx, ecx							; Index <= size (still in ecx)?
-	jge		localPrimitiveFailure1				; No, out of bounds
+	jg		localPrimitiveFailure1				; No, out of bounds
 	
-	lea		eax, [eax].m_elements[edx*OOPSIZE]
+	lea		eax, [eax].m_elements[edx*OOPSIZE-OOPSIZE]
 
 	mov		edx, [_SP]							; Load value to write
 	mov		ecx, [eax]							; Exchange Oop of overwritten value with new value
@@ -1882,8 +1397,40 @@ BEGINPRIMITIVE primitiveInstVarAtPut
 	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
 	ret
 
+byteObjectAtPut:
+	ASSUME	ecx:PTR OTE						; ECX is byte object Oop
+	ASSUME	edx:DWORD						; EDX is index
+	ASSUME	eax:PTR ByteArray				; EAX is point to byte object
+
+	cmp		edx, [ecx].m_size				; Compare offset+HEADERSIZE with object size (latter -ve if immutable)
+	jg		localPrimitiveFailure1			; Index out of bounds (>= size)
+
+	mov		ecx, [_SP]						; Load value to store from stack top
+	ASSUME	ecx:DWORD
+
+	add		eax, edx
+	ASSUME	eax:PTR BYTE
+
+	mov		edx, ecx						; EDX is now free, so store return value for later
+	ASSUME	edx:DWORD
+
+	sar		ecx, 1							; Convert value to real integer value
+	jnc		localPrimitiveFailure2			; Not a SmallInteger
+
+	cmp		ecx, 0FFh						; Too large?
+	ja		localPrimitiveFailure2			; Used unsigned comparison for 0<=ecx<=255
+
+	mov		[eax-1], cl						; Store byte into receiver
+	ASSUME	eax:NOTHING
+
+	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
+	mov		[_SP-OOPSIZE*2], edx			; ...and overwrite with value for return (still in EAX)
+
+	ret
+
 LocalPrimitiveFailure 0
 LocalPrimitiveFailure 1
+LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveInstVarAtPut
 
@@ -2152,10 +1699,11 @@ BEGINPRIMITIVE primitiveReturnFromCallback
 	cmp		eax, [CURRENTCALLBACK]					; Is it current callback?
 	jne		@F										; No, skip longjmp
 
-	PopStack										; Pop off the jmp_buf pointer
+	sub		_SP, OOPSIZE							; Pop off the jmp_buf pointer
 	xor		eax, 1									; Convert from a SmallInteger
 	pushd	SE_VMCALLBACKEXIT						; Return SE_VMCALLBACKEXIT code as the setjmp retval
-	StoreInterpreterRegisters						; Store down IP/SP for C++ we're about to jump back to
+	mov		[STACKPOINTER], _SP						; Store down IP/SP for C++ we're about to jump back to
+	mov		[INSTRUCTIONPOINTER], _IP
 	
 	pushd	eax										; &jmp_buf
 	call	longjmp									; jump out back to C++ - cannot return here
@@ -2165,11 +1713,12 @@ BEGINPRIMITIVE primitiveReturnFromCallback
 	jne		failRetry								; No, then not current callback so need to retry it
 
 	; Raise SE_VMCALLBACKEXIT exception
-	PopStack
+	sub		_SP, OOPSIZE
 	pushd	eax										; Build "Array" of args on stack
 	pushd	esp										; Push address of arg array
 	pushd	1										; One argument (the VM's cookie)
-	StoreInterpreterRegisters
+	mov		[STACKPOINTER], _SP
+	mov		[INSTRUCTIONPOINTER], _IP
 	pushd	0										; No flags
 	pushd	SE_VMCALLBACKEXIT						; User defined exception code
 	call 	RaiseException
@@ -2206,11 +1755,12 @@ BEGINPRIMITIVE primitiveUnwindCallback
 	jne		failRetry								; Not zero or current callback, so retry later
 
 @@:
-	PopStack										; Cookie is an Oop (actually SmallInteger _address_), but must NOT be ref. counted
+	sub		_SP, OOPSIZE										; Cookie is an Oop (actually SmallInteger _address_), but must NOT be ref. counted
 	pushd	eax										; Build "Array" of args on stack
 	pushd	esp										; Push address of arg array
 	pushd	1										; One argument (the VM's cookie)
-	StoreInterpreterRegisters						; We must save down _SP as used by exception handler, _IP needed if unwinding callbacks on termination
+	mov		[STACKPOINTER], _SP						;  We must save down _SP as used by exception handler, 
+	mov		[INSTRUCTIONPOINTER], _IP				; _IP needed if unwinding callbacks on termination
 	pushd	0										; No flags
 	pushd	20000001h								; User defined exception code for unwind
 	call 	RaiseException
@@ -2244,7 +1794,8 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 
 	call	shortReturn							; Return to interrupted frame (returning the suspendingList at the time of the interrupt)
 
-	PopOopInto <ecx>							; Pop suspendingList (returned) into ECX...
+	mov		ecx, [_SP]							; Pop suspendingList (returned) into ECX...
+	sub		_SP, OOPSIZE
 
 	;; State of Process (especially stack) should now be the same as on entry to the interrupt, assuming
 	;; that the image's handler for it didn't have any nasty side effects
@@ -2256,7 +1807,9 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	ret
 @@:
 	; The interrupted process was waiting/suspended
-	StoreInterpreterRegisters
+
+	mov		[STACKPOINTER], _SP
+	mov		[INSTRUCTIONPOINTER], _IP
 
 	;; VM Interrupt mechanism sends a suspending list argument of SmallInteger Zero
 	;; if the process is suspended, rather than waiting on a list, so we must test
@@ -2264,14 +1817,17 @@ BEGINPRIMITIVE primitiveReturnFromInterrupt
 	test	cl, 1								; Is the "suspendingList" a SmallInteger?
 	jz		@F									; No, skip so "suspend on list"
 	call	RESCHEDULE							; Just resuspend the process and schedule another
-	LoadInterpreterRegisters
-	mov		eax, _SP							; primitiveSuccess(0)
+	; Load interpreter registers for new process
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		eax, [STACKPOINTER]
+	mov		_BP, [BASEPOINTER]
 	ret
 		
 @@:
 	call	RESUSPENDACTIVEON
-	LoadInterpreterRegisters
-	mov		eax, _SP							; primitiveSuccess(0)
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		eax, [STACKPOINTER]
+	mov		_BP, [BASEPOINTER]
 	ret
 
 LocalPrimitiveFailure 0
@@ -2284,11 +1840,15 @@ ALIGNPRIMITIVE
 	push	_SP									; Mustn't destroy for C++ caller
 	push	_IP									; Ditto _IP
 	push	_BP									; and _BP
-	LoadInterpreterRegisters
+
+	; Load interpreter registers
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		_SP, [STACKPOINTER]
+	mov		_BP, [BASEPOINTER]
 	call	primitiveValue
 	mov		[STACKPOINTER], eax	
 	pop		_BP									; Restore callers registers
-	StoreIPRegister
+	mov		[INSTRUCTIONPOINTER], _IP
 	pop		_IP
 	pop		_SP
 	ret
@@ -2588,8 +2148,9 @@ BEGINPRIMITIVE primitiveChangeBehavior
 
 	ASSUME	edx:NOTHING
 
-	PopOopInto	<ecx>						; Reload Oop of new class
-	ASSUME	ecx:DWORD
+	mov		ecx, [_SP]								; Reload Oop of new class
+	sub		_SP, OOPSIZE
+	ASSUME	ecx:PTR OTE
 	
 	mov		edx, SIZEOF DWORD				; 4-byte integer (32 bits)
 	ASSUME	edx:DWORD
@@ -2632,7 +2193,9 @@ LocalPrimitiveFailure 1
 	test	ecx, SHAPEMASK						; Test to see if any significant bits differ
 	jnz		localPrimitiveFailure2				; Some significant bits differenct, fail the primitive
 
-	PopOopInto <edx>							; Reload the new class Oop
+	mov		edx, [_SP]							; Reload the new class Oop
+	sub		_SP, OOPSIZE
+
 	mov		ecx, [eax].m_oteClass				; Save current class Oop of receiver in ecx (ready for count down)
 	mov		[eax].m_oteClass, edx				; Set new class of receiver (which is left on top of stack)
 	
@@ -2677,17 +2240,6 @@ BEGINPRIMITIVE primitiveBecome
 	; We don't swap the identity hash or count, as these belong with the pointer (identity)
 
 	push	ebx
-
-	; We must flush both from At(Put) caches as any cached information will be invalidated
-	mov		eax, ecx
-	xor		ebx, ebx
-	and		eax, AtCacheMask
-	mov		_AtCache[eax].oteArray, ebx
-	mov		_AtPutCache[eax].oteArray, ebx
-	mov		eax, edx
-	and		eax, AtCacheMask
-	mov		_AtCache[eax].oteArray, ebx
-	mov		_AtPutCache[eax].oteArray, ebx
 
 	; Exchange body pointers
 	mov		ebx, [ecx].m_location
@@ -2818,10 +2370,9 @@ ENDPRIMITIVE primitiveEnableInterrupts
 BEGINPRIMITIVE primitiveYield
 	call	YIELD
 	
-	; LoadInterpreterRegisters
 	mov		eax, [STACKPOINTER]					; primitiveSuccess(0)
-	LoadIPRegister
-	LoadBPRegister
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		_BP, [BASEPOINTER]
 
 	ret
 ENDPRIMITIVE primitiveYield
@@ -3239,8 +2790,6 @@ BEGINPRIMITIVE primitiveSetImmutable
 		ASSUME	eax:PTR OTE						; ecx points at receiver OTE
 
 		or		[eax].m_size, 80000000h
-		and		eax, AtCacheMask
-		mov		_AtPutCache[eax].oteArray, 0
 	.ENDIF
 
 	lea		eax, [_SP - OOPSIZE]				; primitiveSuccess(1)

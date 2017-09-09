@@ -182,19 +182,6 @@ inline void	Interpreter::NotifyAsyncPending()
 	InterlockedExchange(m_pbAsyncPending, TRUE);
 }
 
-#define ACEAt(cache,offset) (reinterpret_cast<AtCacheEntry*>(reinterpret_cast<BYTE*>(&cache[0])+atCacheOffset))
-
-inline void Interpreter::purgeObjectFromCaches(OTE* ote)
-{
-	unsigned atCacheOffset = Oop(ote) & Interpreter::AtCacheMask;
-	AtCacheEntry* ace = ACEAt(AtCache, atCacheOffset);
-	if (ace->oteArray == ote)
-		ace->oteArray = NULL;
-	ace = ACEAt(AtPutCache, atCacheOffset);
-	if (ace->oteArray == ote)
-		ace->oteArray = NULL;
-}
-
 inline void Interpreter::IncStackRefs(Oop* const sp)
 {
 	Process* pProcess = actualActiveProcess();

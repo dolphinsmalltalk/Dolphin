@@ -71,28 +71,6 @@ OTE		ENDS
 
 POTE		TYPEDEF 	PTR OTE
 
-AtCacheEntry STRUCT 2t
-	oteArray	POTE	?
-	maxIndex	DWORD	?
-	pElements	DWORD	?
-	elemType	DWORD	?
-AtCacheEntry ENDS
-
-_AtCache EQU ?AtCache@Interpreter@@0PAUAtCacheEntry@1@A
-extern _AtCache:AtCacheEntry
-
-_AtPutCache EQU ?AtPutCache@Interpreter@@0PAUAtCacheEntry@1@A
-extern _AtPutCache:AtCacheEntry
-
-AtCacheEntries EQU 16
-; This is right for 4 word OTEs and four word ACEs
-AtCacheMask EQU	((AtCacheEntries-1)*16)
-
-; The types of objects stored in the AtCache
-AtCachePointers EQU 0
-AtCacheBytes EQU 1
-AtCacheString EQU 2
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Shared pointers (shared between VM and Smalltalk code)
 
@@ -595,73 +573,15 @@ CountUpOopIn MACRO oopRegLetter	;; , countRegLetter
 	fini:
 ENDM
 
-
-StoreIPRegister MACRO
-	mov		[INSTRUCTIONPOINTER], _IP		;; Ditto the instruction pointer
-ENDM
-
-StoreSPRegister MACRO spReg
-	mov		[STACKPOINTER], _SP		 		;; Save down interpreter stack pointer, e.g. for C routine
-ENDM
-
-; Store down the commonly used Interpreter registers from Assembler to C++
-StoreInterpreterRegisters MACRO
-	StoreIPRegister
-	StoreSPRegister
-ENDM
-
-LoadIPRegister MACRO
-	mov		_IP, [INSTRUCTIONPOINTER]
-ENDM
-
-LoadSPRegister MACRO
-	mov		_SP, [STACKPOINTER]
-ENDM
-
-LoadBPRegister MACRO
-	mov		_BP, [BASEPOINTER]
-ENDM
-
-LoadIPSPRegisters MACRO
-	LoadIPRegister
-	LoadSPRegister
-ENDM
-
-; Load all interpreter registers on entering assembler from C++, or on return from C++
-; code which modifies the context
-LoadInterpreterRegisters MACRO
-	LoadIPSPRegisters
-	LoadBPRegister
-ENDM
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Stack accessing and manipulation macros
-
-LoadStackValueInto	MACRO	offset, register
-	mov register, [_SP-(OOPSIZE*offset)]
-ENDM
-
-UnPop MACRO
-	add		_SP, OOPSIZE			; Unpop
-ENDM
-
-PopStack MACRO count:=<1>
-	sub		_SP, count&*OOPSIZE
-ENDM
-
-; Macro to pop top stack element and nil it out. Does no ref. counting
-PopOopInto MACRO register
-	mov		register, [_SP]						;; Load stack top into register
-	sub		_SP, OOPSIZE
-ENDM
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 CallCPP MACRO mangledName
-	StoreInterpreterRegisters
+	mov		[INSTRUCTIONPOINTER], _IP
+	mov		[STACKPOINTER], _SP
 	call	mangledName
-	LoadInterpreterRegisters
-
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		_SP, [STACKPOINTER]
+	mov		_BP, [BASEPOINTER]
 ENDM
 
 RECONCILEZCT EQU ?ReconcileZct@ObjectMemory@@SIPAIXZ

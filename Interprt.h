@@ -718,11 +718,8 @@ public:
 		static void __fastcall debugMethodActivated(Oop* sp);
 		static void __fastcall debugReturnToMethod(Oop* sp);
 		static void checkStack(Oop* sp);
-
 		static void DumpMethodCacheStats();
-		static void DumpAtCacheStats();
 		static void DumpCacheStats();
-
 	#endif
 
 public:
@@ -747,25 +744,8 @@ private:
 
 	static MethodCacheEntry methodCache[MethodCacheSize];
 
-	__declspec(align(16)) struct AtCacheEntry
-	{
-		OTE*	oteArray;
-		MWORD	maxIndex;
-		void*	pElements;
-		int		type;
-	};
-
-	enum { AtCacheEntries = 16 };
-	enum { AtCacheMask = (AtCacheEntries - 1)*16 };
-	enum { AtCachePointers = 0, AtCacheBytes, AtCacheString };
-
-	static AtCacheEntry AtCache[AtCacheEntries];
-	static AtCacheEntry AtPutCache[AtCacheEntries];
-
 	static void flushCaches();
-	static void flushAtCaches();
 	static void initializeCaches();
-	static void purgeObjectFromCaches(OTE*);
 	
 	enum { FIXEDVMREFERENCES };
 	enum { SIGNALQGROWTH=32, SIGNALQSIZE=64 };

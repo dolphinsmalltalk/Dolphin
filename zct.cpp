@@ -120,8 +120,6 @@ Oop* ObjectMemory::ReconcileZct()
 	const int nOldZctEntries = m_nZctEntries;
 #endif
 
-	Interpreter::flushAtCaches();
-
 	Oop* const sp = Interpreter::m_registers.m_stackPointer;
 
 	EmptyZct(sp);

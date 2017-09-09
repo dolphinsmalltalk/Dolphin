@@ -71,7 +71,6 @@ void Interpreter::asyncGC(DWORD gcFlags)
 	}
 
 	resizeActiveProcess();
-	flushAtCaches();
 
 #ifdef _DEBUG
 	if (Interpreter::executionTrace != 0)

@@ -60,10 +60,6 @@ extern "C" void __fastcall callPrimitiveValue(unsigned, unsigned numArgs);
 	DWORD cacheHits = 0;
 	static DWORD cacheMisses = 0;
 
-	DWORD AtCacheHits = 0;
-	DWORD AtCacheMisses = 0;
-	DWORD AtPutCacheHits = 0;
-	DWORD AtPutCacheMisses = 0;
 #endif	
 
 //=============
@@ -815,60 +811,9 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 		cacheHits = cacheMisses = 0;
 	}
 
-	void Interpreter::DumpAtCacheStats()
-	{
-		// And also dump stats on the At cache
-		int used = 0;
-		for (int i=0;i<AtCacheEntries;i++)
-		{
-			if (AtCache[i].pElements != 0) 
-			{
-//				OTE* oteArray = AtCache[i].oteArray;
-//				TRACESTREAM << "AtCache[" << i << "] = " << oteArray << endl;
-				used++;
-			}
-		}
-
-		if (AtCacheHits != 0 || AtCacheMisses != 0)
-		{
-			char buf[256];
-			_snprintf(buf, sizeof(buf)-1, "%u At cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
-							AtCacheHits, AtCacheMisses, 
-							(double)AtCacheHits / 
-								(AtCacheHits + AtCacheMisses?AtCacheHits+AtCacheMisses:1),
-							used, AtCacheEntries - used);
-			OutputDebugString(buf);
-		}
-		AtCacheHits = AtCacheMisses = 0;
-		ZeroMemory(AtCache, sizeof(AtCache));
-
-		// Count used at:put: cache slots
-		{
-			used = 0;
-			for (int i=0;i<AtCacheEntries;i++)
-			{
-				if (AtPutCache[i].pElements != 0) used++;
-			}
-		}
-
-		if (AtPutCacheHits != 0 || AtPutCacheMisses != 0)
-		{
-			char buf[256];
-			_snprintf(buf, sizeof(buf)-1, "%u AtPut cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
-							AtPutCacheHits, AtPutCacheMisses, 
-							(double)AtPutCacheHits / 
-								(AtPutCacheHits + AtPutCacheMisses?AtPutCacheHits+AtPutCacheMisses:1),
-							used, AtCacheEntries - used);
-			OutputDebugString(buf);
-		}
-		AtPutCacheHits = AtPutCacheMisses = 0;
-		ZeroMemory(AtPutCache, sizeof(AtPutCache));
-	}
-
 	void Interpreter::DumpCacheStats()
 	{
 		DumpMethodCacheStats();
-		DumpAtCacheStats();
 	}
 #endif
 

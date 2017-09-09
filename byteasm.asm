@@ -148,16 +148,6 @@ IFDEF _DEBUG
 	extern DEBUGMETHODACTIVATED:near32
 	DEBUGRETURNTOMETHOD EQU ?debugReturnToMethod@Interpreter@@SIXPAI@Z
 	extern DEBUGRETURNTOMETHOD:near32
-
-	ATCACHEHITS EQU ?AtCacheHits@@3KA
-	extern ATCACHEHITS:DWORD
-	ATCACHEMISSES EQU ?AtCacheMisses@@3KA
-	extern ATCACHEMISSES:DWORD
-	ATPUTCACHEHITS EQU ?AtPutCacheHits@@3KA
-	extern ATPUTCACHEHITS:DWORD
-	ATPUTCACHEMISSES EQU ?AtPutCacheMisses@@3KA
-	extern ATPUTCACHEMISSES:DWORD
-
 ENDIF
 
 RESIZEACTIVEPROCESS EQU ?resizeActiveProcess@Interpreter@@SIXXZ
@@ -502,13 +492,6 @@ MethodCacheEntry ENDS
 METHODCACHE EQU ?methodCache@Interpreter@@0PAUMethodCacheEntry@1@A
 extern METHODCACHE:MethodCacheEntry
 
-;ALIGN 16
-;_AtCache AtCacheEntry AtCacheEntries DUP (<>,<>,<>,<>)
-;_AtPutCache AtCacheEntry AtCacheEntries DUP (<>,<>,<>,<>)
-
-;public _AtCache
-;public _AtPutCache
-
 .CODE BYTECODES_SEG
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -637,7 +620,7 @@ ENDM
 
 PopDispatchByteCode MACRO
 	MPrefetch
-	PopStack
+	sub		_SP, OOPSIZE
 	DispatchNext
 ENDM	
 
@@ -670,7 +653,7 @@ ENDM
 SendSelectorOneArgToInteger MACRO selector
 	mov 	edx, [selector]								;; access entry in SpecialSelectors table
 	pushd	1											;; 1 argument
-	StoreSPRegister										;; Save down stack pointer (needed for DNU and C++ primitives)
+	mov		[STACKPOINTER], _SP		 					;; Save down stack pointer (needed for DNU and C++ primitives)
 	mov		ecx, [Pointers.ClassSmallInteger]
 	mov		[MESSAGE], edx								;; Set interpreters messageSelector register (no effect on flags)
 	jmp		execMethodOfClass							;; Jump directly to exec. routine
@@ -680,7 +663,7 @@ SendSelectorOneArgToObjectEAX MACRO selector
 	ASSUME	eax:PTR OTE									;; N.B. Expects receiver in EAX
 
 	mov 	edx, [selector]								;; access entry in SpecialSelectors table
-	StoreSPRegister										;; Save down SP for DNU and prims
+	mov		[STACKPOINTER], _SP		 					;; Save down SP for DNU and prims
 
 	pushd	1											;; 0 argument
 	mov		ecx, [eax].m_oteClass						;; Get the class of the Object
@@ -695,8 +678,8 @@ SendSelectorArgs MACRO selector, args
 	mov 	edx, [selector]								;; access entry in SpecialSelectors table
 	pushd	args										;; N arguments
 
-	LoadStackValueInto <args>, <eax>					;; Load receiver into EAX (under args)
-	StoreSPRegister										;; Save down SP for DNU and prims
+	mov		eax, [_SP-(OOPSIZE*args)]					;; Load receiver into EAX (under args)
+	mov		[STACKPOINTER], _SP		 					;; Save down SP for DNU and C++ prims
 
 	mov		[MESSAGE], edx								;; Set the MESSAGE global
 	test	al, 1
@@ -775,13 +758,11 @@ ASSUME _IP:PTR BYTE
 ; The main byte code loop entry point from C++.
 ; Never returns except to an enclosing exception handler
 BEGINPROC _byteCodeLoop
-	LoadBPRegister
-	loadIPSPAndLoop:
-		LoadIPRegister
-	loadSPAndLoop:
-		MPrefetch
-		LoadSPRegister
-		DispatchNext
+	mov		_BP, [BASEPOINTER]
+	mov		_IP, [INSTRUCTIONPOINTER]
+	MPrefetch
+	mov		_SP, [STACKPOINTER]
+	DispatchNext
 ENDPROC _byteCodeLoop
 
 
@@ -1033,7 +1014,8 @@ ENDBYTECODE shortPushStatic
 ; Store into a stack temp. Note no ref. counting needed, as all on the stack
 
 BEGINBYTECODE shortPopStoreTemp
-	PopOopInto <EAX>
+	mov		eax, [_SP]
+	sub		_SP, OOPSIZE
 	mov     [_BP+(ecx*OOPSIZE)-(FIRSTPOPNSTORETEMP*OOPSIZE)], eax
 	DispatchByteCode
 ENDBYTECODE shortPopStoreTemp
@@ -1277,7 +1259,7 @@ BEGINBYTECODE sendSelfNoArgs
 	PushOop <a>										; push receiver
 	
 	test	al, 1									; Test for immediate receiver (used later)
-	StoreSPRegister									; Save down stack pointer (needed for DNU and C++ primitives)
+	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
 
 	mov     edx, [edx].m_aLiterals[ecx*OOPSIZE]		; Load selector Oop into ecx
 
@@ -1409,7 +1391,8 @@ ReturnOopToSender MACRO oop
 ENDM
 
 BEGINBYTECODE popReturnSelf
-	PopOopInto	<eax>
+	mov		eax, [_SP]
+	sub		_SP, OOPSIZE
 	; Drop through...
 ENDBYTECODE popReturnSelf
 
@@ -1596,7 +1579,7 @@ BEGINBYTECODE farReturnFromBlock
 	DispatchByteCode
 	
 @@:
-	; No, need to perform unwind
+	; Not returning to caller, need to perform unwind
 	CallCPP <NONLOCALRETURN>
 	DispatchByteCode
 ENDBYTECODE farReturnFromBlock
@@ -1638,11 +1621,14 @@ BEGINPRIMITIVE primitiveReturn
 	ret
 
 @@:
-	StoreInterpreterRegisters
+	; Store interpreter registers before calling C++ func
+	mov		[INSTRUCTIONPOINTER], _IP
+	mov		[STACKPOINTER], _SP
 	call	NONLOCALRETURN
-	LoadIPRegister
+	; Reload interpreter registers afer non-local return (note SP is reloaded from eax after calling all primitives)
+	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		eax, [STACKPOINTER]
-	LoadBPRegister
+	mov		_BP, [BASEPOINTER]
 	ret
 ENDPRIMITIVE primitiveReturn
 
@@ -1658,7 +1644,7 @@ BEGINBYTECODE popStoreContextTemp
 	ASSUME	eax:Oop
 
 	mov		edx, [edx].m_environment
-	PopStack
+	sub		_SP, OOPSIZE
 
 	mov		edx, (OTE PTR[edx]).m_location
 	ASSUME	edx:PTR Context
@@ -1756,7 +1742,8 @@ ENDM
 
 BEGINBYTECODE popStoreInstVar
 	FetchByte
-	PopOopInto <eax>
+	mov		eax, [_SP]
+	sub		_SP, OOPSIZE
 	StoreInstVarAndDispatch						;; Store down the inst var whose index is in ECX from EAX
 ENDBYTECODE popStoreInstVar
 
@@ -2011,7 +1998,7 @@ ENDM
 BEGINBYTECODE popStoreStatic
 	mov		eax, [_SP]							;; Load stack top into register
 	FetchByte
-	PopStack
+	sub		_SP, OOPSIZE
 	StoreStaticAndDispatch
 ENDBYTECODE popStoreStatic
 
@@ -2171,7 +2158,8 @@ BEGINBYTECODE shortJumpIfFalse
 IFDEF _DEBUG
 	;; N.B. Extra 1 added to extend range of short jumps
 	sub		ecx, FIRSTSHORTJUMPIFFALSE-1
-	PopOopInto <eax>
+	mov		eax, [_SP]
+	sub		_SP, OOPSIZE
 
 	sub		eax, [oteFalse]
 	jnz		@F
@@ -2188,7 +2176,7 @@ IFDEF _DEBUG
 @@:
 	;; Error - receiver not a boolean, we don't care about performance of this arm
 	dec		_IP							;; We'll retry the conditional test if #mustBeBoolean returns
-	UnPop
+	add		_SP, OOPSIZE			; Unpop
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>
 
 ELSE
@@ -2220,7 +2208,7 @@ ELSE
 @@:
 	;; Error - receiver not a boolean, we don't care about performance of this arm
 	dec		_IP							;; We'll retry the conditional test if #mustBeBoolean returns
-	UnPop								;; Undo stack damage
+	add		_SP, OOPSIZE			; Unpop								;; Undo stack damage
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>	;; And inform the image of the error
 ENDIF
 ENDBYTECODE shortJumpIfFalse
@@ -2342,7 +2330,7 @@ elseBranch:
 
 @@:	;; This is the error case - speed not that important
 	dec _IP												; Retry the conditional test if #must be boolean returns
-	UnPop
+	add		_SP, OOPSIZE			; Unpop
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>
 ENDBYTECODE nearJumpIfTrue
 
@@ -2517,7 +2505,7 @@ ENDBYTECODE decrementStackTop
 ;
 
 BEGINBYTECODE sendArithmeticAdd
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument at top of stack (v)
 	test	al, 1										; Receiver is a SmallInteger? (u)
 	jz		sendMessageToObject							; No, skip primitive response (v)
@@ -2551,13 +2539,13 @@ ENDBYTECODE sendArithmeticAdd
 
 
 BEGINBYTECODE sendArithmeticSubtract
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument at top of stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Argument is SmallInteger
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument	(which is not ref. counted)
+	sub		_SP, OOPSIZE											; Pop argument	(which is not ref. counted)
 	xor		edx, 1										; Remove arg's SmallInteger bit
 	sub		eax, edx									; Perform actual subtraction
 	jo		pushLargeFromSmallNegAndCarryEAX			; Overflowed 31-bits?
@@ -2626,13 +2614,13 @@ overflow:
 ENDBYTECODE incrementStackTop
 
 BEGINBYTECODE sendArithmeticLessThan
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument	(which is not ref. counted)
+	sub		_SP, OOPSIZE											; Pop argument	(which is not ref. counted)
 	MPrefetch
 	cmp		eax, edx									; receiver < arg?
 	mov		edx, [oteTrue]								; Default - not less than arg
@@ -2705,19 +2693,19 @@ elseBranch:
 
 @@:	;; This is the error case - speed not that important
 	dec _IP												; Retry the conditional test if #must be boolean returns
-	UnPop
+	add		_SP, OOPSIZE			; Unpop
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>
 ENDBYTECODE nearJumpIfFalse
 
 ; Inlines primitive coding for SmallInteger
 BEGINBYTECODE sendArithmeticLessOrEqual
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument
+	sub		_SP, OOPSIZE											; Pop argument
 	MPrefetch
 	cmp		eax, edx									; receiver <= arg?
 	mov		edx, [oteFalse]								; Default, No
@@ -2737,13 +2725,13 @@ sendMessageToInteger:
 ENDBYTECODE sendArithmeticLessOrEqual
 
 BEGINBYTECODE sendArithmeticGreaterThan
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument
+	sub		_SP, OOPSIZE											; Pop argument
 	cmp		eax, edx									; receiver > arg?
 	mov		edx, [oteTrue]								; Default, yes
 	jg		@F											;
@@ -2764,13 +2752,13 @@ ENDBYTECODE sendArithmeticGreaterThan
 
 ; Inlines primitive coding for SmallInteger
 BEGINBYTECODE sendArithmeticGreaterOrEqual
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
 	test	dl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	PopStack											; Pop argument
+	sub		_SP, OOPSIZE											; Pop argument
 	cmp		eax, edx
 	mov		edx, [oteTrue]								; Yes
 	jge		@F											; receiver >= arg?
@@ -2791,7 +2779,7 @@ ENDBYTECODE sendArithmeticGreaterOrEqual
 
 
 BEGINBYTECODE sendArithmeticEqual
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [oteTrue]								; Load True as default
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
@@ -2819,7 +2807,7 @@ ENDBYTECODE sendArithmeticEqual
 
 
 BEGINBYTECODE sendArithmeticNotEqual
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [oteFalse]								; Load False as default
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; Not SmallInteger, skip primitive response
@@ -2846,7 +2834,7 @@ ENDBYTECODE sendArithmeticNotEqual
 
 
 BEGINBYTECODE sendArithmeticMultiply
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
 
 	test	al, 1										; Is it a SmallInteger?
@@ -2865,7 +2853,7 @@ BEGINBYTECODE sendArithmeticMultiply
 	mov		cl, [_IP]
 	mov		[_SP-OOPSIZE], eax							; Replace receiver with answer
 	
-	PopStack
+	sub		_SP, OOPSIZE
 	IFDEF _DEBUG
 		DispatchByteCode
 	ELSE
@@ -2885,7 +2873,7 @@ ENDBYTECODE sendArithmeticMultiply
 
 ;; N.B. Some difference here - we shift receiver, not just test bottom bit
 BEGINBYTECODE sendArithmeticDivide
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument	(v - pairs)
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument	(v - pairs)
 	mov		ecx, [_SP]									; Load argument from stack	(u)
 	sar		eax, 1										; Is it a SmallInteger?	(u)
 	jnc		sendMessageToObject							; No, skip primitive response (v - pairs)
@@ -2904,7 +2892,7 @@ BEGINBYTECODE sendArithmeticDivide
 	test	edx, edx									; Test remainder in edx	 (u)
 	jnz		sendMessageToInteger						; Inexact, fail primitive	(v - pairs)
 
-	PopStack											; Pop argument	(which is not ref. counted) (u)
+	sub		_SP, OOPSIZE											; Pop argument	(which is not ref. counted) (u)
 
 	; Note that an overflow could occur if min. SmallInteger divided by -1
 	add		eax, eax									; Shift for SmallInteger
@@ -2936,7 +2924,7 @@ ENDBYTECODE sendArithmeticDivide
 
 ;; N.B. Some difference here - we shift receiver, not just test bottom bit
 BEGINBYTECODE sendArithmeticMod
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument	(v - pairs)
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument	(v - pairs)
 	mov		ecx, [_SP]									; Load argument from stack			(u)
 	sar		eax, 1										; Is it a SmallInteger?				(u)
 	jnc		sendMessageToObject							; No, skip primitive response		(v - pairs)
@@ -2951,7 +2939,7 @@ BEGINBYTECODE sendArithmeticMod
 	jz		sendMessageToInteger						; Catch division by zero			(v - pairs)
 	
 	sar		edx, 31										; ... into edx (faster than CDQ)	(u)
-	PopStack											; Pop argument	(which is not ref. counted)	(v - pairs)
+	sub		_SP, OOPSIZE											; Pop argument	(which is not ref. counted)	(v - pairs)
 
 	idiv      ecx
 
@@ -2983,7 +2971,7 @@ ENDBYTECODE sendArithmeticMod
 
 ;; N.B. Some difference here - we shift receiver, not just test bottom bit
 BEGINBYTECODE sendArithmeticDiv
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument	(u)
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument	(u)
 	mov		ecx, [_SP]									; Load argument from stack		(v)
 	sar		eax, 1										; Is it a SmallInteger?			(u)
 	jnc		sendMessageToObject							; No, skip primitive response	(v)
@@ -2999,7 +2987,7 @@ BEGINBYTECODE sendArithmeticDiv
 	
 	sar		edx, 31										; ... into edx					(u)
 	idiv	ecx											; Sadly IDIV does not change the flag in a predictable way (u)
-	PopStack											; Pop argument	(which is not ref. counted) (u)
+	sub		_SP, OOPSIZE											; Pop argument	(which is not ref. counted) (u)
 
 	test	eax, eax									; Quotient?
 	jg		@F											; greater than zero
@@ -3038,7 +3026,7 @@ ENDBYTECODE sendArithmeticDiv
 ;; BitShift is a bit too complicated to expand in-line at present, due to the rather crap overflow
 ;; detection - this seems to make it no faster than multiplication, which is crap of course.
 BEGINBYTECODE sendArithmeticBitShift
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	test	al, 1										; Receiver is a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
 	call	arithmeticBitShift							; Try primitive response
@@ -3061,7 +3049,7 @@ ENDBYTECODE sendArithmeticBitShift
 
 ; bitAnd: is a very fast instruction!
 BEGINBYTECODE sendArithmeticBitAnd
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]
 	and		eax, edx									; Perform the bitwise op with arg
 	test	al, 1										; Result a SmallInteger
@@ -3078,7 +3066,7 @@ ENDBYTECODE sendArithmeticBitAnd
 
 
 BEGINBYTECODE sendArithmeticBitOr
-	LoadStackValueInto <1>, <eax>						; Access receiver beneath argument
+	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
 	mov		edx, [_SP]									; Load argument from stack
 	test	al, 1										; Receiver is a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
@@ -3218,83 +3206,78 @@ isBytes:
 
 ENDBYTECODE shortSpecialSendBasicSize
 
-ALIGN 16
 BEGINBYTECODE shortSpecialSendBasicAt
-	mov		ecx, [_SP-OOPSIZE]					; Access receiver under argument
+	mov		eax, [_SP-OOPSIZE]					; Access receiver under argument
 	mov		edx, [_SP]							; Load argument from stack
 
-	test	cl, 1
-	jnz		sendMessage							; Its a SmallInteger, send it #basicAt:
+	test	al, 1
+	jnz		sendMessageToSmallInteger			; Its a SmallInteger, probably an error, try sending it #basicAt:
 
-   	ASSUME	ecx:PTR OTE							; ecx is receiver Oop
+   	ASSUME	eax:PTR OTE							; eax is receiver OTE
+	mov		ecx, [eax].m_oteClass				; Get class Oop from OTE into eax for later use
+	ASSUME	ecx:PTR OTE
 
 	sar		edx, 1								; Argument is a SmallInteger?
-	jnc		sendMessage							; Arg not a SmallInteger, send the message
-	
-	sub		edx, 1								; Convert 1 based index to zero based offset
-	
-	mov		eax, [ecx].m_oteClass				; Get class Oop from OTE into eax for later use
-	ASSUME	eax:PTR OTE
-	
-	js		sendMessage							; Index out of bounds (<= 0)
+	jnc		sendMessageToClass					; Arg not a SmallInteger, send the message
+	jle		sendMessageToClass					; Index out of bounds (<= 0)
 	     	
-	test	[ecx].m_flags, MASK m_pointer		; Test pointer bit of object table entry
+	test	[eax].m_flags, MASK m_pointer		; Test pointer bit of object table entry
 	jz		byteObjectAt						; Contains bytes? Yes, skip to byte access code
 
 pointerAt:
-	; ASSUME ecx:PTR OTE						; ECX is receiver Oop
-	; ASSUME eax:PTR OTE						; EAX is class Oop
-	; ASSUEM edx:DWORD							; EDX is offset
+	ASSUME eax:PTR OTE							; EAX is receiver Oop
+	ASSUME ecx:PTR OTE							; ECX is class Oop
+	ASSUME edx:DWORD							; EDX is offset
 
+	push	ebx
 	; Array of pointers?
-	mov		ecx, [ecx].m_size					; Load size into ecx
+	mov		ebx, [eax].m_size					; Load size into eax
+	ASSUME	ebx:DWORD
+
+	mov		ecx, [ecx].m_location				; Load address of class object into eax from OTE at ecx
+	ASSUME	ecx:PTR Behavior
+	
+	and		ebx, 7fffffffh						; Ignore the sign bit of the size (used to mark const objects)
+	shr		ebx, 2								; ecx = total Oop size (bytesize div 4)
+
+	mov		ecx, [ecx].m_instanceSpec			; Load Instancespecification into edx
 	ASSUME	ecx:DWORD
 
-	mov		eax, [eax].m_location				; Load address of class object into eax from OTE at eax
-	ASSUME	eax:PTR Behavior
+	and		ecx, MASK m_fixedFields				; Mask off flags
+	shr		ecx, 1								; Convert from SmallInteger
+	add		edx, ecx							; Add fixed offset for inst vars
 	
-	and		ecx, 7fffffffh						; Ignore the sign bit of the size (used to mark const objects)
-	shr		ecx, 2								; ecx = total Oop size (bytesize div 4)
+	cmp		edx, ebx							; Index <= size (still in ebx)?
+	pop		ebx
 
-	mov		eax, [eax].m_instanceSpec			; Load Instancespecification into edx
-	ASSUME	eax:DWORD
+	ja		indexTooLarge						; No, out of bounds
 
-	and		eax, MASK m_fixedFields				; Mask off flags
-	shr		eax, 1								; Convert from SmallInteger
-	add		edx, eax							; Add fixed offset for inst vars
-	
-	cmp		edx, ecx							; Index <= size (still in ecx)?
-	
-	mov		ecx, [_SP-OOPSIZE]					; Reload receiver into ecx
-	ASSUME 	ecx:PTR OTE
-	
-	jae		sendMessage							; No, out of bounds
+	mov		eax, [eax].m_location				; Load address of receiver into eax
+	ASSUME	eax:PTR Oop
 
-	mov		eax, [ecx].m_location				; Reload address of receiver into eax
-
-	PopStack
+	sub		_SP, OOPSIZE
 	MPrefetch
 
-	mov		eax, [eax+edx*OOPSIZE]				; Load Oop of element at required index
+	mov		eax, [eax+edx*OOPSIZE-OOPSIZE]		; Load Oop of element at required index
 	mov		[_SP], eax							; And overwrite receiver in stack with it
 
 	DispatchNext
 
 byteObjectAt:
-	ASSUME	ecx:PTR OTE							; ECX is Oop of receiver
+	ASSUME	eax:PTR OTE							; EAX is Oop of receiver
 	ASSUME	edx:DWORD							; EDX is the index
-	ASSUME	eax:PTR OTE							; EAX is the Oop of the receiver's class
+	ASSUME	ecx:PTR OTE							; ECX is the Oop of the receiver's class
 
-	mov		eax, [ecx].m_location				; Load object address into eax
-	ASSUME	eax:PTR ByteArray					; EAX points at receiver
-
-	mov		ecx, [ecx].m_size
+	mov		ecx, [eax].m_size
+	ASSUME	ecx:DWORD
 	and		ecx, 7fffffffh						; Ignore sign bit (used to mark const objects)
 	
 	cmp		edx, ecx							; Bounds check
-	jae		sendMessage							; Index out of bounds (>= size)
+	mov		ecx, [eax].m_location				; Load object address into ecx on expection it will be in bounds
+	ASSUME	ecx:PTR ByteArray					; EAX points at receiver
+	ja		indexTooLarge						; Index out of bounds (>= size)
 	
-	movzx	eax, BYTE PTR[eax+edx]				; Load required byte, zero extending
+	movzx	eax, BYTE PTR[ecx+edx-1]			; Load required byte, zero extending
 	ASSUME	eax:NOTHING
 
 	MPrefetch
@@ -3302,12 +3285,27 @@ byteObjectAt:
 	lea		eax, [eax+eax+1]					; Convert to SmallInteger
 	mov		[_SP-OOPSIZE], eax					; Overwrite receiver with result. No need to count as SmallInteger
 
-	PopStack									; Pop arg off stack
+	sub		_SP, OOPSIZE									; Pop arg off stack
 
 	DispatchNext
 
-sendMessage:
-	SendSelectorOneArg <Pointers.specialSelectors[10*OOPSIZE]>		; basicAt:
+sendMessageToSmallInteger:						; Sent #basicAt: to a SmallInteger, probably an error
+	mov		ecx, [Pointers.ClassSmallInteger]
+	jmp		sendMessageToClass
+
+indexTooLarge:
+	ASSUME	eax:PTR OTE
+	mov		ecx, [eax].m_oteClass
+
+sendMessageToClass:
+	ASSUME	eax:Oop										; EAX is receiver, although we don't need it here
+	ASSUME	ecx:PTR OTE									; ECX contains class
+
+	mov 	edx, Pointers.specialSelectors[10*OOPSIZE]	; basicAt:
+	mov		[STACKPOINTER], _SP		 					; Save down interpreter stack pointer, e.g. for C routine
+	pushd	1											; 1 argument
+	mov		[MESSAGE], edx								;; Set the MESSAGE global
+	jmp		execMethodOfClass							; Jump to routine to exec class>>message in ECX>>EDX
 ENDBYTECODE shortSpecialSendBasicAt
 
 ; #basicAt:put:
@@ -3320,44 +3318,41 @@ BEGINBYTECODE shortSpecialSendBasicAtPut
 	jnz		sendMessage							; Its a SmallInteger, send it #basicAt:
 
 	sar		edx, 1								; Argument is a SmallInteger?
-	jnc		sendMessage			 				; No, send the message
-
-	sub		edx, 1									; Convert 1 based index to zero based offset
-
-	mov		eax, [ecx].m_oteClass				; Get class Oop	from OTE into eax
-	ASSUME	eax:PTR OTE
-
-	js		sendMessage							; Index out of bounds (<= 0)
+	jnc		sendMessage	 						; No, send the message
+	jle		sendMessage							; Index out of bounds (<= 0)
 
 	test	[ecx].m_flags, MASK m_pointer
 	jz		byteObjectAtPut						; Skip to code for storing bytes
 
-	; Array of pointers?
-	mov		ecx, [ecx].m_size					; Load size into ecx
-												; N.B. DON'T mask out the immutable bit here, so size negative if const object
-	ASSUME	ecx:SDWORD
-	sar		ecx, 2								; ecx = total Oop size
+	mov		eax, [ecx].m_oteClass				; Get class Oop	from OTE into eax
+	ASSUME	eax:PTR OTE
 	
+	push	ebx
 	mov		eax, [eax].m_location				; Load address of class object into eax
 	ASSUME	eax:PTR Behavior
-	
+
+	mov		ebx, [ecx].m_size					; Load size of receiver into ebx
+	ASSUME	ebx:SDWORD							; N.B. DON'T mask out the immutable bit here, so size negative if const object
+
 	mov		eax, [eax].m_instanceSpec			; Load Instancespecification into edx
 	ASSUME	eax:DWORD
 
+	sar		ebx, 2								; ebx = total Oop size
+	
 	and		eax, MASK m_fixedFields				; Mask off flags
 	shr		eax, 1								; Convert from SmallInteger
 	add		edx, eax							; Add fixed offset for inst vars
 
-	mov		eax, [_SP-OOPSIZE*2]				; Reload receiver under arguments
-	ASSUME	eax:PTR OTE
+	cmp		edx, ebx							; Index < size (still in ebx)?
 
-	cmp		edx, ecx							; Index <= size (still in ecx)?
-	jge		sendMessage							; No, out of bounds
-
-	mov		eax, [eax].m_location
+	mov		eax, [ecx].m_location
 	ASSUME	eax:PTR Object
+
+	pop		ebx
+
+	jg		sendMessage							; No, out of bounds
 	
-	lea		eax, [eax+edx*OOPSIZE]
+	lea		eax, [eax+edx*OOPSIZE-OOPSIZE]		; Get address of slot to update into EAX
 
 	mov		edx, [_SP]							; Load value to write
 	ASSUME	edx:PTR OTE
@@ -3382,44 +3377,42 @@ BEGINBYTECODE shortSpecialSendBasicAtPut
 	DispatchNext
 
 byteObjectAtPut:
-	;ASSUME	ecx:PTR ByteArray				; ECX points at byte object
 	ASSUME	ecx:PTR OTE						; ECX is receiver Oop (known byte object)
 	ASSUME	edx:DWORD						; EDX is index
-	ASSUME	eax:PTR OTE						; EAX is receiver's class (not needed)
 
-	mov		eax, [ecx].m_location
+	mov		eax, [ecx].m_location			; Load object address into eax
+	ASSUME	eax:PTR ByteArray				; EAX is pointer to byte object
 	
 	cmp		edx, [ecx].m_size				; Compare offset+HEADERSIZE with object size
-	jge		sendMessage						; Index out of bounds (>= size)
+	jg		sendMessage						; Index out of bounds (> size)
+
+	mov		ecx, [_SP]						; Load value to store from stack top
 	
 	add		eax, edx						; Calculate address of byte to write
 	ASSUME	eax:PTR BYTE
 	ASSUME	edx:NOTHING						; EDX is now free
 
-	mov		edx, [_SP]						; Load value to store from stack top
+	mov		edx, ecx						; Save value to return later
 	ASSUME	edx:DWORD
-	mov		ecx, eax
-	ASSUME	ecx:PTR BYTE
-
-	sar		edx, 1							; Convert to real integer value
-	mov		eax, [_SP]
+	sar		ecx, 1							; Convert to real integer value
 	jnc		sendMessage						; Not a SmallInteger
 
-	cmp		edx, 0FFh
+	cmp		ecx, 0FFh
 	ja		sendMessage						; Used unsigned comparison for 0<=ecx<=255
 
-	mov		[ecx], dl						; Store byte into receiver
+	mov		[eax-1], cl						; Store byte into receiver
 	ASSUME	ecx:NOTHING
 
 	MPrefetch
-	
-	mov		[_SP-OOPSIZE*2], eax			; Overwrite receiver with value for return
-	PopStack <2>							; Pop Args
+
+	mov		[_SP-OOPSIZE*2], edx			; Overwrite receiver with value for return
+	sub		_SP, OOPSIZE*2					; Pop Args
 
 	DispatchNext
 
 sendMessage:
-	SendSelectorArgs <Pointers.specialSelectors[11*OOPSIZE]>, <2>	; basicAt:put:
+	; This is an unlikely error case (non-indexable receiver, out of bounds), so we don't care about perf here
+	SendSelectorTwoArgs <Pointers.specialSelectors[11*OOPSIZE]>			; #basicAt:put:
 ENDBYTECODE shortSpecialSendBasicAtPut
 
 BEGINBYTECODE shortSpecialSendBasicClass
@@ -3528,16 +3521,17 @@ BEGINBYTECODE blockCopy
 	mov		ecx, DWORD PTR[_IP]						; Load extension into
 	movsx	edx, WORD PTR[_IP+4]					; Load jump offset into EDX
 	add		_IP, 6
-	StoreIPRegister									; Save down IP (points at start of block byte codes)
-	StoreSPRegister									; Needed in case any values to copy off stack
-	add		_IP, edx								; Jump to first byte code after block
+	mov		[INSTRUCTIONPOINTER], _IP				; Save down IP (points at start of block byte codes)...
+	mov		[STACKPOINTER], _SP		 				; ...and SP (needed in case any values to copy off stack)
+	add		_IP, edx								; Prepare to jump to first byte code after block
 	call	BLOCKCOPY								; Create new block (returned in EAX)
-	LoadSPRegister									; blockCopy may have adjusted stack to remove copied values
-	mov	[_SP+OOPSIZE], eax
-	add	_SP, OOPSIZE
+	mov		_SP, OOPSIZE							
+	add		_SP, [STACKPOINTER]						; blockCopy may have adjusted stack to remove copied values
+	mov		[_SP], eax								; New block pushed onto stack
 	AddToZct <a>
 	DispatchByteCode
 ENDBYTECODE blockCopy
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ShortSendXArgsN MACRO x, index
@@ -3548,7 +3542,7 @@ ShortSendXArgsN MACRO x, index
 	LoadStackValueInto <x>,<eax>					;; Load receiver into EAX (under arg)
 
 	push DWORD	x									; N arguments
-	StoreSPRegister									; Save down stack pointer (needed for DNU and C++ primitives)
+	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
 
 	mov     edx, [edx].m_aLiterals[&index*OOPSIZE]	; Load selector Oop into edx
 	test	al, 1									; Test for immediate receiver (used later)
@@ -3574,23 +3568,23 @@ ShortSendXArgs MACRO x, offset
 	LOCAL sendToSmallInteger
 
 	; ecx-offset is the literal index
-	mov		edx, [pMethod]							; Load current method
+	mov		edx, [pMethod]							;; Load current method
 	ASSUME	edx:PTR CompiledCodeObj
-	LoadStackValueInto <x>,<eax>					;; Load receiver into EAX (under arg(s))
+	mov		eax, [_SP-(OOPSIZE*x)]					;; Load receiver into EAX (under arg(s))
 	
-	test	al, 1									; Test for immediate receiver (used later)
-	StoreSPRegister									; Save down stack pointer (needed for DNU and C++ primitives)
+	test	al, 1									;; Test for immediate receiver (used later)
+	mov		[STACKPOINTER], _SP		 				;; Save down stack pointer (needed for DNU and C++ primitives)
 
 	mov     edx, [edx].m_aLiterals[(ecx*OOPSIZE)-(offset*OOPSIZE)]	;; Load selector Oop into ecx
-	jnz		sendToSmallInteger						; If a SmallInteger need to load class differently
+	jnz		sendToSmallInteger						;; If a SmallInteger need to load class differently
 
 	ASSUME	eax:PTR OTE
 
-	pushd	x										; X arguments
-	mov		[MESSAGE], edx							; Save down message
+	pushd	x										;; X arguments
+	mov		[MESSAGE], edx							;; Save down message
 	
-	mov		ecx, [eax].m_oteClass					; Get class into ECX
-	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
+	mov		ecx, [eax].m_oteClass					;; Get class into ECX
+	jmp		execMethodOfClass						;; Jump to routine to exec class>>message in ECX>>EDX
 
 sendToSmallInteger:
 	ASSUME	eax:DWORD
@@ -3599,7 +3593,7 @@ sendToSmallInteger:
 	mov		[MESSAGE], edx
 
 	mov		ecx, [Pointers.ClassSmallInteger]
-	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
+	jmp		execMethodOfClass						;; Jump to routine to exec class>>message in ECX>>EDX
 
 	ASSUME	ecx:NOTHING
 ENDM
@@ -3618,7 +3612,7 @@ BEGINBYTECODE shortSendSelfNoArgs
 	PushOop <a>										; push receiver
 	
 	test	al, 1									; Test for immediate receiver (used later)
-	StoreSPRegister									; Save down stack pointer (needed for DNU and C++ primitives)
+	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
 
 	mov     edx, [edx].m_aLiterals[(ecx*OOPSIZE)-(FIRSTSHORTSENDSELFNOARGS*OOPSIZE)]		; Load selector Oop into ecx
 
@@ -3663,8 +3657,7 @@ SendLiteralECXinEAXwithEDXArgs MACRO
 	; Load selector Oop into ecx from literal frame of method pointed at by EAX
 	mov     ecx, [eax].m_aLiterals[ecx*OOPSIZE]
 	ASSUME	eax:NOTHING						; Ptr to method no longer required
-
-	StoreSPRegister							; Save down SP for DNU and prims
+	mov		[STACKPOINTER], _SP		 		; Save down SP for DNU and prims
 	mov		eax, [_SP+(edx*OOPSIZE)]		; Load receiver into EAX (under args) (EDX now free)
 
 	mov		[MESSAGE], ecx					; Set the MESSAGE global
@@ -3712,7 +3705,7 @@ BEGINBYTECODE sendTempNoArgs
 	add		_SP, OOPSIZE
 
 	test	al, 1									; Test for immediate receiver (used later)
-	StoreSPRegister									; Save down stack pointer (needed for DNU and C++ primitives)
+	mov		[STACKPOINTER], _SP						; Save down stack pointer (needed for DNU and C++ primitives)
 
 	pushd	0										; 0 arguments
 	mov		[MESSAGE], edx							; Save down message
@@ -3728,234 +3721,135 @@ BEGINBYTECODE sendTempNoArgs
 	ASSUME	ecx:NOTHING
 ENDBYTECODE sendTempNoArgs
 
-ALIGN 16
 BEGINBYTECODE shortSpecialSendAt
-	mov		eax, [_SP-OOPSIZE]						; Load receiver OTE from stack into EAX
-	ASSUME	eax:PTR OTE
-
-	mov		edx, DWORD PTR [_SP]					; Load argument into EDX
+	mov		eax, [_SP-OOPSIZE]						; Load receiver into EAX
+	mov		edx, [_SP]
 
 	test	al, 1
-	mov		ecx, eax								; Get receiver Oop into ECX (where it remains)
 	jnz		sendToSmallInteger
 
-	and		eax, AtCacheMask						; Mask off index to AtCache size (must be power of 2)
+	ASSUME	eax:PTR OTE
 
+	mov		ecx, [eax].m_oteClass					; Get the class of the Object
+	ASSUME	ecx:PTR OTE
+
+	; Test for integer index first as this will detect typical dictionary lookup by non-integer key without need to compare against Array class
 	sar		edx, 1
-	jnc		sendAt									; Index not an integer
+	jnc		sendToClass								; Index not an integer
+	jle		sendToClass
 
-	; Is the array already in the AtCache?
-	cmp		_AtCache[eax].oteArray, ecx
-	jne		cacheMiss								; If not in cache, must set up before can access entry
+	cmp		ecx, [Pointers.ClassArray]
+	jne		sendToClass
 
-	sub		edx, 1									; Convert 1 based index to zero based offset
-	js		sendAt									; Index out of bounds (<= 0)
+	; It's an Array, so use hard-coded implementation for this very common operation
 
-	; Access the object in the cache
+	mov		ecx, 7fffffffh						; Ignore the sign bit of the size (used to mark const objects)
+	shl		edx, 2								; edx = edx*OOPSIZE
+	and		ecx, [eax].m_size					; Load size into ecx (masking out sign bit)
+	ASSUME	ecx:DWORD
 
-	cmp		edx, _AtCache[eax].maxIndex			; index greater than upper bound?
-	jge		sendAt									; N.B. Comparing zero-based offset against max one-based index, therefore GE
+	mov		eax, [eax].m_location				; Load address of receiver into eax
+	ASSUME	eax:PTR Oop
 
-	IFDEF _DEBUG
-		inc	[ATCACHEHITS]
-	ENDIF
+	cmp		edx, ecx							; Index < size
+	ja		boundsError							; No, out of bounds
 
-	; What type of object is it (pointers, bytes, or String) ?
-	cmp		_AtCache[eax].elemType, AtCacheBytes
-
-	mov		eax, _AtCache[eax].pElements			; Preload element base address
-	ASSUME	eax:NOTHING								; Got pointer to elements (as yet unknown type) in EAX
-
-	jge		cachedByteObjectAt						; If a byte object skip to byte access code
-	ASSUME	eax:PTR Oop								; We know its a pointer object
-
+	sub		_SP, OOPSIZE
 	MPrefetch
-	
-	mov		eax, [eax+edx*OOPSIZE]					; Load Oop from object
-	ASSUME	eax:Oop
 
-	sub		_SP, OOPSIZE							; Adjust stack pointer
-
-	; Overwrite the receiver with the accessed object and inc. its ref count
-	mov		[_SP], eax
+	mov		eax, [eax+edx-OOPSIZE]				; Load Oop of element at required index
+	mov		[_SP], eax							; And overwrite receiver in stack with it
 
 	DispatchNext
 
 sendToSmallInteger:
+	ASSUME	eax:SDWORD									;; EAX is a SmallInteger
 	mov		ecx, [Pointers.ClassSmallInteger]
-	jmp		sendAtToClassInECX
-		
-cacheMiss:
-	IFDEF _DEBUG
-		inc	[ATCACHEMISSES]
-	ENDIF
-sendAt:
-	ASSUME	ecx:PTR OTE
-	mov		ecx, [ecx].m_oteClass
-	
-sendAtToClassInECX:
+	jmp		sendToClass
+
+boundsError:
+	mov		eax, [_SP-OOPSIZE]
+	ASSUME	eax:PTR OTE
+	mov		ecx, [eax].m_oteClass
+
+sendToClass:
 	mov 	edx, [Pointers.atSelector]				; access entry in SpecialSelectors table
-	StoreSPRegister									; Save down SP for DNU and prims
+	mov		[STACKPOINTER], _SP		 				; Save down SP for DNU and prims
 	pushd	1										; 1 argument
 	mov		[MESSAGE], edx							; Set the MESSAGE global
 	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
-
-cachedByteObjectAt:
-	ASSUME eax:PTR BYTE
-	ASSUME ecx:PTR OTE								; ECX is the receiver
-
-	jg		cachedStringAt							; If a string then skip to handler for that
-
-	MPrefetch
-	
-	movzx	eax, BYTE PTR[eax+edx]					; Load required byte, zero extending
-	lea		eax, [eax+eax+1]						; Convert to SmallInteger
-	
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver with SmallInteger result.
-	sub		_SP, OOPSIZE							; Pop arg off stack
-
-	DispatchNext
-
-cachedStringAt:
-	movzx	edx, BYTE PTR[eax+edx]					; Load the character value from the string
-	mov		eax, [OBJECTTABLE]
-
-	; Multiply by 16 (OTE size) to convert to offset into characters in OT
-	shl		edx, 4
-	add		eax, FIRSTCHAROFFSET
-	
-	MPrefetch
-	
-	add		eax, edx
-
-	; Overwrite receiver, count down receiver, and dispatch next bytecode
-
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver with Character result.
-	sub		_SP, OOPSIZE							; Pop arg off stack
-
-	DispatchNext
-
 ENDBYTECODE shortSpecialSendAt
 
-ALIGN 16
-BEGINBYTECODE shortSpecialSendAtPut
-	mov		eax, [_SP-OOPSIZE*2]						; Load receiver OTE from stack into EAX
-	ASSUME	eax:PTR OTE
 
-	mov		edx, DWORD PTR [_SP-OOPSIZE]				; Load index argument into EDX
+BEGINBYTECODE shortSpecialSendAtPut
+	mov		eax, [_SP-OOPSIZE*2]					; Access receiver under arguments
+	mov		edx, [_SP-OOPSIZE]						; Load index argument from stack
 
 	test	al, 1
-	jnz		sendToSmallInteger
+	jnz		sendToSmallInteger						; Its a SmallInteger, send it #at:put: even though this is probably an error
+	ASSUME	eax:PTR OTE
 
-	mov		ecx, eax									; Get receiver Oop into ECX (where it remains)
-	and		eax, AtCacheMask							; Mask off index to atPutCache size (must be power of 2)
-
-	sar		edx, 1
-	jnc		sendAtPut									; Index not an integer
-
-	; Is the array already in the AtPutCache?
-	cmp		_AtPutCache[eax].oteArray, ecx
-	jne		cacheMiss									; If not in cache, must set up before can access entry
-
-	sub		edx, 1										; Convert 1 based index to zero based offset
-	js		sendAtPut									; Index out of bounds (<= 0)
-
-	; Access the object in the cache
-
-	cmp		edx, _AtPutCache[eax].maxIndex				; index greater than upper bound?
-	jge		sendAtPut									; N.B. Comparing zero-based offset against max one-based index, therefore GE
-
-	IFDEF _DEBUG
-		inc	[ATPUTCACHEHITS]
-	ENDIF
-
-	; Is it pointers?
-	cmp		_AtPutCache[eax].elemType, AtCacheBytes
-	mov		eax, _AtPutCache[eax].pElements
-	ASSUME	eax:NOTHING									; Got pointer to elements (as yet unknown type) in EAX
-	jge		cachedByteObjectAtPut						; Contains bytes? Yes, skip to byte access code
-
-	ASSUME	eax:PTR Oop
+	mov		ecx, [eax].m_oteClass
 	
-	lea		edx, [eax+edx*OOPSIZE]						; Get pointer to element into edx
-	ASSUME	edx:PTR Oop
+	sar		edx, 1									; Convert SmallIteger arg to int
+	jnc		sendToClass			 					; Non-SmallInteger?
+	jle		sendToClass								; Index is <= 0?
 
-	; Now do the xchg of the new Oop argument and the existing element at the address
+	cmp		ecx, [Pointers.ClassArray]
+	jne		sendToClass
 
-	mov		ecx, [_SP]									; Reload value to write
-	ASSUME	ecx:PTR OTE
+	; It's an Array, so use hard-coded implementation for this very common operation
 
-	; N.B. Here we are actually writing into an indexed inst var slot, so we must do some ref counting
-	mov		eax, [edx]									; Get old element value
-	CountUpOopIn <c>
-	mov		[edx], ecx									; Store new element value 
-	CountDownOopIn <a>									; Count down overwritten value (destroys registers)
+	mov		ecx, [eax].m_location
+	ASSUME	ecx:PTR Object
+	mov		eax, [eax].m_size						; Compare with byte size of receiver Array
+	sar		eax, 2									; N.B. DON'T mask out the immutable bit here, so size negative if const object
+	lea		ecx, [ecx+edx*OOPSIZE-OOPSIZE]
+	ASSUME	ecx:PTR Oop
+	cmp		edx, eax
 
-	; count down destroys eax, ecx, and edx
+	mov		edx, [_SP]								; Load value to write into EDX
+	ASSUME	edx:PTR OTE
 	
+	jg		boundsError								; No, out of bounds (not unsigned comparison is correct here in case of large EDX that would go negative when shifted)
+
+	; We must inc ref. count, as we are storing into a heap allocated object here
+	CountUpOopIn <d>
+	
+	; Exchange Oop of overwritten value with new value
+	mov		eax, [ecx]
+	mov		[ecx], edx
+
+	; Must count down overwritten value, as it was in a heap object slot
+	CountDownOopIn <a>							
+
+	; count down destroys eax, ecx, and edx, so have to wait til now for prefetch
+	
+	mov		eax, [_SP]								; Reload new value into eax
 	MPrefetch
-	mov		eax, [_SP]									; Reload new value into eax
-	mov		[_SP-OOPSIZE*2], eax						; Overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2								; Pop args
-	DispatchNext
+	mov		[_SP-OOPSIZE*2], eax					; And overwrite receiver in stack with new value
+	sub		_SP, OOPSIZE*2							; Pop args
 	
+	DispatchNext
+
 sendToSmallInteger:
+	ASSUME	eax:SDWORD								; EAX is a SmallInteger
 	mov		ecx, [Pointers.ClassSmallInteger]
-	jmp		sendAtPutToClassInECX
-		
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-cachedByteObjectAtPut:
-	ASSUME eax:PTR BYTE									; 
-	ASSUME ecx:PTR OTE									; ECX is the receiver
-	ASSUME edx:DWORD									; EDX is offset
+	jmp		sendToClass
 
-	jg		cachedStringAtPut
+boundsError:
+	mov		eax, [_SP-OOPSIZE*2]
+	ASSUME	eax:PTR OTE
+	mov		ecx, [eax].m_oteClass
 
-	add		eax, edx									; Make eax a pointer to the byte to be overwritten
-	mov		edx, [_SP]									; Load SmallInteger argument into edx
-
-	sar		edx, 1										; Convert to real integer value
-	jnc		sendAtPut									; Not a SmallInteger
-
-	cmp		edx, 0FFh
-	ja		sendAtPut									; Used unsigned comparison for 0<=ecx<=255
-
-	MPrefetch
-	
-	; Write down the actual byte value
-	mov		BYTE PTR[eax], dl
-	
-	lea		eax, [edx+edx+1]							; Regenerate SmallInteger argument
-
-	mov		[_SP-OOPSIZE*2], eax						; And overwrite receiver in stack with new value
-	sub		_SP, OOPSIZE*2								; Pop args
-
-	DispatchNext
-
-cachedStringAtPut:
-	; Not yet implemented
-	
-	int 3
-	; Test its a character, and if not fail it
-	; Get index out of character
-	; Store into object
-	; Dispatch
-
-cacheMiss:
-	IFDEF _DEBUG
-		inc	[ATPUTCACHEMISSES]
-	ENDIF
-sendAtPut:
-	ASSUME	ecx:PTR OTE
-	mov		ecx, [ecx].m_oteClass
-sendAtPutToClassInECX:
-	mov 	edx, [Pointers.atPutSelector]				; access entry in SpecialSelectors table
-	StoreSPRegister									; Save down SP for DNU and prims
+sendToClass:
+	mov 	edx, [Pointers.atPutSelector]			; access entry in SpecialSelectors table
+	mov		[STACKPOINTER], _SP		 				; Save down SP for DNU and prims
 	pushd	2										; 1 argument
 	mov		[MESSAGE], edx							; Set the MESSAGE global
 	jmp		execMethodOfClass						; Jump to routine to exec class>>message in ECX>>EDX
-
 ENDBYTECODE shortSpecialSendAtPut
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Extended Send Instruction (triple byte). 
@@ -4015,7 +3909,7 @@ MExecNewMethod MACRO
 		ASSUME	eax:DWORD
 	ENDIF
 
-	StoreIPRegister							;; Save IP in case of fault or call to C++ primitive
+	mov		[INSTRUCTIONPOINTER], _IP		;; Save IP in case of fault or call to C++ primitive
 
 	call	eax
 
@@ -4053,10 +3947,6 @@ BEGINPROC execMethodOfClass
 
 	; Cache is 16 bytes per entry (a Pentium sweet spot, and since OTE is 16 bytes long, we don't
 	; need to scale the hash we calculated
-	
-	;; The value in EAX we currently have is *4, since its an Oop (bottom two bits always zero)
-	; The value in EAX we currently have is *16, since its an Oop (bottom four bits always zero)
-	; shl		eax, 2									; index already * 4 because its an Oop
 	
 	; At this point
 	;	EAX = byte index into cache
@@ -4097,7 +3987,7 @@ findMethodCacheMiss:
 	ASSUME	ecx:PTR CompiledCodeObj
 	xor		eax, eax
 	mov		al, [ecx].m_header.primitiveIndex
-	LoadSPRegister									; Restore stack pointer (in case of DNU)
+	mov		_SP, [STACKPOINTER]						; Restore stack pointer (in case of DNU)
 	xor		edx, edx
 	mov		dl, [ecx].m_header.argumentCount
 	
@@ -4404,11 +4294,13 @@ BEGINPRIMITIVE primitiveActivateMethod
 	ret
 
 asyncPending:
-	StoreInterpreterRegisters
+	; Store interpreter registers before calling C++ func
+	mov		[INSTRUCTIONPOINTER], _IP
+	mov		[STACKPOINTER], _SP
 	call	MSGPOLL
-	LoadIPRegister
+	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		eax, [STACKPOINTER]
-	LoadBPRegister
+	mov		_BP, [BASEPOINTER]
 	ret
 ENDPRIMITIVE primitiveActivateMethod
 
@@ -4647,7 +4539,7 @@ BEGINPROCNOALIGN sendLiteralSelectorToSuper			; EDX = argCount, ECX = literal in
 	mov		ecx, (OTE PTR[ecx]).m_location			; Load pointer to class object
 	mov		ecx, (Behavior PTR[ecx]).m_superclass	; Load Oop of superclass into ECX
 
-	StoreSPRegister									; Save down stack pointer (needed for DNU and C++ primitives)
+	mov		[STACKPOINTER], _SP		 				; Save down stack pointer (needed for DNU and C++ primitives)
 	push	edx										; Save arg count for later use
 
 	mov		edx, [MESSAGE]
@@ -4687,7 +4579,9 @@ BEGINPROC EXECUTENEWMETHOD
 	push	_BP
 	xor		eax, eax
 	mov		al, [ecx].m_header.primitiveIndex
-	LoadInterpreterRegisters
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		_SP, [STACKPOINTER]
+	mov		_BP, [BASEPOINTER]
 
 	push	ecx									; Save pMethod
 	IFDEF _DEBUG
@@ -4699,9 +4593,8 @@ BEGINPROC EXECUTENEWMETHOD
 	test	eax, eax							; Primitives return 0 for failure, ~0 for success
 	jz		@F									; Failed?
 	
-	; StoreInterpreterRegisters
 	mov		[STACKPOINTER], eax	
-	StoreIPRegister								; Do we need this?
+	mov		[INSTRUCTIONPOINTER], _IP			; Do we need this?
 
 	pop		_BP
 	pop		_IP
@@ -4713,7 +4606,7 @@ BEGINPROC EXECUTENEWMETHOD
 	call	primitiveActivateMethod
 
 	mov		[STACKPOINTER], eax	
-	StoreIPRegister
+	mov		[INSTRUCTIONPOINTER], _IP
 
 	pop		_BP
 	pop		_IP
@@ -4729,9 +4622,14 @@ BEGINPROC ACTIVATENEWMETHOD
 	push	_IP									; Ditto _IP
 	push	_BP
 
-	LoadInterpreterRegisters
+	; Load interpreter registers
+	mov		_IP, [INSTRUCTIONPOINTER]
+	mov		_SP, [STACKPOINTER]
+	mov		_BP, [BASEPOINTER]
 	MActivateMethod
-	StoreInterpreterRegisters
+	; Store interpreter registers
+	mov		[INSTRUCTIONPOINTER], _IP
+	mov		[STACKPOINTER], _SP
 
 	pop		_BP
 	pop		_IP
@@ -4777,7 +4675,7 @@ ENDBYTECODE shortSpecialSendValue
 ; Send the 1 argument selector #value.
 ; Optimise for one arg blocks to bypass message lookup.
 BEGINBYTECODE shortSpecialSendValueColon
-	LoadStackValueInto <1>, <eax>				; Load receiver block into EAX
+	mov		eax, [_SP-OOPSIZE]					; Load receiver block into EAX
 	test	al, 1								; SmallInteger?
 	jnz		sendMessage							; Yes, skip to send
 	ASSUME	eax:PTR OTE
@@ -4814,7 +4712,7 @@ ENDBYTECODE shortSpecialSendValueColon
 ; Send the 2 argument selector #value:value:.
 ; Optimise for two arg blocks to bypass message lookup.
 BEGINBYTECODE shortSpecialSendValueValue
-	LoadStackValueInto <2>, <eax>				; Load receiver block into EAX
+	mov		eax, [_SP-OOPSIZE*2]				; Load receiver block into EAX
 	test	al, 1								; SmallInteger?
 	jnz		sendMessage							; Yes, skip to send
 	ASSUME	eax:PTR OTE
@@ -5035,7 +4933,8 @@ ENDPROC activateBlock
 ;; These are very rarely used
 
 BEGINRARECODE longJumpIfTrue
-	PopOopInto <edx>
+	mov		edx, [_SP]
+	sub		_SP, OOPSIZE
 	sub		edx, [oteTrue]
 	jnz		@F
 
@@ -5052,12 +4951,13 @@ BEGINRARECODE longJumpIfTrue
 
 @@:	; Errorneous attempt to branch on non-boolean object
 	sub		_IP, 1+SIZEOF WORD						;; We'll retry the conditional test if #mustBeBoolean returns
-	UnPop
+	add		_SP, OOPSIZE			; Unpop
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>
 ENDBYTECODE longJumpIfTrue
 
 BEGINRARECODE longJumpIfFalse
-	PopOopInto <edx>
+	mov		edx, [_SP]
+	sub		_SP, OOPSIZE
 	sub		edx, [oteFalse]
 	jnz		@F
 
@@ -5075,12 +4975,13 @@ BEGINRARECODE longJumpIfFalse
 
 @@:	; Errorneous attempt to branch on non-boolean object
 	sub		_IP, 1+SIZEOF WORD
-	UnPop
+	add		_SP, OOPSIZE			; Unpop
 	SendSelectorNoArgs <Pointers.MustBeBooleanSelector>
 ENDBYTECODE longJumpIfFalse
 
 BEGINRARECODE longJumpIfNil
-	PopOopInto <edx>
+	mov		edx, [_SP]
+	sub		_SP, OOPSIZE
 	cmp		edx, [oteNil]
 	jne		@F
 
@@ -5095,7 +4996,8 @@ BEGINRARECODE longJumpIfNil
 ENDBYTECODE longJumpIfNil
 
 BEGINRARECODE longJumpIfNotNil
-	PopOopInto <edx>
+	mov		edx, [_SP]
+	sub		_SP, OOPSIZE
 	cmp		edx, [oteNil]
 	je		@F
 

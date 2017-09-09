@@ -113,7 +113,6 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 	// that are in the stack but are otherwise unreferenced)
 	ote1->m_count = 1;
 	ote1->countDown();
-	Interpreter::flushAtCaches();
 
 	CHECKREFERENCES
 }

@@ -678,10 +678,6 @@ void Interpreter::switchTo(ProcessOTE* oteProcess)
 		}
 #endif
 
-		// Reconciling the ZCT will result in objects being deleted, so these should be removed from
-		// the At Caches.
-		flushAtCaches();
-
 		// Important to get the real active process here
 		ObjectMemory::storePointerWithValue(reinterpret_cast<POTE&>(scheduler()->m_activeProcess), reinterpret_cast<POTE>(oteProcess));
 		m_registers.NewActiveProcess(oteProcess);

@@ -155,9 +155,6 @@ Oop* __fastcall Interpreter::primitiveResize()
 		ASSERT(pNew != NULL || newSize == 0);
 	}
 
-	// Object size has changed, invalidating any AtCache entry
-	purgeObjectFromCaches(oteReceiver);
-
 	return primitiveSuccess(1);
 }
 
@@ -205,17 +202,6 @@ void Interpreter::flushCaches()
 #endif
 
 	ZeroMemory(methodCache, sizeof(methodCache));
-
-	flushAtCaches();
-}
-
-void Interpreter::flushAtCaches()
-{
-#ifdef _DEBUG
-	//DumpAtCacheStats();
-#endif
-	ZeroMemory(AtCache, sizeof(AtCache));
-	ZeroMemory(AtPutCache, sizeof(AtPutCache));
 }
 
 Oop* __fastcall Interpreter::primitiveFlushCache()

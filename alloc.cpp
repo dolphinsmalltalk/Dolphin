@@ -123,11 +123,14 @@ PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer
 
 	// Initialise the fields to nils
 	const Oop nil = Oop(Pointers.Nil);		// Loop invariant (otherwise compiler reloads each time)
-	const MWORD loopEnd = oops;
 	VariantObject* pLocation = ote->m_location;
+#ifdef _M_IX86
+	__stosd(reinterpret_cast<DWORD*>(pLocation->m_fields), nil, oops);
+#else
+	const MWORD loopEnd = oops;
 	for (MWORD i=0; i<loopEnd; i++)
 		pLocation->m_fields[i] = nil;
-
+#endif
 	ASSERT(ote->isPointers());
 	
 	return reinterpret_cast<PointersOTE*>(ote);
@@ -149,7 +152,7 @@ BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWOR
 	// Byte objects are initialized to zeros (but not the header)
 	// Note that we round up to initialize to the next DWORD
 	// This can be useful when working on a 32-bit word machine
-	memset(newBytes->m_fields, 0, _ROUND2(objectSize, sizeof(DWORD)));
+	ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(DWORD)));
 
 	ASSERT(ote->getSize()== objectSize+SizeOfPointers(0));
 
@@ -291,10 +294,15 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, MWORD init
 
 	// Fill space with nils for initial values
 	const Oop nil = Oop(Pointers.Nil);
-	const unsigned loopEnd = initialSize-ObjectHeaderSize;
-	for (unsigned i=0; i< loopEnd; i++)
-		pLocation->m_fields[i] = nil;
 	
+#ifdef _M_IX86
+	__stosd(reinterpret_cast<DWORD*>(pLocation->m_fields), nil, initialSize);
+#else
+	const unsigned loopEnd = initialSize;
+	for (unsigned i = 0; i< loopEnd; i++)
+		pLocation->m_fields[i] = nil;
+#endif
+
 	// All of the above doesn't touch any shared static member vars
 //	EnterCritSection();
 

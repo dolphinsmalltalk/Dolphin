@@ -134,7 +134,7 @@ primitiveVirtualCall PROC
 
 	; We must save down IP, as we're going to overwrite it, and because it may
 	; be required if a callback into Smalltalk results
-	StoreIPRegister
+	mov		[INSTRUCTIONPOINTER], _IP
 	
 	mov		eax, edx
 	neg		eax
@@ -251,7 +251,7 @@ asyncDLL32Call PROC STDCALL PUBLIC USES edi esi ebx,
 performCall:
 	push	eax												; ARG1: cached proc address
 	call	callExternalFunction
-	StoreSPRegister
+	mov		[STACKPOINTER], _SP		 						; Save down interpreter stack pointer, e.g. for C routine
 	ret														; eax will be non-zero as otherwise we'd not be here
 
 procAddressNotCached:
@@ -312,7 +312,8 @@ primitiveDLL32Call PROC
 
 	; We must save down IP/SP, as we're going to overwrite IP, and because they may
 	; be required if a callback into Smalltalk results
-	StoreInterpreterRegisters
+	mov		[INSTRUCTIONPOINTER], _IP
+	mov		[STACKPOINTER], _SP
 
 	push	0												; ARG6: Overlapped? (no)
 	push	OFFSET INTERPCONTEXT							; ARG5: Pointer to interpreters thread context

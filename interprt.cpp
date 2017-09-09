@@ -83,11 +83,6 @@ POTE* Interpreter::m_roots[] = {
 __declspec(align(16))
 Interpreter::MethodCacheEntry Interpreter::methodCache[MethodCacheSize];
 
-__declspec(align(16))
-Interpreter::AtCacheEntry Interpreter::AtCache[AtCacheEntries];
-__declspec(align(16))
-Interpreter::AtCacheEntry Interpreter::AtPutCache[AtCacheEntries];
-
 DWORD Interpreter::m_dwThreadId;
 HANDLE Interpreter::m_hThread;
 
@@ -277,13 +272,6 @@ inline void Interpreter::initializeCaches()
 	ASSERT(sizeof(OTE) == 16);
 	ASSERT(sizeof(MethodCacheEntry) == sizeof(OTE));
 	ASSERT(MethodCacheSize == 1024);
-
-	ASSERT(sizeof(AtCacheEntry) == sizeof(OTE));
-
-	// Caches should be 16-byte aligned
-	ASSERT(((intptr_t)methodCache & 0xF) == 0);
-	ASSERT(((intptr_t)AtCache & 0xF) == 0);
-	ASSERT(((intptr_t)AtPutCache & 0xF) == 0);
 
 	flushCaches();
 }
