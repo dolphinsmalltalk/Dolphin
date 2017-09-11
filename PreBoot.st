@@ -285,6 +285,12 @@ setStream: anExternalHandle flags: anInteger name: aString
 
 SessionManager current stdioStreams do: [:each | each setStream: each asParameter flags: 16r80 name: nil]!
 
+!Process methodsFor!
+
+at: anInteger 
+	<primitive: 60>
+	^self errorAt: anInteger! !
+
 Process instanceVariableString: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'!
 
 CRTConstants at: '_EM_INEXACT' put: 1!

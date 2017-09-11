@@ -970,146 +970,199 @@ testOverlappedCallTermination
 	1 to: 5 do: [:i | self earlyTermination: true]!
 
 testPrimitiveAt
-	"First some error cases - accessing non-indexable objects"
-
-	| array |
-	self
-		should: [Array at: 1]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self
-		should: [Array at: 0]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self
-		should: [Array at: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	array := Array with: 1.
-	self should: [(array at: 1) == 1].
-	"Some tests are repeated with a new array in case of different behaviour resulting from caching"
-	self should: [(array at: 1) == 1].
-	"Now attempt some out of bounds accesses"
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 2] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
+	| array outOfBounds |
+	#(1 0 nil) do: 
+			[:each |
+			self
+				should: [Array at: each]
+				raise: Error
+				matching: [:ex | ex messageText = 'not indexable'].
+			self
+				should: [Array perform: #at: with: each]
+				raise: Error
+				matching: [:ex | ex messageText = 'not indexable']].
+	array := Array with: 2.
+	self assert: (array at: 1) sameAs: 2.
+	self assert: (array perform: #at: with: 1) sameAs: 2.
+	"Now attempt some out of bounds accesses in mutable and immutable arrays"
+	outOfBounds := {-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum}.
+	{array. #(1)} do: 
+			[:subject |
+			outOfBounds do: 
+					[:each |
+					self should: [subject at: each] raise: BoundsError.
+					self should: [subject perform: #at: with: each] raise: BoundsError]].
 
 	"Repeat for an object with one named instance variable and no #at: override"
-	array := MourningWeakArray with: 1.
-	self should: [(array at: 1) == 1].
-	self should: [(array at: 1) == 1].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 2] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
+	array := MourningWeakArray with: 2.
+	self assert: (array at: 1) sameAs: 2.
+	self assert: (array perform: #at: with: 1) sameAs: 2.
+	outOfBounds do: 
+			[:each |
+			self should: [array at: each] raise: BoundsError.
+			self should: [array perform: #at: with: each] raise: BoundsError].
 
 	"And again for one with a number of named instance variables (a method)"
 	array := Object compiledMethodAt: #addDependent:.
-	self should: [(array at: 1) == #getDependents].
-	self should: [(array at: 1) == #getDependents].
+	self assert: (array at: 1) sameAs: #getDependents.
 	self should: 
 			[| lit |
 			lit := array at: 2.
 			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
-	self should: [(array at: 3) == #setDependents:].
-	self should: [(array at: array size) == #add:].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: array size + 1] raise: BoundsError.
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
+	self assert: (array at: 3) sameAs: #setDependents:.
+	self assert: (array at: array size) sameAs: #add:.
+	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
+			[:each |
+			self should: [array at: each] raise: BoundsError.
+			self should: [array perform: #at: with: each] raise: BoundsError].
 
 	"LargeIntegers"
-	self should: [array at: SmallInteger maximum + 1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31) - 1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32) - 1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)] raise: BoundsError.
-	self should: [array at: SmallInteger minimum - 1] raise: BoundsError.
-	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
+	{SmallInteger maximum + 1.
+		(2 raisedToInteger: 31) - 1.
+		2 raisedToInteger: 31.
+		(2 raisedToInteger: 32) - 1.
+		2 raisedToInteger: 32.
+		SmallInteger minimum - 1.
+		-2 raisedToInteger: 31} do: 
+				[:each |
+				self should: [array at: each] raise: BoundsError.
+				self should: [array perform: #at: with: each] raise: BoundsError].
 
 	"Try accessing with non-integer indices"
-	self
-		should: [array at: $1]
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self
-		should: [array at: '1']
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self
-		should: [array at: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self
-		should: [array at: #[1]]
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self
-		should: [array at: #'1']
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self
-		should: [array at: #(1)]
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self
-		should: [array at: #(1)]
-		raise: Error
-		matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
+	#($1 '1' nil true false #[1] #'1' #(1)) do: 
+			[:each |
+			self
+				should: [array at: each]
+				raise: Error
+				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
 	array := Array with: 'a' with: 'b'.
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 2) = 'b'].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
+	self assert: (array at: 1) equals: 'a'.
+	self assert: (array at: 2) equals: 'b'.
 	array := MourningWeakArray with: 'a' with: 'b'.
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 1) = 'a'].
-	self should: [(array at: 2) = 'b'].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
+	self assert: (array at: 1) equals: 'a'.
+	self assert: (array at: 2) equals: 'b'.
 	array := (-100 to: 100) asArray.
-	-100 to: 100 do: [:i | self should: [(array at: i + 100 + 1) == i]]!
+	-100 to: 100
+		do: 
+			[:i |
+			self assert: (array at: i + 100 + 1) sameAs: i.
+			self assert: (array perform: #at: with: i + 100 + 1) sameAs: i]!
 
 testPrimitiveAtPut
 	"First some error cases - accessing non-indexable objects"
 
 	| array |
-	self
-		should: [Array at: 1 put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self
-		should: [Array at: 0 put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	self
-		should: [Array at: nil put: nil]
-		raise: Error
-		matching: [:ex | ex messageText = 'not indexable'].
-	array := Array with: 1.
+	#(1 0 nil) do: 
+			[:each |
+			self
+				should: [Array at: each put: nil]
+				raise: Error
+				matching: [:ex | ex messageText = 'not indexable']].
+	array := Array with: 0.
 	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
-	"One second access, will be in the cache"
+	"One second access, may be cached"
 	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
 
 	"Now attempt some out of bounds accesses"
-	self should: [array at: 0 put: '0'] raise: BoundsError.
-	self should: [array at: 2 put: '2'] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 0 put: '0'] raise: BoundsError.
-	array := Array with: 1.
-	self should: [array at: 2 put: '2'] raise: BoundsError.
-	self should: [array at: SmallInteger maximum put: nil] raise: BoundsError.
-	self should: [array at: SmallInteger minimum put: nil] raise: BoundsError!
+	{-1.
+		0.
+		array size + 1.
+		SmallInteger maximum.
+		SmallInteger minimum.
+		SmallInteger maximum + 1.
+		(2 raisedToInteger: 31) - 1.
+		2 raisedToInteger: 31.
+		(2 raisedToInteger: 32) - 1.
+		2 raisedToInteger: 32.
+		SmallInteger minimum - 1.
+		-2 raisedToInteger: 31} do: 
+				[:each |
+				self should: [array at: each put: nil] raise: BoundsError.
+				self should: 
+						[array
+							perform: #at:put:
+							with: each
+							with: nil]
+					raise: BoundsError]!
+
+testPrimitiveBasicAt
+	| array outOfBounds |
+	#(1 0 nil) do: 
+			[:each |
+			self
+				should: [Array basicAt: each]
+				raise: Error
+				matching: [:ex | ex messageText = 'not indexable'].
+			self
+				should: [Array perform: #basicAt: with: each]
+				raise: Error
+				matching: [:ex | ex messageText = 'not indexable']].
+	array := Array with: 2.
+	self assert: (array basicAt: 1) sameAs: 2.
+	self assert: (array perform: #basicAt: with: 1) sameAs: 2.
+	"Now attempt some out of bounds accesses in mutable and immutable arrays"
+	outOfBounds := {-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum}.
+	{array. #(1)} do: 
+			[:subject |
+			outOfBounds do: 
+					[:each |
+					self should: [subject basicAt: each] raise: BoundsError.
+					self should: [subject perform: #basicAt: with: each] raise: BoundsError]].
+
+	"Repeat for an object with one named instance variable and no #basicAt: override"
+	array := MourningWeakArray with: 2.
+	self assert: (array basicAt: 1) sameAs: 2.
+	self assert: (array perform: #basicAt: with: 1) sameAs: 2.
+	outOfBounds do: 
+			[:each |
+			self should: [array basicAt: each] raise: BoundsError.
+			self should: [array perform: #basicAt: with: each] raise: BoundsError].
+
+	"And again for one with a number of named instance variables (a method)"
+	array := Object compiledMethodAt: #addDependent:.
+	self assert: (array basicAt: 1) sameAs: #getDependents.
+	self should: 
+			[| lit |
+			lit := array basicAt: 2.
+			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
+	self assert: (array basicAt: 3) sameAs: #setDependents:.
+	self assert: (array basicAt: array size) sameAs: #add:.
+	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
+			[:each |
+			self should: [array basicAt: each] raise: BoundsError.
+			self should: [array perform: #basicAt: with: each] raise: BoundsError].
+
+	"LargeIntegers"
+	{SmallInteger maximum + 1.
+		(2 raisedToInteger: 31) - 1.
+		2 raisedToInteger: 31.
+		(2 raisedToInteger: 32) - 1.
+		2 raisedToInteger: 32.
+		SmallInteger minimum - 1.
+		-2 raisedToInteger: 31} do: 
+				[:each |
+				self should: [array basicAt: each] raise: BoundsError.
+				self should: [array perform: #basicAt: with: each] raise: BoundsError].
+
+	"Try accessing with non-integer indices"
+	#($1 '1' nil true false #[1] #'1' #(1)) do: 
+			[:each |
+			self
+				should: [array basicAt: each]
+				raise: Error
+				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
+	array := Array with: 'a' with: 'b'.
+	self assert: (array basicAt: 1) equals: 'a'.
+	self assert: (array basicAt: 2) equals: 'b'.
+	array := MourningWeakArray with: 'a' with: 'b'.
+	self assert: (array basicAt: 1) equals: 'a'.
+	self assert: (array basicAt: 2) equals: 'b'.
+	array := (-100 to: 100) asArray.
+	-100 to: 100
+		do: 
+			[:i |
+			self assert: (array basicAt: i + 100 + 1) sameAs: i.
+			self assert: (array perform: #basicAt: with: i + 100 + 1) sameAs: i]!
 
 testPrimitiveBytesIsNull
 	| method subject |
@@ -1714,6 +1767,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testOverlappedCallTermination!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
