@@ -18,7 +18,7 @@ at: index
 		0	- aSmallInteger is not a SmallInteger
 		1	- aSmallInteger out of bounds (not in the range 1..receiver's indexable size)."
 
-	<primitive: 49>
+	<primitive: 60>
 	^self errorAt: index!
 
 at: index put: value
@@ -32,7 +32,7 @@ at: index put: value
 		2	- the argument, value, is not of a class which can be stored in the receiver
 			(e.g. its a non-SmallInteger and the receiver is a ByteArray)."
 
-	<primitive: 50>
+	<primitive: 61>
 	^self errorAt: index put: value!
 
 block

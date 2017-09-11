@@ -63,7 +63,7 @@ at: anInteger
 		0	- index is not a SmallInteger
 		1	- index out of bounds (not in the range 1..receiver's indexable size)."
 
-	<primitive: 49>
+	<primitive: 60>
 	^self errorAt: anInteger!
 
 at: anInteger ifAbsent: exceptionBlock 
@@ -716,7 +716,6 @@ topFrame
 !Process categoriesFor: #finalize!finalizing!private! !
 !Process categoriesFor: #fpControl!accessing!public! !
 !Process categoriesFor: #fpeMask:!accessing!private! !
-!Process categoriesFor: #fpStatus!accessing!public! !
 !Process categoriesFor: #frameAtAddress:!private!stack frames! !
 !Process categoriesFor: #frameAtIndex:!private!stack frames! !
 !Process categoriesFor: #frameClass!private!stack frames! !

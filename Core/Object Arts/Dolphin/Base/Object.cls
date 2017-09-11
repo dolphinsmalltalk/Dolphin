@@ -218,7 +218,7 @@ basicAt: aSmallInteger
 	unless directly performed, or unless the inlined code detects an error (such as
 	an out-of-bounds index). It is not possible to override this message successfully."
 
-	<primitive: 49>
+	<primitive: 60>
 	^self errorAt: aSmallInteger!
 
 basicAt: aSmallInteger put: value
@@ -238,7 +238,7 @@ basicAt: aSmallInteger put: value
 	unless directly performed, or unless the inlined code detects an error (such as
 	an out-of-bounds index). It is not possible to override this message successfully."
 
-	<primitive: 50>
+	<primitive: 61>
 	^self errorAt: aSmallInteger put: value!
 
 basicClass
