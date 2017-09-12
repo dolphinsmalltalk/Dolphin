@@ -669,7 +669,7 @@ extCallArgCHAR:
 	jne		preCallFail									; No? Fail it
 	ASSUME	ARG:PTR Character							; Yes
 
-	mov		ARG, [ARG].m_asciiValue						; Load ascii value from Char
+	mov		ARG, [ARG].m_codePoint						; Load ascii value from Char
 	ASSUME	ARG:DWORD
 	sar		ARG, 1										; Convert to 32-bit int
 	PushLoopNext <ARG>

@@ -262,7 +262,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 		// Search is in bounds, lets do it
 		CharOTE* oteChar = reinterpret_cast<CharOTE*>(valuePointer);
 		Character* charObj = oteChar->m_location;
-		const char charValue = static_cast<char>(ObjectMemoryIntegerValueOf(charObj->m_asciiValue));
+		const char charValue = static_cast<char>(ObjectMemoryIntegerValueOf(charObj->m_codePoint));
 
 		String* chars = receiverPointer->m_location;
 
@@ -280,3 +280,4 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 	stackValue(3) = answer;
 	return primitiveSuccess(3);
 }
+

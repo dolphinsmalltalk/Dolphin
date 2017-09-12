@@ -23,7 +23,7 @@ namespace ST
 	class Character : public Magnitude
 	{
 	public:
-		Oop m_asciiValue;		// Small integer value
+		Oop m_codePoint;		// Small integer value
 		enum { CharacterValueIndex = Magnitude::FixedSize, FixedSize };
 
 		static CharOTE* New(unsigned char value);

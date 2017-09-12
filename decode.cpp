@@ -257,7 +257,7 @@ ostream& operator<<(ostream& st, const CharOTE* ote)
 	if (IsBadReadPtr(&ch, sizeof(Character)))
 		return st << "***Bad Character: " << ch;
 	else
-		return st << '$' << char(ObjectMemoryIntegerValueOf(ch->m_asciiValue));
+		return st << '$' << char(ObjectMemoryIntegerValueOf(ch->m_codePoint));
 }
 
 ostream& operator<<(ostream& st, const FloatOTE* ote)

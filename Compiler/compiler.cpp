@@ -1449,7 +1449,6 @@ int Compiler::ParseStatements(TokenType closingToken, bool popResults)
 	// stack into env temps. The reason for having a Nop is to avoid any jump target confusion, 
 	// since when inserting an instruction the old instruction is shuffled down and the inserted
 	// instruction becomes the jump target.
-	_ASSERTE(m_codePointer == 0);
 	GenNop();
 
 	int count = 0;
@@ -3312,6 +3311,7 @@ void Compiler::AssertValidIpForTextMapEntry(int ip, bool bFinal)
 			|| (bc.byte == IncrementTemp || bc.byte == DecrementTemp)
 			|| (bc.byte == IncrementStackTop || bc.byte == DecrementStackTop)
 			|| (bc.byte == IncrementPushTemp|| bc.byte == DecrementPushTemp)
+			|| (bc.byte == IsZero)
 			);
 	}
 }

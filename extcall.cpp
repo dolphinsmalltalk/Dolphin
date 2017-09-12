@@ -864,7 +864,7 @@ void doBlah()
 						mov		eax, [eax].m_location		// Load object pointer
 						cmp		ecx, [Pointers.ClassCharacter]
 						jne		preCallFail					// Not a character
-						mov		eax, [eax].m_asciiValue		// Load ascii value of char (SmallInteger)
+						mov		eax, [eax].m_codePoint		// Load ascii value of char (SmallInteger)
 						sar		eax, 1						// Convert to SmallInteger
 						push	eax
 					}

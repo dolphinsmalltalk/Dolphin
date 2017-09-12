@@ -385,7 +385,7 @@ QWORDValue STRUCT 2t
 QWORDValue ENDS
 
 Character STRUCT 2t
-	m_asciiValue		Oop				?
+	m_codePoint		Oop				?
 Character ENDS
 
 ByteArray		STRUCT 2t
