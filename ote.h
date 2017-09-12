@@ -51,8 +51,9 @@ public:
 	// Often it is more efficient to use masking to avoid a 16-bit load operation
 	enum { FreeMask = 1, PointerMask = 2, MarkMask = 4, FinalizeMask = 8, WeakOrZMask = 16 };
 	enum { WeakMask = (PointerMask | WeakOrZMask) };
+	enum { SizeMask = 0x7FFFFFFF, ImmutabilityBit = 0x80000000 };
 
-	__forceinline MWORD getSize() const						{ return m_size & 0x7FFFFFFF; }
+	__forceinline MWORD getSize() const						{ return m_size & SizeMask; }
 	__forceinline void setSize(MWORD size)					{ m_size = size; }
 
 	__forceinline MWORD getWordSize() const					{ return getSize()/sizeof(MWORD); }
@@ -95,8 +96,8 @@ public:
 
 	__forceinline bool decRefs()							{ return (m_count < MAXCOUNT) && (--m_count == 0); }
 	__forceinline bool isImmutable() const					{ return static_cast<int>(m_size) < 0; }
-	__forceinline void beImmutable()						{ m_size |= 0x80000000; }
-	__forceinline void beMutable()							{ m_size &= ~0x80000000; }
+	__forceinline void beImmutable()						{ m_size |= ImmutabilityBit; }
+	__forceinline void beMutable()							{ m_size &= SizeMask; }
 	__forceinline BOOL isFree() const						{ return m_dwFlags & FreeMask; /*m_flags.m_free;*/ }
 	__forceinline void beFree()								{ m_dwFlags |= FreeMask; }
 	__forceinline void setFree(bool bFree)					{ m_flags.m_free = bFree; }
@@ -164,6 +165,7 @@ public:
 
 #include "STObject.h"
 typedef TOTE<ST::Object> OTE;
+typedef TOTE<void>* OOP;
 #ifndef POTE_DEFINED
 typedef OTE* POTE;
 #define POTE_DEFINED

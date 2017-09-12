@@ -44,7 +44,7 @@
   <Type Name="TOTE&lt;ST::String&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed String**</DisplayString>
-    <DisplayString Condition="!m_flags.m_free">{m_location,na}</DisplayString>
+    <DisplayString Condition="!m_flags.m_free">{m_location,na} (size {m_size})</DisplayString>
     <Expand HideRawView="true">
       <ExpandedItem>m_location</ExpandedItem>
     </Expand>
@@ -78,7 +78,7 @@
   <Type Name="TOTE&lt;ST::Character&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Character**</DisplayString>
-    <DisplayString>{m_location->m_asciiValue>>1,c}</DisplayString>
+    <DisplayString>{m_location->m_codePoint>>1,c}</DisplayString>
     <Expand HideRawView="true"></Expand>   
   </Type>
   
@@ -121,7 +121,7 @@
       <Item Name="myList">m_myList</Item>
       <Item Name="primitiveFailureCode">(OTE*)m_primitiveFailureCode,na</Item>
       <Item Name="primitiveFailureData">(OTE*)m_primitiveFailureData,na</Item>
-      <Item Name="fpeMask">(OTE*)m_fpeMask,na</Item>
+      <Item Name="m_fpControl">(OTE*)m_fpControl,na</Item>
       <Item Name="exceptionEnvironment">(OTE*)m_exceptionEnvironment,na</Item>
       <LinkedListItems>
         <HeadPointer>(ST::StackFrame*)(m_suspendedFrame-1)</HeadPointer>
@@ -179,12 +179,12 @@
   </Type>
   <Type Name="ST::StackFrame">
     <!-- Omit the calling frame since the debugger will expand the list and show this as the address of each element anyway -->
-    <DisplayString Condition="!(m_environment&amp;1) &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass==Pointers.ClassBlockClosure">{{{(TOTE&lt;ST::BlockClosure&gt;*)m_environment,na}, ip {m_ip>>1}, sp {m_sp-1,x}, bp {m_bp-1,x}}</DisplayString>
+    <DisplayString Condition="!(m_environment&amp;1) &amp;&amp; ((TOTE&lt;ST::Object&gt;*)m_environment)->m_oteClass==Pointers.ClassBlockClosure">{{{(TOTE&lt;ST::BlockClosure&gt;*)m_environment,na}, ip {m_ip>>1}, sp {m_sp-1,x}, bp {m_bp-1,x}}</DisplayString>
     <DisplayString>{{{m_method,na} &#64; {m_ip>>1}, sp {m_sp-1,x}, bp {m_bp-1,x}}}</DisplayString>
     <Expand>
-      <Item Name="block" Condition="!(m_environment&amp;1) &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass==Pointers.ClassBlockClosure">(TOTE&lt;ST::BlockClosure&gt;*)m_environment</Item>
-      <Item Name="context" Condition="!(m_environment&amp;1) &amp;&amp; ((TOTE&lt;void&gt;*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">(TOTE&lt;void&gt;*)m_environment</Item>
-      <Item Name="method" Condition="(m_environment&amp;1) || ((TOTE&lt;void&gt;*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">m_method</Item>
+      <Item Name="block" Condition="!(m_environment&amp;1) &amp;&amp; ((OTE*)m_environment)->m_oteClass==Pointers.ClassBlockClosure">(TOTE&lt;ST::BlockClosure&gt;*)m_environment</Item>
+      <Item Name="context" Condition="!(m_environment&amp;1) &amp;&amp; ((OTE*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">(OTE*)m_environment</Item>
+      <Item Name="method" Condition="(m_environment&amp;1) || ((OTE*)m_environment)->m_oteClass!=Pointers.ClassBlockClosure">m_method</Item>
     </Expand>
   </Type>
   <!-- CompiledCode -->
@@ -194,7 +194,7 @@
     <Expand>
       <ExpandedItem>m_location</ExpandedItem>
       <ArrayItems>
-        <Size>((m_size&amp;0x7FFFFFFF) - sizeof(CompiledMethod))>>2</Size>
+        <Size>((m_size&amp;0x7FFFFFFF) - sizeof(ST::CompiledMethod))>>2</Size>
         <ValuePointer>(OTE**)&amp;(m_location->m_aLiterals)</ValuePointer>
       </ArrayItems>
     </Expand>
@@ -230,7 +230,7 @@
       <Item Name="method">(OTE*)m_method</Item>
       <Item Name="initialIP">(OTE*)m_initialIP,na</Item>
       <Item Name="info">m_info</Item>
-      <Item Name="receiver">(TOTE&lt;void&gt;*)m_receiver</Item>
+      <Item Name="receiver">(OTE*)m_receiver</Item>
     </Expand>
   </Type>
   <Type Name="ST::BlockInfo">
@@ -262,7 +262,7 @@
     </Expand>
   </Type>
   <Type Name="ST::VariableBinding">
-    <DisplayString>{(TOTE&lt;void&gt;*)m_key} -> {(TOTE&lt;void&gt;*)m_value}</DisplayString>
+    <DisplayString>{(OTE*)m_key} -> {(OTE*)m_value}</DisplayString>
     <Expand HideRawView="true">
       <Item Name="key">m_key</Item>
       <Item Name="value">(OTE*)(m_value)</Item>
@@ -292,9 +292,9 @@
   </Type>
   
   <!-- Generic OTEs -->
-  <Type Name="TOTE&lt;void&gt;" Inheritable="true">
+  <Type Name="TOTE&lt;ST::Object&gt;" Inheritable="true">
      <!-- SmallInteger -->
-    <DisplayString Condition="((Oop)this) &amp; 1">{(int)(((Oop)this)>>1),na}</DisplayString>
+    <DisplayString Condition="((Oop)this)&amp;1">{(int)(((Oop)this)>>1),na} (SmallInteger)</DisplayString>
     <!-- Free'd object -->
     <DisplayString Condition="m_flags.m_free">**a Freed Object**</DisplayString>
     <!-- Pseudo vars -->
@@ -323,7 +323,7 @@
     <DisplayString Condition="!m_flags.m_pointer">{(TOTE&lt;ST::VariantByteObject&gt;*)this,na}</DisplayString>
     <DisplayString>a {m_oteClass,na}</DisplayString>
     
-    <Expand>
+    <Expand HideRawView="true">
       <!--Expand recognised classes by casting to the custom visualization defined above-->
       <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassString">(TOTE&lt;ST::String&gt;*)this</ExpandedItem>
       <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassSymbol">(TOTE&lt;ST::String&gt;*)this</ExpandedItem>

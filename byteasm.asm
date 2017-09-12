@@ -574,10 +574,10 @@ FetchNext MACRO
 	IFDEF _DEBUG
 		.IF ([EXECUTIONTRACE])
 			mov		ecx, _IP
-			mov		edx, _SP
 			; We must preserve edx and eax so that this is transparent, 
 			; but ecx will be overwritten anyway, so we can ignore that.
 			push	edx
+			mov		edx, _SP
 			push	eax
 			call	DEBUGEXECTRACE
 			pop		eax
