@@ -1009,7 +1009,7 @@ void OverlappedCall::ReincrementProcessReferences()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive 
 
-Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(CompiledMethod& method, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 {
 	//inPrim = true;
 	//completed = false;
@@ -1021,7 +1021,9 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(CompiledMethod& method, uns
 	}
 	#endif
 
-	OverlappedCall* pCall = OverlappedCall::Do(&method, argCount);
+	CompiledMethod* method = m_registers.m_oopNewMethod->m_location;
+
+	OverlappedCall* pCall = OverlappedCall::Do(method, argCount);
 	if (pCall == NULL)
 		// Nested overlapped calls are not supported
 		return primitiveFailure(0);

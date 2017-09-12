@@ -27,7 +27,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //	Storage Management Primitives
 
-Oop* __fastcall Interpreter::primitiveNewInitializedObject(CompiledMethod&, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveNewInitializedObject(void*, unsigned argCount)
 {
 	Oop* sp = m_registers.m_stackPointer;
 	Oop oopReceiver = *(sp - argCount);
@@ -172,23 +172,11 @@ Oop* __fastcall Interpreter::primitiveNewVirtual()
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveAllReferences(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveAllReferences()
 {
 	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
 	Oop* sp = m_registers.m_stackPointer;
-	bool includeWeakRefs;
-	switch (argumentCount)
-	{
-	case 0:
-		includeWeakRefs = true;
-		break;
-	case 1:
-		includeWeakRefs = *sp-- == reinterpret_cast<Oop>(Pointers.True);
-		break;
-	default:
-		// 0 or 1 args expected
-		return primitiveFailure(0);
-	}
+	bool includeWeakRefs = *sp-- == reinterpret_cast<Oop>(Pointers.True);
 
 	// Resize the active process to exclude the receiver and arg (if any) to the primitive
 	ST::Process* pActiveProcess = m_registers.m_pActiveProcess;

@@ -1155,7 +1155,7 @@ inline bool LinkedList::isEmpty()
 // Process related primitives (Semaphore etc)
 #include "InterprtPrim.inl"
 
-Oop* __fastcall Interpreter::primitiveSignal(CompiledMethod&, unsigned)
+Oop* __fastcall Interpreter::primitiveSignal()
 {
 	SemaphoreOTE* receiver = reinterpret_cast<SemaphoreOTE*>(stackTop());
 	HARDASSERT(ObjectMemory::fetchClassOf((Oop)receiver) == Pointers.ClassSemaphore);
@@ -1208,13 +1208,11 @@ Oop* __fastcall Interpreter::primitiveSetSignals()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveWait()
 {
 	//CHECKREFERENCES
 
-	HARDASSERT(argumentCount == 2);
-
-	Oop oopTimeout = stackValue(argumentCount - 1);
+	Oop oopTimeout = stackValue(1);
 	if (!ObjectMemoryIsIntegerObject(oopTimeout))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(oopTimeout);
@@ -1225,27 +1223,16 @@ Oop* __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCou
 	if (timeout != INFINITE && timeout != 0)
 		return primitiveFailureWithInt(PrimitiveFailureBadValue, timeout);
 
-	OTE* oteRetValHolder;
-	if (argumentCount > 1)
-	{
-		oteRetValHolder = reinterpret_cast<OTE*>(stackTop());
-		if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
-			oteRetValHolder->getWordSize() == ObjectHeaderSize)
-			return primitiveFailureWith(4, Oop(oteRetValHolder));	// Must be a suitable value holder
-	}
-	else
-	{
-		// Construct a suitable return value holder
-		//oteRetValHolder = Array::New(1);
-		//oteRetValHolder->m_flags.m_count = 1;
-		oteRetValHolder = NULL;
-	}
+	OTE* oteRetValHolder = reinterpret_cast<OTE*>(stackTop());
+	if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
+		oteRetValHolder->getWordSize() == ObjectHeaderSize)
+		return primitiveFailureWith(4, Oop(oteRetValHolder));	// Must be a suitable value holder
 
-	SemaphoreOTE* thisReceiver = reinterpret_cast<SemaphoreOTE*>(stackValue(argumentCount));
+	SemaphoreOTE* thisReceiver = reinterpret_cast<SemaphoreOTE*>(stackValue(2));
 	Semaphore* sem = thisReceiver->m_location;
 
 	// Any arguments are integers or no change to ref. count
-	pop(argumentCount);
+	pop(2);
 
 	// Sending #wait implicity re-enables interrupts
 	// This is to prevent interrupts remaining disabled forever, which might happen
@@ -1265,15 +1252,12 @@ Oop* __fastcall Interpreter::primitiveWait(CompiledMethod&, unsigned argumentCou
 
 	Oop oopAnswer = ObjectMemoryIntegerObjectOf(nAnswer);
 
-	if (argumentCount > 1)
-	{
-		// Assign result into temporary in the active context
-		VariantObject* retValHolder = static_cast<VariantObject*>(oteRetValHolder->m_location);
-		ObjectMemory::countDown(retValHolder->m_fields[0]);
-		retValHolder->m_fields[0] = oopAnswer;
+	// Assign result into temporary in the active context
+	VariantObject* retValHolder = static_cast<VariantObject*>(oteRetValHolder->m_location);
+	ObjectMemory::countDown(retValHolder->m_fields[0]);
+	retValHolder->m_fields[0] = oopAnswer;
 
-		oopAnswer = reinterpret_cast<Oop>(oteRetValHolder);
-	}
+	oopAnswer = reinterpret_cast<Oop>(oteRetValHolder);
 
 	stackTop() = oopAnswer;
 
@@ -1378,7 +1362,7 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-Oop* __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveResume(void*, unsigned argumentCount)
 {
 #ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
@@ -1420,7 +1404,7 @@ Oop* __fastcall Interpreter::primitiveResume(CompiledMethod&, unsigned argumentC
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-Oop* __fastcall Interpreter::primitiveSingleStep(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveSingleStep(void*, unsigned argumentCount)
 {
 	SMALLINTEGER steps;
 	switch (argumentCount)
@@ -1606,7 +1590,7 @@ Oop* __fastcall Interpreter::primitiveTerminateProcess()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveUnwindInterrupt(CompiledMethod&, unsigned)
+Oop* __fastcall Interpreter::primitiveUnwindInterrupt()
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
@@ -1689,7 +1673,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority()
 
 // Register a new Object with the VM. This primitive is now used to register
 // more than just the input semaphore, and is independent of receiver.
-Oop* __fastcall Interpreter::primitiveInputSemaphore(CompiledMethod&, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveInputSemaphore()
 {
 	Oop* const sp = m_registers.m_stackPointer;
 

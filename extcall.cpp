@@ -409,7 +409,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-Oop* __fastcall Interpreter::primitivePerformWithArgsAt(CompiledMethod& /*method*/, unsigned )
+Oop* __fastcall Interpreter::primitivePerformWithArgsAt()
 {
 	Oop* const sp = m_registers.m_stackPointer;
 
@@ -458,7 +458,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(CompiledMethod& /*method
 
 ///////////////////////////////////////////////////////////////////////////////
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
-Oop* __fastcall Interpreter::primitiveValueWithArgsAt(CompiledMethod&, unsigned)
+Oop* __fastcall Interpreter::primitiveValueWithArgsAt()
 {
 	Oop* sp = m_registers.m_stackPointer;
 	Oop argPointer = *sp;

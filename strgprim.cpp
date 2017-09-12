@@ -25,17 +25,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //	String Primitives
 
-/*
-MFC 3.0 hash function
-inline UINT CMapStringToOb::HashKey(LPCTSTR key) const
-{
-	UINT nHash = 0;
-	while (*key)
-		nHash = (nHash<<5) + nHash + *key++;
-	return nHash;
-}
-*/
-
 void Interpreter::memmove(BYTE* dst, const BYTE* src, size_t count)
 {
     if (dst <= src || dst >= src + count) 
@@ -281,3 +270,67 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 	return primitiveSuccess(3);
 }
 
+Oop* __fastcall Interpreter::primitiveStringAt()
+{
+	Oop* const sp = m_registers.m_stackPointer;
+	int index = *sp;
+	if (ObjectMemoryIsIntegerObject(index))
+	{
+		index = ObjectMemoryIntegerValueOf(index);
+		const StringOTE* oteReceiver = reinterpret_cast<const StringOTE*>(*(sp - 1));
+		if (index > 0 && (MWORD)index <= (oteReceiver->m_size & OTE::SizeMask))
+		{
+			const char* const psz = oteReceiver->m_location->m_characters;
+			CharOTE* oteResult = ST::Character::New(psz[index - 1]);
+			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+			return sp - 1;
+		}
+		else
+		{
+			// Index out of range
+			return primitiveFailure(1);
+		}
+	}
+
+	// Index argument not a SmallInteger
+	return primitiveFailure(0);
+}
+
+Oop* __fastcall Interpreter::primitiveStringAtPut()
+{
+	Oop* const __restrict sp = m_registers.m_stackPointer;
+	StringOTE* __restrict oteReceiver = reinterpret_cast<StringOTE*>(*(sp - 2));
+	int index = *(sp - 1);
+	char* const __restrict psz = oteReceiver->m_location->m_characters;
+	if (ObjectMemoryIsIntegerObject(index))
+	{
+		index = ObjectMemoryIntegerValueOf(index);
+		int receiverSize = oteReceiver->m_size;
+		// Note that we don't mask off the immutability bit, so if receiver immutable, size will be < 0, and the condition will be false
+		if (index > 0 && index <= receiverSize)
+		{
+			const Oop oopValue = *sp;
+			if (!ObjectMemoryIsIntegerObject(oopValue) && reinterpret_cast<const OTE*>(oopValue)->m_oteClass == Pointers.ClassCharacter)
+			{
+				psz[index-1] = ObjectMemoryIntegerValueOf(reinterpret_cast<const CharOTE*>(oopValue)->m_location->m_codePoint);
+				*(sp - 2) = *sp;
+				return sp - 2;
+			}
+			else
+			{
+				// Value is not a character
+				return primitiveFailure(2);
+			}
+		}
+		else
+		{
+			// Index out of range or immutable
+			return primitiveFailure(1);
+		}
+	}
+	else
+	{
+		// Index argument not a SmallInteger
+		return primitiveFailure(0);
+	}
+}

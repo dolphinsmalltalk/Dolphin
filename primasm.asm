@@ -244,20 +244,20 @@ extern primitiveAtEnd:near32
 
 primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIXZ
 extern primitiveValueWithArgs:near32
-primitivePerform EQU ?primitivePerform@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitivePerform EQU ?primitivePerform@Interpreter@@CIPAIPAXI@Z
 extern primitivePerform:near32
 primitivePerformWithArgs EQU ?primitivePerformWithArgs@Interpreter@@CIPAIXZ
 extern primitivePerformWithArgs:near32
-primitivePerformMethod EQU ?primitivePerformMethod@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitivePerformMethod EQU ?primitivePerformMethod@Interpreter@@CIPAIXZ
 extern primitivePerformMethod:near32
-primitivePerformWithArgsAt EQU ?primitivePerformWithArgsAt@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitivePerformWithArgsAt EQU ?primitivePerformWithArgsAt@Interpreter@@CIPAIXZ
 extern primitivePerformWithArgsAt:near32
-primitiveValueWithArgsAt EQU ?primitiveValueWithArgsAt@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveValueWithArgsAt EQU ?primitiveValueWithArgsAt@Interpreter@@CIPAIXZ
 extern primitiveValueWithArgsAt:near32
 primitiveVariantValue EQU ?primitiveVariantValue@Interpreter@@CIPAIXZ
 extern primitiveVariantValue:near32
 
-PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIPAIXZ
 extern PRIMUNWINDINTERRUPT:near32
 
 RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VLinkedList@ST@@@@PAV2@@Z
@@ -266,27 +266,27 @@ extern RESUSPENDACTIVEON:near32
 RESCHEDULE EQU ?Reschedule@Interpreter@@SGHXZ
 extern RESCHEDULE:near32
 
-primitiveSignal EQU ?primitiveSignal@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveSignal EQU ?primitiveSignal@Interpreter@@CIPAIXZ
 extern primitiveSignal:near32
 
 extern ?primitiveSetSignals@Interpreter@@CIPAIXZ:near32
-primitiveSignalAtTick EQU ?primitiveSignalAtTick@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveSignalAtTick EQU ?primitiveSignalAtTick@Interpreter@@CIPAIXZ
 extern primitiveSignalAtTick:near32
-primitiveInputSemaphore EQU ?primitiveInputSemaphore@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveInputSemaphore EQU ?primitiveInputSemaphore@Interpreter@@CIPAIXZ
 extern primitiveInputSemaphore:near32
 primitiveSampleInterval EQU ?primitiveSampleInterval@Interpreter@@CIPAIXZ
 extern primitiveSampleInterval:near32
 
-PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIPAIXZ
 extern PRIMITIVEWAIT:near32
 
 primitiveFlushCache EQU ?primitiveFlushCache@Interpreter@@CIPAIXZ
 extern primitiveFlushCache:near32
 
-PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIPAIPAXI@Z
 extern PRIMITIVERESUME:near32
 
-PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIPAIPAXI@Z
 extern PRIMITIVESINGLESTEP:near32
 
 extern ?primitiveSuspend@Interpreter@@CIPAIXZ	:near32
@@ -294,7 +294,7 @@ extern ?primitiveTerminateProcess@Interpreter@@CIPAIXZ	:near32
 extern ?primitiveProcessPriority@Interpreter@@CIPAIXZ:near32
 primitiveNewVirtual EQU ?primitiveNewVirtual@Interpreter@@CIPAIXZ
 extern primitiveNewVirtual:near32
-primitiveSnapshot EQU ?primitiveSnapshot@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveSnapshot EQU ?primitiveSnapshot@Interpreter@@CIPAIXZ
 extern primitiveSnapshot:near32
 primitiveReplaceBytes EQU ?primitiveReplaceBytes@Interpreter@@CIPAIXZ
 extern primitiveReplaceBytes:near32
@@ -302,9 +302,9 @@ primitiveIndirectReplaceBytes EQU ?primitiveIndirectReplaceBytes@Interpreter@@CI
 extern primitiveIndirectReplaceBytes :near32
 primitiveReplacePointers EQU ?primitiveReplacePointers@Interpreter@@CIPAIXZ
 extern primitiveReplacePointers:near32
-primitiveCoreLeft EQU ?primitiveCoreLeft@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveCoreLeft EQU ?primitiveCoreLeft@Interpreter@@CIPAIPAXI@Z
 extern primitiveCoreLeft:near32
-primitiveQuit EQU ?primitiveQuit@Interpreter@@CIXAAVCompiledMethod@ST@@I@Z
+primitiveQuit EQU ?primitiveQuit@Interpreter@@CIXXZ
 extern primitiveQuit:near32
 primitiveOopsLeft EQU ?primitiveOopsLeft@Interpreter@@CIPAIXZ
 extern primitiveOopsLeft:near32
@@ -330,7 +330,7 @@ extern primitiveHookWindowCreate:near32
 primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIPAIXZ
 extern primitiveSmallIntegerPrintString:near32
 
-primitiveNewInitializedObject EQU ?primitiveNewInitializedObject@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveNewInitializedObject EQU ?primitiveNewInitializedObject@Interpreter@@CIPAIPAXI@Z
 extern primitiveNewInitializedObject:near32
 primitiveNewFromStack EQU ?primitiveNewFromStack@Interpreter@@CIPAIXZ
 extern primitiveNewFromStack:near32
@@ -360,10 +360,10 @@ extern primitiveLargeIntegerEqual:near32
 primitiveLargeIntegerAsFloat EQU ?primitiveLargeIntegerAsFloat@Interpreter@@CIPAIXZ
 extern primitiveLargeIntegerAsFloat:near32
 
-primitiveAsyncDLL32Call EQU ?primitiveAsyncDLL32Call@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveAsyncDLL32Call EQU ?primitiveAsyncDLL32Call@Interpreter@@CIPAIPAXI@Z
 extern primitiveAsyncDLL32Call:near32
 
-primitiveAllReferences EQU ?primitiveAllReferences@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveAllReferences EQU ?primitiveAllReferences@Interpreter@@CIPAIXZ
 extern primitiveAllReferences:near32
 
 IFDEF _DEBUG
@@ -409,12 +409,16 @@ extern PRIMSTRINGSEARCH:near32
 
 primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIXZ
 extern primitiveStringNextIndexOfFromTo:near32
+primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIXZ
+extern primitiveStringAt:near32
+primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIXZ
+extern primitiveStringAtPut:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
 extern DISABLEINTERRUPTS:near32
 
-primitiveStackAtPut EQU ?primitiveStackAtPut@Interpreter@@CIPAIAAVCompiledMethod@ST@@I@Z
+primitiveStackAtPut EQU ?primitiveStackAtPut@Interpreter@@CIPAIXZ
 extern primitiveStackAtPut:near32
 
 primitiveMillisecondClockValue EQU  ?primitiveMillisecondClockValue@Interpreter@@CIPAIXZ
@@ -999,7 +1003,7 @@ ENDPRIMITIVE primitiveSize
 ; that the receiver is a string, as does not expect to be used in incorrect
 ; classes.
 ;
-BEGINPRIMITIVE primitiveStringAt
+BEGINPRIMITIVE primitiveStringAt1
 	mov		eax, DWORD PTR [_SP-OOPSIZE]		; Load receiver OTE from stack into EAX
 	ASSUME	eax:PTR OTE
 
@@ -1037,14 +1041,14 @@ BEGINPRIMITIVE primitiveStringAt
 LocalPrimitiveFailure 0
 LocalPrimitiveFailure 1
 
-ENDPRIMITIVE primitiveStringAt
+ENDPRIMITIVE primitiveStringAt1
 
 
 ;  BOOL __fastcall Interpreter::primitiveStringAtPut()
 ;
 ; Primitive for storing characters into Strings
 ;
-BEGINPRIMITIVE primitiveStringAtPut
+BEGINPRIMITIVE primitiveStringAtPut1
 	mov		ecx, [_SP-OOPSIZE*2]				; Access receiver under arguments
 	ASSUME	ecx:PTR OTE
 	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
@@ -1075,7 +1079,7 @@ BEGINPRIMITIVE primitiveStringAtPut
 	; Rather than use codePoint in char, could work entirely with the Oop by deducting
 	; an appropriate offset in the OT, but this will also work for 16-bit or larger character encodings
 	
-	mov		ecx, [ecx].m_asciiValue				; Load first (and only) Oop of object
+	mov		ecx, [ecx].m_codePoint				; Load first (and only) Oop of object
 	ASSUME	ecx:DWORD							; ecx now contains SmallInteger code pointer of character
 
 	shr		ecx, 1								; Convert codePoint from SmallInteger
@@ -1090,7 +1094,7 @@ LocalPrimitiveFailure 0
 LocalPrimitiveFailure 1
 LocalPrimitiveFailure 2
 
-ENDPRIMITIVE primitiveStringAtPut
+ENDPRIMITIVE primitiveStringAtPut1
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1244,7 +1248,7 @@ ENDPRIMITIVE primitiveInstVarAt
 ;;
 ;;	BOOL __fastcall Interpreter::primitiveBasicAtPut()
 ;;
-;; Primitive for setting elements of indexed objects without using AtPutCache
+;; Primitive for setting elements of indexed objects without using cache
 ;; This primitive answers its value argument, so it moves it down
 ;; the stack, overwriting the receiver. The other argument must be a
 ;; SmallInteger for the primitive to succeed.
@@ -1855,7 +1859,7 @@ ALIGNPRIMITIVE
 @callPrimitiveValue@8 ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; int __fastcall Interpreter::primitiveValue(CompiledMethod&, unsigned argCount)
+; int __fastcall Interpreter::primitiveValue(void*, unsigned argCount)
 ;
 BEGINPRIMITIVE primitiveValue
 	mov		eax, edx								; Get argument count into EAX

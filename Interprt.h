@@ -551,7 +551,7 @@ private:
 	static Oop* __fastcall primitiveFloatIntegerPart();
 	static Oop* __fastcall primitiveFloatClassify();
 
-	static Oop* __fastcall primitiveNewInitializedObject(CompiledMethod&, unsigned argCount);
+	static Oop* __fastcall primitiveNewInitializedObject(void*, unsigned argCount);
 	static Oop* __fastcall primitiveNewFromStack();
 
 	static Oop* __fastcall primitiveSize();
@@ -563,7 +563,7 @@ private:
 	static Oop* __fastcall primitiveNextIndexOfFromTo();
 
 	// Specialized primitive for storing into process stacks. Allows for Zct
-	static Oop* __fastcall primitiveStackAtPut(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveStackAtPut();
 
 	///////////////////////////////////////////////////////////////////////////
 	// External Buffer access primitives
@@ -639,28 +639,28 @@ private:
 	// Object Memory primitives
 	static Oop* __fastcall primitiveBasicIdentityHash();
 	static Oop* __fastcall primitiveIdentityHash();
-	static Oop* __fastcall primitiveAllReferences(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveAllReferences();
 	static Oop* __fastcall primitiveAllInstances();
 	
 	// Control Primitives
 	
-	static Oop* __fastcall primitiveValue(CompiledMethod* , unsigned argumentCount);
+	static Oop* __fastcall primitiveValue(void*, unsigned argumentCount);
 	static Oop* __fastcall primitiveValueWithArgs();
-	static Oop* __fastcall primitivePerform(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitivePerform(void*, unsigned argumentCount);
 	static Oop* __fastcall primitivePerformWithArgs();
-	static Oop* __fastcall primitivePerformMethod(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitivePerformMethod();
 
 	// Process primitives
-	static Oop* __fastcall primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveSignalAtTick();
 	static Oop* __fastcall primitiveMicrosecondClockValue();
-	static Oop* __fastcall primitiveSignal(CompiledMethod&, unsigned argumentCount);
-	static Oop* __fastcall primitiveWait(CompiledMethod&, unsigned argumentCount);
-	static Oop* __fastcall primitiveResume(CompiledMethod&, unsigned argumentCount);
-	static Oop* __fastcall primitiveSingleStep(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveSignal();
+	static Oop* __fastcall primitiveWait();
+	static Oop* __fastcall primitiveResume(void*, unsigned argumentCount);
+	static Oop* __fastcall primitiveSingleStep(void*, unsigned argumentCount);
 	static Oop* __fastcall primitiveSuspend();
 	static Oop* __fastcall primitiveSetSignals();
 	static Oop* __fastcall primitiveFlushCache();
-	static Oop* __fastcall primitiveInputSemaphore(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveInputSemaphore();
 	static Oop* __fastcall primitiveSampleInterval();
 	static Oop* __fastcall primitiveNewVirtual();
 	static Oop* __fastcall primitiveProcessPriority();
@@ -668,7 +668,7 @@ private:
 	static Oop* __fastcall primitiveMillisecondClockValue();
 
 	// Input/Out Primitives
-	static Oop* __fastcall primitiveSnapshot(CompiledMethod& , unsigned argCount);
+	static Oop* __fastcall primitiveSnapshot();
 
 	// Dispatcher Primitives
 	static Oop* __fastcall primitiveHookWindowCreate();
@@ -676,8 +676,8 @@ private:
 	// System Primitives
 	static Oop* __fastcall primitiveEquivalent();
 	static Oop* __fastcall primitiveClass();
-	static Oop* __fastcall primitiveCoreLeft(CompiledMethod& , unsigned argCount);
-	static void __fastcall primitiveQuit(CompiledMethod&, unsigned argumentCount);
+	static Oop* __fastcall primitiveCoreLeft(void* , unsigned argCount);
+	static void __fastcall primitiveQuit();
 	static Oop* __fastcall primitiveOopsLeft();
 	static Oop* __fastcall primitiveInheritsFrom();
 	static Oop* __fastcall primitiveShallowCopy();
@@ -688,14 +688,14 @@ private:
 
 
 	// Extension system primitives
-	static Oop* __fastcall primitiveDLL32Call(CompiledMethod& method, unsigned argCount);
-	static Oop* __fastcall primitiveVirtualCall(CompiledMethod& method, unsigned argCount);
-	static Oop* __fastcall primitiveAsyncDLL32Call(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveDLL32Call(void*, unsigned argCount);
+	static Oop* __fastcall primitiveVirtualCall(void*, unsigned argCount);
+	static Oop* __fastcall primitiveAsyncDLL32Call(void*, unsigned argCount);
 
-	static Oop* __fastcall primitivePerformWithArgsAt(CompiledMethod& method, unsigned argCount);
-	static Oop* __fastcall primitiveValueWithArgsAt(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitivePerformWithArgsAt();
+	static Oop* __fastcall primitiveValueWithArgsAt();
 
-	static Oop* __fastcall primitiveUnwindInterrupt(CompiledMethod& method, unsigned argCount);
+	static Oop* __fastcall primitiveUnwindInterrupt();
 	static Oop* __fastcall primitiveVariantValue();
 
 private:

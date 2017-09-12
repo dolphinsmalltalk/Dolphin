@@ -89,7 +89,7 @@ void Interpreter::asyncGC(DWORD gcFlags)
 
 
 // This has been usurped for GC primitive
-Oop* __fastcall Interpreter::primitiveCoreLeft(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveCoreLeft(void* , unsigned argCount)
 {
 	DWORD gcFlags = 0;
 	if (argCount)

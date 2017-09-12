@@ -130,14 +130,14 @@ ASSERTEQU	%RESULT, <eax>				; We rely on this convention when answering the resu
 ;;
 primitiveVirtualCall PROC
 	ASSUME	edx:DWORD
-	ASSUME	ecx:PTR CompiledCodeObj
 
-	; We must save down IP, as we're going to overwrite it, and because it may
-	; be required if a callback into Smalltalk results
-	mov		[INSTRUCTIONPOINTER], _IP
-	
+	mov		ecx, [NEWMETHOD]
+
 	mov		eax, edx
 	neg		eax
+	mov		ecx, (OTE PTR[ecx]).m_location
+	ASSUME	ecx:PTR CompiledCodeObj
+
 	lea		eax, [_SP+eax*OOPSIZE]						; EAX now points at receiver in stack
 	mov		eax, [eax]									; load receiver from stack into EAX
 
@@ -307,16 +307,15 @@ getProcAddress ENDP
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; A fastcall function (ecx is pMethod, edx is argCount)
 primitiveDLL32Call PROC
-	ASSUME	ecx:PTR CompiledCodeObj
 	ASSUME	edx:DWORD
 
-	; We must save down IP/SP, as we're going to overwrite IP, and because they may
-	; be required if a callback into Smalltalk results
-	mov		[INSTRUCTIONPOINTER], _IP
-	mov		[STACKPOINTER], _SP
+	mov		ecx, [NEWMETHOD]
+	ASSUME	ecx:PTR OTE
 
 	push	0												; ARG6: Overlapped? (no)
 	push	OFFSET INTERPCONTEXT							; ARG5: Pointer to interpreters thread context
+	mov		ecx, [ecx].m_location
+	ASSUME	ecx:PTR CompiledCodeObj
 	push	ecx												; ARG4: Ptr to compiled method (may need literals)
 
 	mov		ecx, [ecx].m_aLiterals[0*OOPSIZE]				; Get descriptor Oop into ecx

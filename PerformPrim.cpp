@@ -128,7 +128,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitivePerform(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitivePerform(void*, unsigned argCount)
 {
 	SymbolOTE* performSelector = m_oopMessageSelector;	// Save in case we need to restore
 
@@ -265,7 +265,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs()
 }
 
 
-Oop* __fastcall Interpreter::primitivePerformMethod(CompiledMethod& , unsigned)
+Oop* __fastcall Interpreter::primitivePerformMethod()
 {
 	Oop * sp = m_registers.m_stackPointer;
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));

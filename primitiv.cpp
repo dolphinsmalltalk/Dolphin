@@ -215,10 +215,8 @@ Oop* __fastcall Interpreter::primitiveFlushCache()
 
 // Separate atPut primitive is needed to write to the stack because the active process
 // stack is not reference counted.
-Oop* __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveStackAtPut()
 {
-	ASSERT(argCount == 2); argCount;
-	
 	Oop* const sp = m_registers.m_stackPointer;
 
 	Oop indexPointer = *(sp-1);
@@ -253,7 +251,7 @@ Oop* __fastcall Interpreter::primitiveStackAtPut(CompiledMethod& , unsigned argC
 
 
 // Don't care what effect on stack is!!
-void __fastcall Interpreter::primitiveQuit(CompiledMethod&,unsigned)
+[[noreturn]] void __fastcall Interpreter::primitiveQuit()
 {
 	Oop argPointer = stackTop();
 	exitSmalltalk(ObjectMemoryIntegerValueOf(argPointer));

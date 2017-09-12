@@ -107,7 +107,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 // Signal a specified semaphore after the specified milliseconds duration (the argument). 
 // NOTE: NOT ABSOLUTE VALUE!
 // If the specified time has already passed, then the TimingSemaphore is signalled immediately. 
-Oop* __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveSignalAtTick()
 {
 	Oop tickPointer = stackTop();
 	SMALLINTEGER nDelay;
@@ -140,14 +140,6 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 
 	if (nDelay > 0)
 	{
-		// Temporarily handle old image code that passes timer semaphore as an argument
-		if (argumentCount > 1 && (POTE)Pointers.TimingSemaphore == Pointers.Nil)
-		{
-			ObjectMemory::ProtectConstSpace(PAGE_READWRITE);
-			_Pointers.TimingSemaphore = (SemaphoreOTE*)stackValue(1);
-			ObjectMemory::ProtectConstSpace(PAGE_READONLY);
-		}
-
 		// Clamp the requested delay to the maximum if it is too large. This simplifies the Delay code in the image a little.
 		if (nDelay > SMALLINTEGER(wTimerMax))
 		{
@@ -166,7 +158,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 		{
 			// Unless timer has already fired, record the timer id so can cancel if necessary
 			InterlockedCompareExchange(reinterpret_cast<SHAREDLONG*>(&timerID), newTimerID, -1);
-			pop(argumentCount);		// No ref. counting required
+			pop(1);		// No ref. counting required
 		}
 		else
 		{
@@ -185,7 +177,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(CompiledMethod&, unsigned arg
 		// available timer resolution (i.e. it will happen too soon), so signal
 		// it immediately
 		// We must adjust stack before signalling, as may change Process (and therefore stack!)
-		pop(argumentCount);
+		pop(1);
 
 		// N.B. Signalling may detect a process switch, but does not actually perform it
 		signalSemaphore(Pointers.TimingSemaphore);

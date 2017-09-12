@@ -28,9 +28,10 @@
 
 #pragma auto_inline(off)
 
-Oop* __fastcall Interpreter::primitiveSnapshot(CompiledMethod&, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveSnapshot()
 {
-	Oop arg = stackValue(argCount - 1);
+	const Oop* const sp = Interpreter::m_registers.m_stackPointer;
+	Oop arg = *(sp-3);
 	char* szFileName;
 	if (arg == Oop(Pointers.Nil))
 		szFileName = 0;
@@ -43,29 +44,17 @@ Oop* __fastcall Interpreter::primitiveSnapshot(CompiledMethod&, unsigned argCoun
 	else
 		return primitiveFailure(0);
 
-	bool bBackup;
-	if (argCount >= 2)
-		bBackup = reinterpret_cast<OTE*>(stackValue(argCount - 2)) == Pointers.True;
-	else
-		bBackup = false;
+	bool bBackup = reinterpret_cast<OTE*>(*(sp-2)) == Pointers.True;
 
 	SMALLINTEGER nCompressionLevel;
-	if (argCount >= 3)
-	{
-		Oop oopCompressionLevel = stackValue(argCount - 3);
-		nCompressionLevel = ObjectMemoryIsIntegerObject(oopCompressionLevel) ? ObjectMemoryIntegerValueOf(oopCompressionLevel) : 0;
-	}
-	else
-		nCompressionLevel = 0;
+	Oop oopCompressionLevel = *(sp-1);
+	nCompressionLevel = ObjectMemoryIsIntegerObject(oopCompressionLevel) ? ObjectMemoryIntegerValueOf(oopCompressionLevel) : 0;
 
 	SMALLUNSIGNED nMaxObjects = 0;
-	if (argCount >= 4)
+	Oop oopMaxObjects = *sp;
+	if (ObjectMemoryIsIntegerObject(oopMaxObjects))
 	{
-		Oop oopMaxObjects = stackValue(argCount - 4);
-		if (ObjectMemoryIsIntegerObject(oopMaxObjects))
-		{
-			nMaxObjects = ObjectMemoryIntegerValueOf(oopMaxObjects);
-		}
+		nMaxObjects = ObjectMemoryIntegerValueOf(oopMaxObjects);
 	}
 
 	// N.B. It is not necessary to clear down the memory pools as the free list is rebuild on every image
