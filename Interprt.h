@@ -518,38 +518,38 @@ private:
 	static Oop* __fastcall primitiveLargeIntegerAsFloat();
 
 	// Float primitives
-	static Oop* __fastcall primitiveAsFloat();
-	static Oop* __fastcall primitiveFloatAdd();
-	static Oop* __fastcall primitiveFloatSubtract();
-	static Oop* __fastcall primitiveFloatLessThan();
-	static Oop* __fastcall primitiveFloatLessOrEqual();
-	static Oop* __fastcall primitiveFloatGreaterThan();
-	static Oop* __fastcall primitiveFloatGreaterOrEqual();
-	static Oop* __fastcall primitiveFloatEqual();
-	static Oop* __fastcall primitiveFloatMultiply();
-	static Oop* __fastcall primitiveFloatDivide();
-	static Oop* __fastcall primitiveTruncated();
-	static Oop* __fastcall primitiveFloatSin();
-	static Oop* __fastcall primitiveFloatCos();
-	static Oop* __fastcall primitiveFloatTan();
-	static Oop* __fastcall primitiveFloatArcSin();
-	static Oop* __fastcall primitiveFloatArcCos();
-	static Oop* __fastcall primitiveFloatArcTan();
-	static Oop* __fastcall primitiveFloatArcTan2();
-	static Oop* __fastcall primitiveFloatExp();
-	static Oop* __fastcall primitiveFloatLog();
-	static Oop* __fastcall primitiveFloatLog10();
-	static Oop* __fastcall primitiveFloatSqrt();
-	static Oop* __fastcall primitiveFloatTimesTwoPower();
-	static Oop* __fastcall primitiveFloatAbs();
-	static Oop* __fastcall primitiveFloatRaisedTo();
-	static Oop* __fastcall primitiveFloatFloor();
-	static Oop* __fastcall primitiveFloatCeiling();
-	static Oop* __fastcall primitiveFloatExponent();
-	static Oop* __fastcall primitiveFloatNegated();
-	static Oop* __fastcall primitiveFloatFractionPart();
-	static Oop* __fastcall primitiveFloatIntegerPart();
-	static Oop* __fastcall primitiveFloatClassify();
+	static Oop* __fastcall primitiveAsFloat(Oop* const sp);
+	static Oop* __fastcall primitiveFloatAdd(Oop* const sp);
+	static Oop* __fastcall primitiveFloatSubtract(Oop* const sp);
+	static Oop* __fastcall primitiveFloatLessThan(Oop* const sp);
+	static Oop* __fastcall primitiveFloatLessOrEqual(Oop* const sp);
+	static Oop* __fastcall primitiveFloatGreaterThan(Oop* const sp);
+	static Oop* __fastcall primitiveFloatGreaterOrEqual(Oop* const sp);
+	static Oop* __fastcall primitiveFloatEqual(Oop* const sp);
+	static Oop* __fastcall primitiveFloatMultiply(Oop* const sp);
+	static Oop* __fastcall primitiveFloatDivide(Oop* const sp);
+	static Oop* __fastcall primitiveTruncated(Oop* const sp);
+	static Oop* __fastcall primitiveFloatSin(Oop* const sp);
+	static Oop* __fastcall primitiveFloatCos(Oop* const sp);
+	static Oop* __fastcall primitiveFloatTan(Oop* const sp);
+	static Oop* __fastcall primitiveFloatArcSin(Oop* const sp);
+	static Oop* __fastcall primitiveFloatArcCos(Oop* const sp);
+	static Oop* __fastcall primitiveFloatArcTan(Oop* const sp);
+	static Oop* __fastcall primitiveFloatArcTan2(Oop* const sp);
+	static Oop* __fastcall primitiveFloatExp(Oop* const sp);
+	static Oop* __fastcall primitiveFloatLog(Oop* const sp);
+	static Oop* __fastcall primitiveFloatLog10(Oop* const sp);
+	static Oop* __fastcall primitiveFloatSqrt(Oop* const sp);
+	static Oop* __fastcall primitiveFloatTimesTwoPower(Oop* const sp);
+	static Oop* __fastcall primitiveFloatAbs(Oop* const sp);
+	static Oop* __fastcall primitiveFloatRaisedTo(Oop* const sp);
+	static Oop* __fastcall primitiveFloatFloor(Oop* const sp);
+	static Oop* __fastcall primitiveFloatCeiling(Oop* const sp);
+	static Oop* __fastcall primitiveFloatExponent(Oop* const sp);
+	static Oop* __fastcall primitiveFloatNegated(Oop* const sp);
+	static Oop* __fastcall primitiveFloatFractionPart(Oop* const sp);
+	static Oop* __fastcall primitiveFloatIntegerPart(Oop* const sp);
+	static Oop* __fastcall primitiveFloatClassify(Oop* const sp);
 
 	static Oop* __fastcall primitiveNewInitializedObject(void*, unsigned argCount);
 	static Oop* __fastcall primitiveNewFromStack();
@@ -586,11 +586,11 @@ private:
 	static Oop* __fastcall primitiveSQWORDAt();
 
 	// Floating point number accessors
-	static Oop* __fastcall primitiveSinglePrecisionFloatAt();
-	static Oop* __fastcall primitiveSinglePrecisionFloatAtPut();
-	static Oop* __fastcall primitiveDoublePrecisionFloatAt();
-	static Oop* __fastcall primitiveDoublePrecisionFloatAtPut();
-	static Oop* __fastcall primitiveLongDoubleAt();
+	static Oop* __fastcall primitiveSinglePrecisionFloatAt(Oop* const sp);
+	static Oop* __fastcall primitiveSinglePrecisionFloatAtPut(Oop* const sp);
+	static Oop* __fastcall primitiveDoublePrecisionFloatAt(Oop* const sp);
+	static Oop* __fastcall primitiveDoublePrecisionFloatAtPut(Oop* const sp);
+	static Oop* __fastcall primitiveLongDoubleAt(Oop* const sp);
 
 	// Most of the External Buffer primitives handle indirect addresses
 	// as well, but bytes are normally accessed via the standard primitives 
@@ -604,8 +604,8 @@ private:
 
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives
-	static Oop* __fastcall primitiveStringAt();
-	static Oop* __fastcall primitiveStringAtPut();
+	static Oop* __fastcall primitiveStringAt(Oop* sp);
+	static Oop* __fastcall primitiveStringAtPut(Oop* sp);
 
 	// Helper for memory moves
 	static void memmove(BYTE* dst, const BYTE* src, size_t count);

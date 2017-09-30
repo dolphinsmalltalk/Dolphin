@@ -90,68 +90,80 @@ extern primitiveReturnInstVar:near32
 extern primitiveSetInstVar:near32
 
 ; Imports from flotprim.cpp
-primitiveAsFloat EQU ?primitiveAsFloat@Interpreter@@CIPAIXZ
+primitiveTruncated EQU ?primitiveTruncated@Interpreter@@CIPAIQAI@Z
+extern primitiveTruncated:near32
+primitiveAsFloat EQU ?primitiveAsFloat@Interpreter@@CIPAIQAI@Z
 extern primitiveAsFloat:near32
-primitiveFloatAdd EQU ?primitiveFloatAdd@Interpreter@@CIPAIXZ
+primitiveFloatAdd EQU ?primitiveFloatAdd@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatAdd:near32
-primitiveFloatSub EQU ?primitiveFloatSubtract@Interpreter@@CIPAIXZ
+primitiveFloatSub EQU ?primitiveFloatSubtract@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatSub:near32
-primitiveFloatMul EQU ?primitiveFloatMultiply@Interpreter@@CIPAIXZ
+primitiveFloatMul EQU ?primitiveFloatMultiply@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatMul:near32
-primitiveFloatDiv EQU ?primitiveFloatDivide@Interpreter@@CIPAIXZ
+primitiveFloatDiv EQU ?primitiveFloatDivide@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatDiv:near32
-primitiveFloatEQ EQU ?primitiveFloatEqual@Interpreter@@CIPAIXZ
+primitiveFloatEQ EQU ?primitiveFloatEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatEQ:near32
-primitiveFloatLT EQU ?primitiveFloatLessThan@Interpreter@@CIPAIXZ
+primitiveFloatLT EQU ?primitiveFloatLessThan@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatLT:near32
-primitiveFloatLE EQU ?primitiveFloatLessOrEqual@Interpreter@@CIPAIXZ
+primitiveFloatLE EQU ?primitiveFloatLessOrEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatLE:near32
-primitiveFloatGT EQU ?primitiveFloatGreaterThan@Interpreter@@CIPAIXZ
+primitiveFloatGT EQU ?primitiveFloatGreaterThan@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatGT:near32
-primitiveFloatGE EQU ?primitiveFloatGreaterOrEqual@Interpreter@@CIPAIXZ
+primitiveFloatGE EQU ?primitiveFloatGreaterOrEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatGE:near32
-primitiveFloatSin EQU ?primitiveFloatSin@Interpreter@@CIPAIXZ
+primitiveFloatSin EQU ?primitiveFloatSin@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatSin:near32
-primitiveFloatCos EQU ?primitiveFloatCos@Interpreter@@CIPAIXZ
+primitiveFloatCos EQU ?primitiveFloatCos@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatCos:near32
-primitiveFloatTan EQU ?primitiveFloatTan@Interpreter@@CIPAIXZ
+primitiveFloatTan EQU ?primitiveFloatTan@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatTan:near32
-primitiveFloatArcSin EQU ?primitiveFloatArcSin@Interpreter@@CIPAIXZ
+primitiveFloatArcSin EQU ?primitiveFloatArcSin@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatArcSin:near32
-primitiveFloatArcCos EQU ?primitiveFloatArcCos@Interpreter@@CIPAIXZ
+primitiveFloatArcCos EQU ?primitiveFloatArcCos@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatArcCos:near32
-primitiveFloatArcTan EQU ?primitiveFloatArcTan@Interpreter@@CIPAIXZ
+primitiveFloatArcTan EQU ?primitiveFloatArcTan@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatArcTan:near32
-primitiveFloatArcTan2 EQU ?primitiveFloatArcTan2@Interpreter@@CIPAIXZ
+primitiveFloatArcTan2 EQU ?primitiveFloatArcTan2@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatArcTan2:near32
-primitiveFloatExp EQU ?primitiveFloatExp@Interpreter@@CIPAIXZ
+primitiveFloatExp EQU ?primitiveFloatExp@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatExp:near32
-primitiveFloatLog EQU ?primitiveFloatLog@Interpreter@@CIPAIXZ
+primitiveFloatLog EQU ?primitiveFloatLog@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatLog:near32
-primitiveFloatSqrt EQU ?primitiveFloatSqrt@Interpreter@@CIPAIXZ
+primitiveFloatSqrt EQU ?primitiveFloatSqrt@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatSqrt:near32
-primitiveFloatLog10 EQU ?primitiveFloatLog10@Interpreter@@CIPAIXZ
+primitiveFloatLog10 EQU ?primitiveFloatLog10@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatLog10:near32
-primitiveFloatTimesTwoPower EQU ?primitiveFloatTimesTwoPower@Interpreter@@CIPAIXZ
+primitiveFloatTimesTwoPower EQU ?primitiveFloatTimesTwoPower@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatTimesTwoPower:near32
-primitiveFloatAbs EQU ?primitiveFloatAbs@Interpreter@@CIPAIXZ
+primitiveFloatAbs EQU ?primitiveFloatAbs@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatAbs:near32
-primitiveFloatRaisedTo EQU ?primitiveFloatRaisedTo@Interpreter@@CIPAIXZ
+primitiveFloatRaisedTo EQU ?primitiveFloatRaisedTo@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatRaisedTo:near32
-primitiveFloatFloor EQU ?primitiveFloatFloor@Interpreter@@CIPAIXZ
+primitiveFloatFloor EQU ?primitiveFloatFloor@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatFloor:near32
-primitiveFloatCeiling EQU ?primitiveFloatCeiling@Interpreter@@CIPAIXZ
+primitiveFloatCeiling EQU ?primitiveFloatCeiling@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatCeiling:near32
-primitiveFloatExponent EQU ?primitiveFloatExponent@Interpreter@@CIPAIXZ
+primitiveFloatExponent EQU ?primitiveFloatExponent@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatExponent:near32
-primitiveFloatNegated EQU ?primitiveFloatNegated@Interpreter@@CIPAIXZ
+primitiveFloatNegated EQU ?primitiveFloatNegated@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatNegated:near32
-primitiveFloatClassify EQU ?primitiveFloatClassify@Interpreter@@CIPAIXZ
+primitiveFloatClassify EQU ?primitiveFloatClassify@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatClassify:near32
-primitiveFloatFractionPart EQU ?primitiveFloatFractionPart@Interpreter@@CIPAIXZ
+primitiveFloatFractionPart EQU ?primitiveFloatFractionPart@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatFractionPart:near32
-primitiveFloatIntegerPart EQU ?primitiveFloatIntegerPart@Interpreter@@CIPAIXZ
+primitiveFloatIntegerPart EQU ?primitiveFloatIntegerPart@Interpreter@@CIPAIQAI@Z
 extern primitiveFloatIntegerPart:near32
+primitiveDoublePrecisionFloatAt EQU ?primitiveDoublePrecisionFloatAt@Interpreter@@CIPAIQAI@Z
+extern ?primitiveDoublePrecisionFloatAt@Interpreter@@CIPAIQAI@Z:near32
+primitiveDoublePrecisionFloatAtPut EQU ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIPAIQAI@Z
+extern ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIPAIQAI@Z:near32
+primitiveLongDoubleAt EQU ?primitiveLongDoubleAt@Interpreter@@CIPAIQAI@Z
+extern primitiveLongDoubleAt:near32
+primitiveSinglePrecisionFloatAt EQU ?primitiveSinglePrecisionFloatAt@Interpreter@@CIPAIQAI@Z
+extern primitiveSinglePrecisionFloatAt:near32
+primitiveSinglePrecisionFloatAtPut EQU ?primitiveSinglePrecisionFloatAtPut@Interpreter@@CIPAIQAI@Z
+extern primitiveSinglePrecisionFloatAtPut:near32
 
 ; Imports from ExternalBytes.asm
 extern primitiveAddressOf:near32
@@ -229,8 +241,6 @@ CURRENTCALLBACK EQU ?currentCallbackContext@@3IA
 extern CURRENTCALLBACK:DWORD
 
 ; C++ Primitive method imports
-primitiveTruncated EQU ?primitiveTruncated@Interpreter@@CIPAIXZ
-extern primitiveTruncated:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIXZ
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIXZ
@@ -310,16 +320,6 @@ primitiveOopsLeft EQU ?primitiveOopsLeft@Interpreter@@CIPAIXZ
 extern primitiveOopsLeft:near32
 primitiveResize EQU ?primitiveResize@Interpreter@@CIPAIXZ
 extern primitiveResize:near32
-primitiveDoublePrecisionFloatAt EQU ?primitiveDoublePrecisionFloatAt@Interpreter@@CIPAIXZ
-extern ?primitiveDoublePrecisionFloatAt@Interpreter@@CIPAIXZ:near32
-primitiveDoublePrecisionFloatAtPut EQU ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIPAIXZ
-extern ?primitiveDoublePrecisionFloatAtPut@Interpreter@@CIPAIXZ:near32
-primitiveLongDoubleAt EQU ?primitiveLongDoubleAt@Interpreter@@CIPAIXZ
-extern primitiveLongDoubleAt:near32
-primitiveSinglePrecisionFloatAt EQU ?primitiveSinglePrecisionFloatAt@Interpreter@@CIPAIXZ
-extern primitiveSinglePrecisionFloatAt:near32
-primitiveSinglePrecisionFloatAtPut EQU ?primitiveSinglePrecisionFloatAtPut@Interpreter@@CIPAIXZ
-extern primitiveSinglePrecisionFloatAtPut:near32
 primitiveNextIndexOfFromTo EQU ?primitiveNextIndexOfFromTo@Interpreter@@CIPAIXZ
 extern primitiveNextIndexOfFromTo:near32
 primitiveDeQBereavement EQU ?primitiveDeQBereavement@Interpreter@@CIPAIXZ
@@ -409,9 +409,9 @@ extern PRIMSTRINGSEARCH:near32
 
 primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIXZ
 extern primitiveStringNextIndexOfFromTo:near32
-primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIXZ
+primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAt:near32
-primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIXZ
+primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAtPut:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax

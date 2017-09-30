@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VM", "dll.vcxproj", "{382ABBF3-B32D-4D77-B303-346AA146921C}"
 EndProject
@@ -40,6 +40,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIToGo", "ToGoStub\GuiToGo.vcxproj", "{12B536BA-143E-4F38-BD96-77B35467DB13}"
+	ProjectSection(ProjectDependencies) = postProject
+		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToGoLib", "ToGoLib\ToGoLib.vcxproj", "{50AB410B-7D13-43FF-B426-FB02CA3FEF86}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -123,5 +126,8 @@ Global
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
 		{12B536BA-143E-4F38-BD96-77B35467DB13} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
 		{50AB410B-7D13-43FF-B426-FB02CA3FEF86} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {808FD94F-FA41-4A9A-B2BC-2010D373F582}
 	EndGlobalSection
 EndGlobal

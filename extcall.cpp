@@ -645,12 +645,14 @@ void doBlah()
 #ifndef _M_IX86
 	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, BYTE* argTypes, BOOL isVirtual);
 
-	BOOL __fastcall Interpreter::primitiveVirtualCall(CompiledMethod& method, unsigned argCount)
+	BOOL __fastcall Interpreter::primitiveVirtualCall(void*, unsigned argCount)
 	{
 		// Calling out may initiate a callback to Smalltalk
 		// We need to ensure that this primitive is reentrant so we
 		// save any cached registers of the interpreter.
 		//
+
+		CompiledMethod& method = *m_registers.m_oopNewMethod->m_location;
 
 		OTE* objectPointer = stackValue(argCount);
 
@@ -706,8 +708,10 @@ void doBlah()
 	// This primitive does not check that enough types are specified, because it
 	// assumes that the compiler does this.
 	//
-	BOOL __fastcall Interpreter::primitiveDLL32Call(CompiledMethod& method, unsigned argCount)
+	BOOL __fastcall Interpreter::primitiveDLL32Call(void*, unsigned argCount)
 	{
+		CompiledMethod& method = *m_registers.m_oopNewMethod->m_location;
+
 		// Calling out may initiate a callback to Smalltalk
 		// We need to ensure that this primitive is reentrant so we
 		// save any cached registers of the interpreter.

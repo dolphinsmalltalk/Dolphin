@@ -270,9 +270,8 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 	return primitiveSuccess(3);
 }
 
-Oop* __fastcall Interpreter::primitiveStringAt()
+Oop* __fastcall Interpreter::primitiveStringAt(Oop* sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	int index = *sp;
 	if (ObjectMemoryIsIntegerObject(index))
 	{
@@ -296,9 +295,8 @@ Oop* __fastcall Interpreter::primitiveStringAt()
 	return primitiveFailure(0);
 }
 
-Oop* __fastcall Interpreter::primitiveStringAtPut()
+Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 {
-	Oop* const __restrict sp = m_registers.m_stackPointer;
 	StringOTE* __restrict oteReceiver = reinterpret_cast<StringOTE*>(*(sp - 2));
 	int index = *(sp - 1);
 	char* const __restrict psz = oteReceiver->m_location->m_characters;

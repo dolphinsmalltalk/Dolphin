@@ -135,6 +135,7 @@ primitiveVirtualCall PROC
 
 	mov		eax, edx
 	neg		eax
+
 	mov		ecx, (OTE PTR[ecx]).m_location
 	ASSUME	ecx:PTR CompiledCodeObj
 
@@ -314,8 +315,10 @@ primitiveDLL32Call PROC
 
 	push	0												; ARG6: Overlapped? (no)
 	push	OFFSET INTERPCONTEXT							; ARG5: Pointer to interpreters thread context
+
 	mov		ecx, [ecx].m_location
 	ASSUME	ecx:PTR CompiledCodeObj
+	
 	push	ecx												; ARG4: Ptr to compiled method (may need literals)
 
 	mov		ecx, [ecx].m_aLiterals[0*OOPSIZE]				; Get descriptor Oop into ecx

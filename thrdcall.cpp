@@ -1011,8 +1011,7 @@ void OverlappedCall::ReincrementProcessReferences()
 
 Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 {
-	//inPrim = true;
-	//completed = false;
+	CompiledMethod* method = m_registers.m_oopNewMethod->m_location;
 
 	#if TRACING == 1
 	{
@@ -1021,16 +1020,12 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 	}
 	#endif
 
-	CompiledMethod* method = m_registers.m_oopNewMethod->m_location;
-
 	OverlappedCall* pCall = OverlappedCall::Do(method, argCount);
 	if (pCall == NULL)
 		// Nested overlapped calls are not supported
 		return primitiveFailure(0);
 
 	HARDASSERT(newProcessWaiting());
-
-//	if (completed) DebugBreak();
 
 	// The overlapped call may already have returned, in which case a process switch
 	// will not occur, so we must notify the overlapped call that it can complete as 
@@ -1042,8 +1037,6 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 		pCall->OnActivateProcess();
 	}
 
-	//inPrim = false;
-
 	#if TRACING == 1
 	{
 		TRACELOCK();
@@ -1051,13 +1044,6 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 				m_registers.m_pActiveFrame->stackPointer() << endl;
 	}
 	#endif
-
-	// If the call completes really quickly, then the process which initiated it may
-	// never have lost activation, in which case we need to ensure that the Interpreter
-	// registers are up to date with the context after the call completion
-	//m_registers.LoadSPFromFrame();
-
-	//inPrim = false;
 
 	return m_registers.m_stackPointer;
 }

@@ -3973,13 +3973,13 @@ MExecNewMethod MACRO
 	IFDEF _DEBUG
 		push	eax
 		ASSUME	eax:NOTHING
-		xor		eax, eax
-		mov		al, [ecx].m_header.primitiveIndex
+		movzx	eax, [ecx].m_header.primitiveIndex
 		inc DWORD PTR[_primitiveCounters+eax*4]
 		pop		eax
 		ASSUME	eax:DWORD
 	ENDIF
 
+	mov		ecx, _SP
 	mov		[INSTRUCTIONPOINTER], _IP		;; Save IP in case of fault or call to C++ primitive
 
 	call	eax
@@ -3993,15 +3993,9 @@ MExecNewMethod MACRO
 	DispatchByteCode						;; succeeded, continue executing byte codes without activating new context
 @@:
 
-	mov		ecx, [NEWMETHOD]
-	ASSUME	ecx:PTR OTE
-
-	mov		ecx, [ecx].m_location
-	ASSUME	ecx:PTR CompiledCodeObj
-
-	;; Activate method as primitive failed
+	;; Activate method as primitive failed - note we don't bother to pass the correct argument count
 	call	primitiveActivateMethod
-	mov		esi, eax
+	mov		_SP, eax
 
 	DispatchByteCode
 ENDM
@@ -4218,20 +4212,22 @@ ENDM
 ;
 BEGINPRIMITIVE primitiveActivateMethod
 	;MActivateMethod
-		ASSUME ecx:PTR CompiledCodeObj					; Expects ptr to new method in ECX
 
 	IFDEF PROFILING
 		inc 	[?contextsSuspended@@3IA]
 		inc 	[?methodsActivated@@3IA]
 	ENDIF
 
+	mov		ecx, [NEWMETHOD]
+	ASSUME	ecx:PTR OTE
+
 	;; Work out _IP index before overwriting old method pointer
 	mov		eax, [pMethod]							; Load pointer to current method into eax
 	ASSUME	eax:PTR CompiledCodeObj
 
-	mov		edx, ecx								; Get pointer to new method into edx
+	mov		edx, [ecx].m_location					; Get pointer to new method into edx
 	ASSUME	edx:PTR CompiledCodeObj
-	mov		[pMethod], ecx							; Save down pointer to new method
+	mov		[pMethod], edx							; Save down pointer to new method
 
 	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
 		add		eax, CompiledCodeObj.m_byteCodes
@@ -4249,20 +4245,15 @@ BEGINPRIMITIVE primitiveActivateMethod
 	ENDIF
 	; At this point _IP is the offset into the byte codes
 
-	xor		eax, eax
-	mov		al, [edx].m_header.argumentCount
+	movzx	eax, [edx].m_header.argumentCount
 
 	; Work out the new base pointer (points at first argument - not receiver)
 	neg		eax										; We'll be subtracting arg count
 	lea		_IP, [_IP+_IP+1]						; Convert old IP offset to SmallInteger for later
 
-	; We're don't need pointer to new method any more
-	ASSUME ecx:NOTHING
-
 	; Now work out the number of temporaries required for new method
 	; Load flag word which contains temp count
-	xor		ecx, ecx
-	mov		cl, [edx].m_header.stackTempCount		; Get stack temp count into ecx
+	movzx	ecx, [edx].m_header.stackTempCount		; Get stack temp count into ecx
 
 	lea		_BP, [_SP+eax*OOPSIZE+OOPSIZE]			; Calculate _BP of new context (points at first argument NOT receiver)
 	add		_SP, OOPSIZE
@@ -4421,11 +4412,13 @@ BEGINPRIMITIVE primitiveReturnNil
 ENDPRIMITIVE primitiveReturnNil
 
 BEGINPRIMITIVE primitiveReturnLiteralZero
-	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method (still)	
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
+	mov		ecx, [NEWMETHOD]
 	mov		eax, [STEPPING]
 	neg		edx
+	mov		ecx, (OTE PTR[ecx]).m_location
+	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method
 	test	eax, eax
 	mov		ecx, [ecx].m_aLiterals[0]			; Load first literal into EAX
 	jnz		stepping
@@ -4441,11 +4434,14 @@ stepping:
 ENDPRIMITIVE primitiveReturnLiteralZero
 
 BEGINPRIMITIVE primitiveReturnStaticZero
-	ASSUME	ecx:PTR CompiledCodeObj					; ECX points at the new method (still)	
 	ASSUME	edx:DWORD
 	ASSUME	_SP:PTR Oop
+
 	mov		eax, [STEPPING]
+	mov		ecx, [NEWMETHOD]
 	neg		edx
+	mov		ecx, (OTE PTR[ecx]).m_location
+	ASSUME	ecx:PTR CompiledCodeObj					; ECX points at the new method
 	test	eax, eax								; Debugging? If so fail so can step into the method
 	mov		ecx, [ecx].m_aLiterals[0]				; Load first literal into EAX
 	ASSUME	ecx:PTR OTE								; ECX is now the OTE of the var binding
@@ -4475,11 +4471,14 @@ BEGINPRIMITIVE primitiveReturnInstVar
 	;	3(inst var index)
 	;	4 ReturnStackTop
 
-	; ECX points at the new method (still)	
-	ASSUME	ecx:PTR CompiledCodeObj
+	mov		ecx, [NEWMETHOD]
+
 	ASSUME	edx:NOTHING				; Don't need the argument count
 
 	; We need a mini interpreter now to extract the inst var index from the byte codes
+
+	mov		ecx, (OTE PTR[ecx]).m_location
+	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method
 
 	mov		edx, [STEPPING]
 	mov		eax, [ecx].m_byteCodes				; Get bytecodes into eax - note that it MUST be a SmallInteger
@@ -4525,12 +4524,13 @@ BEGINPRIMITIVE primitiveSetInstVar
 	; There must only be one argument, and that is the value to store down. There is no
 	; net effect on its ref. count (similar code to pop & store)
 
-	; ECX points at the new method (still)	
-	ASSUME	ecx:PTR CompiledCodeObj
+	mov		ecx, [NEWMETHOD]
 
 	; We need a mini interpreter now to extract the inst var index from the byte codes
 	
 	cmp		[STEPPING], 0
+	mov		ecx, (OTE PTR[ecx]).m_location
+	ASSUME	ecx:PTR CompiledCodeObj				; ECX points at the new method
 	mov		edx, [_SP-OOPSIZE]					; edx = receiver Oop under argument
 	ASSUME	edx:PTR OTE
 	
@@ -4538,7 +4538,7 @@ BEGINPRIMITIVE primitiveSetInstVar
 
 	jne		steppingOrFailure
 
-	mov		ecx, [edx].m_location 				; edx now points at receiver object
+	mov		ecx, [edx].m_location 				; ecx now points at receiver object
 	ASSUME	ecx:PTR Object
 
 	; Note assumption here that OOPSIZE == 4 (32-bit)
@@ -4648,18 +4648,16 @@ BEGINPROC EXECUTENEWMETHOD
 	push	_SP									; Mustn't destroy for C++ caller
 	push	_IP									; Ditto _IP
 	push	_BP
-	xor		eax, eax
-	mov		al, [ecx].m_header.primitiveIndex
-	mov		_IP, [INSTRUCTIONPOINTER]
+	movzx	eax, [ecx].m_header.primitiveIndex
 	mov		_SP, [STACKPOINTER]
+	mov		_IP, [INSTRUCTIONPOINTER]
 	mov		_BP, [BASEPOINTER]
+	mov		ecx, _SP
 
-	push	ecx									; Save pMethod
 	IFDEF _DEBUG
 		inc	DWORD PTR[_primitiveCounters+eax*4]
 	ENDIF
 	call	DWORD PTR[_primitivesTable+eax*4]	; Call via jump table
-	pop		ecx									; Restore pMethod
 
 	test	eax, eax							; Primitives return 0 for failure, ~0 for success
 	jz		@F									; Failed?
