@@ -779,18 +779,6 @@ primQuit: anInteger
 	<primitive: 113>
 	^self primitiveFailed!
 
-primSnapshot: fileName backup: aBoolean type: anInteger
-	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
-
-	Primitive failure codes:
-		0	- fileName not a String
-		1	- No longer used
-		2	- Unable to open image file
-		3	- I/O Error writing image file (try KernelLibrary>>getLastError)."
-
-	<primitive: 97>
-	^self error: 'Dolphin was unable to save the image.'!
-
 primSnapshot: fileName backup: aBoolean type: typeInteger maxObjects: maxInteger
 	"Private - Save the current image to fileName, optionally creating a backup of the existing file.
 
@@ -1193,7 +1181,6 @@ windowsDirectory
 !SessionManager categoriesFor: #preStart!operations-startup!public! !
 !SessionManager categoriesFor: #primaryStartup!operations-startup!public! !
 !SessionManager categoriesFor: #primQuit:!operations-shutdown!private! !
-!SessionManager categoriesFor: #primSnapshot:backup:type:!operations-saving!private! !
 !SessionManager categoriesFor: #primSnapshot:backup:type:maxObjects:!operations-saving!private! !
 !SessionManager categoriesFor: #queryEndSession!event handling!public! !
 !SessionManager categoriesFor: #quit!operations-shutdown!public! !

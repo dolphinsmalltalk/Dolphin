@@ -149,8 +149,7 @@ allReferences
 	"Answer an Array containing all objects which reference the receiver.
 	The primitive should not fail."
 
-	<primitive: 153>
-	^self primitiveFailed!
+	^self allReferences: true!
 
 allReferences: aBoolean
 	"Answer an Array containing all objects which reference the receiver, including weak
