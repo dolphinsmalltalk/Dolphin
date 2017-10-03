@@ -15,12 +15,12 @@ _descriptionArguments
 
 	| hresult |
 	hresult := self hresult.
-	^{hresult. self messageText. hresult facility}!
+	^{hresult asUnsignedInteger. self messageText. hresult facility}!
 
 _descriptionFormat
 	"Answer the Win32 format String to be used to format the description for the receiver."
 
-	^'HRESULT Error: %2 (%3)'!
+	^'HRESULT Error 0x%1!!X!!: %2 (%3)'!
 
 hresult
 	"Answer the HRESULT error code associated with the receiver."
