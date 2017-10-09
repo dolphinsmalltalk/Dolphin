@@ -92,7 +92,7 @@ isStructure
 isUnion
 	"Answer whether the receiver describes a user-defined union type."
 
-	^self isUserDefined and: [self typeInfo isUnion]!
+	^self isUserDefined and: [self realTypeInfo isUnion]!
 
 isUserDefined
 	"Answer whether the receiver describes a user-defined type, e.g. a struct."
@@ -128,6 +128,11 @@ printOn: aStream
 				print: self typeInfo name]
 		ifFalse: [aStream print: self typeName].
 	aStream nextPut: $)!
+
+realTypeInfo
+	"Answer an <AXTypeInfoAnalyzer> on the underlying type described by the receiver."
+
+	^self typeInfo realTypeInfo!
 
 tdesc
 	"Answer a <TYPEDESC> which is the type of the element described by the receiver.
@@ -208,6 +213,7 @@ vtName
 !TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #owner:!accessing!private! !
 !TYPEDESC categoriesFor: #printOn:!development!printing!public! !
+!TYPEDESC categoriesFor: #realTypeInfo!accessing!public! !
 !TYPEDESC categoriesFor: #tdesc!accessing!public! !
 !TYPEDESC categoriesFor: #tdescArray!accessing!public! !
 !TYPEDESC categoriesFor: #typeDesc!helpers!private! !

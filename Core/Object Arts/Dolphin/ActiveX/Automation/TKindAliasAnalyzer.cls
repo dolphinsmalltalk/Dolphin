@@ -23,10 +23,23 @@ classDesc
 
 	^(BaseTypes lookup: self name) ifNil: [self tdesc classDesc] ifNotNil: [:class | class -> 0]!
 
+isAnonymous
+	"Answer whether the receiver describes an anonymous (i.e. unnamed) structure or union."
+
+	^(BaseTypes lookup: self name) isNil and: [self tdesc isAnonymous]!
+
+isStructure
+	"Answer whether the receiver describes a structure."
+
+	^self tdesc isStructure!
+
 isUnion
 	"Answer whether the receiver describes a union."
 
 	^self tdesc isUnion!
+
+realTypeInfo
+	^self tdesc realTypeInfo!
 
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
@@ -35,7 +48,10 @@ vt
 	^self tdesc vartype! !
 !TKindAliasAnalyzer categoriesFor: #baseClass!constants!private! !
 !TKindAliasAnalyzer categoriesFor: #classDesc!accessing!constants!private! !
+!TKindAliasAnalyzer categoriesFor: #isAnonymous!public!testing! !
+!TKindAliasAnalyzer categoriesFor: #isStructure!public!testing! !
 !TKindAliasAnalyzer categoriesFor: #isUnion!public!testing! !
+!TKindAliasAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
 !TKindAliasAnalyzer categoriesFor: #vt!accessing!constants!public! !
 
 !TKindAliasAnalyzer class methodsFor!
@@ -46,7 +62,7 @@ initialize
 	"
 
 	BaseTypes := LookupTable new.
-	#(#UINT_PTR #INT_PTR #LARGE_INTEGER #ULARGE_INTEGER #BOOLEAN)
+	#(#UINT_PTR #INT_PTR #LARGE_INTEGER #ULARGE_INTEGER #BOOLEAN #GUID)
 		do: [:each | BaseTypes at: each asString put: (Smalltalk at: each)].
 	BaseTypes
 		at: 'guid' put: GUID;
