@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_MULTIPLE_KNOWN_HEADERS guid: (GUID fromString: '{a12486b1-fdf5-4d31-a4b7-af9848ffe5c6}')!
-HTTP_MULTIPLE_KNOWN_HEADERS comment: '<HTTP_MULTIPLE_KNOWN_HEADERS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_MULTIPLE_KNOWN_HEADERS'' from type information in the ''Win32 API'' library.
+HTTP_MULTIPLE_KNOWN_HEADERS comment: '<HTTP_MULTIPLE_KNOWN_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure allows the provision of providing multiple known headers."
@@ -18,23 +18,23 @@ IDL definition follows:
 typedef [uuid(a12486b1-fdf5-4d31-a4b7-af9848ffe5c6), helpstring("This structure allows the provision of providing multiple known headers.")]
 struct tagHTTP_MULTIPLE_KNOWN_HEADERS {
 	[helpstring("Known header id.")] HTTP_HEADER_ID HeaderId;
-	[helpstring("The flags corresponding to the response header in the HeaderId member. This member is used only when the WWW-Authenticate header is present.")] ULONG flags;
+	[helpstring("The flags corresponding to the response header in the HeaderId member. This member is used only when the WWW-Authenticate header is present.")] ULONG Flags;
 	[helpstring("The number of elements in the array specified in the KnownHeaders member.")] USHORT KnownHeaderCount;
 	[helpstring("A pointer to the first element in the array of HTTP_KNOWN_HEADER structures."), size_is("KnownHeaderCount")] PHTTP_KNOWN_HEADER KnownHeaders;
 } HTTP_MULTIPLE_KNOWN_HEADERS;
 '!
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesForClass!Win32-Structs! !
+!HTTP_MULTIPLE_KNOWN_HEADERS categoriesForClass!WinHttpServer-Structs! !
 !HTTP_MULTIPLE_KNOWN_HEADERS methodsFor!
 
-flags
-	"Answer the <Integer> value of the receiver's 'flags' field."
+Flags
+	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
 
-flags: anInteger
-	"Set the receiver's 'flags' field to the value of the argument, anInteger"
+Flags: anInteger
+	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anInteger!
 
 HeaderId
 	"Answer the <Integer> value of the receiver's 'HeaderId' field."
@@ -69,8 +69,8 @@ KnownHeaders: aStructureArray
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #KnownHeaders) put: aStructureArray yourAddress.
 	self KnownHeaderCount: aStructureArray size! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #flags!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #flags:!**compiled accessors**!public! !
+!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags!**compiled accessors**!public! !
+!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags:!**compiled accessors**!public! !
 !HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId!**compiled accessors**!public! !
 !HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId:!**compiled accessors**!public! !
 !HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount!**compiled accessors**!public! !
@@ -88,7 +88,7 @@ defineFields
 		typedef [uuid(a12486b1-fdf5-4d31-a4b7-af9848ffe5c6), helpstring('This structure allows the provision of providing multiple known headers.')]
 		struct tagHTTP_MULTIPLE_KNOWN_HEADERS {
 			[helpstring('Known header id.')] HTTP_HEADER_ID HeaderId;
-			[helpstring('The flags corresponding to the response header in the HeaderId member. This member is used only when the WWW-Authenticate header is present.')] ULONG flags;
+			[helpstring('The flags corresponding to the response header in the HeaderId member. This member is used only when the WWW-Authenticate header is present.')] ULONG Flags;
 			[helpstring('The number of elements in the array specified in the KnownHeaders member.')] USHORT KnownHeaderCount;
 			[helpstring('A pointer to the first element in the array of HTTP_KNOWN_HEADER structures.'), size_is('KnownHeaderCount')] PHTTP_KNOWN_HEADER KnownHeaders;
 		} HTTP_MULTIPLE_KNOWN_HEADERS;
@@ -96,7 +96,7 @@ defineFields
 
 	self
 		defineField: #HeaderId type: SDWORDField new offset: 0;
-		defineField: #flags type: DWORDField new offset: 4;
+		defineField: #Flags type: DWORDField new offset: 4;
 		defineField: #KnownHeaderCount type: WORDField new offset: 8;
 		defineField: #KnownHeaders type: (StructureArrayPointerField type: HTTP_KNOWN_HEADER lengthField: #KnownHeaderCount) offset: 12.
 	self byteSize: 16! !

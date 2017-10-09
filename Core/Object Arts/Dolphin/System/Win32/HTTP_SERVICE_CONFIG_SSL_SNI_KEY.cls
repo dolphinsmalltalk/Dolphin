@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_SNI_KEY guid: (GUID fromString: '{32358de8-2f95-48e9-8b5e-72900a0e6f36}')!
-HTTP_SERVICE_CONFIG_SSL_SNI_KEY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_KEY> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_CONFIG_SSL_SNI_KEY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_KEY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -20,7 +20,7 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_KEY {
 	LPWSTR Host;
 } HTTP_SERVICE_CONFIG_SSL_SNI_KEY;
 '!
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForClass!Win32-Structs! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY methodsFor!
 
 Host

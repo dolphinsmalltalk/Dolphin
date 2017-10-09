@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
-HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Win32 API'' library.
+HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -22,7 +22,7 @@ struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 	LPWSTR Realm;
 } HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS;
 '!
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForClass!Win32-Structs! !
+!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS methodsFor!
 
 DomainName

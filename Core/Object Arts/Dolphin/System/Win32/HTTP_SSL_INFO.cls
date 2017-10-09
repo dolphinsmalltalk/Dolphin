@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SSL_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SSL_INFO guid: (GUID fromString: '{fd0d6f69-8afe-4748-a88b-9fb70593dfc8}')!
-HTTP_SSL_INFO comment: '<HTTP_SSL_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SSL_INFO'' from type information in the ''Win32 API'' library.
+HTTP_SSL_INFO comment: '<HTTP_SSL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Data computed during SSL handshake."
@@ -27,7 +27,7 @@ struct tagHTTP_SSL_INFO {
 	[helpstring("If non-zero, indicates that the client certificate is already present locally.")] ULONG SslClientCertNegotiated;
 } HTTP_SSL_INFO;
 '!
-!HTTP_SSL_INFO categoriesForClass!Win32-Structs! !
+!HTTP_SSL_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SSL_INFO methodsFor!
 
 ConnectionKeySize

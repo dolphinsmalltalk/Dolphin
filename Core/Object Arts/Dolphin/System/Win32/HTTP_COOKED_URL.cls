@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_COOKED_URL
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_COOKED_URL guid: (GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
-HTTP_COOKED_URL comment: '<HTTP_COOKED_URL> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_COOKED_URL'' from type information in the ''Win32 API'' library.
+HTTP_COOKED_URL comment: '<HTTP_COOKED_URL> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"The HTTP_COOKED_URL structure contains a validated, canonical, UTF-16 Unicode-encoded URL request string together with pointers into it and element lengths."
@@ -27,7 +27,7 @@ struct tagHTTP_COOKED_URL {
 	[readonly, helpstring("Pointer to the first question mark (?) in the string, or NULL if there is none."), size_is("QueryStringLength>>1"), string] LPCWSTR pQueryString;
 } HTTP_COOKED_URL;
 '!
-!HTTP_COOKED_URL categoriesForClass!Win32-Structs! !
+!HTTP_COOKED_URL categoriesForClass!WinHttpServer-Structs! !
 !HTTP_COOKED_URL methodsFor!
 
 AbsPathLength

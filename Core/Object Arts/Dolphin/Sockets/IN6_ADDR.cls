@@ -26,16 +26,16 @@ struct tagIN6_ADDR {
 !IN6_ADDR methodsFor!
 
 Bytes
-	"Answer the <ByteArray> value of the receiver's 'Bytes' field."
+	"Answer the <ExternalArray> value of the receiver's 'Bytes' field."
 
-	^ByteArray fromAddress: bytes yourAddress length: 16!
+	^ExternalArray fromAddress: bytes yourAddress length: 16!
 
-Bytes: aByteArray
-	"Set the receiver's 'Bytes' field to the value of the argument, aByteArray"
+Bytes: anExternalArray
+	"Set the receiver's 'Bytes' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := aByteArray byteSize min: ##(16 * ByteArray elementSize).
-	aByteArray
+	size := anExternalArray byteSize min: ##(16 * ExternalArray elementSize).
+	anExternalArray
 		replaceBytesOf: bytes
 		from: 1
 		to: size
@@ -51,9 +51,9 @@ addressFamily
 defineFields
 	"Define the fields of the IN6_ADDR structure.
 
-	IN6_ADDR  compileDefinition
+	IN6_ADDR compileDefinition
 
-		typedef [uuid(BEBF4C25-CE63-4511-B68E-2434810FA9C3)]
+		typedef [uuid(bebf4c25-ce63-4511-b68e-2434810fa9c3)]
 		struct tagIN6_ADDR {
 			union {
 				UCHAR Bytes[16];
@@ -63,7 +63,7 @@ defineFields
 "
 
 	self
-		defineField: #Bytes type: (ArrayField type: ByteArray length: 16) offset: 0;
+		defineField: #Bytes type: (ArrayField type: ExternalArray length: 16) offset: 0;
 		defineField: #Words type: (ArrayField type: WORDArray length: 8) beFiller offset: 0.
 	self byteSize: 16! !
 !IN6_ADDR class categoriesFor: #addressFamily!constants!public! !

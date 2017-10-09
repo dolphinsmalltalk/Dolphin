@@ -6,7 +6,7 @@ HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_FLOWRATE_INFO guid: (GUID fromString: '{c2fad8f6-f179-4bbb-a5f2-073c416f6704}')!
-HTTP_FLOWRATE_INFO comment: '<HTTP_FLOWRATE_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_FLOWRATE_INFO'' from type information in the ''Win32 API'' library.
+HTTP_FLOWRATE_INFO comment: '<HTTP_FLOWRATE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_FLOWRATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"The transfer rate of a response."
@@ -23,7 +23,7 @@ struct tagHTTP_FLOWRATE_INFO {
 	[helpstring("The size of the content, in bytes, to be delivered at MaxPeakBandwidth. Once this content has been delivered, the response is throttled at MaxBandwidth.")] ULONG BurstSize;
 } HTTP_FLOWRATE_INFO;
 '!
-!HTTP_FLOWRATE_INFO categoriesForClass!Win32-Structs! !
+!HTTP_FLOWRATE_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_FLOWRATE_INFO methodsFor!
 
 BurstSize

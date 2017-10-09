@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_BYTE_RANGE guid: (GUID fromString: '{3426318c-022f-4dd9-9e4e-a04febf70a10}')!
-HTTP_BYTE_RANGE comment: '<HTTP_BYTE_RANGE> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_BYTE_RANGE'' from type information in the ''Win32 API'' library.
+HTTP_BYTE_RANGE comment: '<HTTP_BYTE_RANGE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BYTE_RANGE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure defines a file byte range. If the Length field is HTTP_BYTE_RANGE_TO_EOF then the remainder of the file (everything after StartingOffset) is sent."
@@ -21,7 +21,7 @@ struct tagHTTP_BYTE_RANGE {
 	[helpstring("Size, in bytes, of the range. If this member is HTTP_BYTE_RANGE_TO_EOF, the range extends from the starting offset to the end of the file or data block.")] ULARGE_INTEGER Length;
 } HTTP_BYTE_RANGE;
 '!
-!HTTP_BYTE_RANGE categoriesForClass!Win32-Structs! !
+!HTTP_BYTE_RANGE categoriesForClass!WinHttpServer-Structs! !
 !HTTP_BYTE_RANGE methodsFor!
 
 Length

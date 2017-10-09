@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_UNKNOWN_HEADER guid: (GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
-HTTP_UNKNOWN_HEADER comment: '<HTTP_UNKNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_UNKNOWN_HEADER'' from type information in the ''Win32 API'' library.
+HTTP_UNKNOWN_HEADER comment: '<HTTP_UNKNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure defining format of an unknown header."
@@ -17,13 +17,13 @@ IDL definition follows:
 
 typedef [uuid(98a27339-73e3-4d54-baf2-915b818916b1), helpstring("Structure defining format of an unknown header.")]
 struct tagHTTP_UNKNOWN_HEADER {
-	[nonbrowsable] USHORT NameLength;
-	[nonbrowsable] USHORT RawValueLength;
+	[nonbrowsable, helpstring("Size in bytes of Name not including terminating null")] USHORT NameLength;
+	[nonbrowsable, helpstring("Size in bytes of RawValue not including terminating null")] USHORT RawValueLength;
 	[helpstring("The header name (minus the '':'' character)"), size_is("NameLength"), string] LPCSTR pName;
 	[helpstring("The header value."), size_is("RawValueLength"), string] LPCSTR pRawValue;
 } HTTP_UNKNOWN_HEADER;
 '!
-!HTTP_UNKNOWN_HEADER categoriesForClass!Win32-Structs! !
+!HTTP_UNKNOWN_HEADER categoriesForClass!WinHttpServer-Structs! !
 !HTTP_UNKNOWN_HEADER methodsFor!
 
 NameLength
@@ -86,8 +86,8 @@ defineFields
 
 		typedef [uuid(98a27339-73e3-4d54-baf2-915b818916b1), helpstring('Structure defining format of an unknown header.')]
 		struct tagHTTP_UNKNOWN_HEADER {
-			[nonbrowsable] USHORT NameLength;
-			[nonbrowsable] USHORT RawValueLength;
+			[nonbrowsable, helpstring('Size in bytes of Name not including terminating null')] USHORT NameLength;
+			[nonbrowsable, helpstring('Size in bytes of RawValue not including terminating null')] USHORT RawValueLength;
 			[helpstring('The header name (minus the ':' character)'), size_is('NameLength'), string] LPCSTR pName;
 			[helpstring('The header value.'), size_is('RawValueLength'), string] LPCSTR pRawValue;
 		} HTTP_UNKNOWN_HEADER;

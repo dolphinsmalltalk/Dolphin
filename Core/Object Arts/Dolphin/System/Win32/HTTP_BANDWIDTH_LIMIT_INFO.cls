@@ -6,7 +6,7 @@ HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_BANDWIDTH_LIMIT_INFO guid: (GUID fromString: '{197b6874-68bb-4a22-b2fa-9e02210f4cd9}')!
-HTTP_BANDWIDTH_LIMIT_INFO comment: '<HTTP_BANDWIDTH_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_BANDWIDTH_LIMIT_INFO'' from type information in the ''Win32 API'' library.
+HTTP_BANDWIDTH_LIMIT_INFO comment: '<HTTP_BANDWIDTH_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used to set or query the bandwidth throttling limit.This structure must be used when setting or querying the HttpServerBandwidthProperty on a URL Group or server session."
@@ -21,7 +21,7 @@ struct tagHTTP_BANDWIDTH_LIMIT_INFO {
 	[helpstring("The maximum allowed bandwidth rate in bytesper second. Setting the value to HTTP_LIMIT_INFINITE allows unlimited bandwidth rate. The value cannot be smaller than HTTP_MIN_ALLOWED_BANDWIDTH_THROTTLING_RATE.")] ULONG MaxBandwidth;
 } HTTP_BANDWIDTH_LIMIT_INFO;
 '!
-!HTTP_BANDWIDTH_LIMIT_INFO categoriesForClass!Win32-Structs! !
+!HTTP_BANDWIDTH_LIMIT_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_BANDWIDTH_LIMIT_INFO methodsFor!
 
 MaxBandwidth

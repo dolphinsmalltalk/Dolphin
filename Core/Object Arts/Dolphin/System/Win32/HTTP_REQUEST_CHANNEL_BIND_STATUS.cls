@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
-HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '<HTTP_REQUEST_CHANNEL_BIND_STATUS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Win32 API'' library.
+HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '<HTTP_REQUEST_CHANNEL_BIND_STATUS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -19,10 +19,10 @@ struct tagHTTP_REQUEST_CHANNEL_BIND_STATUS {
 	[helpstring("The service name from the client. This is populated if the request''s Channel Binding Token (CBT) is not configured to retrieve service names.")] HTTP_SERVICE_BINDING_BASE* ServiceName;
 	[helpstring("A pointer to a buffer that contains the secure channel endpoint binding."), size_is("ChannelTokenSize")] UCHAR* ChannelToken;
 	[nonbrowsable, helpstring("The length of the ChannelToken buffer in bytes.")] ULONG ChannelTokenSize;
-	[hidden, helpstring("Reserved.")] ULONG flags;
+	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] ULONG Flags;
 } HTTP_REQUEST_CHANNEL_BIND_STATUS;
 '!
-!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForClass!Win32-Structs! !
+!HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesForClass!WinHttpServer-Structs! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS methodsFor!
 
 ChannelToken
@@ -75,7 +75,7 @@ defineFields
 			[helpstring('The service name from the client. This is populated if the request's Channel Binding Token (CBT) is not configured to retrieve service names.')] HTTP_SERVICE_BINDING_BASE* ServiceName;
 			[helpstring('A pointer to a buffer that contains the secure channel endpoint binding.'), size_is('ChannelTokenSize')] UCHAR* ChannelToken;
 			[nonbrowsable, helpstring('The length of the ChannelToken buffer in bytes.')] ULONG ChannelTokenSize;
-			[hidden, helpstring('Reserved.')] ULONG flags;
+			[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] ULONG Flags;
 		} HTTP_REQUEST_CHANNEL_BIND_STATUS;
 "
 
@@ -83,7 +83,7 @@ defineFields
 		defineField: #ServiceName type: (PointerField type: HTTP_SERVICE_BINDING_BASE) offset: 0;
 		defineField: #ChannelToken type: (ArrayPointerField type: ExternalArray lengthField: #ChannelTokenSize) offset: 4;
 		defineField: #ChannelTokenSize type: DWORDField new beNonBrowsable offset: 8;
-		defineField: #flags type: DWORDField new beFiller offset: 12.
+		defineField: #Flags type: DWORDField new beFiller offset: 12.
 	self byteSize: 16! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

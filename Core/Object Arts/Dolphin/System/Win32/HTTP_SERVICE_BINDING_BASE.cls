@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_BINDING_BASE
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_BINDING_BASE guid: (GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
-HTTP_SERVICE_BINDING_BASE comment: '<HTTP_SERVICE_BINDING_BASE> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_BINDING_BASE comment: '<HTTP_SERVICE_BINDING_BASE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_BASE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Common base for the HTTP_SERVICE_BINDING_A structure and the HTTP_SERVICE_BINDING_W structure."
@@ -20,7 +20,7 @@ struct tagHTTP_SERVICE_BINDING_BASE {
 	[helpstring("Indicates whether the data is in ASCII or Unicode.")] HTTP_SERVICE_BINDING_TYPE Type;
 } HTTP_SERVICE_BINDING_BASE;
 '!
-!HTTP_SERVICE_BINDING_BASE categoriesForClass!Win32-Structs! !
+!HTTP_SERVICE_BINDING_BASE categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SERVICE_BINDING_BASE methodsFor!
 
 Type

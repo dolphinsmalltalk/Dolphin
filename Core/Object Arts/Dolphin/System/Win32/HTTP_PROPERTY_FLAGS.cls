@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_PROPERTY_FLAGS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_PROPERTY_FLAGS guid: (GUID fromString: '{6ba76c16-b60f-4235-9179-145a93b3f5cb}')!
-HTTP_PROPERTY_FLAGS comment: '<HTTP_PROPERTY_FLAGS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_PROPERTY_FLAGS'' from type information in the ''Win32 API'' library.
+HTTP_PROPERTY_FLAGS comment: '<HTTP_PROPERTY_FLAGS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_PROPERTY_FLAGS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Generic property flags. Each structure defining a property info typically contain an element of this type."
@@ -20,7 +20,7 @@ struct tagHTTP_PROPERTY_FLAGS {
 	[nonbrowsable] BOOL Present;
 } HTTP_PROPERTY_FLAGS;
 '!
-!HTTP_PROPERTY_FLAGS categoriesForClass!Win32-Structs! !
+!HTTP_PROPERTY_FLAGS categoriesForClass!WinHttpServer-Structs! !
 !HTTP_PROPERTY_FLAGS methodsFor!
 
 Present

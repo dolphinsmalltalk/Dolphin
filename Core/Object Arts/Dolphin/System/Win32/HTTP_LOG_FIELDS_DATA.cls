@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_LOG_FIELDS_DATA guid: (GUID fromString: '{35c62b99-abf3-46f3-b967-7b54dc2641cc}')!
-HTTP_LOG_FIELDS_DATA comment: '<HTTP_LOG_FIELDS_DATA> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_LOG_FIELDS_DATA'' from type information in the ''Win32 API'' library.
+HTTP_LOG_FIELDS_DATA comment: '<HTTP_LOG_FIELDS_DATA> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LOG_FIELDS_DATA'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Current log fields data structure for of type HttpLogDataTypeFields."
@@ -49,7 +49,7 @@ struct tagHTTP_LOG_FIELDS_DATA {
 	USHORT SubStatus;
 } HTTP_LOG_FIELDS_DATA;
 '!
-!HTTP_LOG_FIELDS_DATA categoriesForClass!Win32-Structs! !
+!HTTP_LOG_FIELDS_DATA categoriesForClass!WinHttpServer-Structs! !
 !HTTP_LOG_FIELDS_DATA methodsFor!
 
 ClientIp

@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_VERSION
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_VERSION guid: (GUID fromString: '{f6a0c406-b01a-4701-aa8c-d4c1a0d2b1a5}')!
-HTTP_VERSION comment: '<HTTP_VERSION> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_VERSION'' from type information in the ''Win32 API'' library.
+HTTP_VERSION comment: '<HTTP_VERSION> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_VERSION'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"defines a version of the HTTP protocol that a request requires or a response provides."
@@ -21,7 +21,7 @@ struct tagHTTP_VERSION {
 	[readonly, helpstring("Minor version of the HTTP protocol.")] USHORT MinorVersion;
 } HTTP_VERSION;
 '!
-!HTTP_VERSION categoriesForClass!Win32-Structs! !
+!HTTP_VERSION categoriesForClass!WinHttpServer-Structs! !
 !HTTP_VERSION methodsFor!
 
 MajorVersion

@@ -6,7 +6,7 @@ HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_CONNECTION_LIMIT_INFO guid: (GUID fromString: '{6fca5840-1e00-4065-ad55-203bd079a117}')!
-HTTP_CONNECTION_LIMIT_INFO comment: '<HTTP_CONNECTION_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_CONNECTION_LIMIT_INFO'' from type information in the ''Win32 API'' library.
+HTTP_CONNECTION_LIMIT_INFO comment: '<HTTP_CONNECTION_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used to set or query the limit on the maximum number of outstanding connections for a URL Group."
@@ -21,7 +21,7 @@ struct tagHTTP_CONNECTION_LIMIT_INFO {
 	ULONG MaxConnections;
 } HTTP_CONNECTION_LIMIT_INFO;
 '!
-!HTTP_CONNECTION_LIMIT_INFO categoriesForClass!Win32-Structs! !
+!HTTP_CONNECTION_LIMIT_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_CONNECTION_LIMIT_INFO methodsFor!
 
 MaxConnections

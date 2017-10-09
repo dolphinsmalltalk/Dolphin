@@ -343,7 +343,7 @@ httpAddFragmentToCache: requestQueueHandle urlPrefix: urlPrefix dataChunk: dataC
 	"Invoke the HttpAddFragmentToCache() function of the module wrapped by the receiver.
 	Helpstring:  caches a data fragment with a specified name by which it can be retrieved, or updates data cached under a specified name. Such cached data fragments can be used repeatedly to construct dynamic responses without going to disk.
 
-		unsigned long __stdcall HttpAddFragmentToCache(
+		ULONG __stdcall HttpAddFragmentToCache(
 			[in]HANDLE RequestQueueHandle,
 			[in]LPCWSTR UrlPrefix,
 			[in]HTTP_DATA_CHUNK* DataChunk,
@@ -357,11 +357,11 @@ httpAddUrlToUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl urlConte
 	"Invoke the HttpAddUrlToUrlGroup() function of the module wrapped by the receiver.
 	Helpstring: Adds the specified URL to the URL Group identified by the URL Group ID.
 
-		unsigned long __stdcall HttpAddUrlToUrlGroup(
+		ULONG __stdcall HttpAddUrlToUrlGroup(
 			[in]unsigned __int64 UrlGroupId,
 			[in]LPCWSTR pFullyQualifiedUrl,
 			[in]HTTP_URL_CONTEXT UrlContext,
-			[in]unsigned long Reserved);"
+			[in]ULONG Reserved);"
 
 	<stdcall: dword HttpAddUrlToUrlGroup qword lpwstr qword dword>
 	^self invalidCall!
@@ -370,7 +370,7 @@ httpCancelHttpRequest: requestQueueHandle requestId: requestId overlapped: overl
 	"Invoke the HttpCancelHttpRequest() function of the module wrapped by the receiver.
 	Helpstring: Cancels a specified reqest.
 
-		unsigned long __stdcall HttpCancelHttpRequest(
+		ULONG __stdcall HttpCancelHttpRequest(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 RequestId,
 			[in]LPOVERLAPPED OVERLAPPED);"
@@ -382,7 +382,7 @@ httpCloseRequestQueue: requestQueueHandle
 	"Invoke the HttpCloseRequestQueue() function of the module wrapped by the receiver.
 	Helpstring: Close a request queue when it is no longer required.
 
-		unsigned long __stdcall HttpCloseRequestQueue(
+		ULONG __stdcall HttpCloseRequestQueue(
 			[in]HANDLE RequestQueueHandle);"
 
 	<stdcall: dword HttpCloseRequestQueue handle>
@@ -392,7 +392,7 @@ httpCloseServerSession: serverSessionId
 	"Invoke the HttpCloseServerSession() function of the module wrapped by the receiver.
 	Helpstring: Deletes the server session identified by the server session ID. All remaining URL Groups associated with the server session will also be closed.
 
-		unsigned long __stdcall HttpCloseServerSession(
+		ULONG __stdcall HttpCloseServerSession(
 			[in]unsigned __int64 ServerSessionId);"
 
 	<stdcall: dword HttpCloseServerSession qword>
@@ -402,7 +402,7 @@ httpCloseUrlGroup: urlGroupId
 	"Invoke the HttpCloseUrlGroup() function of the module wrapped by the receiver.
 	Helpstring: Closes the URL Group identified by the URL Group ID. This call also removes all of the URLs that are associated with the URL Group
 
-		unsigned long __stdcall HttpCloseUrlGroup(
+		ULONG __stdcall HttpCloseUrlGroup(
 			[in]unsigned __int64 UrlGroupId);"
 
 	<stdcall: dword HttpCloseUrlGroup qword>
@@ -412,11 +412,11 @@ httpCreateRequestQueue: version name: name securityAttributes: securityAttribute
 	"Invoke the HttpCreateRequestQueue() function of the module wrapped by the receiver.
 	Helpstring: Creates a new request queue or opens an existing request queue.
 
-		unsigned long __stdcall HttpCreateRequestQueue(
+		ULONG __stdcall HttpCreateRequestQueue(
 			[in]HTTPAPI_VERSION Version,
-			[in]LPCWSTR name,
-			[in]SECURITY_ATTRIBUTES* securityAttributes,
-			[in]unsigned long flags,
+			[in]LPCWSTR Name,
+			[in]SECURITY_ATTRIBUTES* SecurityAttributes,
+			[in]ULONG Flags,
 			[out]HANDLE* RequestQueueHandle);"
 
 	<stdcall: dword HttpCreateRequestQueue dword lpwstr SECURITY_ATTRIBUTES* dword handle*>
@@ -426,10 +426,10 @@ httpCreateServerSession: version serverSessionId: serverSessionId reserved: rese
 	"Invoke the HttpCreateServerSession() function of the module wrapped by the receiver.
 	Helpstring: Create a server session for the specified version.
 
-		unsigned long __stdcall HttpCreateServerSession(
+		ULONG __stdcall HttpCreateServerSession(
 			[in]HTTPAPI_VERSION Version,
 			[out]unsigned __int64* ServerSessionId,
-			[in]unsigned long Reserved);"
+			[in]ULONG Reserved);"
 
 	<stdcall: dword HttpCreateServerSession dword qword* dword>
 	^self invalidCall!
@@ -438,10 +438,10 @@ httpCreateUrlGroup: serverSessionId pUrlGroupId: pUrlGroupId reserved: reserved
 	"Invoke the HttpCreateUrlGroup() function of the module wrapped by the receiver.
 	Helpstring: Creates a URL Group under the specified server session.
 
-		unsigned long __stdcall HttpCreateUrlGroup(
+		ULONG __stdcall HttpCreateUrlGroup(
 			[in]unsigned __int64 ServerSessionId,
 			[out]unsigned __int64* pUrlGroupId,
-			[in]unsigned long Reserved);"
+			[in]ULONG Reserved);"
 
 	<stdcall: dword HttpCreateUrlGroup qword qword* dword>
 	^self invalidCall!
@@ -450,13 +450,13 @@ httpDeclarePush: requestQueueHandle requestId: requestId verb: verb path: path q
 	"Invoke the HttpDeclarePush() function of the module wrapped by the receiver.
 	Helpstring: Declares a resource-to-subresource relationship to use for an HTTP server push. HTTP.sys then performs an HTTP 2.0 server push for the given resource, if the underlying protocol, connection, client, and policies allow the push operation.
 
-		unsigned long __stdcall HttpDeclarePush(
-			HANDLE RequestQueueHandle,
-			unsigned __int64 RequestId,
-			HTTP_VERB Verb,
-			LPCWSTR Path,
-			LPCSTR Query,
-			PHTTP_REQUEST_HEADERS Headers);"
+		ULONG __stdcall HttpDeclarePush(
+			[in]HANDLE RequestQueueHandle,
+			[in]unsigned __int64 RequestId,
+			[in]HTTP_VERB Verb,
+			[in]LPCWSTR Path,
+			[in]LPCSTR Query,
+			[in]HTTP_REQUEST_HEADERS* Headers);"
 
 	<stdcall: dword HttpDeclarePush handle qword sdword lpwstr lpstr HTTP_REQUEST_HEADERS*>
 	^self invalidCall!
@@ -465,11 +465,11 @@ httpDeleteServiceConfiguration: serviceHandle configId: configId pConfigInformat
 	"Invoke the HttpDeleteServiceConfiguration() function of the module wrapped by the receiver.
 	Helpstring: Deletes specified data, such as IP addresses or SSL Certificates, from the HTTP Server API configuration store, one record at a time.
 
-		unsigned long __stdcall HttpDeleteServiceConfiguration(
+		ULONG __stdcall HttpDeleteServiceConfiguration(
 			[in]HANDLE ServiceHandle,
 			[in]HTTP_SERVICE_CONFIG_ID ConfigId,
 			[in]void* pConfigInformation,
-			[in]unsigned long ConfigInformationLength,
+			[in]ULONG ConfigInformationLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
 	<stdcall: dword HttpDeleteServiceConfiguration handle sdword void* dword OVERLAPPED*>
@@ -479,10 +479,10 @@ httpFlushResponseCache: requestQueueHandle urlPrefix: urlPrefix flags: flags ove
 	"Invoke the HttpFlushResponseCache() function of the module wrapped by the receiver.
 	Helpstring: Remove from the HTTP Server API cache associated with a given request queue all response fragments that have a name whose site portion matches a specified UrlPrefix.
 
-		unsigned long __stdcall HttpFlushResponseCache(
+		ULONG __stdcall HttpFlushResponseCache(
 			[in]HANDLE RequestQueueHandle,
 			[in]LPCWSTR UrlPrefix,
-			[in]unsigned long flags,
+			[in]ULONG Flags,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpFlushResponseCache handle lpwstr dword OVERLAPPED*>
@@ -492,10 +492,10 @@ httpInitialize: version flags: flags pReserved: pReserved
 	"Invoke the HttpInitialize() function of the module wrapped by the receiver.
 	Helpstring: The HttpInitialize function initializes the HTTP Server API driver, starts it, if it has not already been started, and allocates data structures for the calling application to support response-queue creation and other operations.
 
-		unsigned long __stdcall HttpInitialize(
+		ULONG __stdcall HttpInitialize(
 			[in]HTTPAPI_VERSION Version,
-			[in]unsigned long flags,
-			[in, out]void* pReserved);"
+			[in]ULONG Flags,
+			[in, out]PVOID pReserved);"
 
 	<stdcall: dword HttpInitialize dword dword void*>
 	^self invalidCall!
@@ -504,11 +504,11 @@ httpPrepareUrl: reserved flags: flags url: url preparedUrl: preparedUrl
 	"Invoke the HttpPrepareUrl() function of the module wrapped by the receiver.
 	Helpstring: Parses, analyzes, and normalizes a non-normalized Unicode or punycode URL so it is safe and valid to use in other HTTP functions (Win8+).
 
-		unsigned long __stdcall HttpPrepareUrl(
-			void* Reserved,
-			unsigned long flags,
-			LPCWSTR Url,
-			LPWSTR* PreparedUrl);"
+		ULONG __stdcall HttpPrepareUrl(
+			PVOID Reserved,
+			ULONG Flags,
+			[in]LPCWSTR Url,
+			[out]LPWSTR* PreparedUrl);"
 
 	<stdcall: dword HttpPrepareUrl void* dword lpwstr lpwstr*>
 	^self invalidCall!
@@ -517,14 +517,14 @@ httpQueryRequestQueueProperty: requestQueueProperty property: property propertyI
 	"Invoke the HttpQueryRequestQueueProperty() function of the module wrapped by the receiver.
 	Helpstring: Query a property of the request queue identified by the specified handle
 
-		unsigned long __stdcall HttpQueryRequestQueueProperty(
+		ULONG __stdcall HttpQueryRequestQueueProperty(
 			[in]HANDLE RequestQueueProperty,
 			[in]HTTP_SERVER_PROPERTY Property,
-			void* PropertyInformation,
-			[in]unsigned long PropertyInformationLength,
-			[in]unsigned long Reserved1,
-			unsigned long* ReturnLength,
-			[in]void* Reserved2);"
+			[out]void* PropertyInformation,
+			[in]ULONG PropertyInformationLength,
+			[in]ULONG Reserved1,
+			[out]ULONG* ReturnLength,
+			[in]PVOID Reserved2);"
 
 	<stdcall: dword HttpQueryRequestQueueProperty handle sdword void* dword dword dword* void*>
 	^self invalidCall!
@@ -533,12 +533,12 @@ httpQueryServerSessionProperty: serverSessionId property: property propertyInfor
 	"Invoke the HttpQueryServerSessionProperty() function of the module wrapped by the receiver.
 	Helpstring: Queries a server property on the specified server session.
 
-		unsigned long __stdcall HttpQueryServerSessionProperty(
+		ULONG __stdcall HttpQueryServerSessionProperty(
 			[in]unsigned __int64 ServerSessionId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			void* PropertyInformation,
-			[in]unsigned long PropertyInformationLength,
-			unsigned long* ReturnLength);"
+			[out]void* PropertyInformation,
+			[in]ULONG PropertyInformationLength,
+			[out]ULONG* ReturnLength);"
 
 	<stdcall: dword HttpQueryServerSessionProperty qword sdword void* dword dword*>
 	^self invalidCall!
@@ -547,14 +547,14 @@ httpQueryServiceConfiguration: serviceHandle configId: configId pInput: pInput i
 	"Invoke the HttpQueryServiceConfiguration() function of the module wrapped by the receiver.
 	Helpstring: Retrieves one or more HTTP Server API configuration records.
 
-		unsigned long __stdcall HttpQueryServiceConfiguration(
+		ULONG __stdcall HttpQueryServiceConfiguration(
 			[in]HANDLE ServiceHandle,
 			[in]HTTP_SERVICE_CONFIG_ID ConfigId,
 			[in]void* pInput,
-			[in]unsigned long InputLength,
+			[in]ULONG InputLength,
 			[out]void* pOutput,
-			[in]unsigned long OutputLength,
-			[out]unsigned long* pReturnLength,
+			[in]ULONG OutputLength,
+			[out]ULONG* pReturnLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
 	<stdcall: dword HttpQueryServiceConfiguration handle sdword void* dword void* dword dword* OVERLAPPED*>
@@ -564,12 +564,12 @@ httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: pr
 	"Invoke the HttpQueryUrlGroupProperty() function of the module wrapped by the receiver.
 	Helpstring: Query a property on the specified URL Group.
 
-		unsigned long __stdcall HttpQueryUrlGroupProperty(
+		ULONG __stdcall HttpQueryUrlGroupProperty(
 			[in]unsigned __int64 UrlGroupId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			void* PropertyInformation,
-			[in]unsigned long PropertyInformationLength,
-			unsigned long* ReturnLength);"
+			[out]void* PropertyInformation,
+			[in]ULONG PropertyInformationLength,
+			[out]ULONG* ReturnLength);"
 
 	<stdcall: dword HttpQueryUrlGroupProperty qword sdword void* dword dword*>
 	^self invalidCall!
@@ -577,13 +577,13 @@ httpQueryUrlGroupProperty: urlGroupId property: property propertyInformation: pr
 httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: byteRange buffer: buffer bufferLength: bufferLength bytesRead: bytesRead overlapped: overlapped
 	"Invoke the HttpReadFragmentFromCache() function of the module wrapped by the receiver.
 
-		unsigned long __stdcall HttpReadFragmentFromCache(
+		ULONG __stdcall HttpReadFragmentFromCache(
 			[in]HANDLE RequestQueueHandle,
 			[in]LPCWSTR UrlPrefix,
 			[in]PHTTP_BYTE_RANGE ByteRange,
-			void* Buffer,
-			[in]unsigned long BufferLength,
-			unsigned long* BytesRead,
+			[out]void* Buffer,
+			[in]ULONG BufferLength,
+			[out]ULONG* BytesRead,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReadFragmentFromCache handle lpwstr HTTP_BYTE_RANGE* void* dword dword* OVERLAPPED*>
@@ -592,13 +592,13 @@ httpReadFragmentFromCache: requestQueueHandle urlPrefix: urlPrefix byteRange: by
 httpReceiveClientCertificate: requestQueueHandle connectionId: connectionId flags: flags sslClientCertInfo: sslClientCertInfo sslClientCertInfoSize: sslClientCertInfoSize bytesReceived: bytesReceived overlapped: overlapped
 	"Invoke the HttpReceiveClientCertificate() function of the module wrapped by the receiver.
 
-		unsigned long __stdcall HttpReceiveClientCertificate(
+		ULONG __stdcall HttpReceiveClientCertificate(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 ConnectionId,
-			[in]unsigned long flags,
-			PHTTP_SSL_CLIENT_CERT_INFO SslClientCertInfo,
-			[in]unsigned long SslClientCertInfoSize,
-			unsigned long* BytesReceived,
+			[in]ULONG Flags,
+			[out]PHTTP_SSL_CLIENT_CERT_INFO SslClientCertInfo,
+			[in]ULONG SslClientCertInfoSize,
+			[out]ULONG* BytesReceived,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReceiveClientCertificate handle qword dword HTTP_SSL_CLIENT_CERT_INFO* dword dword* OVERLAPPED*>
@@ -608,28 +608,28 @@ httpReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags req
 	"Invoke the HttpReceiveHttpRequest() function of the module wrapped by the receiver.
 	Helpstring: Retrieve the next available HTTP request from the specified request queue either synchronously or asynchronously.
 
-		unsigned long __stdcall HttpReceiveHttpRequest(
+		ULONG __stdcall HttpReceiveHttpRequest(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 RequestId,
-			[in]unsigned long flags,
-			PHTTP_REQUEST RequestBuffer,
-			[in]unsigned long RequestBufferLength,
-			unsigned long* BytesReturned,
+			[in]ULONG Flags,
+			[out]HTTP_REQUEST* RequestBuffer,
+			[in]ULONG RequestBufferLength,
+			[out]ULONG* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
-	<stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST* dword dword* OVERLAPPED*>
+	<stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
 	^self invalidCall!
 
 httpReceiveRequestEntityBody: requestQueueHandle requestId: requestId flags: flags entityBuffer: entityBuffer entityBufferLength: entityBufferLength bytesReturned: bytesReturned overlapped: overlapped
 	"Invoke the HttpReceiveRequestEntityBody() function of the module wrapped by the receiver.
 
-		unsigned long __stdcall HttpReceiveRequestEntityBody(
+		ULONG __stdcall HttpReceiveRequestEntityBody(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 RequestId,
-			[in]unsigned long flags,
-			void* EntityBuffer,
-			[in]unsigned long EntityBufferLength,
-			unsigned long* BytesReturned,
+			[in]ULONG Flags,
+			[out]void* EntityBuffer,
+			[in]ULONG EntityBufferLength,
+			[out]ULONG* BytesReturned,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpReceiveRequestEntityBody handle qword dword void* dword dword* OVERLAPPED*>
@@ -639,10 +639,10 @@ httpRemoveUrlFromUrlGroup: urlGroupId pFullyQualifiedUrl: pFullyQualifiedUrl fla
 	"Invoke the HttpRemoveUrlFromUrlGroup() function of the module wrapped by the receiver.
 	Helpstring: The HttpRemoveUrlFromUrlGroup function removes the specified URL from the group identified by the URL Group ID. This function removes one, or all, of the URLs from the group. 
 
-		unsigned long __stdcall HttpRemoveUrlFromUrlGroup(
+		ULONG __stdcall HttpRemoveUrlFromUrlGroup(
 			[in]unsigned __int64 UrlGroupId,
 			[in]LPCWSTR pFullyQualifiedUrl,
-			[in]unsigned long flags);"
+			[in]ULONG Flags);"
 
 	<stdcall: dword HttpRemoveUrlFromUrlGroup qword lpwstr dword>
 	^self invalidCall!
@@ -651,34 +651,34 @@ httpSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpR
 	"Invoke the HttpSendHttpResponse() function of the module wrapped by the receiver.
 	Helpstring: Sends an HTTP response to the specified HTTP request.
 
-		unsigned long __stdcall HttpSendHttpResponse(
+		ULONG __stdcall HttpSendHttpResponse(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 RequestId,
-			[in]unsigned long flags,
+			[in]ULONG Flags,
 			[in]PHTTP_RESPONSE HttpResponse,
 			[in]PHTTP_CACHE_POLICY CachePolicy,
-			[out]unsigned long* BytesSent,
-			void* Reserved2,
-			unsigned long reserved3,
+			[out]ULONG* BytesSent,
+			PVOID Reserved2,
+			ULONG Reserved3,
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
-	<stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
+	<stdcall: dword HttpSendHttpResponse handle qword dword HTTP_RESPONSE_V2* HTTP_CACHE_POLICY* dword* void* dword OVERLAPPED* HTTP_LOG_FIELDS_DATA*>
 	^self invalidCall!
 
 httpSendResponseEntityBody: requestQueueHandle requestId: requestId flags: flags entityChunkCount: entityChunkCount entityChunks: entityChunks bytesSent: bytesSent reserved1: reserved1 reserved2: reserved2 overlapped: overlapped logData: logData
 	"Invoke the HttpSendResponseEntityBody() function of the module wrapped by the receiver.
 	Helpstring: Sends entity-body data associated with an HTTP response.
 
-		unsigned long __stdcall HttpSendResponseEntityBody(
+		ULONG __stdcall HttpSendResponseEntityBody(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 RequestId,
-			[in]unsigned long flags,
-			[in]unsigned short EntityChunkCount,
-			HTTP_DATA_CHUNK* EntityChunks,
-			[out]unsigned long* BytesSent,
-			void* Reserved1,
-			unsigned long Reserved2,
+			[in]ULONG Flags,
+			[in]USHORT EntityChunkCount,
+			[in]HTTP_DATA_CHUNK* EntityChunks,
+			[out]ULONG* BytesSent,
+			PVOID Reserved1,
+			ULONG Reserved2,
 			[in]LPOVERLAPPED OVERLAPPED,
 			[in]PHTTP_LOG_DATA LogData);"
 
@@ -689,13 +689,13 @@ httpSetRequestQueueProperty: requestQueueHandle property: property propertyInfor
 	"Invoke the HttpSetRequestQueueProperty() function of the module wrapped by the receiver.
 	Helpstring: Set a new property or modifies an existing property on the request queue identified by the specified handle.
 
-		unsigned long __stdcall HttpSetRequestQueueProperty(
+		ULONG __stdcall HttpSetRequestQueueProperty(
 			[in]HANDLE RequestQueueHandle,
 			[in]HTTP_SERVER_PROPERTY Property,
-			void* PropertyInformation,
-			[in]unsigned long PropertyInformationLength,
-			[in]unsigned long Reserved1,
-			[in]void* Reserved2);"
+			[in]void* PropertyInformation,
+			[in]ULONG PropertyInformationLength,
+			[in]ULONG Reserved1,
+			[in]PVOID Reserved2);"
 
 	<stdcall: dword HttpSetRequestQueueProperty handle sdword void* dword dword void*>
 	^self invalidCall!
@@ -704,11 +704,11 @@ httpSetServerSessionProperty: serverSessionId property: property propertyInforma
 	"Invoke the HttpSetServerSessionProperty() function of the module wrapped by the receiver.
 	Helpstring: Sets a new server session property or modifies an existing property on the specified server session.
 
-		unsigned long __stdcall HttpSetServerSessionProperty(
+		ULONG __stdcall HttpSetServerSessionProperty(
 			[in]unsigned __int64 ServerSessionId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			void* PropertyInformation,
-			[in]unsigned long PropertyInformationLength);"
+			[in]void* PropertyInformation,
+			[in]ULONG PropertyInformationLength);"
 
 	<stdcall: dword HttpSetServerSessionProperty qword sdword void* dword>
 	^self invalidCall!
@@ -717,11 +717,11 @@ httpSetServiceConfiguration: serviceHandle configId: configId pConfigInformation
 	"Invoke the HttpSetServiceConfiguration() function of the module wrapped by the receiver.
 	Helpstring: creates and sets a configuration record for the HTTP Server API configuration store. The call fails if the specified record already exists.
 
-		unsigned long __stdcall HttpSetServiceConfiguration(
+		ULONG __stdcall HttpSetServiceConfiguration(
 			[in]HANDLE ServiceHandle,
 			[in]HTTP_SERVICE_CONFIG_ID ConfigId,
 			[in]void* pConfigInformation,
-			[in]unsigned long ConfigInformationLength,
+			[in]ULONG ConfigInformationLength,
 			[in]LPOVERLAPPED pOverlapped);"
 
 	<stdcall: dword HttpSetServiceConfiguration handle sdword void* dword OVERLAPPED*>
@@ -731,11 +731,11 @@ httpSetUrlGroupProperty: urlGroupId property: property propertyInformation: prop
 	"Invoke the HttpSetUrlGroupProperty() function of the module wrapped by the receiver.
 	Helpstring: Sets a new property or modifies an existing property on the specified URL Group.
 
-		unsigned long __stdcall HttpSetUrlGroupProperty(
+		ULONG __stdcall HttpSetUrlGroupProperty(
 			[in]unsigned __int64 UrlGroupId,
 			[in]HTTP_SERVER_PROPERTY Property,
-			void* PropertyInformation,
-			[in]unsigned long PropertyInformationLength);"
+			[in]void* PropertyInformation,
+			[in]ULONG PropertyInformationLength);"
 
 	<stdcall: dword HttpSetUrlGroupProperty qword sdword void* dword>
 	^self invalidCall!
@@ -744,7 +744,7 @@ httpShutdownRequestQueue: requestQueueHandle
 	"Invoke the HttpShutdownRequestQueue() function of the module wrapped by the receiver.
 	Helpstring: Stop queuing requests for the specified request queue process.
 
-		unsigned long __stdcall HttpShutdownRequestQueue(
+		ULONG __stdcall HttpShutdownRequestQueue(
 			[in]HANDLE RequestQueueHandle);"
 
 	<stdcall: dword HttpShutdownRequestQueue handle>
@@ -754,9 +754,9 @@ httpTerminate: flags pReserved: pReserved
 	"Invoke the HttpTerminate() function of the module wrapped by the receiver.
 	Helpstring: Cleans up resources used by the HTTP Server API to process calls by an application. An application should call HttpTerminate once for every time it called HttpInitialize, with matching flag settings.
 
-		unsigned long __stdcall HttpTerminate(
-			[in]unsigned long flags,
-			[in, out]void* pReserved);"
+		ULONG __stdcall HttpTerminate(
+			[in]ULONG Flags,
+			[in, out]PVOID pReserved);"
 
 	<stdcall: dword HttpTerminate dword void*>
 	^self invalidCall!
@@ -765,7 +765,7 @@ httpWaitForDemandStart: requestQueueHandle overlapped: overlapped
 	"Invoke the HttpWaitForDemandStart() function of the module wrapped by the receiver.
 	Helpstring: Wait for the arrival of a new request that can be served by a new request queue process.
 
-		unsigned long __stdcall HttpWaitForDemandStart(
+		ULONG __stdcall HttpWaitForDemandStart(
 			[in]HANDLE RequestQueueHandle,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
@@ -776,7 +776,7 @@ httpWaitForDisconnect: requestQueueHandle connectionId: connectionId overlapped:
 	"Invoke the HttpWaitForDisconnect() function of the module wrapped by the receiver.
 	Helpstring: Notifies the application when the connection to an HTTP client is broken for any reason.
 
-		unsigned long __stdcall HttpWaitForDisconnect(
+		ULONG __stdcall HttpWaitForDisconnect(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 ConnectionId,
 			[in]LPOVERLAPPED OVERLAPPED);"
@@ -788,10 +788,10 @@ httpWaitForDisconnectEx: requestQueueHandle connectionId: connectionId reserved:
 	"Invoke the HttpWaitForDisconnectEx() function of the module wrapped by the receiver.
 	Helpstring: This function is an extension to HttpWaitForDisconnect.
 
-		unsigned long __stdcall HttpWaitForDisconnectEx(
+		ULONG __stdcall HttpWaitForDisconnectEx(
 			[in]HANDLE RequestQueueHandle,
 			[in]unsigned __int64 ConnectionId,
-			[in]unsigned long Reserved,
+			[in]ULONG Reserved,
 			[in]LPOVERLAPPED OVERLAPPED);"
 
 	<stdcall: dword HttpWaitForDisconnectEx handle qword dword OVERLAPPED*>
@@ -963,8 +963,8 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 				propertyInformation: aWinHttpPropertyInfo
 				propertyInformationLength: aWinHttpPropertyInfo byteSize)! !
 !HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
-!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!public! !
-!HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!**auto generated**!public! !
+!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!operations!public! !
+!HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!operations!public! !
 !HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
 !HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
 !HttpApiLibrary categoriesFor: #close!public!realizing/unrealizing! !
@@ -1044,7 +1044,7 @@ example1
 	"
 
 	| lib sessionId queue groupId urlPrefix iveConfiguredSsl |
-	iveConfiguredSsl := true.
+	iveConfiguredSsl := false.
 	urlPrefix := iveConfiguredSsl
 				ifTrue: [
 					"Change this to the URL you've added your SSL cert to."
@@ -1161,7 +1161,7 @@ example3
 
 	| param bufSize lib ret sizeRequired buf |
 	lib := self default.
-	"Add IPv6 localhost to the list list"
+	"Add IPv6 localhost to the listen list - needs admin rights"
 	param := HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM new.
 	param address: (SOCKADDR fromString: '::1').
 	ret := lib

@@ -6,7 +6,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_TIMEOUT_LIMIT_INFO guid: (GUID fromString: '{7dae0007-41d0-4925-b425-a14d837d56d0}')!
-HTTP_TIMEOUT_LIMIT_INFO comment: '<HTTP_TIMEOUT_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Win32 API'' library.
+HTTP_TIMEOUT_LIMIT_INFO comment: '<HTTP_TIMEOUT_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"For manipulating application specific timeout settings. These timers run when there''s a request being processed on a connection and HTTPAPI has already associated the request with an application."

@@ -6,7 +6,7 @@ HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_URLACL_QUERY
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_URLACL_QUERY guid: (GUID fromString: '{fbe6f060-f472-445e-b48c-9caa8faedc7e}')!
-HTTP_SERVICE_CONFIG_URLACL_QUERY comment: '<HTTP_SERVICE_CONFIG_URLACL_QUERY> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_URLACL_QUERY'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_CONFIG_URLACL_QUERY comment: '<HTTP_SERVICE_CONFIG_URLACL_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This data structure is used by HttpQueryServiceConfiguration() for the	config ID HttpServiceConfigUrlAclInfo to query records from the URL ACL store."

@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_CACHE_SET guid: (GUID fromString: '{7d7f269d-ce99-4ee1-979d-387f6f2147be}')!
-HTTP_SERVICE_CONFIG_CACHE_SET comment: '<HTTP_SERVICE_CONFIG_CACHE_SET> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_CACHE_SET'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_CONFIG_CACHE_SET comment: '<HTTP_SERVICE_CONFIG_CACHE_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"To set a cache parameter value use the set structure. To query use the key directly.When you query a parameter value the output buffer must be exactly the sizeof param."
@@ -18,10 +18,10 @@ IDL definition follows:
 typedef [uuid(7d7f269d-ce99-4ee1-979d-387f6f2147be), helpstring("To set a cache parameter value use the set structure. To query use the key directly.When you query a parameter value the output buffer must be exactly the sizeof param.")]
 struct tagHTTP_SERVICE_CONFIG_CACHE_SET {
 	HTTP_SERVICE_CONFIG_CACHE_KEY KeyDesc;
-	ULONG paramdesc;
+	ULONG ParamDesc;
 } HTTP_SERVICE_CONFIG_CACHE_SET;
 '!
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesForClass!Win32-Structs! !
+!HTTP_SERVICE_CONFIG_CACHE_SET categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SERVICE_CONFIG_CACHE_SET methodsFor!
 
 KeyDesc
@@ -34,19 +34,19 @@ KeyDesc: anInteger
 
 	bytes sdwordAtOffset: 0 put: anInteger!
 
-paramdesc
-	"Answer the <Integer> value of the receiver's 'paramdesc' field."
+ParamDesc
+	"Answer the <Integer> value of the receiver's 'ParamDesc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #paramdesc)!
+	^bytes dwordAtOffset: ##(self offsetOf: #ParamDesc)!
 
-paramdesc: anInteger
-	"Set the receiver's 'paramdesc' field to the value of the argument, anInteger"
+ParamDesc: anInteger
+	"Set the receiver's 'ParamDesc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #paramdesc) put: anInteger! !
+	bytes dwordAtOffset: ##(self offsetOf: #ParamDesc) put: anInteger! !
 !HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #paramdesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #paramdesc:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
 
 !HTTP_SERVICE_CONFIG_CACHE_SET class methodsFor!
 
@@ -58,13 +58,13 @@ defineFields
 		typedef [uuid(7d7f269d-ce99-4ee1-979d-387f6f2147be), helpstring('To set a cache parameter value use the set structure. To query use the key directly.When you query a parameter value the output buffer must be exactly the sizeof param.')]
 		struct tagHTTP_SERVICE_CONFIG_CACHE_SET {
 			HTTP_SERVICE_CONFIG_CACHE_KEY KeyDesc;
-			ULONG paramdesc;
+			ULONG ParamDesc;
 		} HTTP_SERVICE_CONFIG_CACHE_SET;
 "
 
 	self
 		defineField: #KeyDesc type: SDWORDField new offset: 0;
-		defineField: #paramdesc type: DWORDField new offset: 4.
+		defineField: #ParamDesc type: DWORDField new offset: 4.
 	self byteSize: 8! !
 !HTTP_SERVICE_CONFIG_CACHE_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

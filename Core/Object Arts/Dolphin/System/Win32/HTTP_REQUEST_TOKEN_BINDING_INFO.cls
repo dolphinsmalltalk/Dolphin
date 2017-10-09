@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_TOKEN_BINDING_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_TOKEN_BINDING_INFO guid: (GUID fromString: '{9a86eb3d-22ee-4cc3-980d-f3427eecdb0c}')!
-HTTP_REQUEST_TOKEN_BINDING_INFO comment: '<HTTP_REQUEST_TOKEN_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST_TOKEN_BINDING_INFO'' from type information in the ''Win32 API'' library.
+HTTP_REQUEST_TOKEN_BINDING_INFO comment: '<HTTP_REQUEST_TOKEN_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -23,7 +23,7 @@ struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
 	LPWSTR KeyType;
 } HTTP_REQUEST_TOKEN_BINDING_INFO;
 '!
-!HTTP_REQUEST_TOKEN_BINDING_INFO categoriesForClass!Win32-Structs! !
+!HTTP_REQUEST_TOKEN_BINDING_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO methodsFor!
 
 KeyType

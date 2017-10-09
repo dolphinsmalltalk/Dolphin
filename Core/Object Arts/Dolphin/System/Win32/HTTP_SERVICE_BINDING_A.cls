@@ -6,7 +6,7 @@ HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_BINDING_A guid: (GUID fromString: '{88ca7833-a66a-4e2f-98bc-cd2313254b15}')!
-HTTP_SERVICE_BINDING_A comment: '<HTTP_SERVICE_BINDING_A> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_BINDING_A'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_BINDING_A comment: '<HTTP_SERVICE_BINDING_A> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_A'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Provides Service Principle Name (SPN) in ASCII."

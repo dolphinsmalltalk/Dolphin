@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_RESPONSE_V1
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_V1 guid: (GUID fromString: '{c23ac8a9-b97f-4aec-8096-91648573c429}')!
-HTTP_RESPONSE_V1 comment: '<HTTP_RESPONSE_V1> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_RESPONSE_V1'' from type information in the ''Win32 API'' library.
+HTTP_RESPONSE_V1 comment: '<HTTP_RESPONSE_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure describes an HTTP response (V1)."
@@ -17,7 +17,7 @@ IDL definition follows:
 
 typedef [uuid(c23ac8a9-b97f-4aec-8096-91648573c429), helpstring("This structure describes an HTTP response (V1).")]
 struct tagHTTP_RESPONSE_V1 {
-	[helpstring("Response flags from the HTTP_RESPONSE_FLAGS_* constants.")] ULONG flags;
+	[helpstring("Response flags from the HTTP_RESPONSE_FLAGS_* constants.")] ULONG Flags;
 	[helpstring("The raw HTTP protocol version number.")] HTTP_VERSION Version;
 	[helpstring("The HTTP status code (e.g., 200).")] USHORT StatusCode;
 	[nonbrowsable] USHORT ReasonLength;
@@ -27,7 +27,7 @@ struct tagHTTP_RESPONSE_V1 {
 	[helpstring("pEntityChunks points to an array of EntityChunkCount HTTP_DATA_CHUNKs."), size_is("EntityChunkCount")] HTTP_DATA_CHUNK* pEntityChunks;
 } HTTP_RESPONSE_V1;
 '!
-!HTTP_RESPONSE_V1 categoriesForClass!Win32-Structs! !
+!HTTP_RESPONSE_V1 categoriesForClass!WinHttpServer-Structs! !
 !HTTP_RESPONSE_V1 methodsFor!
 
 content: aByteObject
@@ -49,13 +49,13 @@ EntityChunkCount: anInteger
 
 	bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount) put: anInteger!
 
-flags
-	"Answer the <Integer> value of the receiver's 'flags' field."
+Flags
+	"Answer the <Integer> value of the receiver's 'Flags' field."
 
 	^bytes dwordAtOffset: 0!
 
-flags: anInteger
-	"Set the receiver's 'flags' field to the value of the argument, anInteger"
+Flags: anInteger
+	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: 0 put: anInteger!
 
@@ -138,8 +138,8 @@ Version: aHTTP_VERSION
 !HTTP_RESPONSE_V1 categoriesFor: #contentType:!accessing!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
 !HTTP_RESPONSE_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
-!HTTP_RESPONSE_V1 categoriesFor: #flags!**compiled accessors**!public! !
-!HTTP_RESPONSE_V1 categoriesFor: #flags:!**compiled accessors**!public! !
+!HTTP_RESPONSE_V1 categoriesFor: #Flags!**compiled accessors**!public! !
+!HTTP_RESPONSE_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #Headers!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
 !HTTP_RESPONSE_V1 categoriesFor: #initialize!initializing!private! !
@@ -163,7 +163,7 @@ defineFields
 
 		typedef [uuid(c23ac8a9-b97f-4aec-8096-91648573c429), helpstring('This structure describes an HTTP response (V1).')]
 		struct tagHTTP_RESPONSE_V1 {
-			[helpstring('Response flags from the HTTP_RESPONSE_FLAGS_* constants.')] ULONG flags;
+			[helpstring('Response flags from the HTTP_RESPONSE_FLAGS_* constants.')] ULONG Flags;
 			[helpstring('The raw HTTP protocol version number.')] HTTP_VERSION Version;
 			[helpstring('The HTTP status code (e.g., 200).')] USHORT StatusCode;
 			[nonbrowsable] USHORT ReasonLength;
@@ -175,7 +175,7 @@ defineFields
 "
 
 	self
-		defineField: #flags type: DWORDField new offset: 0;
+		defineField: #Flags type: DWORDField new offset: 0;
 		defineField: #Version type: (StructureField type: HTTP_VERSION) offset: 4;
 		defineField: #StatusCode type: WORDField new offset: 8;
 		defineField: #ReasonLength type: WORDField new beNonBrowsable offset: 10;

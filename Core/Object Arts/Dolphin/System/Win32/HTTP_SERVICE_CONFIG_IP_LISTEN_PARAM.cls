@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM guid: (GUID fromString: '{00a93e39-c011-4a5b-af4d-13f2df7a38d4}')!
-HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Set/Delete IP Listen-Only List record. Used as a parameter to both HttpSetServiceConfiguration() and HttpDeleteServiceConfiguration() functions."
@@ -21,7 +21,7 @@ struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_PARAM {
 	[helpstring("A pointer to an Internet Protocol (IP) address to be added to or deleted from the listen list.")] SOCKADDR* pAddress;
 } HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM;
 '!
-!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForClass!Win32-Structs! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM methodsFor!
 
 address

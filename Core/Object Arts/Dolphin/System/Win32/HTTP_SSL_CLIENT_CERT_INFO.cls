@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SSL_CLIENT_CERT_INFO guid: (GUID fromString: '{2ea1d77c-9411-49f7-af99-3554a22fe89e}')!
-HTTP_SSL_CLIENT_CERT_INFO comment: '<HTTP_SSL_CLIENT_CERT_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Win32 API'' library.
+HTTP_SSL_CLIENT_CERT_INFO comment: '<HTTP_SSL_CLIENT_CERT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"SSL Client certificate information."
@@ -21,10 +21,10 @@ struct tagHTTP_SSL_CLIENT_CERT_INFO {
 	[nonbrowsable, helpstring("The size, in bytes, of the certificate")] ULONG CertEncodedSize;
 	[helpstring("A pointer to the actual certificate."), size_is("CertEncodedSize")] UCHAR* pCertEncoded;
 	[helpstring("A handle to an access token.")] HANDLE Token;
-	[hidden, helpstring("Reserved.")] BOOLEAN CertDeniedByMapper;
+	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] BOOLEAN CertDeniedByMapper;
 } HTTP_SSL_CLIENT_CERT_INFO;
 '!
-!HTTP_SSL_CLIENT_CERT_INFO categoriesForClass!Win32-Structs! !
+!HTTP_SSL_CLIENT_CERT_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SSL_CLIENT_CERT_INFO methodsFor!
 
 CertEncodedSize
@@ -90,7 +90,7 @@ defineFields
 			[nonbrowsable, helpstring('The size, in bytes, of the certificate')] ULONG CertEncodedSize;
 			[helpstring('A pointer to the actual certificate.'), size_is('CertEncodedSize')] UCHAR* pCertEncoded;
 			[helpstring('A handle to an access token.')] HANDLE Token;
-			[hidden, helpstring('Reserved.')] BOOLEAN CertDeniedByMapper;
+			[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] BOOLEAN CertDeniedByMapper;
 		} HTTP_SSL_CLIENT_CERT_INFO;
 "
 
