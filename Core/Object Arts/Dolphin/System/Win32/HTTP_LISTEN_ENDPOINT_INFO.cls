@@ -6,7 +6,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_LISTEN_ENDPOINT_INFO guid: (GUID fromString: '{c96f66fd-b678-4046-9100-ed4b4bc7c9fe}')!
-HTTP_LISTEN_ENDPOINT_INFO comment: '<HTTP_LISTEN_ENDPOINT_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_LISTEN_ENDPOINT_INFO'' from type information in the ''Win32 API'' library.
+HTTP_LISTEN_ENDPOINT_INFO comment: '<HTTP_LISTEN_ENDPOINT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Controls whether IP-based URLs should listen on the specific IP or wildcard."

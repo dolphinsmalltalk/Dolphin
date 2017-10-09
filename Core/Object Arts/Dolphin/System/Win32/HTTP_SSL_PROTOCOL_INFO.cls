@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SSL_PROTOCOL_INFO guid: (GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
-HTTP_SSL_PROTOCOL_INFO comment: '<HTTP_SSL_PROTOCOL_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Win32 API'' library.
+HTTP_SSL_PROTOCOL_INFO comment: '<HTTP_SSL_PROTOCOL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"HttpRequestInfoTypeSslProtocol payload. Contains basic information about the SSL/TLS protocol and cipher. See SecPkgContext_ConnectionInfo documentation for details."
@@ -17,7 +17,7 @@ IDL definition follows:
 
 typedef [uuid(73784afd-f4e5-464e-b716-46ebb0c8c6d1), helpstring("HttpRequestInfoTypeSslProtocol payload. Contains basic information about the SSL/TLS protocol and cipher. See SecPkgContext_ConnectionInfo documentation for details.")]
 struct tagHTTP_SSL_PROTOCOL_INFO {
-	[readonly] ULONG protocol;
+	[readonly] ULONG Protocol;
 	[readonly] ULONG CipherType;
 	[readonly] ULONG CipherStrength;
 	[readonly] ULONG HashType;
@@ -26,7 +26,7 @@ struct tagHTTP_SSL_PROTOCOL_INFO {
 	[readonly] ULONG KeyExchangeStrength;
 } HTTP_SSL_PROTOCOL_INFO;
 '!
-!HTTP_SSL_PROTOCOL_INFO categoriesForClass!Win32-Structs! !
+!HTTP_SSL_PROTOCOL_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SSL_PROTOCOL_INFO methodsFor!
 
 CipherStrength
@@ -59,8 +59,8 @@ KeyExchangeType
 
 	^bytes dwordAtOffset: ##(self offsetOf: #KeyExchangeType)!
 
-protocol
-	"Answer the <Integer> value of the receiver's 'protocol' field."
+Protocol
+	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
 	^bytes dwordAtOffset: 0! !
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherStrength!**compiled accessors**!public! !
@@ -69,7 +69,7 @@ protocol
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashType!**compiled accessors**!public! !
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeStrength!**compiled accessors**!public! !
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #KeyExchangeType!**compiled accessors**!public! !
-!HTTP_SSL_PROTOCOL_INFO categoriesFor: #protocol!**compiled accessors**!public! !
+!HTTP_SSL_PROTOCOL_INFO categoriesFor: #Protocol!**compiled accessors**!public! !
 
 !HTTP_SSL_PROTOCOL_INFO class methodsFor!
 
@@ -80,7 +80,7 @@ defineFields
 
 		typedef [uuid(73784afd-f4e5-464e-b716-46ebb0c8c6d1), helpstring('HttpRequestInfoTypeSslProtocol payload. Contains basic information about the SSL/TLS protocol and cipher. See SecPkgContext_ConnectionInfo documentation for details.')]
 		struct tagHTTP_SSL_PROTOCOL_INFO {
-			[readonly] ULONG protocol;
+			[readonly] ULONG Protocol;
 			[readonly] ULONG CipherType;
 			[readonly] ULONG CipherStrength;
 			[readonly] ULONG HashType;
@@ -91,7 +91,7 @@ defineFields
 "
 
 	self
-		defineField: #protocol type: DWORDField new beReadOnly offset: 0;
+		defineField: #Protocol type: DWORDField new beReadOnly offset: 0;
 		defineField: #CipherType type: DWORDField new beReadOnly offset: 4;
 		defineField: #CipherStrength type: DWORDField new beReadOnly offset: 8;
 		defineField: #HashType type: DWORDField new beReadOnly offset: 12;

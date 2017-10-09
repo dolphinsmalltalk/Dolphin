@@ -72,9 +72,9 @@ addressFamily
 defineFields
 	"Define the fields of the IN_ADDR structure.
 
-	IN_ADDR  compileDefinition
+	IN_ADDR compileDefinition
 
-		typedef [uuid(87B4C5F6-026E-11D3-9FD7-00A0CC3E4A32), helpstring('IPv4 Internet address. This is an 'on-wire' format structure.')]
+		typedef [uuid(87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32), helpstring('IPv4 Internet address. This is an 'on-wire' format structure.')]
 		struct tagIN_ADDR {
 			union {
 				[hidden] struct {

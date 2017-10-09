@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_CACHE_POLICY
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_CACHE_POLICY guid: (GUID fromString: '{02064551-c601-4e48-85ac-6d19fe34f58b}')!
-HTTP_CACHE_POLICY comment: '<HTTP_CACHE_POLICY> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_CACHE_POLICY'' from type information in the ''Win32 API'' library.
+HTTP_CACHE_POLICY comment: '<HTTP_CACHE_POLICY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CACHE_POLICY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	" Only cache unauthorized GETs + HEADs."
@@ -21,7 +21,7 @@ struct tagHTTP_CACHE_POLICY {
 	ULONG SecondsToLive;
 } HTTP_CACHE_POLICY;
 '!
-!HTTP_CACHE_POLICY categoriesForClass!Win32-Structs! !
+!HTTP_CACHE_POLICY categoriesForClass!WinHttpServer-Structs! !
 !HTTP_CACHE_POLICY methodsFor!
 
 policy

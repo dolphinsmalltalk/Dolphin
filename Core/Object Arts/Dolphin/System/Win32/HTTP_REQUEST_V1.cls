@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_V1
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_V1 guid: (GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
-HTTP_REQUEST_V1 comment: '<HTTP_REQUEST_V1> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST_V1'' from type information in the ''Win32 API'' library.
+HTTP_REQUEST_V1 comment: '<HTTP_REQUEST_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Represents an incoming HTTP request (N.B. this is the V1, pre-Vista, structure)"
@@ -17,7 +17,7 @@ IDL definition follows:
 
 typedef [uuid(7927a79c-8c4e-423a-bf24-f1b36b4df5c4), helpstring("Represents an incoming HTTP request (N.B. this is the V1, pre-Vista, structure)")]
 struct tagHTTP_REQUEST_V1 {
-	[helpstring("Request flags (see HTTP_REQUEST_FLAG_* definitions below).")] ULONG flags;
+	[helpstring("Request flags (see HTTP_REQUEST_FLAG_* definitions below).")] ULONG Flags;
 	[helpstring("An opaque request identifier. These values are used by the driver to correlate outgoing responses with incoming requests.")] unsigned __int64 ConnectionId;
 	unsigned __int64 RequestId;
 	[helpstring("The context associated with the URL prefix.")] HTTP_URL_CONTEXT UrlContext;
@@ -37,7 +37,7 @@ struct tagHTTP_REQUEST_V1 {
 	[helpstring("A pointer to an HTTP_SSL_INFO structure that contains Secure Sockets Layer (SSL) information about the connection on which the request was received.")] HTTP_SSL_INFO* pSslInfo;
 } HTTP_REQUEST_V1;
 '!
-!HTTP_REQUEST_V1 categoriesForClass!Win32-Structs! !
+!HTTP_REQUEST_V1 categoriesForClass!WinHttpServer-Structs! !
 !HTTP_REQUEST_V1 methodsFor!
 
 Address
@@ -103,13 +103,13 @@ EntityChunkCount: anInteger
 
 	bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount) put: anInteger!
 
-flags
-	"Answer the <Integer> value of the receiver's 'flags' field."
+Flags
+	"Answer the <Integer> value of the receiver's 'Flags' field."
 
 	^bytes dwordAtOffset: 0!
 
-flags: anInteger
-	"Set the receiver's 'flags' field to the value of the argument, anInteger"
+Flags: anInteger
+	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: 0 put: anInteger!
 
@@ -307,8 +307,8 @@ Version: aHTTP_VERSION
 !HTTP_REQUEST_V1 categoriesFor: #CookedUrl:!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
 !HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #flags!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #flags:!**compiled accessors**!public! !
+!HTTP_REQUEST_V1 categoriesFor: #Flags!**compiled accessors**!public! !
+!HTTP_REQUEST_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #Headers!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #maxPrint!constants!private! !
@@ -348,7 +348,7 @@ defineFields
 
 		typedef [uuid(7927a79c-8c4e-423a-bf24-f1b36b4df5c4), helpstring('Represents an incoming HTTP request (N.B. this is the V1, pre-Vista, structure)')]
 		struct tagHTTP_REQUEST_V1 {
-			[helpstring('Request flags (see HTTP_REQUEST_FLAG_* definitions below).')] ULONG flags;
+			[helpstring('Request flags (see HTTP_REQUEST_FLAG_* definitions below).')] ULONG Flags;
 			[helpstring('An opaque request identifier. These values are used by the driver to correlate outgoing responses with incoming requests.')] unsigned __int64 ConnectionId;
 			unsigned __int64 RequestId;
 			[helpstring('The context associated with the URL prefix.')] HTTP_URL_CONTEXT UrlContext;
@@ -370,7 +370,7 @@ defineFields
 "
 
 	self
-		defineField: #flags type: DWORDField new offset: 0;
+		defineField: #Flags type: DWORDField new offset: 0;
 		defineField: #ConnectionId type: QWORDField new offset: 8;
 		defineField: #RequestId type: QWORDField new offset: 16;
 		defineField: #UrlContext type: QWORDField new offset: 24;

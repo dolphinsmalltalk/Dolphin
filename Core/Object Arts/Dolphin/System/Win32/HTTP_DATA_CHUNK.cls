@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_DATA_CHUNK guid: (GUID fromString: '{831e8135-6bb5-45e2-b278-10b1c489883a}')!
-HTTP_DATA_CHUNK comment: '<HTTP_DATA_CHUNK> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_DATA_CHUNK'' from type information in the ''Win32 API'' library.
+HTTP_DATA_CHUNK comment: '<HTTP_DATA_CHUNK> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_DATA_CHUNK'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure describes an individual data chunk."
@@ -28,17 +28,17 @@ struct tagHTTP_DATA_CHUNK {
 			HANDLE FileHandle;
 		} FromFileHandle;
 		[helpstring("From-fragment cache data chunk.")] struct {
-			USHORT FragmentNameLength;
+			[helpstring("Size in bytes of FragmentName not including terminating null")] USHORT FragmentNameLength;
 			LPCWSTR pFragmentName;
 		} FromFragmentCache;
 		[helpstring("From-fragment cache data chunk that specifies a byte range.")] struct {
 			HTTP_BYTE_RANGE ByteRange;
-			LPCWSTR pFragmentName;
+			[helpstring("Null-terminated string")] LPCWSTR pFragmentName;
 		} FromFragmentCacheEx;
 	};
 } HTTP_DATA_CHUNK;
 '!
-!HTTP_DATA_CHUNK categoriesForClass!Win32-Structs! !
+!HTTP_DATA_CHUNK categoriesForClass!WinHttpServer-Structs! !
 !HTTP_DATA_CHUNK methodsFor!
 
 data: aByteObject
@@ -200,12 +200,12 @@ defineFields
 					HANDLE FileHandle;
 				} FromFileHandle;
 				[helpstring('From-fragment cache data chunk.')] struct {
-					USHORT FragmentNameLength;
+					[helpstring('Size in bytes of FragmentName not including terminating null')] USHORT FragmentNameLength;
 					LPCWSTR pFragmentName;
 				} FromFragmentCache;
 				[helpstring('From-fragment cache data chunk that specifies a byte range.')] struct {
 					HTTP_BYTE_RANGE ByteRange;
-					LPCWSTR pFragmentName;
+					[helpstring('Null-terminated string')] LPCWSTR pFragmentName;
 				} FromFragmentCacheEx;
 			};
 		} HTTP_DATA_CHUNK;

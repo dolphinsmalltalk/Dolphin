@@ -6,7 +6,7 @@ HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_V2 guid: (GUID fromString: '{5e3a97da-7345-49a7-a5a9-1ddea2366eb2}')!
-HTTP_RESPONSE_V2 comment: '<HTTP_RESPONSE_V2> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_RESPONSE_V2'' from type information in the ''Win32 API'' library.
+HTTP_RESPONSE_V2 comment: '<HTTP_RESPONSE_V2> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"This structure describes an HTTP response (V2)."

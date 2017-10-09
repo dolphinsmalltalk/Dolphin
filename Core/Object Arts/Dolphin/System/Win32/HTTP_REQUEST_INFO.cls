@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_INFO guid: (GUID fromString: '{8c37d370-da00-4186-b515-ebe6b57d8cc6}')!
-HTTP_REQUEST_INFO comment: '<HTTP_REQUEST_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST_INFO'' from type information in the ''Win32 API'' library.
+HTTP_REQUEST_INFO comment: '<HTTP_REQUEST_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -21,7 +21,7 @@ struct tagHTTP_REQUEST_INFO {
 	[nonbrowsable, helpstring("The request info data"), size_is("InfoLength")] void* pInfo;
 } HTTP_REQUEST_INFO;
 '!
-!HTTP_REQUEST_INFO categoriesForClass!Win32-Structs! !
+!HTTP_REQUEST_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_REQUEST_INFO methodsFor!
 
 info

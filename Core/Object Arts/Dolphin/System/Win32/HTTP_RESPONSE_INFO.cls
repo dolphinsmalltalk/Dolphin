@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_RESPONSE_INFO
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_INFO guid: (GUID fromString: '{cdf58c2c-140f-4611-b847-12837ce3155f}')!
-HTTP_RESPONSE_INFO comment: '<HTTP_RESPONSE_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_RESPONSE_INFO'' from type information in the ''Win32 API'' library.
+HTTP_RESPONSE_INFO comment: '<HTTP_RESPONSE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -21,7 +21,7 @@ struct tagHTTP_RESPONSE_INFO {
 	[nonbrowsable, helpstring("Response information data"), size_is("Length")] void* pInfo;
 } HTTP_RESPONSE_INFO;
 '!
-!HTTP_RESPONSE_INFO categoriesForClass!Win32-Structs! !
+!HTTP_RESPONSE_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_RESPONSE_INFO methodsFor!
 
 info

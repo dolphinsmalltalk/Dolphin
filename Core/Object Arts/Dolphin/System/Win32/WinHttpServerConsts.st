@@ -21,7 +21,7 @@ WinHttpServerConsts at: 'HTTP_CREATE_REQUEST_QUEUE_FLAG_OPEN_EXISTING' put: 16r1
 WinHttpServerConsts at: 'HTTP_FLUSH_RESPONSE_FLAG_RECURSIVE' put: 16r1!
 WinHttpServerConsts at: 'HTTP_INITIALIZE_CONFIG' put: 16r2!
 WinHttpServerConsts at: 'HTTP_INITIALIZE_SERVER' put: 16r1!
-WinHttpServerConsts at: 'HTTP_LIMIT_INFINITE' put: 16rFFFFFFFF!
+WinHttpServerConsts at: 'HTTP_LIMIT_INFINITE' put: -16r1!
 WinHttpServerConsts at: 'HTTP_LOG_FIELD_BYTES_RECV' put: 16r2000!
 WinHttpServerConsts at: 'HTTP_LOG_FIELD_BYTES_SENT' put: 16r1000!
 WinHttpServerConsts at: 'HTTP_LOG_FIELD_CLIENT_IP' put: 16r4!

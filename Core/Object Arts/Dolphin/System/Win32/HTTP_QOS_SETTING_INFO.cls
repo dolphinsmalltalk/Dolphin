@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_QOS_SETTING_INFO guid: (GUID fromString: '{a0bcefe3-d299-4e8a-9c7a-6e753a441ad6}')!
-HTTP_QOS_SETTING_INFO comment: '<HTTP_QOS_SETTING_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_QOS_SETTING_INFO'' from type information in the ''Win32 API'' library.
+HTTP_QOS_SETTING_INFO comment: '<HTTP_QOS_SETTING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_QOS_SETTING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Contains information about a QOS setting."
@@ -21,7 +21,7 @@ struct tagHTTP_QOS_SETTING_INFO {
 	void* QosSetting;
 } HTTP_QOS_SETTING_INFO;
 '!
-!HTTP_QOS_SETTING_INFO categoriesForClass!Win32-Structs! !
+!HTTP_QOS_SETTING_INFO categoriesForClass!WinHttpServer-Structs! !
 !HTTP_QOS_SETTING_INFO methodsFor!
 
 printFields: aCollection on: aStream limit: anInteger

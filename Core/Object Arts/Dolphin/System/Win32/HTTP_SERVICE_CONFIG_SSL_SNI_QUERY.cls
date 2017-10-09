@@ -6,7 +6,7 @@ HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_SNI_QUERY guid: (GUID fromString: '{4d8cbfdf-8766-4e01-a7f0-c775406dd04c}')!
-HTTP_SERVICE_CONFIG_SSL_SNI_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_QUERY> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_CONFIG_SSL_SNI_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Used with HttpQueryServiceConfiguration() to query a HttpServiceConfigSSLSniCertInfo record from the SSL store."

@@ -6,7 +6,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_BINDING_INFO guid: (GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
-HTTP_BINDING_INFO comment: '<HTTP_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_BINDING_INFO'' from type information in the ''Win32 API'' library.
+HTTP_BINDING_INFO comment: '<HTTP_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"The HTTP_BINDING_INFO structure is used to associate a URL Group with a request queue. This structure must be used when setting or querying the HttpServerBindingProperty on a URL Group."

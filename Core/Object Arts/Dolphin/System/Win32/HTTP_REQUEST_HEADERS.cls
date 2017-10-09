@@ -6,7 +6,7 @@ HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_HEADERS guid: (GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
-HTTP_REQUEST_HEADERS comment: '<HTTP_REQUEST_HEADERS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_REQUEST_HEADERS'' from type information in the ''Win32 API'' library.
+HTTP_REQUEST_HEADERS comment: '<HTTP_REQUEST_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Structure defining format of request headers."

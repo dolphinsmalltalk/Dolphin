@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_HEADERS
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_HEADERS guid: (GUID fromString: '{739d04bb-0a15-47ea-8a7d-20b4fd31cc96}')!
-HTTP_HEADERS comment: '<HTTP_HEADERS> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_HEADERS'' from type information in the ''Win32 API'' library.
+HTTP_HEADERS comment: '<HTTP_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"Fields common to HTTP_REQUEST_HEADERS and HTTP_RESPONSE_HEADERS"
@@ -19,11 +19,11 @@ typedef [uuid(739d04bb-0a15-47ea-8a7d-20b4fd31cc96), helpstring("Fields common t
 struct tagHTTP_HEADERS {
 	[nonbrowsable, helpstring("The number of entries in the UnknownHeaders array.")] USHORT UnknownHeaderCount;
 	[helpstring("The array of unknown HTTP headers."), size_is("UnknownHeaderCount")] PHTTP_UNKNOWN_HEADER pUnknownHeaders;
-	[hidden, nonbrowsable] USHORT TrailerCount;
-	[hidden, helpstring("Trailers - we don''t use these currently, reserved for a future release"), size_is("TrailerCount")] PHTTP_UNKNOWN_HEADER pTrailers;
+	[hidden, nonbrowsable, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] USHORT TrailerCount;
+	[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0), size_is("TrailerCount")] PHTTP_UNKNOWN_HEADER pTrailers;
 } HTTP_HEADERS;
 '!
-!HTTP_HEADERS categoriesForClass!Win32-Structs! !
+!HTTP_HEADERS categoriesForClass!WinHttpServer-Structs! !
 !HTTP_HEADERS methodsFor!
 
 knownHeaderName: anInteger
@@ -160,8 +160,8 @@ defineFields
 		struct tagHTTP_HEADERS {
 			[nonbrowsable, helpstring('The number of entries in the UnknownHeaders array.')] USHORT UnknownHeaderCount;
 			[helpstring('The array of unknown HTTP headers.'), size_is('UnknownHeaderCount')] PHTTP_UNKNOWN_HEADER pUnknownHeaders;
-			[hidden, nonbrowsable] USHORT TrailerCount;
-			[hidden, helpstring('Trailers - we don't use these currently, reserved for a future release'), size_is('TrailerCount')] PHTTP_UNKNOWN_HEADER pTrailers;
+			[hidden, nonbrowsable, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0)] USHORT TrailerCount;
+			[hidden, custom(9d8468d2-88ea-4452-b32c-992c9937e29c, 0), size_is('TrailerCount')] PHTTP_UNKNOWN_HEADER pTrailers;
 		} HTTP_HEADERS;
 "
 

@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_TIMEOUT_SET
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_TIMEOUT_SET guid: (GUID fromString: '{6f4abcfc-2a59-4996-a958-5de93dc64213}')!
-HTTP_SERVICE_CONFIG_TIMEOUT_SET comment: '<HTTP_SERVICE_CONFIG_TIMEOUT_SET> is an <ExternalStructure> class to wrap the struct ''Win32.HTTP_SERVICE_CONFIG_TIMEOUT_SET'' from type information in the ''Win32 API'' library.
+HTTP_SERVICE_CONFIG_TIMEOUT_SET comment: '<HTTP_SERVICE_CONFIG_TIMEOUT_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_TIMEOUT_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
 	"To set a timeout value use the set structure. To query/delete use the key directly. When you query a timeout value the output buffer must be exactly the sizeof param."
@@ -18,10 +18,10 @@ IDL definition follows:
 typedef [uuid(6f4abcfc-2a59-4996-a958-5de93dc64213), helpstring("To set a timeout value use the set structure. To query/delete use the key directly. When you query a timeout value the output buffer must be exactly the sizeof param.")]
 struct tagHTTP_SERVICE_CONFIG_TIMEOUT_SET {
 	HTTP_SERVICE_CONFIG_TIMEOUT_KEY KeyDesc;
-	USHORT paramdesc;
+	USHORT ParamDesc;
 } HTTP_SERVICE_CONFIG_TIMEOUT_SET;
 '!
-!HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesForClass!Win32-Structs! !
+!HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesForClass!WinHttpServer-Structs! !
 !HTTP_SERVICE_CONFIG_TIMEOUT_SET methodsFor!
 
 KeyDesc
@@ -34,19 +34,19 @@ KeyDesc: anInteger
 
 	bytes sdwordAtOffset: 0 put: anInteger!
 
-paramdesc
-	"Answer the <Integer> value of the receiver's 'paramdesc' field."
+ParamDesc
+	"Answer the <Integer> value of the receiver's 'ParamDesc' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #paramdesc)!
+	^bytes wordAtOffset: ##(self offsetOf: #ParamDesc)!
 
-paramdesc: anInteger
-	"Set the receiver's 'paramdesc' field to the value of the argument, anInteger"
+ParamDesc: anInteger
+	"Set the receiver's 'ParamDesc' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #paramdesc) put: anInteger! !
+	bytes wordAtOffset: ##(self offsetOf: #ParamDesc) put: anInteger! !
 !HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesFor: #paramdesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesFor: #paramdesc:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_TIMEOUT_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
 
 !HTTP_SERVICE_CONFIG_TIMEOUT_SET class methodsFor!
 
@@ -58,13 +58,13 @@ defineFields
 		typedef [uuid(6f4abcfc-2a59-4996-a958-5de93dc64213), helpstring('To set a timeout value use the set structure. To query/delete use the key directly. When you query a timeout value the output buffer must be exactly the sizeof param.')]
 		struct tagHTTP_SERVICE_CONFIG_TIMEOUT_SET {
 			HTTP_SERVICE_CONFIG_TIMEOUT_KEY KeyDesc;
-			USHORT paramdesc;
+			USHORT ParamDesc;
 		} HTTP_SERVICE_CONFIG_TIMEOUT_SET;
 "
 
 	self
 		defineField: #KeyDesc type: SDWORDField new offset: 0;
-		defineField: #paramdesc type: WORDField new offset: 4.
+		defineField: #ParamDesc type: WORDField new offset: 4.
 	self byteSize: 8! !
 !HTTP_SERVICE_CONFIG_TIMEOUT_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

@@ -6,7 +6,7 @@ HttpServerStructure subclass: #HttpServiceConfigQuery
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HttpServiceConfigQuery guid: (GUID fromString: '{38f6548e-ee39-4262-9f31-96ce0e8c6cb7}')!
-HttpServiceConfigQuery comment: '<HttpServiceConfigQuery> is an <ExternalStructure> class to wrap the struct ''Win32.HttpServiceConfigQuery'' from type information in the ''Win32 API'' library.
+HttpServiceConfigQuery comment: '<HttpServiceConfigQuery> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HttpServiceConfigQuery'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
 
@@ -19,7 +19,7 @@ struct tagHttpServiceConfigQuery {
 	HTTP_SERVICE_CONFIG_QUERY_TYPE QueryDesc;
 } HttpServiceConfigQuery;
 '!
-!HttpServiceConfigQuery categoriesForClass!Win32-Structs! !
+!HttpServiceConfigQuery categoriesForClass!WinHttpServer-Structs! !
 !HttpServiceConfigQuery methodsFor!
 
 QueryDesc
