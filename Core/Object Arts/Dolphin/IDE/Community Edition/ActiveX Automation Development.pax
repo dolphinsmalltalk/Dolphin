@@ -1908,7 +1908,7 @@ idlAttributesAndId
 idlCustomAttributes
 	| attrs |
 	attrs := Array writeStream.
-	self customAttributes associations asSortedCollection do: 
+	(self customAttributes associations asSortedCollection: [:a :b | a key displayString < b key displayString]) do: 
 			[:each |
 			| attr |
 			attr := String writeStream.
@@ -2092,7 +2092,7 @@ generateWrapper
 
 printAnonymousStruct: aVARDESC offset: anInteger prefix: aString hidden: aBoolean on: aWriteStream
 	| hidden prefix offset structTypeInfo |
-	structTypeInfo := aVARDESC tdesc typeInfo.
+	structTypeInfo := aVARDESC tdesc realTypeInfo.
 	offset := anInteger + aVARDESC oInst.
 	prefix := aString , (aVARDESC isAnonymous ifTrue: [''] ifFalse: [aVARDESC name , '_']).
 	hidden := (aBoolean or: [aVARDESC isHidden]) or: [structTypeInfo isHidden].
@@ -2895,7 +2895,7 @@ printIDLForVariable: aVARDESC on: aPuttableStream indent: anInteger
 	typedesc isAnonymous
 		ifTrue: 
 			[| structure |
-			structure := typedesc typeInfo.
+			structure := typedesc realTypeInfo.
 			aPuttableStream
 				nextPutAll: structure idlKeyword;
 				space;

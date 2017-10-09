@@ -330,6 +330,9 @@ realize
 	self setTypeInfo: (typeLib basicTypeInfoAt: index)
 !
 
+realTypeInfo
+	^self!
+
 releaseFuncDesc: aFUNCDESC
 	tlbInterface isNull ifFalse: [tlbInterface ReleaseFuncDesc: aFUNCDESC]!
 
@@ -444,6 +447,7 @@ vt
 !AXTypeInfoAnalyzer categoriesFor: #nameOfID:ifAbsent:!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #nameSansTag!accessing!private! !
 !AXTypeInfoAnalyzer categoriesFor: #realize!private!realizing/unrealizing! !
+!AXTypeInfoAnalyzer categoriesFor: #realTypeInfo!accessing!public! !
 !AXTypeInfoAnalyzer categoriesFor: #releaseFuncDesc:!private!realizing/unrealizing! !
 !AXTypeInfoAnalyzer categoriesFor: #releaseTypeAttr:!private!realizing/unrealizing! !
 !AXTypeInfoAnalyzer categoriesFor: #releaseVarDesc:!private!realizing/unrealizing! !
