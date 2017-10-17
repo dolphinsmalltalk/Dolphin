@@ -72,7 +72,10 @@ hash: operand max: maximum
 !Object methodsFor!
 
 identityHash
-	^self basicIdentityHash bitShift: 14! !
+	^self basicIdentityHash bitShift: 14!
+
+hash
+	^self identityHash! !
 
 | m st | 
 st := Smalltalk.
@@ -315,4 +318,3 @@ Float addClassConstant: 'NegativeInfinity' value: infinity negated.
 Float addClassConstant: 'NaN' value: infinity - infinity!
 
 #(#decimalSeparator #synchronizeLocale) do: [:each | CRTLibrary removeSelector: each]!
-

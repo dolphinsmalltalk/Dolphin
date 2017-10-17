@@ -13,6 +13,13 @@ DictionaryTest comment: ''!
 collectionClass
 	^Dictionary!
 
+testAllInstancesValid
+	| invalid |
+	invalid := IdentitySet new.
+	self collectionClass allSubinstances
+		do: [:each | each keysDo: [:key | (each includesKey: key) ifFalse: [invalid add: each]]].
+	self assert: invalid isEmpty!
+
 testAtIfAbsentPutValue
 	| dictionary initialSize f |
 	super testAtIfAbsentPutValue.
@@ -27,5 +34,6 @@ testAtIfAbsentPutValue
 	self assert: (dictionary at: f ifAbsentPutValue: 2) == f.
 	self assert: dictionary size == (initialSize + 1)! !
 !DictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!DictionaryTest categoriesFor: #testAllInstancesValid!public!unit tests! !
 !DictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
 
