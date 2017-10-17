@@ -446,7 +446,7 @@ mutateAllInstancesOf: oldClass toBeInstancesOf: newClass
 			newInst setSpecialBehavior: (oldInst setSpecialBehavior: 0).
 			oldInst become: newInst]!
 
-mutateClass: oldClass toBeASubclassOf: newSuperclass 
+mutateClass: oldClass toBeASubclassOf: newSuperclass
 	"Private - Create a new class with the appropriate features and mutate
 	all instances of oldClass to new instances of the new class and then 
 	recursively make the same change to the subclasses of aClass. Finally,
@@ -455,7 +455,7 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 	Implementation Note: We must not access any instance variables after mutation, in case
 	the receiver is being mutated and the inst. var offsets change."
 
-	oldClass isMeta 
+	oldClass isMeta
 		ifTrue: 
 			[| newClass |
 			newClass := self newMetaclassLike: oldClass superclass: newSuperclass.
@@ -466,11 +466,12 @@ mutateClass: oldClass toBeASubclassOf: newSuperclass
 			oldClass become: newClass.
 			newClass oneWayBecome: oldClass]
 		ifFalse: 
-			[| newClass |
+			[| newClass mutatingClassItself |
+			mutatingClassItself := oldClass == Class.
 			newClass := self newClassLike: oldClass superclass: newSuperclass.
 			self install: newClass.
 			self mutateAllInstancesOf: oldClass toBeInstancesOf: newClass.
-			oldClass == Class 
+			mutatingClassItself
 				ifTrue: 
 					["In Dolphin Object class et al are not in the subclasses
 					collection of Class, so need special case handling"
