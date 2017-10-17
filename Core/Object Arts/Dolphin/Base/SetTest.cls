@@ -61,6 +61,12 @@ newSet: elements
 setUp
 	primes := Integer primesUpTo: 8192 * 2!
 
+testAllInstancesValid
+	| invalid |
+	invalid := self collectionClass allSubinstances
+				select: [:each | (each isKindOf: Dictionary) not and: [each anySatisfy: [:elem | (each includes: elem) not]]].
+	self assert: invalid isEmpty!
+
 testClassSizeFor
 	"The capacity algorithm should be a prime that allows for at least 1.5x the size requested. Minimum capacity is 5."
 
@@ -196,6 +202,7 @@ testShallowCopy
 !SetTest categoriesFor: #newSet!private!unit tests! !
 !SetTest categoriesFor: #newSet:!private!unit tests! !
 !SetTest categoriesFor: #setUp!public!Running! !
+!SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
 !SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
 !SetTest categoriesFor: #testCopy!public!unit tests! !
 !SetTest categoriesFor: #testDeepCopy!public!unit tests! !
