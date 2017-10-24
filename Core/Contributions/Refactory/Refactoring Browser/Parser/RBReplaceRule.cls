@@ -6,6 +6,7 @@ RBParseTreeRule subclass: #RBReplaceRule
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RBReplaceRule guid: (GUID fromString: '{206caebb-9f38-4bdf-85a6-50261f48360e}')!
+RBReplaceRule isAbstract: true!
 RBReplaceRule comment: ''!
 !RBReplaceRule categoriesForClass!Refactory-ParseTree Matching! !
 !RBReplaceRule methodsFor!

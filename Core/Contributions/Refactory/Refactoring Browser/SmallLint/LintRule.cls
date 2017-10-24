@@ -6,6 +6,7 @@ Object subclass: #LintRule
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LintRule guid: (GUID fromString: '{0a5056c9-9803-42b3-9c34-5bf472b5d967}')!
+LintRule isAbstract: true!
 LintRule comment: 'LintRule is an abstract class that represents some check on the code.
 
 Subclasses must implement the following messages:
