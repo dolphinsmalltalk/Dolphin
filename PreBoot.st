@@ -318,3 +318,24 @@ Float addClassConstant: 'NegativeInfinity' value: infinity negated.
 Float addClassConstant: 'NaN' value: infinity - infinity!
 
 #(#decimalSeparator #synchronizeLocale) do: [:each | CRTLibrary removeSelector: each]!
+
+Behavior addClassConstant: '_BasicSpecMask' value: 32767!
+Behavior addClassConstant: '_BytesSubMask' value: 18432!
+Behavior addClassConstant: '_FundamentalShapeMask' value: 12543!
+Behavior addClassConstant: '_IndirectMask' value: 2048!
+Behavior addClassConstant: '_MournerMask' value: 1024!
+Behavior addClassConstant: '_NonInstantiableMask' value: 512!
+Behavior addClassConstant: '_NullTermMask' value: 16384!
+Behavior addClassConstant: '_PointersMask' value: 8192!
+Behavior addClassConstant: '_ShapeMask' value: 28927!
+Behavior addClassConstant: '_SizeMask' value: 255!
+Behavior addClassConstant: '_VariableMask' value: 4096!
+
+ClassBuilder setSharedPoolNames: (ClassBuilder sharedPoolNames copyWithout: #_BehaviorMasks)!
+
+!Class methodsFor!
+
+isAbstract: aBoolean
+	self setShapeFlags: _NonInstantiableMask to: aBoolean! !
+
+Behavior owningPackage removeGlobalNamed: #_BehaviorMasks!
