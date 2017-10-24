@@ -6,6 +6,7 @@ StValueNode subclass: #StLiteralNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StLiteralNode guid: (GUID fromString: '{dad93c9c-b8b1-43b6-b9eb-dae76d502022}')!
+StLiteralNode isAbstract: true!
 StLiteralNode comment: 'StLiteralNode is a parse tree node that represents literals (e.g., #foo, #(1 2 3), true, etc.).
 
 Instance Variables:

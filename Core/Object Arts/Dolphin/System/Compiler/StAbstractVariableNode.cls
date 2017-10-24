@@ -6,6 +6,7 @@ StValueNode subclass: #StAbstractVariableNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StAbstractVariableNode guid: (GUID fromString: '{38ecca66-7d53-4b09-90f6-5c6f0e76ba79}')!
+StAbstractVariableNode isAbstract: true!
 StAbstractVariableNode comment: 'StAbstrctVariableNode is an abstract parse tree node with subclasses to represent variable references and definitions.
 
 Instance Variables:
