@@ -6,6 +6,7 @@ Object subclass: #Collection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Collection guid: (GUID fromString: '{87b4c464-026e-11d3-9fd7-00a0cc3e4a32}')!
+Collection isAbstract: true!
 Collection comment: ''!
 !Collection categoriesForClass!Collections-Abstract! !
 !Collection methodsFor!

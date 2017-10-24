@@ -6,6 +6,7 @@ Object subclass: #Exception
 	poolDictionaries: 'MessageBoxConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 Exception guid: (GUID fromString: '{87b4c483-026e-11d3-9fd7-00a0cc3e4a32}')!
+Exception isAbstract: true!
 Exception comment: ''!
 !Exception categoriesForClass!Kernel-Exception Handling! !
 !Exception methodsFor!

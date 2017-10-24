@@ -6,6 +6,7 @@ Collection subclass: #SequenceableCollection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequenceableCollection guid: (GUID fromString: '{87b4c50a-026e-11d3-9fd7-00a0cc3e4a32}')!
+SequenceableCollection isAbstract: true!
 SequenceableCollection comment: 'SequenceableCollection is the class of Collections whose elements are ordered and which are externally named by integer indices.'!
 !SequenceableCollection categoriesForClass!Collections-Abstract! !
 !SequenceableCollection methodsFor!

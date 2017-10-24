@@ -6,6 +6,7 @@ Notification subclass: #CompilerNotification
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 CompilerNotification guid: (GUID fromString: '{87b4c56d-026e-11d3-9fd7-00a0cc3e4a32}')!
+CompilerNotification isAbstract: true!
 CompilerNotification comment: 'CompilerNotification is the abstract class of <Notification>s used to represent lexical, syntax, and semantic errors and warnings detected by the Dolphin <Compiler>, <SmalltalkParser>, and <StSemanticChecker>.
 
 Instance Variables:
@@ -20,6 +21,7 @@ Instance Variables:
 N.B. The inherited''''tag'''' instance variable is used to hold the <integer> error code, but the inherited ''''messageText'''' instance variable is unused.'''!
 !CompilerNotification categoriesForClass!System-Exception Handling! !
 !CompilerNotification methodsFor!
+
 _descriptionArguments
 	"Answer the arguments to be substitued into the receiver's Win32 description format String."
 

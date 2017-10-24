@@ -6,6 +6,7 @@ ExternalArray subclass: #GenericExternalArray
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GenericExternalArray guid: (GUID fromString: '{a784c4d3-dd39-4844-b096-400529d9295c}')!
+GenericExternalArray isAbstract: true!
 GenericExternalArray comment: 'GenericExternalArray is an abstract class of <ExternalArray>s that can be used to represent single-dimensioned arrays of more than one type.
 
 Instance Variables:

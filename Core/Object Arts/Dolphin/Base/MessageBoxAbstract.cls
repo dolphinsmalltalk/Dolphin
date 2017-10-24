@@ -6,6 +6,7 @@ Object subclass: #MessageBoxAbstract
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
 MessageBoxAbstract guid: (GUID fromString: '{32ce06b2-35c6-41eb-a41f-6b20f935676d}')!
+MessageBoxAbstract isAbstract: true!
 MessageBoxAbstract comment: 'MessageBoxAbstract is the abstract class of dialogs that display a message to the user to acknowledge. Subclasses might include a number of responses that the user can make, typically by pressing buttons, making them useful for asking questions as well as displaying informational messages.
 
 Instance Variables:
