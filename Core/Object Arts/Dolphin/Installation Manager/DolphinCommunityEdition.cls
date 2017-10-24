@@ -36,9 +36,6 @@ preShrink
 
 !DolphinCommunityEdition class methodsFor!
 
-isAbstract
-	^false!
-
 productLevel
 	"Private - Answer the product ID for the receiver"
 
@@ -53,7 +50,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCE'! !
-!DolphinCommunityEdition class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinCommunityEdition class categoriesFor: #productLevel!constants!private! !
 !DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
 !DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !

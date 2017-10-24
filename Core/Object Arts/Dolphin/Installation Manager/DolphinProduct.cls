@@ -6,6 +6,7 @@ Object subclass: #DolphinProduct
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinProduct guid: (GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
+DolphinProduct isAbstract: true!
 DolphinProduct comment: ''!
 !DolphinProduct categoriesForClass!Development! !
 !DolphinProduct methodsFor!
@@ -491,9 +492,6 @@ initialize
 	DolphinBaseProduct allSubclasses do: [:p | EditionsMap at: p productName put: p].
 	EditionsMap shrink!
 
-isAbstract
-	^true!
-
 loadAndShrink
 	"Makes the image an instance of the receiver"
 
@@ -600,7 +598,6 @@ versionMask: versionMask
 !DolphinProduct class categoriesFor: #fromString:!instance creation!public! !
 !DolphinProduct class categoriesFor: #icon!constants!public! !
 !DolphinProduct class categoriesFor: #initialize!initializing!private! !
-!DolphinProduct class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinProduct class categoriesFor: #loadAndShrink!operations!public! !
 !DolphinProduct class categoriesFor: #new!instance creation!public! !
 !DolphinProduct class categoriesFor: #ofImageLevel:!instance creation!private! !

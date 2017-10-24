@@ -165,9 +165,6 @@ warnOfUnlistedContent
 
 !DolphinBaseProduct class methodsFor!
 
-isAbstract
-	^true!
-
 productName
 	"Answer the product name"
 	
@@ -177,7 +174,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DBASE'! !
-!DolphinBaseProduct class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinBaseProduct class categoriesFor: #productName!accessing!public! !
 !DolphinBaseProduct class categoriesFor: #shortProductName!accessing!public! !
 

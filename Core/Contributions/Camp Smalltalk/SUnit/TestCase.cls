@@ -6,6 +6,7 @@ Object subclass: #TestCase
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TestCase guid: (GUID fromString: '{5e96793a-0810-11d4-a876-0050da643bf9}')!
+TestCase isAbstract: true!
 TestCase comment: ''!
 !TestCase categoriesForClass!SUnit! !
 !TestCase methodsFor!
@@ -296,11 +297,6 @@ debug: aSymbol
 debugAsFailure: aSymbol
 	^(self selector: aSymbol) debugAsFailure!
 
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-	^self name = #TestCase.!
-
 resources
 	^#()!
 
@@ -332,7 +328,6 @@ version
 !TestCase class categoriesFor: #buildSuiteFromSelectors!Building Suites!public! !
 !TestCase class categoriesFor: #debug:!Instance Creation!public! !
 !TestCase class categoriesFor: #debugAsFailure:!Instance Creation!public! !
-!TestCase class categoriesFor: #isAbstract!public!Testing! !
 !TestCase class categoriesFor: #resources!Accessing!public! !
 !TestCase class categoriesFor: #run:!Instance Creation!public! !
 !TestCase class categoriesFor: #selector:!Instance Creation!public! !

@@ -6,6 +6,7 @@ ClassBrowserPlugin subclass: #SmalllintPlugin
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalllintPlugin guid: (GUID fromString: '{321fcbfb-84d2-40ae-bf8f-f4b816723a1b}')!
+SmalllintPlugin isAbstract: true!
 SmalllintPlugin comment: ''!
 !SmalllintPlugin categoriesForClass!MVP-Presenters! !
 !SmalllintPlugin methodsFor!
@@ -73,10 +74,4 @@ systemModel
 !SmalllintPlugin categoriesFor: #runTransformation:!helpers!private! !
 !SmalllintPlugin categoriesFor: #status:!operations!private! !
 !SmalllintPlugin categoriesFor: #systemModel!commands!private! !
-
-!SmalllintPlugin class methodsFor!
-
-isAbstract
-	^self == ##(self)! !
-!SmalllintPlugin class categoriesFor: #isAbstract!public!Testing! !
 

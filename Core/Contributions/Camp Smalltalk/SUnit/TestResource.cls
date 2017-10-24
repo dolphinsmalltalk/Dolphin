@@ -6,6 +6,7 @@ Object subclass: #TestResource
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
 TestResource guid: (GUID fromString: '{69aeb725-622f-43db-a9c7-095932055892}')!
+TestResource isAbstract: true!
 TestResource comment: ''!
 !TestResource categoriesForClass!Unclassified! !
 !TestResource methodsFor!
@@ -73,11 +74,6 @@ current
 current: aTestResource
 	current := aTestResource!
 
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-	^self name = #TestResource!
-
 isAvailable
 	^self current notNil and: [self current isAvailable]!
 
@@ -97,7 +93,6 @@ resources
 	^#()! !
 !TestResource class categoriesFor: #current!Accessing!public! !
 !TestResource class categoriesFor: #current:!Accessing!public! !
-!TestResource class categoriesFor: #isAbstract!public!Testing! !
 !TestResource class categoriesFor: #isAvailable!public!Testing! !
 !TestResource class categoriesFor: #isUnavailable!public!Testing! !
 !TestResource class categoriesFor: #new!Creation!public! !

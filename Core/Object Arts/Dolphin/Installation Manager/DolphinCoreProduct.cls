@@ -128,9 +128,6 @@ installSystemFolderOptions
 
 !DolphinCoreProduct class methodsFor!
 
-isAbstract
-	^false!
-
 productLevel
 	"Private - Answer the product ID for the receiver"
 
@@ -145,7 +142,6 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCORE'! !
-!DolphinCoreProduct class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinCoreProduct class categoriesFor: #productLevel!constants!private! !
 !DolphinCoreProduct class categoriesFor: #productName!accessing!public! !
 !DolphinCoreProduct class categoriesFor: #shortProductName!accessing!public! !
