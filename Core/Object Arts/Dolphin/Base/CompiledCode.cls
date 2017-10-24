@@ -6,6 +6,7 @@ Object variableSubclass: #CompiledCode
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
 CompiledCode guid: (GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
+CompiledCode isAbstract: true!
 CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
 
 The method header of the receiver is a SmallInteger containing a set of flags containing information such as the number of arguments, the number of temporaries, etc, is layed out as follows (subject to change):

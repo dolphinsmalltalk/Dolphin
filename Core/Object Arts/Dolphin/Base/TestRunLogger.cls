@@ -6,6 +6,7 @@ Object subclass: #TestRunLogger
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TestRunLogger guid: (GUID fromString: '{00fd980b-da74-44be-888f-6735ffb8e96b}')!
+TestRunLogger isAbstract: true!
 TestRunLogger comment: ''!
 !TestRunLogger categoriesForClass!Kernel-Objects! !
 !TestRunLogger methodsFor!

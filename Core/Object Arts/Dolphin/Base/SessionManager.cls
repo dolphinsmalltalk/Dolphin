@@ -6,6 +6,7 @@ Object subclass: #SessionManager
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 SessionManager guid: (GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
+SessionManager isAbstract: true!
 SessionManager addClassConstant: 'EmbeddingMask' value: 1!
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 

@@ -6,6 +6,7 @@ AttributeDescriptor subclass: #ExternalField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalField guid: (GUID fromString: '{87b4c4d8-026e-11d3-9fd7-00a0cc3e4a32}')!
+ExternalField isAbstract: true!
 ExternalField comment: 'ExternalField is the abstract class of metadata objects that describe the fields of <ExternalStructure>s, including such attributes as the byte offset of the field, the type of the field, and potentially the size of the field.
 
 Instance Variables:

@@ -6,6 +6,7 @@ Object subclass: #Boolean
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Boolean guid: (GUID fromString: '{87b4c45c-026e-11d3-9fd7-00a0cc3e4a32}')!
+Boolean isAbstract: true!
 Boolean comment: 'Boolean is the class which provides the protocol for logical values. The actual logical values, true and false, are represented by Boolean''s subclasses True and False. Boolean itself is abstract.
 
 In Smalltalk many control structures, such as conditional evaluations, are implemented by sending messages to Booleans, rather than by incorporating control flow mechanisms into the syntax of the language. The compiler does, however, inline certain commonly used messages such as #ifTrue:ifFalse: for reasons of performance. For this reason some methods of Boolean are not normally executed unless #perform:''d.

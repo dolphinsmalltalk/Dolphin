@@ -6,6 +6,7 @@ Object subclass: #AttributeDescriptor
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AttributeDescriptor guid: (GUID fromString: '{87b4c455-026e-11d3-9fd7-00a0cc3e4a32}')!
+AttributeDescriptor isAbstract: true!
 AttributeDescriptor addClassConstant: 'AccessorMask' value: 4!
 AttributeDescriptor addClassConstant: 'MutableMask' value: 32!
 AttributeDescriptor addClassConstant: 'MutatorMask' value: 8!

@@ -6,6 +6,7 @@ ByteArray variableByteSubclass: #ExternalIntegerBytes
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalIntegerBytes guid: (GUID fromString: '{f5016870-059b-445b-a045-9e17ef13beec}')!
+ExternalIntegerBytes isAbstract: true!
 ExternalIntegerBytes comment: ''!
 !ExternalIntegerBytes categoriesForClass!External-Data-Unstructured! !
 !ExternalIntegerBytes methodsFor!

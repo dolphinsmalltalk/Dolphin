@@ -6,6 +6,7 @@ Object subclass: #ExceptionHandlerAbstract
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExceptionHandlerAbstract guid: (GUID fromString: '{87b4c484-026e-11d3-9fd7-00a0cc3e4a32}')!
+ExceptionHandlerAbstract isAbstract: true!
 ExceptionHandlerAbstract comment: ''!
 !ExceptionHandlerAbstract categoriesForClass!Kernel-Exception Handling! !
 !ExceptionHandlerAbstract methodsFor!
