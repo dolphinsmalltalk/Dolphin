@@ -22,8 +22,8 @@ Object subclass: #AttributeDescriptor
 	classInstanceVariableNames: ''!
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
-	classVariableNames: '_NullMethodDictionary'
-	poolDictionaries: '_BehaviorMasks'
+	classVariableNames: '_BasicSpecMask _BytesSubMask _FundamentalShapeMask _IndirectMask _MournerMask _NonInstantiableMask _NullMethodDictionary _NullTermMask _PointersMask _ShapeMask _SizeMask _VariableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object variableSubclass: #BlockClosure
 	instanceVariableNames: 'outer method initialIP info receiver'
@@ -58,7 +58,7 @@ Object subclass: #ChunkReader
 Object subclass: #ClassBuilder
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
 	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
-	poolDictionaries: '_BehaviorMasks'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Collection
 	instanceVariableNames: ''

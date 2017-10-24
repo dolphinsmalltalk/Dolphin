@@ -158,7 +158,6 @@ package methodNames
 	add: #BrowserEnvironmentWrapper -> #includesResource:;
 	add: #BrowserEnvironmentWrapper -> #openEditor;
 	add: #Character -> #literalTextStyle;
-	add: #Class -> #isAbstract;
 	add: #ClassDescription -> #browse;
 	add: #ClassDescription -> #commentStamp:prior:;
 	add: #ClassDescription -> #methodsFor:;
@@ -1605,13 +1604,6 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
 		yourself! !
 !CheckButton class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-
-!Class methodsFor!
-
-isAbstract
-	^(self whichMethodsReferTo: #subclassResponsibility) notEmpty 
-		or: [(self class whichMethodsReferTo: #subclassResponsibility) notEmpty]! !
-!Class categoriesFor: #isAbstract!public!testing! !
 
 !ClassBuilder class methodsFor!
 
