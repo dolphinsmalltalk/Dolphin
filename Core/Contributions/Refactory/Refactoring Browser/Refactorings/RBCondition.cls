@@ -59,7 +59,7 @@ checkClassVarName: aName in: aClass
 	string := aName asString.
 	(self reservedNames includes: string) ifTrue: [^false].
 	string isEmpty ifTrue: [^false].
-	string first isUppercase ifFalse: [^false].
+	(string first isUppercase or: [string first == $_]) ifFalse: [^false].
 	^RBScanner isVariable: string!
 
 checkInstanceVariableName: aName in: aClass 
