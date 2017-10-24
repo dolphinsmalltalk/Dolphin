@@ -6,6 +6,7 @@ IDispatch subclass: #IRegExpAbstract
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IRegExpAbstract guid: (IID fromString: '{427E61D6-DDA9-489B-9102-C745EC40641B}')!
+IRegExpAbstract isAbstract: true!
 IRegExpAbstract comment: '<IRegExpAbstract> is an abstract class implementing methods common between the various Microsoft VBScript IRegExp COM interfaces.'!
 !IRegExpAbstract categoriesForClass!COM-Interfaces! !
 !IRegExpAbstract methodsFor!

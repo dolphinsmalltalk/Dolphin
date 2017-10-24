@@ -6,6 +6,7 @@ IUnknown subclass: #IEnumXXXX
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IEnumXXXX guid: (IID fromString: '{87B4C59F-026E-11D3-9FD7-00A0CC3E4A32}')!
+IEnumXXXX isAbstract: true!
 IEnumXXXX comment: ''!
 !IEnumXXXX categoriesForClass!COM-Interfaces! !
 !IEnumXXXX methodsFor!

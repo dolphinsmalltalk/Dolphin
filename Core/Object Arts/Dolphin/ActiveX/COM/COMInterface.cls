@@ -6,6 +6,7 @@ ExternalStructure subclass: #COMInterface
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
 COMInterface guid: (IID fromString: '{87B4C591-026E-11D3-9FD7-00A0CC3E4A32}')!
+COMInterface isAbstract: true!
 COMInterface comment: ''!
 !COMInterface categoriesForClass!External-Data-Structured-COM! !
 !COMInterface methodsFor!
