@@ -6,6 +6,7 @@ Object subclass: #AbstractRecentMenu
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractRecentMenu guid: (GUID fromString: '{ab893c67-84d1-4718-9d83-44266284c927}')!
+AbstractRecentMenu isAbstract: true!
 AbstractRecentMenu comment: ''!
 !AbstractRecentMenu categoriesForClass!Kernel-Objects! !
 !AbstractRecentMenu methodsFor!
