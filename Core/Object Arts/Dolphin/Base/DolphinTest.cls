@@ -6,6 +6,7 @@ TestCase subclass: #DolphinTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest guid: (GUID fromString: '{6444f9c6-8a25-4f8a-bade-5f08d7c882be}')!
+DolphinTest isAbstract: true!
 DolphinTest comment: ''!
 !DolphinTest categoriesForClass!Unclassified! !
 !DolphinTest methodsFor!
@@ -94,13 +95,4 @@ versionFromParts: versionNumbers
 !DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
 !DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
 !DolphinTest categoriesFor: #versionFromParts:!public!unit tests! !
-
-!DolphinTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!DolphinTest class categoriesFor: #isAbstract!public!Testing! !
 

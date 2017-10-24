@@ -6,6 +6,7 @@ SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedGrowableCollectionTest guid: (GUID fromString: '{7c5c4663-14ac-4420-85af-2c2644e54463}')!
+SequencedGrowableCollectionTest isAbstract: true!
 SequencedGrowableCollectionTest comment: ''!
 !SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
 !SequencedGrowableCollectionTest methodsFor!
@@ -149,13 +150,4 @@ testAddFirst
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllFirst2!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddAllLast!public!unit tests! !
 !SequencedGrowableCollectionTest categoriesFor: #testAddFirst!public!unit tests! !
-
-!SequencedGrowableCollectionTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!SequencedGrowableCollectionTest class categoriesFor: #isAbstract!public!Testing! !
 

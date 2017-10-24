@@ -6,6 +6,7 @@ DolphinTest subclass: #SortAlgorithmTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SortAlgorithmTest guid: (GUID fromString: '{50fde7dc-5db4-4eda-9ee2-61882b8ee3e5}')!
+SortAlgorithmTest isAbstract: true!
 SortAlgorithmTest comment: ''!
 !SortAlgorithmTest categoriesForClass!Unclassified! !
 !SortAlgorithmTest methodsFor!
@@ -276,13 +277,4 @@ testSortIntegers
 !SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
 !SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !
 !SortAlgorithmTest categoriesFor: #testSortIntegers!public!unit tests! !
-
-!SortAlgorithmTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!SortAlgorithmTest class categoriesFor: #isAbstract!public!Testing! !
 

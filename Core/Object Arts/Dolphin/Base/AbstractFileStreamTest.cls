@@ -6,6 +6,7 @@ ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractFileStreamTest guid: (GUID fromString: '{fc7d3bee-d1b0-477d-a33c-33ee6cfb0339}')!
+AbstractFileStreamTest isAbstract: true!
 AbstractFileStreamTest comment: ''!
 !AbstractFileStreamTest categoriesForClass!Unclassified! !
 !AbstractFileStreamTest methodsFor!
@@ -375,13 +376,4 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #testReset!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testRewindAfterWrite!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testTruncate!public!unit tests! !
-
-!AbstractFileStreamTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!AbstractFileStreamTest class categoriesFor: #isAbstract!public!Testing! !
 

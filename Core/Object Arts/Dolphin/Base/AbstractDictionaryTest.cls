@@ -6,6 +6,7 @@ DolphinCollectionTest subclass: #AbstractDictionaryTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractDictionaryTest guid: (GUID fromString: '{5d8b76ad-dcc1-44ff-8a2a-cf5e50c4b434}')!
+AbstractDictionaryTest isAbstract: true!
 AbstractDictionaryTest comment: ''!
 !AbstractDictionaryTest categoriesForClass!Unclassified! !
 !AbstractDictionaryTest methodsFor!
@@ -244,13 +245,4 @@ testStrongTalkTests
 !AbstractDictionaryTest categoriesFor: #testNilKey!public!unit tests! !
 !AbstractDictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
 !AbstractDictionaryTest categoriesFor: #testStrongTalkTests!benchmarking!public! !
-
-!AbstractDictionaryTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!AbstractDictionaryTest class categoriesFor: #isAbstract!public!Testing! !
 

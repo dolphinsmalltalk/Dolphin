@@ -6,6 +6,7 @@ PresenterTest subclass: #ReferenceViewTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReferenceViewTest guid: (GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
+ReferenceViewTest isAbstract: true!
 ReferenceViewTest comment: ''!
 !ReferenceViewTest categoriesForClass!Unclassified! !
 !ReferenceViewTest methodsFor!

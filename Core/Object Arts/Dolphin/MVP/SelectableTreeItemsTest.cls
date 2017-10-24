@@ -6,6 +6,7 @@ SelectableItemsTest subclass: #SelectableTreeItemsTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableTreeItemsTest guid: (GUID fromString: '{cccec658-6b6a-4d9f-a9ac-2701da23a46e}')!
+SelectableTreeItemsTest isAbstract: true!
 SelectableTreeItemsTest comment: ''!
 !SelectableTreeItemsTest categoriesForClass!Unclassified! !
 !SelectableTreeItemsTest methodsFor!
@@ -238,13 +239,4 @@ treeModel
 !SelectableTreeItemsTest categoriesFor: #testSetImageBlockDoesNotAffectSelection!public!unit tests! !
 !SelectableTreeItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !SelectableTreeItemsTest categoriesFor: #treeModel!public!unit tests! !
-
-!SelectableTreeItemsTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!SelectableTreeItemsTest class categoriesFor: #isAbstract!public!Testing! !
 

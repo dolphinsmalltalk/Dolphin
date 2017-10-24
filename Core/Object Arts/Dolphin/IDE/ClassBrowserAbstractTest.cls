@@ -6,6 +6,7 @@ DolphinTest subclass: #ClassBrowserAbstractTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassBrowserAbstractTest guid: (GUID fromString: '{fa025e63-3880-48ae-82d4-4b3172d507cc}')!
+ClassBrowserAbstractTest isAbstract: true!
 ClassBrowserAbstractTest comment: ''!
 !ClassBrowserAbstractTest categoriesForClass!Unclassified! !
 !ClassBrowserAbstractTest methodsFor!
@@ -362,13 +363,4 @@ visibilityTestPlaceHolder! !
 !ClassBrowserAbstractTest categoriesFor: #testIsMethodVisibleInObject!public!unit tests! !
 !ClassBrowserAbstractTest categoriesFor: #testSwitchFilterPane!public!unit tests! !
 !ClassBrowserAbstractTest categoriesFor: #visibilityTestPlaceHolder!helpers!private! !
-
-!ClassBrowserAbstractTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!ClassBrowserAbstractTest class categoriesFor: #isAbstract!public!Testing! !
 

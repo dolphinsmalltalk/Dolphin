@@ -6,6 +6,7 @@ DolphinTestResource subclass: #DolphinTestClassResource
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTestClassResource guid: (GUID fromString: '{e358c277-08b0-4ffe-9f5a-c41be358f898}')!
+DolphinTestClassResource isAbstract: true!
 DolphinTestClassResource comment: ''!
 !DolphinTestClassResource categoriesForClass!Unclassified! !
 !DolphinTestClassResource methodsFor!
@@ -72,10 +73,4 @@ tearDown
 !DolphinTestClassResource categoriesFor: #packageName!private!unit tests! !
 !DolphinTestClassResource categoriesFor: #setUp!Init / Release!public! !
 !DolphinTestClassResource categoriesFor: #tearDown!public!Running! !
-
-!DolphinTestClassResource class methodsFor!
-
-isAbstract
-	^self == ##(self)! !
-!DolphinTestClassResource class categoriesFor: #isAbstract!public!Testing! !
 

@@ -6,6 +6,7 @@ DolphinTest subclass: #AbstractParserErrorTest
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 AbstractParserErrorTest guid: (GUID fromString: '{5f42cbdc-9ab6-40b0-826d-b9cb9dd30c78}')!
+AbstractParserErrorTest isAbstract: true!
 AbstractParserErrorTest comment: ''!
 !AbstractParserErrorTest categoriesForClass!Unclassified! !
 !AbstractParserErrorTest methodsFor!
@@ -1948,13 +1949,4 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testWarningWrittenNotRead!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #traceException:source:!helpers!private! !
 !AbstractParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
-
-!AbstractParserErrorTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!AbstractParserErrorTest class categoriesFor: #isAbstract!public!Testing! !
 

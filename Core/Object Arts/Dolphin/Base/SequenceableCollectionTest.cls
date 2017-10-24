@@ -6,6 +6,7 @@ DolphinCollectionTest subclass: #SequenceableCollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequenceableCollectionTest guid: (GUID fromString: '{4c32dbcc-4044-442b-95d9-d6e8ad2396cf}')!
+SequenceableCollectionTest isAbstract: true!
 SequenceableCollectionTest comment: 'SUnitBrowser openOnTestCase: self'!
 !SequenceableCollectionTest categoriesForClass!Unclassified! !
 !SequenceableCollectionTest methodsFor!
@@ -701,13 +702,4 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!private!unit tests! !
 !SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!private!unit tests! !
-
-!SequenceableCollectionTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!SequenceableCollectionTest class categoriesFor: #isAbstract!public!Testing! !
 

@@ -6,6 +6,7 @@ SelectableItemsTest subclass: #ClassSelectorTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassSelectorTest guid: (GUID fromString: '{165b5ae1-4f70-45e2-94d3-cc4f11c068dc}')!
+ClassSelectorTest isAbstract: true!
 ClassSelectorTest comment: ''!
 !ClassSelectorTest categoriesForClass!Unclassified! !
 !ClassSelectorTest methodsFor!
@@ -324,14 +325,7 @@ testSelection
 
 !ClassSelectorTest class methodsFor!
 
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)!
-
 resources
 	^Array with: DolphinTestPackages! !
-!ClassSelectorTest class categoriesFor: #isAbstract!public!Testing! !
 !ClassSelectorTest class categoriesFor: #resources!Accessing!public! !
 

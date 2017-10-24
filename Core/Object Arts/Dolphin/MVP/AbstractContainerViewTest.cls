@@ -6,6 +6,7 @@ DolphinTest subclass: #AbstractContainerViewTest
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 AbstractContainerViewTest guid: (GUID fromString: '{79c3a28a-ce43-49e3-a030-adb99de3efea}')!
+AbstractContainerViewTest isAbstract: true!
 AbstractContainerViewTest comment: ''!
 !AbstractContainerViewTest categoriesForClass!Unclassified! !
 !AbstractContainerViewTest methodsFor!
@@ -199,13 +200,4 @@ waitForScreenUpdate
 !AbstractContainerViewTest categoriesFor: #testNcCalcSize!public! !
 !AbstractContainerViewTest categoriesFor: #testNonBorderedNcRectangle!public! !
 !AbstractContainerViewTest categoriesFor: #waitForScreenUpdate!private! !
-
-!AbstractContainerViewTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!AbstractContainerViewTest class categoriesFor: #isAbstract!public!Testing! !
 
