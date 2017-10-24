@@ -6,6 +6,7 @@ HTTP_PROPERTY_FLAGS subclass: #HttpQosSetting
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HttpQosSetting guid: (GUID fromString: '{9468481b-e27a-44f4-8468-2e5f2fdef275}')!
+HttpQosSetting isAbstract: true!
 HttpQosSetting comment: ''!
 !HttpQosSetting categoriesForClass!Win32-Structs! !
 !HttpQosSetting methodsFor!

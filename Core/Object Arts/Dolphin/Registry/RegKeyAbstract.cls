@@ -6,6 +6,7 @@ Dictionary variableSubclass: #RegKeyAbstract
 	poolDictionaries: 'Win32Errors WinRegConstants'
 	classInstanceVariableNames: ''!
 RegKeyAbstract guid: (GUID fromString: '{87b4c52b-026e-11d3-9fd7-00a0cc3e4a32}')!
+RegKeyAbstract isAbstract: true!
 RegKeyAbstract comment: ''!
 !RegKeyAbstract categoriesForClass!System-Support! !
 !RegKeyAbstract methodsFor!
