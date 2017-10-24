@@ -6,6 +6,7 @@ Event subclass: #SelectionChangeEvent
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectionChangeEvent guid: (GUID fromString: '{d0986742-3873-4dce-8e8f-6693994a4f26}')!
+SelectionChangeEvent isAbstract: true!
 SelectionChangeEvent comment: ''!
 !SelectionChangeEvent categoriesForClass!Kernel-Objects! !
 !SelectionChangeEvent methodsFor!

@@ -6,6 +6,7 @@ Win32Structure subclass: #AbstractLOGFONT
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractLOGFONT guid: (GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
+AbstractLOGFONT isAbstract: true!
 AbstractLOGFONT comment: ''!
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
 !AbstractLOGFONT methodsFor!

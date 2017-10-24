@@ -6,6 +6,7 @@ View subclass: #AbstractDelegatingView
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractDelegatingView guid: (GUID fromString: '{93fdcca7-1448-41db-abf2-5aa02abef751}')!
+AbstractDelegatingView isAbstract: true!
 AbstractDelegatingView comment: 'AbstractDelegatingView is an abstract class for views that contain another view internally and delegate their interface to it. An example is ToolBotton, which presents the interace of a toolbar button but actually contains an instance of class Toolbar internally and uses it to do all the work.
 
 Instance Variables:

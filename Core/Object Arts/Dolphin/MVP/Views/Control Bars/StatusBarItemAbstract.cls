@@ -6,6 +6,7 @@ Object subclass: #StatusBarItemAbstract
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
 StatusBarItemAbstract guid: (GUID fromString: '{87b4c4bf-026e-11d3-9fd7-00a0cc3e4a32}')!
+StatusBarItemAbstract isAbstract: true!
 StatusBarItemAbstract comment: 'StatusBarItemAbstract is an abstract class whose subclasses represent the items held by a <StatusBar> view.
 
 Subclasses should redefine the #drawItem:bounding: to paint in the desired manner.

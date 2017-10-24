@@ -6,6 +6,7 @@ View subclass: #ControlView
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 ControlView guid: (GUID fromString: '{87b4c70d-026e-11d3-9fd7-00a0cc3e4a32}')!
+ControlView isAbstract: true!
 ControlView comment: 'ControlView is the abstract superclass for all <view>s that are based on Windows controls. In general, controls are responsible for their own painting and so it is not necessary, or advisable, to override #onPaintRequired: in any of the ControlView subclasses.
 
 Some controls, but not all, allow control over the foreground and background colours used when painting. If neither of the #forecolor and #backcolor aspects is explicitly set then the default control colours will be used.

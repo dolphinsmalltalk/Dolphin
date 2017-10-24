@@ -6,6 +6,7 @@ Object subclass: #MenuItem
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 MenuItem guid: (GUID fromString: '{87b4c49d-026e-11d3-9fd7-00a0cc3e4a32}')!
+MenuItem isAbstract: true!
 MenuItem addClassConstant: 'StringSeparator' value: $/!
 MenuItem addClassConstant: 'StylesMask' value: 1048575!
 MenuItem comment: 'MenuItem is an abstract class whose subclasses represent the items held by a <Menu>.

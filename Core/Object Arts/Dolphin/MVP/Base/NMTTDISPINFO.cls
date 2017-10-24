@@ -6,6 +6,7 @@ NMHDR subclass: #NMTTDISPINFO
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 NMTTDISPINFO guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
+NMTTDISPINFO isAbstract: true!
 NMTTDISPINFO comment: ''!
 !NMTTDISPINFO categoriesForClass!External-Data-Structured-Win32! !
 !NMTTDISPINFO methodsFor!

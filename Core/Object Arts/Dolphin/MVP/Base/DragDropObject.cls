@@ -6,6 +6,7 @@ Object subclass: #DragDropObject
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DragDropObject guid: (GUID fromString: '{87b4c480-026e-11d3-9fd7-00a0cc3e4a32}')!
+DragDropObject isAbstract: true!
 DragDropObject comment: ''!
 !DragDropObject categoriesForClass!MVP-DragDrop! !
 !DragDropObject methodsFor!
