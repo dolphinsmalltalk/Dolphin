@@ -6,6 +6,7 @@ Win32Structure subclass: #CCHITTESTINFO
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 CCHITTESTINFO guid: (GUID fromString: '{87b4c5cd-026e-11d3-9fd7-00a0cc3e4a32}')!
+CCHITTESTINFO isAbstract: true!
 CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implements shared behaviour and state for the common controls hit-test structures, LVHITTESTINFO, TCHITTESTINFO, and TVHITTESTINFO. There is no actual Win32 common control structure of this name.'!
 !CCHITTESTINFO categoriesForClass!External-Data-Structured-Win32! !
 !CCHITTESTINFO methodsFor!

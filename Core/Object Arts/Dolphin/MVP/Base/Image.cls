@@ -6,6 +6,7 @@ GraphicsTool subclass: #Image
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Image guid: (GUID fromString: '{87b4c635-026e-11d3-9fd7-00a0cc3e4a32}')!
+Image isAbstract: true!
 Image comment: 'Image is the class of <GraphicsTools>s that represent pictures which can be drawn onto the display (or other device).
 
 Instance Variables:

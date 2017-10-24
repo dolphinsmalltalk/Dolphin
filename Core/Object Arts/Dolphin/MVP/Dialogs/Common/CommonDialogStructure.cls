@@ -6,6 +6,7 @@ Win32Structure subclass: #CommonDialogStructure
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 CommonDialogStructure guid: (GUID fromString: '{2ddae63c-f325-47b3-abc3-4b9f8bd84ee9}')!
+CommonDialogStructure isAbstract: true!
 CommonDialogStructure comment: ''!
 !CommonDialogStructure categoriesForClass!External-Data-Structured-Win32! !
 !CommonDialogStructure methodsFor!

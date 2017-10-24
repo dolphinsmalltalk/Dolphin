@@ -6,6 +6,7 @@ NMHDR subclass: #NMCUSTOMDRAW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
+NMCUSTOMDRAW isAbstract: true!
 NMCUSTOMDRAW comment: 'NMCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 NMCUSTOMDRAW structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the <ListView> and <TreeView> to request custom draw information for individual items (and optionally sub-items).

@@ -6,6 +6,7 @@ StaticView subclass: #StaticImage
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StaticImage guid: (GUID fromString: '{87b4c73f-026e-11d3-9fd7-00a0cc3e4a32}')!
+StaticImage isAbstract: true!
 StaticImage comment: 'StaticImage is an abstract superclass for Windows STATIC controls that display <images>. The <valueModel> associated with a StaticImage must always yield an <image> value when mapped through the installed type converter. A StaticImage will normally be used in conjunction with a <ImagePresenter>.
 
 Instance Variables:

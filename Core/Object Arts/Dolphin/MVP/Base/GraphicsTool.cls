@@ -6,6 +6,7 @@ Object subclass: #GraphicsTool
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 GraphicsTool guid: (GUID fromString: '{87b4c48d-026e-11d3-9fd7-00a0cc3e4a32}')!
+GraphicsTool isAbstract: true!
 GraphicsTool comment: ''!
 !GraphicsTool categoriesForClass!Graphics-Tools! !
 !GraphicsTool methodsFor!

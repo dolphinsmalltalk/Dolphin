@@ -6,6 +6,7 @@ ListControlView subclass: #IconicListAbstract
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IconicListAbstract guid: (GUID fromString: '{87b4c728-026e-11d3-9fd7-00a0cc3e4a32}')!
+IconicListAbstract isAbstract: true!
 IconicListAbstract comment: 'IconicListAbstract is an abstract class whose subclasses implement various Windows iconic list common controls.
 
 Each of the subclasses of IconicListAbstract are capable of displaying the list items in an iconic form with associated descriptive text. The list determines the text for an item by mapping it via its #getTextBlock aspect. Similarly, the image for an item can be determined by setting an appropriate #getImageBlock. This is a <monadicValuable> which must map a particular item to an image index. The images are held in an <ImageManager> set into the #imageManager aspect.
