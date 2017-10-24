@@ -6,6 +6,7 @@ StProgramNode subclass: #StTagNode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StTagNode guid: (GUID fromString: '{eb694d50-0176-4a1d-a468-8f7a306f573b}')!
+StTagNode isAbstract: true!
 StTagNode comment: ''!
 !StTagNode categoriesForClass!System-Compiler! !
 !StTagNode methodsFor!
