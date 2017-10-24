@@ -120,9 +120,6 @@ developmentClasses
 			package notNil ifTrue: [package classes do: [:c | classes remove: c ifAbsent: []]]].
 	^classes!
 
-isAbstract
-	^false!
-
 productLevel
 	"Private - Answer the product ID for the receiver"
 
@@ -138,7 +135,6 @@ shortProductName
 	
 	^'DPRO'! !
 !DolphinProfessional class categoriesFor: #developmentClasses!public! !
-!DolphinProfessional class categoriesFor: #isAbstract!operations!public!testing! !
 !DolphinProfessional class categoriesFor: #productLevel!constants!private! !
 !DolphinProfessional class categoriesFor: #productName!accessing!public! !
 !DolphinProfessional class categoriesFor: #shortProductName!accessing!public! !

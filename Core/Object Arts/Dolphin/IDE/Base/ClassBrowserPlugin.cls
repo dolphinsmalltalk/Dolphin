@@ -6,6 +6,7 @@ Presenter subclass: #ClassBrowserPlugin
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassBrowserPlugin guid: (GUID fromString: '{4e71c848-3d94-41f6-8ce9-66d437619a5f}')!
+ClassBrowserPlugin isAbstract: true!
 ClassBrowserPlugin comment: '<ClassBrowserPluginAbstract> is the abstract superclass that implements the basic <classBrowserPlugin> protocol to support plug-in views for class browsers. The plug-ins are appended to the standard set of tabbed cards in the lower half of the browser and can be displayed by selecting the appropriate tab. Each browser class maintains an <OrderedCollection> of plug-ins that will be installed when instances of the browser are created. This collection can be modified through the User Preferences for that browser.
 
 When a plug-in is created it is assigned the class browser to which it is attached as its model. From this, the plug-in can observe events in the browser (such as #classSelected, #methodSelected, #packageSelected etc) and use these to initiate the rendition of its own display. In situations where creating this rendition may be a time consuming process, the plug-in may choose to defer this step until its card is actually made visible in the browser. This can be intercepted by overriding #onShownInBrowser.'!
@@ -90,9 +91,6 @@ ClassBrowserPlugin methodProtocol: #classBrowserPlugin attributes: #(#readOnly) 
 
 !ClassBrowserPlugin class methodsFor!
 
-isAbstract
-	^self == ##(self)!
-
 uninitialize
 	"Private - Un-register the receiver by removing it from any plugins list.
 		self uninitialize
@@ -113,7 +111,6 @@ uninitializeBeforeRemove
 unregisterFromAllBrowsers
 	ClassBrowserAbstract allSubclasses do: [:each | each removePlugin: self].
 	self primAllInstances do: [:each | each destroy]! !
-!ClassBrowserPlugin class categoriesFor: #isAbstract!public!Testing! !
 !ClassBrowserPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !ClassBrowserPlugin class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
 !ClassBrowserPlugin class categoriesFor: #unregisterFromAllBrowsers!initializing!private! !
