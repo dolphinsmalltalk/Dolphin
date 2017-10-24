@@ -3,7 +3,7 @@
 Object subclass: #ClassBuilder
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
 	classVariableNames: 'FixedInitialLayout FixedLayout IgnoreInstsMask RecompileMask Unsubclassable'
-	poolDictionaries: '_BehaviorMasks'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassBuilder guid: (GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 2!
@@ -300,7 +300,7 @@ install: aClassDescription
 instanceShapeIsBeingChanged
 	"Private - Answer whether the instance spec is being changed."
 
-	^(instanceSpec bitAnd: _ShapeMask) ~= (currentClass instanceSpec bitAnd: _ShapeMask)
+	^(instanceSpec bitAnd: Behavior._ShapeMask) ~= (currentClass instanceSpec bitAnd: Behavior._ShapeMask)
 			!
 
 instanceSpec: anInteger
@@ -388,9 +388,9 @@ modifyOrCreate
 		ifFalse: [self createNewClass]
 		ifTrue: [
 			instanceSpec := instanceSpec maskSet: (currentClass instanceSpec 
-											maskClear: _FundamentalShapeMask).
+											maskClear: Behavior._FundamentalShapeMask).
 			(self class instanceSpecIsBytes: instanceSpec)
-				ifFalse: [instanceSpec := instanceSpec maskClear: _BytesSubMask].
+				ifFalse: [instanceSpec := instanceSpec maskClear: Behavior._BytesSubMask].
 			self modifyExistingClass]!
 
 modifyPrivate
@@ -1065,7 +1065,7 @@ forModifying: aClass
 fundamentalTypeOf: anInstanceSpec
 	"Private - Answer the combined settings of the isVariable and isPointers flags of anInstanceSpec."
 
-	^anInstanceSpec bitAnd: _VariableMask + _PointersMask!
+	^anInstanceSpec bitAnd: Behavior._VariableMask + Behavior._PointersMask!
 
 initialize
 	"Initialize the receiver's class variables.
@@ -1116,40 +1116,40 @@ initialize
 instanceSpecIsBytes: anInstanceSpec
 	"Private - Answer whether anInstanceSpec represents a byte subclass."
 
-	^(anInstanceSpec anyMask: _PointersMask) not!
+	^(anInstanceSpec anyMask: Behavior._PointersMask) not!
 
 instanceSpecWithFixedPointers: anInteger
 	"Private - Answer an instance spec based on anInteger but adjusted to represent instances
 	containing named instance vars only."
 
-	^_PointersMask bitOr: (anInteger bitAnd: _SizeMask)!
+	^Behavior._PointersMask bitOr: (anInteger bitAnd: Behavior._SizeMask)!
 
 instanceSpecWithIndirectBytes
 	"Private - Answer an instance spec to represent instances with no named instances variables,
 	made of indexable bytes and interpreted by certain system primitives as an indirection to
 	other data."
 
-	^_VariableMask + _IndirectMask!
+	^Behavior._VariableMask + Behavior._IndirectMask!
 
 instanceSpecWithNullTerminatedBytes
 	"Private - Answer an instance spec to represent instances with no named instances variables,
 	made of indexable bytes and terminated by an extra byte initialized to null."
 
-	^_VariableMask + _NullTermMask!
+	^Behavior._VariableMask + Behavior._NullTermMask!
 
 instanceSpecWithVariableBytes: anInteger
 	"Private - Answer an instance spec based on anInteger but adjusted to represent instances
 	with no named instances variables and made of indexable bytes."
 
-	^_VariableMask
-		bitOr: (anInteger bitAnd: _NullTermMask + _IndirectMask)!
+	^Behavior._VariableMask
+		bitOr: (anInteger bitAnd: Behavior._NullTermMask + Behavior._IndirectMask)!
 
 instanceSpecWithVariablePointers: anInteger
 	"Private - Answer an instance spec based on anInteger but adjusted to represent instances
 	containing indexable pointers with or without named instance vars."
 
-	^_VariableMask + _PointersMask
-		bitOr: (anInteger bitAnd: _SizeMask)!
+	^Behavior._VariableMask + Behavior._PointersMask
+		bitOr: (anInteger bitAnd: Behavior._SizeMask)!
 
 instSizeOf: aClass
 	"Private - Answer the fixed size of aClass or zero if it is nil."
@@ -1265,17 +1265,17 @@ validateInstanceSpec: anInstanceSpec size: anInteger superclass: proposedSupercl
 	and answer a completed instance spec."
 
 	| spec fundamentalType fixedSize |
-	spec := anInstanceSpec bitAnd: _SizeMask bitInvert.
+	spec := anInstanceSpec bitAnd: Behavior._SizeMask bitInvert.
 	fundamentalType := self fundamentalTypeOf: spec.
-	fundamentalType = _VariableMask
+	fundamentalType = Behavior._VariableMask
 		ifTrue: [spec := self validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass].
-	fundamentalType = _PointersMask
+	fundamentalType = Behavior._PointersMask
 		ifTrue: [spec := self validateSpecAsFixedPointers: spec size: anInteger superclass: proposedSuperclass].
-	fundamentalType = (_VariableMask + _PointersMask)
+	fundamentalType = (Behavior._VariableMask + Behavior._PointersMask)
 		ifTrue: [spec := self validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSuperclass].
 	fixedSize := anInteger + (self instSizeOf: proposedSuperclass).
-	fixedSize > _SizeMask
-		ifTrue: [self error: ('Classes are allowed a maximum of <1d> instance variables.' expandMacrosWith: _SizeMask)].
+	fixedSize > Behavior._SizeMask
+		ifTrue: [self error: ('Classes are allowed a maximum of <1d> instance variables.' expandMacrosWith: Behavior._SizeMask)].
 	^spec bitOr: fixedSize!
 
 validateInstanceVars: instVarsArray againstSuperclass: aClass
@@ -1324,7 +1324,7 @@ validateSpecAsVariableBytes: spec size: anInteger superclass: proposedSuperclass
 	if spec is invalid as a variable byte subclass of proposedSuperclass."
 
 	| inheritedFlags validatedSpec |
-	inheritedFlags := _IndirectMask + _NullTermMask.
+	inheritedFlags := Behavior._IndirectMask + Behavior._NullTermMask.
 	validatedSpec := spec.
 	proposedSuperclass notNil
 		ifTrue: [
@@ -1346,9 +1346,9 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 
 	(proposedSuperclass notNil and: [proposedSuperclass isBytes])
 		ifTrue: [self error: 'A subclass containing pointers may not derive from a class containing bytes.'].
-	(spec anyMask: _IndirectMask)
+	(spec anyMask: Behavior._IndirectMask)
 		ifTrue: [self error: 'Indirect subclasses must contain bytes.'].
-	(spec anyMask: _NullTermMask)
+	(spec anyMask: Behavior._NullTermMask)
 		ifTrue: [self error: 'Null-terminated subclasses must contain bytes.'].
 	^spec! !
 !ClassBuilder class categoriesFor: #allClassVarNamesOf:!helpers!private! !

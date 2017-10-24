@@ -2,10 +2,22 @@
 
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
-	classVariableNames: '_NullMethodDictionary'
-	poolDictionaries: '_BehaviorMasks'
+	classVariableNames: '_BasicSpecMask _BytesSubMask _FundamentalShapeMask _IndirectMask _MournerMask _NonInstantiableMask _NullMethodDictionary _NullTermMask _PointersMask _ShapeMask _SizeMask _VariableMask'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Behavior guid: (GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
+Behavior isAbstract: true!
+Behavior addClassConstant: '_BasicSpecMask' value: 32767!
+Behavior addClassConstant: '_BytesSubMask' value: 18432!
+Behavior addClassConstant: '_FundamentalShapeMask' value: 12543!
+Behavior addClassConstant: '_IndirectMask' value: 2048!
+Behavior addClassConstant: '_MournerMask' value: 1024!
+Behavior addClassConstant: '_NonInstantiableMask' value: 512!
+Behavior addClassConstant: '_NullTermMask' value: 16384!
+Behavior addClassConstant: '_PointersMask' value: 8192!
+Behavior addClassConstant: '_ShapeMask' value: 28927!
+Behavior addClassConstant: '_SizeMask' value: 255!
+Behavior addClassConstant: '_VariableMask' value: 4096!
 Behavior comment: 'Class Behavior is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 
 Instance Variables:
@@ -15,8 +27,7 @@ Instance Variables:
 	methodDictionary	<MethodDictionary> mapping selector Symbols to CompiledMethods
 	instanceSpec	<integer> containg flags which describe the "shape" of the instance (e.g. oops vs bytes)
 
-Behavior defines a number of bit masks which are used to describe objects. These flags are stored in the pool dictionary,
-_BehaviorMasks, for ease of sharing with the ClassBuilder and other tools::
+Behavior defines a number of bit masks which are used to describe objects. These flags are stored as constants in the class pool:
 	_BasicSpecMask 		<integer> bit mask to extract the basic inst. spec (excludes extra spec word).
 	_BytesSubMask 		<integer> bit mask to extract inst. spec. bits relating exclusively to byte objects
 	_FundamentalShapeMask 	<integer> bit mask to extract the fundamental shape of instances from instance spec.
@@ -30,6 +41,8 @@ _BehaviorMasks, for ease of sharing with the ClassBuilder and other tools::
 				they suffer bereavements during a GC. This notification is ''''off'''' by default because the
 				receipt of such a notifications will delay the death of its receiver, which may result in
 				significantly extended life for hierarchies of incestuously referencing weak objects.
+	_NonInstantiableMask	<integer> bit mask to extract the abstract class flag from inst. spec. flags.
+					This bit is used to mark classes considered to be abstract (non-instantiable).
 	_NullTermMask 		<integer> bit mask to extract null terminated flag from inst. spec. (byte objects only)
 				The null term. bit can be used to mark byte classes as having an implicit null terminator
 				(e.g. to represent C-style strings).
@@ -428,6 +441,16 @@ fullBindingFor: aString
 			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
 
+hasAbstractMethods
+	"Answer whether the receiver has any methods that are by convention considered to be
+	abstract (i.e. they consist solely of a send of #subclassResponsibility to self)."
+
+	^self methodDictionary anySatisfy: 
+			[:each |
+			each size > 0 and: 
+					[(each at: 1) == #subclassResponsibility
+						and: [each byteCodes first == OpcodePool.ShortSendSelfZeroArgs]]]!
+
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
 
@@ -497,6 +520,9 @@ instVarNames
 
 	^#()!
 
+isAbstract
+	^self isNonInstantiable or: [self hasAbstractMethods]!
+
 isBits
 	"Answer whether the variables of instances of the receiver contain bits (i.e. not object pointers)."
 
@@ -542,6 +568,16 @@ isMourner
 	for the loss of their constituents."
 
 	^self instanceSpec anyMask: _MournerMask!
+
+isNonInstantiable
+	"Private - Answer whether the receiver should not be instantiated, e.g. it is abstract."
+
+	^instanceSpec anyMask: _NonInstantiableMask!
+
+isNonInstantiable: aBoolean
+	"Private - Set whether the receiver should not be instantiated, e.g. it is abstract."
+
+	self setShapeFlags: _NonInstantiableMask to: aBoolean!
 
 isNullTerminated
 	"Answer true if the instances of the receiver are Null Terminated (that is they include 
@@ -1168,6 +1204,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
 !Behavior categoriesFor: #fullBindingFor:!compiling!public! !
+!Behavior categoriesFor: #hasAbstractMethods!public!testing! !
 !Behavior categoriesFor: #hasCompilationFailures!public!testing! !
 !Behavior categoriesFor: #hasImmediateInstances!public!testing! !
 !Behavior categoriesFor: #hasMethods!methods-testing!public! !
@@ -1179,6 +1216,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #instanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #instSize!instance specification-accessing!public! !
 !Behavior categoriesFor: #instVarNames!instance variables!public! !
+!Behavior categoriesFor: #isAbstract!public!testing! !
 !Behavior categoriesFor: #isBits!instance specification-testing!public! !
 !Behavior categoriesFor: #isBytes!instance specification-testing!public! !
 !Behavior categoriesFor: #isFixed!instance specification-testing!public! !
@@ -1187,6 +1225,8 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #isMeta!public!testing! !
 !Behavior categoriesFor: #isMetaclass!public!testing! !
 !Behavior categoriesFor: #isMourner!instance specification-testing!public! !
+!Behavior categoriesFor: #isNonInstantiable!instance specification-testing!private! !
+!Behavior categoriesFor: #isNonInstantiable:!instance specification-accessing!private! !
 !Behavior categoriesFor: #isNullTerminated!instance specification-testing!public! !
 !Behavior categoriesFor: #isNullTerminated:!instance specification-accessing!public! !
 !Behavior categoriesFor: #isPointers!instance specification-testing!public! !

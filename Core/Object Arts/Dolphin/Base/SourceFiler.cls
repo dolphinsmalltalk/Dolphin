@@ -109,13 +109,13 @@ emitSetBehaviorFlag: flagName forClass: aClass
 
 	^self subclassResponsibility!
 
-emitSpecialBehaviourAttributesOfClass: aClass 
+emitSpecialBehaviourAttributesOfClass: aClass
 	"Private - Emit attributes for the <Class>, aClass, to define its special behaviour flags."
 
-	#(#isIndirection #isNullTerminated) do: 
-			[:flagName | 
-			(aClass perform: flagName) 
-				ifTrue: [self emitSetBehaviorFlag: flagName forClass: aClass]]!
+	#(#isIndirection #isNullTerminated)
+		do: [:flagName | (aClass perform: flagName) ifTrue: [self emitSetBehaviorFlag: flagName forClass: aClass]].
+	"We only emit the #isAbstract flag if the class has been explicitly marked non-instantiable, not just because it answers true to #isAbstract."
+	aClass isNonInstantiable ifTrue: [self emitSetBehaviorFlag: #isAbstract forClass: aClass]!
 
 evaluationContext
 	^evaluationContext!

@@ -312,6 +312,16 @@ instanceClass
 
 	^self!
 
+isAbstract
+	^super isAbstract or: [self class isAbstract]!
+
+isAbstract: aBoolean
+	"Set/reset the receivers status as an abstract class. Note that a class may still answer
+	true to #isAbstract even after setting this to false if it contains abstract methods (see
+	#hasAbstractMethods)."
+
+	self isNonInstantiable: aBoolean!
+
 isAtomic
 	"Answer whether or not the receiver has a single unique instance for any individual value it
 	can represent."
@@ -788,6 +798,8 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
 !Class categoriesFor: #initializeAfterLoad!initializing!public! !
 !Class categoriesFor: #instanceClass!accessing!public! !
+!Class categoriesFor: #isAbstract!public!testing! !
+!Class categoriesFor: #isAbstract:!instance specification-accessing!public! !
 !Class categoriesFor: #isAtomic!public!testing! !
 !Class categoriesFor: #isChanged!development!public!source filing!testing! !
 !Class categoriesFor: #isChanged:!accessing!development!public! !
