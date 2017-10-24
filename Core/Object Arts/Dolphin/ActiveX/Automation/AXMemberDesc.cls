@@ -6,6 +6,7 @@ AXTypeInfoStructure subclass: #AXMemberDesc
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AXMemberDesc guid: (GUID fromString: '{ac5eb94d-60c1-4c16-ae6d-31acf5123eb6}')!
+AXMemberDesc isAbstract: true!
 AXMemberDesc comment: ''!
 !AXMemberDesc categoriesForClass!External-Data-Structured-COM! !
 !AXMemberDesc methodsFor!

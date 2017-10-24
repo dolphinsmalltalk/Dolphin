@@ -6,6 +6,7 @@ AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXInterfaceTypeAnalyzer guid: (GUID fromString: '{c06f3b7d-0868-11d3-93af-00a024ca708a}')!
+AXInterfaceTypeAnalyzer isAbstract: true!
 AXInterfaceTypeAnalyzer comment: 'AXInterfaceTypeAnalyzer is the abstract superclass of <AXTypeInfoAnalyzer>s describing custom COM interfaces (TKindInterfaceAnalyzer) and dispatch interfaces (TKindDispatchAnalyzer).
 
 AXInterfaceTypeAnalyzers wrap <ITypeInfo> pointers from a type library, providing behaviour which allows one to query information and generate wrapper classes appropriate for COM interfaces.

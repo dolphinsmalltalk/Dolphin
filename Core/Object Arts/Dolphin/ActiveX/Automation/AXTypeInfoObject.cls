@@ -6,6 +6,7 @@ Object subclass: #AXTypeInfoObject
 	poolDictionaries: 'AXAutomationConstants AXTypeGenerationFlags'
 	classInstanceVariableNames: ''!
 AXTypeInfoObject guid: (GUID fromString: '{27440177-dfab-46d4-bf61-a8fada69a263}')!
+AXTypeInfoObject isAbstract: true!
 AXTypeInfoObject comment: '
 	
 Instance Variables:

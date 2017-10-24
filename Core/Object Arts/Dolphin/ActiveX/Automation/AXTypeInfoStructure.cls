@@ -6,6 +6,7 @@ OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure guid: (GUID fromString: '{c06f3b66-0868-11d3-93af-00a024ca708a}')!
+AXTypeInfoStructure isAbstract: true!
 AXTypeInfoStructure comment: 'AXTypeInfoStructure is the class of <ExternalStructure>s representing the OLE Automation structures used in conjunction with <ITypeInfo>. AXTypeInfoStructure itself is abstract.
 
 Note that all subinstances of the receiver are allocated by an ITypeInfo and must be released by that same ITypeInfo. We achieve this by a backpointer to the allocating ITypeInfo/AXTypeInfoAnalyzer, and by marking the subinstance as finalizable. This does mean that holding onto one of these structures will cause the originating ITypeInfo to persist as well.
