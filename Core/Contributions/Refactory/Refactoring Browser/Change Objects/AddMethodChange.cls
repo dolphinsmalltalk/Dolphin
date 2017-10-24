@@ -6,6 +6,7 @@ RefactoryClassChange subclass: #AddMethodChange
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AddMethodChange guid: (GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
+AddMethodChange isAbstract: true!
 AddMethodChange comment: ''!
 !AddMethodChange categoriesForClass!Refactory-Change Objects! !
 !AddMethodChange methodsFor!

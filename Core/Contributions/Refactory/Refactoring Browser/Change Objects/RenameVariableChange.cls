@@ -6,6 +6,7 @@ CompositeRefactoryChange subclass: #RenameVariableChange
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RenameVariableChange guid: (GUID fromString: '{e500a4e5-c686-4c27-903e-02242b8aa5f6}')!
+RenameVariableChange isAbstract: true!
 RenameVariableChange comment: ''!
 !RenameVariableChange categoriesForClass!Refactory-Change Objects! !
 !RenameVariableChange methodsFor!

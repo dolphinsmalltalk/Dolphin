@@ -6,6 +6,7 @@ Object subclass: #RefactoryChange
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoryChange guid: (GUID fromString: '{2e46050f-612f-4e62-a0cf-281408d71404}')!
+RefactoryChange isAbstract: true!
 RefactoryChange comment: 'RefactoryChange is an abstract class that represent some change to a class or method. They are used in combination with RefactoryBuilders to give transaction-like behavior.
 
 Subclasses must implement the following messages:

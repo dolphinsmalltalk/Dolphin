@@ -6,6 +6,7 @@ Refactoring subclass: #VariableRefactoring
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VariableRefactoring guid: (GUID fromString: '{0ef75a5c-d99d-489e-b05f-2cf5a57d0f2c}')!
+VariableRefactoring isAbstract: true!
 VariableRefactoring comment: ''!
 !VariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !VariableRefactoring methodsFor!
