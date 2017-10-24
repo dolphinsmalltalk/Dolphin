@@ -12,6 +12,8 @@ package classNames
 	add: #ArrayTest;
 	add: #BagTest;
 	add: #Base64CodecTest;
+	add: #BehaviorTest;
+	add: #BehaviorTestClasses;
 	add: #BlockClosureTest;
 	add: #BooleanTest;
 	add: #ByteArrayTest;
@@ -192,6 +194,11 @@ DolphinTest subclass: #BagTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #Base64CodecTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #BehaviorTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -683,6 +690,11 @@ DolphinTestResource subclass: #DolphinTestClassResource
 	classInstanceVariableNames: ''!
 DolphinTestResource subclass: #DolphinTestPackages
 	instanceVariableNames: 'a b c'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTestClassResource subclass: #BehaviorTestClasses
+	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
