@@ -6,6 +6,7 @@ InspectorAbstract subclass: #AspectInspector
 	poolDictionaries: ''
 	classInstanceVariableNames: 'treeUpdateMode treeHasGridLines'!
 AspectInspector guid: (GUID fromString: '{3a705749-14d8-4cd1-9b4e-ccf02a0218de}')!
+AspectInspector isAbstract: true!
 AspectInspector comment: ''!
 !AspectInspector categoriesForClass!MVP-Presenters! !
 !AspectInspector methodsFor!

@@ -6,6 +6,7 @@ Object subclass: #ProtectedProductSerialNumber
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ProtectedProductSerialNumber guid: (GUID fromString: '{1e38759a-1c4b-4b07-bfa7-2b47b361a5d1}')!
+ProtectedProductSerialNumber isAbstract: true!
 ProtectedProductSerialNumber comment: 'This class acts as an abstract superclass for serial numbers of protected products. A protected product can be encrypted using the #decodingKey of a serial number. The encryption process garbles the bytecodes of the product''s compiled methods so the application will not run successfully until it is decrypted by the same #decodingKey.
 
 Concrete subclasses should be created either for each product created or, more likely, for each publishing author. These subclasses must override the following methods (all on the class side) as described in the method comments:

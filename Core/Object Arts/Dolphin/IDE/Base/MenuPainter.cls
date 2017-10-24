@@ -6,6 +6,7 @@ Object subclass: #MenuPainter
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 MenuPainter guid: (GUID fromString: '{50ca5bf4-97c5-4fba-a59f-fb43f0a962f9}')!
+MenuPainter isAbstract: true!
 MenuPainter comment: ''!
 !MenuPainter categoriesForClass!Kernel-Objects! !
 !MenuPainter methodsFor!

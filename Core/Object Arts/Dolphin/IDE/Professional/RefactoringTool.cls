@@ -6,6 +6,7 @@ Object subclass: #RefactoringTool
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RefactoringTool guid: (GUID fromString: '{838c8c37-c249-4db4-b324-65cb5babdc40}')!
+RefactoringTool isAbstract: true!
 RefactoringTool comment: 'RefactoringTool is the abstract class of plugins used to add refactoring functionality to browsers and other coding tools in the Dolphin IDE.
 
 Note that RefactoringTool is neither a presenter nor a model, but it is a <commandTarget>.

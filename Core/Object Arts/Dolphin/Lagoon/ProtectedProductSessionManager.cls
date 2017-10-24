@@ -6,6 +6,7 @@ RuntimeSessionManager subclass: #ProtectedProductSessionManager
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ProtectedProductSessionManager guid: (GUID fromString: '{a90c2f6f-8f92-4493-995a-1ec18066d054}')!
+ProtectedProductSessionManager isAbstract: true!
 ProtectedProductSessionManager comment: ''!
 !ProtectedProductSessionManager categoriesForClass!Unclassified! !
 !ProtectedProductSessionManager methodsFor!
