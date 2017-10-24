@@ -6,6 +6,7 @@ DolphinTest subclass: #StreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StreamTest guid: (GUID fromString: '{f1611eb3-2c1c-491e-a814-c62dcdce0fff}')!
+StreamTest isAbstract: true!
 StreamTest comment: ''!
 !StreamTest categoriesForClass!Unclassified! !
 !StreamTest methodsFor!
@@ -43,13 +44,4 @@ testUpTo
 !StreamTest categoriesFor: #streamClass!helpers!private! !
 !StreamTest categoriesFor: #streamOn:!helpers!private! !
 !StreamTest categoriesFor: #testUpTo!public! !
-
-!StreamTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!StreamTest class categoriesFor: #isAbstract!public!Testing! !
 

@@ -6,6 +6,7 @@ DolphinTest subclass: #ExternalArrayTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalArrayTest guid: (GUID fromString: '{356dac42-9b9c-4970-87d2-bfd4846fafa4}')!
+ExternalArrayTest isAbstract: true!
 ExternalArrayTest comment: ''!
 !ExternalArrayTest categoriesForClass!Unclassified! !
 !ExternalArrayTest methodsFor!
@@ -182,13 +183,4 @@ testFromToKeysAndValuesDo
 !ExternalArrayTest categoriesFor: #newNumericArray:!helpers!private! !
 !ExternalArrayTest categoriesFor: #testAtAndAtPut!public!unit tests! !
 !ExternalArrayTest categoriesFor: #testFromToKeysAndValuesDo!public!unit tests! !
-
-!ExternalArrayTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!ExternalArrayTest class categoriesFor: #isAbstract!public!Testing! !
 

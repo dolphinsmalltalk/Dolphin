@@ -6,6 +6,7 @@ StreamTest subclass: #PositionableStreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PositionableStreamTest guid: (GUID fromString: '{3abcc3a3-be2b-417d-bdb7-cf6a64cc2c6b}')!
+PositionableStreamTest isAbstract: true!
 PositionableStreamTest comment: ''!
 !PositionableStreamTest categoriesForClass!Unclassified! !
 !PositionableStreamTest methodsFor!
@@ -404,13 +405,4 @@ testUpToEnd
 !PositionableStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
-
-!PositionableStreamTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!PositionableStreamTest class categoriesFor: #isAbstract!public!Testing! !
 

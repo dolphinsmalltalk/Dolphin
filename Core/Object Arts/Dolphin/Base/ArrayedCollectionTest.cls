@@ -6,6 +6,7 @@ SequenceableCollectionTest subclass: #ArrayedCollectionTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArrayedCollectionTest guid: (GUID fromString: '{48d15c8e-983b-48d0-8c62-51b644ba6bdb}')!
+ArrayedCollectionTest isAbstract: true!
 ArrayedCollectionTest comment: ''!
 !ArrayedCollectionTest categoriesForClass!Unclassified! !
 !ArrayedCollectionTest methodsFor!
@@ -23,13 +24,4 @@ testReplaceIdentityWith
 	a replaceIdentity: (self assimilate: $6) with: rep.
 	self assert: a = (self newCollection: #($0 $2 $0 $3 $0 $0))! !
 !ArrayedCollectionTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
-
-!ArrayedCollectionTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!ArrayedCollectionTest class categoriesFor: #isAbstract!public!Testing! !
 

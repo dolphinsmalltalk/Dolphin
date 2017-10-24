@@ -6,6 +6,7 @@ ExternalArrayTest subclass: #GenericExternalArrayTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GenericExternalArrayTest guid: (GUID fromString: '{69952948-3aa8-44c5-956f-8731aa221d5f}')!
+GenericExternalArrayTest isAbstract: true!
 GenericExternalArrayTest comment: ''!
 !GenericExternalArrayTest categoriesForClass!Unclassified! !
 !GenericExternalArrayTest methodsFor!
@@ -36,13 +37,4 @@ testInvalidLength
 !GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
 !GenericExternalArrayTest categoriesFor: #testElementSize!public!unit tests! !
 !GenericExternalArrayTest categoriesFor: #testInvalidLength!public!unit tests! !
-
-!GenericExternalArrayTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!GenericExternalArrayTest class categoriesFor: #isAbstract!public!Testing! !
 

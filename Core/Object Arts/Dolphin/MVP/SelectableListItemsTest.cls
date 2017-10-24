@@ -6,6 +6,7 @@ SelectableItemsTest subclass: #SelectableListItemsTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SelectableListItemsTest guid: (GUID fromString: '{48f12746-e517-4013-8077-973b1d783f60}')!
+SelectableListItemsTest isAbstract: true!
 SelectableListItemsTest comment: ''!
 !SelectableListItemsTest categoriesForClass!Unclassified! !
 !SelectableListItemsTest methodsFor!
@@ -359,13 +360,4 @@ testUpdateSelectedObject
 !SelectableListItemsTest categoriesFor: #testSelectionByIndex!public!unit tests! !
 !SelectableListItemsTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !SelectableListItemsTest categoriesFor: #testUpdateSelectedObject!public!unit tests! !
-
-!SelectableListItemsTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!SelectableListItemsTest class categoriesFor: #isAbstract!public!Testing! !
 

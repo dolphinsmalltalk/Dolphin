@@ -6,6 +6,7 @@ DolphinTest subclass: #LayoutManagerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LayoutManagerTest guid: (GUID fromString: '{a94f94cc-98cb-4a2e-801e-7c115e70d1f8}')!
+LayoutManagerTest isAbstract: true!
 LayoutManagerTest comment: ''!
 !LayoutManagerTest categoriesForClass!Unclassified! !
 !LayoutManagerTest methodsFor!
@@ -27,13 +28,4 @@ tearDown
 !LayoutManagerTest categoriesFor: #layoutManagerClass!private!unit tests! !
 !LayoutManagerTest categoriesFor: #setUp!public!unit tests! !
 !LayoutManagerTest categoriesFor: #tearDown!public!unit tests! !
-
-!LayoutManagerTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!LayoutManagerTest class categoriesFor: #isAbstract!public!Testing! !
 

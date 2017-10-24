@@ -6,6 +6,7 @@ GdiplusTests subclass: #GdiplusInitializerTests
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializerTests guid: (GUID fromString: '{6547b0a9-3786-40b7-bacc-48ed66bf651d}')!
+GdiplusInitializerTests isAbstract: true!
 GdiplusInitializerTests comment: ''!
 !GdiplusInitializerTests categoriesForClass!Unclassified! !
 !GdiplusInitializerTests methodsFor!

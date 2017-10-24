@@ -6,6 +6,7 @@ SelectableListItemsTest subclass: #ListViewTest
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListViewTest guid: (GUID fromString: '{bce10a8d-244e-4377-846c-bcbef9d853a1}')!
+ListViewTest isAbstract: true!
 ListViewTest comment: ''!
 !ListViewTest categoriesForClass!Unclassified! !
 !ListViewTest methodsFor!
@@ -287,13 +288,4 @@ testSetTextImageDoesNotAffectSelection
 !ListViewTest categoriesFor: #testSelectionRemainsVisibleOnSort!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextBlockDoesNotAffectSelection!public!unit tests! !
 !ListViewTest categoriesFor: #testSetTextImageDoesNotAffectSelection!public!unit tests! !
-
-!ListViewTest class methodsFor!
-
-isAbstract
-	"Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-	^self == ##(self)! !
-!ListViewTest class categoriesFor: #isAbstract!public!Testing! !
 

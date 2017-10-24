@@ -29,8 +29,3 @@ testPrintOn
 !AddMethodChangeTest categoriesFor: #changeClass!public!unit tests! !
 !AddMethodChangeTest categoriesFor: #testPrintOn!public!unit tests! !
 
-!AddMethodChangeTest class methodsFor!
-
-isAbstract ^false! !
-!AddMethodChangeTest class categoriesFor: #isAbstract!public!testing! !
-

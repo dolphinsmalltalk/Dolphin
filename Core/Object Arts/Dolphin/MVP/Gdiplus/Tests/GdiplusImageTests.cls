@@ -6,6 +6,7 @@ GdiplusTests subclass: #GdiplusImageTests
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusImageTests guid: (GUID fromString: '{f51a7675-4fec-411d-a3a4-3a11dd7d104a}')!
+GdiplusImageTests isAbstract: true!
 GdiplusImageTests comment: ''!
 !GdiplusImageTests categoriesForClass!Unclassified! !
 !GdiplusImageTests methodsFor!
