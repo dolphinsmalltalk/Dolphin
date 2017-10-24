@@ -279,35 +279,37 @@ testIsMethodVisible
 	self deny: (browser isMethodVisible: (TestResource compiledMethodAt: #name))!
 
 testIsMethodVisibleClassSide
+	| subjectClass |
 	self deny: self browser isShowInheritedMethods.
 	self assert: browser isFilterObjectMethods = browser class defaultFilterObjectMethods.
-	browser actualClass: DolphinTest class.
-	self assert: (browser isMethodVisible: (DolphinTest class compiledMethodAt: #isAbstract)).
-	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #isAbstract)).
+	subjectClass := PackageBrowserTest class.
+	browser actualClass: subjectClass.
+	self assert: (browser isMethodVisible: (subjectClass compiledMethodAt: #resources)).
 	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
+	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #testSelectors)).
 	self deny: (browser isMethodVisible: (Behavior compiledMethodAt: #selectors)).
 	self deny: (browser isMethodVisible: (Object compiledMethodAt: #==)).
 	browser toggleShowInheritedMethods.
 	self assert: browser isShowInheritedMethods.
-	self assert: (browser isMethodVisible: (DolphinTest class compiledMethodAt: #isAbstract)).
-	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #isAbstract)).
-	self assert: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
-	self assert: (browser isMethodVisible: (Behavior compiledMethodAt: #selectors)) 
+	self assert: (browser isMethodVisible: (subjectClass compiledMethodAt: #resources)).
+	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
+	self assert: (browser isMethodVisible: (TestCase class compiledMethodAt: #testSelectors)).
+	self assert: (browser isMethodVisible: (Behavior compiledMethodAt: #selectors))
 				= browser class defaultFilterObjectMethods not.
-	self assert: (browser isMethodVisible: (Object compiledMethodAt: #==)) 
+	self assert: (browser isMethodVisible: (Object compiledMethodAt: #==))
 				= browser class defaultFilterObjectMethods not.
 	browser toggleFilterObjectMethods.
 	self deny: browser isFilterObjectMethods = browser class defaultFilterObjectMethods.
-	self assert: (browser isMethodVisible: (DolphinTest class compiledMethodAt: #isAbstract)).
-	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #isAbstract)).
-	self assert: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
+	self assert: (browser isMethodVisible: (subjectClass compiledMethodAt: #resources)).
+	self deny: (browser isMethodVisible: (TestCase class compiledMethodAt: #resources)).
+	self assert: (browser isMethodVisible: (TestCase class compiledMethodAt: #testSelectors)).
 	"We now filter everything in Object class and above on the class side - see #923."
-	self assert: (browser isMethodVisible: (Object class compiledMethodAt: #initialize)) 
+	self assert: (browser isMethodVisible: (Object class compiledMethodAt: #icon))
 				= browser isFilterObjectMethods not.
-	self assert: (browser isMethodVisible: (Behavior compiledMethodAt: #selectors)) 
+	self assert: (browser isMethodVisible: (Behavior compiledMethodAt: #selectors))
 				= browser isFilterObjectMethods not.
-	self assert: (browser isMethodVisible: (Object compiledMethodAt: #==)) 
-				= browser isFilterObjectMethods not!
+	self
+		assert: (browser isMethodVisible: (Object compiledMethodAt: #==)) = browser isFilterObjectMethods not!
 
 testIsMethodVisibleInObject
 	self deny: self browser isShowInheritedMethods.
