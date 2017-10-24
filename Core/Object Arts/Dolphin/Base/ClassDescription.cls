@@ -493,6 +493,12 @@ instVarNames
 			instanceVariables subStrings: Character space]
 		ifFalse: [instanceVariables]!
 
+isChanged: aBoolean
+	"Flag the receiver as changed or not changed, according to the value 
+	of the <Boolean> argument."
+
+	self subclassResponsibility!
+
 logDefinition
 	self sourceManager logEvaluate: self definition!
 
@@ -794,6 +800,15 @@ setInstanceVariables: aCollection
 
 	instanceVariables := aCollection notEmpty ifTrue: [aCollection asArray]!
 
+setShapeFlags: anIntegerMask to: aBoolean
+	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)
+	according to the argument aBoolean."
+
+	| oldSpec |
+	oldSpec := instanceSpec.
+	super setShapeFlags: anIntegerMask to: aBoolean.
+	oldSpec = instanceSpec ifFalse: [self isChanged: true]!
+
 setSharedPoolNames: aCollection
 	"Private - Set the <Symbol>ic names of the shared pool dictionaries that are declared as
 	referenced locally in the receiver (pools are inherited in Dolphin)."
@@ -910,6 +925,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
 !ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
 !ClassDescription categoriesFor: #instVarNames!instance variables!public! !
+!ClassDescription categoriesFor: #isChanged:!development!public!source filing! !
 !ClassDescription categoriesFor: #logDefinition!instance variables!private! !
 !ClassDescription categoriesFor: #logRemoveSelector:!helpers!private! !
 !ClassDescription categoriesFor: #logRemoveSelectors:!helpers!private! !
@@ -948,6 +964,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #resourceSelectorsDo:!enumerating!public! !
 !ClassDescription categoriesFor: #selectorsInCategory:!categories-accessing!public! !
 !ClassDescription categoriesFor: #setInstanceVariables:!instance variables!private! !
+!ClassDescription categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
 !ClassDescription categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
 !ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
