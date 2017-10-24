@@ -6,6 +6,7 @@ Object subclass: #DolphinCompilerTestMethods
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinCompilerTestMethods guid: (GUID fromString: '{c6d8841d-910d-434f-9fec-9d821dd7a202}')!
+DolphinCompilerTestMethods isAbstract: true!
 DolphinCompilerTestMethods addClassConstant: 'Const' value: 1!
 DolphinCompilerTestMethods comment: ''!
 !DolphinCompilerTestMethods categoriesForClass!Kernel-Objects! !

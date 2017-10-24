@@ -6,6 +6,7 @@ ClassBrowserPlugin subclass: #ClassAspectPlugin
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassAspectPlugin guid: (GUID fromString: '{310dd22a-ce36-4a0a-ba51-44a6014bd35b}')!
+ClassAspectPlugin isAbstract: true!
 ClassAspectPlugin comment: 'ClassAspectPlugin is an abstract class of <classBrowserPlugin>s that allow editing of a textual aspect of a class in a workspace. '!
 !ClassAspectPlugin categoriesForClass!Browser-Plugins! !
 !ClassAspectPlugin methodsFor!
