@@ -26,6 +26,7 @@ renameReferences
 	| replacer |
 	replacer := (ParseTreeRewriter replaceLiteral: className with: newName)
 				replace: className with: newName;
+				replace: 'Smalltalk.' , className with: 'Smalltalk.' , newName;
 				replaceArgument: newName
 					withValueFrom: 
 						[:aNode | 
