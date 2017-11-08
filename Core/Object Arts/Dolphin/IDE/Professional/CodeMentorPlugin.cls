@@ -215,16 +215,34 @@ filterOutRules: rules
 			methods := eachRule failedMethods.
 			methods do: [:each | self systemModel addFilteredMethod: each forLintRule: eachRule]]!
 
-htmlDescriptionFor: aLintRule 
+getRuleInfo: aLintRule
+	| xpath parts |
+	parts := self splitName: aLintRule name.
+	xpath := String writeStream.
+	xpath nextPutAll: './/LintRule[name='.
+	parts size = 1
+		ifTrue: 
+			[xpath
+				nextPut: $";
+				nextPutAll: parts first;
+				nextPutAll: $"]
+		ifFalse: 
+			[xpath nextPutAll: 'concat('.
+			parts do: [:each | xpath print: each] separatedBy: [xpath nextPut: $,].
+			xpath nextPutAll: ')'].
+	xpath nextPut: $].
+	^CodeMentorPlugin lintRulesDoc selectSingleNode: xpath contents!
+
+htmlDescriptionFor: aLintRule
 	"Private - Answers the failures description for aLintRule as HTML"
 
 	"#2139"
 
-	| xpath name stream |
+	| stream node |
 	aLintRule isNil ifTrue: [^''].
 	stream := String writeStream.
 	stream nextPutAll: self htmlStyle.
-	aLintRule isComposite 
+	aLintRule isComposite
 		ifFalse: 
 			[stream
 				nextPutAll: '<A href="';
@@ -234,19 +252,17 @@ htmlDescriptionFor: aLintRule
 				nextPutAll: '">'].
 	stream
 		nextPutAll: '<H4>';
-				nextPutAll: aLintRule name;
+		nextPutAll: aLintRule name;
 		nextPutAll: '</H4>'.
 	aLintRule isComposite ifFalse: [stream nextPutAll: '</A>'].
 	stream nextPutAll: '<P>'.
-			self printTransformationRuleHtmlFor: aLintRule on: stream.
-	name := aLintRule name copyReplaceAll: '"' with: '\"'.
-	xpath := './/LintRule[name="<1s>"]/description' expandMacrosWith: name.
-	(self class lintRulesDoc selectSingleNode: xpath) 
-		ifNotNil: [:ruleNode | stream nextPutAll: ruleNode innerXML].
+	node := self getRuleInfo: aLintRule.
+	self printTransformationRuleHtmlFor: node on: stream.
+	(node selectSingleNode: 'description') ifNotNil: [:ruleNode | stream nextPutAll: ruleNode innerXML].
 	stream nextPutAll: '</P><P>'.
-			self printClassFailuresHtmlFor: aLintRule on: stream.
-			stream nextPutAll: '</P><P>'.
-			self printMethodFailuresHtmlFor: aLintRule on: stream.
+	self printClassFailuresHtmlFor: aLintRule on: stream.
+	stream nextPutAll: '</P><P>'.
+	self printMethodFailuresHtmlFor: aLintRule on: stream.
 	stream nextPutAll: '</P>'.
 	^stream contents!
 
@@ -479,20 +495,18 @@ printMethodFailuresHtmlFor: aLintRule on: aStream
 		display: #browseAllFailedMethods;
 		nextPutAll: '">here</a> to browse all.</p>'!
 
-printTransformationRuleHtmlFor: aLintRule on: aStream 
-	| name xpath node |
-	name := aLintRule name copyReplaceAll: '"' with: '\"'.
-	xpath := './/LintRule[name="<1s>"]/<2s>' expandMacrosWith: name with: 'transformationRuleSelector'.
-	node := CodeMentorPlugin lintRulesDoc selectSingleNode: xpath.
-	node isNil ifTrue: [^self].
-	aStream
-		nextPutAll: '<p><i>There is an <a href="';
-		nextPutAll: self smalltalkUrlTag;
-		nextPutAll: 'self%20';
-		display: #applyTransform:;
-		display: '%20';
-		print: node innerXML;
-		nextPutAll: '"> automatic transformation</a> available to address this issue.</i></p>'!
+printTransformationRuleHtmlFor: anIXMLDOMElement on: aStream
+	(anIXMLDOMElement selectSingleNode: 'transformationRuleSelector')
+		ifNotNil: 
+			[:node |
+			aStream
+				nextPutAll: '<p><i>There is an <a href="';
+				nextPutAll: self smalltalkUrlTag;
+				nextPutAll: 'self%20';
+				display: #applyTransform:;
+				display: '%20';
+				print: node innerXML;
+				nextPutAll: '"> automatic transformation</a> available to address this issue.</i></p>']!
 
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver 
@@ -618,6 +632,28 @@ showDescriptionFor: aLintRule
 smalltalkUrlTag
 	^'smalltalk:'!
 
+splitName: aString
+	| stream answer wordStream word |
+	answer := OrderedCollection new.
+	stream := aString readStream.
+	wordStream := String writeStream: 10.
+	wordStream reset.
+	[stream atEnd] whileFalse: 
+			[| next |
+			next := stream next.
+			next == $"
+				ifTrue: 
+					[word := wordStream contents.
+					word notEmpty
+						ifTrue: 
+							[answer add: word.
+							wordStream reset].
+					answer add: '"']
+				ifFalse: [wordStream nextPut: next]].
+	word := wordStream contents.
+	word notEmpty ifTrue: [answer add: word].
+	^answer asArray!
+
 startCheckerProcess
 	self stopCheckerProcess.
 	checkerProcess := 
@@ -653,6 +689,7 @@ stopCheckerProcess
 !CodeMentorPlugin categoriesFor: #filterInRules:!commands!private! !
 !CodeMentorPlugin categoriesFor: #filterOutRule!commands!public! !
 !CodeMentorPlugin categoriesFor: #filterOutRules:!commands!private! !
+!CodeMentorPlugin categoriesFor: #getRuleInfo:!helpers!private! !
 !CodeMentorPlugin categoriesFor: #htmlDescriptionFor:!helpers!private! !
 !CodeMentorPlugin categoriesFor: #htmlStyle!helpers!private! !
 !CodeMentorPlugin categoriesFor: #icon!accessing!public! !
@@ -695,6 +732,7 @@ stopCheckerProcess
 !CodeMentorPlugin categoriesFor: #selectFilteredRules!commands!public! !
 !CodeMentorPlugin categoriesFor: #showDescriptionFor:!operations!private! !
 !CodeMentorPlugin categoriesFor: #smalltalkUrlTag!constants!private! !
+!CodeMentorPlugin categoriesFor: #splitName:!helpers!private! !
 !CodeMentorPlugin categoriesFor: #startCheckerProcess!operations!private! !
 !CodeMentorPlugin categoriesFor: #stopCheckerProcess!operations!private! !
 
