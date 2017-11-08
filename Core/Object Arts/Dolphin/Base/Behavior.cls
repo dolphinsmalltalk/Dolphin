@@ -6,7 +6,6 @@ Object subclass: #Behavior
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Behavior guid: (GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
-Behavior isAbstract: true!
 Behavior addClassConstant: '_BasicSpecMask' value: 32767!
 Behavior addClassConstant: '_BytesSubMask' value: 18432!
 Behavior addClassConstant: '_FundamentalShapeMask' value: 12543!
@@ -99,15 +98,6 @@ addToSuper
 
 	superclass addSubclass: self!
 
-allClassVarNames
-	"Answer a <Set> of the <readableString> names of the receiver's and the 
-	receiver's superclasses' class variables."
-
-	| answer |
-	answer := Set new.
-	self withAllSuperclassesDo: [:c | answer addAll: c classVarNames].
-	^answer!
-
 allInstances
 	"Answer an <Array> of all direct instances of the receiver."
 
@@ -136,15 +126,6 @@ allSelectors
 	answer := IdentitySet new.
 	self withAllSuperclassesDo: [:each | answer addAll: each selectors].
 	^answer!
-
-allSharedPoolNames
-	"Answer a <sequencedReadableCollection> of <Symbol>s, being the names of all the shared pool
-	dictionaries that are specified that are specified in the receiver and each of its
-	superclasses. The list is ordered with the receiver's own pool references first, and then
-	those of the superclass, and so on up the class hierarchy. Pools only appear where first
-	referenced (i.e. no duplicates)."
-
-	^self allSharedPools collect: [:each | each name]!
 
 allSharedPools
 	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
@@ -317,11 +298,6 @@ changedMethods
 	"Private - Answer a <collection> of all the changed methods in the receiver."
 
 	^self methodDictionary select: [:method | method hasChanged]!
-
-classVarNames
-	"Answer a <Set> of <String>s, being the class variable names of the receiver."
-
-	^self subclassResponsibility!
 
 compile: code
 	"Compile the argument, code, and enter the result in the receiver's method dictionary. 
@@ -652,11 +628,6 @@ methodDictionary: aMethodDictionary
 	methodDictionary := (aMethodDictionary isNil or: [aMethodDictionary isEmpty])
 				ifFalse: [aMethodDictionary]!
 
-name
-	"Answer a <readableString> that is the name of the receiver."
-
-	^self subclassResponsibility!
-
 new
 	"Answer an instance of the receiver with no indexed variables. Send the receiver the 
 	message {new: 0} if the receiver is indexable.
@@ -955,9 +926,6 @@ shallowCopy
 
 	^self!
 
-sharedPoolNames
-	^self subclassResponsibility!
-
 sharedPools
 	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
 	locally in the receiver."
@@ -1030,12 +998,6 @@ understoodSelectors
 	but will be understood as a result of #doesNotUnderstand: processing, if that is possible."
 
 	^self selectors!
-
-whichClassDefinesClassVar: aString
-	"Answer which <Class> in the receiver's inheritance chain, including the receiver,
-	defines the named class variable."
-
-	^self whichClassSatisfies: [:each | each classVarNames includes: aString]!
 
 whichClassIncludesSelector: selector
 	"Answer the first class on the receiver's superclass chain (including the receiver) where 
@@ -1167,12 +1129,10 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #addSelector:withMethod:!methods-accessing!private! !
 !Behavior categoriesFor: #addSubclass:!class hierarchy-adding!private! !
 !Behavior categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Behavior categoriesFor: #allClassVarNames!class variables!public! !
 !Behavior categoriesFor: #allInstances!instances!public! !
 !Behavior categoriesFor: #allInstVarNames!instance variables!public! !
 !Behavior categoriesFor: #allMethodsDo:!enumerating!public! !
 !Behavior categoriesFor: #allSelectors!methods-accessing!public! !
-!Behavior categoriesFor: #allSharedPoolNames!pool variables!public! !
 !Behavior categoriesFor: #allSharedPools!pool variables!public! !
 !Behavior categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
@@ -1189,7 +1149,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #bindingFor:!compiling!public! !
 !Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Behavior categoriesFor: #changedMethods!methods-accessing!private! !
-!Behavior categoriesFor: #classVarNames!class variables!public! !
 !Behavior categoriesFor: #compile:!compiling!public! !
 !Behavior categoriesFor: #compileAll!compiling!development!public! !
 !Behavior categoriesFor: #compileAllSubclasses!compiling!development!public! !
@@ -1237,7 +1196,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #makeMourner!instance specification-accessing!private! !
 !Behavior categoriesFor: #methodDictionary!methods-accessing!private! !
 !Behavior categoriesFor: #methodDictionary:!methods-accessing!private! !
-!Behavior categoriesFor: #name!accessing!public! !
 !Behavior categoriesFor: #new!instance creation!public! !
 !Behavior categoriesFor: #new:!instance creation!public! !
 !Behavior categoriesFor: #new:max:!instance creation!private! !
@@ -1263,7 +1221,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSuperclass:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #shallowCopy!copying!public! !
-!Behavior categoriesFor: #sharedPoolNames!pool variables!public! !
 !Behavior categoriesFor: #sharedPools!pool variables!public! !
 !Behavior categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
@@ -1274,7 +1231,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #superclass!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #superclass:!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #understoodSelectors!methods-accessing!public! !
-!Behavior categoriesFor: #whichClassDefinesClassVar:!class variables!public! !
 !Behavior categoriesFor: #whichClassIncludesSelector:!methods-testing!public! !
 !Behavior categoriesFor: #whichClassSatisfies:!helpers!private! !
 !Behavior categoriesFor: #whichMethodsAccess:!development!methods-testing!public! !
@@ -1295,9 +1251,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #withAllSuperclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #withAllSuperclassesDo:!enumerating!public! !
 
-Behavior methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
 Behavior methodProtocol: #instantiator attributes: #(#ansi #readOnly) selectors: #(#new)!
-Behavior methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #new #subclasses #superclass)!
 
 !Behavior class methodsFor!
 
