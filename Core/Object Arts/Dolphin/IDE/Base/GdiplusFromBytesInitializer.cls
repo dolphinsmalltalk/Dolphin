@@ -6,6 +6,7 @@ GdiplusInitializer subclass: #GdiplusFromBytesInitializer
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusFromBytesInitializer guid: (GUID fromString: '{3156f9e7-c46c-48e7-9cca-e6405bf8a085}')!
+GdiplusFromBytesInitializer isAbstract: true!
 GdiplusFromBytesInitializer comment: ''!
 !GdiplusFromBytesInitializer categoriesForClass!Unclassified! !
 !GdiplusFromBytesInitializer methodsFor!

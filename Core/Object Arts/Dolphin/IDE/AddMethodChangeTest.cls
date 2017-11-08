@@ -11,7 +11,7 @@ AddMethodChangeTest comment: ''!
 !AddMethodChangeTest methodsFor!
 
 changeClass
-	^AddMethodChange!
+	^DolphinAddMethodChange!
 
 testPrintOn
 	| change |
