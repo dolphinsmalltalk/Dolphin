@@ -27,9 +27,8 @@
 // This primitive handles PositionableStream>>next, but only for Arrays, Strings and ByteArrays
 // Unary message, so does not modify stack pointer, and is therefore called directly from the ASM 
 // primitive table without indirection through an ASM thunk.
-Oop* __fastcall Interpreter::primitiveNext()
+Oop* __fastcall Interpreter::primitiveNext(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	
 	// Only works for subclasses of PositionableStream (or look alikes)
@@ -98,9 +97,8 @@ Oop* __fastcall Interpreter::primitiveNext()
 
 
 // This primitive handles WriteStream>>NextPut:, but only for Arrays, Strings & ByteArrays
-Oop* __fastcall Interpreter::primitiveNextPut()
+Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
 	
 	WriteStream* writeStream = streamPointer->m_location;
@@ -172,9 +170,8 @@ Oop* __fastcall Interpreter::primitiveNextPut()
 }
 
 // Non-standard, but has very beneficial effect on performance
-Oop* __fastcall Interpreter::primitiveNextPutAll()
+Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
 
 	WriteStream* writeStream = streamPointer->m_location;
@@ -272,9 +269,8 @@ Oop* __fastcall Interpreter::primitiveNextPutAll()
 }
 
 // The primitive handles PositionableStream>>atEnd, but only for arrays/strings
-Oop* __fastcall Interpreter::primitiveAtEnd()
+Oop* __fastcall Interpreter::primitiveAtEnd(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	//ASSERT(!ObjectMemoryIsIntegerObject(streamPointer) && ObjectMemory::isKindOf(streamPointer, Pointers.ClassPositionableStream));
 	PositionableStream* readStream = streamPointer->m_location;
@@ -305,9 +301,8 @@ Oop* __fastcall Interpreter::primitiveAtEnd()
 
 // This primitive handles PositionableStream>>nextSDWORD, but only for byte-arrays
 // Unary message, so does not modify stack pointer
-Oop* __fastcall Interpreter::primitiveNextSDWORD()
+Oop* __fastcall Interpreter::primitiveNextSDWORD(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	PositionableStream* readStream = streamPointer->m_location;
 

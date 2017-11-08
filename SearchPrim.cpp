@@ -20,20 +20,20 @@
 
 // Uses object identity to locate the next occurrence of the argument in the receiver from
 // the specified index to the specified index
-Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo()
+Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp)
 {
-	Oop integerPointer = stackTop();
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);				// to not an integer
 	const SMALLINTEGER to = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(1);
+	integerPointer = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(1);				// from not an integer
 	SMALLINTEGER from = ObjectMemoryIntegerValueOf(integerPointer);
 
-	Oop valuePointer = stackValue(2);
-	OTE* receiverPointer = reinterpret_cast<OTE*>(stackValue(3));
+	Oop valuePointer = *(sp - 2);
+	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 3));
 
 //	#ifdef _DEBUG
 		if (ObjectMemoryIsIntegerObject(receiverPointer))
@@ -102,8 +102,8 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo()
 	else
 		answer = ZeroPointer; 		// Range is non-inclusive, cannot be there
 
-	stackValue(3) = answer;
-	return primitiveSuccess(3);
+	*(sp - 3) = answer;
+	return sp - 3;
 }
 
 // Initialize the Boyer-Moorer skip array
@@ -169,9 +169,8 @@ inline int __stdcall stringSearch(const BYTE* a, const int N, const BYTE* p, con
 
 // Uses object identity to locate the next occurrence of the argument in the receiver from
 // the specified index to the specified index
-Oop* __fastcall Interpreter::primitiveStringSearch()
+Oop* __fastcall Interpreter::primitiveStringSearch(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);				// startingAt not an integer

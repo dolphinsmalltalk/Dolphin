@@ -107,9 +107,9 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 // Signal a specified semaphore after the specified milliseconds duration (the argument). 
 // NOTE: NOT ABSOLUTE VALUE!
 // If the specified time has already passed, then the TimingSemaphore is signalled immediately. 
-Oop* __fastcall Interpreter::primitiveSignalAtTick()
+Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 {
-	Oop tickPointer = stackTop();
+	Oop tickPointer = *sp;
 	SMALLINTEGER nDelay;
 
 	if (ObjectMemoryIsIntegerObject(tickPointer))
@@ -202,7 +202,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveMillisecondClockValue()
+Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp)
 {
 	// QPC is declared as returning (via out param) a signed value, but this makes no sense because
 	// the function boils down to a wrapper around the RDTSC instruction, which Intel's docs make
@@ -221,13 +221,12 @@ Oop* __fastcall Interpreter::primitiveMillisecondClockValue()
 	uint64_t millisecs = seconds * 1000 + (remainder * 1000 / m_clockFrequency);
 	
 	Oop result = Integer::NewUnsigned64(millisecs);
-	Oop* const sp = m_registers.m_stackPointer;
 	*sp = result;
 	ObjectMemory::AddToZct(result);
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveMicrosecondClockValue()
+Oop* __fastcall Interpreter::primitiveMicrosecondClockValue(Oop* const sp)
 {
 	uint64_t counter;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&counter));
@@ -237,7 +236,6 @@ Oop* __fastcall Interpreter::primitiveMicrosecondClockValue()
 	uint64_t microsecs = seconds * 1000000 + (remainder * 1000000 / m_clockFrequency);
 
 	Oop result = Integer::NewUnsigned64(microsecs);
-	Oop* const sp = m_registers.m_stackPointer;
 	*sp = result;
 	ObjectMemory::AddToZct(result);
 	return sp;

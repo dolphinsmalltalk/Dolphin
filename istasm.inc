@@ -246,7 +246,9 @@ InstanceSpecFlags		RECORD	m_nullTerminated:1,
 			m_pointers:1,
 			m_indexable:1,
 			m_indirect:1,
-			m_unusedSpecBits:3,
+			m_mourner:1,
+			m_nonInstantiable:1,
+			m_unusedSpecBits:1,
 			m_fixedFields:8,
 			m_isInt:1
 

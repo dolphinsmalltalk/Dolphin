@@ -23,7 +23,7 @@
 
 #pragma auto_inline(off)
 
-Oop* __fastcall Interpreter::primitiveSnapshot()
+Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const)
 {
 	return NULL;
 }

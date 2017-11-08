@@ -53,24 +53,24 @@ void Interpreter::memmove(BYTE* dst, const BYTE* src, size_t count)
 //
 //		aByteObject replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-Oop* __fastcall Interpreter::primitiveReplaceBytes()
+Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp)
 {
-	Oop integerPointer = stackTop();
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);	// startAt is not an integer
 	SMALLINTEGER startAt = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(1);
+	integerPointer = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(1);	// stop is not an integer
 	SMALLINTEGER stop = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(2);
+	integerPointer = *(sp - 2);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(2);	// start is not an integer
 	SMALLINTEGER start = ObjectMemoryIntegerValueOf(integerPointer);
 
-	OTE* argPointer = reinterpret_cast<OTE*>(stackValue(3));
+	OTE* argPointer = reinterpret_cast<OTE*>(*(sp - 3));
 	if (ObjectMemoryIsIntegerObject(argPointer) || !argPointer->isBytes())
 		return primitiveFailure(3);	// Argument MUST be a byte object
 
@@ -109,7 +109,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes()
 			pTo = argBytes->m_fields;
 		}
 
-		BytesOTE* receiverPointer = reinterpret_cast<BytesOTE*>(stackValue(4));
+		BytesOTE* receiverPointer = reinterpret_cast<BytesOTE*>(*(sp - 4));
 
 		// Now validate that the interval specified for copying from the receiver
 		// is within the bounds of the receiver (we've already tested startAt)
@@ -132,8 +132,8 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes()
 	}
 
 	// Answers the argument by moving it down over the receiver
-	stackValue(4) = reinterpret_cast<Oop>(argPointer);
-	return primitiveSuccess(4);
+	*(sp - 4) = reinterpret_cast<Oop>(argPointer);
+	return sp - 4;
 }
 
 
@@ -142,10 +142,8 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes()
 //
 //		anExternalAddress replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes()
+Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);	// startAt is not an integer
@@ -219,21 +217,21 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes()
 }
 
 // Locate the next occurrence of the given character in the receiver between the specified indices.
-Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
+Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp)
 {
-	Oop integerPointer = stackTop();
+	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);				// to not an integer
 	const SMALLINTEGER to = ObjectMemoryIntegerValueOf(integerPointer);
 
-	integerPointer = stackValue(1);
+	integerPointer = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(1);				// from not an integer
 	SMALLINTEGER from = ObjectMemoryIntegerValueOf(integerPointer);
 
-	Oop valuePointer = stackValue(2);
+	Oop valuePointer = *(sp - 2);
 
-	StringOTE* receiverPointer = reinterpret_cast<StringOTE*>(stackValue(3));
+	StringOTE* receiverPointer = reinterpret_cast<StringOTE*>(*(sp - 3));
 
 	Oop answer = ZeroPointer;
 	if ((ObjectMemory::fetchClassOf(valuePointer) == Pointers.ClassCharacter) && to >= from)
@@ -266,8 +264,8 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo()
 		}
 	}
 
-	stackValue(3) = answer;
-	return primitiveSuccess(3);
+	*(sp - 3) = answer;
+	return sp - 3;
 }
 
 Oop* __fastcall Interpreter::primitiveStringAt(Oop* sp)

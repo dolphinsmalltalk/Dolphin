@@ -37,10 +37,8 @@
 //	SmallInteger Primitives - See IntPrim.cpp (OR primasm.asm for IX86)
 ///////////////////////////////////////////////////////////////////////////////
 
-Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString()
+Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
 	Oop integerPointer = *sp;
 
 #ifdef _WIN64
@@ -75,17 +73,15 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString()
 
 #pragma code_seg(MEM_SEG)
 
-Oop* __fastcall Interpreter::primitiveBasicIdentityHash()
+Oop* __fastcall Interpreter::primitiveBasicIdentityHash(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	OTE* ote = (OTE*)*sp;
 	*sp = ObjectMemoryIntegerObjectOf(ote->identityHash());
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveIdentityHash()
+Oop* __fastcall Interpreter::primitiveIdentityHash(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	OTE* ote = (OTE*)*sp;
 	*sp = ObjectMemoryIntegerObjectOf(ote->identityHash() << 14);
 	return sp;
@@ -93,16 +89,16 @@ Oop* __fastcall Interpreter::primitiveIdentityHash()
 
 // Does not use successFlag, and returns a clean stack because can only succeed if
 // argument is a positive SmallInteger
-Oop* __fastcall Interpreter::primitiveResize()
+Oop* __fastcall Interpreter::primitiveResize(Oop* const sp)
 {
-	Oop integerPointer = stackTop();
+	Oop integerPointer = *sp;
 	SMALLINTEGER newSize;
 	
 	if (!ObjectMemoryIsIntegerObject(integerPointer) || 
 		(newSize = ObjectMemoryIntegerValueOf(integerPointer)) < 0)
 		return primitiveFailure(0);	// Size not a positive SmallInteger
 
-	Oop oopReceiver = stackValue(1);
+	Oop oopReceiver = *(sp - 1);
 	if (ObjectMemoryIsIntegerObject(oopReceiver))
 		return primitiveFailure(1);
 	OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
@@ -119,7 +115,7 @@ Oop* __fastcall Interpreter::primitiveResize()
 		if (currentPointerSize == (int)newPointerSize)
 		{
 			// No change, succeed
-			return primitiveSuccess(1);
+			return sp - 1;
 		}
 
 		if (currentPointerSize < 0)
@@ -141,7 +137,7 @@ Oop* __fastcall Interpreter::primitiveResize()
 		if (currentByteSize == (int)newSize)
 		{
 			// No change, succeed
-			return primitiveSuccess(1);
+			return sp - 1;
 		}
 		
 		if (currentByteSize < 0)
@@ -155,7 +151,7 @@ Oop* __fastcall Interpreter::primitiveResize()
 		ASSERT(pNew != NULL || newSize == 0);
 	}
 
-	return primitiveSuccess(1);
+	return sp - 1;
 }
 
 
@@ -164,9 +160,8 @@ Oop* __fastcall Interpreter::primitiveResize()
 // Remove a request from the last request queue, nil if none pending. Fails if argument is not an
 // array of the correct length to receiver the popped Queue entry (currently 2 objects)
 // Answers nil if the queue is empty, or the argument if an entry was successfully popped into it
-Oop* __fastcall Interpreter::primitiveDeQBereavement()
+Oop* __fastcall Interpreter::primitiveDeQBereavement(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(PrimitiveFailureBadValue);
@@ -204,21 +199,19 @@ void Interpreter::flushCaches()
 	ZeroMemory(methodCache, sizeof(methodCache));
 }
 
-Oop* __fastcall Interpreter::primitiveFlushCache()
+Oop* __fastcall Interpreter::primitiveFlushCache(Oop* const sp)
 {
 #ifdef _DEBUG
 	DumpCacheStats();
 #endif
 	flushCaches();
-	return primitiveSuccess(0);	// return success value so can be used directly as primitive
+	return sp;
 }
 
 // Separate atPut primitive is needed to write to the stack because the active process
 // stack is not reference counted.
-Oop* __fastcall Interpreter::primitiveStackAtPut()
+Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
 	Oop indexPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(indexPointer))
 		return primitiveFailure(PrimitiveFailureNonInteger);
@@ -251,15 +244,14 @@ Oop* __fastcall Interpreter::primitiveStackAtPut()
 
 
 // Don't care what effect on stack is!!
-[[noreturn]] void __fastcall Interpreter::primitiveQuit()
+[[noreturn]] void __fastcall Interpreter::primitiveQuit(Oop* const sp)
 {
-	Oop argPointer = stackTop();
+	Oop argPointer = *sp;
 	exitSmalltalk(ObjectMemoryIntegerValueOf(argPointer));
 }
 
-Oop* __fastcall Interpreter::primitiveReplacePointers()
+Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 		return primitiveFailure(0);	// startAt is not an integer

@@ -23,10 +23,8 @@
 #include "STBlockClosure.h"
 
 // Value with args takes an array of arguments
-Oop* __fastcall Interpreter::primitiveValueWithArgs()
+Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp)
 {
-	Oop* bp = m_registers.m_stackPointer;
-
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(bp));
 	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(bp-1));
 	ASSERT(ObjectMemory::fetchClassOf(Oop(oteBlock)) == Pointers.ClassBlockClosure);
@@ -128,15 +126,15 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitivePerform(void*, unsigned argCount)
+Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 {
 	SymbolOTE* performSelector = m_oopMessageSelector;	// Save in case we need to restore
 
-	SymbolOTE* selectorToPerform = reinterpret_cast<SymbolOTE*>(stackValue(argCount-1));
+	SymbolOTE* selectorToPerform = reinterpret_cast<SymbolOTE*>(*(sp - (argCount-1)));
 	if (ObjectMemoryIsIntegerObject(selectorToPerform))
 		return primitiveFailure(1);
 	m_oopMessageSelector = selectorToPerform;
-	Oop newReceiver = stackValue(argCount);
+	Oop newReceiver = *(sp - argCount);
 
 	// lookupMethodInClass returns the Oop of the new CompiledMethod
 	// if the selector is found, or Pointers.DoesNotUnderstand if the class 
@@ -186,9 +184,8 @@ Oop* __fastcall Interpreter::primitivePerform(void*, unsigned argCount)
 	}
 }
 
-Oop* __fastcall Interpreter::primitivePerformWithArgs()
+Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
 	if (arrayClass != Pointers.ClassArray)
@@ -265,19 +262,16 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs()
 }
 
 
-Oop* __fastcall Interpreter::primitivePerformMethod()
+Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp)
 {
-	Oop * sp = m_registers.m_stackPointer;
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
 	if (ObjectMemory::fetchClassOf(Oop(oteArg)) != Pointers.ClassArray)
 		return primitiveFailure(0);		// Arguments not an Array
 	Array* arguments = oteArg->m_location;
-	Oop receiverPointer = *(sp-1);
-	MethodOTE* oteMethod = reinterpret_cast<MethodOTE*>(*(sp-2));
-	// Adjust sp to point at slot where receiver will be moved
-	sp -= 2;
+	Oop receiverPointer = *(sp - 1);
+	MethodOTE* oteMethod = reinterpret_cast<MethodOTE*>(*(sp - 2));
+	Oop* bp = sp - 2;
 
-	//ASSERT(ObjectMemory::isKindOf(oteMethod, Pointers.ClassCompiledMethod));
 	CompiledMethod* method = oteMethod->m_location;
 	if (!ObjectMemory::isKindOf(receiverPointer, method->m_methodClass))
 		return primitiveFailure(1);		// Wrong class of receiver
@@ -288,14 +282,14 @@ Oop* __fastcall Interpreter::primitivePerformMethod()
 		return primitiveFailure(2);		// Wrong number of arguments
 
 	// Push receiver and arguments on stack (over the top of array and receiver)
-	sp[0] = receiverPointer;					// Write receiver over the top of the method
+	bp[0] = receiverPointer;					// Write receiver over the top of the method
 	for (MWORD i = 0; i < argCount; i++)
 	{
 		Oop pushee = arguments->m_elements[i];
 		// Don't count up because we are adding a stack ref.
-		sp[i+1] = pushee;
+		bp[i+1] = pushee;
 	}
-	m_registers.m_stackPointer = sp+argCount;
+	m_registers.m_stackPointer = bp+argCount;
 
 	// Don't count down any args
 	executeNewMethod(oteMethod, argCount);

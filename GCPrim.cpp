@@ -89,19 +89,20 @@ void Interpreter::asyncGC(DWORD gcFlags)
 
 
 // This has been usurped for GC primitive
-Oop* __fastcall Interpreter::primitiveCoreLeft(void* , unsigned argCount)
+Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , unsigned argCount)
 {
 	DWORD gcFlags = 0;
 	if (argCount)
 	{
 		ASSERT(argCount == 1);
-		Oop intPointer = popStack();
+		Oop intPointer = *sp;
 		ASSERT(ObjectMemoryIsIntegerObject(intPointer));
 		gcFlags = ObjectMemoryIntegerValueOf(intPointer);
+		m_registers.m_stackPointer -= argCount;
 	}
 
 	syncGC(gcFlags);
-	return primitiveSuccess(0);
+	return m_registers.m_stackPointer;
 }
 
 #ifdef _DEBUG
@@ -160,7 +161,7 @@ void Interpreter::freePools()
 	#endif
 }
 
-Oop* __fastcall Interpreter::primitiveOopsLeft()
+Oop* __fastcall Interpreter::primitiveOopsLeft(Oop* const sp)
 {
 	// Ensure active process has the correct size and that the Zct is empty
 	// and all ref counts are correct
@@ -170,7 +171,7 @@ Oop* __fastcall Interpreter::primitiveOopsLeft()
 	// so any that are saved down in Smalltalk will be invalidated.
 	GrabAsyncProtect();
 	// It is OK for compact to perform additional GrabAsyncProtects()
-	SMALLINTEGER oopsLeft = ObjectMemory::compact(m_registers.m_stackPointer);
+	SMALLINTEGER oopsLeft = ObjectMemory::compact(sp);
 	RelinquishAsyncProtect();
 
 	// compact() returns -1 if unable to reserve space for a new OT. This can happen
@@ -180,10 +181,10 @@ Oop* __fastcall Interpreter::primitiveOopsLeft()
 		return primitiveFailure(1);
 
 	// Adjust stack before any process switch!
-	stackTop() = ObjectMemoryIntegerObjectOf(oopsLeft);
+	*sp = ObjectMemoryIntegerObjectOf(oopsLeft);
 
 	// N.B. May cause a process switch
 	CheckProcessSwitch();
 
-	return primitiveSuccess(0);
+	return m_registers.m_stackPointer;
 }

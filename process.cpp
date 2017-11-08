@@ -1155,9 +1155,9 @@ inline bool LinkedList::isEmpty()
 // Process related primitives (Semaphore etc)
 #include "InterprtPrim.inl"
 
-Oop* __fastcall Interpreter::primitiveSignal()
+Oop* __fastcall Interpreter::primitiveSignal(Oop* const sp)
 {
-	SemaphoreOTE* receiver = reinterpret_cast<SemaphoreOTE*>(stackTop());
+	SemaphoreOTE* receiver = reinterpret_cast<SemaphoreOTE*>(*sp);
 	HARDASSERT(ObjectMemory::fetchClassOf((Oop)receiver) == Pointers.ClassSemaphore);
 
 	// Sending #signal always re-enables interrupts (inside signalSemaphore)
@@ -1167,9 +1167,8 @@ Oop* __fastcall Interpreter::primitiveSignal()
 }
 
 
-Oop* __fastcall Interpreter::primitiveSetSignals()
+Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
 	{
@@ -1208,11 +1207,11 @@ Oop* __fastcall Interpreter::primitiveSetSignals()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveWait()
+Oop* __fastcall Interpreter::primitiveWait(Oop* const sp)
 {
 	//CHECKREFERENCES
 
-	Oop oopTimeout = stackValue(1);
+	Oop oopTimeout = *(sp - 1);
 	if (!ObjectMemoryIsIntegerObject(oopTimeout))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(oopTimeout);
@@ -1223,12 +1222,12 @@ Oop* __fastcall Interpreter::primitiveWait()
 	if (timeout != INFINITE && timeout != 0)
 		return primitiveFailureWithInt(PrimitiveFailureBadValue, timeout);
 
-	OTE* oteRetValHolder = reinterpret_cast<OTE*>(stackTop());
+	OTE* oteRetValHolder = reinterpret_cast<OTE*>(*sp);
 	if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
 		oteRetValHolder->getWordSize() == ObjectHeaderSize)
 		return primitiveFailureWith(4, Oop(oteRetValHolder));	// Must be a suitable value holder
 
-	SemaphoreOTE* thisReceiver = reinterpret_cast<SemaphoreOTE*>(stackValue(2));
+	SemaphoreOTE* thisReceiver = reinterpret_cast<SemaphoreOTE*>(*(sp - 2));
 	Semaphore* sem = thisReceiver->m_location;
 
 	// Any arguments are integers or no change to ref. count
@@ -1259,7 +1258,7 @@ Oop* __fastcall Interpreter::primitiveWait()
 
 	oopAnswer = reinterpret_cast<Oop>(oteRetValHolder);
 
-	stackTop() = oopAnswer;
+	*m_registers.m_stackPointer = oopAnswer;
 
 	CheckProcessSwitch();
 #ifdef _DEBUG
@@ -1362,7 +1361,7 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-Oop* __fastcall Interpreter::primitiveResume(void*, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveResume(Oop* const sp, unsigned argumentCount)
 {
 #ifdef _DEBUG
 	//	if (abs(executionTrace) > 0)
@@ -1371,7 +1370,7 @@ Oop* __fastcall Interpreter::primitiveResume(void*, unsigned argumentCount)
 	if (argumentCount > 1)
 		return primitiveFailure(2);	// Too many arguments
 
-	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(stackValue(argumentCount));
+	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(*(sp - argumentCount));
 	Process* proc = receiverProcess->m_location;
 	// We can only resume processes which are not waiting on a queue
 	// already (i.e. Schedulable processes in a Ready state, and Processes
@@ -1381,7 +1380,7 @@ Oop* __fastcall Interpreter::primitiveResume(void*, unsigned argumentCount)
 		return primitiveFailure(0);
 
 	LinkedListOTE* oteList;
-	if (argumentCount == 0 || (oteList = reinterpret_cast<LinkedListOTE*>(stackTop()))->isNil())
+	if (argumentCount == 0 || (oteList = reinterpret_cast<LinkedListOTE*>(*sp))->isNil())
 	{
 		if (!resume(receiverProcess))
 			return primitiveFailure(1);
@@ -1404,7 +1403,7 @@ Oop* __fastcall Interpreter::primitiveResume(void*, unsigned argumentCount)
 
 // Uses, but does not modify, instructionPointer and stackPointer
 // Does not modify pHome or pMethod
-Oop* __fastcall Interpreter::primitiveSingleStep(void*, unsigned argumentCount)
+Oop* __fastcall Interpreter::primitiveSingleStep(Oop* const sp, unsigned argumentCount)
 {
 	SMALLINTEGER steps;
 	switch (argumentCount)
@@ -1415,7 +1414,7 @@ Oop* __fastcall Interpreter::primitiveSingleStep(void*, unsigned argumentCount)
 
 	case 1:
 	{
-		Oop oopSteps = stackTop();
+		Oop oopSteps = *sp;
 		if (!ObjectMemoryIsIntegerObject(oopSteps))
 		{
 			OTE* oteArg = reinterpret_cast<OTE*>(oopSteps);
@@ -1428,7 +1427,7 @@ Oop* __fastcall Interpreter::primitiveSingleStep(void*, unsigned argumentCount)
 		return primitiveFailure(PrimitiveFailureWrongNumberOfArgs);	// Too many arguments
 	}
 
-	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(stackValue(argumentCount));
+	ProcessOTE* receiverProcess = reinterpret_cast<ProcessOTE*>(*(sp - argumentCount));
 	Process* proc = receiverProcess->m_location;
 
 	// Detect terminated, or pending termination, processes
@@ -1538,9 +1537,9 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 
 // Suspend the caller if it is the receiver if it is the active process
 // if it is not the active process, then the primitive fails
-Oop* __fastcall Interpreter::primitiveSuspend()
+Oop* __fastcall Interpreter::primitiveSuspend(Oop* const sp)
 {
-	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(stackTop());
+	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(*sp);
 
 	int nRet = SuspendProcess(processPointer);
 	if (nRet >= 0)
@@ -1561,9 +1560,9 @@ Oop* __fastcall Interpreter::primitiveSuspend()
 // then it won't get as far as nilling out the suspended context. The alternative is to
 // use another process to do the nilling, but that seems more error prone and consumes
 // more resources than this very simple primitive.
-Oop* __fastcall Interpreter::primitiveTerminateProcess()
+Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp)
 {
-	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(stackTop());
+	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(*sp);
 
 	int nRet = SuspendProcess(processPointer);
 	if (nRet >= 0)
@@ -1590,7 +1589,7 @@ Oop* __fastcall Interpreter::primitiveTerminateProcess()
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveUnwindInterrupt()
+Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const)
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
@@ -1602,10 +1601,9 @@ Oop* __fastcall Interpreter::primitiveUnwindInterrupt()
 // Change the priority of the receiver to the argument.
 // Fail if the argument is not a SmallInteger in the range 1..max priority
 // Answers the processes old priority
-Oop* __fastcall Interpreter::primitiveProcessPriority()
+Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp)
 {
 	//	CHECKREFERENCES
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
@@ -1673,10 +1671,8 @@ Oop* __fastcall Interpreter::primitiveProcessPriority()
 
 // Register a new Object with the VM. This primitive is now used to register
 // more than just the input semaphore, and is independent of receiver.
-Oop* __fastcall Interpreter::primitiveInputSemaphore()
+Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
 	Oop oopIndex = *(sp-1);
 	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(oopIndex);
 	if (which <= 0 || which > NumPointers)
@@ -1703,9 +1699,9 @@ Oop* __fastcall Interpreter::primitiveInputSemaphore()
 // Answers the old sample interval.
 // If the new interval is 0, simply resets the counter.
 // If the new interval is < 0, turns off the input polling
-Oop* __fastcall Interpreter::primitiveSampleInterval()
+Oop* __fastcall Interpreter::primitiveSampleInterval(Oop* const sp)
 {
-	Oop argPointer = stackTop();
+	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))
 	{
 		OTE* oteArg = reinterpret_cast<OTE*>(argPointer);
@@ -1725,8 +1721,8 @@ Oop* __fastcall Interpreter::primitiveSampleInterval()
 	// And ensure pressed bit of async key state is reset
 	IsUserBreakRequested();
 
-	stackValue(1) = oldInterval;
-	return primitiveSuccess(1);
+	*(sp-1) = oldInterval;
+	return sp - 1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

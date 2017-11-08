@@ -39,6 +39,8 @@ namespace ST
 	class Process : public Object
 	{
 	private:
+		friend class Interpreter;
+
 		// Really a member of Link superclass
 		ProcessOTE*		m_nextLink;
 		Oop				m_suspendedFrame;

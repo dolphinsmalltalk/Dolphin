@@ -27,7 +27,7 @@ int __stdcall DolphinMessage(UINT flags, const char* msg)
 	return 0;
 }
 
-Oop* __fastcall Interpreter::primitiveHookWindowCreate()
+Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
 {
 	return NULL;
 }

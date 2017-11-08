@@ -183,6 +183,32 @@ void ObjectMemory::EmptyZct(Oop* const sp)
 	//	CHECKREFSNOFIX
 }
 
+void Interpreter::IncStackRefs(Oop* const sp)
+{
+	Process* pProcess = actualActiveProcess();
+	for (Oop* pOop = pProcess->m_stack; pOop <= sp; pOop++)
+	{
+		if (!isIntegerObject(*pOop))
+		{
+			OTE* ote = reinterpret_cast<OTE*>(*pOop);
+			ote->countUp();
+		}
+	}
+}
+
+void Interpreter::DecStackRefs(Oop* const sp)
+{
+	Process* pProcess = actualActiveProcess();
+	for (Oop* pOop = pProcess->m_stack; pOop <= sp; pOop++)
+	{
+		if (!isIntegerObject(*pOop))
+		{
+			OTE* rootOTE = reinterpret_cast<OTE*>(*pOop);
+			rootOTE->countDownStackRef();
+		}
+	}
+}
+
 void ObjectMemory::PopulateZct(Oop* const sp)
 {
 	HARDASSERT(m_nZctEntries <= 0);

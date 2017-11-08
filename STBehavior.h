@@ -17,20 +17,35 @@
 #include "STObject.h"
 #include "STArray.h"
 
-class InstanceSpecification
+union InstanceSpecification
 {
-	WORD m_isInt 			: 1;	// MUST be 1 (to avoid treatment as object)
-public:
-	WORD m_fixedFields 		: 8;	// Number of instance variables (must be zero for byte objects)
-	WORD m_unusedSpecBits	: 2;	// 2 free bits for other nice things
-	WORD m_mourner			: 1;	// Notify weak instances of the receiver when they suffer bereavements
-	WORD m_indirect			: 1;	// Byte object containing address of another object/external structure?
-	WORD m_indexable 		: 1;	// variable or variableByte subclass?
-	WORD m_pointers 		: 1;	// Pointers or bytes?
-	WORD m_nullTerminated 	: 1;	// Null terminated byte object?
+	struct
+	{
+		WORD m_isInt : 1;	// MUST be 1 (to avoid treatment as object)
+		WORD m_fixedFields : 8;	// Number of instance variables (must be zero for byte objects)
+		WORD m_unusedSpecBits : 1;
+		WORD m_nonInstantiable : 1;	// The Behavior should not be instantiated, e.g. it is abstract
+		WORD m_mourner : 1;	// Notify weak instances of the receiver when they suffer bereavements
+		WORD m_indirect : 1;	// Byte object containing address of another object/external structure?
+		WORD m_indexable : 1;	// variable or variableByte subclass?
+		WORD m_pointers : 1;	// Pointers or bytes?
+		WORD m_nullTerminated : 1;	// Null terminated byte object?
 
-	WORD m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
+		WORD m_extraSpec;				// High word for class specific purposes (e.g. structure byte size)
+	};
+	DWORD m_value;
+
+	enum
+	{
+		NonInstantiableMask = 1 << 10,
+		MournerMask = 1 << 11,
+		IndirectMask = 1 << 12,
+		IndexableMask = 1 << 13,
+		PointersMask = 1 << 14,
+		NullTermMask = 1 << 15
+	};
 };
+
 
 // Declare forward references
 namespace ST

@@ -28,9 +28,8 @@
 
 #pragma auto_inline(off)
 
-Oop* __fastcall Interpreter::primitiveSnapshot()
+Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 {
-	const Oop* const sp = Interpreter::m_registers.m_stackPointer;
 	Oop arg = *(sp-3);
 	char* szFileName;
 	if (arg == Oop(Pointers.Nil))

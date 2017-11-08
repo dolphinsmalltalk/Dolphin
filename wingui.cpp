@@ -29,11 +29,11 @@ static HHOOK hHookOldCbtFilter;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 
-Oop* __fastcall Interpreter::primitiveHookWindowCreate()
+Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
 {
-	Oop argPointer = stackTop();
+	Oop argPointer = *sp;
 	OTE* underConstruction = m_oteUnderConstruction;
-	OTE* receiverPointer = reinterpret_cast<OTE*>(stackValue(1));
+	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp-1));
 
 	if (!underConstruction->isNil() && underConstruction != receiverPointer)
 	{
@@ -71,7 +71,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate()
 			return primitiveFailureWith(0, argPointer);	// Invalid argument
 	}
 
-	return primitiveSuccess(1);
+	return sp - 1;
 }
 
 inline void Interpreter::subclassWindow(OTE* window, HWND hWnd)

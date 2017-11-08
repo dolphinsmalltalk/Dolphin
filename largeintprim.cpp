@@ -50,7 +50,7 @@
 #define /*DWORD*/ LowLimb(/*LONGLONG*/ op) (static_cast<DWORD>(MASK_DWORD(op)))
 
 // Forward references
-Oop __stdcall liNormalize(LargeIntegerOTE* oteLI);
+Oop __fastcall liNormalize(LargeIntegerOTE* oteLI);
 
 // Answer the sign bit of the argument
 inline static int signBitOf(SDWORD signedInt)
@@ -195,7 +195,7 @@ inline void deallocateIntermediateResult(Oop oopResult)
 // comes from trying to do the least possible work (in particular not reallocating
 // the object unless necessary).
 //
-Oop __stdcall liNormalize(LargeIntegerOTE* oteLI)
+Oop __fastcall liNormalize(LargeIntegerOTE* oteLI)
 {
 	LargeInteger* li = oteLI->m_location;
 
@@ -1515,17 +1515,12 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 //	Invert the bits of the 2's complement LargeInteger argument
 //	The answer may not be normalized!
 
-LargeIntegerOTE* __stdcall liBitInvert(LargeIntegerOTE* oteLI)
+LargeIntegerOTE* __fastcall liBitInvert(LargeIntegerOTE* oteLI)
 {
 	LargeInteger* li = oteLI->m_location;
 
 	MWORD size = oteLI->getWordSize();
-//	MWORD last = size - 1;
-//	SDWORD highDigit = SDWORD(li->m_digits[last]);
 	MWORD invertedSize = size;
-	//if (highDigit == -SDWORD(2147483648))
-		// Will need extra zero digit to represent as positive value
-	//	invertedSize++;
 		
 	LargeIntegerOTE* oteInverted = LargeInteger::NewWithLimbs(invertedSize);
 	LargeInteger* liInverted = oteInverted->m_location;
@@ -1907,18 +1902,34 @@ __int64 __stdcall liCmp(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
 *	LargeInteger arithmetic primitives
 *
 ******************************************************************************/
+Oop* __fastcall Interpreter::primitiveLargeIntegerNormalize(Oop* const sp)
+{
+	Oop oopNormalized = liNormalize(reinterpret_cast<LargeIntegerOTE*>(*sp));
+	*sp = oopNormalized;
+	ObjectMemory::AddToZct(oopNormalized);
+	return sp;
+}
+
+Oop* __fastcall Interpreter::primitiveLargeIntegerBitInvert(Oop* const sp)
+{
+	LargeIntegerOTE* oteInverted = liBitInvert(reinterpret_cast<LargeIntegerOTE*>(*sp));
+	*sp = (Oop)oteInverted;
+	ObjectMemory::AddToZct((OTE*)oteInverted);
+	return sp;
+}
+
+Oop* __fastcall Interpreter::primitiveLargeIntegerNegate(Oop* const sp)
+{
+	Oop oopNegated = liNegate(reinterpret_cast<LargeIntegerOTE*>(*sp));
+	*sp = oopNegated;
+	ObjectMemory::AddToZct(oopNegated);
+	return sp;
+}
 
 #ifndef _M_IX86
-	Oop* __fastcall Interpreter::primitiveLargeIntegerNormalize()
-	{
-		Oop* const sp = m_registers.m_stackPointer;
-		*sp = liNormalize(reinterpret_cast<LargeIntegerOTE*>(*sp));
-		return sp;
-	}
 
-	Oop* __fastcall Interpreter::primitiveLargeIntegerAdd()
+	Oop* __fastcall Interpreter::primitiveLargeIntegerAdd(Oop* const sp)
 	{
-		Oop* const sp = m_registers.m_stackPointer;
 		Oop oopOperand = *sp;
 		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));
 		LargeIntegerOTE* oteSum;
@@ -1953,9 +1964,8 @@ __int64 __stdcall liCmp(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
 	// be quicker than competing Smalltalks because of the use of signed 32-bit arithmetic
 	// instead of unsigned 8-bit arithmetic.
 
-	Oop* __fastcall Interpreter::primitiveLargeIntegerSub()
+	Oop* __fastcall Interpreter::primitiveLargeIntegerSub(Oop* const sp)
 	{
-		Oop* const sp = m_registers.m_stackPointer;
 		Oop oopOperand = *sp;
 		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
 		LargeIntegerOTE* oteDifference;
@@ -1977,9 +1987,8 @@ __int64 __stdcall liCmp(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
 		return PrimitiveSuccessWithNew(1, normalizeIntermediateResult(oteDifference));
 	}
 
-	Oop* __fastcall Interpreter::primitiveLargeIntegerMul()
+	Oop* __fastcall Interpreter::primitiveLargeIntegerMul(Oop* const sp)
 	{
-		Oop* const sp = m_registers.m_stackPointer;
 		Oop oopOperand = *sp;
 		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
 		Oop oopProduct;
@@ -2058,9 +2067,8 @@ static LargeIntegerOTE* liMul32(DWORD *const outer, MWORD outerSize, DWORD *cons
 */
 
 // N.B. Only produces a result if division is exact, otherwise fails
-Oop* __fastcall Interpreter::primitiveLargeIntegerDivide()
+Oop* __fastcall Interpreter::primitiveLargeIntegerDivide(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop oopV = *sp;
 	LargeIntegerOTE* oteU = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
 	liDiv_t quoAndRem;
@@ -2106,7 +2114,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerDivide()
 }
 
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerMod()
+Oop* __fastcall Interpreter::primitiveLargeIntegerMod(Oop* const sp)
 {
 	return NULL;
 }		
@@ -2115,15 +2123,14 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerMod()
 // division is not exact (so this is the same as primitiveLargeIntegerDivide, but without check
 // for exact division). Note that in Smalltalk integer divide truncates towards
 // negative infinity, not zero
-Oop* __fastcall Interpreter::primitiveLargeIntegerDiv()
+Oop* __fastcall Interpreter::primitiveLargeIntegerDiv(Oop* const sp)
 {
 	return NULL;
 }		
 
 // Integer division with truncation towards zero
-Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem()
+Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop oopV = *sp;
 	LargeIntegerOTE* oteU = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));
 	liDiv_t quoAndRem;
@@ -2168,7 +2175,6 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem()
 // Compare macro to generate relational ops (all the same layout)
 
 #define LICOMPARE(X) \
-	Oop* const sp = m_registers.m_stackPointer;\
 	Oop argPointer = *sp;\
 	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));\
 \
@@ -2199,51 +2205,50 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem()
 //
 //	Note that these don't pop the stack, but return the number of bytes to pop
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerLessThan()
+Oop* __fastcall Interpreter::primitiveLargeIntegerLessThan(Oop* const sp)
 {
 	LICOMPARE(<)
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterThan()
+Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterThan(Oop* const sp)
 {
 	LICOMPARE(>)
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerLessOrEqual()
+Oop* __fastcall Interpreter::primitiveLargeIntegerLessOrEqual(Oop* const sp)
 {
 	LICOMPARE(<=)
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterOrEqual()
+Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterOrEqual(Oop* const sp)
 {
 	LICOMPARE(>=)
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerEqual()
+Oop* __fastcall Interpreter::primitiveLargeIntegerEqual(Oop* const sp)
 {
 	// We Implement this specially, because the generic comparison macro does more work than necessary
-	Oop* const sp = m_registers.m_stackPointer;
 	Oop argPointer = *sp;
 
 	if (ObjectMemoryIsIntegerObject(argPointer))
 	{
 		// SmallInteger cannot be equal to a normalized large integer
-		*(sp-1) = reinterpret_cast<Oop>(Pointers.False);
+		*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
 	}
 	else
 	{
 		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(argPointer);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(stackValue(1));
+			LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
 			__int64 cmp = liCmp(oteReceiver, oteArg);
-			*(sp-1) = reinterpret_cast<Oop>(cmp == 0 ? Pointers.True : Pointers.False);
+			*(sp - 1) = reinterpret_cast<Oop>(cmp == 0 ? Pointers.True : Pointers.False);
 		}
 		else
 			return NULL;	/* Arg not an integer, fall back on Smalltalk code*/
 	}
 	
-	return sp-1;
+	return sp - 1;
 }
 
 
@@ -2253,17 +2258,17 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerEqual()
 
 
 #ifndef _M_IX86
-	Oop* __fastcall Interpreter::primitiveLargeIntegerBitAnd()
+	Oop* __fastcall Interpreter::primitiveLargeIntegerBitAnd(Oop* const sp)
 	{
 		return NULL;
 	}
 
-	Oop* __fastcall Interpreter::primitiveLargeIntegerBitOr()
+	Oop* __fastcall Interpreter::primitiveLargeIntegerBitOr(Oop* const sp)
 	{
 		return NULL;
 	}
 
-	Oop* __fastcall Interpreter::primitiveLargeIntegerBitXor()
+	Oop* __fastcall Interpreter::primitiveLargeIntegerBitXor(Oop* const sp)
 	{
 		return NULL;
 	}
@@ -2272,10 +2277,8 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerEqual()
 ///////////////////////////////////////////////////////////////////////////////
 //	Bit shifting 
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift()
+Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 	{
@@ -2314,9 +2317,8 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerBitShift()
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat()
+Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
 	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*sp);
 	LargeInteger* liReceiver = oteReceiver->m_location;
 	const MWORD size = oteReceiver->getWordSize();
@@ -2357,11 +2359,10 @@ ArrayOTE* __stdcall liDivExport(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 #endif
 
 
-Oop* __fastcall Interpreter::primitiveQWORDAt()
+Oop* __fastcall Interpreter::primitiveQWORDAt(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer - 1;
-	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*sp);
-	const Oop oopOffset = sp[1];
+	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 1));
+	const Oop oopOffset = *sp;
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
 		SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(oopOffset);
@@ -2370,9 +2371,9 @@ Oop* __fastcall Interpreter::primitiveQWORDAt()
 			VariantByteObject* pBytes = oteReceiver->m_location;
 			Oop result = Integer::NewUnsigned64(*(ULONGLONG*)(pBytes->m_fields + offset));
 
-			*sp = result;
+			*(sp - 1) = result;
 			ObjectMemory::AddToZct(result);
-			return sp;
+			return sp - 1;
 		}
 		else
 			return primitiveFailure(PrimitiveFailureBoundsError);
@@ -2381,11 +2382,10 @@ Oop* __fastcall Interpreter::primitiveQWORDAt()
 	return primitiveFailure(PrimitiveFailureNonInteger);
 }
 
-Oop* __fastcall Interpreter::primitiveSQWORDAt()
+Oop* __fastcall Interpreter::primitiveSQWORDAt(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer - 1;
-	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*sp);
-	const Oop oopOffset = sp[1];
+	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp-1));
+	const Oop oopOffset = *sp;
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
 		SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(oopOffset);
@@ -2394,9 +2394,9 @@ Oop* __fastcall Interpreter::primitiveSQWORDAt()
 			VariantByteObject* pBytes = oteReceiver->m_location;
 			Oop result = Integer::NewSigned64(*(LONGLONG*)(pBytes->m_fields + offset));
 
-			*sp = result;
+			*(sp-1) = result;
 			ObjectMemory::AddToZct(result);
-			return sp;
+			return sp-1;
 		}
 		else
 			return primitiveFailure(PrimitiveFailureBoundsError);

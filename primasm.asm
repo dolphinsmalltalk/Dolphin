@@ -186,9 +186,9 @@ extern primitiveIndirectSWORDAtPut:near32
 extern primitiveByteAtAddress:near32
 extern primitiveByteAtAddressPut:near32
 
-primitiveQWORDAt EQU ?primitiveQWORDAt@Interpreter@@CIPAIXZ
+primitiveQWORDAt EQU ?primitiveQWORDAt@Interpreter@@CIPAIQAI@Z
 extern primitiveQWORDAt:near32
-primitiveSQWORDAt EQU ?primitiveSQWORDAt@Interpreter@@CIPAIXZ
+primitiveSQWORDAt EQU ?primitiveSQWORDAt@Interpreter@@CIPAIQAI@Z
 extern primitiveSQWORDAt:near32
 
 ; Imports from ExternalCall.asm
@@ -221,14 +221,6 @@ extern primitiveHighBit:near32
 extern primitiveLowBit:near32
 
 ; Imports from LargeIntPrim.CPP
-liBitInvert EQU ?liBitInvert@@YGPAV?$TOTE@VLargeInteger@ST@@@@PAV1@@Z
-extern liBitInvert:near32
-
-liNegate  EQU ?liNegate@@YGIPAV?$TOTE@VLargeInteger@ST@@@@@Z
-extern liNegate:near32
-
-liNormalize  EQU ?liNormalize@@YGIPAV?$TOTE@VLargeInteger@ST@@@@@Z
-extern liNormalize:near32
 
 normalizeIntermediateResult EQU ?normalizeIntermediateResult@@YGII@Z
 extern normalizeIntermediateResult:near32
@@ -241,33 +233,33 @@ CURRENTCALLBACK EQU ?currentCallbackContext@@3IA
 extern CURRENTCALLBACK:DWORD
 
 ; C++ Primitive method imports
-primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIXZ
+primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
-primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIXZ
+primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
 extern primitiveNextSDWORD:near32
-primitiveNextPut EQU ?primitiveNextPut@Interpreter@@CIPAIXZ
+primitiveNextPut EQU ?primitiveNextPut@Interpreter@@CIPAIQAI@Z
 extern primitiveNextPut:near32
-primitiveNextPutAll EQU ?primitiveNextPutAll@Interpreter@@CIPAIXZ	
+primitiveNextPutAll EQU ?primitiveNextPutAll@Interpreter@@CIPAIQAI@Z	
 extern primitiveNextPutAll:near32
-primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIXZ
+primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIQAI@Z
 extern primitiveAtEnd:near32
 
-primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIXZ
+primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIQAI@Z
 extern primitiveValueWithArgs:near32
-primitivePerform EQU ?primitivePerform@Interpreter@@CIPAIPAXI@Z
+primitivePerform EQU ?primitivePerform@Interpreter@@CIPAIQAII@Z
 extern primitivePerform:near32
-primitivePerformWithArgs EQU ?primitivePerformWithArgs@Interpreter@@CIPAIXZ
+primitivePerformWithArgs EQU ?primitivePerformWithArgs@Interpreter@@CIPAIQAI@Z
 extern primitivePerformWithArgs:near32
-primitivePerformMethod EQU ?primitivePerformMethod@Interpreter@@CIPAIXZ
+primitivePerformMethod EQU ?primitivePerformMethod@Interpreter@@CIPAIQAI@Z
 extern primitivePerformMethod:near32
-primitivePerformWithArgsAt EQU ?primitivePerformWithArgsAt@Interpreter@@CIPAIXZ
+primitivePerformWithArgsAt EQU ?primitivePerformWithArgsAt@Interpreter@@CIPAIQAI@Z
 extern primitivePerformWithArgsAt:near32
-primitiveValueWithArgsAt EQU ?primitiveValueWithArgsAt@Interpreter@@CIPAIXZ
+primitiveValueWithArgsAt EQU ?primitiveValueWithArgsAt@Interpreter@@CIPAIQAI@Z
 extern primitiveValueWithArgsAt:near32
-primitiveVariantValue EQU ?primitiveVariantValue@Interpreter@@CIPAIXZ
+primitiveVariantValue EQU ?primitiveVariantValue@Interpreter@@CIPAIQAI@Z
 extern primitiveVariantValue:near32
 
-PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIPAIXZ
+PRIMUNWINDINTERRUPT EQU ?primitiveUnwindInterrupt@Interpreter@@CIPAIQAI@Z
 extern PRIMUNWINDINTERRUPT:near32
 
 RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VLinkedList@ST@@@@PAV2@@Z
@@ -276,94 +268,111 @@ extern RESUSPENDACTIVEON:near32
 RESCHEDULE EQU ?Reschedule@Interpreter@@SGHXZ
 extern RESCHEDULE:near32
 
-primitiveSignal EQU ?primitiveSignal@Interpreter@@CIPAIXZ
+primitiveSignal EQU ?primitiveSignal@Interpreter@@CIPAIQAI@Z
 extern primitiveSignal:near32
 
-extern ?primitiveSetSignals@Interpreter@@CIPAIXZ:near32
-primitiveSignalAtTick EQU ?primitiveSignalAtTick@Interpreter@@CIPAIXZ
+primitiveSetSignals EQU ?primitiveSetSignals@Interpreter@@CIPAIQAI@Z
+extern primitiveSetSignals:near32
+primitiveSignalAtTick EQU ?primitiveSignalAtTick@Interpreter@@CIPAIQAI@Z
 extern primitiveSignalAtTick:near32
-primitiveInputSemaphore EQU ?primitiveInputSemaphore@Interpreter@@CIPAIXZ
+primitiveInputSemaphore EQU ?primitiveInputSemaphore@Interpreter@@CIPAIQAI@Z
 extern primitiveInputSemaphore:near32
-primitiveSampleInterval EQU ?primitiveSampleInterval@Interpreter@@CIPAIXZ
+primitiveSampleInterval EQU ?primitiveSampleInterval@Interpreter@@CIPAIQAI@Z
 extern primitiveSampleInterval:near32
 
-PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIPAIXZ
+PRIMITIVEWAIT EQU ?primitiveWait@Interpreter@@CIPAIQAI@Z
 extern PRIMITIVEWAIT:near32
 
-primitiveFlushCache EQU ?primitiveFlushCache@Interpreter@@CIPAIXZ
+primitiveFlushCache EQU ?primitiveFlushCache@Interpreter@@CIPAIQAI@Z
 extern primitiveFlushCache:near32
 
-PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIPAIPAXI@Z
+PRIMITIVERESUME EQU ?primitiveResume@Interpreter@@CIPAIQAII@Z
 extern PRIMITIVERESUME:near32
 
-PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIPAIPAXI@Z
+PRIMITIVESINGLESTEP EQU ?primitiveSingleStep@Interpreter@@CIPAIQAII@Z
 extern PRIMITIVESINGLESTEP:near32
 
-extern ?primitiveSuspend@Interpreter@@CIPAIXZ	:near32
-extern ?primitiveTerminateProcess@Interpreter@@CIPAIXZ	:near32
-extern ?primitiveProcessPriority@Interpreter@@CIPAIXZ:near32
-primitiveNewVirtual EQU ?primitiveNewVirtual@Interpreter@@CIPAIXZ
-extern primitiveNewVirtual:near32
-primitiveSnapshot EQU ?primitiveSnapshot@Interpreter@@CIPAIXZ
+primitiveSuspend EQU ?primitiveSuspend@Interpreter@@CIPAIQAI@Z
+extern primitiveSuspend:near32
+primitiveTerminateProcess EQU ?primitiveTerminateProcess@Interpreter@@CIPAIQAI@Z
+extern primitiveTerminateProcess:near32
+primitiveProcessPriority EQU ?primitiveProcessPriority@Interpreter@@CIPAIQAI@Z
+extern primitiveProcessPriority:near32
+primitiveSnapshot EQU ?primitiveSnapshot@Interpreter@@CIPAIQAI@Z
 extern primitiveSnapshot:near32
-primitiveReplaceBytes EQU ?primitiveReplaceBytes@Interpreter@@CIPAIXZ
+primitiveReplaceBytes EQU ?primitiveReplaceBytes@Interpreter@@CIPAIQAI@Z
 extern primitiveReplaceBytes:near32
-primitiveIndirectReplaceBytes EQU ?primitiveIndirectReplaceBytes@Interpreter@@CIPAIXZ
+primitiveIndirectReplaceBytes EQU ?primitiveIndirectReplaceBytes@Interpreter@@CIPAIQAI@Z
 extern primitiveIndirectReplaceBytes :near32
-primitiveReplacePointers EQU ?primitiveReplacePointers@Interpreter@@CIPAIXZ
+primitiveReplacePointers EQU ?primitiveReplacePointers@Interpreter@@CIPAIQAI@Z
 extern primitiveReplacePointers:near32
-primitiveCoreLeft EQU ?primitiveCoreLeft@Interpreter@@CIPAIPAXI@Z
+primitiveCoreLeft EQU ?primitiveCoreLeft@Interpreter@@CIPAIQAII@Z
 extern primitiveCoreLeft:near32
-primitiveQuit EQU ?primitiveQuit@Interpreter@@CIXXZ
+primitiveQuit EQU ?primitiveQuit@Interpreter@@CIXQAI@Z
 extern primitiveQuit:near32
-primitiveOopsLeft EQU ?primitiveOopsLeft@Interpreter@@CIPAIXZ
+primitiveOopsLeft EQU ?primitiveOopsLeft@Interpreter@@CIPAIQAI@Z
 extern primitiveOopsLeft:near32
-primitiveResize EQU ?primitiveResize@Interpreter@@CIPAIXZ
+primitiveResize EQU ?primitiveResize@Interpreter@@CIPAIQAI@Z
 extern primitiveResize:near32
-primitiveNextIndexOfFromTo EQU ?primitiveNextIndexOfFromTo@Interpreter@@CIPAIXZ
+primitiveNextIndexOfFromTo EQU ?primitiveNextIndexOfFromTo@Interpreter@@CIPAIQAI@Z
 extern primitiveNextIndexOfFromTo:near32
-primitiveDeQBereavement EQU ?primitiveDeQBereavement@Interpreter@@CIPAIXZ
+primitiveDeQBereavement EQU ?primitiveDeQBereavement@Interpreter@@CIPAIQAI@Z
 extern primitiveDeQBereavement:near32
-primitiveHookWindowCreate EQU ?primitiveHookWindowCreate@Interpreter@@CIPAIXZ
+primitiveHookWindowCreate EQU ?primitiveHookWindowCreate@Interpreter@@CIPAIQAI@Z
 extern primitiveHookWindowCreate:near32
 
-primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIPAIXZ
+primitiveSmallIntegerPrintString EQU ?primitiveSmallIntegerPrintString@Interpreter@@CIPAIQAI@Z
 extern primitiveSmallIntegerPrintString:near32
 
-primitiveNewInitializedObject EQU ?primitiveNewInitializedObject@Interpreter@@CIPAIPAXI@Z
+; Storage prims imported from memprim.cpp
+primitiveNew EQU ?primitiveNew@Interpreter@@CIPAIQAI@Z
+extern primitiveNew:near32
+primitiveNewWithArg EQU ?primitiveNewWithArg@Interpreter@@CIPAIQAI@Z
+extern primitiveNewWithArg:near32
+primitiveNewPinned EQU ?primitiveNewPinned@Interpreter@@CIPAIQAI@Z
+extern primitiveNewPinned:near32
+primitiveNewInitializedObject EQU ?primitiveNewInitializedObject@Interpreter@@CIPAIPAII@Z
 extern primitiveNewInitializedObject:near32
-primitiveNewFromStack EQU ?primitiveNewFromStack@Interpreter@@CIPAIXZ
+primitiveNewFromStack EQU ?primitiveNewFromStack@Interpreter@@CIPAIPAI@Z
 extern primitiveNewFromStack:near32
+primitiveNewVirtual EQU ?primitiveNewVirtual@Interpreter@@CIPAIQAI@Z
+extern primitiveNewVirtual:near32
 
-primitiveLargeIntegerDivide EQU ?primitiveLargeIntegerDivide@Interpreter@@CIPAIXZ
+primitiveLargeIntegerNormalize EQU ?primitiveLargeIntegerNormalize@Interpreter@@CIPAIQAI@Z
+extern primitiveLargeIntegerNormalize:near32
+primitiveLargeIntegerBitInvert EQU ?primitiveLargeIntegerBitInvert@Interpreter@@CIPAIQAI@Z
+extern primitiveLargeIntegerBitInvert:near32
+primitiveLargeIntegerNegate EQU ?primitiveLargeIntegerNegate@Interpreter@@CIPAIQAI@Z
+extern primitiveLargeIntegerNegate:near32
+primitiveLargeIntegerDivide EQU ?primitiveLargeIntegerDivide@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerDivide:near32
-primitiveLargeIntegerDiv EQU ?primitiveLargeIntegerDiv@Interpreter@@CIPAIXZ
+primitiveLargeIntegerDiv EQU ?primitiveLargeIntegerDiv@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerDiv:near32
-primitiveLargeIntegerMod EQU ?primitiveLargeIntegerMod@Interpreter@@CIPAIXZ
+primitiveLargeIntegerMod EQU ?primitiveLargeIntegerMod@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerMod:near32
-primitiveLargeIntegerQuoAndRem EQU ?primitiveLargeIntegerQuoAndRem@Interpreter@@CIPAIXZ
+primitiveLargeIntegerQuoAndRem EQU ?primitiveLargeIntegerQuoAndRem@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerQuoAndRem:near32
-primitiveLargeIntegerBitShift EQU ?primitiveLargeIntegerBitShift@Interpreter@@CIPAIXZ
+primitiveLargeIntegerBitShift EQU ?primitiveLargeIntegerBitShift@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerBitShift:near32
 
-primitiveLargeIntegerGreaterThan EQU ?primitiveLargeIntegerGreaterThan@Interpreter@@CIPAIXZ
+primitiveLargeIntegerGreaterThan EQU ?primitiveLargeIntegerGreaterThan@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerGreaterThan:near32
-primitiveLargeIntegerLessThan EQU ?primitiveLargeIntegerLessThan@Interpreter@@CIPAIXZ
+primitiveLargeIntegerLessThan EQU ?primitiveLargeIntegerLessThan@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerLessThan:near32
-primitiveLargeIntegerGreaterOrEqual EQU ?primitiveLargeIntegerGreaterOrEqual@Interpreter@@CIPAIXZ
+primitiveLargeIntegerGreaterOrEqual EQU ?primitiveLargeIntegerGreaterOrEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerGreaterOrEqual:near32
-primitiveLargeIntegerLessOrEqual EQU ?primitiveLargeIntegerLessOrEqual@Interpreter@@CIPAIXZ
+primitiveLargeIntegerLessOrEqual EQU ?primitiveLargeIntegerLessOrEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerLessOrEqual:near32
-primitiveLargeIntegerEqual EQU ?primitiveLargeIntegerEqual@Interpreter@@CIPAIXZ
+primitiveLargeIntegerEqual EQU ?primitiveLargeIntegerEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerEqual:near32
 
-primitiveLargeIntegerAsFloat EQU ?primitiveLargeIntegerAsFloat@Interpreter@@CIPAIXZ
+primitiveLargeIntegerAsFloat EQU ?primitiveLargeIntegerAsFloat@Interpreter@@CIPAIQAI@Z
 extern primitiveLargeIntegerAsFloat:near32
 
 primitiveAsyncDLL32Call EQU ?primitiveAsyncDLL32Call@Interpreter@@CIPAIPAXI@Z
 extern primitiveAsyncDLL32Call:near32
 
-primitiveAllReferences EQU ?primitiveAllReferences@Interpreter@@CIPAIXZ
+primitiveAllReferences EQU ?primitiveAllReferences@Interpreter@@CIPAIQAI@Z
 extern primitiveAllReferences:near32
 
 IFDEF _DEBUG
@@ -404,10 +413,10 @@ extern YIELD:near32												; See process.cpp
 LOOKUPMETHOD EQU ?lookupMethod@Interpreter@@SIPAV?$TOTE@VCompiledMethod@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAV?$TOTE@VSymbol@ST@@@@@Z
 extern LOOKUPMETHOD:near32
 
-PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIPAIXZ
+PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIPAIQAI@Z
 extern PRIMSTRINGSEARCH:near32
 
-primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIXZ
+primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIQAI@Z
 extern primitiveStringNextIndexOfFromTo:near32
 primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAt:near32
@@ -418,18 +427,18 @@ extern primitiveStringAtPut:near32
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
 extern DISABLEINTERRUPTS:near32
 
-primitiveStackAtPut EQU ?primitiveStackAtPut@Interpreter@@CIPAIXZ
+primitiveStackAtPut EQU ?primitiveStackAtPut@Interpreter@@CIPAIQAI@Z
 extern primitiveStackAtPut:near32
 
-primitiveMillisecondClockValue EQU  ?primitiveMillisecondClockValue@Interpreter@@CIPAIXZ
+primitiveMillisecondClockValue EQU  ?primitiveMillisecondClockValue@Interpreter@@CIPAIQAI@Z
 extern primitiveMillisecondClockValue:near32
 
-primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIPAIXZ
+primitiveMicrosecondClockValue EQU  ?primitiveMicrosecondClockValue@Interpreter@@CIPAIQAI@Z
 extern primitiveMicrosecondClockValue:near32
 
-primitiveBasicIdentityHash EQU ?primitiveBasicIdentityHash@Interpreter@@CIPAIXZ
+primitiveBasicIdentityHash EQU ?primitiveBasicIdentityHash@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicIdentityHash:near32
-primitiveIdentityHash EQU ?primitiveIdentityHash@Interpreter@@CIPAIXZ
+primitiveIdentityHash EQU ?primitiveIdentityHash@Interpreter@@CIPAIQAI@Z
 extern primitiveIdentityHash:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -513,7 +522,7 @@ DWORD		primitiveBecome									; case 72
 DWORD		primitiveInstVarAt								; case 73
 DWORD		primitiveInstVarAtPut							; case 74
 DWORD		primitiveBasicIdentityHash						; case 75	Object>>basicIdentityHash
-DWORD		primitiveNewWithArg								; case 76	Will be primitiveNewFixed:
+DWORD		primitiveNewPinned								; case 76
 DWORD		primitiveAllInstances							; case 77	was Behavior>>someInstance
 DWORD		primitiveReturn									; case 78	was Object>>nextInstance
 DWORD		primitiveValueOnUnwind							; case 79	CompiledMethod class>>newMethod:header:
@@ -709,92 +718,6 @@ ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
 
-;  BOOL __fastcall Interpreter::primitiveNew()
-;
-; ObjectMemory::allocateObject() no longer counts up the class of an object when 
-; instantiating it. This is a little more error prone, but (if we are careful) we
-; can substantially speed up the instantiation of new objects from Smalltalk code
-; because the class reference on the stack is removed at the same time as the class
-; becomes referenced from the new object. Consequently no actual ref. counting
-; operations need be performed at all by these primitives (the ref. count of the
-; new object is forced to 1).
-;
-BEGINPRIMITIVE primitiveNew
-	mov		ecx, [_SP]						; Load receiver class at stack top
-	mov		edx, (OTE PTR[ecx]).m_location
-
-	; Are instances of the class indexable
-	mov		edx, (Behavior PTR[edx]).m_instanceSpec
-	test    edx, MASK m_indexable
-
-	jnz		localPrimitiveFailure0			; Yes, require a size argument
-				     	
-	; Mask out all but inst size bits (including SmallInteger flag)
-	and		edx, MASK m_fixedFields
-	shr		edx, 1							
-
-	call	NEWPOINTEROBJECT				; Allocate the object
-
-	mov		[_SP], eax						; Overwrite receiver with new object
-	AddToZctNoSP <a>
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveNew
-
-;  BOOL __fastcall Interpreter::primitiveNewWithArg()
-;
-BEGINPRIMITIVE primitiveNewWithArg
-	mov		eax, [_SP]						; Load argument at stack top
-	mov		ecx, [_SP-OOPSIZE]				; Load receiver class under argument
-	ASSUME	ecx:PTR OTE
-	sar		eax, 1
-	jnc		localPrimitiveFailure0		; Need integer size (SmallInteger bit would be shifted into carry flag)
-	mov		edx, [ecx].m_location
-	ASSUME	edx:PTR Behavior
-	js		localPrimitiveFailure1		; Size must be >= 0
-
-   	; Are instances of the class indexable
-	mov		edx, [edx].m_instanceSpec
-	ASSUME	edx:DWORD
-	test    edx, MASK m_indexable
-	jz		localPrimitiveFailure2				; No, must use #new, not #new:
-
-   	; Do instances of the class contain pointers?
-	test    edx, MASK m_pointers
-	jz		newByteObject					; skip pointer object handling
-
-	and		edx, MASK m_fixedFields			; Mask out all but inst size
-	sar		edx, 1							; Convert from SmallInteger
-
-	add		edx, eax						; edx now contains complete object size in oops
-	call	NEWPOINTEROBJECT				; Allocate the object
-
-	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-newByteObject:
-	mov		edx, eax						; edx now contains complete object size in bytes (excluding any null terminator)
-	ASSUME	ecx:PTR OTE						; ECX still contains pointer to class
-	call	NEWBYTEOBJECT					; Allocate the object
-
-	mov		[_SP-OOPSIZE], eax				; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-	ASSUME	eax:NOTHING
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-
-ENDPRIMITIVE primitiveNewWithArg
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;  int __fastcall Interpreter::primitiveEquivalent()
@@ -802,10 +725,6 @@ ENDPRIMITIVE primitiveNewWithArg
 ;	Receiver != Arg is probably the more common case, so the condition
 ;	is organised so that the conditional jump is taken when Receiver==Arg
 ;	since not taking a jump is cheaper (1 cycle vs 3 cycles)
-;
-;	This primitive does not fail, so leaves the pointer value in
-;	eax (which will not be 0), SO LIKE WIN32 FUNCTIONS, DO NOT 
-;	COMPARE FOR EQUALITY WITH TRUE!
 ;
 ;	N.B. This primitive is not used unless #== is performed, because #== is inlined
 ;	by the compiler for performance reasons.
@@ -2601,50 +2520,6 @@ LIARITHMPRIMR BitXor
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-BEGINPRIMITIVE primitiveLargeIntegerNormalize
-	mov		eax, [_SP]
-	push	eax
-	call	liNormalize
-	test	al, 1
-	mov		[_SP], eax					; Overwrite stack top with new Oop
-	jnz		@F	
-	AddToZctNoSP <a>
-@@:
-	mov		eax, _SP					; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveLargeIntegerNormalize	
-
-BEGINPRIMITIVE primitiveLargeIntegerBitInvert
-	mov		eax, [_SP]
-
-	ASSUME	eax:PTR OTE
-	push	eax
-	call	liBitInvert
-	test	al, 1
-	mov		[_SP], eax					; Overwrite stack top with new Oop
-	jnz		@F	
-	AddToZctNoSP <a>
-@@:
-	mov		eax, _SP					; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveLargeIntegerBitInvert
-
-
-BEGINPRIMITIVE primitiveLargeIntegerNegate
-	mov		eax, [_SP]
-
-	ASSUME	eax:PTR OTE
-	push	eax
-	call	liNegate
-	test	al, 1
-	mov		[_SP], eax					; Overwrite stack top with new Oop
-	jnz		@F	
-	AddToZctNoSP <a>
-@@:
-	mov		eax, _SP					; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveLargeIntegerNegate
-
 .CODE PRIM_SEG
 
 ; Note that the failure code is not set.
@@ -2704,19 +2579,19 @@ BEGINPRIMITIVE primitiveWaitThunk
 ENDPRIMITIVE primitiveWaitThunk
 
 BEGINPRIMITIVE primitiveSuspendThunk
-	CallContextPrim <?primitiveSuspend@Interpreter@@CIPAIXZ>
+	CallContextPrim <primitiveSuspend>
 ENDPRIMITIVE primitiveSuspendThunk
 
 BEGINPRIMITIVE primitiveTerminateThunk
-	CallContextPrim <?primitiveTerminateProcess@Interpreter@@CIPAIXZ>
+	CallContextPrim <primitiveTerminateProcess>
 ENDPRIMITIVE primitiveTerminateThunk
 
 BEGINPRIMITIVE primitiveSetSignalsThunk
-	CallContextPrim <?primitiveSetSignals@Interpreter@@CIPAIXZ>
+	CallContextPrim <primitiveSetSignals>
 ENDPRIMITIVE primitiveSetSignalsThunk
 
 BEGINPRIMITIVE primitiveProcessPriorityThunk
-	CallContextPrim <?primitiveProcessPriority@Interpreter@@CIPAIXZ>
+	CallContextPrim <primitiveProcessPriority>
 ENDPRIMITIVE primitiveProcessPriorityThunk
 
 BEGINPRIMITIVE primitiveUnwindInterruptThunk
@@ -2761,7 +2636,7 @@ ENDPRIMITIVE primitiveCoreLeftThunk
 ;; This is actually a GC primitive, and it may switch contexts
 ;; because is synchronously signals a Semaphore (sometimes)
 BEGINPRIMITIVE primitiveOopsLeftThunk
-	CallContextPrim <?primitiveOopsLeft@Interpreter@@CIPAIXZ>
+	CallContextPrim <primitiveOopsLeft>
 ENDPRIMITIVE primitiveOopsLeftThunk
 
 BEGINPRIMITIVE primitiveGetImmutable

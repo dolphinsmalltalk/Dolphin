@@ -409,10 +409,8 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-Oop* __fastcall Interpreter::primitivePerformWithArgsAt()
+Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp)
 {
-	Oop* const sp = m_registers.m_stackPointer;
-
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(0);
@@ -458,9 +456,8 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt()
 
 ///////////////////////////////////////////////////////////////////////////////
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
-Oop* __fastcall Interpreter::primitiveValueWithArgsAt()
+Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp)
 {
-	Oop* sp = m_registers.m_stackPointer;
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
 		return primitiveFailure(0);
@@ -508,14 +505,14 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt()
 	// With new block closures, args must be on the stack immediate after receiver (i.e. at BP)
 	pushArgsAt(descriptor, lpParms);
 
-	sp = m_registers.m_stackPointer + 1;
+	Oop* localSp = m_registers.m_stackPointer + 1;
 
 	const unsigned copiedValues = block->copiedValuesCount(oteBlock);
 	{
 		for (unsigned i=0;i<copiedValues;i++)
 		{
 			Oop oopCopied = block->m_copiedValues[i];
-			*sp++ = oopCopied;
+			*localSp++ = oopCopied;
 		}
 	}
 
@@ -523,11 +520,11 @@ Oop* __fastcall Interpreter::primitiveValueWithArgsAt()
 	{
 		const Oop nilPointer = Oop(Pointers.Nil);
 		for (unsigned i=0;i<extraTemps;i++)
-			*sp++ = nilPointer;
+			*localSp++ = nilPointer;
 	}
 
 	// Stack frame follows args...
-	StackFrame* pFrame = reinterpret_cast<StackFrame*>(sp);
+	StackFrame* pFrame = reinterpret_cast<StackFrame*>(localSp);
 
 	m_registers.m_stackPointer = reinterpret_cast<Oop*>(reinterpret_cast<BYTE*>(pFrame)+sizeof(StackFrame)) - 1;
 
@@ -645,7 +642,7 @@ void doBlah()
 #ifndef _M_IX86
 	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, unsigned argCount, BYTE* argTypes, BOOL isVirtual);
 
-	BOOL __fastcall Interpreter::primitiveVirtualCall(void*, unsigned argCount)
+	BOOL __fastcall Interpreter::primitiveVirtualCall(Oop* const sp, unsigned argCount)
 	{
 		// Calling out may initiate a callback to Smalltalk
 		// We need to ensure that this primitive is reentrant so we
@@ -654,7 +651,7 @@ void doBlah()
 
 		CompiledMethod& method = *m_registers.m_oopNewMethod->m_location;
 
-		OTE* objectPointer = stackValue(argCount);
+		OTE* objectPointer = *(sp - argCount);
 
 		#ifdef _DEBUG
 			// SmallIntegers are not valid receivers
@@ -708,7 +705,7 @@ void doBlah()
 	// This primitive does not check that enough types are specified, because it
 	// assumes that the compiler does this.
 	//
-	BOOL __fastcall Interpreter::primitiveDLL32Call(void*, unsigned argCount)
+	BOOL __fastcall Interpreter::primitiveDLL32Call(Oop* const sp, unsigned argCount)
 	{
 		CompiledMethod& method = *m_registers.m_oopNewMethod->m_location;
 
@@ -741,7 +738,7 @@ void doBlah()
 			#endif
 			char* procName = reinterpret_cast<char*>(argTypes.m_elements)+procNameOffset;
 
-			OTE* handlePointer = stackValue(argCount);
+			OTE* handlePointer = *(sp - argCount);
 			ASSERT(!ObjectMemory::isBytes(handlePointer));
 			handlePointer = reinterpret_cast<OTE*>(ObjectMemory::fetchPointerOfObject(0, handlePointer));
 			HMODULE hModule = static_cast<HMODULE>((static_cast<ExternalHandle*>(handlePointer->m_location)->m_handle);
@@ -1237,7 +1234,7 @@ void doBlah()
 				case ExtCallArgOOP:
 					pop(argCount);
 					ASSERT(!ObjectMemoryIsIntegerObject(dwValue));
-					stackTop() = dwValue;
+					*m_registers.m_stackPointer = dwValue;
 					break;
 
 				case ExtCallArgVOID:

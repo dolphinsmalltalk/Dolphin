@@ -94,6 +94,14 @@ public:
 				ObjectMemory::AddToZct((OTE*)this);
 	}
 
+	void countDownStackRef()
+	{
+		HARDASSERT(m_count > 0);
+		if (m_count < MAXCOUNT)
+			if (--m_count == 0)
+				ObjectMemory::AddStackRefToZct((OTE*)this);
+	}
+
 	__forceinline bool decRefs()							{ return (m_count < MAXCOUNT) && (--m_count == 0); }
 	__forceinline bool isImmutable() const					{ return static_cast<int>(m_size) < 0; }
 	__forceinline void beImmutable()						{ m_size |= ImmutabilityBit; }

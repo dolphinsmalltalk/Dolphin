@@ -168,7 +168,7 @@ inline BOOL Interpreter::isAFloat(Oop objectPointer)
 inline void Interpreter::sendSelectorArgumentCount(SymbolOTE* selector, unsigned argCount)
 {
 	m_oopMessageSelector = selector;
-	sendSelectorToClass(ObjectMemory::fetchClassOf(stackValue(argCount)), argCount);
+	sendSelectorToClass(ObjectMemory::fetchClassOf(*(m_registers.m_stackPointer - argCount)), argCount);
 }
 
 inline void Interpreter::sendSelectorToClass(BehaviorOTE* classPointer, unsigned argCount)
@@ -180,20 +180,6 @@ inline void Interpreter::sendSelectorToClass(BehaviorOTE* classPointer, unsigned
 inline void	Interpreter::NotifyAsyncPending()
 {
 	InterlockedExchange(m_pbAsyncPending, TRUE);
-}
-
-inline void Interpreter::IncStackRefs(Oop* const sp)
-{
-	Process* pProcess = actualActiveProcess();
-	for (Oop* pOop = pProcess->m_stack; pOop <= sp; pOop++)
-		ObjectMemory::countUp(*pOop);
-}
-
-inline void Interpreter::DecStackRefs(Oop* const sp)
-{
-	Process* pProcess = actualActiveProcess();
-	for (Oop* pOop = pProcess->m_stack;pOop <= sp;pOop++)
-		ObjectMemory::countDown(*pOop);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

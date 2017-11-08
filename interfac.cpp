@@ -252,7 +252,7 @@ int Interpreter::callbackTerminationFilter(LPEXCEPTION_POINTERS info, Process* c
 
 				// Allow any pending callback exits to retry
 				wakePendingCallbacks();
-				ASSERT(reinterpret_cast<SchedulerOTE*>(stackTop()) == schedulerPointer());
+				ASSERT(reinterpret_cast<SchedulerOTE*>(*m_registers.m_stackPointer) == schedulerPointer());
 				return EXCEPTION_CONTINUE_SEARCH;
 			}
 			else

@@ -298,35 +298,9 @@ public:
 	static bool alwaysReconcileOnAdd;
 #endif
 
-	static void __fastcall AddToZct(TOTE<Object>* ote)
-	{
-		HARDASSERT(m_nZctEntries >= 0);
-
-		// If we don't use a temp here, compiler generates code that needlessly reads the field from memory multiple times
-		int zctEntries = m_nZctEntries;
-		m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
-		m_nZctEntries = zctEntries;
-
-#ifdef _DEBUG
-		if (alwaysReconcileOnAdd || m_nZctEntries >= m_nZctHighWater)
-#else
-		if (m_nZctEntries >= m_nZctHighWater)
-#endif
-		{
-			if (!m_bIsReconcilingZct)
-			{
-				ReconcileZct();
-			}
-			else
-			{
-				// Uh oh, the Zct overflowed when attempting to repopulate it from the active process
-				// stack. We must "grow" it.
-				GrowZct();
-			}
-		}
-	}
-
+	static void __fastcall AddToZct(TOTE<Object>* ote);
 	static void __fastcall AddToZct(Oop);
+	static void __fastcall AddStackRefToZct(TOTE<Object>* ote);
 
 	// Used by Interpreter when switching processes
 	static void EmptyZct(Oop* const sp);
@@ -634,6 +608,42 @@ inline void __fastcall ObjectMemory::AddToZct(Oop oop)
 		AddToZct(reinterpret_cast<OTE*>(oop));
 	}
 }
+
+inline void __fastcall ObjectMemory::AddToZct(TOTE<Object>* ote)
+{
+	HARDASSERT(m_nZctEntries >= 0);
+
+	// If we don't use a temp here, compiler generates code that needlessly reads the field from memory multiple times
+	int zctEntries = m_nZctEntries;
+	m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
+	m_nZctEntries = zctEntries;
+
+#ifdef _DEBUG
+	if (alwaysReconcileOnAdd || m_nZctEntries >= m_nZctHighWater)
+#else
+	if (zctEntries >= m_nZctHighWater)
+#endif
+	{
+		ReconcileZct();
+	}
+}
+
+inline void __fastcall ObjectMemory::AddStackRefToZct(TOTE<Object>* ote)
+{
+	HARDASSERT(m_nZctEntries >= 0);
+
+	// If we don't use a temp here, compiler generates code that needlessly reads the field from memory multiple times
+	int zctEntries = m_nZctEntries;
+	m_pZct[zctEntries++] = reinterpret_cast<OTE*>(ote);
+	m_nZctEntries = zctEntries;
+
+	if (zctEntries >= m_nZctHighWater)
+	{
+		// The Zct overflowed when attempting to repopulate it from the active process stack. We must "grow" it.
+		GrowZct();
+	}
+}
+
 
 inline bool ObjectMemory::IsReconcilingZct()
 {
