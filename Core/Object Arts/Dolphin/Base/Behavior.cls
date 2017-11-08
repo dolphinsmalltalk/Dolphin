@@ -273,6 +273,7 @@ basicNew
 
 	<primitive: 70>
 	self isVariable ifTrue: [^self basicNew: 0].
+	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
 	^self primitiveFailed!
 
 basicNew: aSmallInteger
@@ -280,6 +281,7 @@ basicNew: aSmallInteger
 
 	<primitive: 71>
 	self isFixed ifTrue: [^Error notIndexable: self].
+	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
 	^self primitiveFailed!
 
 bindingFor: aString 
@@ -638,10 +640,12 @@ new
 			-> Object class -> Class -> ClassDescription -> Behavior
 
 	Primitive failure reasons:
-		0 -	The receiver is an indexable class, and requires a size."
+		0 -	The receiver is an indexable class, and requires a size.
+		1 -	The receiver class is non-instantiable (abstract)."
 
 	<primitive: 70>
 	self isVariable ifTrue: [^self new: 0].
+	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
 	^self primitiveFailed!
 
 new: aSmallInteger
@@ -656,10 +660,12 @@ new: aSmallInteger
 	Primitive failure reasons:
 		0 - the argument is not a <SmallInteger>.
 		1 - the argument is negative
-		2 - the receiver's instances are not indexable."
+		2 - the receiver's instances are not indexable.
+		3 - the receiver is non-instantiable (abstract)."
 
 	<primitive: 71>
 	self isFixed ifTrue: [^Error notIndexable: self].
+	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
 	^self primitiveFailed!
 
 new: numSmallInteger max: maxSmallInteger
