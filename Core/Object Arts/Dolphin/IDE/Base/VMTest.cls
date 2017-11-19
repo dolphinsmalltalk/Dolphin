@@ -289,6 +289,11 @@ findCaller: aStackFrame in: aCompiledMethod
 findFaultInterruptFrame: anException
 	^self findCaller: anException raisingFrame in: ProcessorScheduler >> #vmi:list:no:with:!
 
+firstVmVersionRespectingNonInstantiable
+	"The first VM version that refuses to instantiate abstract classes."
+
+	^self versionFromParts: #(2016 7 0 51)!
+
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
 	| frame |
 	frame := self findFaultInterruptFrame: anException.
@@ -1173,7 +1178,7 @@ testPrimitiveBytesIsNull
 	self assert: (method value: subject withArguments: #()).
 	subject := DWORDBytes fromInteger: 1.
 	self deny: (method value: subject withArguments: #()).
-	subject := ExternalIntegerBytes newFixed: 8.
+	subject := UIntPtrBytes newFixed: 8.
 	self assert: (method value: subject withArguments: #()) equals: 'failed0'!
 
 testPrimitiveEnableInterrupts
@@ -1317,6 +1322,72 @@ testPrimitiveMakePoint
 						yourself.
 			result := method value: Context withArguments: (1 to: i) asArray.
 			1 to: expected size do: [:j | self assert: (result instVarAt: j) equals: (expected at: j)]]!
+
+testPrimitiveNewColonFailure
+	| method |
+	method := self createPrimitiveMethodLike: Behavior >> #new: setsFailCode: true.
+	self assert: (method value: Array withArguments: #('failed2')) equals: 'failed0'.
+	self vmRespectsNonInstantiable
+		ifTrue: 
+			[self assert: (method value: Array withArguments: #(-1)) equals: 'failed0'.
+			"CompiledCode is abstract"
+			self assert: (method value: CompiledCode withArguments: #(0)) equals: 'failed1']
+		ifFalse: [self assert: (method value: Array withArguments: #(-1)) equals: 'failed1'].
+	self assert: (method value: Object withArguments: #(0)) equals: 'failed2'!
+
+testPrimitiveNewFailure
+	| method |
+	method := self createPrimitiveMethodLike: Behavior >> #new setsFailCode: true.
+	self assert: (method value: Array withArguments: #()) equals: 'failed0'.
+	self vmRespectsNonInstantiable
+		ifTrue: [self assert: (method value: Boolean withArguments: #()) equals: 'failed1']!
+
+testPrimitiveNewFixedFailure
+	| method |
+	method := self createPrimitiveMethodLike: Behavior >> #newFixed: setsFailCode: true.
+	"Invalid size (must be a positive SmallInteger)"
+	self assert: (method value: ByteArray withArguments: #('failed2')) equals: 'failed0'.
+	self vmRespectsNonInstantiable
+		ifTrue: 
+			[self assert: (method value: ByteArray withArguments: #(-1)) equals: 'failed0'.
+			"Only byte objects can be pinned"
+			self assert: (method value: Array withArguments: #(1)) equals: 'failed2'.
+			"ExternalIntegerBytes is abstract"
+			self assert: (method value: ExternalIntegerBytes withArguments: #(1)) equals: 'failed1']
+		ifFalse: [self assert: (method value: ByteArray withArguments: #(-1)) equals: 'failed1']!
+
+testPrimitiveNewInitializedFailure
+	| method |
+	method := self
+				createPrimitiveMethod: (Array class >> #with:with:with:) primitiveIndex
+				in: Object
+				argCount: 3
+				setsFailCode: true.
+	"Only valid for pointer classes"
+	self assert: (method value: Array withArguments: #(1 2 3)) equals: #(1 2 3).
+	self assert: (method value: Point withArguments: #(1 2 3)) equals: 'failed2'.
+	self vmRespectsNonInstantiable
+		ifTrue: 
+			[self assert: (method value: MessageSendAbstract withArguments: #(1 2 3)) equals: 'failed1'.
+			self assert: (method value: ByteArray withArguments: #(1 2 3)) equals: 'failed0']
+		ifFalse: [self assert: (method value: ByteArray withArguments: #(1 2 3)) equals: 'failed1']!
+
+testPrimitiveNewVirtualFailure
+	| method |
+	method := self createPrimitiveMethodLike: Behavior >> #new:max: setsFailCode: true.
+	"Invalid sizes (must be positive SmallInteger)"
+	self assert: (method value: Array withArguments: #('1' 2)) equals: 'failed1'.
+	self vmRespectsNonInstantiable
+		ifTrue: 
+			[
+			"Older VM just threw an out-of-memory for negative sizes as it treated the arg as unsigned"
+			self assert: (method value: Array withArguments: #(-1 2)) equals: 'failed1'.
+			self assert: (method value: Array withArguments: #(1 -2)) equals: 'failed0'.
+			"CompiledCode is abstract"
+			self assert: (method value: CompiledCode withArguments: #(1 2)) equals: 'failed3'].
+	self assert: (method value: Array withArguments: #(1 '2')) equals: 'failed0'.
+	"Object is not indexable"
+	self assert: (method value: Object withArguments: #(1 2)) equals: 'failed2'!
 
 testPrimitiveObjectCount
 	"Test primitive that returns object instance count."
@@ -1721,7 +1792,10 @@ testWeakMournerNotifications
 	"Garbage weak array should not have been notified of loss of obj2 as it was collected in same GC cycle"
 	self assert: (losses at: id1) equals: 2.
 	"Garbage but finalizable weak array should have been notified of loss of obj2"
-	self assert: (losses at: id2) equals: 3! !
+	self assert: (losses at: id2) equals: 3!
+
+vmRespectsNonInstantiable
+	^VMLibrary default versionInfo fileVersion >= self firstVmVersionRespectingNonInstantiable! !
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
@@ -1734,6 +1808,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
 !VMTest categoriesFor: #findCaller:in:!helpers!private! !
 !VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
+!VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!accessing!public! !
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
@@ -1774,6 +1849,11 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsSuperclassOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveNewFixedFailure!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveNewInitializedFailure!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveNewVirtualFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
@@ -1787,6 +1867,7 @@ testWeakMournerNotifications
 !VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
+!VMTest categoriesFor: #vmRespectsNonInstantiable!public!unit tests! !
 
 !VMTest class methodsFor!
 

@@ -2,6 +2,12 @@
 
 VMLibrary default primRegistryAt: 71 put: #~~; primRegistryAt: 72 put: #not!
 
+!Array class methodsFor!
+ 
+newFromStack: aSmallInteger
+	<primitive: 190>
+	^self primitiveFailed! !
+
 AttributeDescriptorFlags keysAndValuesDo: [:k :v | AttributeDescriptor addClassConstant: k value: v].
 AttributeDescriptor addClassConstant: 'NonBrowsableMask' value: 128!
 #(#AttributeDescriptorFlags #STBPrefixConstants) do: [:each | Package manager systemPackage removeGlobalNamed: each. Smalltalk removeKey: each ifAbsent: []]!

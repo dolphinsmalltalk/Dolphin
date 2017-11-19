@@ -114,6 +114,22 @@ Array methodProtocol: #Array attributes: #(#ansi #readOnly) selectors: #(#, #aft
 
 !Array class methodsFor!
 
+newFromStack: aSmallInteger
+	"Private - Answer an instance of the receiver with the specified number of instance
+	variables (indexed and fixed), populated from that many entries on the stack. "
+
+	"N.B. This method is part of the implementation of brace arrays, and is intended for use by
+	the compiler. If used incorrectly it will corrupt the stack and will likely cause the
+	program to fail. The primitive will pop anInteger arguments from the stack in order to
+	populate the new object. If that exact number of arguments has not been previously pushed,
+	then either extra stack content will be left behind, or preceding content will be eaten
+	into. When the method returns this will probably cause a crash. In other words, do not 
+	attempt to use this method in normal code."
+
+	<primitive: 190>
+	"This primitive should not fail for Array class."
+	^self primitiveFailed!
+
 with: element1 
 	"Answer a new instance of the receiver containing the single 
 	<Object> element, element1."
@@ -163,6 +179,7 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 		with: element3
 		with: element4
 		with: element5! !
+!Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
 !Array class categoriesFor: #with:!instance creation!public! !
 !Array class categoriesFor: #with:with:!instance creation!public! !
 !Array class categoriesFor: #with:with:with:!instance creation!public! !

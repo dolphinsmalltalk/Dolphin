@@ -273,7 +273,7 @@ basicNew
 
 	<primitive: 70>
 	self isVariable ifTrue: [^self basicNew: 0].
-	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed!
 
 basicNew: aSmallInteger
@@ -384,6 +384,11 @@ environment
 	"Answer the receiver's name space."
 
 	^Smalltalk!
+
+errorNonInstantiable
+	"Private - Report an error that an attempt was made to instantiate an abstract class."
+
+	^self error: 'Cannot instantiate abstract class'!
 
 extraInstanceSpec
 	"Private - Answer the user class instance specification of the receiver (a 16-Bit Integer)."
@@ -645,7 +650,7 @@ new
 
 	<primitive: 70>
 	self isVariable ifTrue: [^self new: 0].
-	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed!
 
 new: aSmallInteger
@@ -658,14 +663,13 @@ new: aSmallInteger
 			-> Object class -> Class -> ClassDescription -> Behavior
 
 	Primitive failure reasons:
-		0 - the argument is not a <SmallInteger>.
-		1 - the argument is negative
-		2 - the receiver's instances are not indexable.
-		3 - the receiver is non-instantiable (abstract)."
+		0 - the argument is not a positive <SmallInteger>.
+		1 - the receiver is non-instantiable (abstract).
+		2 - the receiver's instances are not indexable."
 
 	<primitive: 71>
 	self isFixed ifTrue: [^Error notIndexable: self].
-	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed!
 
 new: numSmallInteger max: maxSmallInteger
@@ -680,6 +684,7 @@ new: numSmallInteger max: maxSmallInteger
 
 	<primitive: 90>
 	self isFixed ifTrue: [^Error notIndexable: self].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed!
 
 newFixed: aSmallInteger
@@ -687,30 +692,17 @@ newFixed: aSmallInteger
 	only valid for byte objects). The object is allocated from the fixed memory heap
 	and will not move in memory (objects allocated with primitive 71 are free to 
 	move to assist garbage collection, whereas those allocated with primitive 76 
-	are in a traditional fixed heap)."
+	are in a traditional fixed heap).
+
+	Primitive failure reasons:
+		0 - the argument is not a positive <SmallInteger>.
+		1 - the receiver is non-instantiable (abstract).
+		2 - the receiver's is not an indexable byte class."
 
 	<primitive: 76>
-	^self primitiveFailed!
-
-newFromStack: aSmallInteger
-	"Private - Answer an instance of the receiver with the specified number of instance
-	variables (indexed and fixed), populated from that many entries on the stack. "
-
-	"N.B. This method is part of the implementation of brace arrays, and is intended for use by
-	the compiler. If used incorrectly it will corrupt the stack and will likely cause the
-	program to fail. The primitive will pop anInteger arguments from the stack in order to
-	populate the new object. If that exact number of arguments has not been previously pushed,
-	then either extra stack content will be left behind, or preceding content will be eaten
-	into. When the method returns this will probably cause a crash."
-
-	"Primitive failure reasons: 
-		0 - the receiver is not a <Behaviour>
-		1 - the receiver is a byte class
-		2 - the receiver is not indexable and the argument is greater than the number of fixed fields
-		3 - the argument is not a <SmallInteger>
-		4- the argument is negative"
-
-	<primitive: 190>
+	self isFixed ifTrue: [^Error notIndexable: self].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
+	self isPointers ifTrue: [^self error: 'Pointer objects cannot be pinned'].
 	^self primitiveFailed!
 
 primAllInstances
@@ -1165,6 +1157,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #defaultCompilationFlags!compiling!constants!public! !
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Behavior categoriesFor: #environment!constants!public! !
+!Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
@@ -1206,7 +1199,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #new:!instance creation!public! !
 !Behavior categoriesFor: #new:max:!instance creation!private! !
 !Behavior categoriesFor: #newFixed:!instance creation!public! !
-!Behavior categoriesFor: #newFromStack:!instance creation!must not strip!private! !
 !Behavior categoriesFor: #primAllInstances!instances!private! !
 !Behavior categoriesFor: #primAllSubinstances!instances!private! !
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
