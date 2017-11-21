@@ -33,12 +33,12 @@ struct OTEFlags
 	// Object Creation
 	enum Spaces { NormalSpace, VirtualSpace, BlockSpace, ContextSpace, DWORDSpace, HeapSpace, FloatSpace, PoolSpace, NumSpaces };
 
-	BYTE	m_free		: 1;			// Is the object in use?
-	BYTE	m_pointer	: 1; 			// Pointer bit?
-	BYTE	m_mark		: 1;			// Garbage collector mark
-	BYTE	m_finalize	: 1;			// Should the object be finalized
-	BYTE 	m_weakOrZ	: 1;			// weak references if pointers, null term if bytes
-	BYTE 	m_space		: SPACEBITS;	// Memory space in which the object resides (used when deallocating)
+	BYTE	m_free : 1;				// Is the object in use?
+	BYTE	m_pointer : 1; 			// Pointer bit?
+	BYTE	m_mark : 1;				// Garbage collector mark
+	BYTE	m_finalize : 1;			// Should the object be finalized
+	BYTE 	m_weakOrZ : 1;			// weak references if pointers, null term if bytes
+	BYTE 	m_space : SPACEBITS;	// Memory space in which the object resides (used when deallocating)
 };
 
 
@@ -76,10 +76,7 @@ public:
 	__forceinline BOOL isSticky() const						{ return m_count == MAXCOUNT; }
 	__forceinline void beSticky()							{ m_count = MAXCOUNT; }
 
-	// Set the receiver to have the current mark
-	__forceinline void mark()								{ m_flags.m_mark = ObjectMemory::currentMark(); }
 	// Answer whether the receiver has the current mark
-	__forceinline bool hasCurrentMark()						{ return m_flags.m_mark == ObjectMemory::currentMark(); }
 	__forceinline void setMark(BYTE mark)					{ m_flags.m_mark = mark; }
 
 	__forceinline MWORD getIndex()	const					{ return this - reinterpret_cast<const TOTE<T>*>(ObjectMemory::m_pOT); }
@@ -127,8 +124,7 @@ public:
 
 	__forceinline bool isNil() const						{ return Oop(this) == Oop(Pointers.Nil); }
 	__forceinline OTEFlags::Spaces heapSpace() const		{ return static_cast<OTEFlags::Spaces>(m_flags.m_space); }
-	__forceinline BYTE getFlagsByte() const					{ return *reinterpret_cast<const BYTE*>(&m_dwFlags); }
-	__forceinline bool flagsAllMask(BYTE mask) const		{ return (getFlagsByte() & mask) == mask; }
+	__forceinline bool flagsAllMask(BYTE mask) const		{ return (m_ubFlags & mask) == mask; }
 
 	hash_t identityHash()
 	{
@@ -149,9 +145,13 @@ public:
 	{
 		struct 
 		{
-			struct OTEFlags	m_flags;					// 8-bits of flags
-			count_t			m_count;
-			hash_t			m_idHash;					// identity hash value (16-bit)
+			union
+			{
+				OTEFlags	m_flags;					// 8-bits of flags
+				BYTE		m_ubFlags;
+			};
+			count_t		m_count;
+			hash_t		m_idHash;					// identity hash value (16-bit)
 		};
 		DWORD m_dwFlags;
 	};

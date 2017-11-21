@@ -62,7 +62,7 @@ inline Oop ObjectMemory::corpsePointer()
 void ObjectMemory::MarkObjectsAccessibleFromRoot(OTE* rootOTE)
 {
 	BYTE curMark = 	*reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
-	if ((rootOTE->getFlagsByte() ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
+	if ((rootOTE->m_ubFlags ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
 		markObjectsAccessibleFrom(rootOTE);
 }
 
@@ -79,7 +79,7 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 	// The class is always visited, but is now in the OTE which means we may not need
 	// to visit the object body at all
 	BehaviorOTE* oteClass = ote->m_oteClass;
-	if ((oteClass->getFlagsByte() ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
+	if ((oteClass->m_ubFlags ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
 		markObjectsAccessibleFrom(reinterpret_cast<POTE>(oteClass));
 
 	const MWORD lastPointer = lastStrongPointerOf(ote);
@@ -96,7 +96,7 @@ void ObjectMemory::markObjectsAccessibleFrom(OTE* ote)
 
 			// By Xoring current mark mask with existing one we should only get > 1 if they
 			// don't actually match, and therefore we haven't visited here yet.
-			if ((oteField->getFlagsByte() ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
+			if ((oteField->m_ubFlags ^ curMark) & OTE::MarkMask)	// Already accessible from roots of world?
 				markObjectsAccessibleFrom(oteField);
 		}
 	}
@@ -168,10 +168,10 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	OTE**		pUnmarked = 0;
 
 	const OTE* pEnd = m_pOT+m_nOTSize;							// Loop invariant
-	BYTE curMark = 	*reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
+	const BYTE curMark = 	*reinterpret_cast<BYTE*>(&m_spaceOTEBits[OTEFlags::NormalSpace]);
 	for (OTE* ote=m_pOT+OTBase; ote < pEnd; ote++)
 	{
-		BYTE oteFlags = ote->getFlagsByte();
+		BYTE oteFlags = ote->m_ubFlags;
 		if (!(oteFlags & OTE::FreeMask))								// Already free'd?
 		{
 			// By Xoring current mark mask with existing one we should only get > 1 if they
@@ -210,7 +210,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	{
 		for (OTE* ote = m_pOT + OTBase; ote < pEnd; ote++)
 		{
-			BYTE oteFlags = ote->getFlagsByte();
+			const BYTE oteFlags = ote->m_ubFlags;
 			// Is it a non-free'd, weak pointer object, and does it either have the current mark or is finalizable?
 			// If so it's losses are replaced with references to the corpse object, and it may be sent a loss notification
 			if (((oteFlags & (OTE::WeakMask|OTE::FreeMask)) == OTE::WeakMask)
@@ -228,7 +228,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 					if (!ObjectMemoryIsIntegerObject(fieldPointer))
 					{
 						OTE* fieldOTE = reinterpret_cast<OTE*>(fieldPointer);
-						BYTE fieldFlags = fieldOTE->getFlagsByte();
+						const BYTE fieldFlags = fieldOTE->m_ubFlags;
 						if (fieldFlags & OTE::FreeMask)
 						{
 #if defined(_DEBUG) && 0
@@ -241,7 +241,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 						}
 						else if ((fieldFlags ^ curMark) & OTE::MarkMask)
 						{
-							HARDASSERT(!fieldOTE->hasCurrentMark());
+							HARDASSERT(!ObjectMemory::hasCurrentMark(fieldOTE));
 							// We must correctly maintain ref. count of dying object,
 							// just in case it is in (or will be in) the finalization queue
 #if defined(_DEBUG) && 0
@@ -292,12 +292,12 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	for (unsigned i=0;i<loopEnd;i++)
 	{
 		OTE* ote = pUnmarked[i];
-		BYTE oteFlags = ote->getFlagsByte();
+		const BYTE oteFlags = ote->m_ubFlags;
 		HARDASSERT(!(oteFlags & OTE::FreeMask));
 		if ((oteFlags ^ curMark) & OTE::MarkMask)	// Still unmarked?
 		{
 			// Object still unmarked, so either deallocate it OR queue it for finalization
-			HARDASSERT(!ote->hasCurrentMark());
+			HARDASSERT(!ObjectMemory::hasCurrentMark(ote));
 
 			// We found a dying object, finalize it if necessary
 			if (oteFlags & OTE::FinalizeMask)

@@ -128,7 +128,6 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="..\MemPrim.cpp" />
     <ClCompile Include="..\objmem.cpp" />
     <ClCompile Include="..\ObjMemInit.cpp" />
     <ClCompile Include="..\oleprim.cpp" />

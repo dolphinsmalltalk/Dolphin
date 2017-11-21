@@ -445,14 +445,26 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 }
 
 #endif
-// All the stuff below this point is not performance critical
-#ifndef _DEBUG
-	#pragma optimize("s", on)
-	#pragma auto_inline(off)
-#endif
-
 
 #pragma code_seg(GC_SEG)
+
+Oop* __fastcall Interpreter::primitiveAllReferences(Oop* const sp)
+{
+	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
+	bool includeWeakRefs = *sp == reinterpret_cast<Oop>(Pointers.True);
+
+	// Resize the active process to exclude the receiver and arg (if any) to the primitive
+	ST::Process* pActiveProcess = m_registers.m_pActiveProcess;
+	MWORD words = sp - 1 - reinterpret_cast<const Oop*>(pActiveProcess);
+	m_registers.m_oteActiveProcess->setSize(words * sizeof(MWORD));
+
+	Oop receiver = *(sp - 1);
+	ArrayOTE* refs = ObjectMemory::referencesTo(receiver, includeWeakRefs);
+
+	*(sp - 1) = reinterpret_cast<Oop>(refs);
+	ObjectMemory::AddToZct((OTE*)refs);
+	return sp - 1;
+}
 
 // Return an array containing all objects which reference
 // objectPointer (which may be a SmallInteger)

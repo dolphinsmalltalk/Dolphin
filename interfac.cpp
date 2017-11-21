@@ -392,7 +392,7 @@ Oop	__stdcall Interpreter::performWithArguments(Oop receiver, SymbolOTE* selecto
 BytesOTE* __fastcall Interpreter::NewDWORD(DWORD dwValue, BehaviorOTE* classPointer)
 {
 	BytesOTE* ote = m_otePools[DWORDPOOL].newByteObject(classPointer, sizeof(DWORD), OTEFlags::DWORDSpace);
-	ASSERT(ote->hasCurrentMark());
+	ASSERT(ObjectMemory::hasCurrentMark(ote));
 
 	// Assign class as this can differ in this particular pool, which is used for all manner of 32-bit objects
 	ote->m_oteClass = classPointer;

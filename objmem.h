@@ -122,7 +122,6 @@ public:
 	static unsigned GetOTSize();
 	static size_t compact(Oop* const sp);
 	static void HeapCompact();
-	static BYTE currentMark();
 
 	// Used by Interpreter and Compiler to update any Oops they hold following a compact
 	template <class T> static void compactOop(TOTE<T>*& ote)
@@ -195,6 +194,12 @@ public:
 	static void checkStackRefs(Oop* const sp);
 	static bool isValidOop(Oop);
 #endif
+
+	// Does an object have the current GC mark?
+	template <class T> static bool hasCurrentMark(TOTE<T>* const ote)
+	{
+			return ote->m_flags.m_mark == m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
+	}
 
 #ifdef MEMSTATS
 	static void DumpStats();
@@ -470,7 +475,7 @@ private:		// Private Data
 	static int		CountFreeOTEs();
 #endif
 
-	static struct OTEFlags m_spaceOTEBits[OTEFlags::NumSpaces];
+	static OTEFlags m_spaceOTEBits[OTEFlags::NumSpaces];
 
 	static unsigned m_nOTMax;
 	static unsigned m_nOTSize;						// The size (in Oops, not bytes) of the object table
@@ -756,12 +761,6 @@ inline BehaviorOTE* ObjectMemory::fetchClassOf(Oop objectPointer)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Does an object have the current GC mark?
-
-__forceinline BYTE ObjectMemory::currentMark()
-{
-	return m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
-}
 
 inline bool ObjectMemory::isAContext(const OTE* ote)
 {
@@ -821,18 +820,16 @@ inline bool ObjectMemory::isKindOf(Oop objectPointer, const BehaviorOTE* classPo
 
 inline void ObjectMemory::markObject(OTE* ote)
 {
-	// TODO: Check code generated here is optimal
-	ote->mark();
-	//ote->m_flags.m_mark = m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
+	ote->m_flags.m_mark = m_spaceOTEBits[OTEFlags::NormalSpace].m_mark;
 }
 
 // lastPointerOf includes the object header, sizeBitsOf()/mwordSizeOf() does NOT
 inline MWORD ObjectMemory::lastStrongPointerOf(OTE* ote)
 {
-	BYTE flags = ote->getFlagsByte();
+	BYTE flags = ote->m_ubFlags;
 	return (flags & OTE::PointerMask)
 		? (flags & WeaknessMask) == OTE::WeakMask 
-				? ObjectHeaderSize + ote->m_oteClass->m_location->fixedFields() 
+				? ObjectHeaderSize + ote->m_oteClass->m_location->m_instanceSpec.m_fixedFields 
 				: ote->getWordSize()
 		: 0;
 }
@@ -923,7 +920,7 @@ inline OTE* ObjectMemory::OTEPool::allocate()
 
 		// Should now be considered by GC, so remove free mark
 		ote->beAllocated();
-		ote->mark();
+		markObject(ote);
 		VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
 		m_pFreeList = reinterpret_cast<OTE*>(obj->m_fields[0]);
 
@@ -999,7 +996,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 	ASSERT(!ote->isFree());
 	ASSERT(!ote->isPointers());
 	ASSERT(ote->heapSpace() == space);
-	ASSERT(ote->hasCurrentMark());
+	ASSERT(ObjectMemory::hasCurrentMark(ote));
 	ASSERT(ote->m_count == 0);
 	ASSERT(!ote->isImmutable());
 
@@ -1040,7 +1037,7 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	ASSERT(!ote->isFree());
 	ASSERT(ote->isPointers());
 	ASSERT(ote->heapSpace() == space);
-	ASSERT(ote->hasCurrentMark());
+	ASSERT(ObjectMemory::hasCurrentMark(ote));
 	ASSERT(ote->m_count == 0);
 
 	return ote;

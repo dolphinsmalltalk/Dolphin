@@ -344,19 +344,20 @@ void __fastcall Interpreter::createActualMessage(const unsigned argCount)
 	message->m_args->m_count = 1;
 	Array* args = message->m_args->m_location;
 	
-	m_registers.m_stackPointer -= argCount;//-1;
-	Oop* const sp = m_registers.m_stackPointer;
+	Oop* const sp = m_registers.m_stackPointer - argCount + 1;
 
 	// Transfer the arguments off the stack to the array
 	const unsigned loopEnd = argCount;
 	for (unsigned i=0;i<loopEnd;i++)
 	{
-		Oop oopArg = sp[i+1];
+		Oop oopArg = sp[i];
 		ObjectMemory::countUp(oopArg);
 		args->m_elements[i] = oopArg;
 	}
 
-	pushNewObject((OTE*)messagePointer);
+	*sp = (Oop)messagePointer;
+	m_registers.m_stackPointer = sp;
+	ObjectMemory::AddToZct((OTE*)messagePointer);
 }
 
 #pragma code_seg(INTERP_SEG)
@@ -637,7 +638,7 @@ BlockOTE* __fastcall Interpreter::blockCopy(DWORD ext)
 	// may come from the context cache
 	BlockOTE* oteBlock = BlockClosure::New(extension.copiedValuesCount);
 
-	HARDASSERT(oteBlock->hasCurrentMark());
+	HARDASSERT(ObjectMemory::hasCurrentMark(oteBlock));
 	HARDASSERT(oteBlock->m_oteClass == Pointers.ClassBlockClosure);
 	BlockClosure* pBlock = oteBlock->m_location;
 

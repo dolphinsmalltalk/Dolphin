@@ -80,6 +80,72 @@ inline POBJECT ObjectMemory::allocObject(MWORD objectSize, OTE*& ote)
 	return pObj;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Object copying (mostly allocation)
+
+PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
+{
+	ASSERT(!ote->isBytes());
+
+	// A pointer object is a bit more tricky to copy (but not much)
+	VariantObject* obj = ote->m_location;
+	BehaviorOTE* classPointer = ote->m_oteClass;
+
+	PointersOTE* copyPointer;
+	MWORD size;
+
+	if (ote->heapSpace() == OTEFlags::VirtualSpace)
+	{
+		Interpreter::resizeActiveProcess();
+
+		//size = obj->PointerSize();
+		size = ote->pointersSize();
+
+		VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(obj);
+		VirtualObjectHeader* pBase = pVObj->getHeader();
+		unsigned maxByteSize = pBase->getMaxAllocation();
+		unsigned currentTotalByteSize = pBase->getCurrentAllocation();
+
+		VirtualOTE* virtualCopy = ObjectMemory::newVirtualObject(classPointer,
+			currentTotalByteSize / sizeof(MWORD),
+			maxByteSize / sizeof(MWORD));
+
+		pVObj = virtualCopy->m_location;
+		pBase = pVObj->getHeader();
+		ASSERT(pBase->getMaxAllocation() == maxByteSize);
+		ASSERT(pBase->getCurrentAllocation() == currentTotalByteSize);
+		virtualCopy->setSize(ote->getSize());
+
+		copyPointer = reinterpret_cast<PointersOTE*>(virtualCopy);
+	}
+	else
+	{
+		//size = obj->PointerSize();
+		size = ote->pointersSize();
+		copyPointer = newPointerObject(classPointer, size);
+	}
+
+	// Now copy over all the fields
+	VariantObject* copy = copyPointer->m_location;
+	ASSERT(copyPointer->pointersSize() == size);
+	for (unsigned i = 0; i<size; i++)
+	{
+		copy->m_fields[i] = obj->m_fields[i];
+		countUp(obj->m_fields[i]);
+	}
+	return copyPointer;
+}
+
+OTE* __fastcall ObjectMemory::shallowCopy(OTE* ote)
+{
+	ASSERT(!isIntegerObject(ote));
+
+	return ote->isBytes()
+		? reinterpret_cast<OTE*>(shallowCopy(reinterpret_cast<BytesOTE*>(ote)))
+		: reinterpret_cast<OTE*>(shallowCopy(reinterpret_cast<PointersOTE*>(ote)));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Public object Instantiation (see also Objmem.h)
 //
@@ -87,10 +153,174 @@ inline POBJECT ObjectMemory::allocObject(MWORD objectSize, OTE*& ote)
 // opaque to external users, and to be interchangeable with MWORDs.
 //
 
+Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* sp)
+{
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
+
+	Oop oopArg = (*sp);
+	SMALLINTEGER count;
+	if (isIntegerObject(oopArg) && (count = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
+	{
+		// Note that instantiateClassWithPointers counts up the class,
+		PointersOTE* oteObj = ObjectMemory::newUninitializedPointerObject(oteClass, count);
+		VariantObject* obj = oteObj->m_location;
+
+		sp = sp - count - 1;
+		while (--count >= 0)
+		{
+			Oop oopArg = *(sp + count);
+			ObjectMemory::countUp(oopArg);
+			obj->m_fields[count] = oopArg;
+		}
+
+		// Save down SP in case ZCT is reconciled on adding result
+		m_registers.m_stackPointer = sp;
+		*sp = reinterpret_cast<Oop>(oteObj);
+		ObjectMemory::AddToZct((OTE*)oteObj);
+		return sp;
+	}
+	else
+	{
+		return primitiveFailure(0);
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, unsigned argCount)
+{
+	Oop oopReceiver = *(sp - argCount);
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(oopReceiver);
+	InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
+
+	if ((instSpec.m_value & (InstanceSpecification::PointersMask | InstanceSpecification::NonInstantiableMask)) == InstanceSpecification::PointersMask)
+	{
+		size_t minSize = instSpec.m_fixedFields;
+		size_t i;
+		if (instSpec.m_indexable)
+		{
+			i = max(minSize, argCount);
+		}
+		else
+		{
+			if (argCount > minSize)
+			{
+				// Not indexable, and too many fields
+				return primitiveFailure(2);
+			}
+			i = minSize;
+		}
+
+		// Note that instantiateClassWithPointers counts up the class,
+		PointersOTE* oteObj = ObjectMemory::newUninitializedPointerObject(oteClass, i);
+		VariantObject* obj = oteObj->m_location;
+
+		// nil out any extra fields
+		const Oop nil = reinterpret_cast<Oop>(Pointers.Nil);
+		while (i > argCount)
+		{
+			obj->m_fields[--i] = nil;
+		}
+
+		while (i != 0)
+		{
+			i--;
+			Oop oopArg = *sp--;
+			ObjectMemory::countUp(oopArg);
+			obj->m_fields[i] = oopArg;
+		}
+
+		// Save down SP in case ZCT is reconciled on adding result, allowing unref'd args to be reclaimed
+		m_registers.m_stackPointer = sp;
+		*sp = reinterpret_cast<Oop>(oteObj);
+		ObjectMemory::AddToZct((OTE*)oteObj);
+		return sp;
+	}
+	else
+	{
+		return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 0);
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveNew(Oop* const sp)
+{
+	// This form of C code results in something very close to the hand-coded assembler original for primitiveNew
+
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*sp);
+	InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
+	if (!(instSpec.m_indexable || instSpec.m_nonInstantiable))
+	{
+		PointersOTE* newObj = ObjectMemory::newPointerObject(oteClass, instSpec.m_fixedFields);
+		*sp = reinterpret_cast<Oop>(newObj);
+		ObjectMemory::AddToZct((OTE*)newObj);
+		return sp;
+	}
+	else
+	{
+		return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 0);
+	}
+}
+
+Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp)
+{
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
+	Oop oopArg = (*sp);
+	// Unfortunately the compiler can't be persuaded to perform this using just the sar and conditional jumps on no-carry and signed;
+	// it generates both the bit test and the shift.
+	SMALLINTEGER size;
+	if (isIntegerObject(oopArg) && (size = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
+	{
+		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
+		if ((instSpec.m_value & (InstanceSpecification::IndexableMask | InstanceSpecification::NonInstantiableMask)) == InstanceSpecification::IndexableMask)
+		{
+			if (instSpec.m_pointers)
+			{
+				PointersOTE* newObj = ObjectMemory::newPointerObject(oteClass, size + instSpec.m_fixedFields);
+				*(sp - 1) = reinterpret_cast<Oop>(newObj);
+				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+				return sp - 1;
+			}
+			else
+			{
+				BytesOTE* newObj = ObjectMemory::newByteObject(oteClass, size);
+				*(sp - 1) = reinterpret_cast<Oop>(newObj);
+				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+				return sp - 1;
+			}
+		}
+		else
+		{
+			// Not indexable, or non-instantiable
+			return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 2);
+		}
+	}
+	else
+	{
+		return primitiveFailure(0);	// Size must be positive SmallInteger
+	}
+}
+
 PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer)
 {
 	ASSERT(isBehavior(Oop(classPointer)));
 	return newPointerObject(classPointer, classPointer->m_location->fixedFields());
+}
+
+PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer, MWORD oops)
+{
+	PointersOTE* ote = newUninitializedPointerObject(classPointer, oops);
+
+	// Initialise the fields to nils
+	const Oop nil = Oop(Pointers.Nil);		// Loop invariant (otherwise compiler reloads each time)
+	VariantObject* pLocation = ote->m_location;
+#ifdef _M_IX86
+	__stosd(reinterpret_cast<DWORD*>(pLocation->m_fields), nil, oops);
+#else
+	const MWORD loopEnd = oops;
+	for (MWORD i = 0; i<loopEnd; i++)
+		pLocation->m_fields[i] = nil;
+#endif
+	ASSERT(ote->isPointers());
+
+	return reinterpret_cast<PointersOTE*>(ote);
 }
 
 PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD oops)
@@ -112,25 +342,6 @@ PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE*
 
 	// DO NOT Initialise the fields to nils
 
-	ASSERT(ote->isPointers());
-	
-	return reinterpret_cast<PointersOTE*>(ote);
-}
-
-PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer, MWORD oops)
-{
-	PointersOTE* ote = newUninitializedPointerObject(classPointer, oops);
-
-	// Initialise the fields to nils
-	const Oop nil = Oop(Pointers.Nil);		// Loop invariant (otherwise compiler reloads each time)
-	VariantObject* pLocation = ote->m_location;
-#ifdef _M_IX86
-	__stosd(reinterpret_cast<DWORD*>(pLocation->m_fields), nil, oops);
-#else
-	const MWORD loopEnd = oops;
-	for (MWORD i=0; i<loopEnd; i++)
-		pLocation->m_fields[i] = nil;
-#endif
 	ASSERT(ote->isPointers());
 	
 	return reinterpret_cast<PointersOTE*>(ote);
@@ -173,6 +384,33 @@ BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWOR
 	return reinterpret_cast<BytesOTE*>(ote);
 }
 
+Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp)
+{
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
+	Oop oopArg = (*sp);
+	SMALLINTEGER size;
+	if (isIntegerObject(oopArg) && (size = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
+	{
+		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
+		if (!(instSpec.m_pointers || instSpec.m_nonInstantiable))
+		{
+			BytesOTE* newObj = ObjectMemory::newByteObject(oteClass, size);
+			*(sp - 1) = reinterpret_cast<Oop>(newObj);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
+			return sp - 1;
+		}
+		else
+		{
+			// Not indexable, or non-instantiable
+			return primitiveFailure(instSpec.m_nonInstantiable ? 1 : 2);
+		}
+	}
+	else
+	{
+		return primitiveFailure(0);	// Size must be positive SmallInteger
+	}
+}
+
 
 BytesOTE* __fastcall ObjectMemory::newUninitializedByteObject(BehaviorOTE* classPointer, MWORD byteSize)
 {
@@ -197,8 +435,78 @@ BytesOTE* __fastcall ObjectMemory::newUninitializedByteObject(BehaviorOTE* class
 }
 
 
+BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
+{
+	ASSERT(ote->isBytes());
+
+	// Copying byte objects is simple and fast
+	VariantByteObject& bytes = *ote->m_location;
+	BehaviorOTE* classPointer = ote->m_oteClass;
+	MWORD objectSize = ote->sizeOf();
+
+	OTE* copyPointer;
+	// Allocate an uninitialized object ...
+	VariantByteObject* pLocation = static_cast<VariantByteObject*>(allocObject(objectSize, copyPointer));
+	ASSERT((objectSize > MaxSizeOfPoolObject && copyPointer->heapSpace() == OTEFlags::NormalSpace)
+		|| copyPointer->heapSpace() == OTEFlags::PoolSpace);
+
+	ASSERT(copyPointer->getSize() == objectSize);
+	// This set does not want to copy over the immutability bit - i.e. even if the original was immutable, the 
+	// copy will never be.
+	copyPointer->setSize(ote->getSize());
+	copyPointer->m_dwFlags = (copyPointer->m_dwFlags & ~OTE::WeakMask) | (ote->m_dwFlags & OTE::WeakMask);
+	ASSERT(copyPointer->isBytes());
+	copyPointer->m_oteClass = classPointer;
+	classPointer->countUp();
+
+	// Copy the entire object over the other one, including any null terminator and object header
+	memcpy(pLocation, &bytes, objectSize);
+
+	return reinterpret_cast<BytesOTE*>(copyPointer);
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual object space allocation
+
+// Answer a new process with an initial stack size specified by the first argument, and a maximum
+// stack size specified by the second argument.
+Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp)
+{
+	Oop maxArg = *sp;
+	SMALLINTEGER maxSize;
+	if (ObjectMemoryIsIntegerObject(maxArg) && (maxSize = ObjectMemoryIntegerValueOf(maxArg)) >= 0)
+	{
+		Oop initArg = *(sp - 1);
+		SMALLINTEGER initialSize;
+		if (ObjectMemoryIsIntegerObject(initArg) && (initialSize = ObjectMemoryIntegerValueOf(initArg)) >= 0)
+		{
+			BehaviorOTE* receiverClass = reinterpret_cast<BehaviorOTE*>(*(sp - 2));
+			InstanceSpecification instSpec = receiverClass->m_location->m_instanceSpec;
+			if (instSpec.m_indexable && !instSpec.m_nonInstantiable)
+			{
+				unsigned fixedFields = instSpec.m_fixedFields;
+				VirtualOTE* newObject = ObjectMemory::newVirtualObject(receiverClass, initialSize + fixedFields, maxSize + fixedFields);
+				*(sp - 2) = reinterpret_cast<Oop>(newObject);
+				// No point saving down SP before potential Zct reconcile as the init & max args must be SmallIntegers
+				ObjectMemory::AddToZct((OTE*)newObject);
+				return sp - 2;
+			}
+			else
+			{
+				return primitiveFailure(instSpec.m_nonInstantiable ? 3 : 2);	// Non-indexable or abstract class
+			}
+		}
+		else
+		{
+			return primitiveFailure(1);	// initialSize arg not a SmallInteger
+		}
+	}
+	else
+	{
+		return primitiveFailure(0);	// maxsize arg not a SmallInteger
+	}
+}
 
 /*
 	Allocate a new virtual object from virtual space, which can grow up to maxBytes (including the
@@ -316,102 +624,6 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, MWORD init
 //	ExitCritSection();
 
 	return reinterpret_cast<VirtualOTE*>(ote);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Object copying (mostly allocation)
-
-BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
-{
-	ASSERT(ote->isBytes());
-
-	// Copying byte objects is simple and fast
-	VariantByteObject& bytes = *ote->m_location;
-	BehaviorOTE* classPointer = ote->m_oteClass;
-	MWORD objectSize = ote->sizeOf();
-
-	OTE* copyPointer;
-	// Allocate an uninitialized object ...
-	VariantByteObject* pLocation = static_cast<VariantByteObject*>(allocObject(objectSize, copyPointer));
-	ASSERT((objectSize > MaxSizeOfPoolObject && copyPointer->heapSpace() == OTEFlags::NormalSpace)
-			|| copyPointer->heapSpace() == OTEFlags::PoolSpace);
-
-	ASSERT(copyPointer->getSize() == objectSize);
-	// This set does not want to copy over the immutability bit - i.e. even if the original was immutable, the 
-	// copy will never be.
-	copyPointer->setSize(ote->getSize());
-	copyPointer->m_dwFlags = (copyPointer->m_dwFlags & ~OTE::WeakMask) | (ote->m_dwFlags & OTE::WeakMask);
-	ASSERT(copyPointer->isBytes());
-	copyPointer->m_oteClass = classPointer;
-	classPointer->countUp();
-
-	// Copy the entire object over the other one, including any null terminator and object header
-	memcpy(pLocation, &bytes, objectSize);
-
-	return reinterpret_cast<BytesOTE*>(copyPointer);
-}
-
-PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
-{
-	ASSERT(!ote->isBytes());
-
-	// A pointer object is a bit more tricky to copy (but not much)
-	VariantObject* obj = ote->m_location;
-	BehaviorOTE* classPointer = ote->m_oteClass;
-
-	PointersOTE* copyPointer;
-	MWORD size;
-
-	if (ote->heapSpace() == OTEFlags::VirtualSpace)
-	{
-		Interpreter::resizeActiveProcess();
-
-		//size = obj->PointerSize();
-		size = ote->pointersSize();
-
-		VirtualObject* pVObj = reinterpret_cast<VirtualObject*>(obj);
-		VirtualObjectHeader* pBase = pVObj->getHeader();
-		unsigned maxByteSize = pBase->getMaxAllocation(); 
-		unsigned currentTotalByteSize = pBase->getCurrentAllocation();
-
-		VirtualOTE* virtualCopy = ObjectMemory::newVirtualObject(classPointer, 
-			currentTotalByteSize/sizeof(MWORD), 
-			maxByteSize/sizeof(MWORD));
-
-		pVObj = virtualCopy->m_location;
-		pBase = pVObj->getHeader();
-		ASSERT(pBase->getMaxAllocation() == maxByteSize);
-		ASSERT(pBase->getCurrentAllocation() == currentTotalByteSize);
-		virtualCopy->setSize(ote->getSize());
-
-		copyPointer = reinterpret_cast<PointersOTE*>(virtualCopy);
-	}
-	else
-	{
-		//size = obj->PointerSize();
-		size = ote->pointersSize();
-		copyPointer = newPointerObject(classPointer, size);
-	}
-
-	// Now copy over all the fields
-	VariantObject* copy = copyPointer->m_location;
-	ASSERT(copyPointer->pointersSize() == size);
-	for (unsigned i=0;i<size;i++)
-	{
-		copy->m_fields[i] = obj->m_fields[i];
-		countUp(obj->m_fields[i]);
-	}
-	return copyPointer;
-}
-
-OTE* __fastcall ObjectMemory::shallowCopy(OTE* ote)
-{
-	ASSERT(!isIntegerObject(ote));
-
-	return ote->isBytes() 
-			? reinterpret_cast<OTE*>(shallowCopy(reinterpret_cast<BytesOTE*>(ote))) 
-			: reinterpret_cast<OTE*>(shallowCopy(reinterpret_cast<PointersOTE*>(ote)));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

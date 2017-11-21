@@ -131,7 +131,6 @@
     <ClCompile Include="..\LoadImage.cpp">
       <AdditionalIncludeDirectories>$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <ClCompile Include="..\MemPrim.cpp" />
     <ClCompile Include="..\objmem.cpp" />
     <ClCompile Include="..\ObjMemInit.cpp" />
     <ClCompile Include="..\oleprim.cpp" />

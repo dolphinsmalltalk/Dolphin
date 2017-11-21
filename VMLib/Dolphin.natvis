@@ -247,7 +247,7 @@
   <Type Name="ST::Message">
     <DisplayString>a Message</DisplayString>
     <Expand HideRawView="true">
-      <Item Name="selector">>m_selector</Item>
+      <Item Name="selector">m_selector</Item>
       <Item Name="args">m_args</Item>
     </Expand>
   </Type>
