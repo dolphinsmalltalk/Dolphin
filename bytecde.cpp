@@ -654,7 +654,11 @@ BlockOTE* __fastcall Interpreter::blockCopy(DWORD ext)
 
 	HARDASSERT(ObjectMemoryIsIntegerObject(*reinterpret_cast<Oop*>(&pBlock->m_info)));
 
-	if (extension.needsOuter)
+	if (!extension.needsOuter)
+	{
+		pBlock->m_outer = Pointers.Nil;
+	}
+	else
 	{
 		OTE* outerPointer = reinterpret_cast<OTE*>(frame->m_environment);
 		// If this assertion fires its a clean block, which we don't expect at present
@@ -680,8 +684,6 @@ BlockOTE* __fastcall Interpreter::blockCopy(DWORD ext)
 		// We've added a heap object to home context so we must count it
 		outerPointer->countUp();
 	}
-	else
-		pBlock->m_outer = Pointers.Nil;
 	
 	const unsigned nValuesToCopy = extension.copiedValuesCount;
 	if (nValuesToCopy > 0)

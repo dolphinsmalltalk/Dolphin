@@ -249,7 +249,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 								fieldOTE << "(" << (UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << " refs " <<
 								int(ote->m_flags.m_count) << ")" << endl;
 #endif	
-							decRefs(fieldOTE);
+							fieldOTE->decRefs();
 							weakObj->m_fields[j] = corpse;
 							losses++;
 						}
@@ -300,21 +300,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 			HARDASSERT(!ObjectMemory::hasCurrentMark(ote));
 
 			// We found a dying object, finalize it if necessary
-			if (oteFlags & OTE::FinalizeMask)
-			{
-				#if 0//def _DEBUG
-					TRACESTREAM << "Finalizing " << ote << endl;
-				#endif
-
-				Interpreter::basicQueueForFinalization(ote);
-				// Prevent a second finalization
-				ote->beUnfinalizable();
-				// We must ensure the object has the current mark so that it doesn't cock up the
-				// next GC in case it survives that long
-				markObject(ote);
-				queuedForFinalize++;
-			}
-			else
+			if (!(oteFlags & OTE::FinalizeMask))
 			{
 				// It doesn't want finalizing, so we can free it
 				// Countdown all refs from objects which are to be
@@ -370,6 +356,20 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 				ote->m_count = 0;
 				deallocate(ote);
 				deletions++;
+			}
+			else
+			{
+#if 0//def _DEBUG
+				TRACESTREAM << "Finalizing " << ote << endl;
+#endif
+
+				Interpreter::basicQueueForFinalization(ote);
+				// Prevent a second finalization
+				ote->beUnfinalizable();
+				// We must ensure the object has the current mark so that it doesn't cock up the
+				// next GC in case it survives that long
+				markObject(ote);
+				queuedForFinalize++;
 			}
 		}
 	}

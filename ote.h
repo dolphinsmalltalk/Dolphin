@@ -81,12 +81,16 @@ public:
 
 	__forceinline MWORD getIndex()	const					{ return this - reinterpret_cast<const TOTE<T>*>(ObjectMemory::m_pOT); }
 
-	__forceinline void countUp()							{ if (m_count < MAXCOUNT) m_count++; }
+	__forceinline void countUp() 
+	{ 
+		BYTE up = m_count + 1; 
+		if (up != 0) m_count = up; 
+	}
 
 	__forceinline void countDown()
 	{
 		HARDASSERT(m_count > 0);
-		if (m_count < MAXCOUNT)
+		if (m_count != MAXCOUNT)
 	 		if (--m_count == 0)
 				ObjectMemory::AddToZct((OTE*)this);
 	}
@@ -94,12 +98,12 @@ public:
 	void countDownStackRef()
 	{
 		HARDASSERT(m_count > 0);
-		if (m_count < MAXCOUNT)
+		if (m_count != MAXCOUNT)
 			if (--m_count == 0)
 				ObjectMemory::AddStackRefToZct((OTE*)this);
 	}
 
-	__forceinline bool decRefs()							{ return (m_count < MAXCOUNT) && (--m_count == 0); }
+	__forceinline bool decRefs()							{ return (m_count != MAXCOUNT) && (--m_count == 0); }
 	__forceinline bool isImmutable() const					{ return static_cast<int>(m_size) < 0; }
 	__forceinline void beImmutable()						{ m_size |= ImmutabilityBit; }
 	__forceinline void beMutable()							{ m_size &= SizeMask; }

@@ -392,7 +392,6 @@ private:
 
 	static FixedSizePool& spacePoolForSize(MWORD objectSize);
 
-	static void decRefs(OTE* ote);
 	static void decRefs(Oop);
 
 #ifdef _DEBUG
@@ -530,12 +529,6 @@ inline bool ObjectMemory::isValidOop(Oop objectPointer)
 
 // Macro to calculate the byte size of an object with N pointers
 #define SizeOfPointers(N) (((N)+ObjectHeaderSize)*sizeof(MWORD))
-
-inline void ObjectMemory::decRefs(OTE* ote)
-{
-	ASSERT(!isIntegerObject(ote));
-	ote->decRefs();
-}
 
 inline void ObjectMemory::decRefs(Oop oop)
 {
@@ -774,14 +767,14 @@ inline bool ObjectMemory::isAContext(const OTE* ote)
 
 inline BYTE* ObjectMemory::ByteAddressOfObject(Oop& objectPointer)
 {
-	if (isIntegerObject(objectPointer))
-	{
-		return reinterpret_cast<BYTE*>(&objectPointer);
-	}
-	else
+	if (!isIntegerObject(objectPointer))
 	{
 		OTE* ote = reinterpret_cast<OTE*>(objectPointer);
 		return reinterpret_cast<BYTE*>(ote->m_location);
+	}
+	else
+	{
+		return reinterpret_cast<BYTE*>(&objectPointer);
 	}
 }
 
@@ -792,14 +785,14 @@ inline BYTE* ObjectMemory::ByteAddressOfObject(Oop& objectPointer)
 // byte after the header.
 inline BYTE* ObjectMemory::ByteAddressOfObjectContents(Oop& objectPointer)
 {
-	if (isIntegerObject(objectPointer))
-	{
-		return reinterpret_cast<BYTE*>(&objectPointer);
-	}
-	else
+	if (!isIntegerObject(objectPointer))
 	{
 		BytesOTE* oteBytes = reinterpret_cast<BytesOTE*>(objectPointer);
 		return oteBytes->m_location->m_fields;
+	}
+	else
+	{
+		return reinterpret_cast<BYTE*>(&objectPointer);
 	}
 }
 
