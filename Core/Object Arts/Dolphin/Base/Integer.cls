@@ -523,6 +523,23 @@ isPowerOfTwo
 
 	^self strictlyPositive and: [(self bitAnd: self - 1) == 0]!
 
+isPrime
+	"Answer true if the receiver is a prime number."
+
+	| maxDivider |
+
+	"Handle special cases."
+	self < 2 ifTrue: [ ^ false ].					"1, 0 and negative numbers are not prime."
+	( self = 2 or: [ self = 3 ] ) ifTrue: [ ^ true ].	"2 and 3 are prime."
+	self \\ 2 = 0 ifTrue: [ ^ false ].				"Other even numbers are not prime."
+
+	"Now check divisibility by all odd dividers upto the square root of self."
+	maxDivider := self sqrt asInteger + 1.
+	3 to: maxDivider by: 2 do: [ :divider |
+		self \\ divider = 0 ifTrue: [ ^ false ] ].
+
+	^ true.!
+
 isSDWORD
 	"Answer whether the receiver can be represented as a 32-bit two's complement signed integer
 	(i.e. as an SDWORD)."
@@ -796,6 +813,7 @@ truncated
 !Integer categoriesFor: #isInteger!public!testing! !
 !Integer categoriesFor: #isNull!public!testing! !
 !Integer categoriesFor: #isPowerOfTwo!public!testing! !
+!Integer categoriesFor: #isPrime!bit manipulation!public!testing! !
 !Integer categoriesFor: #isSDWORD!public!testing! !
 !Integer categoriesFor: #lcm:!factorization!public! !
 !Integer categoriesFor: #lowBit!bit manipulation!public! !

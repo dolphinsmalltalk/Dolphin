@@ -69,6 +69,14 @@ testIsPowerOfTwo
 	powersOfTwo do: [:each | self assert: each isPowerOfTwo].
 	nonPowersOfTwo do: [:each | self deny: each isPowerOfTwo]!
 
+testIsPrime
+	| isPrimeResults |
+
+	isPrimeResults := #( 1 2 3 4 5 6 7 8 9 10 11 12 13 1000 7919 ) collect: [ :num | num isPrime ].
+
+	self assert: isPrimeResults = 
+		#(false true true false true false true false false false true false true false true ).!
+
 testNew
 	self should: [self canonicalInstance class new] raise: TestResult error!
 
@@ -109,6 +117,7 @@ testTwoComplementRightShift
 !IntegerTest categoriesFor: #testIndexedAccess!public!unit tests! !
 !IntegerTest categoriesFor: #testIsInteger!public!unit tests! !
 !IntegerTest categoriesFor: #testIsPowerOfTwo!public! !
+!IntegerTest categoriesFor: #testIsPrime!public!unit tests! !
 !IntegerTest categoriesFor: #testNew!public!unit tests! !
 !IntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
 !IntegerTest categoriesFor: #testSetBit!public!unit tests! !
