@@ -183,6 +183,56 @@ void ObjectMemory::EmptyZct(Oop* const sp)
 	//	CHECKREFSNOFIX
 }
 
+
+// Count down and deallocate an Object - only performed when reconciling
+// the Zct.
+//
+void ObjectMemory::recursiveCountDown(OTE* ote)
+{
+	if (ote->decRefs())
+		recursiveFree(ote);
+}
+
+OTE* __fastcall ObjectMemory::recursiveFree(OTE* rootOTE)
+{
+	HARDASSERT(!isIntegerObject(rootOTE));
+	HARDASSERT(!isPermanent(rootOTE));
+	HARDASSERT(!rootOTE->isFree());
+	HARDASSERT(rootOTE->m_count == 0);
+
+	if (!rootOTE->isFinalizable())
+	{
+		// Deal with the class first, as this is now held in the OTE
+		recursiveCountDown(reinterpret_cast<POTE>(rootOTE->m_oteClass));
+
+		if (rootOTE->isPointers())
+		{
+			// Recurse through referenced objects as necessary
+			const MWORD lastPointer = rootOTE->getWordSize();
+			Oop* pFields = reinterpret_cast<Oop*>(rootOTE->m_location);
+			// Start after the header (only includes size now, which is not an Oop)
+			for (MWORD i = ObjectHeaderSize; i < lastPointer; i++)
+			{
+				Oop fieldPointer = pFields[i];
+				if (!isIntegerObject(fieldPointer))
+				{
+					OTE* fieldOTE = reinterpret_cast<OTE*>(fieldPointer);
+					recursiveCountDown(fieldOTE);
+				}
+			}
+		}
+
+		deallocate(rootOTE);
+	}
+	else
+	{
+		finalize(rootOTE);
+		rootOTE->beUnfinalizable();
+	}
+
+	return rootOTE;		// Important for some assembler routines - will be non-zero, so can act as TRUE
+}
+
 void Interpreter::IncStackRefs(Oop* const sp)
 {
 	Process* pProcess = actualActiveProcess();
@@ -229,12 +279,12 @@ void ObjectMemory::PopulateZct(Oop* const sp)
 	//CHECKREFSNOFIX
 #endif
 
-	if (m_nZctEntries > (m_nZctHighWater - m_nZctHighWater / 4))
+	if (m_nZctEntries > (m_nZctHighWater - (m_nZctHighWater >> 2)))
 	{
 		// More than 75% full, then grow it
 		GrowZct();
 	}
-	else if ((m_nZctHighWater > (int)ZctMinSize) && (m_nZctEntries < m_nZctHighWater / 4))
+	else if ((m_nZctHighWater > (int)ZctMinSize) && (m_nZctEntries < (m_nZctHighWater >> 2)))
 	{
 		// Less than 25% full, so shrink it
 		ShrinkZct();

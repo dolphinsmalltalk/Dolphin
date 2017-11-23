@@ -132,56 +132,6 @@ void ObjectMemory::deallocate(OTE* ote)
 // Return to default setting
 //#pragma auto_inline(on)
 
-
-// Count down and deallocate an Object - only performed when reconciling
-// the Zct.
-//
-void ObjectMemory::recursiveCountDown(OTE* ote)
-{
-	if (ote->decRefs())
-		recursiveFree(ote);
-}
-
-OTE* __fastcall ObjectMemory::recursiveFree(OTE* rootOTE)
-{
-	HARDASSERT(!isIntegerObject(rootOTE));
-	HARDASSERT(!isPermanent(rootOTE));
-	HARDASSERT(!rootOTE->isFree());
-	HARDASSERT(rootOTE->m_count == 0);
-
-	if (rootOTE->isFinalizable())
-	{
-		finalize(rootOTE);
-		rootOTE->beUnfinalizable();
-	}
-	else
-	{
-		// Deal with the class first, as this is now held in the OTE
-		recursiveCountDown(reinterpret_cast<POTE>(rootOTE->m_oteClass));
-
-		if (rootOTE->isPointers())
-		{
-			// Recurse through referenced objects as necessary
-			const MWORD lastPointer = rootOTE->getWordSize();
-			Oop* pFields = reinterpret_cast<Oop*>(rootOTE->m_location);
-			// Start after the header (only includes size now, which is not an Oop)
-			for (MWORD i = ObjectHeaderSize; i < lastPointer; i++)
-			{
-				Oop fieldPointer = pFields[i];
-				if (!isIntegerObject(fieldPointer))
-				{
-					OTE* fieldOTE = reinterpret_cast<OTE*>(fieldPointer);
-					recursiveCountDown(fieldOTE);
-				}
-			}
-		}
-
-		deallocate(rootOTE);
-	}
-
-	return rootOTE;		// Important for some assembler routines - will be non-zero, so can act as TRUE
-}
-
 #pragma code_seg(GC_SEG)
 
 // Free up a pool of objects maintained by the interpreter on request
