@@ -239,6 +239,8 @@ primitiveEquivalent EQU ?primitiveEquivalent@Interpreter@@CIPAIQAI@Z
 extern primitiveEquivalent:near32
 primitiveShallowCopy EQU ?primitiveShallowCopy@Interpreter@@CIPAIQAI@Z
 extern primitiveShallowCopy:near32
+primitiveAllInstances EQU ?primitiveAllInstances@Interpreter@@CIPAIQAI@Z
+extern primitiveAllInstances:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
@@ -396,8 +398,6 @@ extern ALLOCATEBYTESNOZERO:near32
 DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@VObject@ST@@@@XZ
 extern DQFORFINALIZATION:near32
 
-INSTANCESOF EQU ?instancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
-extern INSTANCESOF:near32
 SUBINSTANCESOF EQU ?subinstancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
 extern SUBINSTANCESOF:near32
 INSTANCECOUNTS EQU ?instanceCounts@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV2@@Z
@@ -1761,14 +1761,6 @@ ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;  BOOL __fastcall Interpreter::primitiveAllInstances()
 ;
-BEGINPRIMITIVE primitiveAllInstances
-	mov		ecx, [_SP]						; Load receiver class at stack top
-	call	INSTANCESOF
-	mov		[_SP], eax						; Overwrite receiver with new object
-	AddToZctNoSP <a>
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveAllInstances
 
 BEGINPRIMITIVE primitiveInstanceCounts
 	mov		ecx, [_SP]						; Load arg stack top

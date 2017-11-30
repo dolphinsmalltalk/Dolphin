@@ -160,6 +160,15 @@ ArrayOTE* __fastcall ObjectMemory::instancesOf(BehaviorOTE* classPointer)
 	return arrayPointer;
 }
 
+Oop* __fastcall Interpreter::primitiveAllInstances(Oop* const sp)
+{
+	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
+	ArrayOTE* instances = ObjectMemory::instancesOf(receiver);
+	*sp = reinterpret_cast<Oop>(instances);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(instances));
+	return sp;
+}
+
 #pragma code_seg(MEM_SEG)
 
 bool __fastcall ObjectMemory::isBehavior(Oop objectPointer)
