@@ -241,6 +241,8 @@ primitiveShallowCopy EQU ?primitiveShallowCopy@Interpreter@@CIPAIQAI@Z
 extern primitiveShallowCopy:near32
 primitiveAllInstances EQU ?primitiveAllInstances@Interpreter@@CIPAIQAI@Z
 extern primitiveAllInstances:near32
+primitiveAllSubinstances EQU ?primitiveAllSubinstances@Interpreter@@CIPAIQAI@Z
+extern primitiveAllSubinstances:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
@@ -398,8 +400,6 @@ extern ALLOCATEBYTESNOZERO:near32
 DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@VObject@ST@@@@XZ
 extern DQFORFINALIZATION:near32
 
-SUBINSTANCESOF EQU ?subinstancesOf@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV?$TOTE@VBehavior@ST@@@@@Z
-extern SUBINSTANCESOF:near32
 INSTANCECOUNTS EQU ?instanceCounts@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV2@@Z
 extern INSTANCECOUNTS:near32
 
@@ -1782,18 +1782,6 @@ BEGINPRIMITIVE primitiveInstanceCounts
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveInstanceCounts
-
-;  BOOL __fastcall Interpreter::primitiveAllInstances()
-;
-BEGINPRIMITIVE primitiveAllSubinstances
-	mov		ecx, [_SP]						; Load receiver class at stack top
-	call	SUBINSTANCESOF
-	mov		[_SP], eax						; Overwrite receiver with new object
-	AddToZctNoSP <a>
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveAllSubinstances
-
 
 ;  BOOL __fastcall Interpreter::primitiveObjectCount()
 ;

@@ -249,6 +249,15 @@ ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
 	return arrayPointer;
 }
 
+Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp)
+{
+	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
+	ArrayOTE* instances = ObjectMemory::subinstancesOf(receiver);
+	*sp = reinterpret_cast<Oop>(instances);
+	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(instances));
+	return sp;
+}
+
 // Disable warning about exception handling (we compile with exception handling disabled)
 #pragma warning (disable:4530)
 #include <unordered_map>
