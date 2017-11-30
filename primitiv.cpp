@@ -87,6 +87,20 @@ Oop* __fastcall Interpreter::primitiveIdentityHash(Oop* const sp)
 	return sp;
 }
 
+Oop* __fastcall Interpreter::primitiveClass(Oop* const sp)
+{
+	Oop receiver = *sp;
+	if (!ObjectMemoryIsIntegerObject(receiver))
+	{
+		*sp = (Oop)reinterpret_cast<OTE*>(receiver)->m_oteClass;
+	}
+	else
+	{
+		*sp = (Oop)Pointers.ClassSmallInteger;
+	}
+	return sp;
+}
+
 // Does not use successFlag, and returns a clean stack because can only succeed if
 // argument is a positive SmallInteger
 Oop* __fastcall Interpreter::primitiveResize(Oop* const sp)

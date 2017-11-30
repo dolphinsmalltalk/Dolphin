@@ -233,6 +233,9 @@ CURRENTCALLBACK EQU ?currentCallbackContext@@3IA
 extern CURRENTCALLBACK:DWORD
 
 ; C++ Primitive method imports
+primitiveClass EQU ?primitiveClass@Interpreter@@CIPAIQAI@Z
+extern primitiveClass:near32
+
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
@@ -740,26 +743,6 @@ BEGINPRIMITIVE primitiveEquivalent
 	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
 	ret
 ENDPRIMITIVE primitiveEquivalent
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;  int __fastcall Interpreter::primitiveClass()
-;
-BEGINPRIMITIVE primitiveClass
-	mov		ecx, [_SP]							; Load receiver into ecx
-	mov		eax, _SP							; primitiveSuccess(0)
-	test	cl, 1								; SmallInteger?
-	jne		smallInteger
-
-	mov		ecx, (OTE PTR[ecx]).m_oteClass		; No, get class Oop	from Object into eax
-	mov		[_SP], ecx
-	ret
-
-smallInteger:
-	mov		ecx, [Pointers.ClassSmallInteger]
-	mov		[_SP], ecx
-	ret
-ENDPRIMITIVE primitiveClass
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
