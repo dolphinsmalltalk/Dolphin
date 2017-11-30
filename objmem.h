@@ -109,7 +109,6 @@ public:
 	static VariantObject* resize(PointersOTE* objectPointer, MWORD newPointers, bool bRefCount);
 	static VariantByteObject* resize(BytesOTE* objectPointer, MWORD newBytes);
 
-	static OTE* __fastcall shallowCopy(OTE* ote);
 	static BytesOTE* __fastcall shallowCopy(BytesOTE* ote);
 	static PointersOTE* __fastcall shallowCopy(PointersOTE* ote);
 

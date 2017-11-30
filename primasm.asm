@@ -237,6 +237,8 @@ primitiveClass EQU ?primitiveClass@Interpreter@@CIPAIQAI@Z
 extern primitiveClass:near32
 primitiveEquivalent EQU ?primitiveEquivalent@Interpreter@@CIPAIQAI@Z
 extern primitiveEquivalent:near32
+primitiveShallowCopy EQU ?primitiveShallowCopy@Interpreter@@CIPAIQAI@Z
+extern primitiveShallowCopy:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
@@ -405,8 +407,6 @@ QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@ST@@@@II@Z
 extern QUEUEINTERRUPT:near32
 ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@VObject@ST@@@@0@Z
 extern ONEWAYBECOME:near32
-SHALLOWCOPY EQU ?shallowCopy@ObjectMemory@@SIPAV?$TOTE@VObject@ST@@@@PAV2@@Z
-extern SHALLOWCOPY:near32
 
 OOPSUSED EQU ?OopsUsed@ObjectMemory@@SIHXZ
 extern OOPSUSED:near32
@@ -876,106 +876,6 @@ ENDPRIMITIVE primitiveSize
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; String/variable byte objects primitives
 
-;  BOOL __fastcall Interpreter::primitiveStringAt()
-;
-; Primitive for accessing character elements of Strings. Does not check
-; that the receiver is a string, as does not expect to be used in incorrect
-; classes.
-;
-BEGINPRIMITIVE primitiveStringAt1
-	mov		eax, DWORD PTR [_SP-OOPSIZE]		; Load receiver OTE from stack into EAX
-	ASSUME	eax:PTR OTE
-
-	mov		edx, DWORD PTR [_SP]				; Load argument into EDX
-
-	mov		ecx, eax							; Get receiver Oop into ECX (where it remains)
-	sar		edx, 1
-	jnc		localPrimitiveFailure0				; Index not an integer
-	jle		localPrimitiveFailure1				; Index <= 0?
-
-	ASSUME  ecx:PTR OTE
-	mov		eax, [ecx].m_location
-	mov		ecx, [ecx].m_size
-	and		ecx, 7fffffffh						; Mask out the immutability bit
-	cmp		edx, ecx
-
-	ASSUME	eax:PTR BYTE						; 
-	jg		localPrimitiveFailure1
-
-	ASSUME ecx:NOTHING							; ECX is the receiver, but no longer needed
-
-	movzx	edx, BYTE PTR[eax+edx-1]				; Load the character value from the string
-	mov		eax, [OBJECTTABLE]
-
-	shl		edx, 4								; Multiply edx by OTENTRYSIZE (16) (unfortunately not a valid scale value for LEA)
-	add		eax, FIRSTCHAROFFSET
-	add		eax, edx
-
-	; Overwrite the receiver with the accessed character
-	mov		[_SP-OOPSIZE], eax
-	lea		eax, [_SP-OOPSIZE*1]				; primitiveSuccess(1)
-
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-
-ENDPRIMITIVE primitiveStringAt1
-
-
-;  BOOL __fastcall Interpreter::primitiveStringAtPut()
-;
-; Primitive for storing characters into Strings
-;
-BEGINPRIMITIVE primitiveStringAtPut1
-	mov		ecx, [_SP-OOPSIZE*2]				; Access receiver under arguments
-	ASSUME	ecx:PTR OTE
-	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
-	sar		edx, 1								; Argument is a SmallInteger?
-	jnc		localPrimitiveFailure0				; No, primitive failure
-	jle		localPrimitiveFailure1							; Index out of bounds (<= 0)
-
-	mov		eax, [ecx].m_location				; Load object address into eax
-
-	cmp		edx, [ecx].m_size					; Compare offset with object size (if immutable size < 0, so will fail)
-	jg		localPrimitiveFailure1				; Index out of bounds (>= size)
-
-	add		eax, edx							; eax now contains pointer to destination (offset by 1 due to 1-based Smalltalk indexing)
-
-	mov		ecx, [_SP]							; Load value argument receiver into ecx
-	test	cl, 1
-	jnz		localPrimitiveFailure2				; Value is SmallInteger - fail primitive
-	ASSUME	ecx:PTR OTE							; Value is an object (need to check if Character or not)
-
-	mov		edx, [ecx].m_oteClass				; Get class oop into EDX from OTE
-	ASSUME	edx:PTR OTE
-	mov		ecx, [ecx].m_location				; Get address of value into
-	ASSUME	ecx:PTR Character
-
-	cmp		edx, [Pointers.ClassCharacter]		; Is it a character?
-	jne		localPrimitiveFailure2				; Not a char, fail the primitive
-
-	; Rather than use codePoint in char, could work entirely with the Oop by deducting
-	; an appropriate offset in the OT, but this will also work for 16-bit or larger character encodings
-	
-	mov		ecx, [ecx].m_codePoint				; Load first (and only) Oop of object
-	ASSUME	ecx:DWORD							; ecx now contains SmallInteger code pointer of character
-
-	shr		ecx, 1								; Convert codePoint from SmallInteger
-	mov		BYTE PTR [eax-1], cl				; to give 0 based code
-
-	mov		eax, [_SP]							; Relod char (not ref. counted)
-	mov		[_SP-OOPSIZE*2], eax				; ...and overwrite with value for return
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-
-ENDPRIMITIVE primitiveStringAtPut1
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;  BOOL __fastcall Interpreter::primitiveBasicAt()
@@ -1316,18 +1216,6 @@ LocalPrimitiveFailure 1
 LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveInstVarAtPut
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-BEGINPRIMITIVE primitiveShallowCopy
-	mov		ecx, [_SP]
-	CANTBEINTEGEROBJECT <ecx>
-	call	SHALLOWCOPY
-	mov		[_SP], eax						; Overwrite receiver with new object
-	AddToZctNoSP <a>
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveShallowCopy
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; There is a small performance advantage in using this instead of directly 

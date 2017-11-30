@@ -84,6 +84,7 @@ inline POBJECT ObjectMemory::allocObject(MWORD objectSize, OTE*& ote)
 ///////////////////////////////////////////////////////////////////////////////
 // Object copying (mostly allocation)
 
+
 PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 {
 	ASSERT(!ote->isBytes());
@@ -137,13 +138,17 @@ PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 	return copyPointer;
 }
 
-OTE* __fastcall ObjectMemory::shallowCopy(OTE* ote)
+Oop* __fastcall Interpreter::primitiveShallowCopy(Oop* const sp)
 {
-	ASSERT(!isIntegerObject(ote));
+	OTE* receiver = reinterpret_cast<OTE*>(*sp);
+	ASSERT(!isIntegerObject(receiver));
 
-	return ote->isBytes()
-		? reinterpret_cast<OTE*>(shallowCopy(reinterpret_cast<BytesOTE*>(ote)))
-		: reinterpret_cast<OTE*>(shallowCopy(reinterpret_cast<PointersOTE*>(ote)));
+	OTE* copy = receiver->m_flags.m_pointer
+		? (OTE*)ObjectMemory::shallowCopy(reinterpret_cast<PointersOTE*>(receiver))
+		: (OTE*)ObjectMemory::shallowCopy(reinterpret_cast<BytesOTE*>(receiver));
+	*sp = (Oop)copy;
+	ObjectMemory::AddToZct(copy);
+	return sp;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

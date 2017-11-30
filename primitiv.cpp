@@ -90,14 +90,8 @@ Oop* __fastcall Interpreter::primitiveIdentityHash(Oop* const sp)
 Oop* __fastcall Interpreter::primitiveClass(Oop* const sp)
 {
 	Oop receiver = *sp;
-	if (!ObjectMemoryIsIntegerObject(receiver))
-	{
-		*sp = (Oop)reinterpret_cast<OTE*>(receiver)->m_oteClass;
-	}
-	else
-	{
-		*sp = (Oop)Pointers.ClassSmallInteger;
-	}
+	*sp = reinterpret_cast<Oop>(!ObjectMemoryIsIntegerObject(receiver) 
+			? reinterpret_cast<OTE*>(receiver)->m_oteClass : Pointers.ClassSmallInteger);
 	return sp;
 }
 
