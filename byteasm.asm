@@ -3101,9 +3101,7 @@ BEGINBYTECODE shortSpecialSendIdentical
 	sub		_SP, OOPSIZE								; POP
 	mov		edx, [oteTrue]								; Load oteTrue (default answer)
 	cmp		ecx, eax									; receiver == arg?
-	je		@F											; Yes, skip false
-	add		edx, OTENTRYSIZE							; No, load false
-@@:
+	cmovne	edx, [oteFalse]
 	MPrefetch
 	mov		[_SP], edx									; Overwrite stack top with true/false
 	DispatchNext										; Dispatch the next byte code

@@ -235,7 +235,8 @@ extern CURRENTCALLBACK:DWORD
 ; C++ Primitive method imports
 primitiveClass EQU ?primitiveClass@Interpreter@@CIPAIQAI@Z
 extern primitiveClass:near32
-
+primitiveEquivalent EQU ?primitiveEquivalent@Interpreter@@CIPAIQAI@Z
+extern primitiveEquivalent:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
@@ -720,30 +721,6 @@ ENDIF
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;  int __fastcall Interpreter::primitiveEquivalent()
-;
-;	Receiver != Arg is probably the more common case, so the condition
-;	is organised so that the conditional jump is taken when Receiver==Arg
-;	since not taking a jump is cheaper (1 cycle vs 3 cycles)
-;
-;	N.B. This primitive is not used unless #== is performed, because #== is inlined
-;	by the compiler for performance reasons.
-;
-BEGINPRIMITIVE primitiveEquivalent
-	mov		eax, [_SP]							; Load argument ...
-	mov		edx, [oteTrue]						; Load oteTrue (default answer)
-	mov		ecx, [_SP-OOPSIZE]					; Load receiver into ecx
-	.IF ecx != eax								; receiver == arg?
-		add		edx, OTENTRYSIZE				; No, load oteFalse
-	.ENDIF
-	mov		[_SP-OOPSIZE], edx					; Overwrite the receiver with true/false
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	ret
-ENDPRIMITIVE primitiveEquivalent
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

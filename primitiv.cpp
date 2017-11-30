@@ -101,6 +101,15 @@ Oop* __fastcall Interpreter::primitiveClass(Oop* const sp)
 	return sp;
 }
 
+Oop* __fastcall Interpreter::primitiveEquivalent(Oop* const sp)
+{
+	Oop receiver = *(sp-1);
+	Oop arg = *sp;
+	*(sp - 1) = reinterpret_cast<Oop>(arg == receiver ? Pointers.True : Pointers.False);
+	return sp - 1;
+}
+
+
 // Does not use successFlag, and returns a clean stack because can only succeed if
 // argument is a positive SmallInteger
 Oop* __fastcall Interpreter::primitiveResize(Oop* const sp)
