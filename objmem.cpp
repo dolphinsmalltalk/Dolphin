@@ -318,7 +318,6 @@ static int storageSize(OTE* ote)
 	return _ROUND2(bodySize, 8) + sizeof(OTE);
 }
 
-#if 1
 ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 {
 	ClassCountMap counts;
@@ -374,23 +373,20 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 		{
 			Oop obj = array->m_elements[i];
 			countUp(obj);
-			classStats->m_elements[i] = obj;
-			if (isBehavior(obj))
+			int j = i * 3;
+			classStats->m_elements[j] = obj;
+			ClassCountMap::const_iterator it;
+			if (isBehavior(obj) && (it = counts.find(reinterpret_cast<BehaviorOTE*>(obj))) != end)
 			{
-				BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(obj);
-				ClassCountMap::const_iterator it = counts.find(oteClass);
-				if (it != end)
-				{
-					const InstStats& stats = (*it).second;
-					SMALLINTEGER count = stats.count;
-					classStats->m_elements[i+1] = integerObjectOf(count);
-					SMALLINTEGER bytesUsed = stats.bytes;
-					classStats->m_elements[i+2] = integerObjectOf(bytesUsed);
-				}
+				const InstStats& stats = (*it).second;
+				SMALLINTEGER count = stats.count;
+				classStats->m_elements[j+1] = integerObjectOf(count);
+				SMALLINTEGER bytesUsed = stats.bytes;
+				classStats->m_elements[j+2] = integerObjectOf(bytesUsed);
 			}
 			else
 			{
-				classStats->m_elements[i+1] = classStats->m_elements[i+2] = ZeroPointer;
+				classStats->m_elements[j+1] = classStats->m_elements[j+2] = ZeroPointer;
 			}
 		}
 	}
@@ -398,71 +394,24 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 	// WARNING: Ref. count of arrayPointer currently 0
 	return oteClassStats;
 }
-#else
 
-ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
+Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp)
 {
-	const bool allClasses = oteClasses->isNil();
-	ClassCountMap counts;
-
-	if (!allClasses)
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
 	{
-		Array* array = oteClasses->m_location;
-		MWORD count = oteClasses->pointersSize();
-		for (MWORD i=0;i<count;i++)
+		OTE* oteArg = reinterpret_cast<OTE*>(arg);
+		if (oteArg == Pointers.Nil || oteArg->m_oteClass == Pointers.ClassArray)
 		{
-			Oop obj = array->m_elements[i];
-			if (isBehavior(obj))
-			{
-				BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(obj);
-				counts.insert(ClassCountMap::value_type(oteClass, InstStats()));
-			}
+			ArrayOTE* counts = ObjectMemory::instanceCounts(reinterpret_cast<ArrayOTE*>(oteArg));
+			*(sp-1) = reinterpret_cast<Oop>(counts);
+			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(counts));
+			return sp - 1;
 		}
 	}
 
-	const OTE* pEnd = m_pOT+m_nOTSize;
-	for (OTE* ote=m_pOT; ote < pEnd; ote++)
-	{
-		if (!ote->isFree())
-		{
-			BehaviorOTE* oteClass = ote->m_oteClass;
-			ClassCountMap::iterator it = counts.find(oteClass);
-			if (it == counts.end())
-			{
-				if (allClasses)
-					counts.insert(ClassCountMap::value_type(oteClass, InstStats(1,storageSize(ote))));
-			}
-			else
-			{
-				InstStats& stats = (*it).second;
-				stats.count++;
-				stats.bytes += storageSize(ote);
-			}
-		}
-	}
-
-	int n = counts.size();
-	ArrayOTE* oteClassStats = Array::NewUninitialized(n * 3);
-	Array* classStats = oteClassStats->m_location;
-	int i = 0;
-	const ClassCountMap::iterator loopEnd = counts.end();
-	for (ClassCountMap::const_iterator it = counts.begin();it != loopEnd; it++,i+=3)
-	{
-		BehaviorOTE* oteClass = (*it).first;
-		oteClass->countUp();
-		classStats->m_elements[i] = reinterpret_cast<Oop>(oteClass);
-		const InstStats& stats = (*it).second;
-		SMALLINTEGER count = stats.count;
-		classStats->m_elements[i+1] = integerObjectOf(count);
-		SMALLINTEGER bytesUsed = stats.bytes;
-		classStats->m_elements[i+2] = integerObjectOf(bytesUsed);
-	}
-
-	// WARNING: Ref. count of arrayPointer currently 0
-	return oteClassStats;
+	return primitiveFailure(0);
 }
-
-#endif
 
 #pragma code_seg(GC_SEG)
 

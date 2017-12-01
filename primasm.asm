@@ -243,6 +243,8 @@ primitiveAllInstances EQU ?primitiveAllInstances@Interpreter@@CIPAIQAI@Z
 extern primitiveAllInstances:near32
 primitiveAllSubinstances EQU ?primitiveAllSubinstances@Interpreter@@CIPAIQAI@Z
 extern primitiveAllSubinstances:near32
+primitiveInstanceCounts EQU ?primitiveInstanceCounts@Interpreter@@CIPAIQAI@Z
+extern primitiveInstanceCounts:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
@@ -399,9 +401,6 @@ extern ALLOCATEBYTESNOZERO:near32
 
 DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@VObject@ST@@@@XZ
 extern DQFORFINALIZATION:near32
-
-INSTANCECOUNTS EQU ?instanceCounts@ObjectMemory@@SIPAV?$TOTE@VArray@ST@@@@PAV2@@Z
-extern INSTANCECOUNTS:near32
 
 QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@ST@@@@II@Z
 extern QUEUEINTERRUPT:near32
@@ -1756,32 +1755,6 @@ failPrimitivePerform:
 	ret
 
 ENDIF
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;  BOOL __fastcall Interpreter::primitiveAllInstances()
-;
-
-BEGINPRIMITIVE primitiveInstanceCounts
-	mov		ecx, [_SP]						; Load arg stack top
-	test	cl, 1
-	jnz		localPrimitiveFailure0
-	ASSUME	ecx:PTR OTE	
-	cmp		ecx, [Pointers.Nil]
-	je		@F
-	mov		edx, [Pointers.ClassArray]
-	cmp		[ecx].m_oteClass, edx
-	jne		localPrimitiveFailure0
-@@:	
-	call	INSTANCECOUNTS
-	mov		[_SP-OOPSIZE], eax						; Overwrite receiver with new object
-	AddToZct <a>
-	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveInstanceCounts
 
 ;  BOOL __fastcall Interpreter::primitiveObjectCount()
 ;

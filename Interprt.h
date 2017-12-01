@@ -643,6 +643,7 @@ private:
 	static Oop* __fastcall primitiveAllReferences(Oop* const sp);
 	static Oop* __fastcall primitiveAllInstances(Oop* const sp);
 	static Oop* __fastcall primitiveAllSubinstances(Oop* const sp);
+	static Oop* __fastcall primitiveInstanceCounts(Oop* const sp);
 	
 	// Control Primitives
 	
