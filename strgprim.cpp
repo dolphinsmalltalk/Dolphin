@@ -430,3 +430,19 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp)
 		return Interpreter::primitiveFailure(0);
 	}
 }
+
+extern MWORD __fastcall hashBytes(const BYTE* bytes, MWORD size);
+
+extern "C" MWORD __cdecl HashBytes(const BYTE* bytes, MWORD size)
+{
+	return bytes != nullptr ? hashBytes(bytes, size) : 0;
+}
+
+Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp)
+{
+	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
+	MWORD hash = hashBytes(receiver->m_location->m_fields, receiver->bytesSize());
+	*sp = ObjectMemoryIntegerObjectOf(hash);
+	return sp;
+}
+

@@ -62,9 +62,6 @@ public @callPrimitiveValue@8
 ; Entry points for byte code dispatcher (see primasm.asm)
 public _primitivesTable
 
-; We export this so it can be called from Smalltalk
-public HashBytes
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
 
@@ -415,9 +412,6 @@ extern OOPSUSED:near32
 YIELD EQU ?yield@Interpreter@@CIHXZ
 extern YIELD:near32												; See process.cpp
 
-LOOKUPMETHOD EQU ?lookupMethod@Interpreter@@SIPAV?$TOTE@VCompiledMethod@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAV?$TOTE@VSymbol@ST@@@@@Z
-extern LOOKUPMETHOD:near32
-
 PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIPAIQAI@Z
 extern PRIMSTRINGSEARCH:near32
 
@@ -451,6 +445,8 @@ primitiveBasicIdentityHash EQU ?primitiveBasicIdentityHash@Interpreter@@CIPAIQAI
 extern primitiveBasicIdentityHash:near32
 primitiveIdentityHash EQU ?primitiveIdentityHash@Interpreter@@CIPAIQAI@Z
 extern primitiveIdentityHash:near32
+primitiveHashBytes EQU ?primitiveHashBytes@Interpreter@@CIPAIQAI@Z
+extern primitiveHashBytes:near32
 primitiveLookupMethod EQU ?primitiveLookupMethod@Interpreter@@CIPAIQAI@Z
 extern primitiveLookupMethod:near32
 
@@ -1077,19 +1073,14 @@ LocalPrimitiveFailure 2
 ENDPRIMITIVE primitiveInstVarAtPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; _declspec(naked) unsigned long __stdcall hashBytes(const BYTE* chars, int len)
+; _declspec(naked) unsigned long __fastcall hashBytes(const BYTE* bytes, int len)
 ;
 ; On entry ECX contains pointer to string, and EDX the length
 ; Here we keep top 24 bits of _BP 0 to avoid expensive MOVZX (3 cycles)
 ; Hash value answered in EAX
 ;
-HashBytes:								; cdecl entry point
-	mov		ecx, [ESP+4]
-	mov		edx, [ESP+8]
-	test	ecx, ecx
-	jnz		hashBytes
-	xor		eax, eax
-	ret
+hashBytes EQU ?hashBytes@@YIIPBEI@Z 
+public hashBytes
 
 hashBytes PPROC
 	push    ebx
@@ -1127,35 +1118,6 @@ hashStringRet:
 	pop		ebx
 	ret
 hashBytes ENDP
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;  int __fastcall Interpreter::primitiveHashBytes()
-;
-; Should not fail as long as has not been called for a non-byte object (i.e. somebody 
-; has put the primitive in a method of a non-byte class). The only other 
-; possibility for failure is a VM bug which results in the stack pointer being out for
-; some reason. This will be trapped in the debug system only.
-;
-BEGINPRIMITIVE primitiveHashBytes
-	mov		ecx, [_SP]						; Access receiver at stack top
-	ASSUME	ecx:PTR OTE
-
-	ASSERTISBYTES <ecx>
-
-	mov		edx, [ecx].m_size
-	and		edx, 7fffffffh					; Mask out immutability (sign) bit
-	ASSUME	edx:DWORD
-
-	mov		ecx, [ecx].m_location
-	ASSUME	ecx:PTR Object
-
-	call	hashBytes
-	lea		ecx, [eax+eax+1]					; Convert to SmallInteger
-	mov		eax, _SP							; primitiveSuccess(0)
-	mov		[_SP], ecx
-	ret
-ENDPRIMITIVE primitiveHashBytes
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
