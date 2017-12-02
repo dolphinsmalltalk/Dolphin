@@ -431,7 +431,22 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp)
 	}
 }
 
-extern MWORD __fastcall hashBytes(const BYTE* bytes, MWORD size);
+inline MWORD __fastcall hashBytes(const BYTE* bytes, MWORD size)
+{
+	MWORD hash = 0;
+	while(size > 0)
+	{
+		hash = (hash << 4) + *bytes;
+		MWORD topNibble = hash & 0x0f0000000;
+		if (topNibble)
+		{
+			hash = (hash & 0x0fffffff) ^ (topNibble >> 24);
+		}
+		bytes++;
+		size--;
+	}
+	return hash;
+}
 
 extern "C" MWORD __cdecl HashBytes(const BYTE* bytes, MWORD size)
 {
@@ -445,4 +460,5 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp)
 	*sp = ObjectMemoryIntegerObjectOf(hash);
 	return sp;
 }
+
 

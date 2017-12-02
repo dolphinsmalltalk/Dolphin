@@ -1072,53 +1072,6 @@ LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveInstVarAtPut
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; _declspec(naked) unsigned long __fastcall hashBytes(const BYTE* bytes, int len)
-;
-; On entry ECX contains pointer to string, and EDX the length
-; Here we keep top 24 bits of _BP 0 to avoid expensive MOVZX (3 cycles)
-; Hash value answered in EAX
-;
-hashBytes EQU ?hashBytes@@YIIPBEI@Z 
-public hashBytes
-
-hashBytes PPROC
-	push    ebx
-	xor		ebx, ebx					; We need top 24 bits clear
-	xor     eax, eax					; Initial hash value is zero
-hashStringRepeat:
-	or	    edx, edx					; No Bytes remaining?
-	jle     hashStringRet				; Yes, return value
-	shl     eax, 4						; hashVal << 4
-	mov		bl, byte ptr [ecx]			; Character into bl
-	add     eax, ebx					; (hashVal<<4) += char
-	test	eax, 0f0000000h				; Carry into top nibble ?
-	jz      hashStringNoCarry			; No carry into top nibble
-
-	; 6 instructions, 13 bytes, 6 cycles
-	bswap	eax								; Reverse ordering to put top byte in al
-	mov		bl, al							; top byte into bl
-	and		bl, 0f0h						; save top nibble in bl
-	and		al, 0fh							; mask out top nibble in al
-	bswap	eax								; revert to normal ordering, top nibble masked out
-	xor		al, bl							; xor the top nibble into the top nibble of the first byte
-
-	; 5 instructions, 15 bytes, 6 cycles
-	;mov		ebx, eax
-	;shr		ebx, 24						; Has effect of clearing top 24 bits too
-	;and		bl, 0f0h					; Mask in former top nibble
-	;xor		al, bl						; And xor it into the bottom
-	;and		eax, 0fffffffh				; Mask out the former top nibble
-
-hashStringNoCarry:
-	inc		ecx
-	dec     edx
-	jnz     hashStringRepeat
-hashStringRet:
-	pop		ebx
-	ret
-hashBytes ENDP
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Raise a special exception caught by the callback entry point routine - the result will still be on top
