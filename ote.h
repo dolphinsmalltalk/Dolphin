@@ -44,6 +44,7 @@ union OTEFlags
 	};
 	BYTE m_value;
 
+	// Often it is more efficient to use masking to avoid a 16-bit load operation
 	enum
 	{
 		FreeMask = 1,
@@ -52,6 +53,7 @@ union OTEFlags
 		FinalizeMask = 1 << 3,
 		WeakOrZMask = 1 << 4,
 	};
+	enum { WeakMask = (PointerMask | WeakOrZMask) };
 };
 
 
@@ -61,9 +63,6 @@ template <class T> class TOTE
 {
 public:
 	enum { MAXCOUNT	= ((2<<(COUNTBITS-1))-1) };
-	// Often it is more efficient to use masking to avoid a 16-bit load operation
-	enum { FreeMask = 1, PointerMask = 2, MarkMask = 4, FinalizeMask = 8, WeakOrZMask = 16 };
-	enum { WeakMask = (PointerMask | WeakOrZMask) };
 	enum { SizeMask = 0x7FFFFFFF, ImmutabilityBit = 0x80000000 };
 
 	__forceinline MWORD getSize() const						{ return m_size & SizeMask; }
@@ -120,21 +119,21 @@ public:
 	__forceinline bool isImmutable() const					{ return static_cast<int>(m_size) < 0; }
 	__forceinline void beImmutable()						{ m_size |= ImmutabilityBit; }
 	__forceinline void beMutable()							{ m_size &= SizeMask; }
-	__forceinline BOOL isFree() const						{ return m_dwFlags & FreeMask; /*m_flags.m_free;*/ }
-	__forceinline void beFree()								{ m_dwFlags |= FreeMask; }
+	__forceinline BOOL isFree() const						{ return m_dwFlags & OTEFlags::FreeMask; /*m_flags.m_free;*/ }
+	__forceinline void beFree()								{ m_dwFlags |= OTEFlags::FreeMask; }
 	__forceinline void setFree(bool bFree)					{ m_flags.m_free = bFree; }
-	__forceinline void beAllocated()						{ m_dwFlags &= ~FreeMask; }
+	__forceinline void beAllocated()						{ m_dwFlags &= ~OTEFlags::FreeMask; }
 	__forceinline BOOL isPointers() const					{ return m_flags.m_pointer; }
-	__forceinline void bePointers()							{ m_dwFlags |= PointerMask; }
+	__forceinline void bePointers()							{ m_dwFlags |= OTEFlags::PointerMask; }
 	__forceinline BOOL isBytes() const						{ return !m_flags.m_pointer; }
-	__forceinline void beBytes()							{ m_dwFlags &= ~PointerMask; }
+	__forceinline void beBytes()							{ m_dwFlags &= ~OTEFlags::PointerMask; }
 	__forceinline BOOL isFinalizable()	const				{ return m_flags.m_finalize; }
-	__forceinline void beFinalizable()						{ m_dwFlags |= FinalizeMask; }
-	__forceinline void beUnfinalizable()					{ m_dwFlags &= ~FinalizeMask; }
-	__forceinline bool isWeak() const						{ return (m_dwFlags & WeakMask) == WeakMask; }
-	__forceinline bool isNullTerminated() const				{ return (m_dwFlags & WeakMask) == WeakOrZMask; }
+	__forceinline void beFinalizable()						{ m_dwFlags |= OTEFlags::FinalizeMask; }
+	__forceinline void beUnfinalizable()					{ m_dwFlags &= ~OTEFlags::FinalizeMask; }
+	__forceinline bool isWeak() const						{ return (m_dwFlags & OTEFlags::WeakMask) == OTEFlags::WeakMask; }
+	__forceinline bool isNullTerminated() const				{ return (m_dwFlags & OTEFlags::WeakMask) == OTEFlags::WeakOrZMask; }
 	__forceinline void beNullTerminated()					{ ASSERT(!isImmutable()); setNullTerminated(); m_size--; }
-	__forceinline void setNullTerminated()					{ m_dwFlags = (m_dwFlags & ~PointerMask) | WeakOrZMask; }
+	__forceinline void setNullTerminated()					{ m_dwFlags = (m_dwFlags & ~OTEFlags::PointerMask) | OTEFlags::WeakOrZMask; }
 
 	__forceinline bool isBehavior() const					{ return isMetaclass() || m_oteClass->isMetaclass(); }
 	__forceinline bool isMetaclass() const					{ return m_oteClass == Pointers.ClassMetaclass; }

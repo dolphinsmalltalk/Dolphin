@@ -342,7 +342,7 @@ template <class Op> __forceinline static Oop* primitiveStringComparisonOp(Oop* c
 		char* szArg = oteArg->m_location->m_characters;
 		if (oteArg != oteReceiver)
 		{
-			if ((oteArg->m_flags.m_value & (OTEFlags::PointerMask | OTEFlags::WeakOrZMask)) == OTEFlags::WeakOrZMask)
+			if (oteArg->isNullTerminated())
 			{
 				int result = op(szReceiver, szArg);
 				*(sp - 1) = ObjectMemoryIntegerObjectOf(result);

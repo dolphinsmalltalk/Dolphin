@@ -819,8 +819,8 @@ inline void ObjectMemory::markObject(OTE* ote)
 inline MWORD ObjectMemory::lastStrongPointerOf(OTE* ote)
 {
 	BYTE flags = ote->m_ubFlags;
-	return (flags & OTE::PointerMask)
-		? (flags & WeaknessMask) == OTE::WeakMask 
+	return (flags & OTEFlags::PointerMask)
+		? (flags & WeaknessMask) == OTEFlags::WeakMask 
 				? ObjectHeaderSize + ote->m_oteClass->m_location->m_instanceSpec.m_fixedFields 
 				: ote->getWordSize()
 		: 0;
