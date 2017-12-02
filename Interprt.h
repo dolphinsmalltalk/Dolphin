@@ -683,6 +683,8 @@ private:
 	// System Primitives
 	static Oop* __fastcall primitiveIdentical(Oop* const sp);
 	static Oop* __fastcall primitiveClass(Oop* const sp);
+	static Oop* __fastcall primitiveIsKindOf(Oop* const sp);
+	static Oop* __fastcall primitiveIsSuperclassOf(Oop* const sp);
 	static Oop* __fastcall primitiveCoreLeft(Oop* const sp, unsigned argCount);
 	static void __fastcall primitiveQuit(Oop* const sp);
 	static Oop* __fastcall primitiveOopsLeft(Oop* const sp);

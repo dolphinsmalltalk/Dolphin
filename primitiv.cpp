@@ -103,6 +103,36 @@ Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp)
 	return sp - 1;
 }
 
+// Primitive to speed up #isKindOf: (so we don't have to implement too many #isXXXXX methods, 
+// which are nasty, requiring a change to Object for each).
+Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp)
+{
+	Oop arg = *sp;
+	// Nothing can be a kind of SmallInteger instance
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		BehaviorOTE* oteArg = reinterpret_cast<BehaviorOTE*>(arg);
+		Oop receiver = *(sp - 1);
+		BehaviorOTE* oteClass = !ObjectMemoryIsIntegerObject(receiver)
+			? reinterpret_cast<OTE*>(receiver)->m_oteClass
+			: Pointers.ClassSmallInteger;
+		while (oteClass != oteArg)
+		{
+			if (reinterpret_cast<OTE*>(oteClass) == Pointers.Nil)
+			{
+				*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+				return sp - 1;
+			}
+			oteClass = oteClass->m_location->m_superclass;
+		};
+
+		*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+		return sp - 1;
+	}
+
+	*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+	return sp - 1;
+}
 
 // Does not use successFlag, and returns a clean stack because can only succeed if
 // argument is a positive SmallInteger

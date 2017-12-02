@@ -233,6 +233,8 @@ extern CURRENTCALLBACK:DWORD
 ; C++ Primitive method imports
 primitiveClass EQU ?primitiveClass@Interpreter@@CIPAIQAI@Z
 extern primitiveClass:near32
+primitiveIsKindOf EQU ?primitiveIsKindOf@Interpreter@@CIPAIQAI@Z
+extern primitiveIsKindOf:near32
 primitiveIdentical EQU ?primitiveIdentical@Interpreter@@CIPAIQAI@Z
 extern primitiveIdentical:near32
 primitiveShallowCopy EQU ?primitiveShallowCopy@Interpreter@@CIPAIQAI@Z
@@ -753,52 +755,6 @@ BEGINPRIMITIVE primitiveIsSuperclassOf
 	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
 	ret
 ENDPRIMITIVE primitiveIsSuperclassOf
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;  int __fastcall Interpreter::primitiveIsKindOf()
-;
-;	Primitive to speed up #isKindOf: (so we don't have to implement too many #isXXXXX methods, 
-;	which are nasty, requiring a change to Object for each).
-;
-BEGINPRIMITIVE primitiveIsKindOf
-	mov		eax, [_SP]									; Load argument ...
-	test	al, 1
-	jnz		answerFalse									; Nothing is a kind of SmallInteger instance
-
-	cmp		eax, [oteNil]
-	je		answerTrue									; everything is a type of nil
-
-	mov		ecx, [_SP-OOPSIZE]								; Load receiver into ecx
-
-	.IF (cl & 1)
-		mov	ecx, [Pointers.ClassSmallInteger]
-	.ELSE
-		mov ecx, (OTE PTR[ecx]).m_oteClass
-	.ENDIF
-	
-	;; Now we have the class of the object in ECX, and the class we're looking for in EAX
-	.WHILE (ecx != eax)
-		mov		ecx, (OTE PTR[ecx]).m_location
-		mov		ecx, (Behavior PTR[ecx]).m_superclass
-		cmp		ecx, [oteNil]							; Top of superclass chain?
-		je		answerFalse								; Yes, answer false
-	.ENDW
-
-answerTrue:
-	mov			ecx, [oteTrue]							; Use EAX register so non-zero on exit
-	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-	mov			[_SP-OOPSIZE], ecx						; overwrite on stack
-
-	ret
-
-answerFalse:
-	mov			ecx, [oteFalse]
-	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-	mov			[_SP-OOPSIZE], ecx						; overwrite on stack
-
-	ret
-ENDPRIMITIVE primitiveIsKindOf
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
