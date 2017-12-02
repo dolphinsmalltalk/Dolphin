@@ -427,6 +427,8 @@ primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAtPut:near32
 primitiveStringCollate EQU ?primitiveStringCollate@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCollate:near32
+primitiveStringCmp EQU ?primitiveStringCmp@Interpreter@@CIPAIQAI@Z
+extern primitiveStringCmp:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -502,7 +504,7 @@ DWORD		primitiveFloatEQ								; case 47	Float>>#= in Smalltalk-80
 DWORD		primitiveAsyncDLL32CallThunk					; case 48	Float>>#~= in Smalltalk-80
 DWORD		primitiveBasicAt								; case 49	Float>>#* in Smalltalk-80
 DWORD		primitiveBasicAtPut								; case 50	Float>>#/ in Smalltalk-80
-DWORD		primitiveStringCollates							; case 51	Float>>#truncated
+DWORD		primitiveStringCmp								; case 51	Float>>#truncated
 DWORD		primitiveStringNextIndexOfFromTo				; case 52	Float>>#fractionPart in Smalltalk-80
 DWORD		primitiveQuo									; case 53	Float>>#exponent in Smalltalk-80
 DWORD		primitiveHighBit								; case 54	Float>>#timesTwoPower: in Smalltalk-80
@@ -1217,43 +1219,6 @@ LocalPrimitiveFailure 1
 LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveInstVarAtPut
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-BEGINPRIMITIVE primitiveStringCollates
-	mov		ecx, [_SP-OOPSIZE]
-	ASSUME	ecx:PTR OTE
-	mov		edx, [_SP]
-
-	xor		eax, eax							; Set 0 as default (i.e. equal)
-	cmp		ecx, edx
-	je		@F									; If identical, can short cut as must be =
-
-	test	dl, 1								; Arg is SmallInteger?
-	jnz		localPrimitiveFailure0
-	ASSUME	edx:PTR OTE
-
-	test	[edx].m_flags, MASK m_weakOrZ		; Arg object is null terminated?
-	mov		ecx, [ecx].m_location				; Preload ptr to receiver string
-	ASSUME	ecx:PTR StringA
-	jz		localPrimitiveFailure0				; Arg not a null termianted object
-	
-	mov		edx, [edx].m_location
-	ASSUME	edx:PTR StringA
-
-	INVOKE	lstrcmp, ecx, edx
-
-	add		eax, eax							; Shift to make SmallInteger
-
-@@:
-	or		eax, 1								; Add SmallInteger flag
-	mov		[_SP-OOPSIZE], eax					; Store SmallInteger result over receiver
-	lea		eax, [_SP-OOPSIZE*1]				; primitiveSuccess(1)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveStringCollates
 
 BEGINPRIMITIVE primitiveStringCompare
 	mov		eax, [_SP-OOPSIZE]				; eax holds receiver Oop

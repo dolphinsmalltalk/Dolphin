@@ -331,10 +331,10 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
+template <class Op> __forceinline static Oop* primitiveStringComparisonOp(Oop* const sp, Op& op)
 {
-	Oop oopArg = *(sp - 1);
-	StringOTE* oteReceiver = reinterpret_cast<StringOTE*>(*sp);
+	Oop oopArg = *sp;
+	StringOTE* oteReceiver = reinterpret_cast<StringOTE*>(*(sp - 1));
 	if (!ObjectMemoryIsIntegerObject(oopArg))
 	{
 		StringOTE* oteArg = reinterpret_cast<StringOTE*>(oopArg);
@@ -344,14 +344,14 @@ Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
 		{
 			if ((oteArg->m_flags.m_value & (OTEFlags::PointerMask | OTEFlags::WeakOrZMask)) == OTEFlags::WeakOrZMask)
 			{
-				int result = lstrcmpi(szReceiver, szArg);
+				int result = op(szReceiver, szArg);
 				*(sp - 1) = ObjectMemoryIntegerObjectOf(result);
 				return sp - 1;
 			}
 			else
 			{
 				// Arg not a null terminated byte object
-				return primitiveFailure(1);
+				return Interpreter::primitiveFailure(1);
 			}
 		}
 		else
@@ -364,6 +364,24 @@ Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
 	else
 	{
 		// Arg is a SmallInteger
-		return primitiveFailure(0);
+		return Interpreter::primitiveFailure(0);
 	}
+}
+
+Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
+{
+	struct op {
+		int operator() (const char*a, const char* b) const { return lstrcmpi(a, b); }
+	};
+
+	return primitiveStringComparisonOp(sp, op());
+}
+
+Oop* __fastcall Interpreter::primitiveStringCmp(Oop* sp)
+{
+	struct op {
+		int operator() (const char*a, const char* b) const { return lstrcmp(a, b); }
+	};
+
+	return primitiveStringComparisonOp(sp, op());
 }
