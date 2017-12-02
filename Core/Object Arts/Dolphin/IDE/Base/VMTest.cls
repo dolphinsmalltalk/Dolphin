@@ -294,6 +294,9 @@ firstVmVersionRespectingNonInstantiable
 
 	^self versionFromParts: #(2016 7 0 51)!
 
+has7052OrLater
+	^VMLibrary default versionInfo fileVersion >= (self versionFromParts: #(2016 7 0 52))!
+
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
 	| frame |
 	frame := self findFaultInterruptFrame: anException.
@@ -424,14 +427,14 @@ testExtCallRetHRESULT
 	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF) do: 
 			[:each |
 			| result |
-			result := method value: VMLibrary default withArguments: (Array with: each).
+			result := method value: VMLibrary default withArguments: {each}.
 			self assert: result equals: each.
 			self assert: each class == result class].
 	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code."
 	#(-1 -16r40000000 -16r40000001 -16r80000000) do: 
 			[:each |
 			| result |
-			result := method value: VMLibrary default withArguments: (Array with: each).
+			result := method value: VMLibrary default withArguments: {each}.
 			self assert: result key equals: -1.
 			self assert: result value equals: each.
 			self assert: each class == result value class]!
@@ -974,6 +977,12 @@ testOverlappedCallTermination
 	"2) Call is terminated before completion, but is allowed to start"
 	1 to: 5 do: [:i | self earlyTermination: true]!
 
+testPrimitiveAllInstances
+	| actual |
+	"There are few things we can rely on having a fixed number of instances"
+	actual := Processor class primAllInstances.
+	self assert: actual equals: {Processor}!
+
 testPrimitiveAt
 	| array outOfBounds |
 	#(1 0 nil) do: 
@@ -986,7 +995,7 @@ testPrimitiveAt
 				should: [Array perform: #at: with: each]
 				raise: Error
 				matching: [:ex | ex messageText = 'not indexable']].
-	array := Array with: 2.
+	array := {2}.
 	self assert: (array at: 1) sameAs: 2.
 	self assert: (array perform: #at: with: 1) sameAs: 2.
 	"Now attempt some out of bounds accesses in mutable and immutable arrays"
@@ -1040,7 +1049,7 @@ testPrimitiveAt
 				should: [array at: each]
 				raise: Error
 				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
-	array := Array with: 'a' with: 'b'.
+	array := {'a'. 'b'}.
 	self assert: (array at: 1) equals: 'a'.
 	self assert: (array at: 2) equals: 'b'.
 	array := MourningWeakArray with: 'a' with: 'b'.
@@ -1063,7 +1072,7 @@ testPrimitiveAtPut
 				should: [Array at: each put: nil]
 				raise: Error
 				matching: [:ex | ex messageText = 'not indexable']].
-	array := Array with: 0.
+	array := {0}.
 	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
 	"One second access, may be cached"
 	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
@@ -1102,7 +1111,7 @@ testPrimitiveBasicAt
 				should: [Array perform: #basicAt: with: each]
 				raise: Error
 				matching: [:ex | ex messageText = 'not indexable']].
-	array := Array with: 2.
+	array := {2}.
 	self assert: (array basicAt: 1) sameAs: 2.
 	self assert: (array perform: #basicAt: with: 1) sameAs: 2.
 	"Now attempt some out of bounds accesses in mutable and immutable arrays"
@@ -1156,7 +1165,7 @@ testPrimitiveBasicAt
 				should: [array basicAt: each]
 				raise: Error
 				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
-	array := Array with: 'a' with: 'b'.
+	array := {'a'. 'b'}.
 	self assert: (array basicAt: 1) equals: 'a'.
 	self assert: (array basicAt: 2) equals: 'b'.
 	array := MourningWeakArray with: 'a' with: 'b'.
@@ -1168,6 +1177,58 @@ testPrimitiveBasicAt
 			[:i |
 			self assert: (array basicAt: i + 100 + 1) sameAs: i.
 			self assert: (array perform: #basicAt: with: i + 100 + 1) sameAs: i]!
+
+testPrimitiveBytesEqual
+	| method string1 string2 string3 string4 bytes1 bytes2 string5 string6 string7 mismatchedClassFailure |
+	method := self
+				createPrimitiveMethod: (String >> #=) primitiveIndex
+				in: Object
+				argCount: 1
+				setsFailCode: true.
+	bytes1 := #[1 2 3 4 5 6 7 8].
+	bytes2 := #[4 5 6 7 8 9 10 11].
+	string1 := 'abc'.
+	string2 := 'ab'.
+	string3 := 'abd'.
+	"Exactly one word in length"
+	string4 := 'abcd'.
+	string5 := ''.
+	"More than one word, odd length"
+	string6 := 'abcdefghi'.
+	string7 := 'abcdefghj'.
+	mismatchedClassFailure := self has7052OrLater ifTrue: ['failed1'] ifFalse: ['failed0'].
+	{{string1. string1. true}.
+		{bytes1. bytes1. true}.
+		{bytes1. bytes1 copy. true}.
+		{bytes1. bytes2. false}.
+		{bytes2. bytes1. false}.
+		{string1. string1 copy. true}.
+		{string1.
+			string1 copy
+				isImmutable: true;
+				yourself.
+			true}.
+		{string2. string2 copy. true}.
+		{string3. string3 copy. true}.
+		{string4. string4 copy. true}.
+		{string5. string5 copy. true}.
+		{string6. string6 copy. true}.
+		{string6. string7. false}.
+		{string7. string6. false}.
+		{string1. string2. false}.
+		{string2. string1. false}.
+		{string1. string3. false}.
+		{string3. string1. false}.
+		{string1. string4. false}.
+		{string4. string1. false}.
+		{string1. string5. false}.
+		{string5. string1. false}.
+		{string1. string1 asSymbol. mismatchedClassFailure}.
+		{string1 asSymbol. string1. mismatchedClassFailure}} do: 
+				[:each |
+				| actual |
+				actual := method value: each first withArguments: {each second}.
+				self assert: actual equals: each last]!
 
 testPrimitiveBytesIsNull
 	| method subject |
@@ -1198,29 +1259,103 @@ testPrimitiveEnableInterrupts
 	enabled := method value: Processor withArguments: #(true).
 	self assert: enabled description: 'Interrupts should have remained enabled'!
 
-testPrimitiveInstanceCounts
-	"Test primitive that returns instance count stats for a list of requested classes."
+testPrimitiveIdentical
+	| method |
+	method := self createPrimitiveMethodLike: Object >> #== setsFailCode: false.
+	#(#(1 1 true) #(1 2 false) #(2 1 false) #(#x #x true) #(#x #y false) #(1 #x false) #(#x 1 false))
+		do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each third]!
 
-	| method stats |
-	method := self createPrimitiveMethodLike: MemoryManager >> #primInstanceStats: setsFailCode: true.
-	stats := method value: MemoryManager current withArguments: #(nil).
+testPrimitiveInstanceCounts
+	"Test primitive that returns instance count stats, but not requesting any specific classes."
+
+	| stats counts |
+	stats := MemoryManager current primInstanceStats: nil.
 	"Kick a couple of tyres"
 	self assert: stats size \\ 3 == 0.
+	counts := IdentityDictionary new.
 	1 to: stats size
 		by: 3
-		do: 
-			[:i |
-			| class |
-			class := stats at: i.
+		do: [:i | counts at: (stats at: i) put: (stats at: i + 1)].
+	self assert: (counts at: Symbol) > 30000.
+	self assert: (counts at: VMLibrary) equals: 1.
+	counts keysAndValuesDo: 
+			[:class :count |
 			class isMetaclass
 				ifTrue: 
 					["Metaclasses should have only a single instance"
-					self assert: (stats at: i + 1) equals: 1].
-			class == SmallInteger ifTrue: [self assert: (stats at: i + 1) equals: 0]].
-	#(1 'a') do: 
+					self assert: count equals: 1].
+			class isNonInstantiable ifTrue: [self assert: count equals: 0]].
+	self deny: (counts includes: SmallInteger).
+	self assert: (counts at: Character) equals: 256.
+	self assert: (counts at: MemoryManager) equals: 1.
+	"Test primitive failure"
+	#(1 'a' #[1 2 3]) do: 
 			[:each |
-			self assert: (method value: MemoryManager current withArguments: (Array with: each))
-				equals: 'failed0']!
+			self
+				should: [MemoryManager current primInstanceStats: each]
+				raise: Error
+				matching: [:ex | ex messageText = 'Primitive MemoryManager>>primInstanceStats: failed (0)']].
+	"Test requesting stats for a specific class"
+	stats := MemoryManager current primInstanceStats: {Metaclass}.
+	self assert: stats first equals: Metaclass.
+	self assert: stats second > Smalltalk allClasses size
+!
+
+testPrimitiveInstanceCounts2
+	"Test primitive that returns instance count stats for a list of requested classes."
+
+	| stats baseClasses counts |
+	self skipUnless: 
+			["Crashing bug in older VMs"
+			self has7052OrLater].
+	baseClasses := Object owningPackage classes.
+	stats := MemoryManager current primInstanceStats: baseClasses asArray.
+	self assert: stats size equals: baseClasses size * 3.
+	"Verify a few instance counts"
+	counts := IdentityDictionary new.
+	1 to: stats size
+		by: 3
+		do: [:i | counts at: (stats at: i) put: (stats at: i + 1)].
+	self assert: (counts keys noDifference: baseClasses).
+	"Some sanity checks that the stats look reasonable."
+	self assert: (counts at: Symbol) = Symbol primAllInstances size.
+	self assert: (counts at: String) > 30000.
+	self assert: (counts at: Object) < 100.
+	self assert: (counts at: VMLibrary) equals: 1.
+	self assert: (counts at: Processor class) equals: 1.
+	(baseClasses select: [:each | each isAbstract])
+		do: [:each | self assert: (counts at: each) equals: 0]!
+
+testPrimitiveIsKindOf
+	"Test the isKindOf primitive (which does not fail)"
+
+	| method proto |
+	method := self createPrimitiveMethodLike: Object >> #isKindOf: setsFailCode: false.
+	"SmallInteger"
+	{nil. 123. 1 -> 2. #[1 2 3]. 'abc'. Object. Object class. ProtoObject. ProtoObject class} do: 
+			[:subject |
+			subject basicClass
+				withAllSuperclassesDo: [:class | self assert: (method value: subject withArguments: {class})].
+			self assert: (method value: subject withArguments: #(nil)).
+			self deny: (method value: subject withArguments: #(1)).
+			self deny: (method value: subject withArguments: {Float}).
+			self deny: (method value: subject withArguments: {Object new}).
+			subject isBehavior
+				ifTrue: 
+					[subject isMetaclass
+						ifTrue: [self deny: (method value: subject withArguments: {Object class})]
+						ifFalse: 
+							[Class withAllSuperclassesDo: [:class | self assert: (method value: subject withArguments: {class})]]]
+				ifFalse: 
+					[self deny: (method value: subject withArguments: {Behavior}).
+					self deny: (method value: subject withArguments: {Object class})]].
+	proto := ProtoObject new.
+	self assert: (proto isKindOf: ProtoObject).
+	self assert: (proto isKindOf: nil).
+	self deny: (proto isKindOf: ProtoObject class).
+	self deny: (proto isKindOf: 1).
+	self deny: (proto isKindOf: Object).
+!
 
 testPrimitiveIsNullBytes
 	| addr handle |
@@ -1257,23 +1392,24 @@ testPrimitiveIsSuperclassOf
 	"Test the currently unused isSuperclassOf primitive."
 
 	| method |
+	self skipUnless: [self has7052OrLater not].
 	method := self
 				createPrimitiveMethod: 109
 				in: Behavior
 				argCount: 1
 				setsFailCode: true.
 	"The primitive is like includesBehavior with arg/receiver inverted, and if both are the same class then the answer is true."
-	self assert: (method value: Association withArguments: (Array with: Association)).
-	self assert: (method value: Magnitude withArguments: (Array with: Association)).
-	self assert: (method value: Object withArguments: (Array with: Association)).
-	self deny: (method value: Association withArguments: (Array with: Object)).
-	self deny: (method value: Association withArguments: (Array with: SmallInteger)).
-	self deny: (method value: Object class withArguments: (Array with: Behavior)).
-	self assert: (method value: Object class withArguments: (Array with: Object class)).
-	self assert: (method value: Object class withArguments: (Array with: Magnitude class)).
-	self assert: (method value: Object withArguments: (Array with: Magnitude class)).
-	self assert: (method value: Behavior withArguments: (Array with: Object class)).
-	self assert: (method value: Magnitude class withArguments: (Array with: Association class))!
+	self assert: (method value: Association withArguments: {Association}).
+	self assert: (method value: Magnitude withArguments: {Association}).
+	self assert: (method value: Object withArguments: {Association}).
+	self deny: (method value: Association withArguments: {Object}).
+	self deny: (method value: Association withArguments: {SmallInteger}).
+	self deny: (method value: Object class withArguments: {Behavior}).
+	self assert: (method value: Object class withArguments: {Object class}).
+	self assert: (method value: Object class withArguments: {Magnitude class}).
+	self assert: (method value: Object withArguments: {Magnitude class}).
+	self assert: (method value: Behavior withArguments: {Object class}).
+	self assert: (method value: Magnitude class withArguments: {Association class})!
 
 testPrimitiveMakePoint
 	"Test the general object instantiation and initialization primitive (it doesn't just make Points)."
@@ -1475,6 +1611,18 @@ testPrimitiveResume
 	self assert: e isDead.
 	self assert: a isDead!
 
+testPrimitiveShallowCopy
+	| method subject result |
+	"Note that the primitive does not expect to be invoked for an immediate (SmallInteger) receiver."
+	method := self createPrimitiveMethodLike: Object >> #shallowCopy setsFailCode: false.
+	#(#(#(1) 'a') #[0 1 2 3] 'abc' #x:y:) do: 
+			[:each |
+			subject := #(#()).
+			result := method value: subject withArguments: #().
+			self deny: result sameAs: subject.
+			self assert: result equals: subject.
+			result with: subject do: [:a :b | self assert: a sameAs: b]]!
+
 testPrimitiveStringAt
 	| array |
 	
@@ -1541,13 +1689,13 @@ testPrimitiveStringAtPut
 			[:each |
 			self assert: (subject at: 1) equals: $\0.
 			self assert: (subject at: 2) equals: $\0.
-			self assert: (method value: subject withArguments: (Array with: each with: $a)) equals: 'failed1'].
+			self assert: (method value: subject withArguments: {each. $a}) equals: 'failed1'].
 	"Objects that strings can't hold, including some special cases that have no object body (issue #234)"
 	#(0 ##(Object new) nil '' #'' true false #() #[]) do: 
 			[:each |
 			self assert: (subject at: 1) equals: $\0.
 			self assert: (subject at: 2) equals: $\0.
-			self assert: (method value: subject withArguments: (Array with: 1 with: each)) equals: 'failed2']!
+			self assert: (method value: subject withArguments: {1. each}) equals: 'failed2']!
 
 testPrimitiveStringCmp
 	"Test case sensitive string comparison primitive"
@@ -1555,16 +1703,49 @@ testPrimitiveStringCmp
 	| method |
 	method := self createPrimitiveMethodLike: String >> #trueCompare: setsFailCode: true.
 	"Note that we don't test that the primitive fails for a non-String receiver - in general primitives assume they are only used in methods of suitable receiver classes."
-	#(#('a' 'b' -1) #('abc' 'abc' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'failed0')) do: 
+	#(#('a' 'b' -1) #('A' 'a' 1) #('abc' 'ABC' -1) #('abc' 'abc' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'failed0'))
+		do: 
 			[:each |
 			| subject result operand expected |
 			subject := each first.
 			self assert: subject class == String.
 			operand := each second.
 			expected := each third.
-			result := method value: subject withArguments: (Array with: operand).
+			result := method value: subject withArguments: {operand}.
 			self assert: result class == expected class.
-			self assert: result equals: expected]!
+			self assert: result equals: expected].
+	self has7052OrLater
+		ifTrue: 
+			[self assert: (method value: 'a' withArguments: {Array new}) equals: 'failed1'.
+			self assert: (method value: 'a' withArguments: {WeakArray new}) equals: 'failed1']!
+
+testPrimitiveStringCollate
+	"Test case insensitive string comparison primitive"
+
+	| method |
+	method := self createPrimitiveMethodLike: String >> #_collate: setsFailCode: true.
+	"Note that we don't test that the primitive fails for a non-String receiver - in general primitives assume they are only used in methods of suitable receiver classes."
+	#(#('a' 'b' -1) #('b' 'a' 1) #('abc' 'ABC' 0) #('A' 'a' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'failed0'))
+		do: 
+			[:each |
+			| subject result operand expected |
+			subject := each first.
+			self assert: subject class == String.
+			operand := each second.
+			expected := each third.
+			result := method value: subject withArguments: {operand}.
+			self assert: result class == expected class.
+			self assert: result equals: expected].
+	self has7052OrLater
+		ifTrue: 
+			[self assert: (method value: 'a' withArguments: {Array new}) equals: 'failed1'.
+			"Weak pointer objects use the same OTE flag as zero-terminated byte objects"
+			self assert: (method value: 'a' withArguments: {WeakArray new}) equals: 'failed1']
+		ifFalse: 
+			["Older VM always uses failure code 0"
+			self assert: (method value: 'a' withArguments: {Array new}) equals: 'failed0'
+
+			"Older VM incorrectly treats weak pointer object as zero terminated string"]!
 
 testPrimitiveSubtract
 	"Test the SmallInteger subtract primitive for normal, overflow and failure cases."
@@ -1580,7 +1761,7 @@ testPrimitiveSubtract
 			self assert: subject class == SmallInteger.
 			operand := each second.
 			expected := each third.
-			result := method value: subject withArguments: (Array with: operand).
+			result := method value: subject withArguments: {operand}.
 			self assert: result class == expected class.
 			self assert: result equals: expected]!
 
@@ -1809,6 +1990,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #findCaller:in:!helpers!private! !
 !VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
 !VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!accessing!public! !
+!VMTest categoriesFor: #has7052OrLater!private!testing! !
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
@@ -1840,12 +2022,17 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallsSuspendAndTerminate!public!unit tests! !
 !VMTest categoriesFor: #testOverlappedCallTermination!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveAllInstances!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsSuperclassOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
@@ -1857,9 +2044,11 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveStringCollate!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
 !VMTest categoriesFor: #testQwordAtOffset!public!unit tests! !
@@ -1867,11 +2056,11 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
-!VMTest categoriesFor: #vmRespectsNonInstantiable!public!unit tests! !
+!VMTest categoriesFor: #vmRespectsNonInstantiable!private!testing! !
 
 !VMTest class methodsFor!
 
 resources
-	^Array with: MustBeBooleanTestClasses! !
+	^{MustBeBooleanTestClasses}! !
 !VMTest class categoriesFor: #resources!Accessing!public! !
 
