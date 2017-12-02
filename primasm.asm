@@ -449,6 +449,8 @@ primitiveBasicIdentityHash EQU ?primitiveBasicIdentityHash@Interpreter@@CIPAIQAI
 extern primitiveBasicIdentityHash:near32
 primitiveIdentityHash EQU ?primitiveIdentityHash@Interpreter@@CIPAIQAI@Z
 extern primitiveIdentityHash:near32
+primitiveLookupMethod EQU ?primitiveLookupMethod@Interpreter@@CIPAIQAI@Z
+extern primitiveLookupMethod:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Constants
@@ -727,31 +729,6 @@ ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;  int __fastcall Interpreter::primitiveLookupMethod()
-;
-;	Primitive to duplicate the VM's method lookup. Useful for fast #respondsTo:/
-;	#canUnderstand:. Uses, but does not update, the method cache.
-;
-BEGINPRIMITIVE primitiveLookupMethod
-	mov		edx, [_SP]								; Load selector arg into EDX
-	mov		ecx, [_SP-OOPSIZE]						; Load receiver into ECX
-	test	dl, 1
-	jnz		localPrimitiveFailure1					; Immediate selectors not permitted
-
-	call	LOOKUPMETHOD
-	; eax contains method Oop, or nil
-
-	mov		[_SP-OOPSIZE], eax						; Store back result
-	lea		eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-
-	ret
-
-LocalPrimitiveFailure 1
-
-ENDPRIMITIVE primitiveLookupMethod
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

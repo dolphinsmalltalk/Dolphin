@@ -785,6 +785,23 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 	return reinterpret_cast<MethodOTE*>(nil);
 }
 
+
+//	Primitive to duplicate the VM's method lookup. Useful for fast #respondsTo:/
+//	#canUnderstand:.Uses, but does not update, the method cache.
+Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp)
+{
+	Oop arg = *sp;
+	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		*(sp - 1) = reinterpret_cast<Oop>(lookupMethod(receiver, reinterpret_cast<SymbolOTE*>(arg)));
+		return sp - 1;
+	}
+	else
+		return primitiveFailure(1);
+}
+
+
 #pragma code_seg(DEBUG_SEG)
 
 #ifdef _DEBUG
