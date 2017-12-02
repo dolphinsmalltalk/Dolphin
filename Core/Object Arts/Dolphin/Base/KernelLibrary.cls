@@ -28,13 +28,21 @@ addAtom: aString
 	^self invalidCall!
 
 allocConsole
-	"Allocate a new console.
-		BOOL AllocConsole(VOID)"
+	"Invoke the AllocConsole() function of the module wrapped by the receiver.
+	Helpstring: Allocates a new console for the calling process.
+
+		BOOL __stdcall AllocConsole();"
 
 	<stdcall: bool AllocConsole>
 	^self invalidCall!
 
-attachConsole: anInteger
+attachConsole: dwProcessId
+	"Invoke the AttachConsole() function of the module wrapped by the receiver.
+	Helpstring: Attaches the calling process to the console of the specified process.
+
+		BOOL __stdcall AttachConsole(
+			[in]DWORD dwProcessId);"
+
 	<stdcall: bool AttachConsole dword>
 	^self invalidCall!
 
@@ -461,9 +469,11 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 "!
 
 freeConsole
-	"Detach from the current console.
-		BOOL FreeConsole(VOID)"
-  
+	"Invoke the FreeConsole() function of the module wrapped by the receiver.
+	Helpstring: Detaches the calling process from its console.
+
+		BOOL __stdcall FreeConsole();"
+
 	<stdcall: bool FreeConsole>
 	^self invalidCall!
 
@@ -521,6 +531,17 @@ getComputerName: buffer nSize: pBufSize
 	^self invalidCall
 
 !
+
+getConsoleTitle: lpConsoleTitle nSize: nSize
+	"Invoke the GetConsoleTitle() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the title for the current console window.
+
+		DWORD __stdcall GetConsoleTitle(
+			[out]LPSTR lpConsoleTitle,
+			[in]DWORD nSize);"
+
+	<stdcall: dword GetConsoleTitleA lpstr dword>
+	^self invalidCall!
 
 getCurrentProcess
 	"Answer handle of the Dolphin process.
@@ -1309,6 +1330,16 @@ setConsoleCtrlHandler: pHandlerRoutine add: aBoolean
 	<stdcall: bool SetConsoleCtrlHandler void* bool>
 	^self invalidCall!
 
+setConsoleTitle: lpConsoleTitle
+	"Invoke the SetConsoleTitle() function of the module wrapped by the receiver.
+	Helpstring: Sets the title for the current console window.
+
+		BOOL __stdcall SetConsoleTitle(
+			[in]LPCSTR lpConsoleTitle);"
+
+	<stdcall: bool SetConsoleTitleA lpstr>
+	^self invalidCall!
+
 setEndOfFile: anExternalHandle
 	<stdcall: bool SetEndOfFile handle>
 	^self invalidCall!
@@ -1624,8 +1655,8 @@ zeroMemory: pvDest length: cBytes
 	<stdcall: void RtlZeroMemory void* dword>
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #addAtom:!public!win32 functions-atom! !
-!KernelLibrary categoriesFor: #allocConsole!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #attachConsole:!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #allocConsole!**auto generated**!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #attachConsole:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #beep:dwDuration:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
@@ -1654,12 +1685,13 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #flushFileBuffers:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #formatMessage:source:flags:withArguments:!helpers!public! !
-!KernelLibrary categoriesFor: #freeConsole!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #freeConsole!**auto generated**!public! !
 !KernelLibrary categoriesFor: #freeLibrary:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
@@ -1728,6 +1760,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #resetEvent:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #setConsoleTitle:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #setEvent:!**auto generated**!public!win32 functions-synchronization! !

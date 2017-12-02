@@ -30,7 +30,7 @@ allocConsole
 			kernel allocConsole.
 			"Remove the close button from the console window as otherwise if the user
 			closes it Windows will kill this process with no way to intercept."
-			hConsole := KernelLibrary default getConsoleWindow.
+			hConsole := kernel getConsoleWindow.
 			user := UserLibrary default.
 			hMenu := user getSystemMenu: hConsole bRevert: false.
 			user

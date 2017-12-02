@@ -707,6 +707,7 @@ openConsole
 		allocConsole;
 		registerConsoleCtrlHandler;
 		openConsoleStreams.
+	KernelLibrary default setConsoleTitle: self applicationName.
 	^wasOpen!
 
 openConsoleStreams

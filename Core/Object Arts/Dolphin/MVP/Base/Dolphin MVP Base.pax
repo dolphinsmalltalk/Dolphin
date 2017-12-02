@@ -1335,9 +1335,14 @@ userSessionIdleMs
 !KernelLibrary methodsFor!
 
 getConsoleWindow
+	"Invoke the GetConsoleWindow() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the window handle used by the console associated with the calling process.
+
+		wireHWND __stdcall GetConsoleWindow();"
+
 	<stdcall: handle GetConsoleWindow>
 	^self invalidCall! !
-!KernelLibrary categoriesFor: #getConsoleWindow!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public! !
 
 !MessageSend methodsFor!
 
