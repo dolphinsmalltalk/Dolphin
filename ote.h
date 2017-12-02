@@ -28,17 +28,30 @@ typedef TOTE<ST::Behavior> BehaviorOTE;
 typedef	BYTE count_t;
 typedef WORD hash_t;						// Identity hash value, assigned on object creation
 
-struct OTEFlags
+union OTEFlags
 {
 	// Object Creation
 	enum Spaces { NormalSpace, VirtualSpace, BlockSpace, ContextSpace, DWORDSpace, HeapSpace, FloatSpace, PoolSpace, NumSpaces };
 
-	BYTE	m_free : 1;				// Is the object in use?
-	BYTE	m_pointer : 1; 			// Pointer bit?
-	BYTE	m_mark : 1;				// Garbage collector mark
-	BYTE	m_finalize : 1;			// Should the object be finalized
-	BYTE 	m_weakOrZ : 1;			// weak references if pointers, null term if bytes
-	BYTE 	m_space : SPACEBITS;	// Memory space in which the object resides (used when deallocating)
+	struct
+	{
+		BYTE	m_free : 1;				// Is the object in use?
+		BYTE	m_pointer : 1; 			// Pointer bit?
+		BYTE	m_mark : 1;				// Garbage collector mark
+		BYTE	m_finalize : 1;			// Should the object be finalized
+		BYTE 	m_weakOrZ : 1;			// weak references if pointers, null term if bytes
+		BYTE 	m_space : SPACEBITS;	// Memory space in which the object resides (used when deallocating)
+	};
+	BYTE m_value;
+
+	enum
+	{
+		FreeMask = 1,
+		PointerMask = 1 << 1,
+		MarkMask = 1 << 2,
+		FinalizeMask = 1 << 3,
+		WeakOrZMask = 1 << 4,
+	};
 };
 
 

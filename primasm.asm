@@ -425,6 +425,8 @@ primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAt:near32
 primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAtPut:near32
+primitiveStringCollate EQU ?primitiveStringCollate@Interpreter@@CIPAIQAI@Z
+extern primitiveStringCollate:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -1215,45 +1217,6 @@ LocalPrimitiveFailure 1
 LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveInstVarAtPut
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; There is a small performance advantage in using this instead of directly 
-; calling lstrcmpi from Smalltalk but it is so small that the only real point 
-; in having this primitive is in order to win on a benchmark!
-;
-BEGINPRIMITIVE primitiveStringCollate
-	mov		ecx, [_SP-OOPSIZE]
-	ASSUME	ecx:PTR OTE
-	mov		edx, [_SP]
-
-	test	dl, 1								; Arg is SmallInteger?
-	jnz		localPrimitiveFailure0
-	ASSUME	edx:PTR OTE
-
-	xor		eax, eax							; Set 0 as default (i.e. equal)
-	cmp		ecx, edx
-	je		@F									; If identical, can short cut as must be =
-
-	test	[edx].m_flags, MASK m_weakOrZ		; Arg object is null terminated?
-	mov		ecx, [ecx].m_location				; Preload ptr to receiver string
-	ASSUME	ecx:PTR StringA
-	jz		localPrimitiveFailure0				; Arg not a null termianted object
-	
-	mov		edx, [edx].m_location
-	ASSUME	edx:PTR StringA
-
-	INVOKE	lstrcmpi, ecx, edx
-
-	add		eax, eax					; Shift lstrcmpi result to make SmallInteger
-@@:
-	or		eax, 1						; Add SmallInteger flag
-	mov		[_SP-OOPSIZE], eax			; Store back the SmallInteger result over receiver
-	lea		eax, [_SP-OOPSIZE*1]		; primitiveSuccess(1)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveStringCollate
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

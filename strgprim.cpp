@@ -330,3 +330,40 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 		return primitiveFailure(0);
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
+{
+	Oop oopArg = *(sp - 1);
+	StringOTE* oteReceiver = reinterpret_cast<StringOTE*>(*sp);
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		StringOTE* oteArg = reinterpret_cast<StringOTE*>(oopArg);
+		char* szReceiver = oteReceiver->m_location->m_characters;
+		char* szArg = oteArg->m_location->m_characters;
+		if (oteArg != oteReceiver)
+		{
+			if ((oteArg->m_flags.m_value & (OTEFlags::PointerMask | OTEFlags::WeakOrZMask)) == OTEFlags::WeakOrZMask)
+			{
+				int result = lstrcmpi(szReceiver, szArg);
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(result);
+				return sp - 1;
+			}
+			else
+			{
+				// Arg not a null terminated byte object
+				return primitiveFailure(1);
+			}
+		}
+		else
+		{
+			// Identical
+			*(sp - 1) = ZeroPointer;
+			return sp - 1;
+		}
+	}
+	else
+	{
+		// Arg is a SmallInteger
+		return primitiveFailure(0);
+	}
+}

@@ -617,6 +617,9 @@ private:
 	static Oop* __fastcall primitiveStringSearch(Oop* const sp);
 	static Oop* __fastcall primitiveStringNextIndexOfFromTo(Oop* const sp);
 
+	static Oop* __fastcall primitiveStringCollate(Oop* const sp);
+
+	
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp);
 	static Oop* __fastcall primitiveNextSDWORD(Oop* const sp);
