@@ -385,3 +385,48 @@ Oop* __fastcall Interpreter::primitiveStringCmp(Oop* sp)
 
 	return primitiveStringComparisonOp(sp, op());
 }
+
+Oop* Interpreter::primitiveBytesEqual(Oop* const sp)
+{
+	Oop oopArg = *sp;
+	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 1));
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		BytesOTE* oteArg = reinterpret_cast<BytesOTE*>(oopArg);
+		if (oteArg != oteReceiver)
+		{
+			if (oteArg->m_oteClass == oteReceiver->m_oteClass)
+			{
+				ASSERT(oteArg->isBytes());
+				MWORD argSize = oteArg->bytesSize();
+				Oop answer = reinterpret_cast<Oop>(Pointers.False);
+				if (argSize == oteReceiver->bytesSize())
+				{
+					BYTE* pbReceiver = oteReceiver->m_location->m_fields;
+					BYTE* pbArg = oteArg->m_location->m_fields;
+					if (memcmp(pbReceiver, pbArg, argSize) == 0)
+						answer = reinterpret_cast<Oop>(Pointers.True);
+				}
+
+				*(sp - 1) = answer;
+				return sp - 1;
+			}
+			else
+			{
+				// Arg not same type
+				return Interpreter::primitiveFailure(1);
+			}
+		}
+		else
+		{
+			// Identical
+			*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+			return sp - 1;
+		}
+	}
+	else
+	{
+		// Arg is a SmallInteger
+		return Interpreter::primitiveFailure(0);
+	}
+}

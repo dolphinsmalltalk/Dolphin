@@ -619,6 +619,7 @@ private:
 
 	static Oop* __fastcall primitiveStringCollate(Oop* const sp);
 	static Oop* __fastcall primitiveStringCmp(Oop* const sp);
+	static Oop* __fastcall primitiveBytesEqual(Oop* const sp);
 
 	
 	// Stream Primitives

@@ -70,8 +70,6 @@ public HashBytes
 
 ;; Win32 functions
 RaiseException		PROTO STDCALL :DWORD, :DWORD, :DWORD, :DWORD
-lstrcmpi			PROTO STDCALL :LPCSTR, :LPCSTR
-lstrcmp				PROTO STDCALL :LPCSTR, :LPCSTR
 longjmp				PROTO C :DWORD, :DWORD
 
 ; Imports from byteasm.asm
@@ -429,6 +427,8 @@ primitiveStringCollate EQU ?primitiveStringCollate@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCollate:near32
 primitiveStringCmp EQU ?primitiveStringCmp@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCmp:near32
+primitiveBytesEqual EQU ?primitiveBytesEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveBytesEqual:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -508,7 +508,7 @@ DWORD		primitiveStringCmp								; case 51	Float>>#truncated
 DWORD		primitiveStringNextIndexOfFromTo				; case 52	Float>>#fractionPart in Smalltalk-80
 DWORD		primitiveQuo									; case 53	Float>>#exponent in Smalltalk-80
 DWORD		primitiveHighBit								; case 54	Float>>#timesTwoPower: in Smalltalk-80
-DWORD		primitiveStringCompare							; case 55	Not used in Smalltalk-80
+DWORD		primitiveBytesEqual								; case 55	Not used in Smalltalk-80
 DWORD		primitiveStringCollate							; case 56
 DWORD		primitiveIsKindOf								; case 57	Not used in Smalltalk-80
 DWORD		primitiveAllSubinstances						; case 58	Not used in Smalltalk-80
@@ -1219,86 +1219,6 @@ LocalPrimitiveFailure 1
 LocalPrimitiveFailure 2
 
 ENDPRIMITIVE primitiveInstVarAtPut
-
-BEGINPRIMITIVE primitiveStringCompare
-	mov		eax, [_SP-OOPSIZE]				; eax holds receiver Oop
-	ASSUME	eax:PTR OTE
-	mov		edx, [_SP]
-
-	cmp		eax, edx
-	jne		notIdentical
-
-	mov		ecx, [oteTrue]					; Identical
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	mov		[_SP-OOPSIZE], ecx
-	ret
-
-notIdentical:
-	test	dl, 1
-	jnz		localPrimitiveFailure0
-	ASSUME	edx:PTR OTE
-
-	mov		ecx, [eax].m_oteClass			; Load ecx with receiver class
-	cmp		ecx, [edx].m_oteClass			; receiver class == arg class?
-	jne		localPrimitiveFailure0				; Same class? If not fail it
-
-	push	esi								; Save esi for temp store
-	mov		ecx, [eax].m_size				; Load ecx with size of both objects
-	mov		esi, [edx].m_size				; Same size? (Note can ignore null term, since same class)
-	and		ecx, 7fffffffh
-	and		esi, 7fffffffh
-	cmp		ecx, esi
-	je		@F
-
-	pop		esi
-
-	mov		ecx, [oteFalse]					; Different sizes, therefore cannot be equal
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	mov		[_SP-OOPSIZE], ecx
-	ret
-
-@@:
-	mov		esi, [eax].m_location			
-	ASSUME	esi:PTR StringA					; esi points at receiver string contents
-	ASSUME	eax:NOTHING						; Arg Oop no longer needed
-	push	edi								; Save edi for temp store
-	mov		edi, [edx].m_location			
-	ASSUME	edi:PTR StringA					; edi points at receiver string contents
-	
-	mov		edx, ecx						; Copy size into edx
-	ASSUME	edx:DWORD
-
-	shr		ecx, 2							; Calc dwords in objects
-
-	mov		eax, [oteFalse]					; Let the default result be false
-	
-	; Perform the memcmp, first by comparing the DWORDs
-	repe	cmpsd
-	jne		@F								; If not equal, skip to answer false
-
-	mov		ecx, edx						; Reload byte size
-	and		ecx, 3							; compare the remaining bytes
-	repe	cmpsb
-
-	jne		@F								; If not equal, skip to answer false
-
-	sub		eax, OTENTRYSIZE				; true is Oop before false
-
-	ASSUME	esi:NOTHING
-	ASSUME	edi:NOTHING
-@@:
-	pop		edi
-	ASSUME	_IP:PTR Byte
-	pop		esi								; We're using ESI for _SP, so must restore before going to stack
-	ASSUME	_SP:PTR Oop
-
-	mov		[_SP-OOPSIZE], eax
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveStringCompare
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; _declspec(naked) unsigned long __stdcall hashBytes(const BYTE* chars, int len)
@@ -2180,11 +2100,11 @@ LIARITHMPRIMZ MACRO Op
 
 	BEGINPRIMITIVE primitiveLargeInteger&Op
 		mov		eax, [_SP]
+		ASSUME	eax:Oop
 		mov		ecx, [_SP-OOPSIZE]							; Load receiver (under argument)
 		ASSUME	ecx:PTR OTE
 
 		.IF	(al & 1)										; SmallInteger?
-			ASSUME	eax:Oop
 			sar		eax, 1
 			jz		zero
 			push	eax
@@ -2195,6 +2115,7 @@ LIARITHMPRIMZ MACRO Op
 			ASSUME	eax:PTR OTE
 
 			mov		edx, [eax].m_oteClass
+			ASSUME	edx:PTR OTE
 			cmp		edx, [Pointers.ClassLargeInteger]
 			jne		localPrimitiveFailure0
 
@@ -2223,6 +2144,7 @@ LIARITHMPRIMZ MACRO Op
 
 	ENDPRIMITIVE primitiveLargeInteger&Op
 ENDM
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 LIARITHMPRIMR Add

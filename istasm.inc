@@ -524,6 +524,10 @@ _SP						EQU		esi
 _IP						EQU		edi
 _BP						EQU		ebx
 
+ASSUME _SP:Ptr Oop
+ASSUME _IP:Ptr byte
+ASSUME _BP:Ptr Oop
+
 ASSERTEQU MACRO arg1, arg2
 	.ERRDIF <&arg1>, <&arg2>
 ENDM
