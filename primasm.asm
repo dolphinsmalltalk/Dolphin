@@ -564,7 +564,7 @@ DWORD		primitiveSingleStepThunk						; case 105
 DWORD		primitiveHashBytes								; case 106	Not used in Smalltalk-80
 DWORD		primitiveUnwindCallback							; case 107	ProcessorScheduler>>primUnwindCallback
 DWORD		primitiveHookWindowCreate						; case 108	Not used in Smalltalk-80
-DWORD		primitiveIsSuperclassOf							; case 109	Not used in Smalltalk-80
+DWORD		unusedPrimitive									; case 109	Not used in Smalltalk-80
 DWORD		primitiveIdentical								; case 110	Character =, Object ==
 DWORD		primitiveClass									; case 111	Object class
 DWORD		primitiveCoreLeftThunk							; case 112	Was SystemDictionary>>coreLeft - This is now the basic, non-compacting, incremental, garbage collect
@@ -727,34 +727,6 @@ ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;  int __fastcall Interpreter::primitiveIsSuperclassOf()
-;
-; Double dispatched from Behavior, so we know receiver and args are correct types
-;
-BEGINPRIMITIVE primitiveIsSuperclassOf
-	mov		eax, [_SP]									; Load argument ...
-
-	; We ASSUME that the argument is indeed a Class object (because of a double dispatch)
-	mov		ecx, [_SP-OOPSIZE]							; Load receiver into ecx
-	mov		edx, [oteFalse]								; Default answer is false
-
-	;; Now we have the class of the object in ECX, and the class we're looking for in EAX
-	.WHILE (eax != ecx)
-		mov		eax, (OTE PTR[eax]).m_location
-		mov		eax, (Behavior PTR[eax]).m_superclass
-		cmp		eax, [oteNil]							; Top of superclass chain?
-		je		@F										; Yes, answer false
-	.ENDW
-	mov			edx, [oteTrue]
-
-@@:
-	mov			[_SP-OOPSIZE], edx						; overwrite receiver on stack
-
-	lea			eax, [_SP-OOPSIZE]						; primitiveSuccess(1)
-	ret
-ENDPRIMITIVE primitiveIsSuperclassOf
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
