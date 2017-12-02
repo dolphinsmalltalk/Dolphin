@@ -103,6 +103,32 @@ Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp)
 	return sp - 1;
 }
 
+// This primitive is unusual(like primitiveClass) in that it cannot fail
+// Essentially same code as shortSpecialSendBasicSize
+Oop* __fastcall Interpreter::primitiveSize(Oop* const sp)
+{
+	// The primitive assumes it is never called for SmallIntegers.
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*sp);
+	MWORD bytesSize = oteReceiver->bytesSize();
+	if (oteReceiver->m_flags.m_pointer)
+	{
+		InstanceSpecification instSpec = oteReceiver->m_oteClass->m_location->m_instanceSpec;
+		// The compiler generates poor code here if we access the InstanceSpecification::m_fixedFields bit field directly
+		// so we do the bit manipulations directly to guide the compiler into generating more efficient asm.
+		// This does mean we are using internal knowledge here that the fixedFields bitfield is left-shifted 1, and that
+		// SmallIntegers are also left-shifted 1 with the bottom bit set
+		Oop value = ((bytesSize >> 1) - (instSpec.m_value & InstanceSpecification::FixedFieldsMask)) | 1;
+		*sp = value;
+		return sp;
+	}
+	else
+	{
+		*sp = integerObjectOf(bytesSize);
+		return sp;
+	}
+}
+
+
 // Primitive to speed up #isKindOf: (so we don't have to implement too many #isXXXXX methods, 
 // which are nasty, requiring a change to Object for each).
 Oop* __fastcall Interpreter::primitiveIsKindOf(Oop* const sp)

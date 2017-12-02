@@ -233,6 +233,8 @@ extern CURRENTCALLBACK:DWORD
 ; C++ Primitive method imports
 primitiveClass EQU ?primitiveClass@Interpreter@@CIPAIQAI@Z
 extern primitiveClass:near32
+primitiveSize EQU ?primitiveSize@Interpreter@@CIPAIQAI@Z
+extern primitiveSize:near32
 primitiveIsKindOf EQU ?primitiveIsKindOf@Interpreter@@CIPAIQAI@Z
 extern primitiveIsKindOf:near32
 primitiveIdentical EQU ?primitiveIdentical@Interpreter@@CIPAIQAI@Z
@@ -728,57 +730,6 @@ ENDIF
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;  int __fastcall Interpreter::primitiveSize()
-;
-;	This primitive is unusual (like primitiveClass) in that it cannot fail
-;	The primitive ASSUMES it is never called for SmallIntegers.
-;	Essentially same code as shortSpecialSendBasicSize
-;
-BEGINPRIMITIVE primitiveSize
-	mov		ecx, [_SP]								; Load receiver into ecx
-	ASSUME	ecx:PTR OTE								; ecx points at receiver OTE
-
-	mov		eax, [ecx].m_size						; Load size into eax
-
-	test	[ecx].m_flags, MASK m_pointer			; ote->isPointers?
-	jz		isBytes
-
-	;; Calculate the length of the indexed part of a pointer object
-	mov		edx, [ecx].m_oteClass					; Get class Oop	from OTE into edx
-	ASSUME	edx:PTR OTE								; edx now points at class OTE
-	
-	and		eax, 7fffffffh							; Mask out the immutability bit
-
-	mov		edx, [edx].m_location					; Load address of class object into edx
-	ASSUME	edx:PTR Behavior						; edx now points at class object
-
-	mov		edx, [edx].m_instanceSpec				; Load InstanceSpecification into edx
-	ASSUME	edx:NOTHING
-	and		edx, MASK m_fixedFields
-	
-	add		edx, edx								; Convert to byte size (already *2 since SmallInteger)
-	sub		eax, edx								; Calculate length of variable part in bytes
-	
-	shr		eax, 1									; Divide byte size by 2 to get MWORD size as SmallInteger
-	or		eax, 1									; Add SmallInteger flag
-	mov		[_SP], eax								; Replace stack top
-
-	mov		eax, _SP								; primitiveSuccess(0)
-	ret
-
-isBytes:
-	lea		ecx, [eax+eax+1]						; Convert to SmallInteger
-	mov		eax, _SP								; primitiveSuccess(0)
-	mov		[_SP], ecx								; Replace stack top
-	ret
-
-	ASSUME	edx:NOTHING
-	ASSUME	ecx:NOTHING
-ENDPRIMITIVE primitiveSize
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
