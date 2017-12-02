@@ -95,7 +95,7 @@ Oop* __fastcall Interpreter::primitiveClass(Oop* const sp)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveEquivalent(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp)
 {
 	Oop receiver = *(sp-1);
 	Oop arg = *sp;

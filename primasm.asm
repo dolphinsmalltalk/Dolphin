@@ -235,8 +235,8 @@ extern CURRENTCALLBACK:DWORD
 ; C++ Primitive method imports
 primitiveClass EQU ?primitiveClass@Interpreter@@CIPAIQAI@Z
 extern primitiveClass:near32
-primitiveEquivalent EQU ?primitiveEquivalent@Interpreter@@CIPAIQAI@Z
-extern primitiveEquivalent:near32
+primitiveIdentical EQU ?primitiveIdentical@Interpreter@@CIPAIQAI@Z
+extern primitiveIdentical:near32
 primitiveShallowCopy EQU ?primitiveShallowCopy@Interpreter@@CIPAIQAI@Z
 extern primitiveShallowCopy:near32
 primitiveAllInstances EQU ?primitiveAllInstances@Interpreter@@CIPAIQAI@Z
@@ -561,7 +561,7 @@ DWORD		primitiveHashBytes								; case 106	Not used in Smalltalk-80
 DWORD		primitiveUnwindCallback							; case 107	ProcessorScheduler>>primUnwindCallback
 DWORD		primitiveHookWindowCreate						; case 108	Not used in Smalltalk-80
 DWORD		primitiveIsSuperclassOf							; case 109	Not used in Smalltalk-80
-DWORD		primitiveEquivalent								; case 110	Character =, Object ==
+DWORD		primitiveIdentical								; case 110	Character =, Object ==
 DWORD		primitiveClass									; case 111	Object class
 DWORD		primitiveCoreLeftThunk							; case 112	Was SystemDictionary>>coreLeft - This is now the basic, non-compacting, incremental, garbage collect
 DWORD		primitiveQuit									; case 113	SystemDictionary>>quitPrimitive

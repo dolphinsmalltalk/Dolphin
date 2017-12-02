@@ -679,7 +679,7 @@ private:
 	static Oop* __fastcall primitiveHookWindowCreate(Oop* const sp);
 
 	// System Primitives
-	static Oop* __fastcall primitiveEquivalent(Oop* const sp);
+	static Oop* __fastcall primitiveIdentical(Oop* const sp);
 	static Oop* __fastcall primitiveClass(Oop* const sp);
 	static Oop* __fastcall primitiveCoreLeft(Oop* const sp, unsigned argCount);
 	static void __fastcall primitiveQuit(Oop* const sp);
