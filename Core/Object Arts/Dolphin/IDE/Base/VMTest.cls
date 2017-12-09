@@ -1411,6 +1411,23 @@ testPrimitiveIsSuperclassOf
 	self assert: (method value: Behavior withArguments: {Object class}).
 	self assert: (method value: Magnitude class withArguments: {Association class})!
 
+testPrimitiveLookupMethod
+	| method |
+	method := self createPrimitiveMethodLike: Behavior >> #lookupMethod: setsFailCode: true.
+	self assert: (method value: Object withArguments: #(1)) equals: 'failed1'.
+	"The primitive doesn't bother to check that the argument is actually a Symbol."
+	self assertIsNil: (method value: Object withArguments: #(nil)).
+	self assertIsNil: (method value: Object withArguments: #('size')).
+	"Successful lookups"
+	self assert: (method value: Object withArguments: #(#size)) equals: Object >> #size.
+	self assert: (method value: Association withArguments: #(#size)) equals: Object >> #size.
+	self assert: (method value: Object class withArguments: #(#size)) equals: Object >> #size.
+	self assert: (method value: ByteArray withArguments: #(#size)) equals: ArrayedCollection >> #size.
+	self assert: (method value: String withArguments: #(#size)) equals: ArrayedCollection >> #size.
+	"Unsuccessful lookups"
+	self assertIsNil: (method value: Object withArguments: #(#testPrimitiveLookupMethod)).
+	self assertIsNil: (method value: ProtoObject withArguments: #(#class)).!
+
 testPrimitiveMakePoint
 	"Test the general object instantiation and initialization primitive (it doesn't just make Points)."
 
@@ -1622,6 +1639,17 @@ testPrimitiveShallowCopy
 			self deny: result sameAs: subject.
 			self assert: result equals: subject.
 			result with: subject do: [:a :b | self assert: a sameAs: b]]!
+
+testPrimitiveSize
+	| method subject |
+	method := self createPrimitiveMethodLike: Object >> #size setsFailCode: false.
+	self assert: (method value: '' withArguments: #()) equals: 0.
+	self assert: (method value: #[1 2] withArguments: #()) equals: 2.
+	self assert: (method value: #(#a #b #c) withArguments: #()) equals: 3.
+	self assert: (method value: 1->2 withArguments: #()) equals: 0.
+	subject := OrderedCollection basicNew: 5.
+	self assert: (method value: subject withArguments: #()) equals: 5.
+	!
 
 testPrimitiveStringAt
 	| array |
@@ -2035,6 +2063,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsSuperclassOf!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
@@ -2045,6 +2074,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveSize!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
