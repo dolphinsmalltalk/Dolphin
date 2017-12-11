@@ -1,0 +1,127 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+IniFileAbstract subclass: #IniFileSection
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IniFileSection guid: (GUID fromString: '{958fca51-c92d-44e7-bba0-cfb419fa5b11}')!
+IniFileSection comment: 'Implements <abstractDictionary> over a named section of a Windows .ini file'!
+!IniFileSection categoriesForClass!Unclassified! !
+!IniFileSection methodsFor!
+
+= comparand
+	^super = comparand and: [comparand name sameAs: name]!
+
+at: keyString ifAbsent: operation
+	| value |
+	keyString isNil ifTrue: [self errorNilKey].
+	^(value := self getValue: keyString shallowCopy) isNil ifTrue: [operation value] ifFalse: [value]!
+
+at: keyString put: valueObject
+	| value |
+	keyString isNil ifTrue: [self errorNilKey].
+	value := valueObject asString.
+	^(KernelLibrary default
+		writePrivateProfileString: name
+		lpKeyName: keyString shallowCopy
+		lpString: value
+		lpFileName: filename) == 0
+		ifTrue: [Win32Error signal]
+		ifFalse: [valueObject]!
+
+errorNilKey
+	self error: 'nil is not a valid key'!
+
+getValue: aString
+	| lib buf count |
+	buf := String new: 512.
+	lib := KernelLibrary default.
+	
+	[count := lib
+				getPrivateProfileString: name
+				lpKeyName: aString
+				lpDefault: nil
+				lpReturnedString: buf
+				nSize: buf size
+				lpFileName: filename.
+	(count == 0 and: [KernelLibrary default getLastError ~~ 0])
+		ifTrue: 
+			["Not found"
+			^nil].
+	count = (buf size - 2)]
+			whileTrue: [buf := String new: buf size * 2].
+	^buf resize: count!
+
+hash
+	^super hash bitXor: name hash !
+
+keysClass
+	"Private - Answer the class of Collection to be used for collecting the keys of the receiver"
+	
+	^Set!
+
+keysDo: operation
+	"Evaluate the <monadicValuable>, operation, for each of the receiver's <String> keys."
+
+	| buf start size end |
+	buf := self getValue: nil.
+	size := buf size.
+	start := 1.
+	
+	[end := buf
+				nextIndexOf: $\0
+				from: start
+				to: size.
+	end == 0] whileFalse: 
+				[operation value: (buf copyFrom: start to: end - 1).
+				start := end + 1]!
+
+name
+	^name!
+
+printPrefixOn: aStream
+	super printPrefixOn: aStream.
+	aStream
+		nextPut: $[;
+		nextPutAll: name;
+		nextPut: $];
+		space!
+
+removeKey: aString ifAbsent: aNiladicValuable
+	| value key |
+	aString isNil ifTrue: [^self errorNilKey].
+	key := aString shallowCopy.
+	value := self getValue: key.
+	value isNil ifTrue: [^aNiladicValuable value].
+	^(KernelLibrary default
+		writePrivateProfileString: name
+		lpKeyName: key
+		lpString: nil
+		lpFileName: filename) == 0
+		ifTrue: [Win32Error signal]
+		ifFalse: [value]!
+
+setFilename: filenameString section: sectionNameString
+	filename := filenameString.
+	name := sectionNameString shallowCopy! !
+!IniFileSection categoriesFor: #=!comparing!public! !
+!IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
+!IniFileSection categoriesFor: #at:put:!adding!public! !
+!IniFileSection categoriesFor: #errorNilKey!exceptions!private! !
+!IniFileSection categoriesFor: #getValue:!helpers!private! !
+!IniFileSection categoriesFor: #hash!comparing!public! !
+!IniFileSection categoriesFor: #keysClass!constants!private! !
+!IniFileSection categoriesFor: #keysDo:!enumerating!public! !
+!IniFileSection categoriesFor: #name!accessing!public! !
+!IniFileSection categoriesFor: #printPrefixOn:!printing!private! !
+!IniFileSection categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!IniFileSection categoriesFor: #setFilename:section:!initializing!private! !
+
+!IniFileSection class methodsFor!
+
+open: filenameString section: sectionNameString
+	^self new
+		setFilename: filenameString section: sectionNameString! !
+!IniFileSection class categoriesFor: #open:section:!public! !
+

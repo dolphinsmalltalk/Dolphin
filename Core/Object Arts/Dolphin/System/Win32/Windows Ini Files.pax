@@ -1,0 +1,250 @@
+| package |
+package := Package name: 'Windows Ini Files'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Windows Ini Files
+Copyright (c) Object Arts Ltd, 2017
+
+This package provides a <Dictionary> interface over Windows "private" .ini files. This is a simple mechanism for implementing human readable config files.'.
+
+
+package classNames
+	add: #IniFile;
+	add: #IniFileAbstract;
+	add: #IniFileSection;
+	yourself.
+
+package methodNames
+	add: #KernelLibrary -> #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:;
+	add: #KernelLibrary -> #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:;
+	add: #KernelLibrary -> #getPrivateProfileSectionNames:nSize:lpFileName:;
+	add: #KernelLibrary -> #getPrivateProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:lpFileName:;
+	add: #KernelLibrary -> #getPrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:;
+	add: #KernelLibrary -> #getProfileInt:lpKeyName:iDef:;
+	add: #KernelLibrary -> #getProfileSection:lpReturnedString:nSize:;
+	add: #KernelLibrary -> #getProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:;
+	add: #KernelLibrary -> #writePrivateProfileSection:lpString:lpFileName:;
+	add: #KernelLibrary -> #writePrivateProfileString:lpKeyName:lpString:lpFileName:;
+	add: #KernelLibrary -> #writePrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:;
+	add: #KernelLibrary -> #writeProfileSection:lpString:;
+	add: #KernelLibrary -> #writeProfileString:lpKeyName:lpString:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Collection subclass: #IniFileAbstract
+	instanceVariableNames: 'filename'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IniFileAbstract subclass: #IniFile
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IniFileAbstract subclass: #IniFileSection
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!KernelLibrary methodsFor!
+
+getPrivateProfileInt: lpAppName lpKeyName: lpKeyName nDefault: nDefault lpFileName: lpFileName
+	"Invoke the GetPrivateProfileInt() function of the module wrapped by the receiver.
+	Helpstring: Retrieves an integer from a key in the specified section of the Win.ini file.
+
+		unsigned int __stdcall GetPrivateProfileInt(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpKeyName,
+			[in]int nDefault,
+			[in]LPCSTR lpFileName);"
+
+	<stdcall: dword GetPrivateProfileIntA lpstr lpstr sdword lpstr>
+	^self invalidCall!
+
+getPrivateProfileSection: lpAppName lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName
+	"Invoke the GetPrivateProfileSectionA() function of the module wrapped by the receiver.
+	Helpstring: Retrieves all the keys and values for the specified section of an initialization file.
+
+		DWORD __stdcall GetPrivateProfileSectionA(
+			[in]LPCSTR lpAppName,
+			[out]LPSTR lpReturnedString,
+			[in]DWORD nSize,
+			[in]LPCSTR lpFileName);"
+
+	<stdcall: dword GetPrivateProfileSectionA lpstr lpstr dword lpstr>
+	^self invalidCall!
+
+getPrivateProfileSectionNames: lpszReturnBuffer nSize: nSize lpFileName: lpFileName
+	"Invoke the GetPrivateProfileSectionNames() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the names of all sections in an initialization file.
+
+		DWORD __stdcall GetPrivateProfileSectionNames(
+			[out]LPSTR lpszReturnBuffer,
+			[in]DWORD nSize,
+			[in]LPCSTR lpFileName);"
+
+	<stdcall: dword GetPrivateProfileSectionNamesA lpstr dword lpstr>
+	^self invalidCall!
+
+getPrivateProfileString: lpAppName lpKeyName: lpKeyName lpDefault: lpDefault lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName
+	"Invoke the GetPrivateProfileStringA() function of the module wrapped by the receiver.
+	Helpstring: Retrieves a string from the specified section in an initialization file.
+
+		DWORD __stdcall GetPrivateProfileStringA(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpKeyName,
+			[in]LPCSTR lpDefault,
+			[out]LPSTR lpReturnedString,
+			[in]DWORD nSize,
+			[in]LPCSTR lpFileName);"
+
+	<stdcall: dword GetPrivateProfileStringA lpstr lpstr lpstr lpstr dword lpstr>
+	^self invalidCall!
+
+getPrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeStruct: uSizeStruct szFile: szFile
+	"Invoke the GetPrivateProfileStruct() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the data associated with a key in the specified section of an initialization file.
+
+		BOOL __stdcall GetPrivateProfileStruct(
+			[in]LPCSTR lpszSection,
+			[in]LPCSTR lpszKey,
+			[out]LPVOID lpStruct,
+			[in]unsigned int uSizeStruct,
+			[in]LPCSTR szFile);"
+
+	<stdcall: bool GetPrivateProfileStructA lpstr lpstr void* dword lpstr>
+	^self invalidCall!
+
+getProfileInt: lpAppName lpKeyName: lpKeyName iDef: iDef
+	"Invoke the GetProfileInt() function of the module wrapped by the receiver.
+	Helpstring: Retrieves an integer from a key in the specified section of the Win.ini file.
+
+		unsigned int __stdcall GetProfileInt(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpKeyName,
+			[in]int iDef);"
+
+	<stdcall: dword GetProfileIntA lpstr lpstr sdword>
+	^self invalidCall!
+
+getProfileSection: lpAppName lpReturnedString: lpReturnedString nSize: nSize
+	"Invoke the GetProfileSection() function of the module wrapped by the receiver.
+	Helpstring: Retrieves all the keys and values for the specified section of the Win.ini file.
+
+		DWORD __stdcall GetProfileSection(
+			[in]LPCSTR lpAppName,
+			[out]LPSTR lpReturnedString,
+			[in]DWORD nSize);"
+
+	<stdcall: dword GetProfileSectionA lpstr lpstr dword>
+	^self invalidCall!
+
+getProfileString: lpAppName lpKeyName: lpKeyName lpDefault: lpDefault lpReturnedString: lpReturnedString nSize: nSize
+	"Invoke the GetProfileString() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the string associated with a key in the specified section of the Win.ini file.
+
+		DWORD __stdcall GetProfileString(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpKeyName,
+			[in]LPCSTR lpDefault,
+			[out]LPSTR lpReturnedString,
+			[in]DWORD nSize);"
+
+	<stdcall: dword GetProfileStringA lpstr lpstr lpstr lpstr dword>
+	^self invalidCall!
+
+writePrivateProfileSection: lpAppName lpString: lpString lpFileName: lpFileName
+	"Invoke the WritePrivateProfileSection() function of the module wrapped by the receiver.
+	Helpstring: Replaces the keys and values for the specified section in an initialization file.
+
+		BOOL __stdcall WritePrivateProfileSection(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpString,
+			[in]LPCSTR lpFileName);"
+
+	<stdcall: bool WritePrivateProfileSectionA lpstr lpstr lpstr>
+	^self invalidCall!
+
+writePrivateProfileString: lpAppName lpKeyName: lpKeyName lpString: lpString lpFileName: lpFileName
+	"Invoke the WritePrivateProfileStringA() function of the module wrapped by the receiver.
+	Helpstring: Copies a string into the specified section of an initialization file.
+
+		BOOL __stdcall WritePrivateProfileString(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpKeyName,
+			[in]LPCSTR lpString,
+			[in]LPCSTR lpFileName);"
+
+	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
+	^self invalidCall!
+
+writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeStruct: uSizeStruct szFile: szFile
+	"Invoke the WritePrivateProfileStruct() function of the module wrapped by the receiver.
+	Helpstring: Copies data into a key in the specified section of an initialization file.
+
+		BOOL __stdcall WritePrivateProfileStruct(
+			[in]LPCSTR lpszSection,
+			[in]LPCSTR lpszKey,
+			[in]LPVOID lpStruct,
+			[in]unsigned int uSizeStruct,
+			[in]LPCSTR szFile);"
+
+	<stdcall: bool WritePrivateProfileStructA lpstr lpstr void* dword lpstr>
+	^self invalidCall!
+
+writeProfileSection: lpAppName lpString: lpString
+	"Invoke the WriteProfileSection() function of the module wrapped by the receiver.
+	Helpstring: Replaces the contents of the specified section in the Win.ini file with specified keys and values.
+
+		BOOL __stdcall WriteProfileSection(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpString);"
+
+	<stdcall: bool WriteProfileSectionA lpstr lpstr>
+	^self invalidCall!
+
+writeProfileString: lpAppName lpKeyName: lpKeyName lpString: lpString
+	"Invoke the WriteProfileStringA() function of the module wrapped by the receiver.
+	Helpstring: Copies a string into the specified section of the Win.ini file.
+
+		BOOL __stdcall WriteProfileStringA(
+			[in]LPCSTR lpAppName,
+			[in]LPCSTR lpKeyName,
+			[in]LPCSTR lpString);"
+
+	<stdcall: bool WriteProfileStringA lpstr lpstr lpstr>
+	^self invalidCall! !
+!KernelLibrary categoriesFor: #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getPrivateProfileSectionNames:nSize:lpFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getPrivateProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:lpFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getPrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getProfileInt:lpKeyName:iDef:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getProfileSection:lpReturnedString:nSize:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getProfileString:lpKeyName:lpDefault:lpReturnedString:nSize:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #writePrivateProfileSection:lpString:lpFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #writePrivateProfileString:lpKeyName:lpString:lpFileName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #writePrivateProfileStruct:lpszKey:lpStruct:uSizeStruct:szFile:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #writeProfileSection:lpString:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #writeProfileString:lpKeyName:lpString:!**auto generated**!public! !
+
+"End of package definition"!
+

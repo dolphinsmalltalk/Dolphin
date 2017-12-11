@@ -1,0 +1,51 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+TestResource subclass: #IniFileTestResource
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IniFileTestResource guid: (GUID fromString: '{8e42730b-5040-4528-ae15-41e9f153c025}')!
+IniFileTestResource comment: ''!
+!IniFileTestResource categoriesForClass!Unclassified! !
+!IniFileTestResource methodsFor!
+
+emptyFile
+	^self fileLocator localFileSpecFor: 'empty.ini'!
+
+fileLocator
+	^FolderRelativeFileLocator 
+		basePath: (FileLocator imageRelative localFileSpecFor: 'Resources\Tests\IniFiles\')!
+
+iniFile1
+	^self fileLocator localFileSpecFor: '1.ini'!
+
+setUp
+	super setUp.
+	File createDirectory: self fileLocator basePath.
+	(FileStream write: self iniFile1)
+		nextPutAll: '[Section1]
+S1Key1=S1Value1
+S1Key2=S1Value2
+S1Key3=
+
+[S2]
+
+[3]
+S3Key1=123
+
+[]
+=NoSectionNoKeyValue
+';
+		close.
+	(FileStream write: self emptyFile) close!
+
+tearDown
+	super tearDown.
+	(File exists: self fileLocator basePath) ifTrue: [[File deleteDirectory: self fileLocator basePath] on: Error do: [:ex | ]]! !
+!IniFileTestResource categoriesFor: #emptyFile!public! !
+!IniFileTestResource categoriesFor: #fileLocator!accessing!public! !
+!IniFileTestResource categoriesFor: #iniFile1!accessing!public! !
+!IniFileTestResource categoriesFor: #setUp!public!setup! !
+!IniFileTestResource categoriesFor: #tearDown!public!setup! !
+
