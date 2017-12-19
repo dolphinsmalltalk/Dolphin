@@ -11,17 +11,22 @@ IniFileSection comment: 'Implements <abstractDictionary> over a named section of
 !IniFileSection methodsFor!
 
 = comparand
+	"Answer whether the receiver and the <Object>, comparand, are considered equivalent."
+
 	^super = comparand and: [comparand name sameAs: name]!
 
-at: keyString ifAbsent: operation
+at: aString ifAbsent: aNiladicValuable
+	"Answer the value of the receiver named by the key argument, aString.  If the key is not found, 
+	answer the result of evaluating the <niladicValuable> argument."
+
 	| value |
-	keyString isNil ifTrue: [self errorNilKey].
-	^(value := self getValue: keyString shallowCopy) isNil ifTrue: [operation value] ifFalse: [value]!
+	aString isNil ifTrue: [^self errorNilKey].
+	^(value := self lookup: aString) isNil ifTrue: [aNiladicValuable value] ifFalse: [value]!
 
 at: keyString put: valueObject
 	| value |
 	keyString isNil ifTrue: [self errorNilKey].
-	value := valueObject asString.
+	value := valueObject displayString.
 	^(KernelLibrary default
 		writePrivateProfileString: name
 		lpKeyName: keyString shallowCopy
@@ -33,14 +38,14 @@ at: keyString put: valueObject
 errorNilKey
 	self error: 'nil is not a valid key'!
 
-getValue: aString
+getValue: key
 	| lib buf count |
-	buf := String new: 512.
+	buf := String new: 128.
 	lib := KernelLibrary default.
 	
 	[count := lib
 				getPrivateProfileString: name
-				lpKeyName: aString
+				lpKeyName: key
 				lpDefault: nil
 				lpReturnedString: buf
 				nSize: buf size
@@ -89,6 +94,10 @@ printPrefixOn: aStream
 		space!
 
 removeKey: aString ifAbsent: aNiladicValuable
+	"Remove the <String> key (and its associated value), from the receiver. If key is
+	not in the receiver, answer the result of evaluating the <niladicValuable>,
+	operation. Otherwise, answer the value named by key."
+
 	| value key |
 	aString isNil ifTrue: [^self errorNilKey].
 	key := aString shallowCopy.
@@ -109,7 +118,7 @@ setFilename: filenameString section: sectionNameString
 !IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
 !IniFileSection categoriesFor: #at:put:!adding!public! !
 !IniFileSection categoriesFor: #errorNilKey!exceptions!private! !
-!IniFileSection categoriesFor: #getValue:!helpers!private! !
+!IniFileSection categoriesFor: #getValue:!accessing!public! !
 !IniFileSection categoriesFor: #hash!comparing!public! !
 !IniFileSection categoriesFor: #keysClass!constants!private! !
 !IniFileSection categoriesFor: #keysDo:!enumerating!public! !
