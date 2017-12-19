@@ -10,16 +10,16 @@ IniFile comment: 'Implements <abstractDictionary> over a Windows .ini file'!
 !IniFile categoriesForClass!Unclassified! !
 !IniFile methodsFor!
 
-at: aString ifAbsent: operation
-	"Answer the named section of the initialization file.  If there is no such section,
-	answer the result of evaluating the <niladicValuable>, operation."
+at: aString ifAbsent: aNiladicValuable
+	"Answer the <IniFileSection> in the received named by the <String> argument.  If there is no such section,
+	answer the result of evaluating the <niladicValuable> argument."
 
 	| key |
 	key := aString shallowCopy.
-	^(self hasSectionNamed: key) ifTrue: [self getValue: key] ifFalse: [operation value]!
+	^(self hasSectionNamed: key) ifTrue: [self getValue: key] ifFalse: [aNiladicValuable value]!
 
 at: keyString put: valueDictionary
-	"Store the key-value pairs in the <abstractDictionary> argument as the named section of the initialization file."
+	"Store the key-value pairs in the <abstractDictionary> argument as a named section of the initialization file."
 
 	| kvps |
 	kvps := String writeStream.
@@ -40,19 +40,21 @@ at: keyString put: valueDictionary
 	^valueDictionary!
 
 getValue: aString
+	"Private - Answer the <IniFileSection> named by the <String> argument. Note that the section may not
+	currently exist in the ini-file, but can be added to, which will then cause the section to
+	be added to the ini-file."
+
 	^IniFileSection open: filename section: aString!
 
 hasSectionNamed: aString
-	| lib |
-	lib := KernelLibrary default.
-	^(lib
+	^(KernelLibrary default
 		getPrivateProfileSection: aString
 		lpReturnedString: (String newFixed: 3)
 		nSize: 3
 		lpFileName: filename) ~~ 0
-		or: [
-			"Special case of empty section is OK"
-			lib getLastError == 0]!
+		or: 
+			["Special case of empty section is OK"
+			KernelLibrary default getLastError == 0]!
 
 includesKey: aString
 	"Answer whether the receiver has a section with the specified name."
@@ -98,7 +100,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !
 !IniFile categoriesFor: #at:ifAbsent:!accessing!public! !
 !IniFile categoriesFor: #at:put:!adding!public! !
-!IniFile categoriesFor: #getValue:!helpers!private! !
+!IniFile categoriesFor: #getValue:!accessing!private! !
 !IniFile categoriesFor: #hasSectionNamed:!accessing!private! !
 !IniFile categoriesFor: #includesKey:!accessing!public! !
 !IniFile categoriesFor: #keysDo:!enumerating!public! !

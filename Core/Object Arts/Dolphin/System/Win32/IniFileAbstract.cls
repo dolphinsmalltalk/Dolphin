@@ -11,39 +11,85 @@ IniFileAbstract comment: ''!
 !IniFileAbstract methodsFor!
 
 = comparand
+	"Answer whether the receiver and the <Object>, comparand, are considered equivalent."
+
 	^comparand class == self class
 		and: [comparand filename sameAs: filename]!
 
 add: anAssociation
 	"Add anAssociation to the receiver. Answer anAssociation."
 
-	^self at: anAssociation key put: anAssociation value!
+	self at: anAssociation key put: anAssociation value.
+	^anAssociation!
 
-at: anObject
+associationAt: aString
+	"Answer an <Association> with the specified key and the associated value from the receiver.
+	If the key is not found, raise an exception."
+
+	^(self associationAt: aString ifAbsent: [])
+		ifNil: [self errorKeyNotFound: aString]
+		ifNotNil: [:assoc | assoc]!
+
+associationAt: anObject ifAbsent: aNiladicValuable
+	"Answer a new <Association> between the key and value of the receiver at the first argument.
+	If the key is not found, answer the result of evaluating the <niladicValuable> exception
+	handler."
+
+	"Implementation Note: IniFiles do not actually store key-value pairs in Associations, so
+	the answer is not state information."
+
+	| value |
+	value := self at: anObject ifAbsent: [AbsentCookie].
+	^value == AbsentCookie ifTrue: [aNiladicValuable value] ifFalse: [anObject -> value]!
+
+associations
+	"Answer a <sequencedReadableCollection> of <Association>s representing the key-value pairs in the receiver."
+
+	| stream |
+	stream := Array writeStream.
+	self associationsDo: [:assoc | stream nextPut: assoc].
+	^stream contents!
+
+associationsDo: aMonadicValuable
+	"Evalue the <MonadicValuable> argument for each of the receiver's key-value pairs."
+
+	self keysAndValuesDo: [:eachKey :eachValue | aMonadicValuable value: eachKey -> eachValue]!
+
+at: aString
 	"Answer the value at the specified <String> key in the receiver, or if the key
 	is not found raise a <NotFoundError>."
 
 	| answer |
-	answer := self at: anObject ifAbsent: [].
-	^answer isNil ifTrue: [self errorKeyNotFound: anObject] ifFalse: [answer]!
+	answer := self at: aString ifAbsent: [AbsentCookie].
+	^answer == AbsentCookie ifTrue: [self errorKeyNotFound: aString] ifFalse: [answer]!
 
-at: key ifAbsent: operation
-	self subclassResponsibility!
+at: aString ifAbsent: aNiladicValuable
+	"Answer the value of the receiver named by the key argument, aString.  If the key is not found, 
+	answer the result of evaluating the <niladicValuable> argument."
 
-at: arg1 ifAbsentPut: arg2
-	self subclassResponsibility!
+	^self subclassResponsibility!
 
-at: keyString put: value
-	self subclassResponsibility!
+at: aString ifAbsentPut: aNiladicValuable
+	"Answer the value of the receiver keyed by the <String> argument, or if not found add and
+	answer the result of result of evaluating the <niladicValuable>, argument."
 
-collect: transformer
-	"Evaluate the monadic valuable argument, transformer, for each of the receiver's values.
-	Answer a new collection like the receiver containing the same keys, and the values returned 
-	by the transformer on each evaluation."
+	| preexisting |
+	preexisting := self at: aString ifAbsent: [AbsentCookie].
+	^preexisting == AbsentCookie
+		ifTrue: [self at: aString put: aNiladicValuable value]
+		ifFalse: [preexisting]!
+
+at: aString put: value
+	^self subclassResponsibility!
+
+collect: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's values. Answer a new
+	collection like the receiver containing the same keys, and the values returned by the
+	transformer on each evaluation."
 
 	| answer |
 	answer := self copyLike.
-	self keysAndValuesDo: [:key :value | answer at: key put: (transformer value: value)].
+	self keysAndValuesDo: [:key :value | answer at: key put: (aMonadicValuable value: value)].
 	^answer!
 
 copySize
@@ -94,55 +140,60 @@ getValue: aString
 hash
 	^filename hash!
 
-includesKey: anObject 
+includesKey: aString
 	"Answer whether the receiver has a key equal to the <Object>
 	argument."
 
-	^(self at: anObject ifAbsent: []) notNil!
+	^(self at: aString ifAbsent: [AbsentCookie]) ~~ AbsentCookie!
 
 isEmpty
+	"Answer whether the receiver contains no elements."
+
 	^self keys isEmpty!
 
-keyAtValue: value 
-	"Answer the <Object> key of the <Object> argument, value. 
+keyAtValue: value
+	"Answer the <String> key of the <Object> argument, value. 
 	If there is no such value, send #errorValueNotFound: to the receiver with 
 	value as its argument.
 	N.B. Since values are not necessarily unique, answer the name of the first 
 	one encountered in the search."
 
 	| key |
-	key := self keyAtValue: value ifAbsent: [].
-	^key isNil ifTrue: [self errorValueNotFound: value] ifFalse: [key]!
+	key := self keyAtValue: value ifAbsent: [AbsentCookie].
+	^key == AbsentCookie ifTrue: [self errorValueNotFound: value] ifFalse: [key]!
 
-keyAtValue: anObject ifAbsent: aNiladicValuable 
-	"Answer the <Object> key of the <Object> value argument. 
+keyAtValue: anObject ifAbsent: aNiladicValuable
+	"Answer the <String> key of the <Object> value argument. 
 	If there is no such value, answer the result of evaluating the 
 	<niladicValuable> argument.
 	N.B. Identity is used for comparison of the values, but see also
 	#keyAtEqualValue:ifAbsent:"
 
-	#todo.	"ANSI standard states that #= be used rather than #==, but long established standard is the latter"
 	self keysAndValuesDo: [:eachKey :eachValue | eachValue == anObject ifTrue: [^eachKey]].
 	^aNiladicValuable value!
 
 keys
-	"Answer a <sequencedReadableCollection> containing the names of the the sections in the receiver's initialization file."
+	"Answer a <sequencedReadableCollection> of <String> being the receiver's keys."
 
 	| answer |
 	answer := Array writeStream.
 	self keysDo: [:key | answer nextPut: key].
 	^answer contents!
 
-keysAndValuesDo: operation
-	"Evaluate the <dyadicValuable>, operation, for each section in the initialization file.
-	The key/values pairs are visited in the section order of that file."
+keysAndValuesDo: aDyadicValuable
+	"Evaluate the <dyadicValuable> arguemnt for each of the receiver's key-value pairs."
 
-	self keysDo: [:each | operation value: each value: (self getValue: each)]!
+	self keysDo: [:each | aDyadicValuable value: each value: (self getValue: each)]!
 
-keysDo: operation
-	"Evaluate the <monadicValuable>, operation, for each of the receiver's keys."
+keysDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's keys."
 
 	^self subclassResponsibility!
+
+lookup: aString
+	"Answer the <String> value named by the <String> argument, or nil if there is no such key in the receiver."
+
+	^self getValue: aString shallowCopy!
 
 removeAllKeys: keys
 	"Remove any elements from the receiver with the keys in the <collection> argument, keys.
@@ -152,12 +203,12 @@ removeAllKeys: keys
 	keys do: [:k | self removeKey: k]!
 
 removeAllKeys: keys ifAbsent: operation
-	"Remove any elements from the receiver with the keys in the <collection>
-	argument, keys. If any of the keys are not present in the receiver, or there 
-	are duplicates in keys, then evaluate the <niladicValuable> argument, 
-	operation, but do not stop the enumeration."
+	"Remove any elements from the receiver with the keys in the <collection> argument, keys. If
+	any of the keys are not present in the receiver, or there are duplicates in keys, then
+	evaluate the <niladicValuable>|<monadicValuable> argument, operation, but do not stop the
+	enumeration."
 
-	keys do: [:k | self removeKey: k ifAbsent: operation]!
+	keys do: [:k | self removeKey: k ifAbsent: [operation cull: k]]!
 
 removeKey: keyString
 	"Remove the <String> key (and its associated value), from the receiver. 
@@ -165,11 +216,11 @@ removeKey: keyString
 	named by the key."
 
 	| removed |
-	removed := self removeKey: keyString ifAbsent: [].
-	^removed isNil ifTrue: [self errorKeyNotFound: keyString] ifFalse: [removed]!
+	removed := self removeKey: keyString ifAbsent: [AbsentCookie].
+	^removed == AbsentCookie ifTrue: [self errorKeyNotFound: keyString] ifFalse: [removed]!
 
-removeKey: keyString ifAbsent: aNiladicValuable
-	"Remove the <Object> key (and its associated value), from the receiver. If key is
+removeKey: aString ifAbsent: aNiladicValuable
+	"Remove the <String> key (and its associated value), from the receiver. If key is
 	not in the receiver, answer the result of evaluating the <niladicValuable>,
 	operation. Otherwise, answer the value named by key."
 
@@ -189,21 +240,26 @@ select: discriminator
 	^answer!
 
 species
+	"Answer the preferred class of the receiver for returning the results of projections, etc."
+
 	^LookupTable!
 
 values
-	"Answer a <collection> containing the receiver's <IniFileSection> values in the order in
-	which they appear in the file."
+	"Answer a <seequencedReadableCollection> containing the receiver's values."
 
 	| values |
 	values := Array writeStream.
 	self do: [:each | values nextPut: each].
 	^values contents! !
 !IniFileAbstract categoriesFor: #=!comparing!public! !
-!IniFileAbstract categoriesFor: #add:!public! !
+!IniFileAbstract categoriesFor: #add:!adding!public! !
+!IniFileAbstract categoriesFor: #associationAt:!accessing!public! !
+!IniFileAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
+!IniFileAbstract categoriesFor: #associations!accessing!public! !
+!IniFileAbstract categoriesFor: #associationsDo:!enumerating!public! !
 !IniFileAbstract categoriesFor: #at:!accessing!public! !
 !IniFileAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
-!IniFileAbstract categoriesFor: #at:ifAbsentPut:!public! !
+!IniFileAbstract categoriesFor: #at:ifAbsentPut:!accessing!public! !
 !IniFileAbstract categoriesFor: #at:put:!adding!public! !
 !IniFileAbstract categoriesFor: #collect:!enumerating!public! !
 !IniFileAbstract categoriesFor: #copySize!copying!private! !
@@ -213,19 +269,20 @@ values
 !IniFileAbstract categoriesFor: #errorValueNotFound:!exceptions!private! !
 !IniFileAbstract categoriesFor: #filename!accessing!public! !
 !IniFileAbstract categoriesFor: #filename:!initializing!private! !
-!IniFileAbstract categoriesFor: #getValue:!helpers!private! !
+!IniFileAbstract categoriesFor: #getValue:!accessing!private! !
 !IniFileAbstract categoriesFor: #hash!comparing!public! !
 !IniFileAbstract categoriesFor: #includesKey:!public!searching! !
-!IniFileAbstract categoriesFor: #isEmpty!public! !
+!IniFileAbstract categoriesFor: #isEmpty!public!testing! !
 !IniFileAbstract categoriesFor: #keyAtValue:!accessing!public! !
 !IniFileAbstract categoriesFor: #keyAtValue:ifAbsent:!accessing!public! !
 !IniFileAbstract categoriesFor: #keys!accessing!public! !
 !IniFileAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!IniFileAbstract categoriesFor: #keysDo:!public! !
-!IniFileAbstract categoriesFor: #removeAllKeys:!public!removing! !
+!IniFileAbstract categoriesFor: #keysDo:!enumerating!public! !
+!IniFileAbstract categoriesFor: #lookup:!accessing!public! !
+!IniFileAbstract categoriesFor: #removeAllKeys:!accessing!public! !
 !IniFileAbstract categoriesFor: #removeAllKeys:ifAbsent:!public!removing! !
 !IniFileAbstract categoriesFor: #removeKey:!public!removing! !
-!IniFileAbstract categoriesFor: #removeKey:ifAbsent:!public! !
+!IniFileAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
 !IniFileAbstract categoriesFor: #select:!enumerating!public! !
 !IniFileAbstract categoriesFor: #species!accessing!public! !
 !IniFileAbstract categoriesFor: #values!accessing!public! !

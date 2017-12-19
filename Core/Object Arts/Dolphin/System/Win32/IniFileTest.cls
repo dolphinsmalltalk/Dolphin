@@ -20,7 +20,7 @@ makeIniFile
 	^IniFile open: self fileResource iniFile1!
 
 makeModifiableIniFile
-	iniFile := self fileResource fileLocator localFileSpecFor: self selector, '.ini'.
+	iniFile := self fileResource fileLocator localFileSpecFor: self selector , '.ini'.
 	File copy: self fileResource iniFile1 to: iniFile.
 	^IniFile open: iniFile!
 
@@ -29,7 +29,7 @@ tearDown
 	^super tearDown!
 
 testAdd
-	| subject section newValues |
+	| subject section newValues assoc |
 	subject := self makeModifiableIniFile.
 	"Sanity check"
 	newValues := LookupTable new
@@ -37,17 +37,20 @@ testAdd
 				at: '' put: 'Value2';
 				at: 'Key3' put: '';
 				yourself.
-	self assert: (subject add: 'Section1' -> newValues) equals: newValues.
+	assoc := 'Section1' -> newValues.
+	self assert: (subject add: assoc) equals: assoc.
 	section := subject at: 'Section1'.
 	self assert: (section keys noDifference: newValues keys).
 	self assert: (section values noDifference: newValues values).
-	section add: 'Key1' -> 'Modified1'.
+	assoc := 'Key1' -> 'Modified1'.
+	self assert: (section add: assoc) sameAs: assoc.
+	self assert: (section associationAt: assoc key) equals: assoc.
 	section add: '' -> 'Modified2'.
 	section add: 'Key4' -> 'Added'.
-	self assert: (section keys noDifference: (newValues keys add: 'Key4'; yourself)).
-	self assert: (section values noDifference: #('Modified1' 'Modified2' '' 'Added')).
-
-	!
+	self assert: (section keys noDifference: (newValues keys
+						add: 'Key4';
+						yourself)).
+	self assert: (section values noDifference: #('Modified1' 'Modified2' '' 'Added'))!
 
 testAsByteArray
 	| subject |
@@ -67,7 +70,7 @@ testAt
 	subject := self makeEmptyIniFile.
 	self should: [subject at: ''] raise: NotFoundError!
 
-testAtPut
+testAtIfAbsentPut
 	| subject section newValues |
 	subject := self makeModifiableIniFile.
 	"Sanity check"
@@ -76,17 +79,40 @@ testAtPut
 				at: '' put: 'Value2';
 				at: 'Key3' put: '';
 				yourself.
-	self assert: (subject at: 'Section1' put: newValues) equals: newValues.
 	section := subject at: 'Section1'.
+	self assert: (subject at: 'Section1' ifAbsentPut: [newValues]) equals: section.
+	self assert: (subject at: 'S5' ifAbsentPut: [newValues]) sameAs: newValues.
+	self assert: (subject at: 'S5') associations equals: newValues associations asArray!
+
+testAtPut
+	| subject section newValues |
+	subject := self makeModifiableIniFile.
+	"We can write a whole section at once"
+	self deny: (subject includesKey: 'Section5').
+	newValues := LookupTable new
+				at: 'Key1' put: 'Value1';
+				at: '' put: 'Value2';
+				at: 'Key3' put: '';
+				yourself.
+	self assert: (subject at: 'Section5' put: newValues) equals: newValues.
+	section := subject at: 'Section5'.
 	self assert: (section keys noDifference: newValues keys).
 	self assert: (section values noDifference: newValues values).
 	section at: 'Key1' put: 'Modified1'.
 	section at: '' put: 'Modified2'.
 	section at: 'Key4' put: 'Added'.
-	self assert: (section keys noDifference: (newValues keys add: 'Key4'; yourself)).
+	self assert: (section keys noDifference: (newValues keys
+						add: 'Key4';
+						yourself)).
 	self assert: (section values noDifference: #('Modified1' 'Modified2' '' 'Added')).
-
-	!
+	"If we write a whole section that exists, only the replaced/added values should remain."
+	newValues at: 'Key5' put: 'Added5'.
+	newValues removeKey: 'Key1'.
+	self assert: (subject at: 'Section5') keys asSortedCollection asArray
+		equals: #('' 'Key1' 'Key3' 'Key4').
+	subject at: 'Section1' put: newValues.
+	self assert: (subject at: 'Section1' put: newValues) equals: newValues.
+	self assert: (subject at: 'Section1') equals: newValues!
 
 testCollect
 	| subject section collected |
@@ -134,6 +160,41 @@ testKeys
 	subject := self makeEmptyIniFile.
 	self assert: subject keys isEmpty!
 
+testLookup
+	| subject absent values |
+	subject := self makeModifiableIniFile.
+	values := subject values.
+	self assert: (subject lookup: 'section1') equals: values first.
+	self assert: (subject lookup: '') equals: values last.
+	absent := subject lookup: 'section'.
+	self assert: subject keys equals: #('Section1' 'S2' '3' '').
+	absent at: 'x' put: 1.
+	self assert: subject keys equals: #('Section1' 'S2' '3' '' 'section').
+	"Reopen"
+	subject := IniFile open: subject filename.
+	absent := subject lookup: 'section'.
+	self assert: absent associations equals: {'x' -> '1'}!
+
+testRemoveAllKeys
+	| subject sections absent |
+	subject := self makeModifiableIniFile.
+	"Sanity check"
+	sections := subject values.
+	self should: [sections first removeAllKeys: #('x')] raise: NotFoundError.
+	sections first removeAllKeys: #('S1key2' 's1Key1').
+	self assert: sections first keys equals: #('S1Key3').
+	sections first removeAllKeys: #('s1Key3').
+	self assert: (subject at: 'section1') keys equals: #().
+	self assert: subject keys equals: #('Section1' 'S2' '3' '').
+	self should: [subject removeAllKeys: #('x')] raise: NotFoundError.
+	subject removeAllKeys: #('Section1' '3').
+	self assert: subject keys equals: #('S2' '').
+	self assert: subject values equals: {sections second. sections fourth}.
+	absent := OrderedCollection new.
+	subject removeAllKeys: #('Section1' 'S2' '3' '') ifAbsent: [:k | absent add: k].
+	self assert: absent asArray equals: #('Section1' '3').
+	self assert: subject isEmpty!
+
 testRemoveKey
 	| subject section removed |
 	subject := self makeModifiableIniFile.
@@ -168,15 +229,18 @@ testValues
 !IniFileTest categoriesFor: #makeEmptyIniFile!helpers!private! !
 !IniFileTest categoriesFor: #makeIniFile!helpers!private! !
 !IniFileTest categoriesFor: #makeModifiableIniFile!helpers!private! !
-!IniFileTest categoriesFor: #tearDown!public!running! !
+!IniFileTest categoriesFor: #tearDown!private!running! !
 !IniFileTest categoriesFor: #testAdd!public!unit tests! !
 !IniFileTest categoriesFor: #testAsByteArray!public!unit tests! !
 !IniFileTest categoriesFor: #testAt!public!unit tests! !
+!IniFileTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
 !IniFileTest categoriesFor: #testAtPut!public!unit tests! !
 !IniFileTest categoriesFor: #testCollect!public!unit tests! !
 !IniFileTest categoriesFor: #testIncludesKey!public!unit tests! !
 !IniFileTest categoriesFor: #testIsEmpty!public!unit tests! !
 !IniFileTest categoriesFor: #testKeys!public!unit tests! !
+!IniFileTest categoriesFor: #testLookup!public!unit tests! !
+!IniFileTest categoriesFor: #testRemoveAllKeys!public!unit tests! !
 !IniFileTest categoriesFor: #testRemoveKey!public!unit tests! !
 !IniFileTest categoriesFor: #testValues!public!unit tests! !
 
