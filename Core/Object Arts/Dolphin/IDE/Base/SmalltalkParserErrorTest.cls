@@ -88,7 +88,7 @@ scannerClass
 	^SmalltalkScanner!
 
 testErrorsBadCodePoint
-	#('$\x100' '$\xFFFFFFFF') do: 
+	#('$\x110000' '$\xFFFFFFFF') do: 
 			[:each |
 			self
 				parseExprError: each

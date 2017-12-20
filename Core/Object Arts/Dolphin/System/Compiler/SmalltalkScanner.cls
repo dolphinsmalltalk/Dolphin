@@ -437,8 +437,8 @@ scanLiteralCharacter
 												ifNotNil: 
 													[:codePoint |
 													stop := self previousStepPosition.
-													"At present we are still limited to 8-bit characters"
-													codePoint > 255
+													"Maximum Unicode code point is U+10FFFF"
+													codePoint > 16r10FFFF
 														ifTrue: 
 															["Code point out of range"
 															self lexicalError: LErrBadCodePoint range: (tokenStart to: stop).
