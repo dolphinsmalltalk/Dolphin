@@ -1072,20 +1072,26 @@ odbShortAt: index put: longValue
 !Character methodsFor!
 
 odbBasicSerialize: serializer
-
-	asciiValue < 256 ifTrue: [
-		serializer stream putByte: 13; putChar: self.
-		^self
-	].
-	serializer stream putByte: 29; putWord: asciiValue!
+	codePoint < 256
+		ifTrue: 
+			[serializer stream
+				putByte: 13;
+				putChar: self.
+			^self].
+	serializer stream
+		putByte: 29;
+		putWord: codePoint!
 
 odbSerialize: serializer
-
-	asciiValue < 256 ifTrue: [
-		serializer stream putByte: 13; putChar: self.
-		^self
-	].
-	serializer stream putByte: 29; putWord: asciiValue! !
+	codePoint < 256
+		ifTrue: 
+			[serializer stream
+				putByte: 13;
+				putChar: self.
+			^self].
+	serializer stream
+		putByte: 29;
+		putWord: codePoint! !
 !Character categoriesFor: #odbBasicSerialize:!public! !
 !Character categoriesFor: #odbSerialize:!OmniBase!public! !
 

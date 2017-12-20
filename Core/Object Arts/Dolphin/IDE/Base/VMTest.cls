@@ -1612,6 +1612,27 @@ testPrimitiveNewVirtualFailure
 	"Object is not indexable"
 	self assert: (method value: Object withArguments: #(1 2)) equals: 'failed2'!
 
+testPrimitiveNextPut
+	| method subject |
+	method := self createPrimitiveMethodLike: WriteStream >> #nextPut: setsFailCode: true.
+	subject := String writeStream.
+	"Past limit"
+	self assert: (method value: subject withArguments: #($a)) equals: 'failed2'.
+	"Smalltalk backup code will extend the collection"
+	subject nextPut: $a.
+	self assert: (method value: subject withArguments: #($b)) equals: $b.
+	self assert: subject position equals: 2.
+	self assert: subject contents equals: 'ab'.
+	subject position: 0.0.
+	self assert: (method value: subject withArguments: #($a)) equals: 'failed0'.
+	subject := String writeStream: 2.
+	"Not a character"
+	self assert: (method value: subject withArguments: #(1)) equals: 'failed4'.
+	self has7053OrLater
+		ifTrue: 
+			["Earlier VM assumed chars were always for byte code points"
+			self assert: (method value: subject withArguments: {Character codePoint: 16r394}) equals: 'failed4']!
+
 testPrimitiveObjectCount
 	"Test primitive that returns object instance count."
 
@@ -2144,6 +2165,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveNewFixedFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewInitializedFailure!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewVirtualFailure!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveNextPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !

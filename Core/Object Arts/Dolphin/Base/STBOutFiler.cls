@@ -21,20 +21,16 @@ Instance Variables:
 basicNextPut: anObject
 	"Private - Write anObject to the stream in STB format."
 
+	| class |
 	anObject isNil ifTrue: [^self writeNil].
 	"If anObject has been registered as a global then we wrap it up as an STBGlobalObjectProxy
 	and output that instead."
 	(self objectIsGlobal: anObject) ifTrue: [^self putGlobal: anObject].
 
-	"SmallIntegers can be encoded entirely within the prefix."
-	anObject isImmediate
-		ifTrue: 
-			[anObject class == SmallInteger
-				ifTrue: [^self writeInteger: (STBPrefix encodeSmallInteger: anObject)].
-
-			"Characters can be encoded entirely within the prefix."
-			anObject class == Character ifTrue: [^self putCharacter: anObject].
-			self error: 'unrecognised immediate object type'].
+	"Some objects can be encoded entirely within the prefix."
+	class := anObject class.
+	class == SmallInteger ifTrue: [^self writeInteger: (STBPrefix encodeSmallInteger: anObject)].
+	class == Character ifTrue: [^self putCharacter: anObject].
 
 	"References to objects already output can also be encoded entirely within the prefix."
 	(self refForObject: anObject)

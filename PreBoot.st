@@ -352,3 +352,6 @@ contains: aString
 	"Answer whether the receiver contains the specified sub-string."
 
 	^(self findString: aString startingAt: 1) ~~ 0! !
+
+Character instanceVariableString: 'codePoint'!
+

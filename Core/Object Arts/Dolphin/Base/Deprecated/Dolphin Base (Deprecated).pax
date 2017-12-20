@@ -28,6 +28,7 @@ package methodNames
 	add: #_FPIEEE_VALUE -> #valueType;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
+	add: #Character -> #asciiValue;
 	add: #Class -> #addClassVarName:;
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
@@ -201,6 +202,17 @@ makeNullTerminated
 	self isNullTerminated: true! !
 !Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
 !Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
+
+!Character methodsFor!
+
+asciiValue
+	"Answers the ascii character value of the receiver."
+
+	"Retained for ST-80 compatibility only, as specific to ASCII char set. Use #codePoint instead."
+
+	#deprecated.
+	^codePoint! !
+!Character categoriesFor: #asciiValue!accessing!public! !
 
 !Class methodsFor!
 
