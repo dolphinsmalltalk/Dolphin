@@ -1057,26 +1057,26 @@ buildAllSelectors
 			each class understoodSelectors do: [:s | set add: s]].
 	^set!
 
-buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector extraArgs: extraArgs browseOtherSelector: browseOtherSelector 
+buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector extraArgs: extraArgs browseOtherSelector: browseOtherSelector
 	"Private - Build a messages dynamic pop-up for [local] references to/definitions of."
 
 	| messages |
 	aMenu clear.
 	aCollection do: 
-			[:method | 
-			aMenu 
+			[:method |
+			aMenu
 				addCommand: (Message selector: browseSelector arguments: (Array with: method selector) , extraArgs)
-				description: method selector.
+				description: (method selector copyReplaceAll: '&' with: '&&').
 			"Rather than include only sent messages, we include all referenced symbols as useful for tracking down events, etc"
 			messages := method allSymbolLiterals.
 			messages remove: method selector ifAbsent: [].
 			aMenu addSeparator.
-			messages notEmpty 
+			messages notEmpty
 				ifTrue: 
 					[messages asSortedCollection do: 
-							[:selector | 
+							[:selector |
 							aMenu addCommand: (Message selector: browseSelector arguments: (Array with: selector) , extraArgs)
-								description: selector].
+								description: (selector copyReplaceAll: '&' with: '&&')].
 					aMenu addSeparator]].
 	aMenu addCommand: (Message selector: browseOtherSelector arguments: extraArgs)
 		description: '&Message...'.
