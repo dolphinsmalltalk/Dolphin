@@ -172,32 +172,48 @@ inline int __stdcall stringSearch(const BYTE* a, const int N, const BYTE* p, con
 Oop* __fastcall Interpreter::primitiveStringSearch(Oop* const sp)
 {
 	Oop integerPointer = *sp;
-	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(0);				// startingAt not an integer
-	const SMALLINTEGER startingAt = ObjectMemoryIntegerValueOf(integerPointer);
+	if (ObjectMemoryIsIntegerObject(integerPointer))
+	{
+		const SMALLINTEGER startingAt = ObjectMemoryIntegerValueOf(integerPointer);
 
-	Oop oopSubString = *(sp-1);
-	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp-2));
+		Oop oopSubString = *(sp - 1);
+		BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 
-	if (ObjectMemory::fetchClassOf(oopSubString) != oteReceiver->m_oteClass)
-		return primitiveFailure(2);
+		if (ObjectMemory::fetchClassOf(oopSubString) == oteReceiver->m_oteClass)
+		{
 
-	// We know it can't be a SmallInteger because it has the same class as the receiver
-	BytesOTE* oteSubString = reinterpret_cast<BytesOTE*>(oopSubString);
+			// We know it can't be a SmallInteger because it has the same class as the receiver
+			BytesOTE* oteSubString = reinterpret_cast<BytesOTE*>(oopSubString);
 
-	VariantByteObject* bytesPattern = oteSubString->m_location;
-	VariantByteObject* bytesReceiver = oteReceiver->m_location;
-	const int M = oteSubString->bytesSize();
-	const int N = oteReceiver->bytesSize();
+			VariantByteObject* bytesPattern = oteSubString->m_location;
+			VariantByteObject* bytesReceiver = oteReceiver->m_location;
+			const int M = oteSubString->bytesSize();
+			const int N = oteReceiver->bytesSize();
 
-	// Check 'startingAt' is in range
-	if (startingAt < 1 || startingAt > N)
-		return primitiveFailure(1);	// out of bounds
-
-	int nOffset = M == 0 || ((startingAt + M) - 1 > N)
-					? -1 
+			// Check 'startingAt' is in range
+			if (startingAt > 0)
+			{
+				int nOffset = M == 0 || ((startingAt + M) - 1 > N)
+					? -1
 					: stringSearch(bytesReceiver->m_fields, N, bytesPattern->m_fields, M, startingAt - 1);
-	
-	*(sp-2) = ObjectMemoryIntegerObjectOf(nOffset+1);
-	return sp-2;
+
+				*(sp - 2) = ObjectMemoryIntegerObjectOf(nOffset + 1);
+				return sp - 2;
+			}
+			else
+			{
+				return primitiveFailure(1);	// out of bounds
+			}
+		}
+		else
+		{
+			// Receiver and substring are of different classes (e.g. String and UnicodeString) - fall back on Smalltalk code
+			// TODO: Consider double-dispatching to this prim
+			return primitiveFailure(2);
+		}
+	}
+	else
+	{
+		return primitiveFailure(0);				// startingAt not an integer
+	}
 }

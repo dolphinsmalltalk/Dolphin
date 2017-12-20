@@ -947,7 +947,10 @@ bool Compiler::GenPushImmediate(Oop objectPointer, const TEXTRANGE& range)
 			Oop asciiValue = pChar->fields[0];
 			_ASSERT(IsIntegerObject(asciiValue));
 			MWORD codePoint = IntegerValueOf(asciiValue);
-			_ASSERTE(codePoint >= 0 && codePoint < 256);
+			if (codePoint > 255)
+			{
+				return false;
+			}
 			GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
 		}
 		else
@@ -1706,7 +1709,14 @@ void Compiler::ParseTerm(int textPosition)
 		{
 			long codePoint = ThisTokenInteger();
 			_ASSERTE(codePoint < 256);	// Shouldn't happen because lexer should not have created the token
-			GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+			if (codePoint > 255)
+			{
+				GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(codePoint))), ThisTokenRange());
+			}
+			else
+			{
+				GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+			}
 			NextToken();
 		}
 		break;

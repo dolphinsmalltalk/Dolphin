@@ -27,15 +27,33 @@ namespace ST
 		enum { CharacterValueIndex = Magnitude::FixedSize, FixedSize };
 
 		static CharOTE* New(unsigned char value);
+		static CharOTE* New(MWORD value);
 	};
+
+	// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
+	// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
+	inline CharOTE* Character::New(MWORD value)
+	{
+		CharOTE* character;
+		if (value > 255)
+		{
+			character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+			character->m_location->m_codePoint = ObjectMemoryIntegerObjectOf(value);
+			character->beImmutable();
+		}
+		else
+		{
+			character = New(static_cast<unsigned char>(value));
+		}
+		return character;
+	}
 
 	// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
 	// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
 	inline CharOTE* Character::New(unsigned char value)
 	{
-		// Characters will later become immediate
 		CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::PointerFromIndex(ObjectMemory::FirstCharacterIdx + value));
-		//ASSERT(fetchClassOf(character) == Pointers.ClassCharacter);
+		ASSERT(character->m_location->m_codePoint == ObjectMemoryIntegerObjectOf(value));
 		return character;
 	}
 }

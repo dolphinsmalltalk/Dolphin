@@ -178,9 +178,9 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::NewUnsignedInteger(
 }
     
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewCharacter( 
-        /* [in] */ unsigned char value)
+        /* [in] */ DWORD codePoint)
 {
-	return (POTE)Character::New(value);
+	return (POTE)Character::New(static_cast<MWORD>(codePoint));
 }
     
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewArray( 

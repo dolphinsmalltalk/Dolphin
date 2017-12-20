@@ -209,7 +209,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgCHAR:
-				pushObject((OTE*)Character::New(char(*lpParms)));
+				pushObject((OTE*)Character::New(*reinterpret_cast<MWORD*>(lpParms)));
 				lpParms += sizeof(MWORD);
 				break;
 

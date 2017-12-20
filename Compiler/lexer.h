@@ -82,6 +82,8 @@ public:
 	void CompileErrorV(const TEXTRANGE& range, int code, ...);
 
 protected:
+	enum { MaxCodePoint = 0x10FFFF };
+
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
 
 	

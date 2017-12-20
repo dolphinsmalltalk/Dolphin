@@ -62,7 +62,7 @@ _DOLPHINAPI(Oop) NewSignedInteger(SDWORD value);
 _DOLPHINAPI(Oop) NewUnsignedInteger(DWORD value);
 //_DOLPHINAPI(Oop) NewUnsignedInteger(QWORD value);
 
-_DOLPHINAPI(POTE) NewCharacter(char value);
+_DOLPHINAPI(POTE) NewCharacter(DWORD codePoint);
 _DOLPHINAPI(POTE) NewArray(unsigned size);
 
 _DOLPHINAPI(POTE) NewFloat(double fValue);

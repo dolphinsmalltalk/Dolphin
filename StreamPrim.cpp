@@ -63,7 +63,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp)
 			return primitiveFailure(3);
 
 		String* buf = oteString->m_location;
-		*sp = reinterpret_cast<Oop>(Character::New(buf->m_characters[index]));
+		*sp = reinterpret_cast<Oop>(Character::New(static_cast<unsigned char>(buf->m_characters[index])));
 	}
 	// We also support ByteArrays in our primitiveNext (unlike BB).
 	else if (bufClass == Pointers.ClassByteArray)
@@ -96,84 +96,126 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp)
 }
 
 
-// This primitive handles WriteStream>>NextPut:, but only for Arrays, Strings & ByteArrays
+// This primitive handles WriteStream>>nextPut:, but only for Arrays, Strings & ByteArrays
 Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp)
 {
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
-	
 	WriteStream* writeStream = streamPointer->m_location;
 	
 	// Ensure valid stream - checks from Blue Book
-	if (!ObjectMemoryIsIntegerObject(writeStream->m_index) ||
-		!ObjectMemoryIsIntegerObject(writeStream->m_writeLimit))
-		return primitiveFailure(0);	// Fails invariant check
-
-	SMALLINTEGER index = ObjectMemoryIntegerValueOf(writeStream->m_index);
-	SMALLINTEGER limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
-
-	// Within the bounds of the limit
-	if (index < 0 || index >= limit)
-		return primitiveFailure(2);
-	
-	Oop value = *(sp);
-	OTE* oteBuf = writeStream->m_array;
-	BehaviorOTE* bufClass = oteBuf->m_oteClass;
-	
-	if (bufClass == Pointers.ClassString)
+	if (ObjectMemoryIsIntegerObject(writeStream->m_index) && ObjectMemoryIsIntegerObject(writeStream->m_writeLimit))
 	{
-		if (ObjectMemory::fetchClassOf(value) != Pointers.ClassCharacter)
-			return primitiveFailure(4);	// Attempt to put non-character
+		SMALLINTEGER index = ObjectMemoryIntegerValueOf(writeStream->m_index);
+		SMALLINTEGER limit = ObjectMemoryIntegerValueOf(writeStream->m_writeLimit);
 
-		StringOTE* oteString = reinterpret_cast<StringOTE*>(oteBuf);
-		
-		if (index >= oteString->bytesSizeForUpdate())
-			return primitiveFailure(3);	// Attempt to put non-character or off end of String
+		// Within the bounds of the limit?
+		if (index >= 0 && index < limit)
+		{
+			Oop value = *(sp);
 
-		String* buf = oteString->m_location;
-		CharOTE* oteChar = reinterpret_cast<CharOTE*>(value);
-		buf->m_characters[index] = static_cast<char>(oteChar->getIndex() - ObjectMemory::FirstCharacterIdx);
-	}
-	else if (bufClass == Pointers.ClassArray)
-	{
-		ArrayOTE* oteArray = reinterpret_cast<ArrayOTE*>(oteBuf);
-		
-		// In bounds of Array?
-		if (index >= oteArray->pointersSizeForUpdate())
-			return primitiveFailure(3);
+			OTE* oteBuf = writeStream->m_array;
+			BehaviorOTE* bufClass = oteBuf->m_oteClass;
 
-		Array* buf = oteArray->m_location;
-		// We must ref. count value here as we're storing into a heap object slot
-		ObjectMemory::storePointerWithValue(buf->m_elements[index], value);
-	}
-	else if (bufClass == Pointers.ClassByteArray)
-	{
-		if (!ObjectMemoryIsIntegerObject(value))
-			return primitiveFailure(4);	// Attempt to put non-SmallInteger
-		SMALLINTEGER intValue = ObjectMemoryIntegerValueOf(value);
-		if (intValue < 0 || intValue > 255)
-			return primitiveFailure(4);	// Can only store 0..255
+			if (bufClass == Pointers.ClassString)
+			{
+				if (ObjectMemory::fetchClassOf(value) == Pointers.ClassCharacter)
+				{
+					StringOTE* oteString = reinterpret_cast<StringOTE*>(oteBuf);
 
-		ByteArrayOTE* oteByteArray = reinterpret_cast<ByteArrayOTE*>(oteBuf);
-		
-		if (index >= oteByteArray->bytesSizeForUpdate())
-			return primitiveFailure(3);	// Attempt to put non-character or off end of String
+					if (index < oteString->bytesSizeForUpdate())
+					{
+						String* buf = oteString->m_location;
+						CharOTE* oteChar = reinterpret_cast<CharOTE*>(value);
+						MWORD codePoint = ObjectMemoryIntegerValueOf(oteChar->m_location->m_codePoint);
+						if (codePoint <= 255)
+						{
+							buf->m_characters[index] = codePoint;
 
-		oteByteArray->m_location->m_elements[index] = static_cast<BYTE>(intValue);
+							writeStream->m_index = Integer::NewSigned32WithRef(index + 1);		// Increment the stream index
+
+							// Return the argument
+							*(sp - 1) = value;
+							return sp - 1;
+						}
+					}
+					else
+					{
+						return primitiveFailure(3);	// Off end of String
+					}
+				}
+
+				// Not a byte character
+				return primitiveFailure(4);
+			}
+			else if (bufClass == Pointers.ClassArray)
+			{
+				ArrayOTE* oteArray = reinterpret_cast<ArrayOTE*>(oteBuf);
+
+				// In bounds of Array?
+				if (index < oteArray->pointersSizeForUpdate())
+				{
+					Array* buf = oteArray->m_location;
+					// We must ref. count value here as we're storing into a heap object slot
+					ObjectMemory::storePointerWithValue(buf->m_elements[index], value);
+
+					// Increment the stream index
+					writeStream->m_index = Integer::NewSigned32WithRef(index + 1);
+					// Return the value
+					*(sp - 1) = value;
+					return sp - 1;
+				}
+				else
+				{
+					return primitiveFailure(3);	// Out of bounds
+				}
+			}
+			else if (bufClass == Pointers.ClassByteArray)
+			{
+				if (ObjectMemoryIsIntegerObject(value))
+				{
+					MWORD intValue = ObjectMemoryIntegerValueOf(value);
+					if (intValue > 255)
+					{
+						ByteArrayOTE* oteByteArray = reinterpret_cast<ByteArrayOTE*>(oteBuf);
+
+						if (index >= oteByteArray->bytesSizeForUpdate())
+							return primitiveFailure(3);	// Attempt to put non-character or off end of String
+
+						oteByteArray->m_location->m_elements[index] = static_cast<BYTE>(intValue);
+
+						// Increment the stream index
+						writeStream->m_index = Integer::NewSigned32WithRef(index + 1);
+						// Return the argument
+						*(sp - 1) = value;
+						return sp - 1;
+					}
+				}
+
+				return primitiveFailure(4);	// Attempt to put non-SmallInteger or out of range 0..255
+			}
+			else
+			{
+				// Primitive response not supported for the streamed over collection
+				return primitiveFailure(1);
+			}
+		}
+		else
+		{
+			// Out of bounds of limit
+			return primitiveFailure(2);
+		}
 	}
 	else
-		return primitiveFailure(1);
-	
-	writeStream->m_index = Integer::NewSigned32WithRef(index + 1);		// Increment the stream index
-
-	*(sp-1) = value;
-	return sp - 1;
+	{
+		// Invalid stream
+		return primitiveFailure(0);
+	}
 }
 
 // Non-standard, but has very beneficial effect on performance
 Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp)
 {
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
-
 	WriteStream* writeStream = streamPointer->m_location;
 	
 	// Ensure valid stream - checks from Blue Book

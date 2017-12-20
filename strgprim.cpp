@@ -220,52 +220,73 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp)
 Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp)
 {
 	Oop integerPointer = *sp;
-	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(0);				// to not an integer
-	const SMALLINTEGER to = ObjectMemoryIntegerValueOf(integerPointer);
-
-	integerPointer = *(sp - 1);
-	if (!ObjectMemoryIsIntegerObject(integerPointer))
-		return primitiveFailure(1);				// from not an integer
-	SMALLINTEGER from = ObjectMemoryIntegerValueOf(integerPointer);
-
-	Oop valuePointer = *(sp - 2);
-
-	StringOTE* receiverPointer = reinterpret_cast<StringOTE*>(*(sp - 3));
-
-	Oop answer = ZeroPointer;
-	if ((ObjectMemory::fetchClassOf(valuePointer) == Pointers.ClassCharacter) && to >= from)
+	if (ObjectMemoryIsIntegerObject(integerPointer))
 	{
-		ASSERT(!receiverPointer->isPointers());
+		const SMALLINTEGER to = ObjectMemoryIntegerValueOf(integerPointer);
 
-		// Search a byte object
-
-		const SMALLINTEGER length = receiverPointer->bytesSize();
-		// We can only be in here if to>=from, so if to>=1, then => from >= 1
-		// furthermore if to <= length then => from <= length
-		if (from < 1 || to > length)
-			return primitiveFailure(2);
-
-		// Search is in bounds, lets do it
-		CharOTE* oteChar = reinterpret_cast<CharOTE*>(valuePointer);
-		Character* charObj = oteChar->m_location;
-		const char charValue = static_cast<char>(ObjectMemoryIntegerValueOf(charObj->m_codePoint));
-
-		String* chars = receiverPointer->m_location;
-
-		from--;
-		while (from < to)
+		integerPointer = *(sp - 1);
+		if (ObjectMemoryIsIntegerObject(integerPointer))
 		{
-			if (chars->m_characters[from++] == charValue)
+			SMALLINTEGER from = ObjectMemoryIntegerValueOf(integerPointer);
+
+			Oop valuePointer = *(sp - 2);
+
+			StringOTE* receiverPointer = reinterpret_cast<StringOTE*>(*(sp - 3));
+
+			Oop answer = ZeroPointer;
+			// If not a character, or the search interval is empty, we treat as not found
+			if ((ObjectMemory::fetchClassOf(valuePointer) == Pointers.ClassCharacter) && to >= from)
 			{
-				answer = ObjectMemoryIntegerObjectOf(from);
-				break;
+				ASSERT(!receiverPointer->isPointers());
+
+				// Search a byte object
+
+				const SMALLINTEGER length = receiverPointer->bytesSize();
+				// We can only be in here if to>=from, so if to>=1, then => from >= 1
+				// furthermore if to <= length then => from <= length
+				if (from >= 1 && to <= length)
+				{
+					// Search is in bounds, lets do it
+					CharOTE* oteChar = reinterpret_cast<CharOTE*>(valuePointer);
+					Character* charObj = oteChar->m_location;
+					MWORD codePoint = ObjectMemoryIntegerValueOf(charObj->m_codePoint);
+					// If not a byte char, can't possibly be in a byte string (treat as not found, rather than primitive failure)
+					if (codePoint <= 255)
+					{
+						const char charValue = static_cast<char>(codePoint);
+
+						String* chars = receiverPointer->m_location;
+
+						from--;
+						while (from < to)
+						{
+							if (chars->m_characters[from++] == charValue)
+							{
+								answer = ObjectMemoryIntegerObjectOf(from);
+								break;
+							}
+						}
+					}
+				}
+				else
+				{
+					// To/from out of bounds
+					return primitiveFailure(2);
+				}
 			}
+
+			*(sp - 3) = answer;
+			return sp - 3;
+		}
+		else
+		{
+			return primitiveFailure(1);				// from not an integer
 		}
 	}
-
-	*(sp - 3) = answer;
-	return sp - 3;
+	else
+	{
+		return primitiveFailure(0);				// to not an integer
+	}
 }
 
 Oop* __fastcall Interpreter::primitiveStringAt(Oop* sp)
@@ -278,7 +299,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* sp)
 		if (index > 0 && (MWORD)index <= (oteReceiver->m_size & OTE::SizeMask))
 		{
 			const char* const psz = oteReceiver->m_location->m_characters;
-			CharOTE* oteResult = ST::Character::New(psz[index - 1]);
+			CharOTE* oteResult = ST::Character::New(static_cast<unsigned char>(psz[index - 1]));
 			*(sp - 1) = reinterpret_cast<Oop>(oteResult);
 			return sp - 1;
 		}
@@ -308,15 +329,17 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 			const Oop oopValue = *sp;
 			if (!ObjectMemoryIsIntegerObject(oopValue) && reinterpret_cast<const OTE*>(oopValue)->m_oteClass == Pointers.ClassCharacter)
 			{
-				psz[index-1] = ObjectMemoryIntegerValueOf(reinterpret_cast<const CharOTE*>(oopValue)->m_location->m_codePoint);
-				*(sp - 2) = *sp;
-				return sp - 2;
+				MWORD codePoint = ObjectMemoryIntegerValueOf(reinterpret_cast<const CharOTE*>(oopValue)->m_location->m_codePoint);
+				if (codePoint <= 255)
+				{
+					psz[index - 1] = codePoint;
+					*(sp - 2) = *sp;
+					return sp - 2;
+				}
 			}
-			else
-			{
-				// Value is not a character
-				return primitiveFailure(2);
-			}
+
+			// Value is not a byte character
+			return primitiveFailure(2);
 		}
 		else
 		{
@@ -437,7 +460,7 @@ inline MWORD __fastcall hashBytes(const BYTE* bytes, MWORD size)
 	while(size > 0)
 	{
 		hash = (hash << 4) + *bytes;
-		MWORD topNibble = hash & 0x0f0000000;
+		MWORD topNibble = hash & 0xf0000000;
 		if (topNibble)
 		{
 			hash = (hash & 0x0fffffff) ^ (topNibble >> 24);

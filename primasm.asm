@@ -412,8 +412,8 @@ extern OOPSUSED:near32
 YIELD EQU ?yield@Interpreter@@CIHXZ
 extern YIELD:near32												; See process.cpp
 
-PRIMSTRINGSEARCH EQU ?primitiveStringSearch@Interpreter@@CIPAIQAI@Z
-extern PRIMSTRINGSEARCH:near32
+primitiveStringSearch EQU ?primitiveStringSearch@Interpreter@@CIPAIQAI@Z
+extern primitiveStringSearch:near32
 
 primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIQAI@Z
 extern primitiveStringNextIndexOfFromTo:near32
@@ -607,7 +607,7 @@ DWORD		primitiveAnyMask								; case 145
 DWORD		primitiveAllMask								; case 146
 DWORD		primitiveIdentityHash							; case 147
 DWORD		primitiveLookupMethod							; case 148
-DWORD		PRIMSTRINGSEARCH								; case 149
+DWORD		primitiveStringSearch							; case 149
 DWORD		primitiveUnwindInterruptThunk					; case 150
 DWORD		primitiveExtraInstanceSpec						; case 151
 DWORD		primitiveLowBit									; case 152
@@ -1325,55 +1325,6 @@ LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveValueOnUnwind
 
-
-IF 0
-;; Under construction
-?primitivePerformInterpreter@@CIPAIAAVCompiledMethod@ST@@I@Z:
-	mov		eax, [MESSAGE]							; Load current message selector (#perform:???) ...
-	push	eax										; ... and save in case need to restore
-	lea		eax, [edx*4]
-	neg		eax
-	mov		ecx, [_SP+eax]							; Load receiver from stack
-	mov		ecx, (OTE PTR[ecx]).m_location
-	mov		ecx, (Object PTR[ecx]).m_class
-	mov		eax, [_SP+eax+OOPSIZE]					; Load selector from stack
-	mov		[MESSAGE], eax							; Store down as new message selector
-	StoreSPRegister									; Save down stack pointer (in case of DNU)
-	push	dl										; Save the arg count (0.255)
-	call	FINDMETHODINCLASS
-	pop		dl										; Pop off the saved arg count ...
-	dec		dl										; ... and deduct 1 for the selector
-	mov		_SP, [STACKPOINTER]						; Restore stack pointer (in case of does not understand)
-	mov		ecx, (OTE PTR[eax]).m_location			; Load address of new method object into eax
-	cmp		dl, (CompiledMethod PTR[ecx]).m_header.m_argumentCount	; Arg counts match ?
-	je		@F										; Yes, ok to perform it
-	mov		ecx, [MESSAGE]
-	cmp		ecx, [Pointers.DoesNotUnderstandSelector]
-	je		@F										; We also allow any doesNotUnderstand: to continue
-	jmp		failPrimitivePerform					; Fail the primitive due to arg count mismatch
-@@:
-	;; So now we know the perform can proceed
-	pop		ecx										; Pop off the #perform:??? selector
-
-	;; We must reduce the arg count of the selector, because we're going
-	;; to shuffle the args down over the top of it
-	;; We can safely count down the selector by a simple decrement, since
-	;; we know it can't go away (its a Symbol).
-	mov		ecx, [MESSAGE]
-	cmp		(OTE PTR[ecx]).m_count, 0ffh			; Overflowed - very unlikely?
-	je		@F										; Yes, skip the decrement
-	dec		(OTE PTR[ecx]).m_count
-@@:
-	;; Now we can shuffle the args down over the selector
-
-
-failPrimitivePerform:
-	pop		eax										; Pop off current message selector (#perform: or similar)
-	mov		[MESSAGE], eax							; Restore old message selector into global
-	xor		eax, eax								; Return FALSE
-	ret
-
-ENDIF
 
 ;  BOOL __fastcall Interpreter::primitiveObjectCount()
 ;

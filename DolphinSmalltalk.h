@@ -118,7 +118,7 @@ public:
             /* [in] */ DWORD value);
         
 	STDMETHOD_(POTE, NewCharacter)( 
-            /* [in] */ unsigned char value);
+            /* [in] */ DWORD value);
         
 	STDMETHOD_(POTE, NewArray)( 
             /* [in] */ unsigned int size);

@@ -174,7 +174,7 @@ library DolphinVM
 		Oop NewSignedInteger([in]SDWORD value);
 		Oop NewUnsignedInteger([in]DWORD value);
 
-		POTE NewCharacter([in]char value);
+		POTE NewCharacter([in]DWORD codePoint);
 		POTE NewArray([in]unsigned size);
 
 		POTE NewFloat([in]double fValue);

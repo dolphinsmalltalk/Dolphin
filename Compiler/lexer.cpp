@@ -733,7 +733,7 @@ void Lexer::ScanLiteralCharacter()
 					int pos = CharPosition();
 					CompileError(LErrExpectCodePoint);
 				}
-				else if (codePoint > 255)
+				else if (codePoint > MaxCodePoint)
 				{
 					m_thisTokenRange.m_stop = CharPosition();
 					int pos = CharPosition();
@@ -767,7 +767,7 @@ inline int Lexer::ReadHexCodePoint()
 		Step();
 		
 		// Avoid potential overflow for long hex sequence 
-		if (codePoint < 256)
+		if (codePoint <= MaxCodePoint)
 		{
 			codePoint = (codePoint * 16) + digit;
 		}
