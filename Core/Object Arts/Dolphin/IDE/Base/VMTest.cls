@@ -1457,29 +1457,6 @@ testPrimitiveIsNullBytes
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
 
-testPrimitiveIsSuperclassOf
-	"Test the currently unused isSuperclassOf primitive."
-
-	| method |
-	self skipUnless: [self has7052OrLater not].
-	method := self
-				createPrimitiveMethod: 109
-				in: Behavior
-				argCount: 1
-				setsFailCode: true.
-	"The primitive is like includesBehavior with arg/receiver inverted, and if both are the same class then the answer is true."
-	self assert: (method value: Association withArguments: {Association}).
-	self assert: (method value: Magnitude withArguments: {Association}).
-	self assert: (method value: Object withArguments: {Association}).
-	self deny: (method value: Association withArguments: {Object}).
-	self deny: (method value: Association withArguments: {SmallInteger}).
-	self deny: (method value: Object class withArguments: {Behavior}).
-	self assert: (method value: Object class withArguments: {Object class}).
-	self assert: (method value: Object class withArguments: {Magnitude class}).
-	self assert: (method value: Object withArguments: {Magnitude class}).
-	self assert: (method value: Behavior withArguments: {Object class}).
-	self assert: (method value: Magnitude class withArguments: {Association class})!
-
 testPrimitiveLookupMethod
 	| method |
 	method := self createPrimitiveMethodLike: Behavior >> #lookupMethod: setsFailCode: true.
@@ -2184,7 +2161,6 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIsSuperclassOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
