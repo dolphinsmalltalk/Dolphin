@@ -345,3 +345,10 @@ isAbstract: aBoolean
 	self setShapeFlags: _NonInstantiableMask to: aBoolean! !
 
 Behavior owningPackage removeGlobalNamed: #_BehaviorMasks!
+
+!String methodsFor!
+
+contains: aString
+	"Answer whether the receiver contains the specified sub-string."
+
+	^(self findString: aString startingAt: 1) ~~ 0! !
