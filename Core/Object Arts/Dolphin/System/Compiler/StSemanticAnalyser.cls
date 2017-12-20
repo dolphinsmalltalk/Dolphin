@@ -27,10 +27,9 @@ addMessageToFrame: aMessageNode
 addToFrame: aLiteralNode
 	| value |
 	value := aLiteralNode value.
-	value isImmediate ifTrue: [^self].
+	(VMLibrary hasBytecodeRepresentation: value) ifTrue: [^self].
 	value isString
-		ifTrue: [(value isSymbol not and: [(stringLiterals addNewElement: value) not]) ifTrue: [^self]]
-		ifFalse: [(value == true or: [value == false or: [value isNil]]) ifTrue: [^self]].
+		ifTrue: [(value isSymbol not and: [(stringLiterals addNewElement: value) not]) ifTrue: [^self]].
 	self addLiteral: aLiteralNode value: value!
 
 addToFrameStatic: aLiteralNode

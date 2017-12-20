@@ -1366,7 +1366,7 @@ Magnitude subclass: #Association
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
-	instanceVariableNames: 'asciiValue'
+	instanceVariableNames: 'codePoint'
 	classVariableNames: 'CharacterSet EscapeChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

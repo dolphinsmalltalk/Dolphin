@@ -123,7 +123,7 @@ testDeepCopy
 
 	| copy any dictionary |
 	dictionary := self newDictionary.
-	1 to: 5 do: [:i | dictionary at: (Character value: $A asciiValue + i) put: i].
+	1 to: 5 do: [:i | dictionary at: (Character value: $A codePoint + i) put: i].
 	"Ensure that the hashed collection is the standard capacity for size of contents as the assertIs:deepCopyOf: method expects
 	the basic size of the two objects to be the same (which is not relevant for hashed collections)."
 	dictionary shrink.
