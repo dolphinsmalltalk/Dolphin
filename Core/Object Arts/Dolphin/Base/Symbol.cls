@@ -127,6 +127,18 @@ keywords
 		ifTrue: [(self subStrings: $:) collect: [:keyword | keyword copyWith: $:]]
 		ifFalse: [{self}]!
 
+mutableCopy
+	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."
+
+	| len |
+	len := self size.
+	^(self copyLike: len)
+		replaceFrom: 1
+			to: len
+			with: self
+			startingAt: 1;
+		yourself!
+
 numArgs
 	^self argumentCount!
 
@@ -190,6 +202,7 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
 !Symbol categoriesFor: #keywords!accessing!public! !
+!Symbol categoriesFor: #mutableCopy!copying!public! !
 !Symbol categoriesFor: #numArgs!accessing!public! !
 !Symbol categoriesFor: #printArgumentTypeOn:!printing!private! !
 !Symbol categoriesFor: #printOn:!printing!public! !

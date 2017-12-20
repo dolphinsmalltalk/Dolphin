@@ -66,8 +66,7 @@ printLiterals: anInteger on: aPuttableStream
 	self halt!
 
 skipUnlessCompilerSupportsCodePointErrors
-	self
-		skipUnless: [VMLibrary default versionInfo fileVersion >= (self versionFromParts: #(2016 7 0 49))]!
+	self skipUnless: [self isAtLeastVmVersion: #(2016 7 0 49)]!
 
 tempWarningRangeIn: aString
 	| start |

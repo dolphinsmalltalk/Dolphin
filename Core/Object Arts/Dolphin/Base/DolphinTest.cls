@@ -56,6 +56,9 @@ failureLog
 	^Transcript
 !
 
+isAtLeastVmVersion: anArray
+	^VMLibrary default versionInfo fileVersion >= (self versionFromParts: anArray)!
+
 isLogging
 	^true!
 
@@ -89,6 +92,7 @@ versionFromParts: versionNumbers
 !DolphinTest categoriesFor: #createPackage:!helpers!public! !
 !DolphinTest categoriesFor: #createTestPackage!helpers!public! !
 !DolphinTest categoriesFor: #failureLog!Accessing!public! !
+!DolphinTest categoriesFor: #isAtLeastVmVersion:!private!testing! !
 !DolphinTest categoriesFor: #isLogging!Accessing!public! !
 !DolphinTest categoriesFor: #isOnline!public!unit tests! !
 !DolphinTest categoriesFor: #methodContextClass!constants!private! !

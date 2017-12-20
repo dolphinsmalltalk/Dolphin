@@ -77,7 +77,10 @@ testReplaceFromToWithStartingAt
 		matching: [:ex | ex messageText = 'Symbol should not implement #replaceFrom:to:with:startingAt:']!
 
 testReplaceIdentityWith
-	self should: [super testReplaceIdentityWith] raise: Processor constWriteSignal! !
+	self should: [super testReplaceIdentityWith] raise: Processor constWriteSignal!
+
+testResize
+	self should: [super testResize] raise: Processor constWriteSignal! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !SymbolTest categoriesFor: #newCopy:!helpers!private! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
@@ -86,4 +89,5 @@ testReplaceIdentityWith
 !SymbolTest categoriesFor: #testPrintString!helpers!public! !
 !SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
+!SymbolTest categoriesFor: #testResize!public!unit tests! !
 

@@ -96,6 +96,23 @@ testLast2
 		raise: BoundsError
 		matching: [:ex | ex tag = 0]!
 
+testResize
+	| subject |
+	super testResize.
+	subject := self newCollection: #($a $b $c $d $e $f).
+	subject removeFirst.
+	subject removeLast.
+	subject resize: 5.
+	self assert: subject equals: (self newCollection: #($b $c $d $e nil)).
+	subject resize: 10.
+	self assert: subject equals: (self newCollection: #($b $c $d $e nil nil nil nil nil nil)).
+	subject resize: 4.
+	self assert: subject equals: (self newCollection: #($b $c $d $e)).
+	subject resize: 2.
+	self assert: subject equals: (self newCollection: #($b $c)).
+	subject resize: 1.
+	self assert: subject equals: (self newCollection: #($b))!
+
 testSetSize
 	| o capacity o2 o3 o4 o5 |
 	o := OrderedCollection new.
@@ -318,6 +335,7 @@ testStrongTalkTests
 !OrderedCollectionTest categoriesFor: #testFirst2!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testFromToKeysAndValuesDo3!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testLast2!public!unit tests! !
+!OrderedCollectionTest categoriesFor: #testResize!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testSetSize!public!unit tests! !
 !OrderedCollectionTest categoriesFor: #testStrongTalkTests!public!testing! !
 

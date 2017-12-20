@@ -345,6 +345,7 @@ basicResize: anInteger
 
 	| answer |
 	<primitive: 101>
+	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].
 	answer := self class new: anInteger.
 	1 to: anInteger do: [ :i | answer basicAt: i put: (self basicAt: i) ].
 	self become: answer!

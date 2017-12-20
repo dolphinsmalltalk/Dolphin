@@ -17,8 +17,20 @@ assimilate: anObject
 assimilateElements: aCollection 
 	^aCollection asArray collect: [:each | self assimilate: each]!
 
+collectionClass
+	^self subclassResponsibility!
+
 newCollection: aCollection
 	^self collectionClass withAll: (self assimilateElements: aCollection)!
+
+shouldnt: aNiladicBlock implement: aSymbol 
+	self 
+		should: aNiladicBlock
+		raise: Error
+		matching: 
+			[:ex | 
+			ex description 
+				= ('<1p> should not implement <2p>' expandMacrosWith: self collectionClass with: aSymbol)]!
 
 testAllSatisfy
 	| subject |
@@ -137,11 +149,13 @@ testFold
 			self assert: result = i factorial]! !
 !DolphinCollectionTest categoriesFor: #assimilate:!private!unit tests! !
 !DolphinCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
+!DolphinCollectionTest categoriesFor: #collectionClass!constants!private! !
 !DolphinCollectionTest categoriesFor: #newCollection:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #testAllSatisfy!public! !
+!DolphinCollectionTest categoriesFor: #shouldnt:implement:!helpers!private! !
+!DolphinCollectionTest categoriesFor: #testAllSatisfy!public!unit tests! !
 !DolphinCollectionTest categoriesFor: #testAnyone!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testAnySatisfy!public! !
-!DolphinCollectionTest categoriesFor: #testCount!public! !
+!DolphinCollectionTest categoriesFor: #testAnySatisfy!public!unit tests! !
+!DolphinCollectionTest categoriesFor: #testCount!public!unit tests! !
 !DolphinCollectionTest categoriesFor: #testDistinct!public!unit tests! !
 !DolphinCollectionTest categoriesFor: #testFold!public!unit tests! !
 

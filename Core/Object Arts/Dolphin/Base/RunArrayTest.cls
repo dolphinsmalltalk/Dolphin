@@ -17,8 +17,12 @@ testReplaceFromToWithStartingAt
 	self should: [super testReplaceFromToWithStartingAt] raise: Error!
 
 testReplaceIdentityWith
-	self should: [super testReplaceIdentityWith] raise: Error! !
+	self should: [super testReplaceIdentityWith] raise: Error!
+
+testResize
+	self shouldnt: [super testResize] implement: #resize:! !
 !RunArrayTest categoriesFor: #collectionClass!helpers!private! !
 !RunArrayTest categoriesFor: #testReplaceFromToWithStartingAt!public! !
 !RunArrayTest categoriesFor: #testReplaceIdentityWith!public! !
+!RunArrayTest categoriesFor: #testResize!public!unit tests! !
 
