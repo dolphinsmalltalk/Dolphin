@@ -1356,7 +1356,7 @@ testPrimitiveInstanceCounts
 					self assert: count equals: 1].
 			class isNonInstantiable ifTrue: [self assert: count equals: 0]].
 	self deny: (counts includes: SmallInteger).
-	self assert: (counts at: Character) equals: 256.
+	self assert: (counts at: Character) >= 256.
 	self assert: (counts at: MemoryManager) equals: 1.
 	"Test primitive failure"
 	#(1 'a' #[1 2 3]) do: 
@@ -1368,8 +1368,7 @@ testPrimitiveInstanceCounts
 	"Test requesting stats for a specific class"
 	stats := MemoryManager current primInstanceStats: {Metaclass}.
 	self assert: stats first equals: Metaclass.
-	self assert: stats second > Smalltalk allClasses size
-!
+	self assert: stats second >= Smalltalk allClasses size!
 
 testPrimitiveInstanceCounts2
 	"Test primitive that returns instance count stats for a list of requested classes."
@@ -1790,7 +1789,7 @@ testPrimitiveStringAt
 !
 
 testPrimitiveStringAtPut
-	| subject method |
+	| subject method cantHold |
 	method := self createPrimitiveMethodLike: String >> #at:put: setsFailCode: true.
 	subject := String new: 2.
 	"Valid case"
@@ -1810,7 +1809,9 @@ testPrimitiveStringAtPut
 			self assert: (subject at: 2) equals: $\0.
 			self assert: (method value: subject withArguments: {each. $a}) equals: 'failed1'].
 	"Objects that strings can't hold, including some special cases that have no object body (issue #234)"
-	#(0 ##(Object new) nil '' #'' true false #() #[]) do: 
+	cantHold := #(0 ##(Object new) nil '' #'' true false #() #[]) asOrderedCollection.
+	self has7053OrLater ifTrue: [cantHold add: (Character value: 256)].
+	cantHold do: 
 			[:each |
 			self assert: (subject at: 1) equals: $\0.
 			self assert: (subject at: 2) equals: $\0.
@@ -1865,6 +1866,32 @@ testPrimitiveStringCollate
 			self assert: (method value: 'a' withArguments: {Array new}) equals: 'failed0'
 
 			"Older VM incorrectly treats weak pointer object as zero terminated string"]!
+
+testPrimitiveStringNextIndexOfFromTo
+	| method foundCases nonIntegerToFrom fromOutOfBounds toOutOfBounds emptyIntervalBounds notFoundCases |
+	method := self createPrimitiveMethodLike: String >> #nextIndexOf:from:to: setsFailCode: true.
+	foundCases := #(#('aabc' $a 1 1 1) #('aabc' $a 1 2 1) #('a' $a 1 1 1) #('aabc' $a 2 3 2) #('abc' $c 1 3 3) #('abac' $a 2 4 3)).
+	nonIntegerToFrom := #(#('aabc' $a $b 4 'failed1') #('aabc' $a nil 4 'failed1') #('aabc' $a 1 nil 'failed0')).
+	fromOutOfBounds := #(#('aabc' $a 0 4 'failed2') #('aabc' $a -1 4 'failed2')).
+	emptyIntervalBounds := #(#('aabc' $a 1 -1 0) #('aabc' $a 1 0 0) #('aabc' $a 4 3 0) #('aabc' $a 5 4 0) #('' $a 1 0 0)).
+	toOutOfBounds := #(#('aabc' $a 1 5 'failed2') #('' $a 1 2 'failed2')).
+	notFoundCases := #(#('aabc' $d 1 1 0) #('aabc' $d 1 2 0) #('abc' $d 1 3 0) #('abac' nil 1 4 0))
+				asOrderedCollection.
+	self has7053OrLater
+		ifTrue: 
+			["Fails on earlier VM, as it truncates the codepoint to the first byte, which means $\x161 gets treated as $a"
+			notFoundCases add: {'abc'. Character value: 16r161. 1. 3. 0}].
+	foundCases , nonIntegerToFrom , fromOutOfBounds , emptyIntervalBounds , toOutOfBounds
+		, notFoundCases do: 
+				[:each |
+				| subject actual char start stop expected |
+				subject := each first.
+				char := each second.
+				start := each third.
+				stop := each fourth.
+				expected := each last.
+				actual := method value: subject withArguments: {char. start. stop}.
+				self assert: actual equals: expected]!
 
 testPrimitiveSubtract
 	"Test the SmallInteger subtract primitive for normal, overflow and failure cases."
@@ -2175,6 +2202,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringCollate!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveStringNextIndexOfFromTo!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
 !VMTest categoriesFor: #testQwordAtOffset!public!unit tests! !
