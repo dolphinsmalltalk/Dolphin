@@ -247,7 +247,7 @@ shutdown
 	session is successful, this will never be reached since the BootSessionManager will have
 	been replaced with a DevelopmentSessionManager before the booted image exits."
 
-	self traceLine: 'Shutting down boot session'.
+	[self traceLine: 'Shutting down boot session'] on: Error do: [:ex |].
 	super shutdown!
 
 snapshot
