@@ -2978,7 +2978,7 @@ shouldOverwriteClassComment
 	| existingComment |
 	existingComment := self global comment.
 	^existingComment isEmpty or: 
-			[(existingComment findString: self autoGenClassCommentMarker) ~~ 0
+			[(existingComment contains: self autoGenClassCommentMarker)
 				or: [self generationFlags allMask: OverwriteClassComments]]!
 
 superclassClashPrompt: binding 

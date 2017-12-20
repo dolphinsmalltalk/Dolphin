@@ -92,13 +92,13 @@ suffixCategories
 	)
 !
 
-suggestedPrivacyFor: method 
+suggestedPrivacyFor: method
 	"Answer the suggested <MethodPrivacyCategory> for the <CompiledMethod>, method."
 
 	| source catClass |
 	source := method getSource.
 	catClass := method methodClass methodCategoryClass.
-	^(source findString: '"Private -') == 0 ifTrue: [catClass public] ifFalse: [catClass private]!
+	^(source contains: '"Private -') ifTrue: [catClass private] ifFalse: [catClass public]!
 
 suggestionsFor: method 
 	"Answer a <sequencedReadableCollection> of suggested method categories for 

@@ -230,15 +230,15 @@ prepareStruct
 	| buf filename defext |
 	buf := File pathBuffer.
 	filename := self value.
-	filename notNil 
+	filename notNil
 		ifTrue: 
-			[buf 
+			[buf
 				replaceFrom: 1
 				to: filename size
 				with: filename].
-	(self filterIndex = 0 and: [(defext := self defaultExtension) notNil]) 
-		ifTrue: [self filterIndex: (self fileTypes findFirst: [:pair | (pair last findString: defext) ~~ 0])].
-	(self winStruct)
+	(self filterIndex = 0 and: [(defext := self defaultExtension) notNil])
+		ifTrue: [self filterIndex: (self fileTypes findFirst: [:pair | pair last contains: defext])].
+	self winStruct
 		fileTypes: (self fileTypesStringFromSpecs: self fileTypes);
 		nMaxFile: buf size;
 		fileName: buf;

@@ -437,8 +437,7 @@ isConsoleApplication
 	^self class isConsoleApplication!
 
 isDebug
-
-	^(self versionInfo productVersionString findString: '(Debug)') ~~ 0!
+	^self versionInfo productVersionString contains: '(Debug)'!
 
 isDLL
 	"Private - Answer whether the receiver is a shared library, as opposed to an application."
