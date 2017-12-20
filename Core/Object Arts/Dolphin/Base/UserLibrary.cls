@@ -25,21 +25,16 @@ blockInput: aBoolean
 
 charLower: aCharacter
 	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
+	language selected by the user during setup or by using Control Panel."
 
-		LPTSTR CharLower(LPTSTR  lpsz); 	// single character or pointer to string"
-
-	<stdcall: char CharLowerA char>
+	<stdcall: word CharLowerW char>
 	^self invalidCall!
 
 charUpper: aCharacter
 	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
-	of the language selected by the user during setup or by using Control Panel.
+	of the language selected by the user during setup or by using Control Panel."
 
-		LPTSTR CharUpper(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: char CharUpperA char>
+	<stdcall: word CharUpperW char>
 	^self invalidCall!
 
 copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags 
@@ -280,7 +275,7 @@ isCharAlpha: aCharacter
 			TCHAR  ch 	// character to test  
 		);"
 
-	<stdcall: bool IsCharAlphaA char>
+	<stdcall: bool IsCharAlphaW char>
 	^self invalidCall!
 
 isCharAlphaNumeric: aCharacter
@@ -290,7 +285,7 @@ isCharAlphaNumeric: aCharacter
 			TCHAR  ch 	// character to test  
 		);"
 
-	<stdcall: bool IsCharAlphaNumericA char>
+	<stdcall: bool IsCharAlphaNumericW char>
 	^self invalidCall!
 
 isCharLower: aCharacter
@@ -300,7 +295,7 @@ isCharLower: aCharacter
 			TCHAR  ch 	// character to test  
 		);"
 
-	<stdcall: bool IsCharLowerA char>
+	<stdcall: bool IsCharLowerW char>
 	^self invalidCall!
 
 isCharUpper: aCharacter
@@ -310,7 +305,7 @@ isCharUpper: aCharacter
 			TCHAR  ch 	// character to test  
 		);"
 
-	<stdcall: bool IsCharUpperA char>
+	<stdcall: bool IsCharUpperW char>
 	^self invalidCall!
 
 isWindow: hWnd

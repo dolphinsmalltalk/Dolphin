@@ -686,7 +686,7 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_I2)."
 
 	^VARIANT new
-		sword: self asInteger;
+		sword: asciiValue;
 		yourself! !
 !Character categoriesFor: #asVariant!converting!public! !
 
