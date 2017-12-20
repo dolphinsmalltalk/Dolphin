@@ -229,6 +229,15 @@ replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection sta
 
 	^self shouldNotImplement!
 
+resize: anInteger
+	"Private - Resize the receiver to the specified number of elements. Elements are discarded, or new nil elements added to the end of the collection, as needed."
+
+	"Implementation Note: SortedCollections can be reduced in size, but not grown - in general we don't know if nils are a valid element that have a sort order
+	relationship recognised by the receiver's sort block."
+
+	anInteger > self size ifTrue: [^self shouldNotImplement].
+	super resize: anInteger!
+
 reSort
 	"Resort the entire contents of the receiver in the order specified by the current
 	<SortAlgorithm>."
@@ -305,6 +314,7 @@ stbSaveOn: anSTBOutFiler
 !SortedCollection categoriesFor: #copyLikeOfSize:!copying!private! !
 !SortedCollection categoriesFor: #indexForInserting:!adding!private! !
 !SortedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!SortedCollection categoriesFor: #resize:!mutating!private! !
 !SortedCollection categoriesFor: #reSort!operations!public! !
 !SortedCollection categoriesFor: #reverse!copying!public! !
 !SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !

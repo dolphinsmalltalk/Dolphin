@@ -290,12 +290,15 @@ findFaultInterruptFrame: anException
 	^self findCaller: anException raisingFrame in: ProcessorScheduler >> #vmi:list:no:with:!
 
 firstVmVersionRespectingNonInstantiable
-	"The first VM version that refuses to instantiate abstract classes."
+	"Private - The first VM version that refuses to instantiate abstract classes."
 
-	^self versionFromParts: #(2016 7 0 51)!
+	^#(2016 7 0 51)!
 
 has7052OrLater
-	^VMLibrary default versionInfo fileVersion >= (self versionFromParts: #(2016 7 0 52))!
+	^self isAtLeastVmVersion: #(2016 7 0 52)!
+
+has7053OrLater
+	^self isAtLeastVmVersion: #(2016 7 0 53)!
 
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
 	| frame |
@@ -1259,6 +1262,40 @@ testPrimitiveEnableInterrupts
 	enabled := method value: Processor withArguments: #(true).
 	self assert: enabled description: 'Interrupts should have remained enabled'!
 
+testPrimitiveFindString
+	"Test string search primitive"
+
+	| method foundCases failureCases notFoundCases unlikely comment large expectedForStartingAtOffEnd |
+	method := self createPrimitiveMethodLike: String >> #findString:startingAt: setsFailCode: true.
+	failureCases := #(#('abc' 'a' 'b' 'failed0') #('abc' 'a' 0 'failed1') #('abc' 'a' -1 'failed1') #('abc' #a 1 'failed2')).
+	foundCases := #(#('abc' 'a' 1 1) #('abc' 'b' 1 2) #('abc' 'c' 1 3) #('abc' 'ab' 1 1) #('abc' 'b' 2 2) #('abc' 'bc' 2 2) #('abc' 'c' 3 3))
+				asOrderedCollection.
+	unlikely := '!!@#^%'.
+	comment := Object comment.
+	large := Object comment , unlikely.
+	foundCases addLast: {large. unlikely. 1. comment size + 1}.
+	foundCases addLast: {large , comment. unlikely. large size // 2. comment size + 1}.
+	foundCases
+		addLast: {large , large. unlikely. large size - unlikely size + 2. large size + comment size + 1}.
+	notFoundCases := #(#('abc' '' 1 0) #('abc' '' 3 0) #('abc' 'd' 1 0) #('abc' 'ad' 1 0) #('abc' 'abd' 1 0) #('abc' 'a' 2 0) #('abc' 'ab' 2 0) #('abc' 'a' 3 0) #('abc' 'cd' 3 0))
+				asOrderedCollection.
+	"Older VM failed the primitive if the startingAt argument was too large."
+	expectedForStartingAtOffEnd := (self isAtLeastVmVersion: #(2016 7 0 53))
+				ifTrue: [0]
+				ifFalse: ['failed1'].
+	notFoundCases addAll: (#(#('abc' '' 4) #('abc' 'c' 4) #('abc' 'ab' 4))
+				collect: [:each | each copyWith: expectedForStartingAtOffEnd]).
+	notFoundCases addLast: {large. unlikely reverse. 1. 0}.
+	foundCases , notFoundCases , failureCases do: 
+			[:each |
+			| subject actual match expected startingAt |
+			subject := each first.
+			match := each second.
+			startingAt := each third.
+			expected := each fourth.
+			actual := method value: subject withArguments: {match. startingAt}.
+			self assert: actual equals: expected]!
+
 testPrimitiveIdentical
 	| method |
 	method := self createPrimitiveMethodLike: Object >> #== setsFailCode: false.
@@ -2004,7 +2041,7 @@ testWeakMournerNotifications
 	self assert: (losses at: id2) equals: 3!
 
 vmRespectsNonInstantiable
-	^VMLibrary default versionInfo fileVersion >= self firstVmVersionRespectingNonInstantiable! !
+	^self isAtLeastVmVersion: self firstVmVersionRespectingNonInstantiable! !
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
 !VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
@@ -2017,8 +2054,9 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
 !VMTest categoriesFor: #findCaller:in:!helpers!private! !
 !VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
-!VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!accessing!public! !
+!VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
 !VMTest categoriesFor: #has7052OrLater!private!testing! !
+!VMTest categoriesFor: #has7053OrLater!private!testing! !
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
@@ -2040,11 +2078,11 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testImmutableResize!public!unit tests! !
 !VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
 !VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
-!VMTest categoriesFor: #testIndirectByteAtOffsetPrimitives!public! !
-!VMTest categoriesFor: #testIndirectDwordAtOffsetPrimitives!public! !
-!VMTest categoriesFor: #testIndirectSdwordAtOffsetPrimitives!public! !
-!VMTest categoriesFor: #testIndirectSwordAtOffsetPrimitives!public! !
-!VMTest categoriesFor: #testIndirectWordAtOffsetPrimitives!public! !
+!VMTest categoriesFor: #testIndirectByteAtOffsetPrimitives!public!unit tests! !
+!VMTest categoriesFor: #testIndirectDwordAtOffsetPrimitives!public!unit tests! !
+!VMTest categoriesFor: #testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
+!VMTest categoriesFor: #testIndirectSwordAtOffsetPrimitives!public!unit tests! !
+!VMTest categoriesFor: #testIndirectWordAtOffsetPrimitives!public!unit tests! !
 !VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
 !VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
 !VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
@@ -2057,6 +2095,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !

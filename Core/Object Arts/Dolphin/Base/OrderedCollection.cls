@@ -78,8 +78,7 @@ addLast: newObject
 	Implementation Note: Override for performance."
 
 	lastIndex == self basicSize ifTrue: [self makeRoomAtEndFor: 1].
-	lastIndex := lastIndex + 1.
-	^self basicAt: lastIndex put: newObject!
+	^self basicAt: (lastIndex := lastIndex + 1) put: newObject!
 
 allSatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
@@ -286,9 +285,10 @@ makeRoomAtEndFor: anInteger
 
 	| shift capacity |
 	capacity := self basicSize.
-	(capacity - self size) < anInteger ifTrue: [
-		"Too full, increase the receivers capacity. We don't bother shifting" 
-		^self resize: capacity + (anInteger roundUpTo: self growSize)].
+	capacity - self size < anInteger
+		ifTrue: 
+			["Too full, increase the receivers capacity. We don't bother shifting"
+			^self basicResize: capacity + (anInteger roundUpTo: self growSize)].
 	shift := 1 - firstIndex.	"N.B. shift < 0"
 
 	"Move tail of collection towards head"
@@ -404,11 +404,10 @@ replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection sta
 		startingAt: startAtInteger!
 
 resize: anInteger
-	"Private - Override back to the basic implementation as our elements are contiguously located.
-	This changes the capacity of the receiver, but has no other effect."
+	"Private - Resize the receiver to the specified number of elements. Elements are discarded, or new nil elements added to the end of the collection, as needed."
 
-	<primitive: 101>
-	^super resize: anInteger!
+	self basicResize: firstIndex + anInteger - 1.
+	lastIndex := firstIndex + anInteger - 1!
 
 reverseDo: aMonadicValuable 
 	"Evaluate the <monadicValuable> argument against each of the element of the receiver in reverse

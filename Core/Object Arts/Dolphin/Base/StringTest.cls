@@ -85,10 +85,6 @@ testCapitalized
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
 	searchee := self newCollection: 'abcdefgabcdef'.
-	(searchee respondsTo: #findString:startingAt:) 
-		ifFalse: 
-			["Introduced in D6"
-			^self].
 	abc := self newCollection: 'abc'.
 	self assert: (searchee findString: abc startingAt: 1) = 1.
 	self assert: (searchee findString: abc startingAt: 2) = 8.
@@ -121,7 +117,7 @@ testFindStringStartingAt
 	self assert: (abba findString: ab startingAt: 4) = 0.
 	self assert: (abba findString: ab startingAt: 2) = 0.
 	self assert: (abba findString: ab startingAt: 1) = 1.
-	searchee := self 
+	searchee := self
 				newCollection: 'Now''s the time for all good men to come to the aid of their country.'.
 	self assert: (searchee findString: (self newCollection: 'time') startingAt: 1) = 11.
 	self assert: (searchee findString: (self newCollection: 'timid') startingAt: 1) = 0.

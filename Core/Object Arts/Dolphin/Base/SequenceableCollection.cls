@@ -318,52 +318,51 @@ copyLikeOfSize: anInteger
 
 	^self species ofSize: anInteger!
 
-copyReplaceAll: targetElements with: replacementElements
-	"Answer a new <sequencedReadableCollection> which is a copy of the receiver
-	but in which all occurrences of targetElements have been replaced 	by 
-	the elements of the <sequencedReadableCollection> replacementElements."
+copyReplaceAll: oldElements with: newElements
+	"Answer a new <sequencedReadableCollection> which is a copy of the receiver but in which all
+	occurrences of the sequence, oldElements, have been replaced by the sequence, newElements."
 
-	| occurrences resultCollection findSize replaceSize extraSpace index sourceIndex resultIndex selfSize |
-	occurrences := self occurrencesOfSubCollection: targetElements.
-	findSize := targetElements size.
-	replaceSize := replacementElements size.
-	extraSpace := (replaceSize - findSize) * occurrences.
-	selfSize := self size.
-	resultCollection := self copyLikeOfSize: selfSize + extraSpace.
-	sourceIndex := 1.
-	resultIndex := 1.
+	| target matchSize replaceSize index sourcePos targetPos indices occurrences |
+	(index := self indexOfSubCollection: oldElements startingAt: 1) == 0 ifTrue: [^self mutableCopy].
+	matchSize := oldElements size.
+	indices := OrderedCollection new: 5.
 	
-	[(index := self indexOfSubCollection: targetElements startingAt: sourceIndex) 
-		> 0] 
-			whileTrue: 
-				["We have found a subCollection to replace.
-		Copy the elements before the match."
+	[indices addLast: index.
+	(index := self indexOfSubCollection: oldElements startingAt: index + matchSize) == 0]
+			whileFalse.
+	replaceSize := newElements size.
+	occurrences := indices size.
+	target := self copyLikeOfSize: self size + ((replaceSize - matchSize) * occurrences).
+	sourcePos := 1.
+	targetPos := 1.
+	1 to: occurrences
+		do: 
+			[:i |
+			| next |
+			index := indices at: i.
+			next := targetPos + index - sourcePos.
+			"Copy the elements before the match."
+			target
+				replaceFrom: targetPos
+				to: next - 1
+				with: self
+				startingAt: sourcePos.
+			sourcePos := index + matchSize.
+			"Copy the replacement collection."
+			targetPos := next + replaceSize.
+			target
+				replaceFrom: next
+				to: targetPos - 1
+				with: newElements
+				startingAt: 1].
 
-				index > sourceIndex 
-					ifTrue: 
-						[resultCollection 
-							replaceFrom: resultIndex
-							to: resultIndex + index - sourceIndex - 1
-							with: (self copyFrom: sourceIndex to: index - 1).
-						resultIndex := resultIndex + index - sourceIndex.
-						sourceIndex := index].
-				"Copy the replacement collection."
-				resultCollection 
-					replaceFrom: resultIndex
-					to: resultIndex + replaceSize - 1
-					with: replacementElements.
-				resultIndex := resultIndex + replaceSize.
-				sourceIndex := sourceIndex + findSize].
-
-	"Copy the collection following the last replacement (if any)."
-	resultCollection 
-		replaceFrom: resultIndex
-		to: resultCollection size
-		with: (self copyFrom: sourceIndex to: selfSize).
-	^resultCollection.
-	#todo	"This implementation does not look very efficient. Might be better to use Streams.
-			OR a collection of the positions should be created, and then the construction of the copy
-			could use that."!
+	"Copy any remaining elements"
+	target
+		replaceFrom: targetPos
+		to: target size
+		with: self
+		startingAt: sourcePos.
+	^target!
 
 copyReplaceFrom: start to: stop with: replacementElements
 	"Answer a new <sequencedReadableCollection> which is a copy of the receiver
@@ -824,6 +823,11 @@ lookup: keyInteger
 
 	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self at: keyInteger]!
 
+mutableCopy
+	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."
+
+	^self copy!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
@@ -1211,6 +1215,7 @@ writeStream
 !SequenceableCollection categoriesFor: #lastIndexOf:!public!searching! !
 !SequenceableCollection categoriesFor: #lastIndexOf:ifAbsent:!public!searching! !
 !SequenceableCollection categoriesFor: #lookup:!accessing!public! !
+!SequenceableCollection categoriesFor: #mutableCopy!copying!public! !
 !SequenceableCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #occurrencesOfSubCollection:!private!searching! !
