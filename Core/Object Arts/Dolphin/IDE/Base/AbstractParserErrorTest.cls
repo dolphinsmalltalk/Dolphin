@@ -860,7 +860,7 @@ testErrorsLexicalBadChar
 				code: LErrBadChar]!
 
 testErrorsLexicalBadCodePoint
-	#('$\x100' '$\xFFFFFFFF') do: 
+	#('$\x110000' '$\xFFFFFFFF') do: 
 			[:each |
 			| delimited end |
 			end := each size.
