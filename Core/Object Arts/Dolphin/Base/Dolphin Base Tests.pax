@@ -18,6 +18,7 @@ package classNames
 	add: #BooleanTest;
 	add: #ByteArrayTest;
 	add: #CaseInsensitiveSearchPolicyTest;
+	add: #CharacterTest;
 	add: #ClassBuilderTestClasses;
 	add: #ClassBuilderTests;
 	add: #CollectionCombinator;
@@ -209,6 +210,11 @@ DolphinTest subclass: #BlockClosureTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BooleanTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #CharacterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

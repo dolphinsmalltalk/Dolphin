@@ -67,12 +67,10 @@ _separateSubStringsIn: tokens
 
 = comperand
 	"Answer whether the receiver is the sames as the parameter, comperand.
-	There is a unique Character instance for each possible value, so equality
-	between characters is the same as object identity in Dolphin.
-	The object identity primitive should not fail."
+	There is a unique Character instance for each possible byte-character value,
+	but the instances are not unique for codepoints > 255."
 
-	<primitive: 110>
-	^self primitiveFailed!
+	^self == comperand or: [comperand class == Character and: [comperand codePoint == self codePoint]]!
 
 > aCharacter
 	"Answer whether the receiver is greater than the parameter aCharacter."
@@ -90,14 +88,13 @@ appendToStream: puttableStream
 asciiValue
 	"Answers the ascii character value of the receiver."
 
-	"Retained for ST-80 compatibility only, as specific to ASCII char set, and will be obsolete when we go Unicode. 
-	Use #codePoint instead."
+	"Retained for ST-80 compatibility only, as specific to ASCII char set. Use #codePoint instead."
 
+	#deprecated.
 	^asciiValue!
 
 asInteger
-	"Answer the receiver's character code as an Integer. 
-	For standard 8-byte characters, this is the ASCII value"
+	"Answer the receiver's character code as an Integer."
 
 	^asciiValue!
 
@@ -109,7 +106,7 @@ asLowercase
 	implementation will map other characters, depending on the configured
 	locale of the host OS."
 
-	^UserLibrary default charLower: self!
+	^self class codePoint: (UserLibrary default charLower: self)!
 
 asString
 	"Answer a new <String> whose sole element is the receiver."
@@ -130,24 +127,17 @@ asUppercase
 	implementation will map other characters, depending on the configured
 	locale of the host OS."
 
-	^UserLibrary default charUpper: self!
+	^self class codePoint: (UserLibrary default charUpper: self)!
 
 basicShallowCopy
-	"Answer the receiver, as Characters have a unique representation for
-	each possible value."
+	"Answer the receiver as Characters are immutable."
 
 	^self!
-
-basicSize
-	"Private - We must override the primitive implementation in Object,
-	which does not expect to be invoked for immediate receivers."
-
-	^0!
 
 codePoint
 	"Answers the receiver's <integer> encoding value."
 
-	^self asInteger!
+	^asciiValue!
 
 deepCopy
 	"Answer the receiver, as Characters are immutable"
@@ -173,7 +163,7 @@ displayOn: aStream
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
-	^self asInteger!
+	^asciiValue!
 
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
@@ -181,7 +171,7 @@ isAlphaNumeric
 	^UserLibrary default isCharAlphaNumeric: self!
 
 isAtomic
-	"Answer whether or not the receiver it the single unique instance of its class that
+	"Answer whether or not the receiver is the single unique instance of its class that
 	represents its value."
 
 	"Byte characters are atomic"
@@ -213,7 +203,7 @@ isHexDigit
 isImmediate
 	"Answer whether the receiver has an immediate representation."
 
-	^true!
+	^asciiValue <= 255!
 
 isLetter
 	"Answer whether the receiver is an alphabetic character."
@@ -237,8 +227,7 @@ isLiteral
 isLowercase
 	"Answer whether the receiver is a lowercase letter."
 
-	^UserLibrary default isCharLower: self
-!
+	^UserLibrary default isCharLower: self!
 
 isLowerCase
 	"Answer whether the receiver is a lowercase letter."
@@ -287,7 +276,7 @@ printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
 
 	aStream nextPut: $$.
-	(asciiValue > 32 and: [asciiValue ~= 127])
+	(asciiValue > 32 and: [asciiValue <= 255 and: [asciiValue ~= 127]])
 		ifTrue: [aStream nextPut: self]
 		ifFalse: 
 			[aStream nextPut: $\.
@@ -301,16 +290,9 @@ printOn: aStream
 						showRadix: false]]!
 
 shallowCopy
-	"Answer the receiver, as Characters have a unique representation for
-	each possible value."
+	"Answer the receiver, as Characters are immutable."
 
 	^self!
-
-size
-	"Private - We must override the primitive implementation in Object,
-	which does not expect to be invoked for immediate receivers."
-
-	^0!
 
 species
 	"Answer the 'species' of the receiver.
@@ -331,7 +313,6 @@ species
 !Character categoriesFor: #asSymbol!converting!public! !
 !Character categoriesFor: #asUppercase!converting!public! !
 !Character categoriesFor: #basicShallowCopy!copying!public! !
-!Character categoriesFor: #basicSize!accessing!private! !
 !Character categoriesFor: #codePoint!accessing!public! !
 !Character categoriesFor: #deepCopy!copying!public! !
 !Character categoriesFor: #digitValue!accessing!public! !
@@ -358,7 +339,6 @@ species
 !Character categoriesFor: #isWhitespace!public!testing! !
 !Character categoriesFor: #printOn:!printing!public! !
 !Character categoriesFor: #shallowCopy!copying!public! !
-!Character categoriesFor: #size!accessing!private! !
 !Character categoriesFor: #species!accessing!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
@@ -447,6 +427,13 @@ new
 	^self shouldNotImplement
 !
 
+newCodePoint: anInteger
+	"Private - Answer a new instance of the receiver with the specified code point. This should
+	only be used for code points > 255."
+
+	<primitive: 157>
+	^self primitiveFailed!
+
 newPage
 	"Answer the new page Character."
 
@@ -477,8 +464,12 @@ value: anInteger
 	"Answer the character with ascii value, anInteger. If anInteger is not in the range 0..255, 
 	then #at: primitive will fail"
 
-	^CharacterSet at: anInteger + 1
-! !
+	^anInteger < 256
+		ifTrue: [CharacterSet at: anInteger + 1]
+		ifFalse: 
+			[(self newCodePoint: anInteger)
+				isImmutable: true;
+				yourself]! !
 !Character class categoriesFor: #backspace!constants!public! !
 !Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !
@@ -491,6 +482,7 @@ value: anInteger
 !Character class categoriesFor: #initialize!development!initializing!public! !
 !Character class categoriesFor: #lf!constants!public! !
 !Character class categoriesFor: #new!instance creation!public! !
+!Character class categoriesFor: #newCodePoint:!instance creation!private! !
 !Character class categoriesFor: #newPage!constants!public! !
 !Character class categoriesFor: #nl!constants!public! !
 !Character class categoriesFor: #null!constants!public! !
