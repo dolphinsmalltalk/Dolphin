@@ -177,12 +177,12 @@ compilerClass
 
 	^methodClass compilerClass!
 
-containsSource: aString 
+containsSource: aString
 	"Answer whether the receiver contains the specified source string."
 
 	| src |
 	src := self getSource.
-	^src notNil and: [(src findString: aString) ~~ 0]!
+	^src notNil and: [src contains: aString]!
 
 debugInfo
 	"Private - Answer a compilation result containing a recompilation of the receiver, a

@@ -310,6 +310,11 @@ capitalized
 	(answer := self basicCopy) notEmpty ifTrue: [answer at: 1 put: self first asUppercase].
 	^answer!
 
+contains: aString
+	"Answer whether the receiver contains the specified sub-string."
+
+	^(self findString: aString startingAt: 1) ~~ 0!
+
 displayOn: aStream
 	"Append the receiver in end-user form to aStream. Since this message is intended
 	for producing end-user text, the receiver is appended to the stream as-is."
@@ -553,13 +558,14 @@ indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger
 
 	^aCollectionOfCharacters _indexOfAnyInString: self startingAt: anInteger!
 
-indexOfSubCollection: targetSequence startingAt: start 
+indexOfSubCollection: targetSequence startingAt: start
 	"Answer the <integer> index of the next occurrence within the 
 	receiver of the <sequencedReadableCollection> targetSequence,
 	starting at the <integer> index start. If there are no such occurrences
 	(or the search sequence is empty), answer 0."
 
-	^self findString: targetSequence startingAt: start!
+	<primitive: 149>
+	^super indexOfSubCollection: targetSequence startingAt: start!
 
 isLiteral
 	"Answer whether the receiver can be represented as a literal (i.e. it has a printed
@@ -1051,6 +1057,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #between:and:!comparing!public! !
 !String categoriesFor: #byteSize!accessing!private! !
 !String categoriesFor: #capitalized!converting!public! !
+!String categoriesFor: #contains:!public! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
 !String categoriesFor: #equals:!comparing!public! !

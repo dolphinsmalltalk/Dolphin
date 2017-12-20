@@ -145,6 +145,14 @@ first: anInteger
 
 	^self copyFrom: 1 to: anInteger!
 
+indexOfSubCollection: targetSequence startingAt: start 
+	"Answer the <integer> index of the next occurrence within the 
+	receiver of the <sequencedReadableCollection> targetSequence,
+	starting at the <integer> index start. If there are no such occurrences
+	(or the search sequence is empty), answer 0."
+
+	^self findString: targetSequence startingAt: start!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
@@ -237,6 +245,7 @@ wordAtOffset: anInteger put: anObject
 !UnicodeString categoriesFor: #displayOn:!printing!public! !
 !UnicodeString categoriesFor: #findString:startingAt:!public!searching! !
 !UnicodeString categoriesFor: #first:!copying!public! !
+!UnicodeString categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !UnicodeString categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !UnicodeString categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !UnicodeString categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
