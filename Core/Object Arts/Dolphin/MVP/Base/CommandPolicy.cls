@@ -190,7 +190,7 @@ routeFrom: sourceView
 	and lastly the model if it is a <commandTarget>."
 
 	| presenter |
-	path := OrderedCollection new.
+	path := OrderedCollection new: 12.
 	presenter := sourceView presenter.
 	[presenter notNil and: [presenter ~= DeafObject current]] whileTrue: [ | next |
 		"A common mistake is to forget to answer the next presenter to visit, so move up to the parent by default
