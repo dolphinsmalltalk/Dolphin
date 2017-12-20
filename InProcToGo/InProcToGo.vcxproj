@@ -69,6 +69,7 @@
       <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>.\Release/InProcToGo.tlb</TypeLibraryName>
+      <MinimumTargetSystem />
     </Midl>
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;WIN32;_WINDOWS;WIN32_LEAN_AND_MEAN;WIN32_EXTRA_LEAN;STRICT;TO_GO;_WIN32_WINNT=0x0500;_MERGE_PROXYSTUB;ZEXPORT=__stdcall;ZEXPORTVA=__cdecl;_CRT_SECURE_NO_WARNINGS;_HAS_EXCEPTIONS=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>

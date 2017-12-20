@@ -70,6 +70,7 @@
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <TypeLibraryName>.\Release/InProcStub.tlb</TypeLibraryName>
+      <MinimumTargetSystem />
     </Midl>
     <ClCompile>
       <Optimization>MinSpace</Optimization>

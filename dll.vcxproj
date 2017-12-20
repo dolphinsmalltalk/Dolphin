@@ -67,6 +67,7 @@
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimumTargetSystem />
     </Midl>
     <ClCompile>
       <AdditionalOptions>/LD  /Gw %(AdditionalOptions)</AdditionalOptions>

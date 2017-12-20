@@ -51,6 +51,7 @@
       <SuppressStartupBanner>false</SuppressStartupBanner>
       <DllDataFileName>$(ProjectDir)/dlldata.c</DllDataFileName>
       <ValidateAllParameters>false</ValidateAllParameters>
+      <MinimumTargetSystem Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
