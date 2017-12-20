@@ -300,6 +300,22 @@ has7052OrLater
 has7053OrLater
 	^self isAtLeastVmVersion: #(2016 7 0 53)!
 
+hashBytes: aByteArray
+	"Private - PJW hash (Aho, Sethi, and Ullman pp. 434-438).
+	Note that this algorithm is optimised for ASCII characters, making it a good choice for symbols, but probably not as a general byte hash algorithm."
+
+	| h |
+	h := 0.
+	1 to: aByteArray size
+		do: 
+			[:i |
+			| g ki |
+			ki := aByteArray basicAt: i.
+			h := (h << 4) + ki.
+			g := h & 16rF0000000.
+			g ~~ 0 ifTrue: [h := (h bitXor: g >> 24) bitXor: g]].
+	^h!
+
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
 	| frame |
 	frame := self findFaultInterruptFrame: anException.
@@ -1296,6 +1312,23 @@ testPrimitiveFindString
 			actual := method value: subject withArguments: {match. startingAt}.
 			self assert: actual equals: expected]!
 
+testPrimitiveHashBytes
+	| method |
+	method := self
+				createPrimitiveMethod: (String >> #hash) primitiveIndex
+				in: Object
+				argCount: 0
+				setsFailCode: false.
+	{'abcdefghijklmnopqrstuvwxyz'. String new: 8 withAll: $\x7F. #[255 255 255 255 255 255 239 127]}
+		do: 
+			[:each |
+			1 to: each size
+				do: 
+					[:i |
+					| slice |
+					slice := each copyFrom: 1 to: i.
+					self assert: (method value: slice withArguments: #()) equals: (self hashBytes: slice)]]!
+
 testPrimitiveIdentical
 	| method |
 	method := self createPrimitiveMethodLike: Object >> #== setsFailCode: false.
@@ -2057,6 +2090,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
 !VMTest categoriesFor: #has7052OrLater!private!testing! !
 !VMTest categoriesFor: #has7053OrLater!private!testing! !
+!VMTest categoriesFor: #hashBytes:!helpers!private! !
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
@@ -2096,6 +2130,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
