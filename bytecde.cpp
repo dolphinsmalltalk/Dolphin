@@ -213,26 +213,23 @@ MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointe
 	// are always the same.
 	unsigned hashForCache = cacheHash(classPointer, oteSelector);
 
-	if (methodCache[hashForCache].classPointer == classPointer)
+	if (methodCache[hashForCache].classPointer == classPointer
+		&& methodCache[hashForCache].selector == oteSelector)
 	{
 		MethodOTE* oteMethod = methodCache[hashForCache].method;
-
-		if (oteMethod->m_location->m_selector == oteSelector)
+		#ifdef _DEBUG
+		cacheHits++;
 		{
-			#ifdef _DEBUG
-			cacheHits++;
+			if (executionTrace)
 			{
-				if (executionTrace)
-				{
-					tracelock lock(TRACESTREAM);
-					TRACESTREAM << "Found method " << classPointer << ">>" << oteSelector << 
-							" (" << oteMethod << ") in cache\n";
-				}
+				tracelock lock(TRACESTREAM);
+				TRACESTREAM << "Found method " << classPointer << ">>" << oteSelector << 
+						" (" << oteMethod << ") in cache\n";
 			}
-			#endif
-
-			return oteMethod;
 		}
+		#endif
+
+		return oteMethod;
 	}
 
 	return findNewMethodInClassNoCache(classPointer, argCount);
@@ -292,7 +289,7 @@ MethodOTE* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* class
 					HARDASSERT(ObjectMemory::isKindOf(methodPointer, Pointers.ClassCompiledMethod));
 
 					unsigned hashForCache = cacheHash(classPointer, targetSelector);
-					// Write back into the cache, no longer store selector in the cache
+					// Write back into the cache
 					methodCache[hashForCache].selector = targetSelector;
 					methodCache[hashForCache].classPointer = classPointer;
 					methodCache[hashForCache].method = methodPointer;

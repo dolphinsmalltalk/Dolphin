@@ -109,7 +109,7 @@ Oop* __fastcall Interpreter::primitiveSize(Oop* const sp)
 {
 	// The primitive assumes it is never called for SmallIntegers.
 	OTE* oteReceiver = reinterpret_cast<OTE*>(*sp);
-	MWORD bytesSize = oteReceiver->bytesSize();
+	MWORD bytesSize = oteReceiver->getSize();
 	if (oteReceiver->m_flags.m_pointer)
 	{
 		InstanceSpecification instSpec = oteReceiver->m_oteClass->m_location->m_instanceSpec;
@@ -408,3 +408,51 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp)
 	return sp-4;
 }
 
+Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
+{
+	OTE* receiver = reinterpret_cast<OTE*>(*(sp - 1));
+	Oop arg = *sp;
+
+	if (ObjectMemoryIsIntegerObject(arg))
+	{
+		SMALLINTEGER index = ObjectMemoryIntegerValueOf(arg) - 1;
+		if (receiver->m_flags.m_pointer)
+		{
+			MWORD size = receiver->pointersSize();
+			MWORD fixedFields = receiver->m_oteClass->m_location->fixedFields();
+			VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(receiver)->m_location;
+
+			if (index >= 0 && (index + fixedFields) < size)
+			{
+				Oop field = pointerObj->m_fields[index + fixedFields];
+				*(sp - 1) = field;
+				return sp - 1;
+			}
+			else
+			{
+				// Out of bounds
+				return primitiveFailure(1);
+			}
+		}
+		else
+		{
+			MWORD size = receiver->bytesSize();
+			if (static_cast<MWORD>(index) < size)
+			{
+				BYTE value = reinterpret_cast<BytesOTE*>(receiver)->m_location->m_fields[index];
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(value);
+				return sp - 1;
+			}
+			else
+			{
+				// Out of bounds
+				return primitiveFailure(1);
+			}
+		}
+	}
+	else
+	{
+		// Index not a smallinteger
+		return primitiveFailure(0);
+	}
+}

@@ -68,7 +68,7 @@ namespace ST
 		ArrayOTE*				m_subclasses;
 
 	public:
-		unsigned fixedFields() const { return (*reinterpret_cast<const DWORD*>(&m_instanceSpec) >> 1) & 0xFF; }
+		unsigned fixedFields() const { return (m_instanceSpec.m_value >> 1) & 0xFF; }
 		BOOL isPointers() const { return m_instanceSpec.m_pointers; }
 		BOOL isBytes() const { return !m_instanceSpec.m_pointers; }
 		BOOL isIndexable() const { return m_instanceSpec.m_indexable; }

@@ -81,7 +81,7 @@ Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp)
 			VariantObject* receiver = oteReceiver->m_location;
 			Behavior* behavior = receiverPointer->m_oteClass->m_location;
 			const MWORD length = oteReceiver->pointersSize();
-			const MWORD fixedFields = behavior->m_instanceSpec.m_fixedFields;
+			const MWORD fixedFields = behavior->fixedFields();
 
 			// Similar reasoning with to/from as for byte objects, but here we need to
 			// take account of the fixed fields.

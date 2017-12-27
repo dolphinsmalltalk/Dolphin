@@ -554,6 +554,9 @@ private:
 	static Oop* __fastcall primitiveSize(Oop* const sp);
    	
 	// Object Indexing Primitives
+	static Oop* __fastcall primitiveBasicAt(Oop* const sp);
+	static Oop* __fastcall primitiveBasicAtPut(Oop* const sp);
+	static Oop* __fastcall primitiveAt(Oop* const sp);
 	static Oop* __fastcall primitiveAtPut(Oop* const sp);
 	static Oop* __fastcall primitiveInstVarAt(Oop* const sp);
 	static Oop* __fastcall primitiveInstVarAtPut(Oop* const sp);
