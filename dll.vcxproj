@@ -107,6 +107,7 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
+      <MinimumTargetSystem />
     </Midl>
     <ClCompile>
       <AdditionalOptions>/LD  %(AdditionalOptions)</AdditionalOptions>

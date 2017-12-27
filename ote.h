@@ -95,8 +95,13 @@ public:
 
 	__forceinline void countUp() 
 	{ 
-		BYTE up = m_count + 1; 
+#ifdef _DEBUG
+		if (m_count < MAXCOUNT) m_count++;
+#else
+		// Deliberately truncate to zero to detect sticky
+		count_t up = m_count + 1;
 		if (up != 0) m_count = up; 
+#endif
 	}
 
 	__forceinline void countDown()
