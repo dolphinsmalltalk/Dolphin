@@ -256,8 +256,8 @@ primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIQAI@Z
 extern primitiveAtEnd:near32
 primitiveBasicAt EQU ?primitiveBasicAt@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicAt:near32
-;primitiveBasicAtPut EQU ?primitiveBasicAtPut@Interpreter@@CIPAIQAI@Z
-;extern primitiveBasicAtPut:near32
+primitiveBasicAtPut EQU ?primitiveBasicAtPut@Interpreter@@CIPAIQAI@Z
+extern primitiveBasicAtPut:near32
 
 primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIQAI@Z
 extern primitiveValueWithArgs:near32
@@ -793,115 +793,6 @@ LocalPrimitiveFailure 0
 LocalPrimitiveFailure 1
 
 ENDPRIMITIVE primitiveInstVarAt
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;	BOOL __fastcall Interpreter::primitiveBasicAtPut()
-;;
-;; Primitive for setting elements of indexed objects without using cache
-;; This primitive answers its value argument, so it moves it down
-;; the stack, overwriting the receiver. The other argument must be a
-;; SmallInteger for the primitive to succeed.
-;;
-BEGINPRIMITIVE primitiveBasicAtPut
-	mov		ecx, [_SP-OOPSIZE*2]				; Access receiver under arguments
-	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
-	ASSUME	ecx:PTR OTE
-
-	sar		edx, 1								; Argument is a SmallInteger?
-	jnc		localPrimitiveFailure0 				; No, primitive failure
-	jle		localPrimitiveFailure1				; Index <= 0?
-
-	test	[ecx].m_flags, MASK m_pointer		; Pointer object?
-	jz		byteObjectAtPut						; No, skip to code for storing bytes
-
-	mov		eax, [ecx].m_oteClass				; Get class Oop	from OTE into eax
-	ASSUME	eax:PTR OTE
-	
-	mov		ecx, [ecx].m_size					; Load size into ecx (negative if immutable)
-	ASSUME	ecx:SDWORD
-	sar		ecx, 2								; ecx = total Oop size
-
-	mov		eax, [eax].m_location				; Load address of class object into eax
-	ASSUME	eax:PTR Behavior
-
-	mov		eax, [eax].m_instanceSpec			; Load Instancespecification flags into edx
-	ASSUME	eax:DWORD
-
-	and		eax, MASK m_fixedFields				; Mask off flags
-	shr		eax, 1								; Convert from SmallInteger
-	add		edx, eax							; Add fixed offset for inst vars to offset argument
-
-	mov		eax, [_SP-OOPSIZE*2]				; Reload receiver under arguments
-	ASSUME	eax:PTR OTE
-
-	cmp		edx, ecx							; Index <= size (still in ecx)?
-
-	mov		eax, [eax].m_location				; Reload address of receiver into eax
-	ASSUME	eax:PTR VariantObject
-	
-	jg		localPrimitiveFailure1				; No, out of bounds
-		
-	lea		eax, [eax+edx*OOPSIZE-OOPSIZE]	
-
-	mov		edx, [_SP]							; Reload value to write
-	ASSUME	edx:PTR OTE
-
-	; We must inc ref. count, as we are storing into a heap allocated object here
-	CountUpOopIn <d>
-
-	; Exchange Oop of overwritten value with new value
-	mov		ecx, [eax]				 			; Load value to overwrite into ECX
-	mov		[eax], edx							; and overwrite with new value in edx
-
-	; Must count down overwritten value, as it was in a heap object slot
-	CountDownOopIn <c>		
-
-	; count down destroys eax, ecx, and edx
-
-	mov		eax, [_SP]							; Reload new value into eax again
-	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-	ret
-
-byteObjectAtPut:
-	ASSUME	ecx:PTR OTE						; ECX is byte object Oop
-	ASSUME	edx:DWORD						; EDX is index
-
-	mov		eax, [ecx].m_location			; Load object address into eax
-	ASSUME	eax:PTR ByteArray				; EAX is pointer to byte object
-
-	cmp		edx, [ecx].m_size				; Compare index+HEADERSIZE with object size (latter -ve if immutable)
-	jg		localPrimitiveFailure1			; Index out of bounds (>= size)
-
-	mov		ecx, [_SP]						; Load value to store/return
-
-	add		eax, edx
-	ASSUME	eax:PTR BYTE
-	ASSUME	edx:NOTHING						; EDX is now free
-
-	mov		edx, ecx
-	ASSUME	ecx:DWORD
-	sar		ecx, 1							; Convert to real integer value
-	jnc		localPrimitiveFailure2			; Not a SmallInteger
-
-	cmp		ecx, 0FFh						; Too large?
-	ja		localPrimitiveFailure2			; Used unsigned comparison for 0<=ecx<=255
-
-	mov		[eax-1], cl						; Store byte into receiver
-	ASSUME	eax:NOTHING
-
-	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
-	mov		[_SP-OOPSIZE*2], edx			; ...and overwrite with value for return (still in EAX)
-
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-
-ENDPRIMITIVE primitiveBasicAtPut
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
