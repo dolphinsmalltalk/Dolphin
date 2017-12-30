@@ -1118,6 +1118,14 @@ testPrimitiveEnableInterrupts
 	enabled := method value: Processor withArguments: #(true).
 	self assert: enabled description: 'Interrupts should have remained enabled'!
 
+testPrimitiveExtraInstanceSpec
+	| method |
+	method := self createPrimitiveMethodLike: Behavior >> #extraInstanceSpec setsFailCode: false.
+	Smalltalk allClasses do: 
+			[:each |
+			self assert: (method value: each withArguments: #())
+				equals: ((each instanceSpec bitShift: -15) bitAnd: 16rFFFF)]!
+
 testPrimitiveFindString
 	"Test string search primitive"
 
@@ -1632,6 +1640,46 @@ testPrimitiveResume
 	self assert: state equals: 'a1, b, a2, c, a3, d, a4, a5, e'.
 	self assert: e isDead.
 	self assert: a isDead!
+
+testPrimitiveSetSpecialBehavior
+	| method subject before after nullTermMask |
+	method := self createPrimitiveMethodLike: Object >> #setSpecialBehavior: setsFailCode: true.
+	self assert: (method value: 1 withArguments: #(1)) equals: 'failed1'.
+	subject := Object new.
+	self assert: (method value: subject withArguments: #(nil)) equals: 'failed0'.
+	before := subject getSpecialBehavior.
+	self assert: (method value: subject withArguments: #(16rFF00)) equals: before.
+	self assert: (method value: subject withArguments: #(16rFFFF)) equals: before.
+	"The per-object flags contain a number of bits that the VM will not allow to be modified - in fact only the weak & finalize bits can be set or unset."
+	after := before | _WeakMask | _FinalizeMask.
+	self assert: subject getSpecialBehavior equals: after.
+	self assert: subject isWeak.
+	self assert: subject isFinalizable.
+	self assert: (method value: subject withArguments: {_WeakMask}) equals: after.
+	self assert: subject getSpecialBehavior equals: before | _WeakMask.
+	self assert: subject isWeak.
+	self deny: subject isFinalizable.
+	self assert: (method value: subject withArguments: #(0)) equals: before | _WeakMask.
+	self assert: subject getSpecialBehavior equals: before.
+	self deny: subject isWeak.
+	self deny: subject isFinalizable.
+	subject := ByteArray new: 1.
+	before := subject getSpecialBehavior.
+	self assert: (method value: subject withArguments: #(16rFF00)) equals: before.
+	self assert: (method value: subject withArguments: #(16rFFFF)) equals: before.
+	nullTermMask := _WeakMask bitXor: _PointersMask.
+	after := before | nullTermMask | _FinalizeMask.
+	self assert: subject getSpecialBehavior equals: after.
+	self deny: subject isWeak.
+	self assert: subject isFinalizable.
+	self assert: (method value: subject withArguments: {nullTermMask}) equals: after.
+	self assert: subject getSpecialBehavior equals: before | nullTermMask.
+	self deny: subject isWeak.
+	self deny: subject isFinalizable.
+	self assert: (method value: subject withArguments: #(0)) equals: before | nullTermMask.
+	self assert: subject getSpecialBehavior equals: before.
+	self deny: subject isWeak.
+	self deny: subject isFinalizable!
 
 testPrimitiveShallowCopy
 	| method subject result |
@@ -2240,6 +2288,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !
 !VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
@@ -2260,6 +2309,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveSetSpecialBehavior!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveSize!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
