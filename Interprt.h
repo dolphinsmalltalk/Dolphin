@@ -419,7 +419,6 @@ private:
 	static ProcessOTE* wakeHighestPriority();
 	static ProcessOTE* resumeFirst(LinkedList* list);
 	static ProcessOTE* resumeFirst(Semaphore* sem);
-	static BOOL __fastcall yield();
 	static BOOL	__fastcall FireAsyncEvents();
 	static BOOL __fastcall CheckProcessSwitch();
 	static void switchTo(ProcessOTE* processPointer);
@@ -668,6 +667,7 @@ private:
 	static Oop* __fastcall primitiveSignal(Oop* const sp);
 	static Oop* __fastcall primitiveWait(Oop* const sp);
 	static Oop* __fastcall primitiveResume(Oop* const sp, unsigned argumentCount);
+	static Oop* __fastcall primitiveYield();
 	static Oop* __fastcall primitiveSingleStep(Oop* const sp, unsigned argumentCount);
 	static Oop* __fastcall primitiveSuspend(Oop* const sp);
 	static Oop* __fastcall primitiveSetSignals(Oop* const sp);

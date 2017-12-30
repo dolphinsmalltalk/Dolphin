@@ -382,7 +382,7 @@ void Interpreter::signalSemaphore(SemaphoreOTE* aSemaphore)
 
 // Yield to the Processes of the same or higher priority than the current active process
 // Answers whether a process switch occurred
-BOOL __fastcall Interpreter::yield()
+Oop* __fastcall Interpreter::primitiveYield()
 {
 	HARDASSERT(!m_bInterruptsDisabled);
 
@@ -392,7 +392,8 @@ BOOL __fastcall Interpreter::yield()
 	// Schedule may remove active process from a list again, but does not reduce the ref. count
 	if (schedule() == active)
 		active->countDown();
-	return CheckProcessSwitch();
+	CheckProcessSwitch();
+	return m_registers.m_stackPointer;
 }
 
 // N.B. Ref. count of returned Object is one too high to prevent
@@ -1643,7 +1644,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp)
 		if (newPriority < oldPriority)
 		{
 			// Priority reduced, may need to run another process
-			yield();
+			primitiveYield();
 		}
 		// else priority same or increased, leave it running
 	}

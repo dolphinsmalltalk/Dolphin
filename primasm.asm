@@ -414,8 +414,8 @@ extern QUEUEINTERRUPT:near32
 ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@VObject@ST@@@@0@Z
 extern ONEWAYBECOME:near32
 
-YIELD EQU ?yield@Interpreter@@CIHXZ
-extern YIELD:near32												; See process.cpp
+primitiveYield EQU ?primitiveYield@Interpreter@@CIPAIXZ
+extern primitiveYield:near32												; See process.cpp
 
 primitiveStringSearch EQU ?primitiveStringSearch@Interpreter@@CIPAIQAI@Z
 extern primitiveStringSearch:near32
@@ -621,7 +621,7 @@ DWORD		primitiveLowBit									; case 152
 DWORD		primitiveAllReferences							; case 153
 DWORD		primitiveOneWayBecome							; case 154
 DWORD		primitiveShallowCopy							; case 155
-DWORD		primitiveYield									; case 156
+DWORD		primitiveYieldThunk								; case 156
 DWORD		primitiveNewInitializedObject					; case 157
 DWORD		primitiveSmallIntegerAt							; case 158
 DWORD		primitiveLongDoubleAt							; case 159
@@ -1311,16 +1311,6 @@ LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveEnableInterrupts
 
-BEGINPRIMITIVE primitiveYield
-	call	YIELD
-	
-	mov		eax, [STACKPOINTER]					; primitiveSuccess(0)
-	mov		_IP, [INSTRUCTIONPOINTER]
-	mov		_BP, [BASEPOINTER]
-
-	ret
-ENDPRIMITIVE primitiveYield
-
 BEGINPRIMITIVE primitiveStructureIsNull
 	mov		ecx, [_SP]								; Access argument
 	ASSUME	ecx:PTR OTE
@@ -1592,6 +1582,10 @@ ENDPRIMITIVE primitiveSignalThunk
 BEGINPRIMITIVE primitiveSingleStepThunk
 	CallContextPrim	<PRIMITIVESINGLESTEP>
 ENDPRIMITIVE primitiveSingleStepThunk
+
+BEGINPRIMITIVE primitiveYieldThunk
+	CallContextPrim	<primitiveYield>
+ENDPRIMITIVE primitiveYieldThunk
 
 BEGINPRIMITIVE primitiveResumeThunk
 	CallContextPrim	<PRIMITIVERESUME>
