@@ -1305,19 +1305,18 @@ validateRenameInstVar: oldString to: newString in: aClass
 				& (RBCondition definesTemporaryVariable: newString in: aClass) not.
 	refactoring checkPreconditions: conditions!
 
-validateRenameTemp: aStVariableNode to: aString in: aClass 
-	| refactoring |
-	refactoring := RenameTemporaryRefactoring 
+validateRenameTemp: aStVariableNode to: aString in: aClass
+	| refactoring definingNode |
+	refactoring := RenameTemporaryRefactoring
 				renameTemporaryFrom: aStVariableNode sourceInterval
 				to: aString
 				in: aClass
 				selector: aStVariableNode methodNode selector.
-	aStVariableNode methodNode allDefinedVariableNodesDo: 
-			[:each | 
-			each name = aString 
-				ifTrue: [refactoring refactoringError: ('<1p> is already defined' expandMacrosWith: aString)]].
-	refactoring checkPreconditions
-! !
+	"Find the scope definining the existing temp"
+	definingNode := aStVariableNode whoDefines: aStVariableNode name.
+	((definingNode whoDefines: aString) notNil or: [definingNode allDefinedVariables includes: aString])
+		ifTrue: [refactoring refactoringError: ('<1p> is already defined' expandMacrosWith: aString)].
+	refactoring checkPreconditions! !
 !RefactoringSmalltalkSystem categoriesFor: #abstractClassVariable:in:within:!public!refactoring! !
 !RefactoringSmalltalkSystem categoriesFor: #abstractClassVariables:within:!public!refactoring! !
 !RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariable:in:within:!public!refactoring! !
