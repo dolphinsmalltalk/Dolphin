@@ -258,6 +258,10 @@ primitiveBasicAt EQU ?primitiveBasicAt@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicAt:near32
 primitiveBasicAtPut EQU ?primitiveBasicAtPut@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicAtPut:near32
+primitiveInstVarAt EQU ?primitiveInstVarAt@Interpreter@@CIPAIQAI@Z
+extern primitiveInstVarAt:near32
+;primitiveInstVarAtPut EQU ?primitiveInstVarAtPut@Interpreter@@CIPAIQAI@Z
+;extern primitiveInstVarAtPut:near32
 
 primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIQAI@Z
 extern primitiveValueWithArgs:near32
@@ -734,65 +738,6 @@ ENDIF
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; String/variable byte objects primitives
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; BOOL __fastcall Interpreter::primitiveInstVarAt()
-;;
-;; Primitive for getting elements of objects
-;;
-BEGINPRIMITIVE primitiveInstVarAt
-	mov		ecx, [_SP-OOPSIZE]					; Access receiver under argument
-	mov		edx, [_SP]							; Load argument from stack
-	sar		edx, 1								; Argument is a SmallInteger?
-   	ASSUME	ecx:PTR OTE							; ecx is pointer to receiver for rest of primitive
-	jnc		localPrimitiveFailure0				; Arg not a SmallInteger, primitive failure 0
-	jle		localPrimitiveFailure1				; Arg <= 0?
-
-	mov		eax, [ecx].m_location				; Load object address into eax *Will fail if receiver is SmallInteger*
-	ASSUME	eax:PTR VariantObject
-				     	
-	test	[ecx].m_flags, MASK m_pointer		; Test pointer bit of object table entry
-	jz		byteObjectAt						; Contains pointers? No, skip to byte access code
-
-	; Array of pointers?
-	mov		ecx, [ecx].m_size					; Load byte size into ECX
-	and		ecx, 7fffffffh						; Mask out immutability (sign) bit
-	shr		ecx, 2								; Div 4 gives pointer count
-	cmp		edx, ecx							; index <= size?
-	ja		localPrimitiveFailure1				; No, out of bounds (>=)
-
-	mov		ecx, [eax].m_elements[edx*OOPSIZE-OOPSIZE]	; Load Oop from inst var
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with inst var value
-
-	ret
-
-byteObjectAt:
-	ASSUME	ecx:PTR OTE							; ECX is Oop of receiver, but not needed
-	ASSUME	edx:DWORD							; EDX is the index
-	ASSUME	eax:PTR OTE							; EAX is the Oop of the receiver's class
-
-	mov		eax, [ecx].m_location				; Load object address into eax
-	ASSUME	eax:PTR ByteArray					; EAX points at receiver
-
-	mov		ecx, [ecx].m_size					
-	and		ecx, 7fffffffh						; Mask out the immutability bit
-	
-	cmp		edx, ecx							; Index out of bounds (> size) ?
-	ja		localPrimitiveFailure1				; 
-	
-	movzx	ecx, BYTE PTR[eax+edx-1]			; Load required byte, zero extending
-
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	lea		ecx, [ecx+ecx+1]					; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], ecx					; Overwrite receiver with result. 
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-
-ENDPRIMITIVE primitiveInstVarAt
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

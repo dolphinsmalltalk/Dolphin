@@ -519,3 +519,52 @@ Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp)
 		return primitiveFailure(0);
 	}
 }
+
+
+Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp)
+{
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 1));
+	Oop oopIndex = *sp;
+
+	if (ObjectMemoryIsIntegerObject(oopIndex))
+	{
+		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		if (oteReceiver->m_flags.m_pointer)
+		{
+			MWORD size = oteReceiver->pointersSize();
+			VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
+
+			if (static_cast<MWORD>(index) < size)
+			{
+				Oop field = pointerObj->m_fields[index];
+				*(sp - 1) = field;
+				return sp - 1;
+			}
+			else
+			{
+				// Out of bounds
+				return primitiveFailure(1);
+			}
+		}
+		else
+		{
+			MWORD size = oteReceiver->bytesSize();
+			if (static_cast<MWORD>(index) < size)
+			{
+				BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
+				*(sp - 1) = ObjectMemoryIntegerObjectOf(value);
+				return sp - 1;
+			}
+			else
+			{
+				// Out of bounds
+				return primitiveFailure(1);
+			}
+		}
+	}
+	else
+	{
+		// Index not a smallinteger
+		return primitiveFailure(0);
+	}
+}
