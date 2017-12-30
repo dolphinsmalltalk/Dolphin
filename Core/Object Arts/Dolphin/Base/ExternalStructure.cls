@@ -540,6 +540,7 @@ baseAlignment
 basicByteSize
 	"Answer the size (in bytes) of the structure the receiver represents, or zero if not yet defined."
 
+	<primitive: 151>
 	^self extraInstanceSpec!
 
 beCompiled
