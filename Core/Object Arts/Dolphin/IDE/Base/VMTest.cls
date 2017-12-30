@@ -1003,199 +1003,39 @@ testPrimitiveAllInstances
 	self assert: actual equals: {Processor}!
 
 testPrimitiveAt
-	| array outOfBounds |
-	#(1 0 nil) do: 
-			[:each |
-			self
-				should: [Array at: each]
-				raise: Error
-				matching: [:ex | ex messageText = 'not indexable'].
-			self
-				should: [Array perform: #at: with: each]
-				raise: Error
-				matching: [:ex | ex messageText = 'not indexable']].
-	array := {2}.
-	self assert: (array at: 1) sameAs: 2.
-	self assert: (array perform: #at: with: 1) sameAs: 2.
-	"Now attempt some out of bounds accesses in mutable and immutable arrays"
-	outOfBounds := {-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum}.
-	{array. #(1)} do: 
-			[:subject |
-			outOfBounds do: 
-					[:each |
-					self should: [subject at: each] raise: BoundsError.
-					self should: [subject perform: #at: with: each] raise: BoundsError]].
-
-	"Repeat for an object with one named instance variable and no #at: override"
-	array := MourningWeakArray with: 2.
-	self assert: (array at: 1) sameAs: 2.
-	self assert: (array perform: #at: with: 1) sameAs: 2.
-	outOfBounds do: 
-			[:each |
-			self should: [array at: each] raise: BoundsError.
-			self should: [array perform: #at: with: each] raise: BoundsError].
-
-	"And again for one with a number of named instance variables (a method)"
-	array := Object compiledMethodAt: #addDependent:.
-	self assert: (array at: 1) sameAs: #getDependents.
-	self should: 
-			[| lit |
-			lit := array at: 2.
-			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
-	self assert: (array at: 3) sameAs: #setDependents:.
-	self assert: (array at: array size) sameAs: #add:.
-	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
-			[:each |
-			self should: [array at: each] raise: BoundsError.
-			self should: [array perform: #at: with: each] raise: BoundsError].
-
-	"LargeIntegers"
-	{SmallInteger maximum + 1.
-		(2 raisedToInteger: 31) - 1.
-		2 raisedToInteger: 31.
-		(2 raisedToInteger: 32) - 1.
-		2 raisedToInteger: 32.
-		SmallInteger minimum - 1.
-		-2 raisedToInteger: 31} do: 
-				[:each |
-				self should: [array at: each] raise: BoundsError.
-				self should: [array perform: #at: with: each] raise: BoundsError].
-
-	"Try accessing with non-integer indices"
-	#($1 '1' nil true false #[1] #'1' #(1)) do: 
-			[:each |
-			self
-				should: [array at: each]
-				raise: Error
-				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
-	array := {'a'. 'b'}.
-	self assert: (array at: 1) equals: 'a'.
-	self assert: (array at: 2) equals: 'b'.
-	array := MourningWeakArray with: 'a' with: 'b'.
-	self assert: (array at: 1) equals: 'a'.
-	self assert: (array at: 2) equals: 'b'.
-	array := (-100 to: 100) asArray.
-	-100 to: 100
-		do: 
-			[:i |
-			self assert: (array at: i + 100 + 1) sameAs: i.
-			self assert: (array perform: #at: with: i + 100 + 1) sameAs: i]!
+	self verifyPrimitiveAt: [:a :i | a at: i] performBlock: [:a :i | a perform: #at: with: i]!
 
 testPrimitiveAtPut
-	"First some error cases - accessing non-indexable objects"
-
-	| array |
-	#(1 0 nil) do: 
-			[:each |
-			self
-				should: [Array at: each put: nil]
-				raise: Error
-				matching: [:ex | ex messageText = 'not indexable']].
-	array := {0}.
-	self should: [(array at: 1 put: 1) == 1 and: [(array at: 1) == 1]].
-	"One second access, may be cached"
-	self should: [(array at: 1 put: '1') = '1' and: [(array at: 1) = '1']].
-
-	"Now attempt some out of bounds accesses"
-	{-1.
-		0.
-		array size + 1.
-		SmallInteger maximum.
-		SmallInteger minimum.
-		SmallInteger maximum + 1.
-		(2 raisedToInteger: 31) - 1.
-		2 raisedToInteger: 31.
-		(2 raisedToInteger: 32) - 1.
-		2 raisedToInteger: 32.
-		SmallInteger minimum - 1.
-		-2 raisedToInteger: 31} do: 
-				[:each |
-				self should: [array at: each put: nil] raise: BoundsError.
-				self should: 
-						[array
-							perform: #at:put:
-							with: each
-							with: nil]
-					raise: BoundsError]!
+	self verifyPrimitiveAtPut: [:a :i :v | a at: i put: v]
+		performBlock: 
+			[:a :i :v |
+			a
+				perform: #at:put:
+				with: i
+				with: v]!
 
 testPrimitiveBasicAt
-	| array outOfBounds |
-	#(1 0 nil) do: 
+	self verifyPrimitiveAt: [:a :i | a basicAt: i] performBlock: [:a :i | a perform: #basicAt: with: i].
+	"#basicAt: access into strings returns the byte encoding"
+	self assert: ('abc' basicAt: 1) equals: $a codePoint.
+	self assert: ('abc' perform: #basicAt: with: 3) equals: $c codePoint.
+	self assert: ('abc' basicAt: 2) equals: $b codePoint.
+	self assert: ('abc' copy perform: #basicAt: with: 2) equals: $b codePoint.
+	#(-1 0 4) do: 
 			[:each |
-			self
-				should: [Array basicAt: each]
-				raise: Error
-				matching: [:ex | ex messageText = 'not indexable'].
-			self
-				should: [Array perform: #basicAt: with: each]
-				raise: Error
-				matching: [:ex | ex messageText = 'not indexable']].
-	array := {2}.
-	self assert: (array basicAt: 1) sameAs: 2.
-	self assert: (array perform: #basicAt: with: 1) sameAs: 2.
-	"Now attempt some out of bounds accesses in mutable and immutable arrays"
-	outOfBounds := {-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum}.
-	{array. #(1)} do: 
-			[:subject |
-			outOfBounds do: 
-					[:each |
-					self should: [subject basicAt: each] raise: BoundsError.
-					self should: [subject perform: #basicAt: with: each] raise: BoundsError]].
+			self should: ['abc' basicAt: each] raise: BoundsError.
+			self should: ['abc' copy basicAt: each] raise: BoundsError.
+			self should: ['abc' perform: #basicAt: with: each] raise: BoundsError.
+			self should: ['abc' copy perform: #basicAt: with: each] raise: BoundsError]!
 
-	"Repeat for an object with one named instance variable and no #basicAt: override"
-	array := MourningWeakArray with: 2.
-	self assert: (array basicAt: 1) sameAs: 2.
-	self assert: (array perform: #basicAt: with: 1) sameAs: 2.
-	outOfBounds do: 
-			[:each |
-			self should: [array basicAt: each] raise: BoundsError.
-			self should: [array perform: #basicAt: with: each] raise: BoundsError].
-
-	"And again for one with a number of named instance variables (a method)"
-	array := Object compiledMethodAt: #addDependent:.
-	self assert: (array basicAt: 1) sameAs: #getDependents.
-	self should: 
-			[| lit |
-			lit := array basicAt: 2.
-			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
-	self assert: (array basicAt: 3) sameAs: #setDependents:.
-	self assert: (array basicAt: array size) sameAs: #add:.
-	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
-			[:each |
-			self should: [array basicAt: each] raise: BoundsError.
-			self should: [array perform: #basicAt: with: each] raise: BoundsError].
-
-	"LargeIntegers"
-	{SmallInteger maximum + 1.
-		(2 raisedToInteger: 31) - 1.
-		2 raisedToInteger: 31.
-		(2 raisedToInteger: 32) - 1.
-		2 raisedToInteger: 32.
-		SmallInteger minimum - 1.
-		-2 raisedToInteger: 31} do: 
-				[:each |
-				self should: [array basicAt: each] raise: BoundsError.
-				self should: [array perform: #basicAt: with: each] raise: BoundsError].
-
-	"Try accessing with non-integer indices"
-	#($1 '1' nil true false #[1] #'1' #(1)) do: 
-			[:each |
-			self
-				should: [array basicAt: each]
-				raise: Error
-				matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]].
-	array := {'a'. 'b'}.
-	self assert: (array basicAt: 1) equals: 'a'.
-	self assert: (array basicAt: 2) equals: 'b'.
-	array := MourningWeakArray with: 'a' with: 'b'.
-	self assert: (array basicAt: 1) equals: 'a'.
-	self assert: (array basicAt: 2) equals: 'b'.
-	array := (-100 to: 100) asArray.
-	-100 to: 100
-		do: 
-			[:i |
-			self assert: (array basicAt: i + 100 + 1) sameAs: i.
-			self assert: (array perform: #basicAt: with: i + 100 + 1) sameAs: i]!
+testPrimitiveBasicAtPut
+	self verifyPrimitiveAtPut: [:a :i :v | a basicAt: i put: v]
+		performBlock: 
+			[:a :i :v |
+			a
+				perform: #basicAt:put:
+				with: i
+				with: v]!
 
 testPrimitiveBytesEqual
 	| method string1 string2 string3 string4 bytes1 bytes2 string5 string6 string7 mismatchedClassFailure |
@@ -1394,6 +1234,104 @@ testPrimitiveInstanceCounts2
 	self assert: (counts at: Processor class) equals: 1.
 	(baseClasses select: [:each | each isAbstract])
 		do: [:each | self assert: (counts at: each) equals: 0]!
+
+testPrimitiveInstVarAt
+	| mutableOc method immutableBytes mutableBytes immutableOc |
+	method := self createPrimitiveMethodLike: Object >> #instVarAt: setsFailCode: true.
+	mutableOc := OrderedCollection with: '3' with: '4'.
+	self deny: mutableOc isImmutable.
+	immutableOc := mutableOc copy
+				isImmutable: true;
+				yourself.
+	self assert: immutableOc isImmutable.
+	1 to: 2
+		do: 
+			[:i |
+			self assert: (method value: mutableOc withArguments: {i}) equals: i.
+			self assert: (method value: immutableOc withArguments: {i}) equals: i].
+	3 to: 4
+		do: 
+			[:i |
+			self assert: (method value: mutableOc withArguments: {i}) equals: i printString.
+			self assert: (method value: immutableOc withArguments: {i}) equals: i printString].
+	immutableBytes := #[10 20 30 40].
+	self assert: immutableBytes isImmutable.
+	mutableBytes := immutableBytes copy.
+	self deny: mutableBytes isImmutable.
+	1 to: immutableBytes size
+		do: 
+			[:i |
+			self assert: (method value: immutableBytes withArguments: {i}) equals: i * 10.
+			self assert: (method value: mutableBytes withArguments: {i}) equals: i * 10].
+	"Out of bounds"
+	{-1. 0. 5. SmallInteger minimum. SmallInteger maximum} do: 
+			[:each |
+			self assert: (method value: mutableOc withArguments: {each}) equals: 'failed1'.
+			self assert: (method value: immutableOc withArguments: {each}) equals: 'failed1'.
+			self assert: (method value: mutableBytes withArguments: {each}) equals: 'failed1'.
+			self assert: (method value: immutableBytes withArguments: {each}) equals: 'failed1'].
+	"Invalid index"
+	{SmallInteger minimum - 1. SmallInteger maximum + 1. nil} do: 
+			[:each |
+			self assert: (method value: mutableOc withArguments: {each}) equals: 'failed0'.
+			self assert: (method value: immutableOc withArguments: {each}) equals: 'failed0'.
+			self assert: (method value: mutableBytes withArguments: {each}) equals: 'failed0'.
+			self assert: (method value: immutableBytes withArguments: {each}) equals: 'failed0']!
+
+testPrimitiveInstVarAtPut
+	| mutableOc method immutableBytes mutableBytes immutableOc immutableString mutableString |
+	method := self createPrimitiveMethodLike: Object >> #instVarAt:put: setsFailCode: true.
+	mutableOc := OrderedCollection new: 2.
+	self deny: mutableOc isImmutable.
+	immutableOc := mutableOc copy
+				isImmutable: true;
+				yourself.
+	self assert: immutableOc isImmutable.
+	self assert: (method value: mutableOc withArguments: #(1 1)) equals: 1.
+	self assert: (method value: mutableOc withArguments: #(2 2)) equals: 2.
+	self assert: mutableOc size equals: 2.
+	self assert: (method value: mutableOc withArguments: #(3 '3')) equals: '3'.
+	self assert: (method value: mutableOc withArguments: #(4 '4')) equals: '4'.
+	self assert: mutableOc asArray equals: #('3' '4').
+	self assert: (method value: immutableOc withArguments: #(1 1)) equals: 'failed1'.
+	immutableBytes := #[10 20 30 40].
+	mutableString := String new: 4.
+	immutableString := 'abcd'.
+	self assert: immutableBytes isImmutable.
+	mutableBytes := immutableBytes copy.
+	self deny: mutableBytes isImmutable.
+	1 to: immutableBytes size
+		do: 
+			[:i |
+			self assert: (method value: immutableBytes withArguments: {i. i * 10}) equals: 'failed1'.
+			self assert: (method value: immutableString withArguments: {i. 96 + i}) equals: 'failed1'.
+			self assert: (method value: mutableString withArguments: {i. 96 + i}) equals: 96 + i.
+			self assert: (method value: mutableBytes withArguments: {i. i * 10}) equals: i * 10.
+			self assert: (mutableBytes basicAt: i) equals: i * 10].
+	self assert: mutableString equals: immutableString.
+	"Out of bounds"
+	{-1. 0. 5. SmallInteger minimum. SmallInteger maximum} do: 
+			[:each |
+			self assert: (method value: mutableOc withArguments: {each. each}) equals: 'failed1'.
+			self assert: (method value: immutableOc withArguments: {each. each}) equals: 'failed1'.
+			self assert: (method value: mutableString withArguments: {each. each}) equals: 'failed1'.
+			self assert: (method value: immutableString withArguments: {each. each}) equals: 'failed1'.
+			self assert: (method value: mutableBytes withArguments: {each. each}) equals: 'failed1'.
+			self assert: (method value: immutableBytes withArguments: {each. each}) equals: 'failed1'].
+	"Invalid index"
+	{SmallInteger minimum - 1. SmallInteger maximum + 1. nil} do: 
+			[:each |
+			self assert: (method value: mutableOc withArguments: {each. each}) equals: 'failed0'.
+			self assert: (method value: immutableOc withArguments: {each. each}) equals: 'failed0'.
+			self assert: (method value: mutableString withArguments: {each. each}) equals: 'failed0'.
+			self assert: (method value: immutableString withArguments: {each. each}) equals: 'failed0'.
+			self assert: (method value: mutableBytes withArguments: {each. each}) equals: 'failed0'.
+			self assert: (method value: immutableBytes withArguments: {each. each}) equals: 'failed0'].
+	"Invalid byte content"
+	#($a -1 256 nil) do: 
+			[:each |
+			self assert: (method value: mutableString withArguments: #(1 #each)) equals: 'failed2'.
+			self assert: (method value: mutableBytes withArguments: #(1 #each)) equals: 'failed2']!
 
 testPrimitiveIsKindOf
 	"Test the isKindOf primitive (which does not fail)"
@@ -2098,6 +2036,153 @@ testWeakMournerNotifications
 	"Garbage but finalizable weak array should have been notified of loss of obj2"
 	self assert: (losses at: id2) equals: 3!
 
+verifyPrimitiveAt: opAt performBlock: performAt
+	| array outOfBounds |
+	array := (-100 to: 100) asArray.
+	-100 to: 100
+		do: 
+			[:i |
+			self assert: (opAt value: array value: i + 100 + 1) sameAs: i.
+			self assert: (performAt value: array value: i + 100 + 1) sameAs: i].
+	"Valid case, first and last, with and without named fields"
+	array := {'a'. 'b'}.
+	self assert: (opAt value: array value: 1) equals: 'a'.
+	self assert: (opAt value: array value: 2) equals: 'b'.
+	array := MourningWeakArray with: 'a' with: 'b'.
+	self assert: (opAt value: array value: 1) equals: 'a'.
+	self assert: (opAt value: array value: 2) equals: 'b'.
+	#(#(2) #[2]) do: 
+			[:a |
+			self assert: (opAt value: a value: 1) sameAs: 2.
+			self assert: (performAt value: a value: 1) sameAs: 2].
+	"Non-indexable object"
+	#(1 0 nil) do: 
+			[:each |
+			{opAt. performAt} do: 
+					[:op |
+					self
+						should: [op value: Array value: each]
+						raise: Error
+						matching: [:ex | ex messageText = 'not indexable']]].
+	"Now attempt some out of bounds accesses in mutable and immutable arrays"
+	outOfBounds := {-1. 0. 2. SmallInteger maximum. SmallInteger minimum}.
+	{{2}. ByteArray with: 2. #(1). #[1]} do: 
+			[:subject |
+			outOfBounds do: 
+					[:each |
+					self should: [opAt value: subject value: each] raise: BoundsError.
+					self should: [performAt value: subject value: each] raise: BoundsError]].
+	"Repeat for an object with one named instance variable and no #at:/#basicAt: override"
+	array := MourningWeakArray with: 2.
+	self assert: (opAt value: array value: 1) sameAs: 2.
+	self assert: (performAt value: array value: 1) sameAs: 2.
+	outOfBounds do: 
+			[:each |
+			self should: [opAt value: array value: each] raise: BoundsError.
+			self should: [performAt value: array value: each] raise: BoundsError].
+
+	"And again for one with a number of named instance variables (a method)"
+	array := Object compiledMethodAt: #addDependent:.
+	self assert: (opAt value: array value: 1) sameAs: #getDependents.
+	self should: 
+			[| lit |
+			lit := opAt value: array value: 2.
+			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
+	self assert: (opAt value: array value: 3) sameAs: #setDependents:.
+	self assert: (opAt value: array value: array size) sameAs: #add:.
+	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
+			[:each |
+			self should: [opAt value: array value: each] raise: BoundsError.
+			self should: [performAt value: array value: each] raise: BoundsError].
+	"LargeIntegers"
+	{SmallInteger maximum + 1.
+		(2 raisedToInteger: 31) - 1.
+		2 raisedToInteger: 31.
+		(2 raisedToInteger: 32) - 1.
+		2 raisedToInteger: 32.
+		SmallInteger minimum - 1.
+		-2 raisedToInteger: 31} do: 
+				[:each |
+				self should: [opAt value: array value: each] raise: BoundsError.
+				self should: [performAt value: array value: each] raise: BoundsError].
+	"Non-integer indices"
+	#($1 '1' nil true false #[1] #'1' #(1)) do: 
+			[:each |
+			{opAt. performAt} do: 
+					[:block |
+					self
+						should: [block value: array value: each]
+						raise: Error
+						matching: [:ex | ex messageText = ('Index: <1p> is not an integer' expandMacrosWith: each)]]]!
+
+verifyPrimitiveAtPut: opAtPut performBlock: performAtPut
+	| bytes arrays |
+	#(1 0 nil) do: 
+			[:each |
+			{opAtPut. performAtPut} do: 
+					[:block |
+					self
+						should: 
+							[block
+								value: Array
+								value: each
+								value: nil]
+						raise: Error
+						matching: [:ex | ex messageText = 'not indexable']]].
+	arrays := {Array with: 0. ByteArray with: 0. MourningWeakArray with: 0}.
+	arrays do: 
+			[:array |
+			{opAtPut. performAtPut} do: 
+					[:block |
+					self should: 
+							[(block
+								value: array
+								value: 1
+								value: 123) == 123
+								and: [(array at: 1) == 123]].
+					"On second access, may be cached"
+					self should: 
+							[(block
+								value: array
+								value: 1
+								value: 255) = 255 and: [(array at: 1) = 255]]]].
+	"ByteArrays can only hold 0..255"
+	bytes := ByteArray new: 1.
+	#(-1 256 '1') do: 
+			[:each |
+			{opAtPut. performAtPut} do: 
+					[:block |
+					self should: 
+							[block
+								value: bytes
+								value: 1
+								value: each]
+						raise: Error]].
+	"Now attempt some out of bounds accesses"
+	{-1.
+		0.
+		2.
+		SmallInteger maximum.
+		SmallInteger minimum.
+		SmallInteger maximum + 1.
+		(2 raisedToInteger: 31) - 1.
+		2 raisedToInteger: 31.
+		(2 raisedToInteger: 32) - 1.
+		2 raisedToInteger: 32.
+		SmallInteger minimum - 1.
+		-2 raisedToInteger: 31} do: 
+				[:each |
+				arrays do: 
+						[:array |
+						{opAtPut. performAtPut} do: 
+								[:block |
+								self should: 
+										[block
+											value: array
+											value: each
+											value: nil]
+									raise: BoundsError]]]!
+
 vmRespectsNonInstantiable
 	^self isAtLeastVmVersion: self firstVmVersionRespectingNonInstantiable! !
 !VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
@@ -2151,6 +2236,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveBasicAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
@@ -2159,6 +2245,8 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveInstVarAt!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
@@ -2186,6 +2274,8 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
 !VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
 !VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
+!VMTest categoriesFor: #verifyPrimitiveAt:performBlock:!helpers!private! !
+!VMTest categoriesFor: #verifyPrimitiveAtPut:performBlock:!helpers!private! !
 !VMTest categoriesFor: #vmRespectsNonInstantiable!private!testing! !
 
 !VMTest class methodsFor!
