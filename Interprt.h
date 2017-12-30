@@ -696,6 +696,7 @@ private:
 	static Oop* __fastcall primitiveShallowCopy(Oop* const sp);
 	static Oop* __fastcall primitiveSetSpecialBehavior(Oop* const sp);
 	static Oop* __fastcall primitiveQueueInterrupt(Oop* const sp);
+	static Oop* __fastcall primitiveExtraInstanceSpec(Oop* const sp);
 
 	static Oop* __fastcall primitiveDeQBereavement(Oop* const sp);
 	static Oop* __fastcall primitiveLookupMethod(Oop* const sp);

@@ -630,3 +630,10 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp)
 		return primitiveFailure(0);
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp)
+{
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*sp);
+	*sp = (oteClass->m_location->m_instanceSpec.m_value >> 15) | 1;
+	return sp;
+}

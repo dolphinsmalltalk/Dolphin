@@ -456,6 +456,8 @@ primitiveLookupMethod EQU ?primitiveLookupMethod@Interpreter@@CIPAIQAI@Z
 extern primitiveLookupMethod:near32
 primitiveObjectCount EQU ?primitiveObjectCount@Interpreter@@CIPAIQAI@Z
 extern primitiveObjectCount:near32
+primitiveExtraInstanceSpec EQU ?primitiveExtraInstanceSpec@Interpreter@@CIPAIQAI@Z
+extern primitiveExtraInstanceSpec:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Constants
@@ -985,19 +987,6 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveValueOnUnwind
-
-BEGINPRIMITIVE primitiveExtraInstanceSpec
-	mov		ecx, [_SP]						; Load receiver class at stack top
-	mov		edx, (OTE PTR[ecx]).m_location
-	ASSUME	edx:PTR Behavior
-
-	mov		ecx, [edx].m_instanceSpec
-	shr		ecx, 15							; Shift to get the high 16 bits
-	or		ecx, 1							; Set SmallInteger flag
-	mov		eax, _SP						; primitiveSuccess(0)
-	mov		[_SP], ecx						; Overwrite receiver class with new object (receiver's ref. count remains same)
-	ret
-ENDPRIMITIVE primitiveExtraInstanceSpec
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Set the special behavior bits of an object according to the mask
