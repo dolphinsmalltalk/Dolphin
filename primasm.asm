@@ -260,8 +260,8 @@ primitiveBasicAtPut EQU ?primitiveBasicAtPut@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicAtPut:near32
 primitiveInstVarAt EQU ?primitiveInstVarAt@Interpreter@@CIPAIQAI@Z
 extern primitiveInstVarAt:near32
-;primitiveInstVarAtPut EQU ?primitiveInstVarAtPut@Interpreter@@CIPAIQAI@Z
-;extern primitiveInstVarAtPut:near32
+primitiveInstVarAtPut EQU ?primitiveInstVarAtPut@Interpreter@@CIPAIQAI@Z
+extern primitiveInstVarAtPut:near32
 
 primitiveValueWithArgs EQU ?primitiveValueWithArgs@Interpreter@@CIPAIQAI@Z
 extern primitiveValueWithArgs:near32
@@ -414,9 +414,6 @@ extern QUEUEINTERRUPT:near32
 ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@VObject@ST@@@@0@Z
 extern ONEWAYBECOME:near32
 
-OOPSUSED EQU ?OopsUsed@ObjectMemory@@SIHXZ
-extern OOPSUSED:near32
-
 YIELD EQU ?yield@Interpreter@@CIHXZ
 extern YIELD:near32												; See process.cpp
 
@@ -457,6 +454,8 @@ primitiveHashBytes EQU ?primitiveHashBytes@Interpreter@@CIPAIQAI@Z
 extern primitiveHashBytes:near32
 primitiveLookupMethod EQU ?primitiveLookupMethod@Interpreter@@CIPAIQAI@Z
 extern primitiveLookupMethod:near32
+primitiveObjectCount EQU ?primitiveObjectCount@Interpreter@@CIPAIQAI@Z
+extern primitiveObjectCount:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Constants
@@ -735,96 +734,6 @@ ENDIF
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; String/variable byte objects primitives
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;;	BOOL __fastcall Interpreter::primitiveInstVarAtPut()
-;;
-;; Primitive for setting elements of any object
-;;
-BEGINPRIMITIVE primitiveInstVarAtPut
-	mov		edx, [_SP-OOPSIZE]					; Load index argument from stack
-	mov		ecx, [_SP-OOPSIZE*2]				; Access receiver under arguments
-	ASSUME	ecx:PTR OTE
-
-	sar		edx, 1								; Argument is a SmallInteger?
-	jnc		localPrimitiveFailure0				; No, primitive failure
-	jle		localPrimitiveFailure1
-
-	mov		eax, [ecx].m_location				; Load object address into eax
-
-	test	[ecx].m_flags, MASK m_pointer
-	jz		byteObjectAtPut						; Skip to code for storing bytes
-
-	; Array of pointers
-	ASSUME	eax:PTR VariantObject
-
-	mov		ecx, [ecx].m_size					; Load size into ecx (-ve if immutable)
-	sar		ecx, 2								; ecx = total Oop size
-
-	cmp		edx, ecx							; Index <= size (still in ecx)?
-	jg		localPrimitiveFailure1				; No, out of bounds
-	
-	lea		eax, [eax].m_elements[edx*OOPSIZE-OOPSIZE]
-
-	mov		edx, [_SP]							; Load value to write
-	mov		ecx, [eax]							; Exchange Oop of overwritten value with new value
-	mov		[eax], edx
-	ASSUME	eax:NOTHING
-	CountDownOopIn <c>							; Count down overwritten value
-
-	; count down destroys eax, ecx, and edx
-	mov		ecx, [_SP-OOPSIZE*2]				; Reload receiver
-	mov		eax, [_SP]							; Reload new value into eax
-	mov		[_SP-OOPSIZE*2], eax				; And overwrite receiver in stack with new value
-
-	; Must count up arg, because written into a heap object
-	CountUpOopIn <a>
-
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-	ret
-
-byteObjectAtPut:
-	ASSUME	ecx:PTR OTE						; ECX is byte object Oop
-	ASSUME	edx:DWORD						; EDX is index
-	ASSUME	eax:PTR ByteArray				; EAX is point to byte object
-
-	cmp		edx, [ecx].m_size				; Compare offset+HEADERSIZE with object size (latter -ve if immutable)
-	jg		localPrimitiveFailure1			; Index out of bounds (>= size)
-
-	mov		ecx, [_SP]						; Load value to store from stack top
-	ASSUME	ecx:DWORD
-
-	add		eax, edx
-	ASSUME	eax:PTR BYTE
-
-	mov		edx, ecx						; EDX is now free, so store return value for later
-	ASSUME	edx:DWORD
-
-	sar		ecx, 1							; Convert value to real integer value
-	jnc		localPrimitiveFailure2			; Not a SmallInteger
-
-	cmp		ecx, 0FFh						; Too large?
-	ja		localPrimitiveFailure2			; Used unsigned comparison for 0<=ecx<=255
-
-	mov		[eax-1], cl						; Store byte into receiver
-	ASSUME	eax:NOTHING
-
-	lea		eax, [_SP-OOPSIZE*2]			; primitiveSuccess(2)
-	mov		[_SP-OOPSIZE*2], edx			; ...and overwrite with value for return (still in EAX)
-
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-LocalPrimitiveFailure 2
-
-ENDPRIMITIVE primitiveInstVarAtPut
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Raise a special exception caught by the callback entry point routine - the result will still be on top
 ; of the stack
@@ -1076,17 +985,6 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveValueOnUnwind
-
-
-;  BOOL __fastcall Interpreter::primitiveObjectCount()
-;
-BEGINPRIMITIVE primitiveObjectCount
-	call	OOPSUSED
-	lea		ecx, [eax+eax+1]				; Convert result to SmallInteger
-	mov		eax, _SP						; primitiveSuccess(0)
-	mov		[_SP], ecx						; Overwrite receiver class with new object
-	ret
-ENDPRIMITIVE primitiveObjectCount
 
 BEGINPRIMITIVE primitiveExtraInstanceSpec
 	mov		ecx, [_SP]						; Load receiver class at stack top

@@ -633,6 +633,7 @@ private:
 	static Oop* __fastcall primitiveAtEnd(Oop* const sp);
 
 	// Storage Management Primitives
+	static Oop* __fastcall primitiveObjectCount(Oop* const sp);
 	static Oop* __fastcall primitiveNew(Oop* const sp);
 	static Oop* __fastcall primitiveNewWithArg(Oop* const sp);
 	static Oop* __fastcall primitiveNewPinned(Oop* const sp);

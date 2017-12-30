@@ -568,3 +568,65 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp)
 		return primitiveFailure(0);
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp)
+{
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 2));
+	Oop oopIndex = *(sp - 1);
+
+	if (ObjectMemoryIsIntegerObject(oopIndex))
+	{
+		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
+		if (oteReceiver->m_flags.m_pointer)
+		{
+			int size = oteReceiver->pointersSizeForUpdate();
+			VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
+
+			if (index >= 0 && index < size)
+			{
+				Oop newValue = *sp;
+				ObjectMemory::countUp(newValue);
+				Oop oldValue = pointerObj->m_fields[index];
+				pointerObj->m_fields[index] = newValue;
+				ObjectMemory::countDown(oldValue);
+				*(sp - 2) = newValue;
+				return sp - 2;
+			}
+			else
+			{
+				// Out of bounds
+				return primitiveFailure(1);
+			}
+		}
+		else
+		{
+			int size = oteReceiver->bytesSizeForUpdate();
+			if (index >= 0 && index < size)
+			{
+				Oop oopValue = *sp;
+				MWORD newValue;
+				if (ObjectMemoryIsIntegerObject(oopValue) && (newValue = static_cast<MWORD>(ObjectMemoryIntegerValueOf(oopValue))) <= 255)
+				{
+					reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
+					*(sp - 2) = oopValue;
+					return sp - 2;
+				}
+				else
+				{
+					// Not a SmallInteger in range 0..255
+					return primitiveFailure(2);
+				}
+			}
+			else
+			{
+				// Out of bounds
+				return primitiveFailure(1);
+			}
+		}
+	}
+	else
+	{
+		// Index not a smallinteger
+		return primitiveFailure(0);
+	}
+}

@@ -725,6 +725,12 @@ int ObjectMemory::OopsUsed()
 	return m_nOTSize - nFreeOTEs;
 }
 
+Oop* __fastcall Interpreter::primitiveObjectCount(Oop* const sp)
+{
+	*sp = ObjectMemoryIntegerObjectOf(ObjectMemory::OopsUsed());
+	return sp;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef MEMSTATS
