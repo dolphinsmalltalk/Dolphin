@@ -19,6 +19,18 @@ Symbol complies with the following ANSI protocols:
 !Symbol categoriesForClass!Collections-Text! !
 !Symbol methodsFor!
 
+_equalsByteString: aString
+	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
+	Double-dispatched from String>>=."
+
+	^false!
+
+_equalsUnicodeString: anUnicodeString
+	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
+	Double-dispatched from UnicodeString>>=."
+
+	^false!
+
 = aSymbol
 	"Symbols equality is the same as symbol identity since instances with the same
 	characters are unique.
@@ -188,6 +200,8 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
+!Symbol categoriesFor: #_equalsByteString:!comparing!private! !
+!Symbol categoriesFor: #_equalsUnicodeString:!comparing!private! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
 !Symbol categoriesFor: #asBlock!converting!public! !

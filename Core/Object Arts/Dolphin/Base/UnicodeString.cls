@@ -38,6 +38,29 @@ UnicodeStrings can be constructed from <String>s when needed by sending the #asU
 _appendToString: aString
 	^self asString _appendToString: aString!
 
+_equalsByteString: aString
+	"Private - Answer whether the receiver is equivalent to the byte string, aString. 
+	Double-dispatched from String>>=."
+
+	^aString asUnicodeString = self!
+
+_equalsUnicodeString: aUnicodeString
+	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
+	Double-dispatched from UnicodeString>>=."
+
+	"We should only get here if the byte comparison primitive failed unexpected."
+	^aUnicodeString primitiveFailed!
+
+= comparand
+	"Answer whether the receiver and the <Object> argument, comparand, 
+	are both Strings containing identical characters (i.e. case sensitive).
+
+	Primitive failure results:
+		0 -	aString is not a byte object of the same class as the receiver."
+
+	<primitive: 55>
+	^comparand isString and: [comparand _equalsUnicodeString: self]!
+
 asByteArray
 	"Answer a <ByteArray> containing the Unicode representation of the characters of the
 	receiver."
@@ -233,6 +256,9 @@ wordAtOffset: anInteger put: anObject
 	^self primitiveFailed! !
 !UnicodeString categoriesFor: #,!copying!public! !
 !UnicodeString categoriesFor: #_appendToString:!comparing!double dispatch!private! !
+!UnicodeString categoriesFor: #_equalsByteString:!comparing!private! !
+!UnicodeString categoriesFor: #_equalsUnicodeString:!comparing!private! !
+!UnicodeString categoriesFor: #=!comparing!public! !
 !UnicodeString categoriesFor: #asByteArray!converting!public! !
 !UnicodeString categoriesFor: #asLowercase!converting!public! !
 !UnicodeString categoriesFor: #asString!converting!public! !

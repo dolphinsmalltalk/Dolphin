@@ -65,6 +65,19 @@ _collate: comparand
 "	^CRTLibrary default _stricmp: self string2: comparand."
 !
 
+_equalsByteString: aString
+	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
+	Double-dispatched from String>>=."
+
+	"We should only get here if the byte comparison primitive failed unexpectedly."
+	^aString primitiveFailed!
+
+_equalsUnicodeString: aUnicodeString
+	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
+	Double-dispatched from UnicodeString>>=."
+
+	^self asUnicodeString = aUnicodeString!
+
 _indexOfAnyInString: aString startingAt: anInteger 
 	| span |
 	span := aString strcspn: self start: anInteger.
@@ -132,7 +145,7 @@ _separateSubStringsIn: aReadableString
 		0 -	aString is not a byte object of the same class as the receiver."
 
 	<primitive: 55>
-	^false!
+	^comparand isString and: [comparand _equalsByteString: self]!
 
 > comparand
 	"Answer whether the receiver is lexically greater than the <readableString>, comparand,
@@ -1032,6 +1045,8 @@ withNormalizedLineDelimiters
 !String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !String categoriesFor: #_collate:!comparing!private! !
+!String categoriesFor: #_equalsByteString:!comparing!private! !
+!String categoriesFor: #_equalsUnicodeString:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
 !String categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
