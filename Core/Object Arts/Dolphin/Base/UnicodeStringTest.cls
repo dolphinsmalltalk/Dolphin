@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-StringTest subclass: #UnicodeStringTest
+AbstractStringTest subclass: #UnicodeStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

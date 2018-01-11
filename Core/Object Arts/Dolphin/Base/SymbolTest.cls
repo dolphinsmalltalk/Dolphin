@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-StringTest subclass: #SymbolTest
+AbstractStringTest subclass: #SymbolTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -12,6 +12,9 @@ SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are 
 	- the sunit class category'!
 !SymbolTest categoriesForClass!Unclassified! !
 !SymbolTest methodsFor!
+
+collectionClass
+	^Symbol!
 
 newCollection: aCollection
 	^(self newCopy: aCollection) asSymbol!
@@ -81,6 +84,7 @@ testReplaceIdentityWith
 
 testResize
 	self should: [super testResize] raise: Processor constWriteSignal! !
+!SymbolTest categoriesFor: #collectionClass!helpers!private! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !SymbolTest categoriesFor: #newCopy:!helpers!private! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !

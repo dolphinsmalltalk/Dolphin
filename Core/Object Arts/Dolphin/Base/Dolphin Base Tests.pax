@@ -7,6 +7,7 @@ package paxVersion: 1;
 package classNames
 	add: #AbstractDictionaryTest;
 	add: #AbstractFileStreamTest;
+	add: #AbstractStringTest;
 	add: #AlwaysSearchPolicyTest;
 	add: #ArrayedCollectionTest;
 	add: #ArrayTest;
@@ -484,6 +485,11 @@ SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ArrayedCollectionTest subclass: #AbstractStringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ArrayedCollectionTest subclass: #ArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -499,17 +505,17 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArrayedCollectionTest subclass: #StringTest
+AbstractStringTest subclass: #StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringTest subclass: #SymbolTest
+AbstractStringTest subclass: #SymbolTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringTest subclass: #UnicodeStringTest
+AbstractStringTest subclass: #UnicodeStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
