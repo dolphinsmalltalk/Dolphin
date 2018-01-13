@@ -1,0 +1,52 @@
+| package |
+package := Package name: 'Thread Pool'.
+package paxVersion: 1;
+	basicComment: 'Based on Ramon Leon implementation.
+http://onsmalltalk.com/2010-07-28-a-simple-thread-pool-for-smalltalk
+
+Adapted for Dolphin Smalltalk by Sebastian Calvo (https://github.com/fxgallego)
+
+Additions and modifications:
+- Protect workers queue from concurrent access
+- Changed exception handling to allow debug sessions
+- Clean dead processes'.
+
+
+package classNames
+	add: #ThreadPool;
+	add: #ThreadWorker;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\ITC Gorisek\Dialect Abstraction Layer';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #ThreadPool
+	instanceVariableNames: 'maxPoolSize minPoolSize poolManager queueWorkers workQueue'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #ThreadWorker
+	instanceVariableNames: 'block expires value lock error'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
