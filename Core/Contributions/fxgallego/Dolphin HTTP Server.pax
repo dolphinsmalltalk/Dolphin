@@ -1,0 +1,115 @@
+| package |
+package := Package name: 'Dolphin HTTP Server'.
+package paxVersion: 1;
+	basicComment: '"Simplest example:"
+
+server := HttpServer new.
+server
+	addListener: ''DolphinSmaltalkHTTPServer''
+	at: ''http://localhost:8080/''
+	handler: [:request :response | response statusCode: 200; content: ''Hello''].
+server start.
+
+"Point your browser to: http://localhost:8080 "
+'.
+
+
+package classNames
+	add: #HttpServer;
+	add: #HttpServerCookie;
+	add: #HttpServerError;
+	add: #HttpServerFile;
+	add: #HttpServerHeaders;
+	add: #HttpServerListener;
+	add: #HttpServerObject;
+	add: #HttpServerQueue;
+	add: #HttpServerRequest;
+	add: #HttpServerResponse;
+	add: #HttpServerSession;
+	add: #HttpServerUrlGroup;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'Thread Pool';
+	add: '..\..\Object Arts\Dolphin\System\Win32\Windows HTTP Server';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #HttpServerObject
+	instanceVariableNames: 'lib'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Error subclass: #HttpServerError
+	instanceVariableNames: 'statusCode reason'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServer
+	instanceVariableNames: 'session listeners state'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerCookie
+	instanceVariableNames: 'name value domain path expires maxAge secure httpOnly'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerFile
+	instanceVariableNames: 'contents contentType fileName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerHeaders
+	instanceVariableNames: 'knownHeaders unknownHeaders pHeaders pKnownHeaders pUnknownHeaders'
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerListener
+	instanceVariableNames: 'name urlPrefix queue urlGroup handler loop multithreaded state threadPool'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerQueue
+	instanceVariableNames: 'handle name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerRequest
+	instanceVariableNames: 'queue httpRequest headers body postFields queryFields params'
+	classVariableNames: 'MAX_PAYLOAD'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerResponse
+	instanceVariableNames: 'request statusCode reason contentType content headers'
+	classVariableNames: ''
+	poolDictionaries: 'WinHttpServerConsts'
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerSession
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+HttpServerObject subclass: #HttpServerUrlGroup
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

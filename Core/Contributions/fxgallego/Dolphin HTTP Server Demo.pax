@@ -1,0 +1,53 @@
+| package |
+package := Package name: 'Dolphin HTTP Server Demo'.
+package paxVersion: 1;
+	basicComment: '"Evaluate"
+
+HttpServerDemo start.
+
+"Point your browser to: http://localhost:8080.
+All actions are implemented in HttpServerDemoController. 
+
+To end demo evaluate: "
+
+HttpServerDemo stop.'.
+
+
+package classNames
+	add: #HttpServerDemo;
+	add: #HttpServerDemoController;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'Dolphin HTTP Server';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #HttpServerDemo
+	instanceVariableNames: 'server'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: 'Current'!
+Object subclass: #HttpServerDemoController
+	instanceVariableNames: 'request response'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
