@@ -52,6 +52,7 @@ union OTEFlags
 		MarkMask = 1 << 2,
 		FinalizeMask = 1 << 3,
 		WeakOrZMask = 1 << 4,
+		SpaceMask = 0x7 << 5,
 	};
 	enum { WeakMask = (PointerMask | WeakOrZMask) };
 };

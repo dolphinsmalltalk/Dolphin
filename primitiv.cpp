@@ -228,6 +228,56 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp)
 }
 
 
+
+Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp)
+{
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*sp);
+	*sp = (oteClass->m_location->m_instanceSpec.m_value >> 15) | 1;
+	return sp;
+}
+
+// Set the special behavior bits of an object according to the mask
+// Takes a SmallInteger argument, of which only the low order word is significant.
+// The high order byte of the low order word specifies the AND mask, used to mask out bits,
+// The low order byte of the low order word specifies the OR mask, used to mask in bits.
+// The current value of the special behavior bits is then answered.
+// The primitive ensures that the current values of bits which may affect the stability of the
+// system cannot be modified.
+// To query the current value of the special bits, pass in 16rFF00.
+Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp)
+{
+	Oop oopMask = *sp;
+	if (ObjectMemoryIsIntegerObject(oopMask))
+	{
+		SMALLINTEGER mask = ObjectMemoryIntegerValueOf(oopMask);
+		Oop oopReceiver = *(sp - 1);
+		if (!ObjectMemoryIsIntegerObject(oopReceiver))
+		{
+			// Ensure the masks cannot affect the critical bits of the flags
+			// the AND mask, must have the pointer, mark, and free bits set, to keep these bits
+			// the OR mask, must have those bits reset so as not to add them
+			BYTE andMask = (mask >> 8) | (OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
+			BYTE orMask = mask & static_cast<BYTE>(~(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask));
+
+			OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
+			BYTE oldFlags = oteReceiver->m_ubFlags;
+			oteReceiver->m_ubFlags = (oldFlags & andMask) | orMask;
+			*(sp - 1) = ObjectMemoryIntegerObjectOf(oldFlags);
+			return sp - 1;
+		}
+		else
+		{
+			// SmallIntegers can't have special behavior
+			return primitiveFailure(1);
+		}
+	}
+	else
+	{
+		// Mask is not a SmallInteger
+		return primitiveFailure(0);
+	}
+}
+
 #pragma code_seg(PROCESS_SEG)
 
 // Remove a request from the last request queue, nil if none pending. Fails if argument is not an
@@ -629,11 +679,4 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp)
 		// Index not a smallinteger
 		return primitiveFailure(0);
 	}
-}
-
-Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp)
-{
-	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*sp);
-	*sp = (oteClass->m_location->m_instanceSpec.m_value >> 15) | 1;
-	return sp;
 }

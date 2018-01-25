@@ -458,6 +458,10 @@ primitiveObjectCount EQU ?primitiveObjectCount@Interpreter@@CIPAIQAI@Z
 extern primitiveObjectCount:near32
 primitiveExtraInstanceSpec EQU ?primitiveExtraInstanceSpec@Interpreter@@CIPAIQAI@Z
 extern primitiveExtraInstanceSpec:near32
+primitiveExtraInstanceSpec EQU ?primitiveExtraInstanceSpec@Interpreter@@CIPAIQAI@Z
+extern primitiveExtraInstanceSpec:near32
+primitiveSetSpecialBehavior EQU ?primitiveSetSpecialBehavior@Interpreter@@CIPAIQAI@Z
+extern primitiveSetSpecialBehavior:near32
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Constants
@@ -987,53 +991,6 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveValueOnUnwind
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Set the special behavior bits of an object according to the mask
-; Takes a SmallInteger argument, of which only the low order word is significant.
-; The high order byte of the low order word specifies the AND mask, used to mask out bits,
-; The low order byte of the low order word specifies the OR mask, used to mask in bits.
-; The current value of the special behavior bits is then answered.
-; The primitive ensures that the current values of bits which may affect the stability of the
-; system cannot be modified.
-; To query the current value of the special bits, pass in 16rFF00.
-BEGINPRIMITIVE primitiveSetSpecialBehavior
-	mov		edx, [_SP]							; Load integer mask argument
-	sar		edx, 1								; Get the integer value
-	jnc		localPrimitiveFailure0						; Not a SmallInteger
-	
-	; No other failures after this point
-	mov		ecx, [_SP-OOPSIZE]					; Load Oop of receiver
-	
-	test	cl, 1
-	jnz		localPrimitiveFailure1				; SmallIntegers can't have special behavior
-	ASSUME ecx:PTR OTE							; ECX is now an Oop
-
-	; Ensure the masks cannot affect the critical bits of the flags
-	; dh, the AND mask, must have the pointer, mark, and free bits set, to keep these bits
-	; dl, the OR mask, must have those bits reset so as not to add them
-	or		dh, (MASK m_pointer OR MASK m_mark OR MASK m_free OR MASK m_space)
-	and		dl, NOT (MASK m_pointer OR MASK m_mark OR MASK m_free OR MASK m_space)
-
-	xor		eax, eax
-	mov		al, [ecx].m_flags
-	push	eax									; Save for later
-	and		al, dh								; Mask out the desired bits
-	or		al, dl								; Mask in the desired bits
-	mov		[ecx].m_flags, al
-	ASSUME	ecx:NOTHING
-	pop		ecx
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	lea		ecx, [ecx+ecx+1]					; Convert old mask to SmallInteger
-	mov		[_SP-OOPSIZE], ecx					; Store old mask as return value
-
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-
-ENDPRIMITIVE primitiveSetSpecialBehavior
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;  BOOL __fastcall Interpreter::primitiveChangeBehavior()
