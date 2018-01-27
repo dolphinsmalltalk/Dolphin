@@ -77,7 +77,7 @@ cookieTest
 	name notEmpty
 		ifTrue: 
 			[self response addCookie: ((HttpServerCookie name: 'cookie-test-name' value: name displayString)
-						expiresLocalTime: (TimeStamp fromSeconds: TimeStamp current asSeconds + 20);
+						expiresLocalTime: (TimeStamp current addSeconds: 20);
 						yourself)].
 	self respondOk: self cookieTestView!
 

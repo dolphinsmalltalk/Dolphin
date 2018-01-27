@@ -33,7 +33,7 @@ expiresLocalTime: aTimeStamp
 	| bias |
 	"GMT = local time + bias. bias are minutes"
 	bias := Locale default timeZoneInformation last bias * 60.
-	self expires: (TimeStamp fromSeconds: aTimeStamp asSeconds + bias)!
+	self expires: (aTimeStamp addSeconds: bias)!
 
 httpOnly
 	^httpOnly!
