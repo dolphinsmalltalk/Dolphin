@@ -23,7 +23,7 @@ cleanDead
 
 	self
 		queueWorkItem: [queueWorkers removeAll: (queueWorkers select: [:each | each isDead])]
-		expiresAt: (TimeStamp fromSeconds: TimeStamp current asSeconds + 600)!
+		expiresAt: (TimeStamp current addSeconds: 600)!
 
 free
 	self stop!
@@ -50,13 +50,13 @@ killWorker
 
 	self
 		queueWorkItem: [self isPoolTooBig ifTrue: [(queueWorkers remove: Processor activeProcess) terminate]]
-		expiresAt: (TimeStamp fromSeconds: TimeStamp current asSeconds + 600)!
+		expiresAt: (TimeStamp current addSeconds: 600)!
 
 processQueueElement
 	workQueue next evaluate!
 
 queueWorkItem: aBlock
-	self queueWorkItem: aBlock expiresAt: (TimeStamp fromSeconds: Timestamp current asSeconds + 60)!
+	self queueWorkItem: aBlock expiresAt: (TimeStamp current addSeconds: 60)!
 
 queueWorkItem: aBlock expiresAt: aTimestamp
 	| worker |

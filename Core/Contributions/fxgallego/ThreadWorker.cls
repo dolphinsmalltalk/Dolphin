@@ -54,7 +54,7 @@ new
 
 on: aBlock
 	^self
-		on: aBlock expires: (TimeStamp fromSeconds: TimeStamp current asSeconds + 60);
+		on: aBlock expires: (TimeStamp current addSeconds: 60);
 		yourself!
 
 on: aBlock expires: aTime
