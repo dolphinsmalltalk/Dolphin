@@ -963,12 +963,13 @@ receiveRequestEntityBody: anExternalHandle requestId: requestId
 			^buf]
 		ifFalse: 
 			[ret == Win32Errors.NO_ERROR
-				ifTrue: [
-					data nextPutAll: (buf copyFrom: 1 to: bytesReceived asInteger).
-					buf := ByteArray new: bufLen]
+				ifTrue: 
+					[data
+						next: bytesReceived asInteger
+						putAll: buf
+						startingAt: 1]
 				ifFalse: 
-					[
-					ret == Win32Errors.ERROR_HANDLE_EOF
+					[ret == Win32Errors.ERROR_HANDLE_EOF
 						ifTrue: [^data contents]
 						ifFalse: 
 							[self checkReturnCode: ret.
