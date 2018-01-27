@@ -23,6 +23,11 @@ This class is likely to be replaced by the forthcoming ANSI compliant DateAndTim
 	^self species == aTimeStamp species 
 		and: [self date = aTimeStamp date and: [self time = aTimeStamp time]]!
 
+addSeconds: anInteger
+	"Answer a new TimeStamp, anInteger seconds after the receiver."
+
+	^self class fromSeconds: self asSeconds + anInteger!
+
 asMilliseconds
 	"Answer the number of milliseconds between January 1, 1901, and the time and date
 	represented by the receiver (this will likely be a LargeInteger). Can be used to perform 
@@ -129,6 +134,7 @@ time: aTime
 ! !
 !TimeStamp categoriesFor: #<!comparing!public! !
 !TimeStamp categoriesFor: #=!comparing!public! !
+!TimeStamp categoriesFor: #addSeconds:!arithmetic!comparing!public! !
 !TimeStamp categoriesFor: #asMilliseconds!converting!public! !
 !TimeStamp categoriesFor: #asParameter!converting!public! !
 !TimeStamp categoriesFor: #asSeconds!converting!public! !

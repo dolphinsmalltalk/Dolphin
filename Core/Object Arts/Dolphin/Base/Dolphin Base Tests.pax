@@ -111,6 +111,7 @@ package classNames
 	add: #SymbolTest;
 	add: #TestRunConsoleLogger;
 	add: #TestRunLogger;
+	add: #TimeStampTest;
 	add: #TimeTest;
 	add: #TrueTest;
 	add: #UndefinedObjectTest;
@@ -407,6 +408,11 @@ DolphinTest subclass: #STLFilerTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #StreamTest
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #TimeStampTest
+	instanceVariableNames: 'current'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
