@@ -62,6 +62,52 @@ defineFields
 	super defineFields.
 	self
 		defineField: #KnownHeaders type: (StructureArrayField type: HTTP_KNOWN_HEADER length: 41) offset: 16.
-	self byteSize: 344! !
+	self byteSize: 344!
+
+indexToHeaderMap
+	^##(LookupTable new
+		at: HttpHeaderCacheControl put: 'Cache-Control';
+		at: HttpHeaderConnection put: 'Connection';
+		at: HttpHeaderDate put: 'Date';
+		at: HttpHeaderKeepAlive put: 'Keep-Alive';
+		at: HttpHeaderPragma put: 'Pragma';
+		at: HttpHeaderTrailer put: 'Trailer';
+		at: HttpHeaderTransferEncoding put: 'Transfer-Encoding';
+		at: HttpHeaderUpgrade put: 'Upgrade';
+		at: HttpHeaderVia put: 'Via';
+		at: HttpHeaderWarning put: 'Warning';
+		at: HttpHeaderAllow put: 'Allow';
+		at: HttpHeaderContentLength put: 'Content-Length';
+		at: HttpHeaderContentType put: 'Content-Type';
+		at: HttpHeaderContentEncoding put: 'Content-Encoding';
+		at: HttpHeaderContentLanguage put: 'Content-Language';
+		at: HttpHeaderContentLocation put: 'Content-Location';
+		at: HttpHeaderContentMd5 put: 'Content-MD5';
+		at: HttpHeaderContentRange put: 'Content-Range';
+		at: HttpHeaderExpires put: 'Expires';
+		at: HttpHeaderLastModified put: 'Last-Modified';
+		at: HttpHeaderAccept put: 'Accept';
+		at: HttpHeaderAcceptCharset put: 'Accept-Charset';
+		at: HttpHeaderAcceptEncoding put: 'Accept-Encoding';
+		at: HttpHeaderAcceptLanguage put: 'Accept-Language';
+		at: HttpHeaderAuthorization put: 'Authorization';
+		at: HttpHeaderCookie put: 'Cookie';
+		at: HttpHeaderExpect put: 'Expect';
+		at: HttpHeaderFrom put: 'From';
+		at: HttpHeaderHost put: 'Host';
+		at: HttpHeaderIfMatch put: 'If-Match';
+		at: HttpHeaderIfModifiedSince put: 'If-Modified-Since';
+		at: HttpHeaderIfNoneMatch put: 'If-None-Match';
+		at: HttpHeaderIfRange put: 'If-Range';
+		at: HttpHeaderIfUnmodifiedSince put: 'If-Unmodified-Since';
+		at: HttpHeaderMaxForwards put: 'Max-Forwards';
+		at: HttpHeaderProxyAuthorization put: 'Proxy-Authorization';
+		at: HttpHeaderReferer put: 'Referer';
+		at: HttpHeaderRange put: 'Range';
+		at: HttpHeaderTe put: 'TE';
+		at: HttpHeaderTranslate put: 'Translate';
+		at: HttpHeaderUserAgent put: 'User-Agent';
+		yourself)! !
 !HTTP_REQUEST_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 

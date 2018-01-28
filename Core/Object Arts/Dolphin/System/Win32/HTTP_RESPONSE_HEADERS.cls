@@ -62,6 +62,21 @@ defineFields
 	super defineFields.
 	self
 		defineField: #KnownHeaders type: (StructureArrayField type: HTTP_KNOWN_HEADER length: 30) offset: 16.
-	self byteSize: 256! !
+	self byteSize: 256!
+
+indexToHeaderMap
+	^##(LookupTable new
+		at: HttpHeaderAcceptRanges put: 'Accept-Ranges';
+		at: HttpHeaderAge put: 'Age';
+		at: HttpHeaderEtag put: 'ETag';
+		at: HttpHeaderLocation put: 'Location';
+		at: HttpHeaderProxyAuthenticate put: 'Proxy-Authenticate';
+		at: HttpHeaderRetryAfter put: 'Retry-After';
+		at: HttpHeaderServer put: 'Server';
+		at: HttpHeaderSetCookie put: 'Set-Cookie';
+		at: HttpHeaderVary put: 'Vary';
+		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
+		yourself)! !
 !HTTP_RESPONSE_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 
