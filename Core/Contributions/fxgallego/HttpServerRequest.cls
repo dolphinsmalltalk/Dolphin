@@ -21,7 +21,9 @@ cancel
 		overlapped: nil!
 
 contentLength
-	^(self headers headerAt: 'Content-Length' ifAbsent: ['0']) asNumber!
+	"Note: Don't using #asNumber here to avoid interpret strings using Smalltalk syntax."
+
+	^Integer readPositiveFrom: (self headers headerAt: 'Content-Length' ifAbsent: ['0']) readStream radix: 10!
 
 contentType
 	^self headers headerAt: 'Content-Type' ifAbsent: ['']!
@@ -94,13 +96,8 @@ params
 	^params!
 
 parsePostFields
-	| time contents |
 	self isFormUrlEncoded ifTrue: [^self class decodeUrlEncoded: self body].
-	Transcript show: 'Get body time: ' , (Time millisecondsToRun: [self body]) displayString; cr.
-	self isMultipart ifTrue: [
-		time := Time millisecondsToRun: [contents := self class decodeMultipart: self body boundary: self multipartBoundary].
-		Transcript show: 'Decode time: ' , time displayString.
-		^contents].
+	self isMultipart ifTrue: [^self class decodeMultipart: self body boundary: self multipartBoundary].
 	^LookupTable new!
 
 parseQueryFields
