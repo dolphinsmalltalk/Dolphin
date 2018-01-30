@@ -300,6 +300,9 @@ has7052OrLater
 has7053OrLater
 	^self isAtLeastVmVersion: #(2016 7 0 53)!
 
+has7054OrLater
+	^self isAtLeastVmVersion: #(2016 7 0 54)!
+
 hashBytes: aByteArray
 	"Private - PJW hash (Aho, Sethi, and Ullman pp. 434-438).
 	Note that this algorithm is optimised for ASCII characters, making it a good choice for symbols, but probably not as a general byte hash algorithm."
@@ -457,6 +460,21 @@ testExtCallRetHRESULT
 			self assert: result key equals: -1.
 			self assert: result value equals: each.
 			self assert: each class == result value class]!
+
+testExtCallRetLpwstr
+	| expected actual method |
+	self skipUnless: [self has7054OrLater].
+	method := Compiler
+				compile: 'w: anInteger
+	| proc |
+	<stdcall: lpwstr AnswerDWORD lpvoid>
+	proc := Processor activeProcess.
+	^proc primitiveFailureCode -> proc primitiveFailureData'
+				in: VMLibrary.
+	expected := 'abc' asUnicodeString.
+	actual := method value: VMLibrary default withArguments: {expected yourAddress}.
+	self assert: actual equals: expected.
+	self assert: actual isKindOf: UnicodeString!
 
 testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some
@@ -2248,6 +2266,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
 !VMTest categoriesFor: #has7052OrLater!private!testing! !
 !VMTest categoriesFor: #has7053OrLater!private!testing! !
+!VMTest categoriesFor: #has7054OrLater!private!testing! !
 !VMTest categoriesFor: #hashBytes:!helpers!private! !
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
@@ -2257,6 +2276,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
+!VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
 !VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
 !VMTest categoriesFor: #testFPStatus!public!unit tests! !
 !VMTest categoriesFor: #testGPFTrap!public!unit tests! !
