@@ -22,8 +22,10 @@ namespace ST
 { 
 	class String;
 	class Symbol;
+	class WideString;
 }
 typedef TOTE<ST::String> StringOTE;
+typedef TOTE<ST::WideString> WideStringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
 
 namespace ST
@@ -35,7 +37,7 @@ namespace ST
 
 		static StringOTE* __fastcall NewWithLen(const char* value, unsigned len);
 		static StringOTE* __stdcall New(LPCSTR sz);
-		static StringOTE* __fastcall NewFromWide(LPCWSTR wsz);
+		static StringOTE* __fastcall New(LPCWSTR wsz);
 		static StringOTE* __fastcall NewFromBSTR(BSTR bs);
 		static StringOTE* NewLiteral(const char* szValue);
 	};
@@ -49,7 +51,7 @@ namespace ST
 	// Allocate a new String from a Unicode string
 	inline StringOTE* __fastcall String::NewFromBSTR(BSTR bs)
 	{
-		return bs == NULL ? NewWithLen("", 0) : NewFromWide(bs);
+		return bs == NULL ? NewWithLen("", 0) : New(bs);
 	}
 
 	inline StringOTE* String::NewLiteral(const char* value)
@@ -71,6 +73,21 @@ namespace ST
 	public:
 		char m_characters[];
 	};
+
+	class WideString : public ArrayedCollection	// Actuall a string subclass
+	{
+	public:
+		wchar_t m_characters[];
+
+		static WideStringOTE* __fastcall New(LPCWSTR wsz);
+		static WideStringOTE* __fastcall NewWithLen(const wchar_t* wsz, unsigned len);
+	};
+
+	inline WideStringOTE* WideString::New(LPCWSTR value)
+	{
+		unsigned len = wcslen(value);
+		return NewWithLen(value, len);
+	}
 }
 
 ostream& operator<<(ostream& st, const StringOTE*);

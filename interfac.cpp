@@ -34,7 +34,7 @@ const char* SZREGKEYBASE = "Software\\Object Arts\\Dolphin Smalltalk 6.0";
 #include "STInteger.h"		// NewDWORD uses to create new integer, also for winproc return
 #include "STExternal.h"		// Primary purpos of this module is external i/f'ing
 
-static PROC ForceNonInlineNewString = PROC(&String::New);
+static WideStringOTE* (__fastcall *ForceNonInlineNewString)(LPCWSTR) = &WideString::New;
 
 extern LPCSTR GetVMFileName();
 
@@ -404,7 +404,7 @@ BytesOTE* __fastcall Interpreter::NewDWORD(DWORD dwValue, BehaviorOTE* classPoin
 }
 
 // Allocate a new String from a Unicode string
-StringOTE* __fastcall String::NewFromWide(LPCWSTR wsz)
+StringOTE* __fastcall String::New(LPCWSTR wsz)
 {
 	int len = ::WideCharToMultiByte(CP_ACP, 0, wsz, -1, NULL, 0, NULL, NULL);
 	// Length includes null terminator since input is null terminated
@@ -425,7 +425,6 @@ StringOTE* __fastcall String::NewFromWide(LPCWSTR wsz)
 	
 StringOTE* __fastcall String::NewWithLen(const char* value, unsigned len)
 {
-	// Allocate an extra byte for the null terminator which strings and symbols have
 	StringOTE* stringPointer = reinterpret_cast<StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassString, len));
 	String* string = stringPointer->m_location;
 	memcpy(string->m_characters, value, len);
@@ -433,6 +432,15 @@ StringOTE* __fastcall String::NewWithLen(const char* value, unsigned len)
 	return stringPointer;
 }
 
+WideStringOTE* __fastcall WideString::NewWithLen(const wchar_t* value, unsigned len)
+{
+	const unsigned byteLen = len * 2;
+	WideStringOTE* stringPointer = reinterpret_cast<WideStringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassUnicodeString, byteLen));
+	WideString* string = stringPointer->m_location;
+	memcpy(string->m_characters, value, byteLen);
+	string->m_characters[len] = 0;
+	return stringPointer;
+}
 #pragma code_seg(XIF_SEG)
 
 // Symbol result has correct ref. count

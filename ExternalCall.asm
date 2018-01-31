@@ -24,8 +24,10 @@ NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PA
 extern NewExternalStructure:near32
 NewStringWithLen EQU ?NewWithLen@String@ST@@SIPAV?$TOTE@VString@ST@@@@PBDI@Z
 extern NewStringWithLen:near32
-NewStringFromWide EQU ?NewFromWide@String@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
+NewStringFromWide EQU ?New@String@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
 extern NewStringFromWide:near32
+NewWideString EQU ?New@WideString@ST@@SIPAV?$TOTE@VWideString@ST@@@@PB_W@Z
+extern NewWideString:near32
 
 NewBSTR			EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PBD@Z
 extern NewBSTR:near32
@@ -40,10 +42,6 @@ NewSigned64 EQU ?NewSigned64@Integer@ST@@SGI_J@Z
 extern NewSigned64:near32
 NewUnsigned64 EQU ?NewUnsigned64@Integer@ST@@SGI_K@Z
 extern NewUnsigned64:near32
-SysFreeString EQU _SysFreeString@4
-extern SysFreeString:near32
-SysAllocString EQU _SysAllocString@4
-extern SysAllocString:near32
 
 REQUESTCOMPLETION EQU ?OnCallReturned@OverlappedCall@@AAEXXZ
 extern REQUESTCOMPLETION:near32
@@ -1864,7 +1862,7 @@ extCallRetLPWSTR:
 	jz		returnNil
 
 	mov		ecx, RESULT
-	call	NewStringFromWide
+	call	NewWideString
 	AnswerObjectResult
 
 extCallRetLPSTR:

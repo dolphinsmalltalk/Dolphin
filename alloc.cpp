@@ -355,7 +355,7 @@ PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE*
 BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD byteSize)
 {
 	Behavior& byteClass = *classPointer->m_location;
-	int nullTerm = byteClass.m_instanceSpec.m_nullTerminated;
+	int nullTerm = byteClass.m_instanceSpec.m_nullTerminated * NULLTERMSIZE;
 
 	// Don't worry, compiler will not really use multiply instruction here
 	MWORD objectSize = byteSize + nullTerm;
@@ -419,7 +419,10 @@ Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp)
 
 BytesOTE* __fastcall ObjectMemory::newUninitializedByteObject(BehaviorOTE* classPointer, MWORD byteSize)
 {
-	int nullTerm = classPointer->m_location->m_instanceSpec.m_nullTerminated;
+	// As a temporary hack, allocate an extra two bytes if null terminated in case it's a wide string. 
+	// This wastes very little memory since we round up the objects to 4 or 8-byte allocations anyway, so in most cases the extra byte fits in the slop
+	// TODO: Consider reinstating notion of word objects. Would be useful for more efficient wide string operations anyway as could then be handled in byte object primitives.
+	int nullTerm = classPointer->m_location->m_instanceSpec.m_nullTerminated * NULLTERMSIZE;
 
 	MWORD objectSize = byteSize + nullTerm;
 

@@ -15,6 +15,7 @@
 
 #define COUNTBITS	(sizeof(BYTE)*8)
 #define SPACEBITS	3
+#define NULLTERMSIZE 2
 
 template <class T> class TOTE;
 
@@ -138,7 +139,7 @@ public:
 	__forceinline void beUnfinalizable()					{ m_dwFlags &= ~OTEFlags::FinalizeMask; }
 	__forceinline bool isWeak() const						{ return (m_dwFlags & OTEFlags::WeakMask) == OTEFlags::WeakMask; }
 	__forceinline bool isNullTerminated() const				{ return (m_dwFlags & OTEFlags::WeakMask) == OTEFlags::WeakOrZMask; }
-	__forceinline void beNullTerminated()					{ ASSERT(!isImmutable()); setNullTerminated(); m_size--; }
+	__forceinline void beNullTerminated()					{ ASSERT(!isImmutable()); setNullTerminated(); m_size -= NULLTERMSIZE; }
 	__forceinline void setNullTerminated()					{ m_dwFlags = (m_dwFlags & ~OTEFlags::PointerMask) | OTEFlags::WeakOrZMask; }
 
 	__forceinline bool isBehavior() const					{ return isMetaclass() || m_oteClass->isMetaclass(); }
