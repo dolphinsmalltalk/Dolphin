@@ -11,10 +11,13 @@ HttpServer comment: ''!
 !HttpServer methodsFor!
 
 addListener: listenerName at: urlPrefix handler: handler
-	^self listeners add: (HttpServerListener
-				name: listenerName
-				url: urlPrefix
-				handler: handler)!
+	| listener |
+	listener := self listeners add: (HttpServerListener
+						name: listenerName
+						url: urlPrefix
+						handler: handler).
+	self isRunning ifTrue: [listener startInSession: self session].
+	^listener!
 
 createServerSession
 	session := HttpServerSession new!
@@ -65,9 +68,6 @@ registerSessionManagerEvents
 			send: #onSessionStarted
 			to: self!
 
-removeListener: name
-	listeners := self listeners reject: [:each | each name = name]!
-
 session
 	session ifNil: [self createServerSession].
 	^session!
@@ -89,7 +89,7 @@ stopListenersAndCloseSession
 	session ifNotNil: [session close].
 	session := nil! !
 !HttpServer categoriesFor: #addListener:at:handler:!public! !
-!HttpServer categoriesFor: #createServerSession!public! !
+!HttpServer categoriesFor: #createServerSession!private! !
 !HttpServer categoriesFor: #free!public! !
 !HttpServer categoriesFor: #initialize!private! !
 !HttpServer categoriesFor: #isRunning!public! !
@@ -99,7 +99,6 @@ stopListenersAndCloseSession
 !HttpServer categoriesFor: #onSessionStarted!private! !
 !HttpServer categoriesFor: #onSessionStopped!private! !
 !HttpServer categoriesFor: #registerSessionManagerEvents!private! !
-!HttpServer categoriesFor: #removeListener:!public! !
 !HttpServer categoriesFor: #session!public! !
 !HttpServer categoriesFor: #start!public! !
 !HttpServer categoriesFor: #startIfPaused!private! !

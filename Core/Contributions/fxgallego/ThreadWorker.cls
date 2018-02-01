@@ -33,11 +33,6 @@ initialize
 
 value
 	lock excessSignals > 0 ifFalse: [lock wait].
-	"rethrow any error from worker thread on calling thread"
-	"  error ifNotNil: 
-        [ error
-            privHandlerContext: thisContext;
-            signal ]."
 	^value! !
 !ThreadWorker categoriesFor: #block:!accessing!private! !
 !ThreadWorker categoriesFor: #error!accessing!private! !

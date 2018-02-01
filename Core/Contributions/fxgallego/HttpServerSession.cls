@@ -20,5 +20,5 @@ initialize
 	id := self lib createServerSession! !
 !HttpServerSession categoriesFor: #close!public! !
 !HttpServerSession categoriesFor: #id!public! !
-!HttpServerSession categoriesFor: #initialize!public! !
+!HttpServerSession categoriesFor: #initialize!private! !
 
