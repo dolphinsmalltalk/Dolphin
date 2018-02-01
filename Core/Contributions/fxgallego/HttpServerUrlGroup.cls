@@ -24,7 +24,7 @@ initializeOn: httpApiSession
 !HttpServerUrlGroup categoriesFor: #addUrl:!public! !
 !HttpServerUrlGroup categoriesFor: #bindQueue:!public! !
 !HttpServerUrlGroup categoriesFor: #id!public! !
-!HttpServerUrlGroup categoriesFor: #initializeOn:!public! !
+!HttpServerUrlGroup categoriesFor: #initializeOn:!private! !
 
 !HttpServerUrlGroup class methodsFor!
 

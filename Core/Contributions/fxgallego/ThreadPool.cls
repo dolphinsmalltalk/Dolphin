@@ -26,7 +26,9 @@ cleanDead
 		expiresAt: (TimeStamp current addSeconds: 600)!
 
 free
-	self stop!
+	self
+		stop;
+		beUnfinalizable!
 
 initialize
 	super initialize.
@@ -43,6 +45,9 @@ isPoolTooBig
 isPoolTooSmall
 	^queueWorkers size < minPoolSize
 		or: [workQueue size > queueWorkers size and: [queueWorkers size < maxPoolSize]]!
+
+isRunning
+	^poolManager notNil and: [poolManager isAlive]!
 
 killWorker
 	"Private - just queue a task that kill the activeProcess, 
@@ -83,14 +88,14 @@ stop
 	poolManager
 		ifNotNil: 
 			[poolManager terminate.
-			poolManager := nil].
-	! !
+			poolManager := nil]! !
 !ThreadPool categoriesFor: #adjustThreadPoolSize!private! !
 !ThreadPool categoriesFor: #cleanDead!private! !
 !ThreadPool categoriesFor: #free!private! !
 !ThreadPool categoriesFor: #initialize!private! !
 !ThreadPool categoriesFor: #isPoolTooBig!private! !
 !ThreadPool categoriesFor: #isPoolTooSmall!private! !
+!ThreadPool categoriesFor: #isRunning!public! !
 !ThreadPool categoriesFor: #killWorker!private! !
 !ThreadPool categoriesFor: #processQueueElement!private! !
 !ThreadPool categoriesFor: #queueWorkItem:!public! !
@@ -102,6 +107,18 @@ stop
 !ThreadPool class methodsFor!
 
 new
-	^super new initialize! !
+	^super new initialize!
+
+stopAll
+	"Despite the instances of the receiver implements free, it probably will never be garbage collected
+	because the private processes of the receiver still references the receiver.
+	The aim of this method is stop all instances of the receiver to allow them die in peace.
+	
+	self stopAll 
+	
+	"
+
+	self allInstances do: [:each | each stop]! !
 !ThreadPool class categoriesFor: #new!public! !
+!ThreadPool class categoriesFor: #stopAll!public! !
 
