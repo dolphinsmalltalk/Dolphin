@@ -275,6 +275,21 @@ asyncReceiveHttpRequest: requestQueueHandle requestId: requestId flags: flags re
 	<overlap stdcall: dword HttpReceiveHttpRequest handle qword dword HTTP_REQUEST_V2* dword dword* OVERLAPPED*>
 	^self invalidCall!
 
+asyncReceiveHttpRequestEntityBody: requestQueueHandle requestId: requestId flags: flags entityBuffer: entityBuffer entityBufferLength: entityBufferLength bytesReturned: bytesReturned overlapped: overlapped
+	"Invoke the HttpReceiveRequestEntityBody() function of the module wrapped by the receiver.
+
+		ULONG __stdcall HttpReceiveRequestEntityBody(
+			[in]HANDLE RequestQueueHandle,
+			[in]unsigned __int64 RequestId,
+			[in]ULONG Flags,
+			[out]void* EntityBuffer,
+			[in]ULONG EntityBufferLength,
+			[out]ULONG* BytesReturned,
+			[in]LPOVERLAPPED OVERLAPPED);"
+
+	<overlap stdcall: dword HttpReceiveRequestEntityBody handle qword dword void* dword dword* OVERLAPPED*>
+	^self invalidCall!
+
 asyncSendHttpResponse: requestQueueHandle requestId: requestId flags: flags httpResponse: httpResponse cachePolicy: cachePolicy bytesSent: bytesSent reserved2: reserved2 reserved3: reserved3 overlapped: overlapped logData: logData
 	"Invoke the HttpSendHttpResponse() function of the module wrapped by the receiver.
 	Helpstring: Sends an HTTP response to the specified HTTP request.
@@ -894,8 +909,11 @@ queryUrlGroup: urlGroupId qosSetting: anInteger
 	^query value!
 
 receiveRequest: anExternalHandle
+	^self receiveRequest: anExternalHandle flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY!
+
+receiveRequest: anExternalHandle flags: anInteger
 	| bytesReceived buf requestId |
-	buf := HTTP_REQUEST new: 1024.
+	buf := HTTP_REQUEST new: 4096.
 	bytesReceived := DWORDBytes new.
 	requestId := 0.
 	
@@ -903,7 +921,7 @@ receiveRequest: anExternalHandle
 	ret := self
 				asyncReceiveHttpRequest: anExternalHandle
 				requestId: requestId
-				flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_FLAG_COPY_BODY
+				flags: anInteger
 				requestBuffer: buf
 				requestBufferLength: buf size
 				bytesReturned: bytesReceived
@@ -921,6 +939,41 @@ receiveRequest: anExternalHandle
 				ifFalse: 
 					[self checkReturnCode: ret.
 					^buf]]]
+			repeat!
+
+receiveRequestEntityBody: anExternalHandle requestId: requestId
+	| bytesReceived buf bufLen data |
+	bufLen := 32768.
+	buf := ByteArray new: bufLen.
+	data := WriteStream on: (ByteArray new: buf size).
+	bytesReceived := DWORDBytes new.
+	
+	[| ret |
+	ret := self
+				asyncReceiveHttpRequestEntityBody: anExternalHandle
+				requestId: requestId
+				flags: WinHttpServerConsts.HTTP_RECEIVE_REQUEST_ENTITY_BODY_FLAG_FILL_BUFFER
+				entityBuffer: buf
+				entityBufferLength: buf size
+				bytesReturned: bytesReceived
+				overlapped: nil.
+	ret == Win32Errors.ERROR_INVALID_PARAMETER
+		ifTrue: 
+			[self checkReturnCode: ret.
+			^buf]
+		ifFalse: 
+			[ret == Win32Errors.NO_ERROR
+				ifTrue: 
+					[data
+						next: bytesReceived asInteger
+						putAll: buf
+						startingAt: 1]
+				ifFalse: 
+					[ret == Win32Errors.ERROR_HANDLE_EOF
+						ifTrue: [^data contents]
+						ifFalse: 
+							[self checkReturnCode: ret.
+							^data contents]]]]
 			repeat!
 
 sendResponse: response queue: queue id: request
@@ -964,6 +1017,7 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 				propertyInformationLength: aWinHttpPropertyInfo byteSize)! !
 !HttpApiLibrary categoriesFor: #addUrl:toUrlGroup:!operations!public! !
 !HttpApiLibrary categoriesFor: #asyncReceiveHttpRequest:requestId:flags:requestBuffer:requestBufferLength:bytesReturned:overlapped:!operations!public! !
+!HttpApiLibrary categoriesFor: #asyncReceiveHttpRequestEntityBody:requestId:flags:entityBuffer:entityBufferLength:bytesReturned:overlapped:!operations!public! !
 !HttpApiLibrary categoriesFor: #asyncSendHttpResponse:requestId:flags:httpResponse:cachePolicy:bytesSent:reserved2:reserved3:overlapped:logData:!operations!public! !
 !HttpApiLibrary categoriesFor: #bindQueue:toUrlGroup:!operations!public! !
 !HttpApiLibrary categoriesFor: #checkReturnCode:!helpers!private! !
@@ -1010,6 +1064,8 @@ setUrlGroup: anIntegerGroupId property: aWinHttpPropertyInfo
 !HttpApiLibrary categoriesFor: #querySession:qosProperty:!operations!public! !
 !HttpApiLibrary categoriesFor: #queryUrlGroup:qosSetting:!operations!public! !
 !HttpApiLibrary categoriesFor: #receiveRequest:!operations!public! !
+!HttpApiLibrary categoriesFor: #receiveRequest:flags:!operations!public! !
+!HttpApiLibrary categoriesFor: #receiveRequestEntityBody:requestId:!operations!public! !
 !HttpApiLibrary categoriesFor: #sendResponse:queue:id:!operations!public! !
 !HttpApiLibrary categoriesFor: #setQueue:property:!accessing!public! !
 !HttpApiLibrary categoriesFor: #setSession:property:!public! !

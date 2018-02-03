@@ -1,0 +1,52 @@
+| package |
+package := Package name: 'Dolphin HTTP Server Tests'.
+package paxVersion: 1;
+	basicComment: 'ToDo: Test Request and Response objects using a client, for example, a WinInet client.
+One exists here: https://code.google.com/archive/p/dolphin-st-winhttp/downloads but I''ve no tested if it still works.'.
+
+
+package classNames
+	add: #HttpServerCookieTest;
+	add: #HttpServerHeadersTest;
+	add: #HttpServerTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: 'Dolphin HTTP Server';
+	add: '..\Camp Smalltalk\SUnit\SUnit';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #HttpServerCookieTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #HttpServerHeadersTest
+	instanceVariableNames: 'headers'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TestCase subclass: #HttpServerTest
+	instanceVariableNames: 'server'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
