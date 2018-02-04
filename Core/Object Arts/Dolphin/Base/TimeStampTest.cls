@@ -59,7 +59,7 @@ testFromSYSTEMTIME
 	| ts sysTime |
 	sysTime := SYSTEMTIME now.
 	ts := TimeStamp fromSYSTEMTIME: sysTime.
-	self assert: ts date day = sysTime wDay.
+	self assert: ts date dayOfMonth = sysTime wDay.
 	self assert: ts date monthIndex = sysTime wMonth.
 	self assert: ts date year = sysTime wYear.
 	self assert: ts time hours = sysTime wHour.
