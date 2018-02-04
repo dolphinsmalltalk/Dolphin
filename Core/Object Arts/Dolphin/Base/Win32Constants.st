@@ -97,6 +97,8 @@ Win32Constants at: 'COLOR_WINDOW' put: 16r5!
 Win32Constants at: 'COLOR_WINDOWFRAME' put: 16r6!
 Win32Constants at: 'COLOR_WINDOWTEXT' put: 16r8!
 Win32Constants at: 'CP_ACP' put: 16r0!
+Win32Constants at: 'CP_UTF7' put: 16rFDE8!
+Win32Constants at: 'CP_UTF8' put: 16rFDE9!
 Win32Constants at: 'CREATE_ALWAYS' put: 16r2!
 Win32Constants at: 'CREATE_DEFAULT_ERROR_MODE' put: 16r4000000!
 Win32Constants at: 'CREATE_FORCEDOS' put: 16r2000!
@@ -446,6 +448,7 @@ Win32Constants at: 'MAPVK_VSC_TO_VK' put: 16r1!
 Win32Constants at: 'MAPVK_VSC_TO_VK_CHAR' put: 16r2!
 Win32Constants at: 'MAPVK_VSC_TO_VK_EX' put: 16r3!
 Win32Constants at: 'MAX_COMPUTERNAME_LENGTH' put: 16rF!
+Win32Constants at: 'MB_ERR_INVALID_CHARS' put: 16r8!
 Win32Constants at: 'MEM_COMMIT' put: 16r1000!
 Win32Constants at: 'MEM_DECOMMIT' put: 16r4000!
 Win32Constants at: 'MEM_FREE' put: 16r10000!
@@ -921,6 +924,7 @@ Win32Constants at: 'WAIT_FAILED' put: -16r1!
 Win32Constants at: 'WAIT_IO_COMPLETION' put: 16rC0!
 Win32Constants at: 'WAIT_OBJECT_0' put: 16r0!
 Win32Constants at: 'WAIT_TIMEOUT' put: 16r102!
+Win32Constants at: 'WC_ERR_INVALID_CHARS' put: 16r80!
 Win32Constants at: 'WHEEL_DELTA' put: 16r78!
 Win32Constants at: 'WHEEL_PAGESCROLL' put: -16r1!
 Win32Constants at: 'WHITE_BRUSH' put: 16r0!

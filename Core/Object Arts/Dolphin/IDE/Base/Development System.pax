@@ -331,6 +331,7 @@ package methodNames
 	add: #TranscriptShell -> #help;
 	add: #UndefinedObject -> #aspectDisplayOn:;
 	add: #UndefinedObject -> #literalTextStyle;
+	add: #UnicodeString -> #aspectDisplayOn:;
 	add: #ValueModel -> #debugPrintString;
 	add: #VariableEnvironment -> #includesMethodUncached:;
 	add: #VariableEnvironment -> #updateCachesForMethod:;
@@ -4223,6 +4224,9 @@ publishedAspectsOfInstances
 					addEvaluationFrom: (Array with: ScintillaIndicatorStyle name , ' new')) beImmutable;
 		add: (Aspect sequenceableCollection: #markerDefinitions
 					addEvaluationFrom: (Array with: ScintillaMarkerDefinition name , ' new')) beImmutable;
+		add: ((Aspect choice: #codePage from: CodePages values)
+					isNullable: true;
+					yourself);
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
 		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
@@ -5571,6 +5575,12 @@ literalTextStyle
 	^#literalPseudo! !
 !UndefinedObject categoriesFor: #aspectDisplayOn:!development!private! !
 !UndefinedObject categoriesFor: #literalTextStyle!constants!private! !
+
+!UnicodeString methodsFor!
+
+aspectDisplayOn: aStream
+	self asString aspectDisplayOn: aStream! !
+!UnicodeString categoriesFor: #aspectDisplayOn:!development!private! !
 
 !ValueConverter class methodsFor!
 
