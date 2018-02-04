@@ -32,10 +32,10 @@ asString
 
 	| buf size bytes |
 	(size := self size) == 0 ifTrue: [^''].
-	buf := String new: size + size.
+	buf := String new: size * 4.
 	bytes := KernelLibrary default
-				wideCharToMultiByte: 0
-				dwFlags: 0
+				wideCharToMultiByte: Win32Constants.CP_UTF8
+				dwFlags: Win32Constants.WC_ERR_INVALID_CHARS
 				lpWideCharStr: self
 				cchWideChar: size
 				lpMultiByteStr: buf

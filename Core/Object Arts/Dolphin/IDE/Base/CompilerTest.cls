@@ -883,8 +883,8 @@ testRadixInteger
 	0 to: 35
 		do: 
 			[:eachRadix |
-			"Test invalid radix integers cause an MNU of #rN"
 			| suffix |
+			"Test invalid radix integers cause an MNU of #rN"
 			suffix := String with: $r with: (Character digitValue: eachRadix).
 			self
 				should: 
@@ -892,13 +892,7 @@ testRadixInteger
 					expr := eachRadix printString , suffix.
 					self evaluateExpression: expr]
 				raise: MessageNotUnderstood
-				matching: 
-					[:ex |
-					(ex receiver = eachRadix and: [ex selector equals: suffix])
-						ifFalse: 
-							[self halt.
-							false]
-						ifTrue: [true]]]!
+				matching: [:ex | (ex receiver = eachRadix and: [ex selector equals: suffix]) ifFalse: [false] ifTrue: [true]]]!
 
 testReturnFromOptimizedBlock
 	| compiled lowerText upperText |

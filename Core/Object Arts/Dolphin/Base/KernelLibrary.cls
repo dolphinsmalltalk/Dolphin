@@ -1211,7 +1211,7 @@ multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn
 			int cchWideChar 	// size of buffer 
 		);"
 
-	<stdcall: sdword MultiByteToWideChar dword dword lpstr sdword lpstr sdword>
+	<stdcall: sdword MultiByteToWideChar dword dword lpstr sdword lpvoid sdword>
 	^self invalidCall!
 
 openProcess: dwDesiredAccess bInheritHandle: bInheritHandle dwProcessId: dwProcessId 
@@ -1615,7 +1615,7 @@ wideCharToMultiByte: codePage
 			LPBOOL lpUsedDefaultChar// address of flag set when default char. used 
 		);"
 
-	<stdcall: sdword WideCharToMultiByte dword dword UnicodeString* sdword lpstr sdword lpstr lpvoid>
+	<stdcall: sdword WideCharToMultiByte dword dword lpvoid sdword lpvoid sdword lpstr lpvoid>
 	^self invalidCall!
 
 winExec: lpstrCmdLine uCmdShow: nCmdShow

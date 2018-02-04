@@ -435,6 +435,23 @@ testEvaluationOrder
 	i := 2.
 	self assert: (3 between: i and: (i := 4))!
 
+testExtCallArgLpwstr
+	| expected actual method |
+	self skipUnless: [self has7054OrLater].
+	method := Compiler
+				compile: 'x: aString
+	| proc |
+	<stdcall: lpwstr AnswerDWORD lpwstr>
+	proc := Processor activeProcess.
+	^proc primitiveFailureCode -> proc primitiveFailureData'
+				in: VMLibrary.
+	self assert: method argumentTypes asArray equals: #('lpwstr').
+	self assert: method returnType equals: 'lpwstr'.
+	expected := 'abc' asUnicodeString.
+	actual := method value: VMLibrary default withArguments: {'abc'}.
+	self assert: actual equals: expected.
+	self assert: actual isKindOf: UnicodeString!
+
 testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
 
@@ -2275,6 +2292,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
+!VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
 !VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
