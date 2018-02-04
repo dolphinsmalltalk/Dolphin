@@ -2,7 +2,7 @@
 
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'HeaderToIndexMap'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_HEADERS guid: (GUID fromString: '{739d04bb-0a15-47ea-8a7d-20b4fd31cc96}')!
@@ -126,12 +126,17 @@ defineFields
 	self byteSize: 16!
 
 headerToIndexMap
-	^##(self subclasses inject: LookupTable new
-		into: 
-			[:table :class |
-			table
-				addAll: (class indexToHeaderMap associations collect: [:assoc | assoc value -> assoc key]);
-				yourself])!
+	"This method is compiled before than its subclasses counterparts so cannot be precompiled."
+
+	HeaderToIndexMap
+		ifNil: 
+			[HeaderToIndexMap := self subclasses inject: LookupTable new
+						into: 
+							[:table :class |
+							table
+								addAll: (class indexToHeaderMap associations collect: [:assoc | assoc value -> assoc key]);
+								yourself]].
+	^HeaderToIndexMap!
 
 indexToHeaderMap
 	^self subclassResponsibility!
