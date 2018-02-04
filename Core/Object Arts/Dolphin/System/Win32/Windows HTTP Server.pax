@@ -141,7 +141,7 @@ HttpServerStructure subclass: #HTTP_DATA_CHUNK
 	classInstanceVariableNames: ''!
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'HeaderToIndexMap'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HttpServerStructure subclass: #HTTP_KNOWN_HEADER

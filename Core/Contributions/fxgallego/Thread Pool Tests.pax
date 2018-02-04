@@ -1,0 +1,38 @@
+| package |
+package := Package name: 'Thread Pool Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #ThreadPoolTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Camp Smalltalk\SUnit\SUnit';
+	add: 'Thread Pool';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+TestCase subclass: #ThreadPoolTest
+	instanceVariableNames: 'tp'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
