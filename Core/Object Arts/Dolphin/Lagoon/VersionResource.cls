@@ -186,7 +186,7 @@ unpackStringTable: aZVersionBlockHeader
 	[offset < length] whileTrue: 
 			[| stringHeader value |
 			stringHeader := VS_VERSION_INFO_HEADER fromAddress: base + offset.
-			value := stringHeader valueString asString.
+			value := stringHeader valueString.
 			strings at: stringHeader key put: value.
 			offset := offset + stringHeader wLength roundUpTo: 4]!
 
