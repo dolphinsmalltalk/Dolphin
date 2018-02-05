@@ -423,7 +423,7 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 	(status := GdiplusLibrary default 
 				gdipDrawString: self asParameter
 				str: aString asUnicodeString
-				length: aString size
+				length: -1
 				font: font asParameter
 				layoutRect: (RECTF fromRectangle: aRectangle)
 				stringFormat: format asParameter
