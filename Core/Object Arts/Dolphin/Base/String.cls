@@ -1237,19 +1237,19 @@ fromUnicodeString: anAddressOrUnicodeString
 	| answer size lib |
 	lib := KernelLibrary default.
 	(size := lib
-				wideCharToMultiByte: CP_UTF8
-				dwFlags: WC_ERR_INVALID_CHARS
-				lpWideCharStr: anAddressOrUnicodeString
-				cchWideChar: -1
-				lpMultiByteStr: nil
-				cchMultiByte: 0
-				lpDefaultChar: nil
-				lpUsedDefaultChar: nil) == 0
-		ifTrue: [lib systemError].
-	answer := self new: size - 1.
+		wideCharToMultiByte: 0
+		dwFlags: 0
+		lpWideCharStr: anAddressOrUnicodeString
+		cchWideChar: -1
+		lpMultiByteStr: nil
+		cchMultiByte: 0
+		lpDefaultChar: nil
+		lpUsedDefaultChar: nil) == 0
+			ifTrue: [lib systemError].
+	answer := self new: size-1.
 	lib
-		wideCharToMultiByte: CP_UTF8
-		dwFlags: WC_ERR_INVALID_CHARS
+		wideCharToMultiByte: 0
+		dwFlags: 0
 		lpWideCharStr: anAddressOrUnicodeString
 		cchWideChar: -1
 		lpMultiByteStr: answer

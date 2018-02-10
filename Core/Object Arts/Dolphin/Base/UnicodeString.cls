@@ -82,17 +82,18 @@ asString
 	"Answer a byte string representation of the receiver."
 
 	| buf size bytes |
-	(size := self size) == 0 ifTrue: [^''].	"Avoid 'The Parameter is Incorrect' error"
-	buf := String new: size * 4.
+	size := self size.
+	buf := String new: size+size.
+	size == 0 ifTrue: [^buf].	"Avoid 'The Parameter is Incorrect' error"
 	bytes := KernelLibrary default
-				wideCharToMultiByte: CP_UTF8
-				dwFlags: WC_ERR_INVALID_CHARS
-				lpWideCharStr: self
-				cchWideChar: size
-				lpMultiByteStr: buf
-				cchMultiByte: buf size
-				lpDefaultChar: nil
-				lpUsedDefaultChar: nil.
+		wideCharToMultiByte: 0
+		dwFlags: 0
+		lpWideCharStr: self
+		cchWideChar: size
+		lpMultiByteStr: buf
+		cchMultiByte: buf size
+		lpDefaultChar: nil
+		lpUsedDefaultChar: nil.
 	bytes == 0 ifTrue: [^KernelLibrary default systemError].
 	buf resize: bytes.
 	^buf!
@@ -192,9 +193,6 @@ nextIndexOf: anElement from: start to: stop
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
 	^0!
 
-printOn: aStream
-	self asString printOn: aStream!
-
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
 	"Replace the characters of the receiver at index positions startInteger through stopInteger
 	inclusive with consecutive characters of the <readableString>, aReadableString, beginning at
@@ -276,7 +274,6 @@ wordAtOffset: anInteger put: anObject
 !UnicodeString categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !UnicodeString categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !UnicodeString categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!UnicodeString categoriesFor: #printOn:!printing!public! !
 !UnicodeString categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !UnicodeString categoriesFor: #resize:!mutating!public! !
 !UnicodeString categoriesFor: #shallowCopy!public! !
@@ -316,20 +313,20 @@ fromAddress: anAddress length: anInteger
 
 fromString: aString
 	"Answer a new instance of the receiver containing the same characters as the <String>
-	argument."
+	argument.
+	Implementation Note: CP_ACP is the only code page supported by Win95."
 
-	| answer len |
+	| answer |
 	answer := self new: aString size.
-	#todo.	"Replace use of copyright symbol in VM version resource copyright message with valid unicode code point and enable error checking here"
-	^(len := KernelLibrary default
-				multiByteToWideChar: CP_UTF8
-				dwFlags: 0	"MB_ERR_INVALID_CHARS"
-				lpMultiByteStr: aString
-				cchMultiByte: -1
-				lpWideCharStr: answer
-				cchWideChar: answer basicSize) == 0
-		ifTrue: [KernelLibrary default systemError]
-		ifFalse: [answer resize: len - 1]	!
+	(KernelLibrary default 
+		multiByteToWideChar: CP_ACP
+		dwFlags: 0
+		lpMultiByteStr: aString
+		cchMultiByte: -1
+		lpWideCharStr: answer
+		cchWideChar: answer basicSize) == 0 
+		ifTrue: [^KernelLibrary default systemError].
+	^answer!
 
 new: anInteger
 	"Answer an instance of the receiver to accomodate exactly
