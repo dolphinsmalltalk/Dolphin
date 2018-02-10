@@ -105,10 +105,15 @@ package methodNames
 	add: 'String class' -> #unicodeClass;
 	yourself.
 
+package globalNames
+	add: #UnicodeString;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #UnicodeString;
 	yourself).
 
 package setPrerequisites: (IdentitySet new
@@ -166,6 +171,8 @@ STBProxy subclass: #STBSymbolProxy
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
+
+UnicodeString := Utf16String!
 
 
 "Loose Methods"!
