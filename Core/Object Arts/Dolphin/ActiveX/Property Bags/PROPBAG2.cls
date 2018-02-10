@@ -12,64 +12,68 @@ PROPBAG2 comment: '<PROPBAG2> is an <ExternalStructure> class to wrap the struct
 !PROPBAG2 methodsFor!
 
 cfType
-	"Answer the receiver's cfType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cfType' field."
 
-	^(bytes wordAtOffset: 6)!
+	^bytes wordAtOffset: ##(self offsetOf: #cfType)!
 
-cfType: anObject
-	"Set the receiver's cfType field to the value of anObject."
+cfType: anInteger
+	"Set the receiver's 'cfType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 6 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #cfType) put: anInteger!
 
 clsid
-	"Answer the receiver's clsid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'clsid' field."
 
-	^GUID fromAddress: (bytes yourAddress + 16)!
+	^GUID fromAddress: bytes yourAddress + ##(self offsetOf: #clsid)!
 
-clsid: anObject
-	"Set the receiver's clsid field to the value of anObject."
+clsid: aGUID
+	"Set the receiver's 'clsid' field to the value of the argument, aGUID"
 
-	anObject replaceBytesOf: bytes from: 17 to: 32 startingAt: 1!
+	aGUID
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #clsid) + 1)
+		to: ##((self offsetOf: #clsid) + GUID basicByteSize)
+		startingAt: 1!
 
 dwHint
-	"Answer the receiver's dwHint field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwHint' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: ##(self offsetOf: #dwHint)!
 
-dwHint: anObject
-	"Set the receiver's dwHint field to the value of anObject."
+dwHint: anInteger
+	"Set the receiver's 'dwHint' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwHint) put: anInteger!
 
 dwType
-	"Answer the receiver's dwType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwType' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: 0!
 
-dwType: anObject
-	"Set the receiver's dwType field to the value of anObject."
+dwType: anInteger
+	"Set the receiver's 'dwType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 pstrName
-	"Answer the receiver's pstrName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'pstrName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: 12)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pstrName))!
 
-pstrName: anObject 
-	"Set the receiver's pstrName field to the value of anObject."
+pstrName: anUtf16String
+	"Set the receiver's 'pstrName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 12 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pstrName) put: anUtf16String yourAddress!
 
 vt
-	"Answer the receiver's vt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: ##(self offsetOf: #vt)!
 
-vt: anObject
-	"Set the receiver's vt field to the value of anObject."
+vt: anInteger
+	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #vt) put: anInteger! !
 !PROPBAG2 categoriesFor: #cfType!**compiled accessors**!public! !
 !PROPBAG2 categoriesFor: #cfType:!**compiled accessors**!public! !
 !PROPBAG2 categoriesFor: #clsid!**compiled accessors**!public! !
@@ -105,7 +109,7 @@ defineFields
 		defineField: #vt type: WORDField new;
 		defineField: #cfType type: WORDField new;
 		defineField: #dwHint type: DWORDField new;
-		defineField: #pstrName type: (PointerField type: UnicodeString);
+		defineField: #pstrName type: (PointerField type: Utf16String);
 		defineField: #clsid type: (StructureField type: GUID)! !
 !PROPBAG2 class categoriesFor: #defineFields!initializing!public! !
 

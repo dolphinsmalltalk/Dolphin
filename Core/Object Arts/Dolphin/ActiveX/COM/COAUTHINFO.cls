@@ -75,7 +75,7 @@ pAuthIdentityData: anObject
 pwszServerPrincName
 	"Answer the receiver's pwszServerPrincName field as a Smalltalk object."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pwszServerPrincName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pwszServerPrincName))!
 
 pwszServerPrincName: anObject 
 	"Set the receiver's pwszServerPrincName field to the value of anObject."
@@ -117,7 +117,7 @@ defineFields
 	self
 		defineField: #dwAuthnSvc type: DWORDField new;
 		defineField: #dwAuthzSvc type: DWORDField new;
-		defineField: #pwszServerPrincName type: (PointerField type: UnicodeString);
+		defineField: #pwszServerPrincName type: (PointerField type: Utf16String);
 		defineField: #dwAuthnLevel type: DWORDField new;
 		defineField: #dwImpersonationLevel type: DWORDField new;
 		defineField: #pAuthIdentityData type: (PointerField type: COAUTHIDENTITY);

@@ -25,24 +25,24 @@ struct tagHTTP_SERVICE_CONFIG_URLACL_SET {
 !HTTP_SERVICE_CONFIG_URLACL_SET methodsFor!
 
 KeyDesc
-	"Answer the <UnicodeString> value of the receiver's 'KeyDesc' field."
+	"Answer the <Utf16String> value of the receiver's 'KeyDesc' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: 0)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: 0)!
 
-KeyDesc: anUnicodeString
-	"Set the receiver's 'KeyDesc' field to the value of the argument, anUnicodeString"
+KeyDesc: anUtf16String
+	"Set the receiver's 'KeyDesc' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 0 put: anUnicodeString yourAddress!
+	bytes uintPtrAtOffset: 0 put: anUtf16String yourAddress!
 
 ParamDesc
-	"Answer the <UnicodeString> value of the receiver's 'ParamDesc' field."
+	"Answer the <Utf16String> value of the receiver's 'ParamDesc' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ParamDesc))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ParamDesc))!
 
-ParamDesc: anUnicodeString
-	"Set the receiver's 'ParamDesc' field to the value of the argument, anUnicodeString"
+ParamDesc: anUtf16String
+	"Set the receiver's 'ParamDesc' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ParamDesc) put: anUnicodeString yourAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #ParamDesc) put: anUtf16String yourAddress! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
@@ -63,8 +63,8 @@ defineFields
 "
 
 	self
-		defineField: #KeyDesc type: (PointerField type: UnicodeString) offset: 0;
-		defineField: #ParamDesc type: (PointerField type: UnicodeString) offset: 4.
+		defineField: #KeyDesc type: (PointerField type: Utf16String) offset: 0;
+		defineField: #ParamDesc type: (PointerField type: Utf16String) offset: 4.
 	self byteSize: 8! !
 !HTTP_SERVICE_CONFIG_URLACL_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

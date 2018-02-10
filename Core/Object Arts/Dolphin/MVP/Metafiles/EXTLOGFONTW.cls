@@ -32,16 +32,16 @@ struct tagEXTLOGFONT {
 !EXTLOGFONTW methodsFor!
 
 elfFullName
-	"Answer the <UnicodeString> value of the receiver's 'elfFullName' field."
+	"Answer the <Utf16String> value of the receiver's 'elfFullName' field."
 
-	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #elfFullName)!
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #elfFullName)!
 
-elfFullName: anUnicodeString
-	"Set the receiver's 'elfFullName' field to the value of the argument, anUnicodeString"
+elfFullName: anUtf16String
+	"Set the receiver's 'elfFullName' field to the value of the argument, anUtf16String"
 
 	| size |
-	size := anUnicodeString byteSize - 2 min: ##(63 * 2).
-	anUnicodeString
+	size := anUtf16String byteSize - 2 min: ##(63 * 2).
+	anUtf16String
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #elfFullName) + 1)
 		to: ##(self offsetOf: #elfFullName) + size
@@ -87,16 +87,16 @@ elfPanose: aPANOSE
 		startingAt: 1!
 
 elfStyle
-	"Answer the <UnicodeString> value of the receiver's 'elfStyle' field."
+	"Answer the <Utf16String> value of the receiver's 'elfStyle' field."
 
-	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #elfStyle)!
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #elfStyle)!
 
-elfStyle: anUnicodeString
-	"Set the receiver's 'elfStyle' field to the value of the argument, anUnicodeString"
+elfStyle: anUtf16String
+	"Set the receiver's 'elfStyle' field to the value of the argument, anUtf16String"
 
 	| size |
-	size := anUnicodeString byteSize - 2 min: ##(31 * 2).
-	anUnicodeString
+	size := anUtf16String byteSize - 2 min: ##(31 * 2).
+	anUtf16String
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #elfStyle) + 1)
 		to: ##(self offsetOf: #elfStyle) + size
@@ -167,8 +167,8 @@ defineFields
 
 	self
 		defineField: #elfLogFont type: (StructureField type: LOGFONTW) offset: 0;
-		defineField: #elfFullName type: (StringField type: UnicodeString length: 64) offset: 92;
-		defineField: #elfStyle type: (StringField type: UnicodeString length: 32) offset: 220;
+		defineField: #elfFullName type: (StringField type: Utf16String length: 64) offset: 92;
+		defineField: #elfStyle type: (StringField type: Utf16String length: 32) offset: 220;
 		defineField: #elfVersion type: DWORDField new beFiller offset: 284;
 		defineField: #elfStyleSize type: DWORDField new offset: 288;
 		defineField: #elfMatch type: DWORDField new offset: 292;

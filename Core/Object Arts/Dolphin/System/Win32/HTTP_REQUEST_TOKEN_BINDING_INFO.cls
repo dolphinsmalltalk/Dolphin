@@ -27,14 +27,14 @@ struct tagHTTP_REQUEST_TOKEN_BINDING_INFO {
 !HTTP_REQUEST_TOKEN_BINDING_INFO methodsFor!
 
 KeyType
-	"Answer the <UnicodeString> value of the receiver's 'KeyType' field."
+	"Answer the <Utf16String> value of the receiver's 'KeyType' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyType))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyType))!
 
-KeyType: anUnicodeString
-	"Set the receiver's 'KeyType' field to the value of the argument, anUnicodeString"
+KeyType: anUtf16String
+	"Set the receiver's 'KeyType' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #KeyType) put: anUnicodeString yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #KeyType) put: anUtf16String yourAddress!
 
 TlsUnique
 	"Answer the <BYTE> value of the receiver's 'TlsUnique' field."
@@ -108,7 +108,7 @@ defineFields
 		defineField: #TokenBindingSize type: DWORDField new offset: 4;
 		defineField: #TlsUnique type: (PointerField type: BYTE) offset: 8;
 		defineField: #TlsUniqueSize type: DWORDField new offset: 12;
-		defineField: #KeyType type: (PointerField type: UnicodeString) offset: 16.
+		defineField: #KeyType type: (PointerField type: Utf16String) offset: 16.
 	self byteSize: 20! !
 !HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

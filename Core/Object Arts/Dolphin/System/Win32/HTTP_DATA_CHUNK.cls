@@ -20,7 +20,7 @@ struct tagHTTP_DATA_CHUNK {
 	[helpstring("The type of this data chunk.")] HTTP_DATA_CHUNK_TYPE DataChunkType;
 	[helpstring("The data chunk structures, one per supported data chunk type.")] union {
 		[helpstring("From-memory data chunk.")] struct {
-			void* pBuffer;
+			PVOID pBuffer;
 			ULONG BufferLength;
 		} FromMemory;
 		[helpstring("From-file handle data chunk.")] struct {
@@ -93,16 +93,16 @@ FromFragmentCache_FragmentNameLength: anInteger
 	bytes wordAtOffset: ##(self offsetOf: #FromFragmentCache_FragmentNameLength) put: anInteger!
 
 FromFragmentCache_pFragmentName
-	"Answer the <UnicodeString> value of the receiver's 'FromFragmentCache_pFragmentName' field."
+	"Answer the <Utf16String> value of the receiver's 'FromFragmentCache_pFragmentName' field."
 
-	^UnicodeString
+	^Utf16String
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FromFragmentCache_pFragmentName))!
 
-FromFragmentCache_pFragmentName: anUnicodeString
-	"Set the receiver's 'FromFragmentCache_pFragmentName' field to the value of the argument, anUnicodeString"
+FromFragmentCache_pFragmentName: anUtf16String
+	"Set the receiver's 'FromFragmentCache_pFragmentName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #FromFragmentCache_pFragmentName)
-		put: anUnicodeString yourAddress!
+		put: anUtf16String yourAddress!
 
 FromFragmentCacheEx_ByteRange
 	"Answer the <HTTP_BYTE_RANGE> value of the receiver's 'FromFragmentCacheEx_ByteRange' field."
@@ -119,16 +119,16 @@ FromFragmentCacheEx_ByteRange: aHTTP_BYTE_RANGE
 		startingAt: 1!
 
 FromFragmentCacheEx_pFragmentName
-	"Answer the <UnicodeString> value of the receiver's 'FromFragmentCacheEx_pFragmentName' field."
+	"Answer the <Utf16String> value of the receiver's 'FromFragmentCacheEx_pFragmentName' field."
 
-	^UnicodeString
+	^Utf16String
 		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FromFragmentCacheEx_pFragmentName))!
 
-FromFragmentCacheEx_pFragmentName: anUnicodeString
-	"Set the receiver's 'FromFragmentCacheEx_pFragmentName' field to the value of the argument, anUnicodeString"
+FromFragmentCacheEx_pFragmentName: anUtf16String
+	"Set the receiver's 'FromFragmentCacheEx_pFragmentName' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #FromFragmentCacheEx_pFragmentName)
-		put: anUnicodeString yourAddress!
+		put: anUtf16String yourAddress!
 
 FromMemory_BufferLength
 	"Answer the <Integer> value of the receiver's 'FromMemory_BufferLength' field."
@@ -192,7 +192,7 @@ defineFields
 			[helpstring('The type of this data chunk.')] HTTP_DATA_CHUNK_TYPE DataChunkType;
 			[helpstring('The data chunk structures, one per supported data chunk type.')] union {
 				[helpstring('From-memory data chunk.')] struct {
-					void* pBuffer;
+					PVOID pBuffer;
 					ULONG BufferLength;
 				} FromMemory;
 				[helpstring('From-file handle data chunk.')] struct {
@@ -218,9 +218,9 @@ defineFields
 		defineField: #FromFileHandle_ByteRange type: (StructureField type: HTTP_BYTE_RANGE) offset: 8;
 		defineField: #FromFileHandle_FileHandle type: HANDLEField new offset: 24;
 		defineField: #FromFragmentCache_FragmentNameLength type: WORDField new offset: 8;
-		defineField: #FromFragmentCache_pFragmentName type: (PointerField type: UnicodeString) offset: 12;
+		defineField: #FromFragmentCache_pFragmentName type: (PointerField type: Utf16String) offset: 12;
 		defineField: #FromFragmentCacheEx_ByteRange type: (StructureField type: HTTP_BYTE_RANGE) offset: 8;
-		defineField: #FromFragmentCacheEx_pFragmentName type: (PointerField type: UnicodeString) offset: 24.
+		defineField: #FromFragmentCacheEx_pFragmentName type: (PointerField type: Utf16String) offset: 24.
 	self byteSize: 32! !
 !HTTP_DATA_CHUNK class categoriesFor: #data:!instance creation!public! !
 !HTTP_DATA_CHUNK class categoriesFor: #defineFields!**auto generated**!initializing!public! !

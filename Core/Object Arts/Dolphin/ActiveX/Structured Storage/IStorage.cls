@@ -193,11 +193,11 @@ getCLIPFORMATAndUserType
 	| cf pszUserType answer |
 	cf := WORD new.
 	pszUserType := COMTaskMemory new.
-	OLELibrary default 
+	OLELibrary default
 		readFmtUserTypeStg: self
 		pcf: cf
 		lplpszUserType: pszUserType.
-	answer := Array with: cf asInteger with: (UnicodeString fromAddress: pszUserType).
+	answer := Array with: cf asInteger with: (Utf16String fromAddress: pszUserType).
 	pszUserType free.
 	^answer!
 

@@ -262,7 +262,7 @@ defineFields
 		defineField: #dwReserved		type: DWORDField filler;
 		defineField: #memidConstructor	type: SDWORDField readOnly;	"MEMBERID = DISPID = LONG"
 		defineField: #memidDestructor	type: SDWORDField readOnly;	"MEMBERID"
-		defineField: #lpstrSchema		type: (PointerField type: UnicodeString) beFiller;
+		defineField: #lpstrSchema		type: (PointerField type: Utf16String) beFiller;
 		defineField: #cbSizeInstance	type: DWORDField readOnly;
 		defineField: #typekind			type: SDWORDField readOnly;	"enumerated type TYPEKIND"
 		defineField: #cFuncs			type: WORDField readOnly;

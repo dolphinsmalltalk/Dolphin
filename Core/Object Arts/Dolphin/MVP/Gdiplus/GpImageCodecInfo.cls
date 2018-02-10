@@ -35,134 +35,142 @@ struct tagGpImageCodecInfo {
 !GpImageCodecInfo methodsFor!
 
 Clsid
-	"Answer the receiver's Clsid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'Clsid' field."
 
-	^GUID fromAddress: (bytes yourAddress)!
+	^GUID fromAddress: bytes yourAddress!
 
-Clsid: anObject
-	"Set the receiver's Clsid field to the value of anObject."
+Clsid: aGUID
+	"Set the receiver's 'Clsid' field to the value of the argument, aGUID"
 
-	anObject replaceBytesOf: bytes from: 1 to: 16 startingAt: 1!
+	aGUID
+		replaceBytesOf: bytes
+		from: 1
+		to: ##(GUID basicByteSize)
+		startingAt: 1!
 
 CodecName
-	"Answer the receiver's CodecName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'CodecName' field."
 
-	^UnicodeString fromAddress: (bytes sdwordAtOffset: 32)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #CodecName))!
 
-CodecName: anObject
-	"Set the receiver's CodecName field to the value of anObject."
+CodecName: anUtf16String
+	"Set the receiver's 'CodecName' field to the value of the argument, anUtf16String"
 
-	bytes dwordAtOffset: 32 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #CodecName) put: anUtf16String yourAddress!
 
 DllName
-	"Answer the receiver's DllName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'DllName' field."
 
-	^UnicodeString fromAddress: (bytes sdwordAtOffset: 36)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DllName))!
 
-DllName: anObject
-	"Set the receiver's DllName field to the value of anObject."
+DllName: anUtf16String
+	"Set the receiver's 'DllName' field to the value of the argument, anUtf16String"
 
-	bytes dwordAtOffset: 36 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #DllName) put: anUtf16String yourAddress!
 
 FilenameExtension
-	"Answer the receiver's FilenameExtension field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'FilenameExtension' field."
 
-	^UnicodeString fromAddress: (bytes sdwordAtOffset: 44)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FilenameExtension))!
 
-FilenameExtension: anObject
-	"Set the receiver's FilenameExtension field to the value of anObject."
+FilenameExtension: anUtf16String
+	"Set the receiver's 'FilenameExtension' field to the value of the argument, anUtf16String"
 
-	bytes dwordAtOffset: 44 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #FilenameExtension) put: anUtf16String yourAddress!
 
 Flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: 52!
+	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
 
-Flags: anObject 
-	"Set the receiver's flags field to the value of anObject."
+Flags: anInteger
+	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 52 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anInteger!
 
 FormatDescription
-	"Answer the receiver's FormatDescription field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'FormatDescription' field."
 
-	^UnicodeString fromAddress: (bytes sdwordAtOffset: 40)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FormatDescription))!
 
-FormatDescription: anObject
-	"Set the receiver's FormatDescription field to the value of anObject."
+FormatDescription: anUtf16String
+	"Set the receiver's 'FormatDescription' field to the value of the argument, anUtf16String"
 
-	bytes dwordAtOffset: 40 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #FormatDescription) put: anUtf16String yourAddress!
 
 FormatID
-	"Answer the receiver's FormatID field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'FormatID' field."
 
-	^GUID fromAddress: (bytes yourAddress + 16)!
+	^GUID fromAddress: bytes yourAddress + ##(self offsetOf: #FormatID)!
 
-FormatID: anObject
-	"Set the receiver's FormatID field to the value of anObject."
+FormatID: aGUID
+	"Set the receiver's 'FormatID' field to the value of the argument, aGUID"
 
-	anObject replaceBytesOf: bytes from: 17 to: 32 startingAt: 1!
+	aGUID
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #FormatID) + 1)
+		to: ##((self offsetOf: #FormatID) + GUID basicByteSize)
+		startingAt: 1!
 
 MimeType
-	"Answer the receiver's MimeType field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'MimeType' field."
 
-	^UnicodeString fromAddress: (bytes sdwordAtOffset: 48)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #MimeType))!
 
-MimeType: anObject
-	"Set the receiver's MimeType field to the value of anObject."
+MimeType: anUtf16String
+	"Set the receiver's 'MimeType' field to the value of the argument, anUtf16String"
 
-	bytes dwordAtOffset: 48 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #MimeType) put: anUtf16String yourAddress!
 
 SigCount
-	"Answer the receiver's SigCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'SigCount' field."
 
-	^(bytes dwordAtOffset: 60)!
+	^bytes dwordAtOffset: ##(self offsetOf: #SigCount)!
 
-SigCount: anObject
-	"Set the receiver's SigCount field to the value of anObject."
+SigCount: anInteger
+	"Set the receiver's 'SigCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 60 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #SigCount) put: anInteger!
 
 SigMask
-	"Answer the receiver's SigMask field as a Smalltalk object."
+	"Answer the <BYTE> value of the receiver's 'SigMask' field."
 
-	^BYTE fromAddress: (bytes sdwordAtOffset: 72)!
+	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #SigMask))!
 
-SigMask: anObject
-	"Set the receiver's SigMask field to the value of anObject."
+SigMask: aBYTE
+	"Set the receiver's 'SigMask' field to the value of the argument, aBYTE"
 
-	bytes dwordAtOffset: 72 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #SigMask) put: aBYTE yourAddress!
 
 SigPattern
-	"Answer the receiver's SigPattern field as a Smalltalk object."
+	"Answer the <BYTE> value of the receiver's 'SigPattern' field."
 
-	^BYTE fromAddress: (bytes sdwordAtOffset: 68)!
+	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #SigPattern))!
 
-SigPattern: anObject
-	"Set the receiver's SigPattern field to the value of anObject."
+SigPattern: aBYTE
+	"Set the receiver's 'SigPattern' field to the value of the argument, aBYTE"
 
-	bytes dwordAtOffset: 68 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #SigPattern) put: aBYTE yourAddress!
 
 SigSize
-	"Answer the receiver's SigSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'SigSize' field."
 
-	^(bytes dwordAtOffset: 64)!
+	^bytes dwordAtOffset: ##(self offsetOf: #SigSize)!
 
-SigSize: anObject
-	"Set the receiver's SigSize field to the value of anObject."
+SigSize: anInteger
+	"Set the receiver's 'SigSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 64 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #SigSize) put: anInteger!
 
 Version
-	"Answer the receiver's Version field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Version' field."
 
-	^(bytes dwordAtOffset: 56)!
+	^bytes dwordAtOffset: ##(self offsetOf: #Version)!
 
-Version: anObject
-	"Set the receiver's Version field to the value of anObject."
+Version: anInteger
+	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 56 put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #Version) put: anInteger! !
 !GpImageCodecInfo categoriesFor: #Clsid!**compiled accessors**!public! !
 !GpImageCodecInfo categoriesFor: #Clsid:!**compiled accessors**!public! !
 !GpImageCodecInfo categoriesFor: #CodecName!**compiled accessors**!public! !
@@ -217,11 +225,11 @@ defineFields
 	self
 		defineField: #Clsid type: (StructureField type: GUID) offset: 0;
 		defineField: #FormatID type: (StructureField type: GUID) offset: 16;
-		defineField: #CodecName type: (PointerField type: UnicodeString) offset: 32;
-		defineField: #DllName type: (PointerField type: UnicodeString) offset: 36;
-		defineField: #FormatDescription type: (PointerField type: UnicodeString) offset: 40;
-		defineField: #FilenameExtension type: (PointerField type: UnicodeString) offset: 44;
-		defineField: #MimeType type: (PointerField type: UnicodeString) offset: 48;
+		defineField: #CodecName type: (PointerField type: Utf16String) offset: 32;
+		defineField: #DllName type: (PointerField type: Utf16String) offset: 36;
+		defineField: #FormatDescription type: (PointerField type: Utf16String) offset: 40;
+		defineField: #FilenameExtension type: (PointerField type: Utf16String) offset: 44;
+		defineField: #MimeType type: (PointerField type: Utf16String) offset: 48;
 		defineField: #Flags type: DWORDField new offset: 52;
 		defineField: #Version type: DWORDField new offset: 56;
 		defineField: #SigCount type: DWORDField new offset: 60;

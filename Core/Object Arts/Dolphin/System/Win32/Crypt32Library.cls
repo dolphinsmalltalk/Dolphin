@@ -176,7 +176,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 		pPromptStruct: nil
 		dwFlags: flags
 		pDataOut: unencrypted) ifFalse: [^Win32Error signal].
-	description := UnicodeString fromAddress: description.
+	description := Utf16String fromAddress: description.
 	dataClass := Smalltalk at: description asString ifAbsent: [ByteArray].
 	size := unencrypted cbData.
 	answer := unencrypted data

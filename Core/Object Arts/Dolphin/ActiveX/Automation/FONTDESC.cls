@@ -13,19 +13,19 @@ FONTDESC is similar to a LOGFONT in that it represents a logical description of 
 !FONTDESC methodsFor!
 
 cySize
-	"Answer the receiver's cySize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cySize' field."
 
 	^bytes sqwordAtOffset: ##(self offsetOf: #cySize)!
 
-cySize: anObject 
-	"Set the receiver's cySize field to the value of anObject."
+cySize: anInteger
+	"Set the receiver's 'cySize' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: ##(self offsetOf: #cySize) put: anObject!
+	bytes sqwordAtOffset: ##(self offsetOf: #cySize) put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 faceName
 	"Answer the font name."
@@ -39,44 +39,44 @@ faceName: fontName
 	self lpstrName: name!
 
 fItalic
-	"Answer the receiver's fItalic field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'fItalic' field."
 
 	^(bytes dwordAtOffset: ##(self offsetOf: #fItalic)) asBoolean!
 
-fItalic: anObject 
-	"Set the receiver's fItalic field to the value of anObject."
+fItalic: aBoolean
+	"Set the receiver's 'fItalic' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fItalic) put: anObject asParameter!
+	bytes dwordAtOffset: ##(self offsetOf: #fItalic) put: aBoolean asParameter!
 
 fStrikethrough
-	"Answer the receiver's fStrikethrough field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'fStrikethrough' field."
 
 	^(bytes dwordAtOffset: ##(self offsetOf: #fStrikethrough)) asBoolean!
 
-fStrikethrough: anObject 
-	"Set the receiver's fStrikethrough field to the value of anObject."
+fStrikethrough: aBoolean
+	"Set the receiver's 'fStrikethrough' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fStrikethrough) put: anObject asParameter!
+	bytes dwordAtOffset: ##(self offsetOf: #fStrikethrough) put: aBoolean asParameter!
 
 fUnderline
-	"Answer the receiver's fUnderline field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'fUnderline' field."
 
 	^(bytes dwordAtOffset: ##(self offsetOf: #fUnderline)) asBoolean!
 
-fUnderline: anObject 
-	"Set the receiver's fUnderline field to the value of anObject."
+fUnderline: aBoolean
+	"Set the receiver's 'fUnderline' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fUnderline) put: anObject asParameter!
+	bytes dwordAtOffset: ##(self offsetOf: #fUnderline) put: aBoolean asParameter!
 
 lpstrName
-	"Answer the receiver's lpstrName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'lpstrName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpstrName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpstrName))!
 
-lpstrName: anObject 
-	"Set the receiver's lpstrName field to the value of anObject."
+lpstrName: anUtf16String
+	"Set the receiver's 'lpstrName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrName) put: anUtf16String yourAddress!
 
 pointSize
 	"Answer the point size of the font described by the receiver."
@@ -89,24 +89,24 @@ pointSize: points
 	self cySize: (points * 10000) asInteger!
 
 sCharset
-	"Answer the receiver's sCharset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'sCharset' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #sCharset)!
 
-sCharset: anObject 
-	"Set the receiver's sCharset field to the value of anObject."
+sCharset: anInteger
+	"Set the receiver's 'sCharset' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #sCharset) put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #sCharset) put: anInteger!
 
 sWeight
-	"Answer the receiver's sWeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'sWeight' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #sWeight)!
 
-sWeight: anObject 
-	"Set the receiver's sWeight field to the value of anObject."
+sWeight: anInteger
+	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #sWeight) put: anObject! !
+	bytes swordAtOffset: ##(self offsetOf: #sWeight) put: anInteger! !
 !FONTDESC categoriesFor: #cySize!**compiled accessors**!public! !
 !FONTDESC categoriesFor: #cySize:!**compiled accessors**!public! !
 !FONTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
@@ -149,7 +149,7 @@ defineFields
 
 	self
 		defineField: #dwSize type: DWORDField writeOnly;	"Renamed from cbSizeOfStruct"
-		defineField: #lpstrName type: (PointerField type: UnicodeString);
+		defineField: #lpstrName type: (PointerField type: Utf16String);
 		defineField: #cySize type:  SQWORDField new;
 		defineField: #sWeight type: SWORDField new;
 		defineField: #sCharset type: SWORDField new;

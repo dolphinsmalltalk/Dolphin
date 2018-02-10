@@ -111,7 +111,7 @@ stateMask: anObject
 szID
 	"Answer the receiver's szID field as a Smalltalk object."
 
-	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #szID)!
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szID)!
 
 szID: anObject 
 	"Set the receiver's szID field to the value of anObject."
@@ -128,7 +128,7 @@ szID: anObject
 szURL
 	"Answer the receiver's szURL field as a Smalltalk object."
 
-	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #szURL)!
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szURL)!
 
 szURL: anObject 
 	"Set the receiver's szURL field to the value of anObject."
@@ -191,7 +191,7 @@ defineFields
 		defineField: #iLink type: SDWORDField new;
 		defineField: #state type: DWORDField new;
 		defineField: #stateMask type: DWORDField new;
-		defineField: #szID type: (StringField type: UnicodeString length: MAX_LINKID_TEXT);
-		defineField: #szURL type: (StringField type: UnicodeString length: L_MAX_URL_LENGTH)! !
+		defineField: #szID type: (StringField type: Utf16String length: MAX_LINKID_TEXT);
+		defineField: #szURL type: (StringField type: Utf16String length: L_MAX_URL_LENGTH)! !
 !LITEM class categoriesFor: #defineFields!initializing!public! !
 

@@ -40,7 +40,7 @@ pAuthInfo: anObject
 pwszName
 	"Answer the receiver's pwszName field as a Smalltalk object."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pwszName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pwszName))!
 
 pwszName: anObject 
 	"Set the receiver's pwszName field to the value of anObject."
@@ -70,7 +70,7 @@ defineFields
 
 	self
 		defineField: #dwReserved1 type: DWORDField filler;
-		defineField: #pwszName type: (PointerField type: UnicodeString);
+		defineField: #pwszName type: (PointerField type: Utf16String);
 		defineField: #pAuthInfo type: (PointerField type: COAUTHINFO);
 		defineField: #dwReserved2 type: DWORDField filler! !
 !COSERVERINFO class categoriesFor: #defineFields!initializing!public! !

@@ -36,14 +36,14 @@ dwToken: anInteger
 	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anInteger!
 
 KeyDesc
-	"Answer the <UnicodeString> value of the receiver's 'KeyDesc' field."
+	"Answer the <Utf16String> value of the receiver's 'KeyDesc' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyDesc))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #KeyDesc))!
 
-KeyDesc: anUnicodeString
-	"Set the receiver's 'KeyDesc' field to the value of the argument, anUnicodeString"
+KeyDesc: anUtf16String
+	"Set the receiver's 'KeyDesc' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #KeyDesc) put: anUnicodeString yourAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #KeyDesc) put: anUtf16String yourAddress! !
 !HTTP_SERVICE_CONFIG_URLACL_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
@@ -66,7 +66,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #KeyDesc type: (PointerField type: UnicodeString) offset: 4;
+		defineField: #KeyDesc type: (PointerField type: Utf16String) offset: 4;
 		defineField: #dwToken type: DWORDField new offset: 8.
 	self byteSize: 12! !
 !HTTP_SERVICE_CONFIG_URLACL_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !

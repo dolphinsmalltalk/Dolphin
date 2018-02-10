@@ -24,14 +24,14 @@ struct tagHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS {
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS methodsFor!
 
 Realm
-	"Answer the <UnicodeString> value of the receiver's 'Realm' field."
+	"Answer the <Utf16String> value of the receiver's 'Realm' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Realm))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Realm))!
 
-Realm: anUnicodeString
-	"Set the receiver's 'Realm' field to the value of the argument, anUnicodeString"
+Realm: anUtf16String
+	"Set the receiver's 'Realm' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anUnicodeString yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anUtf16String yourAddress!
 
 RealmLength
 	"Answer the <Integer> value of the receiver's 'RealmLength' field."
@@ -63,7 +63,7 @@ defineFields
 
 	self
 		defineField: #RealmLength type: WORDField new offset: 0;
-		defineField: #Realm type: (PointerField type: UnicodeString) offset: 4.
+		defineField: #Realm type: (PointerField type: Utf16String) offset: 4.
 	self byteSize: 8! !
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

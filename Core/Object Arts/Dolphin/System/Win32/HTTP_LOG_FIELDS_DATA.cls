@@ -298,16 +298,16 @@ UriQueryLength: anInteger
 	bytes wordAtOffset: ##(self offsetOf: #UriQueryLength) put: anInteger!
 
 UriStem
-	"Answer the <UnicodeString> value of the receiver's 'UriStem' field."
+	"Answer the <Utf16String> value of the receiver's 'UriStem' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UriStem))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UriStem))
 		length: self UriStemLength!
 
-UriStem: anUnicodeString
-	"Set the receiver's 'UriStem' field to the value of the argument, anUnicodeString"
+UriStem: anUtf16String
+	"Set the receiver's 'UriStem' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #UriStem) put: anUnicodeString yourAddress.
-	self UriStemLength: anUnicodeString size!
+	bytes uintPtrAtOffset: ##(self offsetOf: #UriStem) put: anUtf16String yourAddress.
+	self UriStemLength: anUtf16String size!
 
 UriStemLength
 	"Answer the <Integer> value of the receiver's 'UriStemLength' field."
@@ -342,16 +342,16 @@ UserAgentLength: anInteger
 	bytes wordAtOffset: ##(self offsetOf: #UserAgentLength) put: anInteger!
 
 UserName
-	"Answer the <UnicodeString> value of the receiver's 'UserName' field."
+	"Answer the <Utf16String> value of the receiver's 'UserName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UserName))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #UserName))
 		length: self UserNameLength!
 
-UserName: anUnicodeString
-	"Set the receiver's 'UserName' field to the value of the argument, anUnicodeString"
+UserName: anUtf16String
+	"Set the receiver's 'UserName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #UserName) put: anUnicodeString yourAddress.
-	self UserNameLength: anUnicodeString size!
+	bytes uintPtrAtOffset: ##(self offsetOf: #UserName) put: anUtf16String yourAddress.
+	self UserNameLength: anUtf16String size!
 
 UserNameLength
 	"Answer the <Integer> value of the receiver's 'UserNameLength' field."
@@ -489,8 +489,8 @@ defineFields
 		defineField: #UserAgentLength type: WORDField new offset: 22;
 		defineField: #CookieLength type: WORDField new offset: 24;
 		defineField: #ReferrerLength type: WORDField new offset: 26;
-		defineField: #UserName type: (ArrayPointerField type: UnicodeString lengthField: #UserNameLength) offset: 28;
-		defineField: #UriStem type: (ArrayPointerField type: UnicodeString lengthField: #UriStemLength) offset: 32;
+		defineField: #UserName type: (ArrayPointerField type: Utf16String lengthField: #UserNameLength) offset: 28;
+		defineField: #UriStem type: (ArrayPointerField type: Utf16String lengthField: #UriStemLength) offset: 32;
 		defineField: #ClientIp type: (ArrayPointerField type: String lengthField: #ClientIpLength) offset: 36;
 		defineField: #ServerName type: (ArrayPointerField type: String lengthField: #ServerNameLength) offset: 40;
 		defineField: #ServiceName type: (ArrayPointerField type: String lengthField: #ServiceNameLength) offset: 44;

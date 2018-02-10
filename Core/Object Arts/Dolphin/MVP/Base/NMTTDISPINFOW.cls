@@ -55,8 +55,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #lpszText type: (PointerField type: UnicodeString) beWriteOnly;
-		defineField: #szText type: (ArrayField type: UnicodeString length: 80) beFiller;
+		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
+		defineField: #szText type: (ArrayField type: Utf16String length: 80) beFiller;
 		defineField: #hinst type: HANDLEField filler;
 		defineField: #uFlags type: DWORDField readOnly;
 		defineField: #lParam type: INT_PTRField filler! !

@@ -24,14 +24,14 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_KEY {
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY methodsFor!
 
 Host
-	"Answer the <UnicodeString> value of the receiver's 'Host' field."
+	"Answer the <Utf16String> value of the receiver's 'Host' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Host))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Host))!
 
-Host: anUnicodeString
-	"Set the receiver's 'Host' field to the value of the argument, anUnicodeString"
+Host: anUtf16String
+	"Set the receiver's 'Host' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Host) put: anUnicodeString yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Host) put: anUtf16String yourAddress!
 
 IpPort
 	"Answer the <SOCKADDR_STORAGE> value of the receiver's 'IpPort' field."
@@ -67,7 +67,7 @@ defineFields
 
 	self
 		defineField: #IpPort type: (StructureField type: SOCKADDR_STORAGE) offset: 0;
-		defineField: #Host type: (PointerField type: UnicodeString) offset: 128.
+		defineField: #Host type: (PointerField type: Utf16String) offset: 128.
 	self byteSize: 136! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

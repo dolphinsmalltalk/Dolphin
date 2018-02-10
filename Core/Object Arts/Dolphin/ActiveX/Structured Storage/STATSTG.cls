@@ -28,61 +28,61 @@ Member variables:
 !STATSTG methodsFor!
 
 atime
-	"Answer the receiver's atime field as a Smalltalk object."
+	"Answer the <FILETIME> value of the receiver's 'atime' field."
 
 	^FILETIME fromAddress: bytes yourAddress + ##(self offsetOf: #atime)!
 
-atime: anObject 
-	"Set the receiver's atime field to the value of anObject."
+atime: aFILETIME
+	"Set the receiver's 'atime' field to the value of the argument, aFILETIME"
 
-	anObject 
+	aFILETIME
 		replaceBytesOf: bytes
-		from: ##(self offsetOf: #atime) + 1
-		to: ##(self offsetOf: #atime) + ##(FILETIME basicByteSize)
+		from: ##((self offsetOf: #atime) + 1)
+		to: ##((self offsetOf: #atime) + FILETIME basicByteSize)
 		startingAt: 1!
 
 cbSize
-	"Answer the receiver's cbSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbSize' field."
 
 	^bytes qwordAtOffset: ##(self offsetOf: #cbSize)!
 
-cbSize: anObject 
-	"Set the receiver's cbSize field to the value of anObject."
+cbSize: anInteger
+	"Set the receiver's 'cbSize' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #cbSize) put: anObject!
+	bytes qwordAtOffset: ##(self offsetOf: #cbSize) put: anInteger!
 
 clsid
-	"Answer the receiver's clsid field as a Smalltalk object."
+	"Answer the <CLSID> value of the receiver's 'clsid' field."
 
 	^CLSID fromAddress: bytes yourAddress + ##(self offsetOf: #clsid)!
 
 ctime
-	"Answer the receiver's ctime field as a Smalltalk object."
+	"Answer the <FILETIME> value of the receiver's 'ctime' field."
 
 	^FILETIME fromAddress: bytes yourAddress + ##(self offsetOf: #ctime)!
 
 dwStgFmt
-	"Answer the receiver's dwStgFmt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwStgFmt' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwStgFmt)!
 
 grfLocksSupported
-	"Answer the receiver's grfLocksSupported field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'grfLocksSupported' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #grfLocksSupported)!
 
-grfLocksSupported: anObject 
-	"Set the receiver's grfLocksSupported field to the value of anObject."
+grfLocksSupported: anInteger
+	"Set the receiver's 'grfLocksSupported' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #grfLocksSupported) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #grfLocksSupported) put: anInteger!
 
 grfMode
-	"Answer the receiver's grfMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'grfMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #grfMode)!
 
 grfStateBits
-	"Answer the receiver's grfStateBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'grfStateBits' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #grfStateBits)!
 
@@ -101,7 +101,7 @@ isOLEStream
 	^self type == STGTY_STREAM!
 
 mtime
-	"Answer the receiver's mtime field as a Smalltalk object."
+	"Answer the <FILETIME> value of the receiver's 'mtime' field."
 
 	^FILETIME fromAddress: bytes yourAddress + ##(self offsetOf: #mtime)!
 
@@ -120,24 +120,24 @@ name: aString
 	name beUnfinalizable!
 
 pwcsName
-	"Answer the receiver's pwcsName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'pwcsName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: 0)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: 0)!
 
-pwcsName: anObject 
-	"Set the receiver's pwcsName field to the value of anObject."
+pwcsName: anUtf16String
+	"Set the receiver's 'pwcsName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
+	bytes uintPtrAtOffset: 0 put: anUtf16String yourAddress!
 
 type
-	"Answer the receiver's type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'type' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #type)!
 
-type: anObject 
-	"Set the receiver's type field to the value of anObject."
+type: anInteger
+	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #type) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #type) put: anInteger! !
 !STATSTG categoriesFor: #atime!**compiled accessors**!public! !
 !STATSTG categoriesFor: #atime:!**compiled accessors**!public! !
 !STATSTG categoriesFor: #cbSize!**compiled accessors**!public! !
@@ -192,7 +192,7 @@ defineFields
 	"
 
 	self
-		defineField: #pwcsName type: (PointerField type: UnicodeString);
+		defineField: #pwcsName type: (PointerField type: Utf16String);
 		defineField: #type type: DWORDField new;
 		defineField: #cbSize type: QWORDField new;
 		defineField: #mtime type: (StructureField type: FILETIME) beReadOnly;

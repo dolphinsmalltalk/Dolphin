@@ -37,7 +37,7 @@ asUtf16String
 
 	| bstr |
 	bstr := bytes uintPtrAtOffset: 0.
-	^UnicodeString fromAddress: bstr length: (OLEAutLibrary default sysStringLen: bstr)!
+	^Utf16String fromAddress: bstr length: (OLEAutLibrary default sysStringLen: bstr)!
 
 value
 	"Answer the <String> pointed at by the receiver (N.B. it is copied into Smalltalk space)"

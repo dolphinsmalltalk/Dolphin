@@ -15,78 +15,78 @@ The COAUTHIDENTITY structure represents a user name and password.'!
 Domain
 	"Answer the receiver's Domain field as a Smalltalk object."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Domain))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Domain))!
 
-Domain: anObject 
-	"Set the receiver's Domain field to the value of anObject."
+Domain: aWORD
+	"Set the receiver's 'Domain' field to the value of the argument, aWORD"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Domain) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Domain) put: aWORD yourAddress!
 
 DomainLength
-	"Answer the receiver's DomainLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'DomainLength' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #DomainLength)!
 
-DomainLength: anObject 
-	"Set the receiver's DomainLength field to the value of anObject."
+DomainLength: anInteger
+	"Set the receiver's 'DomainLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DomainLength) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #DomainLength) put: anInteger!
 
-Flags
-	"Answer the receiver's Flags field as a Smalltalk object."
+flags
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
+	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
 
-Flags: anObject 
-	"Set the receiver's Flags field to the value of anObject."
+flags: anInteger
+	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
 
 Password
 	"Answer the receiver's Password field as a Smalltalk object."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Password))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Password))!
 
-Password: anObject 
-	"Set the receiver's Password field to the value of anObject."
+Password: aWORD
+	"Set the receiver's 'Password' field to the value of the argument, aWORD"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Password) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Password) put: aWORD yourAddress!
 
 PasswordLength
-	"Answer the receiver's PasswordLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'PasswordLength' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #PasswordLength)!
 
-PasswordLength: anObject 
-	"Set the receiver's PasswordLength field to the value of anObject."
+PasswordLength: anInteger
+	"Set the receiver's 'PasswordLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #PasswordLength) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #PasswordLength) put: anInteger!
 
 User
 	"Answer the receiver's User field as a Smalltalk object."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: 0)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: 0)!
 
-User: anObject 
-	"Set the receiver's User field to the value of anObject."
+User: aWORD
+	"Set the receiver's 'User' field to the value of the argument, aWORD"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
+	bytes uintPtrAtOffset: 0 put: aWORD yourAddress!
 
 UserLength
-	"Answer the receiver's UserLength field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'UserLength' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #UserLength)!
 
-UserLength: anObject 
-	"Set the receiver's UserLength field to the value of anObject."
+UserLength: anInteger
+	"Set the receiver's 'UserLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #UserLength) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #UserLength) put: anInteger! !
 !COAUTHIDENTITY categoriesFor: #Domain!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #Domain:!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #DomainLength!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #DomainLength:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Flags!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #Flags:!**compiled accessors**!public! !
+!COAUTHIDENTITY categoriesFor: #flags!**compiled accessors**!public! !
+!COAUTHIDENTITY categoriesFor: #flags:!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #Password!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #Password:!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #PasswordLength!**compiled accessors**!public! !
@@ -115,11 +115,11 @@ defineFields
 	"
 
 	self
-		defineField: #User type: (PointerField type: UnicodeString);
+		defineField: #User type: (PointerField type: Utf16String);
 		defineField: #UserLength type: DWORDField new;
-		defineField: #Domain type: (PointerField type: UnicodeString);
+		defineField: #Domain type: (PointerField type: Utf16String);
 		defineField: #DomainLength type: DWORDField new;
-		defineField: #Password type: (PointerField type: UnicodeString);
+		defineField: #Password type: (PointerField type: Utf16String);
 		defineField: #PasswordLength type: DWORDField new;
 		defineField: #Flags type: DWORDField new! !
 !COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
