@@ -240,6 +240,9 @@ testCharacterScanning
 			self assert: result == ch.
 			result := self evaluateExpression: '$\x' , i asHexString.
 			self assert: result == ch].
+	result := self evaluateExpression: '$\x4E2D'.
+	self assert: result isKindOf: Character.
+	self assert: result codePoint equals: 16r4E2D.
 	result := self evaluateExpression: '$\.'.
 	self assert: result == (Character value: 92).
 	result := self evaluateExpression: '$\codePoint'.
