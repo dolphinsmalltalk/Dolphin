@@ -226,7 +226,7 @@ basicRemoveClass: aClass
 	"Private - Remove aClass from the list of Classes owned by the receiver.
 	Answer aClass."
 
-	classNames remove: aClass name.
+	self removeClassName: aClass name.
 	^aClass!
 
 basicRemoveGlobalNamed: globalName 
@@ -1546,6 +1546,9 @@ removeClass: aClass
 	self manager addClass: aClass to: nil.
 	^aClass!
 
+removeClassName: aSymbol
+	classNames remove: aSymbol!
+
 removeGlobalNamed: globalName
 	"Remove globalName from the list of globals owned by the receiver.
 	Answer globalName."
@@ -2494,6 +2497,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #rebaseTo:!public!testing! !
 !Package categoriesFor: #remainingClasses!accessing!public! !
 !Package categoriesFor: #removeClass:!public!removing! !
+!Package categoriesFor: #removeClassName:!private!removing! !
 !Package categoriesFor: #removeGlobalNamed:!public!removing! !
 !Package categoriesFor: #removeLooseMethod:!private!removing! !
 !Package categoriesFor: #removeMethod:!public!removing! !

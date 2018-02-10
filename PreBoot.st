@@ -397,3 +397,12 @@ ArrayedCollection variableByteSubclass: #String
 	classInstanceVariableNames: 'empty'!
 
 String instVarAt: 14 put: ''!
+Utf16String instVarAt: 14 put: Utf16String new!
+Symbol instVarAt: 14 put: #''!
+
+!Package methodsFor!
+
+removeClassName: aSymbol
+	classNames remove: aSymbol! !
+
+

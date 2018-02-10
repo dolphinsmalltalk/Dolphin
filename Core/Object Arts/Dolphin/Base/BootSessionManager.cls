@@ -31,7 +31,8 @@ initializeSystemPackage
 
 	STBPrefix initialize.
 	Delay initializeTimingSemaphore.
-	CompilerNotification initialize!
+	CompilerNotification initialize.
+	(Smalltalk at: #Utf8String) initialize!
 
 keepAlive
 	"We stay alive until explicitly terminated."
@@ -139,47 +140,59 @@ reloadSystemPackage
 	srcMgr := SourceManager default.
 	"First load the constants pools to ensure all constants ref'd in new code are defined"
 	Notification signal: 'Reloading BCL constants pools...'.
-	basePackage sourceGlobalVariables 
+	basePackage sourceGlobalVariables
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
-	classesBefore := basePackage classes.
+	classesBefore := basePackage classNames.
 	Notification signal: 'Reloading BCL class definitions...'.
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: nil.
 	"Ensure all base classes (including any defined after the boot image was created) are packaged"
-	(Object withAllSubclasses difference: classesBefore) do: [:each | 
-		Notification signal: 'Adding new class ', each name, ' to BCL package'.
-		each owningPackage: basePackage].
+	Object withAllSubclassesDo: 
+			[:each |
+			(classesBefore includes: each name)
+				ifFalse: 
+					[Notification signal: 'Adding new class ' , each name , ' to BCL package'.
+					each owningPackage: basePackage]].
+	"Remove names of any classes that have been renamed"
+	classesBefore do: 
+			[:each |
+			| class |
+			class := basePackage classFromName: each.
+			class name == each
+				ifFalse: 
+					[Notification signal: 'Boot class ' , each , ' renamed to ' , class name.
+					basePackage removeClassName: each]].
 	Smalltalk clearCachedClasses.
 	"Then reload all base package classes in breadth-first order"
 	Notification signal: 'Reloading BCL classes...'.
 	baseClasses := basePackage classesInHierarchyOrder.
 	missingClasses := OrderedCollection new.
 	baseClasses do: 
-			[:each | 
-			(#(#BootSessionManager #ClassBuilder) identityIncludes: each name) 
+			[:each |
+			(#(#BootSessionManager #ClassBuilder) identityIncludes: each name)
 				ifFalse: 
 					[| relativePath |
 					relativePath := File relativePathOf: each fileOutName to: imageDir.
-					(File exists: relativePath) 
+					(File exists: relativePath)
 						ifTrue: [srcMgr fileIn: relativePath]
 						ifFalse: [missingClasses add: each]]].
 	missingClasses reverseDo: 
-			[:each | 
+			[:each |
 			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
 			each removeFromSystem.
 			basePackage basicRemoveClass: each].
 	Notification signal: 'Deleting obsolete boot image methods...'.
 	obsoleteMethodFilter := [:each | each hasChanged not].
 	(baseClasses difference: missingClasses) do: 
-			[:each | 
+			[:each |
 			each setInstanceVariables: each instVarNames.
-			(((each selectMethods: obsoleteMethodFilter) 
+			(((each selectMethods: obsoleteMethodFilter)
 				asSortedCollection: [:a :b | a printString <= b printString])
 				addAll: (each class selectMethods: obsoleteMethodFilter);
 				yourself) do: 
-						[:m | 
+						[:m |
 						Notification signal: 'Removing obsolete boot image method ' , m printString.
 						m methodClass removeSelector: m selector]].
 	self initializeSystemPackage!
