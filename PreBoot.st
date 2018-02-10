@@ -358,6 +358,7 @@ Character instanceVariableString: 'codePoint'!
 
 Smalltalk at: #Utf16String put: UnicodeString!
 UnicodeString setName: #Utf16String!
+(Smalltalk associationAt: #UnicodeString) isImmutable: false!
 
 !Utf16String class methodsFor!
 fromString: aString

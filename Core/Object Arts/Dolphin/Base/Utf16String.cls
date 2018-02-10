@@ -222,7 +222,7 @@ resize: anInteger
 shallowCopy
 	"Implemented here to ensure that copied UnicodeStrings are correctly terminated with a double null"
 
-	^UnicodeString fromAddress: self yourAddress length: self size!
+	^self class fromAddress: self yourAddress length: self size!
 
 size
 	"Answer the number of characters in the receiver."

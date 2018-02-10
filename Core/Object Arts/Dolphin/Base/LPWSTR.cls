@@ -23,7 +23,7 @@ asString
 value
 	"Answer the UnicodeString pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
-	^UnicodeString fromAddress: super value! !
+	^Utf16String fromAddress: super value! !
 !LPWSTR categoriesFor: #asString!converting!public! !
 !LPWSTR categoriesFor: #value!accessing!public! !
 

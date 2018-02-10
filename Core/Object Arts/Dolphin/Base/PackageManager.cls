@@ -529,7 +529,7 @@ isProcessingEvents
 
 	^processEvents == 0!
 
-loadCompatibilityCheck: aPackage 
+loadCompatibilityCheck: aPackage
 	"Private - The <Package> argument is about to be filed in. Ensure that no existing package
 	managed by the receiver owns any of the objects which the package thinks it owns. This must
 	be executed before the package can be taken under the receiver's wing as a managed package.
@@ -540,14 +540,14 @@ loadCompatibilityCheck: aPackage
 
 	| overlappingObjects |
 	overlappingObjects := Set new.
-	aPackage classNames 
+	aPackage classNames
 		do: [:each | Smalltalk at: each ifPresent: [:class | overlappingObjects add: class]].
-	aPackage globalNames 
+	(aPackage globalNames intersection: self packagedGlobals keys)
 		do: [:each | Smalltalk associationAt: each ifPresent: [:global | overlappingObjects add: global]].
 	"The methods accessor answers a collection of those methods named in the package that can
 	be found in the image, since the package is not yet loaded, this will only include the clashing methods"
 	overlappingObjects addAll: aPackage methods.
-	overlappingObjects notEmpty 
+	overlappingObjects notEmpty
 		ifTrue: [self errorFileInCompatibilityCheck: aPackage overlap: overlappingObjects].
 	^overlappingObjects!
 
