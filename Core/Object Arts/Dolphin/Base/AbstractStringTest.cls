@@ -14,6 +14,9 @@ AbstractStringTest comment: ''!
 assimilate: each 
 	^Character codePoint: each asInteger!
 
+assimilateString: aString
+	^self subclassResponsibility!
+
 newNumericArray: anInteger 
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
@@ -50,6 +53,17 @@ testCapitalized
 	cap := string capitalized.
 	self assert: (cap equals: (self newCollection: 'Ab')).
 	self assert: string = (self newCollection: 'Ab')!
+
+testCaseConversions
+	| subject actual expected |
+	#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvíztűrő tükörfúrógép' 'ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP') #('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け' '文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ'))
+		do: 
+			[:each |
+			subject := self assimilateString: each first.
+			actual := subject asUppercase.
+			expected := self assimilateString: each last.
+			self assert: actual equals: expected.
+			self assert: actual asLowercase equals: subject]!
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
@@ -249,6 +263,29 @@ testInvalidComparisons
 	literals do: [:each | self should: [each > str] raise: Error].
 	literals do: [:each | self should: [each >= str] raise: Error]!
 
+testReverse
+	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
+
+	#(#('abc' 'cba') #('año' 'oña') #('文字化け' 'け化字文') #('𐌰𐌱𐌲' '𐌲𐌱𐌰'))
+		do: 
+			[:each |
+			| subject expected |
+			subject := self assimilateString: each first.
+			expected := self assimilateString: each last.
+			self assert: subject reverse equals: expected]!
+
+testStreamUtfRoundTrip
+	| expected actual |
+	"Test a variety of 1 to 4 byte encodings"
+	#('' 'a' 'abc' '£' '£1' 'être' '九龍灣' '文字化けテスト' 'الإعلان العالمى لحقوق الإنسان' '𐌰𐌱𐌲')
+		do: 
+			[:each |
+			expected := self assimilateString: each.
+			actual := expected species writeStream
+						nextPutAll: expected;
+						contents.
+			self assert: (self assimilateString: actual) equals: expected]!
+
 testSubStrings
 	"Test single character delimiter"
 
@@ -375,13 +412,17 @@ testWithNormalizedLineDelimiters
 	"CRLFCR"
 	self assert: (cr , lf , cr) withNormalizedLineDelimiters = (crlf , crlf)! !
 !AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
+!AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AbstractStringTest categoriesFor: #newNumericArray:!helpers!private! !
 !AbstractStringTest categoriesFor: #testAsByteArray!public!unit tests! !
 !AbstractStringTest categoriesFor: #testAt!public!testing / accessing! !
 !AbstractStringTest categoriesFor: #testCapitalized!public!unit tests! !
+!AbstractStringTest categoriesFor: #testCaseConversions!public! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
+!AbstractStringTest categoriesFor: #testReverse!public! !
+!AbstractStringTest categoriesFor: #testStreamUtfRoundTrip!public! !
 !AbstractStringTest categoriesFor: #testSubStrings!public!unit tests! !
 !AbstractStringTest categoriesFor: #testTrimNulls!public!unit tests! !
 !AbstractStringTest categoriesFor: #testUnescapePercents!public!unit tests! !

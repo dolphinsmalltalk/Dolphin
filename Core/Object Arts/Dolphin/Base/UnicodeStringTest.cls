@@ -10,6 +10,9 @@ UnicodeStringTest comment: ''!
 !UnicodeStringTest categoriesForClass!Unclassified! !
 !UnicodeStringTest methodsFor!
 
+assimilateString: aString
+	^aString asUnicodeString!
+
 byteArrayForSequence: aCollection
 	| answer |
 	answer := ByteArray new: aCollection size * 2.
@@ -41,6 +44,7 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUnicodeString equals: wideString.
 	self assert: bstr asString equals: byteString! !
+!UnicodeStringTest categoriesFor: #assimilateString:!helpers!private! !
 !UnicodeStringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !UnicodeStringTest categoriesFor: #collectionClass!helpers!private! !
 !UnicodeStringTest categoriesFor: #testUtf8StringConversion!public! !

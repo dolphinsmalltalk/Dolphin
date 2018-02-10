@@ -13,6 +13,9 @@ StringTest comment: 'This is the unit test for the class String. Unit tests are 
 !StringTest categoriesForClass!Unclassified! !
 !StringTest methodsFor!
 
+assimilateString: aString
+	^aString!
+
 collectionClass
 	^String!
 
@@ -111,6 +114,7 @@ testMatch
 	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
 		do: [:each | self assert: (each match: 'foo')].
 	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
+!StringTest categoriesFor: #assimilateString:!helpers!private! !
 !StringTest categoriesFor: #collectionClass!helpers!private! !
 !StringTest categoriesFor: #testAsPhrase!public!unit tests! !
 !StringTest categoriesFor: #testEquals!public!unit tests! !
