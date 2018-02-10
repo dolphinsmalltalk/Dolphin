@@ -19,13 +19,9 @@ asString
 	| buf answer |
 	buf := COMTaskMemory new.
 	OLELibrary default stringFromIID: self lplpsz: buf.
-	answer := String fromUnicodeString: buf.
+	answer := String fromUtf16String: buf.
 	buf free.		"remove finalization overhead by explicity freeing"
-	^answer
-
-"
-IUnknown iid asString
-"!
+	^answer!
 
 displayOn: aStream
 	"Append an 'end-user suitable' textual representation of the receiver to aStream.
@@ -56,7 +52,7 @@ fromString: aString
 
 	| answer unicodeString |
 	answer := self newNull.
-	unicodeString := aString asUnicodeString.
+	unicodeString := aString asUtf16String.
 	OLELibrary default iidFromString: unicodeString lpiid: answer.
 	^answer!
 

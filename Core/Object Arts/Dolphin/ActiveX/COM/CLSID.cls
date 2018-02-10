@@ -19,8 +19,8 @@ asString
 	| buf answer |
 	buf := COMTaskMemory new.
 	OLELibrary default stringFromCLSID: self lplpsz: buf.
-	answer := String fromUnicodeString: buf.
-	buf free.		"remove finalization overhead by explicity freeing"
+	answer := String fromUtf16String: buf.
+	buf free.	"remove finalization overhead by explicity freeing"
 	^answer!
 
 displayOn: aStream
@@ -43,30 +43,30 @@ progID
 	| pProgId |
 	pProgId := COMTaskMemory new.
 	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
-	^(UnicodeString fromAddress: pProgId) asString! !
+	^(Utf16String fromAddress: pProgId) asString! !
 !CLSID categoriesFor: #asString!converting!public! !
 !CLSID categoriesFor: #displayOn:!displaying!public! !
 !CLSID categoriesFor: #progID!displaying!public! !
 
 !CLSID class methodsFor!
 
-fromProgID: aString 
+fromProgID: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString,
 	which contains a ProgID which is expected to be in the registry."
 
 	| answer |
 	answer := self newNull.
-	OLELibrary default clsidFromProgID: aString asUnicodeString lpclsid: answer.
+	OLELibrary default clsidFromProgID: aString asUtf16String lpclsid: answer.
 	^answer!
 
-fromString: aString 
+fromString: aString
 	"Answer an instance of the receiver instantiated from the argument, aString."
 
 	| answer unicodeString |
 	aString isEmpty ifTrue: [^self null].
 	aString first ~~ ${ ifTrue: [^self fromProgID: aString].
 	answer := self newNull.
-	unicodeString := aString asUnicodeString.
+	unicodeString := aString asUtf16String.
 	OLELibrary default clsidFromString: unicodeString pclsid: answer.
 	^answer!
 

@@ -22,19 +22,25 @@ BSTRs use finalization to safely manage the sys. alloc''d string, but they may b
 !BSTR categoriesForClass!External-Data-Unstructured! !
 !BSTR methodsFor!
 
+asAnsiString
+	"Answer an byte-encoded string representation of the receiver."
+
+	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
+	^self asByteString: String!
+
 asBSTR
 	"Answer the receiver converted to an AX Automation string."
 
 	^self!
 
-asString
-	"Answer a byte string representation of the receiver."
+asByteString: aClass
+	"Private - Answer a byte-string encoding of the receiver using the specified code page for translation."
 
-	| buf size bytes |
-	(size := self size) == 0 ifTrue: [^''].
-	buf := String new: size + size.
+	| bytes buf size |
+	(size := self size) == 0 ifTrue: [^aClass empty].
+	buf := aClass new: size * 4.
 	bytes := KernelLibrary default
-				wideCharToMultiByte: 0
+				wideCharToMultiByte: aClass codePage
 				dwFlags: 0
 				lpWideCharStr: self
 				cchWideChar: size
@@ -46,12 +52,28 @@ asString
 	buf resize: bytes.
 	^buf!
 
+asString
+	"Answer an byte-encoded string representation of the receiver."
+
+	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
+	^self asByteString: String!
+
 asUnicodeString
-	"Answer a UnicodeString composed of the characters of the receiver, or
-	the empty string if the receiver is a null pointer (by convention a null BSTR 
+	#deprecated.
+	^self asUtf16String!
+
+asUtf16String
+	"Answer a Utf16String composed of the characters of the receiver (assumed itself to be UTF16
+	encoded), or the empty string if the receiver is a null pointer (by convention a null BSTR
 	is treated the same as an empty string)."
 
-	^UnicodeString fromAddress: self length: self size!
+	^Utf16String fromAddress: self length: self size!
+
+asUtf8String
+	"Answer an byte-encoded string representation of the receiver."
+
+	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
+	^self asByteString: Utf8String!
 
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
@@ -128,7 +150,7 @@ printOn: aStream
 	aStream 
 		basicPrint: self;
 		nextPut: $(;
-		print: self asUnicodeString;
+		print: self asUtf16String ;
 		nextPut: $)!
 
 size
@@ -155,9 +177,13 @@ value: newValue
 			bstr := newValue asBSTR.
 			bstr == newValue ifTrue: [bstr := bstr copy]].
 	super value: (bstr beUnfinalizable; yourself)! !
+!BSTR categoriesFor: #asAnsiString!converting!public! !
 !BSTR categoriesFor: #asBSTR!converting!public! !
+!BSTR categoriesFor: #asByteString:!converting!private! !
 !BSTR categoriesFor: #asString!converting!public! !
 !BSTR categoriesFor: #asUnicodeString!converting!public! !
+!BSTR categoriesFor: #asUtf16String!converting!public! !
+!BSTR categoriesFor: #asUtf8String!converting!public! !
 !BSTR categoriesFor: #at:!accessing!public! !
 !BSTR categoriesFor: #at:put:!accessing!public! !
 !BSTR categoriesFor: #attach:!accessing!private! !
@@ -196,11 +222,11 @@ fromInteger: anAddress
 				ifTrue: [OutOfMemoryError signal]
 				ifFalse: [answer beFinalizable; yourself]]!
 
-fromString: aString 
+fromString: aString
 	"Answer a new instance of the receiver with the same contents as aString."
 
 	| wstr |
-	wstr := aString asUnicodeString.
+	wstr := aString asUtf16String.
 	wstr size == 0 ifTrue: [^self new].
 	^self fromInteger: wstr yourAddress!
 

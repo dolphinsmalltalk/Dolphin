@@ -17,8 +17,14 @@ assimilate: each
 assimilateString: aString
 	^self subclassResponsibility!
 
+caseConversionCases
+	^#(#('abc �12' 'ABC �12') #('o�a' 'O�A') #('�rv�zturo t�k�rf�r�g�p' '�RV�ZTURO T�K�RF�R�G�P'))!
+
 newNumericArray: anInteger 
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
+
+reverseTestCases
+	^#(#('abc' 'cba') #('o�a' 'a�o'))!
 
 testAsByteArray
 	super testAsByteArray.
@@ -35,7 +41,7 @@ testAt
 
 testCapitalized
 	| string cap |
-	string := self newCollection: ''.
+	string := self assimilateString: ''.
 	self assert: (string capitalized equals: string).
 	string := self newCollection: 'a'.
 	cap := string capitalized.
@@ -56,14 +62,16 @@ testCapitalized
 
 testCaseConversions
 	| subject actual expected |
-	#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvíztűrő tükörfúrógép' 'ÁRVÍZTŰRŐ TÜKÖRFÚRÓGÉP') #('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け' '文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ'))
-		do: 
+	self caseConversionCases do: 
 			[:each |
 			subject := self assimilateString: each first.
 			actual := subject asUppercase.
-			expected := self assimilateString: each last.
+			expected := (self assimilateString: each last) basicCopy.
 			self assert: actual equals: expected.
-			self assert: actual asLowercase equals: subject]!
+			self assert: actual asLowercase equals: subject basicCopy]!
+
+testEmpty
+	self assert: self collectionClass empty class equals: self collectionClass!
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
@@ -266,13 +274,14 @@ testInvalidComparisons
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
 
-	#(#('abc' 'cba') #('año' 'oña') #('文字化け' 'け化字文') #('𐌰𐌱𐌲' '𐌲𐌱𐌰'))
-		do: 
+	#todo.	"Test multi-byte UTF encodings"
+	self reverseTestCases do: 
 			[:each |
-			| subject expected |
+			| subject expected actual |
 			subject := self assimilateString: each first.
 			expected := self assimilateString: each last.
-			self assert: subject reverse equals: expected]!
+			actual := subject reverse.
+			self assert: actual equals: expected basicCopy]!
 
 testStreamUtfRoundTrip
 	| expected actual |
@@ -413,11 +422,14 @@ testWithNormalizedLineDelimiters
 	self assert: (cr , lf , cr) withNormalizedLineDelimiters = (crlf , crlf)! !
 !AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
 !AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
+!AbstractStringTest categoriesFor: #caseConversionCases!constants!private! !
 !AbstractStringTest categoriesFor: #newNumericArray:!helpers!private! !
+!AbstractStringTest categoriesFor: #reverseTestCases!constants!private! !
 !AbstractStringTest categoriesFor: #testAsByteArray!public!unit tests! !
 !AbstractStringTest categoriesFor: #testAt!public!testing / accessing! !
 !AbstractStringTest categoriesFor: #testCapitalized!public!unit tests! !
 !AbstractStringTest categoriesFor: #testCaseConversions!public! !
+!AbstractStringTest categoriesFor: #testEmpty!public!testing / accessing! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !

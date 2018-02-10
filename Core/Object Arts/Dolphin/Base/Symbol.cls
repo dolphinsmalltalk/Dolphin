@@ -25,7 +25,7 @@ _equalsByteString: aString
 
 	^false!
 
-_equalsUnicodeString: anUnicodeString
+_equalsUtf16String: anUnicodeString
 	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
 	Double-dispatched from UnicodeString>>=."
 
@@ -50,6 +50,12 @@ argumentCount
 		argCount := argCount max: 1].
 	^argCount!
 
+asAnsiString
+	"Answer a new ANSI-encoded <readableString> containing the characters of 
+	the receiver."
+
+	^self class ansiClass fromString: self!
+
 asBlock
 	"Answer a block capable of sending the receiver to an object"
 
@@ -72,6 +78,12 @@ asSymbol
 	(i.e. the receiver, since <symbol>s are unique)."
 
 	^self!
+
+basicCopy
+	"Private - Answer a writable copy of the receiver."
+
+	^self species fromAddress: self yourAddress
+!
 
 deepCopy
 	"Answer the receiver - Symbols are unique, so a copy with the same characters
@@ -201,12 +213,14 @@ stbSaveOn: anSTBOutFiler
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
 !Symbol categoriesFor: #_equalsByteString:!comparing!private! !
-!Symbol categoriesFor: #_equalsUnicodeString:!comparing!private! !
+!Symbol categoriesFor: #_equalsUtf16String:!comparing!private! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
+!Symbol categoriesFor: #asAnsiString!converting!public! !
 !Symbol categoriesFor: #asBlock!converting!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
+!Symbol categoriesFor: #basicCopy!copying!private! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
@@ -285,7 +299,8 @@ initialize
 	Table	-	An Array which is used as a hash table containing WeakArray buckets, in which the currently used
 				instances of the receiver are kept."
 
-	Table isNil ifTrue: [Table := Array new: 3989]!
+	Table isNil ifTrue: [Table := Array new: 3989].
+	empty := #''!
 
 intern: aString
 	"Answer the unique Symbol for aString."

@@ -92,6 +92,7 @@ package methodNames
 	add: #Process -> #fpeMask;
 	add: #ShlwapiLibrary -> #pathStripPath:;
 	add: #String -> #asDword;
+	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
@@ -100,6 +101,8 @@ package methodNames
 	add: 'ExternalDescriptor class' -> #oneStringArg;
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
+	add: 'String class' -> #fromUnicodeString:;
+	add: 'String class' -> #unicodeClass;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -680,8 +683,25 @@ asDword
 	longer required, or it will be a dangling pointer."
 
 	#deprecated.
-	^self yourAddress! !
+	^self yourAddress!
+
+asUnicodeString
+	#deprecated.
+	^self asUtf16String! !
 !String categoriesFor: #asDword!converting!public! !
+!String categoriesFor: #asUnicodeString!converting!public! !
+
+!String class methodsFor!
+
+fromUnicodeString: anAddressOrUnicodeString
+	#deprecated.
+	^self fromUtf16String: anAddressOrUnicodeString!
+
+unicodeClass
+	#deprecated.
+	^self utf16Class! !
+!String class categoriesFor: #fromUnicodeString:!instance creation!public! !
+!String class categoriesFor: #unicodeClass!constants!public! !
 
 !WinMMLibrary methodsFor!
 

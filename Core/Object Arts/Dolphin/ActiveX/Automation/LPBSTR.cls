@@ -27,9 +27,13 @@ asString
 	^self asUnicodeString asString!
 
 asUnicodeString
-	"Answer a UnicodeString composed of the characters of the receiver, or
-	the empty string if the receiver is a null pointer (by convention a null BSTR 
-	is treated the same as an empty string)."
+	#deprecated.
+	^self asUtf16String!
+
+asUtf16String
+	"Answer a Utf16String composed of the characters of the BSTR pointed at by the receiver
+	(assumed itself to be UTF16 encoded), or the empty string if the referenced BSTR is a null
+	pointer (by convention a null BSTR is treated the same as an empty string)."
 
 	| bstr |
 	bstr := bytes uintPtrAtOffset: 0.
@@ -55,6 +59,7 @@ value: aString
 	super value: bstr detach! !
 !LPBSTR categoriesFor: #asString!converting!public! !
 !LPBSTR categoriesFor: #asUnicodeString!converting!public! !
+!LPBSTR categoriesFor: #asUtf16String!converting!public! !
 !LPBSTR categoriesFor: #value!accessing!public! !
 !LPBSTR categoriesFor: #value:!accessing!public! !
 

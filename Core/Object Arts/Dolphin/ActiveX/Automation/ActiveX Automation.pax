@@ -250,9 +250,9 @@ package methodNames
 	add: 'ULARGE_INTEGER class' -> #typeName;
 	add: 'UndefinedObject class' -> #typeName;
 	add: 'UndefinedObject class' -> #vt;
-	add: 'UnicodeString class' -> #pointerType;
-	add: 'UnicodeString class' -> #typeName;
-	add: 'UnicodeString class' -> #vt;
+	add: 'Utf16String class' -> #pointerType;
+	add: 'Utf16String class' -> #typeName;
+	add: 'Utf16String class' -> #vt;
 	add: 'VOID class' -> #typeName;
 	add: 'VOID class' -> #vt;
 	add: 'WORD class' -> #typeName;
@@ -1666,7 +1666,7 @@ loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptli
 	^self invalidCall!
 
 loadTypeLib: szFileName pptlib: lplptlib
-	<stdcall: hresult LoadTypeLib UnicodeString* lppvoid>
+	<stdcall: hresult LoadTypeLib lpwstr lppvoid>
 	^self invalidCall!
 
 loadTypeLibEx: szFileName regkind: regkind pptlib: lplptlib
@@ -1678,7 +1678,7 @@ loadTypeLibEx: szFileName regkind: regkind pptlib: lplptlib
 			ITypeLib FAR* FAR*	pptlib
 		)"
 
-	<stdcall: hresult LoadTypeLibEx UnicodeString* sdword lppvoid>
+	<stdcall: hresult LoadTypeLibEx lpwstr sdword lppvoid>
 	^self invalidCall!
 
 oleCreateFontIndirect: pFontDesc riid: riid ppvObj: ppvObj
@@ -2301,7 +2301,7 @@ vt
 !UndefinedObject class categoriesFor: #typeName!constants!private! !
 !UndefinedObject class categoriesFor: #vt!constants!public! !
 
-!UnicodeString class methodsFor!
+!Utf16String class methodsFor!
 
 pointerType
 	"Answer the <ExternalStructure> class to represent pointers to this external type with the
@@ -2320,9 +2320,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_LPWSTR! !
-!UnicodeString class categoriesFor: #pointerType!constants!private! !
-!UnicodeString class categoriesFor: #typeName!constants!private! !
-!UnicodeString class categoriesFor: #vt!constants!public! !
+!Utf16String class categoriesFor: #pointerType!constants!private! !
+!Utf16String class categoriesFor: #typeName!constants!private! !
+!Utf16String class categoriesFor: #vt!constants!public! !
 
 !VOID class methodsFor!
 

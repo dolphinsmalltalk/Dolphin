@@ -3,10 +3,12 @@
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
 	classVariableNames: 'LineDelimiter NullPrintCharacter'
-	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	poolDictionaries: ''
+	classInstanceVariableNames: 'empty'!
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
+String addClassConstant: 'LineDelimiter' value: '
+'!
 String comment: 'String is the class of <ArrayedCollection>s whose elements are <Character>s.
 
 N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null terminated. Space for the null terminator is implicity included when a String is allocated, but is not reported when the size of the String is requested.
@@ -72,11 +74,11 @@ _equalsByteString: aString
 	"We should only get here if the byte comparison primitive failed unexpectedly."
 	^aString primitiveFailed!
 
-_equalsUnicodeString: aUnicodeString
-	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
-	Double-dispatched from UnicodeString>>=."
+_equalsUtf16String: aUtf16String
+	"Private - Answer whether the receiver is equivalent to the <Utf16String>, aString. 
+	Double-dispatched from Utf16String>>=."
 
-	^self asUnicodeString = aUnicodeString!
+	^self asUtf16String = aUtf16String!
 
 _indexOfAnyInString: aString startingAt: anInteger 
 	| span |
@@ -161,16 +163,23 @@ _separateSubStringsIn: aReadableString
 
 	^(self _collate: comparand) >= 0!
 
+asAnsiString
+	"Answer an ANSI encoded string representation of the receiver."
+
+	#todo. "Make String abstract, with AnsiString subclass"
+	^self!
+
 asByteArray
-	"Answer a <ByteArray> containing the codepoint representations of the characters of the
+	"Answer a <ByteArray> containing the encoded representations of the characters of the
 	receiver."
 
 	| size |
-	size := self size.
+	size := self basicSize.
 	^self
-		replaceBytesOf: (ByteArray new: size) 
-		from: 1 to: size startingAt: 1.
-!
+		replaceBytesOf: (ByteArray new: size)
+		from: 1
+		to: size
+		startingAt: 1!
 
 asLowercase
 	"Answer a <readableString> which is a copy of the receiver but
@@ -218,6 +227,8 @@ asString
 	"Answer a <readableString> containing the same characters as the receiver,
 	i.e. the receiver."
 
+	"For historical reasons, this is always an ANSI-encoded byte string."
+
 	^self!
 
 asSymbol
@@ -236,9 +247,6 @@ asUIntPtr
 
 	^self yourAddress!
 
-asUnicodeString
-	^self class unicodeClass fromString: self!
-
 asUppercase
 	"Answer a <readableString> which is a copy of the receiver but with 
 	the contents converted to uppercase.
@@ -249,6 +257,14 @@ asUppercase
 	copy := self basicCopy.
 	UserLibrary default stringUpperA: copy.
 	^copy!
+
+asUtf16String
+	^self class utf16Class fromString: self!
+
+asUtf8String
+	"Answer a UTF8 encoded string representation of the receiver."
+
+	^self asUtf16String asUtf8String!
 
 at: index
 	"Answer the <Character> at the <integer> index, in the receiver.
@@ -274,10 +290,9 @@ at: anInteger put: aCharacter
 		ifFalse: [self error: ('can''t hold <1p>''s' expandMacrosWith: aCharacter class)]!
 
 basicCopy
-	"Private - Answer a copy of the receiver. Not to be overridden
-	by subclasses. Should always answer a String."
+	"Private - Answer a writable copy of the receiver."
 
-	^self species fromAddress: self yourAddress
+	^self shallowCopy
 !
 
 beginsWith: comperand
@@ -322,6 +337,9 @@ capitalized
 	| answer |
 	(answer := self basicCopy) notEmpty ifTrue: [answer at: 1 put: self first asUppercase].
 	^answer!
+
+codePage
+	^self class codePage!
 
 contains: aString
 	"Answer whether the receiver contains the specified sub-string."
@@ -537,7 +555,7 @@ formatWithArguments: aCollection
 	^KernelLibrary default 
 		formatMessage: 0
 		source: self
-		flags: FORMAT_MESSAGE_FROM_STRING
+		flags: Win32Constants.FORMAT_MESSAGE_FROM_STRING
 		withArguments: aCollection!
 
 hash
@@ -1046,7 +1064,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !String categoriesFor: #_collate:!comparing!private! !
 !String categoriesFor: #_equalsByteString:!comparing!private! !
-!String categoriesFor: #_equalsUnicodeString:!comparing!private! !
+!String categoriesFor: #_equalsUtf16String:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
 !String categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
@@ -1055,6 +1073,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #=!comparing!public! !
 !String categoriesFor: #>!comparing!public! !
 !String categoriesFor: #>=!comparing!public! !
+!String categoriesFor: #asAnsiString!converting!public! !
 !String categoriesFor: #asByteArray!converting!public! !
 !String categoriesFor: #asLowercase!converting!public! !
 !String categoriesFor: #asNumber!converting!public! !
@@ -1062,8 +1081,9 @@ withNormalizedLineDelimiters
 !String categoriesFor: #asString!converting!public! !
 !String categoriesFor: #asSymbol!converting!public! !
 !String categoriesFor: #asUIntPtr!converting!public! !
-!String categoriesFor: #asUnicodeString!converting!public! !
 !String categoriesFor: #asUppercase!converting!public! !
+!String categoriesFor: #asUtf16String!converting!public! !
+!String categoriesFor: #asUtf8String!converting!public! !
 !String categoriesFor: #at:!accessing!public! !
 !String categoriesFor: #at:put:!accessing!public! !
 !String categoriesFor: #basicCopy!copying!private! !
@@ -1072,6 +1092,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #between:and:!comparing!public! !
 !String categoriesFor: #byteSize!accessing!private! !
 !String categoriesFor: #capitalized!converting!public! !
+!String categoriesFor: #codePage!constants!public! !
 !String categoriesFor: #contains:!public! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
@@ -1137,6 +1158,15 @@ String methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #<
 
 !String class methodsFor!
 
+ansiClass
+	"Answer the class of String to use for ANSI-encoded strings."
+
+	^String!
+
+codePage
+	#todo.	"This should really be 1252, but historically we have used the current ANSI code page (which may vary by machine)"
+	^Win32Constants.CP_ACP!
+
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
@@ -1147,7 +1177,7 @@ empty
 	N.B. The compiler generates reference to a shared empty string in any case
 	so there should never be more than one empty literal string."
 
-	^''!
+	^empty!
 
 formatMessage: anIntegerId in: hModule withArguments: arguments
 	"Answer a String which is a message formatted from the format String with the
@@ -1171,10 +1201,10 @@ formatSystemMessage: anIntegerId withArguments: arguments
 	specified id in the specified module, with arguments substituted from
 	argumentCollection."
 
-	^KernelLibrary default 
-		formatMessage: anIntegerId 
+	^KernelLibrary default
+		formatMessage: anIntegerId
 		source: 0
-		flags: FORMAT_MESSAGE_FROM_SYSTEM
+		flags: Win32Constants.FORMAT_MESSAGE_FROM_SYSTEM
 		withArguments: arguments!
 
 fromAddress: anAddress
@@ -1203,6 +1233,16 @@ fromAtomId: anInteger
 	^(atomName := String new: 255)
 		leftString: (KernelLibrary default getAtomName: anInteger lpBuffer: atomName nSize: atomName basicSize)!
 
+fromByteArray: aByteArray
+	| size |
+	size := aByteArray size.
+	^(self basicNew: size)
+		replaceFrom: 1
+			to: size
+			with: aByteArray
+			startingAt: 1;
+		yourself!
+
 fromId: anInteger
 	"Answer a new String loaded from resources."
 
@@ -1222,7 +1262,7 @@ fromId: resourceId in: anExternalLibraryOrHandle
 	^answer leftString: len!
 
 fromString: aString
-	"Answer a new instance of the receiver copied from aString."
+	"Answer a new instance of the receiver containing the same characters as the argument, aString."
 
 	| size |
 	size := aString size.
@@ -1230,27 +1270,28 @@ fromString: aString
 		replaceBytesOf: (self new: size)
 		from: 1 to: size startingAt: 1!
 
-fromUnicodeString: anAddressOrUnicodeString
-	"Answer a single byte String representation of the Unicode string at the specified
+fromUtf16String: anAddressOrUtf16String
+	"Answer a byte-encoded String representation of the UTF16 string at the specified
 	address."
 
-	| answer size lib |
+	| answer size lib cp |
 	lib := KernelLibrary default.
+	cp := self codePage.
 	(size := lib
-		wideCharToMultiByte: 0
-		dwFlags: 0
-		lpWideCharStr: anAddressOrUnicodeString
-		cchWideChar: -1
-		lpMultiByteStr: nil
-		cchMultiByte: 0
-		lpDefaultChar: nil
-		lpUsedDefaultChar: nil) == 0
-			ifTrue: [lib systemError].
-	answer := self new: size-1.
+				wideCharToMultiByte: cp
+				dwFlags: 0
+				lpWideCharStr: anAddressOrUtf16String
+				cchWideChar: -1
+				lpMultiByteStr: nil
+				cchMultiByte: 0
+				lpDefaultChar: nil
+				lpUsedDefaultChar: nil) == 0
+		ifTrue: [lib systemError].
+	answer := self new: size - 1.
 	lib
-		wideCharToMultiByte: 0
+		wideCharToMultiByte: cp
 		dwFlags: 0
-		lpWideCharStr: anAddressOrUnicodeString
+		lpWideCharStr: anAddressOrUtf16String
 		cchWideChar: -1
 		lpMultiByteStr: answer
 		cchMultiByte: answer basicSize
@@ -1264,8 +1305,8 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	LineDelimiter isImmutable: true.
-	NullPrintCharacter := $?!
+	NullPrintCharacter := $?.
+	empty := ''!
 
 lineDelimiter
 	"Answer an immutable instance of the receiver containing the host system 
@@ -1310,10 +1351,17 @@ tab
 
 	^##(self with: Character tab)!
 
-unicodeClass
-	"Answer the class of String to use for Unicode."
+utf16Class
+	"Answer the class of String to use for UTF16-encoded strings."
 
-	^UnicodeString! !
+	^Utf16String!
+
+utf8Class
+	"Answer the class of String to use for UTF8-encoded strings."
+
+	^Utf16String! !
+!String class categoriesFor: #ansiClass!constants!public! !
+!String class categoriesFor: #codePage!constants!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
 !String class categoriesFor: #formatMessage:in:withArguments:!instance creation!public! !
@@ -1322,10 +1370,11 @@ unicodeClass
 !String class categoriesFor: #fromAddress:!instance creation!public! !
 !String class categoriesFor: #fromAddress:length:!instance creation!public! !
 !String class categoriesFor: #fromAtomId:!instance creation!public! !
+!String class categoriesFor: #fromByteArray:!public! !
 !String class categoriesFor: #fromId:!instance creation!public! !
 !String class categoriesFor: #fromId:in:!instance creation!public! !
 !String class categoriesFor: #fromString:!instance creation!public! !
-!String class categoriesFor: #fromUnicodeString:!instance creation!public! !
+!String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !String class categoriesFor: #icon!constants!public! !
 !String class categoriesFor: #initialize!development!initializing!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !
@@ -1333,7 +1382,8 @@ unicodeClass
 !String class categoriesFor: #nullPrintCharacter:!accessing!development!public! !
 !String class categoriesFor: #readFrom:!instance creation!public! !
 !String class categoriesFor: #tab!instance creation!public! !
-!String class categoriesFor: #unicodeClass!constants!public! !
+!String class categoriesFor: #utf16Class!constants!public! !
+!String class categoriesFor: #utf8Class!constants!public! !
 
 String class methodProtocol: #'String factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 
