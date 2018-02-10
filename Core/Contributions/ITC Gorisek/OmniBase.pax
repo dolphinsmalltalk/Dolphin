@@ -307,7 +307,7 @@ package methodNames
 	add: #UndefinedObject -> #odbLoadVariables:classInfo:;
 	add: #UndefinedObject -> #odbObjectID;
 	add: #UndefinedObject -> #odbSerialize:;
-	add: #UnicodeString -> #odbBasicSerialize:;
+	add: #Utf16String -> #odbBasicSerialize:;
 	add: 'Array class' -> #odbDeserialize:;
 	add: 'Association class' -> #odbDeserialize:;
 	add: 'Character class' -> #odbDeserialize:;
@@ -332,7 +332,7 @@ package methodNames
 	add: 'Time class' -> #odbDeserialize:;
 	add: 'Time class' -> #secondClockValue;
 	add: 'UndefinedObject class' -> #odbDeserialize:;
-	add: 'UnicodeString class' -> #odbDeserialize:;
+	add: 'Utf16String class' -> #odbDeserialize:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -1885,7 +1885,7 @@ odbDeserialize: deserializer
 	^nil! !
 !UndefinedObject class categoriesFor: #odbDeserialize:!OmniBase!public! !
 
-!UnicodeString methodsFor!
+!Utf16String methodsFor!
 
 odbBasicSerialize: serializer 
 	| len stream |
@@ -1894,16 +1894,16 @@ odbBasicSerialize: serializer
 		putByte: 36;
 		putPositiveInteger: len.
 	1 to: len do: [:i | stream putWord: (self at: i) asInteger]! !
-!UnicodeString categoriesFor: #odbBasicSerialize:!OmniBase!public! !
+!Utf16String categoriesFor: #odbBasicSerialize:!OmniBase!public! !
 
-!UnicodeString class methodsFor!
+!Utf16String class methodsFor!
 
 odbDeserialize: deserializer 
 	| str len stream |
 	str := self new: (len := (stream := deserializer stream) getPositiveInteger).
 	1 to: len do: [:i | str at: i put: (Character value: stream getWord)].
 	^deserializer register: str! !
-!UnicodeString class categoriesFor: #odbDeserialize:!OmniBase!public! !
+!Utf16String class categoriesFor: #odbDeserialize:!OmniBase!public! !
 
 "End of package definition"!
 

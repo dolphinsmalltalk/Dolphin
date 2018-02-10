@@ -46,7 +46,7 @@ testMixedConcatenation
 	subjects := #(#() #(1) #(1 2)).
 	(Array
 		with: String empty
-		with: UnicodeString empty
+		with: Utf16String empty
 		with: ByteArray new
 		with: OrderedCollection new
 		with: (1 to: 0)) do: 

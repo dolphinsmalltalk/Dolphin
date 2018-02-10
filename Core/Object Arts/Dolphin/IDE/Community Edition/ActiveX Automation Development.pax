@@ -516,6 +516,7 @@ package methodNames
 	add: 'TKindModuleAnalyzer class' -> #publishedAspectsOfInstances;
 	add: 'UINT_PTR class' -> #arrayType;
 	add: 'UnicodeString class' -> #printMethodArgument:elemdesc:indirections:on:;
+	add: 'Utf16String class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'VARIANT class' -> #example1;
 	add: 'VARIANT class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'VARIANT class' -> #printOptionalParameter:on:;
@@ -536,6 +537,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\ActiveX\Automation\ActiveX Automation';
 	add: '..\Base\Development System';
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
@@ -7113,18 +7115,25 @@ arrayType
 	^UINT_PTRArray! !
 !UINT_PTR class categoriesFor: #arrayType!constants!development!private! !
 
-!UnicodeString class methodsFor!
+!Utf16String class methodsFor!
 
 printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
 	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
 
 	elemdesc isOut
-		ifTrue: [super printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target]
-		ifFalse: [target nextPutAll: argName; space; nextPutAll: #asUnicodeString]
-
-! !
-!UnicodeString class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!development!private! !
+		ifTrue: 
+			[super
+				printMethodArgument: argName
+				elemdesc: elemdesc
+				indirections: indirs
+				on: target]
+		ifFalse: 
+			[target
+				nextPutAll: argName;
+				space;
+				nextPutAll: #asUtf16String]! !
+!Utf16String class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!development!private! !
 
 !VARDESC methodsFor!
 

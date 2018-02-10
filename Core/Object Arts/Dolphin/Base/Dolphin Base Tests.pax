@@ -67,6 +67,7 @@ package classNames
 	add: #MemoryManagerTest;
 	add: #MergesortAlgorithmTest;
 	add: #MethodDictionaryTest;
+	add: #MultiByteStringTest;
 	add: #MustBeBooleanTestClasses;
 	add: #NeverSearchPolicyTest;
 	add: #NumberTest;
@@ -115,7 +116,8 @@ package classNames
 	add: #TimeTest;
 	add: #TrueTest;
 	add: #UndefinedObjectTest;
-	add: #UnicodeStringTest;
+	add: #Utf16StringTest;
+	add: #Utf8StringTest;
 	add: #VARIANTTest;
 	add: #WORDArrayTest;
 	add: #WriteStreamTest;
@@ -511,6 +513,11 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+AbstractStringTest subclass: #MultiByteStringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 AbstractStringTest subclass: #StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -521,7 +528,12 @@ AbstractStringTest subclass: #SymbolTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #UnicodeStringTest
+MultiByteStringTest subclass: #Utf16StringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MultiByteStringTest subclass: #Utf8StringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

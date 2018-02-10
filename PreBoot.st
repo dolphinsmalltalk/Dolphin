@@ -345,6 +345,7 @@ isAbstract: aBoolean
 	self setShapeFlags: _NonInstantiableMask to: aBoolean! !
 
 Behavior owningPackage removeGlobalNamed: #_BehaviorMasks!
+Smalltalk removeKey: #_BehaviorMasks ifAbsent: []!
 
 !String methodsFor!
 
@@ -355,3 +356,44 @@ contains: aString
 
 Character instanceVariableString: 'codePoint'!
 
+Smalltalk at: #Utf16String put: UnicodeString!
+UnicodeString setName: #Utf16String!
+
+!Utf16String class methodsFor!
+fromString: aString
+	| answer cch |
+	cch := aString size.
+	answer := self new: cch.
+	^(cch := KernelLibrary default
+				multiByteToWideChar: Win32Constants.CP_ACP
+				dwFlags: 0
+				lpMultiByteStr: aString
+				cchMultiByte: -1
+				lpWideCharStr: answer
+				cchWideChar: cch + 1) == 0
+		ifTrue: [KernelLibrary default systemError]
+		ifFalse: [answer resize: cch - 1]! !
+
+!String class methodsFor!
+formatSystemMessage: anIntegerId withArguments: arguments
+	^KernelLibrary default
+		formatMessage: anIntegerId
+		source: 0
+		flags: Win32Constants.FORMAT_MESSAGE_FROM_SYSTEM
+		withArguments: arguments! !
+
+!String methodsFor!
+formatWithArguments: aCollection 
+	^KernelLibrary default 
+		formatMessage: 0
+		source: self
+		flags: Win32Constants.FORMAT_MESSAGE_FROM_STRING
+		withArguments: aCollection! !
+
+ArrayedCollection variableByteSubclass: #String
+	instanceVariableNames: ''
+	classVariableNames: 'LineDelimiter NullPrintCharacter'
+	poolDictionaries: ''
+	classInstanceVariableNames: 'empty'!
+
+String instVarAt: 14 put: ''!

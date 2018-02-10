@@ -268,6 +268,7 @@ package methodNames
 	add: #RegKeyAbstract -> #debugPrintString;
 	add: #ResourceIdentifier -> #assign:;
 	add: #ResourceIdentifier -> #assignLiteralResourceData:;
+	add: #ResourceIdentifier -> #browse;
 	add: #ResourceIdentifier -> #edit;
 	add: #ResourceIdentifier -> #prompt;
 	add: #ResourceIdentifier -> #publishedAspects;
@@ -331,7 +332,7 @@ package methodNames
 	add: #TranscriptShell -> #help;
 	add: #UndefinedObject -> #aspectDisplayOn:;
 	add: #UndefinedObject -> #literalTextStyle;
-	add: #UnicodeString -> #aspectDisplayOn:;
+	add: #Utf16String -> #aspectDisplayOn:;
 	add: #ValueModel -> #debugPrintString;
 	add: #VariableEnvironment -> #includesMethodUncached:;
 	add: #VariableEnvironment -> #updateCachesForMethod:;
@@ -3945,6 +3946,9 @@ assignLiteralResourceData: aLiteralArray
 	source := stream contents.
 	self owningClass class compile: source classified: self class viewResourceCategoryName!
 
+browse
+	^self edit!
+
 edit
     	"Invoke a suitable editor on the resource identified by the receiver."
     
@@ -3975,6 +3979,7 @@ reassign
 	view destroy! !
 !ResourceIdentifier categoriesFor: #assign:!accessing!public! !
 !ResourceIdentifier categoriesFor: #assignLiteralResourceData:!accessing!private! !
+!ResourceIdentifier categoriesFor: #browse!development!public! !
 !ResourceIdentifier categoriesFor: #edit!development!operations!public! !
 !ResourceIdentifier categoriesFor: #prompt!development!operations!public! !
 !ResourceIdentifier categoriesFor: #publishedAspects!constants!development!public! !
@@ -5576,11 +5581,11 @@ literalTextStyle
 !UndefinedObject categoriesFor: #aspectDisplayOn:!development!private! !
 !UndefinedObject categoriesFor: #literalTextStyle!constants!private! !
 
-!UnicodeString methodsFor!
+!Utf16String methodsFor!
 
 aspectDisplayOn: aStream
 	self asString aspectDisplayOn: aStream! !
-!UnicodeString categoriesFor: #aspectDisplayOn:!development!private! !
+!Utf16String categoriesFor: #aspectDisplayOn:!development!private! !
 
 !ValueConverter class methodsFor!
 

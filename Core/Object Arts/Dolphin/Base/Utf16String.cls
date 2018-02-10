@@ -1,17 +1,17 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #UnicodeString
+String variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-UnicodeString guid: (GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
-UnicodeString isNullTerminated: true!
-UnicodeString comment: 'UnicodeString is a minimal class to support wide character (16-bit) Unicode strings. Natively Dolphin uses byte-character strings at present.
+Utf16String guid: (GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
+Utf16String isNullTerminated: true!
+Utf16String comment: 'Utf16String is a minimal class to support UTF16 encoded wide character strings. Natively Dolphin uses byte-character strings at present.
 
-UnicodeStrings can be constructed from <String>s when needed by sending the #asUnicodeString message, and converted back again by sending the #asString message.'!
-!UnicodeString categoriesForClass!Collections-Text! !
-!UnicodeString methodsFor!
+Utf16Strings can be constructed from <String>s when needed by sending the #asUtf16String message, and converted back again by sending the #asString message.'!
+!Utf16String categoriesForClass!Collections-Text! !
+!Utf16String methodsFor!
 
 , aSequencedReadableCollection
 	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
@@ -42,13 +42,14 @@ _equalsByteString: aString
 	"Private - Answer whether the receiver is equivalent to the byte string, aString. 
 	Double-dispatched from String>>=."
 
-	^aString asUnicodeString = self!
+	^aString asUtf16String = self!
 
-_equalsUnicodeString: aUnicodeString
+_equalsUtf16String: aUnicodeString
 	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
 	Double-dispatched from UnicodeString>>=."
 
 	"We should only get here if the byte comparison primitive failed unexpected."
+
 	^aUnicodeString primitiveFailed!
 
 = comparand
@@ -59,18 +60,31 @@ _equalsUnicodeString: aUnicodeString
 		0 -	aString is not a byte object of the same class as the receiver."
 
 	<primitive: 55>
-	^comparand isString and: [comparand _equalsUnicodeString: self]!
+	^comparand isString and: [comparand _equalsUtf16String: self]!
 
-asByteArray
-	"Answer a <ByteArray> containing the Unicode representation of the characters of the
-	receiver."
+asAnsiString
+	"Answer an ANSI encoded string representation of the receiver."
 
-	| size |
-	size := self basicSize.
-	^super
-		replaceBytesOf: (ByteArray new: size) 
-		from: 1 to: size startingAt: 1.
-!
+	^self asByteString: String!
+
+asByteString: aClass
+	"Private - Answer a byte-string encoded <String> of the specified class containing the same characters as the receiver."
+
+	| bytes buf size |
+	(size := self size) == 0 ifTrue: [^aClass empty].	"Avoid 'The Parameter is Incorrect' error"
+	buf := aClass new: size * 4.
+	bytes := KernelLibrary default
+				wideCharToMultiByte: aClass codePage
+				dwFlags: 0
+				lpWideCharStr: self
+				cchWideChar: -1
+				lpMultiByteStr: buf
+				cchMultiByte: buf size + 1
+				lpDefaultChar: nil
+				lpUsedDefaultChar: nil.
+	bytes == 0 ifTrue: [^KernelLibrary default systemError].
+	buf resize: bytes - 1.
+	^buf!
 
 asLowercase
 	| copy |
@@ -79,35 +93,26 @@ asLowercase
 	^copy!
 
 asString
-	"Answer a byte string representation of the receiver."
+	"Answer an byte encoded string representation of the receiver."
 
-	| buf size bytes |
-	size := self size.
-	buf := String new: size+size.
-	size == 0 ifTrue: [^buf].	"Avoid 'The Parameter is Incorrect' error"
-	bytes := KernelLibrary default
-		wideCharToMultiByte: 0
-		dwFlags: 0
-		lpWideCharStr: self
-		cchWideChar: size
-		lpMultiByteStr: buf
-		cchMultiByte: buf size
-		lpDefaultChar: nil
-		lpUsedDefaultChar: nil.
-	bytes == 0 ifTrue: [^KernelLibrary default systemError].
-	buf resize: bytes.
-	^buf!
-
-asUnicodeString
-	"Answer a wide character String representation of the receiver."
-
-	^self!
+	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
+	^self asByteString: String!
 
 asUppercase
 	| copy |
 	copy := self basicCopy.
 	UserLibrary default stringUpperW: copy.
 	^copy!
+
+asUtf16String
+	"Answer a UTF16-encoded equivalent of the receiver (i.e. the receiver)."
+
+	^self!
+
+asUtf8String
+	"Answer a UTF8 encoded string representation of the receiver."
+
+	^self asByteString: Utf8String!
 
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
@@ -193,6 +198,9 @@ nextIndexOf: anElement from: start to: stop
 	self from: start to: stop keysAndValuesDo: [:i :elem | elem = anElement ifTrue: [^i]].
 	^0!
 
+printOn: aStream
+	self asString printOn: aStream!
+
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
 	"Replace the characters of the receiver at index positions startInteger through stopInteger
 	inclusive with consecutive characters of the <readableString>, aReadableString, beginning at
@@ -221,9 +229,9 @@ size
 
 	^self basicSize bitShift: -1!
 
-strcspn: aString start: anInteger 
+strcspn: aString start: anInteger
 	^CRTLibrary default wcscspn: self yourAddress + ((anInteger - 1) * 2)
-		strCharSet: aString asUnicodeString!
+		strCharSet: aString asUtf16String!
 
 wordAtOffset: anInteger
 	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
@@ -254,35 +262,41 @@ wordAtOffset: anInteger put: anObject
 
 	<primitive: 125>
 	^self primitiveFailed! !
-!UnicodeString categoriesFor: #,!copying!public! !
-!UnicodeString categoriesFor: #_appendToString:!comparing!double dispatch!private! !
-!UnicodeString categoriesFor: #_equalsByteString:!comparing!private! !
-!UnicodeString categoriesFor: #_equalsUnicodeString:!comparing!private! !
-!UnicodeString categoriesFor: #=!comparing!public! !
-!UnicodeString categoriesFor: #asByteArray!converting!public! !
-!UnicodeString categoriesFor: #asLowercase!converting!public! !
-!UnicodeString categoriesFor: #asString!converting!public! !
-!UnicodeString categoriesFor: #asUnicodeString!converting!public! !
-!UnicodeString categoriesFor: #asUppercase!converting!public! !
-!UnicodeString categoriesFor: #at:!accessing!public! !
-!UnicodeString categoriesFor: #at:put:!accessing!public! !
-!UnicodeString categoriesFor: #beginsWith:!comparing!public! !
-!UnicodeString categoriesFor: #byteSize!accessing!private! !
-!UnicodeString categoriesFor: #displayOn:!printing!public! !
-!UnicodeString categoriesFor: #findString:startingAt:!public!searching! !
-!UnicodeString categoriesFor: #first:!copying!public! !
-!UnicodeString categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
-!UnicodeString categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!UnicodeString categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!UnicodeString categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!UnicodeString categoriesFor: #resize:!mutating!public! !
-!UnicodeString categoriesFor: #shallowCopy!public! !
-!UnicodeString categoriesFor: #size!accessing!public! !
-!UnicodeString categoriesFor: #strcspn:start:!private!searching! !
-!UnicodeString categoriesFor: #wordAtOffset:!accessing!primitives!private! !
-!UnicodeString categoriesFor: #wordAtOffset:put:!accessing!primitives!private! !
+!Utf16String categoriesFor: #,!copying!public! !
+!Utf16String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
+!Utf16String categoriesFor: #_equalsByteString:!comparing!private! !
+!Utf16String categoriesFor: #_equalsUtf16String:!comparing!private! !
+!Utf16String categoriesFor: #=!comparing!public! !
+!Utf16String categoriesFor: #asAnsiString!converting!public! !
+!Utf16String categoriesFor: #asByteString:!converting!private! !
+!Utf16String categoriesFor: #asLowercase!converting!public! !
+!Utf16String categoriesFor: #asString!converting!public! !
+!Utf16String categoriesFor: #asUppercase!converting!public! !
+!Utf16String categoriesFor: #asUtf16String!converting!public! !
+!Utf16String categoriesFor: #asUtf8String!converting!public! !
+!Utf16String categoriesFor: #at:!accessing!public! !
+!Utf16String categoriesFor: #at:put:!accessing!public! !
+!Utf16String categoriesFor: #beginsWith:!comparing!public! !
+!Utf16String categoriesFor: #byteSize!accessing!private! !
+!Utf16String categoriesFor: #displayOn:!printing!public! !
+!Utf16String categoriesFor: #findString:startingAt:!public!searching! !
+!Utf16String categoriesFor: #first:!copying!public! !
+!Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
+!Utf16String categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
+!Utf16String categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!Utf16String categoriesFor: #printOn:!printing!public! !
+!Utf16String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
+!Utf16String categoriesFor: #resize:!mutating!public! !
+!Utf16String categoriesFor: #shallowCopy!public! !
+!Utf16String categoriesFor: #size!accessing!public! !
+!Utf16String categoriesFor: #strcspn:start:!private!searching! !
+!Utf16String categoriesFor: #wordAtOffset:!accessing!primitives!private! !
+!Utf16String categoriesFor: #wordAtOffset:put:!accessing!primitives!private! !
 
-!UnicodeString class methodsFor!
+!Utf16String class methodsFor!
+
+codePage
+	^self shouldNotImplement!
 
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
@@ -313,20 +327,26 @@ fromAddress: anAddress length: anInteger
 
 fromString: aString
 	"Answer a new instance of the receiver containing the same characters as the <String>
-	argument.
-	Implementation Note: CP_ACP is the only code page supported by Win95."
+	argument."
 
-	| answer |
-	answer := self new: aString size.
-	(KernelLibrary default 
-		multiByteToWideChar: CP_ACP
-		dwFlags: 0
-		lpMultiByteStr: aString
-		cchMultiByte: -1
-		lpWideCharStr: answer
-		cchWideChar: answer basicSize) == 0 
-		ifTrue: [^KernelLibrary default systemError].
-	^answer!
+	| answer cch |
+	cch := aString size.
+	"The result will have at most the number of code points as are present in the input, probably fewer if the input is UTF8"
+	answer := self new: cch.
+	^(cch := KernelLibrary default
+				multiByteToWideChar: aString codePage
+				dwFlags: 0
+				lpMultiByteStr: aString
+				cchMultiByte: -1
+				lpWideCharStr: answer
+				cchWideChar: cch + 1) == 0
+		ifTrue: [KernelLibrary default systemError]
+		ifFalse: [answer resize: cch - 1]	"MB_ERR_INVALID_CHARS"!
+
+initialize
+	empty := self new
+				isImmutable: true;
+				yourself!
 
 new: anInteger
 	"Answer an instance of the receiver to accomodate exactly
@@ -342,10 +362,12 @@ newFixed: aSmallInteger
 	are in a traditional fixed heap)."
 
 	^super newFixed: aSmallInteger * 2! !
-!UnicodeString class categoriesFor: #elementSize!constants!public! !
-!UnicodeString class categoriesFor: #fromAddress:!instance creation!public! !
-!UnicodeString class categoriesFor: #fromAddress:length:!instance creation!public! !
-!UnicodeString class categoriesFor: #fromString:!instance creation!public! !
-!UnicodeString class categoriesFor: #new:!instance creation!public! !
-!UnicodeString class categoriesFor: #newFixed:!instance creation!public! !
+!Utf16String class categoriesFor: #codePage!constants!public! !
+!Utf16String class categoriesFor: #elementSize!constants!public! !
+!Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
+!Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
+!Utf16String class categoriesFor: #fromString:!instance creation!public! !
+!Utf16String class categoriesFor: #initialize!development!initializing!public! !
+!Utf16String class categoriesFor: #new:!instance creation!public! !
+!Utf16String class categoriesFor: #newFixed:!instance creation!public! !
 

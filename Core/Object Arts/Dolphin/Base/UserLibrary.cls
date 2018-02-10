@@ -414,10 +414,10 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
 		ifFalse: 
 			["#1633: On NT systems if the icon has a string resource identifier it must
-			be passed as a Unicode string even though we are calling the ANSI version of
+			be passed as a UTF16 string even though we are calling the ANSI version of
 			the MessageBoxIndirect() function!!. This is obviously a Windows bug which we
 			need to work around."
-			iconId isInteger not ifTrue: [iconId := iconId asUnicodeString].
+			iconId isInteger not ifTrue: [iconId := iconId asUtf16String].
 			struct lpszIcon: iconId asUIntPtr.
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.

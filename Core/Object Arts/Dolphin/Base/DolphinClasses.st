@@ -588,8 +588,8 @@ ArrayedCollection subclass: #RunArray
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
 	classVariableNames: 'LineDelimiter NullPrintCharacter'
-	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
+	poolDictionaries: ''
+	classInstanceVariableNames: 'empty'!
 ArrayedCollection variableSubclass: #WeakArray
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -635,7 +635,12 @@ String variableByteSubclass: #Symbol
 	classVariableNames: 'Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #UnicodeString
+String variableByteSubclass: #Utf16String
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+String variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
