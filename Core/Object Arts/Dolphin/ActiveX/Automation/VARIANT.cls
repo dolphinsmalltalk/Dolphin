@@ -108,16 +108,13 @@ bstr
 
 	| addr |
 	addr := self ulVal.
-	^self isByRef 
+	^self isByRef
 		ifTrue: 
 			["See class example1 for more info on by-ref BSTRs"
-
 			LPBSTR fromAddress: addr]
 		ifFalse: 
 			["Get down to bare metal for speed"
-
-			(UnicodeString fromAddress: addr length: (OLEAutLibrary default sysStringLen: addr)) 
-				asString]!
+			(Utf16String fromAddress: addr length: (OLEAutLibrary default sysStringLen: addr)) asString]!
 
 bstr: aString
 	"Set the BSTR value of the receiver to the <String> argument, newValue.
@@ -1048,7 +1045,7 @@ initializeVTClasses
 		at: VT_I8+1			put: LARGE_INTEGER;	"64-bit signed integer - supported type on WinXP"
 		at: VT_INT+1			put: SDWORD;		"signed machine dependent integer - TYPEDESC only"
 		at: VT_LPSTR+1		put: String;			"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
-		at: VT_LPWSTR+1		put: UnicodeString;		"Null-terminated Unicode string - OLE Property Sets and TYPEDESC only"
+		at: VT_LPWSTR+1		put: Utf16String;		"Null-terminated UTF16 string - OLE Property Sets and TYPEDESC only"
 		"at: VT_NULL+1			put: UndefinedObject;	""SQL Null (i.e. nil)"
 		at: VT_PTR+1			put: ExternalAddress;	"Pointer type - TYPEDESC only"
 		at: VT_R4+1			put: FLOAT;			"Single precision floating point"

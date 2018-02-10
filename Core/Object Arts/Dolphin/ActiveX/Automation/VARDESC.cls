@@ -48,7 +48,7 @@ basicIdlAttributes
 	^answer!
 
 elemdesc
-	"Answer the receiver's elemdesc field as a Smalltalk object."
+	"Answer the <ELEMDESC> value of the receiver's 'elemdesc' field."
 
 	^ELEMDESC fromAddress: bytes yourAddress + ##(self offsetOf: #elemdesc)!
 
@@ -129,27 +129,27 @@ isUnion
 	^self tdesc isUnion!
 
 lpvarValue
-	"Answer the receiver's lpvarValue field as a Smalltalk object."
+	"Answer the <VARIANT> value of the receiver's 'lpvarValue' field."
 
 	^VARIANT fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpvarValue))!
 
 memid
-	"Answer the receiver's memid field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'memid' field."
 
 	^bytes sdwordAtOffset: 0!
 
 oInst
-	"Answer the receiver's oInst field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'oInst' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #oInst)!
 
 varkind
-	"Answer the receiver's varkind field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'varkind' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #varkind)!
 
 wVarFlags
-	"Answer the receiver's wVarFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wVarFlags' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wVarFlags)! !
 !VARDESC categoriesFor: #arguments!accessing!public! !
@@ -203,14 +203,14 @@ defineFields
 
 	self
 		defineField: #memid type: SDWORDField readOnly;
-		defineField: #lpstrSchema type: (PointerField type: UnicodeString) beFiller;
+		defineField: #lpstrSchema type: (PointerField type: Utf16String) beFiller;
 		defineField: #lpvarValue type: (PointerField type: VARIANT) beReadOnly;
 		defineField: #elemdesc type: (StructureField type: ELEMDESC) beReadOnly;
 		defineField: #wVarFlags type: WORDField readOnly;
 		defineField: #varkind type: SDWORDField readOnly.
 
 	"Note union here"
-	self 
+	self
 		defineField: #oInst
 		type: DWORDField readOnly
 		offset: (self offsetOf: #lpvarValue)! !

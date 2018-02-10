@@ -13,7 +13,7 @@ EMREXTTEXTOUTW comment: ''!
 text
 	"Answer the receiver's text field as a Smalltalk object."
 
-	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #text) length: self EMRTEXT nChars!
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #text) length: self EMRTEXT nChars!
 
 text: anObject 
 	"Set the receiver's text field to the value of anObject."
@@ -38,7 +38,7 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #text type: (StringField type: UnicodeString length: 1)!
+	self defineField: #text type: (StringField type: Utf16String length: 1)!
 
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."

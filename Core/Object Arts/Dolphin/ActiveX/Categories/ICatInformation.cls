@@ -79,7 +79,7 @@ descriptionOfCategory: catid locale: locale
 	localized correctly for the <Locale> (or <integer> locale id>, locale."
 
 	| buf |
-	buf := (StructurePointer newNull: COMTaskMemory elementClass: UnicodeString).
+	buf := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
 	self
 		GetCategoryDesc: catid
 		lcid: locale asParameter

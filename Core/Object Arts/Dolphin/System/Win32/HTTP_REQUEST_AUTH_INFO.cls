@@ -25,7 +25,7 @@ struct tagHTTP_REQUEST_AUTH_INFO {
 	[helpstring("The client context attributes for the access token.")] ULONG ContextAttributes;
 	[nonbrowsable, helpstring("The length, in bytes, of the PackedContext.")] ULONG PackedContextLength;
 	[helpstring("The type of context in the PackedContext member.")] ULONG PackedContextType;
-	[helpstring("The security context for the authentication type."), size_is("PackedContextLength")] void* PackedContext;
+	[helpstring("The security context for the authentication type."), size_is("PackedContextLength")] PVOID PackedContext;
 	[nonbrowsable, helpstring("The length, in bytes, of the pMutualAuthData member.")] ULONG MutualAuthDataLength;
 	[helpstring("The Base64 encoded mutual authentication data used in the WWW-Authenticate header."), size_is("MutualAuthDataLength"), string] PCHAR pMutualAuthData;
 	[nonbrowsable, helpstring("For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.")] USHORT PackageNameLength;
@@ -150,16 +150,16 @@ pMutualAuthData: aString
 	self MutualAuthDataLength: aString size!
 
 pPackageName
-	"Answer the <UnicodeString> value of the receiver's 'pPackageName' field."
+	"Answer the <Utf16String> value of the receiver's 'pPackageName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pPackageName))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pPackageName))
 		length: self PackageNameLength >> 1!
 
-pPackageName: anUnicodeString
-	"Set the receiver's 'pPackageName' field to the value of the argument, anUnicodeString"
+pPackageName: anUtf16String
+	"Set the receiver's 'pPackageName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pPackageName) put: anUnicodeString yourAddress.
-	self PackageNameLength: anUnicodeString size << 1!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pPackageName) put: anUtf16String yourAddress.
+	self PackageNameLength: anUtf16String size << 1!
 
 SecStatus
 	"Answer the <Integer> value of the receiver's 'SecStatus' field."
@@ -214,7 +214,7 @@ defineFields
 			[helpstring('The client context attributes for the access token.')] ULONG ContextAttributes;
 			[nonbrowsable, helpstring('The length, in bytes, of the PackedContext.')] ULONG PackedContextLength;
 			[helpstring('The type of context in the PackedContext member.')] ULONG PackedContextType;
-			[helpstring('The security context for the authentication type.'), size_is('PackedContextLength')] void* PackedContext;
+			[helpstring('The security context for the authentication type.'), size_is('PackedContextLength')] PVOID PackedContext;
 			[nonbrowsable, helpstring('The length, in bytes, of the pMutualAuthData member.')] ULONG MutualAuthDataLength;
 			[helpstring('The Base64 encoded mutual authentication data used in the WWW-Authenticate header.'), size_is('MutualAuthDataLength'), string] PCHAR pMutualAuthData;
 			[nonbrowsable, helpstring('For SSPI based schemes the package name is returned. Length does not include the terminating null and it is in bytes.')] USHORT PackageNameLength;
@@ -235,7 +235,7 @@ defineFields
 		defineField: #MutualAuthDataLength type: DWORDField new beNonBrowsable offset: 36;
 		defineField: #pMutualAuthData type: (ArrayPointerField type: String lengthField: #MutualAuthDataLength) offset: 40;
 		defineField: #PackageNameLength type: WORDField new beNonBrowsable offset: 44;
-		defineField: #pPackageName type: (ArrayPointerField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'PackageNameLength >> 1')) offset: 48.
+		defineField: #pPackageName type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'PackageNameLength >> 1')) offset: 48.
 	self byteSize: 52! !
 !HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

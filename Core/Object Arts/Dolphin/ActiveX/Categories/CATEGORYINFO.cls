@@ -58,6 +58,6 @@ defineFields
 	self
 		defineField: #catid type: (StructureField type: GUID);
 		defineField: #lcid type: DWORDField new;
-		defineField: #szDescription type: (StringField type: UnicodeString length: 128)! !
+		defineField: #szDescription type: (StringField type: Utf16String length: 128)! !
 !CATEGORYINFO class categoriesFor: #defineFields!initializing!public! !
 

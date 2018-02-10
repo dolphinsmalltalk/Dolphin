@@ -184,17 +184,17 @@ wCode: anObject
 wstrDescription
 	"Answer the receiver's bstrDescription field as a <UnicodeString>."
 
-	^UnicodeString fromAddress: self pwszDescription!
+	^Utf16String fromAddress: self pwszDescription!
 
 wstrHelpFile
 	"Answer the receiver's bstrHelpFile field as a <UnicodeString>."
 
-	^UnicodeString fromAddress: self pwszHelpFile!
+	^Utf16String fromAddress: self pwszHelpFile!
 
 wstrSource
 	"Answer the receiver's bstrSource field as a <UnicodeString> Smalltalk object."
 
-	^UnicodeString fromAddress: self pwszSource! !
+	^Utf16String fromAddress: self pwszSource! !
 !EXCEPINFO categoriesFor: #_deepCopy:!copying!private! !
 !EXCEPINFO categoriesFor: #bstrDescription!accessing!public! !
 !EXCEPINFO categoriesFor: #bstrDescription:!accessing!public! !

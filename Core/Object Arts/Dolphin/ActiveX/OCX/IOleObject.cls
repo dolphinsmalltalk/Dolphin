@@ -216,17 +216,15 @@ GetUserClassID: pClsid
 	^self invalidCall
 !
 
-getUserType: dwFormOfType 
+getUserType: dwFormOfType
 	"Answer the <UnicodeString> result of invoking the COM Object's GetUserType() method.
 	Auto-generated method would work here (handles task memory correctly), but rewritten for 
 	improved efficiency."
 
 	| mem answer |
 	mem := COMTaskMemory new.
-	self
-		GetUserType: dwFormOfType
-		pszUserType: mem.
-	answer := (UnicodeString fromAddress: mem) asString.
+	self GetUserType: dwFormOfType pszUserType: mem.
+	answer := (Utf16String fromAddress: mem) asString.
 	mem free.
 	^answer!
 

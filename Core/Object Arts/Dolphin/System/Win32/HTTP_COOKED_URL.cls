@@ -46,27 +46,27 @@ HostLength
 	^bytes wordAtOffset: ##(self offsetOf: #HostLength)!
 
 pAbsPath
-	"Answer the <UnicodeString> value of the receiver's 'pAbsPath' field."
+	"Answer the <Utf16String> value of the receiver's 'pAbsPath' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAbsPath))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAbsPath))
 		length: self AbsPathLength >> 1!
 
 pFullUrl
-	"Answer the <UnicodeString> value of the receiver's 'pFullUrl' field."
+	"Answer the <Utf16String> value of the receiver's 'pFullUrl' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pFullUrl))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pFullUrl))
 		length: self FullUrlLength / 2!
 
 pHost
-	"Answer the <UnicodeString> value of the receiver's 'pHost' field."
+	"Answer the <Utf16String> value of the receiver's 'pHost' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pHost))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pHost))
 		length: self HostLength >> 1!
 
 pQueryString
-	"Answer the <UnicodeString> value of the receiver's 'pQueryString' field."
+	"Answer the <Utf16String> value of the receiver's 'pQueryString' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pQueryString))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pQueryString))
 		length: self QueryStringLength >> 1!
 
 QueryStringLength
@@ -107,10 +107,10 @@ defineFields
 		defineField: #HostLength type: WORDField new beReadOnly beNonBrowsable offset: 2;
 		defineField: #AbsPathLength type: WORDField new beReadOnly beNonBrowsable offset: 4;
 		defineField: #QueryStringLength type: WORDField new beReadOnly beNonBrowsable offset: 6;
-		defineField: #pFullUrl type: (ArrayPointerField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'FullUrlLength / 2')) beReadOnly offset: 8;
-		defineField: #pHost type: (ArrayPointerField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'HostLength >> 1')) beReadOnly offset: 12;
-		defineField: #pAbsPath type: (ArrayPointerField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'AbsPathLength >> 1')) beReadOnly offset: 16;
-		defineField: #pQueryString type: (ArrayPointerField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'QueryStringLength >> 1')) beReadOnly offset: 20.
+		defineField: #pFullUrl type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'FullUrlLength / 2')) beReadOnly offset: 8;
+		defineField: #pHost type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'HostLength >> 1')) beReadOnly offset: 12;
+		defineField: #pAbsPath type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'AbsPathLength >> 1')) beReadOnly offset: 16;
+		defineField: #pQueryString type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'QueryStringLength >> 1')) beReadOnly offset: 20.
 	self byteSize: 24! !
 !HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

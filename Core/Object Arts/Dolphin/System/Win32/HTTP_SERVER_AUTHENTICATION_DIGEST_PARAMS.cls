@@ -26,14 +26,14 @@ struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS methodsFor!
 
 DomainName
-	"Answer the <UnicodeString> value of the receiver's 'DomainName' field."
+	"Answer the <Utf16String> value of the receiver's 'DomainName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DomainName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DomainName))!
 
-DomainName: anUnicodeString
-	"Set the receiver's 'DomainName' field to the value of the argument, anUnicodeString"
+DomainName: anUtf16String
+	"Set the receiver's 'DomainName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #DomainName) put: anUnicodeString yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #DomainName) put: anUtf16String yourAddress!
 
 DomainNameLength
 	"Answer the <Integer> value of the receiver's 'DomainNameLength' field."
@@ -46,14 +46,14 @@ DomainNameLength: anInteger
 	bytes wordAtOffset: 0 put: anInteger!
 
 Realm
-	"Answer the <UnicodeString> value of the receiver's 'Realm' field."
+	"Answer the <Utf16String> value of the receiver's 'Realm' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Realm))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Realm))!
 
-Realm: anUnicodeString
-	"Set the receiver's 'Realm' field to the value of the argument, anUnicodeString"
+Realm: anUtf16String
+	"Set the receiver's 'Realm' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anUnicodeString yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anUtf16String yourAddress!
 
 RealmLength
 	"Answer the <Integer> value of the receiver's 'RealmLength' field."
@@ -91,9 +91,9 @@ defineFields
 
 	self
 		defineField: #DomainNameLength type: WORDField new offset: 0;
-		defineField: #DomainName type: (PointerField type: UnicodeString) offset: 4;
+		defineField: #DomainName type: (PointerField type: Utf16String) offset: 4;
 		defineField: #RealmLength type: WORDField new offset: 8;
-		defineField: #Realm type: (PointerField type: UnicodeString) offset: 12.
+		defineField: #Realm type: (PointerField type: Utf16String) offset: 12.
 	self byteSize: 16! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

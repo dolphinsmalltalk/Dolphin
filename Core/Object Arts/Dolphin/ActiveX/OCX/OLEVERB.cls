@@ -26,44 +26,44 @@ struct tagOLEVERB {
 !OLEVERB methodsFor!
 
 fuFlags
-	"Answer the receiver's fuFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fuFlags' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: ##(self offsetOf: #fuFlags)!
 
-fuFlags: anObject
-	"Set the receiver's fuFlags field to the value of anObject."
+fuFlags: anInteger
+	"Set the receiver's 'fuFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #fuFlags) put: anInteger!
 
 grfAttribs
-	"Answer the receiver's grfAttribs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'grfAttribs' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: ##(self offsetOf: #grfAttribs)!
 
-grfAttribs: anObject
-	"Set the receiver's grfAttribs field to the value of anObject."
+grfAttribs: anInteger
+	"Set the receiver's 'grfAttribs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 12 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #grfAttribs) put: anInteger!
 
 lpszVerbName
-	"Answer the receiver's lpszVerbName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'lpszVerbName' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: 4)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszVerbName))!
 
-lpszVerbName: anObject
-	"Set the receiver's lpszVerbName field to the value of anObject."
+lpszVerbName: anUtf16String
+	"Set the receiver's 'lpszVerbName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 4 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpszVerbName) put: anUtf16String yourAddress!
 
 lVerb
-	"Answer the receiver's lVerb field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lVerb' field."
 
-	^(bytes sdwordAtOffset: 0)!
+	^bytes sdwordAtOffset: 0!
 
-lVerb: anObject
-	"Set the receiver's lVerb field to the value of anObject."
+lVerb: anInteger
+	"Set the receiver's 'lVerb' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 printOn: aStream 
 	"Append a textual representation of the receiver to aStream."
@@ -103,7 +103,7 @@ defineFields
 
 	self
 		defineField: #lVerb type: SDWORDField new;
-		defineField: #lpszVerbName type: (PointerField type: UnicodeString);
+		defineField: #lpszVerbName type: (PointerField type: Utf16String);
 		defineField: #fuFlags type: DWORDField new;
 		defineField: #grfAttribs type: DWORDField new! !
 !OLEVERB class categoriesFor: #defineFields!**auto generated**!initializing!public! !

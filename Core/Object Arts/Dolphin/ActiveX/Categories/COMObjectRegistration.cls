@@ -57,13 +57,13 @@ getUserType: form
 
 	| mem answer hresult |
 	mem := COMTaskMemory new.
-	hresult := OLELibrary default 
+	hresult := OLELibrary default
 				oleRegGetUserType: clsid
 				dwFormOfType: form
 				pszUserType: mem.
-	answer := hresult < 0 
+	answer := hresult < 0
 				ifTrue: ['ERROR: ' , (HRESULT fromInteger: hresult) displayString]
-				ifFalse: [(UnicodeString fromAddress: mem) asString].
+				ifFalse: [(Utf16String fromAddress: mem) asString].
 	mem free.
 	^answer!
 

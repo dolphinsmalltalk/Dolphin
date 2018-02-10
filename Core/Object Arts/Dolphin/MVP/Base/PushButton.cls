@@ -58,9 +58,9 @@ getNote
 	| length chars |
 	length := self sendMessage: BCM_GETNOTELENGTH.
 	length == 0 ifTrue: [^''].
-	chars := UnicodeString newFixed: length.
+	chars := Utf16String newFixed: length.
 	length := DWORD fromInteger: length + 1.
-	self 
+	self
 		sendMessage: BCM_GETNOTE
 		wParam: length yourAddress
 		lpParam: chars.

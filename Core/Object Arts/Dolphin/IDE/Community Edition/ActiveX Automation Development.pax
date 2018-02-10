@@ -515,7 +515,6 @@ package methodNames
 	add: 'TKindModuleAnalyzer class' -> #icon;
 	add: 'TKindModuleAnalyzer class' -> #publishedAspectsOfInstances;
 	add: 'UINT_PTR class' -> #arrayType;
-	add: 'UnicodeString class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'Utf16String class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'VARIANT class' -> #example1;
 	add: 'VARIANT class' -> #printMethodArgument:elemdesc:indirections:on:;
@@ -537,7 +536,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\ActiveX\Automation\ActiveX Automation';
 	add: '..\Base\Development System';
 	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
@@ -2233,7 +2231,7 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 		nextPutAll: ' type: '.
 	classdesc := aVARDESC classDesc.
 	(aVARDESC isStringField
-		ifTrue: [classdesc key elementSize == 2 ifTrue: [UnicodeString] ifFalse: [String]]
+		ifTrue: [classdesc key elementSize == 2 ifTrue: [Utf16String] ifFalse: [String]]
 		ifFalse: [classdesc key])
 			printStructField: aVARDESC
 			indirections: classdesc value
@@ -5393,7 +5391,7 @@ printVariable: aVARDESC type: aClass indirections: anInteger on: aWriteStream
 	self assert: [aVARDESC isStringField not].
 	self
 		printArrayField: (aVARDESC isStringField
-				ifTrue: [elemType elementClass byteSize == 2 ifTrue: [UnicodeString] ifFalse: [String]]
+				ifTrue: [elemType elementClass byteSize == 2 ifTrue: [Utf16String] ifFalse: [String]]
 				ifFalse: [elemType])
 		length: arrayDesc elementCount
 		on: aWriteStream! !

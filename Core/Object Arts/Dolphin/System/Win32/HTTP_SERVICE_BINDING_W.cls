@@ -26,16 +26,15 @@ struct tagHTTP_SERVICE_BINDING_W {
 !HTTP_SERVICE_BINDING_W methodsFor!
 
 Buffer
-	"Answer the <UnicodeString> value of the receiver's 'Buffer' field."
+	"Answer the <Utf16String> value of the receiver's 'Buffer' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Buffer))
-		length: self BufferSize!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Buffer)) length: self BufferSize!
 
-Buffer: anUnicodeString
-	"Set the receiver's 'Buffer' field to the value of the argument, anUnicodeString"
+Buffer: anUtf16String
+	"Set the receiver's 'Buffer' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Buffer) put: anUnicodeString yourAddress.
-	self BufferSize: anUnicodeString size!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Buffer) put: anUtf16String yourAddress.
+	self BufferSize: anUtf16String size!
 
 BufferSize
 	"Private - Answer the <Integer> value of the receiver's 'BufferSize' field."
@@ -68,7 +67,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #Buffer type: (ArrayPointerField type: UnicodeString lengthField: #BufferSize) offset: 4;
+		defineField: #Buffer type: (ArrayPointerField type: Utf16String lengthField: #BufferSize) offset: 4;
 		defineField: #BufferSize type: DWORDField new beNonBrowsable offset: 8.
 	self byteSize: 12! !
 !HTTP_SERVICE_BINDING_W class categoriesFor: #defineFields!**auto generated**!initializing!public! !

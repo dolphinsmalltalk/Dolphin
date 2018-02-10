@@ -22,39 +22,39 @@ struct tagCRYPTPROTECT_PROMPTSTRUCT {
 !CRYPTPROTECT_PROMPTSTRUCT methodsFor!
 
 dwPromptFlags
-	"Answer the receiver's dwPromptFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwPromptFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwPromptFlags)!
 
-dwPromptFlags: anObject
-	"Set the receiver's dwPromptFlags field to the value of anObject."
+dwPromptFlags: anInteger
+	"Set the receiver's 'dwPromptFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwPromptFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwPromptFlags) put: anInteger!
 
-dwSize: anObject
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 hwndApp
-	"Answer the receiver's hwndApp field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'hwndApp' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #hwndApp)) asExternalHandle!
 
-hwndApp: anObject
-	"Set the receiver's hwndApp field to the value of anObject."
+hwndApp: anExternalHandle
+	"Set the receiver's 'hwndApp' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndApp) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #hwndApp) put: anExternalHandle!
 
 szPrompt
-	"Answer the receiver's szPrompt field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'szPrompt' field."
 
-	^UnicodeString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #szPrompt))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #szPrompt))!
 
-szPrompt: anObject
-	"Set the receiver's szPrompt field to the value of anObject."
+szPrompt: anUtf16String
+	"Set the receiver's 'szPrompt' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #szPrompt) put: anObject yourAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #szPrompt) put: anUtf16String yourAddress! !
 !CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags!**compiled accessors**!public! !
 !CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags:!**compiled accessors**!public! !
 !CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwSize:!**compiled accessors**!public! !
@@ -83,7 +83,7 @@ defineFields
 		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
 		defineField: #dwPromptFlags type: DWORDField new offset: 4;
 		defineField: #hwndApp type: HANDLEField new offset: 8;
-		defineField: #szPrompt type: (PointerField type: UnicodeString) offset: 12.
+		defineField: #szPrompt type: (PointerField type: Utf16String) offset: 12.
 	self byteSize: 16! !
 !CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 

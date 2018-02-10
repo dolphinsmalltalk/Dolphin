@@ -44,11 +44,11 @@ name
 	"Answer the String name of the receiver (e.g., 'Arial')."
 
 	| status name |
-	name := UnicodeString new: LF_FACESIZE.
-	(status := GdiplusLibrary default 
+	name := Utf16String new: LF_FACESIZE.
+	(status := GdiplusLibrary default
 				gdipGetFamilyName: self asParameter
 				name: name asParameter
-				language: 0) = Ok 
+				language: 0) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
 	^name asString trimNulls! !
 !GdiplusFontFamily categoriesFor: #basicFree!private!realizing/unrealizing! !

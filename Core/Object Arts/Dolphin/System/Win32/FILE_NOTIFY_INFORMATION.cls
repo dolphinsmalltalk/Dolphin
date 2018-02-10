@@ -20,7 +20,7 @@ struct tagFILE_NOTIFY_INFORMATION {
 	[readonly] DWORD NextEntryOffset;
 	[readonly] DWORD Action;
 	[readonly] DWORD FileNameLength;
-	[readonly, string, size_is("FileNameLength>>1")] unsigned short FileName[1];
+	[readonly, size_is("FileNameLength>>1"), string] unsigned short FileName[1];
 } FILE_NOTIFY_INFORMATION;
 '!
 !FILE_NOTIFY_INFORMATION categoriesForClass!Win32-Structs! !
@@ -32,9 +32,9 @@ Action
 	^bytes dwordAtOffset: ##(self offsetOf: #Action)!
 
 FileName
-	"Answer the <UnicodeString> value of the receiver's 'FileName' field."
+	"Answer the <Utf16String> value of the receiver's 'FileName' field."
 
-	^UnicodeString fromAddress: bytes yourAddress + ##(self offsetOf: #FileName)
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #FileName)
 		length: self FileNameLength >> 1!
 
 FileNameLength
@@ -63,7 +63,7 @@ defineFields
 			[readonly] DWORD NextEntryOffset;
 			[readonly] DWORD Action;
 			[readonly] DWORD FileNameLength;
-			[readonly, string, size_is('FileNameLength>>1')] unsigned short FileName[1];
+			[readonly, size_is('FileNameLength>>1'), string] unsigned short FileName[1];
 		} FILE_NOTIFY_INFORMATION;
 "
 
@@ -71,7 +71,7 @@ defineFields
 		defineField: #NextEntryOffset type: DWORDField new beReadOnly offset: 0;
 		defineField: #Action type: DWORDField new beReadOnly offset: 4;
 		defineField: #FileNameLength type: DWORDField new beReadOnly offset: 8;
-		defineField: #FileName type: (StringField type: UnicodeString arrayLength: (SizeIsArrayFieldLength sizeIs: 'FileNameLength >> 1')) beReadOnly offset: 12.
+		defineField: #FileName type: (StringField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'FileNameLength >> 1')) beReadOnly offset: 12.
 	self byteSize: 16!
 
 new
