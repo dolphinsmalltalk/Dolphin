@@ -75,7 +75,7 @@ testMixedConcatenation
 	subjects := #(#[] #[1] #[1 2]).
 	(Array
 		with: String empty
-		with: UnicodeString empty
+		with: Utf16String empty
 		with: Array new
 		with: OrderedCollection new
 		with: (1 to: 0)) do: 
@@ -88,7 +88,7 @@ testMixedConcatenation
 						self assert: result equals: eachArray]].
 	(Array
 		with: 'a'
-		with: 'a' asUnicodeString
+		with: 'a' asUtf16String
 		with: #(255)
 		with: (OrderedCollection with: 123)
 		with: (100 to: 100)) do: 
@@ -101,7 +101,7 @@ testMixedConcatenation
 						self assert: result class == self collectionClass]].
 	(Array
 		with: 'ab'
-		with: 'a' asUnicodeString
+		with: 'a' asUtf16String
 		with: #(1 255)
 		with: (OrderedCollection with: 123 with: 255)
 		with: (100 to: 101)) do: 

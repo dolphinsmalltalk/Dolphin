@@ -227,7 +227,7 @@ initialize
 	registeredFormats
 		at: #RichText put: rtfFormat;
 		at: #String put: CF_TEXT;
-		at: #UnicodeString put: CF_UNICODETEXT;
+		at: #Utf16String put: CF_UNICODETEXT;
 		at: #Bitmap put: CF_BITMAP;
 		"at: #DIBSection put: CF_DIB;"	"Don't know how to do these at present"
 		at: #Palette put: CF_PALETTE;

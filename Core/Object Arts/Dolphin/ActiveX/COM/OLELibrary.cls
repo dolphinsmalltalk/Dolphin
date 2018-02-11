@@ -129,7 +129,7 @@ coGetMalloc: dwMemContext ppMalloc: ppMalloc
 	<stdcall: hresult CoGetMalloc dword IMalloc**>
 	^self invalidCall!
 
-coGetObject: aUnicodeString pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterface 
+coGetObject: aUtf16String pBindOptions: aBIND_OPTS riid: anIID ppv: aCOMInterface 
 	"Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker. 
 		WINOLEAPI CoGetObject(
 			LPCWSTR pszName,

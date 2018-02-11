@@ -19,7 +19,7 @@ asString
 	^self value!
 
 value
-	"Answer the UnicodeString pointed at by the receiver (N.B. it is copied into Smalltalk space)"
+	"Answer the String pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
 	^String fromAddress: super value! !
 !LPSTR categoriesFor: #asString!converting!public! !

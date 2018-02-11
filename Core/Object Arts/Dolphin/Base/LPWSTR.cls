@@ -21,7 +21,7 @@ asString
 	^self value asString!
 
 value
-	"Answer the UnicodeString pointed at by the receiver (N.B. it is copied into Smalltalk space)"
+	"Answer the <Utf16String> pointed at by the receiver (N.B. it is copied into Smalltalk space)"
 
 	^Utf16String fromAddress: super value! !
 !LPWSTR categoriesFor: #asString!converting!public! !

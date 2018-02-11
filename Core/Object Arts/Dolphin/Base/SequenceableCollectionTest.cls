@@ -675,13 +675,13 @@ testMixedConcatenation
 				with: (1 to: 0))
 		with: (Array
 				with: 'c'
-				with: 'c' asUnicodeString
+				with: 'c' asUtf16String
 				with: #[255]
 				with: (OrderedCollection with: 123)
 				with: (200 to: 200))
 		with: (Array
 				with: 'cd'
-				with: 'cd' asUnicodeString
+				with: 'cd' asUtf16String
 				with: #[1 255]
 				with: (OrderedCollection with: 123 with: $x)
 				with: (200 to: 201)))

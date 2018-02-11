@@ -18,7 +18,7 @@ description
 	^self szDescription asString!
 
 description: desc
-	"Set the receiver's szDescription field to <UnicodeString> representation
+	"Set the receiver's szDescription field to <Utf16String> representation
 	of the <readableString> argument, desc."
 
 	self szDescription: (wszDescription := desc asUtf16String)!

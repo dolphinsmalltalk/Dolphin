@@ -59,7 +59,7 @@ testMixedConcatenation
 						self assert: result equals: eachArray]].
 	(Array
 		with: 'a'
-		with: 'a' asUnicodeString
+		with: 'a' asUtf16String
 		with: #[255]
 		with: (OrderedCollection with: 1234)
 		with: (100 to: 100)) do: 
@@ -72,7 +72,7 @@ testMixedConcatenation
 						self assert: result class == Array]].
 	(Array
 		with: 'ab'
-		with: 'ab' asUnicodeString
+		with: 'ab' asUtf16String
 		with: #[1 255]
 		with: (OrderedCollection with: 1234 with: $x)
 		with: (100 to: 101)) do: 

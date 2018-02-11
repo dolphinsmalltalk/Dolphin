@@ -58,10 +58,6 @@ asString
 	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
 	^self asByteString: String!
 
-asUnicodeString
-	#deprecated.
-	^self asUtf16String!
-
 asUtf16String
 	"Answer a Utf16String composed of the characters of the receiver (assumed itself to be UTF16
 	encoded), or the empty string if the receiver is a null pointer (by convention a null BSTR
@@ -181,7 +177,6 @@ value: newValue
 !BSTR categoriesFor: #asBSTR!converting!public! !
 !BSTR categoriesFor: #asByteString:!converting!private! !
 !BSTR categoriesFor: #asString!converting!public! !
-!BSTR categoriesFor: #asUnicodeString!converting!public! !
 !BSTR categoriesFor: #asUtf16String!converting!public! !
 !BSTR categoriesFor: #asUtf8String!converting!public! !
 !BSTR categoriesFor: #at:!accessing!public! !

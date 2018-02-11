@@ -54,7 +54,7 @@ testEquals
 			"Same characters must be equal"
 			self assert: each equals: each copy.
 			each isEmpty ifFalse: [self deny: each equals: each asUppercase].
-			wide := each asUnicodeString.
+			wide := each asUtf16String.
 			self assert: each equals: wide.
 			self assert: wide equals: each.
 			"Not equal to ByteArrays"
@@ -66,8 +66,8 @@ testEquals
 	"Symbols are only ever equal to other symbols, not strings with the same characters"
 	self deny: #abc equals: 'abc'.
 	self deny: 'abc' equals: #abc.
-	self deny: #abc equals: 'abc' asUnicodeString.
-	self deny: 'abc' asUnicodeString equals: #abc!
+	self deny: #abc equals: 'abc' asUtf16String.
+	self deny: 'abc' asUtf16String equals: #abc!
 
 testIndexOfSubCollectionStartingAtGPF
 	| strings search current |

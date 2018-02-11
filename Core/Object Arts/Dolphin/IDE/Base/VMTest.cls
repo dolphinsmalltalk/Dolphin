@@ -447,10 +447,10 @@ testExtCallArgLpwstr
 				in: VMLibrary.
 	self assert: method argumentTypes asArray equals: #('lpwstr').
 	self assert: method returnType equals: 'lpwstr'.
-	expected := 'abc' asUnicodeString.
+	expected := 'abc' asUtf16String.
 	actual := method value: VMLibrary default withArguments: {'abc'}.
 	self assert: actual equals: expected.
-	self assert: actual isKindOf: UnicodeString!
+	self assert: actual isKindOf: Utf16String!
 
 testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
@@ -488,10 +488,10 @@ testExtCallRetLpwstr
 	proc := Processor activeProcess.
 	^proc primitiveFailureCode -> proc primitiveFailureData'
 				in: VMLibrary.
-	expected := 'abc' asUnicodeString.
+	expected := 'abc' asUtf16String.
 	actual := method value: VMLibrary default withArguments: {expected yourAddress}.
 	self assert: actual equals: expected.
-	self assert: actual isKindOf: UnicodeString!
+	self assert: actual isKindOf: Utf16String!
 
 testFPFaultInPrimitive
 	"An FP fault occurring in a primitive should be reported in the primitive method, not some

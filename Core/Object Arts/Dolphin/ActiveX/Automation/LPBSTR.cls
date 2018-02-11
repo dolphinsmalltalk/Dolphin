@@ -26,10 +26,6 @@ asString
 
 	^self asUtf16String asString!
 
-asUnicodeString
-	#deprecated.
-	^self asUtf16String!
-
 asUtf16String
 	"Answer a Utf16String composed of the characters of the BSTR pointed at by the receiver
 	(assumed itself to be UTF16 encoded), or the empty string if the referenced BSTR is a null
@@ -58,7 +54,6 @@ value: aString
 	bstr == aString ifTrue: [bstr := bstr copy].
 	super value: bstr detach! !
 !LPBSTR categoriesFor: #asString!converting!public! !
-!LPBSTR categoriesFor: #asUnicodeString!converting!public! !
 !LPBSTR categoriesFor: #asUtf16String!converting!public! !
 !LPBSTR categoriesFor: #value!accessing!public! !
 !LPBSTR categoriesFor: #value:!accessing!public! !
