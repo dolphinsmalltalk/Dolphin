@@ -213,10 +213,10 @@ setDefault: aBoolean
 
 setNote
 	(self style = #link and: [SystemMetrics current hasButtonNotes]) ifFalse: [^self].
-	(self 
+	(self
 		sendMessage: BCM_SETNOTE
 		wParam: 0
-		lpParam: self note asUnicodeString) == 0 
+		lpParam: self note asUtf16String) == 0
 		ifTrue: [Win32Error signal]!
 
 style

@@ -65,15 +65,14 @@ GetPropertyInfo: iProperty cProperties: cProperties pPropBag: pPropBag pcPropert
 	^self invalidCall
 !
 
-loadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog 
+loadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog
 	"Invoke the LoadObject() method of the COM Object."
 
 	self
-		LoadObject: pstrName asUnicodeString
+		LoadObject: pstrName asUtf16String
 		dwHint: dwHint
 		punkObject: punkObject
-		pErrLog: pErrLog
-!
+		pErrLog: pErrLog!
 
 LoadObject: pstrName dwHint: dwHint punkObject: punkObject pErrLog: pErrLog
 	"Private - Invoke the LoadObject() method of the COM object wrapped by the receiver.

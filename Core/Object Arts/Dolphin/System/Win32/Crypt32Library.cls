@@ -117,7 +117,7 @@ protectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolea
 	encrypted := CRYPTOAPI_BLOB new.
 	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
 	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
-	description := aByteObject class name asUnicodeString.
+	description := aByteObject class name asUtf16String.
 	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default
 		cryptProtectData: unencrypted
@@ -165,7 +165,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 	unencrypted := CRYPTOAPI_BLOB new.
 	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
 	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
-	description := aByteObject class name asUnicodeString.
+	description := aByteObject class name asUtf16String.
 	description := ExternalAddress new.
 	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default

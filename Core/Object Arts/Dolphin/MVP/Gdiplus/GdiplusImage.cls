@@ -539,18 +539,18 @@ saveToFile: pathString
 
 	self saveToFile: pathString encoderParams: nil!
 
-saveToFile: pathString clsidEncoder: aCLSIDEncoder encoderParams: aGpEncoderParameters 
+saveToFile: pathString clsidEncoder: aCLSIDEncoder encoderParams: aGpEncoderParameters
 	"Private - Save the receiver to the specified file, using the image encoder associated with 
 	aCLSIDEncoder and parameters specified by aGpEncoderParameters.
 	NB:  In general, this method should not be called directly (i.e., use other save methods)
 	since the image encoder is normally derived from the pathString."
 
 	| status |
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipSaveImageToFile: self asParameter
-				filename: pathString asUnicodeString
+				filename: pathString asUtf16String
 				clsidEncoder: aCLSIDEncoder
-				encoderParams: aGpEncoderParameters) = Ok 
+				encoderParams: aGpEncoderParameters) = Ok
 		ifFalse: [^GdiplusError signal: 'Error saving image' with: status]!
 
 saveToFile: pathString compression: anIntegerOrNil 
@@ -809,7 +809,7 @@ encoderClsid: aMimeTypeString
 		(self encoderClsid: 'image/jpeg') = (self encoderClsidForExtension: 'jpg')
 	"
 
-	^(self encoders detect: [:each | each MimeType = aMimeTypeString asUnicodeString]) Clsid!
+	^(self encoders detect: [:each | each MimeType = aMimeTypeString asUtf16String]) Clsid!
 
 encoderClsidForExtension: aString
 	"Answer a GUID that represents the image encoder associated with aString file extension.

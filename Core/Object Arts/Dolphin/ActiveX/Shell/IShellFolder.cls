@@ -93,9 +93,9 @@ pidlFromPath: path
 	| answer |
 	answer := WindowsShellMemory new.
 	self
-		ParseDisplayName: nil 
-		pbc: nil 
-		lpwszDisplayName: path asUnicodeString
+		ParseDisplayName: nil
+		pbc: nil
+		lpwszDisplayName: path asUtf16String
 		pchEaten: nil
 		ppidl: answer
 		pdwAttributes: nil.

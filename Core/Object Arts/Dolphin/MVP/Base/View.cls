@@ -416,11 +416,11 @@ beCentered
 beDefaultThemed
 	"Restores the default visual theme for the receiver. Only effective on Windows XP and above"
 
-	SystemMetrics current hasThemes 
+	SystemMetrics current hasThemes
 		ifTrue: 
-			[ThemeLibrary default 
+			[ThemeLibrary default
 				setWindowTheme: self handle
-				pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUnicodeString])
+				pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUtf16String])
 				pszSubIdList: nil.
 			self openTheme]!
 
@@ -437,8 +437,8 @@ beNotThemed
 			[self freeTheme.
 			ThemeLibrary default 
 				setWindowTheme: self handle
-				pszSubAppName: '' asUnicodeString
-				pszSubIdList: '' asUnicodeString]!
+				pszSubAppName: Utf16String empty
+				pszSubIdList: Utf16String empty]!
 
 beNotTopMost
 	"Places the receiver above all non-topmost windows (that is, behind all topmost windows).

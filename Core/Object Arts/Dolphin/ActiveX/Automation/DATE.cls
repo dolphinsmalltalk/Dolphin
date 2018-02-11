@@ -37,11 +37,11 @@ fromString: aString locale: aLocale
 	| answer |
 	answer := self new.
 	OLEAutLibrary default
-		varDateFromStr: aString asUnicodeString lcid: aLocale asParameter dwFlags: 0 pdateOut: answer.
-	^answer
-	
-
-!
+		varDateFromStr: aString asUtf16String
+		lcid: aLocale asParameter
+		dwFlags: 0
+		pdateOut: answer.
+	^answer!
 
 icon
 	"Answer a suitable iconic representation for the receiver."

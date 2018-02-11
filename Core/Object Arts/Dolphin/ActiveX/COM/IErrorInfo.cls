@@ -183,17 +183,15 @@ fromEXCEPINFO: excepInfo guid: id
 
 	^(ICreateErrorInfo fromEXCEPINFO: excepInfo guid: id) errorInfo!
 
-source: sourceString description: descriptionString 
-		helpContext: anInteger helpFile: helpFilePath
-		guid: aGUID
+source: sourceString description: descriptionString helpContext: anInteger helpFile: helpFilePath guid: aGUID
 	"Answer a new instance of the receiver encapsulating all of the specified details."
 
 	| ice |
 	ice := ICreateErrorInfo new.
-	ice SetSource: sourceString asUnicodeString.
-	ice SetDescription: descriptionString asUnicodeString.
+	ice SetSource: sourceString asUtf16String.
+	ice SetDescription: descriptionString asUtf16String.
 	ice SetHelpContext: anInteger.
-	ice SetHelpFile: helpFilePath asUnicodeString.
+	ice SetHelpFile: helpFilePath asUtf16String.
 	ice SetGuid: aGUID.
 	^ice errorInfo! !
 !IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !

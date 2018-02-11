@@ -12,13 +12,10 @@ The IErrorLog interface is an abstraction for an error log that is used to commu
 !IErrorLog categoriesForClass!COM-Interfaces! !
 !IErrorLog methodsFor!
 
-addError: pszPropName pExcepInfo: pExcepInfo 
+addError: pszPropName pExcepInfo: pExcepInfo
 	"Invoke the AddError() method of the COM Object."
 
-	self
-		AddError: pszPropName asUnicodeString
-		pExcepInfo: pExcepInfo
-!
+	self AddError: pszPropName asUtf16String pExcepInfo: pExcepInfo!
 
 AddError: pszPropName pExcepInfo: pExcepInfo
 	"Private - Invoke the AddError() method of the COM object wrapped by the receiver.

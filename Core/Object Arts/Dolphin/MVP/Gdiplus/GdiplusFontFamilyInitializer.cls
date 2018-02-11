@@ -13,8 +13,8 @@ GdiplusFontFamilyInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library 
-				gdipCreateFontFamilyFromName: name asUnicodeString
+	status := self library
+				gdipCreateFontFamilyFromName: name asUtf16String
 				fontCollection: fontCollection asParameter
 				fontFamily: gpHandle.
 	self assertStatusOk: status.

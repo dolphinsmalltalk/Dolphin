@@ -23,8 +23,8 @@ Note that because BSTR is an indirection class (BSTRs are pointers to strings), 
 asString
 	"Answer a String composed of the characters of the receiver, or
 	the empty string if the receiver is a null pointer."
-	
-	^self asUnicodeString asString!
+
+	^self asUtf16String asString!
 
 asUnicodeString
 	#deprecated.

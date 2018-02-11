@@ -438,14 +438,13 @@ fromFile: path
 	| answer |
 	answer := self newPointer.
 	OLEAutLibrary default
-		oleLoadPicturePath: path asUnicodeString
+		oleLoadPicturePath: path asUtf16String
 		punkCaller: nil
-		dwReserved: 0 
+		dwReserved: 0
 		clrReserved: 0
 		riid: self iid
 		ppvRet: answer.
-	^answer
-!
+	^answer!
 
 fromIcon: anIcon
 	"Answer a new instance of the receiver on a StdPicture object wrapping the <Icon> (or handle),

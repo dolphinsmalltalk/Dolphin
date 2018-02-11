@@ -20,11 +20,10 @@ read: pszPropName pErrorLog: pErrorLog
 	| answer |
 	answer := VARIANT new.
 	self
-		Read: pszPropName asUnicodeString
+		Read: pszPropName asUtf16String
 		pVar: answer
 		pErrorLog: pErrorLog.
-	^answer asObject
-!
+	^answer asObject!
 
 Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	"Private - Invoke the Read() method of the COM object wrapped by the receiver.
@@ -41,13 +40,10 @@ Read: pszPropName pVar: pVar pErrorLog: pErrorLog
 	^self invalidCall
 !
 
-write: pszPropName pVar: pVar 
+write: pszPropName pVar: pVar
 	"Invoke the Write() method of the COM Object."
 
-	self
-		Write: pszPropName asUnicodeString
-		pVar: pVar asVariant
-!
+	self Write: pszPropName asUtf16String pVar: pVar asVariant!
 
 Write: pszPropName pVar: pVar
 	"Private - Invoke the Write() method of the COM object wrapped by the receiver.

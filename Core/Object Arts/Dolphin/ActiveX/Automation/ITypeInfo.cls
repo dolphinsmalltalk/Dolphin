@@ -171,12 +171,15 @@ getIDsOfNames: names
 	members of the receiver."
 
 	| rgszNames uNames cNames pMemId hr |
-	uNames := names collect: [:p | p asUnicodeString].
+	uNames := names collect: [:p | p asUtf16String].
 	cNames := names size.
 	rgszNames := DWORDArray new: cNames.
 	uNames keysAndValuesDo: [:i :n | rgszNames at: i put: n yourAddress].
 	pMemId := SDWORDArray new: cNames.
-	hr := self GetIDsOfNames: rgszNames cNames: cNames pMemId: pMemId.
+	hr := self
+				GetIDsOfNames: rgszNames
+				cNames: cNames
+				pMemId: pMemId.
 	hr < 0 ifTrue: [self hresultError: hr].
 	^pMemId collect: [:m | m]!
 
@@ -403,14 +406,14 @@ idOfName: name ifAbsent: exceptionHandler
 
 	| dispId uName hr |
 	dispId := SDWORD new.
-	uName := name asUnicodeString.
-	hr := self 
+	uName := name asUtf16String.
+	hr := self
 				GetIDsOfNames: (DWORDBytes fromInteger: uName yourAddress)
 				cNames: 1
 				pMemId: dispId.
-	^hr < 0 
+	^hr < 0
 		ifTrue: 
-			[(hr = DISP_E_UNKNOWNNAME or: [hr = E_NOTIMPL]) 
+			[(hr = DISP_E_UNKNOWNNAME or: [hr = E_NOTIMPL])
 				ifTrue: [exceptionHandler value]
 				ifFalse: [self hresultError: hr]]
 		ifFalse: [dispId asInteger]!

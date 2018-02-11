@@ -31,18 +31,12 @@ getField: fieldNameString from: data ifAbsent: exceptionHandler
 	| hr val |
 	val := VARIANT new.
 	hr := self
-		GetField: data
-		szFieldName: fieldNameString asUnicodeString
-		pvarField: val.
+				GetField: data
+				szFieldName: fieldNameString asUtf16String
+				pvarField: val.
 	^hr < 0
-		ifTrue: [
-			hr = TYPE_E_FIELDNOTFOUND
-				ifTrue: [exceptionHandler value]
-				ifFalse: [self hresultError: hr]]
-		ifFalse: [val value]	
-	
-
-!
+		ifTrue: [hr = TYPE_E_FIELDNOTFOUND ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]]
+		ifFalse: [val value]!
 
 GetField: pvData szFieldName: szFieldName pvarField: pvarField
 	"Private - Invoke the GetField() method of the COM object wrapped by the receiver.
@@ -283,14 +277,12 @@ setField: fieldNameString value: newValue into: data ifAbsent: exceptionHandler
 
 	| hr |
 	hr := self
-		PutField: INVOKE_PROPERTYPUT
-		pvData: data
-		szFieldName: fieldNameString asUnicodeString
-		pvarField: newValue asVariant.
-	^hr < 0 ifTrue: [
-		hr = TYPE_E_FIELDNOTFOUND
-			ifTrue: [exceptionHandler value]
-			ifFalse: [self hresultError: hr]]
+				PutField: INVOKE_PROPERTYPUT
+				pvData: data
+				szFieldName: fieldNameString asUtf16String
+				pvarField: newValue asVariant.
+	^hr < 0
+		ifTrue: [hr = TYPE_E_FIELDNOTFOUND ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]]
 		ifFalse: [newValue]!
 
 typeInfo
