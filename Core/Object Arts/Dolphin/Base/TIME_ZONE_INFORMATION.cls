@@ -28,25 +28,25 @@ struct tagTIME_ZONE_INFORMATION {
 !TIME_ZONE_INFORMATION categoriesForClass!Win32-Structs! !
 !TIME_ZONE_INFORMATION methodsFor!
 
-Bias
-	"Answer the <Integer> value of the receiver's 'Bias' field."
+bias
+	"Answer the <Integer> value of the receiver's 'bias' field."
 
 	^bytes sdwordAtOffset: 0!
 
-DaylightBias
-	"Answer the <Integer> value of the receiver's 'DaylightBias' field."
+daylightBias
+	"Answer the <Integer> value of the receiver's 'daylightBias' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #DaylightBias)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #daylightBias)!
 
-DaylightDate
-	"Answer the <SYSTEMTIME> value of the receiver's 'DaylightDate' field."
+daylightDate
+	"Answer the <SYSTEMTIME> value of the receiver's 'daylightDate' field."
 
-	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #DaylightDate)!
+	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #daylightDate)!
 
-DaylightName
-	"Answer the <Utf16String> value of the receiver's 'DaylightName' field."
+daylightName
+	"Answer the <Utf16String> value of the receiver's 'daylightName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #DaylightName)!
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #daylightName)!
 
 printableFields
 	| printable |
@@ -54,28 +54,28 @@ printableFields
 	printable remove: #StandardDate; remove: #DaylightDate.
 	^printable!
 
-StandardBias
-	"Answer the <Integer> value of the receiver's 'StandardBias' field."
+standardBias
+	"Answer the <Integer> value of the receiver's 'standardBias' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #StandardBias)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #standardBias)!
 
-StandardDate
-	"Answer the <SYSTEMTIME> value of the receiver's 'StandardDate' field."
+standardDate
+	"Answer the <SYSTEMTIME> value of the receiver's 'standardDate' field."
 
-	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #StandardDate)!
+	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #standardDate)!
 
-StandardName
-	"Answer the <Utf16String> value of the receiver's 'StandardName' field."
+standardName
+	"Answer the <Utf16String> value of the receiver's 'standardName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #StandardName)! !
-!TIME_ZONE_INFORMATION categoriesFor: #Bias!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #DaylightBias!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #DaylightDate!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #DaylightName!**compiled accessors**!public! !
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #standardName)! !
+!TIME_ZONE_INFORMATION categoriesFor: #bias!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #daylightBias!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #printableFields!development!printing!private! !
-!TIME_ZONE_INFORMATION categoriesFor: #StandardBias!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #StandardDate!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #StandardName!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #standardBias!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #standardDate!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #standardName!**compiled accessors**!public! !
 
 !TIME_ZONE_INFORMATION class methodsFor!
 
@@ -97,13 +97,13 @@ defineFields
 "
 
 	self
-		defineField: #Bias type: SDWORDField new beReadOnly offset: 0;
-		defineField: #StandardName type: (StringField type: Utf16String length: 32) beReadOnly offset: 4;
-		defineField: #StandardDate type: (StructureField type: SYSTEMTIME) beReadOnly offset: 68;
-		defineField: #StandardBias type: SDWORDField new beReadOnly offset: 84;
-		defineField: #DaylightName type: (StringField type: Utf16String length: 32) beReadOnly offset: 88;
-		defineField: #DaylightDate type: (StructureField type: SYSTEMTIME) beReadOnly offset: 152;
-		defineField: #DaylightBias type: SDWORDField new beReadOnly offset: 168.
+		defineField: #bias type: SDWORDField new beReadOnly offset: 0;
+		defineField: #standardName type: (StringField type: Utf16String length: 32) beReadOnly offset: 4;
+		defineField: #standardDate type: (StructureField type: SYSTEMTIME) beReadOnly offset: 68;
+		defineField: #standardBias type: SDWORDField new beReadOnly offset: 84;
+		defineField: #daylightName type: (StringField type: Utf16String length: 32) beReadOnly offset: 88;
+		defineField: #daylightDate type: (StructureField type: SYSTEMTIME) beReadOnly offset: 152;
+		defineField: #daylightBias type: SDWORDField new beReadOnly offset: 168.
 	self byteSize: 172! !
-!TIME_ZONE_INFORMATION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!TIME_ZONE_INFORMATION class categoriesFor: #defineFields!initializing!public! !
 
