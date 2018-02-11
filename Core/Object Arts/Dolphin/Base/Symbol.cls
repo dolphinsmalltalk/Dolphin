@@ -25,9 +25,9 @@ _equalsByteString: aString
 
 	^false!
 
-_equalsUtf16String: anUnicodeString
-	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
-	Double-dispatched from UnicodeString>>=."
+_equalsUtf16String: aUtf16String
+	"Private - Answer whether the receiver is equivalent to the <Utf16String> argument.
+	Double-dispatched from Utf16String>>=."
 
 	^false!
 
@@ -300,7 +300,8 @@ initialize
 				instances of the receiver are kept."
 
 	Table isNil ifTrue: [Table := Array new: 3989].
-	empty := #''!
+	empty := #''.
+	VMLibrary default registryAt: #Symbol put: self!
 
 intern: aString
 	"Answer the unique Symbol for aString."

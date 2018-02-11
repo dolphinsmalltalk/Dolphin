@@ -44,13 +44,13 @@ _equalsByteString: aString
 
 	^aString asUtf16String = self!
 
-_equalsUtf16String: aUnicodeString
-	"Private - Answer whether the receiver is equivalent to the <UnicodeString>, aString. 
-	Double-dispatched from UnicodeString>>=."
+_equalsUtf16String: aUtf16String
+	"Private - Answer whether the receiver is equivalent to the <Utf16String> argument.
+	Double-dispatched from Utf16String>>=."
 
 	"We should only get here if the byte comparison primitive failed unexpected."
 
-	^aUnicodeString primitiveFailed!
+	^Utf16String primitiveFailed!
 
 = comparand
 	"Answer whether the receiver and the <Object> argument, comparand, 
@@ -220,7 +220,7 @@ resize: anInteger
 	^super resize: anInteger * 2!
 
 shallowCopy
-	"Implemented here to ensure that copied UnicodeStrings are correctly terminated with a double null"
+	"Implemented here to ensure that copied Utf16Strings are correctly terminated with a double null"
 
 	^self class fromAddress: self yourAddress length: self size!
 
@@ -311,8 +311,8 @@ fromAddress: anAddress
 	^self fromAddress: anAddress length: len!
 
 fromAddress: anAddress length: anInteger
-	"Answer a new UnicodeString, of length anInteger, copied from the first anInteger
-	characters pointed at by anAddress."
+	"Answer a new <Utf16String>, of length anInteger, copied from the first anInteger
+	code units pointed at by anAddress."
 
 	^anAddress isNull
 		ifFalse: 
@@ -346,7 +346,8 @@ fromString: aString
 initialize
 	empty := self new
 				isImmutable: true;
-				yourself!
+				yourself.
+	VMLibrary default registryAt: #Utf16String put: self!
 
 new: anInteger
 	"Answer an instance of the receiver to accomodate exactly
