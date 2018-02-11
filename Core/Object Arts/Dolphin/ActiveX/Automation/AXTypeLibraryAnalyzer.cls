@@ -228,7 +228,7 @@ enums
 
 	^self selectTypeKind: TKIND_ENUM!
 
-find: memberName count: numToFind 
+find: memberName count: numToFind
 	"Find up to the <integer> argument, numToFind, member id -> ITypeInfo pairs for the
 	specified name in the receiver."
 
@@ -236,15 +236,15 @@ find: memberName count: numToFind
 	rgMemId := SDWORDArray new: numToFind.
 	ppTInfo := DWORDArray new: numToFind.
 	pcFound := DWORDBytes fromInteger: numToFind.
-	self tlbInterface 
-		FindName: memberName asUnicodeString
+	self tlbInterface
+		FindName: memberName asUtf16String
 		lHashVal: 0
 		ppTInfo: ppTInfo
 		rgMemId: rgMemId
 		pcFound: pcFound.	"let system compute hash value"	"arg type not implicitly coercable"
 	infos := self typeAnalyzers.
 	^(1 to: pcFound asInteger) collect: 
-			[:i | 
+			[:i |
 			| piTInfo assoc info |
 			piTInfo := ITypeInfo newPointer.
 			piTInfo attach: (ppTInfo at: i).

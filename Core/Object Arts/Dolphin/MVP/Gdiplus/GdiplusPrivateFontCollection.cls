@@ -12,12 +12,12 @@ GdiplusPrivateFontCollection comment: 'GdiplusPrivateFontCollection is a collect
 !GdiplusPrivateFontCollection categoriesForClass!Unclassified! !
 !GdiplusPrivateFontCollection methodsFor!
 
-addFontFile: aFilename 
+addFontFile: aFilename
 	"Adds a font file to this private font collection."
 
 	| status |
 	(status := GdiplusLibrary default gdipPrivateAddFontFile: self asParameter
-				filename: aFilename asUnicodeString) = Ok 
+				filename: aFilename asUtf16String) = Ok
 		ifFalse: [GdiplusError signal: 'GdipPrivateAddFontFile failed' with: status]! !
 !GdiplusPrivateFontCollection categoriesFor: #addFontFile:!operations!public! !
 

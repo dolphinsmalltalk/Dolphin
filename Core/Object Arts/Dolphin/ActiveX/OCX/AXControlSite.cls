@@ -708,7 +708,7 @@ safeCreateControlFromStream: pStream
 	the control's state such as that created by a call to OleSaveToStream()."
 
 	| wszName unkSink control |
-	wszName := self progId asUnicodeString.
+	wszName := self progId asUtf16String.
 	propertyMap := LookupTable new.
 	unkSink := self observePropertyNotifications ifTrue: [self queryInterface: IPropertyNotifySink].
 	self assert: [unkControl isNull].

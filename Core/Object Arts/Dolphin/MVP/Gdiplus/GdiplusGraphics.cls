@@ -411,7 +411,7 @@ drawString: aString font: aFont at: aPoint format: aStringFormat brush: aBrush
 		format: aStringFormat
 		brush: aBrush!
 
-drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aBrush 
+drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aBrush
 	"Draw aString on the receiver inside aRectangle, using font attributes (family name, size,
 	and style) specified by aFont, text format information (layout and display manipulations)
 	specified by aStringFormat, and aBrush to fill the string."
@@ -420,14 +420,14 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 	font := aFont ifNil: [GdiplusFont new].
 	format := aStringFormat ifNil: [GdiplusStringFormat new].
 	brush := aBrush ifNil: [GdiplusSolidBrush new].
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipDrawString: self asParameter
-				str: aString asUnicodeString
+				str: aString asUtf16String
 				length: -1
 				font: font asParameter
 				layoutRect: (RECTF fromRectangle: aRectangle)
 				stringFormat: format asParameter
-				brush: brush asParameter) = Ok 
+				brush: brush asParameter) = Ok
 		ifFalse: [GdiplusError signal: 'GdipDrawString failed' with: status]!
 
 drawString: aString layoutRect: aRectangle
@@ -586,21 +586,21 @@ measureString: aString font: aFont
 		rect: (Point zero extent: Point zero)
 		format: nil) extent!
 
-measureString: aString font: aFont rect: aRectangle format: aStringFormat 
+measureString: aString font: aFont rect: aRectangle format: aStringFormat
 	"Answer a Rectangle that is the bounds of aString inside aRectangle as specified by aFont and aStringFormat."
 
 	| status boundRect |
 	boundRect := RECTF new.
-	(status := GdiplusLibrary default 
+	(status := GdiplusLibrary default
 				gdipMeasureString: self asParameter
-				str: aString asUnicodeString
+				str: aString asUtf16String
 				length: aString size
 				font: aFont asParameter
 				layoutRect: (RECTF fromRectangle: aRectangle)
 				stringFormat: aStringFormat asParameter
 				boundingBox: boundRect
 				codepointsFitted: nil
-				linesFilled: nil) = Ok 
+				linesFilled: nil) = Ok
 		ifFalse: [GdiplusError signal: 'GdipMeasureString failed' with: status].
 	^boundRect asRectangle truncated!
 

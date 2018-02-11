@@ -147,7 +147,10 @@ isName: aString
 
 	| answer |
 	answer := DWORDBytes new.
-	self IsName: aString asUnicodeString lHashVal: 0 pfName: answer.
+	self
+		IsName: aString asUtf16String
+		lHashVal: 0
+		pfName: answer.
 	^answer value asBoolean!
 
 IsName: szNameBuf lHashVal: lHashVal pfName: pfName
@@ -323,7 +326,7 @@ open: aString register: aBoolean
 	| answer oleaut wpath |
 	answer := self newPointer.
 	oleaut := OLEAutLibrary default.
-	wpath := aString asUnicodeString.
+	wpath := aString asUtf16String.
 	oleaut loadTypeLib: wpath pptlib: answer.
 	aBoolean
 		ifTrue: 

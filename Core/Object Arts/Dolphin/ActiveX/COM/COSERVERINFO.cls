@@ -24,7 +24,7 @@ hostName: aString
 	representation of the argument, aString. The Unicode String is stored
 	into an inst. var. to prevent it from being GC'd."
 
-	hostName := aString asUnicodeString.
+	hostName := aString asUtf16String.
 	self pwszName: hostName!
 
 pAuthInfo

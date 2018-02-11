@@ -252,7 +252,7 @@ module HttpApi
 
 addUrl: aString toUrlGroup: anIntegerUrlGroupId
 	| url |
-	url := aString asUnicodeString.
+	url := aString asUtf16String.
 	self checkReturnCode: (self
 				httpAddUrlToUrlGroup: anIntegerUrlGroupId
 				pFullyQualifiedUrl: url

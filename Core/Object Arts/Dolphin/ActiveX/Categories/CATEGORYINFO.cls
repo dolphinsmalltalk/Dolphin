@@ -21,7 +21,7 @@ description: desc
 	"Set the receiver's szDescription field to <UnicodeString> representation
 	of the <readableString> argument, desc."
 
-	self szDescription: (wszDescription := desc asUnicodeString)!
+	self szDescription: (wszDescription := desc asUtf16String)!
 
 lcid: anObject 
 	"Set the receiver's lcid field to the value of anObject."

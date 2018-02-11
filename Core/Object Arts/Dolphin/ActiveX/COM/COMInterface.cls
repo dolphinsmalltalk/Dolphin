@@ -670,7 +670,7 @@ generatedFunctionCategories
 		with: (catClass name: 'COM Interfaces', '-', self name)
 		with: catClass public!
 
-getObject: aString 
+getObject: aString
 	"Answer an instance or subinstance of the receiver on an instance of the COM component 
 	instantiated by binding the moniker with display name equivalent to the <readableString>
 	argument. This is a simplified interface for binding to COM objects 
@@ -678,8 +678,8 @@ getObject: aString
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
-		coGetObject: aString asUnicodeString
+	OLELibrary default
+		coGetObject: aString asUtf16String
 		pBindOptions: nil
 		riid: self iid
 		ppv: answer.

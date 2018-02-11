@@ -32,12 +32,12 @@ id
 
 	^self szID asString!
 
-id: aString 
+id: aString
 	"Set the <readableString> ID held in the receiver."
 
 	self
 		maskIn: LIF_ITEMID;
-		szID: aString asString asUnicodeString!
+		szID: aString asString asUtf16String!
 
 iLink
 	"Answer the receiver's iLink field as a Smalltalk object."
@@ -147,12 +147,12 @@ url
 
 	^self szURL asString!
 
-url: aString 
+url: aString
 	"Set the <readableString> URL held in the receiver."
 
 	self
 		maskIn: LIF_URL;
-		szURL: aString asString asUnicodeString! !
+		szURL: aString asString asUtf16String! !
 !LITEM categoriesFor: #handle!accessing!public! !
 !LITEM categoriesFor: #id!accessing!public! !
 !LITEM categoriesFor: #id:!accessing!public! !

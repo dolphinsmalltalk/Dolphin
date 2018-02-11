@@ -1343,7 +1343,7 @@ onViewDestroyed
 
 openTheme
 	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: #TreeView asUnicodeString]!
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: #TreeView asUtf16String]!
 
 paint: aMoenTreeNode on: aCanvas fromPoint: aPoint 
 	"Private - Paint the tree object onto the canvas together with all its children."

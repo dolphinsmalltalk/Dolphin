@@ -35,7 +35,7 @@ faceName
 faceName: fontName
 	"Set the font name stored in the receiver."
 
-	name := fontName asUnicodeString.
+	name := fontName asUtf16String.
 	self lpstrName: name!
 
 fItalic

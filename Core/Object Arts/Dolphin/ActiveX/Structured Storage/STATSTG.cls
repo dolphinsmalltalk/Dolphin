@@ -110,11 +110,11 @@ name
 
 	^self pwcsName asString!
 
-name: aString 
+name: aString
 	"Set the <readableString> name of the object whose status the receiver is recording."
 
 	| name |
-	name := aString asUnicodeString copyToCOMTaskMemory.
+	name := aString asUtf16String copyToCOMTaskMemory.
 	self pwcsName: name.
 	"struct now has ownership of the name"
 	name beUnfinalizable!

@@ -314,19 +314,15 @@ SetExtent: dwDrawAspect psizel: psizel
 	^self invalidCall
 !
 
-setHostNames: szContainerApp szContainerObj: szContainerObj 
+setHostNames: szContainerApp szContainerObj: szContainerObj
 	"Invoke the SetHostNames() method of the COM Object.
 	Implementation of this method is optional, so we suppress any E_NOTIMPL errors
 	that may be reported."
 
 	| hr |
-	hr := self
-			SetHostNames: szContainerApp asUnicodeString
-			szContainerObj: szContainerObj asUnicodeString.
-	hr  < 0 ifTrue: [
-		hr = E_NOTIMPL ifFalse: [^self hresultError: hr]].
-	^hr
-!
+	hr := self SetHostNames: szContainerApp asUtf16String szContainerObj: szContainerObj asUtf16String.
+	hr < 0 ifTrue: [hr = E_NOTIMPL ifFalse: [^self hresultError: hr]].
+	^hr!
 
 SetHostNames: szContainerApp szContainerObj: szContainerObj
 	"Private - Invoke the SetHostNames() method of the COM object wrapped by the receiver.

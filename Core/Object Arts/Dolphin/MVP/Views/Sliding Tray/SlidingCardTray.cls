@@ -164,7 +164,7 @@ onViewDestroyed
 
 openTheme
 	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'EXPLORERBAR' asUnicodeString].
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'EXPLORERBAR' asUtf16String].
 	pinSize := SystemMetrics current smallIconExtent asParameter.
 	theme isNull
 		ifFalse: 

@@ -51,14 +51,13 @@ createControlLicEx: lpTricsData hWnd: hWnd pStream: pStream piAdvise: piAdvise b
 	| answer |
 	answer := IUnknown newPointer.
 	self
-		CreateControlLicEx: lpTricsData asUnicodeString
+		CreateControlLicEx: lpTricsData asUtf16String
 		hWnd: hWnd
 		pStream: pStream
 		ppUnk: answer
 		piAdvise: piAdvise
 		bstrLic: bstrLic.
-	^answer asObject
-!
+	^answer asObject!
 
 CreateControlLicEx: lpTricsData hWnd: hWnd pStream: pStream ppUnk: ppUnk piAdvise: piAdvise bstrLic: bstrLic
 	"Private - Invoke the CreateControlLicEx() method of the COM object.

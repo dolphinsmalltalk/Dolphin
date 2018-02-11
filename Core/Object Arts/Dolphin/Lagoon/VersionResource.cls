@@ -263,7 +263,7 @@ writeHeaderTo: aWriteStream type: wType key: keyString value: valueBytes length:
 	| blockStart szKey word keySize wLength |
 	aWriteStream padTo: 4 put: 0.
 	blockStart := aWriteStream position.
-	szKey := keyString asUnicodeString.
+	szKey := keyString asUtf16String.
 	keySize := szKey byteSize.
 	wLength := (6 + keySize roundUpTo: 4) + valueBytes size.
 	word := WORD new.
@@ -320,9 +320,9 @@ writeTextHeaderTo: aWriteStream key: keyString value: valueString
 	target (which must be a byte stream). The wLength member is left as zero to be filled in later. Answer 
 	the position of the start of the block."
 
-	^valueString isEmpty 
+	^valueString isEmpty
 		ifTrue: 
-			[self 
+			[self
 				writeHeaderTo: aWriteStream
 				type: 1
 				key: keyString
@@ -330,10 +330,9 @@ writeTextHeaderTo: aWriteStream key: keyString value: valueString
 				length: 0]
 		ifFalse: 
 			[| valueBytes szValue |
-			szValue := valueString asUnicodeString.
-			valueBytes := ByteArray fromAddress: szValue yourAddress
-						length: szValue byteSize.
-			self 
+			szValue := valueString asUtf16String.
+			valueBytes := ByteArray fromAddress: szValue yourAddress length: szValue byteSize.
+			self
 				writeHeaderTo: aWriteStream
 				type: 1
 				key: keyString

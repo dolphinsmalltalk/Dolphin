@@ -124,11 +124,11 @@ defaultMode
 
 	^##(STGM_READWRITE | STGM_SHARE_EXCLUSIVE)!
 
-delete: elementName 
+delete: elementName
 	"Delete the named element from the receiver.
 	This is the equivalent of the file system 'delete' command."
 
-	self DestroyElement: elementName asUnicodeString!
+	self DestroyElement: elementName asUtf16String!
 
 DestroyElement: pwcsName 
 	"Invoke the DestroyElement() method of the object wrapped by the receiver.
@@ -275,14 +275,14 @@ newStorage: storageName mode: stgMode
 		mode: stgMode
 		format: STGFMT_DOCUMENT!
 
-newStorage: storageName mode: dwMode format: dwFormat 
+newStorage: storageName mode: dwMode format: dwFormat
 	"Instantiate and answer an IStorage on a new named substorage 
 	im the receiver with the specified access modes and format."
 
 	| answer |
 	answer := IStorage newPointer.
-	self 
-		CreateStorage: storageName asUnicodeString
+	self
+		CreateStorage: storageName asUtf16String
 		grfMode: dwMode
 		dwStgFmt: dwFormat
 		reserved2: 0
@@ -294,13 +294,13 @@ newStream: streamName
 
 	^self newStream: streamName mode: self defaultMode!
 
-newStream: streamName mode: stgMode 
+newStream: streamName mode: stgMode
 	"Instantiate and answer a new IStream in the receiver with the specified access modes."
 
 	| answer |
 	answer := IStream newPointer.
-	self 
-		CreateStream: streamName asUnicodeString
+	self
+		CreateStream: streamName asUtf16String
 		grfMode: stgMode
 		reserved1: 0
 		reserved2: 0
@@ -313,14 +313,14 @@ openStorage: storageName
 
 	^self openStorage: storageName mode: self defaultMode!
 
-openStorage: storageName mode: stgMode 
+openStorage: storageName mode: stgMode
 	"Open the existing stream of the specified name in the receiver, and answer an
 	IStream on it with the specified access modes."
 
 	| answer |
 	answer := IStorage newPointer.
-	self 
-		OpenStorage: storageName asUnicodeString
+	self
+		OpenStorage: storageName asUtf16String
 		pstgPriority: nil
 		grfMode: (stgMode bitOr: STGM_SHARE_EXCLUSIVE)
 		snbExclude: nil
@@ -350,14 +350,14 @@ openStream: streamName
 
 	^self openStream: streamName mode: self defaultMode!
 
-openStream: streamName mode: stgMode 
+openStream: streamName mode: stgMode
 	"Open the existing stream of the specified name in the receiver, and answer an
 	IStream on it with the specified access modes."
 
 	| answer |
 	answer := IStream newPointer.
-	self 
-		OpenStream: streamName asUnicodeString
+	self
+		OpenStream: streamName asUtf16String
 		reserved1: 0
 		grfMode: stgMode
 		reserved2: 0
@@ -379,12 +379,12 @@ OpenStream: pwcsName reserved1: reserved1 grfMode: grfMode reserved2: reserved2 
 	<virtual stdcall: hresult 5 lpwstr sbyte* dword dword IStream**>
 	^self invalidCall!
 
-rename: string1 to: string2 
+rename: string1 to: string2
 	"Change the name of the element of the receiver currently called, string1, to,
 	string2.
 	This is the equivalent of the file system 'rename' command."
 
-	self RenameElement: string1 asUnicodeString pwcsNewName: string2 asUnicodeString!
+	self RenameElement: string1 asUtf16String pwcsNewName: string2 asUtf16String!
 
 RenameElement: pwcsOldName pwcsNewName: pwcsNewName 
 	"Invoke the RenameElement() method of the object wrapped by the receiver.
@@ -424,13 +424,13 @@ SetClass: clsid
 	<virtual stdcall: hresult 16 guid*>
 	^self invalidCall!
 
-setCLIPFORMAT: cf userType: aString 
+setCLIPFORMAT: cf userType: aString
 	"Set the clipboard format and user type for the receiver."
 
-	OLELibrary default 
+	OLELibrary default
 		writeFmtUserTypeStg: self
 		cf: cf
-		lpszUserType: aString asUnicodeString!
+		lpszUserType: aString asUtf16String!
 
 SetElementTimes: pwcsName pctime: pctime patime: patime pmtime: pmtime 
 	"Invoke the SetElementTimes() method of the object wrapped by the receiver.
@@ -534,15 +534,15 @@ create: fileName
 
 	^self create: fileName mode: self defaultCreateMode!
 
-create: fileName mode: stgMode 
+create: fileName mode: stgMode
 	"Answer an instance of the receiver on a new compound file with the specified
 	name. The access mode of the answered IStorage is as specified in the stgMode
 	argument."
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
-		stgCreateDocfile: fileName asUnicodeString
+	OLELibrary default
+		stgCreateDocfile: fileName asUtf16String
 		grfMode: stgMode
 		reserved: 0
 		ppstgOpen: answer.
@@ -688,7 +688,7 @@ open: pathName
 
 	^self open: pathName mode: self defaultOpenMode	" ##(STGM_TRANSACTED | STGM_READWRITE | STGM_SHARE_DENY_WRITE)"!
 
-open: pathName mode: stgMode 
+open: pathName mode: stgMode
 	"Open the specified compound document file, and answer an instance of the receiver for
 	accessing it. The compound file is opened in the specified mode which is a combination
 	of the following flags:
@@ -712,8 +712,8 @@ open: pathName mode: stgMode
 
 	| answer |
 	answer := self newPointer.
-	OLELibrary default 
-		stgOpenStorage: pathName asUnicodeString
+	OLELibrary default
+		stgOpenStorage: pathName asUtf16String
 		pstgPriority: nil
 		grfMode: stgMode
 		snbExclude: nil

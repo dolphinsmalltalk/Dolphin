@@ -17,7 +17,7 @@ lpszText: anObject
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anObject yourAddress!
 
-text: aString 
+text: aString
 	"Private - Set the receiver's tip text to a Unicode version of the <readableString> argument,
 	and answer that."
 
@@ -25,7 +25,7 @@ text: aString
 	prevent it being prematurely GC'd, so we answer it in order that the caller can reference it."
 
 	| unicode |
-	unicode := aString asUnicodeString.
+	unicode := aString asUtf16String.
 	self lpszText: unicode.
 	^unicode!
 

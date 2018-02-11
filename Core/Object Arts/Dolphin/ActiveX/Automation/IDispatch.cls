@@ -202,24 +202,21 @@ getIDsOfNames: names
 	members of the receiver."
 
 	| rgszNames uNames cNames rgDispId hr |
-	uNames := names collect: [:p | p asUnicodeString].
+	uNames := names collect: [:p | p asUtf16String].
 	cNames := names size.
 	rgszNames := DWORDArray new: cNames.
 	uNames keysAndValuesDo: [:i :n | rgszNames at: i put: n yourAddress].
 	rgDispId := SDWORDArray new: cNames.
-	hr := self 
-		GetIDsOfNames: IID null 
-		rgszNames: rgszNames 
-		cNames: cNames 
-		lcid: LOCALE_USER_DEFAULT
-		rgdispid: rgDispId.
+	hr := self
+				GetIDsOfNames: IID null
+				rgszNames: rgszNames
+				cNames: cNames
+				lcid: LOCALE_USER_DEFAULT
+				rgdispid: rgDispId.
 	^hr < 0
-		ifTrue: [
-			hr = DISP_E_UNKNOWNNAME
-				ifTrue: [self errorNotFound: names]
-				ifFalse: [self hresultError: hr]]
-		ifFalse: [
-			"Convert to a standard Smalltalk Array"
+		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [self errorNotFound: names] ifFalse: [self hresultError: hr]]
+		ifFalse: 
+			["Convert to a standard Smalltalk Array"
 			rgDispId collect: [:m | m]]!
 
 GetIDsOfNames: riid rgszNames: rgszNames cNames: cNames lcid: lcid rgdispid: rgdispid
@@ -370,23 +367,22 @@ idOfName: name ifAbsent: exceptionHandler
 	is much faster for the common case of looking up a single name."
 
 	| uName dispId hr |
-	uName := name asUnicodeString.
+	uName := name asUtf16String.
 	dispId := SDWORD new.
-	hr := self GetIDsOfNames: IID null 
-		rgszNames: (DWORD fromInteger: uName yourAddress) 
-		cNames: 1 
-		lcid: LOCALE_USER_DEFAULT
-		rgdispid: dispId.
+	hr := self
+				GetIDsOfNames: IID null
+				rgszNames: (DWORD fromInteger: uName yourAddress)
+				cNames: 1
+				lcid: LOCALE_USER_DEFAULT
+				rgdispid: dispId.
 	^hr < 0
-		ifTrue: [
-			hr = DISP_E_UNKNOWNNAME
-				ifTrue: [exceptionHandler value]
-				ifFalse: [self hresultError: hr]]
-		ifFalse: [
-			dispId := dispId asInteger.
+		ifTrue: [hr = DISP_E_UNKNOWNNAME ifTrue: [exceptionHandler value] ifFalse: [self hresultError: hr]]
+		ifFalse: 
+			[dispId := dispId asInteger.
 			^dispId == DISPID_UNKNOWN
-				ifTrue: [ "Control should have returned DISP_E_UNKNOWNNAME, but sometimes they don't"
-						exceptionHandler value]
+				ifTrue: 
+					["Control should have returned DISP_E_UNKNOWNNAME, but sometimes they don't"
+					exceptionHandler value]
 				ifFalse: [dispId]]!
 
 implementor: anObject
