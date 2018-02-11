@@ -686,8 +686,8 @@ stringLowerA: aString
 	<stdcall: void CharLowerA lpvoid>
 	^self invalidCall!
 
-stringLowerW: aUnicodeString 
-	"Convert a <UnicodeString> to lower case IN PLACE. This will be dependent on the semantics
+stringLowerW: aUtf16String 
+	"Convert a <Utf16String> to lower case IN PLACE. This will be dependent on the semantics
 	of the language selected by the user during setup or by using Control Panel. N.B. We ignore
 	the return value as it will be a pointer to the argument.
 
@@ -706,12 +706,12 @@ stringUpperA: aString
 	<stdcall: void CharUpperA lpvoid>
 	^self invalidCall!
 
-stringUpperW: aUnicodeString 
-	"Convert a <UnicodeString> to uppercase IN PLACE. This will be dependent on the semantics of
+stringUpperW: aUtf16String 
+	"Convert a <Utf16String> to uppercase IN PLACE. This will be dependent on the semantics of
 	the language selected by the user during setup or by using Control Panel. N.B. We ignore the
 	return value as it will be a pointer to the argument.
 
-	LPTWTR CharUpper(LPWSTR lpsz);"
+	LPWSTR CharUpperW(LPWSTR lpsz);"
 
 	<stdcall: void CharUpperW lpvoid>
 	^self invalidCall!

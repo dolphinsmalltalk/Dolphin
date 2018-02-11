@@ -613,7 +613,7 @@ asSAFEARRAY
 
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_BSTR).
-	This will also work fine for UnicodeString."
+	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
 !BSTR categoriesFor: #asSAFEARRAY!converting!public! !
@@ -2161,7 +2161,7 @@ asVariant
 
 asVariant
 	"Answer the VARIANT representation of the receiver (a VT_BSTR).
-	This will also work fine for UnicodeString."
+	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
 !String categoriesFor: #asVariant!converting!public! !

@@ -60,7 +60,7 @@ valueOffset
 	^valueOffset!
 
 valueString
-	"Answer the <UnicodeString> value of the receiver (assumes this is a String block).
+	"Answer the <Utf16String> value of the receiver (assumes this is a String block).
 	Note that the string will be zero terminated if non-empty."
 
 	^self wValueLength = 0

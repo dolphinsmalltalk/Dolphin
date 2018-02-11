@@ -1158,9 +1158,10 @@ lstrcmpi: aString1 lpString2: aString2
 	<stdcall: sdword lstrcmpiA lpstr lpstr>
 	^self invalidCall!
 
-lstrlenW: aUnicodeString
-	"Answer the length in characters of the parameter (assumed to point
-	at a null-terminated unicode String."
+lstrlenW: aUtf16String
+	"Answer the length in 16-bit code units of the parameter (assumed to point at a
+	null-terminated wide string). Note that this may be more than the number of actual
+	characters should the string contain any code points that require two code units."
 
 	<stdcall: sdword lstrlenW lpvoid>
 	^self invalidCall!
@@ -1196,10 +1197,10 @@ moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
 
 multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn 
 	cchMultiByte: intLenIn
-	lpWideCharStr: aUnicodeStringOut
+	lpWideCharStr: aUtf16StringOut
 	cchWideChar: intLenOut
 
-	"Maps a string to a wide-character (Unicode) string. 
+	"Maps a string to a wide-character (UTF16) string. 
 	Despite the name, aStringIn, need not contain MBCS characters.
 
 		int MultiByteToWideChar(

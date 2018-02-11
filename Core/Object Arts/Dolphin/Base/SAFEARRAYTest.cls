@@ -100,7 +100,7 @@ testElementClasses
 	self assert: array recordInfo getFieldNames = #('x' 'y').
 
 	"Some invalid safe array types in the VTClasses map"
-	#(#String #UnicodeString #ExternalAddress) do: 
+	#(#String #Utf16String #ExternalAddress) do: 
 			[:each | 
 			self 
 				should: [SAFEARRAY length: 1 elementClass: (Smalltalk at: each)]

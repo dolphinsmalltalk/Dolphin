@@ -23,9 +23,9 @@ getErrorInfo: dwReserved pperrinfo: pperrinfo
 	^self invalidCall
 !
 
-sysAllocString: aUnicodeString
+sysAllocString: aUtf16String
 	"Allocates and answer a new Basic string which is a copy of the 
-	argument, aUnicodeString. Answers NULL if there is insufficient memory.
+	argument, aUtf16String. Answers NULL if there is insufficient memory.
 
 		BSTR SysAllocString(OLECHAR FAR* sz);
 	"

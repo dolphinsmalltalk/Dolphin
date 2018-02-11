@@ -408,7 +408,7 @@ ungetc: c stream: stream
 	<cdecl: sdword ungetc sdword handle>
 	^self invalidCall!
 
-wcscspn: aUnicodeString strCharSet: strCharSet
+wcscspn: aWideString strCharSet: strCharSet
 	<cdecl: dword wcscspn lpvoid lpwstr>
 	^self invalidCall! !
 !CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !

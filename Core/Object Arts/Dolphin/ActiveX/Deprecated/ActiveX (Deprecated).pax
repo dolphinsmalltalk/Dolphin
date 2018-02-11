@@ -9,6 +9,8 @@ package basicPackageVersion: '6.0'.
 
 
 package methodNames
+	add: #BSTR -> #asUnicodeString;
+	add: #LPBSTR -> #asUnicodeString;
 	add: 'DATE class' -> #max;
 	add: 'DATE class' -> #min;
 	yourself.
@@ -21,6 +23,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\Automation\ActiveX Automation';
+	add: '..\COM\OLE COM';
 	yourself).
 
 package!
@@ -33,6 +36,13 @@ package!
 
 "Loose Methods"!
 
+!BSTR methodsFor!
+
+asUnicodeString
+	#deprecated.
+	^self asUtf16String! !
+!BSTR categoriesFor: #asUnicodeString!converting!public! !
+
 !DATE class methodsFor!
 
 max
@@ -44,6 +54,13 @@ min
 	^self minimum! !
 !DATE class categoriesFor: #max!instance creation!public! !
 !DATE class categoriesFor: #min!instance creation!public! !
+
+!LPBSTR methodsFor!
+
+asUnicodeString
+	#deprecated.
+	^self asUtf16String! !
+!LPBSTR categoriesFor: #asUnicodeString!converting!public! !
 
 "End of package definition"!
 

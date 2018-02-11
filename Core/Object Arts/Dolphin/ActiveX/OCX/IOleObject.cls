@@ -217,7 +217,7 @@ GetUserClassID: pClsid
 !
 
 getUserType: dwFormOfType
-	"Answer the <UnicodeString> result of invoking the COM Object's GetUserType() method.
+	"Answer the <Utf16String> result of invoking the COM Object's GetUserType() method.
 	Auto-generated method would work here (handles task memory correctly), but rewritten for 
 	improved efficiency."
 

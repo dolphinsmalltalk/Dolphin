@@ -435,7 +435,7 @@ comStartup
 
 asBSTR
 	"Answer the BSTR (AX Automation string) representation of the receiver.
-	This conversion will also work fine for UnicodeString."
+	This conversion will also work fine for Utf16String."
 
 	^BSTR fromString: self!
 

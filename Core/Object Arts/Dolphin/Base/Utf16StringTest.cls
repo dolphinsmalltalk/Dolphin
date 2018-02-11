@@ -31,7 +31,7 @@ testUtf8StringConversion
 	self assert: byteString size equals: 12.
 	wideString := byteString asUtf16String.
 	self assert: wideString size equals: 4.
-	"On VMs before 7.0.54, UnicodeStrings may not be properly terminated (#155)"
+	"On VMs before 7.0.54, Utf16Strings may not be properly terminated (#155)"
 	(self isAtLeastVmVersion: #(2016 7 0 54))
 		ifTrue: 
 			[| string2 |
