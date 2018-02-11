@@ -1217,7 +1217,7 @@ fromAddress: anAddress
 
 fromAddress: anAddress length: anInteger
 	"Answer a new String, of length anInteger, copied from the first anInteger
-	characters of aString."
+	bytes of aString."
 
 	^anAddress isNull 
 		ifFalse: [
@@ -1306,7 +1306,8 @@ icon
 
 initialize
 	NullPrintCharacter := $?.
-	empty := ''!
+	empty := ''.
+	VMLibrary default registryAt: #String put: self!
 
 lineDelimiter
 	"Answer an immutable instance of the receiver containing the host system 

@@ -697,7 +697,7 @@ initialize
 				at: #BlockClosure put: 90;
 				at: #Message put: 91;
 				at: #ByteArray put: 92;
-				at: #UnicodeString put: 93;
+				at: #Utf16String put: 93;
 				at: #CompiledExpression put: 94;
 				at: #ExternalMethod put: 95;
 				at: #Float put: 96;
@@ -708,6 +708,7 @@ initialize
 				at: #ExternalHandle put: 101;
 				at: #Dispatcher put: 102;
 				at: #LPVOID put: 103;
+				at: #Utf8String put: 104;
 				at: #PoolConstantsDictionary put: 105;
 				at: #LargeInteger put: 107;
 				at: #VARIANT put: 108;

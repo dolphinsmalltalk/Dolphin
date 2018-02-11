@@ -79,7 +79,8 @@ fromByteArray: aByteArray
 initialize
 	empty := self new
 				isImmutable: true;
-				yourself! !
+				yourself.
+	VMLibrary default registryAt: #Utf8String put: self! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
 !Utf8String class categoriesFor: #fromByteArray:!public! !
 !Utf8String class categoriesFor: #initialize!development!initializing!public! !
