@@ -586,8 +586,7 @@ ENDPRIMITIVE primitiveIndirectWORDAt
 BEGINPRIMITIVE primitiveByteAtAddress
 	IndirectAtPreamble
 
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[eax+edx]			; Load the desired byte into AL
+	movzx	ecx, BYTE PTR[eax+edx]			; Load the desired byte into cl
 	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
 	lea		ecx, [ecx+ecx+1]				; Convert to SmallInteger
 	mov		[_SP-OOPSIZE], ecx				; Store new SmallInteger at stack top

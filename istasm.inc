@@ -564,6 +564,7 @@ CountUpObjectIn MACRO oopRegLetter	;;, countRegLetter
 	;; and which seems to be faster
 	;; Cycles 3+1 (normal), 3+1+1 (overflowed)
 	inc			(OTE PTR[e&oopRegLetter&x]).m_count
+	; TODO: Can we use setcc here?
 	jnz			fini
 	mov			(OTE PTR[e&oopRegLetter&x]).m_count, MAXCOUNT
 

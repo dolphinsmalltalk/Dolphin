@@ -480,8 +480,7 @@ retStruct:
 	ASSERTNEQU %DESCRIPTOR, <edx>
 
 	;; Returning a 9+ byte structure by value, so we must make space for it on the stack!
-	xor		ecx, ecx
-	mov		cl, [DESCRIPTOR].m_returnParm			; Get return parm literal frame index into ECX
+	movzx	ecx, [DESCRIPTOR].m_returnParm			; Get return parm literal frame index into ECX
 	
 	; N.B. Before we need the INDEX, we'll use it as a temp
 	mov		edx, [method]							; Load the method (NOT Interpreter::m_pMethod)

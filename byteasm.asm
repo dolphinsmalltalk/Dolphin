@@ -565,8 +565,7 @@ FetchByteNoClear MACRO regLetter:=<c>
 ENDM	
 
 FetchByte MACRO regLetter:=<c>
-	xor		e&regLetter&x, e&regLetter&x
-	mov		regLetter&l, BYTE PTR[_IP]
+	movzx	e&regLetter&x, BYTE PTR[_IP]
 	inc		_IP
 ENDM
 
@@ -850,8 +849,7 @@ BEGINBYTECODE shortPushSelfAndTemp
 ENDBYTECODE shortPushSelfAndTemp
 
 BEGINBYTECODE pushTempPair
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[_IP]
+	movzx	ecx, BYTE PTR[_IP]
 	mov		eax, ecx
 	inc		_IP
 	shr		ecx, 4
@@ -1059,8 +1057,7 @@ BEGINBYTECODE pushTemporary
 ENDBYTECODE pushTemporary
 
 OuterTempPreamble MACRO
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[_IP]
+	movzx	ecx, BYTE PTR[_IP]
 	mov		edx, [ACTIVEFRAME]
 	ASSUME	edx:PStackFrame						; EAX is now a pointer to the active context's fields
 
@@ -1107,9 +1104,8 @@ BEGINBYTECODE pushConstant
 
 		mov		eax, [pMethod]							;; Load pointer to current method
 		ASSUME	eax:PTR CompiledCodeObj
-		xor		ecx, ecx
 
-		mov		cl, [_IP]								;; Load literal index
+		movzx	ecx, [_IP]								;; Load literal index
 		add     _SP, OOPSIZE							;; We're going to push, so prepare _SP 
 
 		inc		_IP
@@ -1131,9 +1127,8 @@ BEGINBYTECODE pushStatic
 	ELSE
 		mov		eax, [pMethod]							;; Load pointer to current method
 		ASSUME	eax:PTR CompiledCodeObj
-		xor		ecx, ecx
 
-		mov		cl, [_IP]								;; Load literal index
+		movzx	ecx, [_IP]								;; Load literal index
 		add     _SP, OOPSIZE							;; We're going to push, so prepare _SP 
 		
 		inc		_IP
@@ -1340,18 +1335,15 @@ ENDIF
 ;; Extension (-128..127) is value to be pushed as SmallInteger
 
 BEGINBYTECODE pushImmediate
-	; Optimized form... (though MOVSX is still very slow - 3 cycles)
+	; Optimized form...
 	movsx	eax, BYTE PTR[_IP]					; Sign extend next byte into EAX
-	xor		ecx, ecx							; Clear ECX (avoid partial register stall on PPro and later PIIs it would appear)
-
 	add		_SP, OOPSIZE
-	mov		cl, [_IP+1]
+	movzx	ecx, [_IP+1]
 
 	lea		eax, [eax+eax+1]					; Convert to SmallInteger
 	add		_IP,2
 
 	mov		[_SP], eax							; push SmallInteger onto stack
-
 
 	IFDEF _DEBUG
 		.IF ([EXECUTIONTRACE])
@@ -1653,6 +1645,7 @@ BEGINBYTECODE popStoreContextTemp
 	CountUpOopIn<a>
 	
 	; Swap existing value with new value
+	; TODO: Get rid of xchg, as this is slow (interlocked)
 	xchg	eax, [edx].m_tempFrame[ecx*OOPSIZE-(FIRSTPOPSTORECTXTTEMP*OOPSIZE)]
 
 	; Since count down destroys register contents, we can't pre-fetch
@@ -1682,6 +1675,7 @@ BEGINBYTECODE shortPopStoreOuterTemp
 	CountUpOopIn<a>
 
 	; Swap existing value with new value
+	; TODO: Get rid of slow xchg instruction
 	xchg	eax, [edx].m_tempFrame[ecx*OOPSIZE-(FIRSTPOPSTOREOUTERTEMP*OOPSIZE)]
 
 	; Since count down destroys registers we can't prefetch
@@ -1775,8 +1769,7 @@ BEGINBYTECODE storeTemporary
 ENDBYTECODE storeTemporary
 
 BEGINBYTECODE incrementTemp
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP+1]
+	movzx	edx, BYTE PTR[_IP+1]
 	mov		eax, [_BP+edx*OOPSIZE]
 	test	al, 1									; Is it a SmallInteger?
 	jz		@F										; No, skip primitive response
@@ -1789,8 +1782,7 @@ BEGINBYTECODE incrementTemp
 		add _IP,2									; Skip over the PopStoreTempN instruction
 		DispatchByteCode							; Dispatch the next byte code
 	ELSE
-		;xor		ecx, ecx
-		mov		cl, BYTE PTR[_IP+2]
+		movzx	ecx, BYTE PTR[_IP+2]
 		mov		[_BP+edx*OOPSIZE], eax
 		add		_IP, 3
 		jmp byteCodeTable[ecx*4]
@@ -1811,8 +1803,7 @@ overflow:
 ENDBYTECODE incrementTemp
 
 BEGINBYTECODE incrementTempAndPush
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP+1]
+	movzx	edx, BYTE PTR[_IP+1]
 	mov		eax, [_BP+edx*OOPSIZE]
 	test	al, 1									; Is it a SmallInteger?
 	jz		@F										; No, skip primitive response
@@ -1827,8 +1818,7 @@ BEGINBYTECODE incrementTempAndPush
 		add _IP,2									; Skip over the PopStoreTempN instruction
 		DispatchByteCode							; Dispatch the next byte code
 	ELSE
-		;xor		ecx, ecx
-		mov		cl, BYTE PTR[_IP+2]
+		movzx	ecx, BYTE PTR[_IP+2]
 		mov		[_SP+OOPSIZE], eax				;; push object onto stack
 		add		_IP, 3
 		add     _SP, OOPSIZE
@@ -1850,8 +1840,7 @@ overflow:
 ENDBYTECODE incrementTempAndPush
 
 BEGINBYTECODE decrementTemp
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP+1]
+	movzx	edx, BYTE PTR[_IP+1]
 	mov		eax, [_BP+edx*OOPSIZE]
 	test	al, 1									; Is it a SmallInteger?
 	jz		@F										; No, skip primitive response
@@ -1864,8 +1853,7 @@ BEGINBYTECODE decrementTemp
 		add _IP,2									; Skip over the PopStoreTempN instruction
 		DispatchByteCode							; Dispatch the next byte code
 	ELSE
-		;xor		ecx, ecx
-		mov		cl, BYTE PTR[_IP+2]
+		movzx	ecx, BYTE PTR[_IP+2]
 		mov		[_BP+edx*OOPSIZE], eax
 		add		_IP, 3
 		jmp byteCodeTable[ecx*4]
@@ -1886,8 +1874,7 @@ overflow:
 ENDBYTECODE decrementTemp
 
 BEGINBYTECODE decrementTempAndPush
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP+1]
+	movzx	edx, BYTE PTR[_IP+1]
 	mov		eax, [_BP+edx*OOPSIZE]
 	test	al, 1									; Is it a SmallInteger?
 	jz		@F										; No, skip primitive response
@@ -1902,8 +1889,7 @@ BEGINBYTECODE decrementTempAndPush
 		add _IP,2									; Skip over the PopStoreTempN instruction
 		DispatchByteCode							; Dispatch the next byte code
 	ELSE
-		;xor		ecx, ecx
-		mov		cl, BYTE PTR[_IP+2]
+		movzx	ecx, BYTE PTR[_IP+2]
 		mov		[_SP+OOPSIZE], eax				;; push object onto stack
 		add		_IP, 3
 		add     _SP, OOPSIZE
@@ -2084,12 +2070,8 @@ ENDBYTECODE exLongPushImmediate
 
 BEGINBYTECODE pushChar
 	mov		edx, [OBJECTTABLE]
-	xor		eax, eax
-
-	xor		ecx, ecx
-	mov		al, BYTE PTR[_IP]					; Load code point byte into EAX
-
-	mov		cl, [_IP+1]
+	movzx	eax, BYTE PTR[_IP]					; Load code point byte into EAX
+	movzx	ecx, [_IP+1]
 	add		_SP, OOPSIZE
 
 	;; TODO: Need faster way to do this for 16 byte entry
@@ -2135,8 +2117,7 @@ ShortJumpN MACRO index
 												;; i.e. minimum jump is +2 (from start of jump instruction)
 			DispatchByteCode
 		ELSE
-			xor		ecx, ecx
-			mov		cl, [_IP+index+1]
+			movzx	ecx, [_IP+index+1]
 			add		_IP, index+1+1
 			jmp		byteCodeTable[ecx*4]
 		ENDIF
@@ -2188,17 +2169,15 @@ ELSE
 	jnz		@F
 
 	; Branch taken (it was false)
-	xor		ecx, ecx
+	movzx	ecx, [_IP+edx-1]			
 	ASSUME	ecx:DWORD
-	mov		cl, [_IP+edx-1]			
 	add		_IP, edx
 	jmp		byteCodeTable[ecx*4]
 
 @@: 
 	; Branch not taken (it was not false)
 	;; Might need xor ecx, ecx here, apparently zeroing forgotten after branch misprediction
-	xor		ecx, ecx
-	mov		cl, [_IP]					;; Load next instruction in prep.
+	movzx	ecx, [_IP]					;; Load next instruction in prep.
 	cmp		eax, -OTENTRYSIZE			;; true is immediately before false in OT
 	jne		@F							;; But not true either, so error case
 
@@ -2237,8 +2216,7 @@ BEGINBYTECODE nearJump
 	ELSE
 		; Optimized pentium form
 
-		xor		ecx, ecx							; To avoid partial register stall on PII
-		mov		cl, [_IP+eax+1]
+		movzx	ecx, [_IP+eax+1]
 		test	edx, edx
 		lea		_IP, [_IP+eax+2]					; Offset 0 is the next instruction (after single byte instruction extension)
 		jnz		@F									; If async events pending, go and poll input
@@ -2266,8 +2244,7 @@ BEGINBYTECODE longJump
 	ELSE
 		; Optimized pentium form
 
-		xor		ecx, ecx							; To avoid partial register stall on PII
-		mov		cl, [_IP+eax+2]
+		movzx	ecx, [_IP+eax+2]
 		test	edx, edx
 		lea		_IP, [_IP+eax+3]					; Offset 0 is the next instruction (after double byte instruction extension)
 		jnz		@F									; If async events pending, go and poll input
@@ -2299,8 +2276,7 @@ IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
 	DispatchByteCode
 ELSE
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[_IP+eax+1]
+	movzx	ecx, BYTE PTR[_IP+eax+1]
 	test	edx, edx
 	lea		_IP, [_IP+eax+2]						; Offset 0 is the next instruction (after single byte instruction extension)
 	jnz		@F
@@ -2322,8 +2298,7 @@ elseBranch:
 		DispatchByteCode
 	ELSE
 		; Optimized pentium form
-		xor		ecx, ecx
-		mov		cl, [_IP+1]								; Load instruction after extension byte
+		movzx	ecx, [_IP+1]								; Load instruction after extension byte
 		add		_IP, 2									; _IP points to instruction after that
 		jmp		byteCodeTable[ecx*4]
 	ENDIF
@@ -2347,8 +2322,7 @@ IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
 	DispatchByteCode
 ELSE
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[_IP+eax+1]
+	movzx	ecx, BYTE PTR[_IP+eax+1]
 	test	edx, edx
 	lea		_IP, [_IP+eax+2]						; Offset 0 is the next instruction (after single byte instruction extension)
 	jnz		@F
@@ -2365,8 +2339,7 @@ elseBranch:
 		DispatchByteCode
 	ELSE
 		; Optimized pentium form
-		xor		ecx, ecx
-		mov		cl, [_IP+1]								; Load instruction after extension byte
+		movzx	ecx, [_IP+1]								; Load instruction after extension byte
 		add		_IP, 2									; _IP points to instruction after that
 		jmp		byteCodeTable[ecx*4]
 	ENDIF
@@ -2385,8 +2358,7 @@ IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
 	DispatchByteCode
 ELSE
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[_IP+eax+1]
+	movzx	ecx, BYTE PTR[_IP+eax+1]
 	test	edx, edx
 	lea		_IP, [_IP+eax+2]						; Offset 0 is the next instruction (after single byte instruction extension)
 	jnz		@F
@@ -2403,9 +2375,7 @@ elseBranch:
 		inc		_IP									; Byte for the jump length
 		DispatchByteCode
 	ELSE
-		; Optimized pentium form
-		xor		ecx, ecx
-		mov		cl, [_IP+1]								; Load instruction after extension byte
+		movzx	ecx, [_IP+1]								; Load instruction after extension byte
 		add		_IP, 2									; _IP points to instruction after that
 		jmp		byteCodeTable[ecx*4]
 	ENDIF
@@ -2421,9 +2391,7 @@ ENDBYTECODE nearJumpIfNotNil
 ALIGN 16
 BEGINBYTECODE decrementStackTop
 	mov		eax, [_SP]									; Load receiver at stack top
-	xor		ecx, ecx
-
-	mov		cl, [_IP]
+	movzx	ecx, [_IP]
 	test	al, 1										; Is it a SmallInteger?
 
 	jz		@F											; No, skip primitive response
@@ -2580,9 +2548,7 @@ BEGINBYTECODE incrementStackTop
 	;; N.B. This is highly optimized for the Pentium processor, hence use of EAX as quicker to test accumulator
 	;; against immediate, and strange instruction ordering
 	mov		eax, [_SP]								; Load receiver at stack top
-	xor		ecx, ecx
-
-	mov		cl, [_IP]								; Load next instruction for most common smallinteger inc. case
+	movzx	ecx, [_IP]								; Load next instruction for most common smallinteger inc. case
 	test	al, 1									; Is it a SmallInteger?
 
 	jz		@F										; No, skip primitive response
@@ -2615,24 +2581,16 @@ ENDBYTECODE incrementStackTop
 
 BEGINBYTECODE sendArithmeticLessThan
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	mov		edx, [_SP]									; Load argument from stack
+	mov		ecx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
-	test	dl, 1										; Arg is a SmallInteger?
+	test	cl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	sub		_SP, OOPSIZE											; Pop argument	(which is not ref. counted)
+	mov		edx, [oteFalse]								; Default - not less than arg
+	sub		_SP, OOPSIZE								; Pop argument
+	cmp		eax, ecx									; receiver < arg?
+	cmovl	edx, [oteTrue]
 	MPrefetch
-	cmp		eax, edx									; receiver < arg?
-	mov		edx, [oteTrue]								; Default - not less than arg
-	jl		@F											; Pentium predicts forward jumps not taken (if not in BTB)
-	add		edx, OTENTRYSIZE							; Yes, receiver < arg, EAX := true
-@@:
-	; Note: The following instruction will probably be a Near Jump If False.
-	; Although the PPRO and later don't use pattern recognition for predicting indirect jumps
-	; (such as our bytecode dispatch), the simpler mechanism that is used (that the target will
-	; be the same as last time) will probably work out pretty well here (see Agner Fog).
-	; Actually it might be worth getting rid of the short jump instruction altogether to increase
-	; the probability of the target really being NearJumpIfFalse
 	mov		[_SP], edx
 	DispatchNext
 
@@ -2662,8 +2620,7 @@ IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
 	DispatchByteCode
 ELSE
-	xor		ecx, ecx
-	mov		cl, BYTE PTR[_IP+eax+1]
+	movzx	ecx, BYTE PTR[_IP+eax+1]
 	test	edx, edx
 	lea		_IP, [_IP+eax+2]						; Offset 0 is the next instruction (after single byte instruction extension)
 	jnz		@F
@@ -2685,8 +2642,7 @@ elseBranch:
 		DispatchByteCode
 	ELSE
 		; Optimized pentium form
-		xor		ecx, ecx
-		mov		cl, [_IP+1]								; Load instruction after extension byte
+		movzx	ecx, [_IP+1]								; Load instruction after extension byte
 		add		_IP, 2									; _IP points to instruction after that
 		jmp		byteCodeTable[ecx*4]
 	ENDIF
@@ -2700,18 +2656,16 @@ ENDBYTECODE nearJumpIfFalse
 ; Inlines primitive coding for SmallInteger
 BEGINBYTECODE sendArithmeticLessOrEqual
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	mov		edx, [_SP]									; Load argument from stack
+	mov		ecx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
-	test	dl, 1										; Arg is a SmallInteger?
+	test	cl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	sub		_SP, OOPSIZE											; Pop argument
+	mov		edx, [oteFalse]								; Default, true
+	sub		_SP, OOPSIZE								; Pop argument
+	cmp		eax, ecx									; receiver <= arg?
+	cmovle	edx, [oteTrue]								;
 	MPrefetch
-	cmp		eax, edx									; receiver <= arg?
-	mov		edx, [oteFalse]								; Default, No
-	jg		@F											; No, receiver > arg
-	sub		edx, OTENTRYSIZE							; Yes, EAX := true
-@@:
 	mov		[_SP], edx
 	DispatchNext
 
@@ -2726,17 +2680,15 @@ ENDBYTECODE sendArithmeticLessOrEqual
 
 BEGINBYTECODE sendArithmeticGreaterThan
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	mov		edx, [_SP]									; Load argument from stack
+	mov		ecx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
-	test	dl, 1										; Arg is a SmallInteger?
+	test	cl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	sub		_SP, OOPSIZE											; Pop argument
-	cmp		eax, edx									; receiver > arg?
-	mov		edx, [oteTrue]								; Default, yes
-	jg		@F											;
-	add		edx, OTENTRYSIZE							; No, EAX := false
-@@:
+	mov		edx, [oteFalse]								; Default, true
+	sub		_SP, OOPSIZE								; Pop argument
+	cmp		eax, ecx									; receiver > arg?
+	cmovg	edx, [oteTrue]								;
 	MPrefetch
 	mov		[_SP], edx
 	DispatchNext
@@ -2753,17 +2705,15 @@ ENDBYTECODE sendArithmeticGreaterThan
 ; Inlines primitive coding for SmallInteger
 BEGINBYTECODE sendArithmeticGreaterOrEqual
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	mov		edx, [_SP]									; Load argument from stack
+	mov		ecx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
-	test	dl, 1										; Arg is a SmallInteger?
+	test	cl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	sub		_SP, OOPSIZE											; Pop argument
-	cmp		eax, edx
-	mov		edx, [oteTrue]								; Yes
-	jge		@F											; receiver >= arg?
-	add		edx, OTENTRYSIZE							; No, EAX := false
-@@:
+	mov		edx, [oteFalse]								; Default, true
+	sub		_SP, OOPSIZE								; Pop argument
+	cmp		eax, ecx									; receiver >= arg?
+	cmovge	edx, [oteTrue]								;
 	MPrefetch
 	mov		[_SP], edx
 	DispatchNext
@@ -2780,21 +2730,18 @@ ENDBYTECODE sendArithmeticGreaterOrEqual
 
 BEGINBYTECODE sendArithmeticEqual
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	mov		edx, [oteTrue]								; Load True as default
+	mov		ecx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
 	jz		sendMessageToObject							; No, skip primitive response
-
-	xor		eax, [_SP]									; Receiver = arg?
-	jz		@F											; Result 0 if equal, in which case must be SmallInteger
-	
-	; Not equal, but was the arg a SmallInteger?
-	test	al, 1										; Arg was a SmallInteger?
-	jnz		sendMessageToInteger						; No (bit wasn't cleared), primitive failure
-	add		edx, OTENTRYSIZE							; Load False, arg not equal
-
-@@:
-	mov		[_SP-OOPSIZE], edx							; Replace stack top integer with boolean result
-	PopDispatchByteCode
+	test	cl, 1										; Arg is a SmallInteger?
+	jz		sendMessageToInteger						; No, skip primitive response
+	mov		edx, [oteFalse]								; Default, true
+	sub		_SP, OOPSIZE								; Pop argument
+	cmp		eax, ecx									; receiver = arg?
+	cmove	edx, [oteTrue]								;
+	MPrefetch
+	mov		[_SP], edx
+	DispatchNext
 
 sendMessageToObject:
 	; Try sending the '=' selector through normal message lookup
@@ -2808,20 +2755,18 @@ ENDBYTECODE sendArithmeticEqual
 
 BEGINBYTECODE sendArithmeticNotEqual
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
-	mov		edx, [oteFalse]								; Load False as default
+	mov		ecx, [_SP]									; Load argument from stack
 	test	al, 1										; Is it a SmallInteger?
-	jz		sendMessageToObject							; Not SmallInteger, skip primitive response
-	
-	xor 	eax, [_SP]									; receiver == arg? (if so will be zero)
-	jz		@F											; Yes, skip not equal handling (which must test arg)
-
-	test	al, 1										; Not equal, but was arg a SmallInteger?
-	jnz		sendMessageToInteger						; Not a SmallInteger as bottom bit not set
-	sub		edx, OTENTRYSIZE							; Arg not Equal to receiver
-
-@@:
-	mov		[_SP-OOPSIZE], edx							; Replace stack top integer with boolean result
-	PopDispatchByteCode
+	jz		sendMessageToObject							; No, skip primitive response
+	test	cl, 1										; Arg is a SmallInteger?
+	jz		sendMessageToInteger						; No, skip primitive response
+	mov		edx, [oteFalse]								; Default, true
+	sub		_SP, OOPSIZE								; Pop argument
+	cmp		eax, ecx									; receiver != arg?
+	cmovne	edx, [oteTrue]								;
+	MPrefetch
+	mov		[_SP], edx
+	DispatchNext
 
 sendMessageToObject:
 	; Try sending the '~=' selector through normal message lookup
@@ -3096,12 +3041,12 @@ ENDBYTECODE sendArithmeticBitOr
 ; as the VM never sends this selector directly (only if #perform'd).
 ;
 BEGINBYTECODE shortSpecialSendIdentical
-	mov		ecx, [_SP-OOPSIZE]							; Load receiver into ecx (in prep. for CountDown)
-	mov		eax, [_SP]									; Get argument at stack top into eax, and nil out stack
+	mov		eax, [_SP-OOPSIZE]							; Load receiver into eax
+	mov		ecx, [_SP]									; Get argument at stack top into ecx
 	sub		_SP, OOPSIZE								; POP
-	mov		edx, [oteTrue]								; Load oteTrue (default answer)
-	cmp		ecx, eax									; receiver == arg?
-	cmovne	edx, [oteFalse]
+	mov		edx, [oteFalse]								; Load false (default answer)
+	cmp		eax, ecx									; receiver == arg?
+	cmove	edx, [oteTrue]
 	MPrefetch
 	mov		[_SP], edx									; Overwrite stack top with true/false
 	DispatchNext										; Dispatch the next byte code
@@ -3111,14 +3056,12 @@ ENDBYTECODE shortSpecialSendIdentical
 ; object ~~ object?
 ;
 BEGINBYTECODE shortSpecialSendNotIdentical
-	mov		ecx, [_SP-OOPSIZE]							; Load receiver into ecx (in prep. for CountDown)
-	mov		eax, [_SP]									; Get argument at stack top into eax, and nil out stack
+	mov		eax, [_SP-OOPSIZE]							; Load receiver into eax
+	mov		ecx, [_SP]									; Get argument at stack top into ecx
 	sub		_SP, OOPSIZE								; POP
-	mov		edx, [oteTrue]								; Load oteTrue (default answer)
-	cmp		ecx, eax									; receiver == arg?
-	jne		@F											; Yes, skip false
-	add		edx, OTENTRYSIZE							; No, load false
-@@:
+	mov		edx, [oteFalse]								; Load false (default answer)
+	cmp		eax, ecx									; receiver ~~ arg?
+	cmovne	edx, [oteTrue]
 	MPrefetch
 	mov		[_SP], edx									; Overwrite stack top with true/false
 	DispatchNext										; Dispatch the next byte code
@@ -3434,48 +3377,30 @@ ENDBYTECODE shortSpecialSendBasicClass
 
 BEGINBYTECODE shortSpecialSendIsNil
 	mov		eax, [oteNil]
+	mov		edx, [oteFalse]
 	cmp		eax, [_SP]
-	je		isNil
-
-	add		eax, OTENTRYSIZE*2						; false immediately follows true in OT
+	cmove	edx, [oteTrue]
 	MPrefetch
-	mov		[_SP], eax								; Overwrite stack top with false
+	mov		[_SP], edx								; Overwrite stack top with false
 	DispatchNext
-
-isNil:
-	add		eax, OTENTRYSIZE						; true immediately follows nil in OT
-	MPrefetch
-	mov		[_SP], eax								; Overwrite stack top with true
-	DispatchNext
-
 ENDBYTECODE shortSpecialSendIsNil
 
 BEGINBYTECODE shortSpecialSendNotNil
 	mov		eax, [oteNil]
+	mov		edx, [oteFalse]
 	cmp		eax, [_SP]
-	je		isNil
-
-	add		eax, OTENTRYSIZE						; true immediately follows nil in OT
+	cmovne	edx, [oteTrue]
 	MPrefetch
-	mov		[_SP], eax								; Overwrite stack top with true
+	mov		[_SP], edx								; Overwrite stack top with false
 	DispatchNext
-
-isNil:
-	add		eax, OTENTRYSIZE*2						; false immediately follows true in OT
-	MPrefetch
-	mov		[_SP], eax								; Overwrite stack top with false
-	DispatchNext
-
 ENDBYTECODE shortSpecialSendNotNil
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 BEGINBYTECODE isZero
+	mov		eax, [oteFalse]								; Load false (default answer)
 	cmp		[_SP], SMALLINTZERO							; "receiver" is 0?
-	mov		eax, [oteTrue]								; Load oteTrue (default answer)
-	je		@F
-	add		eax, OTENTRYSIZE							; No, load false
-@@:
+	cmove	eax, [oteTrue]
 	MPrefetch
 	mov		[_SP], eax									; Overwrite stack top with true/false
 	DispatchNext
@@ -3677,8 +3602,7 @@ ENDM
 
 ; Optimized for Pentium (perfectly paired - 8 instructions in 4 cycles)
 BEGINBYTECODE Send
-	xor		ecx, ecx
-	mov		cl, [_IP]						; Get next byte code (top 3 bytes of ecx still 0)
+	movzx	ecx, [_IP]						; Get next byte code (top 3 bytes of ecx still 0)
 	mov		eax, [pMethod]					; Load Oop of current method
 	mov		edx, ecx						; EDX = descriptor
 	and		ecx, 01Fh						; bottom 5 bits are literal index
@@ -3689,8 +3613,7 @@ BEGINBYTECODE Send
 ENDBYTECODE Send
 
 BEGINBYTECODE sendTempNoArgs
-	xor		edx, edx
-	mov		dl, [_IP]								; Get next byte code
+	movzx	edx, [_IP]								; Get next byte code
 	mov		eax, [pMethod]							; Load Oop of current method
 	ASSUME	eax:PTR CompiledCodeObj
 	mov		ecx, edx								; 
@@ -3935,8 +3858,7 @@ BEGINBYTECODE longSend
 
 	mov		cl, BYTE PTR[_IP+1]
 
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP]
+	movzx	edx, BYTE PTR[_IP]
 
 	add		_IP, 2
 
@@ -4048,11 +3970,9 @@ findMethodCacheMiss:
 	mov		[NEWMETHOD], eax
 	mov		ecx, (OTE PTR[eax]).m_location			; Load address of new method object into ecx
 	ASSUME	ecx:PTR CompiledCodeObj
-	xor		eax, eax
-	mov		al, [ecx].m_header.primitiveIndex
+	movzx	eax, [ecx].m_header.primitiveIndex
 	mov		_SP, [STACKPOINTER]						; Restore stack pointer (in case of DNU)
-	xor		edx, edx
-	mov		dl, [ecx].m_header.argumentCount
+	movzx	edx, [ecx].m_header.argumentCount
 	
 	mov		eax, DWORD PTR[_primitivesTable+eax*4]	; Load primitive routine address from jump table (C++ routines via thunks which take care of caching/uncaching registers)
 
@@ -4095,8 +4015,7 @@ MActivateMethod MACRO
 	ENDIF
 	; At this point _IP is the offset into the byte codes
 
-	xor		eax, eax
-	mov		al, [edx].m_header.argumentCount
+	movzx	eax, [edx].m_header.argumentCount
 
 	; Work out the new base pointer (points at first argument - not receiver)
 	neg		eax										; We'll be subtracting arg count
@@ -4107,8 +4026,7 @@ MActivateMethod MACRO
 
 	; Now work out the number of temporaries required for new method
 	; Load flag word which contains temp count
-	xor		ecx, ecx
-	mov		cl, [edx].m_header.stackTempCount		; Get stack temp count into ecx
+	movzx	ecx, [edx].m_header.stackTempCount		; Get stack temp count into ecx
 
 	lea		_BP, [_SP+eax*OOPSIZE+OOPSIZE]			; Calculate _BP of new context (points at first argument NOT receiver)
 	add		_SP, OOPSIZE
@@ -4136,8 +4054,7 @@ MActivateMethod MACRO
 		; correctly set up for the new frame. ECX contains method header flags
 		ASSUME	_SP:PStackFrame					; _SP now points at location for new StackFrame
 
-		xor		ecx, ecx
-		mov		cl, [edx].m_header.flags
+		movzx	ecx, [edx].m_header.flags
 		
 		push	edx										; Save edx for later
 		ASSUME	edx:NOTHING
@@ -4279,8 +4196,7 @@ BEGINPRIMITIVE primitiveActivateMethod
 		; correctly set up for the new frame. ECX contains method header flags
 		ASSUME	_SP:PStackFrame					; _SP now points at location for new StackFrame
 
-		xor		ecx, ecx
-		mov		cl, [edx].m_header.flags
+		movzx	ecx, [edx].m_header.flags
 		
 		push	edx										; Save edx for later
 		ASSUME	edx:NOTHING
@@ -4588,8 +4504,7 @@ ENDPRIMITIVE primitiveSetInstVar
 ;; Extension specifies argument count and selector literal index (encoded into a byte as follows 111 11111)
 
 BEGINBYTECODE Supersend
-	xor		ecx, ecx
-	mov		cl, [_IP]						; Get next byte code (top 3 bytes of ecx still 0)
+	movzx	ecx, [_IP]						; Get next byte code (top 3 bytes of ecx still 0)
 	inc		_IP
 	mov		edx, ecx						; EDX = descriptor
 	and		ecx, 01Fh						; bottom 5 bits are literal index
@@ -4852,8 +4767,7 @@ BEGINPROC activateBlock
 		add		_SP, eax
 	.ENDIF
 
-	xor		eax, eax
-	mov		al, [edx].m_info.stackTempsCount
+	movzx	eax, [edx].m_info.stackTempsCount
 	.IF	(eax != 0)
 		; Allocate and initialize the stack temps to nil
 		mov		ecx, [oteNil]
@@ -4875,8 +4789,7 @@ BEGINPROC activateBlock
 	; edx still pointer to the block
 	ASSUME edx:PTR BlockClosure
 
-	xor		ecx, ecx
-	mov		cl, [edx].m_info.envTempsCount
+	movzx	ecx, [edx].m_info.envTempsCount
 	.IF		(ecx == 0)
 		; No env temps (the common case)
 		pop		eax
@@ -5091,8 +5004,7 @@ BEGINRARECODE longSupersend
 		jmp		sendLiteralSelectorToSuper		; Use code shared with singleExtendedSuperBytecode
 	ELSE
 		xor		ecx, ecx
-		xor		edx, edx
-		mov		dl, BYTE PTR[_IP]				; argCount = first byte code
+		movzx	edx, BYTE PTR[_IP]				; argCount = first byte code
 		mov		cl, BYTE PTR[_IP+1]				; literal index = last byte code
 		add		_IP, 2
 		jmp	sendLiteralSelectorToSuper		; Use code shared with singleExtendedSuperBytecode
@@ -5106,8 +5018,7 @@ ENDBYTECODE longSupersend
 ;; This byte code is very, very, very, rarely used
 
 BEGINRARECODE exLongSupersend
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP]				; argCount = first byte code
+	movzx	edx, BYTE PTR[_IP]				; argCount = first byte code
 	movzx	ecx, WORD PTR[_IP+1]			; literal index = last byte codes
 	add		_IP, 3
 	jmp		sendLiteralSelectorToSuper		; Use code shared with singleExtendedSuperBytecode
@@ -5124,8 +5035,7 @@ BEGINRARECODE exLongSend
 
 	movzx	ecx, WORD PTR[_IP+1]
 
-	xor		edx, edx
-	mov		dl, BYTE PTR[_IP]
+	movzx	edx, BYTE PTR[_IP]
 
 	add		_IP, 3
 
@@ -5162,8 +5072,7 @@ ENDBYTECODE longPushStatic
 
 LOuterTempPreamble MACRO
 	mov		cl, BYTE PTR[_IP]
-	xor		eax, eax
-	mov		al, BYTE PTR[_IP+1]
+	movzx	eax, BYTE PTR[_IP+1]
 
 	mov		edx, [ACTIVEFRAME]
 	ASSUME	edx:PStackFrame						; EAX is now a pointer to the active context's fields
