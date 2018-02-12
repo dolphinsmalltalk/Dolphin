@@ -15,7 +15,9 @@
 
 #define COUNTBITS	(sizeof(BYTE)*8)
 #define SPACEBITS	3
-#define NULLTERMSIZE 2
+#define NULLTERMTYPE wchar_t
+//#define NULLTERMTYPE char
+#define NULLTERMSIZE sizeof(NULLTERMTYPE)
 
 template <class T> class TOTE;
 
@@ -81,7 +83,7 @@ public:
 	__forceinline int sizeOf() const
 	{
 		// If we use getSize() here, it does not get inlined
-		return getSize() + isNullTerminated();
+		return getSize() + (isNullTerminated() * NULLTERMSIZE);
 	}
 
 	// The required size for this variable pointer object to accommodate the specified number of indexable fields

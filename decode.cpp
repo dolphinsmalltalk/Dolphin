@@ -256,8 +256,13 @@ ostream& operator<<(ostream& st, const CharOTE* ote)
 	Character* ch = ote->m_location;
 	if (IsBadReadPtr(&ch, sizeof(Character)))
 		return st << "***Bad Character: " << ch;
+
+	st << '$';
+	SMALLINTEGER codePoint = ObjectMemoryIntegerValueOf(ch->m_codePoint);
+	if (codePoint > 32 && codePoint < 128)
+		return st << static_cast<char>(codePoint);
 	else
-		return st << '$' << char(ObjectMemoryIntegerValueOf(ch->m_codePoint));
+		return st << "\\x" << hex << codePoint;
 }
 
 ostream& operator<<(ostream& st, const FloatOTE* ote)

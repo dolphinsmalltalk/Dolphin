@@ -197,10 +197,10 @@ VariantByteObject* ObjectMemory::resize(BytesOTE* ote, MWORD newByteSize)
 
 	if (ote->isNullTerminated())
 	{
-		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize(reinterpret_cast<POTE>(ote), totalByteSize, 1));
+		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize(reinterpret_cast<POTE>(ote), totalByteSize, NULLTERMSIZE));
 		ASSERT(pByteObj);	// Null-terminated objects should always be resizeable
 		// Ensure we have a null-terminator
-		reinterpret_cast<BYTE*>(pByteObj)[totalByteSize] = 0;
+		*reinterpret_cast<NULLTERMTYPE*>(&pByteObj->m_fields[totalByteSize]) = 0;
 	}
 	else
 		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize(reinterpret_cast<POTE>(ote), totalByteSize, 0));

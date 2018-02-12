@@ -1,3 +1,5 @@
+#include "objmem.h"
+#include "objmem.h"
 /******************************************************************************
 
 	File: LoadImage.cpp
@@ -28,8 +30,8 @@
 #include "STClassDesc.h"
 
 #ifndef _DEBUG
-	#pragma optimize("s", on)
-	#pragma auto_inline(off)
+#pragma optimize("s", on)
+#pragma auto_inline(off)
 #endif
 
 const char ObjectMemory::ISTHDRTYPE[4] = "IST";
@@ -40,7 +42,7 @@ extern VMPointers _Pointers;
 void* ObjectMemory::m_pConstObjs = 0;
 
 #ifdef _DEBUG
-	#define PROFILE_IMAGELOADSAVE
+#define PROFILE_IMAGELOADSAVE
 #endif
 
 // This stuff is a once off, used only during image load
@@ -56,8 +58,8 @@ static HRESULT ImageReadError(ibinstream& imageFile)
 	return fileError
 		? ReportError(IDP_IMAGEREADERROR, fileError)
 		: imageFile.eof()
-			? ReportError(IDP_IMAGEFILETRUNCATED)
-			: ReportError(IDP_UNKNOWNIMAGEERROR);
+		? ReportError(IDP_IMAGEFILETRUNCATED)
+		: ReportError(IDP_UNKNOWNIMAGEERROR);
 }
 
 HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
@@ -72,8 +74,8 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 	ASSERT(imageSize > sizeof(ImageHeader));
 
 	BYTE* pImageBytes = static_cast<BYTE*>(imageData);
-	ImageHeader* pHeader = reinterpret_cast<ImageHeader*>(pImageBytes+sizeof(ISTHDRTYPE));
-	int offset = sizeof(ISTHDRTYPE)+sizeof(ImageHeader);
+	ImageHeader* pHeader = reinterpret_cast<ImageHeader*>(pImageBytes + sizeof(ISTHDRTYPE));
+	int offset = sizeof(ISTHDRTYPE) + sizeof(ImageHeader);
 
 	if (pHeader->flags.bIsCompressed)
 	{
@@ -136,7 +138,7 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 #else
 	const int otSlop = 3;
 #endif
-	HRESULT hr = allocateOT(pHeader->nMaxTableSize, pHeader->nTableSize+(dwPageSize*otSlop/sizeof(OTE)));
+	HRESULT hr = allocateOT(pHeader->nMaxTableSize, pHeader->nTableSize + (dwPageSize*otSlop / sizeof(OTE)));
 	if (FAILED(hr))
 		return hr;
 
@@ -145,11 +147,9 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 		return hr;
 
 	size_t nDataRead = 0;
-	hr = LoadPointers(imageFile, pHeader, nDataRead);
-	if (FAILED(hr))
-		return hr;
-
-	hr = LoadObjects(imageFile, pHeader, nDataRead);
+	hr = pHeader->HasSingleByteNullTerms() 
+			? LoadPointersAndObjects<sizeof(char)>(imageFile, pHeader, nDataRead) 
+			: LoadPointersAndObjects<sizeof(wchar_t)>(imageFile, pHeader, nDataRead);
 	if (FAILED(hr))
 		return hr;
 
@@ -164,41 +164,61 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 		return ReportError(IDP_CORRUPTIMAGE, nDataRead, nCheckSum);
 
 	PostLoadFix();
-			
+
 	// Perform some consistency checks to be sure this image matches the VM
 	ASSERT((reinterpret_cast<const Behavior*>(_Pointers.ClassMetaclass->m_oteClass->m_location))->fixedFields() >= MetaClass::FixedSize);
-			
+
 	return S_OK;
 }
 
-HRESULT ObjectMemory::LoadPointers(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
+template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointersAndObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
+{
+	HRESULT hr = LoadPointers<ImageNullTerms>(imageFile, pHeader, cbRead);
+	if (FAILED(hr))
+		return hr;
+	return LoadObjects<ImageNullTerms>(imageFile, pHeader, cbRead);
+}
+
+template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
 {
 	ASSERT(pHeader->nGlobalPointers == NumPointers);
+
+	::ZeroMemory(m_pConstObjs, CONSTSPACESIZE);
 
 	size_t cbPerm = 0;
 	BYTE* pNextConst = reinterpret_cast<BYTE*>(m_pConstObjs);
 	int i;
-	for (i=0;i<NumPermanent;i++)
+	for (i = 0; i < NumPermanent; i++)
 	{
 		VariantObject* pConstObj = reinterpret_cast<VariantObject*>(pNextConst);
 
-		OTE* ote = m_pOT+i;
-		const size_t bytesToRead = ote->sizeOf();
+		OTE* ote = m_pOT + i;
+		MWORD bytesToRead;
+		MWORD allocSize;
+		if (ote->isNullTerminated())
+		{
+			MWORD byteSize = ote->getSize();
+			allocSize = byteSize + NULLTERMSIZE;
+			bytesToRead = byteSize + ImageNullTerms;
+		}
+		else
+		{
+			allocSize = bytesToRead = ote->getSize();
+		}
+
 		if (bytesToRead > 0)
 		{
 			// Now load the rest of the object (size includes itself)
 			if (!imageFile.read(&(pConstObj->m_fields), bytesToRead))
 				return ImageReadError(imageFile);
-
-			// These need to be outside condition if header stored in object rather than OTE
-			cbPerm += bytesToRead;
-			pNextConst += _ROUND2(bytesToRead,4);
 		}
 		else
-			pConstObj = NULL;
+		{
+			if (allocSize == 0) pConstObj = NULL;
+		}
 
-		//cbPerm += byteSize;
-		//pNextConst += _ROUND2(byteSize,4);
+		cbPerm += bytesToRead;
+		pNextConst += _ROUND2(allocSize, 4);
 
 		markObject(ote);
 		Oop* oldLocation = reinterpret_cast<Oop*>(ote->m_location);
@@ -210,7 +230,7 @@ HRESULT ObjectMemory::LoadPointers(ibinstream& imageFile, const ImageHeader* pHe
 	}
 
 #ifdef _DEBUG
-	TRACESTREAM << i << " permanent objects loaded totalling " << cbPerm << " bytes" <<endl;
+	TRACESTREAM << i << " permanent objects loaded totalling " << cbPerm << " bytes" << endl;
 #endif
 
 	memcpy(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
@@ -222,13 +242,15 @@ HRESULT ObjectMemory::LoadPointers(ibinstream& imageFile, const ImageHeader* pHe
 HRESULT ObjectMemory::LoadObjectTable(ibinstream& imageFile, const ImageHeader* pHeader)
 {
 	ASSERT(pHeader->nTableSize > NumPermanent);
-	if (!imageFile.read(m_pOT, pHeader->nTableSize*sizeof(OTE)))
+	if (!imageFile.read(m_pOT, pHeader->nTableSize * sizeof(OTE)))
 		return ImageReadError(imageFile);
 	return S_OK;
 }
 
+
 // Load objects and repair the free list
-HRESULT ObjectMemory::LoadObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
+
+template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & imageFile, const ImageHeader * pHeader, size_t & cbRead)
 {
 	// Other free OTEs will be threaded in front of the first OTE off the end
 	// of the currently committed table space. We set the free list pointer
@@ -244,13 +266,59 @@ HRESULT ObjectMemory::LoadObjects(ibinstream& imageFile, const ImageHeader* pHea
 #endif
 
 	size_t nDataSize = 0;
-	for (OTE* ote = m_pOT+NumPermanent; ote < pEnd; ote++)
+	for (OTE* ote = m_pOT + NumPermanent; ote < pEnd; ote++)
 	{
 		if (!ote->isFree())
 		{
-			HRESULT hr = LoadObject(ote, imageFile, pHeader, nDataSize);
-			if (FAILED(hr))
-				return hr;
+			MWORD byteSize = ote->getSize();
+
+			MWORD* oldLocation = reinterpret_cast<MWORD*>(ote->m_location);
+
+			Object* pBody;
+
+			// Allocate space for the object, and copy into that space
+			if (ote->heapSpace() == OTEFlags::VirtualSpace)
+			{
+				MWORD dwMaxAlloc;
+				if (!imageFile.read(&dwMaxAlloc, sizeof(MWORD)))
+					return ImageReadError(imageFile);
+				cbRead += sizeof(MWORD);
+
+				pBody = reinterpret_cast<Object*>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
+				ote->m_location = pBody;
+#ifdef OAD
+				TRACESTREAM << "Allocated virtual space at " << ote->m_location
+					<< ", max " << dec << vObjHeader.getMaxAllocation() <<
+					", size " << byteSize << endl;
+#endif
+			}
+			else
+			{
+				if (ote->isNullTerminated())
+				{
+					ASSERT(!ote->isPointers());
+					pBody = AllocObj(ote, byteSize + NULLTERMSIZE);
+					if (NULLTERMSIZE > ImageNullTerms)
+					{
+						// Ensure we have a full null-terminator
+						*reinterpret_cast<NULLTERMTYPE*>(static_cast<VariantByteObject*>(pBody)->m_fields+byteSize) = 0;
+					}
+					byteSize += ImageNullTerms;
+				}
+				else
+				{
+					pBody = AllocObj(ote, byteSize);
+				}
+
+			}
+
+			markObject(ote);
+			if (!imageFile.read(pBody, byteSize))
+				return ImageReadError(imageFile);
+
+			cbRead += byteSize;
+			FixupObject(ote, oldLocation, pHeader);
+
 #ifdef _DEBUG
 			numObjects++;
 #endif
@@ -271,68 +339,33 @@ HRESULT ObjectMemory::LoadObjects(ibinstream& imageFile, const ImageHeader* pHea
 	// needs to be expanded (at which point we commit more pages)
 
 #ifdef _DEBUG
-		ASSERT(numObjects+m_nFreeOTEs == m_nOTSize);
-		ASSERT(m_nFreeOTEs = CountFreeOTEs());
-		TRACESTREAM << dec << numObjects << ", " << m_nFreeOTEs << " free" << endl;
+	ASSERT(numObjects + m_nFreeOTEs == m_nOTSize);
+	ASSERT(m_nFreeOTEs = CountFreeOTEs());
+	TRACESTREAM << dec << numObjects << ", " << m_nFreeOTEs << " free" << endl;
 #endif
 
 	cbRead += nDataSize;
 	return S_OK;
 }
 
-
-HRESULT ObjectMemory::LoadObject(OTE* ote, ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead)
+ST::Object* ObjectMemory::AllocObj(OTE * ote, MWORD allocSize)
 {
-	//MWORD byteSize;
-	//size_t nRead = sizeof(byteSize);
-	//if (!imageFile.read(&byteSize, nRead))
-	//	return ImageReadError(imageFile);
-	size_t nRead = 0;
-	MWORD byteSize = ote->sizeOf();
-
-	MWORD* oldLocation = reinterpret_cast<MWORD*>(ote->m_location);
-
-	// Allocate space for the object, and copy into that space
-	if (ote->heapSpace() == OTEFlags::VirtualSpace)
+	ST::Object* pObj;
+	if (allocSize <= MaxSmallObjectSize)
 	{
-		MWORD dwMaxAlloc;
-		if (!imageFile.read(&dwMaxAlloc, sizeof(MWORD)))
-			return ImageReadError(imageFile);
-		nRead += sizeof(MWORD);
-
-		ote->m_location = reinterpret_cast<POBJECT>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
-		#ifdef OAD
-			TRACESTREAM << "Allocated virtual space at " << ote->m_location
-				<< ", max " << dec << vObjHeader.getMaxAllocation() << 
-				", size " << byteSize << endl;
-		#endif
+		// Allocate from one of the memory pools
+		pObj = static_cast<POBJECT>(allocSmallChunk(allocSize));
+		ote->m_flags.m_space = OTEFlags::PoolSpace;
 	}
 	else
 	{
-		if (byteSize <=	MaxSmallObjectSize)
-		{
-			// Allocate from one of the memory pools
-			ote->m_location = static_cast<POBJECT>(allocSmallChunk(byteSize));
-			ote->m_flags.m_space = OTEFlags::PoolSpace;
-		}
-		else
-		{
-			// Normal space and other spaces allocated from heap (may not be too many)
-			ote->m_location = static_cast<POBJECT>(allocChunk(byteSize));
-			ote->m_flags.m_space = OTEFlags::NormalSpace;
-		}
+		// Normal space and other spaces allocated from heap (may not be too many)
+		pObj = static_cast<POBJECT>(allocChunk(allocSize));
+		ote->m_flags.m_space = OTEFlags::NormalSpace;
 	}
 
-	markObject(ote);
-	VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
-	if (!imageFile.read(obj->m_fields, byteSize))
-		return ImageReadError(imageFile);
-
-	nRead += byteSize;
-	FixupObject(ote, oldLocation, pHeader);
-
-	cbRead += nRead;
-	return S_OK;
+	ote->m_location = pObj;
+	return pObj;
 }
 
 void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* pHeader)
@@ -342,10 +375,10 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 #ifdef _DEBUG
 	{
 		PointersOTE* oteObj = reinterpret_cast<PointersOTE*>(ote);
-		if (ote->isPointers() && (oteObj->getSize()%2 == 1 ||
-				classPointer == _Pointers.ClassByteArray ||
-				classPointer == _Pointers.ClassString ||
-				classPointer == _Pointers.ClassSymbol))
+		if (ote->isPointers() && (oteObj->getSize() % 2 == 1 ||
+			classPointer == _Pointers.ClassByteArray ||
+			classPointer == _Pointers.ClassString ||
+			classPointer == _Pointers.ClassSymbol))
 		{
 			TRACESTREAM << "Bad OTE for byte array " << LPVOID(&ote) << " marked as pointer" << endl;
 			ote->beBytes();
@@ -359,7 +392,7 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 	{
 		PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(ote);
 		VariantObject* obj = otePointers->m_location;
-	
+
 		const SMALLUNSIGNED numFields = ote->pointersSize();
 		ASSERT(SMALLINTEGER(numFields) >= 0);
 		// Fixup all the Oops
@@ -390,7 +423,7 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 			// In Dolphin 4.0, all ExternalHandles are automatically nulled
 			// on image load.
 
-			ExternalHandle* handle= static_cast<ExternalHandle*>(ote->m_location);
+			ExternalHandle* handle = static_cast<ExternalHandle*>(ote->m_location);
 			handle->m_handle = NULL;
 		}
 		// Look for the special image stamp object
@@ -428,7 +461,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 
 	// Wind down the stack adjusting references to self as we go
 	// Start with the suspended context
-	const int delta = m_callbackDepth-1;
+	const int delta = m_callbackDepth - 1;
 	while (isIntegerObject(framePointer) && framePointer != ZeroPointer)
 	{
 		framePointer += delta;
@@ -484,7 +517,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		// The size of the process should exactly correspond with that required to
 		// hold up to the SP of the suspended frame
 		StackFrame* pFrame = StackFrame::FromFrameOop(framePointer);
-		int size = (pFrame->m_sp-1) - reinterpret_cast<DWORD>(this) + sizeof(Oop);
+		int size = (pFrame->m_sp - 1) - reinterpret_cast<DWORD>(this) + sizeof(Oop);
 		if (size > 0 && unsigned(size) < oteThis->getSize())
 		{
 			TRACE("WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
@@ -505,14 +538,14 @@ void ObjectMemory::PostLoadFix()
 	// Special case handling for Contexts because we store
 	// the sp's as integers in the image file, but at
 	// run-time they are expected to be direct pointers
-	const OTE* pEnd = m_pOT+m_nOTSize;	// Loop invariant
-	for (OTE* ote=m_pOT;ote < pEnd; ote++)
+	const OTE* pEnd = m_pOT + m_nOTSize;	// Loop invariant
+	for (OTE* ote = m_pOT; ote < pEnd; ote++)
 	{
 		if (!ote->isFree())
 		{
 			if (ote->isBytes())
 			{
-				#ifdef _DEBUG
+#ifdef _DEBUG
 				{
 					// Its a byte object, and may be null terminated
 					const Behavior* behavior = ote->m_oteClass->m_location;
@@ -520,7 +553,7 @@ void ObjectMemory::PostLoadFix()
 					const VariantByteObject* object = oteBytes->m_location;
 					ASSERT(behavior->m_instanceSpec.m_nullTerminated == ote->isNullTerminated());
 				}
-				#endif
+#endif
 			}
 			else if (ote->m_oteClass == _Pointers.ClassProcess)
 			{
@@ -534,18 +567,18 @@ void ObjectMemory::PostLoadFix()
 
 	ProtectConstSpace(PAGE_READONLY);
 
-	#if defined(_DEBUG) && 0
+#if defined(_DEBUG) && 0
 	{
 		// Dump out the pointers
 		TRACESTREAM << NumPointers << " VM Pointers..." << endl;
-		for (int i=0;i<NumPointers;i++)
+		for (int i = 0; i < NumPointers; i++)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(m_pConstObjs);
 			POTE pote = POTE(obj->m_fields[i]);
 			TRACESTREAM << i << ": " << pote << endl;
 		}
 	}
-	#endif
+#endif
 }
 
 DWORD ObjectMemory::ProtectConstSpace(DWORD dwNewProtect)

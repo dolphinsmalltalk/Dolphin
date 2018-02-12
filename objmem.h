@@ -435,16 +435,19 @@ private:
 	static const char ISTHDRTYPE[4];
 
 	static bool __stdcall SaveObjectTable(obinstream& imageFile, const ImageHeader*);
-	static bool __stdcall SaveObjects(obinstream& imageFile, const ImageHeader*);
+	template <MWORD ImageNullTerms> static bool __stdcall SaveObjects(obinstream& imageFile, const ImageHeader*);
 	static bool __stdcall SaveImage(obinstream& imageFile, const ImageHeader*, int);
 
 	static HRESULT __stdcall LoadImage(ibinstream& imageFile, ImageHeader*);
 
 	static OTE* __fastcall FixupPointer(OTE* pSavedPointer, OTE* pSavedBase);
-	static HRESULT __stdcall LoadPointers(ibinstream& imageFile, const ImageHeader*, size_t&);
 	static HRESULT __stdcall LoadObjectTable(ibinstream& imageFile, const ImageHeader*);
-	static HRESULT __stdcall LoadObjects(ibinstream& imageFile, const ImageHeader*, size_t&);
-	static HRESULT __stdcall LoadObject(OTE* ote, ibinstream& imageFile, const ImageHeader*, size_t&);
+	template <MWORD ImageNullTerms> static HRESULT LoadPointersAndObjects(ibinstream& imageFile, const ImageHeader* pHeader, size_t& cbRead);
+	template <MWORD ImageNullTerms> static HRESULT __stdcall LoadPointers(ibinstream& imageFile, const ImageHeader*, size_t&);
+	template <MWORD ImageNullTerms> static HRESULT __stdcall LoadObjects(ibinstream& imageFile, const ImageHeader*, size_t&);
+
+	static ST::Object* AllocObj(OTE * ote, MWORD allocSize);
+
 	static void __stdcall FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader*);
 	static void __stdcall PostLoadFix();
 

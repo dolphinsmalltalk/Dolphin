@@ -112,10 +112,9 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	ImageHeader header;
 	memset(&header, 0, sizeof(header));
 
-	header.versionMS		= versionInfo.dwProductVersionMS;
-	header.versionLS		= (LOWORD(versionInfo.dwProductVersionLS) << 16) |
-								((isIntegerObject(_Pointers.ImageVersionMinor))?
-								LOWORD(integerValueOf(_Pointers.ImageVersionMinor)) : 0);
+	header.versionMS = versionInfo.dwProductVersionMS;
+	SMALLINTEGER imageVersionMinor = isIntegerObject(_Pointers.ImageVersionMinor) ? integerValueOf(_Pointers.ImageVersionMinor) : 0;
+	header.versionLS = imageVersionMinor == 0 ? LOWORD(versionInfo.dwProductVersionLS) << 16 : imageVersionMinor;
 
 	header.flags.bIsCompressed = nCompressionLevel != 0;
 
@@ -197,21 +196,18 @@ bool __stdcall ObjectMemory::SaveImage(obinstream& imageFile, const ImageHeader*
 {
 	EmptyZct(Interpreter::m_registers.m_stackPointer);
 	// Do the save.
-	bool bResult = imageFile.good() != 0 
+	bool bResult = imageFile.good() != 0
 		&& (nRet == 3)
-		&& SaveObjectTable(imageFile, pHeader) 
-		&& SaveObjects(imageFile, pHeader) 
+		&& SaveObjectTable(imageFile, pHeader)
+		// From VM 7.0.54 two bytes are allowed for null terminators to correctly accommodate wide strings; 
+		// Prior to 7.0.54 null terminators were always 1 byte (which was not really sufficient for wide strings).
+		&& (pHeader->HasSingleByteNullTerms() 
+			? SaveObjects<sizeof(char)>(imageFile, pHeader) 
+			: SaveObjects<sizeof(wchar_t)>(imageFile, pHeader))
 		&& imageFile.flush().good();
 	PopulateZct(Interpreter::m_registers.m_stackPointer);
 	return bResult;
 }
-/*
-bool __stdcall ObjectMemory::SaveHeader(int fd, ImageHeader& header)
-{
-	return ::_lseek(fd, sizeof(ISTHDRTYPE), SEEK_SET) == sizeof(ISTHDRTYPE)
-		&& ::write(fd, &header, sizeof(ImageHeader)) == sizeof(ImageHeader);
-}
-*/
 
 // Quick and dirty - save the whole OT wasting space used by empty
 // entries
@@ -220,7 +216,7 @@ bool __stdcall ObjectMemory::SaveObjectTable(obinstream& imageFile, const ImageH
 	return imageFile.write(m_pOT, sizeof(OTE)*pHeader->nTableSize);
 }
 
-bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeader* pHeader)
+template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeader* pHeader)
 {
 	#ifdef _DEBUG
 		unsigned numObjects = 0;
@@ -249,7 +245,7 @@ bool __stdcall ObjectMemory::SaveObjects(obinstream& imageFile, const ImageHeade
 				dwDataSize += sizeof(MWORD);
 			}
 
-			MWORD bytesToWrite = ote->sizeOf();
+			MWORD bytesToWrite = ote->getSize() + (ote->isNullTerminated() * ImageNullTerms);
 			imageFile.write(obj, bytesToWrite);
 
 			if (imageFile.good() == 0)
