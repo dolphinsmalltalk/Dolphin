@@ -232,7 +232,7 @@ Oop* __fastcall Interpreter::primitiveVariantValue(Oop* const sp)
 
 
 		case VT_BSTR:
-			value = reinterpret_cast<Oop>(String::NewFromBSTR(V_BSTR(pVar)));
+			value = reinterpret_cast<Oop>(Utf8String::NewFromBSTR(V_BSTR(pVar)));
 			break;
 
 		case VT_DATE:

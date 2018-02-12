@@ -119,7 +119,7 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Answer a new BSTR from the specified unicode string
+// Answer a new BSTR from the specified UTF16 string
 
 AddressOTE* __fastcall NewBSTR(LPCWSTR szContents)
 {
@@ -135,20 +135,34 @@ AddressOTE* __fastcall NewBSTR(LPCWSTR szContents)
 	return resultPointer;
 }
 
-AddressOTE* __fastcall NewBSTR(LPCSTR szContents)
+// Answer a new BSTR converted from the a byte string with the specified encoding
+static AddressOTE* __fastcall NewBSTR(LPCSTR szContents, UINT cp)
 {
-	AddressOTE* resultPointer = reinterpret_cast<AddressOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassBSTR, sizeof(BYTE*)));
-	ExternalAddress* extAddress = resultPointer->m_location;
-	if (*szContents)
-	{
-		BSTR bsContents = A2WBSTR(szContents);
-		extAddress->m_pointer = reinterpret_cast<BYTE*>(bsContents);
-		resultPointer->beFinalizable();
-	}
-	else
-		extAddress->m_pointer = 0;
+	int ret = MultiByteToWideChar(cp, 0, szContents, -1, nullptr, 0);
+	if (ret == 0) return nullptr;
+	LPWSTR wsz = static_cast<LPWSTR>(alloca(ret * sizeof(OLECHAR)));
+	ret = MultiByteToWideChar(cp, 0, szContents, -1, wsz, ret);
+	if (ret == 0) return nullptr;
 
-	return resultPointer;
+	return NewBSTR(wsz);
+}
+
+AddressOTE* __fastcall NewBSTR(BehaviorOTE* oteClass, void* pChars)
+{
+	if (oteClass == Pointers.ClassUtf16String)
+	{
+		return NewBSTR(static_cast<LPCWSTR>(pChars));
+	}
+	else if (oteClass == Pointers.ClassUtf8String)
+	{
+		return NewBSTR(static_cast<LPCSTR>(pChars), CP_UTF8);
+	}
+	else if (oteClass->m_location->m_instanceSpec.m_nullTerminated)
+	{
+		// Assume it is an ANSI string
+		return NewBSTR(static_cast<LPCSTR>(pChars), CP_ACP);
+	}
+	return nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -158,21 +172,7 @@ inline void Interpreter::push(LPCWSTR pStr)
 {
    	if (pStr)
 	{
-		int len = ::WideCharToMultiByte(
-					CP_ACP,	// code page 
-					0,		// performance and mapping flags 
-					pStr,	// address of wide-character string
-					-1,		// number of characters in string 
-					NULL,	// address of buffer for new string 
-					0,		// size of buffer 
-					NULL,	// address of default for unmappable characters  
-					NULL	// address of flag set when default char. used 
-				);
-		// N.B. Reported length includes the null terminator!
-		StringOTE* stringPointer = reinterpret_cast<StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassString, len-1));
-		String* string = stringPointer->m_location;
-		::WideCharToMultiByte(CP_ACP,0,pStr,-1,string->m_characters,len,NULL,NULL);
-		pushNewObject((OTE*)stringPointer);
+		pushNewObject((OTE*)ST::Utf16String::New(pStr));
 	}
 	else
 		pushNil();

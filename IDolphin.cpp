@@ -162,7 +162,7 @@ STDMETHODIMP_(POTE) CDolphinSmalltalk::NewString(
         /* [in] */ LPCSTR szValue,
         /* [in] */ int len)
 {
-	return (POTE)String::NewWithLen(szValue, len=-1?strlen(szValue):len);
+	return (POTE)String::New(szValue, len=-1?strlen(szValue):len);
 }
     
 STDMETHODIMP_(Oop) CDolphinSmalltalk::NewSignedInteger( 

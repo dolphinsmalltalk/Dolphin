@@ -34,7 +34,8 @@ const char* SZREGKEYBASE = "Software\\Object Arts\\Dolphin Smalltalk 6.0";
 #include "STInteger.h"		// NewDWORD uses to create new integer, also for winproc return
 #include "STExternal.h"		// Primary purpos of this module is external i/f'ing
 
-static WideStringOTE* (__fastcall *ForceNonInlineNewString)(LPCWSTR) = &WideString::New;
+static Utf16StringOTE* (__fastcall *ForceNonInlineNewString)(LPCWSTR) = &Utf16String::New;
+static StringOTE* (__fastcall *ForceNonInlineNewStringWithLen)(const char * __restrict, MWORD) = &String::New;
 
 extern LPCSTR GetVMFileName();
 
@@ -402,45 +403,40 @@ BytesOTE* __fastcall Interpreter::NewDWORD(DWORD dwValue, BehaviorOTE* classPoin
 
 	return ote;
 }
-
-// Allocate a new String from a Unicode string
-StringOTE* __fastcall String::New(LPCWSTR wsz)
-{
-	int len = ::WideCharToMultiByte(CP_ACP, 0, wsz, -1, NULL, 0, NULL, NULL);
-	// Length includes null terminator since input is null terminated
-	StringOTE* stringPointer = reinterpret_cast<StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassString, len-1));
-	String* string = stringPointer->m_location;
-	if (len > 1)
-	{
-		int nCopied = ::WideCharToMultiByte(CP_ACP, 0, wsz, -1, string->m_characters, len, NULL, NULL);
-		UNREFERENCED_PARAMETER(nCopied);
-		ASSERT(nCopied == len);
-	}
-	else
-		string->m_characters[0] = 0;
-
-	return stringPointer;
-}
-
 	
-StringOTE* __fastcall String::NewWithLen(const char* value, unsigned len)
+Utf16StringOTE * ST::Utf16String::New(LPCSTR sz, UINT codePage)
 {
-	StringOTE* stringPointer = reinterpret_cast<StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassString, len));
-	String* string = stringPointer->m_location;
-	memcpy(string->m_characters, value, len);
-	string->m_characters[len] = 0;
+	int len = ::MultiByteToWideChar(codePage, 0, sz, -1, NULL, 0);
+	// Length includes null terminator since input is null terminated
+	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassUtf16String, (len - 1) * sizeof(wchar_t)));
+	Utf16String* __restrict string = stringPointer->m_location;
+	int nCopied = ::MultiByteToWideChar(codePage, 0, sz, -1, string->m_characters, len);
+	UNREFERENCED_PARAMETER(nCopied);
+	ASSERT(nCopied == len);
 	return stringPointer;
 }
 
-WideStringOTE* __fastcall WideString::NewWithLen(const wchar_t* value, unsigned len)
+Utf16StringOTE* Utf16String::New(LPCWSTR value)
 {
-	const unsigned byteLen = len * 2;
-	WideStringOTE* stringPointer = reinterpret_cast<WideStringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassUnicodeString, byteLen));
-	WideString* string = stringPointer->m_location;
-	memcpy(string->m_characters, value, byteLen);
-	string->m_characters[len] = 0;
+	const unsigned byteLen = wcslen(value) * sizeof(wchar_t);
+	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassUtf16String, byteLen));
+	Utf16String* __restrict string = stringPointer->m_location;
+	memcpy(string->m_characters, value, byteLen + 2);
 	return stringPointer;
 }
+
+//inline Utf16StringOTE* __fastcall Utf16String::NewWithLen(const wchar_t* value, unsigned len)
+//{
+//	const unsigned byteLen = len * sizeof(wchar_t);
+//	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassUtf16String, byteLen));
+//	Utf16String* string = stringPointer->m_location;
+//	string->m_characters[len] = 0;
+//	memcpy(string->m_characters, value, byteLen);
+//	return stringPointer;
+//}
+
+
+
 #pragma code_seg(XIF_SEG)
 
 // Symbol result has correct ref. count

@@ -17,6 +17,9 @@ LPCSTR		TYPEDEF		PTR SBYTE
 HANDLE		TYPEDEF		DWORD
 BOOL		TYPEDEF		DWORD
 
+CP_ACP		EQU 0
+CP_UTF8		EQU 65001
+
 ;; These should match definitions in segdefs.h
 IF 0
 	BYTECODES_SEG	EQU		_text$1_Bytecodes
@@ -172,7 +175,7 @@ VMPointers		STRUCT 2t
 
 	ClassMessage						POTE	?			; 91
 	ClassByteArray						POTE	?			; 92
-	ClassUnicodeString					POTE	?			; 93 Was LPI
+	ClassUtf16String					POTE	?			; 93 Was LPI
 	ClassCompiledExpression				POTE	?			; 94 Was LNI
 	ClassExternalMethod					POTE	?			; 95
 	ClassFloat							POTE	?			; 96
@@ -184,7 +187,7 @@ VMPointers		STRUCT 2t
 	ClassExternalHandle					POTE	?			; 101
 	Dispatcher							POTE	?			; 102 (InputState instance)
 	ClassLPVOID							POTE	?			; 103 (see ExternalCall.asm, LPVOID return type)
-										POTE	?			; 104 (ClassPoint)
+	ClassUtf8String						POTE	?			; 104
 	ClassPoolConstantsDictionary		POTE	?			; 105
 										POTE	?			; 106 Unused (was CompilationResult)
 	ClassLargeInteger					POTE	?			; 107
