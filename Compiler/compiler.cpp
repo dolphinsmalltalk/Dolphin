@@ -1708,7 +1708,6 @@ void Compiler::ParseTerm(int textPosition)
 	case CharConst:
 		{
 			long codePoint = ThisTokenInteger();
-			_ASSERTE(codePoint < 256);	// Shouldn't happen because lexer should not have created the token
 			if (codePoint > 255)
 			{
 				GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(codePoint))), ThisTokenRange());
@@ -2912,7 +2911,7 @@ POTE Compiler::ParseArray()
 			
 		case CharConst:
 			{
-				Oop oopChar = reinterpret_cast<Oop>(m_piVM->NewCharacter((char)ThisTokenInteger()));
+				Oop oopChar = reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(ThisTokenInteger())));
 				elems.push_back(oopChar);
 				NextToken();
 			}
