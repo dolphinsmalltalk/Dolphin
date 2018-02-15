@@ -435,6 +435,26 @@ testEvaluationOrder
 	i := 2.
 	self assert: (3 between: i and: (i := 4))!
 
+testExtCallArgBstr
+	| beers |
+	self skipUnless: [self has7054OrLater].
+	#('' 'a' '£2') do: 
+			[:each |
+			| subject expected actual |
+			expected := each size.
+			actual := OLEAutLibrary default sysStringLen: each.
+			self assert: actual equals: expected.
+			subject := each asUtf8String.
+			actual := OLEAutLibrary default sysStringLen: subject.
+			self assert: actual equals: expected.
+			subject := each asUtf16String.
+			actual := OLEAutLibrary default sysStringLen: subject.
+			self assert: actual equals: expected].
+	"Like most string length functions, SysStringLen reports the number of code units, not the number of characters"
+	beers := Utf8String fromByteArray: #[16rF0 16r9F 16r8D 16rBB].
+	self assert: (OLEAutLibrary default sysStringLen: beers) equals: 2.
+	self assert: (OLEAutLibrary default sysStringLen: beers asUtf16String) equals: 2!
+
 testExtCallArgLpwstr
 	| expected actual method |
 	self skipUnless: [self has7054OrLater].
@@ -447,8 +467,11 @@ testExtCallArgLpwstr
 				in: VMLibrary.
 	self assert: method argumentTypes asArray equals: #('lpwstr').
 	self assert: method returnType equals: 'lpwstr'.
-	expected := 'abc' asUtf16String.
-	actual := method value: VMLibrary default withArguments: {'abc'}.
+	expected := Utf16String fromByteArray: #[97 0 32 0 163 0 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
+	actual := method value: VMLibrary default withArguments: {'a £ or two'}.
+	self assert: actual equals: expected.
+	self assert: actual isKindOf: Utf16String.
+	actual := method value: VMLibrary default withArguments: {'a £ or two' asUtf8String}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String!
 
@@ -2292,6 +2315,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testCRTFault!public!unit tests! !
 !VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
 !VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
+!VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
 !VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
 !VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !

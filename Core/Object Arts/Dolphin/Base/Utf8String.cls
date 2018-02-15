@@ -11,6 +11,13 @@ Utf8String comment: 'Utf8String is a nascent class to support UTF8 encoded byte 
 !Utf8String categoriesForClass!Collections-Text! !
 !Utf8String methodsFor!
 
+_equalsByteString: aString
+	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
+	Double-dispatched from String>>=."
+
+	"We should only get here the comparand is an ANSI string"
+	^aString asUtf8String = self!
+
 asLowercase
 	#todo.	"Provide a more efficient implementation"
 	^self asUtf16String asLowercase asUtf8String!
@@ -55,6 +62,7 @@ asUtf8String
 	"Answer a UTF8 encoded string representation of the receiver."
 
 	^self! !
+!Utf8String categoriesFor: #_equalsByteString:!comparing!private! !
 !Utf8String categoriesFor: #asLowercase!converting!public! !
 !Utf8String categoriesFor: #asString!converting!public! !
 !Utf8String categoriesFor: #asUppercase!converting!public! !

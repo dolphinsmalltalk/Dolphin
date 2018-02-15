@@ -98,6 +98,9 @@ asString
 	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
 	^self asByteString: String!
 
+asSymbol
+	^Symbol intern: self asUtf8String!
+
 asUppercase
 	| copy |
 	copy := self basicCopy.
@@ -271,6 +274,7 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #asByteString:!converting!private! !
 !Utf16String categoriesFor: #asLowercase!converting!public! !
 !Utf16String categoriesFor: #asString!converting!public! !
+!Utf16String categoriesFor: #asSymbol!converting!public! !
 !Utf16String categoriesFor: #asUppercase!converting!public! !
 !Utf16String categoriesFor: #asUtf16String!converting!public! !
 !Utf16String categoriesFor: #asUtf8String!converting!public! !

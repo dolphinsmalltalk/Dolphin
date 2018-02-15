@@ -71,8 +71,7 @@ _equalsByteString: aString
 	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
 	Double-dispatched from String>>=."
 
-	"We should only get here if the byte comparison primitive failed unexpectedly."
-	^aString primitiveFailed!
+	^self asUtf8String = aString!
 
 _equalsUtf16String: aUtf16String
 	"Private - Answer whether the receiver is equivalent to the <Utf16String>, aString. 
@@ -1234,14 +1233,11 @@ fromAtomId: anInteger
 		leftString: (KernelLibrary default getAtomName: anInteger lpBuffer: atomName nSize: atomName basicSize)!
 
 fromByteArray: aByteArray
-	| size |
+	| size answer |
 	size := aByteArray size.
-	^(self basicNew: size)
-		replaceFrom: 1
-			to: size
-			with: aByteArray
-			startingAt: 1;
-		yourself!
+	answer := self basicNew: size.
+	aByteArray replaceBytesOf: answer from: 1 to: size startingAt: 1.
+	^answer!
 
 fromId: anInteger
 	"Answer a new String loaded from resources."
