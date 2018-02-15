@@ -44,6 +44,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Registry\Dolphin Registry Access';
 	add: '..\..\Lagoon\Lagoon Image Stripper';
+	add: '..\..\ActiveX\COM\OLE COM';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
