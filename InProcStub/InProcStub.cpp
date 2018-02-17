@@ -44,8 +44,8 @@ CIPDolphinModule _Module;
 static char achModulePath[_MAX_PATH+1];
 static CInProcPlugHole* s_pPlugHole = NULL;
 
-#include "..\tlock.h"
-typedef TLock<CIPDolphinModule> ModuleRef;
+#include "..\CritSect.h"
+typedef CAutoLock<CIPDolphinModule> ModuleRef;
 
 #ifdef TO_GO
 // In TO_GO mode the Dolphin VM object will be holding a lock, but we don't want this to prevent
