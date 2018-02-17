@@ -199,10 +199,11 @@ BOOL __stdcall Interpreter::MsgSendPoll()
 //#define cacheHash(classPointer, messageSelector) (((Oop(messageSelector) ^ Oop(classPointer)) >> 2) & (MethodCacheSize-1))
 // Use following for 16-byte OTEs
 #define cacheHash(classPointer, messageSelector) (((Oop(messageSelector) ^ Oop(classPointer)) >> 4) & (MethodCacheSize-1))
+#define GetCacheEntry(classPointer, messageSelector) reinterpret_cast<Interpreter::MethodCacheEntry*>(reinterpret_cast<intptr_t>(methodCache) + ((Oop(messageSelector) ^ Oop(classPointer)) & ((MethodCacheSize-1) << 4)))
 
 #pragma code_seg(INTERP_SEG)
 
-MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointer, const unsigned argCount)
+Interpreter::MethodCacheEntry* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointer, const unsigned argCount)
 {
 	ASSERT(ObjectMemory::isBehavior(Oop(classPointer)));
 
@@ -211,17 +212,15 @@ MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointe
 	// This hashForCache 'function' relies on the OTEntry size being 12 bytes, meaning
 	// that the bottom 2 bits of the Oops (which are pointers to the OTEntries)
 	// are always the same.
-	unsigned hashForCache = cacheHash(classPointer, oteSelector);
-
-	if (methodCache[hashForCache].classPointer == classPointer
-		&& methodCache[hashForCache].selector == oteSelector)
+	MethodCacheEntry* pEntry = GetCacheEntry(classPointer, oteSelector);
+	if (pEntry->classPointer == classPointer && pEntry->selector == oteSelector)
 	{
-		MethodOTE* oteMethod = methodCache[hashForCache].method;
 		#ifdef _DEBUG
 		cacheHits++;
 		{
 			if (executionTrace)
 			{
+				MethodOTE* oteMethod = pEntry->method;
 				tracelock lock(TRACESTREAM);
 				TRACESTREAM << "Found method " << classPointer << ">>" << oteSelector << 
 						" (" << oteMethod << ") in cache\n";
@@ -229,7 +228,7 @@ MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointe
 		}
 		#endif
 
-		return oteMethod;
+		return pEntry;
 	}
 
 	return findNewMethodInClassNoCache(classPointer, argCount);
@@ -239,13 +238,7 @@ MethodOTE* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointe
 
 extern "C" intptr_t primitivesTable[PRIMITIVE_MAX];
 
-inline intptr_t LookupMethodPrimitive(MethodOTE* oteMethod)
-{
-	CompiledMethod* pMethod = oteMethod->m_location;
-	return primitivesTable[pMethod->m_header.primitiveIndex];
-}
-
-MethodOTE* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount)
+Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount)
 {
 	HARDASSERT(argCount < 256);
 
@@ -288,12 +281,12 @@ MethodOTE* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* class
 					MethodOTE* methodPointer = reinterpret_cast<MethodOTE*>(methodArray->m_location->m_elements[index]);
 					HARDASSERT(ObjectMemory::isKindOf(methodPointer, Pointers.ClassCompiledMethod));
 
-					unsigned hashForCache = cacheHash(classPointer, targetSelector);
 					// Write back into the cache
-					methodCache[hashForCache].selector = targetSelector;
-					methodCache[hashForCache].classPointer = classPointer;
-					methodCache[hashForCache].method = methodPointer;
-					methodCache[hashForCache].primAddress = LookupMethodPrimitive(methodPointer);
+					MethodCacheEntry* pEntry = GetCacheEntry(classPointer, targetSelector);
+					pEntry->selector = targetSelector;
+					pEntry->classPointer = classPointer;
+					pEntry->method = methodPointer;
+					pEntry->primAddress = primitivesTable[methodPointer->m_location->m_header.primitiveIndex];
 
 #ifdef _DEBUG
 					{
@@ -304,7 +297,7 @@ MethodOTE* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* class
 						}
 					}
 #endif
-					return methodPointer;
+					return pEntry;
 				}
 				else
 				{
@@ -359,7 +352,7 @@ void __fastcall Interpreter::createActualMessage(const unsigned argCount)
 
 #pragma code_seg(INTERP_SEG)
 
-MethodOTE* __fastcall Interpreter::messageNotUnderstood(BehaviorOTE* classPointer, const unsigned argCount)
+Interpreter::MethodCacheEntry* __fastcall Interpreter::messageNotUnderstood(BehaviorOTE* classPointer, const unsigned argCount)
 {
 	#if defined(_DEBUG)
 	{

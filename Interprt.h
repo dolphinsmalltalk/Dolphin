@@ -212,8 +212,23 @@ public:
 	static SMALLUNSIGNED indexOfSP(Oop* sp);
 
 	// Method lookup
+
+	__declspec(align(16)) struct MethodCacheEntry
+	{
+		// Note that the method cache must include the class, as if one tests against
+		// the method's methodClass inherited methods will always result in a cache miss
+		// (e.g. for #new:, which is deeply inherited by many classes such as Array)
+		// The selector, on the other hand, can be tested against in the method itself.
+		const SymbolOTE*	selector;
+		const BehaviorOTE* 	classPointer;
+		MethodOTE* 			method;
+		intptr_t			primAddress;
+	};
+
+	static MethodCacheEntry* __fastcall findNewMethodInClass(BehaviorOTE* classPointer, const unsigned argCount);
+	static MethodCacheEntry* __stdcall findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount);
 	static MethodOTE* __fastcall lookupMethod(BehaviorOTE* aClass, SymbolOTE* selector);
-	static MethodOTE* __fastcall messageNotUnderstood(BehaviorOTE* aClass, const unsigned argCount);
+	static MethodCacheEntry* __fastcall messageNotUnderstood(BehaviorOTE* aClass, const unsigned argCount);
 	static void __fastcall createActualMessage(const unsigned argCount);
 
 	//Misc
@@ -316,8 +331,6 @@ private:
 	static void sendSelectorToClass(BehaviorOTE* classPointer, unsigned argCount);
 	static void sendVMInterrupt(ProcessOTE* processPointer, Oop nInterrupt, Oop argPointer);
 	static void __fastcall sendVMInterrupt(Oop nInterrupt, Oop argPointer);
-	static MethodOTE* __fastcall findNewMethodInClass(BehaviorOTE* classPointer, const unsigned argCount);
-	static MethodOTE* __stdcall findNewMethodInClassNoCache(BehaviorOTE* classPointer, const unsigned argCount);
 
 	static BOOL __stdcall MsgSendPoll();
 	static BOOL	__stdcall BytecodePoll();
@@ -745,18 +758,6 @@ private:
 	// Method cache is a hash table with overwrite on collision
 	// If changing method cache size, then must also modify METHODCACHEWORDS in ISTASM.INC!
 	enum { MethodCacheSize = 1024 };
-	__declspec(align(16)) struct MethodCacheEntry 
-	{
-		// Note that the method cache must include the class, as if one tests against
-		// the method's methodClass inherited methods will always result in a cache miss
-		// (e.g. for #new:, which is deeply inherited by many classes such as Array)
-		// The selector, on the other hand, can be tested against in the method itself.
-		const SymbolOTE*	selector;
-		const BehaviorOTE* 	classPointer;
-		MethodOTE* 			method;
-		intptr_t			primAddress;
-	};
-
 	static MethodCacheEntry methodCache[MethodCacheSize];
 
 	static void flushCaches();

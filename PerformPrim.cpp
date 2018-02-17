@@ -153,14 +153,14 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 	// the Message gets shuffled over the selector, and doesNotUnderstand is
 	// sent
 
-	MethodOTE* methodPointer = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), (argCount-1));
+	MethodCacheEntry* pEntry = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), (argCount - 1));
+	MethodOTE* methodPointer = pEntry->method;
 	CompiledMethod* method = methodPointer->m_location;
-	if (method->m_header.argumentCount == (argCount-1) ||
-		m_oopMessageSelector == Pointers.DoesNotUnderstandSelector)
+	const unsigned methodArgCount = method->m_header.argumentCount;
+	if (methodArgCount == (argCount-1) || m_oopMessageSelector == Pointers.DoesNotUnderstandSelector)
 	{
 		// Shuffle arguments down over the selector (use argumentCount of
 		// method found which may not equal argCount)
-		const unsigned methodArgCount = method->m_header.argumentCount;
 		// #pragma message("primitivePerform: Instead of shuffling args down 1, why not just deduct 1 from calling frames suspended SP after exec?")
 		Oop* const sp = m_registers.m_stackPointer - methodArgCount;
 
@@ -238,7 +238,8 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp)
 	// test if the argumentArray contained only one argument. We allow
 	// this to happen to avoid testing for not understood in the normal
 	// case - just be aware of this anomaly.
-	MethodOTE* methodPointer = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), argCount);
+	MethodCacheEntry* pEntry = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), argCount);
+	MethodOTE* methodPointer = pEntry->method;
 	CompiledMethod& method = *methodPointer->m_location;
 	const unsigned methodArgCount = method.m_header.argumentCount;
 	if (methodArgCount == argCount ||

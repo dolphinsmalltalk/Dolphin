@@ -173,8 +173,8 @@ inline void Interpreter::sendSelectorArgumentCount(SymbolOTE* selector, unsigned
 
 inline void Interpreter::sendSelectorToClass(BehaviorOTE* classPointer, unsigned argCount)
 {
-	MethodOTE* methodPointer = findNewMethodInClass(classPointer, argCount);
-	executeNewMethod(methodPointer, argCount);
+	MethodCacheEntry* pEntry = findNewMethodInClass(classPointer, argCount);
+	executeNewMethod(pEntry->method, argCount);
 }
 
 inline void	Interpreter::NotifyAsyncPending()

@@ -99,7 +99,7 @@ ENDIF
 SENDVMINTERRUPT EQU ?sendVMInterrupt@Interpreter@@CIXII@Z
 extern SENDVMINTERRUPT:near32
 
-FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@CGPAV?$TOTE@VCompiledMethod@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
+FINDNEWMETHODNOCACHE EQU ?findNewMethodInClassNoCache@Interpreter@@SGPAUMethodCacheEntry@1@PAV?$TOTE@VBehavior@ST@@@@I@Z ; STDCALL, OTE return and arg
 extern FINDNEWMETHODNOCACHE:near32
 
 BLOCKCOPY EQU ?blockCopy@Interpreter@@CIPAV?$TOTE@VBlockClosure@ST@@@@K@Z
@@ -3904,20 +3904,21 @@ MExecNewMethod MACRO
 
 	call	eax
 
-	;; Likelihood is that the primitive will succeed, so jump conditionally in that case
-	;; (PII predicts all forwards jumps will not be taken if no other info available)
+	;; Likelihood is that the primitive will succeed, so jump conditionally on failure
+	;; (static prediction is that all forwards jumps will not be taken)
 
 	test	eax, eax
 	jz		@F								;; Primitive failed?
+	MPrefetch
 	mov		_SP, eax						;; Reload stack pointer as primitive may have modified
-	DispatchByteCode						;; succeeded, continue executing byte codes without activating new context
-@@:
+	DispatchNext							;; succeeded, continue executing byte codes without activating new context
 
+@@:
 	;; Activate method as primitive failed - note we don't bother to pass the correct argument count
 	call	primitiveActivateMethod
+	MPrefetch
 	mov		_SP, eax
-
-	DispatchByteCode
+	DispatchNext
 ENDM
 
 BEGINPROC execMethodOfClass
@@ -3967,15 +3968,22 @@ BEGINPROC execMethodOfClass
 findMethodCacheMiss:
 	push	ecx
 	call	FINDNEWMETHODNOCACHE
-	mov		[NEWMETHOD], eax
-	mov		ecx, (OTE PTR[eax]).m_location			; Load address of new method object into ecx
+	ASSUME eax:PTR MethodCacheEntry
+
+	mov		ecx, [eax].method;
+	ASSUME ecx:PTR OTE
+
+	mov		eax, [eax].primAddress
+	ASSUME	eax:DWORD
+
+	mov		[NEWMETHOD], ecx						; Store down new method register
+
+	mov		ecx, [ecx].m_location					; Load address of new method object into ecx
 	ASSUME	ecx:PTR CompiledCodeObj
-	movzx	eax, [ecx].m_header.primitiveIndex
+
 	mov		_SP, [STACKPOINTER]						; Restore stack pointer (in case of DNU)
 	movzx	edx, [ecx].m_header.argumentCount
 	
-	mov		eax, DWORD PTR[_primitivesTable+eax*4]	; Load primitive routine address from jump table (C++ routines via thunks which take care of caching/uncaching registers)
-
 	; ECX = CompiledMethod*, EDX = arg count, EAX = primitive routine to call
 	MExecNewMethod
 	
