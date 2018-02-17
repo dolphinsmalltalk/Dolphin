@@ -1,6 +1,8 @@
 #include "ist.h"
 #include "ImageFileResource.h"
 
+#if defined(TO_GO) || defined(USE_VM_DLL)
+
 int ImageFileResource::Open(HMODULE hModule, int resId)
 {
 	m_hFind = ::FindResource(hModule, LPCSTR(resId), RT_RCDATA);
@@ -32,3 +34,5 @@ void ImageFileResource::Close()
 	}
 	m_hFind = NULL;
 }
+
+#endif

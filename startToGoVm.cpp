@@ -1,6 +1,9 @@
 // startVM.cpp
 
 #include "ist.h"
+
+#ifdef TO_GO
+
 #include <process.h>
 #include <io.h>
 #include "startVM.h"
@@ -39,3 +42,5 @@ HINSTANCE GetApplicationInstance()
 {
 	return GetModuleContaining(GetApplicationInstance);
 }
+
+#endif

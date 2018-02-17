@@ -7,11 +7,10 @@
   Simple binary streams (to avoid pulling in a lot of CRT stream code)
 
 ******************************************************************************/
-#ifndef _ZBINSTREAM_H_
-#define _ZBINSTREAM_H_
+#pragma once
 
 #include "binstream.h"
-#include "zlib.h"
+#include "zlib\zlib.h"
 
 enum { gz_magic1 = 0x1f, gz_magic2 = 0x8b }; /* gzip magic header */
 /* gzip flag byte */
@@ -263,5 +262,3 @@ public:
 		return m_stream.avail_out == 0;
 	}
 };
-
-#endif

@@ -14,10 +14,6 @@
 #pragma auto_inline(off)
 #endif
 
-#if defined(TO_GO)
-#error To Go VMs should not be able to snapshot the image
-#endif
-
 #include "ObjMem.h"
 #include "Interprt.h"
 #include "InterprtPrim.inl"
@@ -27,6 +23,8 @@
 #include "STString.h"
 
 #pragma auto_inline(off)
+
+#ifdef VMDLL
 
 Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 {
@@ -87,3 +85,12 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 		return primitiveFailure(saveResult);
 	}
 }
+
+#elif defined(TO_GO)
+
+Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const)
+{
+	return NULL;
+}
+
+#endif

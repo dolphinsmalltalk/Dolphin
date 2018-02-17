@@ -7,8 +7,7 @@
   Simple binary streams (to avoid pulling in a lot of CRT stream code)
 
 ******************************************************************************/
-#ifndef _BINSTREAM_H_
-#define _BINSTREAM_H_
+#pragma once
 
 class ibinstream;
 class obinstream;
@@ -171,5 +170,3 @@ public:
 		return ::fwrite(pbIn, 1, cBytes, m_fp) == cBytes;
 	}
 };
-
-#endif

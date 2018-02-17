@@ -7,9 +7,7 @@
 	Dolphin Smalltalk Active-X Control Host header file
 
 ******************************************************************************/
-
-#ifndef _AXHOST_H_
-#define _AXHOST_H_
+#pragma once
 
 #if defined(_CONSOLE)
 #error "Not for use in CONSOLE build
@@ -49,4 +47,3 @@
 
 #pragma code_seg()
 
-#endif

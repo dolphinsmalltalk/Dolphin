@@ -1,5 +1,4 @@
-#ifndef _DOLPHINIF_H_
-#define _DOLPHINIF_H_
+#pragma once
 
 #include <windows.h>
 #include <string.h>

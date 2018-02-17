@@ -1,15 +1,15 @@
 // startVM.cpp
 
 #include "ist.h"
+
+#if defined(USE_VM_DLL)
+
 #include <process.h>
 #include <io.h>
 #include "startVM.h"
 #include "DolphinSmalltalk_i.h"
 #include "VMExcept.h"
 
-#if defined(TO_GO)
-#error "Not for use in ToGo build"
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // Globals
@@ -96,3 +96,5 @@ HRESULT __stdcall CreateVM(DWORD dwClsContext, const CLSID* pVMCLSID, LPCSTR psz
 
 	return hr;
 }
+
+#endif

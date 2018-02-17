@@ -1,11 +1,10 @@
-#ifndef _TLOCK_H_
-#define _TLOCK_H_
+#pragma once
 
 template <class T> class TLock
 {
 	T& m_critsec;
 
-	TLock(const TLock&) {DebugBreak();}
+	TLock(const TLock&) = delete;
 
 public:
 	TLock(T& lock) : m_critsec(lock)
@@ -18,5 +17,3 @@ public:
 		m_critsec.Unlock();
 	}
 };
-
-#endif

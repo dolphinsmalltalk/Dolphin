@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VM", "dll.vcxproj", "{382ABBF3-B32D-4D77-B303-346AA146921C}"
 EndProject
@@ -34,17 +34,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Console", "ConsoleStub\Cons
 		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxproj", "{BC5D162D-46BC-42CF-85DB-CB715EE8517E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUIToGo", "ToGoStub\GuiToGo.vcxproj", "{12B536BA-143E-4F38-BD96-77B35467DB13}"
-	ProjectSection(ProjectDependencies) = postProject
-		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToGoLib", "ToGoLib\ToGoLib.vcxproj", "{50AB410B-7D13-43FF-B426-FB02CA3FEF86}"
 	ProjectSection(ProjectDependencies) = postProject
 		{241D4E3E-44C0-40B7-BE1B-5249916FE631} = {241D4E3E-44C0-40B7-BE1B-5249916FE631}
 	EndProjectSection
@@ -59,7 +49,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		dolphin.targets = dolphin.targets
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxitems", "{BC5D162D-46BC-42CF-85DB-CB715EE8517E}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		VMLib\VMLib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
+		VMLib\VMLib.vcxitems*{bc5d162d-46bc-42cf-85db-cb715ee8517e}*SharedItemsImports = 9
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|Win32 = Release|Win32
 		VM Debug|Win32 = VM Debug|Win32
@@ -100,16 +99,9 @@ Global
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820}.Release|Win32.ActiveCfg = Release|Win32
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820}.Release|Win32.Build.0 = Release|Win32
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
-		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.Release|Win32.ActiveCfg = Release|Win32
-		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.Release|Win32.Build.0 = Release|Win32
-		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
-		{BC5D162D-46BC-42CF-85DB-CB715EE8517E}.VM Debug|Win32.Build.0 = VM Debug|Win32
 		{12B536BA-143E-4F38-BD96-77B35467DB13}.Release|Win32.ActiveCfg = Release|Win32
 		{12B536BA-143E-4F38-BD96-77B35467DB13}.Release|Win32.Build.0 = Release|Win32
 		{12B536BA-143E-4F38-BD96-77B35467DB13}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
-		{50AB410B-7D13-43FF-B426-FB02CA3FEF86}.Release|Win32.ActiveCfg = Release|Win32
-		{50AB410B-7D13-43FF-B426-FB02CA3FEF86}.Release|Win32.Build.0 = Release|Win32
-		{50AB410B-7D13-43FF-B426-FB02CA3FEF86}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
 		{6D089C23-9091-47DB-B092-93D387425DC0}.Release|Win32.ActiveCfg = Release|Win32
 		{6D089C23-9091-47DB-B092-93D387425DC0}.Release|Win32.Build.0 = Release|Win32
 		{6D089C23-9091-47DB-B092-93D387425DC0}.VM Debug|Win32.ActiveCfg = VM Debug|Win32
@@ -125,7 +117,6 @@ Global
 		{714480A5-0779-4C59-8A08-856E5C34AC37} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
 		{F6BBF41C-E4E0-4514-BA19-E248DE206820} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
 		{12B536BA-143E-4F38-BD96-77B35467DB13} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
-		{50AB410B-7D13-43FF-B426-FB02CA3FEF86} = {F6CB1D3C-CC39-4BCA-AC1A-DF0D1CA27580}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {808FD94F-FA41-4A9A-B2BC-2010D373F582}

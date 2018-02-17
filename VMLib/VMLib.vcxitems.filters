@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\adler32.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\bytecde.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CompilePrims.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\compact.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\compress.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\crc32.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CrashDump.cpp">
+      <Filter>Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\dealloc.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\decode.cpp">
+      <Filter>Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\deflate.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp">
+      <Filter>FFI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
+      <Filter>FFI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\fatalerror.cpp">
+      <Filter>Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\finalize.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\flotprim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\GC.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\GCPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphin.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphinStart.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\gzio.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infblock.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infcodes.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inffast.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inflate.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inftrees.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infutil.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp">
+      <Filter>FFI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\interprt.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\InterprtInit.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\largeintprim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\LoadImage.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\PerformPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\primitiv.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\process.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\oleprim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\objmem.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjMemInit.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.c">
+      <Filter>FFI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\realloc.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SBHEAP.C">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\sampler.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SearchPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\StreamPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\strgprim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\uncompr.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\zutil.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\thrdcall.cpp">
+      <Filter>FFI</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\TraceStream.cpp">
+      <Filter>Diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\timer.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\trees.c">
+      <Filter>Zlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\dolphin.cpp">
+      <Filter>Interpreter</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ImageFileResource.cpp">
+      <Filter>App Support</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SnapshotPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SaveImage.cpp">
+      <Filter>ObjectMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\startApp.cpp">
+      <Filter>App Support</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\startToGoVm.cpp">
+      <Filter>App Support</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
+      <Filter>FFI</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ist.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\StdAfx.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h">
+      <Filter>FFI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\deflate.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\disassembler.h">
+      <Filter>Diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\dlldatax.h">
+      <Filter>FFI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinSmalltalk.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinX.h">
+      <Filter>FFI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infblock.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infcodes.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inffast.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inffixed.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inftrees.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infutil.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\InterpRegisters.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Interprt.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\oopq.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ote.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\objmem.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.h">
+      <Filter>FFI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STExternal.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STFloat.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STHashedCollection.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STInteger.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STLinkedList.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMagnitude.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMemoryManager.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMessage.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethod.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethodContext.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethodHeader.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STObject.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STProcess.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STStackFrame.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STStream.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STString.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STVirtualObject.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zconf.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zfstream.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zlib.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zutil.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMExcept.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMPointers.h">
+      <Filter>Interpreter</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\thrdcall.h">
+      <Filter>FFI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\TraceStream.h">
+      <Filter>Diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\trees.h">
+      <Filter>Zlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zfbinstream.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ImageFileResource.h">
+      <Filter>App Support</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zbinstream.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h">
+      <Filter>ObjectMemory</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">
+      <Filter>Interpreter</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\InterprtPrim.inl">
+      <Filter>Primitives</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\InterprtProc.inl">
+      <Filter>Interpreter</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\istasm.inc">
+      <Filter>Interpreter</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\ObjMemPriv.inl">
+      <Filter>ObjectMemory</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Zlib">
+      <UniqueIdentifier>{efa685a1-9daa-4a68-a656-43c17137a15b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interpreter">
+      <UniqueIdentifier>{856c0fd8-7208-4e14-8b7c-71b2cb261078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectMemory">
+      <UniqueIdentifier>{402fcea9-52b8-4128-9761-2be0f57627f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Primitives">
+      <UniqueIdentifier>{501e4f3e-559a-41cd-a397-a023407319a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diagnostics">
+      <UniqueIdentifier>{f2bd6d63-46bf-40cd-9adc-e63a7217b127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Smalltalk Objects">
+      <UniqueIdentifier>{671ed41e-b26b-4137-9084-8ae0c2016ac7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FFI">
+      <UniqueIdentifier>{e644de48-b45c-4270-ad6a-d7c7c6817a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App Support">
+      <UniqueIdentifier>{da67b17a-2e1f-4328-8384-c5e4cf08a72b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="$(MSBuildThisFileDirectory)..\constobj.asm">
+      <Filter>ObjectMemory</Filter>
+    </MASM>
+    <MASM Include="$(MSBuildThisFileDirectory)..\byteasm.asm">
+      <Filter>Interpreter</Filter>
+    </MASM>
+    <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm">
+      <Filter>Primitives</Filter>
+    </MASM>
+    <MASM Include="$(MSBuildThisFileDirectory)..\ExternalBytes.asm">
+      <Filter>FFI</Filter>
+    </MASM>
+    <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm">
+      <Filter>FFI</Filter>
+    </MASM>
+    <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm">
+      <Filter>Primitives</Filter>
+    </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)Dolphin.natvis">
+      <Filter>Diagnostics</Filter>
+    </Natvis>
+  </ItemGroup>
+</Project>

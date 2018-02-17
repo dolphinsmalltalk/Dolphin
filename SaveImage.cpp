@@ -10,9 +10,7 @@
 ******************************************************************************/
 #include "ist.h"
 
-#if defined(TO_GO)
-	#error To Go VMs cannot save images
-#endif
+#if defined(VMDLL)
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -271,3 +269,5 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 	// Append the amount of data written as a checksum.
 	return imageFile.write(&dwDataSize, sizeof(DWORD));
 }
+
+#endif

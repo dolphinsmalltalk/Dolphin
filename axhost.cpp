@@ -1,4 +1,7 @@
 #include "Ist.h"
+
+#if defined (VM) && !defined(_CONSOLE)
+
 #include "axhost.h"
 #include "rc_vm.h"
 
@@ -808,3 +811,4 @@ BOOL __stdcall AxWinTerm()
 	return TRUE;
 }
 
+#endif

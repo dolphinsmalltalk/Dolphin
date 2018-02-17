@@ -810,7 +810,7 @@ Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp)
 		if (cacheHits != 0 || cacheMisses != 0)
 		{
 			char buf[256];
-			_snprintf(buf, sizeof(buf)-1, "%u method cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
+			_snprintf_s(buf, sizeof(buf)-1, "%u method cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
 							cacheHits, cacheMisses, 
 							(double)cacheHits / 
 								(cacheHits + cacheMisses?cacheHits+cacheMisses:1),

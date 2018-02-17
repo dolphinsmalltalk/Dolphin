@@ -38,6 +38,7 @@
 #if 1//def _DEBUG
 	int __cdecl _matherr( struct _exception *except )
 	{
+		UNREFERENCED_PARAMETER(except);
 		_asm int 3;
 		return 0;
 	}
@@ -80,7 +81,7 @@ Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp)
 	return sp;
 }
 
-template <class Op> __forceinline static Oop* primitiveTruncationOp(Oop* const sp, Op& op)
+template <class Op> __forceinline static Oop* primitiveTruncationOp(Oop* const sp, const Op& op)
 {
 	FloatOTE* oteFloat = reinterpret_cast<FloatOTE*>(*sp);
 	Float* floatReceiver = oteFloat->m_location;
@@ -153,7 +154,7 @@ Oop* __fastcall Interpreter::primitiveFloatCeiling(Oop* const sp)
 // These is no significant performance impact of using precise for these comparisons.
 #pragma float_control(precise, on, push)
 
-template <class P1, class P2> __forceinline static Oop* primitiveFloatCompare(Oop* const sp, P1 &pred, P2& predMixed)
+template <class P1, class P2> __forceinline static Oop* primitiveFloatCompare(Oop* const sp, const P1 &pred, const P2& predMixed)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
 	Oop oopArg = *sp;
@@ -243,7 +244,7 @@ Oop* Interpreter::primitiveFloatEqual(Oop* const sp)
 // The conditions are also arranged so that the conditional forward jumps are taken in the less
 // common case, which reduces branch misprediction overhead.
 
-template <class O1, class O2> __forceinline static Oop* primitiveFloatBinaryOp(Oop* const sp, O1 &op, O2& opMixed)
+template <class O1, class O2> __forceinline static Oop* primitiveFloatBinaryOp(Oop* const sp, const O1 &op, const O2& opMixed)
 {
 	Oop oopArg = *sp;
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp-1));
@@ -310,7 +311,7 @@ Oop* Interpreter::primitiveFloatDivide(Oop* const sp)
 	return primitiveFloatBinaryOp(sp, op_div<double, double>(), op_div<double, SMALLINTEGER>());
 }
 
-template <class O1> __forceinline static Oop* primitiveFloatUnaryOp(Oop* const sp, O1 &op)
+template <class O1> __forceinline static Oop* primitiveFloatUnaryOp(Oop* const sp, const O1 &op)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	Float* receiver = oteReceiver->m_location;

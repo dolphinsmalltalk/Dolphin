@@ -1,5 +1,4 @@
-#ifndef __DLLMODULE_H_
-#define __DLLMODULE_H_
+#pragma once
 
 #define _ATL_ALL_WARNINGS
 #include <atlbase.h>
@@ -23,5 +22,3 @@ public :
 		return ::UpdateRegistryClass(clsid, lpszProgID, lpszVerIndProgID, nDescID, dwFlags, bRegister);
 	}
 };
-
-#endif //__DLLMODULE_H_

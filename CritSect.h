@@ -7,8 +7,7 @@
 	Description:
 
 ******************************************************************************/
-#ifndef _CriticalSection_H_
-#define _CriticalSection_H_
+#pragma once
 
 class CMonitor
 {
@@ -20,6 +19,11 @@ public:
 	void Unlock() {LeaveCriticalSection(&m_cs);}
 
 private:
+	// Suppress copy constructor and assignment operator
+	const CMonitor& operator=(const CMonitor&) = delete;
+	CMonitor(const CMonitor&) = delete;
+
+private:
 	CRITICAL_SECTION	m_cs;
 };
 
@@ -29,8 +33,8 @@ template <class _T> class CAutoLock
 
 private:
 	// Suppress copy constructor and assignment operator
-	const CAutoLock& operator=(const CAutoLock&);
-	CAutoLock(const CAutoLock&);
+	const CAutoLock& operator=(const CAutoLock&) = delete;
+	CAutoLock(const CAutoLock&) = delete;
 
 public:
 	CAutoLock(_T& mutex) : m_mutex(mutex) 
@@ -45,5 +49,3 @@ public:
 };
 
 typedef CAutoLock<CMonitor> CMonitorLock;
-
-#endif

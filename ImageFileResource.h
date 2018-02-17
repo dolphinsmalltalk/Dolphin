@@ -2,6 +2,8 @@
 
 #include "ImageHeader.h"
 
+#ifndef VMDLL
+
 class ImageFileResource
 {
 	HRSRC m_hFind;
@@ -24,3 +26,5 @@ public:
 	IMAGETYPE GetType() { return *reinterpret_cast<DWORD*>(GetRawData()); }
 	ImageHeader* GetHeader() { return &(reinterpret_cast<ISTImageHeader*>(m_pData)->header); }
 };
+
+#endif

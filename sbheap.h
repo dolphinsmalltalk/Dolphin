@@ -1,5 +1,4 @@
-#ifndef _IST_SBHEAP_H_
-#define _IST_SBHEAP_H_
+#pragma once
 
 #define __sbh_alloc_block __dsbh_alloc_block 
 #define __sbh_alloc_new_group __dsbh_alloc_new_group
@@ -22,5 +21,3 @@
 #define __sbh_cntHeaderList __dsbh_cntHeaderList
 #define __sbh_pHeaderDefer __dsbh_pHeaderDefer
 #define __sbh_indGroupDefer __dsbh_indGroupDefer
-
-#endif

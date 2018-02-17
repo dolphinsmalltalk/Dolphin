@@ -4,11 +4,8 @@
 
 	Description:
 
-	CRegKey class (borrowed from ATL)
-
 ******************************************************************************/
-#ifndef _REGKEY_H_
-#define _REGKEY_H_
+#pragma once
 
 #define _ATL_ALL_WARNINGS
 #include <atlbase.h>
@@ -28,25 +25,3 @@ inline LONG OpenDolphinKey(CRegKey& rkey, LPCTSTR lpszKeyName, REGSAM samDesired
 	return rkey.Open(HKEY_LOCAL_MACHINE, szKey, samDesired);	
 }
 
-/*inline bool __stdcall GetInstallationPath(char* buf, const char* filePart)
-{
-	buf[0] = 0;
-	CRegKey rkInstall;
-	bool bFound = false;
-	if (OpenDolphinKey(rkInstall, "") == ERROR_SUCCESS)
-	{
-		DWORD dwSize = _MAX_DIR;
-		if (rkInstall.QueryValue(buf, "", &dwSize) == ERROR_SUCCESS)
-		{
-			strcat(buf, "\\");
-			bFound = true;
-		}
-	}
-
-	strcat(buf, filePart);
-
-	return bFound;
-}
-*/
-
-#endif

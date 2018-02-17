@@ -1,5 +1,7 @@
 #pragma once
 
+#ifndef VMDLL
+
 #include "ImageHeader.h"
 #if defined(TO_GO)
 	#include "DolphinSmalltalk.h"
@@ -23,3 +25,5 @@ HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, LPCSTR);
 HRESULT __stdcall ErrorVMVersionMismatch(ImageHeader* pHeader, VS_FIXEDFILEINFO* pvi);
 
 #define DecodeHRESULT(hr) (HRESULT_FACILITY(hr) == FACILITY_ITF ? HRESULT_CODE(hr) - 2000 : HRESULT_CODE(hr));
+
+#endif

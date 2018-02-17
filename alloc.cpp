@@ -173,7 +173,7 @@ Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* sp)
 		sp = sp - count - 1;
 		while (--count >= 0)
 		{
-			Oop oopArg = *(sp + count);
+			oopArg = *(sp + count);
 			ObjectMemory::countUp(oopArg);
 			obj->m_fields[count] = oopArg;
 		}
