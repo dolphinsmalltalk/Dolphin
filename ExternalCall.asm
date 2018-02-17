@@ -24,7 +24,7 @@ NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PA
 extern NewExternalStructure:near32
 NewStringWithLen EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIPAV?$TOTE@VString@ST@@@@PIBDI@Z
 extern NewStringWithLen:near32
-NewStringFromUtf16 EQU ?New@?$ByteString@$0PNOJ@$0GI@V?$TOTE@VUtf8String@ST@@@@@ST@@SIPAV?$TOTE@VUtf8String@ST@@@@PB_W@Z
+NewStringFromUtf16 EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
 extern NewStringFromUtf16:near32
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PB_W@Z
 extern NewUtf16String:near32

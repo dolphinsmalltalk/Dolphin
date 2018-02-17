@@ -99,6 +99,7 @@ public:
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
 	static BytesOTE* __fastcall newUninitializedByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
+	static BytesOTE* __fastcall newUninitializedNullTermObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)

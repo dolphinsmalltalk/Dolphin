@@ -442,6 +442,15 @@ BytesOTE* __fastcall ObjectMemory::newUninitializedByteObject(BehaviorOTE* class
 	return reinterpret_cast<BytesOTE*>(ote);
 }
 
+BytesOTE* __fastcall ObjectMemory::newUninitializedNullTermObject(BehaviorOTE* classPointer, MWORD byteSize)
+{
+	OTE* ote;
+	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
+	ote->m_oteClass = classPointer;	// Ref. counting done later if necessary
+	ote->beNullTerminated();
+	return reinterpret_cast<BytesOTE*>(ote);
+}
+
 
 BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 {

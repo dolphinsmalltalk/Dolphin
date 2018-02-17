@@ -42,7 +42,7 @@ namespace ST
 
 		static POTE __fastcall New(const char * __restrict value, MWORD len)
 		{
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedByteObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), len));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), len));
 			MyType* __restrict string = stringPointer->m_location;
 			string->m_characters[len] = 0;
 			memcpy(string->m_characters, value, len);
@@ -52,7 +52,7 @@ namespace ST
 		static POTE __fastcall New(LPCSTR sz)
 		{
 			unsigned len = strlen(sz);
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedByteObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), len));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), len));
 			MyType* __restrict string = stringPointer->m_location;
 			memcpy(string->m_characters, sz, len + 1);
 			return stringPointer;
@@ -63,7 +63,7 @@ namespace ST
 		{
 			int len = ::WideCharToMultiByte(CP, 0, wsz, -1, NULL, 0, NULL, NULL);
 			// Length includes null terminator since input is null terminated
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedByteObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), len - 1));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), len - 1));
 			MyType* __restrict string = stringPointer->m_location;
 			int nCopied = ::WideCharToMultiByte(CP, 0, wsz, -1, string->m_characters, len, NULL, NULL);
 			UNREFERENCED_PARAMETER(nCopied);
@@ -108,8 +108,13 @@ namespace ST
 		wchar_t m_characters[];
 
 		static Utf16StringOTE* __fastcall New(LPCWSTR wsz);
-		//static Utf16StringOTE* __fastcall NewWithLen(const wchar_t* wsz, unsigned len);
-		static Utf16StringOTE* __fastcall New(LPCSTR sz, UINT codePage);
+		static Utf16StringOTE* __fastcall New(const wchar_t* wsz, unsigned len);
+		static Utf16StringOTE* __fastcall New(LPCSTR sz, UINT cp);
+
+		static Utf16StringOTE * ST::Utf16String::NewFromBSTR(BSTR bs)
+		{
+			return New(bs, ::SysStringLen(bs));
+		}
 	};
 }
 
