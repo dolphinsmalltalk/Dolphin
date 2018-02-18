@@ -18,6 +18,14 @@ _equalsByteString: aString
 	"We should only get here the comparand is an ANSI string"
 	^aString asUtf8String = self!
 
+asAnsiString
+	"Answer an ANSI encoded string representation of the receiver. Any of the receiver's code
+	points that cannot be represented as ANSI characters will be translated to an error
+	character."
+
+	<primitive: 217>
+	^self asUtf16String asAnsiString!
+
 asLowercase
 	#todo.	"Provide a more efficient implementation"
 	^self asUtf16String asLowercase asUtf8String!
@@ -63,6 +71,7 @@ asUtf8String
 
 	^self! !
 !Utf8String categoriesFor: #_equalsByteString:!comparing!private! !
+!Utf8String categoriesFor: #asAnsiString!converting!public! !
 !Utf8String categoriesFor: #asLowercase!converting!public! !
 !Utf8String categoriesFor: #asString!converting!public! !
 !Utf8String categoriesFor: #asUppercase!converting!public! !
@@ -73,23 +82,11 @@ asUtf8String
 codePage
 	^Win32Constants.CP_UTF8!
 
-fromByteArray: aByteArray
-	| size answer |
-	size := aByteArray size.
-	answer := self basicNew: size.
-	aByteArray
-		replaceBytesOf: answer
-		from: 1
-		to: size
-		startingAt: 1.
-	^answer!
-
 initialize
 	empty := self new
 				isImmutable: true;
 				yourself.
 	VMLibrary default registryAt: #Utf8String put: self! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
-!Utf8String class categoriesFor: #fromByteArray:!public! !
 !Utf8String class categoriesFor: #initialize!development!initializing!public! !
 

@@ -25,7 +25,17 @@ reverseTestCases
 	self skip.
 	^super reverseTestCases
 		, (#(#(#[16rF0 16r9F 16r8D 16rBA 16r20 16r61] #[16r61 16r20 16rF0 16r9F 16r8D 16rBA]) #(#[230 150 135 229 173 151 229 140 150 227 129 145] #[227 129 145 229 140 150 229 173 151 230 150 135]))
-				collect: [:pair | pair collect: [:b | Utf8String fromByteArray: b]])! !
+				collect: [:pair | pair collect: [:b | Utf8String fromByteArray: b]])!
+
+testAnsiStringRoundTrip
+	| ansiAll utf ansi |
+	ansiAll := Character byteCharacterSet.
+	utf := self assimilateString: ansiAll.
+	ansi := utf asAnsiString.
+	self assert: ansi class sameAs: String.
+	self assert: ansi size equals: 256.
+	self assert: ansi equals: ansiAll! !
 !MultiByteStringTest categoriesFor: #caseConversionCases!constants!private! !
 !MultiByteStringTest categoriesFor: #reverseTestCases!private! !
+!MultiByteStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
 

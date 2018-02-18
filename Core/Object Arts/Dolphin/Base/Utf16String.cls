@@ -65,6 +65,7 @@ _equalsUtf16String: aUtf16String
 asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
 
+	<primitive: 217>
 	^self asByteString: String!
 
 asByteString: aClass
@@ -77,13 +78,13 @@ asByteString: aClass
 				wideCharToMultiByte: aClass codePage
 				dwFlags: 0
 				lpWideCharStr: self
-				cchWideChar: -1
+				cchWideChar: size
 				lpMultiByteStr: buf
-				cchMultiByte: buf size + 1
+				cchMultiByte: buf size
 				lpDefaultChar: nil
 				lpUsedDefaultChar: nil.
 	bytes == 0 ifTrue: [^KernelLibrary default systemError].
-	buf resize: bytes - 1.
+	buf resize: bytes.
 	^buf!
 
 asLowercase
@@ -115,6 +116,7 @@ asUtf16String
 asUtf8String
 	"Answer a UTF8 encoded string representation of the receiver."
 
+	<primitive: 216>
 	^self asByteString: Utf8String!
 
 at: anInteger
@@ -335,17 +337,18 @@ fromString: aString
 
 	| answer cch |
 	cch := aString size.
+	cch == 0 ifTrue: [^self empty].
 	"The result will have at most the number of code points as are present in the input, probably fewer if the input is UTF8"
 	answer := self new: cch.
 	^(cch := KernelLibrary default
 				multiByteToWideChar: aString codePage
 				dwFlags: 0
 				lpMultiByteStr: aString
-				cchMultiByte: -1
+				cchMultiByte: cch
 				lpWideCharStr: answer
-				cchWideChar: cch + 1) == 0
+				cchWideChar: cch) == 0
 		ifTrue: [KernelLibrary default systemError]
-		ifFalse: [answer resize: cch - 1]	"MB_ERR_INVALID_CHARS"!
+		ifFalse: [answer resize: cch]	"MB_ERR_INVALID_CHARS"!
 
 initialize
 	empty := self new
