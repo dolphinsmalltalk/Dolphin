@@ -71,7 +71,7 @@ testCaseConversions
 			self assert: actual asLowercase equals: subject basicCopy]!
 
 testEmpty
-	self assert: self collectionClass empty class equals: self collectionClass!
+	self assert: self collectionClass empty class sameAs: self collectionClass!
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
@@ -274,7 +274,6 @@ testInvalidComparisons
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
 
-	#todo.	"Test multi-byte UTF encodings"
 	self reverseTestCases do: 
 			[:each |
 			| subject expected actual |
@@ -286,14 +285,23 @@ testReverse
 testStreamUtfRoundTrip
 	| expected actual |
 	"Test a variety of 1 to 4 byte encodings"
-	#('' 'a' 'abc' '£' '£1' 'être' '九龍灣' '文字化けテスト' 'الإعلان العالمى لحقوق الإنسان' '𐌰𐌱𐌲')
-		do: 
-			[:each |
-			expected := self assimilateString: each.
-			actual := expected species writeStream
-						nextPutAll: expected;
-						contents.
-			self assert: (self assimilateString: actual) equals: expected]!
+	{''.
+		'a'.
+		'abc'.
+		'�'.
+		'�tre'.
+		Utf8String fromByteArray: #[228 185 157 233 190 141 231 129 163].
+		Utf8String
+			fromByteArray: #[230 150 135 229 173 151 229 140 150 227 129 145 227 131 134 227 130 185 227 131 136].
+		Utf8String
+			fromByteArray: #[216 167 217 132 216 165 216 185 217 132 216 167 217 134 32 216 167 217 132 216 185 216 167 217 132 217 133 217 137 32 217 132 216 173 217 130 217 136 217 130 32 216 167 217 132 216 165 217 134 216 179 216 167 217 134].
+		Utf8String fromByteArray: #[240 144 140 176 240 144 140 177 240 144 140 178]} do: 
+				[:each |
+				expected := self assimilateString: each.
+				actual := expected species writeStream
+							nextPutAll: expected;
+							contents.
+				self assert: (self assimilateString: actual) equals: expected]!
 
 testSubStrings
 	"Test single character delimiter"

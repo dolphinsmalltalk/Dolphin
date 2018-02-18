@@ -165,7 +165,8 @@ _separateSubStringsIn: aReadableString
 asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
 
-	#todo. "Make String abstract, with AnsiString subclass"
+	<primitive: 217>
+	#todo.	"Make String abstract, with AnsiString subclass"
 	^self!
 
 asByteArray
@@ -258,11 +259,15 @@ asUppercase
 	^copy!
 
 asUtf16String
+	"Answer a UTF16-encoded equivalent of the receiver."
+
+	<primitive: 215>
 	^self class utf16Class fromString: self!
 
 asUtf8String
 	"Answer a UTF8 encoded string representation of the receiver."
 
+	<primitive: 216>
 	^self asUtf16String asUtf8String!
 
 at: index

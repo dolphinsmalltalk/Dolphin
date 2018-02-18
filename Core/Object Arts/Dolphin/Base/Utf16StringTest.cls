@@ -27,7 +27,7 @@ testUtf8StringConversion
 	| utf8Bytes byteString wideString bstr |
 	utf8Bytes := #[228 184 128 233 187 158 230 184 172 232 169 166].
 	byteString := Utf8String fromAddress: utf8Bytes yourAddress length: utf8Bytes size.
-	"Byte strings don't correctly represent the multi-byte encoding of the test UTF8 string"
+	"Ansi strings don't correctly represent the multi-byte encoding of the test UTF8 string"
 	self assert: byteString size equals: 12.
 	wideString := byteString asUtf16String.
 	self assert: wideString size equals: 4.
@@ -47,5 +47,5 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #testUtf8StringConversion!public! !
+!Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

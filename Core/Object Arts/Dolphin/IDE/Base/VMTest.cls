@@ -468,12 +468,18 @@ testExtCallArgLpwstr
 	self assert: method argumentTypes asArray equals: #('lpwstr').
 	self assert: method returnType equals: 'lpwstr'.
 	expected := Utf16String fromByteArray: #[97 0 32 0 163 0 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
-	actual := method value: VMLibrary default withArguments: {'a £ or two'}.
+	actual := method value: VMLibrary default withArguments: #('a £ or two').
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
 	actual := method value: VMLibrary default withArguments: {'a £ or two' asUtf8String}.
 	self assert: actual equals: expected.
-	self assert: actual isKindOf: Utf16String!
+	self assert: actual isKindOf: Utf16String.
+	{String empty. Utf8String empty} do: 
+			[:each |
+			actual := method value: VMLibrary default withArguments: {each}.
+			self assert: actual isKindOf: Utf16String.
+			self assert: actual size equals: 0.
+			self assert: actual equals: Utf16String empty]!
 
 testExtCallRetHRESULT
 	"Test that HRESULT return codes are translated into exceptions correctly."
@@ -511,7 +517,7 @@ testExtCallRetLpwstr
 	proc := Processor activeProcess.
 	^proc primitiveFailureCode -> proc primitiveFailureData'
 				in: VMLibrary.
-	expected := 'abc' asUtf16String.
+	expected := 'oña' asUtf16String.
 	actual := method value: VMLibrary default withArguments: {expected yourAddress}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String!
