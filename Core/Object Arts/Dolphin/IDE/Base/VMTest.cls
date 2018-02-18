@@ -438,7 +438,7 @@ testEvaluationOrder
 testExtCallArgBstr
 	| beers |
 	self skipUnless: [self has7054OrLater].
-	#('' 'a' '£2') do: 
+	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
 			[:each |
 			| subject expected actual |
 			expected := each size.
