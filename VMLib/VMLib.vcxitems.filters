@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\adler32.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp">
       <Filter>ObjectMemory</Filter>
     </ClCompile>
@@ -16,12 +13,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\compact.cpp">
       <Filter>ObjectMemory</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\compress.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\crc32.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\CrashDump.cpp">
       <Filter>Diagnostics</Filter>
     </ClCompile>
@@ -30,9 +21,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\decode.cpp">
       <Filter>Diagnostics</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\deflate.c">
-      <Filter>Zlib</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp">
       <Filter>FFI</Filter>
@@ -60,27 +48,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphinStart.cpp">
       <Filter>Interpreter</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\gzio.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infblock.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infcodes.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inffast.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inflate.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inftrees.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infutil.c">
-      <Filter>Zlib</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp">
       <Filter>FFI</Filter>
@@ -136,12 +103,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\strgprim.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\uncompr.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\zutil.c">
-      <Filter>Zlib</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp">
       <Filter>Interpreter</Filter>
     </ClCompile>
@@ -153,9 +114,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\timer.cpp">
       <Filter>Interpreter</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\trees.c">
-      <Filter>Zlib</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp">
       <Filter>ObjectMemory</Filter>
@@ -194,9 +152,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h">
       <Filter>Interpreter</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\deflate.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\disassembler.h">
       <Filter>Diagnostics</Filter>
     </ClInclude>
@@ -208,24 +163,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinX.h">
       <Filter>FFI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infblock.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infcodes.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inffast.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inffixed.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inftrees.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infutil.h">
-      <Filter>Zlib</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\InterpRegisters.h">
       <Filter>Interpreter</Filter>
@@ -299,18 +236,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h">
       <Filter>ObjectMemory</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zconf.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zfstream.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zlib.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zutil.h">
-      <Filter>Zlib</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VMExcept.h">
       <Filter>Interpreter</Filter>
     </ClInclude>
@@ -322,9 +247,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\TraceStream.h">
       <Filter>Diagnostics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\trees.h">
-      <Filter>Zlib</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zfbinstream.h">
       <Filter>ObjectMemory</Filter>
@@ -357,9 +279,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Zlib">
-      <UniqueIdentifier>{efa685a1-9daa-4a68-a656-43c17137a15b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Interpreter">
       <UniqueIdentifier>{856c0fd8-7208-4e14-8b7c-71b2cb261078}</UniqueIdentifier>
     </Filter>

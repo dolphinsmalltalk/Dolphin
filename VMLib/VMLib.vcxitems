@@ -73,62 +73,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\adler32.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\compress.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\crc32.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\deflate.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\gzio.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infblock.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infcodes.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inffast.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inflate.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\inftrees.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\infutil.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\trees.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\uncompr.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\zlib\zutil.c">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
@@ -174,18 +118,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\VMPointers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zbinstream.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\zfbinstream.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\deflate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infblock.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infcodes.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inffast.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inffixed.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\inftrees.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\infutil.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\trees.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zconf.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zfstream.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zlib.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\zlib\zutil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">

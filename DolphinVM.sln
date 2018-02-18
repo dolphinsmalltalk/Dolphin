@@ -51,12 +51,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VMLib", "VMLib\VMLib.vcxitems", "{BC5D162D-46BC-42CF-85DB-CB715EE8517E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.vcxitems", "{1F161730-1E11-4FBD-A4DF-F6E9B5577F5E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		VMLib\VMLib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{12b536ba-143e-4f38-bd96-77b35467db13}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{1f161730-1e11-4fbd-a4df-f6e9b5577f5e}*SharedItemsImports = 9
 		VMLib\VMLib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{382abbf3-b32d-4d77-b303-346aa146921c}*SharedItemsImports = 4
 		VMLib\VMLib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{714480a5-0779-4c59-8a08-856e5c34ac37}*SharedItemsImports = 4
 		VMLib\VMLib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
+		zlib\zlib.vcxitems*{90c32f90-c0b1-46fe-bace-fb6566eb6f3c}*SharedItemsImports = 4
 		VMLib\VMLib.vcxitems*{bc5d162d-46bc-42cf-85db-cb715ee8517e}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
