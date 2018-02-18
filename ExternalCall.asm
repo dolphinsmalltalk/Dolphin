@@ -31,7 +31,7 @@ extern NewUtf16String:near32
 NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VString@ST@@@@@Z
 extern NewUtf16StringFromString:near32
 
-NewBSTR EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
+NewBSTR EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
 extern NewBSTR:near32
 
 NewGUID EQU ?NewGUID@@YIPAV?$TOTE@VVariantByteObject@ST@@@@PAU_GUID@@@Z
@@ -1026,12 +1026,8 @@ extCallArgBSTR:
 	mov		TEMP, [ARG].m_oteClass						; Get class of ARG into TEMP
 	ASSUME	TEMP:PTR OTE
 
-	mov		ARG, [ARG].m_location
-	ASSUME	ARG:PTR ByteArray							; No, its bytes
-
 	.IF (TEMP != [Pointers.ClassBSTR] && TEMP != [Pointers.ClassLargeInteger])
-		ASSERTEQU	%TEMP, <ecx>
-		mov			edx, ARG
+		mov			ecx, ARG
 		call		NewBSTR
 		ASSUME	eax:PTR OTE
 
@@ -1041,9 +1037,9 @@ extCallArgBSTR:
 		AddToZctNoSP <a>
 
 		mov		eax, [_SP+OOPSIZE]
-		mov		ARG, [eax].m_location
 	.ENDIF
 
+	mov		ARG, [ARG].m_location
 	; ARG now contains address of bytes
 	ASSUME	ARG:PTR ByteArray
 

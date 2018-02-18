@@ -121,13 +121,13 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 ///////////////////////////////////////////////////////////////////////////////
 // Answer a new BSTR from the specified UTF16 string
 
-AddressOTE* __fastcall NewBSTR(LPCWSTR szContents)
+AddressOTE* __fastcall NewBSTR(WCHAR* pChars, size_t len)
 {
 	AddressOTE* resultPointer = reinterpret_cast<AddressOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassBSTR, sizeof(BYTE*)));
 	ExternalAddress* extAddress = resultPointer->m_location;
-	if (*szContents)
+	if (len > 0)
 	{
-		extAddress->m_pointer = reinterpret_cast<BYTE*>(::SysAllocString(szContents));
+		extAddress->m_pointer = reinterpret_cast<BYTE*>(::SysAllocStringLen(pChars, len));
 		resultPointer->beFinalizable();
 	}
 	else
@@ -136,31 +136,29 @@ AddressOTE* __fastcall NewBSTR(LPCWSTR szContents)
 }
 
 // Answer a new BSTR converted from the a byte string with the specified encoding
-template <UINT CP> static AddressOTE* __fastcall NewBSTR(LPCSTR szContents)
+template <UINT CP> static AddressOTE* __fastcall NewBSTR(const char* szContents, size_t len)
 {
-	int ret = MultiByteToWideChar(CP, 0, szContents, -1, nullptr, 0);
-	if (ret == 0) return nullptr;
-	LPWSTR wsz = static_cast<LPWSTR>(alloca(ret * sizeof(OLECHAR)));
-	ret = MultiByteToWideChar(CP, 0, szContents, -1, wsz, ret);
-	if (ret == 0) return nullptr;
-
-	return NewBSTR(wsz);
+	Utf16StringOTE* utf16 = Utf16String::New<CP>(szContents, len);
+	AddressOTE* answer = NewBSTR(utf16->m_location->m_characters, utf16->getSize() / sizeof(WCHAR));
+	ObjectMemory::deallocateByteObject((OTE*)utf16);
+	return answer;
 }
 
-AddressOTE* __fastcall NewBSTR(BehaviorOTE* oteClass, void* pChars)
+AddressOTE* __fastcall NewBSTR(OTE* oteString)
 {
+	BehaviorOTE* oteClass = oteString->m_oteClass;
 	if (oteClass == Pointers.ClassUtf16String)
 	{
-		return NewBSTR(static_cast<LPCWSTR>(pChars));
+		return NewBSTR(reinterpret_cast<Utf16StringOTE*>(oteString)->m_location->m_characters, oteString->getSize()/sizeof(WCHAR));
 	}
 	else if (oteClass == Pointers.ClassUtf8String)
 	{
-		return NewBSTR<CP_UTF8>(static_cast<LPCSTR>(pChars));
+		return NewBSTR<CP_UTF8>(reinterpret_cast<Utf8StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
 	}
 	else if (oteClass->m_location->m_instanceSpec.m_nullTerminated)
 	{
 		// Assume it is an ANSI string
-		return NewBSTR<CP_ACP>(static_cast<LPCSTR>(pChars));
+		return NewBSTR<CP_ACP>(reinterpret_cast<StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
 	}
 	return nullptr;
 }
