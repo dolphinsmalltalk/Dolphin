@@ -149,7 +149,7 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 	size_t nDataRead = 0;
 	hr = pHeader->HasSingleByteNullTerms() 
 			? LoadPointersAndObjects<sizeof(char)>(imageFile, pHeader, nDataRead) 
-			: LoadPointersAndObjects<sizeof(wchar_t)>(imageFile, pHeader, nDataRead);
+			: LoadPointersAndObjects<sizeof(WCHAR)>(imageFile, pHeader, nDataRead);
 	if (FAILED(hr))
 		return hr;
 

@@ -54,7 +54,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 
 #pragma auto_inline(off)
 
-POBJECT ObjectMemory::basicResize(POTE ote, MWORD byteSize, int extra)
+template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteSize)
 {
 	ASSERT(!isIntegerObject(ote));
 	POBJECT pObject;
@@ -71,7 +71,7 @@ POBJECT ObjectMemory::basicResize(POTE ote, MWORD byteSize, int extra)
 		{
 //			TRACE("Resizing normal object...\n");
 			pObject = ote->m_location;
-			pObject = reallocChunk(pObject, byteSize+extra);
+			pObject = reallocChunk(pObject, byteSize+Extra);
 
 			if (pObject)
 			{
@@ -83,7 +83,7 @@ POBJECT ObjectMemory::basicResize(POTE ote, MWORD byteSize, int extra)
 
 		case OTEFlags::VirtualSpace:
 //			TRACE("Resizing virtual object...\n");
-			pObject = resizeVirtual(ote, byteSize+extra);
+			pObject = resizeVirtual(ote, byteSize+Extra);
 			break;
 	
 		case OTEFlags::PoolSpace:
@@ -94,13 +94,13 @@ POBJECT ObjectMemory::basicResize(POTE ote, MWORD byteSize, int extra)
 			#endif
 
 			// May be able to do some quicker resizing here if size is still in same pool?
-			if ((byteSize+extra) > MaxSmallObjectSize)
+			if ((byteSize+Extra) > MaxSmallObjectSize)
 			{
-				pObject = allocChunk(byteSize+extra);
+				pObject = allocChunk(byteSize+Extra);
 				ote->m_flags.m_space = OTEFlags::NormalSpace;
 			}
 			else
-				pObject = allocSmallChunk(byteSize+extra);
+				pObject = allocSmallChunk(byteSize+Extra);
 	
 			POBJECT pOldObject = ote->m_location;
 			MWORD oldSize = ote->getSize();
@@ -197,13 +197,13 @@ VariantByteObject* ObjectMemory::resize(BytesOTE* ote, MWORD newByteSize)
 
 	if (ote->isNullTerminated())
 	{
-		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize(reinterpret_cast<POTE>(ote), totalByteSize, NULLTERMSIZE));
+		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<NULLTERMSIZE>(reinterpret_cast<POTE>(ote), totalByteSize));
 		ASSERT(pByteObj);	// Null-terminated objects should always be resizeable
 		// Ensure we have a null-terminator
 		*reinterpret_cast<NULLTERMTYPE*>(&pByteObj->m_fields[totalByteSize]) = 0;
 	}
 	else
-		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize(reinterpret_cast<POTE>(ote), totalByteSize, 0));
+		pByteObj = reinterpret_cast<VariantByteObject*>(ObjectMemory::basicResize<0>(reinterpret_cast<POTE>(ote), totalByteSize));
 
 	if (pByteObj && totalByteSize > oldByteSize)
 	{
@@ -230,7 +230,7 @@ VariantObject* ObjectMemory::resize(PointersOTE* ote, MWORD newPointers, bool bR
 	}
 
 	// Reallocate the object to the new size (bigger or smaller)
-	pObj = reinterpret_cast<VariantObject*>(basicResize(reinterpret_cast<POTE>(ote), SizeOfPointers(newPointers), 0));
+	pObj = reinterpret_cast<VariantObject*>(basicResize<0>(reinterpret_cast<POTE>(ote), SizeOfPointers(newPointers)));
 
 	if (pObj)
 	{

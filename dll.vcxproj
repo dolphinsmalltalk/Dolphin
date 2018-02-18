@@ -236,6 +236,9 @@
   <ItemGroup>
     <ClInclude Include="rc_vm.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="VMLib\Dolphin.natvis" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(ProjectDir)dolphin.targets" />

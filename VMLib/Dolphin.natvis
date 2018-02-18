@@ -79,7 +79,19 @@
     <DisplayString >{m_characters,su}</DisplayString>
     <Expand HideRawView="0"></Expand>
   </Type>
-
+  <Type Name="TOTE&lt;ST::Utf8String&gt;">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString Condition="m_flags.m_free">**a Freed Utf16String**</DisplayString>
+    <DisplayString Condition="!m_flags.m_free">{m_location,s8} (size {m_size})</DisplayString>
+    <Expand HideRawView="true">
+      <ExpandedItem>m_location</ExpandedItem>
+    </Expand>
+  </Type>
+  <Type Name="ST::Utf8String">
+    <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
+    <DisplayString >{m_characters,s8}</DisplayString>
+    <Expand HideRawView="0"></Expand>
+  </Type>
   <!--Other scalar values-->
   <Type Name="TOTE&lt;ST::Float&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
@@ -316,6 +328,7 @@
     <!-- Common types with debug visualization -->
     <DisplayString Condition="m_oteClass == Pointers.ClassSymbol">{(TOTE&lt;ST::Symbol&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassUtf16String">{(TOTE&lt;ST::Utf16String&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassUtf8String">{(TOTE&lt;ST::Utf8String&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassString">{(TOTE&lt;ST::String&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassArray">{(TOTE&lt;ST::Array&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassCompiledMethod">{(TOTE&lt;ST::CompiledMethod&gt;*)this,na}</DisplayString>
@@ -375,6 +388,7 @@
       <!--Fallback expansion for all byte classes without a custom representation-->
       <ExpandedItem Condition="m_flags.m_free==0 &amp;&amp; m_flags.m_pointer==0
         &amp;&amp; m_oteClass != Pointers.ClassUtf16String 
+        &amp;&amp; m_oteClass != Pointers.ClassUtf8String 
         &amp;&amp; m_oteClass != Pointers.ClassString 
         &amp;&amp; m_oteClass != Pointers.ClassSymbol
         &amp;&amp; m_oteClass != Pointers.ClassFloat

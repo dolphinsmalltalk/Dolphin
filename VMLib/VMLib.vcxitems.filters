@@ -321,9 +321,4 @@
       <Filter>Primitives</Filter>
     </MASM>
   </ItemGroup>
-  <ItemGroup>
-    <Natvis Include="$(MSBuildThisFileDirectory)Dolphin.natvis">
-      <Filter>Diagnostics</Filter>
-    </Natvis>
-  </ItemGroup>
 </Project>

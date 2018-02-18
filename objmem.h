@@ -103,7 +103,7 @@ public:
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)
-	static POBJECT basicResize(OTE* ote, MWORD byteSize /*should include header*/, int extra);
+	template <size_t extra> static POBJECT basicResize(OTE* ote, size_t byteSize /*should include header*/);
 	static POBJECT resizeVirtual(OTE* ote, MWORD byteSize /*ditto*/);
 
 	// More useful (and safe) entry points from Interpreter

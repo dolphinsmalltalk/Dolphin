@@ -15,7 +15,7 @@
 
 #define COUNTBITS	(sizeof(BYTE)*8)
 #define SPACEBITS	3
-#define NULLTERMTYPE wchar_t
+#define NULLTERMTYPE WCHAR
 //#define NULLTERMTYPE char
 #define NULLTERMSIZE sizeof(NULLTERMTYPE)
 

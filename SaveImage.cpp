@@ -201,7 +201,7 @@ bool __stdcall ObjectMemory::SaveImage(obinstream& imageFile, const ImageHeader*
 		// Prior to 7.0.54 null terminators were always 1 byte (which was not really sufficient for wide strings).
 		&& (pHeader->HasSingleByteNullTerms() 
 			? SaveObjects<sizeof(char)>(imageFile, pHeader) 
-			: SaveObjects<sizeof(wchar_t)>(imageFile, pHeader))
+			: SaveObjects<sizeof(WCHAR)>(imageFile, pHeader))
 		&& imageFile.flush().good();
 	PopulateZct(Interpreter::m_registers.m_stackPointer);
 	return bResult;

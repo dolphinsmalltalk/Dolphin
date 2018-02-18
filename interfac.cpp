@@ -403,38 +403,6 @@ BytesOTE* __fastcall Interpreter::NewDWORD(DWORD dwValue, BehaviorOTE* classPoin
 
 	return ote;
 }
-	
-
-Utf16StringOTE* Utf16String::New(LPCWSTR value)
-{
-	const unsigned byteLen = wcslen(value) * sizeof(wchar_t);
-	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, byteLen));
-	Utf16String* __restrict string = stringPointer->m_location;
-	memcpy(string->m_characters, value, byteLen + 2);
-	return stringPointer;
-}
-
-Utf16StringOTE* __fastcall Utf16String::New(const wchar_t* value, unsigned len)
-{
-	const unsigned byteLen = len * sizeof(wchar_t);
-	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, byteLen));
-	Utf16String* string = stringPointer->m_location;
-	string->m_characters[len] = 0;
-	memcpy(string->m_characters, value, byteLen);
-	return stringPointer;
-}
-
-Utf16StringOTE * ST::Utf16String::New(LPCSTR sz, UINT cp)
-{
-	int len = ::MultiByteToWideChar(cp, 0, sz, -1, NULL, 0);
-	// Length includes null terminator since input is null terminated
-	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, (len - 1) * sizeof(wchar_t)));
-	Utf16String* __restrict string = stringPointer->m_location;
-	int nCopied = ::MultiByteToWideChar(cp, 0, sz, -1, string->m_characters, len);
-	UNREFERENCED_PARAMETER(nCopied);
-	ASSERT(nCopied == len);
-	return stringPointer;
-}
 
 #pragma code_seg(XIF_SEG)
 

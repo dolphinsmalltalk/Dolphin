@@ -16,9 +16,6 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="$(MSBuildThisFileDirectory)Dolphin.natvis" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\bytecde.cpp" />

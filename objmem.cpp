@@ -145,7 +145,7 @@ ArrayOTE* __fastcall ObjectMemory::instancesOf(BehaviorOTE* classPointer)
 				{
 					// Resize the array to hold twice as many objects
 					size = size * 2;
-					pInstances = static_cast<Array*>(basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size), 0));
+					pInstances = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
 				}
 				pInstances->m_elements[cnt++] = Oop(ote);
 				ote->countUp();
@@ -154,7 +154,7 @@ ArrayOTE* __fastcall ObjectMemory::instancesOf(BehaviorOTE* classPointer)
 	}
 	ASSERT(cnt <= size);
 	if (cnt < size)
-		basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(cnt), 0);
+		basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(cnt));
 
 	// WARNING: Ref. count of arrayPointer currently 0
 	return arrayPointer;
@@ -234,7 +234,7 @@ ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
 				{
 					// Resize the array to hold twice as many objects
 					size = size * 2;
-					pInstances = static_cast<Array*>(basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size), 0));
+					pInstances = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
 				}
 				pInstances->m_elements[cnt++] = Oop(ote);
 				ote->countUp();
@@ -243,7 +243,7 @@ ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
 	}
 	ASSERT(cnt <= size);
 	if (cnt < size)
-		basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(cnt), 0);
+		basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(cnt));
 
 	// WARNING: Ref. count of arrayPointer currently 0
 	return arrayPointer;
@@ -464,7 +464,7 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool
 				{
 					// Resize the array to hold twice as many objects
 					size = size * 2;
-					pRefs = static_cast<Array*>(basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size), 0));
+					pRefs = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
 				}
 				pRefs->m_elements[refCnt++] = Oop(ote);
 				// Having created another ref. to the referencing
@@ -483,7 +483,7 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool
 						{
 							// Resize the array to hold twice as many objects
 							size = size * 2;
-							pRefs = static_cast<Array*>(basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size), 0));
+							pRefs = static_cast<Array*>(basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(size)));
 						}
 						pRefs->m_elements[refCnt++] = Oop(ote);
 						ote->countUp();
@@ -501,7 +501,7 @@ ArrayOTE* __stdcall ObjectMemory::referencesTo(Oop referencedObjectPointer, bool
 	ASSERT(refCnt <= size);
 	if (refCnt < size)
 	{
-		basicResize(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(refCnt), 0);
+		basicResize<0>(reinterpret_cast<OTE*>(arrayPointer), SizeOfPointers(refCnt));
 	}
 
 	// Ref. count of arrayPointer currently 0

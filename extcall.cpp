@@ -136,12 +136,12 @@ AddressOTE* __fastcall NewBSTR(LPCWSTR szContents)
 }
 
 // Answer a new BSTR converted from the a byte string with the specified encoding
-static AddressOTE* __fastcall NewBSTR(LPCSTR szContents, UINT cp)
+template <UINT CP> static AddressOTE* __fastcall NewBSTR(LPCSTR szContents)
 {
-	int ret = MultiByteToWideChar(cp, 0, szContents, -1, nullptr, 0);
+	int ret = MultiByteToWideChar(CP, 0, szContents, -1, nullptr, 0);
 	if (ret == 0) return nullptr;
 	LPWSTR wsz = static_cast<LPWSTR>(alloca(ret * sizeof(OLECHAR)));
-	ret = MultiByteToWideChar(cp, 0, szContents, -1, wsz, ret);
+	ret = MultiByteToWideChar(CP, 0, szContents, -1, wsz, ret);
 	if (ret == 0) return nullptr;
 
 	return NewBSTR(wsz);
@@ -155,12 +155,12 @@ AddressOTE* __fastcall NewBSTR(BehaviorOTE* oteClass, void* pChars)
 	}
 	else if (oteClass == Pointers.ClassUtf8String)
 	{
-		return NewBSTR(static_cast<LPCSTR>(pChars), CP_UTF8);
+		return NewBSTR<CP_UTF8>(static_cast<LPCSTR>(pChars));
 	}
 	else if (oteClass->m_location->m_instanceSpec.m_nullTerminated)
 	{
 		// Assume it is an ANSI string
-		return NewBSTR(static_cast<LPCSTR>(pChars), CP_ACP);
+		return NewBSTR<CP_ACP>(static_cast<LPCSTR>(pChars));
 	}
 	return nullptr;
 }

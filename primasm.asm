@@ -432,6 +432,12 @@ primitiveStringCmp EQU ?primitiveStringCmp@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCmp:near32
 primitiveBytesEqual EQU ?primitiveBytesEqual@Interpreter@@CIPAIQAI@Z
 extern primitiveBytesEqual:near32
+primitiveStringAsUtf16String EQU ?primitiveStringAsUtf16String@Interpreter@@CIPAIQAI@Z
+extern primitiveStringAsUtf16String:near32
+primitiveStringAsUtf8String EQU ?primitiveStringAsUtf8String@Interpreter@@CIPAIQAI@Z
+extern primitiveStringAsUtf8String:near32
+primitiveStringAsAnsiString EQU ?primitiveStringAsAnsiString@Interpreter@@CIPAIQAI@Z
+extern primitiveStringAsAnsiString:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -686,9 +692,9 @@ DWORD		primitiveFloatClassify							; case 211
 DWORD		primitiveFloatFractionPart						; case 212
 DWORD		primitiveFloatIntegerPart						; case 213
 DWORD		primitiveFloatLE								; case 214
-DWORD		unusedPrimitive									; case 215
-DWORD		unusedPrimitive									; case 216
-DWORD		unusedPrimitive									; case 217
+DWORD		primitiveStringAsUtf16String					; case 215
+DWORD		primitiveStringAsUtf8String						; case 216
+DWORD		primitiveStringAsAnsiString						; case 217
 DWORD		unusedPrimitive									; case 218
 DWORD		unusedPrimitive									; case 219
 DWORD		unusedPrimitive									; case 220

@@ -28,7 +28,7 @@ NewStringFromUtf16 EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIP
 extern NewStringFromUtf16:near32
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PB_W@Z
 extern NewUtf16String:near32
-NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PBDI@Z
+NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VString@ST@@@@@Z
 extern NewUtf16StringFromString:near32
 
 NewBSTR EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
@@ -1072,21 +1072,16 @@ ExtCallArgLPWSTR:
 	test	[ARG].m_flags, MASK m_weakOrZ				; It is a null terminated class?
 	jz		preCallFail									; No, only null terminated objects can be passed as #lpwstr
 
-	mov		ARG, [ARG].m_location
-	ASSUME	ARG:PTR String								; Some kind of null terminated string
-
 	cmp		TEMP, [Pointers.ClassUtf16String]
 	jne		@F
+
+	mov		ARG, [ARG].m_location
 
 	; ARG now contains address of wide chars
 	PushLoopNext<ARG>
 
 @@:
-	xor		edx, edx
-	cmp		TEMP, [Pointers.ClassUtf8String]
 	mov		ecx, ARG
-	mov		ARG, CP_UTF8
-	cmove	edx, ARG
 	call	NewUtf16StringFromString					; Create new Utf16String instance from the byte string using the ANSI or UTF8 code page as appropriate
 	ASSUME	eax:PTR OTE
 

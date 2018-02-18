@@ -484,4 +484,134 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp)
 	return sp;
 }
 
+Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp)
+{
+	StringOTE* receiver = reinterpret_cast<StringOTE*>(*sp);
+	Utf16StringOTE* answer = Utf16String::New(receiver);
+	if ((Oop)answer != (Oop)receiver)
+	{
+		*sp = reinterpret_cast<Oop>(answer);
+		ObjectMemory::AddToZct((OTE*)answer);
+	}
+	return sp;
+}
 
+Utf16StringOTE* __fastcall ST::Utf16String::New(StringOTE* oteString)
+{
+	ASSERT(oteString->isNullTerminated());
+
+	if (oteString->m_oteClass == Pointers.ClassUtf8String)
+	{
+		return Utf16String::New<CP_UTF8>(oteString->m_location->m_characters, oteString->getSize());
+	}
+	else if (oteString->m_oteClass != Pointers.ClassUtf16String)
+	{
+		// Assume some kind of ANSI string
+		return Utf16String::New<CP_ACP>(oteString->m_location->m_characters, oteString->getSize());
+	}
+
+	return reinterpret_cast<Utf16StringOTE*>(oteString);
+}
+
+Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp)
+{
+	OTE* receiver = reinterpret_cast<OTE*>(*sp);
+	BehaviorOTE* oteClass = receiver->m_oteClass;
+	if (oteClass == Pointers.ClassUtf16String)
+	{
+		Utf8StringOTE* answer = Utf8String::New(reinterpret_cast<Utf16StringOTE*>(receiver)->m_location->m_characters);
+		*sp = reinterpret_cast<Oop>(answer);
+		ObjectMemory::AddToZct((OTE*)answer);
+	}
+	else if (oteClass != Pointers.ClassUtf8String)
+	{
+		// Assume some kind of Ansi string
+		Utf8StringOTE* answer = Utf8String::NewFromAnsi(reinterpret_cast<StringOTE*>(receiver)->m_location->m_characters, receiver->getSize());
+		*sp = reinterpret_cast<Oop>(answer);
+		ObjectMemory::AddToZct((OTE*)answer);
+	}
+
+	return sp;
+}
+
+Oop* __fastcall Interpreter::primitiveStringAsAnsiString(Oop* const sp)
+{
+	OTE* receiver = reinterpret_cast<OTE*>(*sp);
+	BehaviorOTE* oteClass = receiver->m_oteClass;
+	if (oteClass == Pointers.ClassUtf8String)
+	{
+		StringOTE* answer = String::NewFromUtf8(reinterpret_cast<Utf8StringOTE*>(receiver)->m_location->m_characters, receiver->getSize());
+		*sp = reinterpret_cast<Oop>(answer);
+		ObjectMemory::AddToZct((OTE*)answer);
+	}
+	else if (oteClass == Pointers.ClassUtf16String)
+	{
+		StringOTE* answer = String::New(reinterpret_cast<Utf16StringOTE*>(receiver)->m_location->m_characters, receiver->getSize()/sizeof(WCHAR));
+		*sp = reinterpret_cast<Oop>(answer);
+		ObjectMemory::AddToZct((OTE*)answer);
+	}
+
+	return sp;
+}
+
+Utf16StringOTE* Utf16String::New(LPCWSTR value)
+{
+	const unsigned byteLen = wcslen(value) * sizeof(WCHAR);
+	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, byteLen));
+	Utf16String* __restrict string = stringPointer->m_location;
+	memcpy(string->m_characters, value, byteLen + 2);
+	return stringPointer;
+}
+
+Utf16StringOTE* __fastcall Utf16String::New(const WCHAR* value, size_t len)
+{
+	const unsigned byteLen = len * sizeof(WCHAR);
+	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, byteLen));
+	Utf16String* string = stringPointer->m_location;
+	string->m_characters[len] = L'\0';
+	memcpy(string->m_characters, value, byteLen);
+	return stringPointer;
+}
+
+//Utf16StringOTE * ST::Utf16String::New(LPCSTR sz, UINT cp)
+//{
+//	int len = ::MultiByteToWideChar(cp, 0, sz, -1, nullptr, 0);
+//	// Length includes null terminator since input is null terminated
+//	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, (len - 1) * sizeof(WCHAR)));
+//	Utf16String* __restrict string = stringPointer->m_location;
+//	int nCopied = ::MultiByteToWideChar(cp, 0, sz, -1, string->m_characters, len);
+//	UNREFERENCED_PARAMETER(nCopied);
+//	ASSERT(nCopied == len);
+//	return stringPointer;
+//}
+
+template <UINT CP> Utf16StringOTE * ST::Utf16String::New(const char* pChars, size_t len)
+{
+	// A UTF16 encoded string can never require more code units than a byte encoding (though it will usually require more bytes)
+	Utf16StringOTE* stringPointer = reinterpret_cast<Utf16StringOTE*>(ObjectMemory::newUninitializedNullTermObject(Pointers.ClassUtf16String, len * sizeof(WCHAR)));
+	int actualLen = ::MultiByteToWideChar(CP, 0, pChars, len, stringPointer->m_location->m_characters, len);
+	if (actualLen != len)
+	{
+		ObjectMemory::basicResize<sizeof(WCHAR)>((OTE*)stringPointer, actualLen * sizeof(WCHAR));
+	}
+	stringPointer->m_location->m_characters[actualLen] = L'\0';
+	return stringPointer;
+}
+
+Utf8StringOTE* ST::Utf8String::NewFromAnsi(const char* pChars, size_t len)
+{
+	// There is no Windows API for direct conversion from ANSI<->UTF8, so we need to convert to UTF16 first
+	Utf16StringOTE* utf16 = Utf16String::New<CP_ACP>(pChars, len);
+	Utf8StringOTE* result = Utf8String::New(utf16->m_location->m_characters, utf16->getSize() / sizeof(WCHAR));
+	// Discard the temp Utf16String object
+	ObjectMemory::deallocateByteObject((OTE*)utf16);
+	return result;
+}
+
+StringOTE* ST::String::NewFromUtf8(const char* pChars, size_t ansiLen)
+{
+	Utf16StringOTE* utf16 = Utf16String::New<CP_UTF8>(pChars, ansiLen);
+	StringOTE* result = String::New(utf16->m_location->m_characters, utf16->getSize() / sizeof(WCHAR));
+	ObjectMemory::deallocateByteObject((OTE*)utf16);
+	return result;
+}

@@ -636,7 +636,10 @@ private:
 	static Oop* __fastcall primitiveStringCmp(Oop* const sp);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp);
 
-	
+	static Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp);
+	static Oop* __fastcall Interpreter::primitiveStringAsUtf8String(Oop* const sp);
+	static Oop* __fastcall Interpreter::primitiveStringAsAnsiString(Oop* const sp);
+
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp);
 	static Oop* __fastcall primitiveNextSDWORD(Oop* const sp);
