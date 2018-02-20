@@ -659,11 +659,13 @@ setWindowDWORD: aWindowHandle nIndex: offset dwNewDWORD: value
 setWindowText: aWindowHandle lpString: aString
 	"Set the 'text' of the specified window.
 		BOOL SetWindowText(
-			HWND hWnd,	// handle of window or control
-			LPCTSTR lpString 	// address of string
+			HWND hWnd,		// handle of window or control
+			LPCWSTR lpString 	// address of string
 		);"
 
-	<stdcall: bool SetWindowTextA handle lpvoid>
+	"Note that we can always pass a UTF16 string - Windows will translate automatically for non-Unicode windows."
+
+	<stdcall: bool SetWindowTextW handle lpwstr>
 	^self invalidCall!
 
 showWindow: aWindowHandle nCmdShow: flags
