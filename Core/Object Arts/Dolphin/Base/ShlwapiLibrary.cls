@@ -132,7 +132,7 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 			int id,
 			LPCSTR pszPath);"
 
-	<stdcall: void PathSetDlgItemPathA handle sdword lpstr>
+	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall!
 
 shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefault: iDefault pszRegVal: pszRegVal
