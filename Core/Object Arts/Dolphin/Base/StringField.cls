@@ -29,19 +29,19 @@ printAccessorExpressionSuffixOn: aWriteStream
 printElementSizeExpressionBodyOn: aWriteStream 
 	aWriteStream display: self arrayClass elementSize!
 
-printFieldSizeExpressionOn: aWriteStream 
+printFieldSizeExpressionOn: aWriteStream
 	| charSize |
 	charSize := self arrayClass elementSize.
-	charSize > 1 
+	charSize > 1
 		ifTrue: 
 			[self emitStaticExpression: 
-					[:stream | 
+					[:stream |
 					stream
-						display: self length;
+						display: self allocationLength;
 						nextPutAll: ' * ';
 						display: charSize]
 				on: aWriteStream]
-		ifFalse: [aWriteStream display: self length]!
+		ifFalse: [aWriteStream display: self allocationLength]!
 
 printMutatorBody: aSymbol on: aWriteStream
 	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
@@ -75,13 +75,13 @@ readFrom: anExternalStructure
 
 	^self arrayClass fromAddress: anExternalStructure yourAddress + offset!
 
-writeInto: bytes value: anObject 
+writeInto: bytes value: anObject
 	"Private - Write the bytes of anObject into anExternal. Don't forget the Null Terminator"
 
 	| size elemSize |
 	elemSize := self elementSize.
-	size := anObject byteSize - elemSize min: self length * elemSize.
-	bytes 
+	size := anObject byteSize - elemSize min: self allocationLength * elemSize.
+	bytes
 		replaceFrom: offset + 1
 		to: offset + size
 		with: anObject
