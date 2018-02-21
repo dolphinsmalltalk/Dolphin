@@ -28,6 +28,7 @@ package methodNames
 	add: #BorderLayout -> #hasWest;
 	add: #Canvas -> #origin:;
 	add: #Canvas -> #setTextColor:;
+	add: #GUISessionManager -> #whatsThis:;
 	add: #ListBox -> #basicSelectionByIndex:;
 	add: #ListModel -> #updateAtIndex:;
 	add: #ListModel -> #updateItem:;
@@ -64,9 +65,12 @@ package methodNames
 	add: #TypeConverter -> #leftExceptionalValue:;
 	add: #TypeConverter -> #rightExceptionalValue;
 	add: #TypeConverter -> #rightExceptionalValue:;
+	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: #View -> #defaultWindowProcessing:;
 	add: #View -> #hasWindowEdge;
 	add: #View -> #hasWindowEdge:;
+	add: #View -> #winHelpPopup:topic:;
+	add: #View -> #winHelpPopup:topic:at:;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
 	add: 'Color class' -> #buttonFace;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
@@ -236,6 +240,15 @@ buttonFace
 	#deprecated.
 	^Color face3d! !
 !Color class categoriesFor: #buttonFace!instance creation!public! !
+
+!GUISessionManager methodsFor!
+
+whatsThis: object 
+	| helpId |
+	#deprecated. "The Windows Help program is no longer supported on Windows 10 and later."
+	helpId := object helpId.
+	View active winHelpPopup: self popupHelpFile topic: helpId! !
+!GUISessionManager categoriesFor: #whatsThis:!commands!public! !
 
 !ListBox methodsFor!
 
@@ -491,6 +504,23 @@ rightExceptionalValue: anObject
 !TypeConverter categoriesFor: #rightExceptionalValue!accessing!public! !
 !TypeConverter categoriesFor: #rightExceptionalValue:!accessing!public! !
 
+!UserLibrary methodsFor!
+
+winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
+	"Invoke the WinHelp() function of the module wrapped by the receiver.
+	Helpstring: Starts windows help and passes a request for help
+
+		BOOL __stdcall WinHelp(
+			HWND hwndMain,
+			LPCSTR lpszHelp,
+			unsigned int uCommand,
+			ULONG_PTR dwData);"
+
+	<stdcall: bool WinHelpA handle lpstr dword uintptr>
+	#deprecated. "Not supported on Windows 10 and later."
+	^self invalidCall! !
+!UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
+
 !View methodsFor!
 
 defaultWindowProcessing: anEvent
@@ -505,10 +535,34 @@ hasWindowEdge
 hasWindowEdge: aBoolean 
 	#deprecated.	"6.0: This style is automatically managed by Windows and changing it has no
 			effect."
-	(self exStyleMask: WS_EX_WINDOWEDGE set: aBoolean) ifTrue: [self frameChanged]! !
+	(self exStyleMask: WS_EX_WINDOWEDGE set: aBoolean) ifTrue: [self frameChanged]!
+
+winHelpPopup: helpFileString topic: topicId 
+	#deprecated. "Not supported on Windows 10 and later."
+	^self 
+		winHelpPopup: helpFileString
+		topic: topicId
+		at: nil!
+
+winHelpPopup: helpFileString topic: topicId at: aPointOrNil 
+	#deprecated. "Not supported on Windows 10 and later."
+	aPointOrNil notNil 
+		ifTrue: 
+			[UserLibrary default 
+				winHelp: View active handle
+				lpszHelp: ''
+				uCommand: HELP_SETPOPUP_POS
+				dwData: aPointOrNil asUIntPtr].
+	^UserLibrary default 
+		winHelp: self handle
+		lpszHelp: helpFileString
+		uCommand: HELP_CONTEXTPOPUP
+		dwData: topicId! !
 !View categoriesFor: #defaultWindowProcessing:!dispatching!public! !
 !View categoriesFor: #hasWindowEdge!accessing-styles!public! !
 !View categoriesFor: #hasWindowEdge:!accessing-styles!public! !
+!View categoriesFor: #winHelpPopup:topic:!public! !
+!View categoriesFor: #winHelpPopup:topic:at:!public! !
 
 !WindowsEvent class methodsFor!
 
