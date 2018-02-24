@@ -3182,7 +3182,7 @@ setWindowLong: anIntegerOffset to: anIntegerValue
 	"Private - Set the receiver's Window DWORD at the specified offset to the specified integer value."
 
 	^UserLibrary default
-		setWindowLong: handle
+		setWindowLongA: handle
 		nIndex: anIntegerOffset
 		dwNewLong: anIntegerValue!
 
@@ -5488,11 +5488,11 @@ winClassIcon
 	^0!
 
 winClassName
-	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached
+	"Private - Answer the Windows class name to be used when creating Windows attached
 	to instances of the receiver."
 
 	WndClassAtom isNil ifTrue: [WndClassAtom := self reregisterClass].
-	^WndClassAtom!
+	^self wndClassName!
 
 winClassStyle
 	"Private - Answer the default class style to be used for instances of the receiver."

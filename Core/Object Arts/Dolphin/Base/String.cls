@@ -261,8 +261,20 @@ asUppercase
 asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
 
+	| answer cch |
 	<primitive: 215>
-	^self class utf16Class fromString: self!
+	cch := self size.
+	cch == 0 ifTrue: [^Utf16String empty].	"The result will have at most the number of code points as are present in the input, probably fewer if the input is UTF8"
+	answer := Utf16String new: cch.
+	^(cch := KernelLibrary default
+				multiByteToWideChar: self codePage
+				dwFlags: 0
+				lpMultiByteStr: self
+				cchMultiByte: cch
+				lpWideCharStr: answer
+				cchWideChar: cch) == 0
+		ifTrue: [KernelLibrary default systemError]
+		ifFalse: [answer resize: cch]	"MB_ERR_INVALID_CHARS"!
 
 asUtf8String
 	"Answer a UTF8 encoded string representation of the receiver."
@@ -349,6 +361,13 @@ contains: aString
 	"Answer whether the receiver contains the specified sub-string."
 
 	^(self findString: aString startingAt: 1) ~~ 0!
+
+copyToBuffer: anAddress ofSize: anInteger
+	CRTLibrary default
+		strncpy_s: anAddress
+		bufferSize: anInteger
+		strSource: self
+		count: CRTConstants._TRUNCATE!
 
 displayOn: aStream
 	"Append the receiver in end-user form to aStream. Since this message is intended
@@ -1098,6 +1117,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #capitalized!converting!public! !
 !String categoriesFor: #codePage!constants!public! !
 !String categoriesFor: #contains:!public! !
+!String categoriesFor: #copyToBuffer:ofSize:!constants!copying!public! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
 !String categoriesFor: #equals:!comparing!public! !
@@ -1263,13 +1283,9 @@ fromId: resourceId in: anExternalLibraryOrHandle
 	^answer leftString: len!
 
 fromString: aString
-	"Answer a new instance of the receiver containing the same characters as the argument, aString."
+	"Answer an instance of the receiver containing the same characters as the argument, aString."
 
-	| size |
-	size := aString size.
-	^aString
-		replaceBytesOf: (self new: size)
-		from: 1 to: size startingAt: 1!
+	^aString asAnsiString!
 
 fromUtf16String: anAddressOrUtf16String
 	"Answer a byte-encoded String representation of the UTF16 string at the specified

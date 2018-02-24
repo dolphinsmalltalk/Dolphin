@@ -383,7 +383,7 @@ strncmp: string1 string2: string2 count: count
 	^self invalidCall!
 
 strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
-	<cdecl: lpvoid strncpy_s lpvoid intptr lpvoid intptr>
+	<cdecl: sdword strncpy_s lpvoid uintptr lpstr uintptr>
 	^self invalidCall!
 
 strpbrk: string strCharSet: strCharSet
@@ -410,6 +410,10 @@ ungetc: c stream: stream
 
 wcscspn: aWideString strCharSet: strCharSet
 	<cdecl: dword wcscspn lpvoid lpwstr>
+	^self invalidCall!
+
+wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
+	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall! !
 !CRTLibrary categoriesFor: #__iscsym:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #__iscsymf:!CRT functions-character classification!public! !
@@ -474,6 +478,7 @@ wcscspn: aWideString strCharSet: strCharSet
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 
 !CRTLibrary class methodsFor!
 

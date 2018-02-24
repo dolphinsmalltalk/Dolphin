@@ -74,6 +74,25 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent!
 
+setWndProc: anAddress
+	"Private - Set the window procedure of the receiver to the argument, anAddress.
+	Answer the old window procedure address."
+
+	"Here we are overridding to subclass as Unicode, which enables the full Unicode character set to be used in static views."
+
+	#todo. "Remove once all views are Unicode."
+	^VMConstants.IsWin64
+		ifTrue: 
+			[UserLibrary default
+				setWindowULongPtrW: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]
+		ifFalse: 
+			[UserLibrary default
+				setWindowULongW: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]!
+
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
@@ -85,6 +104,7 @@ updateModel
 !StaticView categoriesFor: #isSunken:!accessing-styles!public! !
 !StaticView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
 !StaticView categoriesFor: #onPositionChanged:!event handling-win32!public! !
+!StaticView categoriesFor: #setWndProc:!accessing!private! !
 !StaticView categoriesFor: #updateModel!public!updating! !
 
 !StaticView class methodsFor!

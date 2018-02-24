@@ -47,12 +47,15 @@ asByteArray
 
 	^self!
 
-asString
+asAnsiString
 	"Answer a byte String containing the same elements as the receiver."
 
 	| size |
 	size := self basicSize.
 	^(String new: size) replaceFrom: 1 to: size with: self startingAt: 1!
+
+asString
+	^self asAnsiString!
 
 basicDwordAtOffset: anInteger
 	"Answer the unsigned 4 byte integer at offset (i.e. zero relative) 

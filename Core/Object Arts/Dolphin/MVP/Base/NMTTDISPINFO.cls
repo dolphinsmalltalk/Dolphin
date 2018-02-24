@@ -3,7 +3,7 @@
 NMHDR subclass: #NMTTDISPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMTTDISPINFO guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
 NMTTDISPINFO isAbstract: true!
@@ -15,7 +15,7 @@ idIsHandle
 	"Answer true if id stored in the receiver's header is a window handle, or false
 	if it is a tool id (e.g. for a toolbar button)."
 
-	^self uFlags anyMask: 1"TTF_IDISHWND"!
+	^self uFlags anyMask: CommCtrlConstants.TTF_IDISHWND!
 
 text: aString 
 	"Private - Set the receiver's tip text to the appropriate form (ANSI or Unicode) of the 

@@ -140,6 +140,13 @@ byteSize
 
 	^self basicSize + 2!
 
+copyToBuffer: anAddress ofSize: anInteger
+	CRTLibrary default
+		wcsncpy_s: anAddress
+		bufferSize: anInteger
+		strSource: self
+		count: CRTConstants._TRUNCATE!
+
 displayOn: aStream
 	"Append the receiver in end-user form to aStream.
 	We must convert to mbcs for display."
@@ -284,6 +291,7 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #at:put:!accessing!public! !
 !Utf16String categoriesFor: #beginsWith:!comparing!public! !
 !Utf16String categoriesFor: #byteSize!accessing!private! !
+!Utf16String categoriesFor: #copyToBuffer:ofSize:!constants!copying!public! !
 !Utf16String categoriesFor: #displayOn:!printing!public! !
 !Utf16String categoriesFor: #findString:startingAt:!public!searching! !
 !Utf16String categoriesFor: #first:!copying!public! !
@@ -332,23 +340,10 @@ fromAddress: anAddress length: anInteger
 			answer]!
 
 fromString: aString
-	"Answer a new instance of the receiver containing the same characters as the <String>
+	"Answer an instance of the receiver containing the same characters as the <String>
 	argument."
 
-	| answer cch |
-	cch := aString size.
-	cch == 0 ifTrue: [^self empty].
-	"The result will have at most the number of code points as are present in the input, probably fewer if the input is UTF8"
-	answer := self new: cch.
-	^(cch := KernelLibrary default
-				multiByteToWideChar: aString codePage
-				dwFlags: 0
-				lpMultiByteStr: aString
-				cchMultiByte: cch
-				lpWideCharStr: answer
-				cchWideChar: cch) == 0
-		ifTrue: [KernelLibrary default systemError]
-		ifFalse: [answer resize: cch]	"MB_ERR_INVALID_CHARS"!
+	^aString asUtf16String!
 
 initialize
 	empty := self new

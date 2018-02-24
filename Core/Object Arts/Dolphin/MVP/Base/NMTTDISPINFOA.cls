@@ -12,26 +12,32 @@ NMTTDISPINFOA accompanies TTN_NEEDTEXTA notifications that are sent by a Toolbar
 !NMTTDISPINFOA categoriesForClass!ToolTip-Structs! !
 !NMTTDISPINFOA methodsFor!
 
-lpszText: anObject 
-	"Set the receiver's lpszText field to the value of anObject."
+lpszText
+	"Answer the <String> value of the receiver's 'lpszText' field."
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anObject yourAddress!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszText))!
+
+lpszText: aString
+	"Set the receiver's 'lpszText' field to the value of the argument, aString"
+
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: aString yourAddress!
 
 text: aString
-	"Private - Set the receiver's tip text to aN ANSI version of the argument, aString,
+	"Private - Set the receiver's tip text to the ANSI encoded version of the argument, aString,
 	and answer that.
 	N.B. The answer must be referenced until the TOOLTIPTEXT is no longer required to
 	prevent it being prematurely GC'd."
 
 	| ansi |
-	ansi := aString asString.
+	ansi := aString displayString asAnsiString.
 	self lpszText: ansi.
 	^ansi!
 
 uFlags
-	"Answer the receiver's uFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uFlags)! !
+!NMTTDISPINFOA categoriesFor: #lpszText!**compiled accessors**!public! !
 !NMTTDISPINFOA categoriesFor: #lpszText:!**compiled accessors**!public! !
 !NMTTDISPINFOA categoriesFor: #text:!accessing!private! !
 !NMTTDISPINFOA categoriesFor: #uFlags!**compiled accessors**!public! !
@@ -54,7 +60,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #lpszText type: (PointerField type: String) beWriteOnly;
+		defineField: #lpszText type: (PointerField type: String);
 		defineField: #szText type: (StringField length: 80) beFiller;
 		defineField: #hinst type: HANDLEField filler;
 		defineField: #uFlags type: DWORDField readOnly;
