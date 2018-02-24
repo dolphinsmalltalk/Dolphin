@@ -1718,40 +1718,27 @@ setItem: anObject indentation: anInteger
 	Note: this causes a Windows error if our control is virtual"
 
 	| objectIndex anLvItem |
-
-	objectIndex := self displayIndexOf: anObject ifAbsent: [^ self].
-
-	anLvItem := (LVITEM new)
-			iItem: objectIndex - 1;
-			indent: anInteger;
-			yourself.
-
+	objectIndex := self displayIndexOf: anObject ifAbsent: [^self].
+	anLvItem := LVITEMW new
+				iItem: objectIndex - 1;
+				indent: anInteger;
+				yourself.
 	self lvmSetItem: anLvItem.
-
-	self invalidateItemIndex: objectIndex .
-!
+	self invalidateItemIndex: objectIndex!
 
 setItem: anObject openState: aSymbol
 	"private -- update the 'state' image for anObject"
 
 	| objectIndex stateIndex anLvItem |
-
-	self systemDrawsStateImages ifFalse: [^ self].
-
-	objectIndex := self displayIndexOf: anObject ifAbsent: [^ self].
+	self systemDrawsStateImages ifFalse: [^self].
+	objectIndex := self displayIndexOf: anObject ifAbsent: [^self].
 	stateIndex := self stateImageIndex: aSymbol.
-
-	anLvItem := (LVITEM new)
-			iItem: objectIndex - 1;
-			stateImageIndex: stateIndex;		"a 1-based index in Windows !!"
-			yourself.
-
+	anLvItem := LVITEMW new
+				iItem: objectIndex - 1;
+				stateImageIndex: stateIndex;
+				yourself.	"a 1-based index in Windows !!"
 	self lvmSetItem: objectIndex - 1 state: anLvItem.
-
-	self invalidateItemIndex: objectIndex .
-
-
-!
+	self invalidateItemIndex: objectIndex!
 
 setItemIndentation: anObject
 	"private -- update the indent for anObject.

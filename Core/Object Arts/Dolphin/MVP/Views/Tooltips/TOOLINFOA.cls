@@ -83,13 +83,13 @@ rect: anObject
 		to: ##((self offsetOf: #rect) + RECT basicByteSize)
 		startingAt: 1!
 
-text: aString 
+text: aString
 	"Set the tool-tip text of the receiver to the <String> argument."
 
 	"Implementation Note: We must retain a reference to the String to ensure it is not
 	garbage collect, so we store it into the 'text' inst var maintained for that purpose."
 
-	text := aString.
+	text := aString asAnsiString.
 	self lpszText: aString!
 
 textCallback

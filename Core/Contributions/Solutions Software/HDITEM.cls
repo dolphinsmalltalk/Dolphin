@@ -11,44 +11,44 @@ HDITEM comment: ''!
 !HDITEM methodsFor!
 
 cchTextMax
-	"Answer the receiver's cchTextMax field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^(bytes sdwordAtOffset: 16)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax)!
 
-cchTextMax: anObject
-	"Set the receiver's cchTextMax field to the value of anObject."
+cchTextMax: anInteger
+	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 16 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax) put: anInteger!
 
 cxy
-	"Answer the receiver's cxy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cxy' field."
 
-	^(bytes sdwordAtOffset: 4)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #cxy)!
 
-cxy: anObject
-	"Set the receiver's cxy field to the value of anObject."
+cxy: anInteger
+	"Set the receiver's 'cxy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 4 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cxy) put: anInteger!
 
 dwState
 	"Answer the receiver's dwState field as a Smalltalk object."
 
 	^self shouldNotImplement!
 
-dwState: anObject
+dwState: anObject 
 	"Set the receiver's dwState field to the value of anObject."
 
-	^self shouldNotImplement!
+	self shouldNotImplement!
 
 fmt
-	"Answer the receiver's fmt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fmt' field."
 
-	^(bytes sdwordAtOffset: 20)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #fmt)!
 
-fmt: anObject
-	"Set the receiver's fmt field to the value of anObject."
+fmt: anInteger
+	"Set the receiver's 'fmt' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 20 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #fmt) put: anInteger!
 
 handle
 	"Answer the 'handle' of the item described by the receiver."
@@ -56,24 +56,24 @@ handle
 	^self shouldNotImplement!
 
 hbm
-	"Answer the receiver's hbm field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'hbm' field."
 
-	^(bytes dwordAtOffset: 12) asExternalHandle!
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #hbm)) asExternalHandle!
 
-hbm: anObject
-	"Set the receiver's hbm field to the value of anObject."
+hbm: anExternalHandle
+	"Set the receiver's 'hbm' field to the value of the argument, anExternalHandle"
 
-	bytes dwordAtOffset: 12 put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #hbm) put: anExternalHandle!
 
 iImage
-	"Answer the receiver's iImage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^(bytes sdwordAtOffset: 28)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #iImage)!
 
-iImage: anObject
-	"Set the receiver's iImage field to the value of anObject."
+iImage: anInteger
+	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 28 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #iImage) put: anInteger!
 
 imageValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the iImage
@@ -82,19 +82,19 @@ imageValidMask
 	^16r0020 "HDI_IMAGE"!
 
 iOrder
-	"Answer the receiver's iOrder field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iOrder' field."
 
-	^(bytes sdwordAtOffset: 32)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #iOrder)!
 
-iOrder: anObject
-	"Set the receiver's iOrder field to the value of anObject."
+iOrder: anInteger
+	"Set the receiver's 'iOrder' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 32 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #iOrder) put: anInteger!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^(bytes dwordAtOffset: 24)!
+	^bytes dwordAtOffset: ##(self offsetOf: #lParam)!
 
 lParam: anObject
 	"Set the receiver's lParam field to the value of anObject."
@@ -108,40 +108,39 @@ paramValidMask
 	^16r8 "HDI_LPARAM"!
 
 pszText
-	"Answer the receiver's pszText field as a Smalltalk object."
+	"Answer the <String> value of the receiver's 'pszText' field."
 
-	^String fromAddress: (bytes sdwordAtOffset: 8)!
+	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszText))!
 
-pszText: anObject
-	"Set the receiver's pszText field to the value of anObject."
+pszText: aString
+	"Set the receiver's 'pszText' field to the value of the argument, aString"
 
-	bytes dwordAtOffset: 8 put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pszText) put: aString yourAddress!
 
 pvFilter
-	"Answer the receiver's pvFilter field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pvFilter' field."
 
-	^(bytes dwordAtOffset: 40)!
+	^bytes dwordAtOffset: ##(self offsetOf: #pvFilter)!
 
-pvFilter: anObject
-	"Set the receiver's pvFilter field to the value of anObject."
+pvFilter: anInteger
+	"Set the receiver's 'pvFilter' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 40 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #pvFilter) put: anInteger!
 
-stateMask: anObject
+stateMask
+	"Answer the receiver's stateMask field as a Smalltalk object."
+
+	^self shouldNotImplement!
+
+stateMask: anObject 
 	"Set the receiver's stateMask field to the value of anObject."
 
-	^self shouldNotImplement!
-
-stateValidMask
-	"Private - Answer the bit mask the receiver uses to denote that the dwState
-	field has valid contents."
-
-	^self shouldNotImplement!
+	self shouldNotImplement!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
-	^8!
+	^##(self offsetOf: #pszText)!
 
 textValidMask
 	"Private - Answer the bit mask the receiver uses to denote that the pszText
@@ -150,20 +149,20 @@ textValidMask
 	^16r0002	"HDI_TEXT"!
 
 type
-	"Answer the receiver's type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^(bytes dwordAtOffset: 36)!
+	^bytes dwordAtOffset: ##(self offsetOf: #type)!
 
-type: anObject
-	"Set the receiver's type field to the value of anObject."
+type: anInteger
+	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 36 put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #type) put: anInteger! !
 !HDITEM categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !HDITEM categoriesFor: #cchTextMax:!**compiled accessors**!public! !
 !HDITEM categoriesFor: #cxy!**compiled accessors**!public! !
 !HDITEM categoriesFor: #cxy:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #dwState!**compiled accessors**!public! !
-!HDITEM categoriesFor: #dwState:!**compiled accessors**!public! !
+!HDITEM categoriesFor: #dwState!accessing!public! !
+!HDITEM categoriesFor: #dwState:!accessing!public! !
 !HDITEM categoriesFor: #fmt!**compiled accessors**!public! !
 !HDITEM categoriesFor: #fmt:!**compiled accessors**!public! !
 !HDITEM categoriesFor: #handle!accessing!public! !
@@ -181,8 +180,8 @@ type: anObject
 !HDITEM categoriesFor: #pszText:!**compiled accessors**!public! !
 !HDITEM categoriesFor: #pvFilter!**compiled accessors**!public! !
 !HDITEM categoriesFor: #pvFilter:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #stateMask:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #stateValidMask!constants!private! !
+!HDITEM categoriesFor: #stateMask!accessing!public! !
+!HDITEM categoriesFor: #stateMask:!accessing!public! !
 !HDITEM categoriesFor: #textPointerOffset!constants!private! !
 !HDITEM categoriesFor: #textValidMask!constants!private! !
 !HDITEM categoriesFor: #type!**compiled accessors**!public! !
@@ -191,7 +190,7 @@ type: anObject
 !HDITEM class methodsFor!
 
 defineFields
-	"Define the fields of the MENUITEMINFOA structure.
+	"Define the fields of the HDITEM structure.
 		HDITEM compileDefinition
 	
 		typedef 		struct _HDITEM {
@@ -213,8 +212,8 @@ defineFields
 		} HDITEM,  *LPHDITEM;
 	"
 
+	super defineFields.
 	self
-		defineField: #mask type: DWORDField new offset: 0;	"Rename to override superclass accessor???"
 		defineField: #cxy type: SDWORDField new offset: 4;
 		defineField: #pszText type: (PointerField type: String) offset: 8;
 		defineField: #hbm type: HANDLEField new offset: 12;
@@ -226,6 +225,10 @@ defineFields
 		defineField: #type type: DWORDField new offset: 36;
 		defineField: #pvFilter type: DWORDField new offset: 40.
 
-	self byteSize: 44! !
+	self byteSize: 44!
+
+textClass
+	^String! !
 !HDITEM class categoriesFor: #defineFields!initializing!public! !
+!HDITEM class categoriesFor: #textClass!constants!private! !
 

@@ -35,8 +35,6 @@ package methodNames
 	add: #Icon -> #asSmallIcon;
 	add: #Icon -> #withExtent:;
 	add: #KeyEvent -> #resendTo:;
-	add: #NMTTDISPINFOA -> #lpszText;
-	add: #NMTTDISPINFOW -> #lpszText;
 	add: #NullConverter -> #isNullConverter;
 	add: #PointEvent -> #resendTo:;
 	add: #PushButton -> #alignment;
@@ -77,6 +75,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
@@ -302,20 +301,6 @@ resendTo: aView
 		wParam: wParam 
 		lParam: lParam! !
 !KeyEvent categoriesFor: #resendTo:!public!testing! !
-
-!NMTTDISPINFOA methodsFor!
-
-lpszText
-
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
-!NMTTDISPINFOA categoriesFor: #lpszText!accessing!public! !
-
-!NMTTDISPINFOW methodsFor!
-
-lpszText
-
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lpszText)! !
-!NMTTDISPINFOW categoriesFor: #lpszText!accessing!public! !
 
 !NullConverter methodsFor!
 

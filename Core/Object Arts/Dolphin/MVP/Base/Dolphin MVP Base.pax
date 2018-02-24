@@ -955,7 +955,7 @@ MENUITEMINFOA subclass: #MENUITEMINFOV5
 NMHDR subclass: #NMTTDISPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'CommCtrlConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMTTDISPINFO subclass: #NMTTDISPINFOA
 	instanceVariableNames: ''

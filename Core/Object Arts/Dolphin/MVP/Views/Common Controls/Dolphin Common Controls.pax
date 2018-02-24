@@ -16,32 +16,37 @@ package classNames
 	add: #ListView;
 	add: #ListViewColumn;
 	add: #LVBKIMAGE;
-	add: #LVCOLUMN;
-	add: #LVFINDINFO;
+	add: #LVCOLUMNW;
+	add: #LVFINDINFOA;
+	add: #LVFINDINFOW;
 	add: #LVHITTESTINFO;
-	add: #LVITEM;
+	add: #LVITEMA;
+	add: #LVITEMW;
 	add: #NMCUSTOMDRAW;
 	add: #NMITEMACTIVATE;
 	add: #NMKEYDOWN;
 	add: #NMLISTVIEW;
 	add: #NMLVCUSTOMDRAW;
-	add: #NMLVDISPINFO;
-	add: #NMLVFINDITEM;
+	add: #NMLVFINDITEMA;
+	add: #NMLVFINDITEMW;
 	add: #NMLVGETINFOTIPA;
+	add: #NMLVGETINFOTIPW;
 	add: #NMLVODSTATECHANGE;
-	add: #NMTREEVIEW;
+	add: #NMTREEVIEWA;
+	add: #NMTREEVIEWW;
 	add: #NMTVCUSTOMDRAW;
-	add: #NMTVDISPINFO;
 	add: #NMTVGETINFOTIPA;
+	add: #NMTVGETINFOTIPW;
 	add: #TabView;
 	add: #TabViewXP;
 	add: #TCHITTESTINFO;
-	add: #TCITEM;
+	add: #TCITEMW;
 	add: #TreeView;
 	add: #TVHITTESTINFO;
-	add: #TVINSERTSTRUCT;
-	add: #TVITEM;
-	add: #TVITEMEX;
+	add: #TVINSERTSTRUCTW;
+	add: #TVITEMA;
+	add: #TVITEMEXW;
+	add: #TVITEMW;
 	yourself.
 
 package methodNames
@@ -95,17 +100,17 @@ Win32Structure subclass: #LVBKIMAGE
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #LVCOLUMN
+Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
 	classVariableNames: 'AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #LVFINDINFO
+Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #TVINSERTSTRUCT
+Win32Structure subclass: #TVINSERTSTRUCTW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -125,22 +130,37 @@ CCHITTESTINFO subclass: #TVHITTESTINFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CCITEM subclass: #LVITEM
+CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
 	classVariableNames: 'CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
-CCITEM subclass: #TCITEM
+CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
-CCITEM subclass: #TVITEM
+CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
-TVITEM subclass: #TVITEMEX
+LVITEMW subclass: #LVITEMA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TVITEMW subclass: #TVITEMA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TVITEMW subclass: #TVITEMEXW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LVFINDINFOW subclass: #LVFINDINFOA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -165,17 +185,12 @@ NMHDR subclass: #NMLISTVIEW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMLVDISPINFO
-	instanceVariableNames: 'item'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMHDR subclass: #NMLVFINDITEM
+NMHDR subclass: #NMLVFINDITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMLVGETINFOTIPA
+NMHDR subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -185,17 +200,12 @@ NMHDR subclass: #NMLVODSTATECHANGE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTREEVIEW
+NMHDR subclass: #NMTREEVIEWW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTVDISPINFO
-	instanceVariableNames: 'item'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTVGETINFOTIPA
+NMHDR subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -206,6 +216,26 @@ NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMLVFINDITEMW subclass: #NMLVFINDITEMA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMLVGETINFOTIPW subclass: #NMLVGETINFOTIPA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMTREEVIEWW subclass: #NMTREEVIEWA
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMTVGETINFOTIPW subclass: #NMTVGETINFOTIPA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

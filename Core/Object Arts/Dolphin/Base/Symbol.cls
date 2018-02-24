@@ -54,7 +54,13 @@ asAnsiString
 	"Answer a new ANSI-encoded <readableString> containing the characters of 
 	the receiver."
 
-	^self class ansiClass fromString: self!
+	| size |
+	size := self size.
+	^self
+		replaceBytesOf: (String new: size)
+		from: 1
+		to: size
+		startingAt: 1!
 
 asBlock
 	"Answer a block capable of sending the receiver to an object"

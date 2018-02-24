@@ -139,11 +139,6 @@ disableLabelEdit
 	self baseStyle: self baseStyle | self editLabelStyle.
 	self canEditLabels: false!
 
-dispInfoClass
-	"Private - Answer the class of ?V_DISPINFO structure associated with the receiver."
-
-	^NMHDR!
-
 dragLeave: session 
 	"The drag operation described by the <DragDropSession>, session,
 	has left the receiver's window."
@@ -357,6 +352,12 @@ initialize
 	getImageBlock := self defaultGetImageBlock.
 	imageManager := self defaultImageManager!
 
+itemFromNMHDRA: pNMHDR
+	^self subclassResponsibility!
+
+itemFromNMHDRW: pNMHDR
+	^self subclassResponsibility!
+
 itemFromPoint: aPoint 
 	"Private - Answer the handle of the object in the control under the <Point> argument,
 	or nil if none."
@@ -402,24 +403,42 @@ nmBeginDrag: pNMHDR
 				ifNotNil: [:dragee | self onBegin: #left drag: dragee]].
 	^nil!
 
-nmBeginLabelEdit: pNMHDR
+nmBeginLabelEditA: pNMHDR
 	"Private - Default handler for the ?VN_BEGINLABELEDIT notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
-	| object di |
-	di := self dispInfoClass fromAddress: pNMHDR.
-	object := self objectFromHandle: di itemHandle.
+	| object item |
+	item := self itemFromNMHDRA: pNMHDR.
+	object := self objectFromHandle: item handle.
 	^self presenter onAboutToEditLabel: object!
 
-nmBeginRDrag: pNMHDR
+nmBeginLabelEditW: pNMHDR
+	"Private - Default handler for the ?VN_BEGINLABELEDITW notification message.
+	N.B. This notification is not necessarily sent by all subclasses."
+
+	| object item |
+	item := self itemFromNMHDRW: pNMHDR.
+	object := self objectFromHandle: item handle.
+	^self presenter onAboutToEditLabel: object!
+
+nmBeginRDragA: pNMHDR
 	"Private - Default handler for the ??N_BEGINRDRAG notification message.
 	Answer nil to accept default processing.
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	| nm |
 	nm := self notificationClass fromAddress: pNMHDR.
-	self isDragSource ifTrue: [
-		self onBegin: #right drag: (self objectFromHandle: nm itemHandle)].
+	self isDragSource ifTrue: [self onBegin: #right drag: (self objectFromHandle: nm itemHandle)].
+	^nil!
+
+nmBeginRDragW: pNMHDR
+	"Private - Default handler for the ??N_BEGINRDRAG notification message.
+	Answer nil to accept default processing.
+	N.B. This notification is not necessarily sent by all subclasses."
+
+	| nm |
+	nm := self notificationWClass fromAddress: pNMHDR.
+	self isDragSource ifTrue: [self onBegin: #right drag: (self objectFromHandle: nm itemHandle)].
 	^nil!
 
 nmCustomDraw: pNMHDR 
@@ -459,13 +478,13 @@ nmDeleteItem: pNMHDR
 
 	^nil!
 
-nmEndLabelEdit: pNMHDR
+nmEndLabelEditA: pNMHDR
 	"Private - Default handler for the ?VN_ENDLABELEDIT notification message. Note that we don't
 	forward the event to the presenter if the edit was cancelled, or if the text wasn't actually
 	changed. N.B. This notification is not necessarily sent by all subclasses."
 
 	| item object text |
-	item := self dispInfoClass itemFromNMHDR: pNMHDR.
+	item := self itemFromNMHDRA: pNMHDR.
 	text := item pszText.
 	self canEditLabels ifFalse: [self disableLabelEdit].
 	text isNil
@@ -476,11 +495,34 @@ nmEndLabelEdit: pNMHDR
 	^text = (self getTextBlock value: object) displayString
 		ifFalse: [self presenter onLabelOf: object editedTo: text]!
 
-nmGetDispInfo: pNMHDR
+nmEndLabelEditW: pNMHDR
+	"Private - Default handler for the ?VN_ENDLABELEDIT notification message. Note that we don't
+	forward the event to the presenter if the edit was cancelled, or if the text wasn't actually
+	changed. N.B. This notification is not necessarily sent by all subclasses."
+
+	| item object text |
+	item := self itemFromNMHDRW: pNMHDR.
+	text := item pszText.
+	self canEditLabels ifFalse: [self disableLabelEdit].
+	text isNil
+		ifTrue: 
+			["Edit cancelled"
+			^nil].
+	object := self objectFromHandle: item handle.
+	^text = (self getTextBlock value: object) displayString
+		ifFalse: [self presenter onLabelOf: object editedTo: text]!
+
+nmGetDispInfoA: pNMHDR
 	"Private - Handler for a ?VN_GETDISPINFO notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
-	^self onDisplayDetailsRequired: (self dispInfoClass itemFromNMHDR: pNMHDR)!
+	^self onDisplayDetailsRequired: (self itemFromNMHDRA: pNMHDR)!
+
+nmGetDispInfoW: pNMHDR
+	"Private - Handler for a ?VN_GETDISPINFO notification message.
+	N.B. This notification is not necessarily sent by all subclasses."
+
+	^self onDisplayDetailsRequired: (self itemFromNMHDRW: pNMHDR)!
 
 nmSelChanged: anExternalAddress 
 	"Private - Default handler for the ??N_SELCHANGED notification message.
@@ -488,17 +530,29 @@ nmSelChanged: anExternalAddress
 
 	^self onSelChanged: self selectionsByIndex!
 
-nmSetDispInfo: pNMHDR
+nmSetDispInfoA: pNMHDR
 	"Private - Default handler for the ?VN_SETDISPINFO notification message.
 	Forward as an onDisplayDetailsChanged: event."
 
-	^self onDisplayDetailsChanged: (self dispInfoClass itemFromNMHDR: pNMHDR)!
+	^self onDisplayDetailsChanged: (self itemFromNMHDRA: pNMHDR)!
+
+nmSetDispInfoW: pNMHDR
+	"Private - Default handler for the ?VN_SETDISPINFO notification message.
+	Forward as an onDisplayDetailsChanged: event."
+
+	^self onDisplayDetailsChanged: (self itemFromNMHDRW: pNMHDR)!
 
 notificationClass
 	"Private - Answer the class of NMHDR associated with certain notifications sent
 	by the receiver's associated Windows control."
 
 	^NMHDR!
+
+notificationWClass
+	"Private - Answer the class of NMHDR associated with certain notifications sent
+	by the receiver's associated Windows control."
+
+	^self notificationClass!
 
 onAboutToEditLabel: anObject
 	"The receiver's element, anObject, is about to have its label edited in the receiver.
@@ -735,7 +789,6 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #defaultImageManager!initializing!private! !
 !IconicListAbstract categoriesFor: #defaultWindowExStyle!constants!private! !
 !IconicListAbstract categoriesFor: #disableLabelEdit!helpers!private! !
-!IconicListAbstract categoriesFor: #dispInfoClass!constants!private! !
 !IconicListAbstract categoriesFor: #dragLeave:!drag & drop!event handling!public! !
 !IconicListAbstract categoriesFor: #dragOver:!drag & drop!event handling!public! !
 !IconicListAbstract categoriesFor: #drop:!drag & drop!event handling!public! !
@@ -763,21 +816,29 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #imageManager!image management!private! !
 !IconicListAbstract categoriesFor: #imageManager:!image management!public! !
 !IconicListAbstract categoriesFor: #initialize!initializing!private! !
+!IconicListAbstract categoriesFor: #itemFromNMHDRA:!helpers!private! !
+!IconicListAbstract categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #itemFromPoint:!enquiries!private! !
 !IconicListAbstract categoriesFor: #itemRect:!accessing!public! !
 !IconicListAbstract categoriesFor: #itemRect:textOnly:!enquiries!public! !
 !IconicListAbstract categoriesFor: #largeIconExtent!constants!public! !
 !IconicListAbstract categoriesFor: #largeIconExtent:!constants!public! !
 !IconicListAbstract categoriesFor: #nmBeginDrag:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmBeginLabelEdit:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmBeginRDrag:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmBeginLabelEditA:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmBeginLabelEditW:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmBeginRDragA:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmBeginRDragW:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmCustomDraw:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmDeleteItem:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmEndLabelEdit:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmGetDispInfo:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmEndLabelEditA:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmEndLabelEditW:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmGetDispInfoA:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmGetDispInfoW:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmSelChanged:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmSetDispInfo:!event handling!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmSetDispInfoA:!event handling!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmSetDispInfoW:!event handling!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #notificationClass!constants!private! !
+!IconicListAbstract categoriesFor: #notificationWClass!constants!private! !
 !IconicListAbstract categoriesFor: #onAboutToEditLabel:!event handling!public! !
 !IconicListAbstract categoriesFor: #onDisplayDetailsChanged:!event handling!private! !
 !IconicListAbstract categoriesFor: #onDisplayDetailsRequired:!event handling!private! !

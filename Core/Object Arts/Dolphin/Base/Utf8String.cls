@@ -82,11 +82,17 @@ asUtf8String
 codePage
 	^Win32Constants.CP_UTF8!
 
+fromString: aString
+	"Answer an instance of the receiver containing the same characters as the argument, aString."
+
+	^aString asUtf8String!
+
 initialize
 	empty := self new
 				isImmutable: true;
 				yourself.
 	VMLibrary default registryAt: #Utf8String put: self! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
+!Utf8String class categoriesFor: #fromString:!instance creation!public! !
 !Utf8String class categoriesFor: #initialize!development!initializing!public! !
 

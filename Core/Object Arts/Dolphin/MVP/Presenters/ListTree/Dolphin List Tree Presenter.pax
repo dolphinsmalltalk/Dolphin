@@ -113,8 +113,6 @@ package methodNames
 	add: #LVHITTESTINFO -> #isOnItemStateIcon;
 	add: #LVHITTESTINFO -> #isToLeft;
 	add: #LVHITTESTINFO -> #isToRight;
-	add: #LVITEM -> #stateImageIndex;
-	add: #LVITEM -> #stateImageIndex:;
 	add: 'ListPresenter class' -> #resource_ListTree_view;
 	add: 'TreePresenter class' -> #resource_ListTree_view;
 	yourself.
@@ -239,25 +237,6 @@ isToRight
 !LVHITTESTINFO categoriesFor: #isOnItemStateIcon!public!testing! !
 !LVHITTESTINFO categoriesFor: #isToLeft!public!testing! !
 !LVHITTESTINFO categoriesFor: #isToRight!public!testing! !
-
-!LVITEM methodsFor!
-
-stateImageIndex
-	"Answer contents' state image index."
-#CUadded.
-
-	self dwState bitShift: -12.!
-
-stateImageIndex: anInteger
-	"Set contents' state image index to anInteger."
-#CUadded.
-
-	self
-		dwState: ((anInteger bitShift: 12) bitOr: self dwState);
-		maskIn: self stateValidMask;
-		stateMask: (LVIS_STATEIMAGEMASK bitOr: self stateMask).! !
-!LVITEM categoriesFor: #stateImageIndex!accessing!public! !
-!LVITEM categoriesFor: #stateImageIndex:!accessing!public! !
 
 !TreePresenter class methodsFor!
 

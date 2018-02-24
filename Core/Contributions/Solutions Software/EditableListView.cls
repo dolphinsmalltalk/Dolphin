@@ -411,12 +411,10 @@ itemAndColumnAt: aPoint
 
 itemIndex: anInteger hasFocus: aBoolean
 	| anLvItem |
-	#deprecated.
-	"Only one item may have focus at a time--use #caretIndex: to set it."
-	anLvItem := LVITEM new.
+	anLvItem := LVITEMW new.
 	anLvItem stateMask: LVIS_FOCUSED.
 	anLvItem dwState: aBoolean.
-	self lvmSetItem: anInteger - 1 state: anLvItem.!
+	self lvmSetItem: anInteger - 1 state: anLvItem!
 
 itemIndexWithFocus
 	#deprecated.

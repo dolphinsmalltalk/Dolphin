@@ -25,29 +25,27 @@ getColumns
 	answer := OrderedCollection new.
 	0 to: 256
 		do: 
-			[:each | 
+			[:each |
 			| col |
-			col := LVCOLUMN new.
-			col text: (String new: 256).
-			(presenter view 
-				sendMessage: LVM_GETCOLUMN
+			col := LVCOLUMNW new.
+			col newTextBuffer: 256.
+			(presenter view
+				sendMessage: LVM_GETCOLUMNW
 				wParam: each
-				lpParam: col) asBoolean 
+				lpParam: col) asBoolean
 				ifTrue: 
 					[col text: col text trimNulls.
 					answer add: col]
 				ifFalse: [^answer]]!
 
-getItem: anInteger 
-	| item textBuf aListView |
+getItem: anInteger
+	| item aListView |
 	aListView := presenter view.
-	item := LVITEM new.
+	item := LVITEMW new.
 	item iItem: anInteger - 1.
 	item iSubItem: 0.
 	item image: 0.
-	textBuf := String new: 128.
-	item text: textBuf.
-	item bytes sdwordAtOffset: 24 put: textBuf size.
+	item newTextBuffer: 128.
 	aListView lvmGetItem: item.
 	^item!
 

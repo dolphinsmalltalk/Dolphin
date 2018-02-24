@@ -12,10 +12,15 @@ NMTTDISPINFOW accompanies TTN_NEEDTEXTW notifications that are sent by a Toolbar
 !NMTTDISPINFOW categoriesForClass!ToolTip-Structs! !
 !NMTTDISPINFOW methodsFor!
 
-lpszText: anObject 
-	"Set the receiver's lpszText field to the value of anObject."
+lpszText
+	"Answer the <Utf16String> value of the receiver's 'lpszText' field."
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anObject yourAddress!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszText))!
+
+lpszText: anUtf16String
+	"Set the receiver's 'lpszText' field to the value of the argument, anUtf16String"
+
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anUtf16String yourAddress!
 
 text: aString
 	"Private - Set the receiver's tip text to a Unicode version of the <readableString> argument,
@@ -25,14 +30,15 @@ text: aString
 	prevent it being prematurely GC'd, so we answer it in order that the caller can reference it."
 
 	| unicode |
-	unicode := aString asUtf16String.
+	unicode := aString displayString asUtf16String.
 	self lpszText: unicode.
 	^unicode!
 
 uFlags
-	"Answer the receiver's uFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uFlags)! !
+!NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
 !NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
 !NMTTDISPINFOW categoriesFor: #text:!accessing!private! !
 !NMTTDISPINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
@@ -55,7 +61,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
+		defineField: #lpszText type: (PointerField type: Utf16String);
 		defineField: #szText type: (ArrayField type: Utf16String length: 80) beFiller;
 		defineField: #hinst type: HANDLEField filler;
 		defineField: #uFlags type: DWORDField readOnly;

@@ -6,6 +6,8 @@ IconicListAbstract subclass: #TabView
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 TabView guid: (GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
+TabView addClassConstant: 'OrientationMask' value: 130!
+TabView addClassConstant: 'TcnMap' value: #(#nmKeyDown: #nmSelChanged: #tcnSelChanging: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
 The most typical use of a <TabView> is as part of a <CardContainer> where each of the cards is identified by a separate tab.
@@ -134,15 +136,15 @@ fontChanged
 	super fontChanged.
 	self invalidateLayout!
 
-getItem: aninteger 
+getItem: anInteger
 	| tcItem |
-	tcItem := TCITEM new.
+	tcItem := TCITEMW new.
 	tcItem
-		text: (String newFixed: 256);
+		newTextBuffer: 256;
 		maskIn: tcItem imageValidMask.
-	self 
-		sendMessage: TCM_GETITEM
-		wParam: aninteger - 1
+	self
+		sendMessage: TCM_GETITEMW
+		wParam: anInteger - 1
 		lpParam: tcItem asParameter.
 	^tcItem!
 
@@ -266,19 +268,25 @@ itemCount
 
 	^self sendMessage: TCM_GETITEMCOUNT!
 
+itemFromNMHDRA: pNMHDR
+	^self shouldNotImplement!
+
+itemFromNMHDRW: pNMHDR
+	^self shouldNotImplement!
+
 itemRect: anInteger textOnly: aBoolean 
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver, optionally for the text label only."
 
 	^(self tcmGetItemRect: anInteger-1) asObject!
 
-makeTcItemStruct: anObject 
+makeTcItemStruct: anObject
 	| tcItem |
-	tcItem := TCITEM new.
-	tcItem text: (self getTextBlock value: anObject) displayString.
-	self hasIcons 
+	tcItem := TCITEMW new.
+	tcItem text: (self getTextBlock value: anObject).
+	self hasIcons
 		ifTrue: 
-			[(self getImageBlock value: anObject) 
+			[(self getImageBlock value: anObject)
 				ifNil: [tcItem image: -1]
 				ifNotNil: [:imageIndex | tcItem image: imageIndex - 1]].
 	^tcItem!
@@ -286,9 +294,12 @@ makeTcItemStruct: anObject
 nmNotify: pNMHDR
 	"Private - Handler for a redirected WinTab WM_NOTIFY message."
 
-	^(TcnMap lookup: (pNMHDR sdwordAtOffset: 8))
-		ifNil: [super nmNotify: pNMHDR]
-		ifNotNil: [:action | self perform: action with: pNMHDR]!
+	| code |
+	code := pNMHDR sdwordAtOffset: 8.
+	"Note that the notification codes are negative"
+	^(code <= TCN_FIRST and: [code >= TCN_LAST])
+		ifTrue: [self perform: (TcnMap at: ##(TCN_FIRST + 1) - code) with: pNMHDR]
+		ifFalse: [super nmNotify: pNMHDR]!
 
 onItem: anObject removedAtIndex: anInteger 
 	"Event received when the <Object>, anObject, has been removed from the receiver's
@@ -493,7 +504,10 @@ tcmGetItemRect: anInteger
 tcmInsertItem: tcItem atOffset: anInteger
 	"Private - Insert a tab defined by tcItem to the receiver at offset anInteger."
 
-	^self sendMessage: TCM_INSERTITEM wParam: anInteger lpParam: tcItem asParameter!
+	^self
+		sendMessage: TCM_INSERTITEMW
+		wParam: anInteger
+		lpParam: tcItem asParameter!
 
 tcmSetExtendedStyle: dwExMask dwExStyle: dwExStyle
 	"Private - Set the extended styles of the receiver. Only those flags
@@ -534,7 +548,7 @@ updateItem: anObject atIndex: aninteger
 	| tcItem |
 	tcItem := self makeTcItemStruct: anObject.
 	self 
-		sendMessage: TCM_SETITEM
+		sendMessage: TCM_SETITEMW
 		wParam: aninteger - 1
 		lpParam: tcItem asParameter!
 
@@ -596,6 +610,8 @@ viewModeChanged
 !TabView categoriesFor: #isVertical!accessing-styles!public! !
 !TabView categoriesFor: #isVertical:!accessing-styles!public! !
 !TabView categoriesFor: #itemCount!accessing!public! !
+!TabView categoriesFor: #itemFromNMHDRA:!helpers!private! !
+!TabView categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
 !TabView categoriesFor: #itemRect:textOnly:!public! !
 !TabView categoriesFor: #makeTcItemStruct:!adding!private! !
 !TabView categoriesFor: #nmNotify:!event handling-win32!private! !
@@ -643,7 +659,7 @@ initialize
 	"
 
 	self initializeNotificationMap.
-	OrientationMask := TCS_VERTICAL | TCS_BOTTOM.
+	self addClassConstant: 'OrientationMask' value: TCS_VERTICAL | TCS_BOTTOM.
 	TabOrientations := (IdentityDictionary new)
 				at: 0 put: #top;
 				at: TCS_BOTTOM put: #bottom;
@@ -664,14 +680,16 @@ initializeNotificationMap
 	"Private - Initialise the map of TabView notification codes to selectors.
 	N.B. This method must not be stripped in order to ensure that the notification event handler
 	methods (which are looked up in the table) are preserved.
-	"
 
-	TcnMap := (IdentityDictionary new)
-				at: TCN_KEYDOWN put: #nmKeyDown:;
-				at: TCN_SELCHANGE put: #nmSelChanged:;
-				at: TCN_SELCHANGING put: #tcnSelChanging:;
-				shrink;
-				yourself
+		self initializeNotificationMap
+	"
+	| tcnMap |
+	tcnMap := (Array new: TCN_FIRST - TCN_LAST withAll: #nmDummy:)
+				at: TCN_FIRST - TCN_KEYDOWN + 1 put: #nmKeyDown:;
+				at: TCN_FIRST - TCN_SELCHANGE + 1 put: #nmSelChanged:;
+				at: TCN_FIRST - TCN_SELCHANGING + 1 put: #tcnSelChanging:;
+				yourself.
+	self addClassConstant: 'TcnMap' value: tcnMap
 !
 
 tabOrientations
