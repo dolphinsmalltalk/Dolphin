@@ -291,17 +291,23 @@ stopProcess
 			[progressProcess terminate.
 			progressProcess := nil]!
 
-subclassWindow: anIntegerOrHandle 
+subclassWindow: anIntegerOrHandle
 	"Private - Subclass the receiver's associated Win32 window by substituting the VM's 
 	window procedure for the default dialog proc. Note that this is sent by the VM."
 
 	handle := anIntegerOrHandle asExternalHandle.
 	SessionManager inputState windowAt: anIntegerOrHandle put: self.
-	oldWndProc := UserLibrary default
-		setWindowDWORD: handle
-		nIndex: GWL_WNDPROC
-		dwNewDWORD: VMLibrary default getWndProc.
-!
+	oldWndProc := VMConstants.IsWin64
+				ifTrue: 
+					[UserLibrary default
+						setWindowULongPtrW: handle
+						nIndex: GWL_WNDPROC
+						dwNewLong: VMLibrary default getWndProc]
+				ifFalse: 
+					[UserLibrary default
+						setWindowULongW: handle
+						nIndex: GWL_WNDPROC
+						dwNewLong: VMLibrary default getWndProc]!
 
 template
 	^140!

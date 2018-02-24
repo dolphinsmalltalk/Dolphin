@@ -307,6 +307,22 @@ setItem: anInteger text: aString
 	(UserLibrary default setDlgItemText: self asParameter nIDDlgItem: anInteger lpString: aString)
 		ifFalse: [UserLibrary default systemError]!
 
+setWndProc: anAddress
+	"Private - Set the window procedure of the receiver to the argument, anAddress.
+	Answer the old window procedure address."
+
+	^VMConstants.IsWin64
+		ifTrue: 
+			[UserLibrary default
+				setWindowULongPtrW: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]
+		ifFalse: 
+			[UserLibrary default
+				setWindowULongW: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]!
+
 showModal
 	"Private - Show the (already created) receiver as a dialog modal to the current active window."
 
@@ -408,6 +424,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !DialogView categoriesFor: #setItem:icon:!accessing!private! !
 !DialogView categoriesFor: #setItem:int:!accessing!private! !
 !DialogView categoriesFor: #setItem:text:!accessing!private! !
+!DialogView categoriesFor: #setWndProc:!accessing!private! !
 !DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
 !DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
 !DialogView categoriesFor: #subclassWindow:!accessing!private! !

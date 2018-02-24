@@ -366,7 +366,7 @@ winClassName
 	"Private - Answer the Windows class name, or atom, to be used when creating Windows attached
 	to instances of the receiver."
 
-	^WndClassAtom! !
+	^self wndClassName! !
 !ImageViewAbstract class categoriesFor: #edgeStyles!constants!public! !
 !ImageViewAbstract class categoriesFor: #edgeStyleTable!constants!public! !
 !ImageViewAbstract class categoriesFor: #icon!constants!public! !

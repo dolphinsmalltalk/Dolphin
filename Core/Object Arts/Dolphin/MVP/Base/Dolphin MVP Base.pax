@@ -235,6 +235,7 @@ package methodNames
 	add: #UserLibrary -> #beginPaint:lpPaint:;
 	add: #UserLibrary -> #bringWindowToTop:;
 	add: #UserLibrary -> #callWindowProc:hWnd:msg:wParam:lParam:;
+	add: #UserLibrary -> #callWindowProcW:hWnd:msg:wParam:lParam:;
 	add: #UserLibrary -> #childWindowFromPointEx:pt:uFlags:;
 	add: #UserLibrary -> #clientToScreen:lpPoint:;
 	add: #UserLibrary -> #closeClipboard;
@@ -243,6 +244,7 @@ package methodNames
 	add: #UserLibrary -> #createMenu;
 	add: #UserLibrary -> #createPopupMenu;
 	add: #UserLibrary -> #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:;
+	add: #UserLibrary -> #createWindowExW:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:;
 	add: #UserLibrary -> #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:;
 	add: #UserLibrary -> #deleteMenu:uPosition:uFlags:;
 	add: #UserLibrary -> #destroyAcceleratorTable:;
@@ -298,6 +300,8 @@ package methodNames
 	add: #UserLibrary -> #getWindowRect:lpRect:;
 	add: #UserLibrary -> #getWindowText:lpString:nMaxCount:;
 	add: #UserLibrary -> #getWindowTextLength:;
+	add: #UserLibrary -> #getWindowTextLengthW:;
+	add: #UserLibrary -> #getWindowTextW:lpString:nMaxCount:;
 	add: #UserLibrary -> #getWindowThreadProcessId:lpdwProcessId:;
 	add: #UserLibrary -> #getWindowULong:nIndex:;
 	add: #UserLibrary -> #getWindowULongPtr:nIndex:;
@@ -309,6 +313,7 @@ package methodNames
 	add: #UserLibrary -> #isClipboardFormatAvailable:;
 	add: #UserLibrary -> #isDialogMessage:lpMsg:;
 	add: #UserLibrary -> #isIconic:;
+	add: #UserLibrary -> #isWindowUnicode:;
 	add: #UserLibrary -> #isZoomed:;
 	add: #UserLibrary -> #loadAccelerators:lpTableName:;
 	add: #UserLibrary -> #loadCursorFromFile:;
@@ -352,9 +357,14 @@ package methodNames
 	add: #UserLibrary -> #setProp:lpString:hData:;
 	add: #UserLibrary -> #setScrollInfo:fnBar:lpsi:fRedraw:;
 	add: #UserLibrary -> #setSysColors:lpaElements:lpaRgbValues:;
-	add: #UserLibrary -> #setWindowLong:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowLongA:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowLongPtrA:nIndex:dwNewLong:;
 	add: #UserLibrary -> #setWindowPlacement:lpwndpl:;
 	add: #UserLibrary -> #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:;
+	add: #UserLibrary -> #setWindowULongA:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowULongPtrA:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowULongPtrW:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowULongW:nIndex:dwNewLong:;
 	add: #UserLibrary -> #showCursor:;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
 	add: #UserLibrary -> #systemParametersInfo:uiParam:pvParam:fWinIni:;
@@ -365,12 +375,13 @@ package methodNames
 	add: #UserLibrary -> #unregisterHotKey:id:;
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
-	add: #UserLibrary -> #winHelp:lpszHelp:uCommand:dwData:;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'ExternalLibrary class' -> #icon;
 	add: 'File class' -> #icon;
 	add: 'Notification class' -> #icon;
+	add: 'String class' -> #getTextOfWindow:;
+	add: 'Utf16String class' -> #getTextOfWindow:;
 	add: 'Warning class' -> #icon;
 	yourself.
 
@@ -1478,6 +1489,19 @@ setTextInto: aView
 !String categoriesFor: #copyToClipboard!copying!public! !
 !String categoriesFor: #setTextInto:!double dispatch!private! !
 
+!String class methodsFor!
+
+getTextOfWindow: aView
+	| buf len |
+	len := aView textLength.
+	buf := self new: len.
+	UserLibrary default
+		getWindowText: aView asParameter
+		lpString: buf
+		nMaxCount: len + 1.
+	^buf! !
+!String class categoriesFor: #getTextOfWindow:!helpers!private! !
+
 !UserLibrary methodsFor!
 
 adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
@@ -1552,7 +1576,7 @@ bringWindowToTop: hWnd
 	^self invalidCall!
 
 callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
-	"Pass a message to the specified window procedure. 
+	"Pass a message to the specified Ansi window procedure. 
 		LRESULT CallWindowProc(
   			WNDPROC lpPrevWndFunc,	// pointer to previous procedure
 			HWND hWnd,			// handle to window
@@ -1565,6 +1589,22 @@ callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
 	as being a DWORD as this allows us to pass a wider range of types."
 
 	<stdcall: uintptr CallWindowProcA dword handle dword uintptr uintptr>
+	^self invalidCall!
+
+callWindowProcW: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
+	"Pass a message to the specified Unicode window procedure. 
+		LRESULT CallWindowProc(
+  			WNDPROC lpPrevWndFunc,	// pointer to previous procedure
+			HWND hWnd,			// handle to window
+			UINT Msg,				// message
+			WPARAM wParam,			// first message parameter
+			LPARAM lParam 			// second message parameter
+		);
+	N.B. As we don't want to pass the address of a Smalltalk object containing
+	the WNDPROC's address to the function, we specify the first parameter
+	as being a DWORD as this allows us to pass a wider range of types."
+
+	<stdcall: uintptr CallWindowProcW dword handle dword uintptr uintptr>
 	^self invalidCall!
 
 childWindowFromPointEx: hwnd pt: aPOINTL uFlags: flags
@@ -1610,7 +1650,7 @@ createAcceleratorTable: pTable cEntries: tableSize
 			int cEntries 		// number of structures in the array
 		);"
 
-	<stdcall: handle CreateAcceleratorTableA lpvoid sdword>
+	<stdcall: handle CreateAcceleratorTableW ACCEL* sdword>
 	^self invalidCall!
 
 createMenu
@@ -1633,13 +1673,13 @@ createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle:
 	"Creates an overlapped, pop-up, or child window with the specified the parent or owner (if any), class, 
 	title, menu, style (and extended style), position and extent. Answer the handle of the
 	new window, or nil if the create fails.
-	N.B. In order to correctly subclass controls so that Dolphin receive's creation messages
+	N.B. In order to correctly subclass controls so that Dolphin receives creation messages
 	for those controls, View>>hookWindowCreate should be called before this function.
 		HWND CreateWindowEx(
 			DWORD dwExStyle,		// extended window style
-			LPCTSTR lpClassName,	// pointer to registered class name
-			LPCTSTR lpWindowName,	// pointer to window name
-			DWORD dwStyle,			// window style
+			LPCSTR lpClassName,	// pointer to registered class name
+			LPCSTR lpWindowName,	// pointer to window name
+			DWORD dwStyle,		// window style
 			int x,				// horizontal position of window
 			int y,				// vertical position of window
 			int nWidth,			// window width
@@ -1650,7 +1690,34 @@ createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle:
 			LPVOID lpParam 		// pointer to window-creation data
 		);"
 
-	<stdcall: handle CreateWindowExA dword lpvoid lpvoid dword sdword sdword sdword sdword handle handle handle lpvoid>
+	<stdcall: handle CreateWindowExA dword lpstr lpstr dword sdword sdword sdword sdword handle handle handle lpvoid>
+	^self invalidCall
+!
+
+createWindowExW: exstyle lpClassName: classname lpWindowName: windowname dwStyle: style 
+		x: x y: y nWidth: width nHeight: height 
+		hWndParent: parent hMenu: menu hInstance: instance lpParam: lpParam
+	"Creates an overlapped, pop-up, or child window with the specified the parent or owner (if any), class, 
+	title, menu, style (and extended style), position and extent. Answer the handle of the
+	new window, or nil if the create fails.
+	N.B. In order to correctly subclass controls so that Dolphin receives creation messages
+	for those controls, View>>hookWindowCreate should be called before this function.
+		HWND CreateWindowEx(
+			DWORD dwExStyle,		// extended window style
+			LPCWSTR lpClassName,	// pointer to registered class name
+			LPCWSTR lpWindowName,	// pointer to window name
+			DWORD dwStyle,		// window style
+			int x,				// horizontal position of window
+			int y,				// vertical position of window
+			int nWidth,			// window width
+			int nHeight,			// window height
+			HWND hWndParent,		// handle to parent or owner window
+			HMENU hMenu,			// handle to menu, or child-window identifier
+			HINSTANCE hInstance,	// handle to application instance
+			LPVOID lpParam 		// pointer to window-creation data
+		);"
+
+	<stdcall: handle CreateWindowExW dword lpwstr lpwstr dword sdword sdword sdword sdword handle handle handle lpvoid>
 	^self invalidCall
 !
 
@@ -1790,7 +1857,7 @@ drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: 
 			[in]int cy,
 			[in]unsigned int fuFlags);"
 
-	<stdcall: bool DrawStateA handle handle void* intptr uintptr sdword sdword sdword sdword dword>
+	<stdcall: bool DrawStateW handle handle void* intptr uintptr sdword sdword sdword sdword dword>
 	^self invalidCall!
 
 drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTFormat lpDTParams: lpdtParams
@@ -1805,7 +1872,7 @@ drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTF
 			LPDRAWTEXTPARAMS lpDTParams	// pointer to struct with options 
 		);
 	" 
-	<stdcall: sdword DrawTextExA handle lpstr sdword RECT* dword lpvoid>
+	<stdcall: sdword DrawTextExW handle lpwstr sdword RECT* dword lpvoid>
 	^self invalidCall!
 
 emptyClipboard
@@ -1886,7 +1953,7 @@ fillRect: hdc lprc: aRECT hbr: hBrush
 findWindow: lpClassName lpWindowName: lpWindowName
 	"Find and answer the handle of the top-level window with matching class name and caption."
 
-	<stdcall: handle FindWindowA lpstr lpstr>
+	<stdcall: handle FindWindowW lpwstr lpwstr>
 	^self invalidCall!
 
 flashWindow: hWnd bInvert: bInvert
@@ -1936,11 +2003,11 @@ getClassName: aWindowHandle lpClassName: aByteBuffer nMaxCount: anInteger
 	"Retrieves the name of the Windows class to which the specified window belongs.
 		int GetClassName(
 			HWND hWnd,			// handle of window
-			LPTSTR lpClassName,	// address of buffer for class name
+			LPWSTR lpClassName,	// address of UTF16 buffer for class name
 			int nMaxCount 			// size of buffer, in characters
 		);"
 
-	<stdcall: sdword GetClassNameA handle lpvoid sdword>
+	<stdcall: sdword GetClassNameW handle lpvoid sdword>
 	^self invalidCall!
 
 getClientRect: aWindowHandle lpRect: aRECT
@@ -1970,11 +2037,11 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 
 		int GetClipboardFormatName( 
 			UINT format,				// clipboard format to retrieve 
-			LPTSTR lpszFormatName, 	// address of buffer for name 
+			LPWSTR lpszFormatName, 	// address of buffer for name 
 			int cchMaxCount  			// length of name string in characters 
 		);"
 
-	<stdcall: sdword GetClipboardFormatNameA dword lpstr sdword>
+	<stdcall: sdword GetClipboardFormatNameW dword lpwstr sdword>
 	^self invalidCall!
 
 getCursor
@@ -2097,13 +2164,13 @@ getProp: aWindowHandle lpString: name
 	of the given window.
 		HANDLE GetProp(
 			HWND hWnd,	// handle of window
-			LPCTSTR lpString 	// atom or address of string
+			LPCWSTR lpString 	// atom or address of string
 		);.
 
-	N.B. The return specification HANDLE here indicates that the value is an opaque 32-bit
-	(DWORD) value, so we use #dword, as we reserve #handle for real handles."
+	N.B. The return specification HANDLE here indicates that the value is an opaque unsigned
+	integer value, so we use uintptr, as we reserve #handle for real handles."
 
-	<stdcall: dword GetPropA handle lpvoid>
+	<stdcall: uintptr GetPropW handle lpwstr>
 	^self invalidCall
 
 !
@@ -2266,6 +2333,29 @@ getWindowTextLength: hWnd
 	^self invalidCall
 !
 
+getWindowTextLengthW: hWnd
+	"Answer the length, in characters, of the specified window's title 'text'
+		int GetWindowTextLength(
+			HWND hWnd 	// handle of window or control with text
+		);"
+
+	<stdcall: sdword GetWindowTextLengthW handle>
+	^self invalidCall
+!
+
+getWindowTextW: aWindow lpString: aBuffer nMaxCount: len
+	"Copy the text of the specified window (its title bar, or other appropriate text)
+	into the supplied buffer, up to the specified maximum length
+		int GetWindowText(
+			HWND hWnd,		// handle of window or control with text
+			LPTSTR lpString,	// address of buffer for text
+			int nMaxCount 		// maximum number of characters to copy
+		);"
+
+	<stdcall: sdword GetWindowTextW handle lpvoid sdword>
+	^self invalidCall
+!
+
 getWindowThreadProcessId: aWindowHandle lpdwProcessId: lpdw
 	"The GetWindowThreadProcessId function retrieves the identifier of the thread that created 
 	the specified window and, optionally, the identifier of the process that created the window. 
@@ -2286,9 +2376,11 @@ getWindowULong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	<stdcall: dword GetWindowLongA handle sdword>
 	^self invalidCall!
 
-getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset 
+getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various unsigned values retrieved from the window with handle, aWindowHandle. See
 	#getWindowLongPtr:offset: for more details"
+
+	"Note: This function only exists on Win64. It is not present on Win32."
 
 	<stdcall: uintptr GetWindowLongPtrA handle sdword>
 	^self invalidCall!
@@ -2377,6 +2469,10 @@ isIconic: aWindowHandle
 		);"
 
 	<stdcall: bool IsIconic handle>
+	^self invalidCall!
+
+isWindowUnicode: hWnd
+	<stdcall: bool IsWindowUnicode handle>
 	^self invalidCall!
 
 isZoomed: aWindowHandle
@@ -2876,7 +2972,7 @@ setSysColors: count lpaElements: elements lpaRgbValues: values
 	<stdcall: bool SetSysColors sdword sdword* ColorRef*>
 	^self invalidCall!
 
-setWindowLong: aWindowHandle nIndex: offset dwNewLong: value
+setWindowLongA: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"Change an attribute of the specified window, setting 
 	a signed 32-bit (long) value at the specified offset into 
 	the extra window memory of a window.
@@ -2887,6 +2983,10 @@ setWindowLong: aWindowHandle nIndex: offset dwNewLong: value
 		);"
 
 	<stdcall: sdword SetWindowLongA handle sdword sdword>
+	^self invalidCall!
+
+setWindowLongPtrA: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: intptr SetWindowLongPtrA handle sdword intptr>
 	^self invalidCall!
 
 setWindowPlacement: aWindowHandle lpwndpl: aWinWINDOWPLACEMENT
@@ -2924,6 +3024,22 @@ setWindowPos: aWindowHandle
 	<stdcall: bool SetWindowPos handle dword sdword sdword sdword sdword dword>
 	^self invalidCall
 		!
+
+setWindowULongA: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: dword SetWindowLongA handle sdword dword>
+	^self invalidCall!
+
+setWindowULongPtrA: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: uintptr SetWindowLongPtrA handle sdword uintptr>
+	^self invalidCall!
+
+setWindowULongPtrW: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
+	^self invalidCall!
+
+setWindowULongW: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: dword SetWindowLongW handle sdword dword>
+	^self invalidCall!
 
 showCursor: aBoolean
 	"Show or hide the cursor. N.B. A count is maintained of the number of times 
@@ -3039,19 +3155,6 @@ windowFromPoint: aPOINTL
 	for a nonrestrictive search."
 
 	<stdcall: handle WindowFromPoint POINTL>
-	^self invalidCall!
-
-winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
-	"Invoke the WinHelp() function of the module wrapped by the receiver.
-	Helpstring: Starts windows help and passes a request for help
-
-		BOOL __stdcall WinHelp(
-			HWND hwndMain,
-			LPCSTR lpszHelp,
-			unsigned int uCommand,
-			ULONG_PTR dwData);"
-
-	<stdcall: bool WinHelpA handle lpstr dword uintptr>
 	^self invalidCall! !
 !UserLibrary categoriesFor: #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:!public!win32 functions-coordinate space and transformation! !
 !UserLibrary categoriesFor: #animateWindow:dwTime:dwFlags:!**auto generated**!public! !
@@ -3060,6 +3163,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #bringWindowToTop:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
+!UserLibrary categoriesFor: #callWindowProcW:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
 !UserLibrary categoriesFor: #childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
 !UserLibrary categoriesFor: #closeClipboard!public!win32 functions-clipboard! !
@@ -3068,6 +3172,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #createMenu!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #createPopupMenu!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #createWindowExW:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
@@ -3123,6 +3228,8 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getWindowTextLength:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #getWindowTextLengthW:!public! !
+!UserLibrary categoriesFor: #getWindowTextW:lpString:nMaxCount:!public! !
 !UserLibrary categoriesFor: #getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getWindowULong:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getWindowULongPtr:nIndex:!public!win32 functions-window class! !
@@ -3134,6 +3241,7 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #isClipboardFormatAvailable:!public!win32 functions-clipboard! !
 !UserLibrary categoriesFor: #isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #isIconic:!public!win32 functions-icon! !
+!UserLibrary categoriesFor: #isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
 !UserLibrary categoriesFor: #isZoomed:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
 !UserLibrary categoriesFor: #loadCursorFromFile:!public!win32 functions-cursor! !
@@ -3177,9 +3285,14 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #setProp:lpString:hData:!public!win32 functions-window property! !
 !UserLibrary categoriesFor: #setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
 !UserLibrary categoriesFor: #setSysColors:lpaElements:lpaRgbValues:!public! !
-!UserLibrary categoriesFor: #setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowLongA:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowLongPtrA:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setWindowPlacement:lpwndpl:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
+!UserLibrary categoriesFor: #setWindowULongA:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowULongPtrA:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowULongPtrW:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowULongW:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 !UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
@@ -3190,7 +3303,19 @@ winHelp: hwndMain lpszHelp: lpszHelp uCommand: uCommand dwData: dwData
 !UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #winHelp:lpszHelp:uCommand:dwData:!**auto generated**!public! !
+
+!Utf16String class methodsFor!
+
+getTextOfWindow: aView
+	| buf len |
+	len := aView textLength.
+	buf := self new: len.
+	UserLibrary default
+		getWindowTextW: aView asParameter
+		lpString: buf
+		nMaxCount: len + 1.
+	^buf! !
+!Utf16String class categoriesFor: #getTextOfWindow:!helpers!private! !
 
 !Warning class methodsFor!
 

@@ -63,7 +63,7 @@ createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: d
 			LPARAM dwInitParam 		// value passed to wmInitDialog:
 		);"
 
-	<stdcall: sdword CreateDialogParamA handle lpvoid handle lpvoid sdword>
+	<stdcall: sdword CreateDialogParamW handle lpvoid handle lpvoid sdword>
 	^self invalidCall!
 
 defDlgProc: hWnd msg: msg wParam: wParam lParam: lParam
@@ -78,7 +78,7 @@ defDlgProc: hWnd msg: msg wParam: wParam lParam: lParam
 		);"
 
 
-	<stdcall: uintptr DefDlgProcA handle dword uintptr uintptr>
+	<stdcall: uintptr DefDlgProcW handle dword uintptr uintptr>
 	^self invalidCall!
 
 defWindowProc: hWnd msg: msg wParam: wParam lParam: lParam
@@ -326,18 +326,6 @@ isWindowVisible: hWnd
 
 	<stdcall: bool IsWindowVisible handle>
 	^self invalidCall!
-
-KeyNameText: lParam lpString: aString nSize: anInteger
-	"Populate a string with the name of a virtual key code
-		int GetKeyNameText( 
-			LONG lParam,	// second parameter of keyboard message	
-			LPWSTR lpString,	// address of buffer for key name	
-			int nSize 	// maximum length of key-name string length	
-		);"
-
-	<stdcall: sdword GetKeyNameTextW dword lpwstr sdword>
-	^self invalidCall
-!
 
 killTimer: aWindowHandle uIDEvent: anInteger
 	"Destroy the specified timer. Any pending wmTimer: messages for the receiver
@@ -626,10 +614,10 @@ setDlgItemText: aWindowHandle nIDDlgItem: anIntegerId lpString: aString
 		BOOL SetDlgItemText(
   			HWND  hDlg,		// handle of dialog box
 			int  nIDDlgItem,	// identifier of control
-			LPCTSTR  lpString 	// text to set
+			LPCWSTR  lpString 	// text to set
 			);"
 
-	<stdcall: bool SetDlgItemTextA handle sdword lpvoid>
+	<stdcall: bool SetDlgItemTextW handle sdword lpwstr>
 	^self invalidCall!
 
 setKeyboardState: a256ByteArray
@@ -794,7 +782,6 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #isWindow:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #isWindowEnabled:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #isWindowVisible:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #KeyNameText:lpString:nSize:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #killTimer:uIDEvent:!public!win32 functions-timer! !
 !UserLibrary categoriesFor: #loadCursor:lpCursorName:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #loadString:uID:lpBuffer:nBufferMax:!public!win32 functions-string manipulation! !
