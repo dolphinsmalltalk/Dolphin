@@ -29,20 +29,17 @@ caption: aString
 
 	self winStruct title: aString!
 
-cdnFileOk: anExternalAddress 
+cdnFileOk: anExternalAddress
 	"Private - The user clicked the OK button; the dialog is about to close. Return 0 to accept the
 	filename choice, or non-zero to reject it."
 
 	| ofn file |
 	ofn := OFNOTIFY fromAddress: anExternalAddress.
 	file := ofn lpOFN lpstrFile.
-	^(validationBlock value: file) 
+	^(validationBlock value: file)
 		ifTrue: [0]
 		ifFalse: 
-			[UserLibrary default 
-				setWindowLong: view handle
-				nIndex: DWL_MSGRESULT
-				dwNewLong: 1.
+			[view setWindowLong: DWL_MSGRESULT to: 1.
 			1]!
 
 cdnFolderChange: anExternalAddress 
