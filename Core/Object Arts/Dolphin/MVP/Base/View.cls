@@ -1978,6 +1978,9 @@ isView
 
 	^true!
 
+isWindowUnicode
+	^UserLibrary default isWindowUnicode: handle!
+
 isWindowVisible
 	"Answer whether both the receiver and its parent have the WS_VISIBLE style,  it is therefore possible
 	that this method will answer true even if the receiver is totally obscured by other windows."
@@ -4629,6 +4632,7 @@ zOrderTop
 !View categoriesFor: #isTransparent!accessing-styles!public! !
 !View categoriesFor: #isTransparent:!accessing-styles!public! !
 !View categoriesFor: #isView!accessing!public!testing! !
+!View categoriesFor: #isWindowUnicode!public!testing! !
 !View categoriesFor: #isWindowVisible!public!testing! !
 !View categoriesFor: #isWindowVisible:!accessing!public!testing! !
 !View categoriesFor: #keyboardCommands!accessing!public! !

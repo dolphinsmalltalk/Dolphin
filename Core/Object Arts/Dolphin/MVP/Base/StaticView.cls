@@ -15,6 +15,27 @@ Instance Variables:
 !StaticView categoriesForClass!MVP-Views! !
 !StaticView methodsFor!
 
+basicCreateAt: position extent: extentPoint
+	"Private - Create the Win32 window for the receiver, and answer its handle.
+	N.B. The window may not be properly subclassed - use #createAt:extent: instead."
+
+	| dwStyle |
+	#todo.	"Push this up. Temporarily (as a more minimal test) only StaticViews are being created in Unicode mode,"
+	dwStyle := self baseCreationStyle.
+	^UserLibrary default
+		createWindowExW: self extendedStyle
+		lpClassName: self class winClassName
+		lpWindowName: self windowName
+		dwStyle: dwStyle
+		x: position x
+		y: position y
+		nWidth: extentPoint x
+		nHeight: extentPoint y
+		hWndParent: self creationParentView asParameter
+		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
+		hInstance: VMLibrary default applicationHandle
+		lpParam: nil!
+
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
@@ -96,6 +117,7 @@ setWndProc: anAddress
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
+!StaticView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
 !StaticView categoriesFor: #defaultExtent!constants!private! !
 !StaticView categoriesFor: #defaultWindowStyle!constants!private! !
