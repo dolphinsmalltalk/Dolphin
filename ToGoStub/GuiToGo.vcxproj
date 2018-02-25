@@ -206,7 +206,6 @@
     <ClInclude Include="..\RaiseThreadException.h" />
     <ClInclude Include="..\regkey.h" />
     <ClInclude Include="..\segdefs.h" />
-    <ClInclude Include="..\STArray.h" />
     <ClInclude Include="..\startvm.h" />
     <ClInclude Include="..\StdAfx.h" />
     <ClInclude Include="..\STExternal.h" />
@@ -229,7 +228,6 @@
     <ClInclude Include="..\TraceStream.h" />
     <ClInclude Include="..\VMExcept.h" />
     <ClInclude Include="..\VMPointers.h" />
-    <ClInclude Include="..\WINHEAP.H" />
     <ClInclude Include="..\zlib\deflate.h" />
     <ClInclude Include="..\zlib\infblock.h" />
     <ClInclude Include="..\zlib\infcodes.h" />

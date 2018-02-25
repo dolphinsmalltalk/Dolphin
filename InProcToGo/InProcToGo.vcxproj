@@ -188,7 +188,6 @@
     <None Include="..\InterprtPrim.inl" />
     <None Include="..\InterprtProc.inl" />
     <None Include="..\ObjMemPriv.inl" />
-    <None Include="..\ote.inl" />
     <None Include="..\Res\hsplit.cur" />
     <None Include="..\Res\vsplit.cur" />
     <None Include="IPToGo.def" />
@@ -244,7 +243,6 @@
     <ClInclude Include="..\TraceStream.h" />
     <ClInclude Include="..\VMExcept.h" />
     <ClInclude Include="..\VMPointers.h" />
-    <ClInclude Include="..\WINHEAP.H" />
     <ClInclude Include="..\zlib\deflate.h" />
     <ClInclude Include="..\zlib\infblock.h" />
     <ClInclude Include="..\zlib\infcodes.h" />

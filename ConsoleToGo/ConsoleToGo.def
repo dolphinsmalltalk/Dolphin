@@ -83,6 +83,7 @@ uncompress
 	strpbrk
 	ungetc
 	wcscspn
+	wcsncpy_s
 
 ; VMLibrary
 

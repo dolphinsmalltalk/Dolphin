@@ -1118,8 +1118,7 @@ ExtCallArgLPSTR:
 
 @@:
 	mov		ecx, ARG
-	mov		edx, CP_ACP									; Assume its an ANSI API (which is generally true of byte string APIs on Windows, unfortunately)
-	call	NewStringFromUtf16
+	call	NewStringFromUtf16							; Assume its an ANSI API and will not understand Utf8 (which is generally true of byte string APIs on Windows, unfortunately)
 	ASSUME	ARG:PTR OTE
 
 	mov		[_SP+OOPSIZE], eax
