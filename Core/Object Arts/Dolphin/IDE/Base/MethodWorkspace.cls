@@ -339,29 +339,6 @@ resetParseTimer
 		killParseTimer;
 		setParseTimer!
 
-secondarySelectionStyle
-	"Private - The receiver highlights all text matching <view selection>"
-
-	| name style styles |
-	name := #secondarySelection.
-	styles := view indicatorStyles.
-	style := styles detect: [:each | each name = name] ifNone: [nil].
-	style ifNil: [
-		| id |
-		id := (styles 
-			inject: 0
-			into: [:max :each | max max: each id]) + 1.
-		style := ScintillaIndicatorStyle new
-			alpha: 15;
-			id: id;
-			name: name;
-			styleName: #roundBox;
-			yourself.
-		styles add: style.
-		view indicatorStyles: styles.
-	].
-	^style!
-
 selectedErrorRange
 	^self selectedNode sourceInterval!
 
@@ -392,37 +369,7 @@ selectedNode
 selectionChanged
 	"The receiver highlights all text matching <view selection>"
 
-	| index indicators selection selectionStart style tag text |
-	tag := 'secondary selection'.
-	style := self secondarySelectionStyle.
-	indicators := view indicators.
-	indicators copy do: [:each | 
-		each tag = tag ifTrue: [
-			indicators remove: each.
-		].
-	].
-	((selection := view selection) isNil or: [selection isEmpty]) ifTrue: [
-		view indicators: indicators.
-		^self
-	].
-	index := 0.
-	text := view plainText.
-	selectionStart := view selectionRange start.
-	[
-		index := text indexOfSubCollection: selection startingAt: index + 1.
-		0 < index.
-	] whileTrue: [
-		| end |
-		end := index + selection size - 1.
-		index ~~ selectionStart ifTrue: [
-			indicators add: (ScintillaIndicator
-				styleName: style name
-				range: (index to: end) 
-				tag: tag).
-		].
-	].
-	view indicators: indicators.
-!
+	view identifyTextMatchingSelectionWithStyleName: #secondarySelection.!
 
 selectorFromNode: aStProgramNode 
 	^aStProgramNode isMessage 
@@ -541,7 +488,6 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #reformattedSource!helpers!private! !
 !MethodWorkspace categoriesFor: #repositionAtSourceLine:!operations!public! !
 !MethodWorkspace categoriesFor: #resetParseTimer!helpers!private! !
-!MethodWorkspace categoriesFor: #secondarySelectionStyle!event handling!private! !
 !MethodWorkspace categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
 !MethodWorkspace categoriesFor: #selectedMessage!accessing!private! !
 !MethodWorkspace categoriesFor: #selectedMessageNode!accessing!private!refactoring! !
