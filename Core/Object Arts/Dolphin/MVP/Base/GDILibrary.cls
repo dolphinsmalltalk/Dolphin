@@ -565,11 +565,11 @@ getTextExtentPoint32: hdc lpString: lpString cbString: cbString lpSize: lpSize
 
 		BOOL __stdcall GetTextExtentPoint32(
 			HDC HDC,
-			LPCSTR lpString,
+			LPWSTR lpString,
 			int cbString,
 			SIZEL* lpSize);"
 
-	<stdcall: bool GetTextExtentPoint32A handle lpstr sdword SIZE*>
+	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword SIZE*>
 	^self invalidCall!
 
 getTextMetrics: hdc lptm: lptm
