@@ -12,6 +12,14 @@ LOGFONT contains information that describes a logical font, such as the face nam
 !LOGFONT categoriesForClass!DxVBLibA-Structs! !
 !LOGFONT methodsFor!
 
+createFont
+	^GDILibrary default createFontIndirectA: self!
+
+faceName: aString
+	"Set the receiver's lfFaceName field."
+	
+	self lfFaceName: aString asAnsiString!
+
 lfFaceName
 	"Answer the receiver's lfFaceName field as a Smalltalk object."
 
@@ -28,6 +36,8 @@ lfFaceName: anObject
 		to: ##(self offsetOf: #lfFaceName) + size
 		startingAt: 1.
 	bytes byteAtOffset: ##(self offsetOf: #lfFaceName) + size put: 0! !
+!LOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
+!LOGFONT categoriesFor: #faceName:!accessing!public! !
 !LOGFONT categoriesFor: #lfFaceName!**compiled accessors**!public! !
 !LOGFONT categoriesFor: #lfFaceName:!**compiled accessors**!public! !
 

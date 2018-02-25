@@ -45,7 +45,7 @@ characterSet: anInteger
 createHandle
 	"Private - Answer an external handle to a new font as described by the logfont structure."
 
-	^GDILibrary default createFontIndirect: logfont!
+	^logfont createFont!
 
 desktopResolution
 	"Private - Answer the resolution of the active desktop."
@@ -65,7 +65,7 @@ handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."
 
 	super handle: hFont.
-	self getData: logfont!
+	self getDataW: logfont!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -76,7 +76,7 @@ initialize
 	"Initialise the receiver."
 
 	super initialize.
-	(logfont := LOGFONT new) lfWeight: FW_NORMAL.
+	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
 	resolution := self desktopResolution.!
 
 isBold
@@ -152,7 +152,7 @@ name
 name: aString
 	"Set the receiver's font name attribute. This has no affect if the receiver is already realized."
 
-	logfont lfFaceName: aString!
+	logfont faceName: aString!
 
 pixelFromPoints: size
 	"Private - Answers a pixel size from a given point size."

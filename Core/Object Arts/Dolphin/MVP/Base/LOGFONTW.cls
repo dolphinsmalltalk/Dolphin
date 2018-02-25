@@ -36,8 +36,16 @@ struct tagLOGFONTW {
 !LOGFONTW categoriesForClass!Win32-Structs! !
 !LOGFONTW methodsFor!
 
+createFont
+	^GDILibrary default createFontIndirectW: self!
+
+faceName: aString
+	"Set the receiver's lfFaceName field."
+	
+	self lfFaceName: aString asUtf16String!
+
 lfFaceName
-	"Answer the receiver's lfFaceName field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'lfFaceName' field."
 
 	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #lfFaceName)!
 
@@ -52,6 +60,8 @@ lfFaceName: anUtf16String
 		to: ##(self offsetOf: #lfFaceName) + size
 		startingAt: 1.
 	bytes wordAtOffset: ##(self offsetOf: #lfFaceName) + size put: 0! !
+!LOGFONTW categoriesFor: #createFont!private!realizing/unrealizing! !
+!LOGFONTW categoriesFor: #faceName:!accessing!public! !
 !LOGFONTW categoriesFor: #lfFaceName!**compiled accessors**!public! !
 !LOGFONTW categoriesFor: #lfFaceName:!**compiled accessors**!public! !
 

@@ -36,18 +36,22 @@ initialize
 	super initialize.
 	self winStruct maskIn: ##(CF_SCREENFONTS | CF_INITTOLOGFONTSTRUCT)!
 
-model: aValueModel 
+model: aValueModel
 	"Set the model of the receiver to be aValueModel."
 
-	| font |
+	| font lf lfw |
 	super model: aValueModel.
 	font := self value ifNil: [Font default].
-	self winStruct logFont: font logFont copy!
+	"Might be a legacy Font instance with a LOGFONTA description, but we need a LOGFONTW"
+	lf := font logFont.
+	lfw := LOGFONTW new copyBytes: lf bytes.
+	lfw faceName: lf faceName.
+	self winStruct logFont: lfw!
 
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
-	^CHOOSEFONT! !
+	^CHOOSEFONTW! !
 !FontDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
 !FontDialog categoriesFor: #extractResult:!helpers!private! !
 !FontDialog categoriesFor: #initialize!public! !

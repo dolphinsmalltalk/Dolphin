@@ -19,10 +19,10 @@ addFontResource: fontFile
 	The font can subsequently be used for text output by any application. 
 
 	int AddFontResource(
-		LPCTSTR lpszFilename   // font file name
+		LPCWSTR lpszFilename   // font file name
 	);"
 
-	<stdcall: sdword AddFontResourceA lpstr>
+	<stdcall: sdword AddFontResourceW lpwstr>
 	^self invalidCall!
 
 beginPath: hdc
@@ -128,12 +128,12 @@ createDC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpInitData: l
 	Helpstring: Creates a device context (DC) for a device by using the specified name
 
 		HDC __stdcall CreateDC(
-			LPCSTR lpszDriver,
-			LPCSTR lpszDevice,
-			LPCSTR lpszOutput,
+			LPCWSTR lpszDriver,
+			LPCWSTR lpszDevice,
+			LPCWSTR lpszOutput,
 			DEVMODE* lpInitData);"
 
-	<stdcall: handle CreateDCA lpstr lpstr lpstr void*>
+	<stdcall: handle CreateDCW lpwstr lpwstr lpwstr void*>
 	^self invalidCall!
 
 createDIBSection: hdc pbmi: pbmi iUsage: iUsage ppvBits: ppvBits hSection: hSection dwOffset: dwOffset
@@ -161,7 +161,7 @@ createEllipticRgnIndirect: lprc
 	<stdcall: handle CreateEllipticRgnIndirect RECT*>
 	^self invalidCall!
 
-createFontIndirect: lplf
+createFontIndirectA: lplf
 	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
 	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
 
@@ -169,6 +169,16 @@ createFontIndirect: lplf
 			LOGFONT* lplf);"
 
 	<stdcall: handle CreateFontIndirectA LOGFONT*>
+	^self invalidCall!
+
+createFontIndirectW: lplf
+	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
+	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
+
+		HFONT __stdcall CreateFontIndirect(
+			LOGFONTW* lplf);"
+
+	<stdcall: handle CreateFontIndirectW LOGFONTW*>
 	^self invalidCall!
 
 createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lpdvminit
@@ -498,6 +508,20 @@ getObject: objectHandle cbBuffer: count lpvObject: buffer
 		);"
 
 	<stdcall: sdword GetObjectA handle sdword lpvoid>
+	^self invalidCall!
+
+getObjectW: objectHandle cbBuffer: count lpvObject: buffer
+	"Obtains information about a specified graphics object. Depending on 
+	the graphics object, the function places a filled-in BITMAP, DIBSECTION, 
+	EXTLOGPEN, LOGBRUSH, LOGFONT, or LOGPEN structure, or a count of table 
+	entries (for a logical palette), into a specified buffer. 
+		int GetObject(
+  			HGDIOBJ hgdiobj,	// handle to graphics object of interest
+			int cbBuffer,	// size of buffer for object information 
+			LPVOID lpvObject 	// pointer to buffer for object information  
+		);"
+
+	<stdcall: sdword GetObjectW handle sdword lpvoid>
 	^self invalidCall!
 
 getOutlineTextMetrics: anExternalHandle cbData: anInteger lpotm: anOUTLINETEXTMETRIC 
@@ -1157,7 +1181,8 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
 !GDILibrary categoriesFor: #createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
-!GDILibrary categoriesFor: #createFontIndirect:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #createPalette:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #createPen:nWidth:crColor:!**auto generated**!public!win32 functions-pen! !
@@ -1187,6 +1212,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #getMapMode:!**auto generated**!public!win32 functions-transformations! !
 !GDILibrary categoriesFor: #getNearestPaletteIndex:crColor:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #getObject:cbBuffer:lpvObject:!public!win32 functions-device context! !
+!GDILibrary categoriesFor: #getObjectW:cbBuffer:lpvObject:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getOutlineTextMetrics:cbData:lpotm:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getPaletteEntries:iStartIndex:nEntries:lppe:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #getPixel:xPos:yPos:!public!win32 functions-device context! !

@@ -83,7 +83,6 @@ package classNames
 	add: #EXTLOGPEN;
 	add: #LOGCOLORSPACE;
 	add: #LOGCOLORSPACEW;
-	add: #LOGFONTW;
 	add: #PIXELFORMATDESCRIPTOR;
 	add: #POINTS;
 	add: #XFORM;
@@ -491,11 +490,6 @@ EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

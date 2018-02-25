@@ -958,6 +958,17 @@ gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
 	<stdcall: sdword GdipCreateFontFromLogfontA  handle LOGFONT* handle*>
 	^self invalidCall!
 
+gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
+	"Invoke the GdipCreateFontFromLogfontA() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipCreateFontFromLogfontA(
+			HDC HDC,
+			[in]LOGFONTW* LOGFONT,
+			[out, retval]PGpFont* font);"
+
+	<stdcall: sdword GdipCreateFontFromLogfontA  handle LOGFONTW* handle*>
+	^self invalidCall!
+
 gdipCreateFromHDC: hdc graphics: graphics
 	"Invoke the GdipCreateFromHDC() function of the module wrapped by the receiver.
 
@@ -3539,6 +3550,17 @@ gdipGetLogFontA: font graphics: graphics logfonta: logfonta
 			LOGFONTA* LOGFONTA);"
 
 	<stdcall: sdword GdipGetLogFontA  handle handle LOGFONT*>
+	^self invalidCall!
+
+gdipGetLogFontW: font graphics: graphics logfonta: logfonta
+	"Invoke the GdipGetLogFontA() function of the module wrapped by the receiver.
+
+		GpStatus __stdcall GdipGetLogFontA(
+			PGpFont font,
+			PGpGraphics graphics,
+			LOGFONTW* LOGFONTW);"
+
+	<stdcall: sdword GdipGetLogFontW  handle handle LOGFONTW*>
 	^self invalidCall!
 
 gdipGetMatrixElements: matrix matrixOut: matrixOut
@@ -7019,6 +7041,7 @@ uninitialize
 !GdiplusLibrary categoriesFor: #gdipCreateFontFamilyFromName:fontCollection:fontFamily:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipCreateFontFromDC:font:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipCreateFontFromLogfontA:logfont:font:!**auto generated**!public! !
+!GdiplusLibrary categoriesFor: #gdipCreateFontFromLogfontW:logfont:font:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipCreateFromHDC:graphics:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipCreateFromHDC2:hDevice:graphics:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipCreateFromHWND:graphics:!**auto generated**!public! !
@@ -7236,6 +7259,7 @@ uninitialize
 !GdiplusLibrary categoriesFor: #gdipGetLineTransform:matrix:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipGetLineWrapMode:wrapMode:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipGetLogFontA:graphics:logfonta:!**auto generated**!public! !
+!GdiplusLibrary categoriesFor: #gdipGetLogFontW:graphics:logfonta:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipGetMatrixElements:matrixOut:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipGetMetafileDownLevelRasterizationLimit:metafileRasterizationLimitDpi:!**auto generated**!public! !
 !GdiplusLibrary categoriesFor: #gdipGetMetafileHeaderFromEmf:header:!**auto generated**!public! !

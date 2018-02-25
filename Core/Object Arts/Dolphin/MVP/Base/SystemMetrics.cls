@@ -61,12 +61,16 @@ edgeExtent
 	^edgeExtent!
 
 getIconTitleFont
-	"Private - Answer a <Font> which is that used for icon titles on the desktop."
+	"Private - Answer a <Font> which is that used for icon titles on the desktop.
+
+		SystemMetrics current getIconTitleFont
+	"
 
 	^Font fromLogFont: (self 
-				getSysParam: SPI_GETICONTITLELOGFONT
-				type: LOGFONT
-				ifError: [^Font system])!
+				getSysParamW: SPI_GETICONTITLELOGFONT
+				type: LOGFONTW
+				ifError: [^Font system])
+!
 
 getMetric: anInteger 
 	^UserLibrary default getSystemMetrics: anInteger!
@@ -101,6 +105,16 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 		getSysParam: anInteger
 		type: anExternalStructureClass
 		ifError: [UserLibrary default systemError]!
+
+getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable 
+	| struct |
+	struct := anExternalStructureClass new.
+	(UserLibrary default 
+		systemParametersInfoW: anInteger
+		uiParam: 0
+		pvParam: struct
+		fWinIni: 0) ifFalse: [^aNiladicValuable value].
+	^struct!
 
 hasButtonNotes
 	"Answer whether the host supports 'notes' for link buttons."
@@ -303,14 +317,19 @@ mouseHoverTime
 		ifError: [^400]) value!
 
 nonClientMetrics
-	nonClientMetrics isNil 
+	"
+		SystemMetrics current nonClientMetrics
+	"
+	nonClientMetrics isNil
 		ifTrue: 
 			["N.B. SPI_GETNONCLIENTMETRICS does not work in NT 3.51, but we no longer support it."
-			nonClientMetrics := self 
-						getSysParam: SPI_GETNONCLIENTMETRICS
-						type: NONCLIENTMETRICS
+			nonClientMetrics := self
+						getSysParamW: SPI_GETNONCLIENTMETRICS
+						type: NONCLIENTMETRICSW
 						ifError: [UserLibrary default systemError]].
-	^nonClientMetrics!
+	^nonClientMetrics
+
+!
 
 onSettingChanged: aWindowsEvent
 	| code |
@@ -394,6 +413,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #getSysParamDword:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamSdword:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamStruct:type:!helpers!private! !
+!SystemMetrics categoriesFor: #getSysParamW:type:ifError:!helpers!private! !
 !SystemMetrics categoriesFor: #hasButtonNotes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasDesktopComposition!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasEnhancedThemes!capability enquiries!public! !

@@ -207,11 +207,11 @@ isUnderlined: aBoolean
 	self setEffect: CFE_UNDERLINE mask: CFM_UNDERLINE set: aBoolean!
 
 logFont
-	"Answer a <LOGFONT> configured with the font settings from the receiver. The display resolution is assumed in converting from the point size to font height."
+	"Answer a <LOGFONTW> configured with the font settings from the receiver. The display resolution is assumed in converting from the point size to font height."
 
 	| answer |
-	answer := LOGFONT new.
-	answer lfFaceName: self szFaceName.
+	answer := LOGFONTW new.
+	answer faceName: self szFaceName.
 	answer lfHeight: (self pointSize * Canvas desktopResolution y / 72) rounded negated.
 	answer lfWeight: (self isBold ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL]).
 	answer lfItalic: self isItalic asParameter.

@@ -124,6 +124,7 @@ package classNames
 	add: #LinearLayout;
 	add: #LOGBRUSH;
 	add: #LOGFONT;
+	add: #LOGFONTW;
 	add: #LOGPALETTE;
 	add: #LOGPEN;
 	add: #MARGINS;
@@ -146,7 +147,7 @@ package classNames
 	add: #NMTTDISPINFO;
 	add: #NMTTDISPINFOA;
 	add: #NMTTDISPINFOW;
-	add: #NONCLIENTMETRICS;
+	add: #NONCLIENTMETRICSW;
 	add: #NOTIFYICONDATA;
 	add: #NullIcon;
 	add: #OUTLINETEXTMETRIC;
@@ -368,6 +369,7 @@ package methodNames
 	add: #UserLibrary -> #showCursor:;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
 	add: #UserLibrary -> #systemParametersInfo:uiParam:pvParam:fWinIni:;
+	add: #UserLibrary -> #systemParametersInfoW:uiParam:pvParam:fWinIni:;
 	add: #UserLibrary -> #trackMouseEvent:;
 	add: #UserLibrary -> #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:;
 	add: #UserLibrary -> #translateAccelerator:haccl:lpmsg:;
@@ -852,7 +854,7 @@ Win32Structure subclass: #NMHDR
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #NONCLIENTMETRICS
+Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -943,6 +945,11 @@ Win32Structure subclass: #WNDCLASS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractLOGFONT subclass: #LOGFONT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AbstractLOGFONT subclass: #LOGFONTW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -3068,6 +3075,18 @@ systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	<stdcall: bool SystemParametersInfoA dword dword lpvoid dword>
 	^self invalidCall!
 
+systemParametersInfoW: uiAction uiParam: param1 pvParam: param2 fWinIni: update
+	"
+	BOOL SystemParametersInfo(
+		UINT uiAction,	// system parameter to query or set
+		UINT uiParam,	// depends on action to be taken
+		PVOID pvParam,	// depends on action to be taken
+		UINT fWinIni 	// user profile update flag
+	);"
+
+	<stdcall: bool SystemParametersInfoW dword dword lpvoid dword>
+	^self invalidCall!
+
 trackMouseEvent: lpEventTrack 
 	"Invoke the TRACKMOUSEEVENT() function of the module wrapped by the receiver.
 	Helpstring: Posts messages when the mouse pointer leaves a window or hovers over a window for a specified amount of time.
@@ -3296,6 +3315,7 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 !UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #systemParametersInfoW:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !

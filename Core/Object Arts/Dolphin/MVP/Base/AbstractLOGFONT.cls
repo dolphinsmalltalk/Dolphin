@@ -11,10 +11,18 @@ AbstractLOGFONT comment: ''!
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
 !AbstractLOGFONT methodsFor!
 
+createFont
+	^self subclassResponsibility!
+
 faceName
 	"Answer the receiver's lfFaceName field as a String, having trimmed any extra nulls."
 	
 	^self lfFaceName trimNulls!
+
+faceName: aString
+	"Set the receiver's lfFaceName field."
+	
+	self subclassResponsibility!
 
 lfCharSet
 	"Answer the receiver's lfCharSet field as a Smalltalk object."
@@ -125,7 +133,9 @@ lfWidth: anObject
 	"Set the receiver's lfWidth field to the value of anObject."
 
 	bytes sdwordAtOffset: ##(self offsetOf: #lfWidth) put: anObject! !
+!AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
 !AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
+!AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !

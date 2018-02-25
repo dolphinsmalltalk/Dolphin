@@ -625,9 +625,9 @@ getThemeFont: htheme hdc: hdc iPartId: iPartId iStateId: iStateId iPropId: iProp
 			[in]int iPartId,
 			[in]int iStateId,
 			[in]int iPropId,
-			[out]LOGFONT* pFont);"
+			[out]LOGFONTW* pFont);"
 
-	<stdcall: hresult GetThemeFont handle handle sdword sdword sdword LOGFONT*>
+	<stdcall: hresult GetThemeFont handle handle sdword sdword sdword LOGFONTW*>
 	^self invalidCall!
 
 getThemeInt: htheme iPartId: iPartId iStateId: iStateId iPropId: iPropId piVal: piVal
@@ -788,9 +788,9 @@ getThemeSysFont: htheme iFontId: iFontId plf: plf
 		HRESULT __stdcall GetThemeSysFont(
 			[in]HTHEME HTHEME,
 			[in]int iFontId,
-			[out]LOGFONT* plf);"
+			[out]LOGFONTW* plf);"
 
-	<stdcall: hresult GetThemeSysFont handle sdword LOGFONT*>
+	<stdcall: hresult GetThemeSysFont handle sdword LOGFONTW*>
 	^self invalidCall!
 
 getThemeSysInt: htheme iIntId: iIntId piValue: piValue

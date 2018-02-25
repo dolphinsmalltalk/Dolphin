@@ -11,7 +11,7 @@ package basicPackageVersion: '6.2'.
 
 package classNames
 	add: #CHOOSECOLOR;
-	add: #CHOOSEFONT;
+	add: #CHOOSEFONTW;
 	add: #ColorDialog;
 	add: #ComDlgLibrary;
 	add: #CommonDialog;
@@ -69,7 +69,7 @@ CommonDialogStructure subclass: #CHOOSECOLOR
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #CHOOSEFONT
+CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'

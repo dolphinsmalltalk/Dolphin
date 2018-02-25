@@ -31,7 +31,7 @@ chooseFont: aWinCHOOSEFONT
 		LPCHOOSEFONT  lpcf 	// address of structure with initialization data
 	);"
 
-	<stdcall: bool ChooseFontA lpvoid>
+	<stdcall: bool ChooseFontW lpvoid>
 	^self invalidCall
 !
 

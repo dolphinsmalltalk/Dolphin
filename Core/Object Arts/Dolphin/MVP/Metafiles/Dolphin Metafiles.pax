@@ -109,9 +109,9 @@ copyEnhMetaFile: hemf lpszFile: lpszFile
 
 		HENHMETAFILE __stdcall CopyEnhMetaFile(
 			HENHMETAFILE hemf,
-			LPCSTR lpszFile);"
+			LPCWSTR lpszFile);"
 
-	<stdcall: handle CopyEnhMetaFileA handle lpstr>
+	<stdcall: handle CopyEnhMetaFileW handle lpwstr>
 	^self invalidCall!
 
 createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDescription
@@ -120,11 +120,11 @@ createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDe
 
 		HDC __stdcall CreateEnhMetaFile(
 			HDC HDC,
-			LPCSTR lpFileName,
+			LPCWSTR lpFileName,
 			int* lpRect,
-			LPCSTR lpDescription);"
+			LPCWSTR lpDescription);"
 
-	<stdcall: handle CreateEnhMetaFileA handle lpstr sdword* lpstr>
+	<stdcall: handle CreateEnhMetaFileW handle lpwstr sdword* lpwstr>
 	^self invalidCall!
 
 deleteEnhMetaFile: hemf
