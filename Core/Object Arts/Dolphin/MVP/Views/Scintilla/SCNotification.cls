@@ -129,6 +129,12 @@ isAltKeyDown
 
 	^self modifiers allMask: SCMOD_ALT!
 
+isSelectionUpdate
+	"Answer whether an SCN_UPDATEUI event was for a change in selection.
+	See http://www.scintilla.org/ScintillaDoc.html#SCN_UPDATEUI"
+
+	^self updated anyMask: SC_UPDATE_SELECTION!
+
 isShiftDown
 	"Answer whether the shift key was down when the event was raised.
 	Only relevant for some notifications such as SCN_KEY, and SCN_HOTSPOT[DOUBLE]CLICK."
@@ -244,6 +250,7 @@ y
 !SCNotification categoriesFor: #foldLevelPrev!**compiled accessors**!public! !
 !SCNotification categoriesFor: #getValidFields!accessing!private! !
 !SCNotification categoriesFor: #isAltKeyDown!public!testing! !
+!SCNotification categoriesFor: #isSelectionUpdate!public!testing! !
 !SCNotification categoriesFor: #isShiftDown!public!testing! !
 !SCNotification categoriesFor: #length!**compiled accessors**!public! !
 !SCNotification categoriesFor: #line!accessing!public! !

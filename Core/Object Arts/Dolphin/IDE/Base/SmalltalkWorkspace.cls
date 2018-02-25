@@ -1797,6 +1797,11 @@ defaultIndicatorStyles
 					styleName: #roundBox;
 					name: #braceHighlight;
 					yourself);
+		add: ((ScintillaIndicatorStyle new)
+					alpha: 15;
+					styleName: #roundBox;
+					name: #secondarySelection;
+					yourself);
 		yourself!
 
 defaultKeywordCompletions

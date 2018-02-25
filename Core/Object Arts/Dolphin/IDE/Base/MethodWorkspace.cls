@@ -164,6 +164,9 @@ createSchematicWiring
 	self
 		when: #textChanged
 			send: #onTextChanged
+			to: self;
+		when: #updateUI:
+			send: #onUpdateUI:
 			to: self!
 
 defaultStylerClass
@@ -236,6 +239,12 @@ onTimerTick: anInteger
 	anInteger == 1000 ifFalse: [^super onTimerTick: anInteger].
 	self killParseTimer.
 	self isAutoParseEnabled ifTrue: [self autoParse]!
+
+onUpdateUI: anSCNotification
+
+	anSCNotification updated == 16r2 "SC_UPDATE_SELECTION" 
+		ifTrue: [self selectionChanged].
+!
 
 parseContext
 	^parentPresenter ifNotNil: [:p | p parseContext]!
@@ -357,6 +366,11 @@ selectedNode
 	range isEmpty ifTrue: [range := range start to: range start].
 	^(self nodeForRange: range) ifNil: [self parseTree]!
 
+selectionChanged
+	"The receiver highlights all text matching <view selection>"
+
+	view identifyTextMatchingSelectionWithStyleName: #secondarySelection.!
+
 selectorFromNode: aStProgramNode 
 	^aStProgramNode isMessage 
 		ifTrue: [aStProgramNode selector]
@@ -463,6 +477,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
 !MethodWorkspace categoriesFor: #onTextChanged!event handling!public! !
 !MethodWorkspace categoriesFor: #onTimerTick:!event handling!public! !
+!MethodWorkspace categoriesFor: #onUpdateUI:!event handling!public! !
 !MethodWorkspace categoriesFor: #parseContext!accessing!private! !
 !MethodWorkspace categoriesFor: #parseSourceIn:!helpers!private! !
 !MethodWorkspace categoriesFor: #parseTree!accessing!private! !
@@ -478,6 +493,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #selectedMessageNode!accessing!private!refactoring! !
 !MethodWorkspace categoriesFor: #selectedMethod!accessing!public! !
 !MethodWorkspace categoriesFor: #selectedNode!accessing!public! !
+!MethodWorkspace categoriesFor: #selectionChanged!event handling!public! !
 !MethodWorkspace categoriesFor: #selectorFromNode:!commands!private! !
 !MethodWorkspace categoriesFor: #selfClass!autocompletion!private! !
 !MethodWorkspace categoriesFor: #setParseTimer!helpers!private! !

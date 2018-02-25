@@ -2397,6 +2397,15 @@ findMatchingBrace: anInteger
 
 	^self sciBraceMatch: anInteger maxReStyle: 0!
 
+findString: aString startingAt: anInteger 
+
+	self 
+		sciSetTargetRange: anInteger 
+		end: self textLength.
+	^(self
+		sciSearchInTarget: aString size 
+		text: aString) + 1!
+
 findStyleStart: aSymbol before: anInteger 
 	"Answer the one-based <integer> index of the first character in a block of the style named
 	by the <Symbol> argument, searching back from the specified <integer> character position. If
@@ -2814,6 +2823,36 @@ hoverTime: periodMillisecondsInteger
 				msg: SCI_SETMOUSEDWELLTIME
 				wParam: periodMillisecondsInteger
 				lParam: 0]!
+
+identifyTextMatchingSelectionWithStyleName: aSymbol
+
+	| index newIndicators selection selectionStart |
+	"get a list of indicators that aren't related to secondary selection"
+	newIndicators := self indicators reject: [:each | each styleName = aSymbol]. 
+	"If no current selection, then we are done"
+	(selection := self selection) isEmpty ifTrue: [
+		self indicators: newIndicators.
+		^self
+	].
+
+	index := 0.
+	selectionStart := self selectionRange start.
+	[
+		index := self findString: selection startingAt: index + 1.
+		0 < index.
+	] whileTrue: [
+		| end |
+		end := index + selection size - 1.
+		index ~~ selectionStart ifTrue: [
+			newIndicators add: (ScintillaIndicator
+				styleName: aSymbol
+				range: (index to: end) 
+				tag: nil).
+			index := end + 1.
+		].
+	].
+	self indicators: newIndicators.
+!
 
 idleStylingMode
 	^self class idleStylingModes at: self sciGetIdleStyling + 1!
@@ -9065,6 +9104,7 @@ scnUpdateUI: pSCNotification
 		Now would be a good time to update any container UI elements that depend on document or view state'
 	"
 
+	self presenter trigger: #updateUI: with: (SCNotification fromAddress: pSCNotification).
 	self invalidateUserInterface.
 	^0!
 
@@ -10814,6 +10854,7 @@ zoomOut
 !ScintillaView categoriesFor: #find:range:flags:!public!searching & replacing! !
 !ScintillaView categoriesFor: #findAutoCompletionEntry:!**auto generated**!autocompletion!public!scintilla interface! !
 !ScintillaView categoriesFor: #findMatchingBrace:!brace highlighting!public! !
+!ScintillaView categoriesFor: #findString:startingAt:!public!searching & replacing! !
 !ScintillaView categoriesFor: #findStyleStart:before:!brace highlighting!public! !
 !ScintillaView categoriesFor: #firstVisibleLine:!public!scrolling! !
 !ScintillaView categoriesFor: #foldFlags!folding!public! !
@@ -10864,6 +10905,7 @@ zoomOut
 !ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
 !ScintillaView categoriesFor: #hoverTime!**auto generated**!notifications!public!scintilla interface! !
 !ScintillaView categoriesFor: #hoverTime:!**auto generated**!notifications!public!scintilla interface! !
+!ScintillaView categoriesFor: #identifyTextMatchingSelectionWithStyleName:!public!searching & replacing! !
 !ScintillaView categoriesFor: #idleStylingMode!public!styling! !
 !ScintillaView categoriesFor: #idleStylingMode:!public!styling! !
 !ScintillaView categoriesFor: #idOfStyleNamed:!helpers!private! !

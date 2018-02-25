@@ -4278,6 +4278,7 @@ publishedEventsOfInstances
 		add: #userList:selection:;
 		add: #painted;
 		add: #macroRecord:;
+		add: #updateUI:;
 		add: #zoomed;
 		yourself! !
 !ScintillaView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
