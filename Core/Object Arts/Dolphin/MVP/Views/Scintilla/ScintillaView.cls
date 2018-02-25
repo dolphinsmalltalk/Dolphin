@@ -2401,10 +2401,11 @@ findString: aString startingAt: anInteger
 
 	self 
 		sciSetTargetRange: anInteger 
-		end: self textLength.
+		end: self textLength + 1.
 	^(self
 		sciSearchInTarget: aString size 
-		text: aString) + 1!
+		text: aString) + 1
+!
 
 findStyleStart: aSymbol before: anInteger 
 	"Answer the one-based <integer> index of the first character in a block of the style named
@@ -2835,6 +2836,7 @@ identifyTextMatchingSelectionWithStyleName: aSymbol
 		^self
 	].
 
+	newIndicators = #() ifTrue: [newIndicators := OrderedCollection new].
 	index := 0.
 	selectionStart := self selectionRange start.
 	[
