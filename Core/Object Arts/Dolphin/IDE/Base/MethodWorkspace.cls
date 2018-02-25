@@ -487,9 +487,6 @@ variableClassification: anStVariableNode
 	"Variable name not found in this context"
 	^nil!
 
-when: aSymbol send: aSymbol2 to: aMethodWorkspace when: aSymbol3 send: aSymbol4 to: aMethodWorkspace2 
-	!
-
 widenSourceSelection
 	"Expand the selection to encompass the next greater syntactic element."
 
@@ -558,7 +555,6 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #source:!accessing!public! !
 !MethodWorkspace categoriesFor: #targetOfMessage:!commands!private!refactoring! !
 !MethodWorkspace categoriesFor: #variableClassification:!helpers!private! !
-!MethodWorkspace categoriesFor: #when:send:to:when:send:to:!public! !
 !MethodWorkspace categoriesFor: #widenSourceSelection!commands!public! !
 
 !MethodWorkspace class methodsFor!
