@@ -9065,6 +9065,7 @@ scnUpdateUI: pSCNotification
 		Now would be a good time to update any container UI elements that depend on document or view state'
 	"
 
+	self presenter trigger: #updateUI: with: (SCNotification fromAddress: pSCNotification).
 	self invalidateUserInterface.
 	^0!
 
