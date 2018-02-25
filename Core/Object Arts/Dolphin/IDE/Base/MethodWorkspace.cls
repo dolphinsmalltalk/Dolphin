@@ -164,6 +164,9 @@ createSchematicWiring
 	self
 		when: #textChanged
 			send: #onTextChanged
+			to: self;
+		when: #updateUI:
+			send: #onUpdateUI:
 			to: self!
 
 defaultStylerClass
@@ -236,6 +239,12 @@ onTimerTick: anInteger
 	anInteger == 1000 ifFalse: [^super onTimerTick: anInteger].
 	self killParseTimer.
 	self isAutoParseEnabled ifTrue: [self autoParse]!
+
+onUpdateUI: anSCNotification
+
+	anSCNotification updated == 16r2 "SC_UPDATE_SELECTION" 
+		ifTrue: [self selectionChanged].
+!
 
 parseContext
 	^parentPresenter ifNotNil: [:p | p parseContext]!
@@ -330,6 +339,29 @@ resetParseTimer
 		killParseTimer;
 		setParseTimer!
 
+secondarySelectionStyle
+	"Private - The receiver highlights all text matching <view selection>"
+
+	| name style styles |
+	name := #secondarySelection.
+	styles := view indicatorStyles.
+	style := styles detect: [:each | each name = name] ifNone: [nil].
+	style ifNil: [
+		| id |
+		id := (styles 
+			inject: 0
+			into: [:max :each | max max: each id]) + 1.
+		style := ScintillaIndicatorStyle new
+			alpha: 15;
+			id: id;
+			name: name;
+			styleName: #roundBox;
+			yourself.
+		styles add: style.
+		view indicatorStyles: styles.
+	].
+	^style!
+
 selectedErrorRange
 	^self selectedNode sourceInterval!
 
@@ -356,6 +388,41 @@ selectedNode
 	range := self selectionRange.
 	range isEmpty ifTrue: [range := range start to: range start].
 	^(self nodeForRange: range) ifNil: [self parseTree]!
+
+selectionChanged
+	"The receiver highlights all text matching <view selection>"
+
+	| index indicators selection selectionStart style tag text |
+	tag := 'secondary selection'.
+	style := self secondarySelectionStyle.
+	indicators := view indicators.
+	indicators copy do: [:each | 
+		each tag = tag ifTrue: [
+			indicators remove: each.
+		].
+	].
+	((selection := view selection) isNil or: [selection isEmpty]) ifTrue: [
+		view indicators: indicators.
+		^self
+	].
+	index := 0.
+	text := view plainText.
+	selectionStart := view selectionRange start.
+	[
+		index := text indexOfSubCollection: selection startingAt: index + 1.
+		0 < index.
+	] whileTrue: [
+		| end |
+		end := index + selection size - 1.
+		index ~~ selectionStart ifTrue: [
+			indicators add: (ScintillaIndicator
+				styleName: style name
+				range: (index to: end) 
+				tag: tag).
+		].
+	].
+	view indicators: indicators.
+!
 
 selectorFromNode: aStProgramNode 
 	^aStProgramNode isMessage 
@@ -420,6 +487,9 @@ variableClassification: anStVariableNode
 	"Variable name not found in this context"
 	^nil!
 
+when: aSymbol send: aSymbol2 to: aMethodWorkspace when: aSymbol3 send: aSymbol4 to: aMethodWorkspace2 
+	!
+
 widenSourceSelection
 	"Expand the selection to encompass the next greater syntactic element."
 
@@ -463,6 +533,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
 !MethodWorkspace categoriesFor: #onTextChanged!event handling!public! !
 !MethodWorkspace categoriesFor: #onTimerTick:!event handling!public! !
+!MethodWorkspace categoriesFor: #onUpdateUI:!event handling!public! !
 !MethodWorkspace categoriesFor: #parseContext!accessing!private! !
 !MethodWorkspace categoriesFor: #parseSourceIn:!helpers!private! !
 !MethodWorkspace categoriesFor: #parseTree!accessing!private! !
@@ -473,11 +544,13 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #reformattedSource!helpers!private! !
 !MethodWorkspace categoriesFor: #repositionAtSourceLine:!operations!public! !
 !MethodWorkspace categoriesFor: #resetParseTimer!helpers!private! !
+!MethodWorkspace categoriesFor: #secondarySelectionStyle!event handling!private! !
 !MethodWorkspace categoriesFor: #selectedErrorRange!accessing!private!refactoring! !
 !MethodWorkspace categoriesFor: #selectedMessage!accessing!private! !
 !MethodWorkspace categoriesFor: #selectedMessageNode!accessing!private!refactoring! !
 !MethodWorkspace categoriesFor: #selectedMethod!accessing!public! !
 !MethodWorkspace categoriesFor: #selectedNode!accessing!public! !
+!MethodWorkspace categoriesFor: #selectionChanged!event handling!public! !
 !MethodWorkspace categoriesFor: #selectorFromNode:!commands!private! !
 !MethodWorkspace categoriesFor: #selfClass!autocompletion!private! !
 !MethodWorkspace categoriesFor: #setParseTimer!helpers!private! !
@@ -485,6 +558,7 @@ widenSourceSelection
 !MethodWorkspace categoriesFor: #source:!accessing!public! !
 !MethodWorkspace categoriesFor: #targetOfMessage:!commands!private!refactoring! !
 !MethodWorkspace categoriesFor: #variableClassification:!helpers!private! !
+!MethodWorkspace categoriesFor: #when:send:to:when:send:to:!public! !
 !MethodWorkspace categoriesFor: #widenSourceSelection!commands!public! !
 
 !MethodWorkspace class methodsFor!
