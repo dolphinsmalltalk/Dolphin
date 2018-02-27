@@ -139,6 +139,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
+    <ClCompile Include="D:\dev\blairmcg\Dolphin\Core\DolphinVM\VMLib\IntPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
