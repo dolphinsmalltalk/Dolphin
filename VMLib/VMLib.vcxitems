@@ -70,6 +70,7 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />

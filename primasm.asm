@@ -190,15 +190,23 @@ extern primitiveSQWORDAt:near32
 extern primitiveDLL32Call:near32
 extern primitiveVirtualCall:near32
 
-; Imports from SmallIntPrim.asm
+; Imports from IntPrim.cpp)
+primitiveLessThan EQU ?primitiveLessThan@Interpreter@@CIPAIQAI@Z
+extern primitiveLessThan:near32
+primitiveLessOrEqual EQU ?primitiveLessOrEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveLessOrEqual:near32
+primitiveGreaterThan EQU ?primitiveGreaterThan@Interpreter@@CIPAIQAI@Z
+extern primitiveGreaterThan:near32
+primitiveGreaterOrEqual EQU ?primitiveGreaterOrEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveGreaterOrEqual:near32
+primitiveEqual EQU ?primitiveEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveEqual:near32
+;primitiveNotEqual EQU ?primitiveNotEqual@Interpreter@@CIPAIQAI@Z
+;extern primitiveNotEqual:near32
+
+; Imports from SmallIntPrim.asm)
 extern primitiveAdd:near32
 extern primitiveSubtract:near32
-extern primitiveLessThan:near32
-extern primitiveGreaterThan:near32
-extern primitiveLessOrEqual:near32
-extern primitiveGreaterOrEqual:near32
-extern primitiveEqual:near32
-;extern primitiveNotEqual:near32
 extern primitiveMultiply:near32
 extern primitiveDivide:near32
 extern primitiveMod:near32

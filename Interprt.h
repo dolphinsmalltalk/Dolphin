@@ -487,7 +487,7 @@ private:
 
 	// SmallInteger relational ops
 	static Oop* __fastcall primitiveEqual(Oop* const sp);
-	//static Oop* __fastcall primitiveNotEqual(Oop* const sp);		Removed as redundant
+	static Oop* __fastcall primitiveNotEqual(Oop* const sp);
 	static Oop* __fastcall primitiveLessThan(Oop* const sp);
 	static Oop* __fastcall primitiveLessOrEqual(Oop* const sp);
 	static Oop* __fastcall primitiveGreaterThan(Oop* const sp);
