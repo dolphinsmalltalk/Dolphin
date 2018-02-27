@@ -684,7 +684,7 @@ void Lexer::ScanLiteralCharacter()
 		return;
 	}
 
-	m_integer = ch;
+	m_integer = static_cast<uint8_t>(ch);
 
 	if (ch == '\\')
 	{
