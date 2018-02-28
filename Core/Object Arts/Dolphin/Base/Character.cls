@@ -85,6 +85,11 @@ appendToStream: puttableStream
 
 	puttableStream nextPut: self!
 
+asAnsiString
+	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
+
+	^String with: self!
+
 asInteger
 	"Answer the <integer> character encoding (i.e. the Unicode code point) that the receiver
 	represents."
@@ -102,7 +107,7 @@ asLowercase
 	^self class codePoint: (UserLibrary default charLower: self)!
 
 asString
-	"Answer a new <String> whose sole element is the receiver."
+	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
 
 	^String with: self
 !
@@ -121,6 +126,18 @@ asUppercase
 	locale of the host OS."
 
 	^self class codePoint: (UserLibrary default charUpper: self)!
+
+asUtf16String
+	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
+
+	^Utf16String with: self!
+
+asUtf8String
+	"Answer a new <Utf8String> encoding the receiver's code point."
+
+	#todo. "Implement this properly to respect the UTF8 encoding - this is a hack until I look it up."
+	^Utf8String with: self
+!
 
 basicShallowCopy
 	"Answer the receiver as Characters are immutable."
@@ -297,11 +314,14 @@ species
 !Character categoriesFor: #=!comparing!public! !
 !Character categoriesFor: #>!comparing!public! !
 !Character categoriesFor: #appendToStream:!double dispatch!private! !
+!Character categoriesFor: #asAnsiString!converting!public! !
 !Character categoriesFor: #asInteger!converting!public! !
 !Character categoriesFor: #asLowercase!converting!public! !
 !Character categoriesFor: #asString!converting!public! !
 !Character categoriesFor: #asSymbol!converting!public! !
 !Character categoriesFor: #asUppercase!converting!public! !
+!Character categoriesFor: #asUtf16String!converting!public! !
+!Character categoriesFor: #asUtf8String!converting!public! !
 !Character categoriesFor: #basicShallowCopy!copying!public! !
 !Character categoriesFor: #codePoint!accessing!public! !
 !Character categoriesFor: #deepCopy!copying!public! !
@@ -446,7 +466,10 @@ value: anInteger
 
 	^anInteger <= 255
 		ifTrue: [CharacterSet at: anInteger + 1]
-		ifFalse: [(self newCodePoint: anInteger) isImmutable: true]! !
+		ifFalse: 
+			[^anInteger < 16r110000
+				ifTrue: [(self newCodePoint: anInteger) isImmutable: true]
+				ifFalse: [self error: 'Invalid code point ' , anInteger hex]]! !
 !Character class categoriesFor: #backspace!constants!public! !
 !Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !

@@ -150,6 +150,11 @@ nextSDWORDPut: anInteger
 			yourself).
 	^anInteger!
 
+nextWORDPut: surrogate
+	self
+		nextPut: (surrogate bitAnd: 16rFF);
+		nextPut: (surrogate bitShift: -8)!
+
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 
 	argument, anObject.  Answer the number of elements written."
@@ -208,6 +213,7 @@ tab: tabCount
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !
 !WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
+!WriteStream categoriesFor: #nextWORDPut:!helpers!private! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
 !WriteStream categoriesFor: #reset!positioning!public! !

@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #Utf16String
+UtfEncodedString variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -21,9 +21,10 @@ Utf16Strings can be constructed from <String>s when needed by sending the #asUtf
 	Note: This is the concatenation operation, and is a simplified form of 
 	#copyReplaceFrom:to:with:."
 
-	| size newSize |
+	| size newSize other|
 	size := self size.
-	newSize := size + aSequencedReadableCollection size.
+	other := aSequencedReadableCollection asUtf16String.
+	newSize := size + other size.
 	^(self copyLikeOfSize: newSize)
 		replaceFrom: 1
 			to: size
@@ -31,12 +32,12 @@ Utf16Strings can be constructed from <String>s when needed by sending the #asUtf
 			startingAt: 1;
 		replaceFrom: size + 1
 			to: newSize
-			with: aSequencedReadableCollection
+			with: other
 			startingAt: 1;
 		yourself!
 
 _appendToString: aString
-	^self asString _appendToString: aString!
+	^aString asUtf16String, self!
 
 _equalsByteString: aString
 	"Private - Answer whether the receiver is equivalent to the byte string, aString. 
@@ -317,6 +318,17 @@ elementSize
 
 	^2!
 
+encode: aCharacter on: aPuttableStream
+	| codePoint |
+	codePoint := aCharacter codePoint.
+	^codePoint <= 16rFFFF
+		ifTrue: [aPuttableStream nextWORDPut: codePoint]
+		ifFalse: 
+			[codePoint := codePoint - 16r10000.
+			aPuttableStream
+				nextWORDPut: (codePoint bitShift: -10) + 16rD800;
+				nextWORDPut: (codePoint bitAnd: 16r3FF) + 16rDC00]!
+
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
@@ -357,6 +369,27 @@ new: anInteger
 
 	^super new: anInteger*2!
 
+new: elementCount withAll: elementValue
+	"Answer a new instance of the receiver with <integer>, elementCount, 
+	elements, each of which is initialized to the <Object>, elementValue.
+	Note that the result will be of size elementCount * codeUnitsFor(elementValue)."
+
+	| stream codePoint |
+	stream := ByteArray writeStream: elementCount * 2.
+	codePoint := elementValue codePoint.
+	codePoint <= 16rFFFF
+		ifTrue: [elementCount timesRepeat: [stream nextWORDPut: codePoint]]
+		ifFalse: 
+			[| l h |
+			codePoint := codePoint - 16r10000.
+			l := (codePoint bitShift: -10) + 16rD800.
+			h := (codePoint bitAnd: 16r3FF) + 16rDC00.
+			elementCount timesRepeat: 
+					[stream
+						nextWORDPut: l;
+						nextWORDPut: h]].
+	^self fromByteArray: stream contents!
+
 newFixed: aSmallInteger 
 	"Answer an instance of the receiver of size aSmallInteger bytes (this method is 
 	only valid for byte objects). The object is allocated from the fixed memory heap
@@ -367,10 +400,12 @@ newFixed: aSmallInteger
 	^super newFixed: aSmallInteger * 2! !
 !Utf16String class categoriesFor: #codePage!constants!public! !
 !Utf16String class categoriesFor: #elementSize!constants!public! !
+!Utf16String class categoriesFor: #encode:on:!helpers!private! !
 !Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
 !Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
 !Utf16String class categoriesFor: #fromString:!instance creation!public! !
 !Utf16String class categoriesFor: #initialize!development!initializing!public! !
 !Utf16String class categoriesFor: #new:!instance creation!public! !
+!Utf16String class categoriesFor: #new:withAll:!instance creation!public! !
 !Utf16String class categoriesFor: #newFixed:!instance creation!public! !
 

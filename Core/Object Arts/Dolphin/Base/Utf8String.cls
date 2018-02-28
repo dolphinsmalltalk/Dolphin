@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #Utf8String
+UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -10,6 +10,32 @@ Utf8String isNullTerminated: true!
 Utf8String comment: 'Utf8String is a nascent class to support UTF8 encoded byte character strings.'!
 !Utf8String categoriesForClass!Collections-Text! !
 !Utf8String methodsFor!
+
+, aSequencedReadableCollection
+	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
+	species but not necessarily the exact same class) containing the elements	of the receiver 
+	in their original order with those of the <sequencedReadableCollection> argument
+	appended in their original order.
+	Note: This is the concatenation operation, and is a simplified form of 
+	#copyReplaceFrom:to:with:."
+
+	| size newSize other|
+	size := self size.
+	other := aSequencedReadableCollection asUtf8String.
+	newSize := size + other size.
+	^(self copyLikeOfSize: newSize)
+		replaceFrom: 1
+			to: size
+			with: self
+			startingAt: 1;
+		replaceFrom: size + 1
+			to: newSize
+			with: other
+			startingAt: 1;
+		yourself!
+
+_appendToString: aString
+	^aString asUtf8String , self!
 
 _equalsByteString: aString
 	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
@@ -70,6 +96,8 @@ asUtf8String
 	"Answer a UTF8 encoded string representation of the receiver."
 
 	^self! !
+!Utf8String categoriesFor: #,!copying!public! !
+!Utf8String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !Utf8String categoriesFor: #_equalsByteString:!comparing!private! !
 !Utf8String categoriesFor: #asAnsiString!converting!public! !
 !Utf8String categoriesFor: #asLowercase!converting!public! !
@@ -82,6 +110,37 @@ asUtf8String
 codePage
 	^Win32Constants.CP_UTF8!
 
+encode: aCharacter on: aPuttableStream
+	| codePoint |
+	codePoint := aCharacter codePoint.
+	^codePoint < 2r10000000
+		ifTrue: [aPuttableStream nextPut: codePoint]
+		ifFalse: 
+			[codePoint < 16r800
+				ifTrue: 
+					["2-byte encoding"
+					aPuttableStream
+						nextPut: (2r11000000 bitOr: (codePoint bitShift: -6));
+						nextPut: (2r10000000 bitOr: (codePoint bitAnd: 16r3F))]
+				ifFalse: 
+					[codePoint < 16rFFFF
+						ifTrue: 
+							["3-byte encoding"
+							aPuttableStream
+								nextPut: (2r11100000 bitOr: (codePoint bitShift: -12));
+								nextPut: (2r10000000 bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
+								nextPut: (2r10000000 bitOr: (codePoint bitAnd: 16r3F))]
+						ifFalse: 
+							["4-byte encoding"
+							codePoint < 16r110000
+								ifTrue: 
+									[aPuttableStream
+										nextPut: (2r11110000 bitOr: (codePoint bitShift: -18));
+										nextPut: (2r10000000 bitOr: ((codePoint bitShift: -12) bitAnd: 16r3F));
+										nextPut: (2r10000000 bitOr: ((codePoint bitShift: -6) bitAnd: 16r3F));
+										nextPut: (2r10000000 bitOr: (codePoint bitAnd: 16r3F))]
+								ifFalse: [self error: 'Invalid code point ' , codePoint hex]]]]!
+
 fromString: aString
 	"Answer an instance of the receiver containing the same characters as the argument, aString."
 
@@ -93,6 +152,7 @@ initialize
 				yourself.
 	VMLibrary default registryAt: #Utf8String put: self! !
 !Utf8String class categoriesFor: #codePage!instance creation!public! !
+!Utf8String class categoriesFor: #encode:on:!helpers!private! !
 !Utf8String class categoriesFor: #fromString:!instance creation!public! !
 !Utf8String class categoriesFor: #initialize!development!initializing!public! !
 

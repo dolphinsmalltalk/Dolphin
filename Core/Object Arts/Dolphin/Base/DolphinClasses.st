@@ -435,6 +435,11 @@ ScalarField subclass: #BYTEField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ScalarField subclass: #CHARField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ScalarField subclass: #DOUBLEField
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -491,6 +496,11 @@ ScalarField subclass: #WORDField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BOOLField subclass: #BOOLEANField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CHARField subclass: #WCHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -635,12 +645,17 @@ String variableByteSubclass: #Symbol
 	classVariableNames: 'Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #Utf16String
+String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #Utf8String
+UtfEncodedString variableByteSubclass: #Utf16String
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
