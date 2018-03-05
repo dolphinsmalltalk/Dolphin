@@ -856,9 +856,9 @@ getThemeTextMetrics: htheme hdc: hdc iPartId: iPartId iStateId: iStateId pTM: pT
 			[in]HDC HDC,
 			[in]int iPartId,
 			[in]int iStateId,
-			[out]TEXTMETRIC* pTM);"
+			[out]TEXTMETRICW* pTM);"
 
-	<stdcall: hresult GetThemeTextMetrics handle handle sdword sdword TEXTMETRIC*>
+	<stdcall: hresult GetThemeTextMetrics handle handle sdword sdword TEXTMETRICW*>
 	^self invalidCall!
 
 getWindowTheme: hwnd

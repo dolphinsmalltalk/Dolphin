@@ -955,7 +955,8 @@ gdipCreateFontFromLogfontA: hdc logfont: logfont font: font
 			[in]LOGFONTA* LOGFONT,
 			[out, retval]PGpFont* font);"
 
-	<stdcall: sdword GdipCreateFontFromLogfontA  handle LOGFONT* handle*>
+	<stdcall: sdword GdipCreateFontFromLogfontA handle LOGFONT* handle*>
+	#deprecated.
 	^self invalidCall!
 
 gdipCreateFontFromLogfontW: hdc logfont: logfont font: font
@@ -3550,6 +3551,7 @@ gdipGetLogFontA: font graphics: graphics logfonta: logfonta
 			LOGFONTA* LOGFONTA);"
 
 	<stdcall: sdword GdipGetLogFontA  handle handle LOGFONT*>
+	#deprecated.
 	^self invalidCall!
 
 gdipGetLogFontW: font graphics: graphics logfonta: logfonta

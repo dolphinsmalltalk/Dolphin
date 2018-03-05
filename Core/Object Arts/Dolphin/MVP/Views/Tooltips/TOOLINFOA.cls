@@ -90,7 +90,7 @@ text: aString
 	garbage collect, so we store it into the 'text' inst var maintained for that purpose."
 
 	text := aString asAnsiString.
-	self lpszText: aString!
+	self lpszText: text!
 
 textCallback
 	"Sets this item into callback mode for the item text."

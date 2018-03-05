@@ -49,8 +49,8 @@ urlDownload: url toFile: aStringFilename
 
 	self 
 		overlappedURLDownloadToFile: nil
-		szURL: url
-		szFilename: aStringFilename
+		szURL: url asAnsiString
+		szFilename: aStringFilename asAnsiString
 		dwReserved: 0
 		pBSC: nil!
 
@@ -68,7 +68,7 @@ urlDownloadToCacheFile: url
 	filename := String new: File maxPath.	"String auto allocates extra byte for null terminator"
 	self 
 		overlappedURLDownloadToCacheFile: nil
-		szURL: url
+		szURL: url asAnsiString
 		szFilename: filename
 		dwBufLength: filename size
 		dwReserved: 0

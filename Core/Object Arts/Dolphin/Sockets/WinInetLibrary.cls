@@ -14,12 +14,12 @@ internetCheckConnection: url dwFlags: flags dwReserved: reserved
 	"Allows an application to check if a connection to the Internet can be established.
 
 	BOOL InternetCheckConnection(
-		IN LPCTSTR lpszUrl,
+		IN LPCWSTR lpszUrl,
 		IN DWORD dwFlags,
 		IN DWORD dwReserved
 		);"
 
-	<stdcall: bool InternetCheckConnectionA lpstr dword dword>
+	<stdcall: bool InternetCheckConnectionW lpwstr dword dword>
 	^self invalidCall!
 
 internetGoOnline: url hwndParent: parent dwReserved: reserved
@@ -43,7 +43,7 @@ internetOpen: agent dwAccessType: access lpszProxyName: proxyName lpszProxyBypas
 		IN LPCTSTR lpszProxyBypass, 
 		IN DWORD dwFlags ); "
 
-	<stdcall: handle InternetOpenA lpstr dword lpstr lpstr dword>
+	<stdcall: handle InternetOpenW lpwstr dword lpwstr lpwstr dword>
 	^self invalidCall!
 
 ping: aURL

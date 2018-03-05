@@ -110,7 +110,7 @@ fromString: aString
 	| buf ret family |
 	buf := NET_ADDRESS_INFO newBuffer.
 	ret := IpHlpApiLibrary default
-				parseNetworkString: aString asUtf16String
+				parseNetworkString: aString
 				types: ##(NET_STRING_IP_ADDRESS | NET_STRING_IP_SERVICE)
 				addressInfo: buf
 				portNumber: nil

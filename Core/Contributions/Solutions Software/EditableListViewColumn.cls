@@ -191,27 +191,24 @@ infoTipFromRow: item withPrefix: prefixText
 		ifFalse: [super infoTipFromRow: item withPrefix: prefixText]!
 
 infoTipPrefixTextFor: anItem on: aCanvasHandle
-
 	"Calculate and return the prefix string argument for a 2-arg getInfoTipBlock (i.e. the receiver's text if too large for its width, or the empty string otherwise).
 	Needed since custom drawn columns don't produce standard ListView tooltip notifications"
 
 	| string size |
-
 	"Only appropriate for text-type columns"
-	(self hasEditor not or: [(self editor isKindOf: TextEdit) or: [self editor isKindOf: ComboBox]]) ifFalse: [^''].
-
+	(self hasEditor not or: [(self editor isKindOf: TextEdit) or: [self editor isKindOf: ComboBox]])
+		ifFalse: [^''].
 	string := self textFromRow: anItem.
 	size := POINTL new.
-
-	(GDILibrary default 
+	(GDILibrary default
 		getTextExtentPoint32: aCanvasHandle
 		lpString: string
-		cbString: string size
-		lpSize: size asParameter) ifFalse: ["Absorb the error" ^''].
-
-	^size asPoint x > self width
-		ifTrue: [string]
-		ifFalse: ['']!
+		c: string size
+		lpSize: size asParameter)
+			ifFalse: 
+				["Absorb the error"
+				^''].
+	^size asPoint x > self width ifTrue: [string] ifFalse: ['']!
 
 initialize
 	"Private - Initialize the state of the receiever."

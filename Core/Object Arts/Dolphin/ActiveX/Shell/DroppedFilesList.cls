@@ -23,7 +23,7 @@ at: index
 				iFile: index - 1
 				lpszFile: nil
 				cch: 0.
-	answer := String newFixed: cch.
+	answer := Utf16String newFixed: cch.
 	"Note that although DragQueryFile returns the number of chars required excluding the null
 	terminator, one has to tell it the complete length of the buffer including the null
 	terminator."
@@ -32,7 +32,8 @@ at: index
 		iFile: index - 1
 		lpszFile: answer
 		cch: cch + 1.
-	^answer!
+	#todo. "Temporarily force to ANSI"
+	^answer asAnsiString!
 
 at: index put: newElement 
 	^self shouldNotImplement!

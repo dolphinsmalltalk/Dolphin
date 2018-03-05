@@ -1,12 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #OFNOTIFYEX
+NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OFNOTIFYEX guid: (GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
-OFNOTIFYEX comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OFNOTIFYEXW guid: (GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
+OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -22,13 +22,13 @@ struct tagOFNOTIFYEX {
 	LPVOID pidl;
 } OFNOTIFYEX;
 '!
-!OFNOTIFYEX categoriesForClass!Win32-Structs! !
-!OFNOTIFYEX methodsFor!
+!OFNOTIFYEXW categoriesForClass!Win32-Structs! !
+!OFNOTIFYEXW methodsFor!
 
 lpOFN
 	"Answer the receiver's lpOFN field as a Smalltalk object."
 
-	^OPENFILENAME fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpOFN))!
+	^OPENFILENAMEW fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpOFN))!
 
 pidl
 	"Answer the receiver's pidl field as a Smalltalk object."
@@ -39,11 +39,11 @@ psf
 	"Answer the receiver's psf field as a Smalltalk object."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #psf)) asExternalAddress! !
-!OFNOTIFYEX categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OFNOTIFYEX categoriesFor: #pidl!**compiled accessors**!public! !
-!OFNOTIFYEX categoriesFor: #psf!**compiled accessors**!public! !
+!OFNOTIFYEXW categoriesFor: #lpOFN!**compiled accessors**!public! !
+!OFNOTIFYEXW categoriesFor: #pidl!**compiled accessors**!public! !
+!OFNOTIFYEXW categoriesFor: #psf!**compiled accessors**!public! !
 
-!OFNOTIFYEX class methodsFor!
+!OFNOTIFYEXW class methodsFor!
 
 defineFields
 	"Define the fields of the OFNOTIFYEX structure.
@@ -61,8 +61,8 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #lpOFN type: (PointerField type: OPENFILENAME) beReadOnly;
+		defineField: #lpOFN type: (PointerField type: OPENFILENAMEW) beReadOnly;
 		defineField: #psf type: LPVOIDField readOnly;
 		defineField: #pidl type: LPVOIDField readOnly! !
-!OFNOTIFYEX class categoriesFor: #defineFields!initializing!public! !
+!OFNOTIFYEXW class categoriesFor: #defineFields!initializing!public! !
 

@@ -41,18 +41,18 @@ addressAtOffset: anInteger
 
 	^(self dwordAtOffset: anInteger) asExternalAddress!
 
+asAnsiString
+	"Answer an ANSI-encoded String the characters of have the same encoding as the byte elements of the receiver."
+
+	| size |
+	size := self basicSize.
+	^(String new: size) replaceFrom: 1 to: size with: self startingAt: 1!
+
 asByteArray
 	"Answer a <ByteArray> containing the same elements as the receiver.
 	In this case no conversion is required."
 
 	^self!
-
-asAnsiString
-	"Answer a byte String containing the same elements as the receiver."
-
-	| size |
-	size := self basicSize.
-	^(String new: size) replaceFrom: 1 to: size with: self startingAt: 1!
 
 asString
 	^self asAnsiString!
@@ -668,6 +668,7 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #_sameAsString:!comparing!private! !
 !ByteArray categoriesFor: #=!comparing!primitives!public! !
 !ByteArray categoriesFor: #addressAtOffset:!accessing!public! !
+!ByteArray categoriesFor: #asAnsiString!public! !
 !ByteArray categoriesFor: #asByteArray!converting!public! !
 !ByteArray categoriesFor: #asString!converting!public! !
 !ByteArray categoriesFor: #basicDwordAtOffset:!accessing!primitives!public! !

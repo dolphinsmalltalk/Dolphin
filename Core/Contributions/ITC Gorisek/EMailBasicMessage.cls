@@ -57,7 +57,7 @@ attachments
 	^attachments!
 
 getMessageContentAsUTF8Base64Encoded
-	^EmailBase64Encoder encodeFrom: self content asUTF8String!
+	^EmailBase64Encoder encodeFrom: self content asUtf8String!
 
 htmlContent
 

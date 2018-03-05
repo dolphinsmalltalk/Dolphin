@@ -6,6 +6,9 @@ MessageBoxAbstract subclass: #MessageBox
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 MessageBox guid: (GUID fromString: '{87b4c49f-026e-11d3-9fd7-00a0cc3e4a32}')!
+MessageBox addClassConstant: 'ButtonMap' value: #(#ok #cancel #abort #retry #ignore #yes #no #close #help #retry #ignore)!
+MessageBox addClassConstant: 'ButtonsForStyle' value: #(#(1) #(1 2) #(3 4 2) #(6 7 2) #(6 7) #(4 2) #(2 10 11))!
+MessageBox addClassConstant: 'SuppressibleMask' value: 16!
 MessageBox comment: 'MessageBox provides a convenient wrapping aound the standard Windows Message Box. It can be used to pose questions, and report information, warnings, or errors.
 
 Note that MessageBox is deliberately implemented using low-level Windows APIs in order to be independent of the MVP subsystem.
@@ -424,7 +427,8 @@ initialize
 		MessageBox initialize
 	"
 
-	ButtonMap := (Array new: 11)
+	| buttonMap buttonsForStyle |
+	buttonMap := (Array new: 11)
 				at: IDOK put: #ok;
 				at: IDCANCEL put: #cancel;
 				at: IDABORT put: #abort;
@@ -437,8 +441,9 @@ initialize
 				at: IDTRYAGAIN put: #retry;
 				at: IDCONTINUE put: #ignore;
 				yourself.
+	self addClassConstant: 'ButtonMap' value: buttonMap.
 	"at: IDTIMEOUT put: #timeout;"
-	SuppressibleMask := 16r10.
+	self addClassConstant: 'SuppressibleMask' value: 16r10.
 	ButtonStyles := IdentityDictionary new
 				at: #ok put: MB_OK;
 				at: #okCancel put: MB_OKCANCEL;
@@ -449,7 +454,7 @@ initialize
 				at: #cancelRetryContinue put: MB_CANCELTRYCONTINUE;
 				shrink;
 				yourself.
-	ButtonsForStyle := (Array new: 7)
+	buttonsForStyle := (Array new: 7)
 				at: MB_OK + 1 put: {IDOK};
 				at: MB_OKCANCEL + 1 put: {IDOK. IDCANCEL};
 				at: MB_ABORTRETRYIGNORE + 1 put: {IDABORT. IDRETRY. IDCANCEL};
@@ -458,6 +463,7 @@ initialize
 				at: MB_RETRYCANCEL + 1 put: {IDRETRY. IDCANCEL};
 				at: MB_CANCELTRYCONTINUE + 1 put: {IDCANCEL. IDTRYAGAIN. IDCONTINUE};
 				yourself.
+	self addClassConstant: 'ButtonsForStyle' value: buttonsForStyle.
 	ModeStyles := IdentityDictionary new
 				at: #application put: MB_APPLMODAL;
 				at: #task put: MB_TASKMODAL;

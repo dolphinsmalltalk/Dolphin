@@ -186,12 +186,12 @@ createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lp
 	Helpstring: Creates an information context for the specified device
 
 		HDC __stdcall CreateIC(
-			LPCSTR lpszDriver,
-			LPCSTR lpszDevice,
-			LPCSTR lpszOutput,
+			LPCWSTR lpszDriver,
+			LPCWSTR lpszDevice,
+			LPCWSTR lpszOutput,
 			DEVMODE* lpdvminit);"
 
-	<stdcall: handle CreateICA lpstr lpstr lpstr DEVMODE*>
+	<stdcall: handle CreateICW lpwstr lpwstr lpwstr DEVMODE*>
 	^self invalidCall!
 
 createPalette: lplgpl
@@ -306,12 +306,12 @@ enumFontFamilies: aHandle lpszFamily: aString lpEnumFontFamProc: anExternalCallb
 	device through the specified callback.
 		int EnumFontFamilies(
 			HDC hdc,	// handle to device control 
-			LPCTSTR lpszFamily,	// pointer to family-name string 
+			LPCWSTR lpszFamily,	// pointer to family-name string 
 			FONTENUMPROC lpEnumFontFamProc,	// pointer to callback function 
 			LPARAM lParam 	// address of application-supplied data  
 		);"
 
-	<stdcall: sdword EnumFontFamilies handle lpstr lpvoid uintptr>
+	<stdcall: sdword EnumFontFamiliesW handle lpwstr lpvoid uintptr>
 	^self invalidCall
 
 !
@@ -327,7 +327,7 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 			LPARAM lParam 				// application-supplied data
 		);"
 
-	<stdcall: sdword EnumFontsA handle lpstr lpvoid uintptr>
+	<stdcall: sdword EnumFontsW handle lpwstr lpvoid uintptr>
 	^self invalidCall!
 
 excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightRect nBottomRect: nBottomRect
@@ -354,11 +354,11 @@ extTextOut: hdc x: x y: y fuOptions: fuOptions lprc: lprc lpString: lpString cbC
 			int y,
 			UINT fuOptions,
 			RECT* lprc,
-			LPCSTR lpString,
+			LPCWSTR lpString,
 			UINT cbCount,
 			int* lpDx);"
 
-	<stdcall: bool ExtTextOutA handle sdword sdword dword RECT* lpstr dword sdword*>
+	<stdcall: bool ExtTextOutW handle sdword sdword dword RECT* lpwstr dword sdword*>
 	^self invalidCall!
 
 fillRgn: hdc hRgn: hRgn hBr: hBr
@@ -525,7 +525,7 @@ getObjectW: objectHandle cbBuffer: count lpvObject: buffer
 	^self invalidCall!
 
 getOutlineTextMetrics: anExternalHandle cbData: anInteger lpotm: anOUTLINETEXTMETRIC 
-	<stdcall: dword GetOutlineTextMetricsA handle dword OUTLINETEXTMETRIC*>
+	<stdcall: dword GetOutlineTextMetricsW handle dword OUTLINETEXTMETRICW*>
 	^self invalidCall!
 
 getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
@@ -583,24 +583,24 @@ getTextColor: hdc
 	<stdcall: dword GetTextColor handle>
 	^self invalidCall!
 
-getTextExtentPoint32: hdc lpString: lpString cbString: cbString lpSize: lpSize
+getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 	"Invoke the GetTextExtentPoint32() function of the module wrapped by the receiver.
 	Helpstring: Computes the width and height of the specified string of text
 
 		BOOL __stdcall GetTextExtentPoint32(
 			HDC HDC,
 			LPWSTR lpString,
-			int cbString,
+			int c,
 			SIZEL* lpSize);"
 
 	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword SIZE*>
 	^self invalidCall!
 
 getTextMetrics: hdc lptm: lptm
-	"Invoke the GetTextMetrics() GDI call to populate a TEXTMETRIC structure, lptm, with
+	"Invoke the GetTextMetrics() GDI call to populate a TEXTMETRICW structure, lptm, with
 	metrics for the font currently selected into the device context with handle, hdc."
 
-	<stdcall: bool GetTextMetricsA handle TEXTMETRIC*>
+	<stdcall: bool GetTextMetricsW handle TEXTMETRICW*>
 	^self invalidCall!
 
 getViewportExtEx: hdc lpSize: lpSize 
@@ -813,11 +813,11 @@ removeFontResource: fontFile
 	If the font was added using the AddFontResourceEx function, you must use the RemoveFontResourceEx function. 
 
 	BOOL RemoveFontResource(
-		LPCTSTR lpFileName   // name of font file
+		LPCWSTR lpFileName   // name of font file
 		);
 	"
 
-	<stdcall: bool RemoveFontResourceA lpstr>
+	<stdcall: bool RemoveFontResourceW lpwstr>
 	^self invalidCall!
 
 restoreDC: hDC nSavedDC: nSavedDC
@@ -1093,10 +1093,10 @@ startDoc: hdc lpdi: info
 	"Start a print job.
 		int StartDoc(
   			HDC hdc,				// handle of device context 
-			CONST DOCINFO *lpdi 	// address of structure with file names  
+			CONST DOCINFOW *lpdi 	// address of structure with file names  
 		);"
 
-	<stdcall: sdword StartDocA handle DOCINFO* >
+	<stdcall: sdword StartDocW handle DOCINFOW* >
 	^self invalidCall
 
 !
@@ -1164,10 +1164,10 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 			HDC HDC,
 			int nXStart,
 			int nYStart,
-			LPCSTR lpString,
+			LPCWSTR lpString,
 			int cbString);"
 
-	<stdcall: bool TextOutA handle sdword sdword lpstr sdword>
+	<stdcall: bool TextOutW handle sdword sdword lpwstr sdword>
 	^self invalidCall! !
 !GDILibrary categoriesFor: #addFontResource:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #beginPath:!**auto generated**!public!win32 functions-path! !
@@ -1219,7 +1219,7 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #getROP2:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getStockObject:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getTextColor:!public!win32 functions-font and text! !
-!GDILibrary categoriesFor: #getTextExtentPoint32:lpString:cbString:lpSize:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #getTextExtentPoint32:lpString:c:lpSize:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getTextMetrics:lptm:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getViewportExtEx:lpSize:!public!win32 functions-transformations! !
 !GDILibrary categoriesFor: #getViewportOrgEx:lppt:!public!win32 functions-transformations! !

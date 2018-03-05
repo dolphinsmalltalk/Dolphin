@@ -112,8 +112,8 @@ createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThrea
 
  	Please see Win32 SDK help for more information."
 
-	<stdcall: bool CreateProcessA lpstr lpstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES*
-		bool dword lpvoid lpstr STARTUPINFO* PROCESS_INFORMATION*>
+	<stdcall: bool CreateProcessW lpwstr lpwstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES*
+		bool dword lpvoid lpwstr STARTUPINFO* PROCESS_INFORMATION*>
 
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !

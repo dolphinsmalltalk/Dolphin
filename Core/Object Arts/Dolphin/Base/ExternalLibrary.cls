@@ -416,12 +416,13 @@ moduleFileName: aLibOrHandle
 	"Private - Answer the file name of the receiver's loaded module."
 
 	| buf size |
-	buf := File pathBuffer.
-	size := KernelLibrary default 
-			getModuleFileName: aLibOrHandle asParameter 
-			lpFilename: buf 
-			nSize: buf basicSize.
-	^buf resize: size!
+	buf := Utf16String new: File maxPath.
+	size := KernelLibrary default
+				getModuleFileName: aLibOrHandle asParameter
+				lpFilename: buf
+				nSize: buf size + 1.
+	#todo.	"Temporary conversion to ANSI for compatibility"
+	^(buf resize: size) asAnsiString!
 
 onExit
 	"Private - Perform shut down processing."

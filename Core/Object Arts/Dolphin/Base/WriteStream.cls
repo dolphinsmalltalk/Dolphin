@@ -150,10 +150,12 @@ nextSDWORDPut: anInteger
 			yourself).
 	^anInteger!
 
-nextWORDPut: surrogate
+nextWORDPut: anInteger
+	"Append a 16-bit unsigned integer value as the next 2 bytes on the receiver."
+
 	self
-		nextPut: (surrogate bitAnd: 16rFF);
-		nextPut: (surrogate bitShift: -8)!
+		nextPut: (anInteger bitAnd: 16rFF);
+		nextPut: (anInteger bitShift: -8)!
 
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 

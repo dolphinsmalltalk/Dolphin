@@ -10,7 +10,7 @@ package basicPackageVersion: '6.2'.
 
 
 package classNames
-	add: #CHOOSECOLOR;
+	add: #CHOOSECOLORW;
 	add: #CHOOSEFONTW;
 	add: #ColorDialog;
 	add: #ComDlgLibrary;
@@ -20,12 +20,12 @@ package classNames
 	add: #FileOpenDialog;
 	add: #FileSaveDialog;
 	add: #FindDialog;
-	add: #FINDREPLACE;
 	add: #FindReplaceDialog;
+	add: #FINDREPLACEW;
 	add: #FontDialog;
-	add: #OFNOTIFY;
-	add: #OFNOTIFYEX;
-	add: #OPENFILENAME;
+	add: #OFNOTIFYEXW;
+	add: #OFNOTIFYW;
+	add: #OPENFILENAMEW;
 	yourself.
 
 package methodNames
@@ -64,7 +64,7 @@ Win32Structure subclass: #CommonDialogStructure
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #CHOOSECOLOR
+CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
@@ -74,22 +74,22 @@ CommonDialogStructure subclass: #CHOOSEFONTW
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #FINDREPLACE
+CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #OPENFILENAME
+CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #OFNOTIFY
+NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #OFNOTIFYEX
+NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -164,11 +164,15 @@ titleOf: aString
 	configuration."
 
 	| buf lib |
-	buf := File pathBuffer.
+	buf := Utf16String new: File maxPath.
 	lib := ComDlgLibrary default.
-	(lib getFileTitle: aString lpszTitle: buf cbBuf: buf size) < 0
+	(lib
+		getFileTitle: aString
+		lpszTitle: buf
+		cbBuf: buf size) < 0
 		ifTrue: [lib systemError: 123].
-	^buf trimNulls! !
+	#todo. "Temporary conversion to ANSI"
+	^buf trimNulls asAnsiString! !
 !File class categoriesFor: #titleOf:!filename manipulation!public! !
 
 !Font class methodsFor!

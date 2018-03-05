@@ -734,7 +734,7 @@ renameVariable
 	(self renameVariableCommand: self selectedNode) value: self!
 
 renameVariableCommand: anStVariableNode
-	^(##((LookupTable new)
+	^(##(IdentityDictionary new
 		at: #temporary put: #renameTemporary:;
 		at: #instance put: #renameInstanceVariable:;
 		at: #class put: #renameClassVariable:;

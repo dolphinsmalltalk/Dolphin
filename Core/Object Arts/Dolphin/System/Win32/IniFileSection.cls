@@ -29,7 +29,7 @@ at: keyString put: valueObject
 	value := valueObject displayString.
 	^(KernelLibrary default
 		writePrivateProfileString: name
-		lpKeyName: keyString shallowCopy
+		lpKeyName: keyString asUtf16String shallowCopy
 		lpString: value
 		lpFileName: filename) == 0
 		ifTrue: [Win32Error signal]
@@ -40,7 +40,7 @@ errorNilKey
 
 getValue: key
 	| lib buf count |
-	buf := String new: 128.
+	buf := Utf16String newFixed: 128.
 	lib := KernelLibrary default.
 	
 	[count := lib
@@ -55,8 +55,8 @@ getValue: key
 			["Not found"
 			^nil].
 	count = (buf size - 2)]
-			whileTrue: [buf := String new: buf size * 2].
-	^buf resize: count!
+			whileTrue: [buf := Utf16String new: buf size * 2].
+	^(buf resize: count) asUtf8String!
 
 hash
 	^super hash bitXor: name hash !
@@ -100,7 +100,7 @@ removeKey: aString ifAbsent: aNiladicValuable
 
 	| value key |
 	aString isNil ifTrue: [^self errorNilKey].
-	key := aString shallowCopy.
+	key := aString asUtf16String shallowCopy.
 	value := self getValue: key.
 	value isNil ifTrue: [^aNiladicValuable value].
 	^(KernelLibrary default
@@ -112,8 +112,8 @@ removeKey: aString ifAbsent: aNiladicValuable
 		ifFalse: [value]!
 
 setFilename: filenameString section: sectionNameString
-	filename := filenameString.
-	name := sectionNameString shallowCopy! !
+	filename := filenameString asUtf16String.
+	name := sectionNameString asUtf16String shallowCopy! !
 !IniFileSection categoriesFor: #=!comparing!public! !
 !IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
 !IniFileSection categoriesFor: #at:put:!adding!public! !

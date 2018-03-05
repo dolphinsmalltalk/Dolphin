@@ -1,12 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-TEXTMETRIC subclass: #NEWTEXTMETRIC
+TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NEWTEXTMETRIC guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
-NEWTEXTMETRIC comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
+NEWTEXTMETRICW guid: (GUID fromString: '{5a49e86c-3d79-4c3d-b5be-65a1b21f73ed}')!
+NEWTEXTMETRICW comment: '<NEWTEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.NEWTEXTMETRIC'' from type information in the ''Windows API'' library.
 
 IDL definition follows:
 
@@ -19,8 +19,8 @@ struct tagNEWTEXTMETRIC {
 	UINT ntmAvgWidth;
 } NEWTEXTMETRIC;
 '!
-!NEWTEXTMETRIC categoriesForClass!Win-Structs! !
-!NEWTEXTMETRIC methodsFor!
+!NEWTEXTMETRICW categoriesForClass!Win-Structs! !
+!NEWTEXTMETRICW methodsFor!
 
 ntmAvgWidth
 	"Answer the receiver's ntmAvgWidth field as a Smalltalk object."
@@ -41,25 +41,25 @@ ntmSizeEM
 	"Answer the receiver's ntmSizeEM field as a Smalltalk object."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ntmSizeEM)! !
-!NEWTEXTMETRIC categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
-!NEWTEXTMETRIC categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
-!NEWTEXTMETRIC categoriesFor: #ntmFlags!**compiled accessors**!public! !
-!NEWTEXTMETRIC categoriesFor: #ntmSizeEM!**compiled accessors**!public! !
+!NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
+!NEWTEXTMETRICW categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
+!NEWTEXTMETRICW categoriesFor: #ntmFlags!**compiled accessors**!public! !
+!NEWTEXTMETRICW categoriesFor: #ntmSizeEM!**compiled accessors**!public! !
 
-!NEWTEXTMETRIC class methodsFor!
+!NEWTEXTMETRICW class methodsFor!
 
 defineFields
 	"Define the fields of the NEWTEXTMETRIC structure.
 		NEWTEXTMETRIC compileDefinition
 	
 		typedef 
-		struct tagNEWTEXTMETRIC {
+		struct tagNEWTEXTMETRICW {
 			// ... all fields of TEXTMETRIC...
 			long ntmFlags;
 			int ntmSizeEM;
 			int ntmCellHeight;
 			int ntmAvgWidth;
-		} NEWTEXTMETRIC;
+		} NEWTEXTMETRICW;
 "
 
 	super defineFields.
@@ -68,5 +68,5 @@ defineFields
 		defineField: #ntmSizeEM type: DWORDField readOnly;
 		defineField: #ntmCellHeight type: DWORDField readOnly;
 		defineField: #ntmAvgWidth type: DWORDField readOnly! !
-!NEWTEXTMETRIC class categoriesFor: #defineFields!initializing!public! !
+!NEWTEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
 

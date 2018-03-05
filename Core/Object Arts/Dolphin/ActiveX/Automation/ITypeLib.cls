@@ -323,23 +323,22 @@ open: aString register: aBoolean
 	"Open the type library at the specified path and answer an instance of the
 	receiver on it. Optionally (re)register the type library."
 
-	| answer oleaut wpath |
+	| answer oleaut |
 	answer := self newPointer.
 	oleaut := OLEAutLibrary default.
-	wpath := aString asUtf16String.
-	oleaut loadTypeLib: wpath pptlib: answer.
+	oleaut loadTypeLib: aString pptlib: answer.
 	aBoolean
 		ifTrue: 
 			["Attempt to register system wide first - this will fail if not running elevated"
 			(oleaut
 				registerTypeLib: answer
-				wszFullPath: wpath
+				wszFullPath: aString
 				wszHelpDir: nil) < S_OK
 				ifTrue: 
 					["Fall back on user specific registration, which does not require admin priviledges"
 					oleaut
 						registerTypeLibForUser: answer
-						szFullPath: wpath
+						szFullPath: aString
 						szHelpDir: nil]].
 	^answer!
 

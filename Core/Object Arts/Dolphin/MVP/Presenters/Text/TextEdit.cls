@@ -710,10 +710,10 @@ onFind: aFindDetails
 			^self].
 	Sound warningBeep!
 
-onFind: registeredId wParam: wParam lParam: lParam 
+onFind: registeredId wParam: wParam lParam: lParam
 	| details struct |
-	struct := FINDREPLACE fromAddress: lParam.
-	struct isClosing 
+	struct := FINDREPLACEW fromAddress: lParam.
+	struct isClosing
 		ifTrue: 
 			["The FindDialog is closing."
 			^0].

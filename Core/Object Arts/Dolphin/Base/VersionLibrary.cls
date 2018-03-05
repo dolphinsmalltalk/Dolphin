@@ -37,7 +37,7 @@ getFileVersionInfo: lpstrFilename dwHandle: dwHandle dwLen: dwLen lpData: lpData
 			LPVOID lpData 	// pointer to buffer to receive file-version info.	
 		);"
 
-	<stdcall: bool GetFileVersionInfoA lpstr dword dword lpvoid>
+	<stdcall: bool GetFileVersionInfoW lpwstr dword dword lpvoid>
 	^self invalidCall
 !
 
@@ -49,7 +49,7 @@ getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
 			LPDWORD lpdwHandle 	// pointer to variable to receive zero	
 		);"
 
-	<stdcall: dword GetFileVersionInfoSizeA lpstr DWORD* >
+	<stdcall: dword GetFileVersionInfoSizeW lpwstr DWORD* >
 	^self invalidCall
 !
 
@@ -57,12 +57,12 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 	"Query selected version information from the specified version information resource
 		BOOL VerQueryValue( 
 			const LPVOID pBlock,	// address of buffer for version resource	
-			LPTSTR lpSubBlock,	// address of value to retrieve	
+			LPWSTR lpSubBlock,	// address of value to retrieve	
 			LPVOID *lplpBuffer,	// address of buffer for version value pointer	
 			PUINT puLen 	// address of length buffer	
 		);" 
 
-	<stdcall: bool VerQueryValueA lpvoid lpstr lppvoid DWORD* >
+	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid DWORD* >
 	^self invalidCall
 
 ! !

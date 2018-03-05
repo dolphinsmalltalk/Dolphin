@@ -191,7 +191,6 @@ open
 	functionality."
 
 	| fh |
-	
 	[fh := KernelLibrary default 
 				createFile: spec
 				dwDesiredAccess: self accessFlags
@@ -553,12 +552,12 @@ commonPrefixOf: path1 and: path2
 	This will be empty if the paths share no common prefix."
 
 	| prefix len |
-	prefix := File pathBuffer.
-	len := ShlwapiLibrary default 
-			pathCommonPrefix: path1 
-			pszFile2: path2
-			achPath: prefix.
-	^prefix first: len!
+	prefix := Utf16String new: File maxPath.
+	len := ShlwapiLibrary default
+				pathCommonPrefix: path1
+				pszFile2: path2
+				achPath: prefix.
+	^(prefix first: len) asAnsiString!
 
 composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 
@@ -570,8 +569,12 @@ composePath: path subPath: subpath
 	"Composes a full pathname from path and subpath components."
 
 	| fullName |
-	fullName := self pathBuffer.
-	^ShlwapiLibrary default pathCombine: fullName lpszDir: path lpszFile: subpath!
+	fullName := Utf16String new: self maxPath.
+	#todo. "Temporarily force to ANSI"
+	^(ShlwapiLibrary default
+		pathCombine: fullName
+		lpszDir: path
+		lpszFile: subpath) asAnsiString!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
@@ -601,7 +604,8 @@ copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
 	Signal a HostSystemError if the copy fails."
 
-	(KernelLibrary default copyFile: oldFileNameString lpNewFileName: newFileNameString bfailIfExists: false)
+	#todo. "Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
+	(KernelLibrary default copyFile: oldFileNameString asUtf16String lpNewFileName: newFileNameString asUtf16String bfailIfExists: false)
 		ifFalse: [KernelLibrary default systemError: Processor activeProcess lastError]!
 
 createDirectory: path
@@ -723,32 +727,31 @@ for: aString do: operation
 		in: (File splitPathFrom: aString)
 		do: operation!
 
-for: matchString in: dirString do: operation 
+for: matchString in: dirString do: operation
 	"For each file/directory matching the wildcarded string argument, matchString, 
 	in the directory named, dirString, evaluate the monadic valuable, operation, with 
 	a WIN32_FIND_DATA describing the file/directory as the argument."
 
 	| lib handle findStruct |
 	lib := KernelLibrary default.
-	findStruct := WIN32_FIND_DATA new.
+	findStruct := WIN32_FIND_DATAW new.
 	findStruct directory: dirString.
 	handle := lib findFirstFile: (File composePath: dirString subPath: matchString)
 				lpFindFileData: findStruct.
-	handle = INVALID_HANDLE_VALUE 
+	handle = INVALID_HANDLE_VALUE
 		ifTrue: 
 			[| err |
 			err := lib getLastError.
-			^(err == ERROR_FILE_NOT_FOUND or: [err == ERROR_ACCESS_DENIED]) 
+			^(err == ERROR_FILE_NOT_FOUND or: [err == ERROR_ACCESS_DENIED])
 				ifTrue: [self]
 				ifFalse: [lib systemError: err]].
 	
 	[| error |
 	
 	[operation value: findStruct.
-	lib findNextFile: handle lpFindFileData: findStruct] 
-			whileTrue.
+	lib findNextFile: handle lpFindFileData: findStruct] whileTrue.
 	error := lib getLastError.
-	error = ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]] 
+	error = ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]]
 			ensure: [lib findClose: handle]!
 
 forAll: matchString in: dirString do: operation
@@ -837,12 +840,16 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath |
-	fullpath := String new: self maxPath.
-	((KernelLibrary default getFullPathName: aPathnameString 
-		nBufferLength: fullpath size lpBuffer: fullpath lpFilePart: nil)==0) ifTrue: [
-			KernelLibrary default systemError].
-	^fullpath trimNulls!
+	| fullpath len|
+	fullpath := Utf16String new: self maxPath.
+	(len := KernelLibrary default
+		getFullPathName: aPathnameString
+		nBufferLength: fullpath size + 1
+		lpBuffer: fullpath
+		lpFilePart: nil) == 0
+		ifTrue: [KernelLibrary default systemError].
+	#todo.	"Temporary conversion to ANSI for compatibility"
+	^(fullpath resize: len) asAnsiString!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -1101,23 +1108,24 @@ readAllText: aString
 	buffer]
 			ensure: [file close]!
 
-relativePathOf: aPathString to: aBasePathString 
+relativePathOf: aPathString to: aBasePathString
 	"Answers the relative path of aPathString relative to aBasePathString.
 	Note that if the last component of aBasePathString is to be considered a directory
 	then there must be a trailing slash, otherwise the last component is ignored (it is
 	treated as if it were a file name)."
 
 	| relPath |
-	relPath := self pathBuffer.
-	relPath := (ShlwapiLibrary default 
-		pathRelativePathTo: relPath
-		pszFrom: aBasePathString
-		dwAttrFrom: 0
-		pszTo: aPathString
-		dwAttrTo: 0) 
-			ifTrue: 
-				[relPath trimNulls]
-			ifFalse: [aPathString].
+	relPath := Utf16String new: self maxPath.
+	relPath := (ShlwapiLibrary default
+				pathRelativePathTo: relPath
+				pszFrom: aBasePathString
+				dwAttrFrom: 0
+				pszTo: aPathString
+				dwAttrTo: 0)
+					ifTrue: 
+						[#todo.	"Temporarily force to ANSI"
+						relPath asAnsiString trimNulls]
+					ifFalse: [aPathString].
 	^(relPath beginsWith: '.\') ifTrue: [relPath allButFirst: 2] ifFalse: [relPath]!
 
 removeDirectory: aString
@@ -1218,11 +1226,12 @@ shortPathOf: aPathnameString
 	"Answers the short path version of aPathnameString"
 
 	| shortpath |
-	shortpath := String new: self maxPath.
+	shortpath := Utf16String new: self maxPath.
 	((KernelLibrary default getShortPathName: aPathnameString 
 		lpszShortPath: shortpath cchBuffer: shortpath size)==0) ifTrue: [
 			KernelLibrary default systemError].
-	^shortpath trimNulls!
+	#todo. "Temporary conversion to ANSI for compatibility."
+	^shortpath trimNulls asAnsiString!
 
 splitDriveFrom: aString
 	"Splits the pathname, aString, and answers the drive portion.
@@ -1370,29 +1379,43 @@ temporaryFilename
 	^self temporaryFilenameWithPrefix: ''
 	!
 
-temporaryFilenameWithPrefix: prefixString 
+temporaryFilenameWithPrefix: prefixString
 	"Answer a temporary filename built from prefixString in the user's temporary files
 	directory. Note that this will create the temp file in order to guarantee uniqueness. You
 	are responsible for deleting the file when it is no longer required. Signals a Win32Error if
 	the operation fails."
 
 	| returnBuf |
-	returnBuf := self pathBuffer.
-	(KernelLibrary default 
+	returnBuf := Utf16String new: self maxPath.
+	(KernelLibrary default
 		getTempFileName: self tempPath
 		lpPrefixString: prefixString
 		uUnique: 0
-		lpTempFileName: returnBuf) == 0 
+		lpTempFileName: returnBuf) == 0
 		ifTrue: [^KernelLibrary default systemError].
-	^returnBuf trimNulls!
+	#todo. "Temporary conversion to ANSI for compatibility"
+	^returnBuf trimNulls asAnsiString!
 
 tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
 
 	| buf len |
-	buf := self pathBuffer.
-	len := KernelLibrary default getTempPath: buf size lpBuffer: buf.
-	^buf resize: len!
+	buf := Utf16String new: self maxPath.
+	len := KernelLibrary default getTempPath: buf size + 1 lpBuffer: buf.
+	#todo.	"Temporary conversion to ANSI for compatibility"
+	^(buf resize: len) asAnsiString!
+
+windowsDirectory
+	"Answer the path of the Windows directory on the host computer for the current session. Note
+	that under Terminal Server this will be the shared Windows directory, not the per-user
+	Windows directory. See MSDN KB281316  for further information."
+
+	| len path |
+	path := Utf16String new: self maxPath.
+	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size + 1.
+	len == 0 ifTrue: [^KernelLibrary default systemError].
+	#todo.	"Temporary conversion to ANSI string for compatibility"
+	^(path leftString: len) asAnsiString!
 
 workingDirectory
 	"Answer the current working directory."
@@ -1473,6 +1496,7 @@ workingDirectory: aString
 !File class categoriesFor: #temporaryFilename!filename manipulation!public! !
 !File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
 !File class categoriesFor: #tempPath!filename manipulation!public! !
+!File class categoriesFor: #windowsDirectory!accessing!public! !
 !File class categoriesFor: #workingDirectory!file operations!public! !
 !File class categoriesFor: #workingDirectory:!file operations!public! !
 

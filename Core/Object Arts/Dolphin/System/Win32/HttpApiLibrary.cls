@@ -251,11 +251,9 @@ module HttpApi
 !HttpApiLibrary methodsFor!
 
 addUrl: aString toUrlGroup: anIntegerUrlGroupId
-	| url |
-	url := aString asUtf16String.
 	self checkReturnCode: (self
 				httpAddUrlToUrlGroup: anIntegerUrlGroupId
-				pFullyQualifiedUrl: url
+				pFullyQualifiedUrl: aString
 				urlContext: 0
 				reserved: 0)!
 

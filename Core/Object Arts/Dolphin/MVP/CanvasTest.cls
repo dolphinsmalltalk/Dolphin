@@ -29,18 +29,20 @@ testFont
 testOutlineTextMetrics
 	"For #1349"
 
-	| font canvas otm |
+	| font canvas otm last|
 	(Canvas canUnderstand: #outlineTextMetrics) ifFalse: [^self].
 	font := Font name: 'Comic Sans MS' pointSize: 22.
 	canvas := Canvas forDisplay.
 	canvas font: font.
 	"Get the outline text metrics"
 	otm := canvas outlineTextMetrics.
-	"Although the TEXTMETRIC structure is of size 56 bytes, its last field is a BYTE so the 
+
+	"Although the TEXTMETRIC structure is of size 60 bytes, its last field is a BYTE so the 
 	last 3 bytes are actually padding. This means that they may contain random data, and
 	so the structures may not be strictly equal based on a byte-by-byte comparison."
-	self assert: (canvas textMetrics bytes copyFrom: 1 to: 53) 
-				= (otm otmTextMetrics bytes copyFrom: 1 to: 53).
+	last := (TEXTMETRICW offsetOf: #tmCharSet) + 1.
+	self assert: (canvas textMetrics bytes copyFrom: 1 to: last)
+				= (otm otmTextMetrics bytes copyFrom: 1 to: last).
 	"Canvas is no longer needed"
 	canvas free.
 	"The tricky bit about getting the OTM is the way that the structure varies in size and 

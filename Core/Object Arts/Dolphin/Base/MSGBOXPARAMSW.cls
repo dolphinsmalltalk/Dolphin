@@ -1,12 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #MSGBOXPARAMS
-	instanceVariableNames: ''
+Win32Structure subclass: #MSGBOXPARAMSW
+	instanceVariableNames: 'text caption'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-MSGBOXPARAMS guid: (GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
-MSGBOXPARAMS comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
+MSGBOXPARAMSW guid: (GUID fromString: '{87b4c600-026e-11d3-9fd7-00a0cc3e4a32}')!
+MSGBOXPARAMSW comment: 'MSGBOXPARAMS is an <ExternalStructure> class which represents the Windows structure of the same name.
 
 MSGBOXPARAMS is used to contain configuration details for Message Boxes.
 
@@ -15,8 +15,17 @@ Instance Variables:
 	text	<String> Text to be display in box (address stored in struct, so need to prevent premature GC)
 	caption 	<String> Caption of box (ditto)
 	owner	<ExternalHandle>. Handle of owner view'!
-!MSGBOXPARAMS categoriesForClass!External-Data-Structured-Win32! !
-!MSGBOXPARAMS methodsFor!
+!MSGBOXPARAMSW categoriesForClass!External-Data-Structured-Win32! !
+!MSGBOXPARAMSW methodsFor!
+
+caption: aString
+	"Set the text to be displayed as the message box title."
+
+	"Implementation Note: We must retain a reference to the String to ensure it is not
+	garbage collected, so we store it into an inst var maintained for that purpose." 
+
+	caption := aString asUtf16String.  
+	self lpszCaption: caption!
 
 dwSize: anObject 
 	"Set the receiver's dwSize field to the value of anObject."
@@ -51,42 +60,53 @@ lpszIcon: anObject
 lpszText: anObject 
 	"Set the receiver's lpszText field to the value of anObject."
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anObject yourAddress! !
-!MSGBOXPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MSGBOXPARAMS categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!MSGBOXPARAMS categoriesFor: #hInstance:!**compiled accessors**!public! !
-!MSGBOXPARAMS categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!MSGBOXPARAMS categoriesFor: #lpszCaption:!**compiled accessors**!public! !
-!MSGBOXPARAMS categoriesFor: #lpszIcon:!**compiled accessors**!public! !
-!MSGBOXPARAMS categoriesFor: #lpszText:!**compiled accessors**!public! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anObject yourAddress!
 
-!MSGBOXPARAMS class methodsFor!
+text: aString
+	"Set the text to be displayed in the message box."
+
+	"Implementation Note: We must retain a reference to the String to ensure it is not
+	garbage collected, so we store it into an inst var maintained for that purpose."
+
+	text := aString asUtf16String.
+	self lpszText: text! !
+!MSGBOXPARAMSW categoriesFor: #caption:!accessing!public! !
+!MSGBOXPARAMSW categoriesFor: #dwSize:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #dwStyle:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #hInstance:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #lpszCaption:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #lpszIcon:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #lpszText:!**compiled accessors**!public! !
+!MSGBOXPARAMSW categoriesFor: #text:!accessing!public! !
+
+!MSGBOXPARAMSW class methodsFor!
 
 defineFields
-	"Define the fields of the Win32 MSGBOXPARAMS structure.
+	"Define the fields of the Win32 MSGBOXPARAMSW structure.
 
-		MSGBOXPARAMS compileDefinition
+		self compileDefinition
 
 	typedef struct {
 			UINT cbSize;
 			HWND hwndOwner;
 			HINSTANCE hInstance;
-			LPCSTR lpszText;
-			LPCSTR lpszCaption;
+			LPCWSTR lpszText;
+			LPCWSTR lpszCaption;
 			DWORD dwStyle;
 			LPCSTR lpszIcon;
 			DWORD dwContextHelpId;
 			MSGBOXCALLBACK lpfnMsgBoxCallback;
 			DWORD dwLanguageId;
-		} MSGBOXPARAMS, *PMSGBOXPARAMS, FAR *LPMSGBOXPARAMS; 
+		} MSGBOXPARAMSW; 
 	"
 
 	self
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #hwndOwner type: DWORDField writeOnly;
 		defineField: #hInstance type: DWORDField writeOnly;
-		defineField: #lpszText type: (PointerField type: String) beWriteOnly;
-		defineField: #lpszCaption type: (PointerField type: String) beWriteOnly;
+		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
+		defineField: #lpszCaption type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #dwStyle type: DWORDField writeOnly;
 		defineField: #lpszIcon type: DWORDField writeOnly;
 		beUncompiled;
@@ -94,5 +114,5 @@ defineFields
 		defineField: #lpfnMsgBoxCallback type: DWORDField filler;
 		defineField: #dwLanguageId type: DWORDField writeOnly
 	"This field can hold a string, or an integer resource id"! !
-!MSGBOXPARAMS class categoriesFor: #defineFields!initializing!public! !
+!MSGBOXPARAMSW class categoriesFor: #defineFields!initializing!public! !
 

@@ -332,7 +332,7 @@ isWindowsServer
 	function, which is provided as an inline function in VersionHelpers.h in the Windows SDK."
 
 	| osvi |
-	osvi := (OSVERSIONINFOEX new)
+	osvi := OSVERSIONINFOEXW new
 				wProductType: VER_NT_WORKSTATION;
 				yourself.
 	^(KernelLibrary default
@@ -352,7 +352,7 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 	SDK."
 
 	| osvi |
-	osvi := (OSVERSIONINFOEX new)
+	osvi := (OSVERSIONINFOEXW new)
 				dwMajorVersion: wMajorVersion;
 				dwMinorVersion: wMinorVersion;
 				wServicePackMajor: wServicePackMajor;

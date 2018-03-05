@@ -208,14 +208,14 @@ imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: u
 
 		HIMAGELIST __stdcall ImageList_LoadImage(
 			HINSTANCE hi,
-			LPCSTR lpbmp,
+			LPCWSTR lpbmp,
 			int cx,
 			int cGrow,
 			COLORREF crMask,
 			UINT uType,
 			UINT uFlags);"
 
-	<stdcall: handle ImageList_LoadImageA handle lpstr sdword sdword dword dword dword>
+	<stdcall: handle ImageList_LoadImageW handle lpwstr sdword sdword dword dword dword>
 	^self invalidCall!
 
 imageList_ReplaceIcon: himl i: i hicon: hicon

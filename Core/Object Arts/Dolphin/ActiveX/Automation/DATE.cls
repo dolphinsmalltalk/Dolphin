@@ -31,13 +31,16 @@ value
 !DATE class methodsFor!
 
 fromString: aString
+	"
+		self fromString: '3 February 1995'.
+	"
 	^self fromString: aString locale: Locale userDefault!
 
 fromString: aString locale: aLocale
 	| answer |
 	answer := self new.
 	OLEAutLibrary default
-		varDateFromStr: aString asUtf16String
+		varDateFromStr: aString
 		lcid: aLocale asParameter
 		dwFlags: 0
 		pdateOut: answer.

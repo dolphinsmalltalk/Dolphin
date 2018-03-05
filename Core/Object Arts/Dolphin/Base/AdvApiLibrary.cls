@@ -38,11 +38,11 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 			PSID lpUserSid,		// user security identifier (optional) 
 			WORD wNumStrings,	// number of strings to merge with message  
 			DWORD dwDataSize,	// size of binary data, in bytes
-			LPCTSTR *lpStrings,	// array of strings to merge with message 
+			LPCWSTR *lpStrings,	// array of strings to merge with message 
 			LPVOID lpRawData 	// address of binary data 
 		);"
 
-	<stdcall: bool ReportEventA handle word word dword lpvoid word dword lpvoid lpvoid>
+	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
 	^self invalidCall! !
 !AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
 !AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !

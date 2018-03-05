@@ -168,7 +168,7 @@ initialize
 		CheckButton initialize
 	"
 
-	AlignmentMap := (LookupTable new)
+	AlignmentMap := IdentityDictionary new
 				at: #leftCenter put: BS_LEFT | BS_VCENTER;
 				at: #rightCenter put: BS_RIGHT | BS_VCENTER;
 				at: #topCenter put: BS_CENTER | BS_TOP;

@@ -80,7 +80,7 @@ package classNames
 	add: #DIBSection;
 	add: #DIBSECTION;
 	add: #DividerMenuItem;
-	add: #DOCINFO;
+	add: #DOCINFOW;
 	add: #DoubleBufferedView;
 	add: #DragDropObject;
 	add: #DragDropSession;
@@ -133,8 +133,7 @@ package classNames
 	add: #MenuBar;
 	add: #MENUINFO;
 	add: #MenuItem;
-	add: #MENUITEMINFOA;
-	add: #MENUITEMINFOV5;
+	add: #MENUITEMINFOW;
 	add: #MINMAXINFO;
 	add: #MockThemeLibrary;
 	add: #MouseEvent;
@@ -142,7 +141,7 @@ package classNames
 	add: #MouseWheelEvent;
 	add: #Msimg32Library;
 	add: #NCCALCSIZE_PARAMS;
-	add: #NEWTEXTMETRIC;
+	add: #NEWTEXTMETRICW;
 	add: #NMHDR;
 	add: #NMTTDISPINFO;
 	add: #NMTTDISPINFOA;
@@ -150,7 +149,7 @@ package classNames
 	add: #NONCLIENTMETRICSW;
 	add: #NOTIFYICONDATA;
 	add: #NullIcon;
-	add: #OUTLINETEXTMETRIC;
+	add: #OUTLINETEXTMETRICW;
 	add: #PaintEvent;
 	add: #PAINTSTRUCT;
 	add: #PALETTEENTRY;
@@ -195,7 +194,7 @@ package classNames
 	add: #SysColorBrush;
 	add: #SystemColor;
 	add: #SystemMetrics;
-	add: #TEXTMETRIC;
+	add: #TEXTMETRICW;
 	add: #ThemeLibrary;
 	add: #TRACKMOUSEEVENT;
 	add: #TRIVERTEX;
@@ -301,8 +300,6 @@ package methodNames
 	add: #UserLibrary -> #getWindowRect:lpRect:;
 	add: #UserLibrary -> #getWindowText:lpString:nMaxCount:;
 	add: #UserLibrary -> #getWindowTextLength:;
-	add: #UserLibrary -> #getWindowTextLengthW:;
-	add: #UserLibrary -> #getWindowTextW:lpString:nMaxCount:;
 	add: #UserLibrary -> #getWindowThreadProcessId:lpdwProcessId:;
 	add: #UserLibrary -> #getWindowULong:nIndex:;
 	add: #UserLibrary -> #getWindowULongPtr:nIndex:;
@@ -382,8 +379,6 @@ package methodNames
 	add: 'ExternalLibrary class' -> #icon;
 	add: 'File class' -> #icon;
 	add: 'Notification class' -> #icon;
-	add: 'String class' -> #getTextOfWindow:;
-	add: 'Utf16String class' -> #getTextOfWindow:;
 	add: 'Warning class' -> #icon;
 	yourself.
 
@@ -769,8 +764,8 @@ Win32Structure subclass: #DIBSECTION
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #DOCINFO
-	instanceVariableNames: ''
+Win32Structure subclass: #DOCINFOW
+	instanceVariableNames: 'docName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -839,8 +834,8 @@ Win32Structure subclass: #MENUINFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #MENUITEMINFOA
-	instanceVariableNames: 'text'
+Win32Structure subclass: #MENUITEMINFOW
+	instanceVariableNames: 'text bitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -864,7 +859,7 @@ Win32Structure subclass: #NOTIFYICONDATA
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #OUTLINETEXTMETRIC
+Win32Structure subclass: #OUTLINETEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -914,7 +909,7 @@ Win32Structure subclass: #SIZE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #TEXTMETRIC
+Win32Structure subclass: #TEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -954,11 +949,6 @@ AbstractLOGFONT subclass: #LOGFONTW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-MENUITEMINFOA subclass: #MENUITEMINFOV5
-	instanceVariableNames: 'bitmap'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 NMHDR subclass: #NMTTDISPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -974,7 +964,7 @@ NMTTDISPINFO subclass: #NMTTDISPINFOW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-TEXTMETRIC subclass: #NEWTEXTMETRIC
+TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1496,19 +1486,6 @@ setTextInto: aView
 !String categoriesFor: #copyToClipboard!copying!public! !
 !String categoriesFor: #setTextInto:!double dispatch!private! !
 
-!String class methodsFor!
-
-getTextOfWindow: aView
-	| buf len |
-	len := aView textLength.
-	buf := self new: len.
-	UserLibrary default
-		getWindowText: aView asParameter
-		lpString: buf
-		nMaxCount: len + 1.
-	^buf! !
-!String class categoriesFor: #getTextOfWindow:!helpers!private! !
-
 !UserLibrary methodsFor!
 
 adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
@@ -1872,7 +1849,7 @@ drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTF
 
 		int DrawTextEx(
 			HDC hdc,			 						// handle to device context
-			LPTSTR lpchText,							// pointer to string to draw 
+			LPWSTR lpchText,							// pointer to string to draw 
 			int cchText,								// length of string to draw 
 			LPRECT lprc,								// pointer to rectangle coordinates 
 			UINT dwDTFormat,						// formatting options 
@@ -2322,13 +2299,12 @@ getWindowText: aWindow lpString: aBuffer nMaxCount: len
 	into the supplied buffer, up to the specified maximum length
 		int GetWindowText(
 			HWND hWnd,		// handle of window or control with text
-			LPTSTR lpString,	// address of buffer for text
+			LPWSTR lpString,	// address of buffer for text
 			int nMaxCount 		// maximum number of characters to copy
 		);"
 
-	<stdcall: sdword GetWindowTextA handle lpvoid sdword>
-	^self invalidCall
-!
+	<stdcall: sdword GetWindowTextW handle lpvoid sdword>
+	^self invalidCall!
 
 getWindowTextLength: hWnd
 	"Answer the length, in characters, of the specified window's title 'text'
@@ -2336,32 +2312,8 @@ getWindowTextLength: hWnd
 			HWND hWnd 	// handle of window or control with text
 		);"
 
-	<stdcall: sdword GetWindowTextLengthA handle>
-	^self invalidCall
-!
-
-getWindowTextLengthW: hWnd
-	"Answer the length, in characters, of the specified window's title 'text'
-		int GetWindowTextLength(
-			HWND hWnd 	// handle of window or control with text
-		);"
-
 	<stdcall: sdword GetWindowTextLengthW handle>
-	^self invalidCall
-!
-
-getWindowTextW: aWindow lpString: aBuffer nMaxCount: len
-	"Copy the text of the specified window (its title bar, or other appropriate text)
-	into the supplied buffer, up to the specified maximum length
-		int GetWindowText(
-			HWND hWnd,		// handle of window or control with text
-			LPTSTR lpString,	// address of buffer for text
-			int nMaxCount 		// maximum number of characters to copy
-		);"
-
-	<stdcall: sdword GetWindowTextW handle lpvoid sdword>
-	^self invalidCall
-!
+	^self invalidCall!
 
 getWindowThreadProcessId: aWindowHandle lpdwProcessId: lpdw
 	"The GetWindowThreadProcessId function retrieves the identifier of the thread that created 
@@ -2392,7 +2344,7 @@ getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 	<stdcall: uintptr GetWindowLongPtrA handle sdword>
 	^self invalidCall!
 
-insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOA
+insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
 	"Insert a new item into a menu.
 
 		BOOL InsertMenuItem(
@@ -2402,7 +2354,7 @@ insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINF
 			LPCMENUITEMINFO lpmii
 		);"
 
-	<stdcall: bool InsertMenuItemA handle dword bool MENUITEMINFOA*>
+	<stdcall: bool InsertMenuItemW handle dword bool MENUITEMINFOW*>
 	^self invalidCall!
 
 invalidate: hWnd lpRect: aRECT bErase: aBoolean
@@ -2499,10 +2451,10 @@ loadAccelerators: anExternalHandle lpTableName: anIntegerOrString
 
 		HACCEL LoadAccelerators(
 				HINSTANCE  hInstance,	// handle of application instance
-				LPCTSTR  lpTableName 	// address of table-name string
+				LPCWSTR  lpTableName 	// address of table-name string
 			);"
 
-	<stdcall: handle LoadAcceleratorsA handle lpvoid>
+	<stdcall: handle LoadAcceleratorsW handle lpvoid>
 	^self invalidCall!
 
 loadCursorFromFile: aFilename
@@ -2513,7 +2465,7 @@ loadCursorFromFile: aFilename
   			LPCTSTR  lpFileName	// pointer to name of cursor file, or system cursor identifier
 	   );"
 
-	<stdcall: handle LoadCursorFromFileA lpvoid>
+	<stdcall: handle LoadCursorFromFileW lpvoid>
 	^self invalidCall!
 
 loadIcon: anInstanceHandle lpIconName: anIntegerID
@@ -2549,10 +2501,10 @@ loadMenu: anExternalHandle lpMenuName: anIntegerOrString
 
 		HMENU LoadMenu(
 			HINSTANCE  hInstance,	// handle of application instance
-			LPCTSTR  lpMenuName	// menu name string or menu-resource identifier  
+			LPCWSTR  lpMenuName	// menu name string or menu-resource identifier  
 			);"
 
-	<stdcall: handle LoadMenuA handle lpvoid>
+	<stdcall: handle LoadMenuW handle lpvoid>
 	^self invalidCall!
 
 lockWindowUpdate: anExternalHandle
@@ -2591,10 +2543,10 @@ modifyMenu: hMenuDrop uPosition: position uFlags: styleFlags uIDNewItem: menuId 
 			UINT uPosition,	// menu item to modify
 			UINT uFlags,		// menu item flags
 			UINT uIDNewItem,	// menu item identifier or pop-up menu handle 
-			LPCTSTR lpNewItem	// menu item content
+			LPCWSTR lpNewItem	// menu item content
 		);"
 
-	<stdcall: bool ModifyMenuA handle dword dword dword lpstr>
+	<stdcall: bool ModifyMenuW handle dword dword dword lpwstr>
 	^self invalidCall!
 
 openClipboard: hWnd
@@ -2640,7 +2592,7 @@ registerClipboardFormat: formatName
 			LPCTSTR lpszFormat  // address of name string 
 		);"
 
-	<stdcall: dword RegisterClipboardFormatA lpstr>
+	<stdcall: dword RegisterClipboardFormatW lpwstr>
 	^self invalidCall!
 
 registerHotKey: aWindowHandle id: anIntegerId fsModifiers: anIntegerFlags vk: anIntegerVk
@@ -2659,10 +2611,10 @@ registerWindowMessage: aString
 	"Defines a new window message that is guaranteed to be unique system wide.
 
 		UINT RegisterWindowMessage(
-			LPCTSTR  lpString 	// address of message string
+			LPCWSTR  lpString 	// address of message string
 		);"
 
-	<stdcall: dword RegisterWindowMessageA lpstr>
+	<stdcall: dword RegisterWindowMessageW lpwstr>
 	^self invalidCall!
 
 releaseCapture
@@ -2712,10 +2664,10 @@ removeProp: aWindowHandle lpString: name
 	the specified window.
 		HANDLE RemoveProp(
 			HWND hWnd,	// handle to window
-			LPCTSTR lpString 	// atom or address of string
+			LPCWSTR lpString 	// atom or address of string
 		);"
 
-	<stdcall: handle RemovePropA handle lpvoid>
+	<stdcall: handle RemovePropW handle lpvoid>
 	^self invalidCall
 
 !
@@ -2916,7 +2868,7 @@ setMenuItemInfo: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMenuItemIn
 			LPMENUITEMINFO lpmii
 		);"
 
-	<stdcall: bool SetMenuItemInfoA handle dword bool MENUITEMINFOA*>
+	<stdcall: bool SetMenuItemInfoW handle dword bool MENUITEMINFOW*>
 	^self invalidCall
 
 !
@@ -2947,7 +2899,7 @@ setProp: aWindowHandle lpString: name hData: anObject
 	Before destroying a window (that is, before processing the WM_DESTROY message), an application must remove all entries it has added
 	to the property list. The application must use the RemoveProp function to remove the entries."
 
-	<stdcall: bool SetPropA handle lpvoid handle>
+	<stdcall: bool SetPropW handle lpvoid handle>
 	^self invalidCall
 
 !
@@ -3245,10 +3197,8 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #getWindowLongPtr:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getWindowPlacement:lpwndpl:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getWindowRect:lpRect:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowTextLength:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #getWindowTextLengthW:!public! !
-!UserLibrary categoriesFor: #getWindowTextW:lpString:nMaxCount:!public! !
+!UserLibrary categoriesFor: #getWindowText:lpString:nMaxCount:!public! !
+!UserLibrary categoriesFor: #getWindowTextLength:!public! !
 !UserLibrary categoriesFor: #getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #getWindowULong:nIndex:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #getWindowULongPtr:nIndex:!public!win32 functions-window class! !
@@ -3323,19 +3273,6 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
-
-!Utf16String class methodsFor!
-
-getTextOfWindow: aView
-	| buf len |
-	len := aView textLength.
-	buf := self new: len.
-	UserLibrary default
-		getWindowTextW: aView asParameter
-		lpString: buf
-		nMaxCount: len + 1.
-	^buf! !
-!Utf16String class categoriesFor: #getTextOfWindow:!helpers!private! !
 
 !Warning class methodsFor!
 

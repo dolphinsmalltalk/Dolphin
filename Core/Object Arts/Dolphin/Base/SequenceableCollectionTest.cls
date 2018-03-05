@@ -666,25 +666,19 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#() #(100) #(101 102)) collect: [:each | self newCollection: each].
-	(Array
-		with: (Array
-				with: String empty
-				with: Utf16String empty
-				with: ByteArray new
-				with: OrderedCollection new
-				with: (1 to: 0))
-		with: (Array
-				with: 'c'
-				with: 'c' asUtf16String
-				with: #[255]
-				with: (OrderedCollection with: 123)
-				with: (200 to: 200))
-		with: (Array
-				with: 'cd'
-				with: 'cd' asUtf16String
-				with: #[1 255]
-				with: (OrderedCollection with: 123 with: $x)
-				with: (200 to: 201)))
+	{{String empty.
+			Utf8String empty.
+			Utf16String empty.
+			ByteArray new.
+			OrderedCollection new.
+			1 to: 0}.
+		{'c'. 'c' asUtf8String. 'c' asUtf16String. #[255]. OrderedCollection with: 123. 200 to: 200}.
+		{'cd'.
+			'cd' asUtf8String.
+			'cd' asUtf16String.
+			#[1 255].
+			OrderedCollection with: 123 with: $x.
+			200 to: 201}}
 			do: 
 				[:args |
 				args do: 
@@ -694,7 +688,7 @@ testMixedConcatenation
 								| result |
 								result := self verifyConcatenation: eachCase with: each.
 								self deny: each == result.
-								self assert: result class == each species]]]!
+								self assert: (result isKindOf: each species)]]]!
 
 testReplaceFromToWithStartingAt
 	| a |

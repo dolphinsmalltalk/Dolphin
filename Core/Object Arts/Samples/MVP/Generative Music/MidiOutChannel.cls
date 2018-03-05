@@ -47,7 +47,7 @@ mapVoiceToValue: aVoiceSymbol
 	^(self class generalMidiMap indexOf: aVoiceSymbol)-1!
 
 midiNoteMap
-	^##((LookupTable new)
+	^##((IdentityDictionary new)
 		at: #C put: 0;
 		at: #'C#' put: 1;
 		at: #'Db' put: 1;

@@ -6,7 +6,7 @@ IconicListAbstract subclass: #TreeView
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmSelChanged: #nmGetDispInfoA: #nmSetDispInfoA: #tvnItemExpandingA: #tvnItemExpandedA: #nmBeginDrag: #nmBeginRDrag: #nmDeleteItem: #nmBeginLabelEditA: #nmEndLabelEditA: #nmKeyDown: #tvnGetInfoTipA: #tvnGetInfoTipW: #nmDummy: #tvnItemChangingA: #tvnItemChangingW: #tvnItemChangedA: #tvnItemChangedW: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChangedW: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpandingW: #tvnItemExpandedW: #nmBeginDragW: #nmBeginRDragW: #nmDeleteItemW: #nmBeginLabelEditW: #nmEndLabelEditW: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
+TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmSelChanged: #nmGetDispInfoA: #nmSetDispInfoA: #tvnItemExpandingA: #tvnItemExpandedA: #nmBeginDrag: #nmBeginRDragA: #nmDeleteItem: #nmBeginLabelEditA: #nmEndLabelEditA: #nmKeyDown: #tvnGetInfoTipA: #tvnGetInfoTipW: #nmDummy: #tvnItemChangingA: #tvnItemChangingW: #tvnItemChangedA: #tvnItemChangedW: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChangedW: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpandingW: #tvnItemExpandedW: #nmBeginDragW: #nmBeginRDragW: #nmDeleteItemW: #nmBeginLabelEditW: #nmEndLabelEditW: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -78,7 +78,7 @@ addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 					| hItem |
 					hItem := user
 								sendMessage: handle
-								msg: TVM_INSERTITEMA
+								msg: TVM_INSERTITEMW
 								wParam: 0
 								lpParam: aTVINSERTSTRUCT.
 					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!

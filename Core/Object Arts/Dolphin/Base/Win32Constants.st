@@ -124,6 +124,9 @@ Win32Constants at: 'CS_OWNDC' put: 16r20!
 Win32Constants at: 'CS_PARENTDC' put: 16r80!
 Win32Constants at: 'CS_SAVEBITS' put: 16r800!
 Win32Constants at: 'CS_VREDRAW' put: 16r1!
+Win32Constants at: 'CSTR_EQUAL' put: 16r2!
+Win32Constants at: 'CSTR_GREATER_THAN' put: 16r3!
+Win32Constants at: 'CSTR_LESS_THAN' put: 16r1!
 Win32Constants at: 'CTRL_BREAK_EVENT' put: 16r1!
 Win32Constants at: 'CTRL_C_EVENT' put: 16r0!
 Win32Constants at: 'CTRL_CLOSE_EVENT' put: 16r2!
@@ -405,6 +408,8 @@ Win32Constants at: 'INVALID_HANDLE_VALUE' put: 16rFFFFFFFF!
 Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
 Win32Constants at: 'LF_FACESIZE' put: 16r20!
 Win32Constants at: 'LF_FULLFACESIZE' put: 16r40!
+Win32Constants at: 'LINGUISTIC_IGNORECASE' put: 16r10!
+Win32Constants at: 'LINGUISTIC_IGNOREDIACRITIC' put: 16r20!
 Win32Constants at: 'LOAD_LIBRARY_AS_DATAFILE' put: 16r2!
 Win32Constants at: 'LOCALE_IDATE' put: 16r21!
 Win32Constants at: 'LOCALE_ILANGUAGE' put: 16r1!
@@ -423,6 +428,7 @@ Win32Constants at: 'LOCALE_SSHORTDATE' put: 16r1F!
 Win32Constants at: 'LOCALE_STIME' put: 16r1E!
 Win32Constants at: 'LOCALE_STIMEFORMAT' put: 16r1003!
 Win32Constants at: 'LOCALE_SYSTEM_DEFAULT' put: 16r800!
+Win32Constants at: 'LOCALE_USE_CP_ACP' put: 16r40000000!
 Win32Constants at: 'LOCALE_USER_DEFAULT' put: 16r400!
 Win32Constants at: 'LOGPIXELSX' put: 16r58!
 Win32Constants at: 'LOGPIXELSY' put: 16r5A!
@@ -522,6 +528,12 @@ Win32Constants at: 'NIF_TIP' put: 16r4!
 Win32Constants at: 'NIM_ADD' put: 16r0!
 Win32Constants at: 'NIM_DELETE' put: 16r2!
 Win32Constants at: 'NIM_MODIFY' put: 16r1!
+Win32Constants at: 'NORM_IGNORECASE' put: 16r1!
+Win32Constants at: 'NORM_IGNOREKANATYPE' put: 16r10000!
+Win32Constants at: 'NORM_IGNORENONCASE' put: 16r2!
+Win32Constants at: 'NORM_IGNORESYMBOLS' put: 16r4!
+Win32Constants at: 'NORM_IGNOREWIDTH' put: 16r20000!
+Win32Constants at: 'NORM_LINGUISTIC_CASING' put: 16r8000000!
 Win32Constants at: 'NORMAL_PRIORITY_CLASS' put: 16r20!
 Win32Constants at: 'NOTSRCCOPY' put: 16r330008!
 Win32Constants at: 'NULL_BRUSH' put: 16r5!
@@ -688,6 +700,8 @@ Win32Constants at: 'SND_RESOURCE' put: 16r40004!
 Win32Constants at: 'SND_SYNC' put: 16r0!
 Win32Constants at: 'SND_TYPEMASK' put: 16r170007!
 Win32Constants at: 'SND_VALIDFLAGS' put: 16r17201F!
+Win32Constants at: 'SORT_DIGITSASNUMBERS' put: 16r8!
+Win32Constants at: 'SORT_STRINGSORT' put: 16r1000!
 Win32Constants at: 'SPI_GETFLATMENU' put: 16r1022!
 Win32Constants at: 'SPI_GETICONTITLELOGFONT' put: 16r1F!
 Win32Constants at: 'SPI_GETLISTBOXSMOOTHSCROLLING' put: 16r1006!

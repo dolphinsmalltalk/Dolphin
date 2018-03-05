@@ -24,13 +24,13 @@ minExtent
 
 	^self defaultExtent * 3 // 4!
 
-onPaintRequired: aPaintEvent 
+onPaintRequired: aPaintEvent
 	"A portion of the receiver window has been exposed and needs repainting.
 	The supplied aPaintEvent holds details about the exposed area.
 	Within #onPaintRequired: you MUST ask for a Canvas from aPaintEvent 
 	(not the receiver window) to paint the contents on."
 
-	| canvas rect  textFont  textExtent  textToShow |
+	| canvas rect textFont textExtent textToShow |
 	canvas := aPaintEvent canvas.
 
 	"We're going to draw an ellipse inside a rectangle that is inset
@@ -41,7 +41,7 @@ onPaintRequired: aPaintEvent
 	text will be when displayed."
 	textFont := Font name: 'Arial' pointSize: 32.
 	canvas font: textFont.
-	textToShow := 'Hello World'.
+	textToShow := 'Hello World', $\x1F37B asUtf8String.
 	textExtent := canvas textExtent: textToShow.
 
 	"Draw the ellipse with a grey background and red border"

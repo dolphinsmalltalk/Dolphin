@@ -44,7 +44,8 @@ model: aValueModel
 	font := self value ifNil: [Font default].
 	"Might be a legacy Font instance with a LOGFONTA description, but we need a LOGFONTW"
 	lf := font logFont.
-	lfw := LOGFONTW new copyBytes: lf bytes.
+	lfw := LOGFONTW new.
+	lfw replaceFrom: 1 to: lf byteSize with: lf bytes startingAt: 1.
 	lfw faceName: lf faceName.
 	self winStruct logFont: lfw!
 

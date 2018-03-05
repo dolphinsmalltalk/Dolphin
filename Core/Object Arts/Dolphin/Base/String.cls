@@ -2,11 +2,14 @@
 
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'LineDelimiter NullPrintCharacter'
+	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf8 LineDelimiter NullPrintCharacter'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'empty'!
+	classInstanceVariableNames: 'encoding empty'!
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
+String addClassConstant: 'EncodingAnsi' value: 0!
+String addClassConstant: 'EncodingUtf16' value: 2!
+String addClassConstant: 'EncodingUtf8' value: 1!
 String addClassConstant: 'LineDelimiter' value: '
 '!
 String comment: 'String is the class of <ArrayedCollection>s whose elements are <Character>s.
@@ -25,25 +28,16 @@ String complies with the following ANSI protocols:
 !String methodsFor!
 
 , aSequencedReadableCollection
-	^aSequencedReadableCollection _appendToString: self!
+	"Answer a new <String> like the receiver (i.e. of the receiver's species but not necessarily
+	the exact same class) containing the Characters of the receiver in their original order with
+	Characters constructed from the elements of the <sequencedReadableCollection> argument
+	appended in their original order, i.e. concatenate the argument to the receiver."
 
-_appendToString: aString
-	| size newSize result |
-	size := aString size.
-	result := aString species new: (newSize := size + self size).
-	aString
-		replaceBytesOf: result
-		from: 1
-		to: size
-		startingAt: 1.
-	self
-		replaceBytesOf: result
-		from: size + 1
-		to: newSize
-		startingAt: 1.
-	^result!
+	<primitive: 218>
+	^super , aSequencedReadableCollection!
 
 _beginsString: aString
+	#todo. "Doesn't work for mixed encodings, only both ANSI or both UTF-8"
 	^(CRTLibrary default 
 		strncmp: aString
 		string2: self
@@ -57,44 +51,38 @@ _collate: comparand
 	The comparison respects the currently configured default locale of the
 	host operating system, and the performance may disappoint in some cases."
 
+	| string1 string2 |
 	<primitive: 56>
-	"The primitive simply invokes the case-insensitive string collation method"
-	^KernelLibrary default lstrcmpi: self lpString2: comparand
+	"The primitive works with any supported string encoding (ANSI, UTF-8 and UTF-16) and invokes
+	the OS StringCompare function, in essence as follows:"
+	string1 := self asUtf16String.
+	string2 := comparand asUtf16String.
+	^(KernelLibrary default
+		compareString: Win32Constants.LOCALE_USER_DEFAULT
+		dwCmpFlags: Win32Constants.NORM_IGNORECASE
+		lpString1: string1
+		cchCount1: string1 size
+		lpString2: string2
+		cchCount2: string2 size) - 2!
 
-	"If you really don't care about Locale sensitive collation, then this is
-	even faster (C collation), especially if the C locale is set."
-
-"	^CRTLibrary default _stricmp: self string2: comparand."
-!
-
-_equalsByteString: aString
-	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
-	Double-dispatched from String>>=."
-
-	^self asUtf8String = aString!
-
-_equalsUtf16String: aUtf16String
-	"Private - Answer whether the receiver is equivalent to the <Utf16String>, aString. 
-	Double-dispatched from Utf16String>>=."
-
-	^self asUtf16String = aUtf16String!
-
-_indexOfAnyInString: aString startingAt: anInteger 
+_indexOfAnyInString: aString startingAt: anInteger
 	| span |
+	#todo.	"Doesn't work for mixed encodings, only both ANSI or both UTF-8"
 	span := aString strcspn: self start: anInteger.
-	^span + anInteger > aString size 
+	^span + anInteger > aString size
 		ifTrue: [0]
 		ifFalse: 
 			["CRT function will stop if it hits a null embedded in the string, so we must fall back
 			on slower superclass implementation in that case."
-			^(aString basicAt: span + anInteger) == 0 
+			^(aString basicAt: span + anInteger) == 0
 				ifTrue: [super _indexOfAnyInString: aString startingAt: anInteger]
 				ifFalse: [span + anInteger]]!
 
 _sameAsString: aString 
 	"Private - Answer whether the receiver collates the same as argument, aString."
 
-	"Implementation Note: Double dispatched from String>>sameAs:."
+	"Implementation Note: Double dispatched from String>>sameAs:. Works for any mix of encodings
+	because _collate: does."
 
 	^self == aString or: [(aString _collate: self) == 0]!
 
@@ -140,13 +128,27 @@ _separateSubStringsIn: aReadableString
 
 = comparand
 	"Answer whether the receiver and the <Object> argument, comparand, 
-	are both Strings containing identical characters (i.e. case sensitive).
+	are both Strings containing identical code points.
 
 	Primitive failure results:
-		0 -	aString is not a byte object of the same class as the receiver."
+		0 -	comparand is a SmallInteger.
+		1 - 	comparand is not a null-terminated object.
+		2 -	comparand and/or receiver encoding not recognised."
 
-	<primitive: 55>
-	^comparand isString and: [comparand _equalsByteString: self]!
+	<primitive: 219>
+	^self == comparand or: 
+			[comparand isString and: 
+					[comparand isSymbol not and: 
+							[| string1 string2 |
+							"The primitive uses the OS CompareStringOrdinal function, or memcmp for a pair of byte strings of matched encoding."
+							string1 := self asUtf16String.
+							string2 := comparand asUtf16String.
+							(KernelLibrary default
+								compareStringOrdinal: string1
+								cchCount1: string1 size
+								lpString2: string2
+								cchCount2: string2 size
+								bIgnoreCase: false) == Win32Constants.CSTR_EQUAL]]]!
 
 > comparand
 	"Answer whether the receiver is lexically greater than the <readableString>, comparand,
@@ -167,7 +169,7 @@ asAnsiString
 
 	<primitive: 217>
 	#todo.	"Make String abstract, with AnsiString subclass"
-	^self!
+	^self asUtf16String asByteString: String!
 
 asByteArray
 	"Answer a <ByteArray> containing the encoded representations of the characters of the
@@ -182,10 +184,10 @@ asByteArray
 		startingAt: 1!
 
 asLowercase
-	"Answer a <readableString> which is a copy of the receiver but
-	with the contents converted to lowercase.
-	Implementation Note: The Win32 function converts in place, so we 
-	must first create a copy."
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to lowercase."
+
+	"Implementation Note: The Win32 function converts in place, so we must first create a copy."
 
 	| copy |
 	copy := self basicCopy.
@@ -227,8 +229,6 @@ asString
 	"Answer a <readableString> containing the same characters as the receiver,
 	i.e. the receiver."
 
-	"For historical reasons, this is always an ANSI-encoded byte string."
-
 	^self!
 
 asSymbol
@@ -248,10 +248,11 @@ asUIntPtr
 	^self yourAddress!
 
 asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with 
-	the contents converted to uppercase.
-	Implementation Note: The Win32 function converts in place, so we need 
-	to create a copy first."
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to uppercase."
+
+	"Implementation Note: The Win32 function converts in place, so we need to create a copy
+	first."
 
 	| copy |
 	copy := self basicCopy.
@@ -261,26 +262,14 @@ asUppercase
 asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
 
-	| answer cch |
 	<primitive: 215>
-	cch := self size.
-	cch == 0 ifTrue: [^Utf16String empty].	"The result will have at most the number of code points as are present in the input, probably fewer if the input is UTF8"
-	answer := Utf16String new: cch.
-	^(cch := KernelLibrary default
-				multiByteToWideChar: self codePage
-				dwFlags: 0
-				lpMultiByteStr: self
-				cchMultiByte: cch
-				lpWideCharStr: answer
-				cchWideChar: cch) == 0
-		ifTrue: [KernelLibrary default systemError]
-		ifFalse: [answer resize: cch]	"MB_ERR_INVALID_CHARS"!
+	^Utf16String withAll: self!
 
 asUtf8String
 	"Answer a UTF8 encoded string representation of the receiver."
 
 	<primitive: 216>
-	^self asUtf16String asUtf8String!
+	^self asUtf16String asByteString: Utf8String!
 
 at: index
 	"Answer the <Character> at the <integer> index, in the receiver.
@@ -392,6 +381,9 @@ equals: comperand
 
 	| size |
 	<primitive: 55>
+	#todo. "Doesn't work correctly for comparing Symbols to UTF encoded strings. This could be
+	       deprecated if we allowed strings and symbols to be equal for the same code point
+	       sequence."
 	(self == comperand or: [self = comperand]) ifTrue: [^true].
 	self species == comperand species ifFalse: [^false].
 	(comperand size = (size := self size)) ifFalse: [^false].
@@ -816,7 +808,7 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	| fromOffset |
 	<primitive: 142>
 	fromOffset := fromStart - start.
-	stop to: start by: -1 do: [:i | aByteObject at: i put: (self at: i + fromOffset)].
+	stop to: start by: -1 do: [:i | aByteObject basicAt: i put: (self basicAt: i + fromOffset)].
 	^aByteObject!
 
 replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
@@ -1020,9 +1012,17 @@ trueCompare: comparand
 	Also the comparison respects the currently configured default locale of the
 	host operating system, and the performance may disappoint in some cases."
 
+	| string1 string2 |
 	<primitive: 51>
-	"The primitive simply invokes this OS case sensitive string collation function"
-	^KernelLibrary default lstrcmp: self lpString2: comparand!
+	string1 := self asUtf16String.
+	string2 := comparand asUtf16String.
+	^(KernelLibrary default
+		compareString: Win32Constants.LOCALE_USER_DEFAULT
+		dwCmpFlags: 0
+		lpString1: string1
+		cchCount1: string1 size
+		lpString2: string2
+		cchCount2: string2 size) - 2!
 
 truncateTo: anInteger
 	"Answer a <readableString> of at most anInteger characters from the receiver."
@@ -1083,11 +1083,8 @@ withNormalizedLineDelimiters
 						ifFalse: [target nextPut: each]]].
 	^target contents! !
 !String categoriesFor: #,!copying!public! !
-!String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !String categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !String categoriesFor: #_collate:!comparing!private! !
-!String categoriesFor: #_equalsByteString:!comparing!private! !
-!String categoriesFor: #_equalsUtf16String:!comparing!private! !
 !String categoriesFor: #_indexOfAnyInString:startingAt:!double dispatch!private!searching! !
 !String categoriesFor: #_sameAsString:!comparing!private! !
 !String categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
@@ -1253,9 +1250,7 @@ fromAddress: anAddress length: anInteger
 fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
 
-	| atomName |
-	^(atomName := String new: 255)
-		leftString: (KernelLibrary default getAtomName: anInteger lpBuffer: atomName nSize: atomName basicSize)!
+	^self fromString: (Utf16String fromAtomId: anInteger)!
 
 fromByteArray: aByteArray
 	| size answer |
@@ -1324,6 +1319,11 @@ icon
 initialize
 	NullPrintCharacter := $?.
 	empty := ''.
+	encoding := 0.
+	self
+		addClassConstant: 'EncodingAnsi' value: encoding;
+		addClassConstant: 'EncodingUtf8' value: 1;
+		addClassConstant: 'EncodingUtf16' value: 2.
 	VMLibrary default registryAt: #String put: self!
 
 lineDelimiter

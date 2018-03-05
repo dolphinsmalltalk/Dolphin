@@ -1,0 +1,223 @@
+"Filed out from Dolphin Smalltalk 7"!
+
+Win32Structure subclass: #TEXTMETRICW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+TEXTMETRICW guid: (GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
+TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
+
+The type library contains no documentation for this struct
+
+Warning: This comment was automatically generated from the struct''s type information, but any changes made here will not be overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+
+typedef 
+struct tagTEXTMETRIC {
+	long tmHeight;
+	long tmAscent;
+	long tmDescent;
+	long tmInternalLeading;
+	long tmExternalLeading;
+	long tmAveCharWidth;
+	long tmMaxCharWidth;
+	long tmWeight;
+	long tmOverhang;
+	long tmDigitizedAspectX;
+	long tmDigitizedAspectY;
+	BYTE tmFirstChar;
+	BYTE tmLastChar;
+	BYTE tmDefaultChar;
+	BYTE tmBreakChar;
+	BYTE tmItalic;
+	BYTE tmUnderlined;
+	BYTE tmStruckOut;
+	BYTE tmPitchAndFamily;
+	BYTE tmCharSet;
+} TEXTMETRIC;
+'!
+!TEXTMETRICW categoriesForClass!Win32-Structs! !
+!TEXTMETRICW methodsFor!
+
+tmAscent
+	"Answer the <Integer> value of the receiver's 'tmAscent' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmAscent)!
+
+tmAveCharWidth
+	"Answer the <Integer> value of the receiver's 'tmAveCharWidth' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmAveCharWidth)!
+
+tmBreakChar
+	"Answer the <Character> value of the receiver's 'tmBreakChar' field."
+
+	^(bytes wordAtOffset: ##(self offsetOf: #tmBreakChar)) asCharacter!
+
+tmCharSet
+	"Answer the <Integer> value of the receiver's 'tmCharSet' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #tmCharSet)!
+
+tmDefaultChar
+	"Answer the <Character> value of the receiver's 'tmDefaultChar' field."
+
+	^(bytes wordAtOffset: ##(self offsetOf: #tmDefaultChar)) asCharacter!
+
+tmDescent
+	"Answer the <Integer> value of the receiver's 'tmDescent' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmDescent)!
+
+tmDigitizedAspectX
+	"Answer the <Integer> value of the receiver's 'tmDigitizedAspectX' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmDigitizedAspectX)!
+
+tmDigitizedAspectY
+	"Answer the <Integer> value of the receiver's 'tmDigitizedAspectY' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmDigitizedAspectY)!
+
+tmExternalLeading
+	"Answer the <Integer> value of the receiver's 'tmExternalLeading' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmExternalLeading)!
+
+tmFirstChar
+	"Answer the <Character> value of the receiver's 'tmFirstChar' field."
+
+	^(bytes wordAtOffset: ##(self offsetOf: #tmFirstChar)) asCharacter!
+
+tmHeight
+	"Answer the <Integer> value of the receiver's 'tmHeight' field."
+
+	^bytes sdwordAtOffset: 0!
+
+tmInternalLeading
+	"Answer the <Integer> value of the receiver's 'tmInternalLeading' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmInternalLeading)!
+
+tmItalic
+	"Answer the <Integer> value of the receiver's 'tmItalic' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #tmItalic)!
+
+tmLastChar
+	"Answer the <Character> value of the receiver's 'tmLastChar' field."
+
+	^(bytes wordAtOffset: ##(self offsetOf: #tmLastChar)) asCharacter!
+
+tmMaxCharWidth
+	"Answer the <Integer> value of the receiver's 'tmMaxCharWidth' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmMaxCharWidth)!
+
+tmOverhang
+	"Answer the <Integer> value of the receiver's 'tmOverhang' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmOverhang)!
+
+tmPitchAndFamily
+	"Answer the <Integer> value of the receiver's 'tmPitchAndFamily' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #tmPitchAndFamily)!
+
+tmStruckOut
+	"Answer the <Integer> value of the receiver's 'tmStruckOut' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #tmStruckOut)!
+
+tmUnderlined
+	"Answer the <Integer> value of the receiver's 'tmUnderlined' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #tmUnderlined)!
+
+tmWeight
+	"Answer the <Integer> value of the receiver's 'tmWeight' field."
+
+	^bytes sdwordAtOffset: ##(self offsetOf: #tmWeight)! !
+!TEXTMETRICW categoriesFor: #tmAscent!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmAveCharWidth!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmBreakChar!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmCharSet!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmDefaultChar!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmDescent!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmDigitizedAspectX!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmDigitizedAspectY!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmExternalLeading!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmFirstChar!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmHeight!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmInternalLeading!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmItalic!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmLastChar!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmMaxCharWidth!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmOverhang!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmPitchAndFamily!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmStruckOut!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmUnderlined!**compiled accessors**!public! !
+!TEXTMETRICW categoriesFor: #tmWeight!**compiled accessors**!public! !
+
+!TEXTMETRICW class methodsFor!
+
+defineFields
+	"Define the fields of the TEXTMETRICW structure.
+		self compileDefinition
+	
+		typedef 
+		struct tagTEXTMETRIC {
+			long tmHeight;
+			long tmAscent;
+			long tmDescent;
+			long tmInternalLeading;
+			long tmExternalLeading;
+			long tmAveCharWidth;
+			long tmMaxCharWidth;
+			long tmWeight;
+			long tmOverhang;
+			long tmDigitizedAspectX;
+			long tmDigitizedAspectY;
+			WCHAR tmFirstChar;
+			WCHAR tmLastChar;
+			WCHAR tmDefaultChar;
+			WCHAR tmBreakChar;
+			BYTE tmItalic;
+			BYTE tmUnderlined;
+			BYTE tmStruckOut;
+			BYTE tmPitchAndFamily;
+			BYTE tmCharSet;
+		} TEXTMETRICW;
+"
+
+	self
+		defineField: #tmHeight type: SDWORDField readOnly;
+		defineField: #tmAscent type: SDWORDField readOnly;
+		defineField: #tmDescent type: SDWORDField readOnly;
+		defineField: #tmInternalLeading type: SDWORDField readOnly;
+		defineField: #tmExternalLeading type: SDWORDField readOnly;
+		defineField: #tmAveCharWidth type: SDWORDField readOnly;
+		defineField: #tmMaxCharWidth type: SDWORDField readOnly;
+		defineField: #tmWeight type: SDWORDField readOnly;
+		defineField: #tmOverhang type: SDWORDField readOnly;
+		defineField: #tmDigitizedAspectX type: SDWORDField readOnly;
+		defineField: #tmDigitizedAspectY type: SDWORDField readOnly;
+		defineField: #tmFirstChar type: WCHARField readOnly;
+		defineField: #tmLastChar type: WCHARField readOnly;
+		defineField: #tmDefaultChar type: WCHARField readOnly;
+		defineField: #tmBreakChar type: WCHARField readOnly;
+		defineField: #tmItalic type: BYTEField readOnly;
+		defineField: #tmUnderlined type: BYTEField readOnly;
+		defineField: #tmStruckOut type: BYTEField readOnly;
+		defineField: #tmPitchAndFamily type: BYTEField readOnly;
+		defineField: #tmCharSet type: BYTEField readOnly!
+
+packing
+	"Uses non-standard packing"
+
+	^4! !
+!TEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!TEXTMETRICW class categoriesFor: #packing!constants!public! !
+

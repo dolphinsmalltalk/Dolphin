@@ -88,7 +88,7 @@ updateTypelibResource: anExternalHandle
 	resourceBytes := (FileStream read: tlbPath text: false) contents.
 	(KernelLibrary default
 		updateResource: anExternalHandle
-		lpType: 'TYPELIB'
+		lpType: 'TYPELIB' asUtf16String
 		lpName: 1
 		wLanguage: 0 
 		lpData: resourceBytes

@@ -597,9 +597,9 @@ ArrayedCollection subclass: #RunArray
 	classInstanceVariableNames: ''!
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'LineDelimiter NullPrintCharacter'
+	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf8 LineDelimiter NullPrintCharacter'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'empty'!
+	classInstanceVariableNames: 'encoding empty'!
 ArrayedCollection variableSubclass: #WeakArray
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1285,12 +1285,12 @@ Win32Structure subclass: #MSG
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #MSGBOXPARAMS
-	instanceVariableNames: ''
+Win32Structure subclass: #MSGBOXPARAMSW
+	instanceVariableNames: 'text caption'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #OSVERSIONINFOEX
+Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1315,7 +1315,7 @@ Win32Structure subclass: #VS_FIXEDFILEINFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #WIN32_FIND_DATA
+Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'

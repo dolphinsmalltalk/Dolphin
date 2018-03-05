@@ -144,7 +144,7 @@ onViewDestroyed
 
 openTheme
 	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'TAB' asUtf16String]!
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'TAB']!
 
 paintLabel: anInteger on: aCanvas in: aRectangle 
 	| inverted rcItem textExtent labelRect textOffset text tcItem imageIndex |

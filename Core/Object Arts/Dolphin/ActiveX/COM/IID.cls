@@ -50,10 +50,9 @@ fromString: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString,
 	which is in Microsoft(tm) GUID format."
 
-	| answer unicodeString |
+	| answer |
 	answer := self newNull.
-	unicodeString := aString asUtf16String.
-	OLELibrary default iidFromString: unicodeString lpiid: answer.
+	OLELibrary default iidFromString: aString lpiid: answer.
 	^answer!
 
 initialize

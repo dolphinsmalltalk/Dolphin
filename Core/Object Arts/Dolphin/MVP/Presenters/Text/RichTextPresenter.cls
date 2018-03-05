@@ -48,7 +48,7 @@ chooseSelectionFont
 	struct := dialog winStruct.
 	charFormat populateChooseFont: struct.
 	dialog showModal.
-	dialog isConfirmed ifTrue: [self view selectionCharFormat: (CHARFORMAT fromChooseFont: struct)]!
+	dialog isConfirmed ifTrue: [self view selectionCharFormat: (CHARFORMATW fromChooseFont: struct)]!
 
 queryCommand: query
 	"Private - Enters details about a potential command for the receiver into 

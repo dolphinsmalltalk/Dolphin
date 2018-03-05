@@ -23,17 +23,16 @@ dialog
 !FileOpenDialog categoriesForClass!MVP-Presenters! !
 !FileOpenDialog methodsFor!
 
-commonDialogSelector
-	"Private - Answer the selector to use to get the result."
+basicShowModal
+	"Private - Show a Open File dialog for the receiver."
 
-	^#getOpenFileName:
-!
+	^ComDlgLibrary default getOpenFileName: winStruct!
 
 defaultStyle
 	"Answers the style for the receiver."
 
 	^super defaultStyle bitOr: OFN_FILEMUSTEXIST! !
-!FileOpenDialog categoriesFor: #commonDialogSelector!constants!private! !
+!FileOpenDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
 !FileOpenDialog categoriesFor: #defaultStyle!constants!public! !
 
 !FileOpenDialog class methodsFor!

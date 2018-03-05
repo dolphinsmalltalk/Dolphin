@@ -1557,7 +1557,7 @@ buildSuiteFromSelectors
 
 initialize
 	| accessOuterTemp accessContextTemp accessStackTemp accessOuter1Temp |
-	TempInstrs := LookupTable new.
+	TempInstrs := IdentityDictionary new.
 	accessStackTemp := [:args | 0 -> (args last + 1)].
 	accessContextTemp := [:args | 1 -> (args last + 1)].
 	accessOuter1Temp := [:args | 2 -> (args last + 1)].

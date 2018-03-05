@@ -24,7 +24,7 @@ At present only byte characters (that are not control characters) have a printab
 !Character methodsFor!
 
 _beginsString: aString 
-	^aString first == self!
+	^aString first = self!
 
 _separateSubStringsIn: tokens
 	"Private - Answer the sub-strings of the <readableString> argument
@@ -86,7 +86,8 @@ appendToStream: puttableStream
 	puttableStream nextPut: self!
 
 asAnsiString
-	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
+	"Answer a new ANSI-encoded <String> whose sole element is the receiver. It is an error if
+	the receiver's code point cannot be represented in ANSI encoding."
 
 	^String with: self!
 
@@ -97,20 +98,19 @@ asInteger
 	^codePoint!
 
 asLowercase
-	"Answer a <Character> which is the lowercase equivalent of the receiver.
-	If the receiver is already lowercase, then answer the receiver unchanged.
-	Implementation Note: Apart from the ANSI asLowercase character mappings
-	(basically all the uppercase letters are mapped to lowercase letters), this
-	implementation will map other characters, depending on the configured
-	locale of the host OS."
+	"Answer a <Character> which is the lowercase equivalent of the receiver."
+
+	"Implementation Note: Apart from the ANSI asLowercase character mappings (basically all the
+	uppercase letters are mapped to lowercase letters), this implementation will map other
+	characters, depending on the configured locale of the host OS."
 
 	^self class codePoint: (UserLibrary default charLower: self)!
 
 asString
 	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
 
-	^String with: self
-!
+	#todo.	"This should return a Utf8String if the code point is not representable as an ANSI string."
+	^String with: self!
 
 asSymbol
 	"Answer the Symbol representation of the receiver."
@@ -118,26 +118,23 @@ asSymbol
 	^Symbol internCharacter: self!
 
 asUppercase
-	"Answer a <Character> which is the uppercase equivalent of the receiver.
-	If the receiver is already uppercase, then answer the receiver unchanged.
-	Implementation Note: Apart from the ANSI asUppercase character mappings
-	(basically all the lowercase letters are mapped to uppercase letters), this
-	implementation will map other characters, depending on the configured
-	locale of the host OS."
+	"Answer a <Character> which is the uppercase equivalent of the receiver."
+
+	"Implementation Note: Apart from the ANSI asUppercase character mappings (basically all the
+	lowercase letters are mapped to uppercase letters), this implementation will map other
+	characters, depending on the configured locale of the host OS."
 
 	^self class codePoint: (UserLibrary default charUpper: self)!
 
 asUtf16String
-	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
+	"Answer a new UTF-16 encoded <String> whose sole element is the receiver."
 
 	^Utf16String with: self!
 
 asUtf8String
 	"Answer a new <Utf8String> encoding the receiver's code point."
 
-	#todo. "Implement this properly to respect the UTF8 encoding - this is a hack until I look it up."
-	^Utf8String with: self
-!
+	^Utf8String with: self!
 
 basicShallowCopy
 	"Answer the receiver as Characters are immutable."

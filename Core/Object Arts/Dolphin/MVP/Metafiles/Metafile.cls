@@ -48,7 +48,7 @@ description
 				getEnhMetaFileDescription: self asParameter
 				cchBuffer: 0
 				lpszDescription: nil.
-	strings := String newFixed: count.
+	strings := Utf16String newFixed: count.
 	GDILibrary default 
 		getEnhMetaFileDescription: self asParameter
 		cchBuffer: count

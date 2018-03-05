@@ -12,17 +12,28 @@ UtfEncodedString comment: ''!
 !UtfEncodedString categoriesForClass!Collections-Text! !
 !UtfEncodedString methodsFor!
 
+asString
+	"Answer a <readableString> containing the same characters as the receiver,
+	i.e. the receiver."
+
+	#todo. "For temporary compatibility reasons, this is always an ANSI-encoded byte string."
+	^self asAnsiString!
+
 copyWith: newElement
 	"Answer a <sequencedReadableCollection> which is a copy of 
 	the receiver that has newElement concatenated to its end."
 
 	^self, (self class with: newElement)! !
+!UtfEncodedString categoriesFor: #asString!converting!public! !
 !UtfEncodedString categoriesFor: #copyWith:!copying!public! !
 
 !UtfEncodedString class methodsFor!
 
 encode: aCharacter on: aPuttableStream
 	^self subclassResponsibility!
+
+initialize
+	encoding := -1!
 
 new: elementCount withAll: elementValue
 	"Answer a new instance of the receiver with <integer>, elementCount, 
@@ -104,6 +115,7 @@ withAll: newElements
 	newElements do: [:each | self encode: each on: stream].
 	^self fromByteArray: stream contents! !
 !UtfEncodedString class categoriesFor: #encode:on:!helpers!private! !
+!UtfEncodedString class categoriesFor: #initialize!public! !
 !UtfEncodedString class categoriesFor: #new:withAll:!instance creation!public! !
 !UtfEncodedString class categoriesFor: #with:!instance creation!public! !
 !UtfEncodedString class categoriesFor: #with:with:!instance creation!public! !

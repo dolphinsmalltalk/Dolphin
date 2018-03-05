@@ -10,7 +10,7 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
-	add: #CHARFORMAT;
+	add: #CHARFORMATW;
 	add: #EDITSTREAM;
 	add: #ENLINK;
 	add: #FORMATRANGE;
@@ -57,7 +57,7 @@ Object subclass: #RichText
 	classVariableNames: 'Converter'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #CHARFORMAT
+Win32Structure subclass: #CHARFORMATW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'

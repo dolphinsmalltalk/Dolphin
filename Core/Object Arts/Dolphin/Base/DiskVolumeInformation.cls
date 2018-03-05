@@ -159,25 +159,26 @@ getVolumeInformation
 	"Private - Call the Win32 GetVolumeInformation() API to retrieve the label, etc."
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
-	volumeNameBuffer := File pathBuffer.
+	volumeNameBuffer := Utf16String new: File maxPath.
 	volumeSerialNumber := DWORDBytes new.
 	maximumComponentLengthBuffer := DWORDBytes new.
 	fileSystemFlagsBuffer := DWORDBytes new.
-	fileSystemNameBuffer := File pathBuffer.
+	fileSystemNameBuffer := volumeNameBuffer copy.
 	(KernelLibrary default
 		getVolumeInformation: self rootPath
 		lpVolumeNameBuffer: volumeNameBuffer
-		nVolumeNameSize: volumeNameBuffer byteSize
+		nVolumeNameSize: volumeNameBuffer size + 1
 		lpVolumeSerialNumber: volumeSerialNumber
 		lpMaximumComponentLength: maximumComponentLengthBuffer
 		lpFileSystemFlags: fileSystemFlagsBuffer
 		lpFileSystemNameBuffer: fileSystemNameBuffer
-		nFileSystemNameSize: fileSystemNameBuffer byteSize) ifFalse: [KernelLibrary default systemError].
-	label := volumeNameBuffer trimNulls.
+		nFileSystemNameSize: fileSystemNameBuffer size + 1) ifFalse: [KernelLibrary default systemError].
+	#todo.	"Temporary conversions to ANSI for compatibility."
+	label := volumeNameBuffer trimNulls asAnsiString.
 	serialNumber := volumeSerialNumber value.
 	maxComponentLength := maximumComponentLengthBuffer value.
 	fileSystemFlags := fileSystemFlagsBuffer value.
-	fileSystemName := fileSystemNameBuffer trimNulls!
+	fileSystemName := fileSystemNameBuffer trimNulls asAnsiString!
 
 isSparseFileCapable
 	"Answer whether the file system supports sparse files."

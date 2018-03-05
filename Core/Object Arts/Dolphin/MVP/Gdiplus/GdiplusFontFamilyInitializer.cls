@@ -14,7 +14,7 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library
-				gdipCreateFontFamilyFromName: name asUtf16String
+				gdipCreateFontFamilyFromName: name
 				fontCollection: fontCollection asParameter
 				fontFamily: gpHandle.
 	self assertStatusOk: status.

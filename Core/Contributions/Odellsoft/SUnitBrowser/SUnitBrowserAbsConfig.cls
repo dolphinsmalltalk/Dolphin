@@ -13,7 +13,7 @@ SUnitBrowserAbsConfig comment: ''!
 initialize
 
 	super initialize.
-	self properties: LookupTable new!
+	self properties: IdentityDictionary new!
 
 properties
 

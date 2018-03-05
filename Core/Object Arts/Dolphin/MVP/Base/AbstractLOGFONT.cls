@@ -17,11 +17,14 @@ createFont
 faceName
 	"Answer the receiver's lfFaceName field as a String, having trimmed any extra nulls."
 	
-	^self lfFaceName trimNulls!
+	^self subclassResponsibility!
 
 faceName: aString
 	"Set the receiver's lfFaceName field."
 	
+	self subclassResponsibility!
+
+getData: hFont
 	self subclassResponsibility!
 
 lfCharSet
@@ -136,6 +139,7 @@ lfWidth: anObject
 !AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
 !AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
 !AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
+!AbstractLOGFONT categoriesFor: #getData:!accessing!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !

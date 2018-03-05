@@ -112,7 +112,7 @@ rehydrateImageStripper: stripperClass
 !UserLibrary methodsFor!
 
 messageBox: hWnd lpText: lpText lpCaption: lpCaption uType: uType
-	<stdcall: sdword MessageBoxA handle lpstr lpstr dword>
+	<stdcall: sdword MessageBoxW handle lpwstr lpwstr dword>
 	^self invalidCall! !
 !UserLibrary categoriesFor: #messageBox:lpText:lpCaption:uType:!public!win32 functions-dialog box! !
 

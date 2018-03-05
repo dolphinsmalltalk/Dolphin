@@ -33,12 +33,12 @@ htmlHelp: hwndCaller pszFile: pszFile uCommand: uCommand dwData: dwData
 
 		HWND HtmlHelp( 
 			HWND hwndCaller, 
-			LPCSTR pszFile, 
+			LPCWSTR pszFile, 
 			UINT uCommand, 
 			DWORD dwData) ; 
 		"
 
-	<stdcall: handle HtmlHelpA handle lpstr dword lpvoid>
+	<stdcall: handle HtmlHelpW handle lpwstr dword lpvoid>
 	^self invalidCall!
 
 htmlHelpCloseAll

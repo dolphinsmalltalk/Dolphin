@@ -5,10 +5,14 @@ ShellConstants at: 'BFFM_ENABLEOK' put: 16r465!
 ShellConstants at: 'BFFM_INITIALIZED' put: 16r1!
 ShellConstants at: 'BFFM_IUNKNOWN' put: 16r5!
 ShellConstants at: 'BFFM_SELCHANGED' put: 16r2!
-ShellConstants at: 'BFFM_SETSELECTION' put: 16r466!
-ShellConstants at: 'BFFM_SETSTATUSTEXT' put: 16r464!
-ShellConstants at: 'BFFM_VALIDATEFAILED' put: 16r3!
+ShellConstants at: 'BFFM_SETEXPANDED' put: 16r46A!
+ShellConstants at: 'BFFM_SETOKTEXT' put: 16r469!
+ShellConstants at: 'BFFM_SETSELECTIONA' put: 16r466!
+ShellConstants at: 'BFFM_SETSELECTIONW' put: 16r467!
+ShellConstants at: 'BFFM_SETSTATUSTEXTA' put: 16r464!
+ShellConstants at: 'BFFM_SETSTATUSTEXTW' put: 16r468!
 ShellConstants at: 'BFFM_VALIDATEFAILEDA' put: 16r3!
+ShellConstants at: 'BFFM_VALIDATEFAILEDW' put: 16r4!
 ShellConstants at: 'BIF_BROWSEFORCOMPUTER' put: 16r1000!
 ShellConstants at: 'BIF_BROWSEFORPRINTER' put: 16r2000!
 ShellConstants at: 'BIF_BROWSEINCLUDEFILES' put: 16r4000!

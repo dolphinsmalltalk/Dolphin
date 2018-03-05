@@ -45,30 +45,6 @@ testAsPhrase
 	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase =
 			'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'.!
 
-testEquals
-	#('' 'a' 'abc') do: 
-			[:each |
-			| wide |
-			"Identical must be equal"
-			self assert: each equals: each.
-			"Same characters must be equal"
-			self assert: each equals: each copy.
-			each isEmpty ifFalse: [self deny: each equals: each asUppercase].
-			wide := each asUtf16String.
-			self assert: each equals: wide.
-			self assert: wide equals: each.
-			"Not equal to ByteArrays"
-			self deny: each asByteArray equals: each.
-			self deny: each equals: each asByteArray.
-			"Nor Arrays of characters"
-			self deny: each asArray equals: each.
-			self deny: each equals: each asArray].
-	"Symbols are only ever equal to other symbols, not strings with the same characters"
-	self deny: #abc equals: 'abc'.
-	self deny: 'abc' equals: #abc.
-	self deny: #abc equals: 'abc' asUtf16String.
-	self deny: 'abc' asUtf16String equals: #abc!
-
 testIndexOfSubCollectionStartingAtGPF
 	| strings search current |
 	#'1553'.
@@ -117,7 +93,6 @@ testMatch
 !StringTest categoriesFor: #assimilateString:!helpers!private! !
 !StringTest categoriesFor: #collectionClass!helpers!private! !
 !StringTest categoriesFor: #testAsPhrase!public!unit tests! !
-!StringTest categoriesFor: #testEquals!public!unit tests! !
 !StringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !StringTest categoriesFor: #testMatch!public!unit tests! !
 

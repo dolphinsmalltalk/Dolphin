@@ -1,12 +1,12 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #OFNOTIFY
+NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OFNOTIFY guid: (GUID fromString: '{7255745f-1034-4d61-be74-66de1d5068aa}')!
-OFNOTIFY comment: '<OFNOTIFY> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFY'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
+OFNOTIFYW guid: (GUID fromString: '{7255745f-1034-4d61-be74-66de1d5068aa}')!
+OFNOTIFYW comment: '<OFNOTIFY> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFY'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -21,22 +21,22 @@ struct tagOFNOTIFY {
 	[helpstring("May be NULL")] LPSTR pszFile;
 } OFNOTIFY;
 '!
-!OFNOTIFY categoriesForClass!Win32-Structs! !
-!OFNOTIFY methodsFor!
+!OFNOTIFYW categoriesForClass!Win32-Structs! !
+!OFNOTIFYW methodsFor!
 
 lpOFN
 	"Answer the receiver's lpOFN field as a Smalltalk object."
 
-	^OPENFILENAME fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpOFN))!
+	^OPENFILENAMEW fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpOFN))!
 
 pszFile
 	"Answer the receiver's pszFile field as a Smalltalk object."
 
 	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszFile))! !
-!OFNOTIFY categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OFNOTIFY categoriesFor: #pszFile!**compiled accessors**!public! !
+!OFNOTIFYW categoriesFor: #lpOFN!**compiled accessors**!public! !
+!OFNOTIFYW categoriesFor: #pszFile!**compiled accessors**!public! !
 
-!OFNOTIFY class methodsFor!
+!OFNOTIFYW class methodsFor!
 
 defineFields
 	"Define the fields of the OFNOTIFY structure.
@@ -53,7 +53,7 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #lpOFN type: (PointerField type: OPENFILENAME) beReadOnly;
+		defineField: #lpOFN type: (PointerField type: OPENFILENAMEW) beReadOnly;
 		defineField: #pszFile type: (PointerField type: String) beReadOnly! !
-!OFNOTIFY class categoriesFor: #defineFields!initializing!public! !
+!OFNOTIFYW class categoriesFor: #defineFields!initializing!public! !
 

@@ -39,10 +39,22 @@ struct tagLOGFONTW {
 createFont
 	^GDILibrary default createFontIndirectW: self!
 
+faceName
+	"Answer the receiver's lfFaceName field as a UTF-8 encoded string, having trimmed any extra
+	nulls."
+	
+	^self lfFaceName asUtf8String trimNulls!
+
 faceName: aString
 	"Set the receiver's lfFaceName field."
 	
 	self lfFaceName: aString asUtf16String!
+
+getData: hFont
+	GDILibrary default
+		getObjectW: hFont
+		cbBuffer: self byteSize
+		lpvObject: self!
 
 lfFaceName
 	"Answer the <Utf16String> value of the receiver's 'lfFaceName' field."
@@ -61,7 +73,9 @@ lfFaceName: anUtf16String
 		startingAt: 1.
 	bytes wordAtOffset: ##(self offsetOf: #lfFaceName) + size put: 0! !
 !LOGFONTW categoriesFor: #createFont!private!realizing/unrealizing! !
+!LOGFONTW categoriesFor: #faceName!accessing!public! !
 !LOGFONTW categoriesFor: #faceName:!accessing!public! !
+!LOGFONTW categoriesFor: #getData:!helpers!private! !
 !LOGFONTW categoriesFor: #lfFaceName!**compiled accessors**!public! !
 !LOGFONTW categoriesFor: #lfFaceName:!**compiled accessors**!public! !
 

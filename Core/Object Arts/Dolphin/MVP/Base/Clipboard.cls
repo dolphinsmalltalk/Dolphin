@@ -220,7 +220,7 @@ initialize
 	| rtfFormat objectFormat objectClassFormat |
 	isOpen := false.
 
-	registeredFormats := LookupTable new.
+	registeredFormats := IdentityDictionary new.
 	rtfFormat := UserLibrary default registerClipboardFormat: 'Rich Text Format'.
 	objectFormat := UserLibrary default registerClipboardFormat: 'Smalltalk Object Format'.
 	objectClassFormat := UserLibrary default registerClipboardFormat: 'Smalltalk Object Class Format'.
@@ -284,7 +284,7 @@ registerFormat: formatName
 	clipboard format. Answer the format identifier."
 
 	| id |
-	id := UserLibrary default registerClipboardFormat: formatName asParameter.
+	id := UserLibrary default registerClipboardFormat: formatName.
 	id == 0 ifTrue: [^Win32Error signal].
 	registeredFormats at: formatName put: id.
 	^id!

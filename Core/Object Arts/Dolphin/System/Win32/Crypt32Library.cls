@@ -117,7 +117,7 @@ protectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBoolea
 	encrypted := CRYPTOAPI_BLOB new.
 	flags := WinCryptConstants.CRYPTPROTECT_UI_FORBIDDEN.
 	aBoolean ifTrue: [flags := flags | WinCryptConstants.CRYPTPROTECT_LOCAL_MACHINE].
-	description := aByteObject class name asUtf16String.
+	description := aByteObject class name.
 	entropy := aByteArrayOrNil ifNotNil: [CRYPTOAPI_BLOB fromBytes: aByteArrayOrNil].
 	(self default
 		cryptProtectData: unencrypted
@@ -177,7 +177,7 @@ unprotectData: aByteObject additionalEntropy: aByteArrayOrNil machineWide: aBool
 		dwFlags: flags
 		pDataOut: unencrypted) ifFalse: [^Win32Error signal].
 	description := Utf16String fromAddress: description.
-	dataClass := Smalltalk at: description asString ifAbsent: [ByteArray].
+	dataClass := Smalltalk at: description ifAbsent: [ByteArray].
 	size := unencrypted cbData.
 	answer := unencrypted data
 				copy: dataClass

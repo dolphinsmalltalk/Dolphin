@@ -21,7 +21,7 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library gdipLoadImageFromFile: self absoluteFilename asUtf16String image: gpHandle.
+	status := self library gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
 	self assertStatusOk: status.
 	^gpHandle!
 

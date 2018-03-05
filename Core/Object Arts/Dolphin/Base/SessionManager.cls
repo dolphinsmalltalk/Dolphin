@@ -202,11 +202,12 @@ computerName
 	Signals an exception if the request fails."
 
 	| name nameSize |
-	name := String new: MAX_COMPUTERNAME_LENGTH.
+	name := Utf16String new: MAX_COMPUTERNAME_LENGTH.
 	nameSize := DWORD fromInteger: name size+1.
 	(KernelLibrary default getComputerName: name nSize: nameSize asParameter)
 		ifFalse: [KernelLibrary default systemError].
-	^name leftString: nameSize asInteger!
+	#todo. "Temporary conversion to ANSI for compatibility"
+	^(name leftString: nameSize asInteger) asAnsiString!
 
 comShutdown
 	"Private - The system is about to shut down, so clear up any COM hangers on.
@@ -307,7 +308,8 @@ freeConsole
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."
 
-	^KernelLibrary default getCommandLine!
+	#todo. "Temporary conversion to Ansi for compatibility"
+	^KernelLibrary default getCommandLine asAnsiString!
 
 getenv: aString
 	"Answer the value of the specified environment variable, or nil if it does not exist.
@@ -317,9 +319,10 @@ getenv: aString
 	"N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
 	size := KernelLibrary default getEnvironmentVariable: aString lpBuffer: nil nSize: 0.
 	size == 0 ifTrue: [^nil].
-	buf := String new: size-1.	"Dolphin Strings alloc. extra space for null terminator"
+	buf := Utf16String new: size-1.	"Dolphin Strings alloc. extra space for null terminator"
 	KernelLibrary default getEnvironmentVariable: aString lpBuffer: buf nSize: size.
-	^buf
+	#todo. "Temporary conversion to ANSI for compatibility"
+	^buf asAnsiString
 	!
 
 hasActiveServers
@@ -502,17 +505,18 @@ logErrorEvent: message
 	self logEvent: message type: EVENTLOG_ERROR_TYPE!
 
 logEvent: message type: typeCode
-	"Write an entry to the system event log. Only available on NT/Win2K."
+	"Write an entry to the system event log."
 
-	| inserts app |
+	| inserts app msg |
 	eventLogHandle isNil ifTrue: [
 		self openEventLog.
 		eventLogHandle isNil ifTrue: ["Event log not available" ^self]].
 
 	inserts := DWORDArray new: 2.
-	app := self applicationName.
+	app := self applicationName asUtf16String.
+	msg := message asUtf16String.
 	inserts at: 1 put: app yourAddress.
-	inserts at: 2 put: message yourAddress.
+	inserts at: 2 put: msg yourAddress.
 
 	(AdvApiLibrary default reportEvent: eventLogHandle wType: typeCode wCategory: 0 dwEventId: 1
 			lpUserSid: nil wNumStrings: 2 dwDataSize: 0 lpStrings: inserts lpRawData: nil)
@@ -998,11 +1002,13 @@ systemDirectory
 	session."
 
 	| path len |
-	path := File pathBuffer.
-	len := KernelLibrary default getSystemDirectory: path uSize: path size.
+	path := Utf16String new: File maxPath.
+	len := KernelLibrary default getSystemDirectory: path uSize: path size + 1.
 	^len == 0
 		ifTrue: [KernelLibrary default systemError]
-		ifFalse: [path leftString: len]!
+		ifFalse: 
+			[#todo.	"Temporary conversion to ANSI for compatibility"
+			(path leftString: len) asAnsiString]!
 
 tertiaryStartup
 	"Perform last startup operations before the main process is started - this includes firing the onStartup
@@ -1080,15 +1086,9 @@ whatsThis: object
 	self subclassResponsibility!
 
 windowsDirectory
-	"Answer the path of the Windows directory on the host computer for the current session. Note
-	that under Terminal Server this will be the shared Windows directory, not the per-user
-	Windows directory. See MSDN KB281316  for further information."
+	"Answer the path of the Windows directory on the host computer for the current session."
 
-	| path len |
-	path := File pathBuffer.
-	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size.
-	len == 0 ifTrue: [^KernelLibrary default systemError].
-	^path leftString: len! !
+	^File windowsDirectory! !
 !SessionManager categoriesFor: #allocConsole!operations!private! !
 !SessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
 !SessionManager categoriesFor: #appIdString!constants!public! !

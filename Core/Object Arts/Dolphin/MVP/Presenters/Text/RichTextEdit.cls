@@ -78,7 +78,9 @@ beNonUnderlined
 bePlain
 	"Set the receiver to plain text mode."
 
-	self selectionCharFormat: (CHARFORMAT new bePlain; yourself)!
+	self selectionCharFormat: (CHARFORMATW new
+				bePlain;
+				yourself)!
 
 beUnderlined
 	"Set the receiver to underline text mode."
@@ -127,7 +129,7 @@ color: aColor
 	"Private - Set the colour of the selection in the receiver to aColor."
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMATW new.
 	cf color: aColor.
 	self selectionCharFormat: cf!
 
@@ -248,15 +250,14 @@ find: findString range: findRange flags: frFlags
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	"Sets the foreground colour of the receiver to aColorOrNil.
 	If aColorOrNil is nil then use the default color"
 
 	| cf |
 	super forecolor: aColorOrNil.
-	cf := CHARFORMAT new.
-	cf 
-		color: (aColorOrNil notNil ifTrue: [aColorOrNil] ifFalse: [Color windowText]).
+	cf := CHARFORMATW new.
+	cf color: (aColorOrNil notNil ifTrue: [aColorOrNil] ifFalse: [Color windowText]).
 	self defaultCharFormat: cf!
 
 getCharFormat: flagsMask
@@ -268,10 +269,13 @@ getCharFormat: flagsMask
 	"
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMATW new.
 	"We want all attributes"
 	cf dwMask: 16rFFFFFFFF.
-	self sendMessage: EM_GETCHARFORMAT wParam: flagsMask lpParam: cf asParameter.
+	self
+		sendMessage: EM_GETCHARFORMAT
+		wParam: flagsMask
+		lpParam: cf asParameter.
 	^cf!
 
 getTextRange: range
@@ -296,7 +300,9 @@ isBold
 isBold: set
 	"Private - Turn on/off emboldening for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMAT new isBold: set; yourself)!
+	self selectionCharFormat: (CHARFORMATW new
+				isBold: set;
+				yourself)!
 
 isItalic
 	"Answer true if receiver's current selection is italic."
@@ -306,7 +312,9 @@ isItalic
 isItalic: set
 	"Private - Turn on/off italics for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMAT new isItalic: set; yourself)!
+	self selectionCharFormat: (CHARFORMATW new
+				isItalic: set;
+				yourself)!
 
 isSelectionKept
 	"Answer true if the receiver is set to maintain selection after losing focus.
@@ -331,7 +339,9 @@ isUnderlined
 isUnderlined: set
 	"Turn on/off underlining for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMAT new isUnderlined: set; yourself)!
+	self selectionCharFormat: (CHARFORMATW new
+				isUnderlined: set;
+				yourself)!
 
 isUrlDetectionEnabled
 	^teFlags allMask: AutoUrlDetectionMask!
@@ -473,7 +483,7 @@ pointSize: anInteger
 	"Private - Set the point size of the currently selected text to, anInteger."
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMATW new.
 	cf pointSize: anInteger.
 	self selectionCharFormat: cf!
 
@@ -654,11 +664,11 @@ selectionColor
 
 	^self selectionCharFormat color!
 
-selectionColor: aColorOrNil 
+selectionColor: aColorOrNil
 	"Set the colour of the selection in the receiver to aColorOrNil. If nil then
 	set the colour to the default window text"
 
-	self selectionCharFormat: ((CHARFORMAT new)
+	self selectionCharFormat: (CHARFORMATW new
 				color: aColorOrNil;
 				yourself)!
 
@@ -671,7 +681,7 @@ selectionFont: aFont
 	"Set the font of the selection in the receiver to aFont"
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMATW new.
 	cf font: aFont.
 	self selectionCharFormat: cf!
 
@@ -729,17 +739,17 @@ setControlBackcolor: aColor
 		wParam: 0
 		lParam: aColor asColorRef asParameter!
 
-setFont: aFont 
+setFont: aFont
 	"Private - Sets the font for the entire receiver text to be aFont. Overridden here because
 	the Windows RichEdit control does not correctly redraw on font change"
 
 	| modified |
 	modified := self isTextModified.
 	super setFont: aFont.
-	aFont isNil 
+	aFont isNil
 		ifFalse: 
 			[| cf |
-			cf := CHARFORMAT new.
+			cf := CHARFORMATW new.
 			cf font: aFont.
 			self setCharFormat: cf flags: SCF_ALL].
 	self isTextModified: modified!
@@ -923,7 +933,7 @@ initialize
 
 	"Descriptor for stream out callback"
 	StreamingDescriptor := ExternalDescriptor argumentTypes: 'dword lpvoid sdword DWORD*'.
-	ParagraphAlignmentMap := (LookupTable new)
+	ParagraphAlignmentMap := (IdentityDictionary new)
 				at: #left put: PFA_LEFT;
 				at: #right put: PFA_RIGHT;
 				at: #center put: PFA_CENTER;

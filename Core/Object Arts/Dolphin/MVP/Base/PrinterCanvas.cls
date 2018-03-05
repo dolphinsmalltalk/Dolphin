@@ -34,10 +34,10 @@ startDoc
 
 	self startDocNamed: SessionManager current applicationName!
 
-startDocNamed: aString 
+startDocNamed: aString
 	| struct |
-	struct := DOCINFO new.
-	struct lpszDocName: aString.
+	struct := DOCINFOW new.
+	struct docName: aString.
 	GDILibrary default startDoc: self asParameter lpdi: struct!
 
 startPage

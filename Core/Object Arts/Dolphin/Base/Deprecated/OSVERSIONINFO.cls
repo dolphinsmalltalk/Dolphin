@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-OSVERSIONINFOEX subclass: #OSVERSIONINFO
+OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''

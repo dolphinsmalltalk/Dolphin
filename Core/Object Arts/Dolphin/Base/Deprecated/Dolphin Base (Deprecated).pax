@@ -84,8 +84,9 @@ package methodNames
 	add: #KernelLibrary -> #getCPInfo:lpCPInfo:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
 	add: #KernelLibrary -> #getVersionEx:;
+	add: #KernelLibrary -> #lstrcmp:lpString2:;
+	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
-	add: #KernelLibrary -> #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:;
 	add: #Object -> #asDword;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
@@ -159,7 +160,7 @@ Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OSVERSIONINFOEX subclass: #OSVERSIONINFO
+OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
@@ -623,24 +624,30 @@ getVersionEx: anOSVERSIONINFO
 			LPOSVERSIONINFO lpVersionInformation 
 		);"
 
-	<stdcall: bool GetVersionExA OSVERSIONINFO*>
+	<stdcall: bool GetVersionExW OSVERSIONINFO*>
 	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
+	^self invalidCall!
+
+lstrcmp: aString1 lpString2: aString2
+	<stdcall: sdword lstrcmpW lpwstr lpwstr>
+	#deprecated.
+	^self invalidCall!
+
+lstrcmpi: aString1 lpString2: aString2
+	<stdcall: sdword lstrcmpiW lpwstr lpwstr>
+	#deprecated.
 	^self invalidCall!
 
 setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
-	^self invalidCall!
-
-writePrivateProfileString: lpszSection lpszEntry: lpszEntry lpszString: lpszString lpszFileName: lpszFileName
-	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
-	#deprecated.	"As explained on msdn, 'This function is provided only for compatibility with 16-bit versions of Windows. Applications should store initialization information in the registry.'"
 	^self invalidCall! !
-!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:!**auto generated**!public! !
 
 !Object methodsFor!
 

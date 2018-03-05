@@ -438,7 +438,7 @@ fromFile: path
 	| answer |
 	answer := self newPointer.
 	OLEAutLibrary default
-		oleLoadPicturePath: path asUtf16String
+		oleLoadPicturePath: path
 		punkCaller: nil
 		dwReserved: 0
 		clrReserved: 0

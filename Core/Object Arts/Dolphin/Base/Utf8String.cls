@@ -11,99 +11,21 @@ Utf8String comment: 'Utf8String is a nascent class to support UTF8 encoded byte 
 !Utf8String categoriesForClass!Collections-Text! !
 !Utf8String methodsFor!
 
-, aSequencedReadableCollection
-	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
-	species but not necessarily the exact same class) containing the elements	of the receiver 
-	in their original order with those of the <sequencedReadableCollection> argument
-	appended in their original order.
-	Note: This is the concatenation operation, and is a simplified form of 
-	#copyReplaceFrom:to:with:."
-
-	| size newSize other|
-	size := self size.
-	other := aSequencedReadableCollection asUtf8String.
-	newSize := size + other size.
-	^(self copyLikeOfSize: newSize)
-		replaceFrom: 1
-			to: size
-			with: self
-			startingAt: 1;
-		replaceFrom: size + 1
-			to: newSize
-			with: other
-			startingAt: 1;
-		yourself!
-
-_appendToString: aString
-	^aString asUtf8String , self!
-
-_equalsByteString: aString
-	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
-	Double-dispatched from String>>=."
-
-	"We should only get here the comparand is an ANSI string"
-	^aString asUtf8String = self!
-
-asAnsiString
-	"Answer an ANSI encoded string representation of the receiver. Any of the receiver's code
-	points that cannot be represented as ANSI characters will be translated to an error
-	character."
-
-	<primitive: 217>
-	^self asUtf16String asAnsiString!
-
 asLowercase
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to lowercase."
+
 	#todo.	"Provide a more efficient implementation"
 	^self asUtf16String asLowercase asUtf8String!
 
-asString
-	"Answer a <readableString> containing the same characters as the receiver,
-	i.e. the receiver."
-
-	"For historical reasons, this is always an ANSI-encoded byte string."
-
-	| utf16 bytes buf size kernel |
-	#todo.	"Provide a more efficient implementation that does not have to convert to utf16 first"
-	(size := self size) == 0 ifTrue: [^String empty].	"Avoid 'The Parameter is Incorrect' error"
-	utf16 := self class utf16Class new: size.
-	((kernel := KernelLibrary default)
-		multiByteToWideChar: self codePage
-		dwFlags: 0
-		lpMultiByteStr: self
-		cchMultiByte: -1
-		lpWideCharStr: utf16
-		cchWideChar: size + 1) == 0
-		ifTrue: [kernel systemError].
-	buf := self class ansiClass new: size * 4.
-	(bytes := kernel
-				wideCharToMultiByte: buf codePage
-				dwFlags: 0
-				lpWideCharStr: utf16
-				cchWideChar: -1
-				lpMultiByteStr: buf
-				cchMultiByte: buf size + 1
-				lpDefaultChar: nil
-				lpUsedDefaultChar: nil) == 0
-		ifTrue: [^kernel systemError].
-	buf resize: bytes - 1.
-	^buf!
-
 asUppercase
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to uppercase."
+
 	#todo.	"Provide a more efficient implementation"
-	^self asUtf16String asUppercase asUtf8String!
-
-asUtf8String
-	"Answer a UTF8 encoded string representation of the receiver."
-
-	^self! !
-!Utf8String categoriesFor: #,!copying!public! !
-!Utf8String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
-!Utf8String categoriesFor: #_equalsByteString:!comparing!private! !
-!Utf8String categoriesFor: #asAnsiString!converting!public! !
+	^self asUtf16String asUppercase asUtf8String! !
 !Utf8String categoriesFor: #asLowercase!converting!public! !
-!Utf8String categoriesFor: #asString!converting!public! !
 !Utf8String categoriesFor: #asUppercase!converting!public! !
-!Utf8String categoriesFor: #asUtf8String!converting!public! !
 
 !Utf8String class methodsFor!
 
@@ -147,6 +69,7 @@ fromString: aString
 	^aString asUtf8String!
 
 initialize
+	encoding := EncodingUtf8.
 	empty := self new
 				isImmutable: true;
 				yourself.

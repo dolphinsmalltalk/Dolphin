@@ -19,18 +19,6 @@ Symbol complies with the following ANSI protocols:
 !Symbol categoriesForClass!Collections-Text! !
 !Symbol methodsFor!
 
-_equalsByteString: aString
-	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
-	Double-dispatched from String>>=."
-
-	^false!
-
-_equalsUtf16String: aUtf16String
-	"Private - Answer whether the receiver is equivalent to the <Utf16String> argument.
-	Double-dispatched from Utf16String>>=."
-
-	^false!
-
 = aSymbol
 	"Symbols equality is the same as symbol identity since instances with the same
 	characters are unique.
@@ -218,8 +206,6 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Symbol categoriesFor: #_equalsByteString:!comparing!private! !
-!Symbol categoriesFor: #_equalsUtf16String:!comparing!private! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
 !Symbol categoriesFor: #asAnsiString!converting!public! !
@@ -278,15 +264,13 @@ findInterned: aString
 	(Table at: aString hashCharacters \\ Table basicSize + 1)
 		ifNotNil: 
 			[:bucket |
-			| corpse |
-			corpse := DeadObject current.
 			"Inline ArrayedCollection>>do: to avoid full block for best performance"
 			1 to: bucket size
 				do: 
 					[:i |
 					| each |
 					each := bucket at: i.
-					(each ~~ corpse and: [(aString trueCompare: each) == 0]) ifTrue: [^each]]].
+					(each ~~ DeadObject.Current and: [(aString trueCompare: each) == 0]) ifTrue: [^each]]].
 	^nil!
 
 fromString: aString
@@ -307,6 +291,7 @@ initialize
 
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
+	encoding := EncodingAnsi.
 	VMLibrary default registryAt: #Symbol put: self!
 
 intern: aString

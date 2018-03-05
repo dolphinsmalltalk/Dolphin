@@ -66,7 +66,7 @@ printRange: anInterval
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
-	^PRINTDLG! !
+	^PRINTDLGW! !
 !PrintDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
 !PrintDialog categoriesFor: #copies!accessing!public! !
 !PrintDialog categoriesFor: #copies:!accessing!public! !

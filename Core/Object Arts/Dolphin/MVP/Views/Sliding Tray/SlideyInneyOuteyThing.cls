@@ -593,7 +593,7 @@ initialize
 	ResizableMask := 4.
 	AnimatedCardChangeMask := 8.
 	AnimationMask := AW_SLIDE | AW_BLEND | AW_CENTER.
-	Animations := (LookupTable new)
+	Animations := IdentityDictionary new
 				at: #roll put: 0;
 				at: #collapse put: AW_CENTER;
 				at: #slide put: AW_SLIDE;

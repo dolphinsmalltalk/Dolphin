@@ -679,7 +679,7 @@ getObject: aString
 	| answer |
 	answer := self newPointer.
 	OLELibrary default
-		coGetObject: aString asUtf16String
+		coGetObject: aString
 		pBindOptions: nil
 		riid: self iid
 		ppv: answer.

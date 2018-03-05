@@ -378,7 +378,7 @@ initialize
 	"
 
 	AlignmentMask := ##(UDS_ALIGNLEFT | UDS_ALIGNRIGHT).
-	AlignmentMap := (LookupTable new)
+	AlignmentMap := IdentityDictionary new
 				at: #left put: UDS_ALIGNLEFT;
 				at: #right put: UDS_ALIGNRIGHT;
 				at: #unattached put: 0;

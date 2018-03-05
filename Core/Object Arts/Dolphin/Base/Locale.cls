@@ -45,7 +45,7 @@ dateFormats: aBoolean
 					[:format | 
 					formats add: format.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpstr').
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	(self nlsLib 
 		enumDateFormats: enum asParameter
 		locale: self asParameter
@@ -100,7 +100,7 @@ getInfo: anIntegerLcType
 
 	| size buf lib |
 	lib := self nlsLib.
-	buf := String new: 20.
+	buf := Utf16String new: 20.
 	size := lib 
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
@@ -115,13 +115,14 @@ getInfo: anIntegerLcType
 						cchData: 0.
 			size == 0 ifTrue: [^lib systemError].
 			"Strings allocate extra space for null automatically"
-			buf := String new: size - 1.
+			buf := Utf16String new: size - 1.
 			lib 
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
 				lpLCData: buf
 				cchData: size].
-	^buf resize: size - 1!
+	#todo. "Temporary conversion to ANSI for compatibility"
+	^(buf resize: size - 1) asAnsiString!
 
 getIntegerInfo: anIntegerLcType
 	"Private - Answer a locale specific single character of the specified type for the 
@@ -129,8 +130,8 @@ getIntegerInfo: anIntegerLcType
 
 	| buf lib |
 	lib := self nlsLib.
-	buf := String new: 15.
-	(lib getLocaleInfo: lcid lCType: anIntegerLcType lpLCData: buf cchData: 11) == 0
+	buf := Utf16String new: 15.
+	(lib getLocaleInfo: lcid lCType: anIntegerLcType lpLCData: buf cchData: buf size) == 0
 		ifTrue: [lib systemError].
 	^CRTLibrary default atoi: buf!
 
@@ -230,7 +231,7 @@ printSysDate: aSYSTEMTIME format: aStringOrNil flags: dwFlags
 
 	| size buf lib |
 	lib := self nlsLib.
-	buf := String new: 30.
+	buf := Utf16String new: 30.
 	size := lib getDateFormat: self asParameter dwFlags: dwFlags 
 				lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: buf size+1.
 	size == 0 ifTrue: [
@@ -238,11 +239,12 @@ printSysDate: aSYSTEMTIME format: aStringOrNil flags: dwFlags
 		size := lib getDateFormat: self asParameter dwFlags: dwFlags 
 				lpDate: aSYSTEMTIME  lpFormat: aStringOrNil lpDateStr: nil cchDate: 0.
 		size == 0 ifTrue: [lib systemError].
-		buf := String new: size-1.	"Strings allocate extra space for null terminator"
+		buf := Utf16String new: size-1.	"Strings allocate extra space for null terminator"
 		lib getDateFormat: self asParameter dwFlags: dwFlags 
 			lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: size].
 	"size includes terminating null"
-	^buf resize: size-1!
+	#todo. "Temporary conversion to ANSI for compatibility"
+	^(buf resize: size-1) asAnsiString!
 
 printTime: aTime format: aStringOrNil flags: dwFlags
 	"Private - Append a locale specific string representation of the argument, aTime, to,
@@ -251,7 +253,7 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 	| size buf timeParm lib |
 	timeParm := aTime asParameter.
 	lib := self nlsLib.
-	buf := String new: 20.
+	buf := Utf16String new: 20.
 	size := lib 
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
@@ -269,7 +271,7 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 						lpTimeStr: nil
 						cchBuf: 0.
 			size == 0 ifTrue: [^lib systemError].
-			buf := String new: size - 1.	"Strings allocate extra space for null terminator"
+			buf := Utf16String new: size - 1.	"Strings allocate extra space for null terminator"
 			lib 
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
@@ -277,7 +279,8 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 				lpFormat: aStringOrNil
 				lpTimeStr: buf
 				cchBuf: size].
-	^buf resize: size - 1!
+	#todo. "Temporary conversion to ANSI for compatibility"
+	^(buf resize: size - 1) asAnsiString!
 
 printUnboundedDate: aDate format: aStringOrNil flags: dwFlags
 	"Private - Answer a locale specific formatted date String generated
@@ -325,7 +328,7 @@ timeFormats
 					[:format | 
 					formats add: format.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpstr').
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	(self nlsLib 
 		enumTimeFormats: enum asParameter
 		locale: self asParameter
@@ -455,7 +458,7 @@ systemLocales: anInteger
 					[:locale | 
 					locales addLast: locale.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpstr').
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]!

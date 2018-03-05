@@ -110,7 +110,7 @@ createTooltip
 	tooltip create!
 
 defaultCaption
-	^MessageBox defaultCaption: self iconStyleFlag!
+	^self class defaultCaption: self iconStyle!
 
 font
 	"Answer the <Font> to be used for the tip text, or nil if the default font is to be applied.

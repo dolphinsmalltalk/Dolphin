@@ -93,14 +93,17 @@ hash
 	^VMLibrary default hashBytes: self count: self basicSize!
 
 idlString
-	"Answer the IDL string representation of the receiver."
+	"Answer the IDL string representation of the receiver.
+		self newUnique idlString
+	"
 
 	| pSz answer status |
 	pSz := ExternalAddress new.
 	(status := RPCLibrary default uuidToString: self stringUuid: pSz) == 0 ifFalse: [RPCError signal: status].
 	answer := String fromAddress: pSz.
 	RPCLibrary default rpcStringFree: pSz.
-	^answer!
+	^answer
+!
 
 isNull
 	"Answer whether the receiver is a null external data item

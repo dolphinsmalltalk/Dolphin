@@ -152,7 +152,7 @@ fileType
 getWordEncodedStringFor: aStringOrNil 
 	| utfString ws |
 	aStringOrNil isNilOrEmpty ifTrue: [^aStringOrNil].
-	utfString := aStringOrNil asUTF8String.
+	utfString := aStringOrNil asUtf8String.
 	(utfString conform: [:each | each asInteger < 128]) 
 		ifTrue: 
 			["needs no encoding since it is already ASCII"

@@ -52,7 +52,7 @@ dragHysteresis
 	^dragHysteresis!
 
 dragImageColorDepth
-	^VMLibrary default isWindowsXPOrGreater ifTrue: [32] ifFalse: [8]!
+	^32!
 
 edgeExtent
 	"Answer the dimensions of 3d window borders."
@@ -131,11 +131,6 @@ hasEnhancedThemes
 
 	^VMLibrary default isWindowsVistaOrGreater!
 
-hasFlashWindow
-	"Answer whether the host supports the FlashWindowEx API."
-
-	^VMLibrary default isWindowsXPOrGreater!
-
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
 
@@ -193,11 +188,6 @@ hasMenuBitmaps
 
 	^VMLibrary default isWindowsVistaOrGreater!
 
-hasMenuImages
-	"Answer whether the host support images on menus,"
-
-	^VMLibrary default isWindowsXPOrGreater!
-
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
 
@@ -223,10 +213,10 @@ hasTextBoxMargins
 hasThemes
 	"Answer whether the host support desktop themes (XP and later)."
 
-	^VMLibrary default isWindowsXPOrGreater and: 
-			["Wine currently errors on theme APIs, so bypass"
-			#wineFix.
-			NTLibrary isWine not]!
+	"Wine currently errors on theme APIs, so bypass"
+
+	#wineFix.
+	^NTLibrary isWine not!
 
 hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
@@ -308,7 +298,7 @@ menuWidth
 	^self nonClientMetrics iMenuWidth!
 
 minimumTreeViewIndent
-	^VMLibrary default isWindowsXPOrGreater ifTrue: [16] ifFalse: [8]!
+	^16!
 
 mouseHoverTime
 	^(self 
@@ -383,7 +373,7 @@ smallIconExtent
 supportsAlphaBlending
 	"Answer whether the host supports alpha blending."
 
-	^VMLibrary default isWindowsXPOrGreater!
+	^true!
 
 virtualScreenExtent
 	"Answer the extent of the virtual screen, i.e. including desktops on all monitors"
@@ -417,7 +407,6 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #hasButtonNotes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasDesktopComposition!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasEnhancedThemes!capability enquiries!public! !
-!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasFlatMenus!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasGdiPalettes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasIconScaleDown!capability enquiries!public! !
@@ -426,7 +415,6 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #hasLinkButtons!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasListViewGridLineScrollScarringBug!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasMenuBitmaps!capability enquiries!public! !
-!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasSmoothScrollingLists!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasTextBoxMargins!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasThemes!capability enquiries!public! !

@@ -12,7 +12,7 @@ ShlwapiLibraryTest comment: ''!
 
 testPathCompactPathEx
 	| buf |
-	buf := String newFixed: 20.
+	buf := Utf16String newFixed: 20.
 	self assert: (ShlwapiLibrary default 
 				pathCompactPathEx: buf
 				pszSrc: 'c:\dolphin\'

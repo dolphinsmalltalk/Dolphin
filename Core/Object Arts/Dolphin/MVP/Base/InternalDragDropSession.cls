@@ -132,7 +132,7 @@ getExtendedOperation
 
 giveCursorFeedback
 	| cursorSelector |
-	cursorSelector := ##((LookupTable new)
+	cursorSelector := ##((IdentityDictionary new)
 				at: #none put: #ddNone;
 				at: #move put: #ddMove;
 				at: #copy put: #ddCopy;

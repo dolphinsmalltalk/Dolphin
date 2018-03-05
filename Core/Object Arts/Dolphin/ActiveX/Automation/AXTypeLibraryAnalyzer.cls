@@ -237,7 +237,7 @@ find: memberName count: numToFind
 	ppTInfo := DWORDArray new: numToFind.
 	pcFound := DWORDBytes fromInteger: numToFind.
 	self tlbInterface
-		FindName: memberName asUtf16String
+		FindName: memberName
 		lHashVal: 0
 		ppTInfo: ppTInfo
 		rgMemId: rgMemId

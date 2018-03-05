@@ -66,25 +66,25 @@ getPrivateProfileInt: lpAppName lpKeyName: lpKeyName nDefault: nDefault lpFileNa
 	Helpstring: Retrieves an integer from a key in the specified section of the Win.ini file.
 
 		unsigned int __stdcall GetPrivateProfileInt(
-			[in]LPCSTR lpAppName,
-			[in]LPCSTR lpKeyName,
+			[in]LPCWSTR lpAppName,
+			[in]LPCWSTR lpKeyName,
 			[in]int nDefault,
-			[in]LPCSTR lpFileName);"
+			[in]LPCWSTR lpFileName);"
 
-	<stdcall: dword GetPrivateProfileIntA lpstr lpstr sdword lpstr>
+	<stdcall: dword GetPrivateProfileIntW lpwstr lpstr sdword lpwstr>
 	^self invalidCall!
 
 getPrivateProfileSection: lpAppName lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName
-	"Invoke the GetPrivateProfileSectionA() function of the module wrapped by the receiver.
+	"Invoke the GetPrivateProfileSection() function of the module wrapped by the receiver.
 	Helpstring: Retrieves all the keys and values for the specified section of an initialization file.
 
 		DWORD __stdcall GetPrivateProfileSectionA(
-			[in]LPCSTR lpAppName,
-			[out]LPSTR lpReturnedString,
+			[in]LPCWSTR lpAppName,
+			[out]LPWSTR lpReturnedString,
 			[in]DWORD nSize,
-			[in]LPCSTR lpFileName);"
+			[in]LPCWSTR lpFileName);"
 
-	<stdcall: dword GetPrivateProfileSectionA lpstr lpstr dword lpstr>
+	<stdcall: dword GetPrivateProfileSectionW lpwstr lpwstr dword lpwstr>
 	^self invalidCall!
 
 getPrivateProfileSectionNames: lpszReturnBuffer nSize: nSize lpFileName: lpFileName
@@ -92,26 +92,26 @@ getPrivateProfileSectionNames: lpszReturnBuffer nSize: nSize lpFileName: lpFileN
 	Helpstring: Retrieves the names of all sections in an initialization file.
 
 		DWORD __stdcall GetPrivateProfileSectionNames(
-			[out]LPSTR lpszReturnBuffer,
+			[out]LPWSTR lpszReturnBuffer,
 			[in]DWORD nSize,
-			[in]LPCSTR lpFileName);"
+			[in]LPCWSTR lpFileName);"
 
-	<stdcall: dword GetPrivateProfileSectionNamesA lpstr dword lpstr>
+	<stdcall: dword GetPrivateProfileSectionNamesW lpwstr dword lpwstr>
 	^self invalidCall!
 
 getPrivateProfileString: lpAppName lpKeyName: lpKeyName lpDefault: lpDefault lpReturnedString: lpReturnedString nSize: nSize lpFileName: lpFileName
-	"Invoke the GetPrivateProfileStringA() function of the module wrapped by the receiver.
+	"Invoke the GetPrivateProfileString() function of the module wrapped by the receiver.
 	Helpstring: Retrieves a string from the specified section in an initialization file.
 
-		DWORD __stdcall GetPrivateProfileStringA(
-			[in]LPCSTR lpAppName,
-			[in]LPCSTR lpKeyName,
-			[in]LPCSTR lpDefault,
-			[out]LPSTR lpReturnedString,
+		DWORD __stdcall GetPrivateProfileString(
+			[in]LPCWSTR lpAppName,
+			[in]LPCWSTR lpKeyName,
+			[in]LPCWSTR lpDefault,
+			[out]LPWSTR lpReturnedString,
 			[in]DWORD nSize,
-			[in]LPCSTR lpFileName);"
+			[in]LPCWSTR lpFileName);"
 
-	<stdcall: dword GetPrivateProfileStringA lpstr lpstr lpstr lpstr dword lpstr>
+	<stdcall: dword GetPrivateProfileStringW lpwstr lpwstr lpwstr lpwstr dword lpwstr>
 	^self invalidCall!
 
 getPrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeStruct: uSizeStruct szFile: szFile
@@ -119,13 +119,13 @@ getPrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeSt
 	Helpstring: Retrieves the data associated with a key in the specified section of an initialization file.
 
 		BOOL __stdcall GetPrivateProfileStruct(
-			[in]LPCSTR lpszSection,
-			[in]LPCSTR lpszKey,
+			[in]LPCWSTR lpszSection,
+			[in]LPCWSTR lpszKey,
 			[out]LPVOID lpStruct,
 			[in]unsigned int uSizeStruct,
-			[in]LPCSTR szFile);"
+			[in]LPCWSTR szFile);"
 
-	<stdcall: bool GetPrivateProfileStructA lpstr lpstr void* dword lpstr>
+	<stdcall: bool GetPrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
 	^self invalidCall!
 
 writePrivateProfileSection: lpAppName lpString: lpString lpFileName: lpFileName
@@ -133,24 +133,24 @@ writePrivateProfileSection: lpAppName lpString: lpString lpFileName: lpFileName
 	Helpstring: Replaces the keys and values for the specified section in an initialization file.
 
 		BOOL __stdcall WritePrivateProfileSection(
-			[in]LPCSTR lpAppName,
-			[in]LPCSTR lpString,
-			[in]LPCSTR lpFileName);"
+			[in]LPCWSTR lpAppName,
+			[in]LPCWSTR lpString,
+			[in]LPCWSTR lpFileName);"
 
-	<stdcall: bool WritePrivateProfileSectionA lpstr lpstr lpstr>
+	<stdcall: bool WritePrivateProfileSectionW lpwstr lpwstr lpwstr>
 	^self invalidCall!
 
 writePrivateProfileString: lpAppName lpKeyName: lpKeyName lpString: lpString lpFileName: lpFileName
-	"Invoke the WritePrivateProfileStringA() function of the module wrapped by the receiver.
+	"Invoke the WritePrivateProfileString() function of the module wrapped by the receiver.
 	Helpstring: Copies a string into the specified section of an initialization file.
 
 		BOOL __stdcall WritePrivateProfileString(
-			[in]LPCSTR lpAppName,
-			[in]LPCSTR lpKeyName,
-			[in]LPCSTR lpString,
-			[in]LPCSTR lpFileName);"
+			[in]LPCWSTR lpAppName,
+			[in]LPCWSTR lpKeyName,
+			[in]LPCWSTR lpString,
+			[in]LPCWSTR lpFileName);"
 
-	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
+	<stdcall: bool WritePrivateProfileStringW lpwstr lpwstr lpwstr lpwstr>
 	^self invalidCall!
 
 writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSizeStruct: uSizeStruct szFile: szFile
@@ -158,13 +158,13 @@ writePrivateProfileStruct: lpszSection lpszKey: lpszKey lpStruct: lpStruct uSize
 	Helpstring: Copies data into a key in the specified section of an initialization file.
 
 		BOOL __stdcall WritePrivateProfileStruct(
-			[in]LPCSTR lpszSection,
-			[in]LPCSTR lpszKey,
+			[in]LPCWSTR lpszSection,
+			[in]LPCWSTR lpszKey,
 			[in]LPVOID lpStruct,
 			[in]unsigned int uSizeStruct,
-			[in]LPCSTR szFile);"
+			[in]LPCWSTR szFile);"
 
-	<stdcall: bool WritePrivateProfileStructA lpstr lpstr void* dword lpstr>
+	<stdcall: bool WritePrivateProfileStructW lpwstr lpwstr void* dword lpwstr>
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #getPrivateProfileInt:lpKeyName:nDefault:lpFileName:!**auto generated**!public!win32 functions-ini files! !
 !KernelLibrary categoriesFor: #getPrivateProfileSection:lpReturnedString:nSize:lpFileName:!**auto generated**!public!win32 functions-ini files! !

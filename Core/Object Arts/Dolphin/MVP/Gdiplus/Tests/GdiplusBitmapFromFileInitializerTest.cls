@@ -31,7 +31,7 @@ testCreateHandle
 	model filename: self fileResource pafRgb0000FF_100x100bmp fileLocator: nil.
 	model createHandle.
 	self assert: constructorArgs size = 2.
-	self assert: constructorArgs first = self fileResource pafRgb0000FF_100x100bmp asUtf16String.
+	self assert: constructorArgs first = self fileResource pafRgb0000FF_100x100bmp.
 	self assertLastArgIsHandle! !
 !GdiplusBitmapFromFileInitializerTest categoriesFor: #gdipCreateBitmapFromFile:bitmap:!accessing!public! !
 !GdiplusBitmapFromFileInitializerTest categoriesFor: #setUp!public!setup! !

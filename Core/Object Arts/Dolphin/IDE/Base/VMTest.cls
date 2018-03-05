@@ -1104,7 +1104,7 @@ testPrimitiveBasicAtPut
 testPrimitiveBytesEqual
 	| method string1 string2 string3 string4 bytes1 bytes2 string5 string6 string7 mismatchedClassFailure |
 	method := self
-				createPrimitiveMethod: (String >> #=) primitiveIndex
+				createPrimitiveMethod: (ByteArray >> #=) primitiveIndex
 				in: Object
 				argCount: 1
 				setsFailCode: true.
@@ -1182,6 +1182,26 @@ testPrimitiveEnableInterrupts
 	enabled := method value: Processor withArguments: #(true).
 	self assert: enabled description: 'Interrupts should have remained enabled'!
 
+testPrimitiveEqual
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #= setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 false).
+		#(1 0 false).
+		#(1 1 true).
+		#(-1 0 false).
+		#(-1 1 false).
+		#(-1 -1 true).
+		#(-1 -2 false).
+		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum. true}.
+		{SmallInteger minimum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger minimum. false}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
 testPrimitiveExtraInstanceSpec
 	| method |
 	method := self createPrimitiveMethodLike: Behavior >> #extraInstanceSpec setsFailCode: false.
@@ -1223,6 +1243,46 @@ testPrimitiveFindString
 			expected := each fourth.
 			actual := method value: subject withArguments: {match. startingAt}.
 			self assert: actual equals: expected]!
+
+testPrimitiveGreaterOrEqual
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #>= setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 false).
+		#(1 0 true).
+		#(1 1 true).
+		#(-1 0 false).
+		#(-1 1 false).
+		#(-1 -1 true).
+		#(-1 -2 true).
+		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum. true}.
+		{SmallInteger minimum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger minimum. true}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
+testPrimitiveGreaterThan
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #> setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 false).
+		#(1 0 true).
+		#(1 1 false).
+		#(-1 0 false).
+		#(-1 1 false).
+		#(-1 -1 false).
+		#(-1 -2 true).
+		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum. false}.
+		{SmallInteger minimum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger minimum. true}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveHashBytes
 	| method |
@@ -1466,6 +1526,46 @@ testPrimitiveIsNullBytes
 			| bytes |
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
+
+testPrimitiveLessOrEqualThan
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #<= setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 true).
+		#(1 0 false).
+		#(1 1 true).
+		#(-1 0 true).
+		#(-1 1 true).
+		#(-1 -1 true).
+		#(-1 -2 false).
+		{SmallInteger minimum. SmallInteger minimum + 1. true}.
+		{SmallInteger minimum. SmallInteger minimum. true}.
+		{SmallInteger minimum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger minimum. false}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
+testPrimitiveLessThan
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #< setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 true).
+		#(1 0 false).
+		#(1 1 false).
+		#(-1 0 true).
+		#(-1 1 true).
+		#(-1 -1 false).
+		#(-1 -2 false).
+		{SmallInteger minimum. SmallInteger minimum + 1. true}.
+		{SmallInteger minimum. SmallInteger minimum. false}.
+		{SmallInteger minimum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger minimum. false}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveLookupMethod
 	| method |
@@ -2356,8 +2456,11 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !
 !VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveGreaterOrEqual!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
@@ -2366,6 +2469,8 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveLessOrEqualThan!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !

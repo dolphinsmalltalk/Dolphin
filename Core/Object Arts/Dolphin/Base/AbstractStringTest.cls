@@ -20,6 +20,9 @@ assimilateString: aString
 caseConversionCases
 	^#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))!
 
+equalityTestCases
+	^#('' 'a' 'abc' '' 'tükörfúrógép')!
+
 newNumericArray: anInteger 
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
@@ -72,6 +75,31 @@ testCaseConversions
 
 testEmpty
 	self assert: self collectionClass empty class sameAs: self collectionClass!
+
+testEquals
+	| abc |
+	self equalityTestCases do: 
+			[:each |
+			| subject |
+			subject := self assimilateString: each.
+			"Identical must be equal"
+			self assert: subject equals: subject.
+			"Same characters must be equal"
+			self assert: subject equals: subject copy.
+			each isEmpty ifFalse: [self deny: subject equals: subject asUppercase].
+			self assert: subject equals: subject asUtf8String.
+			self assert: subject equals: subject asUtf16String.
+			"Not equal to ByteArrays"
+			self deny: subject asByteArray equals: subject.
+			self deny: subject equals: subject asByteArray.
+			"Nor Arrays of characters"
+			self deny: subject asArray equals: subject.
+			self deny: subject equals: subject asArray].
+	"Symbols are only ever equal to other symbols, not strings with the same characters"
+	abc := self assimilateString: 'abc'.
+	self deny: #abc equals: abc.
+	self deny: abc equals: #abc.
+!
 
 testFindStringStartingAt
 	| searchee abc a empty ba ab bb bba abba |
@@ -284,6 +312,7 @@ testReverse
 
 testStreamUtfRoundTrip
 	| expected actual |
+	self skipUnless: [self collectionClass ~~ Symbol].
 	"Test a variety of 1 to 4 byte encodings"
 	{''.
 		'a'.
@@ -431,6 +460,7 @@ testWithNormalizedLineDelimiters
 !AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
 !AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AbstractStringTest categoriesFor: #caseConversionCases!constants!private! !
+!AbstractStringTest categoriesFor: #equalityTestCases!constants!private! !
 !AbstractStringTest categoriesFor: #newNumericArray:!helpers!private! !
 !AbstractStringTest categoriesFor: #reverseTestCases!constants!private! !
 !AbstractStringTest categoriesFor: #testAsByteArray!public!unit tests! !
@@ -438,6 +468,7 @@ testWithNormalizedLineDelimiters
 !AbstractStringTest categoriesFor: #testCapitalized!public!unit tests! !
 !AbstractStringTest categoriesFor: #testCaseConversions!public! !
 !AbstractStringTest categoriesFor: #testEmpty!public!testing / accessing! !
+!AbstractStringTest categoriesFor: #testEquals!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !

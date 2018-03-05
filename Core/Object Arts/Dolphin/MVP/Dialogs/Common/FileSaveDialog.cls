@@ -10,17 +10,16 @@ FileSaveDialog comment: 'FileSaveDialog is a <valueDialogPresenter> implementing
 !FileSaveDialog categoriesForClass!MVP-Presenters! !
 !FileSaveDialog methodsFor!
 
-commonDialogSelector
-	"Private - Answer the selector to use to get the result."
+basicShowModal
+	"Private - Show a File Save dialog for the receiver."
 
-	^#getSaveFileName:
-!
+	^ComDlgLibrary default getSaveFileName: winStruct!
 
 overwritePrompt
 
 	self style: self style | OFN_OVERWRITEPROMPT.
 ! !
-!FileSaveDialog categoriesFor: #commonDialogSelector!constants!private! !
+!FileSaveDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
 !FileSaveDialog categoriesFor: #overwritePrompt!public! !
 
 !FileSaveDialog class methodsFor!

@@ -33,6 +33,16 @@ testAsUppercase
 	"Thai 7 - not a letter"
 	self assert: (Character codePoint: 16rE57) asUppercase equals: (Character codePoint: 16rE57)!
 
+testAsUtf8String
+	#(#($A #[65]) #($\x7F #[16r7F]) #($€ #[16rC2 16r80]) #($\x7FF #[16rDF 16rBF]) #($\x800 #[16rE0 16rA0 16r80]))
+		do: 
+			[:each |
+			| actual subject expected |
+			subject := each first.
+			expected := each last.
+			actual := subject asUtf8String asByteArray.
+			self assert: actual asByteArray equals: expected]!
+
 testEquals
 	self assert: $a equals: (Character codePoint: 97).
 	self deny: $a equals: $A.
@@ -168,6 +178,7 @@ testSize
 	self assert: (Character codePoint: 16rFFFF) size equals: 0! !
 !CharacterTest categoriesFor: #testAsLowercase!public! !
 !CharacterTest categoriesFor: #testAsUppercase!public! !
+!CharacterTest categoriesFor: #testAsUtf8String!public! !
 !CharacterTest categoriesFor: #testEquals!public! !
 !CharacterTest categoriesFor: #testIdentity!public! !
 !CharacterTest categoriesFor: #testIsAlphaNumeric!public! !

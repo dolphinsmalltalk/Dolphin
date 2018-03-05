@@ -131,17 +131,15 @@ defineFields
 		defineField: #h_addr_list type: LPVOIDField new beReadOnly offset: 12.
 	self byteSize: 16!
 
-host: aStringHostName 
+host: aStringHostName
 	"Answer a new instance of the receiver describing a host with the name 
 	held in aStringHostName.
 		(self host: SessionManager current computerName) address
 	"
 
 	| answer |
-	answer := WS2_32Library default gethostbyname: aStringHostName.
-	^answer isNull 
-		ifTrue: [SocketError signalWith: Processor activeProcess lastError]
-		ifFalse: [answer]! !
+	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
+	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
 !HOSTENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !HOSTENT class categoriesFor: #host:!instance creation!public! !
 

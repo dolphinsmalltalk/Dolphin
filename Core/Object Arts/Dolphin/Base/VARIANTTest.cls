@@ -74,8 +74,7 @@ testBSTR
 
 testCollectionConversions
 	| bytes var array sa |
-	array := #(0 1234 1.234 'abc' 16r7FFFFFFF -16r80000000).
-	self class supportsI8 ifTrue: [array := array , #(16r80000000 16rFFFFFFFF 16rFFFFFFFFFFFFFFFF)].
+	array := #(0 1234 1.234 'abc' 16r7FFFFFFF -16r80000000 16r80000000 16rFFFFFFFF 16rFFFFFFFFFFFFFFFF).
 	var := array asVariant.
 	self assert: var vt = (VT_ARRAY | VT_VARIANT).
 	sa := var value.
@@ -284,7 +283,6 @@ testI8
 	var sqword: -2 ** 63.
 	self assert: var value = (-2 ** 63).
 	self should: [var sqword: -2 ** 63 - 1] raise: Error.
-	self class supportsI8 ifFalse: [^self].
 	copy := var copy.
 	self assert: copy vt = VT_I8.
 	self assert: copy value = var value!
@@ -488,6 +486,6 @@ testUI8
 !VARIANTTest class methodsFor!
 
 supportsI8
-	^VMLibrary default isWindowsXPOrGreater! !
+	^true! !
 !VARIANTTest class categoriesFor: #supportsI8!private!testing! !
 

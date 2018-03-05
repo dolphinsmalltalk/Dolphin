@@ -156,9 +156,9 @@ getEnhMetaFile: lpszMetaFile
 	Helpstring: Creates handle for given file-based enhanced-format metafile
 
 		HENHMETAFILE __stdcall GetEnhMetaFile(
-			LPCSTR lpszMetaFile);"
+			LPCWSTR lpszMetaFile);"
 
-	<stdcall: handle GetEnhMetaFileA lpstr>
+	<stdcall: handle GetEnhMetaFileW lpwstr>
 	^self invalidCall!
 
 getEnhMetaFileBits: hemf cbBuffer: cbBuffer lpbBuffer: lpbBuffer
@@ -180,9 +180,9 @@ getEnhMetaFileDescription: hemf cchBuffer: cchBuffer lpszDescription: lpszDescri
 		UINT __stdcall GetEnhMetaFileDescription(
 			HENHMETAFILE hemf,
 			UINT cchBuffer,
-			LPSTR lpszDescription);"
+			LPWSTR lpszDescription);"
 
-	<stdcall: dword GetEnhMetaFileDescriptionA handle dword lpstr>
+	<stdcall: dword GetEnhMetaFileDescriptionW handle dword lpwstr>
 	^self invalidCall!
 
 getEnhMetaFileHeader: hemf cbBuffer: cbBuffer lpemnh: lpemnh

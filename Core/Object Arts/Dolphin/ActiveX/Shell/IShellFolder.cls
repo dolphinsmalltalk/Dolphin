@@ -95,7 +95,7 @@ pidlFromPath: path
 	self
 		ParseDisplayName: nil
 		pbc: nil
-		lpwszDisplayName: path asUtf16String
+		lpwszDisplayName: path
 		pchEaten: nil
 		ppidl: answer
 		pdwAttributes: nil.

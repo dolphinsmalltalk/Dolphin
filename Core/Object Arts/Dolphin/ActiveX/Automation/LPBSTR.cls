@@ -28,7 +28,7 @@ asString
 
 asUtf16String
 	"Answer a Utf16String composed of the characters of the BSTR pointed at by the receiver
-	(assumed itself to be UTF16 encoded), or the empty string if the referenced BSTR is a null
+	(assumed itself to be UTF-16 encoded), or the empty string if the referenced BSTR is a null
 	pointer (by convention a null BSTR is treated the same as an empty string)."
 
 	| bstr |

@@ -168,14 +168,14 @@ initialize
 		StaticText initialize
 	"
 
-	AlignmentMap := (LookupTable new: 5)
-		at: #left put: SS_LEFT;
-		at: #right put: SS_RIGHT;
-		at: #center put: SS_CENTER;
-		at: #leftNoWrap put: SS_LEFTNOWORDWRAP;
-		at: #simple put: SS_SIMPLE;
-		shrink; yourself
-		! !
+	AlignmentMap := IdentityDictionary new
+				at: #left put: SS_LEFT;
+				at: #right put: SS_RIGHT;
+				at: #center put: SS_CENTER;
+				at: #leftNoWrap put: SS_LEFTNOWORDWRAP;
+				at: #simple put: SS_SIMPLE;
+				shrink;
+				yourself! !
 !StaticText class categoriesFor: #icon!constants!public! !
 !StaticText class categoriesFor: #initialize!development!initializing!private! !
 

@@ -420,7 +420,7 @@ beDefaultThemed
 		ifTrue: 
 			[ThemeLibrary default
 				setWindowTheme: self handle
-				pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUtf16String])
+				pszSubAppName: self themeSubAppName
 				pszSubIdList: nil.
 			self openTheme]!
 
@@ -1458,12 +1458,13 @@ getWindowText
 
 	| textLen text |
 	textLen := self textLength.
-	text := String new: textLen.
+	text := Utf16String new: textLen.
 	UserLibrary default
 		getWindowText: handle
 		lpString: text
 		nMaxCount: textLen + 1.
-	^text!
+	#todo.	"As a temporary compatbility measure to avoid breaking too much, force to ANSI."
+	^text asAnsiString!
 
 getWndProc
 	"Private - Answer the window procedure of the receiver."

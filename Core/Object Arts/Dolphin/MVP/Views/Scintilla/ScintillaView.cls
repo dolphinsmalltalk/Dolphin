@@ -1237,14 +1237,13 @@ clearRange: anInterval
 	self sciDeleteRange: anInterval start lengthDelete: anInterval size!
 
 codePage
-	"Answer a <Symbol> naming the code page currently in use, either #utf8, or nil if multi-byte
+	"Answer a <Symbol> naming the code page currently in use, either #utf8, or #ansi if multi-byte
 	character support is disabled."
 
 	^CodePages lookup: self sciGetCodePage!
 
 codePage: aSymbol
-	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8 or
-	nil)."
+	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8, #ansi)."
 
 	self sciSetCodePage: (aSymbol ifNil: [0] ifNotNil: [CodePages keyAtValue: aSymbol])!
 
@@ -1527,7 +1526,7 @@ defaultBraceChars
 	"Private - Answer a <String> containing the set of <Character>s that Scintilla considers to be brace
 	characters by default."
 
-	^##((LookupTable new)
+	^##((IdentityDictionary new)
 		at: #normal put: '()[]{}<>';
 		yourself)!
 
@@ -4470,6 +4469,9 @@ newLine
 				wParam: 0
 				lParam: 0]!
 
+newTextBuffer: anInteger
+	^(self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [String]) newFixed: anInteger!
+
 nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
 
@@ -4551,7 +4553,7 @@ plainText
 		ifTrue: ['']
 		ifFalse: 
 			[| result |
-			result := String newFixed: len - 1.
+			result := self newTextBuffer: len - 1.
 			ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTEXT
@@ -9734,8 +9736,8 @@ setWhitespaceBackcolor
 
 setWhitespaceForecolor
 	whitespaceForecolor 
-		ifTrue: [self sciSetWhitespaceFore: false fore: nil]
-		ifFalse: [self sciSetWhitespaceFore: true fore: whitespaceForecolor asRGB]!
+		ifNil: [self sciSetWhitespaceFore: false fore: nil]
+		ifNotNil: [self sciSetWhitespaceFore: true fore: whitespaceForecolor asRGB]!
 
 showAutoCompletionList: aCollection prefixLength: anInteger
 	"Display a auto-completion list built from the displayStrings of the elements of the
@@ -11070,6 +11072,7 @@ zoomOut
 !ScintillaView categoriesFor: #multiPasteMode!clipboard operations!multiple selection and virtual space!public! !
 !ScintillaView categoriesFor: #multiPasteMode:!clipboard operations!multiple selection and virtual space!public! !
 !ScintillaView categoriesFor: #newLine!**auto generated**!commands!public!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #newTextBuffer:!helpers!private! !
 !ScintillaView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ScintillaView categoriesFor: #onEraseRequired:!event handling!public! !
 !ScintillaView categoriesFor: #onKillFocus!event handling!public! !
@@ -11816,6 +11819,7 @@ initialize
 	self initializeNotificationMap.
 	self addClassConstant: 'CodePages'
 		value: ((IdentityDictionary new)
+				at: CP_ACP put: #ansi;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
 				isImmutable: true;

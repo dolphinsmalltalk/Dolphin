@@ -48,20 +48,21 @@ findWhat
 findWhat: aString 
 	"Private - Set the receivers findWhat String to include aString."
 
-	| size |
+	| size wide|
 	findDetails pattern: aString.
-	size := self findWhat size min: aString size.
+	wide := aString asUtf16String.
+	size := self findWhat size min: wide size.
 	self findWhat 
 		replaceFrom: 1
 		to: size
-		with: aString
+		with: wide
 		startingAt: 1!
 
 initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	findWhatBuf := String newFixed: 256.
+	findWhatBuf := Utf16String newFixed: 256.
 	findDetails := FindDetails new!
 
 prepareStruct
@@ -80,7 +81,7 @@ setFindDetails: aFindDetails
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
-	^FINDREPLACE! !
+	^FINDREPLACEW! !
 !FindDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
 !FindDialog categoriesFor: #extractResult:!helpers!private! !
 !FindDialog categoriesFor: #fdFlags!accessing!private! !

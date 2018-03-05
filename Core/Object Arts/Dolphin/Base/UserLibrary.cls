@@ -380,7 +380,7 @@ mapVirtualKey: keyCode uMapType: mapType
 			UINT uCode,
 			UINT uMapType);"
 
-	<stdcall: dword MapVirtualKeyA dword dword>
+	<stdcall: dword MapVirtualKeyW dword dword>
 	^self invalidCall!
 
 messageBeep: anInteger
@@ -400,10 +400,10 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 				ifFalse: 
 					["#2107: getActiveWindow may return nil, e.g. in a headless app with no windows"
 					anExternalHandle ifNil: [UserLibrary default getActiveWindow ?? 0]].
-	struct := MSGBOXPARAMS new.
+	struct := MSGBOXPARAMSW new.
 	dwStyle := styleInteger.
-	struct lpszText: textString.
-	struct lpszCaption: captionString.
+	struct text: textString.
+	struct caption: captionString.
 	iconId := iconIdentifier.
 	iconId isNil
 		ifTrue: 
@@ -413,11 +413,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 					[struct lpszIcon: IDI_QUESTION.
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
 		ifFalse: 
-			["#1633: On NT systems if the icon has a string resource identifier it must
-			be passed as a UTF16 string even though we are calling the ANSI version of
-			the MessageBoxIndirect() function!!. This is obviously a Windows bug which we
-			need to work around."
-			iconId isInteger not ifTrue: [iconId := iconId asUtf16String].
+			[iconId isInteger not ifTrue: [iconId := iconId asUtf16String].
 			struct lpszIcon: iconId asUIntPtr.
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.
@@ -459,7 +455,7 @@ messageBoxIndirect: aMSGBOXPARAMS
 			LPMSGBOXPARRAMS lpMsgBoxParams;
 		);"
 
-	<stdcall: sdword MessageBoxIndirectA MSGBOXPARAMS*>
+	<stdcall: sdword MessageBoxIndirectW MSGBOXPARAMSW*>
 	^self invalidCall!
 
 msgWaitForMultipleObjectsEx: countInteger pHandles: handles 
@@ -509,7 +505,7 @@ overlappedMsgBoxIndirect: aMSGBOXPARAMS
 			LPMSGBOXPARRAMS lpMsgBoxParams;
 		);"
 
-	<overlap stdcall: sdword MessageBoxIndirectA MSGBOXPARAMS* >
+	<overlap stdcall: sdword MessageBoxIndirectW MSGBOXPARAMSW* >
 	^self invalidCall!
 
 peekMessage: aMSG hWnd: aWindowHandle uMsgFilterMin: anIntFilterMin uMsgFilterMax: uMsgFilterMax wRemoveMsg: anIntFlags
@@ -743,10 +739,10 @@ vkKeyScan: aChar
 	"Translate a character to the corresponding virtual-key code 
 	and shift state for the current keyboard.
 		SHORT VkKeyScan(
-			TCHAR ch 	// character to translate
+			WCHAR ch 	// character to translate
 	   );"
 
-	<stdcall: sword VkKeyScanA char>
+	<stdcall: sword VkKeyScanW char>
 	^self invalidCall
 
 ! !

@@ -1343,7 +1343,7 @@ onViewDestroyed
 
 openTheme
 	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: #TreeView asUtf16String]!
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: #TreeView]!
 
 paint: aMoenTreeNode on: aCanvas fromPoint: aPoint 
 	"Private - Paint the tree object onto the canvas together with all its children."
@@ -1999,7 +1999,7 @@ initialize
 	MultilineMask := DT_WORDBREAK | DT_EDITCONTROL | DT_END_ELLIPSIS.
 	HasButtonsMask := 16r1.
 	AutoExpandingMask := 16r8000000.
-	ViewModes := (LookupTable new)
+	ViewModes := IdentityDictionary new
 				at: #noIcons put: -1 @ 0;
 				at: #smallIcons put: 16 @ 16;
 				at: #mediumIcons put: 24 @ 24;

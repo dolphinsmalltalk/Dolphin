@@ -22,7 +22,7 @@ allFilesType
 basicShowModal
 	"Private - Show a Open File dialog for the receiver."
 
-	^ComDlgLibrary default perform: self commonDialogSelector with: winStruct!
+	^self subclassResponsibility!
 
 caption: aString 
 	"Sets the caption for the receiver to aString"
@@ -34,7 +34,7 @@ cdnFileOk: anExternalAddress
 	filename choice, or non-zero to reject it."
 
 	| ofn file |
-	ofn := OFNOTIFY fromAddress: anExternalAddress.
+	ofn := OFNOTIFYW fromAddress: anExternalAddress.
 	file := ofn lpOFN lpstrFile.
 	^(validationBlock value: file)
 		ifTrue: [0]
@@ -52,21 +52,21 @@ cdnHelp: anExternalAddress
 
 	^0!
 
-cdnIncludeItem: anExternalAddress 
+cdnIncludeItem: anExternalAddress
 	"Private - Determines whether an item should be displayed. When the user opens a new folder
 	or directory, the dialog sends this notification for each item in the folder or directory,
 	but only if the OFN_ENABLEINCLUDENOTIFY flag was set."
 
 	| ofnex |
-	ofnex := OFNOTIFYEX fromAddress: anExternalAddress.
+	ofnex := OFNOTIFYEXW fromAddress: anExternalAddress.
 	ofnex.
 	^1!
 
-cdnInitDone: anExternalAddress 
+cdnInitDone: anExternalAddress
 	"Private - Initialisation of the dialog box is complete."
 
 	| ofn |
-	ofn := OFNOTIFY fromAddress: anExternalAddress.
+	ofn := OFNOTIFYW fromAddress: anExternalAddress.
 	ofn.
 	^0!
 
@@ -157,13 +157,13 @@ fileTypesStringFromSpecs: stringPairs
 
 	stringPairs isNil ifTrue: [^nil].
 
-	stream := WriteStream on: (String new: 40).
+	stream := Utf8String writeStream: 40.
 	null := Character null.
 	stringPairs do: [:x | 
 		stream
-			nextPutAll: x first;
+			nextPutAll: x first asUtf8String ;
 			nextPut: null;
-			nextPutAll: x last;
+			nextPutAll: x last asUtf8String ;
 			nextPut: null ].
 	^stream
 		nextPut: null;
@@ -186,26 +186,28 @@ getFilePath
 	during notifications from the dialog such as CDN_SELCHANGE."
 
 	| len buf |
-	buf := File pathBuffer.
-	len := view parentView 
+	buf := Utf16String new: File maxPath.
+	len := view parentView
 				sendMessage: CDM_GETFILEPATH
-				wParam: buf byteSize
+				wParam: buf size + 1
 				lpParam: buf.
 	buf resize: len - 1.
-	^buf!
+	#todo.	"Temporarily force to ANSI"
+	^buf asAnsiString!
 
 getFileSpec
 	"Retrieve the file name (sans path) as currently specified in the dialog. This can be called
 	during notifications from the dialog such as CDN_SELCHANGE."
 
 	| len buf |
-	buf := File pathBuffer.
-	len := view parentView 
+	buf := Utf16String new: File maxPath.
+	len := view parentView
 				sendMessage: CDM_GETSPEC
-				wParam: buf byteSize
+				wParam: buf size + 1
 				lpParam: buf.
 	buf resize: len - 1.
-	^buf!
+	#todo.	"Temporarily force to ANSI"
+	^buf asAnsiString!
 
 initialDirectory: aString
 	"Set the initial directory path name to be opened/saved."
@@ -225,7 +227,7 @@ prepareStruct
 	this common dialog, immediately prior to the call to that API."
 
 	| buf filename defext |
-	buf := File pathBuffer.
+	buf := Utf16String new: File maxPath.
 	filename := self value.
 	filename notNil
 		ifTrue: 
@@ -269,7 +271,7 @@ validationBlock: aMonadicValuable
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
-	^OPENFILENAME!
+	^OPENFILENAMEW!
 
 wmInitDialog: message wParam: wParam lParam: lParam 
 	"Private - A WM_INITDIALOG message was sent to the hook procedure. This is sent after the common

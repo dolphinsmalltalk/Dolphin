@@ -21,10 +21,10 @@ addAtom: aString
 	Answer the value is the newly created atom or zero if the function fails.
 
 		ATOM AddAtom(
-			LPCTSTR  lpString 	// address of string to add 
+			LPCWSTR  lpString 	// address of string to add 
 		);"
 
-	<stdcall: word AddAtomA lpstr>
+	<stdcall: word AddAtomW lpwstr>
 	^self invalidCall!
 
 allocConsole
@@ -69,11 +69,11 @@ beginUpdateResource: fileNameString bDeleteExistingResources: aBoolean
 	function to add, delete, or replace resources in an executable file. 
 
 	HANDLE BeginUpdateResource(
-		LPCTSTR pFileName <>,             // executable file name
+		LPCWSTR pFileName <>,             // executable file name
 		BOOL bDeleteExistingResources <>  // deletion option
 		);"
 
-	<stdcall: handle BeginUpdateResourceA lpstr bool>
+	<stdcall: handle BeginUpdateResourceW lpwstr bool>
 	^self invalidCall!
 
 close
@@ -94,18 +94,26 @@ closeHandle: aHandle
 	^self invalidCall
 !
 
+compareString: locale dwCmpFlags: dwCmpFlags lpString1: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2
+	<stdcall: sdword CompareString dword dword lpwstr sdword lpwstr sdword>
+	^self invalidCall!
+
+compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
+	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
+	^self invalidCall!
+
 copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	"Copies the file named fromString to a file named toString. If
 	toString already exists then the copy will only proceed if fail
 	is false.
 
-	BOOL	CopyFileA(
-		LPCSTR lpExistingFileName,
-		LPCSTR lpNewFileName,
+	BOOL	CopyFileW(
+		LPCWSTR lpExistingFileName,
+		LPCWSTR lpNewFileName,
 		BOOL bFailIfExists
 		);"
 
-	<overlap stdcall: bool CopyFileA lpstr lpstr bool>
+	<overlap stdcall: bool CopyFileW lpwstr lpwstr bool>
 	^self invalidCall!
 
 createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES 
@@ -117,7 +125,7 @@ createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 			LPSECURITY_ATTRIBUTES lpSecurityAttributes
 		);"
 
-	<stdcall: bool CreateDirectoryA lpstr lpvoid>
+	<stdcall: bool CreateDirectoryW lpwstr lpvoid>
 	^self invalidCall!
 
 createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitialState lpName: lpName
@@ -130,7 +138,7 @@ createEvent: lpEventAttributes bManualReset: bManualReset bInitialState: bInitia
 			BOOL bInitialState,
 			LPCSTR lpName);"
 
-	<stdcall: handle CreateEventA lpvoid bool bool lpstr>
+	<stdcall: handle CreateEventW lpvoid bool bool lpwstr>
 	^self invalidCall!
 
 createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: anIntegerShareMode 
@@ -150,7 +158,7 @@ createFile: aStringFileName dwDesiredAccess: anIntegerAccessMode dwSharedMode: a
 	);
 	Please see Win32 SDK help for more information."
 
-	<stdcall: handle CreateFileA lpstr dword dword lpvoid dword dword handle>
+	<stdcall: handle CreateFileW lpwstr dword dword lpvoid dword dword handle>
 	^self invalidCall!
 
 createMutex: lpMutexAttributes bInitialOwner: bInitialOwner lpName: lpName
@@ -162,7 +170,7 @@ createMutex: lpMutexAttributes bInitialOwner: bInitialOwner lpName: lpName
 			BOOL bInitialOwner,
 			LPSTR lpName);"
 
-	<stdcall: handle CreateMutexA void* bool lpstr>
+	<stdcall: handle CreateMutexW void* bool lpwstr>
 	^self invalidCall!
 
 debugBreak
@@ -177,19 +185,13 @@ debugBreak
 deleteFile: aStringFileName
 	"The DeleteFile function deletes an existing file. Answer true if the function succeeds.
 
-	BOOL DeleteFile(
-		LPCTSTR lpFileName // address of name of file to delete  
-	);
+		BOOL DeleteFile( LPCWSTR lpFileName);
 
-	If the file does not exist, the DeleteFile function fails.
-	Windows 95:
-		This function deletes a file even if it is open for normal I/O or as a memory-mapped file.
-		To prevent loss of data, close files before attempting to delete them.
+	If the file does not exist, the DeleteFile function fails. The function fails if an
+	application attempts to delete a file that is open for normal I/O or as a memory-mapped
+	file."
 
-	Windows NT:
-		This function fails if an application attempts to delete a file that is open for normal I/O or as a memory-mapped file."
-
-	<stdcall: bool DeleteFileA lpstr>
+	<stdcall: bool DeleteFileW lpwstr>
 	^self invalidCall!
 
 deviceIoControl: hDevice dwIoControlCode: dwIoControlCode lpInBuffer: lpInBuffer nInBufferSize: nInBufferSize lpOutBuffer: lpOutBuffer nOutBufferSize: nOutBufferSize lpBytesReturned: lpBytesReturned lpoverlapped: lpoverlapped
@@ -238,7 +240,7 @@ endUpdateResource: hUpdate fDiscard: aBoolean
 		BOOL fDiscard <>   // write option 
 		);"
 
-	<stdcall: bool EndUpdateResourceA handle bool>
+	<stdcall: bool EndUpdateResourceW handle bool>
 	^self invalidCall!
 
 enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
@@ -254,7 +256,7 @@ enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 			DWORD dwFlags 						// date formats to enumerate
 		);"
 
-	<stdcall: bool EnumDateFormatsA lpvoid dword dword>
+	<stdcall: bool EnumDateFormatsW lpvoid dword dword>
 	^self invalidCall!
 
 enumSystemLocales: aCallbackThunk dwFlags: dwFlags
@@ -267,7 +269,7 @@ enumSystemLocales: aCallbackThunk dwFlags: dwFlags
 			DWORD dwFlags 	// indicates which locales to enumerate
 		);"
 
-	<stdcall: bool EnumSystemLocalesA lpvoid dword>
+	<stdcall: bool EnumSystemLocalesW lpvoid dword>
 	^self invalidCall!
 
 enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
@@ -281,12 +283,14 @@ enumTimeFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 			DWORD dwFlags 						// unused
 		);"
 
-	<stdcall: bool EnumTimeFormatsA lpvoid dword dword>
+	<stdcall: bool EnumTimeFormatsW lpvoid dword dword>
 	^self invalidCall!
 
 expandEnvironmentStrings: aString 
 	"Answer the <String> result of replacing environment-variable references of the form
-	%VariableName% with their defined values."
+	%VariableName% with their defined values.
+		(self default expandEnvironmentStrings: '%username% is cool') 
+	"
 
 	| answer size |
 	aString isEmpty ifTrue: [^aString].
@@ -296,14 +300,15 @@ expandEnvironmentStrings: aString
 				nSize: 0.
 	size = 0 ifTrue: [self systemError].
 	"If the function succeeds, the return value is the number of TCHARs stored in the
-	destination buffer, including the terminating null character, but in fact it is off by one."
-	answer := String newFixed: size-2.
+	destination buffer, including the terminating null character."
+	answer := Utf16String newFixed: size-1.
 	(self 
 		expandEnvironmentStrings: aString
 		lpDst: answer
 		nSize: size) = 0 
 		ifTrue: [self systemError].
-	^answer!
+	#todo. "Temporary conversion to ANSI string for compatibility, should be returned untouched."
+	^answer asAnsiString!
 
 expandEnvironmentStrings: lpSrc lpDst: lpDst nSize: bufSize
 	"Replace environment-variable strings with their defined values. 
@@ -312,7 +317,7 @@ expandEnvironmentStrings: lpSrc lpDst: lpDst nSize: bufSize
 			LPTSTR lpDst,
 			DWORD nSize);"
 
-	<stdcall: dword ExpandEnvironmentStringsA lpstr lpstr dword>
+	<stdcall: dword ExpandEnvironmentStringsW lpwstr lpwstr dword>
 	^self invalidCall!
 
 fileTimeToLocalTime: lpFileTime lpLocalFileTime: lpLocalFileTime
@@ -361,11 +366,11 @@ findFirstFile: lpFileName lpFindFileData: aWIN32_FIND_DATA
 	"Search a directory for a file or subdirectory whose name matches the specified filename.
 
 		HANDLE FindFirstFile( 
-			LPCTSTR lpFileName, 
-			LPWIN32_FIND_DATA lpFindFileData 
+			LPCWSTR lpFileName, 
+			LPWIN32_FIND_DATAW lpFindFileData 
 		);"
 
-	<stdcall: handle FindFirstFileA lpstr WIN32_FIND_DATA* >
+	<stdcall: handle FindFirstFileW lpwstr WIN32_FIND_DATAW* >
 	^self invalidCall!
 
 findNextFile: hFindFile lpFindFileData: aWIN32_FIND_DATA
@@ -376,21 +381,21 @@ findNextFile: hFindFile lpFindFileData: aWIN32_FIND_DATA
 
 		BOOL FindNextFile( 
 			HANDLE hFindFile, 
-			LPWIN32_FIND_DATA lpFindFileData 
+			LPWIN32_FIND_DATAW lpFindFileData 
 		);"
 
-	<stdcall: bool FindNextFileA handle WIN32_FIND_DATA* >
+	<stdcall: bool FindNextFileW handle WIN32_FIND_DATAW* >
 	^self invalidCall!
 
 findResource: anInstanceHandle lpName: anIntegerId lpType: anIntegerType
 	"Determine the location of a resource with the specified type and name in the specified module. 
 		HRSRC FindResource(
   			HMODULE hModule,	// resource-module handle 
-			LPCTSTR lpName,	// pointer to resource name  
-			LPCTSTR lpType 	// pointer to resource type 
+			LPCWSTR lpName,	// pointer to resource name  
+			LPCWSTR lpType 	// pointer to resource type 
 		);"
 
-	<stdcall: handle FindResourceA handle lpvoid lpvoid>
+	<stdcall: handle FindResourceW handle lpvoid lpvoid>
 	^self invalidCall
 !
 
@@ -424,7 +429,7 @@ formatMessage: dwFlags lpSource: aStringOrHandleOrNil dwMessageId: dwMessageId d
 			va_list *Arguments 	// address of array of message inserts 
 		);"
 
-	<stdcall: dword FormatMessageA dword lpvoid dword dword lpvoid dword lpvoid>
+	<stdcall: dword FormatMessageW dword lpvoid dword dword lpvoid dword lpvoid>
 	^self invalidCall!
 
 formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: arguments
@@ -432,17 +437,20 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	string (see Win32 help) and the arguments in the <sequencedReadableCollection>, arguments,
 	which will be substitued for the argument identified as %1..%n in the format string."
 
-	| ptr len msg args |
+	| ptr len msg args wideStrings |
 	ptr := ExternalAddress new.
 	args := ByteArray new: arguments size * VMConstants.IntPtrSize.
+	wideStrings := OrderedCollection new.
 	arguments keysAndValuesDo: 
 			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
-				put: (a isInteger ifTrue: [a] ifFalse: [a yourAddress])].
+				put: (a isInteger
+						ifTrue: [a]
+						ifFalse: [a isString ifTrue: [(wideStrings add: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
 	len := self
 				setLastError: 0;
 				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))
-					lpSource: aHandleOrString
+					lpSource: aHandleOrString asUtf16String
 					dwMessageId: messageId
 					dwLanguageId: 0
 					lpBuffer: ptr basicYourAddress
@@ -457,15 +465,16 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 			err ~~ 0 ifTrue: [self systemError: err].
 			msg := String new]
 		ifFalse: 
-			[msg := String fromAddress: ptr length: len.
+			[msg := Utf16String fromAddress: ptr length: len.
 			self
 				heapFree: self getProcessHeap
 				dwFlags: 0
 				lpMem: ptr].
-	^msg
+	#todo. "Temporary conversion to ANSI for compatibility."
+	^msg asAnsiString
 
 	"
-'Blah %1 blah %2!!d!!' formatWithArguments: #('abc' 123)
+('Blah %1 blah %2!!d!!' formatWithArguments: #('abc' 123)) 
 "!
 
 freeConsole
@@ -496,7 +505,7 @@ getAtomName: id lpBuffer: aString nSize: anInteger
 
 		UINT GetAtomName(
 			ATOM  nAtom,		// atom identifying character string 
-			LPTSTR  lpBuffer,	// address of buffer for atom string  
+			LPWSTR  lpBuffer,	// address of buffer for atom string  
 			int  nSize 		// size of buffer 
 			);	
 
@@ -504,16 +513,16 @@ getAtomName: id lpBuffer: aString nSize: anInteger
 	If the function succeeds, the return value is the length of the string copied to the buffer, in characters, not including the terminating null character.
 	If the function fails, the return value is zero. To get extended error information, call GetLastError."
 
-	<stdcall: dword GetAtomNameA word lpstr sdword>
+	<stdcall: dword GetAtomNameW word lpwstr sdword>
 	^self invalidCall
 !
 
 getCommandLine
 	"Answer a pointer to the command-line string.
 
-		LPTSTR GetCommandLine(VOID)"
+		LPWSTR GetCommandLine(VOID)"
   
-	<stdcall: lpstr GetCommandLineA>
+	<stdcall: lpwstr GetCommandLineW>
 	^self invalidCall!
 
 getComputerName: buffer nSize: pBufSize
@@ -523,11 +532,11 @@ getComputerName: buffer nSize: pBufSize
 	in the name.
 
 		BOOL GetComputerName(
-			LPTSTR lpBuffer,	// address of name buffer 
+			LPWSTR lpBuffer,	// address of name buffer 
 			LPDWORD nSize 		// address of size of lpBuffer
 		);"
 
-	<stdcall: bool GetComputerNameA lpstr DWORD* >
+	<stdcall: bool GetComputerNameW lpwstr DWORD* >
 	^self invalidCall
 
 !
@@ -537,10 +546,10 @@ getConsoleTitle: lpConsoleTitle nSize: nSize
 	Helpstring: Retrieves the title for the current console window.
 
 		DWORD __stdcall GetConsoleTitle(
-			[out]LPSTR lpConsoleTitle,
+			[out]LPWSTR lpConsoleTitle,
 			[in]DWORD nSize);"
 
-	<stdcall: dword GetConsoleTitleA lpstr dword>
+	<stdcall: dword GetConsoleTitleW lpwstr dword>
 	^self invalidCall!
 
 getCurrentProcess
@@ -578,13 +587,13 @@ getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatSt
 			LCID  Locale,	// locale for which date is to be formatted 
 			DWORD  dwFlags,	// flags specifying function options 
 			CONST SYSTEMTIME *  lpDate,	// date to be formatted 
-			LPCTSTR  lpFormat,	// date format string 
-			LPTSTR  lpDateStr,	// buffer for storing formatted string 
+			LPCWSTR  lpFormat,	// date format string 
+			LPWSTR  lpDateStr,	// buffer for storing formatted string 
 			int  cchDate 	// size of buffer 
 		);"
 
 	"Avoid creating indirect ref. to SYSTEMTIME from its own #displayOn: by using void* parm instead"
-	<stdcall: sdword GetDateFormatA dword dword void* lpstr lpstr sdword>
+	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
 	^self invalidCall
 
 !
@@ -604,7 +613,7 @@ getDiskFreeSpace: lpRootPathName
 		);
 	"
 
-	<stdcall: bool GetDiskFreeSpaceA lpstr dword* dword* dword* dword*>
+	<stdcall: bool GetDiskFreeSpaceW lpwstr dword* dword* dword* dword*>
 	^self invalidCall!
 
 getDiskFreeSpaceEx: lpDirectoryName
@@ -620,27 +629,27 @@ getDiskFreeSpaceEx: lpDirectoryName
 		);
 	"
 
-	<stdcall: bool GetDiskFreeSpaceExA lpstr qword* qword* qword*>
+	<stdcall: bool GetDiskFreeSpaceExW lpwstr qword* qword* qword*>
 	^self invalidCall!
 
 getEnvironmentVariable: nameString lpBuffer: bufString nSize: bufSize
 	"Populate bufString with the value of the specified environment variable.
 		DWORD GetEnvironmentVariable(
-			LPCTSTR lpName,	// address of environment variable name 
-			LPTSTR lpBuffer,	// address of buffer for variable value 
+			LPCWSTR lpName,	// address of environment variable name 
+			LPWSTR lpBuffer,	// address of buffer for variable value 
 			DWORD nSize 	// size of buffer, in characters 
 		);"
 
-	<stdcall: dword GetEnvironmentVariableA lpstr lpstr dword>
+	<stdcall: dword GetEnvironmentVariableW lpwstr lpwstr dword>
 	^self invalidCall!
 
 getFileAttributes: aFileName
 	"Answer attributes for the specified file or directory. 
 		DWORD GetFileAttributes(
-			LPCTSTR  lpFileName 	// address of the name of a file or directory  
+			LPCWSTR  lpFileName 	// address of the name of a file or directory  
 		);"
 
-	<stdcall: sdword GetFileAttributesA lpstr>
+	<stdcall: sdword GetFileAttributesW lpwstr>
 	^self invalidCall!
 
 getFileSizeEx: hfile lpFileSize: lpFileSize
@@ -677,13 +686,13 @@ getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWOR
 	"Retrieves the full path and filename of the file with name fname, into the buffer, path.
 
 		DWORD GetFullPathName(
-  			LPCTSTR  lpFileName,	// address of name of file to find path for 
+  			LPCWSTR  lpFileName,	// address of name of file to find path for 
 			DWORD  nBufferLength,	// size, in characters, of path buffer 
-			LPTSTR  lpBuffer,		// address of path buffer 
-			LPTSTR  *lpFilePart 	// address of filename in path 
+			LPWSTR  lpBuffer,		// address of path buffer 
+			LPWSTR  *lpFilePart 	// address of filename in path 
 		);"
 
-	<stdcall: dword GetFullPathNameA lpstr dword lpstr lpvoid>
+	<stdcall: dword GetFullPathNameW lpwstr dword lpwstr lpvoid>
 	^self invalidCall!
 
 getLastError
@@ -698,11 +707,11 @@ getLocaleInfo: locale lCType: lcType lpLCData: outputStringOutput cchData: anInt
 		int GetLocaleInfo(
 	  		LCID  Locale,		// locale identifier 
 			LCTYPE  LCType,	// type of information 
-			LPTSTR  lpLCData,	// address of buffer for information 
+			LPWSTR  lpLCData,	// address of buffer for information 
 			int  cchData 		// size of buffer 
 		);"
 
-	<stdcall: sdword GetLocaleInfoA dword dword lpstr sdword>
+	<stdcall: sdword GetLocaleInfoW dword dword lpwstr sdword>
 	^self invalidCall!
 
 getLocalTime: aWinSYSTEMTIME
@@ -719,11 +728,11 @@ getModuleFileName: aHandle lpFilename: aString nSize: anInteger
 
 		DWORD GetModuleFileName(
   			HMODULE  hModule,		// handle to module to find filename for 
-			LPTSTR  lpFilename,	// pointer to buffer for module path 
+			LPWSTR  lpFilename,	// pointer to buffer for module path 
 			DWORD  nSize 			// size of buffer, in characters 
 		);"
 
-	<stdcall: dword GetModuleFileNameA handle lpstr dword>
+	<stdcall: dword GetModuleFileNameW handle lpwstr dword>
 	^self invalidCall
 
 
@@ -731,7 +740,7 @@ getModuleFileName: aHandle lpFilename: aString nSize: anInteger
 
 getModuleHandle: aString
 
-	<stdcall: handle GetModuleHandleA lpstr>
+	<stdcall: handle GetModuleHandleW lpwstr>
 	^self invalidCall
 
 
@@ -772,7 +781,7 @@ getProcessHeap
 getShortPathName: lpszLongPath lpszShortPath: lpszShortPath cchBuffer: cchBuffer
 	"Answers the short pathname form of lpszLongPath in lpszShortPath"
 
-	<stdcall: dword GetShortPathNameA lpstr lpstr dword>
+	<stdcall: dword GetShortPathNameW lpwstr lpwstr dword>
 	^self invalidCall!
 
 getStdHandle: nStdHandle
@@ -799,7 +808,7 @@ getSystemDirectory: lpBuffer uSize: uSize
 			LPTSTR lpBuffer, 
 			UINT uSize);"
   
-	<stdcall: dword GetSystemDirectoryA lpstr dword>
+	<stdcall: dword GetSystemDirectoryW lpwstr dword>
 	^self invalidCall!
 
 getSystemTime: lpSystemTime
@@ -817,7 +826,7 @@ getSystemWindowsDirectory: lpBuffer uSize: uSize
 			LPTSTR lpBuffer, 
 			UINT uSize); "
 
-	<stdcall: dword GetSystemWindowsDirectoryA lpstr dword>
+	<stdcall: dword GetSystemWindowsDirectoryW lpwstr dword>
 	^self invalidCall!
 
 getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTempFileName: bufferString
@@ -827,20 +836,20 @@ getTempFileName: pathString lpPrefixString: prefixString uUnique: anInteger lpTe
 	not create the file.
 
 		UINT GetTempFileName(
-  			LPCTSTR  lpPathName,		// address of directory name for temporary file 
-			LPCTSTR  lpPrefixString,	// address of filename prefix 
+  			LPCWSTR  lpPathName,		// address of directory name for temporary file 
+			LPCWSTR  lpPrefixString,	// address of filename prefix 
 			UINT  uUnique,	// number used to create temporary filename 
-			LPTSTR  lpTempFileName 	// address of buffer that receives the new filename 
+			LPWSTR  lpTempFileName 	// address of buffer that receives the new filename 
 		);"
 
-	<stdcall: dword GetTempFileNameA lpstr lpstr dword lpstr>
+	<stdcall: dword GetTempFileNameW lpwstr lpwstr dword lpwstr>
 	^self invalidCall!
 
 getTempPath: nBufferLength lpBuffer: lpBuffer
 	"Populate the <String> buffer, lpBuffer, with the system directory designated for temporary files.
 	Answers the number of characters written to the buffer."
 
-	<stdcall: dword GetTempPathA dword lpstr>
+	<stdcall: dword GetTempPathW dword lpwstr>
 	^self invalidCall!
 
 getThreadTimes: hThread lpCreationTime: creationFILETIME lpExitTime: exitFILETIME lpKernelTime: kernelFILETIME lpUserTime: userFILETIME
@@ -888,13 +897,13 @@ getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatSt
 			LCID  Locale,					// locale for which time is to be formatted 
 			DWORD  dwFlags,				// flags specifying function options 
 			CONST SYSTEMTIME *  lpTime,	// time to be formatted 
-			LPCTSTR  lpFormat,				// time format string 
-			LPTSTR  lpTimeStr,				// buffer for storing formatted string 
+			LPCWSTR  lpFormat,				// time format string 
+			LPWSTR  lpTimeStr,				// buffer for storing formatted string 
 			int  cchTime					// size of buffer 
 		);"
 
 	"Avoid creating indirect ref. to SYSTEMTIME from its own #displayOn: by using void* parm instead"
-	<stdcall: sdword GetTimeFormatA dword dword void* lpstr lpstr sdword>
+	<stdcall: sdword GetTimeFormatW dword dword void* lpwstr lpwstr sdword>
 	^self invalidCall
 
 !
@@ -938,17 +947,17 @@ getVolumeInformation: lpRootPathName lpVolumeNameBuffer: lpVolumeNameBuffer nVol
 			LPSTR lpFileSystemNameBuffer,
 			DWORD nFileSystemNameSize);"
 
-	<stdcall: bool GetVolumeInformationA lpstr lpstr dword dword* dword* dword* lpstr dword>
+	<stdcall: bool GetVolumeInformationW lpwstr lpwstr dword dword* dword* dword* lpwstr dword>
 	^self invalidCall!
 
 getWindowsDirectory: lpBuffer uSize: uSize
   	"Answer the path of the windows directory.
 
 		UINT GetWindowsDirectory(
-			LPTSTR lpBuffer, 
+			LPWSTR lpBuffer, 
 			UINT uSize); "
   
-	<stdcall: dword GetWindowsDirectoryA lpstr dword>
+	<stdcall: dword GetWindowsDirectoryW lpwstr dword>
 	^self invalidCall!
 
 globalAlloc: uFlags dwBytes: dwBytes
@@ -1081,7 +1090,7 @@ loadLibraryEx: aString hFile: reserved dwFlags: anInteger
 	handle. If the function fails, the return value is nil.
 
 		HINSTANCE LoadLibraryEx(
-			LPCTSTR lpLibFileName,	// points to name of executable module
+			LPCWSTR lpLibFileName,	// points to name of executable module
 			HANDLE hFile,	// reserved, must be NULL 
 			DWORD dwFlags 	// entry-point execution flag 
 		);
@@ -1089,7 +1098,7 @@ loadLibraryEx: aString hFile: reserved dwFlags: anInteger
 	The library is loaded from either the directory from which Dolphin was loaded, the current directory, 
 	the Windows system directory, the Windows directory, or a directory on the path (in that order)."
 
-	<stdcall: handle LoadLibraryExA lpstr handle dword>
+	<stdcall: handle LoadLibraryExW lpwstr handle dword>
 	^self invalidCall!
 
 loadResource: anInstanceHandle hResInfo: aResourceHandle
@@ -1130,34 +1139,6 @@ lockResource: anExternalHandle
 	<stdcall: dword LockResource handle>
 	^self invalidCall!
 
-lstrcmp: aString1 lpString2: aString2
-  	"Answer -1, 0 or 1 depending on whether aString collates before, the same as, 
-	or after aString2 sensitive to case (respectively).
-		int lstrcmp(
-  			LPCTSTR lpString1,	// address of first string 
-			LPCTSTR lpString2 	// address of second string 
-		);
-
-	N.B. If you need more flexibility, implement the CompareStrings() call (which
-	this probably just layers on top of anyway)."
-
-	<stdcall: sdword lstrcmpA lpstr lpstr>
-	^self invalidCall!
-
-lstrcmpi: aString1 lpString2: aString2
-  	"Answer -1, 0 or 1 depending on whether aString collates before, the same as, 
-	or after aString2 ignoring case (respectively).
-		int lstrcmpi(
-  			LPCTSTR lpString1,	// address of first string 
-			LPCTSTR lpString2 	// address of second string 
-		);
-
-	N.B. If you need more flexibility, implement the CompareStrings() call (which
-	this probably just layers on top of anyway)."
-
-	<stdcall: sdword lstrcmpiA lpstr lpstr>
-	^self invalidCall!
-
 lstrlenW: aUtf16String
 	"Answer the length in 16-bit code units of the parameter (assumed to point at a
 	null-terminated wide string). Note that this may be more than the number of actual
@@ -1173,11 +1154,11 @@ moveFile: aStringOldFileName lpNewFileName: aStringnewFileName
 	Answer true if the function succeeds. 
 
 	BOOL MoveFile(
-		LPCTSTR lpExistingFileName, // address of name of the existing file  
-		LPCTSTR lpNewFileName // address of new name for the file 
+		LPCWSTR lpExistingFileName, // address of name of the existing file  
+		LPCWSTR lpNewFileName // address of new name for the file 
 		);"
 
-	<stdcall: bool MoveFileA lpstr lpstr>
+	<stdcall: bool MoveFileW lpwstr lpwstr>
 	^self invalidCall!
 
 moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
@@ -1187,12 +1168,12 @@ moveFileEx: aStringOldFileName lpNewFileName: aStringnewFileName dwFlags: flags
 	Answer true if the function succeeds. 
 
 	BOOL MoveFile(
-		LPCTSTR lpExistingFileName, // address of name of the existing file  
-		LPCTSTR lpNewFileName // address of new name for the file 
+		LPCWSTR lpExistingFileName, // address of name of the existing file  
+		LPCWSTR lpNewFileName // address of new name for the file 
 		DWORD dwFlags <> // move options 
 		);"
 
-	<stdcall: bool MoveFileExA lpstr lpstr dword>
+	<stdcall: bool MoveFileExW lpwstr lpwstr dword>
 	^self invalidCall!
 
 multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn 
@@ -1231,10 +1212,10 @@ outputDebugString: aString
 	"Send aString to the debugger.
 
 		VOID OutputDebugString(
-  			LPCTSTR  lpOutputString 	// address of string to be displayed  
+  			LPCWSTR  lpOutputString 	// address of string to be displayed  
 		);"
 
-	<stdcall: void OutputDebugStringA lpstr>
+	<stdcall: void OutputDebugStringW lpwstr>
 	^self invalidCall!
 
 pulseEvent: hEvent
@@ -1312,7 +1293,7 @@ releaseMutex: hMutex
 	^self invalidCall!
 
 removeDirectory: aStringFileName
-	<stdcall: bool RemoveDirectoryA lpstr>
+	<stdcall: bool RemoveDirectoryW lpwstr>
 	^self invalidCall!
 
 resetEvent: hEvent
@@ -1336,9 +1317,9 @@ setConsoleTitle: lpConsoleTitle
 	Helpstring: Sets the title for the current console window.
 
 		BOOL __stdcall SetConsoleTitle(
-			[in]LPCSTR lpConsoleTitle);"
+			[in]LPCWSTR lpConsoleTitle);"
 
-	<stdcall: bool SetConsoleTitleA lpstr>
+	<stdcall: bool SetConsoleTitleW lpwstr>
 	^self invalidCall!
 
 setEndOfFile: anExternalHandle
@@ -1349,11 +1330,11 @@ setEnvironmentVariable: lpName lpValue: lpValue
 	"Sets the value of an environment variable for the current process. Answer whether the
 	request was successful.
 		BOOL SetEnvironmentVariable(
-			LPCTSTR lpName,	// address of environment variable name  
-  			LPCTSTR lpValue 	// address of new value for variable 
+			LPCWSTR lpName,	// address of environment variable name  
+  			LPCWSTR lpValue 	// address of new value for variable 
 		);"
 
-	<stdcall: bool SetEnvironmentVariableA lpstr lpstr>
+	<stdcall: bool SetEnvironmentVariableW lpwstr lpwstr>
 	^self invalidCall!
 
 setEvent: hEvent
@@ -1399,11 +1380,11 @@ setStdHandle: nStdHandle hHandle: aHandle
 setVolumeLabel: lpRootPathName lpVolumeName: lpVolumeName
 	"Set the label of a a file system volume. Answer whether the operation succeeded.
 		BOOL SetVolumeLabel( 
-			LPCTSTR lpRootPathName,
-			LPCTSTR lpVolumeName
+			LPCWSTR lpRootPathName,
+			LPCWSTR lpVolumeName
 		);"
 
-	<stdcall: bool SetVolumeLabelA lpstr lpstr>
+	<stdcall: bool SetVolumeLabelW lpwstr lpwstr>
 	^self invalidCall!
 
 sizeOfResource: anExternalHandleInstance hResInfo: anExternalHandleResource
@@ -1492,14 +1473,14 @@ updateResource: hUpdate lpType: resTypeString lpName: resName wLanguage: langId 
 
 	BOOL UpdateResource(
 		HANDLE hUpdate <>, // update-file handle
-		LPCTSTR lpType <>, // resource type
-		LPCTSTR lpName <>, // resource name
+		LPCWSTR lpType <>, // resource type
+		LPCWSTR lpName <>, // resource name
 		WORD wLanguage <>, // language identifier
 		LPVOID lpData <>,  // resource data
 		DWORD cbData <>    // length of resource data
 		);"
 
-	<stdcall: bool UpdateResourceA handle lpvoid lpvoid word lpvoid dword>
+	<stdcall: bool UpdateResourceW handle lpvoid lpvoid word lpvoid dword>
 	^self invalidCall!
 
 updateResourcesOf: aString do: aMonadicValuable 
@@ -1513,11 +1494,11 @@ verifyVersionInfo: lpVersionInformation dwTypeMask: dwTypeMask dwlConditionMask:
 	Helpstring: Compares a set of operating system version requirements to the corresponding values for the currently running version of the system
 
 		BOOL __stdcall VerifyVersionInfo(
-			[in, out]OSVERSIONINFOEX* lpVersionInformation,
+			[in, out]OSVERSIONINFOEXW* lpVersionInformation,
 			[in]DWORD dwTypeMask,
 			[in]unsigned __int64 dwlConditionMask);"
 
-	<stdcall: bool VerifyVersionInfoA OSVERSIONINFOEX* dword qword>
+	<stdcall: bool VerifyVersionInfoW OSVERSIONINFOEXW* dword qword>
 	^self invalidCall!
 
 verSetConditionMask: conditionMask typeMask: typeMask condition: condition
@@ -1662,6 +1643,8 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
 !KernelLibrary categoriesFor: #closeHandle:!public!win32 functions-handles and objects! !
+!KernelLibrary categoriesFor: #compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
@@ -1672,9 +1655,9 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
 !KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #endUpdateResource:fDiscard:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #enumDateFormats:locale:dwFlags:!public!win32 functions-natural language support! !
-!KernelLibrary categoriesFor: #enumSystemLocales:dwFlags:!public!win32 functions-natural language support! !
-!KernelLibrary categoriesFor: #enumTimeFormats:locale:dwFlags:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #enumDateFormats:locale:dwFlags:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #expandEnvironmentStrings:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #expandEnvironmentStrings:lpDst:nSize:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #fileTimeToLocalTime:lpLocalFileTime:!public!win32 functions-date and time! !
@@ -1688,7 +1671,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #formatMessage:source:flags:withArguments:!helpers!public! !
 !KernelLibrary categoriesFor: #freeConsole!**auto generated**!public! !
 !KernelLibrary categoriesFor: #freeLibrary:!public!win32 functions-dynamic link library! !
-!KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
@@ -1696,7 +1679,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
-!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getDiskFreeSpace:lpSectorsPerCluster:lpBytesPerSector:lpNumberOfFreeClusters:lpTotalNumberOfClusters:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getDiskFreeSpaceEx:lpFreeBytesAvailable:lpTotalNumberOfBytes:lpTotalNumberOfFreeBytes:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getEnvironmentVariable:lpBuffer:nSize:!public!win32 functions-process and thread! !
@@ -1706,7 +1689,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getFileType:!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getFullPathName:nBufferLength:lpBuffer:lpFilePart:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getLastError!public!win32 functions-error! !
-!KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getLocaleInfo:lCType:lpLCData:cchData:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getLocalTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getModuleFileName:lpFilename:nSize:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getModuleHandle:!public!win32 functions-dynamic link library! !
@@ -1715,7 +1698,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getProcessHeap!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #getShortPathName:lpszShortPath:cchBuffer:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getStdHandle:!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getSystemDefaultLCID!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getSystemDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getSystemTime:!**auto generated**!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getSystemWindowsDirectory:uSize:!public!win32 functions-system information! !
@@ -1723,9 +1706,9 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTempPath:lpBuffer:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getThreadTimes:lpCreationTime:lpExitTime:lpKernelTime:lpUserTime:!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getTickCount!public!win32 functions-date and time!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
@@ -1737,15 +1720,13 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #isDBCSLeadByte:!**auto generated**!public!win32 functions-natural language support! !
-!KernelLibrary categoriesFor: #isDBCSLeadByteEx:testChar:!**auto generated**!public!win32 functions-natural language support! !
+!KernelLibrary categoriesFor: #isDBCSLeadByte:!**auto generated**!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #isDBCSLeadByteEx:testChar:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #localFree:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
-!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrlenW:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #moveFile:lpNewFileName:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file! !

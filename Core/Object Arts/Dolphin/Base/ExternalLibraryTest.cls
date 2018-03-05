@@ -15,51 +15,56 @@ testInvalidCall
 
 	| obj |
 	obj := Object new.
-	self 
+	self
 		should: [KernelLibrary default outputDebugString: obj]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
-			[:ex | 
-			ex tag = 1 
-				and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'lpstr']]].
-	self 
+			[:ex |
+			ex tag = 1 and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'lpwstr']]].
+	self
 		should: [KernelLibrary default findFirstFile: obj lpFindFileData: nil]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
-			[:ex | 
-			ex tag = 1
-				and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'lpstr']]].
-	self 
+			[:ex |
+			ex tag = 1 and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'lpwstr']]].
+	self
 		should: [KernelLibrary default findFirstFile: '*.*' lpFindFileData: obj]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
-			[:ex | 
-			ex tag = 2
-				and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'WIN32_FIND_DATA*']]].
-	self 
-		should: [UserLibrary default fillRect: obj lprc: RECT new hbr: nil]
+			[:ex |
+			ex tag = 2 and: 
+					[(ex instVarNamed: 'argument') == obj
+						and: [(ex instVarNamed: 'type') = (WIN32_FIND_DATAW name , '*')]]].
+	self
+		should: 
+			[UserLibrary default
+				fillRect: obj
+				lprc: RECT new
+				hbr: nil]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
-			[:ex | 
-			ex tag = 1
-				and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'handle']]].
-
-	self 
-		should: [UserLibrary default fillRect: nil lprc: obj hbr: nil]
+			[:ex |
+			ex tag = 1 and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'handle']]].
+	self
+		should: 
+			[UserLibrary default
+				fillRect: nil
+				lprc: obj
+				hbr: nil]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
-			[:ex | 
-			ex tag = 2
-				and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'RECT*']]].
-	self 
-		should: [UserLibrary default fillRect: nil lprc: RECT new hbr: obj]
+			[:ex |
+			ex tag = 2 and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'RECT*']]].
+	self
+		should: 
+			[UserLibrary default
+				fillRect: nil
+				lprc: RECT new
+				hbr: obj]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
-			[:ex | 
-			ex tag = 3
-				and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'handle']]].
-
-!
+			[:ex |
+			ex tag = 3 and: [(ex instVarNamed: 'argument') == obj and: [(ex instVarNamed: 'type') = 'handle']]]!
 
 testSingletonSerialisation
 	| singletons array bytes |

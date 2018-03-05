@@ -191,7 +191,7 @@ initialize
 		self initialize
 	"
 
-	AlignmentMap := (LookupTable new)
+	AlignmentMap := IdentityDictionary new
 				at: #leftCenter put: AlignLeft | AlignVCenter;
 				at: #rightCenter put: AlignRight | AlignVCenter;
 				at: #topCenter put: AlignHCenter | AlignTop;
@@ -215,7 +215,7 @@ stbConvertFrom: anSTBClassFormat
 	newInstance
 		horizontalGap: data first;
 		verticalGap: data second;
-		alignment: (##((LookupTable new)
+		alignment: (##((IdentityDictionary new)
 					at: #left put: #leftTop;
 					at: #center put: #topCenter;
 					at: #right put: #topRight;

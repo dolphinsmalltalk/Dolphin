@@ -42,6 +42,8 @@ package methodNames
 	add: #ScrollingDecorator -> #continuousTracking:;
 	add: #ShellView -> #hasThickFrame;
 	add: #ShellView -> #hasThickFrame:;
+	add: #SystemMetrics -> #hasFlashWindow;
+	add: #SystemMetrics -> #hasMenuImages;
 	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
 	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
 	add: #TextEdit -> #isLowercase;
@@ -366,6 +368,22 @@ hasThickFrame: aBoolean
 	self isResizable: aBoolean! !
 !ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
 !ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
+
+!SystemMetrics methodsFor!
+
+hasFlashWindow
+	"Answer whether the host supports the FlashWindowEx API."
+
+	#deprecated.
+	^true!
+
+hasMenuImages
+	"Answer whether the host supports images on menus."
+
+	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
+	^VMLibrary default isWindowsXPOrGreater! !
+!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
 
 !TextEdit methodsFor!
 

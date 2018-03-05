@@ -85,7 +85,7 @@ validationBlock: aMonadicValuable
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
-	^CHOOSECOLOR!
+	^CHOOSECOLORW!
 
 wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger 
 	"Private - The user has pressed the OK button."

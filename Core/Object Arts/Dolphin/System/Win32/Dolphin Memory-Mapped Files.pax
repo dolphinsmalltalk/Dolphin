@@ -83,9 +83,9 @@ createFileMapping: hFile lpAttributes: lpAttributes flProtect: flProtect dwMaxim
 			DWORD flProtect,
 			DWORD dwMaximumSizeHigh,
 			DWORD dwMaximumSizeLow,
-			LPSTR lpName);"
+			LPWSTR lpName);"
 
-	<stdcall: handle CreateFileMappingA handle void* dword dword dword lpstr>
+	<stdcall: handle CreateFileMappingW handle void* dword dword dword lpwstr>
 	^self invalidCall!
 
 flushViewOfFile: lpBaseAddress dwNumberOfBytesToFlush: dwNumberOfBytesToFlush 
@@ -120,9 +120,9 @@ openFileMapping: dwDesiredAccess bInheritHandle: bInheritHandle lpName: lpName
 		HANDLE __stdcall OpenFileMapping(
 			DWORD dwDesiredAccess,
 			BOOL bInheritHandle,
-			LPSTR lpName);"
+			LPCWSTR lpName);"
 
-	<stdcall: handle OpenFileMappingA dword bool lpstr>
+	<stdcall: handle OpenFileMappingW dword bool lpwstr>
 	^self invalidCall!
 
 unmapViewOfFile: lpBaseAddress 

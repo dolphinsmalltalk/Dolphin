@@ -278,44 +278,18 @@ flash: anInteger
 
 	self flash: anInteger flags: FLASHW_ALL!
 
-flash: flashCountInteger flags: flagsInteger 
+flash: flashCountInteger flags: flagsInteger
 	"Flash the receiver the number of times specified by the <integer> argument, flashCountInteger,
 	configured by the FLASHWINFO flags in the <integer>, flagsInteger.
 	Answer a <boolean> indicating whether the window caption was drawn as active before the call."
 
-	^SystemMetrics current hasFlashWindow 
-		ifTrue: 
-			[| params |
-			params := FLASHWINFO new.
-			params
-				hwnd: self asParameter;
-				uCount: flashCountInteger;
-				dwFlags: flagsInteger.
-			(UserLibrary default flashWindowEx: params) ~= 0]
-		ifFalse: 
-			["Flashing the tray alone is not supported"
-			flagsInteger == FLASHW_STOP 
-				ifTrue: [flashes := 0]
-				ifFalse: 
-					["Doesn't really matter if this is process safe - the only side effect will be a bit more or a bit less flashing"
-					flashes <= 0 ifTrue: [self forkFlasher].
-					flashes := flashCountInteger]]!
-
-forkFlasher
-	"Private - Start a flasher process for this shell."
-
-	| hWnd lib |
-	hWnd := self asParameter.
-	lib := UserLibrary default.
-	[	
-		[(flashes := flashes - 1) >= 0] whileTrue: [
-			lib flashWindow: hWnd bInvert: true.
-			Processor sleep: 525]
-	] forkAt: Processor userBackgroundPriority
-
-	
-
-!
+	| params |
+	params := FLASHWINFO new.
+	params
+		hwnd: self asParameter;
+		uCount: flashCountInteger;
+		dwFlags: flagsInteger.
+	^(UserLibrary default flashWindowEx: params) ~= 0!
 
 getDefId
 	"Private - Answer the ID of any default push button in the receiver, or 0 if none."
@@ -1225,7 +1199,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #filerProxy!binary filing!private! !
 !ShellView categoriesFor: #flash:!operations!public! !
 !ShellView categoriesFor: #flash:flags:!operations!public! !
-!ShellView categoriesFor: #forkFlasher!helpers!private! !
 !ShellView categoriesFor: #getDefId!default button!private! !
 !ShellView categoriesFor: #getLastActivePopup!hierarchy!private! !
 !ShellView categoriesFor: #hasCaption!accessing-styles!public! !

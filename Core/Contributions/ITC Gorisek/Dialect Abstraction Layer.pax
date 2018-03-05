@@ -135,8 +135,6 @@ package methodNames
 	add: #String -> #asDecimalOrFloat;
 	add: #String -> #asFilenameString;
 	add: #String -> #asPlainAsciiString;
-	add: #String -> #asUTF8;
-	add: #String -> #asUTF8String;
 	add: #String -> #beginsWithUppercase:;
 	add: #String -> #breakIntoLinesOfLength:;
 	add: #String -> #breakIntoStringsOfLength:;
@@ -194,6 +192,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\System\Random\Dolphin Random Stream';
 	add: '..\..\Object Arts\Dolphin\Sockets\Dolphin Sockets';
 	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
 	add: 'OmniBase';
@@ -1309,30 +1308,6 @@ asPlainAsciiString
 				includes: ch asInteger) ifTrue: [temp at: i put: $ ]].
 	^temp!
 
-asUTF8
-	"Answer receiver encoded into UTF-8 byte string. The encoding will be done based on the current process code page.
-	Warning, the result will include 4 byte UTF8 marker !!!!!!
-	"
-
-	| ws |
-	ws := WriteStream on: (String new: self size + 100).
-	self class 
-		utf8EncodeFrom: (ReadStream on: self)
-		on: ws
-		addMarker: true.
-	^ws contents!
-
-asUTF8String
-	"Answer receiver encoded into UTF-8 byte string. The encoding will be done based on the current process code page."
-
-	| ws |
-	ws := WriteStream on: (String new: self size + 20).
-	self class 
-		utf8EncodeFrom: (ReadStream on: self)
-		on: ws
-		addMarker: false.
-	^ws contents!
-
 beginsWithUppercase: aString
 
 	| stringSize |
@@ -1550,8 +1525,6 @@ trimToSizeWithDots: maxSize
 !String categoriesFor: #asDecimalOrFloat!converting!public! !
 !String categoriesFor: #asFilenameString!public! !
 !String categoriesFor: #asPlainAsciiString!public! !
-!String categoriesFor: #asUTF8!converting!public! !
-!String categoriesFor: #asUTF8String!converting!public! !
 !String categoriesFor: #beginsWithUppercase:!converting!public! !
 !String categoriesFor: #breakIntoLinesOfLength:!comparing!public! !
 !String categoriesFor: #breakIntoStringsOfLength:!comparing!public! !

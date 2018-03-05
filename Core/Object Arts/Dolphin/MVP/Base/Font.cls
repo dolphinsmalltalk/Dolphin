@@ -65,7 +65,7 @@ handle: hFont
 	"Sets the non-owned handle for the receiver and queries its logical info."
 
 	super handle: hFont.
-	self getDataW: logfont!
+	logfont getData: hFont!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -147,7 +147,7 @@ logFont: aLOGFONT
 name
 	"Answer the face name of the font."
 
-	^logfont lfFaceName trimNulls!
+	^logfont faceName!
 
 name: aString
 	"Set the receiver's font name attribute. This has no affect if the receiver is already realized."

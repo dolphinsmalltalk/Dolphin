@@ -15,10 +15,21 @@ LOGFONT contains information that describes a logical font, such as the face nam
 createFont
 	^GDILibrary default createFontIndirectA: self!
 
+faceName
+	"Answer the receiver's lfFaceName ANSI string field, having trimmed any extra nulls."
+	
+	^self lfFaceName trimNulls!
+
 faceName: aString
 	"Set the receiver's lfFaceName field."
 	
 	self lfFaceName: aString asAnsiString!
+
+getData: hFont
+	GDILibrary default
+		getObject: hFont
+		cbBuffer: self byteSize
+		lpvObject: self!
 
 lfFaceName
 	"Answer the receiver's lfFaceName field as a Smalltalk object."
@@ -37,7 +48,9 @@ lfFaceName: anObject
 		startingAt: 1.
 	bytes byteAtOffset: ##(self offsetOf: #lfFaceName) + size put: 0! !
 !LOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
+!LOGFONT categoriesFor: #faceName!accessing!public! !
 !LOGFONT categoriesFor: #faceName:!accessing!public! !
+!LOGFONT categoriesFor: #getData:!helpers!private! !
 !LOGFONT categoriesFor: #lfFaceName!**compiled accessors**!public! !
 !LOGFONT categoriesFor: #lfFaceName:!**compiled accessors**!public! !
 

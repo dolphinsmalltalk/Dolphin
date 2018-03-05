@@ -33,20 +33,6 @@ SequenceableCollection comment: 'SequenceableCollection is the class of Collecti
 			startingAt: 1;
 		yourself!
 
-_appendToString: aString
-	| size newSize |
-	size := aString size.
-	^(aString copyLikeOfSize: (newSize := size + self size))
-		replaceFrom: 1
-			to: size
-			with: aString
-			startingAt: 1;
-		replaceFrom: size + 1
-			to: newSize
-			with: self
-			startingAt: 1;
-		yourself!
-
 _sameAsString: comparand
 	"Private - Answer whether the receiver collates the same as <readableString>
 	argument, comparand.
@@ -1141,7 +1127,6 @@ writeStream
 
 	^WriteStream on: self! !
 !SequenceableCollection categoriesFor: #,!copying!public! !
-!SequenceableCollection categoriesFor: #_appendToString:!comparing!double dispatch!private! !
 !SequenceableCollection categoriesFor: #_sameAsString:!comparing!private! !
 !SequenceableCollection categoriesFor: #=!comparing!public! !
 !SequenceableCollection categoriesFor: #after:!public!searching! !

@@ -13,62 +13,6 @@ Utf16Strings can be constructed from <String>s when needed by sending the #asUtf
 !Utf16String categoriesForClass!Collections-Text! !
 !Utf16String methodsFor!
 
-, aSequencedReadableCollection
-	"Answer a new <sequencedReadableCollection> like the receiver (i.e. of the receiver's
-	species but not necessarily the exact same class) containing the elements	of the receiver 
-	in their original order with those of the <sequencedReadableCollection> argument
-	appended in their original order.
-	Note: This is the concatenation operation, and is a simplified form of 
-	#copyReplaceFrom:to:with:."
-
-	| size newSize other|
-	size := self size.
-	other := aSequencedReadableCollection asUtf16String.
-	newSize := size + other size.
-	^(self copyLikeOfSize: newSize)
-		replaceFrom: 1
-			to: size
-			with: self
-			startingAt: 1;
-		replaceFrom: size + 1
-			to: newSize
-			with: other
-			startingAt: 1;
-		yourself!
-
-_appendToString: aString
-	^aString asUtf16String, self!
-
-_equalsByteString: aString
-	"Private - Answer whether the receiver is equivalent to the byte string, aString. 
-	Double-dispatched from String>>=."
-
-	^aString asUtf16String = self!
-
-_equalsUtf16String: aUtf16String
-	"Private - Answer whether the receiver is equivalent to the <Utf16String> argument.
-	Double-dispatched from Utf16String>>=."
-
-	"We should only get here if the byte comparison primitive failed unexpected."
-
-	^Utf16String primitiveFailed!
-
-= comparand
-	"Answer whether the receiver and the <Object> argument, comparand, 
-	are both Strings containing identical characters (i.e. case sensitive).
-
-	Primitive failure results:
-		0 -	aString is not a byte object of the same class as the receiver."
-
-	<primitive: 55>
-	^comparand isString and: [comparand _equalsUtf16String: self]!
-
-asAnsiString
-	"Answer an ANSI encoded string representation of the receiver."
-
-	<primitive: 217>
-	^self asByteString: String!
-
 asByteString: aClass
 	"Private - Answer a byte-string encoded <String> of the specified class containing the same characters as the receiver."
 
@@ -89,36 +33,25 @@ asByteString: aClass
 	^buf!
 
 asLowercase
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to lowercase."
+
 	| copy |
 	copy := self basicCopy.
 	UserLibrary default stringLowerW: copy.
 	^copy!
 
-asString
-	"Answer an byte encoded string representation of the receiver."
-
-	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
-	^self asByteString: String!
-
 asSymbol
 	^Symbol intern: self asUtf8String!
 
 asUppercase
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to uppercase."
+
 	| copy |
 	copy := self basicCopy.
 	UserLibrary default stringUpperW: copy.
 	^copy!
-
-asUtf16String
-	"Answer a UTF16-encoded equivalent of the receiver (i.e. the receiver)."
-
-	^self!
-
-asUtf8String
-	"Answer a UTF8 encoded string representation of the receiver."
-
-	<primitive: 216>
-	^self asByteString: Utf8String!
 
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
@@ -238,7 +171,7 @@ shallowCopy
 	^self class fromAddress: self yourAddress length: self size!
 
 size
-	"Answer the number of characters in the receiver."
+	"Answer the number of code units in the receiver."
 
 	^self basicSize bitShift: -1!
 
@@ -275,19 +208,10 @@ wordAtOffset: anInteger put: anObject
 
 	<primitive: 125>
 	^self primitiveFailed! !
-!Utf16String categoriesFor: #,!copying!public! !
-!Utf16String categoriesFor: #_appendToString:!comparing!double dispatch!private! !
-!Utf16String categoriesFor: #_equalsByteString:!comparing!private! !
-!Utf16String categoriesFor: #_equalsUtf16String:!comparing!private! !
-!Utf16String categoriesFor: #=!comparing!public! !
-!Utf16String categoriesFor: #asAnsiString!converting!public! !
 !Utf16String categoriesFor: #asByteString:!converting!private! !
 !Utf16String categoriesFor: #asLowercase!converting!public! !
-!Utf16String categoriesFor: #asString!converting!public! !
 !Utf16String categoriesFor: #asSymbol!converting!public! !
 !Utf16String categoriesFor: #asUppercase!converting!public! !
-!Utf16String categoriesFor: #asUtf16String!converting!public! !
-!Utf16String categoriesFor: #asUtf8String!converting!public! !
 !Utf16String categoriesFor: #at:!accessing!public! !
 !Utf16String categoriesFor: #at:put:!accessing!public! !
 !Utf16String categoriesFor: #beginsWith:!comparing!public! !
@@ -351,6 +275,13 @@ fromAddress: anAddress length: anInteger
 				startingAt: 1.
 			answer]!
 
+fromAtomId: anInteger
+	"Answer a new string which is a copy of the atom with id anInteger."
+
+	| atomName |
+	^(atomName := self new: 255)
+		leftString: (KernelLibrary default getAtomName: anInteger lpBuffer: atomName nSize: atomName size)!
+
 fromString: aString
 	"Answer an instance of the receiver containing the same characters as the <String>
 	argument."
@@ -358,6 +289,7 @@ fromString: aString
 	^aString asUtf16String!
 
 initialize
+	encoding := EncodingUtf16.
 	empty := self new
 				isImmutable: true;
 				yourself.
@@ -403,6 +335,7 @@ newFixed: aSmallInteger
 !Utf16String class categoriesFor: #encode:on:!helpers!private! !
 !Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
 !Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
+!Utf16String class categoriesFor: #fromAtomId:!instance creation!public! !
 !Utf16String class categoriesFor: #fromString:!instance creation!public! !
 !Utf16String class categoriesFor: #initialize!development!initializing!public! !
 !Utf16String class categoriesFor: #new:!instance creation!public! !

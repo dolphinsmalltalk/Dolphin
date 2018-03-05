@@ -146,12 +146,11 @@ warning: warningString
 
 !MessageBoxAbstract class methodsFor!
 
-defaultCaption: anInteger
+defaultCaption: aSymbol
 	"Private - Answer a suitable default caption based on style of the 
 	message box."
 
-	^DefaultCaptions at: anInteger ifAbsent: [
-		SessionManager current applicationName]!
+	^DefaultCaptions at: aSymbol ifAbsent: [SessionManager current applicationName]!
 
 errorMsg: aString 
 	"Display a message with the default error caption, standard error icon, the specified
@@ -184,7 +183,7 @@ initialize
 				yourself.
 
 	"Where there is no entry in the table for the message box type, the application name is used."
-	DefaultCaptions := (LookupTable new)
+	DefaultCaptions := (IdentityDictionary new)
 				at: #confirm put: 'Please confirm...';
 				at: #notify put: 'Note';
 				shrink;

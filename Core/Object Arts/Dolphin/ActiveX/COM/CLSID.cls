@@ -56,19 +56,19 @@ fromProgID: aString
 
 	| answer |
 	answer := self newNull.
-	OLELibrary default clsidFromProgID: aString asUtf16String lpclsid: answer.
+	OLELibrary default clsidFromProgID: aString lpclsid: answer.
 	^answer!
 
 fromString: aString
 	"Answer an instance of the receiver instantiated from the argument, aString."
 
-	| answer unicodeString |
+	| answer |
 	aString isEmpty ifTrue: [^self null].
 	aString first ~~ ${ ifTrue: [^self fromProgID: aString].
 	answer := self newNull.
-	unicodeString := aString asUtf16String.
-	OLELibrary default clsidFromString: unicodeString pclsid: answer.
-	^answer!
+	OLELibrary default clsidFromString: aString pclsid: answer.
+	^answer
+!
 
 initialize
 	"Private - Initialize the receiver's class variables.
