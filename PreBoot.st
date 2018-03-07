@@ -393,17 +393,128 @@ formatWithArguments: aCollection
 
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'LineDelimiter NullPrintCharacter'
+	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf8 LineDelimiter NullPrintCharacter'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'empty'!
+	classInstanceVariableNames: 'empty encoding'!
 
-String instVarAt: 14 put: ''!
-Utf16String instVarAt: 14 put: Utf16String new!
-Symbol instVarAt: 14 put: #''!
+	
+String variableByteSubclass: #UtfEncodedString
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+UtfEncodedString variableByteSubclass: #Utf8String
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+| i |
+i := String class indexOfInstVar: 'encoding'.
+String instVarAt: i put: 0.
+Symbol instVarAt: i put: 0.
+Utf8String instVarAt: i put: 1.
+Utf16String instVarAt: i put: 2!
+
+| i |
+i := String class indexOfInstVar: 'empty'.
+String instVarAt: i put: ''.
+Symbol instVarAt: i put: #''.
+Utf16String instVarAt: i put: Utf16String new.
+Utf8String instVarAt: i put: Utf8String new!
 
 !Package methodsFor!
 
 removeClassName: aSymbol
 	classNames remove: aSymbol! !
 
+!String methodsFor!
 
+asAnsiString
+	^self! !
+
+!Utf16String methodsFor!
+
+asAnsiString
+	^self asByteString: String!
+
+asByteString: aClass
+	| bytes buf size |
+	(size := self size) == 0 ifTrue: [^''].
+	buf := String newFixed: size * 4.
+	bytes := KernelLibrary default
+				wideCharToMultiByte: (aClass == String ifTrue: [0] ifFalse: [65001])
+				dwFlags: 0
+				lpWideCharStr: self
+				cchWideChar: size
+				lpMultiByteStr: buf
+				cchMultiByte: buf size
+				lpDefaultChar: nil
+				lpUsedDefaultChar: nil.
+	bytes == 0 ifTrue: [^KernelLibrary default systemError].
+	buf resize: bytes.
+	^buf! !
+
+
+!File class methodsFor!
+relativePathOf: aPathString to: aBasePathString
+
+	| relPath |
+	relPath := Utf16String new: self maxPath.
+	relPath := (ShlwapiLibrary default
+				pathRelativePathTo: relPath
+				pszFrom: aBasePathString
+				dwAttrFrom: 0
+				pszTo: aPathString
+				dwAttrTo: 0)
+					ifTrue: 
+						[relPath asAnsiString trimNulls]
+					ifFalse: [aPathString].
+	^(relPath beginsWith: '.\') ifTrue: [relPath allButFirst: 2] ifFalse: [relPath]!
+
+composePath: path subPath: subpath
+	| fullName |
+	fullName := Utf16String new: self maxPath.
+	^(ShlwapiLibrary default
+		pathCombine: fullName
+		lpszDir: path
+		lpszFile: subpath) asAnsiString! 
+
+fullPathOf: aPathnameString
+
+	| fullpath len|
+	fullpath := Utf16String new: self maxPath.
+	(len := KernelLibrary default
+		getFullPathName: aPathnameString
+		nBufferLength: fullpath size + 1
+		lpBuffer: fullpath
+		lpFilePart: nil) == 0
+		ifTrue: [KernelLibrary default systemError].
+	^(fullpath resize: len) asAnsiString! !
+
+!KernelLibrary methodsFor!
+
+
+getFullPathName: fname nBufferLength: anInteger lpBuffer: path lpFilePart: aDWORD
+	<stdcall: dword GetFullPathNameW lpwstr dword lpwstr lpvoid>
+	^self invalidCall! !
+
+!ShlwapiLibrary methodsFor!
+
+pathCombine: szDest lpszDir: lpszDir lpszFile: lpszFile
+	<stdcall: lpwstr PathCombineW lpwstr lpwstr lpwstr>
+	^self invalidCall!
+
+pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo dwAttrTo: dwAttrTo
+	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
+	^self invalidCall! !
+
+!WriteStream methodsFor!
+
+nextWORDPut: anInteger
+	self
+		nextPut: (anInteger bitAnd: 16rFF);
+		nextPut: (anInteger bitShift: -8)! !
+
+MessageBox class removeSelector: #initialize!
