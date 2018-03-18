@@ -233,6 +233,7 @@ instanceVariableNames: aCollectionOfStrings
 	instanceVariableNames := OrderedCollection withAll: aCollectionOfStrings!
 
 isAbstract
+	self realClass ifNotNil: [:real | real isNonInstantiable ifTrue: [^true]].
 	(self whichMethodsReferToSymbol: #subclassResponsibility) notEmpty ifTrue: [^true].
 	model allReferencesToClass: self do: [:each | ^false].
 	^true!

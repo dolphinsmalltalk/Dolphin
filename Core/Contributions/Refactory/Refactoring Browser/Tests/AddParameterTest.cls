@@ -97,18 +97,18 @@ testAddParameterThatReferencesModelGlobal
 
 testAddParameterThatReferencesSelf
 	| refactoring class |
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				addParameterToMethod: ('test' , 'Foo:') asSymbol
 				in: RefactoryTestDataApp
 				newSelector: #testFoo:bar:
 				initializer: 'self printString'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #testFoo:bar:) = (RBParser 
-						parseMethod: 'testFoo: anObject bar: aString
+	self assert: (class parseTreeFor: #testFoo:bar:)
+				= (RBParser parseMethod: 'testFoo: anObject bar: ' , (String new basicPrintString copyWithout: $\x20)
+								, '
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) 
+	self assert: (class parseTreeFor: #callFoo)
 				= (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
