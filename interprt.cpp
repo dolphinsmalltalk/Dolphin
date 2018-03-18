@@ -9,7 +9,7 @@ Implementation of Smalltalk interpreter
 #include "Ist.h"
 #include <float.h>
 #include <VersionHelpers.h>
-//#include "rc_vm.h"
+#include "rc_vm.h"
 
 #ifndef _DEBUG
 	//#pragma optimize("s", on)
@@ -124,7 +124,7 @@ HRESULT Interpreter::initialize(const char* szFileName, LPVOID imageData, UINT i
 		return hr;
 #ifdef OAD
 	DWORD timeEnd = timeGetTime();
-	TRACESTREAM << "Time to load image: " << (timeEnd - timeStart) << " mS" << endl;
+	TRACESTREAM<< L"Time to load image: " << (timeEnd - timeStart)<< L" mS" << endl;
 #endif
 
 	ObjectMemory::HeapCompact();
@@ -174,6 +174,7 @@ HRESULT Interpreter::initializeBeforeLoad()
 				: QS_MOUSE | QS_KEY)
 		| (QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE);
 
+	initializeCharMaps();
 
 	OverlappedCall::Initialize();
 
@@ -181,7 +182,6 @@ HRESULT Interpreter::initializeBeforeLoad()
 	return ObjectMemory::Initialize();
 }
 
-#pragma code_seg(INIT_SEG)
 HRESULT Interpreter::initializeAfterLoad()
 {
 	// This must now be done after load so Pointers.Nil available
@@ -208,7 +208,7 @@ HRESULT Interpreter::initializeAfterLoad()
 	m_registers.FetchContextRegisters();
 
 #ifdef _DEBUG
-	TRACESTREAM << "Startup process: " << actualActiveProcessPointer() << endl;
+	TRACESTREAM<< L"Startup process: " << actualActiveProcessPointer() << endl;
 #endif
 
 	// Populate the ZCT with zero count objects in the startup process' stack
@@ -228,6 +228,30 @@ HRESULT Interpreter::initializeAfterLoad()
 	::SetLastError(0);
 
 	return initializeImage();
+}
+
+HRESULT Interpreter::initializeCharMaps()
+{
+	char byteCharSet[256];
+	for (unsigned i = 0; i < 256; i++)
+		byteCharSet[i] = static_cast<char>(i);
+
+	// Map the ansi code units to unicode code points using the current code page. 
+	if (::MultiByteToWideChar(CP_ACP, 0, byteCharSet, 256, nullptr, 0) > 256)
+	{
+		// Empirical evidence is that none of the standard code pages will map any of the ansi code units to more 
+		// than one UTF16 code unit. If this assumption is not true, the implementation will not work correctly
+		return ReportError(IDP_UNSUPPORTED_ACP, ::GetACP());
+	}
+
+	::MultiByteToWideChar(CP_ACP, 0, byteCharSet, 256, m_ansiToUnicodeCharMap, 256);
+
+	// Create the reverse map - it will be very spare, but as it only consumes 64Kb it isn't worth using a hash table
+	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
+	for (unsigned i = 0; i < 256; i++)
+		m_unicodeToAnsiCharMap[m_ansiToUnicodeCharMap[i]] = static_cast<char>(i);
+
+	return S_OK;
 }
 
 #pragma code_seg(TERM_SEG)
@@ -293,8 +317,8 @@ static MWORD ResizeProcInContext(InterpreterRegisters& reg)
 	if (size != oteProc->getSize() && Interpreter::executionTrace)
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "Check Refs: Resized proc " << oteProc << " from "
-			<< dec << size << " to " << oteProc->getSize() << endl;
+		TRACESTREAM<< L"Check Refs: Resized proc " << oteProc<< L" from "
+			<< dec << size<< L" to " << oteProc->getSize() << endl;
 	}
 	return size;
 }
@@ -462,7 +486,7 @@ void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS 
 #ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << hex << pExInfo->ExceptionRecord->ExceptionCode << " exception trapped in " << *m_registers.m_pMethod << endl;
+		TRACESTREAM << hex << pExInfo->ExceptionRecord->ExceptionCode<< L" exception trapped in " << *m_registers.m_pMethod << endl;
 	}
 #endif
 	sendVMInterrupt(oopInterrupt, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(EXCEPTION_RECORD), pExInfo->ExceptionRecord)));
@@ -548,7 +572,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef _DEBUG
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << "Divide by zero in " << *m_registers.m_pMethod << endl;
+			TRACESTREAM<< L"Divide by zero in " << *m_registers.m_pMethod << endl;
 		}
 #endif
 		sendVMInterrupt(VMI_ZERODIVIDE, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
@@ -574,7 +598,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "Unhandled exception " << exceptionCode << " in " << *m_registers.m_pMethod << endl;
+				TRACESTREAM<< L"Unhandled exception " << exceptionCode<< L" in " << *m_registers.m_pMethod << endl;
 			}
 #endif
 			action = EXCEPTION_EXECUTE_HANDLER;
@@ -612,7 +636,7 @@ int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 #ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "FP Fault in " << *m_registers.m_pMethod << endl;
+		TRACESTREAM<< L"FP Fault in " << *m_registers.m_pMethod << endl;
 	}
 #endif
 	sendVMInterrupt(VMI_FPFAULT, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(_FPIEEE_RECORD), pIEEEFPException)));
@@ -645,7 +669,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef OAD
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "Access violation: " << LPVOID(dwAddress) << ", stack top " << LPVOID(dwNext) << endl;
+		TRACESTREAM<< L"Access violation: " << LPVOID(dwAddress)<< L", stack top " << LPVOID(dwNext) << endl;
 	}
 #endif
 
@@ -654,7 +678,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef OAD
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << "Stack overflow detected" << endl;
+			TRACESTREAM<< L"Stack overflow detected" << endl;
 		}
 #endif
 
@@ -664,7 +688,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			// the reserved space to accomodate an overrun page for detection
 			if (activeProcAlloc >= pBase->getMaxAllocation())
 			{
-				TRACESTREAM << "Stack max'd out at " << hex << activeProcAlloc << endl;
+				TRACESTREAM<< L"Stack max'd out at " << hex << activeProcAlloc << endl;
 				// Even though stack has hit max. we can still continue (to handle the error)
 				// We'll just add an interrupt to the queue, which'll be detected later.
 				// In order for this to continue to work, the stack must be shrunk at some

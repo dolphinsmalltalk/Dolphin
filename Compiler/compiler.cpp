@@ -272,7 +272,7 @@ inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 	for (int i = 0; i < NumSpecialSelectors; i++)
 	{
 		const POTE stringPointer = pointers.specialSelectors[i];
-		_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassString));
+		_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassSymbol));
 		const char* psz = (const char*)FetchBytesOf(stringPointer);
 		if (name == psz)
 		{
@@ -285,7 +285,7 @@ inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 		const POTE stringPointer = pointers.exSpecialSelectors[i];
 		if (stringPointer != pointers.Nil)
 		{
-			_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), GetVMPointers().ClassString));
+			_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassSymbol));
 			const char* psz = (const char*)FetchBytesOf(stringPointer);
 			if (name == psz)
 			{
@@ -2912,6 +2912,7 @@ POTE Compiler::ParseArray()
 		case CharConst:
 			{
 				Oop oopChar = reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(ThisTokenInteger())));
+				m_piVM->AddReference(oopChar);
 				elems.push_back(oopChar);
 				NextToken();
 			}
@@ -3181,8 +3182,8 @@ void Compiler::GetInstVars()
 		if (m_piVM->FetchClassOf(Oop(arrayPointer)) != GetVMPointers().ClassArray) 
 		{
 #if defined(_DEBUG) && !defined(USE_VM_DLL)
-			TRACESTREAM << "Compiler: " << m_class << ">>" << GetVMPointers().allInstVarNamesSymbol << " returned " <<
-				arrayPointer << "\n";
+			TRACESTREAM<< L"Compiler: " << m_class<< L">>" << GetVMPointers().allInstVarNamesSymbol<< L" returned " <<
+				arrayPointer<< L"\n";
 #endif
 			// #allInstVarNames incorrect result
 			CompileError(CompileTextRange(), CErrBadContext);
@@ -3527,9 +3528,9 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 			// Unwind may occur if user catches CompilerNotification and doesn't resume it (for example)
 			//
 #ifndef USE_VM_DLL
-			TRACESTREAM << "WARNING: Unwinding Compiler::CompileForClass("
-				<< compilerOop << ',' << szSource << ',' << aClass << ','
-				<< std::hex << flags << ',' << notifier << ')' << std::endl;
+			TRACESTREAM<< L"WARNING: Unwinding Compiler::CompileForClass("
+				<< compilerOop << L',' << szSource << L',' << aClass << L','
+				<< std::hex << flags << L',' << notifier << L')' << std::endl;
 #endif
 		}
 	}
@@ -3590,9 +3591,9 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 			// Unwind may occur if user catches CompilerNotification and doesn't resume it (for example)
 			//
 #ifndef USE_VM_DLL
-			TRACESTREAM << "WARNING: Unwinding Compiler::CompileForEval("
-				<< compilerOop << ',' << szSource << ',' << aClass << ','
-				<< aWorkspacePool << std::hex << flags << ',' << notifier << ')' << std::endl;
+			TRACESTREAM<< L"WARNING: Unwinding Compiler::CompileForEval("
+				<< compilerOop << L',' << szSource << L',' << aClass << L','
+				<< aWorkspacePool << std::hex << flags << L',' << notifier << L')' << std::endl;
 #endif
 		}
 	}

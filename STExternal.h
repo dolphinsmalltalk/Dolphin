@@ -130,4 +130,4 @@ namespace ST
 	}
 }
 
-ostream& operator<<(ostream& st, const HandleOTE* oteHandle);
+wostream& operator<<(wostream& st, const HandleOTE* oteHandle);

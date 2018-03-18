@@ -88,9 +88,9 @@ void Interpreter::initializeVMReferences()
 
 	m_pProcessor = _Pointers.Scheduler->m_location;
 
-	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassString)
+	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassByteString)
 	{
-		_Pointers.EmptyString = String::New("");
+		_Pointers.EmptyString = ByteString::New("");
 		_Pointers.EmptyString->beImmutable();
 	}
 
@@ -108,7 +108,7 @@ void Interpreter::sendStartup(LPCSTR szImagePath, DWORD dwArg)
 	// Construct argument array
 	ArrayOTE* oteArgs = Array::NewUninitialized(2);
 	Array* args = oteArgs->m_location;
-	StringOTE* string = String::New(szImagePath);
+	Utf8StringOTE* string = Utf8String::New(szImagePath);
 	args->m_elements[0] = reinterpret_cast<Oop>(string);
 	string->m_count = 1;
 	args->m_elements[1] = Integer::NewUnsigned32(dwArg);

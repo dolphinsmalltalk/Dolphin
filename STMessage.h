@@ -41,4 +41,4 @@ namespace ST
 	};
 }
 
-ostream& operator<<(ostream& st, const MessageOTE* oteMsg);
+wostream& operator<<(wostream& st, const MessageOTE* oteMsg);

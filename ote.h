@@ -204,7 +204,7 @@ typedef OTE* POTE;
 #define POTE_DEFINED
 #endif
 
-std::ostream& operator<<(std::ostream& stream, const OTE*);
+std::wostream& operator<<(std::wostream& stream, const OTE*);
 
 template <class T> inline void NilOutPointer(TOTE<T>*& ote)
 {

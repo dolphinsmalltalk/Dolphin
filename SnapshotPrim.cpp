@@ -32,10 +32,11 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 	char* szFileName;
 	if (arg == Oop(Pointers.Nil))
 		szFileName = 0;
-	else if (ObjectMemory::fetchClassOf(arg) == Pointers.ClassString)
+	else if (ObjectMemory::fetchClassOf(arg) == Pointers.ClassByteString)
 	{
-		StringOTE* oteString = reinterpret_cast<StringOTE*>(arg);
-		String* fileName = oteString->m_location;
+		// TODO: Use Utf8String for path
+		ByteStringOTE* oteString = reinterpret_cast<ByteStringOTE*>(arg);
+		ByteString* fileName = oteString->m_location;
 		szFileName = fileName->m_characters;
 	}
 	else
@@ -71,7 +72,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 
 #ifdef OAD
 	DWORD timeEnd = timeGetTime();
-	TRACESTREAM << "Time to save image: " << (timeEnd - timeStart) << " mS" << endl;
+	TRACESTREAM<< L"Time to save image: " << (timeEnd - timeStart)<< L" mS" << endl;
 #endif
 
 	if (!saveResult)

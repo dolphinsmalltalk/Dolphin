@@ -92,6 +92,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STClassDesc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\StdAfx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STExternal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STFloat.h" />

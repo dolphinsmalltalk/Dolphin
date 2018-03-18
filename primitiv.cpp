@@ -50,7 +50,7 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp)
 #endif
 	if (err == 0)
 	{
-		auto oteResult = String::New(buffer);
+		auto oteResult = ByteString::New(buffer);
 		*sp = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct((OTE*)oteResult);
 		return sp;
@@ -458,10 +458,11 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp)
 	return sp-4;
 }
 
-Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argCount)
 {
-	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 1));
-	Oop oopIndex = *sp;
+	Oop* newSp = sp - argCount;
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
+	Oop oopIndex = *(newSp + 1);
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
@@ -475,8 +476,8 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
 			if (index >= 0 && (index + fixedFields) < size)
 			{
 				Oop field = pointerObj->m_fields[index + fixedFields];
-				*(sp - 1) = field;
-				return sp - 1;
+				*newSp = field;
+				return newSp;
 			}
 			else
 			{
@@ -490,8 +491,8 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
 			if (static_cast<MWORD>(index) < size)
 			{
 				BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
-				*(sp - 1) = ObjectMemoryIntegerObjectOf(value);
-				return sp - 1;
+				*newSp = ObjectMemoryIntegerObjectOf(value);
+				return newSp;
 			}
 			else
 			{

@@ -22,13 +22,13 @@ NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@VO
 extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
-NewStringWithLen EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIPAV?$TOTE@VString@ST@@@@PIBDI@Z
-extern NewStringWithLen:near32
-NewStringFromUtf16 EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
+NewByteStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VByteString@ST@@@@D@ST@@SIPAV?$TOTE@VByteString@ST@@@@PBDI@Z
+extern NewByteStringWithLen:near32
+NewStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VByteString@ST@@@@D@ST@@SIPAV?$TOTE@VByteString@ST@@@@PB_W@Z
 extern NewStringFromUtf16:near32
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PB_W@Z
 extern NewUtf16String:near32
-NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VString@ST@@@@@Z
+NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
 extern NewUtf16StringFromString:near32
 
 NewBSTR EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
@@ -458,7 +458,7 @@ callExternalFunction PROC NEAR STDCALL,
 
 	
 	; We need EBP based address for these as we'll be modifying ESP
-	LOCAL activeFrame:PStackFrame, returnStructure:PTR DWORD	;, savedSP:PTR DWORD
+	LOCAL activeFrame:PStackFrame, returnStructure:PTR DWORD
 
 	; Save off active frame, etc
 	mov		eax, callContext
@@ -1030,6 +1030,8 @@ extCallArgBSTR:
 		mov			ecx, ARG
 		call		NewBSTR
 		ASSUME	eax:PTR OTE
+		test		eax, eax
+		jz			preCallFail
 
 		;; Now we need some way to ensure this is destroyed, and the easiest way is to stuff
 		;; it on the ST stack in the slot occuppied by the UnicodeString argument
@@ -1919,7 +1921,7 @@ extCallRetLPSTR:
 	not		ecx
 	lea		edx, [ecx-1]						; Get length into edx
 	pop		ecx									; pop RESULT into ECX
-	call	NewStringWithLen
+	call	NewByteStringWithLen
 	AnswerObjectResult
 
 extCallRetLPPVOID:

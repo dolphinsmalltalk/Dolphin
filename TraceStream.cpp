@@ -14,11 +14,11 @@
 #include <iomanip>
 #pragma warning(pop)
 
-std::ostream& operator<<(std::ostream& stream, const SYSTEMTIME& st)
+std::wostream& operator<<(std::wostream& stream, const SYSTEMTIME& st)
 {
 	char buf[128];
 	GetTimeFormat(LOCALE_SYSTEM_DEFAULT, TIME_FORCE24HOURFORMAT, &st, NULL, buf, 64);
-	stream <<  buf << ", ";
+	stream <<  buf<< L", ";
 	GetDateFormat(LOCALE_SYSTEM_DEFAULT, DATE_SHORTDATE, &st, NULL, buf, 64);
 	return stream << buf;
 }

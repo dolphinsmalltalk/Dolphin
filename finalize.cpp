@@ -35,7 +35,7 @@ void ObjectMemory::finalize(OTE* ote)
 		if (abs(Interpreter::executionTrace) > 1)
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << "Finalizing " << ote << "\n";
+			TRACESTREAM<< L"Finalizing " << ote<< L"\n";
 		}
 	}
 	#endif
@@ -58,7 +58,7 @@ void Interpreter::scheduleFinalization()
 			#ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "Signalling undertaker process" << endl;
+				TRACESTREAM<< L"Signalling undertaker process" << endl;
 			}
 			#endif
 			asynchronousSignal(bereavementsSemaphore );
@@ -72,7 +72,7 @@ void Interpreter::scheduleFinalization()
 			#ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "Signalling finalizer process" << endl;
+				TRACESTREAM<< L"Signalling finalizer process" << endl;
 			}
 			#endif
 			asynchronousSignal(finalizationSemaphore);

@@ -18,7 +18,7 @@ inline Str MakeString(IDolphin* piVM, const POTE stringPointer)
 		return Str();
 	else
 	{
-		_ASSERTE(piVM->IsKindOf(Oop(stringPointer), ((VMPointers*)piVM->GetVMPointers())->ClassString));
+		_ASSERTE(IsAString(stringPointer));
 		MWORD stringLen=FetchByteLengthOf(stringPointer);
 		BYTE* bytes = FetchBytesOf(stringPointer);
 		return Str((const char*)bytes, stringLen);
@@ -50,3 +50,9 @@ struct TEXTRANGE
 
 	int span() const { return m_stop - m_start + 1; }
 };
+
+inline std::wostream& operator<<(std::wostream& stream, const std::string& str)
+{
+	USES_CONVERSION;
+	return stream << static_cast<LPCWSTR>(A2W(str.c_str()));
+}

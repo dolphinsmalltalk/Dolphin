@@ -118,7 +118,7 @@ void Interpreter::freePools()
 	#if defined(_DEBUG) && defined(VMDLL)
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "Clearing down OTE pools. Stats before clear..." << endl;
+		TRACESTREAM<< L"Clearing down OTE pools. Stats before clear..." << endl;
 	}
 	#endif
 

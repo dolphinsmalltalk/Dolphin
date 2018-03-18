@@ -162,7 +162,7 @@ STDMETHODIMP_(POTE) CDolphinSmalltalk::NewString(
         /* [in] */ LPCSTR szValue,
         /* [in] */ int len)
 {
-	return (POTE)String::New(szValue, len=-1?strlen(szValue):len);
+	return (POTE)ByteString::New(szValue, len=-1?strlen(szValue):len);
 }
     
 STDMETHODIMP_(Oop) CDolphinSmalltalk::NewSignedInteger( 
@@ -180,7 +180,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::NewUnsignedInteger(
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewCharacter( 
         /* [in] */ DWORD codePoint)
 {
-	return (POTE)Character::New(static_cast<MWORD>(codePoint));
+	return (POTE)Character::NewUnicode(static_cast<MWORD>(codePoint));
 }
     
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewArray( 
@@ -226,7 +226,7 @@ STDMETHODIMP_(void) CDolphinSmalltalk::DecodeMethod(
 {
 #ifdef _DEBUG
 	Interpreter::decodeMethod(reinterpret_cast<MethodOTE*>(methodPointer)->m_location, 
-			reinterpret_cast<ostream*>(pstream));
+			reinterpret_cast<wostream*>(pstream));
 #else
 	UNREFERENCED_PARAMETER(methodPointer);
 	UNREFERENCED_PARAMETER(pstream);
@@ -272,8 +272,6 @@ STDMETHODIMP_(BOOL) CDolphinSmalltalk::IsImmutable(
 STDMETHODIMP_(BSTR) CDolphinSmalltalk::DebugPrintString(
 		/* [in] */ Oop oop)
 {
-	USES_CONVERSION;
-
-	std::string str = Interpreter::PrintString(oop);
-	return SysAllocString(A2W(str.c_str()));
+	std::wstring str = Interpreter::PrintString(oop);
+	return SysAllocString(str.c_str());
 }

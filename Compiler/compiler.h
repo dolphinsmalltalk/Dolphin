@@ -324,16 +324,16 @@ private:
 	void VerifyTextMap(bool bFinal = false);
 	void VerifyJumps();
 	bool IsBlock(Oop oop);
-	void disassemble(std::ostream& stream);
+	void disassemble(std::wostream& stream);
 	void disassemble();
-	Str DebugPrintString(Oop);
+	std::wstring DebugPrintString(Oop);
 
 public:
 	// Methods required by Disassembler
 	BYTE GetBytecode(size_t ip) { return m_bytecodes[ip].byte; }
-	Str GetSpecialSelector(size_t index);
-	Str GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
-	Str GetInstVar(size_t index) { return m_instVars[index]; }
+	std::string GetSpecialSelector(size_t index);
+	std::wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
+	std::string GetInstVar(size_t index) { return m_instVars[index]; }
 
 private:
 #else

@@ -39,6 +39,9 @@ using namespace DolphinX;
 #include "STContext.h"
 #include "STBlockClosure.h"
 
+static ByteStringOTE* (__fastcall *ForceNonInlineNewByteStringFromUtf16)(LPCWSTR) = &ByteString::New;
+static ByteStringOTE* (__fastcall *ForceNonInlineNewByteStringWithLen)(const char * __restrict, MWORD) = &ByteString::New;
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 // Helpers for creating new structures and structure pointers.
@@ -136,7 +139,7 @@ AddressOTE* __fastcall NewBSTR(WCHAR* pChars, size_t len)
 }
 
 // Answer a new BSTR converted from the a byte string with the specified encoding
-template <UINT CP> static AddressOTE* __fastcall NewBSTR(const char* szContents, size_t len)
+template <UINT CP, class TChar> static AddressOTE* __fastcall NewBSTR(const TChar* szContents, size_t len)
 {
 	Utf16StringOTE* utf16 = Utf16String::New<CP>(szContents, len);
 	AddressOTE* answer = NewBSTR(utf16->m_location->m_characters, utf16->getSize() / sizeof(WCHAR));
@@ -144,22 +147,25 @@ template <UINT CP> static AddressOTE* __fastcall NewBSTR(const char* szContents,
 	return answer;
 }
 
-AddressOTE* __fastcall NewBSTR(OTE* oteString)
+AddressOTE* __fastcall NewBSTR(OTE* ote)
 {
-	BehaviorOTE* oteClass = oteString->m_oteClass;
-	if (oteClass == Pointers.ClassUtf16String)
+	if (ote->isNullTerminated())
 	{
-		return NewBSTR(reinterpret_cast<Utf16StringOTE*>(oteString)->m_location->m_characters, oteString->getSize()/sizeof(WCHAR));
+		StringClass* strClass = reinterpret_cast<StringClass*>(ote->m_oteClass->m_location);
+		switch (strClass->Encoding)
+		{
+		case StringEncoding::Ansi:
+			return NewBSTR<ByteString::CodePage, ByteString::CU>(reinterpret_cast<ByteStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+		case StringEncoding::Utf8:
+			return NewBSTR<Utf8String::CodePage, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
+		case StringEncoding::Utf16:
+			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(WCHAR));
+		default:
+			// Unrecognised encoding
+			break;
+		}
 	}
-	else if (oteClass == Pointers.ClassUtf8String)
-	{
-		return NewBSTR<CP_UTF8>(reinterpret_cast<Utf8StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
-	}
-	else if (oteClass->m_location->m_instanceSpec.m_nullTerminated)
-	{
-		// Assume it is an ANSI string
-		return NewBSTR<CP_ACP>(reinterpret_cast<StringOTE*>(oteString)->m_location->m_characters, oteString->getSize());
-	}
+
 	return nullptr;
 }
 
@@ -207,7 +213,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 				break;
 
 			case ExtCallArgCHAR:
-				pushObject((OTE*)Character::New(*reinterpret_cast<MWORD*>(lpParms)));
+				pushObject((OTE*)Character::NewUnicode(*reinterpret_cast<MWORD*>(lpParms)));
 				lpParms += sizeof(MWORD);
 				break;
 
@@ -753,7 +759,7 @@ void doBlah()
 		{
 			TODO("Implement thiscall and fastcall");
 			ASSERT(argTypes.m_elements[ExtCallConvention] < ExtCallThisCall);
-			//TRACE((char*)(argTypes).m_elements+argCount+6); TRACESTREAM << "\n";
+			//TRACE((char*)(argTypes).m_elements+argCount+6); TRACESTREAM<< L"\n";
 			return ::callExternalFunction(pLibProc, argCount, argTypes.m_elements, FALSE);
 		}
 		else
@@ -807,7 +813,7 @@ void doBlah()
 						mov		ecx, [eax].m_oteClass	// Load the class Oop
 						mov		eax, [eax].m_location	// Load object pointer
 						add		eax, sizeof(Object)		// Skip the object header
-						cmp		ecx, [Pointers.ClassString]
+						cmp		ecx, [Pointers.ClassByteString]
 						jne		preCallFail				// Not a String? an error
 						push	eax						// Push pointer to object data
 					}

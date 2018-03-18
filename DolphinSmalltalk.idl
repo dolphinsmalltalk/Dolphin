@@ -60,7 +60,7 @@ typedef struct STInstSpec
 	WORD pointers 		: 1;	// Pointers or bytes?
 	WORD nullTerminated : 1;	// Null terminated byte object?
 
-	WORD extraSpec;				// High word for class specific purposes (e.g. structure byte size)
+	WORD extraSpec;				// High word for class specific purposes (e.g. structure byte size, string encoding)
 } STInstSpec;
 
 typedef struct STBehavior
@@ -252,6 +252,11 @@ library DolphinVM
 	cpp_quote("__inline MWORD FetchWordLengthOf(POTE ote)")
 	cpp_quote("{")
 	cpp_quote("	return FetchByteLengthOf(ote)/sizeof(MWORD);")
+	cpp_quote("}")
+
+	cpp_quote("__inline BOOL IsAString(const POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return (((MWORD*)ote)[3] & 0x12) == 0x10;")
 	cpp_quote("}")
 
 	[

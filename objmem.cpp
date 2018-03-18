@@ -741,9 +741,9 @@ Oop* __fastcall Interpreter::primitiveObjectCount(Oop* const sp)
 		m_nAllocated++;
 		#ifdef VERBOSE_MEMSTATS
 			Behavior* cl = classPointer->m_location;
-			TRACESTREAM << "OTEPool(" << this << "): Allocated new " 
-				<< cl << ", " << LPVOID(ote) << ", total "
-				<< m_nAllocated << ", free " << m_nFree << endl;
+			TRACESTREAM<< L"OTEPool(" << this<< L"): Allocated new " 
+				<< cl<< L", " << LPVOID(ote)<< L", total "
+				<< m_nAllocated<< L", free " << m_nFree << endl;
 		#endif
 	}
 #endif

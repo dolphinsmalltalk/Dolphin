@@ -34,9 +34,6 @@ const char* SZREGKEYBASE = "Software\\Object Arts\\Dolphin Smalltalk 6.0";
 #include "STInteger.h"		// NewDWORD uses to create new integer, also for winproc return
 #include "STExternal.h"		// Primary purpos of this module is external i/f'ing
 
-static StringOTE* (__fastcall *ForceNonInlineNewStringFromUtf16)(LPCWSTR) = &String::New;
-static StringOTE* (__fastcall *ForceNonInlineNewStringWithLen)(const char * __restrict, MWORD) = &String::New;
-
 extern LPCSTR GetVMFileName();
 
 #define USESETJMP
@@ -144,7 +141,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 				else
 				{
 					#ifdef OAD
-						TRACESTREAM << "WARNING: Context switch occurred during callback message send" << endl;
+						TRACESTREAM<< L"WARNING: Context switch occurred during callback message send" << endl;
 					#endif
 					callbackFrameOop = callbackProcess->SuspendedFrame();
 				}
@@ -154,7 +151,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 				if (executionTrace)
 				{
 					TRACESTREAM.Lock();
-					TRACESTREAM << "C entrypoint at context " << returnFrame << "/" << StackFrame::FromFrameOop(returnFrame) << ", frame " << callbackFrameOop << "/" << pCallbackFrame << endl;
+					TRACESTREAM<< L"C entrypoint at context " << returnFrame<< L"/" << StackFrame::FromFrameOop(returnFrame)<< L", frame " << callbackFrameOop<< L"/" << pCallbackFrame << endl;
 					TRACESTREAM.Unlock();
 				}
 
@@ -414,7 +411,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	//
 
 	pushObject((OTE*)Pointers.ClassSymbol);
-	pushNewObject((OTE*)String::New(name));
+	pushNewObject((OTE*)ByteString::New(name));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
@@ -632,8 +629,8 @@ inline DWORD __stdcall Interpreter::GenericCallbackMain(SMALLINTEGER id, BYTE* l
 	{
 		#ifdef _DEBUG
 		{
-			char buf[128];
-			wsprintf(buf, "WARNING: Unwinding GenericCallback(%d, %p)\n", id, lpArgs);
+			wchar_t buf[128];
+			wsprintfW(buf, L"WARNING: Unwinding GenericCallback(%d, %p)\n", id, lpArgs);
 			WarningWithStackTrace(buf);
 		}
 		#endif
@@ -701,8 +698,8 @@ DWORD Interpreter::callbackResultFromOop(Oop objectPointer)
 			return 0;
 
 #ifdef _DEBUG
-	TRACESTREAM << "WARNING: Returned non-Integer object from callback: " << ote << endl;
-	WarningWithStackTrace("");
+	TRACESTREAM<< L"WARNING: Returned non-Integer object from callback: " << ote << endl;
+	WarningWithStackTrace(L"");
 #else
 	tracelock lock(TRACESTREAM);
 	trace("WARNING: Returned non-Integer object from callback\n");
@@ -750,7 +747,7 @@ DWORD __fastcall Interpreter::VirtualCallbackMain(SMALLINTEGER offset, COMThunk*
 	}
 	__except (callbackExceptionFilter(GetExceptionInformation()))
 	{
-		TRACESTREAM << "WARNING: Unwinding VirtualCallback(" << dec << offset << ',' << args << ')' << endl; 
+		TRACESTREAM<< L"WARNING: Unwinding VirtualCallback(" << dec << offset << L',' << args << L')' << endl; 
 		result = static_cast<DWORD>(E_UNEXPECTED);
 	}
 

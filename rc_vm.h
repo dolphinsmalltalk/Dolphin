@@ -25,6 +25,7 @@
 #define IDP_UNKNOWNIMAGEERROR           527
 #define IDP_FAILTOHOOK                  528
 #define IDP_NOHIRESCLOCK                529
+#define IDP_UNSUPPORTED_ACP             530
 #define IDS_INVALIDPROGID               768
 #define IDS_CANTCREATECONTROL           769
 #define IDS_CANTCREATEIE                770

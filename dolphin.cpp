@@ -70,10 +70,10 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 			bRet = TRUE;
 		}
 		else
-			TRACESTREAM << "Fail to get ver info for '" << vmFileName << "' (" << ::GetLastError() << ')' << endl;
+			TRACESTREAM<< L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
 	}
 	else
-		TRACESTREAM << "Fail to get ver info size for '" << vmFileName << "' (" << ::GetLastError() << ')' << endl;
+		TRACESTREAM<< L"Fail to get ver info size for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
 	return bRet;
 }
 
@@ -109,7 +109,7 @@ static long __stdcall ignoreUnwindsFilter(EXCEPTION_POINTERS *pExceptionInfo)
 	case SE_VMCALLBACKEXIT:
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << "Warning: Ignoring extraneous unwind " << hex << PVOID(exceptionCode) << endl;
+			TRACESTREAM<< L"Warning: Ignoring extraneous unwind " << hex << PVOID(exceptionCode) << endl;
 		}
 		return EXCEPTION_CONTINUE_EXECUTION;
 	
@@ -131,8 +131,8 @@ static long __stdcall unhandledExceptionFilter(EXCEPTION_POINTERS *pExceptionInf
 {
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "ERROR: An unhandled exception occurred in thread " << GetCurrentThreadId() 
-					<< ", see Dolphin Crash Dump (if configured)" << endl;
+		TRACESTREAM<< L"ERROR: An unhandled exception occurred in thread " << GetCurrentThreadId() 
+					<< L", see Dolphin Crash Dump (if configured)" << endl;
 		//_asm int 3;
 	}
 	CrashDump(pExceptionInfo, achImagePath);

@@ -23,22 +23,22 @@ extern char achImagePath[];
 // Warning about SEH and destructable objects
 #pragma warning (disable : 4509)
 
-ostream& operator<<(ostream& stream, const CONTEXT* pCtx)
+wostream& operator<<(wostream& stream, const CONTEXT* pCtx)
 {
-	char cFill = stream.fill('0');
+	wostream::char_type cFill = stream.fill('0');
 	stream.setf(ios::uppercase);
 	stream << hex 
-		<< "EAX = " << setw(8) << pCtx->Eax << " EBX = " << setw(8) << pCtx->Ebx << " ECX = " << setw(8) << pCtx->Ecx << endl
-		<< "ESI = " << setw(8) << pCtx->Esi << " EDI = " << setw(8) << pCtx->Edi << " EIP = " << setw(8) << pCtx->Eip << endl
-		<< "ESP = " << setw(8) << pCtx->Esp << " EBP = " << setw(8) << pCtx->Ebp << " EFL = " << setw(8) << pCtx->EFlags << endl
-		<< "CS = " << setw(4) << pCtx->SegCs << " SS = " << setw(4) << pCtx->SegSs << " DS = " << setw(4) << pCtx->SegDs << endl
-		<< "ES = " << setw(4) << pCtx->SegEs << " FS = " << setw(4) << pCtx->SegFs << " GS = " << setw(4) << pCtx->SegGs << endl;
+		<< L"EAX = " << setw(8) << pCtx->Eax<< L" EBX = " << setw(8) << pCtx->Ebx<< L" ECX = " << setw(8) << pCtx->Ecx << endl
+		<< L"ESI = " << setw(8) << pCtx->Esi<< L" EDI = " << setw(8) << pCtx->Edi<< L" EIP = " << setw(8) << pCtx->Eip << endl
+		<< L"ESP = " << setw(8) << pCtx->Esp<< L" EBP = " << setw(8) << pCtx->Ebp<< L" EFL = " << setw(8) << pCtx->EFlags << endl
+		<< L"CS = " << setw(4) << pCtx->SegCs<< L" SS = " << setw(4) << pCtx->SegSs<< L" DS = " << setw(4) << pCtx->SegDs << endl
+		<< L"ES = " << setw(4) << pCtx->SegEs<< L" FS = " << setw(4) << pCtx->SegFs<< L" GS = " << setw(4) << pCtx->SegGs << endl;
 	stream.fill(cFill);
 	stream.unsetf(ios::uppercase);
 	return stream;
 }
 
-void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStackDepth, DWORD nWalkbackDepth)
+void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, DWORD nStackDepth, DWORD nWalkbackDepth)
 {
 	SYSTEMTIME stNow;
 	GetLocalTime(&stNow);
@@ -48,17 +48,17 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStac
 
 	*pStream << endl;
 	for (int i=0;i<80;i++)
-		*pStream << '*';
+		*pStream << L'*';
 
 	EXCEPTION_RECORD* pExRec = pExceptionInfo->ExceptionRecord;
 	DWORD exceptionCode = pExRec->ExceptionCode;
 
 	*pStream << endl;
 	for (int i=0;i<26;i++)
-		*pStream << '*';
-	*pStream << " Dolphin Crash Dump Report ";
+		*pStream << L'*';
+	*pStream<< L" Dolphin Crash Dump Report ";
 	for (int i=0;i<27;i++)
-		*pStream << '*';
+		*pStream << L'*';
 
 	char szModule[_MAX_PATH+1];
 	LPSTR szFileName = 0;
@@ -69,10 +69,10 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStac
 	}
 
 	*pStream << endl << endl << stNow
-		<< ": " << szFileName
-		<< " caused an unhandled Win32 Exception " 
+		<< L": " << szFileName
+		<< L" caused an unhandled Win32 Exception " 
 		<< PVOID(exceptionCode) << endl
-		<<"at " << pExRec->ExceptionAddress;
+		<<L"at " << pExRec->ExceptionAddress;
 
 	// Determine the module in which it occurred
 	MEMORY_BASIC_INFORMATION mbi;
@@ -81,19 +81,19 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStac
 
 	strcpy(szModule, "<UNKNOWN>");
 	GetModuleFileName(hMod, szModule, _MAX_PATH);
-	*pStream << " in module " << hMod << " (" << szModule << ")" << endl << endl;
+	*pStream<< L" in module " << hMod<< L" (" << szModule<< L")" << endl << endl;
 
 	const DWORD NumParms = pExRec->NumberParameters;
 	if (NumParms > 0)
 	{
-		*pStream << "*----> Exception Parameters <----*" << endl;
-		char cFill = pStream->fill('0');
+		*pStream << L"*----> Exception Parameters <----*" << endl;
+		wostream::char_type cFill = pStream->fill(L'0');
 		pStream->setf(ios::uppercase);
 		*pStream << hex;
 		for (unsigned i=0;i<NumParms;i++)
 		{
 			DWORD dwParm = pExRec->ExceptionInformation[i];
-			*pStream << setw(8) << dwParm << "	";
+			*pStream << setw(8) << dwParm<< L"	";
 			BYTE* pBytes = reinterpret_cast<BYTE*>(dwParm);
 			if (!IsBadReadPtr(pBytes, MAXDUMPPARMCHARS))
 			{
@@ -111,8 +111,8 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStac
 
 	DWORD dwThreadId = GetCurrentThreadId();
 	PCONTEXT pCtx = pExceptionInfo->ContextRecord;
-	*pStream << "*----> CPU Context for thread 0x" << hex << dwThreadId
-		<< " <----*" << endl
+	*pStream<< L"*----> CPU Context for thread 0x" << hex << dwThreadId
+		<< L" <----*" << endl
 		<< pCtx << endl;
 
 	DWORD dwMainThreadId = Interpreter::MainThreadId();
@@ -123,23 +123,23 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStac
 		{
 			Interpreter::DumpContext(pExceptionInfo, *pStream);
 
-			*pStream << endl << "*----> Stack Back Trace <----*" << endl;
+			*pStream << endl<< L"*----> Stack Back Trace <----*" << endl;
 			Interpreter::StackTraceOn(*pStream, NULL, nWalkbackDepth);
 
 			Interpreter::DumpStack(*pStream, nStackDepth);
 		}
 		_except((dwCode=GetExceptionCode()), EXCEPTION_EXECUTE_HANDLER)
 		{
-			*pStream << endl << "***Unable to generate complete exception report (" 
-						<< hex << dwCode << ')' << endl;
+			*pStream << endl<< L"***Unable to generate complete exception report (" 
+						<< hex << dwCode << L')' << endl;
 		}
 	}
 	else
 	{
-		*pStream <<"****N.B. This exception did NOT occur in the main Dolphin execution thread ****" << endl << endl;
+		*pStream <<L"****N.B. This exception did NOT occur in the main Dolphin execution thread ****" << endl << endl;
 
-		*pStream << "*----> CPU Context for main thread 0x" << hex << dwMainThreadId
-					<< " <----*" << endl;
+		*pStream<< L"*----> CPU Context for main thread 0x" << hex << dwMainThreadId
+					<< L" <----*" << endl;
 
 		// An overlapped thread
 		HANDLE hMain = Interpreter::MainThreadHandle();
@@ -158,27 +158,27 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, ostream* pStream, DWORD nStac
 
 				strcpy(szModule, "<UNKNOWN>");
 				GetModuleFileName(hMod, szModule, _MAX_PATH);
-				*pStream << "In module " << hMod << " (" << szModule << ")" << endl << endl;
+				*pStream<< L"In module " << hMod<< L" (" << szModule<< L")" << endl << endl;
 			}
 			else
-				*pStream << endl << "*** Unable to access main interpter thread context (" 
-					<< dec << GetLastError() << ")" << endl;
+				*pStream << endl<< L"*** Unable to access main interpter thread context (" 
+					<< dec << GetLastError()<< L")" << endl;
 
 			::ResumeThread(hMain);
 		}
 		else
 		{
-			*pStream << endl << "*** Unable to suspend main interpreter thread (" << dec << GetLastError() << ")" 
+			*pStream << endl<< L"*** Unable to suspend main interpreter thread (" << dec << GetLastError()<< L")" 
 						<< endl;
 		}
 	}
 
-	*pStream << endl << "***** End of crash report *****" << endl << endl;
+	*pStream << endl<< L"***** End of crash report *****" << endl << endl;
 	pStream->flush();
 }
 
 
-ostream* OpenLogStream(const char* achLogPath, const char* achImagePath, ofstream& fStream)
+wostream* OpenLogStream(const char* achLogPath, const char* achImagePath, wofstream& fStream)
 {
 	char path[_MAX_PATH];
 
@@ -195,7 +195,7 @@ ostream* OpenLogStream(const char* achLogPath, const char* achImagePath, ofstrea
 
 	trace("Dolphin: Writing dump to '%.260s'\n", achLogPath);
 
-	ostream* pStream = NULL;
+	wostream* pStream = NULL;
 	// Open the error log for appending
 	fStream.open(achLogPath, ios::out | ios::app | ios::ate);
 	if (fStream.fail())
@@ -210,8 +210,8 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const char* achImagePath)
 {
 	DWORD nStackDepth = DefaultStackDepth;
 	DWORD nWalkbackDepth = DefaultWalkbackDepth;
-	ostream* pStream = NULL;
-	ofstream fStream;
+	wostream* pStream = NULL;
+	wofstream fStream;
 	CRegKey rkDump;
 	if (OpenDolphinKey(rkDump, "CrashDump", KEY_READ)==ERROR_SUCCESS)
 	{
@@ -248,39 +248,39 @@ void __cdecl DebugCrashDump(LPCTSTR szFormat, ...)
 	RaiseException(SE_VMDUMPSTATUS, 0, 1, dwArgs);
 }
 
-void __stdcall Dump2(LPCTSTR szMsg, ostream* pStream, int nStackDepth, int nWalkbackDepth)
+void __stdcall Dump2(LPCTSTR szMsg, wostream* pStream, int nStackDepth, int nWalkbackDepth)
 {
 	if (pStream == NULL)
 		pStream = &TRACESTREAM;
 
 	*pStream << endl;
 	for (int i=0;i<26;i++)
-		*pStream << '*';
-	*pStream << " Dolphin Virtual Machine Dump Report ";
+		*pStream << L'*';
+	*pStream<< L" Dolphin Virtual Machine Dump Report ";
 	for (int i=0;i<27;i++)
-		*pStream << '*';
+		*pStream << L'*';
 
 	// Dump the time and message
 	{
 		SYSTEMTIME stNow;
 		GetLocalTime(&stNow);
 		*pStream << endl << endl << stNow
-			<< ": " << szMsg << endl << endl;
+			<< L": " << szMsg << endl << endl;
 	}
 
 	Interpreter::DumpContext(*pStream);
-	*pStream << endl << "*----> Stack Back Trace <----*" << endl;
+	*pStream << endl<< L"*----> Stack Back Trace <----*" << endl;
 	Interpreter::StackTraceOn(*pStream, NULL, nWalkbackDepth);
 	Interpreter::DumpStack(*pStream, nStackDepth);
-	*pStream << endl << "***** End of dump *****" << endl << endl;
+	*pStream << endl<< L"***** End of dump *****" << endl << endl;
 
 	pStream->flush();
 }
 
 extern"C" void __stdcall Dump(LPCTSTR szMsg, LPCTSTR szPath, int nStackDepth, int nWalkbackDepth)
 {
-	ofstream fStream;
-	ostream* pStream = OpenLogStream(szPath, achImagePath, fStream);
+	wofstream fStream;
+	wostream* pStream = OpenLogStream(szPath, achImagePath, fStream);
 	Dump2(szMsg, pStream, nStackDepth, nWalkbackDepth);
 }
 

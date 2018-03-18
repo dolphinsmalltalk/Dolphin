@@ -1510,7 +1510,7 @@ inline static bool isInNearJumpRange(int distance, unsigned extensionBytes)
 {
 #if defined(_DEBUG) && !defined(USE_VM_DLL)
 	if (distance == 0)
-		TRACESTREAM << "WARNING: Near Jump to itself detected" << std::endl;
+		TRACESTREAM<< L"WARNING: Near Jump to itself detected" << std::endl;
 #endif
 	_ASSERTE(extensionBytes >= 1);
 	

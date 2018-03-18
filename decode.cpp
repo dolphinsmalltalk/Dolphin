@@ -33,70 +33,87 @@ Decodes byte codes to stdout
 #include "STBlockClosure.h"
 #include "InterprtProc.inl"
 #include "disassembler.h"
+#include "Utf16StringBuf.h"
 
 tracestream thinDump;
 
 class UnknownOTE : public OTE {};
 
-typedef TOTE<VariantCharObject> VariantCharOTE;
-
-void printChars(ostream& stream, const VariantCharOTE* oteChars)
+static void printChars(wostream& stream, LPCWSTR pwsz, size_t len)
 {
-	ASSERT(oteChars->isBytes());
-
-	unsigned len = oteChars->bytesSize();
-	VariantCharObject* string = oteChars->m_location;
-	unsigned end = min(len, 80);
-	for (unsigned i = 0; i < end; i++)
+	size_t end = min(len, 80);
+	for (size_t i = 0; i < end; i++)
 	{
-		unsigned char ch = (unsigned char)string->m_characters[i];
-		//if (ch = '\0') break;
-		if (ch < 32 || ch > 127)
+		WCHAR ch = pwsz[i];
+		if (!iswprint(ch))
 		{
-			static char hexChars[16 + 1] = "0123456789ABCDEF";
-			stream << '\\' << hexChars[ch >> 4] << hexChars[ch & 0xF] << '\\';
+			stream << L"\\x" << hex << (unsigned)ch;
 		}
 		else
+		{
 			stream << ch;
+		}
 	}
 
 	if (len > end)
-		stream << "...";
+		stream << L"...";
 
 	//	stream.unlock();
 }
 
 // Helper to dump characters to the tracestream
 // Unprintable characters are printed in hex
-ostream& operator<<(ostream& stream, const VariantCharOTE* oteChars)
+wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 {
 	//    stream.lock();
 
-	if (oteChars->isNil()) return stream << "nil";
-	if (!oteChars->isBytes())
+	if (oteChars->isNil()) return stream << L"nil";
+	if (!oteChars->isNullTerminated())
 	{
-		stream << "**Non-byte object: " << (OTE*)oteChars << "**";
+		stream << L"**Non-string object: " << (OTE*)oteChars << L"**";
 	}
 	else
 	{
-		printChars(stream, oteChars);
+		StringEncoding encoding = ST::String::GetEncoding(oteChars);
+		switch (encoding)
+		{
+		case StringEncoding::Ansi:
+		{
+			Utf16StringBuf<ByteString::CodePage, ByteString::CU> buf(reinterpret_cast<const ByteStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			printChars(stream, buf, buf.Count);
+			break;
+		}
+		case StringEncoding::Utf8:
+		{
+			Utf16StringBuf<Utf8String::CodePage, Utf8String::CU> buf(reinterpret_cast<const Utf8StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			printChars(stream, buf, buf.Count);
+			break;
+		}
+		case StringEncoding::Utf16:
+			printChars(stream, reinterpret_cast<const Utf16StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize() / sizeof(WCHAR));
+			break;
+		default:
+		case StringEncoding::Utf32:
+			stream << L"String with encoding " << (int)encoding;
+			break;
+		}
 	}
 
 	return stream;
 }
 
-ostream& operator<<(ostream& st, const CompiledMethod& method)
+wostream& operator<<(wostream& st, const CompiledMethod& method)
 {
-	return st << method.m_methodClass << ">>" << method.m_selector;
+	return st << method.m_methodClass << L">>" << method.m_selector;
 }
 
-ostream& operator<<(ostream& st, const MethodOTE* ote)
+wostream& operator<<(wostream& st, const MethodOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	BehaviorOTE* oteClass = ote->m_oteClass;
 	if (oteClass == Pointers.ClassCompiledExpression)
 	{
-		st << "a CompiledExpression";
+		st << L"a CompiledExpression";
 	}
 	else if (oteClass == Pointers.ClassCompiledMethod || oteClass == Pointers.ClassExternalMethod)
 	{
@@ -104,132 +121,166 @@ ostream& operator<<(ostream& st, const MethodOTE* ote)
 	}
 	else
 	{
-		st << "**Non-method: " << reinterpret_cast<const OTE*>(ote) << "**";
+		st << L"**Non-method: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	}
 	return st;
 }
 
-ostream& operator<<(ostream& st, const StringOTE* ote)
+wostream& operator<<(wostream& st, const ByteStringOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
-	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassString))
+	if (ote->isNil()) return st << L"nil";
+	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassByteString))
 	{
 		// Expected a String Oop, but got something else
-		st << "**Non-String: " << reinterpret_cast<const OTE*>(ote) << "**";
+		st << L"**Non-ByteString: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	}
 	else
 	{
-		st << "'";
-		printChars(st, reinterpret_cast<const VariantCharOTE*>(ote));
-		st << "'";
+		st << L"'";
+		Utf16StringBuf<ByteString::CodePage, ByteString::CU> buf(ote->m_location->m_characters, ote->bytesSize());
+		printChars(st, buf, buf.Count);
+		st << L"'";
+
 	}
 	return st;
 }
 
-//inline ostream& operator<<(ostream& st, const Symbol& symbol)
-//{
-//	return st << '#' << (const VariantCharObject&)symbol;
-//}
-
-inline ostream& operator<<(ostream& stream, const Class& cl)
+wostream& operator<<(wostream& st, const Utf8StringOTE* ote)
 {
-	return stream << (VariantCharOTE*)cl.m_name;
+	if (ote->isNil()) return st << L"nil";
+	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassUtf8String))
+	{
+		// Expected a String Oop, but got something else
+		st << L"**Non-Utf8String: " << reinterpret_cast<const OTE*>(ote) << L"**";
+	}
+	else
+	{
+		st << L"8'";
+		Utf16StringBuf<Utf8String::CodePage, Utf8String::CU> buf(ote->m_location->m_characters, ote->bytesSize());
+		printChars(st, buf, buf.Count);
+		st << L"'";
+
+	}
+	return st;
+}
+
+wostream& operator<<(wostream& st, const Utf16StringOTE* ote)
+{
+	if (ote->isNil()) return st << L"nil";
+	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassUtf16String))
+	{
+		// Expected a String Oop, but got something else
+		st << L"**Non-Utf16String: " << reinterpret_cast<const OTE*>(ote) << L"**";
+	}
+	else
+	{
+		st << L"L'";
+		printChars(st, ote->m_location->m_characters, ote->bytesSize()/sizeof(WCHAR));
+		st << L"'";
+
+	}
+	return st;
+}
+
+inline wostream& operator<<(wostream& stream, const Class& cl)
+{
+	return stream << (StringOTE*)cl.m_name;
 }
 
 
-ostream& operator<<(ostream& stream, const ClassOTE* ote)
+wostream& operator<<(wostream& stream, const ClassOTE* ote)
 {
-	if (ote->isNil()) return stream << "nil";
+	if (ote->isNil()) return stream << L"nil";
 
 	if (!ote->m_oteClass->isMetaclass())
 		// Expected a Class Oop, but got something else
-		return stream << "**Non-class: " << reinterpret_cast<const OTE*>(ote) << "**";
+		return stream << L"**Non-class: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	else
 		return stream << *ote->m_location;
 }
 
-ostream& operator<<(ostream& stream, const MetaClass& meta)
+wostream& operator<<(wostream& stream, const MetaClass& meta)
 {
-	return stream << meta.m_instanceClass << " class";
+	return stream << meta.m_instanceClass << L" class";
 }
 
-ostream& operator<<(ostream& stream, const SymbolOTE* ote)
+wostream& operator<<(wostream& stream, const SymbolOTE* ote)
 {
-	if (ote->isNil()) return stream << "nil";
+	if (ote->isNil()) return stream << L"nil";
 
 	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassSymbol))
 		// Expected a Symbol Oop, but got something else
-		return stream << "**Non-symbol: " << reinterpret_cast<const OTE*>(ote) << "**";
+		return stream << L"**Non-symbol: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	else
 		// Dump without a # prefix
-		return stream << reinterpret_cast<const VariantCharOTE*>(ote);
+		return stream << reinterpret_cast<const StringOTE*>(ote);
 }
 
-ostream& operator<<(ostream& stream, const BehaviorOTE* ote)
+wostream& operator<<(wostream& stream, const BehaviorOTE* ote)
 {
-	if (ote->isNil()) return stream << "nil";
+	if (ote->isNil()) return stream << L"nil";
 
 	if (!ObjectMemory::isBehavior(Oop(ote)))
 		// Expected a class Oop, but got something else
-		return stream << "**Non-behaviour: " << reinterpret_cast<const OTE*>(ote) << "**";
+		return stream << L"**Non-behaviour: " << reinterpret_cast<const OTE*>(ote) << L"**";
 	else
 		return ote->isMetaclass() ?
 		stream << *static_cast<MetaClass*>(ote->m_location) :
 		stream << *static_cast<Class*>(ote->m_location);
 }
 
-ostream& operator<<(ostream& st, const UnknownOTE* ote)
+wostream& operator<<(wostream& st, const UnknownOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 
-	return st << "a " << ote->m_oteClass;
+	return st << L"a " << ote->m_oteClass;
 }
 
-ostream& operator<<(ostream& st, const LargeIntegerOTE* ote)
+wostream& operator<<(wostream& st, const LargeIntegerOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 
 	LargeInteger* li = ote->m_location;
-	st << "a LargeInteger(" << hex << setfill('0');
+	st << L"a LargeInteger(" << hex << setfill(L'0');
 	const int size = ote->getWordSize();
 	for (int i = size - 1; i >= 0; i--)
-		st << setw(8) << li->m_digits[i] << ' ';
-	return st << setfill(' ') << ')';
+		st << setw(8) << li->m_digits[i] << L' ';
+	return st << setfill(L' ') << L')';
 }
 
-ostream& operator<<(ostream& st, const BlockOTE* ote)
+wostream& operator<<(wostream& st, const BlockOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	BlockClosure* block = ote->m_location;
-	return st << "[] @ " << dec << block->initialIP() << " in " << block->m_method;
+	return st << L"[] @ " << dec << block->initialIP() << L" in " << block->m_method;
 }
 
 
-ostream& operator<<(ostream& st, const ContextOTE* ote)
+wostream& operator<<(wostream& st, const ContextOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	Context* ctx = ote->m_location;
-	return st << "a Context for: " << ctx->m_block
-		<< " frame: " << hex << ctx->m_frame;
+	return st << L"a Context for: " << ctx->m_block
+		<< L" frame: " << hex << ctx->m_frame;
 }
 
-ostream& operator<<(ostream& st, const VariableBindingOTE* ote)
+wostream& operator<<(wostream& st, const VariableBindingOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	VariableBinding* var = ote->m_location;
-	return st << var->m_key << " -> " << reinterpret_cast<const OTE*>(var->m_value);
+	return st << var->m_key << L" -> " << reinterpret_cast<const OTE*>(var->m_value);
 }
 
-ostream& operator<<(ostream& st, const ProcessOTE* ote)
+wostream& operator<<(wostream& st, const ProcessOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	Process* proc = ote->m_location;
-	st << reinterpret_cast<const UnknownOTE*>(ote) << "(" << reinterpret_cast<const OTE*>(proc->Name()) << " base " << proc->getHeader();
+	st << reinterpret_cast<const UnknownOTE*>(ote) << L"(" << reinterpret_cast<const OTE*>(proc->Name()) << L" base " << proc->getHeader();
 	StackFrame* topFrame;
 	Oop* sp = NULL;
 	if (proc == Interpreter::actualActiveProcess())
 	{
-		st << " [ACTIVE]";
+		st << L" [ACTIVE]";
 		topFrame = Interpreter::activeFrame();
 	}
 	else
@@ -237,7 +288,7 @@ ostream& operator<<(ostream& st, const ProcessOTE* ote)
 		Oop suspFrame = proc->SuspendedFrame();
 		if (!ObjectMemoryIsIntegerObject(suspFrame))
 		{
-			st << " frame=" << reinterpret_cast<OTE*>(suspFrame) << ")";
+			st << L" frame=" << reinterpret_cast<OTE*>(suspFrame) << L")";
 			return st;
 		}
 
@@ -245,109 +296,128 @@ ostream& operator<<(ostream& st, const ProcessOTE* ote)
 		sp = topFrame->stackPointer();
 	}
 
-	return st << " in " << topFrame->m_method << " sp=" << sp
-		<< " ip=" << reinterpret_cast<OTE*>(topFrame->m_ip)
-		<< " list=" << proc->SuspendingList() << ")";
+	return st << L" in " << topFrame->m_method << L" sp=" << sp
+		<< L" ip=" << reinterpret_cast<OTE*>(topFrame->m_ip)
+		<< L" list=" << proc->SuspendingList() << L")";
 }
 
-ostream& operator<<(ostream& st, const CharOTE* ote)
+wostream& operator<<(wostream& st, const CharOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	Character* ch = ote->m_location;
 	if (IsBadReadPtr(&ch, sizeof(Character)))
-		return st << "***Bad Character: " << ch;
+		return st << L"***Bad Character: " << ch;
 
-	st << '$';
-	SMALLINTEGER codePoint = ObjectMemoryIntegerValueOf(ch->m_codePoint);
-	if (codePoint > 32 && codePoint < 128)
-		return st << static_cast<char>(codePoint);
-	else
-		return st << "\\x" << hex << codePoint;
+	st << L'$';
+	SMALLINTEGER code = ObjectMemoryIntegerValueOf(ch->m_code);
+	MWORD codePoint;
+	switch (ch->Encoding)
+	{
+	case StringEncoding::Ansi:
+		codePoint = Interpreter::m_ansiToUnicodeCharMap[code & 0xFF];
+		if (codePoint > 32 && codePoint < 128)
+			st << static_cast<char>(codePoint);
+		else
+			st << L"\\x" << hex << codePoint;
+		break;
+	case StringEncoding::Utf8:
+		st << L"\\x" << hex << (code & 0xff);
+		break;
+	case StringEncoding::Utf16:
+		st << L"\\x" << hex << (code & 0xffff);
+		break;
+	case StringEncoding::Utf32:
+		st << L"\\x" << hex << (code & 0xffffff);
+		break;
+	default:
+		ASSERT(false);
+	}
+	return st;
 }
 
-ostream& operator<<(ostream& st, const FloatOTE* ote)
+wostream& operator<<(wostream& st, const FloatOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	Float* fp = ote->m_location;
 	if (IsBadReadPtr(fp, sizeof(Float)))
-		return st << "***Bad Float: " << &fp;
+		return st << L"***Bad Float: " << &fp;
 	else
 		return st << fp->m_fValue;
 }
 
-ostream& operator<<(ostream& st, const MessageOTE* ote)
+wostream& operator<<(wostream& st, const MessageOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	Message* msg = ote->m_location;
 	if (IsBadReadPtr(msg, sizeof(Message)))
-		return st << "***Bad Message: " << msg;
+		return st << L"***Bad Message: " << msg;
 	else
-		return st << "Message selector: " << msg->m_selector << " arguments: " << msg->m_args;
+		return st << L"Message selector: " << msg->m_selector << L" arguments: " << msg->m_args;
 }
 
-ostream& operator<<(ostream& st, const HandleOTE* ote)
+wostream& operator<<(wostream& st, const HandleOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	ExternalHandle* h = ote->m_location;
-	st << reinterpret_cast<const UnknownOTE*>(ote) << '(';
+	st << reinterpret_cast<const UnknownOTE*>(ote) << L'(';
 	if (IsBadReadPtr(h, sizeof(ExternalHandle)))
-		st << "***Bad Handle: " << (void*)h;
+		st << L"***Bad Handle: " << (void*)h;
 	else
 		st << hex << h->m_handle;
-	return st << ')';
+	return st << L')';
 }
 
-ostream& operator<<(ostream& st, const ArrayOTE* ote)
+wostream& operator<<(wostream& st, const ArrayOTE* ote)
 {
-	if (ote->isNil()) return st << "nil";
+	if (ote->isNil()) return st << L"nil";
 	int size = ote->pointersSize();
-	st << "#(";
+	st << L"#(";
 	if (size > 0)
 	{
 		Array* array = ote->m_location;
 		if (IsBadReadPtr(array, SizeOfPointers(size)))
-			return st << "***Bad Array: " << (void*)array;
+			return st << L"***Bad Array: " << (void*)array;
 		else
 		{
 			int size = ote->pointersSize();
 			int end = min(40, size);
 			for (int i = 0; i < end; i++)
-				st << reinterpret_cast<OTE*>(array->m_elements[i]) << " ";
+				st << reinterpret_cast<OTE*>(array->m_elements[i]) << L" ";
 			if (end < size)
-				st << "...";
+				st << L"...";
 		}
 	}
-	return st << ")";
+	return st << L")";
 }
 
-ostream& operator<<(ostream& stream, const OTE* ote)
+wostream& operator<<(wostream& stream, const OTE* ote)
 {
 	if (ObjectMemoryIsIntegerObject(ote))
 		return stream << dec << ObjectMemoryIntegerValueOf(ote);
 
 	if (ote == NULL)
-		return stream << "NULL Oop";
+		return stream << L"NULL Oop";
 
 	// First try an access into the OTE to check if free. If this fails then
 	// the OTE is bad
 	__try
 	{
 		if (ote->isFree())
-			return stream << "***Freed object with Oop: " << PVOID(ote) <<
+			return stream << L"***Freed object with Oop: " << PVOID(ote) <<
 			", class: " << ote->m_oteClass;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		return stream << "***Bad Oop: " << PVOID(ote);
+		return stream << L"***Bad Oop: " << PVOID(ote);
 	}
 
 	// Handle specific object types
 	if (ote == Pointers.Nil)
-		stream << "nil";
+		stream << L"nil";
 	else if (ote == Pointers.True)
-		stream << "true";
+		stream << L"true";
 	else if (ote == Pointers.False)
-		stream << "false";
+		stream << L"false";
 	else
 	{
 		// We need to examine the class to see what it is
@@ -358,12 +428,12 @@ ostream& operator<<(ostream& stream, const OTE* ote)
 			__try
 			{
 				if (classPointer->isFree())
-					return stream << "***Object (Oop " << PVOID(ote) << ") of the freed class Oop: " << PVOID(classPointer);
+					return stream << L"***Object (Oop " << PVOID(ote) << L") of the freed class Oop: " << PVOID(classPointer);
 			}
 			__except (EXCEPTION_EXECUTE_HANDLER)
 			{
 				// Class OTE is bad
-				return stream << "***Object (Oop " << PVOID(ote) << ") with bad class Oop: " << PVOID(classPointer);
+				return stream << L"***Object (Oop " << PVOID(ote) << L") with bad class Oop: " << PVOID(classPointer);
 			}
 
 			if (ote->isBehavior())
@@ -372,8 +442,12 @@ ostream& operator<<(ostream& stream, const OTE* ote)
 			{
 				if (classPointer == Pointers.ClassSymbol)
 					stream << reinterpret_cast<const SymbolOTE*>(ote);
-				else if (classPointer == Pointers.ClassString)
-					stream << reinterpret_cast<const StringOTE*>(ote);
+				else if (classPointer == Pointers.ClassByteString)
+					stream << reinterpret_cast<const ByteStringOTE*>(ote);
+				else if (classPointer == Pointers.ClassUtf8String)
+					stream << reinterpret_cast<const Utf8StringOTE*>(ote);
+				else if (classPointer == Pointers.ClassUtf16String)
+					stream << reinterpret_cast<const Utf16StringOTE*>(ote);
 				else if (classPointer == Pointers.ClassCharacter)
 					stream << reinterpret_cast<const CharOTE*>(ote);
 				else if (classPointer == Pointers.ClassVariableBinding)
@@ -404,7 +478,7 @@ ostream& operator<<(ostream& stream, const OTE* ote)
 		}
 		__except (EXCEPTION_EXECUTE_HANDLER)
 		{
-			stream << "***Bad OTE or Object: " << LPVOID(ote) << '(' << ote->m_location << ')';
+			stream << L"***Bad OTE or Object: " << LPVOID(ote) << L'(' << ote->m_location << L')';
 		}
 	}
 
@@ -416,23 +490,23 @@ SMALLUNSIGNED Interpreter::indexOfSP(Oop* sp)
 	return actualActiveProcess()->indexOfSP(sp);
 }
 
-void DumpStackEntry(Oop* sp, Process* pProc, ostream& stream)
+void DumpStackEntry(Oop* sp, Process* pProc, wostream& stream)
 {
 	__try
 	{
-		stream << "[" << sp << ": " << dec << pProc->indexOfSP(sp) << "]-->";
+		stream << L"[" << sp << L": " << dec << pProc->indexOfSP(sp) << L"]-->";
 		Oop objectPointer = *sp;
 		OTE* ote = reinterpret_cast<OTE*>(objectPointer);
 		stream << ote;
 #ifdef _DEBUG
 		if (!ObjectMemoryIsIntegerObject(objectPointer))
-			stream << ", refs " << dec << int(ote->m_count);
+			stream << L", refs " << dec << int(ote->m_count);
 #endif
 		stream << endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		stream << endl << '\t' << "***CORRUPT STACK ENTRY" << endl;
+		stream << endl << L'\t' << L"***CORRUPT STACK ENTRY" << endl;
 	}
 }
 
@@ -455,7 +529,7 @@ void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
 
 	int nRow = 0;
 
-	char oldFill = out.fill('0');
+	tracestream::char_type oldFill = out.fill('0');
 	out << hex;
 	out.setf(ios::uppercase);
 	while (nBytes--)
@@ -467,7 +541,7 @@ void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
 			out << szBuffer;
 		}
 
-		out << ' ' << setw(2) << *pby++;
+		out << L' ' << setw(2) << *pby++;
 
 		if (++nRow >= nWidth)
 		{
@@ -487,59 +561,59 @@ void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
 
 //////////////////////////////////////////////////////////
 // Dump Active Process info.
-static void DumpProcess(ProcessOTE* oteProc, ostream& logStream)
+static void DumpProcess(ProcessOTE* oteProc, wostream& logStream)
 {
 	Process* pProc = oteProc->m_location;
 	if (IsBadReadPtr(pProc, sizeof(Process)))
-		logStream << "(***Bad pointer: " << PVOID(pProc) << ")";
+		logStream << L"(***Bad pointer: " << PVOID(pProc) << L")";
 	else
 	{
-		logStream << '{' << pProc << ':'
-			<< "size " << dec << oteProc->getWordSize()
-			<< " words, suspended frame " << reinterpret_cast<LPVOID>(pProc->SuspendedFrame())
-			<< dec << ", priority " << pProc->Priority()
-			<< ", callbacks " << pProc->CallbackDepth() << endl;
-		logStream << "last failure " << pProc->PrimitiveFailureCode()
-			<< ":" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
-			<< ", FP control " << hex << pProc->FpControl()
-			<< ", thread " << pProc->Thread();
+		logStream << L'{' << pProc << L':'
+			<< L"size " << dec << oteProc->getWordSize()
+			<< L" words, suspended frame " << reinterpret_cast<LPVOID>(pProc->SuspendedFrame())
+			<< dec << L", priority " << pProc->Priority()
+			<< L", callbacks " << pProc->CallbackDepth() << endl;
+		logStream << L"last failure " << pProc->PrimitiveFailureCode()
+			<< L":" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
+			<< L", FP control " << hex << pProc->FpControl()
+			<< L", thread " << pProc->Thread();
 	}
-	logStream << '}' << endl;
+	logStream << L'}' << endl;
 }
 
 //////////////////////////////////////////////////////////
 // Current Method info.
 
-static void DumpIP(BYTE* ip, CompiledMethod* pMethod, ostream& logStream)
+static void DumpIP(BYTE* ip, CompiledMethod* pMethod, wostream& logStream)
 {
 	if (IsBadReadPtr(ip, 1))
-		logStream << "(Bad pointer: " << PVOID(ip) << ")";
+		logStream << L"(Bad pointer: " << PVOID(ip) << L")";
 	else
 	{
 		// Show the IP index
 		if (IsBadReadPtr(pMethod, sizeof(CompiledMethod)))
 		{
-			logStream << "(Unable to calculate IP index from " << PVOID(ip) << ")";
+			logStream << L"(Unable to calculate IP index from " << PVOID(ip) << L")";
 		}
 		else
 		{
 			int offsetFromBeginningOfByteCodesObject = ip - ObjectMemory::ByteAddressOfObject(pMethod->m_byteCodes);
-			logStream << LPVOID(ip) << " (" << dec << offsetFromBeginningOfByteCodesObject << ')';
+			logStream << LPVOID(ip) << L" (" << dec << offsetFromBeginningOfByteCodesObject << L')';
 		}
 	}
 	logStream << endl;
 }
 
-static void DumpStack(Oop* sp, Process* pProcess, ostream& logStream, unsigned nDepth)
+static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned nDepth)
 {
 	if (IsBadReadPtr(sp, sizeof(Oop)))
-		logStream << "***Bad stack pointer: " << PVOID(sp) << endl;
+		logStream << L"***Bad stack pointer: " << PVOID(sp) << endl;
 	else
 	{
 		// Show the SP index
 		if (IsBadReadPtr(pProcess, sizeof(Process)))
 		{
-			logStream << "***Invalid process pointer: " << PVOID(pProcess) << endl;
+			logStream << L"***Invalid process pointer: " << PVOID(pProcess) << endl;
 		}
 		else
 		{
@@ -555,9 +629,9 @@ static void DumpStack(Oop* sp, Process* pProcess, ostream& logStream, unsigned n
 					sp--;
 					i++;
 				}
-				logStream << "..." << endl
-					<< "<" << dec << nSlots - nDepth << " slots omitted>" << endl
-					<< "..." << endl;
+				logStream << L"..." << endl
+					<< L"<" << dec << nSlots - nDepth << L" slots omitted>" << endl
+					<< L"..." << endl;
 
 				sp = pProcess->m_stack + nHalfDepth;
 				while (sp >= pProcess->m_stack)
@@ -574,35 +648,35 @@ static void DumpStack(Oop* sp, Process* pProcess, ostream& logStream, unsigned n
 					sp--;
 				}
 
-			logStream << "<Bottom of stack>" << endl;
+			logStream << L"<Bottom of stack>" << endl;
 		}
 	}
 }
 
-static void DumpBP(Oop* bp, Process* pProcess, ostream& logStream)
+static void DumpBP(Oop* bp, Process* pProcess, wostream& logStream)
 {
 	if (IsBadReadPtr(bp, sizeof(Oop)))
-		logStream << "(Bad pointer: " << PVOID(bp) << ")";
+		logStream << L"(Bad pointer: " << PVOID(bp) << L")";
 	else
 	{
 		// Show the BP index
 		if (IsBadReadPtr(pProcess, sizeof(Process)))
 		{
-			logStream << "(Unable to calculate SP index from " << PVOID(bp) << ')';
+			logStream << L"(Unable to calculate SP index from " << PVOID(bp) << L')';
 		}
 		else
 		{
 			int index = pProcess->indexOfSP(bp);
-			logStream << bp << " (" << dec << index << ')';
+			logStream << bp << L" (" << dec << index << L')';
 		}
 	}
 	logStream << endl;
 }
 
-ostream& operator<<(ostream& stream, StackFrame *pFrame)
+wostream& operator<<(wostream& stream, StackFrame *pFrame)
 {
 	if (IsBadReadPtr(pFrame, sizeof(StackFrame)))
-		stream << "***Bad frame pointer: " << LPVOID(pFrame);
+		stream << L"***Bad frame pointer: " << LPVOID(pFrame);
 	else
 	{
 		Oop* bp = pFrame->basePointer();
@@ -612,12 +686,12 @@ ostream& operator<<(ostream& stream, StackFrame *pFrame)
 		if (ip != 0)
 			ip += isIntegerObject(method->m_byteCodes) ? 1 : -(int(ObjectByteSize) - 1);
 
-		stream << '{' << LPVOID(pFrame)	// otherwise would be recursive!
-			<< ": cf " << LPVOID(pFrame->m_caller)
-			<< ", sp " << pFrame->stackPointer()
-			<< ", bp " << bp
-			<< ", ip " << dec << ip
-			<< ", ";
+		stream << L'{' << LPVOID(pFrame)	// otherwise would be recursive!
+			<< L": cf " << LPVOID(pFrame->m_caller)
+			<< L", sp " << pFrame->stackPointer()
+			<< L", bp " << bp
+			<< L", ip " << dec << ip
+			<< L", ";
 
 		ContextOTE* oteContext;
 		Context* ctx;
@@ -636,7 +710,7 @@ ostream& operator<<(ostream& stream, StackFrame *pFrame)
 		unsigned stackTempCount;
 		if (ctx != NULL && ctx->isBlockContext())
 		{
-			stream << "[] in ";
+			stream << L"[] in ";
 			const BlockClosure* block;
 
 			if (oteContext->m_oteClass == Pointers.ClassBlockClosure)
@@ -667,23 +741,23 @@ ostream& operator<<(ostream& stream, StackFrame *pFrame)
 			//HARDASSERT(ObjectMemory::isKindOf(pFrame->m_method, superclassOf(Pointers.ClassCompiledMethod)));
 			stream << receiverClass;
 			if (method->m_methodClass != receiverClass)
-				stream << '(' << method->m_methodClass << ')';
+				stream << L'(' << method->m_methodClass << L')';
 		}
-		stream << ">>" << method->m_selector
+		stream << L">>" << method->m_selector
 			<< '}' << endl;
 
-		stream << "	receiver: " << reinterpret_cast<OTE*>(receiver) << endl;
+		stream << L"	receiver: " << reinterpret_cast<OTE*>(receiver) << endl;
 		unsigned i = 0;
 		for (i = 0; i < argc; i++)
-			stream << "	arg[" << dec << i << "]: " << reinterpret_cast<OTE*>(*(bp + i)) << endl;
+			stream << L"	arg[" << dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i)) << endl;
 		for (i = 0; i < stackTempCount; i++)
-			stream << "	stack temp[" << dec << i << "]: " << reinterpret_cast<OTE*>(*(bp + i + argc)) << endl;
+			stream << L"	stack temp[" << dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i + argc)) << endl;
 
 		if (ctx != NULL)
 		{
 			const unsigned envTempCount = oteContext->pointersSize() - Context::FixedSize;
 			for (i = 0; i < envTempCount; i++)
-				stream << "	env temp[" << dec << i << "]: " << reinterpret_cast<OTE*>(ctx->m_tempFrame[i]) << endl;
+				stream << L"	env temp[" << dec << i << L"]: " << reinterpret_cast<OTE*>(ctx->m_tempFrame[i]) << endl;
 		}
 
 		stream << endl;
@@ -694,104 +768,104 @@ ostream& operator<<(ostream& stream, StackFrame *pFrame)
 
 //////////////////////////////////////////////////////////
 // Dump the interpreter context
-void Interpreter::DumpContext(EXCEPTION_POINTERS *pExceptionInfo, ostream& logStream)
+void Interpreter::DumpContext(EXCEPTION_POINTERS *pExceptionInfo, wostream& logStream)
 {
 	saveContextAfterFault(pExceptionInfo, isInPrimitive());
 	DumpContext(logStream);
 }
 
-void Interpreter::DumpContext(ostream& logStream)
+void Interpreter::DumpContext(wostream& logStream)
 {
-	logStream << "*----> VM Context <----*" << endl;
+	logStream << L"*----> VM Context <----*" << endl;
 
 	__try
 	{
-		logStream << "Process: ";
+		logStream << L"Process: ";
 		DumpProcess(m_registers.m_oteActiveProcess, logStream);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT ACTIVE PROCESS OR CONTEXT";
+		logStream << endl << L'\t' << L"***CORRUPT ACTIVE PROCESS OR CONTEXT";
 	}
 
 	__try
 	{
-		logStream << "Active Method: " << *m_registers.m_pMethod;
+		logStream << L"Active Method: " << *m_registers.m_pMethod;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT CURRENT METHOD OR CONTEXT";
+		logStream << endl << L'\t' << L"***CORRUPT CURRENT METHOD OR CONTEXT";
 	}
 
 	__try
 	{
-		logStream << endl << "IP: ";
+		logStream << endl << L"IP: ";
 		DumpIP(m_registers.m_instructionPointer, m_registers.m_pMethod, logStream);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT IP, METHOD, OR CONTEXT";
+		logStream << endl << L'\t' << L"***CORRUPT IP, METHOD, OR CONTEXT";
 	}
 
-	logStream << "SP: " << m_registers.m_stackPointer << endl;
+	logStream << L"SP: " << m_registers.m_stackPointer << endl;
 
 	__try
 	{
-		logStream << "BP: ";
+		logStream << L"BP: ";
 		DumpBP(m_registers.m_basePointer, actualActiveProcess(), logStream);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT SP, PROCESS, OR CONTEXT" << endl;
+		logStream << endl << L'\t' << L"***CORRUPT SP, PROCESS, OR CONTEXT" << endl;
 	}
 
 	__try
 	{
-		logStream << "ActiveFrame: " << m_registers.m_pActiveFrame << endl;
+		logStream << L"ActiveFrame: " << m_registers.m_pActiveFrame << endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT ACTIVE FRAME OR CONTEXT" << endl;
+		logStream << endl << L'\t' << L"***CORRUPT ACTIVE FRAME OR CONTEXT" << endl;
 	}
 
 	__try
 	{
-		logStream << "New Method: " << Interpreter::m_registers.m_oopNewMethod << endl;
+		logStream << L"New Method: " << Interpreter::m_registers.m_oopNewMethod << endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT NEW METHOD OR CONTEXT" << endl;
+		logStream << endl << L'\t' << L"***CORRUPT NEW METHOD OR CONTEXT" << endl;
 	}
 
 	__try
 	{
-		logStream << "Message Selector: " << Interpreter::m_oopMessageSelector << endl;
+		logStream << L"Message Selector: " << Interpreter::m_oopMessageSelector << endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT SELECTOR OR CONTEXT" << endl;
+		logStream << endl << L'\t' << L"***CORRUPT SELECTOR OR CONTEXT" << endl;
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-void Interpreter::DumpStack(ostream& logStream, unsigned nStackDepth)
+void Interpreter::DumpStack(wostream& logStream, unsigned nStackDepth)
 {
 	if (nStackDepth == 0)
 		return;
 
-	logStream << endl << "*----> Stack <----*" << endl;
+	logStream << endl << L"*----> Stack <----*" << endl;
 	__try
 	{
 		::DumpStack(m_registers.m_stackPointer, actualActiveProcess(), logStream, nStackDepth);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << '\t' << "***CORRUPT STACK" << endl;
+		logStream << endl << L'\t' << L"***CORRUPT STACK" << endl;
 	}
 }
 
-void Interpreter::StackTraceOn(ostream& dc, StackFrame* pFrame, unsigned depth)
+void Interpreter::StackTraceOn(wostream& dc, StackFrame* pFrame, unsigned depth)
 {
 	if (!pFrame)
 		pFrame = m_registers.m_pActiveFrame;
@@ -800,7 +874,7 @@ void Interpreter::StackTraceOn(ostream& dc, StackFrame* pFrame, unsigned depth)
 	{
 		if (::IsBadReadPtr(pFrame, sizeof(StackFrame)))
 		{
-			dc << "***Invalid frame pointer: " << LPVOID(pFrame) << endl;
+			dc << L"***Invalid frame pointer: " << LPVOID(pFrame) << endl;
 			// Can't continue
 			break;
 		}
@@ -822,7 +896,7 @@ void Interpreter::StackTraceOn(ostream& dc, StackFrame* pFrame, unsigned depth)
 
 #if defined(_DEBUG)
 
-void Interpreter::WarningWithStackTraceBody(const char* warningCaption, StackFrame* pFrame)
+void Interpreter::WarningWithStackTraceBody(const wchar_t* warningCaption, StackFrame* pFrame)
 {
 	TRACESTREAM << endl << warningCaption << endl;
 	StackTraceOn(TRACESTREAM, pFrame);
@@ -831,7 +905,7 @@ void Interpreter::WarningWithStackTraceBody(const char* warningCaption, StackFra
 	TRACESTREAM << endl << flush;
 }
 
-void Interpreter::WarningWithStackTrace(const char* warningCaption, StackFrame* pFrame)
+void Interpreter::WarningWithStackTrace(const wchar_t* warningCaption, StackFrame* pFrame)
 {
 	__try
 	{
@@ -882,9 +956,10 @@ void Interpreter::AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vect
 		// Recursively walk up to the top of the inheritance hierarchy (found by reaching nil), then append names at 
 		// each level on the way back down
 		AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(pClass->m_superclass), instVarNames);
-		if (pClass->m_instanceVariables->m_oteClass == Pointers.ClassString)
+		if (pClass->m_instanceVariables->m_oteClass == Pointers.ClassByteString)
 		{
-			StringOTE* oteNamesString = reinterpret_cast<StringOTE*>(pClass->m_instanceVariables);
+			// TODO: Use Utf8String
+			ByteStringOTE* oteNamesString = reinterpret_cast<ByteStringOTE*>(pClass->m_instanceVariables);
 			stringstream words(oteNamesString->m_location->m_characters);
 			string each;
 			while (getline(words, each, ' '))
@@ -901,8 +976,9 @@ void Interpreter::AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vect
 			Array* pNames = oteNamesArray->m_location;
 			for (MWORD i = 0; i < oteNamesArray->pointersSize(); i++)
 			{
-				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassString));
-				StringOTE* oteEach = (StringOTE*)pNames->m_elements[i];
+				// TODO: Use Utf8String
+				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassByteString));
+				ByteStringOTE* oteEach = (ByteStringOTE*)pNames->m_elements[i];
 				instVarNames.push_back(oteEach->m_location->m_characters);
 			}
 		}
@@ -946,7 +1022,7 @@ public:
 		return instVarNames[index]; 
 	}
 
-	std::string GetLiteralAsString(size_t index) {
+	std::wstring GetLiteralAsString(size_t index) {
 		return Interpreter::PrintString(literalFrame[index]);
 	}
 
@@ -964,25 +1040,25 @@ private:
 	bool instVarNamesInitialized;
 };
 
-void Interpreter::decodeMethod(CompiledMethod* method, ostream* pstream)
+void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 {
-	ostream& stream = pstream != NULL ? *pstream : (ostream&)TRACESTREAM;
+	wostream& stream = pstream != NULL ? *pstream : (wostream&)TRACESTREAM;
 
 	// Report method header
 	STMethodHeader hdr = method->m_header;
-	stream << "Method " << method;
+	stream << L"Method " << method;
 	if (hdr.primitiveIndex > 7)
-		stream << ", primitive=" << dec << int(hdr.primitiveIndex);
+		stream << L", primitive=" << dec << int(hdr.primitiveIndex);
 	if (hdr.argumentCount > 0)
-		stream << "; args=" << dec << int(hdr.argumentCount);
+		stream << L"; args=" << dec << int(hdr.argumentCount);
 	if (hdr.stackTempCount > 0)
-		stream << "; stack temps=" << dec << int(hdr.stackTempCount);
+		stream << L"; stack temps=" << dec << int(hdr.stackTempCount);
 	int envTemps = hdr.envTempCount;
 	if (envTemps > 0)
 	{
 		if (envTemps > 1)
-			stream << "; env temps=" << dec << envTemps - 1;
-		stream << "; needs context";
+			stream << L"; env temps=" << dec << envTemps - 1;
+		stream << L"; needs context";
 	}
 	stream << endl;
 
@@ -1000,7 +1076,7 @@ void Interpreter::decodeMethod(CompiledMethod* method, ostream* pstream)
 	}
 }
 
-void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, ostream& stream)
+void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, wostream& stream)
 {
 	DisassemblyContext info(method);
 	BytecodeDisassembler<DisassemblyContext> disassembler(info);
@@ -1013,9 +1089,9 @@ void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, ostream& s
 #include <sstream>
 
 
-std::string Interpreter::PrintString(Oop oop)
+std::wstring Interpreter::PrintString(Oop oop)
 {
-	std::stringstream st;
+	std::wstringstream st;
 	st << reinterpret_cast<POTE>(oop);
 	return st.str();
 }
@@ -1038,7 +1114,7 @@ void Interpreter::checkStack(Oop* sp)
 	if (!ObjectMemoryIsIntegerObject(objectPointer) &&
 	((reinterpret_cast<OTE*>(objectPointer)->getCount() < MAXCOUNT)
 	{
-	TRACESTREAM << "WARNING: sp+" << i << " contains " << objectPointer << endl;
+	TRACESTREAM << L"WARNING: sp+" << i << L" contains " << objectPointer << endl;
 	}
 	}
 		*/		if (abs(executionTrace) > 3)
@@ -1054,13 +1130,13 @@ void Interpreter::checkStack(Oop* sp)
 void __fastcall Interpreter::debugReturnToMethod(Oop* sp)
 {
 	tracelock lock(TRACESTREAM);
-	TRACESTREAM << endl << "** Returned to Method: " << *m_registers.m_pMethod << endl;
+	TRACESTREAM << endl << L"** Returned to Method: " << *m_registers.m_pMethod << endl;
 }
 
 void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 {
 	tracelock lock(TRACESTREAM);
-	TRACESTREAM << endl << "** Method activated: " << m_registers.m_pActiveFrame->m_method << endl;
+	TRACESTREAM << endl << L"** Method activated: " << m_registers.m_pActiveFrame->m_method << endl;
 	if (executionTrace > 1)
 	{
 		decodeMethod(m_registers.m_pMethod, NULL);
@@ -1072,7 +1148,7 @@ void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 void __fastcall Interpreter::debugExecTrace(BYTE* ip, Oop* sp)
 {
 	//for (unsigned i=0;i<contextDepth;i++)
-	//	TRACESTREAM << ".";
+	//	TRACESTREAM << L".";
 
 	// To avoid covering bugs, we make sure we don't update the
 	// context for longer than the duration of the trace
@@ -1093,8 +1169,8 @@ void __fastcall Interpreter::debugExecTrace(BYTE* ip, Oop* sp)
 		int ipIndex = int(ip - ObjectMemory::ByteAddressOfObjectContents(method->m_byteCodes));
 		HARDASSERT(ipIndex >= 0 && ipIndex < 1024);
 		//for (i=0;i<contextDepth;i++)
-		//	TRACESTREAM << ".";
-		TRACESTREAM << "{" << method << "} ";
+		//	TRACESTREAM << L".";
+		TRACESTREAM << L"{" << method << L"} ";
 		decodeMethodAt(method, unsigned(ipIndex), TRACESTREAM);
 
 		if (false)
@@ -1117,10 +1193,10 @@ extern "C" __declspec(dllexport) int __stdcall ExecutionTrace(int execTrace)
 	return existing;
 }
 
-const char* Interpreter::activeMethod()
+const wchar_t* Interpreter::activeMethod()
 {
-	static string lastPrinted;
-	std::stringstream stream;
+	static wstring lastPrinted;
+	std::wstringstream stream;
 	stream << *Interpreter::m_registers.m_pMethod;
 	lastPrinted = stream.str();
 	return lastPrinted.c_str();
@@ -1142,25 +1218,25 @@ extern "C" unsigned byteCodePairs[];
 void DumpBytecodeCounts(bool bClear)
 {
 
-	TRACESTREAM << endl << "Bytecode invocation counts" << endl << "-----------------------------" << endl;
+	TRACESTREAM << endl << L"Bytecode invocation counts" << endl << L"-----------------------------" << endl;
 	for (int i = 0; i < 256; i++)
 	{
-		TRACESTREAM << dec << i << ": " << byteCodeCounters[i] << endl;
+		TRACESTREAM << dec << i << L": " << byteCodeCounters[i] << endl;
 		if (bClear) byteCodeCounters[i] = 0;
 	}
-	TRACESTREAM << "-----------------------------" << endl << endl;
+	TRACESTREAM << L"-----------------------------" << endl << endl;
 
-	TRACESTREAM << endl << "Bytecode pair counts" << endl << "-----------------------------" << endl;
+	TRACESTREAM << endl << L"Bytecode pair counts" << endl << L"-----------------------------" << endl;
 	for (int i = 0; i < 256; i++)
 	{
 		for (int j = 0; j < 256; j++)
 		{
-			TRACESTREAM << byteCodePairs[i * 256 + j] << ' ';
+			TRACESTREAM << byteCodePairs[i * 256 + j] << L' ';
 			if (bClear) byteCodePairs[i * 256 + j] = 0;
 		}
 		TRACESTREAM << endl;
 	}
-	TRACESTREAM << "-----------------------------" << endl << endl;
+	TRACESTREAM << L"-----------------------------" << endl << endl;
 
 }
 
@@ -1168,13 +1244,13 @@ extern "C" unsigned primitiveCounters[];
 
 void DumpPrimitiveCounts(bool bClear)
 {
-	TRACESTREAM << endl << "Primitive invocation counts" << endl << "-----------------------------" << endl;
+	TRACESTREAM << endl << L"Primitive invocation counts" << endl << L"-----------------------------" << endl;
 	for (int i = 0; i <= PRIMITIVE_MAX; i++)
 	{
-		TRACESTREAM << dec << i << ": " << primitiveCounters[i] << endl;
+		TRACESTREAM << dec << i << L": " << primitiveCounters[i] << endl;
 		if (bClear) primitiveCounters[i] = 0;
 	}
 
-	TRACESTREAM << "-----------------------------" << endl << endl;
+	TRACESTREAM << L"-----------------------------" << endl << endl;
 }
 #endif	// defined(_DEBUG)

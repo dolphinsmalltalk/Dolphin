@@ -61,7 +61,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
 			if (underConstruction == receiverPointer)
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "WARNING: Unhooking create for " << hex << underConstruction << " before HCBT_CREATEWND" << endl;
+				TRACESTREAM<< L"WARNING: Unhooking create for " << hex << underConstruction<< L" before HCBT_CREATEWND" << endl;
 				ObjectMemory::nilOutPointer(m_oteUnderConstruction);
 			}
 			else

@@ -229,7 +229,7 @@ namespace ST
 	};
 
 #ifdef _DEBUG
-	ostream& operator<<(ostream& st, const Semaphore& sem);
+	wostream& operator<<(wostream& st, const Semaphore& sem);
 #endif
 
 	// ProcessorScheduler has a single instance "Processor" (a global variable)
@@ -276,9 +276,9 @@ namespace ST
 #endif
 }
 
-ostream& operator<<(ostream& st, const ProcessOTE*);
+wostream& operator<<(wostream& st, const ProcessOTE*);
 
 #ifdef _DEBUG
-	ostream& operator<<(ostream& st, const ST::ProcessorScheduler& proc);
+	wostream& operator<<(wostream& st, const ST::ProcessorScheduler& proc);
 #endif
 

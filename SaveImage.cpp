@@ -98,7 +98,7 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	}
 
 #ifdef PROFILE_IMAGELOADSAVE
-	TRACESTREAM << "Saving image to '" << saveName << "' ..." << endl;
+	TRACESTREAM<< L"Saving image to '" << saveName<< L"' ..." << endl;
 	DWORD dwStartTicks = GetTickCount();
 #endif
 
@@ -163,7 +163,7 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 	#ifdef PROFILE_IMAGELOADSAVE
 		DWORD msToRun = GetTickCount() - dwStartTicks;
-		TRACESTREAM << " done (" << (bSaved ? "Succeeded" : "Failed") << "), binstreams time " << long(msToRun) << "mS" << endl;
+		TRACESTREAM<< L" done (" << (bSaved ? "Succeeded" : "Failed")<< L"), binstreams time " << long(msToRun)<< L"mS" << endl;
 	#endif
 	}
 
@@ -259,10 +259,10 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 	}
 
 	#ifdef _DEBUG
-		TRACESTREAM << numObjects << " objects saved totalling " << dec << dwDataSize 
-				<< " bytes, " << nFree << " free OTEs"
+		TRACESTREAM << numObjects<< L" objects saved totalling " << dec << dwDataSize 
+				<< L" bytes, " << nFree<< L" free OTEs"
 				// Compressed stream does not support seeking and sets to bad state
-				//<< ", writing checksum at offset " << imageFile.tellp() 
+				//<< L", writing checksum at offset " << imageFile.tellp() 
 				<< endl;
 	#endif
 

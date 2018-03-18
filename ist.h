@@ -123,3 +123,5 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #ifdef _CONSOLE
 #define _ATL_NO_COM_SUPPORT
 #endif
+
+#include <icucommon.h>

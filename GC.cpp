@@ -137,7 +137,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	if (corpse == Oop(_Pointers.Nil))
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "GC: WARNING, attempted GC before Corpse registered." << endl;
+		TRACESTREAM<< L"GC: WARNING, attempted GC before Corpse registered." << endl;
 		return;	// Refuse to garbage collect if the corpse is invalid
 	}
 	
@@ -232,8 +232,8 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 						if (fieldFlags & OTEFlags::FreeMask)
 						{
 #if defined(_DEBUG) && 0
-							TRACESTREAM << "Weakling " << ote << " loses reference to freed object " <<
-								(UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << endl;
+							TRACESTREAM<< L"Weakling " << ote<< L" loses reference to freed object " <<
+								(UINT)fieldOTE<< L"/" << indexOfObject(fieldOTE) << endl;
 #endif
 
 							weakObj->m_fields[j] = corpse;
@@ -245,9 +245,9 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 							// We must correctly maintain ref. count of dying object,
 							// just in case it is in (or will be in) the finalization queue
 #if defined(_DEBUG) && 0
-							TRACESTREAM << "Weakling " << ote << " loses reference to " <<
-								fieldOTE << "(" << (UINT)fieldOTE << "/" << indexOfObject(fieldOTE) << " refs " <<
-								int(ote->m_flags.m_count) << ")" << endl;
+							TRACESTREAM<< L"Weakling " << ote<< L" loses reference to " <<
+								fieldOTE<< L"(" << (UINT)fieldOTE<< L"/" << indexOfObject(fieldOTE)<< L" refs " <<
+								int(ote->m_flags.m_count)<< L")" << endl;
 #endif	
 							fieldOTE->decRefs();
 							weakObj->m_fields[j] = corpse;
@@ -264,7 +264,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 #ifdef _DEBUG
 					{
 						tracelock lock(TRACESTREAM);
-						TRACESTREAM << "Weakling: " << ote << " (" << hex << UINT(ote) << ") lost " << losses << " elements" << endl;
+						TRACESTREAM<< L"Weakling: " << ote<< L" (" << hex << UINT(ote)<< L") lost " << losses<< L" elements" << endl;
 					}
 #endif
 					// We must also ensure that it and its referenced objects are marked since we're
@@ -321,9 +321,9 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 					#ifdef _DEBUG
 					{
 						tracelock lock(TRACESTREAM);
-						TRACESTREAM << "GC WARNING: " << LPVOID(ote) << '/' << i
-							<< " (size " << ote->getSize() << ") has freed class " 
-							<< LPVOID(classPointer) << '/' << classPointer->getIndex() << endl; 
+						TRACESTREAM<< L"GC WARNING: " << LPVOID(ote) << L'/' << i
+							<< L" (size " << ote->getSize()<< L") has freed class " 
+							<< LPVOID(classPointer) << L'/' << classPointer->getIndex() << endl; 
 					}
 					#endif
 				}
@@ -360,7 +360,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 			else
 			{
 #if 0//def _DEBUG
-				TRACESTREAM << "Finalizing " << ote << endl;
+				TRACESTREAM<< L"Finalizing " << ote << endl;
 #endif
 
 				Interpreter::basicQueueForFinalization(ote);
@@ -385,10 +385,10 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 			{
 				tracelock lock(TRACESTREAM);
 				if (classPointer->isFree())
-					TRACESTREAM << "GC: " << val << " objects of a free'd class ("
-						<< LPVOID(classPointer) << '(' << classPointer->getIndex() << ") were deallocated" << endl;
+					TRACESTREAM<< L"GC: " << val<< L" objects of a free'd class ("
+						<< LPVOID(classPointer) << L'(' << classPointer->getIndex()<< L") were deallocated" << endl;
 				else
-					TRACESTREAM << "GC: " << dec << val << ' ' << classPointer << "'s were deallocated" << endl;
+					TRACESTREAM<< L"GC: " << dec << val << L' ' << classPointer<< L"'s were deallocated" << endl;
 			}
 		}
 
@@ -406,9 +406,9 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 	if (deletions > 0)
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << "GC: Completed, " << deletions << " objects reclaimed, "
-				<< queuedForFinalize << " queued for finalization, "
-				<< queuedForBereavement << " weak lose elements" << endl;
+		TRACESTREAM<< L"GC: Completed, " << deletions<< L" objects reclaimed, "
+				<< queuedForFinalize<< L" queued for finalization, "
+				<< queuedForBereavement<< L" weak lose elements" << endl;
 	}
 #endif
 }
@@ -448,9 +448,9 @@ void ObjectMemory::addVMRefs()
 						else
 						{
 							tracelock lock(TRACESTREAM);
-							TRACESTREAM << "Found large object (size = " << size 
-								<< ") in space " << (int)space 
-								<< ": " << &ote << endl;
+							TRACESTREAM<< L"Found large object (size = " << size 
+								<< L") in space " << (int)space 
+								<< L": " << &ote << endl;
 						}
 					}
 					else
@@ -488,7 +488,7 @@ void ObjectMemory::addVMRefs()
 				OTE* ote = reinterpret_cast<OTE*>(oop);
 				if (ote->m_count == 0 && !IsInZct(ote))
 				{
-					TRACESTREAM << "WARNING: Zero count Oop not in Zct: " << ote << endl;
+					TRACESTREAM<< L"WARNING: Zero count Oop not in Zct: " << ote << endl;
 					zeroCountNotInZct++;
 				}
 			}
@@ -543,10 +543,10 @@ void ObjectMemory::addVMRefs()
 				// Count and free bit should both be zero, or both non-zero
 				/*if (m_pOT[i].m_flags.m_free ^ (m_pOT[i].m_flags.m_count == 0))
 				{
-					TRACESTREAM << "WARNING: ";
+					TRACESTREAM<< L"WARNING: ";
 					Oop oop = pointerFromIndex(i);
 					Interpreter::printObject(oop, TRACESTREAM);
-					TRACESTREAM << " (Oop " << oop << "/" << i << ") has refs " << 
+					TRACESTREAM<< L" (Oop " << oop<< L"/" << i<< L") has refs " << 
 							m_pOT[i].m_flags.m_count << endl;
 					//errors++;
 				}*/
@@ -577,7 +577,7 @@ void ObjectMemory::addVMRefs()
 			poteFree = reinterpret_cast<OTE*>(poteFree->m_location);
 		}
 
-		//TRACESTREAM << nFree << " free slots found in OT, " << cFreeList << " on the free list (" << nFree-cFreeList << ")" <<endl;
+		//TRACESTREAM << nFree<< L" free slots found in OT, " << cFreeList<< L" on the free list (" << nFree-cFreeList<< L")" <<endl;
 
 		Interpreter::ReincrementVMReferences();
 
@@ -597,24 +597,24 @@ void ObjectMemory::addVMRefs()
 					if (tooSmall)
 					{
 						refCountTooSmall++;
-						TRACESTREAM << "ERROR: ";
+						TRACESTREAM<< L"ERROR: ";
 					}
 					else
-						TRACESTREAM << "WARNING: ";
+						TRACESTREAM<< L"WARNING: ";
 					
-					TRACESTREAM << ote << " (Oop " << LPVOID(ote) << "/" << i << ") had refs " << dec << (int)currentRefs[i] 
-							<< " should be " << int(ote->m_count) << endl;
+					TRACESTREAM << ote<< L" (Oop " << LPVOID(ote)<< L"/" << i<< L") had refs " << dec << (int)currentRefs[i] 
+							<< L" should be " << int(ote->m_count) << endl;
 					errors++;
 
 					if (tooSmall)
 					{
 						if (!Interpreter::m_bAsyncGCDisabled)
 						{
-							TRACESTREAM << " Referenced From:" << endl;
+							TRACESTREAM<< L" Referenced From:" << endl;
 							ArrayOTE* oteRefs = ObjectMemory::referencesTo(reinterpret_cast<Oop>(ote), true);
 							Array* refs = oteRefs->m_location;
 							for (unsigned i=0;i<oteRefs->pointersSize();i++)
-								TRACESTREAM << "  " << reinterpret_cast<OTE*>(refs->m_elements[i]) << endl;
+								TRACESTREAM<< L"  " << reinterpret_cast<OTE*>(refs->m_elements[i]) << endl;
 							deallocate(reinterpret_cast<OTE*>(oteRefs));
 						}
 					}
@@ -628,7 +628,7 @@ void ObjectMemory::addVMRefs()
 				} else if (currentRefs[i] == 0 && !ote->isFree() && !IsInZct(ote))
 				{
 					// Shouldn't be zero count objects around that are not in the Zct
-					TRACESTREAM << ote << " (Oop " << LPVOID(ote) << "/" << i << ") had zero refs" << endl;
+					TRACESTREAM << ote<< L" (Oop " << LPVOID(ote)<< L"/" << i<< L") had zero refs" << endl;
 					errors++;
 				}
 			}

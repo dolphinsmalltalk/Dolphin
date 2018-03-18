@@ -18,11 +18,11 @@ tracestream debugStream;
 void Compiler::disassemble()
 {
 	tracelock lock(debugStream);
-	debugStream << noshowbase << nouppercase << setfill(' ');
+	debugStream << noshowbase << nouppercase << setfill(L' ');
 	disassemble(debugStream);
 }
 
-void Compiler::disassemble(ostream& stream)
+void Compiler::disassemble(wostream& stream)
 {
 	int maxDepth = 0;
 	for (size_t i = 0; i < m_allScopes.size(); i++)
@@ -44,7 +44,7 @@ void Compiler::disassemble(ostream& stream)
 
 		// Scope changing, and getting deeper?
 		LexicalScope* newScope = m_bytecodes[i].pScope;
-		stream << newScope << ' ';
+		stream << newScope << L' ';
 
 		char padChar = ' ';
 		// If new nested scope, want to print opening bracket
@@ -72,7 +72,7 @@ void Compiler::disassemble(ostream& stream)
 		int j;
 		for (j = 0; j < currentDepth; j++)
 		{
-			stream << "|";
+			stream<< L"|";
 		}
 		for (; j <= maxDepth; j++)
 		{
@@ -81,9 +81,9 @@ void Compiler::disassemble(ostream& stream)
 
 		const TEXTMAPLIST::iterator it = FindTextMapEntry(i);
 		if (it != m_textMaps.end())
-			stream << '`';
+			stream << L'`';
 		else
-			stream << ' ';
+			stream << L' ';
 
 		disassembler.EmitDecodedInstructionAt(i, stream);
 		i += len;
@@ -97,12 +97,11 @@ Str Compiler::GetSpecialSelector(size_t index)
 	return GetString(pSpecialSelectors[index]);
 }
 
-Str Compiler::DebugPrintString(Oop oop)
+std::wstring Compiler::DebugPrintString(Oop oop)
 {
-	USES_CONVERSION;
-
-	CComBSTR bstr;
-	bstr.Attach(m_piVM->DebugPrintString(oop));
-	return W2A(bstr);
+	BSTR bstr = m_piVM->DebugPrintString(oop);
+	std::wstring result(bstr, ::SysStringLen(bstr));
+	::SysFreeString(bstr);
+	return result;
 }
 

@@ -1158,8 +1158,8 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	LargeInteger* liVee = oteVee->m_location;
 
 #ifdef _DEBUG
-	TRACESTREAM << "liDivUnsigned:\n	" << oteEwe << 
-					"\nby	" << oteVee << "\n\n";
+	TRACESTREAM<< L"liDivUnsigned:\n	" << oteEwe << 
+					"\nby	" << oteVee<< L"\n\n";
 #endif
 
 	int eweSize = oteEwe->getWordSize();
@@ -1212,8 +1212,8 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	ASSERT(oteV->getWordSize() == oteVee->getWordSize()+1);
 
 #if 0 //def _DEBUG
-	TRACESTREAM << "Shifted:\n	U=" << oteU << 
-			"\n	V=" << oteV << "\n";
+	TRACESTREAM<< L"Shifted:\n	U=" << oteU << 
+			"\n	V=" << oteV<< L"\n";
 #endif
 
 	// Allow one extra digit for sign as otherwise might get negative result
@@ -1407,9 +1407,9 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 		ASSERT(qi >= 0 && qi < m);
 		liQuo->m_digits[qi] = qHat;
 #ifdef _DEBUG
-		TRACESTREAM << "\tliQuo->m_digits[" << dec << qi << "] = " 
+		TRACESTREAM<< L"\tliQuo->m_digits[" << dec << qi<< L"] = " 
 			<< hex << qHat << endl;
-		TRACESTREAM << "Remainder: " << oteU << endl << endl;
+		TRACESTREAM<< L"Remainder: " << oteU << endl << endl;
 #endif
 	}
 

@@ -262,7 +262,7 @@ primitiveNextPutAll EQU ?primitiveNextPutAll@Interpreter@@CIPAIQAI@Z
 extern primitiveNextPutAll:near32
 primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIQAI@Z
 extern primitiveAtEnd:near32
-primitiveBasicAt EQU ?primitiveBasicAt@Interpreter@@CIPAIQAI@Z
+primitiveBasicAt EQU ?primitiveBasicAt@Interpreter@@CIPAIQAII@Z
 extern primitiveBasicAt:near32
 primitiveBasicAtPut EQU ?primitiveBasicAtPut@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicAtPut:near32
@@ -430,7 +430,7 @@ extern primitiveStringSearch:near32
 
 primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIQAI@Z
 extern primitiveStringNextIndexOfFromTo:near32
-primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIPAI@Z
+primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIQAII@Z
 extern primitiveStringAt:near32
 primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAtPut:near32
@@ -438,14 +438,21 @@ primitiveStringCollate EQU ?primitiveStringCollate@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCollate:near32
 primitiveStringCmp EQU ?primitiveStringCmp@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCmp:near32
-primitiveBytesEqual EQU ?primitiveBytesEqual@Interpreter@@CIPAIQAI@Z
-extern primitiveBytesEqual:near32
+primitiveStringCmpOrdinal EQU ?primitiveStringCmpOrdinal@Interpreter@@CIPAIQAI@Z
+extern primitiveStringCmpOrdinal:near32
+primitiveStringEqual EQU ?primitiveStringEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveStringEqual:near32
 primitiveStringAsUtf16String EQU ?primitiveStringAsUtf16String@Interpreter@@CIPAIQAI@Z
 extern primitiveStringAsUtf16String:near32
 primitiveStringAsUtf8String EQU ?primitiveStringAsUtf8String@Interpreter@@CIPAIQAI@Z
 extern primitiveStringAsUtf8String:near32
-primitiveStringAsAnsiString EQU ?primitiveStringAsAnsiString@Interpreter@@CIPAIQAI@Z
-extern primitiveStringAsAnsiString:near32
+primitiveStringAsByteString EQU ?primitiveStringAsByteString@Interpreter@@CIPAIQAI@Z
+extern primitiveStringAsByteString:near32
+primitiveStringConcatenate EQU ?primitiveStringConcatenate@Interpreter@@CIPAIQAI@Z
+extern primitiveStringConcatenate :near32
+
+primitiveBytesEqual EQU ?primitiveBytesEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveBytesEqual:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -702,10 +709,10 @@ DWORD		primitiveFloatIntegerPart						; case 213
 DWORD		primitiveFloatLE								; case 214
 DWORD		primitiveStringAsUtf16String					; case 215
 DWORD		primitiveStringAsUtf8String						; case 216
-DWORD		primitiveStringAsAnsiString						; case 217
-DWORD		unusedPrimitive									; case 218
-DWORD		unusedPrimitive									; case 219
-DWORD		unusedPrimitive									; case 220
+DWORD		primitiveStringAsByteString						; case 217
+DWORD		primitiveStringConcatenate						; case 218
+DWORD		primitiveStringEqual							; case 219
+DWORD		primitiveStringCmpOrdinal						; case 220 - Not sure we need this. May remove it.
 DWORD		unusedPrimitive									; case 221
 DWORD		unusedPrimitive									; case 222
 DWORD		unusedPrimitive									; case 223

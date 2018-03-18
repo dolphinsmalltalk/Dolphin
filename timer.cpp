@@ -131,7 +131,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 	if (outstandingID)
 	{
 #ifdef OAD
-		TRACESTREAM << "Killing existing timer with id " << outstandingID << endl;
+		TRACESTREAM<< L"Killing existing timer with id " << outstandingID << endl;
 #endif
 		UINT kill = ::timeKillEvent(outstandingID);
 		if (kill != TIMERR_NOERROR)
@@ -171,7 +171,7 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 	else if (nDelay == 0)
 	{
 #ifdef _DEBUG
-		TRACESTREAM << "Requested delay " << dec << nDelay << " passed, signalling immediately" << endl;
+		TRACESTREAM<< L"Requested delay " << dec << nDelay<< L" passed, signalling immediately" << endl;
 #endif
 		// The request time has already passed, or does not fall within the
 		// available timer resolution (i.e. it will happen too soon), so signal
@@ -190,9 +190,9 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 		ASSERT(m_oteNewProcess->m_oteClass == Pointers.ClassProcess);
 		ProcessOTE* activeProcess = scheduler()->m_activeProcess;
 
-		TRACESTREAM << "signalAtTick: Caused process switch to " << m_oteNewProcess
-			<< endl << "\t\tfrom " << activeProcess << endl
-			<< "\tasync signals " << m_qAsyncSignals.isEmpty() << ')' << endl;
+		TRACESTREAM<< L"signalAtTick: Caused process switch to " << m_oteNewProcess
+			<< endl<< L"\t\tfrom " << activeProcess << endl
+			<< L"\tasync signals " << m_qAsyncSignals.isEmpty() << L')' << endl;
 	}
 #endif
 

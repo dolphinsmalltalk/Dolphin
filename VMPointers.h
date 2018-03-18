@@ -26,7 +26,7 @@
 #if defined(VM)
 namespace ST
 {
-	class String;
+	class ByteString;
 	class Symbol;
 	class Semaphore;
 	class ProcessorScheduler;
@@ -37,7 +37,7 @@ namespace ST
 	class MemoryManager;
 	class VariableBinding;
 }
-typedef TOTE<ST::String> StringOTE;
+typedef TOTE<ST::ByteString> ByteStringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
 typedef TOTE<ST::Semaphore> SemaphoreOTE;
 typedef TOTE<ST::ProcessorScheduler> SchedulerOTE;
@@ -49,7 +49,7 @@ typedef TOTE<ST::MemoryManager> MemManOTE;
 typedef TOTE<ST::VariableBinding> VariableBindingOTE;
 #else
 typedef void OTE;
-typedef OTE StringOTE;
+typedef OTE ByteStringOTE;
 typedef OTE SymbolOTE;
 typedef OTE SemaphoreOTE;
 typedef OTE SchedulerOTE;
@@ -72,8 +72,8 @@ struct VMPointers //: public Object
 			POTE Nil;											// 1
 			POTE True;											// 2
 			POTE False;											// 3
-			StringOTE* EmptyString;								// 4
-			StringOTE* LineDelimString;							// 5
+			ByteStringOTE* EmptyString;							// 4
+			ByteStringOTE* LineDelimString;						// 5
 			ArrayOTE* EmptyArray;								// 6
 			BlockOTE* EmptyBlock;								// 7
 			BlockOTE* EmptyDebugBlock;							// 8
@@ -132,7 +132,7 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassMetaclass;						// 81
 			BehaviorOTE* ClassCharacter;						// 82
 			BehaviorOTE* ClassArray;							// 83
-			BehaviorOTE* ClassString;							// 84
+			BehaviorOTE* ClassByteString;						// 84
 			BehaviorOTE* ClassSymbol;							// 85
 			BehaviorOTE* ClassSmallInteger;						// 86
 			BehaviorOTE* ClassProcess;							// 87

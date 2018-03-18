@@ -135,7 +135,7 @@ void OverlappedCall::TerminateThread()
 	#if TRACING == 1
 	{
 		tracelock lock(::thinDump);
-		::thinDump << GetCurrentThreadId() << ": " << *this << " terminated (" << dwWaitRet << ")" << endl;
+		::thinDump << GetCurrentThreadId()<< L": " << *this<< L" terminated (" << dwWaitRet<< L")" << endl;
 	}
 	#endif
 }
@@ -200,7 +200,7 @@ void OverlappedCall::OnCompact()
 	#if TRACING == 1
 	{
 		tracelock lock(::thinDump);
-		::thinDump << "Compacting outstanding overlapped calls..." << endl;
+		::thinDump<< L"Compacting outstanding overlapped calls..." << endl;
 	}
 	#endif
 	{
@@ -227,7 +227,7 @@ void OverlappedCall::compact()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << *this << " compacting " << m_oteProcess << endl;
+		TRACESTREAM << *this<< L" compacting " << m_oteProcess << endl;
 	}
 	#endif
 
@@ -303,19 +303,19 @@ bool OverlappedCall::QueueForMe(PAPCFUNC pfnAPC)
 ///////////////////////////////////////////////////////////////////////////////
 // Debug Printing
 
-ostream& operator<<(ostream& stream, const OverlappedCall& oc)
+wostream& operator<<(wostream& stream, const OverlappedCall& oc)
 {
-	return stream << "OverlappedCall(" << &oc 
-		<< ", process: " << oc.m_oteProcess
-		<< ", hThread: " << oc.m_hThread 
-		<< ", id:" << oc.m_dwThreadId 
-		<< ", state: " << oc.m_state
-		<< ", suspend:" << oc.m_nSuspendCount 
-		<< ", calls:" << oc.m_nCallDepth
+	return stream<< L"OverlappedCall(" << &oc 
+		<< L", process: " << oc.m_oteProcess
+		<< L", hThread: " << oc.m_hThread 
+		<< L", id:" << oc.m_dwThreadId 
+		<< L", state: " << oc.m_state
+		<< L", suspend:" << oc.m_nSuspendCount 
+		<< L", calls:" << oc.m_nCallDepth
 #ifdef _DEBUG
-		<< ", refs: " << oc.m_dwRefs 
+		<< L", refs: " << oc.m_dwRefs 
 #endif
-		<< ")";
+		<< L")";
 }
 
 
@@ -337,7 +337,7 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << m_dwThreadId << ": " << *this << " created" << endl;
+		TRACESTREAM << m_dwThreadId<< L": " << *this<< L" created" << endl;
 	}
 	#endif
 
@@ -356,7 +356,7 @@ OverlappedCall::~OverlappedCall()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << m_dwThreadId << ": " << *this << " destroyed" << endl;
+		TRACESTREAM << m_dwThreadId<< L": " << *this<< L" destroyed" << endl;
 	}
 	#endif
 
@@ -437,7 +437,7 @@ DWORD OverlappedCall::WaitForRequest()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << m_dwThreadId << ": " << *this << "::Run() processed APCs while waiting" << endl;
+			TRACESTREAM << m_dwThreadId<< L": " << *this<< L"::Run() processed APCs while waiting" << endl;
 		}
 		#endif
 	}
@@ -457,8 +457,8 @@ int OverlappedCall::ProcessRequests()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << m_dwThreadId << ": Calling " << *this << " to " << *m_pMethod << 
-				endl << "	for " << m_oteProcess << endl;
+			TRACESTREAM << m_dwThreadId<< L": Calling " << *this<< L" to " << *m_pMethod << 
+				endl<< L"	for " << m_oteProcess << endl;
 		}
 		#endif
 
@@ -467,7 +467,7 @@ int OverlappedCall::ProcessRequests()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << hex << m_dwThreadId << ": Resting..." << endl;
+			TRACESTREAM << hex << m_dwThreadId<< L": Resting..." << endl;
 		}
 		#endif
 	}
@@ -475,7 +475,7 @@ int OverlappedCall::ProcessRequests()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << *this << " exiting on " << dwRet << endl;
+		TRACESTREAM << hex << *this<< L" exiting on " << dwRet << endl;
 	}
 	#endif
 
@@ -497,7 +497,7 @@ void OverlappedCall::PerformCall()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << m_dwThreadId << ": " << *this << " to " << *m_pMethod << " completes." << endl;
+		TRACESTREAM << hex << m_dwThreadId<< L": " << *this<< L" to " << *m_pMethod<< L" completes." << endl;
 	}
 	#endif
 
@@ -535,7 +535,7 @@ bool OverlappedCall::Initiate(CompiledMethod* pMethod, unsigned argCount)
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::Initiate (main thread part)" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::Initiate (main thread part)" << endl;
 	}
 	#endif
 
@@ -648,7 +648,7 @@ bool OverlappedCall::QueueTerminate()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::QueueTerminate" << endl;
+			TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::QueueTerminate" << endl;
 		}
 		#endif
 
@@ -678,7 +678,7 @@ void __stdcall OverlappedCall::SuspendAPC(DWORD dwParam)
 	#if TRACING == 1
 	{
 		tracelock lock(pThis->thinDump);
-		pThis->thinDump << hex << GetCurrentThreadId() << ": SuspendAPC(" << *pThis << ")" << endl;
+		pThis->thinDump << hex << GetCurrentThreadId()<< L": SuspendAPC(" << *pThis<< L")" << endl;
 	}
 	#endif
 
@@ -706,7 +706,7 @@ bool OverlappedCall::QueueSuspend()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::SuspendThread()" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::SuspendThread()" << endl;
 	}
 	#endif
 
@@ -720,7 +720,7 @@ DWORD OverlappedCall::Resume()
 	#if TRACING == 1
 	{
 		tracelock lock(::thinDump);
-		::thinDump << hex << GetCurrentThreadId() << ": " << *this << "::ResumeThread()" << endl;
+		::thinDump << hex << GetCurrentThreadId()<< L": " << *this<< L"::ResumeThread()" << endl;
 	}
 	#endif
 	InterlockedDecrement(&m_nSuspendCount);
@@ -741,12 +741,12 @@ void OverlappedCall::SuspendThread()
 		dwRet;
 #if TRACING == 1
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::SuspendThread() Suspend count is " << dwRet << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::SuspendThread() Suspend count is " << dwRet << endl;
 	}
 	else
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::SuspendThread() ignored as suspend count <= 0" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::SuspendThread() ignored as suspend count <= 0" << endl;
 #endif
 	}
 }
@@ -771,7 +771,7 @@ int OverlappedCall::TryMain()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << " received terminate exception" << endl;
+			TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L" received terminate exception" << endl;
 		}
 		#endif
 		
@@ -837,7 +837,7 @@ void __stdcall OverlappedCall::TerminatedAPC(DWORD dwParam)
 	#if TRACING == 1
 	{
 		tracelock lock(pThis->thinDump);
-		pThis->thinDump << hex << GetCurrentThreadId() << ": TerminatedAPC(" << *pThis << ")" << endl;
+		pThis->thinDump << hex << GetCurrentThreadId()<< L": TerminatedAPC(" << *pThis<< L")" << endl;
 	}
 	#endif
 
@@ -910,7 +910,7 @@ void OverlappedCall::OnCallReturned()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::OnCallReturned() waiting to complete" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::OnCallReturned() waiting to complete" << endl;
 	}
 	#endif
 
@@ -920,7 +920,7 @@ void OverlappedCall::OnCallReturned()
 	DWORD dwRet;
 	while ((dwRet = ::WaitForSingleObjectEx(m_hEvtGo, 5000, TRUE)) != WAIT_OBJECT_0)
 	{
-		thinDump << hex << GetCurrentThreadId() << ": " << *this << "::OnCallReturned() wait interrupted with " << dwRet << endl;
+		thinDump << hex << GetCurrentThreadId()<< L": " << *this<< L"::OnCallReturned() wait interrupted with " << dwRet << endl;
 		if (dwRet == WAIT_ABANDONED)
 		{
 			// Event deleted, etc, so terminate the thread
@@ -944,7 +944,7 @@ void OverlappedCall::OnCallReturned()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId() << ": " << *this << "::OnCallReturned() Completing... " << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::OnCallReturned() Completing... " << endl;
 	}
 	#endif
 
@@ -1016,7 +1016,7 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << "primAsync32: Prepare to call " << method << endl;
+		TRACESTREAM<< L"primAsync32: Prepare to call " << method << endl;
 	}
 	#endif
 
@@ -1040,7 +1040,7 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << "registers.sp = " << m_registers.m_stackPointer << " frame.sp = " <<
+		TRACESTREAM<< L"registers.sp = " << m_registers.m_stackPointer<< L" frame.sp = " <<
 				m_registers.m_pActiveFrame->stackPointer() << endl;
 	}
 	#endif

@@ -139,9 +139,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
-    <ClCompile Include="D:\dev\blairmcg\Dolphin\Core\DolphinVM\VMLib\IntPrim.cpp">
-      <Filter>Primitives</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
@@ -262,6 +260,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h">
       <Filter>ObjectMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STClassDesc.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h">
+      <Filter>Smalltalk Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

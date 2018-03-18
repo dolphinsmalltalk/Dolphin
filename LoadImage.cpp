@@ -65,7 +65,7 @@ static HRESULT ImageReadError(ibinstream& imageFile)
 HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 #ifdef PROFILE_IMAGELOADSAVE
-	TRACESTREAM << "Loading image '" << szImageName << endl;
+	TRACESTREAM<< L"Loading image '" << szImageName << endl;
 	DWORD dwStartTicks = GetTickCount();
 #endif
 
@@ -100,7 +100,7 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 
 #ifdef PROFILE_IMAGELOADSAVE
 	DWORD msToRun = GetTickCount() - dwStartTicks;
-	TRACESTREAM << " done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed") << "), binstreams time=" << long(msToRun) << "mS" << endl;
+	TRACESTREAM<< L" done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed")<< L"), binstreams time=" << long(msToRun)<< L"mS" << endl;
 #endif
 
 	return hr;
@@ -155,7 +155,7 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 
 #ifdef _DEBUG
 	// tellg() invalidates a gzstream
-	//TRACESTREAM << nDataRead << " data bytes read, loading checksum at offset " << imageFile.tellg() << endl;
+	//TRACESTREAM << nDataRead<< L" data bytes read, loading checksum at offset " << imageFile.tellg() << endl;
 #endif
 
 	// Read the checksum...
@@ -230,7 +230,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& i
 	}
 
 #ifdef _DEBUG
-	TRACESTREAM << i << " permanent objects loaded totalling " << cbPerm << " bytes" << endl;
+	TRACESTREAM << i<< L" permanent objects loaded totalling " << cbPerm<< L" bytes" << endl;
 #endif
 
 	memcpy(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
@@ -287,8 +287,8 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 				pBody = reinterpret_cast<Object*>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
 				ote->m_location = pBody;
 #ifdef OAD
-				TRACESTREAM << "Allocated virtual space at " << ote->m_location
-					<< ", max " << dec << vObjHeader.getMaxAllocation() <<
+				TRACESTREAM<< L"Allocated virtual space at " << ote->m_location
+					<< L", max " << dec << vObjHeader.getMaxAllocation() <<
 					", size " << byteSize << endl;
 #endif
 			}
@@ -341,7 +341,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 #ifdef _DEBUG
 	ASSERT(numObjects + m_nFreeOTEs == m_nOTSize);
 	ASSERT(m_nFreeOTEs = CountFreeOTEs());
-	TRACESTREAM << dec << numObjects << ", " << m_nFreeOTEs << " free" << endl;
+	TRACESTREAM << dec << numObjects<< L", " << m_nFreeOTEs<< L" free" << endl;
 #endif
 
 	cbRead += nDataSize;
@@ -377,10 +377,11 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 		PointersOTE* oteObj = reinterpret_cast<PointersOTE*>(ote);
 		if (ote->isPointers() && (oteObj->getSize() % 2 == 1 ||
 			classPointer == _Pointers.ClassByteArray ||
-			classPointer == _Pointers.ClassString ||
+			classPointer == _Pointers.ClassByteString ||
+			classPointer == _Pointers.ClassUtf8String ||
 			classPointer == _Pointers.ClassSymbol))
 		{
-			TRACESTREAM << "Bad OTE for byte array " << LPVOID(&ote) << " marked as pointer" << endl;
+			TRACESTREAM<< L"Bad OTE for byte array " << LPVOID(&ote)<< L" marked as pointer" << endl;
 			ote->beBytes();
 		}
 	}
@@ -570,12 +571,12 @@ void ObjectMemory::PostLoadFix()
 #if defined(_DEBUG) && 0
 	{
 		// Dump out the pointers
-		TRACESTREAM << NumPointers << " VM Pointers..." << endl;
+		TRACESTREAM << NumPointers<< L" VM Pointers..." << endl;
 		for (int i = 0; i < NumPointers; i++)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(m_pConstObjs);
 			POTE pote = POTE(obj->m_fields[i]);
-			TRACESTREAM << i << ": " << pote << endl;
+			TRACESTREAM << i<< L": " << pote << endl;
 		}
 	}
 #endif

@@ -34,6 +34,6 @@ namespace ST
 	};
 }
 
-ostream& operator<<(ostream& st, const FloatOTE* oteFloat);
+wostream& operator<<(wostream& st, const FloatOTE* oteFloat);
 
 #pragma pack(pop)
