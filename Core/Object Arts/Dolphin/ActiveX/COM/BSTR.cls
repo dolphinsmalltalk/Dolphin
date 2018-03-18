@@ -27,7 +27,7 @@ asAnsiString
 	receiver cannot be represented as ANSI code points, then these will be translated to the
 	default character ($?)."
 
-	^self asByteString: String!
+	^self asByteString: ByteString!
 
 asBSTR
 	"Answer the receiver converted to an AX Automation string."

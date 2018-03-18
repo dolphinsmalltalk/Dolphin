@@ -212,6 +212,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #ByteString -> #copyToClipboard;
 	add: #InputState -> #getLastInputInfo;
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
@@ -228,6 +229,7 @@ package methodNames
 	add: #ShlwapiLibrary -> #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:;
 	add: #String -> #copyToClipboard;
 	add: #String -> #setTextInto:;
+	add: #Symbol -> #copyToClipboard;
 	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
 	add: #UserLibrary -> #animateWindow:dwTime:dwFlags:;
 	add: #UserLibrary -> #attachThreadInput:idAttachTo:fAttach:;
@@ -374,6 +376,7 @@ package methodNames
 	add: #UserLibrary -> #unregisterHotKey:id:;
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
+	add: #UtfEncodedString -> #copyToClipboard;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'ExternalLibrary class' -> #icon;
@@ -1286,6 +1289,14 @@ SIZEL := SIZE!
 
 "Loose Methods"!
 
+!ByteString methodsFor!
+
+copyToClipboard
+	"Copy the #String format of the receiver to the clipboard."
+
+	Clipboard current setText: self formatId: Win32Constants.CF_TEXT! !
+!ByteString categoriesFor: #copyToClipboard!copying!public! !
+
 !ConsoleSessionManager class methodsFor!
 
 icon
@@ -1473,9 +1484,9 @@ colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSatu
 !String methodsFor!
 
 copyToClipboard
-	"Copy the #String format of the receiver to the clipboard."
+	"Copy the text of the receiver to the clipboard."
 
-	Clipboard current setText: self format: #String!
+	self subclassResponsibility!
 
 setTextInto: aView
 	"Private - Sent as part of a double dispatch from View objects to set their text from
@@ -1485,6 +1496,14 @@ setTextInto: aView
 	aView plainText: self! !
 !String categoriesFor: #copyToClipboard!copying!public! !
 !String categoriesFor: #setTextInto:!double dispatch!private! !
+
+!Symbol methodsFor!
+
+copyToClipboard
+	"Copy the #String format of the receiver to the clipboard."
+
+	Clipboard current setText: self printString formatId: Win32Constants.CF_TEXT! !
+!Symbol categoriesFor: #copyToClipboard!copying!public! !
 
 !UserLibrary methodsFor!
 
@@ -3273,6 +3292,14 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
+
+!UtfEncodedString methodsFor!
+
+copyToClipboard
+	"Copy the receiver to the clipboard."
+
+	Clipboard current setText: self asUtf16String formatId: Win32Constants.CF_UNICODETEXT! !
+!UtfEncodedString categoriesFor: #copyToClipboard!copying!public! !
 
 !Warning class methodsFor!
 

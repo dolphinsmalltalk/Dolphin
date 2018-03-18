@@ -130,8 +130,9 @@ nextPut: anObject
 	will fail, and the backup Smalltalk code will be activated."
 
 	<primitive: 66>
-	position < writeLimit ifFalse: [self growCollection].
-	^collection at: (position := position + 1) put: anObject!
+	position + collection maxEncoding < writeLimit ifFalse: [self growCollection].
+	position := position + (collection at: position + 1 encode: anObject).
+	^anObject!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 

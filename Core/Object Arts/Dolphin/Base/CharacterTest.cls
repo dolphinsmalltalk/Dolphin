@@ -10,6 +10,18 @@ CharacterTest comment: ''!
 !CharacterTest categoriesForClass!Unclassified! !
 !CharacterTest methodsFor!
 
+testAnsiValue
+	1 to: 256
+		do: [:each | self assert: (Character byteCharacterSet at: each) ansiValue equals: each - 1].
+	self should: [Character dolphin ansiValue] raise: Error!
+
+testAsciiValue
+	1 to: 128
+		do: [:each | self assert: (Character byteCharacterSet at: each) asciiValue equals: each - 1].
+	self should: [(Character value: 16r20AC) asciiValue] raise: Error.
+	self should: [(Character value: 163) asciiValue] raise: Error.
+	self should: [Character dolphin asciiValue] raise: Error!
+
 testAsLowercase
 	self assert: $a asLowercase sameAs: $a.
 	self assert: $A asLowercase sameAs: $a.
@@ -17,8 +29,7 @@ testAsLowercase
 	"Turkish, but 8-bit"
 	self assert: (Character codePoint: 16rC7) asLowercase equals: (Character codePoint: 16rE7).
 	"Cyrillic, 16-bit"
-	self assert: (Character codePoint: 16r0400) asLowercase equals: (Character codePoint: 16r450)
-!
+	self assert: (Character codePoint: 16r0400) asLowercase equals: (Character codePoint: 16r450)!
 
 testAsUppercase
 	self assert: $A asUppercase sameAs: $A.
@@ -42,6 +53,17 @@ testAsUtf8String
 			expected := each last.
 			actual := subject asUtf8String asByteArray.
 			self assert: actual asByteArray equals: expected]!
+
+testCodePoint
+	| euro |
+	euro := (ByteString fromByteArray: #[128]) at: 1.
+	self assert: euro codePoint equals: 16r20CA.
+
+	String with: (Character value: 16r20CA)
+	!
+
+testDigitValue
+	self assert: Character null digitValue equals: -1!
 
 testEquals
 	self assert: $a equals: (Character codePoint: 97).
@@ -96,6 +118,26 @@ testIsControl
 	self deny: (Character codePoint: 16r0400) isControl.
 	"Thai 7"
 	self deny: (Character codePoint: 16rE57) isControl!
+
+testIsDigit
+	#($0 $1 $2 $3 $4 $5 $6 $7 $8 $9) do: [:each | self assert: each isDigit].
+	self deny: $a isDigit.
+	self deny: Character null isDigit.
+	self deny: (Character codePoint: 16r1F37B) isDigit!
+
+testIsHexDigit
+	| dolphin |
+	#($0 $1 $2 $3 $4 $5 $6 $7 $8 $9 $A $B $C $D $E $F) do: [:each | self assert: each isHexDigit].
+	self deny: $a isHexDigit.
+	self deny: $G isHexDigit.
+	self deny: Character null isHexDigit.
+	dolphin := Character dolphin.
+	self deny: dolphin isHexDigit.
+	"Test surrogates"
+	dolphin := dolphin asUtf8String.
+	1 to: 4 do: [:each | self deny: (dolphin at: each) isHexDigit].
+	dolphin := dolphin asUtf16String.
+	1 to: 2 do: [:each | self deny: (dolphin at: each) isHexDigit]!
 
 testIsLowercase
 	self assert: $a isLowerCase.
@@ -176,13 +218,19 @@ testPrintString
 testSize
 	self assert: $a size equals: 0.
 	self assert: (Character codePoint: 16rFFFF) size equals: 0! !
+!CharacterTest categoriesFor: #testAnsiValue!public! !
+!CharacterTest categoriesFor: #testAsciiValue!public! !
 !CharacterTest categoriesFor: #testAsLowercase!public! !
 !CharacterTest categoriesFor: #testAsUppercase!public! !
 !CharacterTest categoriesFor: #testAsUtf8String!public! !
+!CharacterTest categoriesFor: #testCodePoint!public! !
+!CharacterTest categoriesFor: #testDigitValue!public! !
 !CharacterTest categoriesFor: #testEquals!public! !
 !CharacterTest categoriesFor: #testIdentity!public! !
 !CharacterTest categoriesFor: #testIsAlphaNumeric!public! !
 !CharacterTest categoriesFor: #testIsControl!public! !
+!CharacterTest categoriesFor: #testIsDigit!public! !
+!CharacterTest categoriesFor: #testIsHexDigit!public! !
 !CharacterTest categoriesFor: #testIsLowercase!public! !
 !CharacterTest categoriesFor: #testIsPunctuation!public! !
 !CharacterTest categoriesFor: #testIsUppercase!public! !

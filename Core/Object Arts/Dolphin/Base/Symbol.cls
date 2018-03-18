@@ -9,6 +9,8 @@ Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Symbol isNullTerminated: true!
 Symbol comment: 'Symbol is the class of <String>s which are guaranteed to be unique throughout the system.
 
+Presently Symbols are limited to the current byte character set, however the intention is to switch to UTF-8 symbols in future in order to allow any characters.
+
 Symbol complies with the following ANSI protocols:
 	Object
 	magnitude
@@ -38,18 +40,6 @@ argumentCount
 		argCount := argCount max: 1].
 	^argCount!
 
-asAnsiString
-	"Answer a new ANSI-encoded <readableString> containing the characters of 
-	the receiver."
-
-	| size |
-	size := self size.
-	^self
-		replaceBytesOf: (String new: size)
-		from: 1
-		to: size
-		startingAt: 1!
-
 asBlock
 	"Answer a block capable of sending the receiver to an object"
 
@@ -61,17 +51,42 @@ asBlock
 	arity = 4 ifTrue: [^[:r :a :b :c| r perform: self with: a with: b with: c]].
 	self error: 'Too many arguments'!
 
+asLowercase
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to lowercase."
+
+	"Implementation Note: The Win32 function converts in place, so we must first create a copy."
+
+	| copy |
+	copy := self basicCopy.
+	UserLibrary default stringLowerA: copy.
+	^copy!
+
 asString
 	"Answer a new <readableString> containing the characters of 
 	the receiver."
 
-	^String fromString: self!
+	<primitive: 217>
+	#todo.	"Return a UTF-8 string here."
+	^self asAnsiString!
 
 asSymbol
 	"Answer the <symbol> containing the characters of the receiver
 	(i.e. the receiver, since <symbol>s are unique)."
 
 	^self!
+
+asUppercase
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted
+	to uppercase."
+
+	"Implementation Note: The Win32 function converts in place, so we need to create a copy
+	first."
+
+	| copy |
+	copy := self basicCopy.
+	UserLibrary default stringUpperA: copy.
+	^copy!
 
 basicCopy
 	"Private - Answer a writable copy of the receiver."
@@ -95,6 +110,15 @@ displayString
 	implementation for Symbols which does not include the hash prefix."
 
 	^self basicCopy!
+
+first: anInteger
+	"Answer a new string comprising up to the leftmost anInteger characters of the receiver."
+
+	^self 
+		replaceBytesOf: (self species new: anInteger)
+		from: 1 
+		to: anInteger
+		startingAt: 1!
 
 forwardTo: anObject
 	"Send the <Object> argument the receiver as a niladic message,
@@ -197,7 +221,7 @@ species
 	"Answer the generic type of String and its subclasses. Statically bind to
 	the method's class so that subclasses will also answer that class."
 
-	^String!
+	^ByteString!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -208,13 +232,15 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
-!Symbol categoriesFor: #asAnsiString!converting!public! !
 !Symbol categoriesFor: #asBlock!converting!public! !
+!Symbol categoriesFor: #asLowercase!converting!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
+!Symbol categoriesFor: #asUppercase!converting!public! !
 !Symbol categoriesFor: #basicCopy!copying!private! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
+!Symbol categoriesFor: #first:!copying!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
 !Symbol categoriesFor: #hash!comparing!public! !
 !Symbol categoriesFor: #initialiseFrom:!initializing!private! !
@@ -233,7 +259,9 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #stbSaveOn:!binary filing!public! !
 
 Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
+Symbol methodProtocol: #readableString attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
 Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
+Symbol methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asLowercase #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #asString #asSymbol #asUppercase #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #between:and: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #max: #min: #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #sameAs: #select: #size #subStrings: #with:do:)!
 Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
 
 !Symbol class methodsFor!
@@ -291,7 +319,6 @@ initialize
 
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
-	encoding := EncodingAnsi.
 	VMLibrary default registryAt: #Symbol put: self!
 
 intern: aString
@@ -300,7 +327,7 @@ intern: aString
 	| symbol |
 	(symbol := self findInterned: aString) isNil
 		ifTrue: [
-			symbol := (super new: aString size) initialiseFrom: aString.
+			symbol := (self basicNew: aString size) initialiseFrom: aString.
 			self addUnique: symbol].
 	^symbol!
 
@@ -344,7 +371,7 @@ isLiteralSymbol: aSymbol
 			(includesColon and: [aSymbol last ~~ $:]) ifTrue: [^false]].
 	^true!
 
-new
+new: anInteger
 	"Instances of the receiver can only be created by using the #intern: and #internCharacter:
 	messages."
 
@@ -452,7 +479,7 @@ stbReadFromProxy: anSTBInFiler
 !Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
 !Symbol class categoriesFor: #internCharacter:!instance creation!public! !
 !Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
-!Symbol class categoriesFor: #new!instance creation!public! !
+!Symbol class categoriesFor: #new:!instance creation!public! !
 !Symbol class categoriesFor: #resizeTable!initializing!private! !
 !Symbol class categoriesFor: #resizeTable:!initializing!private! !
 !Symbol class categoriesFor: #stats!development!private! !

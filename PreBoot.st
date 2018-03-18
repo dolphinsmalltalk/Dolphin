@@ -391,13 +391,6 @@ formatWithArguments: aCollection
 		flags: Win32Constants.FORMAT_MESSAGE_FROM_STRING
 		withArguments: aCollection! !
 
-ArrayedCollection variableByteSubclass: #String
-	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf8 LineDelimiter NullPrintCharacter'
-	poolDictionaries: ''
-	classInstanceVariableNames: 'empty encoding'!
-
-	
 String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -410,12 +403,8 @@ UtfEncodedString variableByteSubclass: #Utf8String
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
-| i |
-i := String class indexOfInstVar: 'encoding'.
-String instVarAt: i put: 0.
-Symbol instVarAt: i put: 0.
-Utf8String instVarAt: i put: 1.
-Utf16String instVarAt: i put: 2!
+Utf8String extraInstanceSpec: 1.
+Utf16String extraInstanceSpec: 2!
 
 | i |
 i := String class indexOfInstVar: 'empty'.

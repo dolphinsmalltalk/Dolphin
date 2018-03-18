@@ -136,26 +136,13 @@ package methodNames
 	add: #String -> #asFilenameString;
 	add: #String -> #asPlainAsciiString;
 	add: #String -> #beginsWithUppercase:;
-	add: #String -> #breakIntoLinesOfLength:;
-	add: #String -> #breakIntoStringsOfLength:;
-	add: #String -> #breakIntoStringsOfLength:skipLeadingWhitespace:;
-	add: #String -> #endsWithUppercase:;
 	add: #String -> #isAllDigits;
 	add: #String -> #isAlphabeticalyBefore:;
 	add: #String -> #itcAsInteger;
-	add: #String -> #itcAsMoneyDecimal;
-	add: #String -> #itcAsMoneyDecimalWithPrecision:;
-	add: #String -> #itcReplaceAllSubstrings:with:;
 	add: #String -> #itcSubStrings:;
 	add: #String -> #splitString:;
-	add: #String -> #trimByReducingVowelsToSize:;
-	add: #String -> #trimOrPadLeftToSize:;
-	add: #String -> #trimOrPadToSize:;
-	add: #String -> #trimOrPadToSize:using:;
-	add: #String -> #trimOrZeroPadToSize:;
 	add: #String -> #trimSeparators;
 	add: #String -> #trimToSize:;
-	add: #String -> #trimToSizeWithDots:;
 	add: #Symbol -> #itcAsClass;
 	add: #Symbol -> #itcAsClassOrNil;
 	add: #Time -> #asOdbcString;
@@ -1317,50 +1304,6 @@ beginsWithUppercase: aString
 	].
 	^true!
 
-breakIntoLinesOfLength: maxLineSize 
-	| result coll |
-	self size <= maxLineSize ifTrue: [^self].
-	coll := self breakIntoStringsOfLength: maxLineSize skipLeadingWhitespace: true.
-	result := WriteStream on: String new.
-	coll do: 
-			[:eachLine | 
-			result
-				nextPutAll: eachLine;
-				nextPutAll: '
-'].
-	^result contents!
-
-breakIntoStringsOfLength: maxLineSize 
-	^self breakIntoStringsOfLength: maxLineSize skipLeadingWhitespace: true!
-
-breakIntoStringsOfLength: maxLineSize skipLeadingWhitespace: skipLeadingWhitespace 
-	| result beginPos pos wholeSize |
-	(wholeSize := self size) <= maxLineSize ifTrue: [^Array with: self].
-	result := OrderedCollection new.
-	beginPos := 1.
-	[beginPos <= wholeSize] whileTrue: 
-			[skipLeadingWhitespace == true 
-				ifTrue: 
-					[[beginPos <= wholeSize and: [(self at: beginPos) isSeparator]] 
-						whileTrue: [beginPos := beginPos + 1]].
-			beginPos > wholeSize 
-				ifFalse: 
-					[(pos := beginPos + maxLineSize - 1 min: wholeSize) = wholeSize 
-						ifFalse: 
-							[[(self at: pos) isSeparator not and: [pos > beginPos]] whileTrue: [pos := pos - 1].
-							pos <= beginPos ifTrue: [pos := beginPos + maxLineSize - 1 min: wholeSize]].
-					result add: (self copyFrom: beginPos to: pos) trimBlanks.
-					beginPos := pos + 1]].
-	^result!
-
-endsWithUppercase: aString 
-	| stringSize j |
-	(stringSize := aString size) > self size ifTrue: [^false].
-	j := self size - stringSize.
-	1 to: stringSize
-		do: [:i | (self at: (j := j + 1)) asUppercase = (aString at: i) ifFalse: [^false]].
-	^true!
-
 isAllDigits
 	^self trimBlanks conform: [:each | each isDigit]!
 
@@ -1395,33 +1338,6 @@ itcAsInteger
 			i := i + 1].
 	^negative ifTrue: [0 - value] ifFalse: [value]!
 
-itcAsMoneyDecimal
-	^self itcAsMoneyDecimalWithPrecision: 2!
-
-itcAsMoneyDecimalWithPrecision: precision 
-	| decimalPoint commaIndex pointIndex str |
-	str := self trimBlanks select: [:eachCh | '0123456789,.-+ ' includes: eachCh].
-	str size = 0 ifTrue: [^nil].
-	decimalPoint := $..
-	commaIndex := self indexOf: $,.
-	pointIndex := self indexOf: $..
-	decimalPoint := commaIndex > pointIndex ifTrue: [$,] ifFalse: [$.].
-	^ItcConverter 
-		getNumberFromString: str
-		scale: 20
-		precision: precision
-		thousandsSeparator: nil
-		decimalPoint: decimalPoint!
-
-itcReplaceAllSubstrings: aString1 with: aString2 
-	| i pos result |
-	pos := 1.
-	result := self.
-	[(i := result indexOfSubCollection: aString1 startingAt: pos) > 0] whileTrue: 
-			[result := (result copyFrom: 1 to: i - 1) , aString2 , (result copyFrom: i + aString1 size).
-			pos := i + aString2 size].
-	^result!
-
 itcSubStrings: separator 
 	separator class == Character 
 		ifFalse: 
@@ -1441,67 +1357,6 @@ splitString: delimiterString
 	coll add: str.
 	^coll!
 
-trimByReducingVowelsToSize: maxSize 
-	"Answers string trimmed to size maxSize by reducing words like:
-
-		Business -> Busins
-		Software -> Sftwr
-		Application -> App
-	"
-
-	| str pos |
-	str := self.
-	str size > maxSize 
-		ifTrue: 
-			["fist try taking all small case vowels away"
-			pos := str size.
-			[pos > 2 and: [str size > maxSize]] whileTrue: 
-					[((str at: pos) isVowel and: [(str at: pos) isLowercase]) 
-						ifTrue: 
-							[str := (str copyFrom: 1 to: pos - 1) 
-										, (pos = str size ifTrue: [''] ifFalse: [str copyFrom: pos + 1 to: str size])].
-					pos := pos - 1].
-
-			"then all the vowels except the first letter"
-			pos := str size.
-			[pos > 2 and: [str size > maxSize]] whileTrue: 
-					[(str at: pos) isVowel 
-						ifTrue: 
-							[str := (str copyFrom: 1 to: pos - 1) 
-										, (pos = str size ifTrue: [''] ifFalse: [str copyFrom: pos + 1 to: str size])].
-					pos := pos - 1].
-			"then if nothing else helps just trim it"
-			str := str trimToSize: maxSize].
-	^str!
-
-trimOrPadLeftToSize: desiredSize 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := ' ' , str].
-	^str!
-
-trimOrPadToSize: desiredSize 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := str , ' '].
-	^str!
-
-trimOrPadToSize: desiredSize using: aCharacter 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := str , (String with: aCharacter)].
-	^str!
-
-trimOrZeroPadToSize: desiredSize 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := '0' , str].
-	^str!
-
 trimSeparators
 	"Answer a String containing the receiver string with leading and
 	 trailing separators removed."
@@ -1516,36 +1371,20 @@ trimSeparators
 	^done ifTrue: [''] ifFalse: [self copyFrom: start to: end]!
 
 trimToSize: maxSize 
-	^self copyFrom: 1 to: (self size min: maxSize)!
-
-trimToSizeWithDots: maxSize 
-	^self size > maxSize ifFalse: [self] ifTrue: [(self copyFrom: 1 to: maxSize - 3) , '...']! !
+	^self copyFrom: 1 to: (self size min: maxSize)! !
 !String categoriesFor: #add:withDelimiter:!converting!public! !
 !String categoriesFor: #asDateFromDDMMYYYYString!public! !
 !String categoriesFor: #asDecimalOrFloat!converting!public! !
 !String categoriesFor: #asFilenameString!public! !
 !String categoriesFor: #asPlainAsciiString!public! !
 !String categoriesFor: #beginsWithUppercase:!converting!public! !
-!String categoriesFor: #breakIntoLinesOfLength:!comparing!public! !
-!String categoriesFor: #breakIntoStringsOfLength:!comparing!public! !
-!String categoriesFor: #breakIntoStringsOfLength:skipLeadingWhitespace:!comparing!public! !
-!String categoriesFor: #endsWithUppercase:!converting!public! !
 !String categoriesFor: #isAllDigits!converting!public! !
 !String categoriesFor: #isAlphabeticalyBefore:!converting!public! !
 !String categoriesFor: #itcAsInteger!converting!public! !
-!String categoriesFor: #itcAsMoneyDecimal!converting!public! !
-!String categoriesFor: #itcAsMoneyDecimalWithPrecision:!converting!public! !
-!String categoriesFor: #itcReplaceAllSubstrings:with:!converting!public! !
 !String categoriesFor: #itcSubStrings:!copying!public! !
 !String categoriesFor: #splitString:!converting!public! !
-!String categoriesFor: #trimByReducingVowelsToSize:!converting!public! !
-!String categoriesFor: #trimOrPadLeftToSize:!converting!public! !
-!String categoriesFor: #trimOrPadToSize:!converting!public! !
-!String categoriesFor: #trimOrPadToSize:using:!converting!public! !
-!String categoriesFor: #trimOrZeroPadToSize:!converting!public! !
 !String categoriesFor: #trimSeparators!converting!public! !
 !String categoriesFor: #trimToSize:!converting!public! !
-!String categoriesFor: #trimToSizeWithDots:!converting!public! !
 
 !String class methodsFor!
 

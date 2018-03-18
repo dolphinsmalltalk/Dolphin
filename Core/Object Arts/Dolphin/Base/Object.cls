@@ -1124,7 +1124,7 @@ printString
 	as a developer would want to see it."
 
 	| stream |
-	stream := String writeStream: 32.
+	stream := Utf8String writeStream: 32.
 	self printOn: stream.
 	^stream contents!
 

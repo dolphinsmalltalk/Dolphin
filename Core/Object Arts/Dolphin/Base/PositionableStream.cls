@@ -8,9 +8,13 @@ SequencedStream subclass: #PositionableStream
 PositionableStream guid: (GUID fromString: '{87b4c6f8-026e-11d3-9fd7-00a0cc3e4a32}')!
 PositionableStream comment: 'PositionableStream is the abstract class of <SequencedStream>s for which stream over sequence values from a Smalltalk sequenceable collection. Sub-instances of PositionableStream conform to the ANSI <collectionStream> protocol.
 
+Note that some inconsistencies arise when streaming over multi-byte string encodings, such as UTF-8. The position reported by the stream, and that to which it can be set, is always expressed as a code unit position. This has a number of consequences to be aware of:
+- Reading a single character may advance the position by more than one code unit position. In the case of UTF-8 characters are represented by 1 to 4 code units, so ReadStream>>next will increment the position between 1 and 4 bytes.
+- The stream position can be set to be in the middle of a character if chosen without consideration. For example adjusting the position by using #skip: should generally be avoided - it is better to remember a position, and reset to that. 
+
 Instance Variables
-	position		<Integer> 0 based offset of the current position in the stream
-	readLimit	<Integer> Either the maximum read position in the stream, or the position up to which the stream has previously been read (depends on subclass).'!
+	position		<Integer> 0 based offset of the current code unit position in the stream
+	readLimit		<Integer> Either the maximum read position in the stream, or the position up to which the stream has previously been read (depends on subclass).'!
 !PositionableStream categoriesForClass!Collections-Streams! !
 !PositionableStream methodsFor!
 
@@ -171,11 +175,7 @@ reset
 reverseContents
 	"Answer a copy of the receiver's contents in reverse order."
 
-	| newCollection size |
-	size := self size.
-	newCollection := self contentsSpecies new: size.
-	1 to: size do: [:i | newCollection at: i put: (collection at: size - i + 1)].
-	^newCollection!
+	^self contents reverse!
 
 setToEnd
 	"Set the position of the receiver to be past the last value in the stream."

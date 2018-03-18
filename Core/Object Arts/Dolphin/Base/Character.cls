@@ -1,12 +1,17 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Character
-	instanceVariableNames: 'codePoint'
-	classVariableNames: 'CharacterSet EscapeChars'
+	instanceVariableNames: 'code'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Default Utf8Mask Utf8TrailMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
+Character addClassConstant: 'EncodingMask' value: 1056964608!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
+Character addClassConstant: 'Utf16Mask' value: 33554432!
+Character addClassConstant: 'Utf32Mask' value: 50331648!
+Character addClassConstant: 'Utf8Mask' value: 16777216!
+Character addClassConstant: 'Utf8TrailMask' value: 192!
 Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. Each Character instance represents a specific Unicode code point. The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
 	$\0	- Null
 	$\a	- Bell
@@ -23,8 +28,8 @@ At present only byte characters (that are not control characters) have a printab
 !Character categoriesForClass!Magnitude-General! !
 !Character methodsFor!
 
-_beginsString: aString 
-	^aString first = self!
+_beginsString: aString
+	^aString readStream peek = self!
 
 _separateSubStringsIn: tokens
 	"Private - Answer the sub-strings of the <readableString> argument
@@ -62,7 +67,7 @@ _separateSubStringsIn: tokens
 < aCharacter
 	"Answer whether the receiver is less than the parameter aCharacter."
 
-	^self asInteger < aCharacter asInteger
+	^self codePoint < aCharacter asInteger
 !
 
 = comperand
@@ -70,13 +75,18 @@ _separateSubStringsIn: tokens
 	There is a unique Character instance for each possible byte-character value,
 	but the instances are not unique for codepoints > 255."
 
-	^self == comperand or: [comperand class == Character and: [comperand codePoint == self codePoint]]!
+	^self == comperand or: [comperand class == Character and: [comperand code == code]]!
 
 > aCharacter
 	"Answer whether the receiver is greater than the parameter aCharacter."
 
-	^self asInteger > aCharacter asInteger
+	^self codePoint > aCharacter asInteger
 !
+
+ansiValue
+	"Answers the ansi character value of the receiver."
+
+	^code <= 16rFF ifTrue: [code] ifFalse: [self error: 'Non-ansi code point']!
 
 appendToStream: puttableStream
 	"Private - Append the receiver's elements to the argument, puttableStream.
@@ -89,13 +99,18 @@ asAnsiString
 	"Answer a new ANSI-encoded <String> whose sole element is the receiver. It is an error if
 	the receiver's code point cannot be represented in ANSI encoding."
 
-	^String with: self!
+	^AnsiString with: self!
+
+asciiValue
+	"Answers the ascii character value of the receiver."
+
+	^code < 128 ifTrue: [code] ifFalse: [self error: 'Non-ascii code point']!
 
 asInteger
 	"Answer the <integer> character encoding (i.e. the Unicode code point) that the receiver
 	represents."
 
-	^codePoint!
+	^self codePoint!
 
 asLowercase
 	"Answer a <Character> which is the lowercase equivalent of the receiver."
@@ -104,13 +119,15 @@ asLowercase
 	uppercase letters are mapped to lowercase letters), this implementation will map other
 	characters, depending on the configured locale of the host OS."
 
-	^self class codePoint: (UserLibrary default charLower: self)!
+	| ucp |
+	^(ucp := self codePoint) <= 16rFFFF
+		ifTrue: [self class codePoint: (UserLibrary default charLower: ucp)]
+		ifFalse: [self]!
 
 asString
-	"Answer a new <String> whose sole element is the receiver. Assumes that the receiver represents an ANSI code point."
+	"Answer a new <String> whose sole element is the receiver."
 
-	#todo.	"This should return a Utf8String if the code point is not representable as an ANSI string."
-	^String with: self!
+	^Utf8String with: self!
 
 asSymbol
 	"Answer the Symbol representation of the receiver."
@@ -120,11 +137,14 @@ asSymbol
 asUppercase
 	"Answer a <Character> which is the uppercase equivalent of the receiver."
 
-	"Implementation Note: Apart from the ANSI asUppercase character mappings (basically all the
+	"Implementation Note: Apart from the ASCII asUppercase character mappings (basically all the
 	lowercase letters are mapped to uppercase letters), this implementation will map other
 	characters, depending on the configured locale of the host OS."
 
-	^self class codePoint: (UserLibrary default charUpper: self)!
+	| ucp |
+	^(ucp := self codePoint) <= 16rFFFF
+		ifTrue: [self class codePoint: (UserLibrary default charUpper: ucp)]
+		ifFalse: [self]!
 
 asUtf16String
 	"Answer a new UTF-16 encoded <String> whose sole element is the receiver."
@@ -136,16 +156,44 @@ asUtf8String
 
 	^Utf8String with: self!
 
+basicEncoding
+	"Private - Answer the <integer> encoding of the character, which will be one of the String encoding constants."
+
+	^code bitShift: -24!
+
 basicShallowCopy
 	"Answer the receiver as Characters are immutable."
 
 	^self!
 
-codePoint
-	"Answer the <integer> character encoding (i.e. the Unicode code point) that the receiver
-	represents."
+code
+	^code!
 
-	^codePoint!
+codePoint
+	"Answer the <integer> Unicode code point that the receiver represents. If the receiver is a 
+	UTF-8 or UTF-16 surrogate (partial character) this may not be a valid Unicode code point."
+
+	"Note that Dolphin will prefer to return an ANSI encoded character from the pre-allocated
+	set of 256 ANSI characters, or a UTF-32 encoded character for code points outside the ANSI
+	character set. Characters encounted when streaming or enumerating over any type of string
+	(including Utf8String and Utf16String) will always be either be either ANSI encoded or
+	UTF-32 encoded. UTF-32 encoded characters represent a full code point. However, in the case
+	of code that directly performs indexed access into a Utf8String or Utf16String, the VM may
+	return UTF-8 or UTF16- surrogates (respectively). These surrogates are really only valid for
+	use with further strings of their native encoding, as they do not represent a complete code
+	point and cannot be translated to another encoding without their companion surrogates."
+
+	^code <= 16rFF
+		ifTrue: [AnsiCodePoints at: code + 1]
+		ifFalse: 
+			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
+			code bitAnd: 16r1FFFFF]!
+
+codeUnit
+	"Answer the <integer> character code for the character in its native encoding. This can
+	never be greater than 16r10FFFF, which is the maximum Unicode code point."
+
+	^code bitAnd: 16r1FFFFF!
 
 deepCopy
 	"Answer the receiver, as Characters are immutable"
@@ -153,32 +201,43 @@ deepCopy
 	^self!
 
 digitValue
-	"Answer the digit representation of the receiver.
-	'digit' is defined as either 0-9, or uppercase A-Z (for 10-35).
-	Note: In versions of Dolphin prior to 3.0 this raised an error if the character
-	was not a valid digit character, but for compatibility with VW it now returns
-	-1. The method is now optimized for improved performance too."
+	"Answer the digit representation of the receiver. 'digit' is defined as either 0-9, or
+	uppercase A-Z (for 10-35)."
 
-	^codePoint > 127
+	"Note: In versions of Dolphin prior to 3.0 this raised an error if the character was not a
+	valid digit character, but for compatibility with VW it now returns -1. The method is now
+	optimized for improved performance too."
+
+	^code > ##($Z codePoint)
 		ifTrue: [-1]
 		ifFalse: 
-			[(#[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 2 3 4 5 6 7 8 9 10 0 0 0 0 0 0 0 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
-				at: codePoint + 1) - 1]!
+			[(#[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 2 3 4 5 6 7 8 9 10 0 0 0 0 0 0 0 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36]
+				at: code + 1) - 1]!
 
 displayOn: aStream
 	"Append the end-user display representation of the receiver to aStream."
 
 	aStream nextPut: self!
 
+encoding
+	"Answer a <Symbol> naming the encoding of the character, which will be one of #ansi, #utf8, #utf16 or #utf32."
+
+	^String encodings at: self basicEncoding + 1!
+
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
 
-	^codePoint!
+	^self codePoint!
 
 isAlphaNumeric
 	"Answer whether the receiver is a letter or a digit."
 
 	^UserLibrary default isCharAlphaNumeric: self!
+
+isAscii
+	"Answer whether the receiver is an ascii character"
+
+	^(code bitAnd: 16r1FFFFF) < 16r80!
 
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that
@@ -186,7 +245,7 @@ isAtomic
 
 	"Byte characters are atomic"
 
-	^codePoint <= 255!
+	^code <= 255!
 
 isControl
 	"Answer whether the receiver is a control character."
@@ -197,18 +256,27 @@ isDigit
 	"Answer whether the receiver is a representation of a decimal-digit character
 	(i.e. it is one of $0 $1 $2 $3 $4 $5 $6 $7 $8 $9)."
 
-	^self codePoint >= ##($0 codePoint) and: [self codePoint <= ##($9 codePoint)]!
+	^code >= ##($0 codePoint) and: [code <= ##($9 codePoint)]!
 
 isEnglishLetter
 	"Answer whether the receiver is a letter from the English alphabet."
 
-	^(self between: $a and: $z) or: [self between: $A and: $Z]!
+	| codePoint |
+	^(codePoint := self codePoint) <= ##($z codePoint) and: 
+			[codePoint >= ##($A codePoint)
+				and: [codePoint >= ##($a codePoint) or: [codePoint <= ##($Z codePoint)]]]!
+
+isGraph
+	"Answer whether the receiver is a printable character other than a space."
+
+	#todo. "The CRT functions for character classificiation don't work correctly for characters outside the BMP"
+	^CRTLibrary default iswgraph: self!
 
 isHexDigit
 	"Answer whether the receiver is a valid Smalltalk hexadecimal digit (i.e. digits and the
 	uppercase characters A through F)."
 
-	^self isDigit or: [self codePoint >= ##($A codePoint) and: [self codePoint <= ##($F codePoint)]]!
+	^self isDigit or: [code >= ##($A codePoint) and: [code <= ##($F codePoint)]]!
 
 isLetter
 	"Answer whether the receiver is an alphabetic character."
@@ -242,17 +310,24 @@ isLowerCase
 isPrintable
 	"Answer whether the receiver is a printable character."
 
+	#todo. "The CRT functions for character classificiation don't work correctly for characters outside the BMP"
 	^CRTLibrary default iswprint: self!
 
 isPunctuation
 	"Answer whether the receiver is a punctuation character."
 
+	#todo. "The CRT functions for character classificiation don't work correctly for characters outside the BMP"
 	^CRTLibrary default iswpunct: self!
 
 isSeparator
-	"Answer whether the receiver is a separator character (i.e. whitespace)."
+	"Answer whether the receiver is an ASCII separator character (i.e. whitespace)."
 
-	^codePoint == 32 or: [codePoint >= 9 and: [codePoint <= 13]]!
+	^code == 32 or: [code >= 9 and: [code <= 13]]!
+
+isSurrogate
+	"Answer whether the receiver is a leading or trailing code unit of a multi-code unit character in it's encoding."
+
+	^self isUtf16Surrogate or: [self isUtf8Surrogate]!
 
 isUppercase
 	"Answer whether the receiver is an uppercase letter."
@@ -264,6 +339,41 @@ isUpperCase
 
 	^self isUppercase
 !
+
+isUtf16Lead
+	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
+
+	^(code bitAnd: 16rFFFC00) == 16rD800!
+
+isUtf16Surrogate
+	"Answer whether the receiver is a UTF-16 surrogate (partial character)."
+
+	^(code bitAnd: 16rFFF800) == 16rD800!
+
+isUtf16Trail
+	"Answer whether the receiver is a UTF-16 lead surrogate (leading code unit of two part character)."
+
+	^(code bitAnd: 16rFFFC00) == 16rDC00!
+
+isUtf8
+	"Answer whether the receiver is a UTF-8 code unit."
+
+	^code < 16r80 or: [(code bitAnd: EncodingMask) == Utf8Mask]!
+
+isUtf8Lead
+	"Answer whether the receiver is a UTF-8 leading byte."
+
+	^(code bitAnd: EncodingMask) == Utf8Mask and: [code allMask: 2r11000000]!
+
+isUtf8Surrogate
+	"Answer whether the receiver is a UTF-8 surrogate (partial character)."
+
+	^(code bitAnd: EncodingMask | 16r80) == ##(Utf8Mask | 16r80)!
+
+isUtf8Trail
+	"Answer whether the receiver is a UTF-8 trailing byte."
+
+	^(code bitAnd: ##(EncodingMask | Utf8TrailMask)) == ##(Utf8Mask | 16r80)!
 
 isVowel
 	"Answer whether the receiver is an English vowel (a, e, i, o, or u).
@@ -280,8 +390,10 @@ isWhitespace
 printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
 
+	| codePoint |
 	aStream nextPut: $$.
-	(codePoint > 32 and: [codePoint <= 255 and: [codePoint ~= 127]])
+	codePoint := self codePoint.
+	(codePoint > 32 and: [codePoint < 127 or: [codePoint <= 255 and: [self isGraph]]])
 		ifTrue: [aStream nextPut: self]
 		ifFalse: 
 			[aStream nextPut: $\.
@@ -297,21 +409,16 @@ printOn: aStream
 shallowCopy
 	"Answer the receiver, as Characters are immutable."
 
-	^self!
-
-species
-	"Answer the 'species' of the receiver.
-	Implementation Note: The primitive superclass implementation
-	will fail for immediate classes, so we must override here."
-
-	^Character! !
+	^self! !
 !Character categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !Character categoriesFor: #_separateSubStringsIn:!double dispatch!private! !
 !Character categoriesFor: #<!comparing!public! !
 !Character categoriesFor: #=!comparing!public! !
 !Character categoriesFor: #>!comparing!public! !
+!Character categoriesFor: #ansiValue!accessing!public! !
 !Character categoriesFor: #appendToStream:!double dispatch!private! !
 !Character categoriesFor: #asAnsiString!converting!public! !
+!Character categoriesFor: #asciiValue!accessing!public! !
 !Character categoriesFor: #asInteger!converting!public! !
 !Character categoriesFor: #asLowercase!converting!public! !
 !Character categoriesFor: #asString!converting!public! !
@@ -319,17 +426,23 @@ species
 !Character categoriesFor: #asUppercase!converting!public! !
 !Character categoriesFor: #asUtf16String!converting!public! !
 !Character categoriesFor: #asUtf8String!converting!public! !
+!Character categoriesFor: #basicEncoding!accessing!private! !
 !Character categoriesFor: #basicShallowCopy!copying!public! !
+!Character categoriesFor: #code!accessing!private! !
 !Character categoriesFor: #codePoint!accessing!public! !
+!Character categoriesFor: #codeUnit!accessing!public! !
 !Character categoriesFor: #deepCopy!copying!public! !
 !Character categoriesFor: #digitValue!accessing!public! !
 !Character categoriesFor: #displayOn:!printing!public! !
+!Character categoriesFor: #encoding!accessing!public! !
 !Character categoriesFor: #hash!comparing!public! !
 !Character categoriesFor: #isAlphaNumeric!public!testing! !
+!Character categoriesFor: #isAscii!public!testing! !
 !Character categoriesFor: #isAtomic!public!testing! !
 !Character categoriesFor: #isControl!public!testing! !
 !Character categoriesFor: #isDigit!public!testing! !
 !Character categoriesFor: #isEnglishLetter!public!testing! !
+!Character categoriesFor: #isGraph!public!testing! !
 !Character categoriesFor: #isHexDigit!public!testing! !
 !Character categoriesFor: #isLetter!public!testing! !
 !Character categoriesFor: #isLinefeed!public!testing! !
@@ -339,17 +452,33 @@ species
 !Character categoriesFor: #isPrintable!public!testing! !
 !Character categoriesFor: #isPunctuation!public!testing! !
 !Character categoriesFor: #isSeparator!public!testing! !
+!Character categoriesFor: #isSurrogate!public!testing! !
 !Character categoriesFor: #isUppercase!public!testing! !
 !Character categoriesFor: #isUpperCase!public!testing! !
+!Character categoriesFor: #isUtf16Lead!public!testing! !
+!Character categoriesFor: #isUtf16Surrogate!public!testing! !
+!Character categoriesFor: #isUtf16Trail!public!testing! !
+!Character categoriesFor: #isUtf8!public!testing! !
+!Character categoriesFor: #isUtf8Lead!public!testing! !
+!Character categoriesFor: #isUtf8Surrogate!public!testing! !
+!Character categoriesFor: #isUtf8Trail!public!testing! !
 !Character categoriesFor: #isVowel!public!testing! !
 !Character categoriesFor: #isWhitespace!public!testing! !
 !Character categoriesFor: #printOn:!printing!public! !
 !Character categoriesFor: #shallowCopy!copying!public! !
-!Character categoriesFor: #species!accessing!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
 
 !Character class methodsFor!
+
+ansiValue: anInteger
+	^(CharacterSet lookup: anInteger + 1)
+		ifNil: [self error: 'Invalid ANSI code unit: ' , anInteger printString]!
+
+asciiValue: anInteger
+	^(anInteger >= 0 and: [anInteger <= 127])
+		ifTrue: [CharacterSet at: anInteger + 1]
+		ifFalse: [self error: 'Invalid ASCII code point: ' , anInteger printString]!
 
 backspace
 	"Answer the backspace control <Character>."
@@ -364,14 +493,21 @@ basicNew
 	^self shouldNotImplement!
 
 byteCharacterSet
-	"Answer the first 256 characters."
+	"Answer the ANSI character set, i.e. the complete set of Characters that can be encoded in an <AnsiString>."
 
 	^CharacterSet!
 
 codePoint: integer
 	"Answer an instance of the receiver with the <integer> encoding, integer."
 
-	^self value: integer!
+	^integer < 16r80
+		ifTrue: [CharacterSet at: integer + 1]
+		ifFalse: 
+			[(AnsiCharacters lookup: integer)
+				ifNil: 
+					[(self isValidCodePoint: integer)
+						ifTrue: [(self newCode: (Utf32Mask bitOr: integer)) isImmutable: true]
+						ifFalse: [self error: 'Invalid code point ' , integer hex]]]!
 
 cr
 	"Answer the carriage return control <Character>."
@@ -384,6 +520,15 @@ digitValue: anInteger
 	error."
 
 	^'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ' at: anInteger+1!
+
+dolphin
+	"Answer a <Character> representing the Dolphin symbol, i.e. Unicode code point U+1F42C."
+
+	"Like most symbolic code points, this is outside the basic multi-lingual plane, and so requires
+	multi-part UTF encodings (4x 8-bit code units in UTF-8 and 2x 16-bit code units in UTF-16),
+	making it useful for testing."
+
+	^$\x1F42C!
 
 eof
 	"Answer the EOF (Ctrl+Z) control <Character>.
@@ -413,7 +558,19 @@ initialize
 				at: 11 + 1 put: $v;
 				at: 12 + 1 put: $f;
 				at: 13 + 1 put: $r;
-				yourself)!
+				yourself).
+	self addClassConstant: 'Utf8Mask' value: String.EncodingUtf8 << 24.
+	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
+	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf16 << 24.
+	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
+	self addClassConstant: 'Utf8TrailMask' value: 16rC0.!
+
+isValidCodePoint: anInteger
+	"Answer whether the <integer> argument represents a valid Unicode code point. Invalid code
+	points are those outside the range 0..0x10FFFF, or within that range but non-characters."
+
+	#todo.	"This is not complete"
+	^anInteger <= Win32Constants.MAX_UCSCHAR and: [(anInteger bitAnd: 16rFFFE) ~~ 16rFFFE]!
 
 lf
 	"Answer the linefeed control <Character>."
@@ -426,9 +583,9 @@ new
 
 	^self shouldNotImplement!
 
-newCodePoint: anInteger
-	"Private - Answer a new instance of the receiver with the specified code point. This should
-	only be used for code points > 255."
+newCode: anInteger
+	"Private - Answer a new instance of the receiver with the specified code. This should
+	only be used for code points > 128."
 
 	<primitive: 157>
 	^self primitiveFailed!
@@ -448,6 +605,23 @@ null
 
 	^$\0!
 
+onStartup
+	| utf ansiCharacters |
+	AnsiCodePage := (VMLibrary default getProcAddress: 'AnsiCodePage' ifAbsent: [#[0 0 0 0]])
+				dwordAtOffset: 0.
+	utf := self byteCharacterSet asUtf16String.
+	AnsiCodePoints := ((0 to: utf size * 2 - 1 by: 2) collect: [:each | utf wordAtOffset: each])
+				isImmutable: true;
+				yourself.
+	ansiCharacters := IdentityDictionary new.
+	Character byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
+	ansiCharacters isImmutable: true.
+	AnsiCharacters := ansiCharacters.
+	Utf8Default := (CPINFOEXW codePage: Win32Constants.CP_UTF8) unicodeDefaultChar!
+
+replacement
+	^Utf8Default!
+
 space
 	"Answer the space <Character>."
 
@@ -458,33 +632,73 @@ tab
 
 	^$\t!
 
+utf16Value: anInteger
+	"Answer a Character representing the <integer> UTF-16 code unit, anInteger.
+	Note that the character may not represent a valid Unicode code point."
+
+	^anInteger < 16r80
+		ifTrue: 
+			["Ascii"
+			CharacterSet at: anInteger + 1]
+		ifFalse: 
+			[(AnsiCharacters lookup: anInteger)
+				ifNil: 
+					[(anInteger >= 16rD800 and: [anInteger <= 16rDFFF])
+						ifTrue: 
+							["Surrogate"
+							self newCode: (Utf16Mask bitOr: anInteger)]
+						ifFalse: 
+							[anInteger <= 16rFFFF
+								ifTrue: 
+									["Valid non-ascii/non-ansi code point"
+									self newCode: (Utf32Mask bitOr: anInteger)]
+								ifFalse: [self error: 'Invalid UTF-16 code unit: ' , anInteger printString]]]]!
+
+utf8Value: anInteger
+	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.
+	Note that the character may not represent a valid Unicode code point."
+
+	^anInteger < 16r80
+		ifTrue: 
+			["Ascii"
+			CharacterSet at: anInteger + 1]
+		ifFalse: 
+			[anInteger <= 16rFF
+				ifTrue: 
+					["Some kind of surrogate"
+					self newCode: (Utf8Mask bitOr: anInteger)]
+				ifFalse: [self error: 'Invalid UTF-8 code unit: ' , anInteger printString]]!
+
 value: anInteger
 	"Answer a <Character> representing the specified <integer> Unicode code point."
 
-	^anInteger <= 255
-		ifTrue: [CharacterSet at: anInteger + 1]
-		ifFalse: 
-			[^anInteger < 16r110000
-				ifTrue: [(self newCodePoint: anInteger) isImmutable: true]
-				ifFalse: [self error: 'Invalid code point ' , anInteger hex]]! !
+	^self codePoint: anInteger! !
+!Character class categoriesFor: #ansiValue:!instance creation!public! !
+!Character class categoriesFor: #asciiValue:!instance creation!public! !
 !Character class categoriesFor: #backspace!constants!public! !
 !Character class categoriesFor: #basicNew!instance creation!public! !
 !Character class categoriesFor: #byteCharacterSet!constants!public! !
 !Character class categoriesFor: #codePoint:!instance creation!public! !
 !Character class categoriesFor: #cr!constants!public! !
 !Character class categoriesFor: #digitValue:!instance creation!public! !
+!Character class categoriesFor: #dolphin!constants!public! !
 !Character class categoriesFor: #eof!constants!public! !
 !Character class categoriesFor: #esc!constants!public! !
 !Character class categoriesFor: #icon!constants!public! !
 !Character class categoriesFor: #initialize!development!initializing!public! !
+!Character class categoriesFor: #isValidCodePoint:!instance creation!public! !
 !Character class categoriesFor: #lf!constants!public! !
 !Character class categoriesFor: #new!instance creation!public! !
-!Character class categoriesFor: #newCodePoint:!instance creation!private! !
+!Character class categoriesFor: #newCode:!instance creation!private! !
 !Character class categoriesFor: #newPage!constants!public! !
 !Character class categoriesFor: #nl!constants!public! !
 !Character class categoriesFor: #null!constants!public! !
+!Character class categoriesFor: #onStartup!event handling!public! !
+!Character class categoriesFor: #replacement!accessing!public! !
 !Character class categoriesFor: #space!constants!public! !
 !Character class categoriesFor: #tab!constants!public! !
+!Character class categoriesFor: #utf16Value:!instance creation!public! !
+!Character class categoriesFor: #utf8Value:!instance creation!public! !
 !Character class categoriesFor: #value:!instance creation!public! !
 
 Character class methodProtocol: #'Character factory' attributes: #(#ansi #readOnly) selectors: #(#codePoint: #cr #lf #space #tab)!

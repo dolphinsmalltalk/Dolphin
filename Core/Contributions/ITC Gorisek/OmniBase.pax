@@ -343,6 +343,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog';
 	yourself).
@@ -1072,7 +1073,7 @@ odbShortAt: index put: longValue
 !Character methodsFor!
 
 odbBasicSerialize: serializer
-	codePoint < 256
+	code < 256
 		ifTrue: 
 			[serializer stream
 				putByte: 13;
@@ -1080,10 +1081,10 @@ odbBasicSerialize: serializer
 			^self].
 	serializer stream
 		putByte: 29;
-		putWord: codePoint!
+		putWord: self codePoint!
 
 odbSerialize: serializer
-	codePoint < 256
+	code < 256
 		ifTrue: 
 			[serializer stream
 				putByte: 13;
@@ -1091,7 +1092,7 @@ odbSerialize: serializer
 			^self].
 	serializer stream
 		putByte: 29;
-		putWord: codePoint! !
+		putWord: self codePoint! !
 !Character categoriesFor: #odbBasicSerialize:!public! !
 !Character categoriesFor: #odbSerialize:!OmniBase!public! !
 

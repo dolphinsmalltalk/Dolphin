@@ -117,7 +117,7 @@ announcementSubscriber
 
 new: newSize streamContents: blockWithArg 
 	| stream |
-	stream := self writeStream.
+	stream := self writeStream: newSize.
 	blockWithArg value: stream.
 	^stream contents!
 

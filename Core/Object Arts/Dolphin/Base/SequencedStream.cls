@@ -82,12 +82,12 @@ peek
 	"Answer the next element in the collection, but do not change the current position. Answer
 	nil if the receiver is at its end."
 
-	^self atEnd 
+	^self atEnd
 		ifFalse: 
-			[| anObject |
+			[| anObject pos |
+			pos := self position.
 			anObject := self next.
-			"We don't use #skip:, since we know going back 1 is in bounds"
-			self position: self position - 1.
+			self position: pos.
 			anObject]!
 
 peekFor: anObject
@@ -95,11 +95,10 @@ peekFor: anObject
 	then advance the current position and answer true. Otherwise answer false and do not change
 	the current position."
 
-	| next |
-	^(next := self nextOrNil) notNil and: 
-			[next = anObject or: 
-					["We don't use #skip:, since we know going back 1 is in bounds"
-					self position: self position - 1.
+	| pos next |
+	pos := self position.
+	^(next := self nextOrNil) notNil and: [next = anObject or: 
+					[self position: pos.
 					false]]!
 
 pop
@@ -129,12 +128,13 @@ setToEnd
 
 	^self subclassResponsibility!
 
-skip: anInteger 
+skip: anInteger
 	"Set the receiver's position to be the current position plus the argument, anInteger,
 	possibly adjusting the result so as to remain within the bounds of the collection."
 
-	self position: self position + anInteger.
-	#todo	"This may need to be modified to be compatible with ANSI definition"!
+	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded strings."
+
+	self position: self position + anInteger!
 
 skipSeparators
 	"Advance the receiver's position over any leading whitespace. Answer whether their are more
@@ -170,15 +170,17 @@ skipToAll: aCollection
 							partialStart := nil]]].
 	^true!
 
-skipWhile: aMonadicValuable 
+skipWhile: aMonadicValuable
 	"Advance the receiver's current position to be past the sequence of future values for which
 	the <monadicValuable> argument evaluates to true. Answer true if there are more elements on
 	the stream of false otherwise."
 
 	[self atEnd] whileFalse: 
-			[(aMonadicValuable value: self next) 
+			[| pos |
+			pos := self position.
+			(aMonadicValuable value: self next)
 				ifFalse: 
-					[self pop.
+					[self position: pos.
 					^true]].
 	^false!
 

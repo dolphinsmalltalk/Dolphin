@@ -1237,8 +1237,10 @@ clearRange: anInterval
 	self sciDeleteRange: anInterval start lengthDelete: anInterval size!
 
 codePage
-	"Answer a <Symbol> naming the code page currently in use, either #utf8, or #ansi if multi-byte
-	character support is disabled."
+	"Answer a <Symbol> naming the code page currently in use. Note that the multi-byte code
+	pages supported by Scintilla such as 932, or 936, will not work correctly in Dolphin as
+	there is basic support for multi-byte strings other than in UTF representations. Where
+	international character support is desired, the UTF-8 mode should be used."
 
 	^CodePages lookup: self sciGetCodePage!
 
@@ -4470,7 +4472,7 @@ newLine
 				lParam: 0]!
 
 newTextBuffer: anInteger
-	^(self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [String]) newFixed: anInteger!
+	^self stringClass newFixed: anInteger!
 
 nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
@@ -4550,10 +4552,10 @@ plainText
 						wParam: 0
 						lpParam: nil].
 	^len = 0
-		ifTrue: ['']
+		ifTrue: [self stringClass empty]
 		ifFalse: 
 			[| result |
-			result := self newTextBuffer: len - 1.
+			result := self stringClass newFixed: len - 1.
 			ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTEXT
@@ -9886,6 +9888,9 @@ stopStyling
 
 	self startStylingFrom: self textLength + 1!
 
+stringClass
+	^self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [String]!
+
 styleAt: anInteger 
 	"Answer a <ScintillaTextStyle> being the the style of the character at the specified character
 	position."
@@ -11543,6 +11548,7 @@ zoomOut
 !ScintillaView categoriesFor: #stopDwellTimer!notifications!private! !
 !ScintillaView categoriesFor: #stopRecording!**auto generated**!macro recording!public!scintilla interface! !
 !ScintillaView categoriesFor: #stopStyling!public!styling! !
+!ScintillaView categoriesFor: #stringClass!helpers!private! !
 !ScintillaView categoriesFor: #styleAt:!public!styling! !
 !ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 !ScintillaView categoriesFor: #styledTextFrom:to:!public!text retrieval & modification! !

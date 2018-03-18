@@ -95,7 +95,7 @@ closeHandle: aHandle
 !
 
 compareString: locale dwCmpFlags: dwCmpFlags lpString1: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2
-	<stdcall: sdword CompareString dword dword lpwstr sdword lpwstr sdword>
+	<stdcall: sdword CompareStringW dword dword lpwstr sdword lpwstr sdword>
 	^self invalidCall!
 
 compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
@@ -257,6 +257,10 @@ enumDateFormats: aCallbackThunk locale: locale dwFlags: dwFlags
 		);"
 
 	<stdcall: bool EnumDateFormatsW lpvoid dword dword>
+	^self invalidCall!
+
+enumSystemCodePages: aCallbackThunk dwFlags: dwFlags
+	<stdcall: bool EnumSystemCodePagesW lpvoid dword>
 	^self invalidCall!
 
 enumSystemLocales: aCallbackThunk dwFlags: dwFlags
@@ -550,6 +554,18 @@ getConsoleTitle: lpConsoleTitle nSize: nSize
 			[in]DWORD nSize);"
 
 	<stdcall: dword GetConsoleTitleW lpwstr dword>
+	^self invalidCall!
+
+getCPInfoExW: codepage dwFlags: dwFlags lpCPInfoEx: lpCPInfoEx
+	"Invoke the GetCPInfoExW() function of the module wrapped by the receiver.
+	Helpstring: Retrieves information about any valid installed or available code page.
+
+		BOOL __stdcall GetCPInfoExW(
+			[in]unsigned int codepage,
+			[in]DWORD dwFlags,
+			[out]CPINFOEXW* lpCPInfoEx);"
+
+	<stdcall: bool GetCPInfoExW dword dword CPINFOEXW*>
 	^self invalidCall!
 
 getCurrentProcess
@@ -1085,6 +1101,11 @@ isDBCSLeadByteEx: codepage testChar: testChar
 	<stdcall: bool IsDBCSLeadByte dword byte>
 	^self invalidCall!
 
+lcMapString: locale dwMapFlags: dwMapFlags lpScrStr: lpSrcStr cchSrc: cchSrc lpDestStr: lpDestStr cchDest: cchDest
+	<stdcall: sdword LCMapStringW sdword dword lpwstr sdword lpwstr sdword>
+	^self invalidCall
+!
+
 loadLibraryEx: aString hFile: reserved dwFlags: anInteger
 	"Map the specified executable module into the address space of the calling process, and answer the module
 	handle. If the function fails, the return value is nil.
@@ -1193,7 +1214,7 @@ multiByteToWideChar: intCP dwFlags: intFlags lpMultiByteStr: aStringIn
 			int cchWideChar 	// size of buffer 
 		);"
 
-	<stdcall: sdword MultiByteToWideChar dword dword lpstr sdword lpvoid sdword>
+	<stdcall: sdword MultiByteToWideChar dword dword lpvoid sdword lpvoid sdword>
 	^self invalidCall!
 
 openProcess: dwDesiredAccess bInheritHandle: bInheritHandle dwProcessId: dwProcessId 
@@ -1656,6 +1677,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #duplicateHandle:hSourceHandle:hTargetProcessHandle:lpTargetHandle:dwDesiredAccess:bInheritHandle:dwOptions:!public!win32 functions-handles and objects! !
 !KernelLibrary categoriesFor: #endUpdateResource:fDiscard:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #enumDateFormats:locale:dwFlags:!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #enumSystemCodePages:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #enumSystemLocales:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #enumTimeFormats:locale:dwFlags:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #expandEnvironmentStrings:!public!win32 functions-process and thread! !
@@ -1676,6 +1698,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
@@ -1722,6 +1745,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #isDBCSLeadByte:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #isDBCSLeadByteEx:testChar:!**auto generated**!public!win32 functions-national language support! !
+!KernelLibrary categoriesFor: #lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !

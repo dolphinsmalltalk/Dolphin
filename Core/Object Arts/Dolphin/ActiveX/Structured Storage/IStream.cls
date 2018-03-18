@@ -358,11 +358,13 @@ size
 	self Stat: struct grfStatFlag: STATFLAG_NONAME.
 	^struct cbSize!
 
-skip: deltaInteger 
+skip: deltaInteger
 	"Adjust the receiver's position by the <integer> argument, or as far as possible
 	remaining within the receiver's bounds."
 
-	self 
+	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded strings."
+
+	self
 		Seek: deltaInteger
 		dwOrigin: STREAM_SEEK_CUR
 		plibNewPosition: nil!

@@ -337,12 +337,6 @@ readPageFor: anInteger
 reset
 	self position: 0!
 
-reverseContents
-	"Answer the reversed contents of the receiver."
-
-	^(self contents readStream) reverseContents
-!
-
 setToEnd
 	"Set the file pointer to the end of the file. The current page is flushed and the last page in the file
 	will be read, unless already on the last page."
@@ -357,8 +351,9 @@ skip: anInteger
 	"Adjust the receiver's position by anInteger ensuring that it remains
 	within the bounds of the collection."
 
-	self position: (((self position + anInteger) max: 0) min: self size - 1)
-!
+	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded content."
+
+	self position: ((self position + anInteger max: 0) min: self size - 1)!
 
 updateLimits
 	"Private - Reconcile the stream position and read limit to include any data written since the last update."
@@ -436,7 +431,6 @@ writePage
 !FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !FileStream categoriesFor: #readPageFor:!buffer!private! !
 !FileStream categoriesFor: #reset!positioning!public! !
-!FileStream categoriesFor: #reverseContents!accessing!public! !
 !FileStream categoriesFor: #setToEnd!positioning!public! !
 !FileStream categoriesFor: #size!accessing!public! !
 !FileStream categoriesFor: #skip:!positioning!public! !

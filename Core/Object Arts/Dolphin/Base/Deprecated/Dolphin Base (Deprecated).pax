@@ -15,7 +15,6 @@ package classNames
 	add: #ConformantArrayPointerField;
 	add: #ConformantStructureArrayField;
 	add: #ConformantStructureArrayPointerField;
-	add: #CPINFO;
 	add: #MEMORY_BASIC_INFORMATION;
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
@@ -28,7 +27,6 @@ package methodNames
 	add: #_FPIEEE_VALUE -> #valueType;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
-	add: #Character -> #asciiValue;
 	add: #Class -> #addClassVarName:;
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
@@ -81,18 +79,15 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
-	add: #KernelLibrary -> #getCPInfo:lpCPInfo:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
 	add: #KernelLibrary -> #getVersionEx:;
 	add: #KernelLibrary -> #lstrcmp:lpString2:;
 	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
-	add: #Object -> #asDword;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
 	add: #Process -> #fpeMask;
 	add: #ShlwapiLibrary -> #pathStripPath:;
-	add: #String -> #asDword;
 	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
@@ -146,11 +141,6 @@ ArrayPointerField subclass: #ConformantArrayPointerField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #CPINFO
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -213,17 +203,6 @@ makeNullTerminated
 	self isNullTerminated: true! !
 !Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
 !Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
-
-!Character methodsFor!
-
-asciiValue
-	"Answers the ascii character value of the receiver."
-
-	"Retained for ST-80 compatibility only, as specific to ASCII char set. Use #codePoint instead."
-
-	#deprecated.
-	^codePoint! !
-!Character categoriesFor: #asciiValue!accessing!public! !
 
 !Class methodsFor!
 
@@ -602,17 +581,6 @@ lowSWord
 
 !KernelLibrary methodsFor!
 
-getCPInfo: codepage lpCPInfo: lpCPInfo
-	"Invoke the GetCPInfo() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the current original equipment manufacturer (OEM) code-page identifier for the system
-
-		BOOL __stdcall GetCPInfo(
-			UINT codepage,
-			CPINFO* lpCPInfo);"
-
-	<stdcall: bool GetCPInfo dword CPINFO*>
-	^self invalidCall!
-
 getFileSize: hfile lpFileSizeHigh: lpFileSizeHigh
 	<stdcall: dword GetFileSize handle dword*>
 	#deprecated. "Use #getFileSizeEx:lpFileSize:"
@@ -642,24 +610,11 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall! !
-!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
-
-!Object methodsFor!
-
-asDword
-	"Private - Answer the receiver in a form suitable for passing/returning
-	as the 32-bit parameter/return value. The default is self (which
-	will cause the default window proc. of the window to be called
-	for most objects other than Integers when used as a return value)."
-
-	#deprecated.
-	^self! !
-!Object categoriesFor: #asDword!converting!private! !
 
 !Package methodsFor!
 
@@ -690,19 +645,9 @@ pathStripPath: pszPath
 
 !String methodsFor!
 
-asDword
-	"Answer the receiver in a form suitable for passing and returning as a
-	32-bit integer value.
-	N.B. Be careful that the receiver is not GC'd until the result is no
-	longer required, or it will be a dangling pointer."
-
-	#deprecated.
-	^self yourAddress!
-
 asUnicodeString
 	#deprecated.
 	^self asUtf16String! !
-!String categoriesFor: #asDword!converting!public! !
 !String categoriesFor: #asUnicodeString!converting!public! !
 
 !String class methodsFor!

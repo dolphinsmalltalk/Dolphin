@@ -46,7 +46,11 @@ asAnsiString
 
 	| size |
 	size := self basicSize.
-	^(String new: size) replaceFrom: 1 to: size with: self startingAt: 1!
+	^(ByteString new: size)
+		replaceFrom: 1
+		to: size
+		with: self
+		startingAt: 1!
 
 asByteArray
 	"Answer a <ByteArray> containing the same elements as the receiver.

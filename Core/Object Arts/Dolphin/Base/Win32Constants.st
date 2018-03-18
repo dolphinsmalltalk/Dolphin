@@ -97,6 +97,9 @@ Win32Constants at: 'COLOR_WINDOW' put: 16r5!
 Win32Constants at: 'COLOR_WINDOWFRAME' put: 16r6!
 Win32Constants at: 'COLOR_WINDOWTEXT' put: 16r8!
 Win32Constants at: 'CP_ACP' put: 16r0!
+Win32Constants at: 'CP_INSTALLED' put: 16r1!
+Win32Constants at: 'CP_SUPPORTED' put: 16r2!
+Win32Constants at: 'CP_UNICODE' put: 16r4B0!
 Win32Constants at: 'CP_UTF7' put: 16rFDE8!
 Win32Constants at: 'CP_UTF8' put: 16rFDE9!
 Win32Constants at: 'CREATE_ALWAYS' put: 16r2!
@@ -406,6 +409,7 @@ Win32Constants at: 'IMAGE_ICON' put: 16r1!
 Win32Constants at: 'INFINITE' put: -16r1!
 Win32Constants at: 'INVALID_HANDLE_VALUE' put: 16rFFFFFFFF!
 Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
+Win32Constants at: 'LCMAP_TITLECASE' put: 16r300!
 Win32Constants at: 'LF_FACESIZE' put: 16r20!
 Win32Constants at: 'LF_FULLFACESIZE' put: 16r40!
 Win32Constants at: 'LINGUISTIC_IGNORECASE' put: 16r10!
@@ -454,6 +458,7 @@ Win32Constants at: 'MAPVK_VSC_TO_VK' put: 16r1!
 Win32Constants at: 'MAPVK_VSC_TO_VK_CHAR' put: 16r2!
 Win32Constants at: 'MAPVK_VSC_TO_VK_EX' put: 16r3!
 Win32Constants at: 'MAX_COMPUTERNAME_LENGTH' put: 16rF!
+Win32Constants at: 'MAX_UCSCHAR' put: 16r10FFFF!
 Win32Constants at: 'MB_ERR_INVALID_CHARS' put: 16r8!
 Win32Constants at: 'MEM_COMMIT' put: 16r1000!
 Win32Constants at: 'MEM_DECOMMIT' put: 16r4000!

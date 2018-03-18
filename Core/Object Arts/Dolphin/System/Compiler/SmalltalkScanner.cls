@@ -222,7 +222,7 @@ numberTokenClass
 	^StNumberLiteralToken!
 
 on: aStream
-	buffer := WriteStream on: (String new: 60).
+	buffer := WriteStream on: (Utf8String new: 60).
 	stream := aStream.
 	classificationTable := ClassificationTable.
 	errorHandler := self.
@@ -719,7 +719,7 @@ step
 				ifTrue: [#separator]
 				ifFalse: 
 					[index == 10 ifTrue: [line := line + 1].
-					classificationTable at: index].
+					classificationTable at: index ifAbsent: [#separator]].
 	^currentCharacter!
 
 stepBackTo: anInteger

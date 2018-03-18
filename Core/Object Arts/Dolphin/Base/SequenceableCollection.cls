@@ -172,6 +172,13 @@ at: index
 
 	^self subclassResponsibility!
 
+at: anInteger encode: anObject
+	"Encoded the specified object beginning at the specified position in the receiver. Answer
+	the number of slots consumed by the encoded representation."
+
+	self at: anInteger put: anObject.
+	^1!
+
 at: index ifAbsent: exceptionBlock
 	"Answer an <Object> which is the element of the receiver 
 	at the specified index. If the index is out of bounds answer
@@ -809,6 +816,9 @@ lookup: keyInteger
 
 	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self at: keyInteger]!
 
+maxEncoding
+	^1!
+
 mutableCopy
 	"Answer a <sequencedReadableCollection> like the receiver, but which is a mutable copy with the same elements."
 
@@ -1142,6 +1152,7 @@ writeStream
 !SequenceableCollection categoriesFor: #asRunArray!converting!public! !
 !SequenceableCollection categoriesFor: #associations!accessing!public! !
 !SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
+!SequenceableCollection categoriesFor: #at:encode:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:ifPresent:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:put:!accessing!public! !
@@ -1200,6 +1211,7 @@ writeStream
 !SequenceableCollection categoriesFor: #lastIndexOf:!public!searching! !
 !SequenceableCollection categoriesFor: #lastIndexOf:ifAbsent:!public!searching! !
 !SequenceableCollection categoriesFor: #lookup:!accessing!public! !
+!SequenceableCollection categoriesFor: #maxEncoding!constants!private! !
 !SequenceableCollection categoriesFor: #mutableCopy!copying!public! !
 !SequenceableCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !SequenceableCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !

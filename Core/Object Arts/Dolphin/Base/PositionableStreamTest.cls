@@ -192,6 +192,19 @@ testPeekFor
 	self assert: stream atEnd.
 	self closeTempStream: stream!
 
+testReverseContents
+	| stream euro |
+	stream := self streamWith: ''.
+	self assert: stream reverseContents isEmpty.
+	self closeTempStream: stream.
+	euro := $\x20AC asString.
+	stream := self streamWith: euro.
+	self assert: stream reverseContents = euro.
+	self closeTempStream: stream.
+	stream := self streamWith: '¡Hola!!'.
+	self assert: stream reverseContents = '!!aloH¡'.
+	self closeTempStream: stream!
+
 testSkipToAllColon
 	| chars stream |
 	chars := 'aababcabcdabcde'.
@@ -402,6 +415,7 @@ testUpToEnd
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !

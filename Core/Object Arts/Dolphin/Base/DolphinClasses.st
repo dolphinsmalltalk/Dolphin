@@ -597,9 +597,9 @@ ArrayedCollection subclass: #RunArray
 	classInstanceVariableNames: ''!
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf8 LineDelimiter NullPrintCharacter'
+	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter NullPrintCharacter'
 	poolDictionaries: ''
-	classInstanceVariableNames: 'encoding empty'!
+	classInstanceVariableNames: 'empty'!
 ArrayedCollection variableSubclass: #WeakArray
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -636,6 +636,11 @@ ExternalAddress variableByteSubclass: #ExternalMemory
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ExternalAddress variableByteSubclass: #REFGUID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+String variableByteSubclass: #ByteString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1080,6 +1085,11 @@ ExternalStructure subclass: #_FPIEEE_VALUE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalStructure subclass: #CPINFOEXW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalStructure subclass: #DOUBLE
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1386,8 +1396,8 @@ Magnitude subclass: #Association
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
-	instanceVariableNames: 'codePoint'
-	classVariableNames: 'CharacterSet EscapeChars'
+	instanceVariableNames: 'code'
+	classVariableNames: 'AnsiCharacters AnsiCodePoints CharacterSet EscapeChars'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date

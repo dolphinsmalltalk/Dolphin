@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollectionTest subclass: #AbstractStringTest
 	instanceVariableNames: ''
@@ -18,16 +18,25 @@ assimilateString: aString
 	^self subclassResponsibility!
 
 caseConversionCases
-	^#(#('abc �12' 'ABC �12') #('o�a' 'O�A') #('�rv�zturo t�k�rf�r�g�p' '�RV�ZTURO T�K�RF�R�G�P'))!
+	"#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP') #('a\0b' 'A\0B'))"
+
+	^{{AnsiString fromByteArray: #[97 98 99 32 163 49 50].
+			AnsiString fromByteArray: #[65 66 67 32 163 49 50]}.
+		{AnsiString fromByteArray: #[111 241 97]. AnsiString fromByteArray: #[79 209 65]}.
+		{AnsiString
+				fromByteArray: #[225 114 118 237 122 116 117 114 111 32 116 252 107 246 114 102 250 114 243 103 233 112].
+			AnsiString
+				fromByteArray: #[193 82 86 205 90 84 85 82 79 32 84 220 75 214 82 70 218 82 211 71 201 80]}.
+		{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
 
 equalityTestCases
-	^#('' 'a' 'abc' '' 't�k�rf�r�g�p')!
+	^#('' 'a' 'abc' '' 'tükörfúrógép' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'a🐬' 'a £=1.2€')!
 
 newNumericArray: anInteger 
 	^self newCollection: ((1 to: anInteger) collect: [:each | Character digitValue: each])!
 
 reverseTestCases
-	^#(#('abc' 'cba') #('o�a' 'a�o'))!
+	^#(#('' '') #('a' 'a') #('ab' 'ba') #('abc' 'cba') #('oña' 'año'))!
 
 testAsByteArray
 	super testAsByteArray.
@@ -69,12 +78,39 @@ testCaseConversions
 			[:each |
 			subject := self assimilateString: each first.
 			actual := subject asUppercase.
-			expected := (self assimilateString: each last) basicCopy.
-			self assert: actual equals: expected.
-			self assert: actual asLowercase equals: subject basicCopy]!
+			expected := (self assimilateString: each last).
+			self assert: actual equals: expected mutableCopy.
+			actual := expected asLowercase.
+			self assert: actual equals: subject mutableCopy]!
+
+testClassReadFrom
+	"Tests String class>>readFrom:. Some interested cases are:
+	- Content before the first quote (skipped - not sure that is right, but has always done that)
+	- Unterminated (reads up to end)
+	- Embedded (doubled) quotes - quotes are undoubled
+	- Trailing content - should be left with the stream positioned after the final quote."
+
+	{#('' '' '').
+		#('abc' '' '').
+		#('abc''A''B' 'A' 'B').
+		#('a''AB''CD' 'AB' 'CD').
+		#('''a''' 'a' '').
+		#('''a' 'a' '').
+		#('''abc''' 'abc' '').
+		#('''abc' 'abc' '').
+		#('''abc''''d'' ''e''' 'abc''d' ' ''e''')} do: 
+				[:each |
+				| actual expected stream remainder |
+				expected := self assimilateString: each second.
+				stream := each first readStream.
+				actual := self collectionClass readFrom: stream.
+				self assert: actual class identicalTo: self collectionClass.
+				self assert: actual equals: expected.
+				remainder := stream upToEnd.
+				self assert: remainder equals: each last]!
 
 testEmpty
-	self assert: self collectionClass empty class sameAs: self collectionClass!
+	self assert: self collectionClass empty class identicalTo: self collectionClass!
 
 testEquals
 	| abc |
@@ -299,6 +335,16 @@ testInvalidComparisons
 	literals do: [:each | self should: [each > str] raise: Error].
 	literals do: [:each | self should: [each >= str] raise: Error]!
 
+testMutableCopy
+	self caseConversionCases do: 
+			[:each |
+			| subject actual |
+			subject := self assimilateString: each first.
+			actual := subject mutableCopy.
+			self deny: actual identicalTo: subject.
+			self assert: actual isKindOf: subject species.
+			self assert: (actual _cmp: subject) equals: 0]!
+
 testReverse
 	"Tests reversing a variety of 1, 2, 3 and 4 byte encodings"
 
@@ -308,17 +354,20 @@ testReverse
 			subject := self assimilateString: each first.
 			expected := self assimilateString: each last.
 			actual := subject reverse.
-			self assert: actual equals: expected basicCopy]!
+			self assert: actual equals: expected mutableCopy.
+			"Reverse it back"
+			actual := actual reverse.
+			self assert: actual equals: subject mutableCopy]!
 
 testStreamUtfRoundTrip
 	| expected actual |
-	self skipUnless: [self collectionClass ~~ Symbol].
+	self collectionClass == Symbol ifTrue: [^self].
 	"Test a variety of 1 to 4 byte encodings"
 	{''.
 		'a'.
 		'abc'.
-		'�'.
-		'�tre'.
+		'£'.
+		'être'.
 		Utf8String fromByteArray: #[228 185 157 233 190 141 231 129 163].
 		Utf8String
 			fromByteArray: #[230 150 135 229 173 151 229 140 150 227 129 145 227 131 134 227 130 185 227 131 136].
@@ -375,9 +424,9 @@ testSubStrings
 
 testTrimNulls
 	"#1187"
+
 	| string trimmed |
-	string := self collectionClass new: 3.
-	string at: 1 put: $a.
+	string := self newCollection: #($a $\0 $\0).
 	trimmed := string trimNulls.
 	self assert: trimmed size = 1.
 	self assert: (self newCollection: trimmed) = (self newCollection: 'a')!
@@ -456,7 +505,18 @@ testWithNormalizedLineDelimiters
 	"CRLFLF"
 	self assert: (cr , lf , lf) withNormalizedLineDelimiters = (crlf , crlf).
 	"CRLFCR"
-	self assert: (cr , lf , cr) withNormalizedLineDelimiters = (crlf , crlf)! !
+	self assert: (cr , lf , cr) withNormalizedLineDelimiters = (crlf , crlf)!
+
+verifyConcatenationResult: resultString of: receiverString with: argumentString
+	"When concatenating strings the result should be of the same type as the receiver, unless a
+	UTF string is being concatenated with an AnsiString, in which case the result will be of the
+	same type as the argument."
+
+	| expectedClass |
+	expectedClass := receiverString species.
+	(expectedClass == AnsiString and: [argumentString isString])
+		ifTrue: [expectedClass := argumentString species].
+	self assert: resultString isKindOf: expectedClass! !
 !AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
 !AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AbstractStringTest categoriesFor: #caseConversionCases!constants!private! !
@@ -464,18 +524,21 @@ testWithNormalizedLineDelimiters
 !AbstractStringTest categoriesFor: #newNumericArray:!helpers!private! !
 !AbstractStringTest categoriesFor: #reverseTestCases!constants!private! !
 !AbstractStringTest categoriesFor: #testAsByteArray!public!unit tests! !
-!AbstractStringTest categoriesFor: #testAt!public!testing / accessing! !
+!AbstractStringTest categoriesFor: #testAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testCapitalized!public!unit tests! !
 !AbstractStringTest categoriesFor: #testCaseConversions!public! !
+!AbstractStringTest categoriesFor: #testClassReadFrom!public! !
 !AbstractStringTest categoriesFor: #testEmpty!public!testing / accessing! !
 !AbstractStringTest categoriesFor: #testEquals!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAt!public!unit tests! !
 !AbstractStringTest categoriesFor: #testFindStringStartingAtIgnoreCase!public!unit tests! !
 !AbstractStringTest categoriesFor: #testInvalidComparisons!public!unit tests! !
+!AbstractStringTest categoriesFor: #testMutableCopy!public! !
 !AbstractStringTest categoriesFor: #testReverse!public! !
 !AbstractStringTest categoriesFor: #testStreamUtfRoundTrip!public! !
 !AbstractStringTest categoriesFor: #testSubStrings!public!unit tests! !
 !AbstractStringTest categoriesFor: #testTrimNulls!public!unit tests! !
 !AbstractStringTest categoriesFor: #testUnescapePercents!public!unit tests! !
 !AbstractStringTest categoriesFor: #testWithNormalizedLineDelimiters!public!unit tests! !
+!AbstractStringTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
 

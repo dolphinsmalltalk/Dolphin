@@ -356,6 +356,11 @@ reset
 
 	self isDevice ifTrue: [self errorNotPositionable] ifFalse: [crtlib rewind: stream]!
 
+reverseContents
+	"Answer a copy of the receiver's contents in reverse order."
+
+	^self contents reverse!
+
 seek: originInteger offset: offsetInteger
 	self isDevice ifTrue: [^self errorNotPositionable].
 	(crtlib
@@ -392,6 +397,8 @@ size
 
 skip: anInteger
 	"Adjust the receiver's position by the <integer> argument."
+
+	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded strings."
 
 	self seek: SEEK_CUR offset: anInteger!
 
@@ -453,6 +460,7 @@ upToEnd
 !StdioFileStream categoriesFor: #position!accessing!public! !
 !StdioFileStream categoriesFor: #position:!positioning!public! !
 !StdioFileStream categoriesFor: #reset!positioning!public! !
+!StdioFileStream categoriesFor: #reverseContents!public! !
 !StdioFileStream categoriesFor: #seek:offset:!helpers!positioning!private! !
 !StdioFileStream categoriesFor: #setStream:flags:name:!initializing!private! !
 !StdioFileStream categoriesFor: #setToEnd!positioning!public! !
