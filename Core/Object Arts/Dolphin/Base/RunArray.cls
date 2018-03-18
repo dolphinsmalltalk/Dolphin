@@ -44,6 +44,15 @@ at: anInteger
 			anInteger <= index ifTrue: [^values at: i]].
 	^self errorSubscriptBounds: anInteger!
 
+at: index ifAbsent: exceptionBlock
+	"Answer an <Object> which is the element of the receiver 
+	at the specified index. If the index is out of bounds answer
+	the result of evaluating the <niladicValuable> exceptionBlock."
+
+	^(index > 0 and: [index <= self size])
+		ifTrue: [self at: index]
+		ifFalse: [exceptionBlock value]!
+
 at: index put: newElement
 	"Replace the element of the receiver at the specified <integer> index with 
 	the <Object> argument, newElement. If the index is out of bounds, raise 
@@ -121,6 +130,7 @@ species
 !RunArray categoriesFor: #anySatisfy:!enumerating!public! !
 !RunArray categoriesFor: #asRunArray!converting!public! !
 !RunArray categoriesFor: #at:!accessing!public! !
+!RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
 !RunArray categoriesFor: #at:put:!accessing!public! !
 !RunArray categoriesFor: #postCopy!copying!public! !
 !RunArray categoriesFor: #resize:!mutating!public! !

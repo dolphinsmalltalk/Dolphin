@@ -45,6 +45,14 @@ at: index
 	<primitive: 60>
 	^self errorAt: index!
 
+at: index ifAbsent: exceptionBlock
+	"Answer an <Object> which is the element of the receiver 
+	at the specified index. If the index is out of bounds answer
+	the result of evaluating the <niladicValuable> exceptionBlock."
+
+	<primitive: 60>
+	^exceptionBlock value!
+
 at: index put: newElement
 	"Replace the element of the receiver at the specified <integer> index with 
 	the <Object> argument, newElement. If the index is out of bounds, raise 
@@ -167,6 +175,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
+!ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
 !ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !ArrayedCollection categoriesFor: #findFirst:!public!searching! !
