@@ -284,6 +284,15 @@ basicNew: aSmallInteger
 	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
 	^self primitiveFailed!
 
+basicNewFixed: aSmallInteger
+	"Private - As #newFixed:, but must not be overridden by subclasses."
+
+	<primitive: 76>
+	self isFixed ifTrue: [^Error notIndexable: self].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
+	self isPointers ifTrue: [^self errorNotPinnable].
+	^self primitiveFailed!
+
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil."
@@ -389,6 +398,9 @@ errorNonInstantiable
 	"Private - Report an error that an attempt was made to instantiate an abstract class."
 
 	^self error: 'Cannot instantiate abstract class'!
+
+errorNotPinnable
+	^self error: 'Pointer objects cannot be pinned'!
 
 extraInstanceSpec
 	"Private - Answer the user class instance specification of the receiver (a 16-Bit Integer)."
@@ -702,7 +714,7 @@ newFixed: aSmallInteger
 	<primitive: 76>
 	self isFixed ifTrue: [^Error notIndexable: self].
 	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
-	self isPointers ifTrue: [^self error: 'Pointer objects cannot be pinned'].
+	self isPointers ifTrue: [^self errorNotPinnable].
 	^self primitiveFailed!
 
 primAllInstances
@@ -1144,6 +1156,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #basicCompile:flags:!compiling!private! !
 !Behavior categoriesFor: #basicNew!instance creation!private! !
 !Behavior categoriesFor: #basicNew:!instance creation!private! !
+!Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
 !Behavior categoriesFor: #bindingFor:!compiling!public! !
 !Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Behavior categoriesFor: #changedMethods!methods-accessing!private! !
@@ -1158,6 +1171,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Behavior categoriesFor: #environment!constants!public! !
 !Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
+!Behavior categoriesFor: #errorNotPinnable!error handling!private! !
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
