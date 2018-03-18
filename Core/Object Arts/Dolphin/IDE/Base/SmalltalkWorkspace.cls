@@ -1967,6 +1967,10 @@ defaultTextStyles
 					forecolor: Color darkGray;
 					isItalic: true;
 					yourself);
+		add: ((ScintillaTextStyle name: #whitespace)
+					description: 'Whitespace, when visible';
+					forecolor: Color gray;
+					yourself);
 		yourself.
 	self assert: [answer size < 32].
 	"Scintilla pre-defined styles - note how #normal style inherits font of the view (which in turn should be the default system font)"
