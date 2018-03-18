@@ -146,7 +146,7 @@ prefixTextDisabled: aString at: aPoint
 		drawState: self asParameter
 		hbr: nil 
 		lpOutputFunc: 0 
-		lData: aString asDword
+		lData: aString asUIntPtr
 		wData: 0 
 		x: aPoint x y: aPoint y 
 		cx: self extent x cy: self extent y
