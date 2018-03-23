@@ -512,21 +512,6 @@ errorFileCorrupt
 
 	self error: ('FileIn of <1s> package has failed, file is corrupt' expandMacrosWith: self name)!
 
-fileInClassDefinitions: aFileStream 
-	"Private - Load all package classes from the filestream up to the end marker.
-	Note that this is only used for loading binary legacy (pre 4.0) packages."
-
-	| filer |
-	aFileStream beText.
-	filer := ChunkSourceFiler on: aFileStream.
-	
-	[filer atEnd ifTrue: [^self errorFileCorrupt].
-	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition'] 
-			whileFalse.
-	aFileStream skipSeparators.
-	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
-	aFileStream beBinary!
-
 fileInClasses
 	"Private - Load all packaged classes from external files"
 
@@ -2389,7 +2374,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #endClassDefinitionsMarker!constants!private! !
 !Package categoriesFor: #environment!constants!private! !
 !Package categoriesFor: #errorFileCorrupt!exceptions!private! !
-!Package categoriesFor: #fileInClassDefinitions:!development!public!source filing! !
 !Package categoriesFor: #fileInClasses!private!source filing! !
 !Package categoriesFor: #fileInScript:!private!source filing! !
 !Package categoriesFor: #fileLocator!accessing!public! !

@@ -12,6 +12,7 @@ package basicPackageVersion: '6.1.1'.
 package methodNames
 	add: #Package -> #basicLoadVersion4:filer:;
 	add: #Package -> #errorUnknownFileVersion:;
+	add: #Package -> #fileInClassDefinitions:;
 	add: #Package -> #initializeLegacyResources;
 	add: #Package -> #loadGlobalsFromFiler:;
 	add: #Package -> #loadLegacyPAC:;
@@ -68,6 +69,21 @@ errorUnknownFileVersion: foundVersion
 	self error:
 			'Unknown package file version found ', foundVersion displayString,
 			'. Current version is ', self class packageFileVersion displayString!
+
+fileInClassDefinitions: aFileStream 
+	"Private - Load all package classes from the filestream up to the end marker.
+	Note that this is only used for loading binary legacy (pre 4.0) packages."
+
+	| filer |
+	aFileStream beText.
+	filer := ChunkSourceFiler on: aFileStream.
+	
+	[filer atEnd ifTrue: [^self errorFileCorrupt].
+	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition'] 
+			whileFalse.
+	aFileStream skipSeparators.
+	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
+	aFileStream beBinary!
 
 initializeLegacyResources
 	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
@@ -221,6 +237,7 @@ versionLookup
 		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"! !
 !Package categoriesFor: #basicLoadVersion4:filer:!binary filing!private! !
 !Package categoriesFor: #errorUnknownFileVersion:!binary filing!exceptions!private! !
+!Package categoriesFor: #fileInClassDefinitions:!development!public!source filing! !
 !Package categoriesFor: #initializeLegacyResources!helpers!private! !
 !Package categoriesFor: #loadGlobalsFromFiler:!binary filing!private! !
 !Package categoriesFor: #loadLegacyPAC:!binary filing!private! !
