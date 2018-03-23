@@ -35,35 +35,10 @@ namespace ST
 
 		__declspec(property(get = getCodeUnit)) MWORD CodeUnit;
 		MWORD getCodeUnit() const { return ObjectMemoryIntegerValueOf(m_code) & 0xffffff; }
+
+		__declspec(property(get = getCodePoint)) uint32_t CodePoint;
+		uint32_t getCodePoint() const;
 	};
-
-	inline CharOTE* Character::NewUnicode(uint32_t value)
-	{
-		CharOTE* character;
-
-		if (value < 0x80)
-		{
-			character = NewAnsi(static_cast<unsigned char>(value));
-		}
-		else
-		{
-			character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
-			MWORD code = (static_cast<MWORD>(StringEncoding::Utf32) << 24) | value;
-			character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
-			character->beImmutable();
-		}
-
-		return character;
-	}
-
-	// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
-	// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
-	inline CharOTE* Character::NewAnsi(unsigned char value)
-	{
-		CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::PointerFromIndex(ObjectMemory::FirstCharacterIdx + value));
-		ASSERT(ObjectMemoryIntegerValueOf(character->m_location->m_code) == ((static_cast<MWORD>(StringEncoding::Ansi) << 24) | value));
-		return character;
-	}
 }
 
 wostream& operator<<(wostream& st, const CharOTE* oteCh);

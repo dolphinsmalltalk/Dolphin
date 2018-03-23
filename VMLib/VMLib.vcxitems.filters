@@ -139,7 +139,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />

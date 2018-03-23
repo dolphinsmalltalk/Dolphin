@@ -254,10 +254,14 @@ primitiveInstanceCounts EQU ?primitiveInstanceCounts@Interpreter@@CIPAIQAI@Z
 extern primitiveInstanceCounts:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
+primitiveNextByte EQU ?primitiveNextByte@Interpreter@@CIPAIQAI@Z
+extern primitiveNextByte:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
 extern primitiveNextSDWORD:near32
 primitiveNextPut EQU ?primitiveNextPut@Interpreter@@CIPAIQAI@Z
 extern primitiveNextPut:near32
+primitiveBasicNextPut EQU ?primitiveBasicNextPut@Interpreter@@CIPAIQAI@Z
+extern primitiveBasicNextPut:near32
 primitiveNextPutAll EQU ?primitiveNextPutAll@Interpreter@@CIPAIQAI@Z	
 extern primitiveNextPutAll:near32
 primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIQAI@Z
@@ -713,8 +717,8 @@ DWORD		primitiveStringAsByteString						; case 217
 DWORD		primitiveStringConcatenate						; case 218
 DWORD		primitiveStringEqual							; case 219
 DWORD		primitiveStringCmpOrdinal						; case 220 - Not sure we need this. May remove it.
-DWORD		unusedPrimitive									; case 221
-DWORD		unusedPrimitive									; case 222
+DWORD		primitiveNextByte								; case 221
+DWORD		primitiveBasicNextPut							; case 222
 DWORD		unusedPrimitive									; case 223
 DWORD		unusedPrimitive									; case 224
 DWORD		unusedPrimitive									; case 225

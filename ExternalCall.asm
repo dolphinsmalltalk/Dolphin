@@ -45,6 +45,9 @@ extern NewUnsigned64:near32
 REQUESTCOMPLETION EQU ?OnCallReturned@OverlappedCall@@AAEXXZ
 extern REQUESTCOMPLETION:near32
 
+CharacterGetCodePoint EQU ?getCodePoint@Character@ST@@QBEIXZ
+extern CharacterGetCodePoint:near32
+
 ; We need to test the structure type specially
 ArgSTRUCT	EQU		50
 
@@ -657,18 +660,18 @@ extCallArgCHAR:
 	jnz		preCallFail									; Yes, not valid (only Characters)
 	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
 
-	mov		TEMP, [ARG].m_oteClass
+	mov		TEMP2, [ARG].m_oteClass
 	ASSUME	TEMP:PTR OTE
 	
-	mov		ARG, [ARG].m_location
-	cmp		TEMP, [Pointers.ClassCharacter]				; Is it a Character?
+	mov		TEMP, [ARG].m_location
+	cmp		TEMP2, [Pointers.ClassCharacter]				; Is it a Character?
 
 	jne		preCallFail									; No? Fail it
 	ASSUME	ARG:PTR Character							; Yes
 
-	mov		ARG, [ARG].m_codePoint						; Load ascii value from Char
+	call	CharacterGetCodePoint
+
 	ASSUME	ARG:DWORD
-	sar		ARG, 1										; Convert to 32-bit int
 	PushLoopNext <ARG>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

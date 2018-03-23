@@ -29,6 +29,47 @@ CHAR Interpreter::m_unicodeToAnsiCharMap[65536];
 
 #pragma comment(lib, "icuuc.lib")
 
+CharOTE* Character::NewUnicode(uint32_t value)
+{
+	if (__isascii(value))
+	{
+		return NewAnsi(static_cast<unsigned char>(value));
+	}
+	else if (U_IS_BMP(value))
+	{
+		CHAR ansiCodeUnit = Interpreter::m_unicodeToAnsiCharMap[value];
+		if (ansiCodeUnit != 0)
+		{
+			return NewAnsi(static_cast<unsigned char>(ansiCodeUnit));
+		}
+	}
+
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::newPointerObject(Pointers.ClassCharacter));
+	MWORD code = (static_cast<MWORD>(StringEncoding::Utf32) << 24) | value;
+	character->m_location->m_code = ObjectMemoryIntegerObjectOf(code);
+	character->beImmutable();
+
+	return character;
+}
+
+// Characters are not reference counted - very important that param is unsigned in order to calculate offset of
+// character object in OTE correctly (otherwise chars > 127 will probably offset off the front of the OTE).
+CharOTE* Character::NewAnsi(unsigned char value)
+{
+	CharOTE* character = reinterpret_cast<CharOTE*>(ObjectMemory::PointerFromIndex(ObjectMemory::FirstCharacterIdx + value));
+	ASSERT(ObjectMemoryIntegerValueOf(character->m_location->m_code) == ((static_cast<MWORD>(StringEncoding::Ansi) << 24) | value));
+	return character;
+}
+
+uint32_t Character::getCodePoint() const
+{
+	// For UTF surrogates, this won't actually be a valid code point
+
+	return Encoding == StringEncoding::Ansi
+		? Interpreter::m_ansiToUnicodeCharMap[CodeUnit & 0xff]
+		: CodeUnit;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //	String Primitives
 
@@ -346,7 +387,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 					{
 						CharOTE* oteResult = ST::Character::NewAnsi(ansiCodeUnit);
 						*newSp = reinterpret_cast<Oop>(oteResult);
-						return sp;
+						return newSp;
 					}
 				}
 
@@ -376,7 +417,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 					{
 						CharOTE* oteResult = ST::Character::NewAnsi(static_cast<ByteString::CU>(ansiCodeUnit));
 						*newSp = reinterpret_cast<Oop>(oteResult);
-						return sp;
+						return newSp;
 					}
 				}
 
@@ -413,11 +454,8 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 
 Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 {
-	// TODO: Support other encodings (maybe as new primitives)
-
-	ByteStringOTE* __restrict oteReceiver = reinterpret_cast<ByteStringOTE*>(*(sp - 2));
+	OTE* __restrict oteReceiver = reinterpret_cast<OTE*>(*(sp - 2));
 	int index = *(sp - 1);
-	char* const __restrict psz = oteReceiver->m_location->m_characters;
 	if (ObjectMemoryIsIntegerObject(index))
 	{
 		index = ObjectMemoryIntegerValueOf(index);
@@ -429,66 +467,122 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 			if (!ObjectMemoryIsIntegerObject(oopValue) && reinterpret_cast<const OTE*>(oopValue)->m_oteClass == Pointers.ClassCharacter)
 			{
 				MWORD code = ObjectMemoryIntegerValueOf(reinterpret_cast<const CharOTE*>(oopValue)->m_location->m_code);
-				StringEncoding encoding = static_cast<StringEncoding>(code >> 24);
 				MWORD codeUnit = code & 0xffffff;
-				switch (encoding)
+
+				switch (ST::String::GetEncoding(oteReceiver))
 				{
 				case StringEncoding::Ansi:
-					psz[index - 1] = static_cast<ByteString::CU>(codeUnit);
-					*(sp - 2) = *sp;
-					return sp - 2;
+				{
+					ByteString::CU* const __restrict psz = reinterpret_cast<ByteStringOTE*>(oteReceiver)->m_location->m_characters;
+
+					// Ascii characters are the same in all encodings
+					if (__isascii(codeUnit))
+					{
+						psz[index - 1] = static_cast<ByteString::CU>(codeUnit);
+						*(sp - 2) = *sp;
+						return sp - 2;
+					}
+					else
+					{
+						switch (static_cast<StringEncoding>(code >> 24))
+						{
+						case StringEncoding::Ansi: // Ansi char into Ansi string
+							psz[index - 1] = static_cast<ByteString::CU>(codeUnit);
+							*(sp - 2) = *sp;
+							return sp - 2;
+
+						case StringEncoding::Utf8: // UTF-8 surrogate char into Ansi string - cannot be handled here
+							break;
+
+						case StringEncoding::Utf16: // UTF-16 char into Ansi string - almost certainly invalid, since we should only have UTF-16 encoded chars for surrogates
+						case StringEncoding::Utf32: // UTF-32 char into Ansi string - probably invalid, since we should only have UTF-32 encoded chars for non-ANSI code points
+							if (U_IS_BMP(codeUnit))
+							{
+								ByteString::CU ansi = m_unicodeToAnsiCharMap[codeUnit];
+								if (ansi != 0)
+								{
+									ASSERT(codeUnit > 0 && !U_IS_SURROGATE(codeUnit));
+									psz[index - 1] = ansi;
+									*(sp - 2) = *sp;
+									return sp - 2;
+								}
+							}
+							break;
+						default:
+							break;
+						}
+					}
+					break;
+				}
 
 				case StringEncoding::Utf8:
-					if (codeUnit < 0x80)
+				{
+					Utf8String::CU* const __restrict psz = reinterpret_cast<Utf8StringOTE*>(oteReceiver)->m_location->m_characters;
+
+					if (__isascii(codeUnit) || static_cast<StringEncoding>(code >> 24) == StringEncoding::Utf8)
 					{
-						psz[index - 1] = static_cast<ByteString::CU>(codeUnit);
+						psz[index - 1] = static_cast<Utf8String::CU>(codeUnit);
 						*(sp - 2) = *sp;
 						return sp - 2;
 					}
-					// else it is a surrogate code unit that cannot be handled here
+					// else the non-ascii/non-UTF8 char will require multiple bytes and can't be at:put:
+
 					break;
+				}
 
 				case StringEncoding::Utf16:
-					if (codeUnit < 0x80)
+				{
+					Utf16String::CU* const __restrict psz = reinterpret_cast<Utf16StringOTE*>(oteReceiver)->m_location->m_characters;
+
+					if (__isascii(codeUnit))
 					{
-						psz[index - 1] = static_cast<ByteString::CU>(codeUnit);
+						psz[index - 1] = static_cast<Utf16String::CU>(codeUnit);
 						*(sp - 2) = *sp;
 						return sp - 2;
 					}
-					else if (U_IS_BMP(codeUnit))
+					else
 					{
-						ByteString::CU ansi = m_unicodeToAnsiCharMap[codeUnit];
-						if (ansi != 0)
+						switch (static_cast<StringEncoding>(code >> 24))
 						{
-							ASSERT(codeUnit > 0 && !U_IS_SURROGATE(codeUnit));
-							psz[index - 1] = ansi;
+						case StringEncoding::Ansi:
+							// Non-ascii Ansi char into Utf16 string. Will always go.
+							psz[index - 1] = m_ansiToUnicodeCharMap[codeUnit];
 							*(sp - 2) = *sp;
 							return sp - 2;
+
+						case StringEncoding::Utf8:
+							// Surrogate UTF-8 char into Utf16 string - invalid, since we can't translate surrogates
+							break;
+
+						case StringEncoding::Utf16:
+							// UTF-16 char into Utf16 string - always goes
+							psz[index - 1] = static_cast<Utf16String::CU>(codeUnit);
+							*(sp - 2) = *sp;
+							return sp - 2;
+
+						case StringEncoding::Utf32:
+							// UTF-32 char into Utf16 string - will usually go
+							if (U_IS_BMP(codeUnit))
+							{
+								psz[index - 1] = static_cast<Utf16String::CU>(codeUnit);
+								*(sp - 2) = *sp;
+								return sp - 2;
+							}
+							// else outside the range of a single UTF-16 code unit (e.g. symbols)
+
+							break;
 						}
 					}
 					break;
+				}
 
 				case StringEncoding::Utf32:
-					if (codeUnit < 0x80)
-					{
-						psz[index - 1] = static_cast<ByteString::CU>(codeUnit);
-						*(sp - 2) = *sp;
-						return sp - 2;
-					}
-					else if (U_IS_BMP(codeUnit))
-					{
-						ByteString::CU ansi = m_unicodeToAnsiCharMap[codeUnit];
-						if (ansi != 0)
-						{
-							psz[index - 1] = ansi;
-							*(sp - 2) = *sp;
-							return sp - 2;
-						}
-					}
+					// Not implemented yet
+					return primitiveFailure(3);
 				}
 			}
 
-			// Value is not a valid code point for the current ansi code page
+			// Value is not a valid code point for the destination string
 			return primitiveFailure(2);
 		}
 
@@ -505,7 +599,7 @@ void Interpreter::PushCharacter(Oop* const sp, MWORD codePoint)
 	ASSERT(U_IS_UNICODE_CHAR(codePoint));
 
 	// Try to use one of the fixed set of ANSI chars if we can
-	if (codePoint < 0x80)
+	if (__isascii(codePoint))
 	{
 		CharOTE* oteResult = ST::Character::NewAnsi(static_cast<ByteString::CU>(codePoint));
 		*sp = reinterpret_cast<Oop>(oteResult);

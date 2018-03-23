@@ -310,29 +310,50 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 
 	st << L'$';
 	SMALLINTEGER code = ObjectMemoryIntegerValueOf(ch->m_code);
-	MWORD codePoint;
-	switch (ch->Encoding)
+	MWORD codeUnit = code & 0xffffff;
+	if (__isascii(codeUnit))
 	{
-	case StringEncoding::Ansi:
-		codePoint = Interpreter::m_ansiToUnicodeCharMap[code & 0xFF];
-		if (codePoint > 32 && codePoint < 128)
-			st << static_cast<char>(codePoint);
-		else
-			st << L"\\x" << hex << codePoint;
-		break;
-	case StringEncoding::Utf8:
-		st << L"\\x" << hex << (code & 0xff);
-		break;
-	case StringEncoding::Utf16:
-		st << L"\\x" << hex << (code & 0xffff);
-		break;
-	case StringEncoding::Utf32:
-		st << L"\\x" << hex << (code & 0xffffff);
-		break;
-	default:
-		ASSERT(false);
+		if (isgraph(codeUnit))
+		{
+			return st << static_cast<char>(codeUnit);
+		}
 	}
-	return st;
+	else
+	{
+		switch (ch->Encoding)
+		{
+		case StringEncoding::Ansi:
+		{
+			MWORD codePoint = Interpreter::m_ansiToUnicodeCharMap[code & 0xFF];
+			if (iswgraph(codePoint))
+			{
+				return st << static_cast<wint_t>(codePoint);
+			}
+			break;
+		}
+		case StringEncoding::Utf16:
+			if (iswgraph(codeUnit))
+			{
+				return st << static_cast<WCHAR>(codeUnit);
+			}
+			break;
+
+		case StringEncoding::Utf8:
+			break;
+
+		case StringEncoding::Utf32:
+			if (U_IS_BMP(codeUnit) && iswgraph(codeUnit))
+			{
+				return st << static_cast<WCHAR>(codeUnit);
+			}
+			break;
+
+		default:
+			ASSERT(false);
+		}
+	}
+
+	return st << L"\\x" << hex << codeUnit;
 }
 
 wostream& operator<<(wostream& st, const FloatOTE* ote)

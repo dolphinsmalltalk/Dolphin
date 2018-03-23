@@ -650,8 +650,10 @@ private:
 
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp);
+	static Oop* __fastcall primitiveNextByte(Oop* const sp);
 	static Oop* __fastcall primitiveNextSDWORD(Oop* const sp);
 	static Oop* __fastcall primitiveNextPut(Oop* const sp);
+	static Oop* __fastcall primitiveBasicNextPut(Oop* const sp);
 	static Oop* __fastcall primitiveNextPutAll(Oop* const sp);
 	static Oop* __fastcall primitiveAtEnd(Oop* const sp);
 
