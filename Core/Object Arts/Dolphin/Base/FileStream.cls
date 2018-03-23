@@ -2,7 +2,7 @@
 
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize'
-	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
+	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileStream guid: (GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -34,6 +34,7 @@ atEnd
 beBinary
 	"Treat the elements of the stream as bytes (Integers)."
 
+	#deprecated.
 	collection := collection asByteArray!
 
 beText
@@ -257,6 +258,30 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 					flags := flags bitOr: BufferUpdatedMask]].
 	^aSequenceableCollection!
 
+nextByte
+	"Answer the next byte accessible by the receiver. Signal an error if the receiver is is at its end.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		2 -	The next index is beyond the readLimit.
+		3 -	The next index is off the end of the stream buffer."
+
+	<primitive: 221>
+	^self atEnd
+		ifTrue: [self errorEndOfStream]
+		ifFalse: 
+			[self position: self position.
+			collection byteAt: (position := position + 1)]!
+
+nextBytePut: anInteger
+	"Write anInteger to the receiver and answer the argument."
+
+	"Implementation Note: Inline the #beDirty operation as a performance optimization."
+
+	self primitiveNextBytePut: anInteger.
+	flags := flags bitOr: BufferUpdatedMask.
+	^anInteger!
+
 nextOrNil
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
@@ -308,12 +333,17 @@ position: anInteger
 				readPageFor: anInteger].
 	position := pos - pageBase!
 
+primitiveNextBytePut: anInteger
+	<primitive: 222>
+	self position: self position.
+	^collection byteAt: (position := position + 1) put: anInteger!
+
 primitiveNextPut: anIntegerOrCharacter
 	"Private - Write anIntegerOrCharacter to the receiver."
 
 	<primitive: 66>
 	self position: self position.
-	^collection at: (position := position + 1) put: anIntegerOrCharacter!
+	^collection class encode: anIntegerOrCharacter on: self!
 
 readPageFor: anInteger
 	"Private - Read the page containing position anInteger and record the pageBase
@@ -421,6 +451,8 @@ writePage
 !FileStream categoriesFor: #next!accessing!public! !
 !FileStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!FileStream categoriesFor: #nextByte!accessing!public! !
+!FileStream categoriesFor: #nextBytePut:!accessing!public! !
 !FileStream categoriesFor: #nextOrNil!accessing!public! !
 !FileStream categoriesFor: #nextPut:!accessing!public! !
 !FileStream categoriesFor: #nextPutAll:!accessing!public! !
@@ -428,6 +460,7 @@ writePage
 !FileStream categoriesFor: #ownsFile:!accessing!public! !
 !FileStream categoriesFor: #position!accessing!public! !
 !FileStream categoriesFor: #position:!accessing!positioning!public! !
+!FileStream categoriesFor: #primitiveNextBytePut:!accessing!private! !
 !FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !FileStream categoriesFor: #readPageFor:!buffer!private! !
 !FileStream categoriesFor: #reset!positioning!public! !
@@ -449,10 +482,14 @@ bufferSize
 
 	^PageSize!
 
+defaultTextEncoding
+	^#ansi!
+
 initialize
 	"Private - Initialize class variables of the receiver."
 
 	"Flag set when a write to the buffer has occurred that has not yet been reflected in the lastPosition and/or read limit."
+
 	self addClassConstant: 'LimitsChangedMask' value: 16r1.
 	"Flag set when the buffer contains updated data that has not yet been written to disk"
 	self addClassConstant: 'DirtyBufferMask' value: 16r2.
@@ -463,7 +500,14 @@ initialize
 
 	"The size of buffer used to hold part of the file contents in memory - chosen to be a
 	reasonably efficient compromise for serial and random I/O."
-	self addClassConstant: 'PageSize' value: 8192!
+	self addClassConstant: 'PageSize' value: 8192.
+	self addClassConstant: 'BufferClasses'
+		value: (IdentityDictionary new
+				at: #utf8 put: Utf8String;
+				at: #text put: String;
+				at: #binary put: ByteArray;
+				at: #ansi put: ByteString;
+				yourself)!
 
 on: aFile
 	"Answer an intance of the receiver attached to the open file aFile."
@@ -474,51 +518,44 @@ on: aFile text: aBoolean
 	"Answer an intance of the receiver attached to the open file aFile, in
 	binary or text mode depending on the argument, aBoolean."
 
+	^self on: aFile type: #text!
+
+on: aFile type: aSymbol
+	"Answer an intance of the receiver attached to the open file aFile, in
+	binary or text mode depending on the argument, aBoolean."
+
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	^self basicNew
-		collection: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) new: PageSize);
+		collection: ((BufferClasses at: aSymbol ifAbsent: [self error: 'Unsupported encoding ' , aSymbol])
+					new: PageSize);
 		initialize;
 		file: aFile;
 		initialRead;
 		yourself!
 
-open: aString mode: aSymbol
-	"Private - Answer an instance of the receiver opened on aString 
-	for aSymbol text access. Signal a FileException if the file can't be opened."
-
-	^self open: aString mode: aSymbol text: true!
-
-open: aString mode: aSymbol check: checkBoolean text: textBoolean
-	"Private - Answer an instance of the receiver opened on
-	aString for accessMode access as binary or text depending on aBoolean,
-	reporting errors if the file can't be opened (though file exist/file
-	does not exist error notifications depend on the value of checkBoolean).
-	By default we share for read only."
+open: aString mode: modeSymbol check: checkBoolean type: encSymbol
+	"Private - Answer an instance of the receiver opened on aString for accessMode access with
+	encoding specified by the <Symbol>, encSymbol , reporting errors if the file can't be opened
+	(though file exist/file does not exist error notifications depend on the value of
+	checkBoolean). By default we share for read only."
 
 	| answer |
 	answer := self on: (File
 						open: aString
-						mode: aSymbol
+						mode: modeSymbol
 						check: checkBoolean
 						share: #readWrite)
-				text: textBoolean.
+				type: encSymbol.
 	answer ownsFile: true.
-	aSymbol == #append ifTrue: [answer setToEnd].
+	modeSymbol == #append ifTrue: [answer setToEnd].
 	^answer.
 	#todo	"Default sharing should be #read, but causes problems with boot"!
-
-open: aString mode: aSymbol text: aBoolean
-	"Private - Answer an instance of the receiver opened on
-	aString for accessMode access as binary or text depending on aBoolean.
-	Signal a FileException if the file can't be opened."
- 
-	^self open: aString mode: aSymbol check: false text: aBoolean!
 
 read: fileId
 	"Answer an instance of the receiver whose future sequence values consist
 	of the textual contents of the file identified by the <readableString> path, fileId."
 
-	^self read: fileId text: true!
+	^self read: fileId type: #text!
 
 read: aString text: aBoolean
 	"Answer an instance of the receiver whose future sequence values consist
@@ -526,10 +563,7 @@ read: aString text: aBoolean
 	based or binary, depending on the argument aBoolean. Raise an exception
 	if the file does not exist."
 
-	^self open: aString 
-		mode: #read
-		check: true
-		text: aBoolean!
+	^self read: aString type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 read: fileId type: fileType
 	"Answer an instance of the receiver whose future sequence values consist
@@ -537,12 +571,29 @@ read: fileId type: fileType
 	whose external stream type and sequence value type is determined by the
 	<symbol> argument, fileType (i.e. either binary or text)."
 
-	^self read: fileId text: (fileType == #text)!
+	^self
+		open: fileId
+		mode: #read
+		check: true
+		type: fileType!
 
 readWrite: aString
 	"Answer an instance of the receiver opened on aFileName."
 
-	^self open: aString mode: #create!
+	^self
+		open: aString
+		mode: #create
+		check: false
+		type: #text!
+
+readWrite: aString text: aBoolean
+	"Answer an instance of the receiver opened on aFileName."
+
+	^self
+		open: aString
+		mode: #create
+		check: false
+		type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 write: fileId
 	"Answer an instance of the receiver opened on a new or truncated file 
@@ -555,11 +606,11 @@ write: fileId mode: mode
 	the file identified by the <readableString> path, fileId.
 	See #write:mode:check:type: for a description of the mode argument."
 
-	^self 
+	^self
 		write: fileId
 		mode: mode
 		check: false
-		text: true!
+		type: #text!
 
 write: aString mode: aSymbol check: checkBoolean text: textBoolean
 	"Open a file for write access (in fact our filestreams required read/write
@@ -571,10 +622,11 @@ write: aString mode: aSymbol check: checkBoolean text: textBoolean
 	textBoolean, determines whether or not the new instance is initially configured
 	to read the file as if it contains Characters or bytes."
 
-	^self open: aString 
+	^self
+		write: aString
 		mode: aSymbol
 		check: checkBoolean
-		text: textBoolean!
+		type: (textBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 write: fileId mode: mode check: check type: fileType
 	"Answer a new instance of the receiver open on the contents of
@@ -592,36 +644,50 @@ write: fileId mode: mode check: check type: fileType
 	Implementation Note: Dolphin's FileStreams require read access for
 	buffering, so result is actually a read/write file stream."
 
-	^self open: fileId 
+	^self
+		open: fileId
 		mode: mode
 		check: check
-		text: (fileType == #text)!
+		type: fileType!
+
+write: fileId mode: mode type: type
+	"Answer a new instance of the receiver open on the textual contents of
+	the file identified by the <readableString> path, fileId.
+	See #write:mode:check:type: for a description of the mode and type arguments."
+
+	^self
+		write: fileId
+		mode: mode
+		check: false
+		type: type!
 
 write: aString text: aBoolean
 	"Create a new file/truncate an existing file for write access (in fact our 
 	filestreams require read/write access for buffering, so the result is actually 
-	a read/write file stream) through the receiver. The stream will expect characters
-	or bytes depending on the value of aBoolean."
+	a read/write file stream) through the receiver. The stream will expect text
+	or binary depending on the value of aBoolean."
 
 	^self write: aString 
 		mode: #truncate
 		check: false
 		text: aBoolean! !
 !FileStream class categoriesFor: #bufferSize!constants!public! !
+!FileStream class categoriesFor: #defaultTextEncoding!instance creation!private! !
 !FileStream class categoriesFor: #initialize!development!initializing!private! !
 !FileStream class categoriesFor: #on:!instance creation!public! !
 !FileStream class categoriesFor: #on:text:!instance creation!public! !
-!FileStream class categoriesFor: #open:mode:!instance creation!private! !
-!FileStream class categoriesFor: #open:mode:check:text:!instance creation!private! !
-!FileStream class categoriesFor: #open:mode:text:!instance creation!private! !
+!FileStream class categoriesFor: #on:type:!instance creation!public! !
+!FileStream class categoriesFor: #open:mode:check:type:!instance creation!private! !
 !FileStream class categoriesFor: #read:!instance creation!public! !
 !FileStream class categoriesFor: #read:text:!instance creation!public! !
 !FileStream class categoriesFor: #read:type:!instance creation!public! !
 !FileStream class categoriesFor: #readWrite:!instance creation!public! !
+!FileStream class categoriesFor: #readWrite:text:!instance creation!public! !
 !FileStream class categoriesFor: #write:!instance creation!public! !
 !FileStream class categoriesFor: #write:mode:!instance creation!public! !
 !FileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !
 !FileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
+!FileStream class categoriesFor: #write:mode:type:!instance creation!public! !
 !FileStream class categoriesFor: #write:text:!instance creation!public! !
 
 FileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!

@@ -1397,7 +1397,7 @@ Magnitude subclass: #Association
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePoints CharacterSet EscapeChars'
+	classVariableNames: 'AnsiCharacters AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Mask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date
@@ -1682,7 +1682,7 @@ WriteStream subclass: #ReadWriteStream
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize'
-	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
+	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

@@ -184,7 +184,7 @@ codePoint
 	point and cannot be translated to another encoding without their companion surrogates."
 
 	^code <= 16rFF
-		ifTrue: [AnsiCodePoints at: code + 1]
+		ifTrue: [AnsiCodePoints at: code +1]
 		ifFalse: 
 			["If this is a UTF-8 or UTF-16 surrogate, the code point will be invalid"
 			code bitAnd: 16r1FFFFF]!

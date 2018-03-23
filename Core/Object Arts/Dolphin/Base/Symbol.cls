@@ -284,6 +284,9 @@ allInstancesDo: aMonadicValuable
 
 	Table do: [:eachBucket | eachBucket notNil ifTrue: [eachBucket nonCorpsesDo: aMonadicValuable]]!
 
+encode: aCharacter on: aPuttableStream
+	^aPuttableStream nextBytePut: aCharacter ansiValue!
+
 findInterned: aString
 	"Answer the unique <Symbol> for aString if already defined, else nil.	
 	N.B. This method previously had the selector #symbolAt:, and was private,
@@ -471,6 +474,7 @@ stbReadFromProxy: anSTBInFiler
 	^answer! !
 !Symbol class categoriesFor: #addUnique:!accessing!private! !
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
+!Symbol class categoriesFor: #encode:on:!helpers!private! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
 !Symbol class categoriesFor: #fromString:!instance creation!public! !
 !Symbol class categoriesFor: #icon!constants!public! !

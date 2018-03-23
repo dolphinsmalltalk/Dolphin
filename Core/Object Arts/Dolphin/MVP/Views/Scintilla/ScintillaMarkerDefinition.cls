@@ -100,7 +100,7 @@ glyphName: aSymbol
 				ifFalse: 
 					[(self class glyphNames indexOf: aSymbol
 						ifAbsent: 
-							[(aSymbol size = 1 and: [aSymbol first isPrintable and: [aSymbol first isWhitespace not]])
+							[(aSymbol size = 1 and: [aSymbol first isGraph])
 								ifTrue: [aSymbol first codePoint + SC_MARK_CHARACTER + 1]
 								ifFalse: [^self error: 'Invalid glyph  ' , aSymbol printString]])
 							- 1]).
@@ -495,8 +495,7 @@ stbVersion
 	^1!
 
 visibleCharacterGlyphs
-	^(Character byteCharacterSet 
-		select: [:each | each isPrintable and: [each isWhitespace not]]) asArray 
+	^(Character byteCharacterSet select: [:each | each isGraph]) asArray
 		collect: [:each | each asSymbol]! !
 !ScintillaMarkerDefinition class categoriesFor: #arrows!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #boxTree!constants!public! !

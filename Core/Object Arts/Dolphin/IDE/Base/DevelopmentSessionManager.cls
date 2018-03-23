@@ -274,7 +274,7 @@ logError: anException
 			^self].
 	
 	[| f |
-	f := FileStream write: self errorLogName mode: #append.
+	f := FileStream write: self errorLogName mode: #append type: #utf8.
 	f
 		print: TimeStamp current;
 		nextPutAll: ': Unhandled exception - '.

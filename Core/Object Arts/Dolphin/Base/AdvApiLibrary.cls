@@ -28,6 +28,19 @@ getUserName: buffer nSize: pBufSize
 	<stdcall: bool GetUserNameA lpstr DWORD*>
 	^self invalidCall!
 
+isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
+	"
+	BOOL IsTextUnicode(
+		_In_        const VOID  *lpv,
+		_In_              int   iSize,
+	_Inout_opt_       LPINT lpiResult
+	);
+	"
+
+	<stdcall: bool IsTextUnicode lpvoid sdword sdword*>
+	^self invalidCall
+	!
+
 reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lpUserSid: lpUserSid wNumStrings: wNumStrings dwDataSize: dwDataSize lpStrings: lpStrings lpRawData: lpRawData 
 	"
 		BOOL ReportEvent(
@@ -46,6 +59,7 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 	^self invalidCall! !
 !AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
 !AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !
+!AdvApiLibrary categoriesFor: #isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
 !AdvApiLibrary categoriesFor: #reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
 
 !AdvApiLibrary class methodsFor!

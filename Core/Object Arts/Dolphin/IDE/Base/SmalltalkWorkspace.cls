@@ -1431,7 +1431,7 @@ showTipForIdentifier: anStIdentifierToken
 
 showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
-	tip := String writeStream.
+	tip := Utf8String writeStream.
 	last := 0.
 	aCollectionOfScintillaIndicators do: 
 			[:each |

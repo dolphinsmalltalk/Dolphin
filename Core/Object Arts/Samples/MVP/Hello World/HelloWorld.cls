@@ -41,7 +41,7 @@ onPaintRequired: aPaintEvent
 	text will be when displayed."
 	textFont := Font name: 'Arial' pointSize: 32.
 	canvas font: textFont.
-	textToShow := 'Hello World', $\x1F37B asUtf8String.
+	textToShow := 'Hello World ', Character dolphin asUtf8String.
 	textExtent := canvas textExtent: textToShow.
 
 	"Draw the ellipse with a grey background and red border"

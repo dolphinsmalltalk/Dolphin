@@ -125,6 +125,23 @@ basicUIntPtrAtOffset: anInteger put: anObject
 				ifTrue: [^self basicUIntPtrAtOffset: anInteger put: intVal]].
 	^self errorCantHold: anObject!
 
+byteAt: anInteger
+	"Answer the byte at offset anInteger in the receiver"
+
+	<primitive: 60>
+	^self basicAt: anInteger!
+
+byteAt: aSmallInteger put: value
+	"Replace the byte at the specified index in the receiver with the specified integer byte value.
+
+	Primitive Failure Reasons:
+		0	- aSmallInteger is not a SmallInteger
+		1	- aSmallInteger out of bounds (not in the range 1..receiver's mutable size) 
+		2	- the argument, value, is not a SmallInteger in the range 0..255."
+
+	<primitive: 61>
+	^self errorAt: aSmallInteger put: value!
+
 byteAtOffset: anInteger
 	"Answer the byte at offset anInteger in the receiver"
 
@@ -679,6 +696,8 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #basicDwordAtOffset:put:!accessing!primitives!private! !
 !ByteArray categoriesFor: #basicUIntPtrAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #basicUIntPtrAtOffset:put:!accessing!primitives!private! !
+!ByteArray categoriesFor: #byteAt:!accessing!public! !
+!ByteArray categoriesFor: #byteAt:put:!accessing!public! !
 !ByteArray categoriesFor: #byteAtOffset:!accessing!public! !
 !ByteArray categoriesFor: #byteAtOffset:put:!accessing!public! !
 !ByteArray categoriesFor: #bytesAtOffset:put:!accessing!public! !
@@ -737,6 +756,9 @@ elementSize
 	^1.
 !
 
+encode: anObject on: aPuttableStream
+	^aPuttableStream nextBytePut: anObject!
+
 fromAddress: anAddress length: anInteger
 	"Answer a new instance of the receiver, of size anInteger, copied from the first anInteger
 	bytes at the specified address."
@@ -782,6 +804,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	anSTBInFiler register: answer.
 	^answer! !
 !ByteArray class categoriesFor: #elementSize!constants!private! !
+!ByteArray class categoriesFor: #encode:on:!helpers!private! !
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
 !ByteArray class categoriesFor: #icon!constants!public! !

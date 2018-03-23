@@ -252,6 +252,24 @@ nextAvailable: anInteger
 				stream: stream.
 	^read < anInteger ifTrue: [buf copyFrom: 1 to: read] ifFalse: [buf]!
 
+nextByte
+	"Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
+	values."
+
+	"Implementation note: If connected to device then is it possible for fgetc to both block and to return
+	a value other than -1 even when feof() returns true. After a ^Z (EOF) character has been encountered in the
+	input stream, feof() will subsequently return true. However, since the device stream is not actually at end,
+	fgetc() will block awaiting further input when called. If further input is provided, this will be returned, even
+	though feof() remains true. To avoid this contradictory behaviour we test up front for feof() (via #atEnd)
+	and do not attempt to read further input."
+
+	(crtlib feof: stream)
+		ifFalse: 
+			[| ch |
+			ch := crtlib fgetc: stream.
+			ch == -1 ifFalse: [^ch]].
+	^self errorEndOfStream!
+
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
 	next line delimiter. If there are no further line delimiters in the receiver, then the 
@@ -451,6 +469,7 @@ upToEnd
 !StdioFileStream categoriesFor: #next:put:!accessing!public! !
 !StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
+!StdioFileStream categoriesFor: #nextByte!accessing!public! !
 !StdioFileStream categoriesFor: #nextLine!accessing!public! !
 !StdioFileStream categoriesFor: #nextOrNil!accessing!public! !
 !StdioFileStream categoriesFor: #nextPut:!accessing!public! !

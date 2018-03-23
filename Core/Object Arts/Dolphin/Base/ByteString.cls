@@ -100,6 +100,9 @@ ByteString methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#
 
 !ByteString class methodsFor!
 
+encode: aCharacter on: aPuttableStream
+	^aPuttableStream nextBytePut: aCharacter ansiValue!
+
 initialize
 	empty := ''.
 	VMLibrary default registryAt: #String put: self!
@@ -117,6 +120,7 @@ newFixed: aSmallInteger
 
 	<primitive: 76>
 	^self primitiveFailed! !
+!ByteString class categoriesFor: #encode:on:!helpers!private! !
 !ByteString class categoriesFor: #initialize!class initialization!development!public! !
 !ByteString class categoriesFor: #new:!instance creation!public! !
 !ByteString class categoriesFor: #newFixed:!instance creation!public! !

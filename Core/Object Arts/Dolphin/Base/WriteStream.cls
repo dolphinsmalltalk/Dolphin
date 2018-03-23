@@ -13,6 +13,16 @@ Instance Variables:
 !WriteStream categoriesForClass!Collections-Streams! !
 !WriteStream methodsFor!
 
+basicNextPut: anObject
+	"Private - Store anObject as the next element of the receiver.  If the receiver is not stream 
+	over an Array or a String, or if the Array or String becomes full, then the primitive 
+	will fail, and the backup Smalltalk code will be activated, grow the collection, and
+	attempt to insert the object directly."
+
+	<primitive: 66>
+	position < writeLimit ifFalse: [self growCollection].
+	^collection at: (position := position + 1) put: anObject!
+
 basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description
 	to the receiver."
@@ -116,6 +126,14 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
 	^aSequenceableCollection!
 
+nextBytePut: anInteger
+	"Store anObject as the next byte of the receiver. If the receiver is not stream over byte
+	object then the primitive will fail, and the backup Smalltalk code will be activated."
+
+	<primitive: 222>
+	position < writeLimit ifFalse: [self growCollection].
+	^collection byteAt: (position := position + 1) put: anInteger!
+
 nextDWORDPut: anInteger 
 	"Append a 32-bit unsigned integer representation as the next 4 bytes on the receiver."
 
@@ -130,9 +148,8 @@ nextPut: anObject
 	will fail, and the backup Smalltalk code will be activated."
 
 	<primitive: 66>
-	position + collection maxEncoding < writeLimit ifFalse: [self growCollection].
-	position := position + (collection at: position + 1 encode: anObject).
-	^anObject!
+	position < writeLimit ifFalse: [self growCollection].
+	^collection class encode: anObject on: self!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
@@ -151,12 +168,12 @@ nextSDWORDPut: anInteger
 			yourself).
 	^anInteger!
 
-nextWORDPut: anInteger
+nextWordPut: anInteger
 	"Append a 16-bit unsigned integer value as the next 2 bytes on the receiver."
 
 	self
-		nextPut: (anInteger bitAnd: 16rFF);
-		nextPut: (anInteger bitShift: -8)!
+		nextBytePut: (anInteger bitAnd: 16rFF);
+		nextBytePut: (anInteger bitShift: -8)!
 
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 
@@ -199,6 +216,7 @@ tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	tabCount timesRepeat: [self tab]! !
+!WriteStream categoriesFor: #basicNextPut:!accessing!private! !
 !WriteStream categoriesFor: #basicPrint:!printing!private! !
 !WriteStream categoriesFor: #binaryStore:!binary filing!public!storing! !
 !WriteStream categoriesFor: #contents!accessing!public! !
@@ -212,11 +230,12 @@ tab: tabCount
 !WriteStream categoriesFor: #next!accessing!public! !
 !WriteStream categoriesFor: #next:put:!accessing!public! !
 !WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!WriteStream categoriesFor: #nextBytePut:!accessing!public! !
 !WriteStream categoriesFor: #nextDWORDPut:!binary filing!public! !
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !
 !WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!WriteStream categoriesFor: #nextWORDPut:!helpers!private! !
+!WriteStream categoriesFor: #nextWordPut:!helpers!public! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
 !WriteStream categoriesFor: #reset!positioning!public! !

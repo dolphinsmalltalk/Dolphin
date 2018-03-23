@@ -583,7 +583,7 @@ displayString
 	representation."
 
 	| stream |
-	stream := String writeStream: 32.
+	stream := Utf8String writeStream: 32.
 	self displayOn: stream.
 	^stream contents
 !

@@ -50,6 +50,13 @@ testNewContents
 	self assert: contents = 'hello'.
 	self closeTempStream: stream!
 
+testNextByte
+	| stream |
+	stream := self streamWith: 'abc'.
+	stream reset.
+	"It is an error to attempt to read from a WriteStream"
+	self should: [stream nextByte] raise: Error!
+
 testNextLine
 	| stream |
 	stream := self streamWith: 'abc'.
@@ -112,6 +119,7 @@ testUpToEnd
 !WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextByte!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !

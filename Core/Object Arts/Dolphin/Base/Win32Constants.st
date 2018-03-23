@@ -54,6 +54,16 @@ Win32Constants at: 'BS_NULL' put: 16r1!
 Win32Constants at: 'BS_PATTERN' put: 16r3!
 Win32Constants at: 'BS_PATTERN8X8' put: 16r7!
 Win32Constants at: 'BS_SOLID' put: 16r0!
+Win32Constants at: 'C1_ALPHA' put: 16r100!
+Win32Constants at: 'C1_BLANK' put: 16r40!
+Win32Constants at: 'C1_CNTRL' put: 16r20!
+Win32Constants at: 'C1_DEFINED' put: 16r200!
+Win32Constants at: 'C1_DIGIT' put: 16r4!
+Win32Constants at: 'C1_LOWER' put: 16r2!
+Win32Constants at: 'C1_PUNCT' put: 16r10!
+Win32Constants at: 'C1_SPACE' put: 16r8!
+Win32Constants at: 'C1_UPPER' put: 16r1!
+Win32Constants at: 'C1_XDIGIT' put: 16r80!
 Win32Constants at: 'CBM_INIT' put: 16r4!
 Win32Constants at: 'CF_BITMAP' put: 16r2!
 Win32Constants at: 'CF_DIB' put: 16r8!

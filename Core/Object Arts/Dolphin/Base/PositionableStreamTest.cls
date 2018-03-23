@@ -33,6 +33,15 @@ testContents
 testNew
 	self should: [self streamClass new] raise: Error!
 
+testNextByte
+	{''. #[]. Utf16String empty} do: 
+			[:each |
+			| subject |
+			subject := self streamOn: each.
+			self assert: subject atEnd.
+			self should: [subject nextByte] raise: subject class endOfStreamSignal.
+			self closeTempStream: subject]!
+
 testNextLine
 	"No line delimiters"
 
@@ -411,6 +420,7 @@ testUpToEnd
 !PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
+!PositionableStreamTest categoriesFor: #testNextByte!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !

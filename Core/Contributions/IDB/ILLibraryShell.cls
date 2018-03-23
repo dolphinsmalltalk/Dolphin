@@ -110,7 +110,7 @@ exportExe
 	filename isNil ifTrue: [^self].
 	Cursor wait showWhile: 
 			[| fileStream |
-			fileStream := (FileStream readWrite: filename) beBinary.
+			fileStream := (FileStream readWrite: filename text: false).
 			[self model exportExeTo: fileStream] ensure: [fileStream close]]!
 
 exportIcon

@@ -2130,11 +2130,11 @@ methodExplorerClass: toolClass
 	
 	methodExplorerClass := toolClass!
 
-methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean 
-	| filter searchString search env caption |
+methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
+	| filter searchString search caption |
 	searchString := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
 	self findDetails pattern: searchString.
-	aBoolean 
+	aBoolean
 		ifTrue: [findDetails := self promptForSearchString: findDetails caption: 'Methods Containing ...'].
 	(findDetails isNil or: [findDetails pattern isEmpty]) ifTrue: [^nil].
 	search := MethodSourceSearch newFindDetails: findDetails copy.
@@ -2142,15 +2142,18 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 	"Consolidate into a SelectorEnvironment, rather than keeping a dynamic PluggableEnvironment
 	otherwise there is a danger the entire source file may be scanned again"
 	caption := 'Finding Methods Containing <1p>' expandMacrosWith: search pattern.
-	env := self 
-				selectMethods: filter
-				in: aBrowserEnvironment
-				withProgress: caption.
-	env label: ('Methods containing <1s>: <2p> in <3d>' 
-				expandMacrosWith: search searchMode asPhrase asLowercase
-				with: search pattern
-				with: aBrowserEnvironment).
-	^env!
+	^(self
+		selectMethods: filter
+		in: aBrowserEnvironment
+		withProgress: caption)
+			ifNotNil: 
+				[:env |
+				env
+					label: ('Methods containing <1s>: <2p> in <3d>'
+								expandMacrosWith: search searchMode asPhrase asLowercase
+								with: search pattern
+								with: aBrowserEnvironment);
+					yourself]!
 
 methodsThatFailedToCompileIn: aBrowserEnvironment 
 	| failed |

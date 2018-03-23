@@ -842,7 +842,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 	aCollectionOfScintillaAnnotations isEmpty ifTrue: [^#()].
 	currentLine := 0.
 	"We need a pair of stream buffers to build the annotation text and styles for a line"
-	text := String writeStream.
+	text := Utf8String writeStream.
 	styleBytes := ByteArray writeStream.
 	firstInLine := true.
 	rawAnnotations := OrderedCollection new.
@@ -1193,7 +1193,11 @@ centerCurrentLine
 characterAt: anInteger
 	"Answer the <Character> at the specified one-based <integer> index in the receiver's text."
 
-	^Character value: ((self sciGetCharAt: anInteger) bitAnd: 16rFF)!
+	| ch |
+	ch := (self sciGetCharAt: anInteger) bitAnd: 16rFF.
+	^self sciGetCodePage == CP_UTF8
+		ifTrue: [Character utf8Value: ch]
+		ifFalse: [Character ansiValue: ch]!
 
 charCloseToPosition: aPoint
 	"Answer the one-based index of the character closest to the specified <Point> within the
@@ -9889,7 +9893,7 @@ stopStyling
 	self startStylingFrom: self textLength + 1!
 
 stringClass
-	^self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [String]!
+	^self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [ByteString]!
 
 styleAt: anInteger 
 	"Answer a <ScintillaTextStyle> being the the style of the character at the specified character

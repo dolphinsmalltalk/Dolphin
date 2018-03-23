@@ -57,6 +57,21 @@ nextAvailable
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection at: (position := position + 1)]!
 
+nextByte
+	"Answer the next byte accessible by the receiver. Fail if not streaming over a byte object.
+	Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		1 -	The receiver's collection is not a byte object
+		2 -	The receiver is at its end (index >= readLimit).
+		3 -	The next index is beyond the end of the streamed over collection."
+
+	<primitive: 221>
+	^position >= readLimit
+		ifTrue: [self errorEndOfStream]
+		ifFalse: [collection byteAt: (position := position + 1)]!
+
 nextOrNil
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
@@ -68,6 +83,7 @@ nextOrNil
 !ReadStream categoriesFor: #next!accessing!public! !
 !ReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #nextAvailable!accessing!public! !
+!ReadStream categoriesFor: #nextByte!accessing!public! !
 !ReadStream categoriesFor: #nextOrNil!accessing!public! !
 
 ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!

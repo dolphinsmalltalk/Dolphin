@@ -1262,6 +1262,9 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 					ifFalse: [high := index - 1]].
 	^low!
 
+encode: anObject on: aPuttableStream
+	^aPuttableStream basicNextPut: anObject!
+
 ofSize: anInteger
 	"Private - Answer a new instance of the receiver with anInteger nil elements.
 	This method is subtly different from #new: because that, as defined for 
@@ -1285,6 +1288,7 @@ writeStream: anInteger
 
 	^(self new: anInteger) writeStream! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
+!SequenceableCollection class categoriesFor: #encode:on:!helpers!private! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
 !SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !

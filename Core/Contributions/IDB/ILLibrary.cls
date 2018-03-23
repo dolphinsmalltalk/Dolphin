@@ -243,7 +243,7 @@ importIco: icoFilename exportExe: exeFilename
 	| library icoStream exeStream |
 	library := self new.
 	icoStream := FileStream read: icoFilename text: false.
-	exeStream := (FileStream readWrite: exeFilename) beBinary.
+	exeStream := (FileStream readWrite: exeFilename text: false).
 	
 	[library
 		import: icoStream;

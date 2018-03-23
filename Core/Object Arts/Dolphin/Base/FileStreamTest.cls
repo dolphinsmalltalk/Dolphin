@@ -131,7 +131,7 @@ testWritePastEnd
 	expected reset.
 	r := Random new.
 	FileStream.PageSize
-		timesRepeat: [subject nextPut: (expected nextPut: (Character value: (r next * 97 + 32) asInteger))].
+		timesRepeat: [subject nextPut: (expected nextPut: (Character ansiValue: (r next * 97 + 32) asInteger))].
 	subject position: FileStream.PageSize - 2.
 	expected position: subject position.
 	subject nextPutAll: (expected nextPutAll: 'abc').

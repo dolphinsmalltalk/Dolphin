@@ -294,6 +294,13 @@ iswcntrl: aCharacter
 	^self invalidCall
 !
 
+iswgraph: aCharacter
+	"Answer whether the argument is a printable character other than a space.
+		int iswgraph( wint_t c )"
+
+	<cdecl: bool iswgraph char>
+	^self invalidCall!
+
 iswprint: aCharacter
 	"Answer whether the argument is a printable character.
 		int iswprint( wint_t c )"
@@ -461,6 +468,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #initialize!initializing!private! !
 !CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
+!CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !

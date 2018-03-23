@@ -55,12 +55,25 @@ testAsUtf8String
 			self assert: actual asByteArray equals: expected]!
 
 testCodePoint
-	| euro |
+	| euro utf8 utf16 |
 	euro := (ByteString fromByteArray: #[128]) at: 1.
-	self assert: euro codePoint equals: 16r20CA.
-
-	String with: (Character value: 16r20CA)
-	!
+	self assert: euro codePoint equals: 16r20AC.
+	self assert: Character dolphin codePoint equals: 16r1F42C.
+	"Surrogates  - not real code points"
+	utf8 := Utf8String with: Character dolphin.
+	#[16rF0 16r9F 16r90 16rAC] keysAndValuesDo: 
+			[:i :each |
+			| ch |
+			ch := utf8 at: i.
+			self assert: ch isSurrogate.
+			self assert: ch codePoint equals: each].
+	utf16 := utf8 asUtf16String.
+	#(16rD83D 16rDC2C) keysAndValuesDo: 
+			[:i :each |
+			| ch |
+			ch := utf16 at: i.
+			self assert: ch isSurrogate.
+			self assert: ch codePoint equals: each]!
 
 testDigitValue
 	self assert: Character null digitValue equals: -1!
@@ -193,6 +206,16 @@ testIsUppercase
 	"Thai 7"
 	self deny: (Character codePoint: 16rE57) isUpperCase!
 
+testISurrogate
+	| utf |
+	self deny: Character dolphin isSurrogate.
+	utf := Character dolphin asUtf8String.
+	self assert: utf size equals: 4.
+	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate].
+	utf := Character dolphin asUtf16String.
+	self assert: utf size equals: 2.
+	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate]!
+
 testPrintString
 	self assert: $a printString equals: '$a'.
 	self assert: $a printString equals: '$a'.
@@ -234,6 +257,7 @@ testSize
 !CharacterTest categoriesFor: #testIsLowercase!public! !
 !CharacterTest categoriesFor: #testIsPunctuation!public! !
 !CharacterTest categoriesFor: #testIsUppercase!public! !
+!CharacterTest categoriesFor: #testISurrogate!public! !
 !CharacterTest categoriesFor: #testPrintString!public! !
 !CharacterTest categoriesFor: #testSize!public! !
 
