@@ -23,6 +23,9 @@ byteArrayForSequence: aCollection
 newCopy: aCollection
 	^self newCollection: aCollection!
 
+newEmptyCollection: anInteger
+	^self collectionClass new: anInteger!
+
 newNumericArray: anInteger 
 	^self newCollection: (1 to: anInteger)!
 
@@ -343,26 +346,26 @@ testFirstColon
 	| empty one two three |
 	empty := self newCollection: #().
 	self assert: (empty first: 0) = (self newCopy: empty).
-	self should: [empty first: 1] raise: BoundsError.
-	self should: [empty first: 2] raise: BoundsError.
+	self should: [empty first: 1] raise: Error.
+	self should: [empty first: 2] raise: Error.
 	self should: [empty first: -1] raise: Error.
 	one := self newCollection: #($1).
 	self assert: (one first: 0) = (self newCopy: empty).
 	self assert: (one first: 1) = (self newCopy: one).
-	self should: [one first: 2] raise: BoundsError.
+	self should: [one first: 2] raise: Error.
 	self should: [one first: -1] raise: Error.
 	two := self newCollection: #($1 $2).
 	self assert: (two first: 0) = (self newCopy: empty).
 	self assert: (two first: 1) = (self newCopy: one).
 	self assert: (two first: 2) = (self newCopy: two).
-	self should: [two first: 3] raise: BoundsError.
+	self should: [two first: 3] raise: Error.
 	self should: [one first: -1] raise: Error.
 	three := self newCollection: #($1 $2 $3).
 	self assert: (three first: 0) = (self newCopy: empty).
 	self assert: (three first: 1) = (self newCopy: one).
 	self assert: (three first: 2) = (self newCopy: two).
 	self assert: (three first: 3) = (self newCopy: three).
-	self should: [two first: 4] raise: BoundsError.
+	self should: [two first: 4] raise: Error.
 	self should: [one first: -1] raise: Error.
 !
 
@@ -536,10 +539,10 @@ testIncludesAnyOf
 	self deny: (searchee includesAnyOf: (self newCollection: 'a')).
 	self deny: (searchee includesAnyOf: (self newCollection: 'ab')).
 	"#715"
-	searchee := self collectionClass new: 10.
+	searchee := self newEmptyCollection: 10.
 	self deny: (searchee includesAnyOf: (self newCollection: 'a')).
-	searchee := (self collectionClass new: 1), (self newCollection: 'abc').
-	self assert: (searchee includesAnyOf: (self newCollection: 'b')).!
+	searchee := (self newEmptyCollection: 1) , (self newCollection: 'abc').
+	self assert: (searchee includesAnyOf: (self newCollection: 'b'))!
 
 testIndexOfAnyOfStartingAt
 	| searchee db bd de a d abc offset aa |
@@ -687,8 +690,7 @@ testMixedConcatenation
 								[:each |
 								| result |
 								result := self verifyConcatenation: eachCase with: each.
-								self deny: each == result.
-								self assert: (result isKindOf: each species)]]]!
+								self deny: each == result]]]!
 
 testReplaceFromToWithStartingAt
 	| a |
@@ -763,7 +765,14 @@ verifyConcatenation: b with: a
 	1 to: aSize do: [:i | self assert: (result at: i) equals: (a at: i)].
 	1 to: bSize
 		do: [:i | self assert: (result at: i + aSize) equals: (self assimilateResultElement: (b at: i))].
+	self
+		verifyConcatenationResult: result
+		of: a
+		with: b.
 	^result!
+
+verifyConcatenationResult: resultCollection of: receiverCollection with: argumentCollection
+	self assert: (resultCollection isKindOf: receiverCollection species)!
 
 verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger 
 	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) = foundInteger.
@@ -771,6 +780,7 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #assimilateResultElement:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newCopy:!helpers!private! !
+!SequenceableCollectionTest categoriesFor: #newEmptyCollection:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newNumericArray:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newUnsortedCollection:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #testAsByteArray!public!unit tests! !
@@ -795,7 +805,8 @@ verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInt
 !SequenceableCollectionTest categoriesFor: #testMixedConcatenation!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
 !SequenceableCollectionTest categoriesFor: #testResize!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!public!unit tests! !
-!SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!private!unit tests! !
-!SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!private!unit tests! !
+!SequenceableCollectionTest categoriesFor: #unsortedCollectionClass!constants!private! !
+!SequenceableCollectionTest categoriesFor: #verifyConcatenation:with:!helpers!private! !
+!SequenceableCollectionTest categoriesFor: #verifyConcatenationResult:of:with:!helpers!private! !
+!SequenceableCollectionTest categoriesFor: #verifyIndexOfAnyOf:startingAt:in:is:!helpers!private! !
 

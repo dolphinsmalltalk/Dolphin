@@ -27,14 +27,54 @@ charLower: aCharacter
 	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel."
 
-	<stdcall: word CharLowerW char>
+	<stdcall: word CharLowerW intptr>
+	^self invalidCall!
+
+charLowerBuffA: aByteString cchLength: anInteger
+	"Convert a byte String to lowercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharLowerBuffA(LPSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharLowerBuffA lpstr dword>
+	^self invalidCall!
+
+charLowerBuffW: aUtf16String cchLength: anInteger
+	"Convert a UTF-16 String to lowercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharLowerBuffW(LPWSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharLowerBuffW lpwstr dword>
 	^self invalidCall!
 
 charUpper: aCharacter
 	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
 	of the language selected by the user during setup or by using Control Panel."
 
-	<stdcall: word CharUpperW char>
+	<stdcall: word CharUpperW intptr>
+	^self invalidCall!
+
+charUpperBuffA: aByteString cchLength: anInteger
+	"Convert a byte String to uppercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharUpperBuffA(LPSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharUpperBuffA lpstr dword>
+	^self invalidCall!
+
+charUpperBuffW: aString cchLength: anInteger
+	"Convert a UTF-16 String to uppercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharUpperBuffW(LPWSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharUpperBuffW lpwstr dword>
 	^self invalidCall!
 
 copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags 
@@ -674,46 +714,6 @@ showWindow: aWindowHandle nCmdShow: flags
 	<stdcall: bool ShowWindow handle sdword>
 	^self invalidCall!
 
-stringLowerA: aString 
-	"Convert aString to lower case IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		LPTSTR CharLower(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: void CharLowerA lpvoid>
-	^self invalidCall!
-
-stringLowerW: aUtf16String 
-	"Convert a <Utf16String> to lower case IN PLACE. This will be dependent on the semantics
-	of the language selected by the user during setup or by using Control Panel. N.B. We ignore
-	the return value as it will be a pointer to the argument.
-
-	LPWSTR CharLower(LPWSTR lpsz); // single character or pointer to string "
-
-	<stdcall: void CharLowerW lpvoid>
-	^self invalidCall!
-
-stringUpperA: aString 
-	"Convert aString to uppercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		LPTSTR CharUpper(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: void CharUpperA lpvoid>
-	^self invalidCall!
-
-stringUpperW: aUtf16String 
-	"Convert a <Utf16String> to uppercase IN PLACE. This will be dependent on the semantics of
-	the language selected by the user during setup or by using Control Panel. N.B. We ignore the
-	return value as it will be a pointer to the argument.
-
-	LPWSTR CharUpperW(LPWSTR lpsz);"
-
-	<stdcall: void CharUpperW lpvoid>
-	^self invalidCall!
-
 translateMessage: aMSG
 	"Translates virtual-key messages into character messages, posting them to the message queue to
 	be read by subsequent calls to #getMessage:etc or #peekMessage:etc.
@@ -748,7 +748,11 @@ vkKeyScan: aChar
 ! !
 !UserLibrary categoriesFor: #blockInput:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #charLower:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charLowerBuffA:cchLength:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #charUpper:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 !UserLibrary categoriesFor: #createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
@@ -800,10 +804,6 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #setWindowDWORD:nIndex:dwNewDWORD:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setWindowText:lpString:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #showWindow:nCmdShow:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #stringLowerA:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringLowerW:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringUpperA:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringUpperW:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #translateMessage:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #updateWindow:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #vkKeyScan:!public!win32 functions-keyboard input! !

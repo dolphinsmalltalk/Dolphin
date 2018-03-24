@@ -18,6 +18,7 @@ testAnsiValue
 testAsciiValue
 	1 to: 128
 		do: [:each | self assert: (Character byteCharacterSet at: each) asciiValue equals: each - 1].
+	self should: [(Character ansiValue: 128) asciiValue] raise: Error.
 	self should: [(Character value: 16r20AC) asciiValue] raise: Error.
 	self should: [(Character value: 163) asciiValue] raise: Error.
 	self should: [Character dolphin asciiValue] raise: Error!
@@ -26,15 +27,27 @@ testAsLowercase
 	self assert: $a asLowercase sameAs: $a.
 	self assert: $A asLowercase sameAs: $a.
 	self assert: $\0 asLowercase sameAs: $\0.
+	"Euro symbol - still a unique ANSI encoded char"
+	self assert: (Character ansiValue: 128) asLowercase sameAs: (Character ansiValue: 128).
 	"Turkish, but 8-bit"
 	self assert: (Character codePoint: 16rC7) asLowercase equals: (Character codePoint: 16rE7).
 	"Cyrillic, 16-bit"
-	self assert: (Character codePoint: 16r0400) asLowercase equals: (Character codePoint: 16r450)!
+	self assert: (Character codePoint: 16r0400) asLowercase equals: (Character codePoint: 16r450).
+	"Greek delta"
+	self assert: (Character codePoint: 16r394) asLowercase equals: (Character codePoint: 16r3B4).
+	"Thai 7 - not a letter"
+	self assert: (Character codePoint: 16rE57) asLowercase equals: (Character codePoint: 16rE57).
+	"Symbol outside BMP"
+	self assert: Character dolphin asLowercase equals: Character dolphin!
 
 testAsUppercase
+	"Ascii chars have unique instances in the ANSI set"
+
 	self assert: $A asUppercase sameAs: $A.
 	self assert: $a asUppercase sameAs: $A.
 	self assert: $\0 asUppercase sameAs: $\0.
+	"Euro symbol - still a unique ANSI encoded char"
+	self assert: (Character ansiValue: 128) asUppercase sameAs: (Character ansiValue: 128).
 	"Turkish, but 8-bit"
 	self assert: (Character codePoint: 16rE7) asUppercase equals: (Character codePoint: 16rC7).
 	"Cyrillic, 16-bit"
@@ -42,17 +55,29 @@ testAsUppercase
 	"Greek delta"
 	self assert: (Character codePoint: 16r3B4) asUppercase equals: (Character codePoint: 16r394).
 	"Thai 7 - not a letter"
-	self assert: (Character codePoint: 16rE57) asUppercase equals: (Character codePoint: 16rE57)!
+	self assert: (Character codePoint: 16rE57) asUppercase equals: (Character codePoint: 16rE57).
+	"Symbol outside BMP"
+	self assert: Character dolphin asUppercase equals: Character dolphin!
+
+testAsUtf16String
+	#(#($A #[65 0]) #($\x7F #[16r7F 0]) #($\x20AC #[16rAC 16r20]) #($\x7FF #[16rFF 16r07]) #($\x800 #[16r00 16r08]) #($\x1F42C #[16r3D 16rD8 16r2C 16rDC]))
+		do: 
+			[:each |
+			| actual subject expected |
+			subject := each first.
+			expected := each last.
+			actual := subject asUtf16String asByteArray.
+			self assert: actual equals: expected]!
 
 testAsUtf8String
-	#(#($A #[65]) #($\x7F #[16r7F]) #($€ #[16rC2 16r80]) #($\x7FF #[16rDF 16rBF]) #($\x800 #[16rE0 16rA0 16r80]))
+	#(#($A #[65]) #($\x7F #[16r7F]) #($\xA3 #[16rC2 16rA3]) #($\x7FF #[16rDF 16rBF]) #($\x800 #[16rE0 16rA0 16r80]) #($\x1F42C #[16rF0 16r9F 16r90 16rAC]))
 		do: 
 			[:each |
 			| actual subject expected |
 			subject := each first.
 			expected := each last.
 			actual := subject asUtf8String asByteArray.
-			self assert: actual asByteArray equals: expected]!
+			self assert: actual equals: expected]!
 
 testCodePoint
 	| euro utf8 utf16 |
@@ -169,7 +194,9 @@ testIsLowercase
 	self assert: (Character codePoint: 16r3B4) isLowercase.
 	self deny: (Character codePoint: 16r394) isLowercase.
 	"Thai 7"
-	self deny: (Character codePoint: 16rE57) isLowercase!
+	self deny: (Character codePoint: 16rE57) isLowercase.
+	"Outside BMP"
+	self deny: Character dolphin isLowercase!
 
 testIsPunctuation
 	self deny: $a isPunctuation.
@@ -204,17 +231,36 @@ testIsUppercase
 	self deny: (Character codePoint: 16r3B4) isUppercase.
 	self assert: (Character codePoint: 16r394) isUppercase.
 	"Thai 7"
-	self deny: (Character codePoint: 16rE57) isUpperCase!
+	self deny: (Character codePoint: 16rE57) isUpperCase.
+	"Outside BMP"
+	self deny: Character dolphin isUppercase!
 
 testISurrogate
 	| utf |
+	Character byteCharacterSet do: [:each | self deny: each isSurrogate].
 	self deny: Character dolphin isSurrogate.
 	utf := Character dolphin asUtf8String.
 	self assert: utf size equals: 4.
 	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate].
-	utf := Character dolphin asUtf16String.
+	utf := utf asUtf16String.
 	self assert: utf size equals: 2.
 	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate]!
+
+testIsUtf8Lead
+	| str |
+	self deny: $a isUtf8Lead.
+	self deny: (Character ansiValue: 127) isUtf8Lead.
+	self deny: (Character value: 128) isUtf8Lead.
+	self deny: (Character ansiValue: 128) isUtf8Lead.
+	self deny: (Character value: 2r11000000) isUtf8Lead.
+	str := Character dolphin asUtf8String.
+	self assert: str first isUtf8Lead.
+	self deny: str second isUtf8Lead.
+	self deny: str third isUtf8Lead.
+	self deny: str fourth isUtf8Lead.
+	str := Character dolphin asUtf16String.
+	self deny: str first isUtf8Lead.
+	self deny: str second isUtf8Lead!
 
 testPrintString
 	self assert: $a printString equals: '$a'.
@@ -245,6 +291,7 @@ testSize
 !CharacterTest categoriesFor: #testAsciiValue!public! !
 !CharacterTest categoriesFor: #testAsLowercase!public! !
 !CharacterTest categoriesFor: #testAsUppercase!public! !
+!CharacterTest categoriesFor: #testAsUtf16String!public! !
 !CharacterTest categoriesFor: #testAsUtf8String!public! !
 !CharacterTest categoriesFor: #testCodePoint!public! !
 !CharacterTest categoriesFor: #testDigitValue!public! !
@@ -258,6 +305,7 @@ testSize
 !CharacterTest categoriesFor: #testIsPunctuation!public! !
 !CharacterTest categoriesFor: #testIsUppercase!public! !
 !CharacterTest categoriesFor: #testISurrogate!public! !
+!CharacterTest categoriesFor: #testIsUtf8Lead!public! !
 !CharacterTest categoriesFor: #testPrintString!public! !
 !CharacterTest categoriesFor: #testSize!public! !
 

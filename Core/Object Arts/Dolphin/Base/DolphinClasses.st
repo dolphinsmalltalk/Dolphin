@@ -662,7 +662,7 @@ UtfEncodedString variableByteSubclass: #Utf16String
 	classInstanceVariableNames: ''!
 UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'LeadByteMask2 LeadByteMask3 LeadByteMask4 TrailByteMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WeakArray variableSubclass: #MourningWeakArray
@@ -1397,7 +1397,7 @@ Magnitude subclass: #Association
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Mask'
+	classVariableNames: 'AnsiCharacters AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Mask Utf8TrailMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date

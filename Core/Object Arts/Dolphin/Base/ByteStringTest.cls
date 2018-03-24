@@ -1,23 +1,23 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-AbstractStringTest subclass: #StringTest
+AbstractStringTest subclass: #ByteStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-StringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
-StringTest comment: 'This is the unit test for the class String. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
+ByteStringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
+ByteStringTest comment: 'This is the unit test for the class String. Unit tests are a good way to exercise the functionality of your system in a repeatable and automatic manner. They are therefore recommended if you plan to release anything. For more information, see: 
 	- http://www.c2.com/cgi/wiki?UnitTest
 	- http://minnow.cc.gatech.edu/squeak/1547
 	- the sunit class category'!
-!StringTest categoriesForClass!Unclassified! !
-!StringTest methodsFor!
+!ByteStringTest categoriesForClass!Unclassified! !
+!ByteStringTest methodsFor!
 
 assimilateString: aString
 	^aString!
 
 collectionClass
-	^String!
+	^ByteString!
 
 testAsPhrase
 	self assert: #'' asPhrase = ''.
@@ -90,9 +90,9 @@ testMatch
 	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
 		do: [:each | self assert: (each match: 'foo')].
 	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
-!StringTest categoriesFor: #assimilateString:!helpers!private! !
-!StringTest categoriesFor: #collectionClass!helpers!private! !
-!StringTest categoriesFor: #testAsPhrase!public!unit tests! !
-!StringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
-!StringTest categoriesFor: #testMatch!public!unit tests! !
+!ByteStringTest categoriesFor: #assimilateString:!helpers!private! !
+!ByteStringTest categoriesFor: #collectionClass!helpers!private! !
+!ByteStringTest categoriesFor: #testAsPhrase!public!unit tests! !
+!ByteStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
+!ByteStringTest categoriesFor: #testMatch!public!unit tests! !
 

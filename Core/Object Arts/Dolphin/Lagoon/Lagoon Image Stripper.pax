@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Lagoon Image Stripper'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Lagoon Image Stripper.

@@ -59,7 +59,7 @@ asLowercase
 
 	| copy |
 	copy := self basicCopy.
-	UserLibrary default stringLowerA: copy.
+	UserLibrary default charLowerBuffA: copy cchLength: copy size.
 	^copy!
 
 asString
@@ -85,7 +85,7 @@ asUppercase
 
 	| copy |
 	copy := self basicCopy.
-	UserLibrary default stringUpperA: copy.
+	UserLibrary default charUpperBuffA: copy cchLength: copy size.
 	^copy!
 
 basicCopy
@@ -301,8 +301,11 @@ findInterned: aString
 					[:i |
 					| each |
 					each := bucket at: i.
-					(each ~~ DeadObject.Current and: [(aString trueCompare: each) == 0]) ifTrue: [^each]]].
+					(each ~~ DeadObject.Current and: [(aString _cmp: each) == 0]) ifTrue: [^each]]].
 	^nil!
+
+fromAddress: anInteger length: anInteger2
+	^self intern: (String fromAddress: anInteger length: anInteger2)!
 
 fromString: aString
 	"Answer a unique instance of the receiver whose contents are copied from aString."
@@ -471,11 +474,18 @@ stbReadFromProxy: anSTBInFiler
 	"Then read the string and intern it"
 	answer := anSTBInFiler basicNext asSymbol.
 	anSTBInFiler fixup: ref to: answer.
-	^answer! !
+	^answer!
+
+with: aCharacter
+	^self internCharacter: aCharacter!
+
+withAll: anArrayOfCharacter
+	^self intern: (String withAll: anArrayOfCharacter)! !
 !Symbol class categoriesFor: #addUnique:!accessing!private! !
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
 !Symbol class categoriesFor: #encode:on:!helpers!private! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
+!Symbol class categoriesFor: #fromAddress:length:!public! !
 !Symbol class categoriesFor: #fromString:!instance creation!public! !
 !Symbol class categoriesFor: #icon!constants!public! !
 !Symbol class categoriesFor: #initialize!development!initializing!public! !
@@ -489,4 +499,6 @@ stbReadFromProxy: anSTBInFiler
 !Symbol class categoriesFor: #stats!development!private! !
 !Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
+!Symbol class categoriesFor: #with:!public! !
+!Symbol class categoriesFor: #withAll:!public! !
 

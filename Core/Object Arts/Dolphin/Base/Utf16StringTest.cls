@@ -23,6 +23,28 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
+testMixedConcatenation
+	| subjects |
+	subjects := #('' 'd' 'ef') collect: [:each | self assimilateString: each].
+	{{String empty. Utf8String empty. Utf16String empty}.
+		{'c'. 'c' asUtf8String. 'c' asUtf16String}.
+		{'cd'.
+			'cd' asUtf8String.
+			'cd' asUtf16String.
+			#($a $b).
+			OrderedCollection with: $x.
+			($x codePoint to: $z codePoint) collect: [:each | Character codePoint: each]}}
+			do: 
+				[:args |
+				args do: 
+						[:eachCase |
+						subjects do: 
+								[:each |
+								| result |
+								result := self verifyConcatenation: eachCase with: each.
+								self deny: each == result]]].
+	^self!
+
 testUtf8StringConversion
 	| utf8Bytes byteString wideString bstr |
 	utf8Bytes := #[228 184 128 233 187 158 230 184 172 232 169 166].
@@ -47,5 +69,6 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
+!Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

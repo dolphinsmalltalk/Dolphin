@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Lagoon Tests'.
 package paxVersion: 1;
 	basicComment: ''.

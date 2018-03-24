@@ -18,6 +18,7 @@ package classNames
 	add: #BlockClosureTest;
 	add: #BooleanTest;
 	add: #ByteArrayTest;
+	add: #ByteStringTest;
 	add: #CaseInsensitiveSearchPolicyTest;
 	add: #CharacterTest;
 	add: #ClassBuilderTestClasses;
@@ -106,7 +107,6 @@ package classNames
 	add: #StdioFileStreamTest;
 	add: #STLFilerTest;
 	add: #StreamTest;
-	add: #StringTest;
 	add: #StructureArrayTest;
 	add: #SWORDArrayTest;
 	add: #SymbolTest;
@@ -513,12 +513,12 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #MultiByteStringTest
+AbstractStringTest subclass: #ByteStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #StringTest
+AbstractStringTest subclass: #MultiByteStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

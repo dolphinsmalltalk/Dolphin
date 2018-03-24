@@ -148,8 +148,12 @@ nextPut: anObject
 	will fail, and the backup Smalltalk code will be activated."
 
 	<primitive: 66>
-	position < writeLimit ifFalse: [self growCollection].
-	^collection class encode: anObject on: self!
+	^position < writeLimit
+		ifFalse: 
+			[self
+				growCollection;
+				nextPut: anObject]
+		ifTrue: [collection class encode: anObject on: self]!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 

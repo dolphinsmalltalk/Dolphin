@@ -25,6 +25,9 @@ newCollection: aCollection
 newCopy: aCollection
 	^String withAll: (self assimilateElements: aCollection)!
 
+newEmptyCollection: anInteger
+	^Symbol intern: (String new: anInteger)!
+
 testAtPut
 	| literal |
 	literal := #abc.
@@ -112,6 +115,7 @@ testResize
 !SymbolTest categoriesFor: #collectionClass!helpers!private! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !SymbolTest categoriesFor: #newCopy:!helpers!private! !
+!SymbolTest categoriesFor: #newEmptyCollection:!public! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
 !SymbolTest categoriesFor: #testEquals!public!unit tests! !
 !SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !

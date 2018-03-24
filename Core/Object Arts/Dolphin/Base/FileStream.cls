@@ -85,7 +85,7 @@ flush
 	(flags anyMask: DirtyBufferMask) ifTrue: [self writePage]!
 
 free
-	file notNil
+	(file notNil and: [file handle notNull])
 		ifTrue: 
 			[self flush.
 			self ownsFile ifTrue: [file close].

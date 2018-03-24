@@ -35,7 +35,7 @@ asLowercase
 
 	| copy |
 	copy := self basicCopy.
-	UserLibrary default stringLowerA: copy.
+	UserLibrary default charLowerBuffA: copy cchLength: copy size.
 	^copy!
 
 asUppercase
@@ -47,7 +47,7 @@ asUppercase
 
 	| copy |
 	copy := self basicCopy.
-	UserLibrary default stringUpperA: copy.
+	UserLibrary default charUpperBuffA: copy cchLength: copy size.
 	^copy!
 
 beginsWith: aString ignoreCase: aBoolean
