@@ -258,7 +258,7 @@ newLinesFor: aString startingAt: anIndex
 postCopy
 	super postCopy.
 	lineStart := self currentLineLength negated.
-	codeStream := WriteStream on: (String new: 60).
+	codeStream := WriteStream on: (Utf8String new: 60).
 	firstLineLength := nil.
 	^self!
 
