@@ -3140,7 +3140,31 @@ notSmallInteger:
 	DispatchNext
 
 isBytes:
-	lea		eax, [eax+eax+1]						; Convert byte size to SmallInteger
+	ASSUME	ecx:PTR OTE								; ecx is the receiver OTE
+	ASSUME	eax:DWORD								; eax is the size in bytes
+
+	test	[ecx].m_flags, MASK m_weakOrZ			; Is a string?
+	jz		bytes
+
+	; Its a string, temporarily use the encoding to determine the element size (in future revised InstanceSpec should be used)
+
+	mov     ecx, [ecx].m_oteClass
+	mov     ecx, [ecx].m_location
+	ASSUME  ecx:PTR Behavior
+	movzx   edx, [ecx].m_instanceSpec.m_extraSpec
+	dec     edx  
+	sub     edx,1  
+	je      words
+
+	sub     edx,1  
+	jne     bytes
+
+	shr     eax, 2  
+
+bytes:
+	add		eax, eax
+words:
+	or		eax, 1
 	MPrefetch
 	mov		[_SP], eax								; Replace stack top with byte size
 	DispatchNext

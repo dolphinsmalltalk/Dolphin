@@ -716,7 +716,7 @@ DWORD		primitiveStringAsUtf8String						; case 216
 DWORD		primitiveStringAsByteString						; case 217
 DWORD		primitiveStringConcatenate						; case 218
 DWORD		primitiveStringEqual							; case 219
-DWORD		primitiveStringCmpOrdinal						; case 220 - Not sure we need this. May remove it.
+DWORD		primitiveStringCmpOrdinal						; case 220
 DWORD		primitiveNextByte								; case 221
 DWORD		primitiveBasicNextPut							; case 222
 DWORD		unusedPrimitive									; case 223

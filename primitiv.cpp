@@ -123,6 +123,24 @@ Oop* __fastcall Interpreter::primitiveSize(Oop* const sp)
 	}
 	else
 	{
+		// TODO: Fix this up to use revised InstanceSpecification flags when changed to support 16 and 32-bit indexable byte objects
+		if (oteReceiver->m_dwFlags & OTEFlags::WeakOrZMask)
+		{
+			switch (ST::String::GetEncoding(oteReceiver))
+			{
+			case StringEncoding::Utf16:
+				bytesSize /= sizeof(Utf16String::CU);
+				break;
+			case StringEncoding::Utf32:
+				bytesSize /= sizeof(Utf32String::CU);
+				break;
+			case StringEncoding::Ansi:
+			case StringEncoding::Utf8:
+			default:
+				break;
+			}
+		}
+
 		*sp = integerObjectOf(bytesSize);
 		return sp;
 	}
