@@ -372,6 +372,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 				}
 				return newSp;
 			}
+			break;
 		}
 
 		case StringEncoding::Utf16:
@@ -401,6 +402,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 
 				return newSp;
 			}
+			break;
 		}
 
 		case StringEncoding::Utf32:
@@ -430,18 +432,18 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 				ObjectMemory::AddToZct((OTE*)character);
 				return newSp;
 			}
+			break;
 		}
 
 		default:
 		case StringEncoding::Ansi:
-		{
 			if (index > 0 && static_cast<MWORD>(index) <= oteReceiver->bytesSize())
 			{
 				ByteString::CU codeUnit = oteReceiver->m_location->m_characters[index - 1];
 				*newSp = reinterpret_cast<Oop>(Character::NewAnsi(codeUnit));
 				return newSp;
 			}
-		}
+			break;
 		}
 
 		// Index out of range
@@ -577,8 +579,39 @@ Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* sp)
 				}
 
 				case StringEncoding::Utf32:
-					// Not implemented yet
-					return primitiveFailure(3);
+				{
+					Utf32String::CU* const __restrict psz = reinterpret_cast<Utf32StringOTE*>(oteReceiver)->m_location->m_characters;
+
+					if (__isascii(codeUnit))
+					{
+						psz[index - 1] = static_cast<Utf32String::CU>(codeUnit);
+						*(sp - 2) = *sp;
+						return sp - 2;
+					}
+					else
+					{
+						switch (static_cast<StringEncoding>(code >> 24))
+						{
+						case StringEncoding::Ansi:
+							// Non-ascii Ansi char into Utf16 string. Will always go.
+							psz[index - 1] = m_ansiToUnicodeCharMap[codeUnit];
+							*(sp - 2) = *sp;
+							return sp - 2;
+
+						case StringEncoding::Utf8:
+						case StringEncoding::Utf16:
+							// Surrogate UTF-8/16 char into Utf32 string - invalid, since we can't translate surrogates
+							break;
+
+						case StringEncoding::Utf32:
+							// UTF-32 char into Utf16 string - will always go
+							psz[index - 1] = static_cast<Utf16String::CU>(codeUnit);
+							*(sp - 2) = *sp;
+							return sp - 2;
+						}
+					}
+					break;
+				}
 				}
 			}
 
