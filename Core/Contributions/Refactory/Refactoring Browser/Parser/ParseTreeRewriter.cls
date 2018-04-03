@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ParseTreeSearcher subclass: #ParseTreeRewriter
 	instanceVariableNames: 'tree'
@@ -13,13 +13,9 @@ Instance Variables:
 !ParseTreeRewriter categoriesForClass!Refactory-ParseTree Matching! !
 !ParseTreeRewriter methodsFor!
 
-executeTree: aParseTree 
-	| oldContext |
-	oldContext := context.
-	context := RBSmallDictionary new.
+executeTree: aParseTree
 	answer := false.
-	tree := self visitNode: aParseTree.
-	context := oldContext.
+	tree := self basicExecuteTree: aParseTree.
 	^answer!
 
 foundMatch

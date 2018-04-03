@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 StParseNodeVisitor subclass: #ParseTreeSearcher
 	instanceVariableNames: 'searches answer argumentSearches context messages'
@@ -16,25 +16,43 @@ Instance Variables:
 !ParseTreeSearcher categoriesForClass!Refactory-ParseTree Matching! !
 !ParseTreeSearcher methodsFor!
 
-addArgumentRule: aParseTreeRule 
-	argumentSearches add: aParseTreeRule.
-	aParseTreeRule owner: self!
+addArgumentRule: aParseTreeRule
+	argumentSearches := argumentSearches asOrderedCollection.
+	self basicAddArgumentRule: aParseTreeRule!
 
-addArgumentRules: ruleCollection 
-	ruleCollection do: [:each | self addArgumentRule: each]!
+addArgumentRules: ruleCollection
+	ruleCollection do: [:each | self basicAddArgumentRule: each]!
 
-addRule: aParseTreeRule 
-	searches add: aParseTreeRule.
-	aParseTreeRule owner: self!
+addRule: aParseTreeRule
+	searches := searches asOrderedCollection.
+	self basicAddRule: aParseTreeRule!
 
-addRules: ruleCollection 
-	ruleCollection do: [:each | self addRule: each]!
+addRules: ruleCollection
+	ruleCollection do: [:each | self basicAddRule: each]!
 
 answer
 	^answer!
 
 answer: anObject
 	answer := anObject!
+
+basicAddArgumentRule: aParseTreeRule
+	argumentSearches add: aParseTreeRule.
+	aParseTreeRule owner: self!
+
+basicAddRule: aParseTreeRule
+	searches add: aParseTreeRule.
+	aParseTreeRule owner: self!
+
+basicExecuteTree: aParseTree
+	| oldContext result |
+	searches := searches asArray.
+	argumentSearches := argumentSearches asArray.
+	oldContext := context.
+	context := RBSmallDictionary new.
+	result := self visitNode: aParseTree.
+	context := oldContext.
+	^result!
 
 canMatchMethod: aCompiledMethod
 	| msgs |
@@ -52,14 +70,8 @@ executeMethod: aParseTree initialAnswer: anObject
 	searches detect: [:each | (each performOn: aParseTree) notNil] ifNone: [].
 	^answer!
 
-executeTree: aParseTree 
-	"Save our current context, in case someone is performing another search inside a match."
-
-	| oldContext |
-	oldContext := context.
-	context := RBSmallDictionary new.
-	self visitNode: aParseTree.
-	context := oldContext.
+executeTree: aParseTree
+	self basicExecuteTree: aParseTree.
 	^answer!
 
 executeTree: aParseTree initialAnswer: aValue 
@@ -72,7 +84,7 @@ initialize
 	super initialize.
 	context := RBSmallDictionary new.
 	searches := OrderedCollection new.
-	argumentSearches := OrderedCollection new: 0.
+	argumentSearches := #().
 	answer := nil!
 
 lookForMoreMatchesInContext: oldContext 
@@ -151,9 +163,7 @@ visitArgumentNode: aNode
 			aNode]!
 
 visitNode: aNode
-	| value |
-	value := self performSearches: searches on: aNode.
-	^value
+	^(self performSearches: searches on: aNode)
 		ifNil: 
 			[super visitNode: aNode.
 			aNode]! !
@@ -163,6 +173,9 @@ visitNode: aNode
 !ParseTreeSearcher categoriesFor: #addRules:!accessing!public! !
 !ParseTreeSearcher categoriesFor: #answer!accessing!public! !
 !ParseTreeSearcher categoriesFor: #answer:!initialize/release!public! !
+!ParseTreeSearcher categoriesFor: #basicAddArgumentRule:!accessing!private! !
+!ParseTreeSearcher categoriesFor: #basicAddRule:!accessing!private! !
+!ParseTreeSearcher categoriesFor: #basicExecuteTree:!private!searching! !
 !ParseTreeSearcher categoriesFor: #canMatchMethod:!public!testing! !
 !ParseTreeSearcher categoriesFor: #context!accessing!public! !
 !ParseTreeSearcher categoriesFor: #executeMethod:initialAnswer:!accessing!public! !

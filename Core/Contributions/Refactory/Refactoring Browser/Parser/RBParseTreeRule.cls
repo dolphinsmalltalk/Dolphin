@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBParseTreeRule
 	instanceVariableNames: 'searchTree owner'
@@ -25,14 +25,15 @@ methodSearchString: aString
 owner: aParseTreeSearcher
 	owner := aParseTreeSearcher!
 
-performOn: aProgramNode 
-	self context empty.
-	^((searchTree match: aProgramNode inContext: self context) 
-		and: [self canMatch: aProgramNode]) 
-			ifTrue: 
-				[owner recusivelySearchInContext.
-				self foundMatchFor: aProgramNode]
-			ifFalse: [nil]!
+performOn: aProgramNode
+	| ctx |
+	ctx := self context.
+	ctx empty.
+	^((searchTree match: aProgramNode inContext: ctx) and: [self canMatch: aProgramNode])
+		ifTrue: 
+			[owner recusivelySearchInContext.
+			self foundMatchFor: aProgramNode]
+		ifFalse: [nil]!
 
 searchString: aString 
 	searchTree := RBParser parseRewriteExpression: aString!
