@@ -132,7 +132,7 @@ defWindowProc: hWnd msg: msg wParam: wParam lParam: lParam
 			LPARAM lParam 	// second message parameter
 		);"
 
-	<stdcall: uintptr DefWindowProcA handle dword uintptr uintptr>
+	<stdcall: uintptr DefWindowProcW handle dword uintptr uintptr>
 	^self invalidCall!
 
 destroyWindow: aWindowHandle
@@ -156,7 +156,7 @@ dispatchMessage: aMSG
   			CONST MSG *lpmsg 	// pointer to structure with message
 		);"
 
-	<stdcall: sdword DispatchMessageA MSG* >
+	<stdcall: sdword DispatchMessageW MSG* >
 	^self invalidCall!
 
 enableWindow: aWindowHandle bEnable: aBoolean
@@ -252,7 +252,7 @@ getMessage: aMSG hWnd: aWindowHandle wMsgFilterMin: anIntFilterMin wMsgFilterMax
 	it doesn't really (because of the error return value) so to avoid errors, as
 	suggested in the help), we have it return a signed integer)"
 
-	<stdcall: sdword GetMessageA MSG* handle dword dword>
+	<stdcall: sdword GetMessageW MSG* handle dword dword>
 	^self invalidCall!
 
 getParent: hWnd
@@ -384,10 +384,10 @@ loadCursor: anInstanceHandle lpCursorName: anIntegerID
 
 		HCURSOR LoadCursor(
   			HINSTANCE  hInstance,	// handle of application instance
-			LPCTSTR  lpCursorName 	// name string or cursor resource identifier  
+			LPCWSTR  lpCursorName 	// name string or cursor resource identifier  
 		);"
 
-	<stdcall: handle LoadCursorA handle lpvoid>
+	<stdcall: handle LoadCursorW handle lpvoid>
 	^self invalidCall!
 
 loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIntegerLength
@@ -402,7 +402,7 @@ loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIn
 			int nBufferMax 		// size of buffer
 		);"
 
-	<stdcall: sdword LoadStringA handle dword lpstr sdword>
+	<stdcall: sdword LoadStringW handle dword lpwstr sdword>
 	^self invalidCall!
 
 mapVirtualKey: keyCode uMapType: mapType
@@ -566,7 +566,7 @@ peekMessage: aMSG hWnd: aWindowHandle uMsgFilterMin: anIntFilterMin uMsgFilterMa
 			UINT  wRemoveMsg 		// removal flags
 		);"
 
-	<stdcall: bool PeekMessageA MSG* handle dword dword dword>
+	<stdcall: bool PeekMessageW MSG* handle dword dword dword>
 	^self invalidCall!
 
 postMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
@@ -579,7 +579,7 @@ postMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 		LPARAM lParam 		// second message parameter
 	   );"
 
-	<stdcall: intptr PostMessageA handle dword uintptr intptr>
+	<stdcall: intptr PostMessageW handle dword uintptr intptr>
 	^self invalidCall !
 
 postQuitMessage: anInteger
@@ -599,7 +599,7 @@ postThreadMessage: anIntegerId msg: msg wParam: wParam lParam: lParam
 			WPARAM  wParam,	// first message parameter
 			LPARAM  lParam 	// second message parameter);"
 
-	<stdcall: bool PostThreadMessageA handle dword uintptr uintptr>
+	<stdcall: bool PostThreadMessageW handle dword uintptr uintptr>
 	^self invalidCall !
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
@@ -623,7 +623,7 @@ sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 		LPARAM lParam 		// second message parameter
 	   );"
 
-	<stdcall: intptr SendMessageA handle dword uintptr uintptr>
+	<stdcall: intptr SendMessageW handle dword uintptr uintptr>
 	^self invalidCall !
 
 setActiveWindow: aHandle
@@ -689,7 +689,7 @@ setWindowDWORD: aWindowHandle nIndex: offset dwNewDWORD: value
 	integer as its last argument, and always returns a positive integer constructed by treating
 	the return value as unsigned."
 
-	<stdcall: dword SetWindowLongA handle sdword dword>
+	<stdcall: dword SetWindowLongW handle sdword dword>
 	^self invalidCall!
 
 setWindowText: aWindowHandle lpString: aString

@@ -237,7 +237,6 @@ package methodNames
 	add: #UserLibrary -> #beginPaint:lpPaint:;
 	add: #UserLibrary -> #bringWindowToTop:;
 	add: #UserLibrary -> #callWindowProc:hWnd:msg:wParam:lParam:;
-	add: #UserLibrary -> #callWindowProcW:hWnd:msg:wParam:lParam:;
 	add: #UserLibrary -> #childWindowFromPointEx:pt:uFlags:;
 	add: #UserLibrary -> #clientToScreen:lpPoint:;
 	add: #UserLibrary -> #closeClipboard;
@@ -246,7 +245,6 @@ package methodNames
 	add: #UserLibrary -> #createMenu;
 	add: #UserLibrary -> #createPopupMenu;
 	add: #UserLibrary -> #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:;
-	add: #UserLibrary -> #createWindowExW:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:;
 	add: #UserLibrary -> #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:;
 	add: #UserLibrary -> #deleteMenu:uPosition:uFlags:;
 	add: #UserLibrary -> #destroyAcceleratorTable:;
@@ -357,18 +355,15 @@ package methodNames
 	add: #UserLibrary -> #setProp:lpString:hData:;
 	add: #UserLibrary -> #setScrollInfo:fnBar:lpsi:fRedraw:;
 	add: #UserLibrary -> #setSysColors:lpaElements:lpaRgbValues:;
-	add: #UserLibrary -> #setWindowLongA:nIndex:dwNewLong:;
-	add: #UserLibrary -> #setWindowLongPtrA:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowLong:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowLongPtr:nIndex:dwNewLong:;
 	add: #UserLibrary -> #setWindowPlacement:lpwndpl:;
 	add: #UserLibrary -> #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:;
-	add: #UserLibrary -> #setWindowULongA:nIndex:dwNewLong:;
-	add: #UserLibrary -> #setWindowULongPtrA:nIndex:dwNewLong:;
-	add: #UserLibrary -> #setWindowULongPtrW:nIndex:dwNewLong:;
-	add: #UserLibrary -> #setWindowULongW:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowULong:nIndex:dwNewLong:;
+	add: #UserLibrary -> #setWindowULongPtr:nIndex:dwNewLong:;
 	add: #UserLibrary -> #showCursor:;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
 	add: #UserLibrary -> #systemParametersInfo:uiParam:pvParam:fWinIni:;
-	add: #UserLibrary -> #systemParametersInfoW:uiParam:pvParam:fWinIni:;
 	add: #UserLibrary -> #trackMouseEvent:;
 	add: #UserLibrary -> #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:;
 	add: #UserLibrary -> #translateAccelerator:haccl:lpmsg:;
@@ -1579,22 +1574,6 @@ bringWindowToTop: hWnd
 	^self invalidCall!
 
 callWindowProc: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
-	"Pass a message to the specified Ansi window procedure. 
-		LRESULT CallWindowProc(
-  			WNDPROC lpPrevWndFunc,	// pointer to previous procedure
-			HWND hWnd,			// handle to window
-			UINT Msg,				// message
-			WPARAM wParam,			// first message parameter
-			LPARAM lParam 			// second message parameter
-		);
-	N.B. As we don't want to pass the address of a Smalltalk object containing
-	the WNDPROC's address to the function, we specify the first parameter
-	as being a DWORD as this allows us to pass a wider range of types."
-
-	<stdcall: uintptr CallWindowProcA dword handle dword uintptr uintptr>
-	^self invalidCall!
-
-callWindowProcW: lpPrevWndFunc hWnd: hWnd msg: msg wParam: wParam lParam: lParam
 	"Pass a message to the specified Unicode window procedure. 
 		LRESULT CallWindowProc(
   			WNDPROC lpPrevWndFunc,	// pointer to previous procedure
@@ -1670,36 +1649,7 @@ createPopupMenu
 	<stdcall: handle CreatePopupMenu>
 	^self invalidCall!
 
-createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle: style 
-		x: x y: y nWidth: width nHeight: height 
-		hWndParent: parent hMenu: menu hInstance: instance lpParam: lpParam
-	"Creates an overlapped, pop-up, or child window with the specified the parent or owner (if any), class, 
-	title, menu, style (and extended style), position and extent. Answer the handle of the
-	new window, or nil if the create fails.
-	N.B. In order to correctly subclass controls so that Dolphin receives creation messages
-	for those controls, View>>hookWindowCreate should be called before this function.
-		HWND CreateWindowEx(
-			DWORD dwExStyle,		// extended window style
-			LPCSTR lpClassName,	// pointer to registered class name
-			LPCSTR lpWindowName,	// pointer to window name
-			DWORD dwStyle,		// window style
-			int x,				// horizontal position of window
-			int y,				// vertical position of window
-			int nWidth,			// window width
-			int nHeight,			// window height
-			HWND hWndParent,		// handle to parent or owner window
-			HMENU hMenu,			// handle to menu, or child-window identifier
-			HINSTANCE hInstance,	// handle to application instance
-			LPVOID lpParam 		// pointer to window-creation data
-		);"
-
-	<stdcall: handle CreateWindowExA dword lpstr lpstr dword sdword sdword sdword sdword handle handle handle lpvoid>
-	^self invalidCall
-!
-
-createWindowExW: exstyle lpClassName: classname lpWindowName: windowname dwStyle: style 
-		x: x y: y nWidth: width nHeight: height 
-		hWndParent: parent hMenu: menu hInstance: instance lpParam: lpParam
+createWindowEx: exstyle lpClassName: classname lpWindowName: windowname dwStyle: style x: x y: y nWidth: width nHeight: height hWndParent: parent hMenu: menu hInstance: instance lpParam: lpParam
 	"Creates an overlapped, pop-up, or child window with the specified the parent or owner (if any), class, 
 	title, menu, style (and extended style), position and extent. Answer the handle of the
 	new window, or nil if the create fails.
@@ -1720,9 +1670,8 @@ createWindowExW: exstyle lpClassName: classname lpWindowName: windowname dwStyle
 			LPVOID lpParam 		// pointer to window-creation data
 		);"
 
-	<stdcall: handle CreateWindowExW dword lpwstr lpwstr dword sdword sdword sdword sdword handle handle handle lpvoid>
-	^self invalidCall
-!
+	<stdcall: handle CreateWindowExW dword lpvoid lpwstr dword sdword sdword sdword sdword handle handle handle lpvoid>
+	^self invalidCall!
 
 deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: y cx: cx cy: cy uFlags: uFlags 
 	"Invoke the DeferWindowPos() function of the module wrapped by the receiver.
@@ -2256,7 +2205,7 @@ getWindowLong: aWindowHandle nIndex: zeroBasedIntegerOffset
 
 	Answers 0 if the function fails."
 
-	<stdcall: sdword GetWindowLongA handle sdword>
+	<stdcall: sdword GetWindowLongW handle sdword>
 	^self invalidCall!
 
 getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset 
@@ -2287,7 +2236,7 @@ getWindowLongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 
 	Answers 0 if the function fails."
 
-	<stdcall: intptr GetWindowLongPtrA handle sdword>
+	<stdcall: intptr GetWindowLongPtrW handle sdword>
 	^self invalidCall!
 
 getWindowPlacement: hWnd lpwndpl: lpwndpl
@@ -2351,7 +2300,7 @@ getWindowULong: aWindowHandle nIndex: zeroBasedIntegerOffset
 	"Answer various unsigned 32-bit integer values retrieved from the window with handle,
 	aWindowHandle. See #getWindowLongPtr:offset: for more details"
 
-	<stdcall: dword GetWindowLongA handle sdword>
+	<stdcall: dword GetWindowLongW handle sdword>
 	^self invalidCall!
 
 getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
@@ -2360,7 +2309,7 @@ getWindowULongPtr: aWindowHandle nIndex: zeroBasedIntegerOffset
 
 	"Note: This function only exists on Win64. It is not present on Win32."
 
-	<stdcall: uintptr GetWindowLongPtrA handle sdword>
+	<stdcall: uintptr GetWindowLongPtrW handle sdword>
 	^self invalidCall!
 
 insertMenuItem: hMenu uItem: anInteger fByPosition: aBoolean lpmii: aMENUITEMINFOW
@@ -2437,7 +2386,7 @@ isDialogMessage: aHandle lpMsg: aMSG
 			LPMSG lpMsg	// address of structure with message
 		);"
 
-	<stdcall: bool IsDialogMessageA handle MSG* >
+	<stdcall: bool IsDialogMessageW handle MSG* >
 	^self invalidCall!
 
 isIconic: aWindowHandle
@@ -2494,7 +2443,7 @@ loadIcon: anInstanceHandle lpIconName: anIntegerID
 			LPCTSTR lpIconName 	// icon-name string or icon resource identifier
 		);"
 
-	<stdcall: handle LoadIconA handle lpvoid>
+	<stdcall: handle LoadIconW handle lpvoid>
 	^self invalidCall
 !
 
@@ -2509,7 +2458,7 @@ loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad
 			UINT fuLoad		// load flags
 		);"
 
-	<stdcall: handle LoadImageA handle lpvoid dword sdword sdword dword>
+	<stdcall: handle LoadImageW handle lpvoid dword sdword sdword dword>
 	^self invalidCall!
 
 loadMenu: anExternalHandle lpMenuName: anIntegerOrString
@@ -2601,7 +2550,7 @@ registerClass: aWNDCLASS
 			CONST WNDCLASS  *lpwc 	// address of structure with class data
 		);"
 
-	<stdcall: word RegisterClassA WNDCLASS* >
+	<stdcall: word RegisterClassW WNDCLASS* >
 	^self invalidCall!
 
 registerClipboardFormat: formatName
@@ -2730,21 +2679,21 @@ sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: w
 			LPARAM  lParam 	// second message parameter
 		   );"
 
-	<stdcall: uintptr SendDlgItemMessageA handle sdword dword uintptr intptr>
+	<stdcall: uintptr SendDlgItemMessageW handle sdword dword uintptr intptr>
 	^self invalidCall!
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	to pointer."
 
-	<stdcall: intptr SendMessageA handle dword uintptr lpvoid>
+	<stdcall: intptr SendMessageW handle dword uintptr lpvoid>
 	^self invalidCall !
 
 sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 	"As sendMessage:msg:wParam:lParam, but implicit conversion of lParam
 	and wParam to pointers."
 
-	<stdcall: intptr SendMessageA handle dword lpvoid lpvoid>
+	<stdcall: intptr SendMessageW handle dword lpvoid lpvoid>
 	^self invalidCall !
 
 setCapture: aWindowHandle
@@ -2769,7 +2718,7 @@ setClassLong: aWindowHandle nIndex: offset dwNewLong: value
 			LONG dwNewLong 	// new value
 		);"
 
-	<stdcall: dword SetClassLongA handle sdword sdword>
+	<stdcall: dword SetClassLongW handle sdword sdword>
 	^self invalidCall!
 
 setClipboardData: uFormat hMem: hMem
@@ -2950,7 +2899,7 @@ setSysColors: count lpaElements: elements lpaRgbValues: values
 	<stdcall: bool SetSysColors sdword sdword* ColorRef*>
 	^self invalidCall!
 
-setWindowLongA: hWnd nIndex: nIndex dwNewLong: dwNewLong
+setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"Change an attribute of the specified window, setting 
 	a signed 32-bit (long) value at the specified offset into 
 	the extra window memory of a window.
@@ -2960,11 +2909,11 @@ setWindowLongA: hWnd nIndex: nIndex dwNewLong: dwNewLong
 			LONG dwNewLong 	// new value
 		);"
 
-	<stdcall: sdword SetWindowLongA handle sdword sdword>
+	<stdcall: sdword SetWindowLongW handle sdword sdword>
 	^self invalidCall!
 
-setWindowLongPtrA: hWnd nIndex: nIndex dwNewLong: dwNewLong
-	<stdcall: intptr SetWindowLongPtrA handle sdword intptr>
+setWindowLongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: intptr SetWindowLongPtrW handle sdword intptr>
 	^self invalidCall!
 
 setWindowPlacement: aWindowHandle lpwndpl: aWinWINDOWPLACEMENT
@@ -3003,20 +2952,12 @@ setWindowPos: aWindowHandle
 	^self invalidCall
 		!
 
-setWindowULongA: hWnd nIndex: nIndex dwNewLong: dwNewLong
-	<stdcall: dword SetWindowLongA handle sdword dword>
-	^self invalidCall!
-
-setWindowULongPtrA: hWnd nIndex: nIndex dwNewLong: dwNewLong
-	<stdcall: uintptr SetWindowLongPtrA handle sdword uintptr>
-	^self invalidCall!
-
-setWindowULongPtrW: hWnd nIndex: nIndex dwNewLong: dwNewLong
-	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
-	^self invalidCall!
-
-setWindowULongW: hWnd nIndex: nIndex dwNewLong: dwNewLong
+setWindowULong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	<stdcall: dword SetWindowLongW handle sdword dword>
+	^self invalidCall!
+
+setWindowULongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
+	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
 	^self invalidCall!
 
 showCursor: aBoolean
@@ -3035,18 +2976,6 @@ subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2
 	^self invalidCall!
 
 systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
-	"
-	BOOL SystemParametersInfo(
-		UINT uiAction,	// system parameter to query or set
-		UINT uiParam,	// depends on action to be taken
-		PVOID pvParam,	// depends on action to be taken
-		UINT fWinIni 	// user profile update flag
-	);"
-
-	<stdcall: bool SystemParametersInfoA dword dword lpvoid dword>
-	^self invalidCall!
-
-systemParametersInfoW: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	"
 	BOOL SystemParametersInfo(
 		UINT uiAction,	// system parameter to query or set
@@ -3111,7 +3040,7 @@ unregisterClass: classAtomOrStringName hInstance: instanceHandle
 			HINSTANCE hInstance 	// handle of application instance
 		);"
 
-	<stdcall: bool UnregisterClassA lpvoid handle>
+	<stdcall: bool UnregisterClassW lpvoid handle>
 	^self invalidCall!
 
 unregisterHotKey: aWindowHandle id: anIntegerId
@@ -3153,7 +3082,6 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #beginPaint:lpPaint:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #bringWindowToTop:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
-!UserLibrary categoriesFor: #callWindowProcW:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! !
 !UserLibrary categoriesFor: #childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
 !UserLibrary categoriesFor: #closeClipboard!public!win32 functions-clipboard! !
@@ -3162,7 +3090,6 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #createMenu!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #createPopupMenu!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #createWindowExW:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hMenu:hInstance:lpParam:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
 !UserLibrary categoriesFor: #deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
@@ -3273,18 +3200,15 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #setProp:lpString:hData:!public!win32 functions-window property! !
 !UserLibrary categoriesFor: #setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
 !UserLibrary categoriesFor: #setSysColors:lpaElements:lpaRgbValues:!public! !
-!UserLibrary categoriesFor: #setWindowLongA:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowLongPtrA:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setWindowPlacement:lpwndpl:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #setWindowULongA:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowULongPtrA:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowULongPtrW:nIndex:dwNewLong:!public!win32 functions-window class! !
-!UserLibrary categoriesFor: #setWindowULongW:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
+!UserLibrary categoriesFor: #setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 !UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #systemParametersInfoW:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
 !UserLibrary categoriesFor: #translateAccelerator:haccl:lpmsg:!public!win32 functions-keyboard accelerator! !

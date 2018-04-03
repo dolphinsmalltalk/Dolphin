@@ -145,7 +145,7 @@ fixedClasses
 	checked when a class is first read from the file. In order to version these classes it is
 	necessary to increment the global STB version number."
 
-	^#(##(String) ##(Array) ##(ByteArray) ##(LargeInteger) ##(STBClassProxy) ##(STBMetaclassProxy) ##(Symbol) ##(STBCollectionProxy) ##(OrderedCollection) ##(STBIdentityDictionaryProxy) ##(LookupTable) ##(IdentityDictionary))!
+	^#(##(ByteString) ##(Array) ##(ByteArray) ##(LargeInteger) ##(STBClassProxy) ##(STBMetaclassProxy) ##(Symbol) ##(STBCollectionProxy) ##(OrderedCollection) ##(STBIdentityDictionaryProxy) ##(LookupTable) ##(IdentityDictionary))!
 
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."

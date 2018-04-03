@@ -1,14 +1,13 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'DeviceMask ReadOnlyMask TextMask'
+	instanceVariableNames: 'stream flags name oldFd fd crtlib codec'
+	classVariableNames: 'Codecs DeviceMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 StdioFileStream guid: (GUID fromString: '{7b8405b3-0819-421f-8110-ca2763bcb59a}')!
 StdioFileStream addClassConstant: 'DeviceMask' value: 64!
 StdioFileStream addClassConstant: 'ReadOnlyMask' value: 1!
-StdioFileStream addClassConstant: 'TextMask' value: 128!
 StdioFileStream comment: 'StdioFileStream is a <FileStream> implemented over C runtime library stdio streams. FileStream itself should be used by preference in most cases.
 
 Instance Variables:
@@ -43,7 +42,7 @@ attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean
 	specified read/write and text/binary modes (usual Smalltalk FileStream conventions for the
 	interpretation of the mode and text parameters applies)."
 
-	| newFd crt handle f mode |
+	| newFd crt handle f mode codec |
 	crt := CRTLibrary default.
 	"1: Preserve the existing file descriptor (fd) for later restoration by dup'ing it"
 	oldFd := crt _dup: fdInteger.
@@ -65,15 +64,36 @@ attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean
 					0].
 	aBoolean
 		ifTrue: 
-			[mode := mode copyWith: $t.
-			f := f bitOr: TextMask]
-		ifFalse: [mode := mode copyWith: $b].
+			[codec := ByteString.
+			mode := mode copyWith: $t]
+		ifFalse: 
+			[codec := ByteArray.
+			mode := mode copyWith: $b].
 	handle := crt _fdopen: fdInteger mode: mode.
 	handle isNil ifTrue: [CRTError signal].
 	self
 		setStream: handle
 		flags: f
-		name: nil!
+		name: nil
+		codec: codec!
+
+basicNext
+	"Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
+	values."
+
+	"Implementation note: If connected to device then is it possible for fgetc to both block and to return
+	a value other than -1 even when feof() returns true. After a ^Z (EOF) character has been encountered in the
+	input stream, feof() will subsequently return true. However, since the device stream is not actually at end,
+	fgetc() will block awaiting further input when called. If further input is provided, this will be returned, even
+	though feof() remains true. To avoid this contradictory behaviour we test up front for feof() (via #atEnd)
+	and do not attempt to read further input."
+
+	(crtlib feof: stream)
+		ifFalse: 
+			[| ch |
+			ch := crtlib fgetc: stream.
+			ch == -1 ifFalse: [^ch]].
+	^self errorEndOfStream!
 
 basicPrint: anObject 
 	anObject basicPrintOn: self!
@@ -106,7 +126,7 @@ contents
 	^len == -1 ifTrue: [self upToEnd] ifFalse: [self next: len]!
 
 contentsSpecies
-	^self isText ifTrue: [String] ifFalse: [ByteArray]!
+	^codec!
 
 cr
 	"Store the line delimiter character sequence (as required by
@@ -128,6 +148,9 @@ crtab: anInteger
 	self
 		cr;
 		tab: anInteger!
+
+decodeByte: ch
+	^self isText ifTrue: [Character value: ch] ifFalse: [ch]!
 
 errorNotPositionable
 	^self error: 'The stdio stream is not positionable'!
@@ -168,7 +191,7 @@ isText
 	"Answer whether the receiver's data is characters.
 	X3J20 (draft) includes rational as to why this message is not called #isCharacter."
 
-	^flags anyMask: TextMask!
+	^codec ~~ ByteArray!
 
 isWriteable
 	"Answer whether the receiver can be written to (i.e. it implements the 
@@ -194,7 +217,7 @@ next
 		ifFalse: 
 			[| ch |
 			ch := crtlib fgetc: stream.
-			ch == -1 ifFalse: [^self isText ifTrue: [Character value: ch] ifFalse: [ch]]].
+			ch == -1 ifFalse: [^codec decode: ch]].
 	^self errorEndOfStream!
 
 next: countInteger into: aSequenceableCollection startingAt: startInteger
@@ -251,24 +274,6 @@ nextAvailable: anInteger
 				count: anInteger
 				stream: stream.
 	^read < anInteger ifTrue: [buf copyFrom: 1 to: read] ifFalse: [buf]!
-
-nextByte
-	"Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
-	values."
-
-	"Implementation note: If connected to device then is it possible for fgetc to both block and to return
-	a value other than -1 even when feof() returns true. After a ^Z (EOF) character has been encountered in the
-	input stream, feof() will subsequently return true. However, since the device stream is not actually at end,
-	fgetc() will block awaiting further input when called. If further input is provided, this will be returned, even
-	though feof() remains true. To avoid this contradictory behaviour we test up front for feof() (via #atEnd)
-	and do not attempt to read further input."
-
-	(crtlib feof: stream)
-		ifFalse: 
-			[| ch |
-			ch := crtlib fgetc: stream.
-			ch == -1 ifFalse: [^ch]].
-	^self errorEndOfStream!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
@@ -387,7 +392,7 @@ seek: originInteger offset: offsetInteger
 		origin: originInteger) ~~ 0
 		ifTrue: [CRTError signal]!
 
-setStream: anExternalAddress flags: anInteger name: aString
+setStream: anExternalAddress flags: anInteger name: aString codec: aClass
 	stream := anExternalAddress asExternalHandle.
 	flags := anInteger.
 	crtlib := CRTLibrary default.
@@ -397,6 +402,7 @@ setStream: anExternalAddress flags: anInteger name: aString
 			[crtlib := CRTLibrary nonblocking.
 			flags := flags bitOr: DeviceMask].
 	name := aString.
+	codec := aClass.
 	self beFinalizable!
 
 setToEnd
@@ -446,6 +452,7 @@ upToEnd
 !StdioFileStream categoriesFor: #asParameter!converting!public! !
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
 !StdioFileStream categoriesFor: #attach:toFd:mode:text:!initializing!private! !
+!StdioFileStream categoriesFor: #basicNext!accessing!public! !
 !StdioFileStream categoriesFor: #basicPrint:!printing!private! !
 !StdioFileStream categoriesFor: #close!operations!public! !
 !StdioFileStream categoriesFor: #contents!accessing!public! !
@@ -453,6 +460,7 @@ upToEnd
 !StdioFileStream categoriesFor: #cr!accessing!public! !
 !StdioFileStream categoriesFor: #crtab!accessing!public! !
 !StdioFileStream categoriesFor: #crtab:!accessing!public! !
+!StdioFileStream categoriesFor: #decodeByte:!accessing!public! !
 !StdioFileStream categoriesFor: #errorNotPositionable!exceptions!private! !
 !StdioFileStream categoriesFor: #externalType!accessing!public! !
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
@@ -469,7 +477,6 @@ upToEnd
 !StdioFileStream categoriesFor: #next:put:!accessing!public! !
 !StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
-!StdioFileStream categoriesFor: #nextByte!accessing!public! !
 !StdioFileStream categoriesFor: #nextLine!accessing!public! !
 !StdioFileStream categoriesFor: #nextOrNil!accessing!public! !
 !StdioFileStream categoriesFor: #nextPut:!accessing!public! !
@@ -481,7 +488,7 @@ upToEnd
 !StdioFileStream categoriesFor: #reset!positioning!public! !
 !StdioFileStream categoriesFor: #reverseContents!public! !
 !StdioFileStream categoriesFor: #seek:offset:!helpers!positioning!private! !
-!StdioFileStream categoriesFor: #setStream:flags:name:!initializing!private! !
+!StdioFileStream categoriesFor: #setStream:flags:name:codec:!initializing!private! !
 !StdioFileStream categoriesFor: #setToEnd!positioning!public! !
 !StdioFileStream categoriesFor: #size!accessing!public! !
 !StdioFileStream categoriesFor: #skip:!positioning!public! !
@@ -522,25 +529,37 @@ attach: anExternalHandle toFd: fdInteger mode: modeSymbol text: aBoolean
 		mode: modeSymbol
 		text: aBoolean!
 
+codecForEncoding: aSymbol
+	^Codecs at: aSymbol ifAbsent: [self error: 'Unsupported encoding ' , aSymbol]!
+
 fromHandle: anExternalHandle
 	"Answer a new instance of the receiver on the specified stdio FILE pointer,
 	assumed to be in text mode."
 
 	^self
 		newStream: anExternalHandle
-		flags: TextMask
-		name: nil!
+		flags: 0
+		name: nil
+		type: #text!
 
 initialize
 	self addClassConstant: 'ReadOnlyMask' value: 16r01.
 	self addClassConstant: 'DeviceMask' value: 16r40.
-	self addClassConstant: 'TextMask' value: 16r80!
+	self addClassConstant: 'EncodingMask' value: 16r78.
+	self addClassConstant: 'Codecs'
+		value: (IdentityDictionary new
+				at: #binary put: ByteArray;
+				at: #ansi put: ByteString;
+				at: #text put: ByteString;
+				at: #utf8 put: Utf8String;
+				yourself)!
 
-newStream: anExternalHandle flags: anInteger name: aString
+newStream: anExternalHandle flags: anInteger name: aString type: aSymbol
 	^self basicNew
 		setStream: anExternalHandle
 		flags: anInteger
-		name: aString!
+		name: aString
+		codec:  (self codecForEncoding: aSymbol)!
 
 on: aFile
 	"Answer an intance of the receiver attached to the open file aFile."
@@ -551,10 +570,14 @@ on: aFile text: aBoolean
 	"Answer an intance of the receiver attached to the open file aFile, in binary or text mode
 	depending on the argument, aBoolean."
 
+	^self on: aFile type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
+
+on: aFile type: aSymbol
+	"Answer an intance of the receiver attached to the open file aFile, in binary or text mode
+	depending on the argument, aBoolean."
+
 	| kernel oshandle proc crt fd handle mode f |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
-	"Because _fclose will close the underlying file, we must duplicate the File handle or we
-	will end up closing a File we may not own."
 	oshandle := ExternalHandle new.
 	kernel := KernelLibrary default.
 	proc := kernel getCurrentProcess.
@@ -575,17 +598,14 @@ on: aFile text: aBoolean
 		ifFalse: 
 			[mode := 'r'.
 			f := ReadOnlyMask].
-	aBoolean
-		ifTrue: 
-			[mode := mode copyWith: $t.
-			f := f bitOr: TextMask]
-		ifFalse: [mode := mode copyWith: $b].
+	aSymbol == #binary ifTrue: [mode := mode copyWith: $t] ifFalse: [mode := mode copyWith: $b].
 	handle := crt _fdopen: fd mode: mode.
 	handle isNil ifTrue: [CRTError signal].
 	^self
 		newStream: handle
 		flags: f
-		name: aFile name!
+		name: aFile name
+		type: aSymbol!
 
 read: aString 
 	"Answer a new text mode instance of the receiver whose future sequence values consist
@@ -599,14 +619,16 @@ read: aString text: aBoolean
 	based or binary, depending on the <boolean> argument. Raise an exception
 	if the file does not exist."
 
-	| handle errno flags mode |
-	mode := aBoolean
-				ifTrue: 
-					[flags := ##(TextMask | ReadOnlyMask).
-					'rt']
-				ifFalse: 
-					[flags := ReadOnlyMask.
-					'rb'].
+	^self read: aString type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
+
+read: aString type: aSymbol
+	"Answer an instance of the receiver whose future sequence values consist
+	of the contents of the file named, aString, and whose access is character
+	based or binary, depending on the <boolean> argument. Raise an exception
+	if the file does not exist."
+
+	| handle errno mode |
+	mode := aSymbol == #binary ifTrue: ['rt'] ifFalse: ['rb'].
 	handle := ExternalHandle new.
 	^(errno := CRTLibrary default
 				fopen_s: handle
@@ -615,17 +637,10 @@ read: aString text: aBoolean
 		ifTrue: 
 			[self
 				newStream: handle
-				flags: flags
-				name: aString]
+				flags: ReadOnlyMask
+				name: aString
+				type: aSymbol]
 		ifFalse: [CRTError signalWith: errno]!
-
-read: aString type: aSymbol 
-	"Answer an instance of the receiver whose future sequence values consist
-	of the contents of the file identified by the <readableString> argument, and 
-	whose external stream type and sequence value type is determined by the
-	<symbol> argument (i.e. either #binary or #text)."
-
-	^self read: aString text: aSymbol == #text!
 
 write: aString 
 	"Answer a new text mode instance of the receiver opened on a new or truncated file 
@@ -659,40 +674,13 @@ write: aString mode: aSymbol check: checkBoolean text: textBoolean
 	The final <boolean> argument specifies the external type (#binary or #text) 
 	for which the new instance is initially configured."
 
-	| answer handle errno flags mode |
-	checkBoolean
-		ifTrue: 
-			[| exists |
-			exists := File exists: aString.
-			aSymbol == #create
-				ifTrue: [exists ifTrue: [self error: 'File already exists']]
-				ifFalse: [exists ifFalse: [self error: 'File does not exist']]].
-	"Note that Smalltalk #append mode is unlike the 'a' and 'a+' fopen() modes, because
-	in Smalltalk the mode only controls the initial file position, and it is possible to overwrite
-	the existing data by moving the stream pointer backwards. With the fopen() append
-	modes it is not possible to overwrite the existing data."
-	handle := ExternalHandle new.
-	mode := aSymbol == #append ifTrue: ['r+'] ifFalse: ['w+'].
-	flags := textBoolean
-				ifTrue: 
-					[mode := mode copyWith: $t.
-					TextMask]
-				ifFalse: 
-					[mode := mode copyWith: $b.
-					0].
-	errno := CRTLibrary default
-				fopen_s: handle
-				filename: aString
-				mode: mode.
-	errno ~~ 0 ifTrue: [^CRTError signalWith: errno].
-	answer := self
-				newStream: handle
-				flags: flags
-				name: aString.
-	aSymbol == #append ifTrue: [answer setToEnd].
-	^answer!
+	^self
+		write: aString
+		mode: aSymbol
+		check: checkBoolean
+		type: (textBoolean ifTrue: [#text] ifFalse: [#binary])!
 
-write: fileId mode: mode check: aBoolean type: typeSymbol 
+write: fileId mode: mode check: aBoolean type: typeSymbol
 	"Answer a new instance of the receiver open on the contents of
 	the file identified by the <readableString> argument.
 	The first <symbol> argument identifies the manner in which the file
@@ -706,11 +694,32 @@ write: fileId mode: mode check: aBoolean type: typeSymbol
 	argument specifies the external type (#binary or #text) for which the new instance 
 	is initially configured."
 
-	^self 
-		write: fileId
-		mode: mode
-		check: aBoolean
-		text: typeSymbol == #text!
+	| answer handle errno mode1 |
+	aBoolean
+		ifTrue: 
+			[| exists |
+			exists := File exists: fileId.
+			mode == #create
+				ifTrue: [exists ifTrue: [self error: 'File already exists']]
+				ifFalse: [exists ifFalse: [self error: 'File does not exist']]].	"Note that Smalltalk #append mode is unlike the 'a' and 'a+' fopen() modes, because
+	in Smalltalk the mode only controls the initial file position, and it is possible to overwrite
+	the existing data by moving the stream pointer backwards. With the fopen() append
+	modes it is not possible to overwrite the existing data."
+	handle := ExternalHandle new.
+	mode1 := mode == #append ifTrue: ['r+'] ifFalse: ['w+'].
+	typeSymbol ~~ #binary ifTrue: [mode1 := mode1 copyWith: $t] ifFalse: [mode1 := mode1 copyWith: $b].
+	errno := CRTLibrary default
+				fopen_s: handle
+				filename: fileId
+				mode: mode1.
+	errno ~~ 0 ifTrue: [^CRTError signalWith: errno].
+	answer := self
+				newStream: handle
+				flags: 0
+				name: fileId
+				type: typeSymbol.
+	mode == #append ifTrue: [answer setToEnd].
+	^answer!
 
 write: aString text: aBoolean 
 	"Create a new file/truncate an existing file for read/write access through the receiver.
@@ -721,14 +730,29 @@ write: aString text: aBoolean
 		write: aString
 		mode: #truncate
 		check: false
-		text: aBoolean! !
+		text: aBoolean!
+
+write: aString type: aSymbol
+	"Create a new file/truncate an existing file identified by the <readableString>, aString,
+	for write access (in fact our filestreams require read/write access for buffering, so the
+	result is actually a read/write file stream) through the receiver. The sequence value type
+	is determined by the <symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16,
+	or #utf32)."
+
+	^self
+		write: aString
+		mode: #truncate
+		check: false
+		type: aSymbol! !
 !StdioFileStream class categoriesFor: #attach:toFd:mode:!instance creation!public! !
 !StdioFileStream class categoriesFor: #attach:toFd:mode:text:!instance creation!public! !
+!StdioFileStream class categoriesFor: #codecForEncoding:!helpers!private! !
 !StdioFileStream class categoriesFor: #fromHandle:!instance creation!public! !
 !StdioFileStream class categoriesFor: #initialize!development!initializing!public! !
-!StdioFileStream class categoriesFor: #newStream:flags:name:!instance creation!private! !
+!StdioFileStream class categoriesFor: #newStream:flags:name:type:!instance creation!private! !
 !StdioFileStream class categoriesFor: #on:!instance creation!public! !
 !StdioFileStream class categoriesFor: #on:text:!instance creation!public! !
+!StdioFileStream class categoriesFor: #on:type:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:type:!instance creation!public! !
@@ -737,6 +761,7 @@ write: aString text: aBoolean
 !StdioFileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
 !StdioFileStream class categoriesFor: #write:text:!instance creation!public! !
+!StdioFileStream class categoriesFor: #write:type:!public! !
 
 StdioFileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!
 

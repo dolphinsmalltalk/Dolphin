@@ -461,35 +461,32 @@ isNullConverter
 !View methodsFor!
 
 addToolTipWithHandle: toolTipHandle
-
 	"Add the specified tool tip to this view (typically but not necessarily a Button).
 	The receiver will need to override wmNotify:wParam:lParam: to intercept requests for tip text (see PushButton extension in this package).
 	Borrowed from cdemers 2/26/2003, based on code from Steve Waring and mm_aa."
 
 	| toolInfo |
-
-	(toolInfo := TOOLINFOA new)
-		uFlags: 17; "TTF_IDISHWND | TTF_SUBCLASS"
+	(toolInfo := TOOLINFOW new)
+		uFlags: ##(TooltipConstants.TTF_IDISHWND | TooltipConstants.TTF_SUBCLASS);
 		hwnd: self handle;
 		uId: self handle;
 		textCallback.
-	UserLibrary default 
+	UserLibrary default
 		sendMessage: toolTipHandle
-		msg: 1028	"TTM_ADDTOOL"
+		msg: TooltipConstants.TTM_ADDTOOLW
 		wParam: 0
-		lParam: toolInfo yourAddress.	
+		lParam: toolInfo yourAddress.
 	"cdemers - 2/26/2003 Allow multiline."
-	UserLibrary default 
+	UserLibrary default
 		sendMessage: toolTipHandle
-		msg: 1048	"TTM_SETMAXTIPWIDTH"
+		msg: TooltipConstants.TTM_SETMAXTIPWIDTH
 		wParam: 0
 		lParam: 500.
-	UserLibrary default 
+	UserLibrary default
 		sendMessage: toolTipHandle
-		msg: (WM_USER + 3) "TTM_SETDELAYTIME"
-		wParam: 2 "TTDT_AUTOPOP"
-		lParam: 20000 "Default seems to be 5000 (5 secs) - this is a bit more reasonable".
-
+		msg: TooltipConstants.TTM_SETDELAYTIME
+		wParam: TooltipConstants.TTDT_AUTOPOP
+		lParam: 20000.	"Default seems to be 5000 (5 secs) - this is a bit more reasonable"
 	^toolTipHandle!
 
 getUICuesState

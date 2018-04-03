@@ -172,13 +172,6 @@ at: index
 
 	^self subclassResponsibility!
 
-at: anInteger encode: anObject
-	"Encoded the specified object beginning at the specified position in the receiver. Answer
-	the number of slots consumed by the encoded representation."
-
-	self at: anInteger put: anObject.
-	^1!
-
 at: index ifAbsent: exceptionBlock
 	"Answer an <Object> which is the element of the receiver 
 	at the specified index. If the index is out of bounds answer
@@ -495,6 +488,13 @@ do: operation
 	override."
 
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
+
+encodedAt: anInteger put: anObject
+	"Encoded the specified object beginning at the specified position in the receiver. Answer
+	the <integer> index of the last element updated."
+
+	self at: anInteger put: anObject.
+	^anInteger!
 
 endsWith: aCollection
 	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
@@ -1152,7 +1152,6 @@ writeStream
 !SequenceableCollection categoriesFor: #asRunArray!converting!public! !
 !SequenceableCollection categoriesFor: #associations!accessing!public! !
 !SequenceableCollection categoriesFor: #at:!accessing!public!testing! !
-!SequenceableCollection categoriesFor: #at:encode:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:ifPresent:!accessing!public! !
 !SequenceableCollection categoriesFor: #at:put:!accessing!public! !
@@ -1175,6 +1174,7 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
+!SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
@@ -1288,7 +1288,7 @@ writeStream: anInteger
 
 	^(self new: anInteger) writeStream! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
-!SequenceableCollection class categoriesFor: #encode:on:!helpers!private! !
+!SequenceableCollection class categoriesFor: #encode:on:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
 !SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !

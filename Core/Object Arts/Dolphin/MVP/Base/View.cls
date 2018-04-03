@@ -324,15 +324,15 @@ basicAddSubView: aView
 		show.	"Forces creation"
 	^aView!
 
-basicCreateAt: position extent: extentPoint 
+basicCreateAt: position extent: extentPoint
 	"Private - Create the Win32 window for the receiver, and answer its handle.
 	N.B. The window may not be properly subclassed - use #createAt:extent: instead."
 
 	| dwStyle |
 	dwStyle := self baseCreationStyle.
-	^UserLibrary default 
+	^UserLibrary default
 		createWindowEx: self extendedStyle
-		lpClassName: self class winClassName
+		lpClassName: self class winClassName asUtf16String
 		lpWindowName: self windowName
 		dwStyle: dwStyle
 		x: position x
@@ -1980,6 +1980,8 @@ isView
 	^true!
 
 isWindowUnicode
+	"This should always be true in Dolphin now."
+
 	^UserLibrary default isWindowUnicode: handle!
 
 isWindowVisible
@@ -3186,7 +3188,7 @@ setWindowLong: anIntegerOffset to: anIntegerValue
 	"Private - Set the receiver's Window DWORD at the specified offset to the specified integer value."
 
 	^UserLibrary default
-		setWindowLongA: handle
+		setWindowLong: handle
 		nIndex: anIntegerOffset
 		dwNewLong: anIntegerValue!
 
@@ -3220,10 +3222,21 @@ setWndProc: anAddress
 	"Private - Set the window procedure of the receiver to the argument, anAddress.
 	Answer the old window procedure address."
 
-	^UserLibrary default
-		setWindowDWORD: handle
-		nIndex: GWL_WNDPROC
-		dwNewDWORD: anAddress!
+	"Here we are overridding to subclass as Unicode, which enables the full Unicode character set to be used in static views."
+
+	"Note that the compiler should optimise away the condition as VMConstants.IsWin64 is a constant value"
+
+	^VMConstants.IsWin64
+		ifTrue: 
+			[UserLibrary default
+				setWindowULongPtr: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]
+		ifFalse: 
+			[UserLibrary default
+				setWindowULong: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]!
 
 show
 	"Makes the receiver visible."
@@ -5462,7 +5475,7 @@ unregisterClass
 	"Private - Unregister the receivers corresponding Win32 class - answer whether it succeeds."
 
 	^UserLibrary default 
-		unregisterClass: self wndClassName 
+		unregisterClass: WndClassAtom
 		hInstance: VMLibrary default applicationHandle!
 
 unregisterMessages: aCollectionOfIntegers 
@@ -5497,7 +5510,8 @@ winClassName
 	to instances of the receiver."
 
 	WndClassAtom isNil ifTrue: [WndClassAtom := self reregisterClass].
-	^self wndClassName!
+	^self wndClassName
+!
 
 winClassStyle
 	"Private - Answer the default class style to be used for instances of the receiver."

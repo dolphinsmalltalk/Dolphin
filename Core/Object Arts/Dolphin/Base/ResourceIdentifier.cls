@@ -114,7 +114,7 @@ name
 	"Answer the name of the resource represented by the receiver."
 
 	selector isNil ifTrue: [^nil].
-	selector class == String ifTrue: [self name: selector].
+	selector isSymbol ifFalse: [self name: selector].
 	^self class nameFromSelector: selector!
 
 name: aStringOrNil 
@@ -294,13 +294,14 @@ removeResource: aResourceIdentifier
 selectorFromName: aString
 	| selector prefix |
 	prefix := self selectorPrefix.
-	selector := WriteStream on: (String new: prefix size + aString size).
+	selector := WriteStream on: (aString copyEmpty: prefix size + aString size).
+	selector nextPutAll: prefix.
 	aString do: 
 			[:each |
 			each == $\x20
 				ifTrue: [selector nextPut: $_]
 				ifFalse: [each isAlphaNumeric ifTrue: [selector nextPut: each]]].
-	^(prefix , selector contents) asSymbol!
+	^selector contents asSymbol!
 
 selectorPrefix
 	^'resource_'!

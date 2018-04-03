@@ -11,6 +11,25 @@ ReadWriteStream comment: 'Class ReadWriteStream is a subclass of WriteStream tha
 !ReadWriteStream categoriesForClass!Collections-Streams! !
 !ReadWriteStream methodsFor!
 
+basicNext
+	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
+	same type of object that would be returned from the collection if sent #basicAt:. For bytes
+	and strings the basic elements are integers. For Arrays, the basic elements are whatever
+	objects are stored in the array."
+
+	"Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		1 -	The receiver's collection is not a byte object
+		2 -	The receiver is at its end (index >= readLimit).
+		3 -	The next index is beyond the end of the streamed over collection."
+
+	<primitive: 221>
+	^position >= readLimit
+		ifTrue: [self errorEndOfStream]
+		ifFalse: [collection basicAt: (position := position + 1)]!
+
 contents
 	"Answer a collection of the same type that the stream is accessing, 
 	up to the current readLimit (adjusted to include the current position
@@ -57,21 +76,6 @@ next: count into: aSequenceableCollection startingAt: startAt
 	self position: stop.
 	^aSequenceableCollection!
 
-nextByte
-	"Answer the next byte accessible by the receiver. Fail if not streaming over a byte object.
-	Fail if the receiver is at its end, or the index is outside the bounds of the collection.
-
-	Primitive failure reasons:
-		0 -	The receivers index or readLimit are not SmallInteger values
-		1 -	The receiver's collection is not a byte object
-		2 -	The receiver is at its end (index >= readLimit).
-		3 -	The next index is beyond the end of the streamed over collection."
-
-	<primitive: 221>
-	^position >= readLimit
-		ifTrue: [self errorEndOfStream]
-		ifFalse: [collection byteAt: (position := position + 1)]!
-
 nextOrNil
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
@@ -79,11 +83,11 @@ nextOrNil
 	<primitive: 65>
 	^position >= readLimit
 		ifFalse: [collection at: (position := position + 1)]! !
+!ReadWriteStream categoriesFor: #basicNext!accessing!public! !
 !ReadWriteStream categoriesFor: #contents!accessing!public! !
 !ReadWriteStream categoriesFor: #isReadable!public!testing! !
 !ReadWriteStream categoriesFor: #next!accessing!public! !
 !ReadWriteStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!ReadWriteStream categoriesFor: #nextByte!accessing!public! !
 !ReadWriteStream categoriesFor: #nextOrNil!accessing!public! !
 
 ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!

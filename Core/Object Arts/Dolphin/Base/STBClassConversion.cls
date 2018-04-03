@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #STBClassConversion
-	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -32,15 +32,21 @@ converterBlock: aBlock
 
 	converterBlock := aBlock!
 
+dataClass
+	^dataClass!
+
 instSize
 	"Answer the receiver's instSize inst var."
 
 	^instSize!
 
 isBytes
-	"Answer the receiver's isBytes inst var."
+	"Answer whether the target class is a byte class."
 
-	^isBytes!
+	^dataClass isBytes!
+
+isBytes: aBoolean
+	dataClass := aBoolean ifTrue: [ByteArray] ifFalse: [Array]!
 
 isUpgrading
 	^filer isUpgrading!
@@ -53,9 +59,11 @@ isVariable
 prefix: anSTBPrefix
 	"Initialise the receiver from the details contained in anSTBPrefix."
 
+	| aBoolean |
 	instSize := anSTBPrefix instSize.
-	isBytes := anSTBPrefix isBytes.
-	isVariable := anSTBPrefix isVariable.!
+	aBoolean := anSTBPrefix isBytes.
+	self isBytes: aBoolean.
+	isVariable := anSTBPrefix isVariable!
 
 version
 	"Answer the receiver's version inst var."
@@ -67,13 +75,15 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 
 	version := versionInteger.
 	instSize := (anInteger bitShift: STBPrefix.InstSizeShift) bitAnd: STBPrefix.InstSizeMask.
-	isBytes := anInteger allMask: STBPrefix.BytesMask.
+	self isBytes: (anInteger allMask: STBPrefix.BytesMask).
 	isVariable := anInteger allMask: STBPrefix.VariableMask.
 	filer := anSTBInFiler! !
 !STBClassConversion categoriesFor: #converterBlock!accessing!public! !
 !STBClassConversion categoriesFor: #converterBlock:!accessing!public! !
+!STBClassConversion categoriesFor: #dataClass!accessing!public! !
 !STBClassConversion categoriesFor: #instSize!accessing!public! !
 !STBClassConversion categoriesFor: #isBytes!public!testing! !
+!STBClassConversion categoriesFor: #isBytes:!accessing!public! !
 !STBClassConversion categoriesFor: #isUpgrading!public!testing! !
 !STBClassConversion categoriesFor: #isVariable!public!testing! !
 !STBClassConversion categoriesFor: #prefix:!accessing!public! !

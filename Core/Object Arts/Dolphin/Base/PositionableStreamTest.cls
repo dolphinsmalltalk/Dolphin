@@ -11,6 +11,9 @@ PositionableStreamTest comment: ''!
 !PositionableStreamTest categoriesForClass!Unclassified! !
 !PositionableStreamTest methodsFor!
 
+collections
+	^{''. #[]. Utf16String empty. 'a'. 'abc'. Character byteCharacterSet. Character dolphin asUtf8String}!
+
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -20,6 +23,22 @@ streamWith: aString
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
 	^self streamClass with: aString copy!
+
+testBasicNext
+	self collections do: 
+			[:each |
+			| subject |
+			subject := self streamOn: each.
+			1 to: each size
+				do: 
+					[:i |
+					| expected actual |
+					expected := each basicAt: i.
+					actual := subject basicNext.
+					self assert: actual equals: expected].
+			self assert: subject atEnd.
+			self should: [subject basicNext] raise: subject class endOfStreamSignal.
+			self closeTempStream: subject]!
 
 testContents
 	| stream |
@@ -32,15 +51,6 @@ testContents
 
 testNew
 	self should: [self streamClass new] raise: Error!
-
-testNextByte
-	{''. #[]. Utf16String empty} do: 
-			[:each |
-			| subject |
-			subject := self streamOn: each.
-			self assert: subject atEnd.
-			self should: [subject nextByte] raise: subject class endOfStreamSignal.
-			self closeTempStream: subject]!
 
 testNextLine
 	"No line delimiters"
@@ -416,11 +426,12 @@ testUpToEnd
 	self assert: stream upToEnd = ''.
 	self assert: stream upToEnd = ''.
 	self closeTempStream: stream! !
+!PositionableStreamTest categoriesFor: #collections!constants!private! !
 !PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
+!PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
-!PositionableStreamTest categoriesFor: #testNextByte!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !

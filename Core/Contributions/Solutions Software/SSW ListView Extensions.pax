@@ -226,10 +226,16 @@ lvmGetTopIndex
 	^self sendMessage: ##(LVM_FIRST + 39) "LVM_GETTOPINDEX"!
 
 maxTipWidth: anInteger
+	"Set the width of the receiver's tool tip window. Note it is necessary to set a width to enable multi-line tips"
 
-	"Set the width of the receiver's tool tip window. Note it is necessary to set a width to enable multi-line tips" 
-
-	self lvmGetToolTips ifNotNil: [ :hwnd | UserLibrary default sendMessage: hwnd msg: ##(WM_USER+24) "TTM_SETMAXTIPWIDTH" wParam: 0 lParam: anInteger]!
+	self lvmGetToolTips
+		ifNotNil: 
+			[:hwnd |
+			UserLibrary default
+				sendMessage: hwnd
+				msg: TooltipConstants.TTM_SETMAXTIPWIDTH
+				wParam: 0
+				lParam: anInteger]!
 
 nmCustomDraw: pNMHDR
 

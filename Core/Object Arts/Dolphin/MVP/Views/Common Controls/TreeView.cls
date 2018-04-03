@@ -6,7 +6,7 @@ IconicListAbstract subclass: #TreeView
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmSelChanged: #nmGetDispInfoA: #nmSetDispInfoA: #tvnItemExpandingA: #tvnItemExpandedA: #nmBeginDrag: #nmBeginRDragA: #nmDeleteItem: #nmBeginLabelEditA: #nmEndLabelEditA: #nmKeyDown: #tvnGetInfoTipA: #tvnGetInfoTipW: #nmDummy: #tvnItemChangingA: #tvnItemChangingW: #tvnItemChangedA: #tvnItemChangedW: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChangedW: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpandingW: #tvnItemExpandedW: #nmBeginDragW: #nmBeginRDragW: #nmDeleteItemW: #nmBeginLabelEditW: #nmEndLabelEditW: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
+TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmSelChanged: #nmGetDispInfoA: #nmSetDispInfoA: #nmDummy: #nmDummy: #nmBeginDrag: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #tvnGetInfoTipA: #tvnGetInfoTipW: #nmDummy: #nmDummy: #tvnItemChangingW: #nmDummy: #tvnItemChangedW: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChangedW: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpandingW: #tvnItemExpandedW: #nmBeginDragW: #nmBeginRDragW: #nmDeleteItem: #nmBeginLabelEditW: #nmEndLabelEdit: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -565,7 +565,7 @@ nmDeleteItem: pNMHDR
 	handleObjectMap notEmpty
 		ifTrue: 
 			[| nmtv |
-			nmtv := self notificationClass fromAddress: pNMHDR.
+			nmtv := self notificationWClass fromAddress: pNMHDR.
 			(handleObjectMap removeKey: nmtv itemOld hItem ifAbsent: [])
 				ifNotNil: [:object | objectHandleMap removeKey: object]].
 	^nil!
@@ -1065,30 +1065,20 @@ tvnGetInfoTipW: pNMHDR
 	"Private - Default handler for the TVN_GETINFOTIPA notification message.
 	Answer nil to accept the default processing."
 
+	Sound bell.
 	^getInfoTipBlock isNil ifFalse: [self tvnGetInfoTip: (NMTVGETINFOTIPW fromAddress: pNMHDR)]!
-
-tvnItemChangedA: anExternalAddress 
-	^nil!
 
 tvnItemChangedW: anExternalAddress 
 	^nil!
 
-tvnItemChangingA: anExternalAddress 
-	^nil!
-
 tvnItemChangingW: anExternalAddress 
-	^nil!
-
-tvnItemExpandedA: pNMHDR
-	"Private - Default handler for the TVN_ITEMEXPANDEDA notification message.
-	Answer nil to accept the default processing."
-
 	^nil!
 
 tvnItemExpandedW: pNMHDR
 	"Private - Default handler for the TVN_ITEMEXPANDEDW notification message.
 	Answer nil to accept the default processing."
 
+Sound bell.
 	^nil!
 
 tvnItemExpanding: nmtv
@@ -1111,11 +1101,6 @@ tvnItemExpanding: nmtv
 			are expanded again"
 			tviParent beStateExpandedOnce].
 	^nil	"accept the default processing"!
-
-tvnItemExpandingA: pNMHDR
-	"Private - Default handler for the TVN_ITEMEXPANDINGA notification message."
-
-	^self tvnItemExpanding: (self notificationClass fromAddress: pNMHDR)!
 
 tvnItemExpandingW: pNMHDR
 	"Private - Default handler for the TVN_ITEMEXPANDINGW notification message."
@@ -1316,14 +1301,10 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #tvnGetInfoTip:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnGetInfoTipA:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnGetInfoTipW:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemChangedA:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnItemChangedW:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemChangingA:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnItemChangingW:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemExpandedA:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnItemExpandedW:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnItemExpanding:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemExpandingA:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnItemExpandingW:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnSelChanging:!event handling-win32!private! !
 !TreeView categoriesFor: #updateAllNonVirtual!private!updating! !
@@ -1378,27 +1359,19 @@ initializeNotificationMap
 				at: TVN_FIRST - TVN_GETDISPINFOW put: #nmGetDispInfoW:;
 				at: TVN_FIRST - TVN_SETDISPINFOA put: #nmSetDispInfoA:;
 				at: TVN_FIRST - TVN_SETDISPINFOW put: #nmSetDispInfoW:;
-				at: TVN_FIRST - TVN_ITEMEXPANDINGA put: #tvnItemExpandingA:;
 				at: TVN_FIRST - TVN_ITEMEXPANDINGW put: #tvnItemExpandingW:;
-				at: TVN_FIRST - TVN_ITEMEXPANDEDA put: #tvnItemExpandedA:;
 				at: TVN_FIRST - TVN_ITEMEXPANDEDW put: #tvnItemExpandedW:;
 				at: TVN_FIRST - TVN_BEGINDRAGA put: #nmBeginDrag:;
 				at: TVN_FIRST - TVN_BEGINDRAGW put: #nmBeginDragW:;
-				at: TVN_FIRST - TVN_BEGINRDRAGA put: #nmBeginRDragA:;
 				at: TVN_FIRST - TVN_BEGINRDRAGW put: #nmBeginRDragW:;
-				at: TVN_FIRST - TVN_DELETEITEMA put: #nmDeleteItem:;
-				at: TVN_FIRST - TVN_DELETEITEMW put: #nmDeleteItemW:;
-				at: TVN_FIRST - TVN_BEGINLABELEDITA put: #nmBeginLabelEditA:;
+				at: TVN_FIRST - TVN_DELETEITEMW put: #nmDeleteItem:;
 				at: TVN_FIRST - TVN_BEGINLABELEDITW put: #nmBeginLabelEditW:;
-				at: TVN_FIRST - TVN_ENDLABELEDITA put: #nmEndLabelEditA:;
-				at: TVN_FIRST - TVN_ENDLABELEDITW put: #nmEndLabelEditW:;
+				at: TVN_FIRST - TVN_ENDLABELEDITW put: #nmEndLabelEdit:;
 				at: TVN_FIRST - TVN_KEYDOWN put: #nmKeyDown:;
 				at: TVN_FIRST - TVN_GETINFOTIPA put: #tvnGetInfoTipA:;
 				at: TVN_FIRST - TVN_GETINFOTIPW put: #tvnGetInfoTipW:;
 				at: TVN_FIRST - TVN_ASYNCDRAW put: #tvnAsyncDraw:;
-				at: TVN_FIRST - TVN_ITEMCHANGINGA put: #tvnItemChangingA:;
 				at: TVN_FIRST - TVN_ITEMCHANGINGW put: #tvnItemChangingW:;
-				at: TVN_FIRST - TVN_ITEMCHANGEDA put: #tvnItemChangedA:;
 				at: TVN_FIRST - TVN_ITEMCHANGEDW put: #tvnItemChangedW:;
 				yourself.
 	self addClassConstant: 'TvnMap' value: tvnMap!

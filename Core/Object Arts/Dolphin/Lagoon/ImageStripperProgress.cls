@@ -300,12 +300,12 @@ subclassWindow: anIntegerOrHandle
 	oldWndProc := VMConstants.IsWin64
 				ifTrue: 
 					[UserLibrary default
-						setWindowULongPtrW: handle
+						setWindowULongPtr: handle
 						nIndex: GWL_WNDPROC
 						dwNewLong: VMLibrary default getWndProc]
 				ifFalse: 
 					[UserLibrary default
-						setWindowULongW: handle
+						setWindowULong: handle
 						nIndex: GWL_WNDPROC
 						dwNewLong: VMLibrary default getWndProc]!
 

@@ -999,7 +999,7 @@ selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
 	EM_REPLACESEL does not return a value."
 
-	self sendMessage: EM_REPLACESEL wParam: 0 lpParam: aString.
+	self sendMessage: EM_REPLACESEL wParam: 0 lpParam: aString asAnsiString.
 !
 
 selectionRange

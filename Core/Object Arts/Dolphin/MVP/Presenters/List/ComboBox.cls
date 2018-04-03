@@ -47,7 +47,7 @@ basicAdd: anObject
 	self 
 		sendMessage: CB_ADDSTRING
 		wParam: 0
-		lpParam: (self displayStringFor: anObject).
+		lpParam: (self displayStringFor: anObject) asUtf16String.
 	^anObject!
 
 basicAdd: anObject atIndex: anInteger 
@@ -58,7 +58,7 @@ basicAdd: anObject atIndex: anInteger
 	self 
 		sendMessage: CB_INSERTSTRING
 		wParam: anInteger - 1
-		lpParam: (self displayStringFor: anObject).
+		lpParam: (self displayStringFor: anObject) asUtf16String.
 	^anObject!
 
 basicClear

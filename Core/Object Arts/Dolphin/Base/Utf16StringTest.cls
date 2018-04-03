@@ -23,6 +23,24 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
+testEncodeOn
+	{Character dolphin.
+		Character codePoint: 16r10FFFD.
+		$a.
+		$\0.
+		Character ansiValue: 128.
+		Character codePoint: 128.
+		Character codePoint: 16rFFFD.
+		Character codePoint: 16r10000} do: 
+				[:each |
+				| stream utf16 actual |
+				stream := Utf16String writeStream: 2.
+				Utf16String encode: each on: stream.
+				utf16 := stream contents.
+				self assert: utf16 size equals: (each codePoint > 16rFFFF ifTrue: [2] ifFalse: [1]).
+				actual := utf16 readStream next.
+				self assert: actual equals: each]!
+
 testMixedConcatenation
 	| subjects |
 	subjects := #('' 'd' 'ef') collect: [:each | self assimilateString: each].
@@ -69,6 +87,7 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
+!Utf16StringTest categoriesFor: #testEncodeOn!public!unit tests! !
 !Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

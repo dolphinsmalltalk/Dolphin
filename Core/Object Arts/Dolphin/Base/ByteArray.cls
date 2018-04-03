@@ -245,6 +245,9 @@ dwordAtOffset: anInteger put: anObject
 	<primitive: 121>
 	^self retryDwordAtOffset: anInteger put: anObject!
 
+encoding
+	^#binary!
+
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) 
 	anInteger in the receiver, as a Smalltalk Float object (double precision).
@@ -708,6 +711,7 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
+!ByteArray categoriesFor: #encoding!constants!encode/decode!public! !
 !ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #hash!comparing!primitives!public! !
@@ -750,14 +754,14 @@ wordAtOffset: anInteger put: anObject
 
 !ByteArray class methodsFor!
 
+decode: anInteger 
+	^anInteger!
+
 elementSize
 	"Private - Answer the size of the receiver's constituent elements in bytes."
 
 	^1.
 !
-
-encode: anObject on: aPuttableStream
-	^aPuttableStream nextBytePut: anObject!
 
 fromAddress: anAddress length: anInteger
 	"Answer a new instance of the receiver, of size anInteger, copied from the first anInteger
@@ -803,8 +807,8 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := stream next: size.
 	anSTBInFiler register: answer.
 	^answer! !
+!ByteArray class categoriesFor: #decode:!encode/decode!public! !
 !ByteArray class categoriesFor: #elementSize!constants!private! !
-!ByteArray class categoriesFor: #encode:on:!helpers!private! !
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
 !ByteArray class categoriesFor: #icon!constants!public! !

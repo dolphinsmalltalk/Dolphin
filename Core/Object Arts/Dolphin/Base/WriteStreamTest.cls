@@ -28,6 +28,14 @@ streamOn: aString
 		reset;
 		yourself!
 
+testBasicNext
+	| stream |
+	stream := self streamWith: 'abc'.
+	
+	stream reset.
+	"It is an error to attempt to read from a WriteStream"
+	self should: [stream basicNext] raise: Error!
+
 testContents
 	| stream |
 	stream := self streamWith: ''.
@@ -49,13 +57,6 @@ testNewContents
 	contents := stream contents.
 	self assert: contents = 'hello'.
 	self closeTempStream: stream!
-
-testNextByte
-	| stream |
-	stream := self streamWith: 'abc'.
-	stream reset.
-	"It is an error to attempt to read from a WriteStream"
-	self should: [stream nextByte] raise: Error!
 
 testNextLine
 	| stream |
@@ -117,9 +118,9 @@ testUpToEnd
 !WriteStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
 !WriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
+!WriteStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextByte!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !

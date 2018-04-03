@@ -6,7 +6,7 @@ IconicListAbstract subclass: #ListView
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmBeginLabelEditA: #nmEndLabelEditA: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDrag: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmGetDispInfoA: #nmSetDispInfoA: #lvnFindItemA: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #lvnGetInfoTipA: #lvnGetInfoTipW: #nmDummy: #nmDummy: #nmDummy: #lvnIncrementalSearchA: #lvnIncrementalSearchW: #lvnColumnDropDown: #nmDummy: #lvnColumnOverflowClick: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmBeginLabelEditW: #nmEndLabelEditW: #nmGetDispInfoW: #nmSetDispInfoW: #lvnFindItemW: #lvnBeginScroll: #lvnEndScroll: #nmDummy: #nmDummy: #lvnLinkClick: #nmDummy: #nmDummy: #lvnGetEmptyMarkup: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
+ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmDummy: #nmDummy: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDragW: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmGetDispInfoA: #nmSetDispInfoA: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #nmDummy: #lvnGetInfoTip: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #lvnIncrementalSearch: #lvnColumnDropDown: #nmDummy: #lvnColumnOverflowClick: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmBeginLabelEditW: #nmEndLabelEdit: #nmGetDispInfoW: #nmSetDispInfoW: #lvnFindItem: #lvnBeginScroll: #lvnEndScroll: #nmDummy: #nmDummy: #lvnLinkClick: #nmDummy: #nmDummy: #lvnGetEmptyMarkup: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -1402,6 +1402,7 @@ lvnColumnClick: anNMHDR
 	Attempts to maintain current selection and to keep it visible."
 
 	| nmlv |
+Sound bell.
 	nmlv := self notificationClass fromAddress: anNMHDR yourAddress.
 	self columnClicked: nmlv iSubItem + 1.
 	^0!
@@ -1423,41 +1424,27 @@ lvnDeleteAllItems: pNMHDR
 lvnEndScroll: pNMHDR 
 	^nil!
 
-lvnFindItem: aNMLVFINDINFO
-	"Private - Default handler for an LVN_ODFINDITEM[A|W] notification message.
-	This is the notification the list view sends when it wants us to find an item,
-	a task it is not able to perform itself for a virtual list.
-	Note that this is an incremental search, so the string may be several characters
-	long."
-
-	| f lvfi prefix |
-	lvfi := aNMLVFINDINFO lvfi.
+lvnFindItem: pNMHDR
+	| f lvfi nmlv |
+	nmlv := NMLVFINDITEMW fromAddress: pNMHDR.
+	lvfi := nmlv lvfi.
 	f := lvfi flags.
 	(f allMask: LVFI_STRING) ifFalse: [^-1	"Can't find it"].
-	#todo.	"Bug: findItem:startingAt:wrap: uses String>>sameAs: to find a match, which in turn
-	       uses String>>compare:, which does not correctly compare different string encodings,
-	       hence temporary hack to ANSI string."
-	prefix := lvfi psz asAnsiString.
 	^(self
-		findItem: prefix
-		startingAt: aNMLVFINDINFO iStart + 1
+		findItem: lvfi psz
+		startingAt: nmlv iStart + 1
 		wrap: (f allMask: LVFI_WRAP)) - 1!
-
-lvnFindItemA: pNMHDR
-	^self lvnFindItem: (NMLVFINDITEMA fromAddress: pNMHDR)!
-
-lvnFindItemW: pNMHDR
-	^self lvnFindItem: (NMLVFINDITEMW fromAddress: pNMHDR)!
 
 lvnGetEmptyMarkup: pNMHDR
 	^nil!
 
-lvnGetInfoTip: nmlv
-	| target prefixText |
-	target := self objectFromHandle: nmlv itemHandle ifAbsent: [^0].	"ListView may occassionally ask for info tip for item we don't have (e.g. off end of list)"
-	prefixText := nmlv dwFlags == 0 ifTrue: [nmlv text] ifFalse: [''].
+lvnGetInfoTip: pNMHDR
+	"Private - Default handler for the LVN_GETINFOTIPW notification message."
 
-	"If in report mode and the column has an info. tip block then we delegate to it, otherwise fill it in."
+	| target prefixText nmlv |
+	nmlv := NMLVGETINFOTIPW fromAddress: pNMHDR.
+	target := self objectFromHandle: nmlv itemHandle ifAbsent: [^0].	"ListView may occassionally ask for info tip for item we don't have (e.g. off end of list)"
+	prefixText := nmlv dwFlags == 0 ifTrue: [nmlv text] ifFalse: [''].	"If in report mode and the column has an info. tip block then we delegate to it, otherwise fill it in."
 	nmlv
 		text: ((self isReportMode
 				ifTrue: 
@@ -1467,20 +1454,7 @@ lvnGetInfoTip: nmlv
 				ifFalse: [self]) infoTipFromRow: target withPrefix: prefixText).
 	^0	"Return value is ignored"!
 
-lvnGetInfoTipA: pNMHDR
-	"Private - Default handler for the LVN_GETINFOTIPA notification message."
-
-	^self lvnGetInfoTip: (NMLVGETINFOTIPA fromAddress: pNMHDR)!
-
-lvnGetInfoTipW: pNMHDR
-	"Private - Default handler for the LVN_GETINFOTIPW notification message."
-
-	^self lvnGetInfoTip: (NMLVGETINFOTIPW fromAddress: pNMHDR)!
-
-lvnIncrementalSearchA: pNMHDR 
-	^nil!
-
-lvnIncrementalSearchW: pNMHDR 
+lvnIncrementalSearch: pNMHDR
 	^nil!
 
 lvnInsertItem: pNMHDR
@@ -2457,14 +2431,9 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvnDeleteAllItems:!event handling-win32!private! !
 !ListView categoriesFor: #lvnEndScroll:!event handling-win32!private! !
 !ListView categoriesFor: #lvnFindItem:!event handling-win32!private! !
-!ListView categoriesFor: #lvnFindItemA:!event handling-win32!private! !
-!ListView categoriesFor: #lvnFindItemW:!event handling-win32!private! !
 !ListView categoriesFor: #lvnGetEmptyMarkup:!event handling-win32!private! !
 !ListView categoriesFor: #lvnGetInfoTip:!event handling-win32!private! !
-!ListView categoriesFor: #lvnGetInfoTipA:!event handling-win32!private! !
-!ListView categoriesFor: #lvnGetInfoTipW:!event handling-win32!private! !
-!ListView categoriesFor: #lvnIncrementalSearchA:!event handling-win32!private! !
-!ListView categoriesFor: #lvnIncrementalSearchW:!event handling-win32!private! !
+!ListView categoriesFor: #lvnIncrementalSearch:!event handling-win32!private! !
 !ListView categoriesFor: #lvnInsertItem:!event handling-win32!private! !
 !ListView categoriesFor: #lvnItemActivate:!event handling-win32!private! !
 !ListView categoriesFor: #lvnItemChanged:!private!selection! !
@@ -2590,13 +2559,11 @@ initializeNotificationMap
 				at: LVN_FIRST - LVN_INSERTITEM + 1 put: #lvnInsertItem:;
 				at: LVN_FIRST - LVN_DELETEITEM + 1 put: #nmDeleteItem:;
 				at: LVN_FIRST - LVN_DELETEALLITEMS + 1 put: #lvnDeleteAllItems:;
-				at: LVN_FIRST - LVN_BEGINLABELEDITA + 1 put: #nmBeginLabelEditA:;
 				at: LVN_FIRST - LVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEditW:;
-				at: LVN_FIRST - LVN_ENDLABELEDITA + 1 put: #nmEndLabelEditA:;
-				at: LVN_FIRST - LVN_ENDLABELEDITW + 1 put: #nmEndLabelEditW:;
+				at: LVN_FIRST - LVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
 				at: LVN_FIRST - LVN_COLUMNCLICK + 1 put: #lvnColumnClick:;
 				at: LVN_FIRST - LVN_BEGINDRAG + 1 put: #nmBeginDrag:;
-				at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDragA:;
+				at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDragW:;
 				at: LVN_FIRST - LVN_ODCACHEHINT + 1 put: #nmDummy:;
 				at: LVN_FIRST - LVN_ITEMACTIVATE + 1 put: #lvnItemActivate:;
 				at: LVN_FIRST - LVN_ODSTATECHANGED + 1 put: #lvnODStateChanged:;
@@ -2605,14 +2572,11 @@ initializeNotificationMap
 				at: LVN_FIRST - LVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
 				at: LVN_FIRST - LVN_SETDISPINFOA + 1 put: #nmSetDispInfoA:;
 				at: LVN_FIRST - LVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
-				at: LVN_FIRST - LVN_ODFINDITEMA + 1 put: #lvnFindItemA:;
-				at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItemW:;
+				at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItem:;
 				at: LVN_FIRST - LVN_KEYDOWN + 1 put: #nmKeyDown:;
 				at: LVN_FIRST - LVN_MARQUEEBEGIN + 1 put: #lvnMarqueeBegin:;
-				at: LVN_FIRST - LVN_GETINFOTIPA + 1 put: #lvnGetInfoTipA:;
-				at: LVN_FIRST - LVN_GETINFOTIPW + 1 put: #lvnGetInfoTipW:;
-				at: LVN_FIRST - LVN_INCREMENTALSEARCHA + 1 put: #lvnIncrementalSearchA:;
-				at: LVN_FIRST - LVN_INCREMENTALSEARCHW + 1 put: #lvnIncrementalSearchW:;
+				at: LVN_FIRST - LVN_GETINFOTIPW + 1 put: #lvnGetInfoTip:;
+				at: LVN_FIRST - LVN_INCREMENTALSEARCHW + 1 put: #lvnIncrementalSearch:;
 				at: LVN_FIRST - LVN_COLUMNDROPDOWN + 1 put: #lvnColumnDropDown:;
 				at: LVN_FIRST - LVN_COLUMNOVERFLOWCLICK + 1 put: #lvnColumnOverflowClick:;
 				at: LVN_FIRST - LVN_BEGINSCROLL + 1 put: #lvnBeginScroll:;

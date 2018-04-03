@@ -316,7 +316,7 @@ Object subclass: #StackFrame
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBClassConversion
-	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -597,7 +597,7 @@ ArrayedCollection subclass: #RunArray
 	classInstanceVariableNames: ''!
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter NullPrintCharacter'
+	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'empty'!
 ArrayedCollection variableSubclass: #WeakArray
@@ -645,11 +645,6 @@ String variableByteSubclass: #ByteString
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #Symbol
-	instanceVariableNames: ''
-	classVariableNames: 'Table'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -657,12 +652,17 @@ String variableByteSubclass: #UtfEncodedString
 	classInstanceVariableNames: ''!
 UtfEncodedString variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'LeadOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
 	classVariableNames: 'LeadByteMask2 LeadByteMask3 LeadByteMask4 TrailByteMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Utf8String variableByteSubclass: #Symbol
+	instanceVariableNames: ''
+	classVariableNames: 'Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WeakArray variableSubclass: #MourningWeakArray
@@ -1661,8 +1661,8 @@ SequencedStream subclass: #PositionableStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'DeviceMask ReadOnlyMask TextMask'
+	instanceVariableNames: 'stream flags name oldFd fd crtlib codec'
+	classVariableNames: 'Codecs DeviceMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 PositionableStream subclass: #ReadStream
@@ -1681,7 +1681,7 @@ WriteStream subclass: #ReadWriteStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
-	instanceVariableNames: 'file flags pageBase logicalFileSize'
+	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift pageSize'
 	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

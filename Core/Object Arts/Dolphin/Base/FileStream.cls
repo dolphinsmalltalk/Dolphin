@@ -1,7 +1,7 @@
 "Filed out from Dolphin Smalltalk 7"!
 
 ReadWriteStream subclass: #FileStream
-	instanceVariableNames: 'file flags pageBase logicalFileSize'
+	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift pageSize'
 	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -15,8 +15,14 @@ FileStream comment: 'FileStream is a specialized <ReadWriteStream> for streaming
 
 The collection instance variable inherited from <Stream> is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by #flush or #fullFlush. The readLimit and writeLimit instance variables inherited from <PositionableStream> and <WriteStream> respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The readLimit will always be equal to the page size, except on the last page of the file. The writeLimit is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..
 
+FileStream can read and write files as binary or text. It supports a number of import text encodings, as follows:
+	#text		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
+	#utf8		- UTF-8 encoded text
+	#utf16		- UTF-16 encoded text
+	#utf32		- UTF-32 encoded text
+
 Instance Variables:
-	file			The <File> being streamed over.
+	file				The <File> being streamed over.
 	flags			<integer> flags such as whether the page buffer is dirty.
 	pageBase		<integer> offset of the page currently in the buffer. Always a multiple of the page size, plus 1.
 	logicalFileSize	<integer> size of the file. This is cached because it is expensive to determine dynamically.
@@ -31,10 +37,37 @@ atEnd
 
 !
 
+basicNext
+	"Answer the next integer element accessible by the receiver. For a text stream this will be 
+	the code unit for the next character or partial character based on the underlying encoding.
+	It may not necessarily be a full code point unless the encoding is fixed width (i.e. #ansi, or #utf32)."
+
+	"Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		2 -	The next index is beyond the readLimit.
+		3 -	The next index is off the end of the stream buffer."
+
+	<primitive: 221>
+	^self atEnd
+		ifTrue: [self errorEndOfStream]
+		ifFalse: 
+			[self position: self position.
+			collection basicAt: (position := position + 1)]!
+
+basicNextPut: anObject
+	"Private - Write anObject as the next basic element of the stream. Answer anObject."
+
+	"Implementation Note: Inline the #beDirty operation as a performance optimization."
+
+	self primitiveBasicNextPut: anObject.
+	flags := flags bitOr: BufferUpdatedMask.
+	^anObject!
+
 beBinary
 	"Treat the elements of the stream as bytes (Integers)."
 
-	#deprecated.
+	#deprecated.	"Only works correctly for switching from ByteString"
+	(collection isKindOf: UtfEncodedString) ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
 	collection := collection asByteArray!
 
 beText
@@ -103,13 +136,6 @@ growCollection
 	and the writeLimit is always the page size."
 
 	^self shouldNotImplement!
-
-initialize
-	"Private - Initialise the new instance."
-
-	self beFinalizable.
-	flags := 0.
-	super initialize!
 
 initialRead
 	"Private - Initialise the new instance's buffer and establish the file size."
@@ -258,30 +284,6 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 					flags := flags bitOr: BufferUpdatedMask]].
 	^aSequenceableCollection!
 
-nextByte
-	"Answer the next byte accessible by the receiver. Signal an error if the receiver is is at its end.
-
-	Primitive failure reasons:
-		0 -	The receivers index or readLimit are not SmallInteger values
-		2 -	The next index is beyond the readLimit.
-		3 -	The next index is off the end of the stream buffer."
-
-	<primitive: 221>
-	^self atEnd
-		ifTrue: [self errorEndOfStream]
-		ifFalse: 
-			[self position: self position.
-			collection byteAt: (position := position + 1)]!
-
-nextBytePut: anInteger
-	"Write anInteger to the receiver and answer the argument."
-
-	"Implementation Note: Inline the #beDirty operation as a performance optimization."
-
-	self primitiveNextBytePut: anInteger.
-	flags := flags bitOr: BufferUpdatedMask.
-	^anInteger!
-
 nextOrNil
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
@@ -306,6 +308,13 @@ nextPutAll: aCollection
 	Answer aCollection"
 
 	^aCollection appendToStream: self!
+
+on: aCollection
+	super on: aCollection.
+	self beFinalizable.
+	flags := 0.
+	pageSize := collection size.
+	sizeShift := PageSize / pageSize >> 1!
 
 ownsFile
 	^flags anyMask: OwnsFileMask!
@@ -333,10 +342,10 @@ position: anInteger
 				readPageFor: anInteger].
 	position := pos - pageBase!
 
-primitiveNextBytePut: anInteger
+primitiveBasicNextPut: anInteger
 	<primitive: 222>
 	self position: self position.
-	^collection byteAt: (position := position + 1) put: anInteger!
+	^position := collection encodedAt: position + 1 put: anInteger!
 
 primitiveNextPut: anIntegerOrCharacter
 	"Private - Write anIntegerOrCharacter to the receiver."
@@ -428,6 +437,8 @@ writePage
 		write: collection count: readLimit.
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
 !FileStream categoriesFor: #atEnd!public!testing! !
+!FileStream categoriesFor: #basicNext!accessing!public! !
+!FileStream categoriesFor: #basicNextPut:!accessing!private! !
 !FileStream categoriesFor: #beBinary!modes!public! !
 !FileStream categoriesFor: #beText!modes!public! !
 !FileStream categoriesFor: #close!operations!public! !
@@ -439,7 +450,6 @@ writePage
 !FileStream categoriesFor: #free!operations!public! !
 !FileStream categoriesFor: #fullFlush!buffer!public! !
 !FileStream categoriesFor: #growCollection!operations!private! !
-!FileStream categoriesFor: #initialize!initializing!private! !
 !FileStream categoriesFor: #initialRead!buffer!private! !
 !FileStream categoriesFor: #isBinary!public!testing! !
 !FileStream categoriesFor: #isBufferDirty!buffer!private! !
@@ -451,16 +461,15 @@ writePage
 !FileStream categoriesFor: #next!accessing!public! !
 !FileStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!FileStream categoriesFor: #nextByte!accessing!public! !
-!FileStream categoriesFor: #nextBytePut:!accessing!public! !
 !FileStream categoriesFor: #nextOrNil!accessing!public! !
 !FileStream categoriesFor: #nextPut:!accessing!public! !
 !FileStream categoriesFor: #nextPutAll:!accessing!public! !
+!FileStream categoriesFor: #on:!accessing!initializing!private! !
 !FileStream categoriesFor: #ownsFile!accessing!public! !
 !FileStream categoriesFor: #ownsFile:!accessing!public! !
 !FileStream categoriesFor: #position!accessing!public! !
 !FileStream categoriesFor: #position:!accessing!positioning!public! !
-!FileStream categoriesFor: #primitiveNextBytePut:!accessing!private! !
+!FileStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
 !FileStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !FileStream categoriesFor: #readPageFor:!buffer!private! !
 !FileStream categoriesFor: #reset!positioning!public! !
@@ -503,6 +512,8 @@ initialize
 	self addClassConstant: 'PageSize' value: 8192.
 	self addClassConstant: 'BufferClasses'
 		value: (IdentityDictionary new
+				at: #utf32 put: Utf32String;
+				at: #utf16 put: Utf16String;
 				at: #utf8 put: Utf8String;
 				at: #text put: String;
 				at: #binary put: ByteArray;
@@ -518,17 +529,18 @@ on: aFile text: aBoolean
 	"Answer an intance of the receiver attached to the open file aFile, in
 	binary or text mode depending on the argument, aBoolean."
 
-	^self on: aFile type: #text!
+	^self on: aFile type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 on: aFile type: aSymbol
-	"Answer an intance of the receiver attached to the open file aFile, in
-	binary or text mode depending on the argument, aBoolean."
+	"Answer an intance of the receiver attached to the open file, aFile, configured to read in
+	the encoding specified by the <Symbol> argument. See the class comment for more details on
+	possible the encodings."
 
+	| bufClass |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
+	bufClass := BufferClasses at: aSymbol ifAbsent: [self error: 'Unsupported encoding ' , aSymbol].
 	^self basicNew
-		collection: ((BufferClasses at: aSymbol ifAbsent: [self error: 'Unsupported encoding ' , aSymbol])
-					new: PageSize);
-		initialize;
+		on: (bufClass new: PageSize / bufClass elementSize);
 		file: aFile;
 		initialRead;
 		yourself!
@@ -569,7 +581,7 @@ read: fileId type: fileType
 	"Answer an instance of the receiver whose future sequence values consist
 	of the contents of the file identified by the <readableString>, fileId, and 
 	whose external stream type and sequence value type is determined by the
-	<symbol> argument, fileType (i.e. either binary or text)."
+	<symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16, or #utf32)."
 
 	^self
 		open: fileId
@@ -632,17 +644,22 @@ write: fileId mode: mode check: check type: fileType
 	"Answer a new instance of the receiver open on the contents of
 	the file identified by the <readableString> path, fileId.
 	The <symbol> argument, mode, identifies the manner in which the file
-	is opened. It may be one of:
+	is opened. 
+
+	The mode may be one of:
 		#create 	create a new file, position at its start.
 		#append	open an existing file, position at its end.
 		#truncate	create or open a file, position at its starte.
+
 	See also the File class for further information on the mode.
+
 	The <boolean> argument, check, determines whether or not errors are reported 
 	if the file does or does not exist (depending on the mode). The <symbol>, type,
-	specifies the external type (binary or text) for which the new instance is initially
-	configured.
-	Implementation Note: Dolphin's FileStreams require read access for
-	buffering, so result is actually a read/write file stream."
+	specifies the data encoding (binary or text) for which the new instance is 
+	configured."
+	
+	"Implementation Note: Dolphin's FileStreams require read access for buffering, so result is
+	actually a read/write file stream."
 
 	^self
 		open: fileId
@@ -670,7 +687,20 @@ write: aString text: aBoolean
 	^self write: aString 
 		mode: #truncate
 		check: false
-		text: aBoolean! !
+		text: aBoolean!
+
+write: aString type: aSymbol
+	"Create a new file/truncate an existing file identified by the <readableString>, aString,
+	for write access (in fact our filestreams require read/write access for buffering, so the
+	result is actually a read/write file stream) through the receiver. The sequence value type
+	is determined by the <symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16,
+	or #utf32)."
+
+	^self
+		write: aString
+		mode: #truncate
+		check: false
+		type: aSymbol! !
 !FileStream class categoriesFor: #bufferSize!constants!public! !
 !FileStream class categoriesFor: #defaultTextEncoding!instance creation!private! !
 !FileStream class categoriesFor: #initialize!development!initializing!private! !
@@ -689,6 +719,7 @@ write: aString text: aBoolean
 !FileStream class categoriesFor: #write:mode:check:type:!instance creation!public! !
 !FileStream class categoriesFor: #write:mode:type:!instance creation!public! !
 !FileStream class categoriesFor: #write:text:!instance creation!public! !
+!FileStream class categoriesFor: #write:type:!public! !
 
 FileStream class methodProtocol: #'FileStream factory' attributes: #(#ansi #readOnly) selectors: #(#read: #read:type: #write: #write:mode: #write:mode:check:type:)!
 

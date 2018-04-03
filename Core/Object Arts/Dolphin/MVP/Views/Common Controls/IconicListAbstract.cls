@@ -403,33 +403,15 @@ nmBeginDrag: pNMHDR
 				ifNotNil: [:dragee | self onBegin: #left drag: dragee]].
 	^nil!
 
-nmBeginLabelEditA: pNMHDR
-	"Private - Default handler for the ?VN_BEGINLABELEDIT notification message.
-	N.B. This notification is not necessarily sent by all subclasses."
-
-	| object item |
-	item := self itemFromNMHDRA: pNMHDR.
-	object := self objectFromHandle: item handle.
-	^self presenter onAboutToEditLabel: object!
-
 nmBeginLabelEditW: pNMHDR
 	"Private - Default handler for the ?VN_BEGINLABELEDITW notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	| object item |
+Sound bell.
 	item := self itemFromNMHDRW: pNMHDR.
 	object := self objectFromHandle: item handle.
 	^self presenter onAboutToEditLabel: object!
-
-nmBeginRDragA: pNMHDR
-	"Private - Default handler for the ??N_BEGINRDRAG notification message.
-	Answer nil to accept default processing.
-	N.B. This notification is not necessarily sent by all subclasses."
-
-	| nm |
-	nm := self notificationClass fromAddress: pNMHDR.
-	self isDragSource ifTrue: [self onBegin: #right drag: (self objectFromHandle: nm itemHandle)].
-	^nil!
 
 nmBeginRDragW: pNMHDR
 	"Private - Default handler for the ??N_BEGINRDRAG notification message.
@@ -478,24 +460,7 @@ nmDeleteItem: pNMHDR
 
 	^nil!
 
-nmEndLabelEditA: pNMHDR
-	"Private - Default handler for the ?VN_ENDLABELEDIT notification message. Note that we don't
-	forward the event to the presenter if the edit was cancelled, or if the text wasn't actually
-	changed. N.B. This notification is not necessarily sent by all subclasses."
-
-	| item object text |
-	item := self itemFromNMHDRA: pNMHDR.
-	text := item pszText.
-	self canEditLabels ifFalse: [self disableLabelEdit].
-	text isNil
-		ifTrue: 
-			["Edit cancelled"
-			^nil].
-	object := self objectFromHandle: item handle.
-	^text = (self getTextBlock value: object) displayString
-		ifFalse: [self presenter onLabelOf: object editedTo: text]!
-
-nmEndLabelEditW: pNMHDR
+nmEndLabelEdit: pNMHDR
 	"Private - Default handler for the ?VN_ENDLABELEDIT notification message. Note that we don't
 	forward the event to the presenter if the edit was cancelled, or if the text wasn't actually
 	changed. N.B. This notification is not necessarily sent by all subclasses."
@@ -528,6 +493,9 @@ nmSelChanged: anExternalAddress
 	"Private - Default handler for the ??N_SELCHANGED notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
+	^self onSelChanged: self selectionsByIndex!
+
+nmSelChangedW: anExternalAddress 
 	^self onSelChanged: self selectionsByIndex!
 
 nmSetDispInfoA: pNMHDR
@@ -824,17 +792,15 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #largeIconExtent!constants!public! !
 !IconicListAbstract categoriesFor: #largeIconExtent:!constants!public! !
 !IconicListAbstract categoriesFor: #nmBeginDrag:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmBeginLabelEditA:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmBeginLabelEditW:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmBeginRDragA:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmBeginRDragW:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmCustomDraw:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmDeleteItem:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmEndLabelEditA:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmEndLabelEditW:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmEndLabelEdit:!public! !
 !IconicListAbstract categoriesFor: #nmGetDispInfoA:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmGetDispInfoW:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmSelChanged:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmSelChangedW:!public! !
 !IconicListAbstract categoriesFor: #nmSetDispInfoA:!event handling!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmSetDispInfoW:!event handling!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #notificationClass!constants!private! !

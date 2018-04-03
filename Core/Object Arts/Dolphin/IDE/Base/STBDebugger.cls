@@ -147,7 +147,7 @@ readObjectOfClass: aClass format: anObject
 			passed to the converter block which answers an instance of the
 			real class initialised from it."
 			fullSize := stbClassFormat instSize + basicSize.
-			newObject := (stbClassFormat isBytes ifTrue: [ByteArray] ifFalse: [Array]) basicNew: fullSize].
+			newObject := stbClassFormat dataClass basicNew: fullSize].
 	self register: newObject.
 
 	"Read the object's instance data."

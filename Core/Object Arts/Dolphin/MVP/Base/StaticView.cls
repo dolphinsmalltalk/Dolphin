@@ -15,27 +15,6 @@ Instance Variables:
 !StaticView categoriesForClass!MVP-Views! !
 !StaticView methodsFor!
 
-basicCreateAt: position extent: extentPoint
-	"Private - Create the Win32 window for the receiver, and answer its handle.
-	N.B. The window may not be properly subclassed - use #createAt:extent: instead."
-
-	| dwStyle |
-	#todo.	"Push this up. Temporarily (as a more minimal test) only StaticViews are being created in Unicode mode,"
-	dwStyle := self baseCreationStyle.
-	^UserLibrary default
-		createWindowExW: self extendedStyle
-		lpClassName: self class winClassName
-		lpWindowName: self windowName
-		dwStyle: dwStyle
-		x: position x
-		y: position y
-		nWidth: extentPoint x
-		nHeight: extentPoint y
-		hWndParent: self creationParentView asParameter
-		hMenu: ((dwStyle anyMask: WS_CHILD) ifTrue: [self defaultId])
-		hInstance: VMLibrary default applicationHandle
-		lpParam: nil!
-
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
@@ -95,29 +74,9 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent!
 
-setWndProc: anAddress
-	"Private - Set the window procedure of the receiver to the argument, anAddress.
-	Answer the old window procedure address."
-
-	"Here we are overridding to subclass as Unicode, which enables the full Unicode character set to be used in static views."
-
-	#todo. "Remove once all views are Unicode."
-	^VMConstants.IsWin64
-		ifTrue: 
-			[UserLibrary default
-				setWindowULongPtrW: handle
-				nIndex: GWL_WNDPROC
-				dwNewLong: anAddress]
-		ifFalse: 
-			[UserLibrary default
-				setWindowULongW: handle
-				nIndex: GWL_WNDPROC
-				dwNewLong: anAddress]!
-
 updateModel
 	"Flush changes in the view back to the associated model.
 	Static views don't allow such changes"! !
-!StaticView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !StaticView categoriesFor: #defaultBackcolor!colors!constants!private! !
 !StaticView categoriesFor: #defaultExtent!constants!private! !
 !StaticView categoriesFor: #defaultWindowStyle!constants!private! !
@@ -126,7 +85,6 @@ updateModel
 !StaticView categoriesFor: #isSunken:!accessing-styles!public! !
 !StaticView categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
 !StaticView categoriesFor: #onPositionChanged:!event handling-win32!public! !
-!StaticView categoriesFor: #setWndProc:!accessing!private! !
 !StaticView categoriesFor: #updateModel!public!updating! !
 
 !StaticView class methodsFor!

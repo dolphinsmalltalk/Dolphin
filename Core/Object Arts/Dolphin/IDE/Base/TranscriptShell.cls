@@ -144,7 +144,7 @@ initialize
 	"Private - Initialize the receiver."
 
 	super initialize.
-	buffer := String writeStream.
+	buffer := Utf8String writeStream.
 	bufferProtect := Mutex new.!
 
 isEmpty

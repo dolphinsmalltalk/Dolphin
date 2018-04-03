@@ -31,7 +31,10 @@ defaultModel
 	^'Hello World' asValue!
 
 icon
-	^TextTileIcon text: 'Hi' font: 'Arial' color: Color red!
+	^TextTileIcon
+		text: (Utf8String with: $\x4F60 with: $\x597D)
+		font: 'Arial'
+		color: Color red!
 
 initialize
 	"

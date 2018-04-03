@@ -89,7 +89,7 @@ TextPresenter subclass: #RichTextPresenter
 	classInstanceVariableNames: ''!
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'AutoUrlDetectionMask ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
+	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
 

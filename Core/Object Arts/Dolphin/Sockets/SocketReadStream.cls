@@ -34,12 +34,6 @@ hasInput
 
 	^super atEnd not or: [self socket hasInput]!
 
-initialize
-	"Private - Initialise the new instance."
-
-	super initialize.
-	readLimit := 0!
-
 isBinary
 	"Answer whether the receiver's data is binary (i.e. consisting of Integers in the range 0..255)."
 
@@ -81,6 +75,10 @@ nextOrNil
 	receiver's future sequence values. Answer nil if at EOF."
 
 	^self atEnd ifFalse: [self next]!
+
+on: aCollection
+	super on: aCollection.
+	readLimit := 0!
 
 readPage
 	"Private - Read ahead, a whole page or as much input as is available, into the buffer."
@@ -138,7 +136,6 @@ upToEnd
 !SocketReadStream categoriesFor: #atEnd!public!testing! !
 !SocketReadStream categoriesFor: #contents!accessing!public! !
 !SocketReadStream categoriesFor: #hasInput!public!testing! !
-!SocketReadStream categoriesFor: #initialize!initializing!private! !
 !SocketReadStream categoriesFor: #isBinary!public!testing! !
 !SocketReadStream categoriesFor: #isText!public!testing! !
 !SocketReadStream categoriesFor: #isText:!modes!public! !
@@ -146,6 +143,7 @@ upToEnd
 !SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #nextAvailable!public! !
 !SocketReadStream categoriesFor: #nextOrNil!accessing!public! !
+!SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
 !SocketReadStream categoriesFor: #readPage!operations!private! !
 !SocketReadStream categoriesFor: #setToEnd!positioning!public! !
 !SocketReadStream categoriesFor: #size!accessing!public! !
@@ -166,14 +164,13 @@ on: aSocket
 
 	^self on: aSocket text: false!
 
-on: aSocket text: aBoolean 
+on: aSocket text: aBoolean
 	"Answer a new instance of the receiver on the specified <Socket>, to be used for buffered reading
 	string or binary data from that socket depending on the value of <boolean> argument."
 
-	^(self basicNew)
+	^self basicNew
 		socket: aSocket;
-		collection: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
-		initialize;
+		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
 !SocketReadStream class categoriesFor: #bufferSize!constants!private! !
 !SocketReadStream class categoriesFor: #on:!instance creation!public! !

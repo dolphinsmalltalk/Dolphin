@@ -290,6 +290,12 @@ encodeOn: aPuttableStream put: aCharacter
 	point, or is a UTF-16 surrogate. If the <Character> is a UTF-8 surrogate, the surrogate code
 	point emitted directly."
 
+	"Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding.
+	This requires between one and four byte code units to be written to the stream, depending on
+	the magnitude of the code point. An error is raised if the <Character> has an invalid code
+	point, or is a UTF-16 surrogate. If the <Character> is a UTF-8 surrogate, the surrogate code
+	point emitted directly."
+
 	^aCharacter isUtf8
 		ifTrue: [aPuttableStream basicNextPut: aCharacter codeUnit]
 		ifFalse: 

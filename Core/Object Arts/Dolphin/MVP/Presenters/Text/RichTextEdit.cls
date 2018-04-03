@@ -2,7 +2,7 @@
 
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'AutoUrlDetectionMask ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
+	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
 RichTextEdit guid: (GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -581,7 +581,7 @@ readTextFrom: gettableStream
 	"Replace the receiver control's contents with the plain text 
 	read from the argument, gettableStream."
 
-	^self readTextFrom: gettableStream format: SF_TEXT.
+	^self readTextFrom: gettableStream format: ##(SF_TEXT | SF_UNICODE).
 !
 
 readTextFrom: gettableStream format: formatMask
@@ -954,26 +954,24 @@ initializeNotificationMap
 				shrink;
 				yourself!
 
-onStartup
-	"Private - The system is starting, register the rich edit window class etc"
-
-	self registerClass!
-
 registerClass
-	"Private - Register the rich edit window class."
+	"Private - Ensure the the rich edit window class is registered by loading the relevant library."
 
-	#todo "Use RichEd20.dll if it is present".
-	ExternalLibrary open: 'RICHED32.DLL'.
-	!
+	(Library isNil or: [Library isOpen not])
+		ifTrue: [Library := ExternalLibrary open: self richEditDllName]!
+
+richEditDllName
+	^'riched20.dll'
+	"^'msftedit.dll'"!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
-	#todo "Use RichEdit20(A/W) if RichEd20.dll is present".
-	^'RichEdit'! !
+	self registerClass.
+	^'RichEdit20W'! !
 !RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
 !RichTextEdit class categoriesFor: #initializeNotificationMap!private! !
-!RichTextEdit class categoriesFor: #onStartup!event handling!private! !
-!RichTextEdit class categoriesFor: #registerClass!event handling!private! !
+!RichTextEdit class categoriesFor: #registerClass!initializing!private! !
+!RichTextEdit class categoriesFor: #richEditDllName!constants!private! !
 !RichTextEdit class categoriesFor: #winClassName!constants!private! !
 

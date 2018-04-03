@@ -10,6 +10,12 @@ StdioFileStreamTest comment: ''!
 !StdioFileStreamTest categoriesForClass!Unclassified! !
 !StdioFileStreamTest methodsFor!
 
+collections
+	^(super collections reject: [:each | each class elementSize ~~ 1])
+		collect: [:each | 
+			"stdio  streams treat Ctrl+Z as EOF"
+			each reject: [:ch | ch == $\x1A]]!
+
 maxPosition
 	^2 ** 63 - 1!
 
@@ -43,7 +49,8 @@ testNextLineUpToEof
 			actual := subject nextLine.
 			self assert: actual equals: expected.
 			subject close]! !
-!StdioFileStreamTest categoriesFor: #maxPosition!constants!public! !
+!StdioFileStreamTest categoriesFor: #collections!constants!private! !
+!StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !

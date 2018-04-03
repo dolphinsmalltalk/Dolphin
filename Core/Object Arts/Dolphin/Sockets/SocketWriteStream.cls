@@ -32,12 +32,6 @@ growCollection
 
 	^self shouldNotImplement!
 
-initialize
-	"Private - Initialise the new instance."
-
-	dirty := false.
-	super initialize!
-
 isBinary
 	"Answer whether the receiver's data is binary (i.e. consisting of Integers in the range 0..255)."
 
@@ -92,6 +86,10 @@ nextPutAll: aCollection
 
 	^aCollection appendToStream: self!
 
+on: aCollection
+	super on: aCollection.
+	dirty := false!
+
 primitiveNextPut: anInteger 
 	"Private - Write anInteger to the receiver."
 
@@ -112,13 +110,13 @@ socket: aSocket
 !SocketWriteStream categoriesFor: #close!operations!public! !
 !SocketWriteStream categoriesFor: #flush!buffer!public! !
 !SocketWriteStream categoriesFor: #growCollection!operations!private! !
-!SocketWriteStream categoriesFor: #initialize!initializing!private! !
 !SocketWriteStream categoriesFor: #isBinary!public!testing! !
 !SocketWriteStream categoriesFor: #isText!public!testing! !
 !SocketWriteStream categoriesFor: #isText:!modes!public! !
 !SocketWriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !SocketWriteStream categoriesFor: #nextPut:!accessing!public! !
 !SocketWriteStream categoriesFor: #nextPutAll:!accessing!public! !
+!SocketWriteStream categoriesFor: #on:!accessing!initializing!private! !
 !SocketWriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !SocketWriteStream categoriesFor: #socket!accessing!private! !
 !SocketWriteStream categoriesFor: #socket:!accessing!private! !
@@ -135,14 +133,13 @@ on: aSocket
 
 	^self on: aSocket text: false!
 
-on: aSocket text: aBoolean 
+on: aSocket text: aBoolean
 	"Answer a new instance of the receiver on the specified <Socket>, to be used for buffered writing 
 	string or binary data to that socket depending on the value of <boolean> argument."
 
-	^(self basicNew)
+	^self basicNew
 		socket: aSocket;
-		collection: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
-		initialize;
+		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
 !SocketWriteStream class categoriesFor: #bufferSize!constants!public! !
 !SocketWriteStream class categoriesFor: #on:!instance creation!public! !

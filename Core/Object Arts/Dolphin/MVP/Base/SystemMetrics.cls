@@ -78,10 +78,10 @@ getMetric: anInteger
 getMetric: anInteger1 pair: anInteger2 
 	^(self getMetric: anInteger1) @ (self getMetric: anInteger2)!
 
-getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable 
+getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default 
+	(UserLibrary default
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
@@ -106,11 +106,11 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 		type: anExternalStructureClass
 		ifError: [UserLibrary default systemError]!
 
-getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable 
+getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default 
-		systemParametersInfoW: anInteger
+	(UserLibrary default
+		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
 		fWinIni: 0) ifFalse: [^aNiladicValuable value].
@@ -191,11 +191,11 @@ hasMenuBitmaps
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
 
-	hasSmoothScrollingLists isNil 
+	hasSmoothScrollingLists isNil
 		ifTrue: 
 			[| bool |
 			bool := DWORD new.
-			hasSmoothScrollingLists := (UserLibrary default 
+			hasSmoothScrollingLists := (UserLibrary default
 						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
 						uiParam: 0
 						pvParam: bool
@@ -352,8 +352,8 @@ scrollThumbExtent
 		ifTrue: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB].
 	^scrollThumbExtent!
 
-setSysParamBool: anInteger value: aBoolean 
-	^UserLibrary default 
+setSysParamBool: anInteger value: aBoolean
+	^UserLibrary default
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: aBoolean asInteger

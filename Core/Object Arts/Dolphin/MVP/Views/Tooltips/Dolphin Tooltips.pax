@@ -2,7 +2,7 @@
 package := Package name: 'Dolphin Tooltips'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Tooltips
-Copyright (c) Object Arts Ltd 2003.
+Copyright (c) Object Arts Ltd 2003-2018.
 
 This package contains an MVP View wrapper for the Windows Tooltip control, and a useful balloon help style message box. Please see the class comments of Tooltip and MessageBubble for further details.'.
 
@@ -12,7 +12,7 @@ package basicPackageVersion: '6.1'.
 package classNames
 	add: #MessageBubble;
 	add: #OneOffNoteBubble;
-	add: #TOOLINFOA;
+	add: #TOOLINFOW;
 	add: #Tooltip;
 	yourself.
 
@@ -45,7 +45,7 @@ Object subclass: #OneOffNoteBubble
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #TOOLINFOA
+Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'

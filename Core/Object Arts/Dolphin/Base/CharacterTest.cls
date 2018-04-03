@@ -60,7 +60,7 @@ testAsUppercase
 	self assert: Character dolphin asUppercase equals: Character dolphin!
 
 testAsUtf16String
-	#(#($A #[65 0]) #($\x7F #[16r7F 0]) #($\x20AC #[16rAC 16r20]) #($\x7FF #[16rFF 16r07]) #($\x800 #[16r00 16r08]) #($\x1F42C #[16r3D 16rD8 16r2C 16rDC]))
+	#(#($A #[65 0]) #($\x7F #[16r7F 0]) #($\x20AC #[16rAC 16r20]) #($\x7FF #[16rFF 16r07]) #($\x800 #[16r00 16r08]) #($\x10000 #[16r00 16rD8 16r00 16rDC]) #($\x1F42C #[16r3D 16rD8 16r2C 16rDC]))
 		do: 
 			[:each |
 			| actual subject expected |
@@ -70,7 +70,7 @@ testAsUtf16String
 			self assert: actual equals: expected]!
 
 testAsUtf8String
-	#(#($A #[65]) #($\x7F #[16r7F]) #($\xA3 #[16rC2 16rA3]) #($\x7FF #[16rDF 16rBF]) #($\x800 #[16rE0 16rA0 16r80]) #($\x1F42C #[16rF0 16r9F 16r90 16rAC]))
+	#(#($A #[65]) #($\x7F #[16r7F]) #($\xA3 #[16rC2 16rA3]) #($\x7FF #[16rDF 16rBF]) #($\x800 #[16rE0 16rA0 16r80]) #($\x10000 #[16rF0 16r90 16r80 16r80]) #($\x1F42C #[16rF0 16r9F 16r90 16rAC]))
 		do: 
 			[:each |
 			| actual subject expected |
@@ -78,6 +78,29 @@ testAsUtf8String
 			expected := each last.
 			actual := subject asUtf8String asByteArray.
 			self assert: actual equals: expected]!
+
+testClassCodePoint
+	| ch |
+	ch := Character codePoint: 0.
+	self assert: ch sameAs: $\0.
+	ch := Character codePoint: 127.
+	self assert: ch sameAs: $\x7F.
+	ch := Character codePoint: 128.
+	self assert: ch encoding equals: #utf32.
+	"Euro symbol"
+	ch := Character codePoint: 16r20AC.
+	self assert: ch codePoint equals: 16r20AC.
+	self assert: ch encoding equals: #ansi.
+	self assert: ch sameAs: ((ByteString fromByteArray: #[128]) at: 1).
+	ch := Character codePoint: 16r1F42C.
+	self assert: ch codePoint equals: 16r1F42C.
+	self assert: ch encoding equals: #utf32.
+	"The replacement character"
+	ch := Character codePoint: 16rFFFD.
+	self assert: ch codePoint equals: 16rFFFD.
+	self assert: ch encoding equals: #utf32.
+	"Valid code points but not valid characters"
+	#(16rFFFE 16rFFFF 16r10FFFF) do: [:each | self should: [Character codePoint: each] raise: Error]!
 
 testCodePoint
 	| euro utf8 utf16 |
@@ -293,6 +316,7 @@ testSize
 !CharacterTest categoriesFor: #testAsUppercase!public! !
 !CharacterTest categoriesFor: #testAsUtf16String!public! !
 !CharacterTest categoriesFor: #testAsUtf8String!public! !
+!CharacterTest categoriesFor: #testClassCodePoint!public! !
 !CharacterTest categoriesFor: #testCodePoint!public! !
 !CharacterTest categoriesFor: #testDigitValue!public! !
 !CharacterTest categoriesFor: #testEquals!public! !

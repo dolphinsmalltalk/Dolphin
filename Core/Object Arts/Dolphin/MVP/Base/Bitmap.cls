@@ -603,7 +603,7 @@ fromId: anIntegerOrStringId inFile: aString flags: anInteger
 	reslib := ExternalResourceLibrary open: aString.
 	icon := self fromOwnedHandle: (UserLibrary default 
 				loadImage: reslib asParameter
-				lpszName: anIntegerOrStringId
+				lpszName: anIntegerOrStringId asParameter
 				uType: IMAGE_BITMAP
 				cxDesired: 0
 				cyDesired: 0

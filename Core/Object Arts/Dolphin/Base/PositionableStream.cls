@@ -37,13 +37,6 @@ collection
 	^collection
 !
 
-collection: aCollection
-	"Set the <collection> over which the receiver will stream."
-
-	collection := aCollection.
-
-!
-
 contents
 	"Answer a <sequencedReadableCollection> that contains the complete contents of the stream."
 
@@ -54,11 +47,6 @@ contentsSpecies
 	the receiver."
 
 	^collection species
-!
-
-initialize
-	position := 0.
-	readLimit := collection size
 !
 
 lastPosition
@@ -147,6 +135,13 @@ nextWORD
 
 	^(self next: 2) wordAtOffset: 0!
 
+on: aCollection
+	"Private - Set the <collection> over which the receiver will stream and initialize the receiver."
+
+	collection := aCollection.
+	position := 0.
+	readLimit := aCollection size!
+
 position
 	"Answer the current <integer> position in the stream of  values."
 
@@ -224,10 +219,8 @@ upToEnd
 	^self next: self lastPosition - self position! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
 !PositionableStream categoriesFor: #collection!accessing!private! !
-!PositionableStream categoriesFor: #collection:!accessing!public! !
 !PositionableStream categoriesFor: #contents!accessing!public! !
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
-!PositionableStream categoriesFor: #initialize!initializing!private! !
 !PositionableStream categoriesFor: #lastPosition!accessing!private! !
 !PositionableStream categoriesFor: #nextAvailable!accessing!public! !
 !PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
@@ -238,6 +231,7 @@ upToEnd
 !PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextWORD!binary filing!public! !
+!PositionableStream categoriesFor: #on:!accessing!initializing!private! !
 !PositionableStream categoriesFor: #position!positioning!public! !
 !PositionableStream categoriesFor: #position:!positioning!public! !
 !PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
@@ -257,11 +251,8 @@ on: aCollection
 	argument aCollection. If the new stream is writeable, the initial position
 	is at the beginning of the collection (i.e. overwrite). See also 
 	WriteStream>>#with:"
-	
-	^self basicNew
-		collection: aCollection;
-		initialize
-!
+
+	^self basicNew on: aCollection!
 
 on: aCollection from: firstIndex to: lastIndex
 	"Answer an instance of a kind of the receiver that streams over a

@@ -51,7 +51,7 @@ activateTooltip: aTOOLINFO
 addTool
 	| ti hwnd |
 	hwnd := self ownerHandle.
-	ti := (TOOLINFOA new)
+	ti := TOOLINFOW new
 				uFlags: (itemFlags bitOr: TTF_IDISHWND);
 				text: self text;
 				hwnd: hwnd;

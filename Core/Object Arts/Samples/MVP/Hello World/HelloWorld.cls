@@ -6,7 +6,7 @@ ShellView subclass: #HelloWorld
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 HelloWorld guid: (GUID fromString: '{87b4c720-026e-11d3-9fd7-00a0cc3e4a32}')!
-HelloWorld comment: 'A sample illustrating just about the simplest of all applications;a window displaying the text "Hello World" within an elliptical border. To demonstrate this evaluate the following:
+HelloWorld comment: 'A sample illustrating just about the simplest of all applications; a window displaying hello (in Chinese) within an elliptical border. To demonstrate this evaluate the following:
 
 HelloWorld show.'!
 !HelloWorld categoriesForClass!MVP-Views!Samples! !
@@ -18,6 +18,15 @@ defaultExtent
 	used when the desired size of a view is requested."
 
 	^##(400 @ 400)!
+
+helloWorldText
+	"Answer the text to be displayed."
+
+	^Utf8String
+		with: $\x4F60
+		with: $\x597D
+		with: $\x20
+		with: Character dolphin!
 
 minExtent
 	"Answers the minimum extent for the receiver, in this case 3/4 of the original default size"
@@ -41,7 +50,7 @@ onPaintRequired: aPaintEvent
 	text will be when displayed."
 	textFont := Font name: 'Arial' pointSize: 32.
 	canvas font: textFont.
-	textToShow := 'Hello World ', Character dolphin asUtf8String.
+	textToShow := self helloWorldText.
 	textExtent := canvas textExtent: textToShow.
 
 	"Draw the ellipse with a grey background and red border"
@@ -66,6 +75,7 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
 !HelloWorld categoriesFor: #defaultExtent!constants!private! !
+!HelloWorld categoriesFor: #helloWorldText!constants!public! !
 !HelloWorld categoriesFor: #minExtent!accessing!public! !
 !HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
 !HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !

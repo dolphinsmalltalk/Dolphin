@@ -192,8 +192,7 @@ getFilePath
 				wParam: buf size + 1
 				lpParam: buf.
 	buf resize: len - 1.
-	#todo.	"Temporarily force to ANSI"
-	^buf asAnsiString!
+	^buf asUtf8String!
 
 getFileSpec
 	"Retrieve the file name (sans path) as currently specified in the dialog. This can be called
@@ -206,8 +205,7 @@ getFileSpec
 				wParam: buf size + 1
 				lpParam: buf.
 	buf resize: len - 1.
-	#todo.	"Temporarily force to ANSI"
-	^buf asAnsiString!
+	^buf asUtf8String!
 
 initialDirectory: aString
 	"Set the initial directory path name to be opened/saved."

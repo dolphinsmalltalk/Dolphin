@@ -145,8 +145,8 @@ onShow
 pop
 	self sendMessage: TTM_POP!
 
-registerView: aView 
-	self ttmAddTool: ((TOOLINFOA new)
+registerView: aView
+	self ttmAddTool: (TOOLINFOW new
 				uFlags: ##(TTF_IDISHWND | TTF_CENTERTIP);
 				textCallback;
 				hwnd: aView asParameter;
@@ -203,9 +203,9 @@ startTracking: aTOOLINFO
 
 tools
 	^(0 to: self ttmGetToolCount - 1) collect: 
-			[:each | 
+			[:each |
 			| tool |
-			tool := TOOLINFOA new.
+			tool := TOOLINFOW new.
 			self ttmEnumTools: each info: tool.
 			tool]!
 
@@ -215,40 +215,40 @@ trackPosition: aPoint
 		wParam: 0
 		lParam: aPoint asUIntPtr!
 
-ttmAddTool: aTOOLINFOA 
+ttmAddTool: aTOOLINFOW
 	"Register a new tool with the receiver."
 
-	(self 
-		sendMessage: TTM_ADDTOOLA
+	(self
+		sendMessage: TTM_ADDTOOLW
 		wParam: 0
-		lpParam: aTOOLINFOA asParameter) == 0 
+		lpParam: aTOOLINFOW asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
-ttmDelTool: aTOOLINFOA 
+ttmDelTool: aTOOLINFOW
 	"Unregister a tool from the receiver."
 
-	self 
-		sendMessage: TTM_DELTOOLA
+	self
+		sendMessage: TTM_DELTOOLW
 		wParam: 0
-		lpParam: aTOOLINFOA asParameter!
+		lpParam: aTOOLINFOW asParameter!
 
-ttmEnumTools: anInteger info: aTOOLINFOA 
+ttmEnumTools: anInteger info: aTOOLINFOW
 	"Enumerate the tools set up for the receiver."
 
-	^(self 
-		sendMessage: TTM_ENUMTOOLSA
+	^(self
+		sendMessage: TTM_ENUMTOOLSW
 		wParam: anInteger
-		lpParam: aTOOLINFOA) asBoolean!
+		lpParam: aTOOLINFOW) asBoolean!
 
 ttmGetCurrentTool
 	"Retrieve the text for the current tool."
 
 	| struct |
-	struct := TOOLINFOA new.
-	^(self 
-		sendMessage: TTM_GETCURRENTTOOLA
+	struct := TOOLINFOW new.
+	^(self
+		sendMessage: TTM_GETCURRENTTOOLW
 		wParam: 0
-		lpParam: struct) == 0 
+		lpParam: struct) == 0
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [struct]!
 
@@ -270,13 +270,13 @@ ttmGetToolCount
 
 	^self sendMessage: TTM_GETTOOLCOUNT!
 
-ttmGetToolInfo: aTOOLINFOA 
-	"Retrieve tool details identified in aTOOLINFOA, filling out the structure."
+ttmGetToolInfo: aTOOLINFOW
+	"Retrieve tool details identified in aTOOLINFOW, filling out the structure."
 
-	(self 
-		sendMessage: TTM_GETTOOLINFOA
+	(self
+		sendMessage: TTM_GETTOOLINFOW
 		wParam: 0
-		lpParam: aTOOLINFOA asParameter) == 0 
+		lpParam: aTOOLINFOW asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
 ttmRelayEvent: aMSG 
@@ -297,9 +297,9 @@ ttmSetDelayTime: dwInteger milliseconds: msInteger
 
 ttmSetTitle: aString icon: anInteger 
 	self 
-		sendMessage: TTM_SETTITLEA
+		sendMessage: TTM_SETTITLEW
 		wParam: anInteger
-		lpParam: aString!
+		lpParam: aString asUtf16String!
 
 ttnLinkClick: pNMHDR 
 	"Default handler for the TTN_LINKCLICK message, which is a notification that the 

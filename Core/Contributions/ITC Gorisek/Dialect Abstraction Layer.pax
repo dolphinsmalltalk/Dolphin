@@ -129,7 +129,6 @@ package methodNames
 	add: #SocketWriteStream -> #isBytes:;
 	add: #SocketWriteStream -> #itcFlush;
 	add: #SocketWriteStream -> #sendLine:;
-	add: #Stream -> #itcCrLf;
 	add: #String -> #add:withDelimiter:;
 	add: #String -> #asDateFromDDMMYYYYString;
 	add: #String -> #asDecimalOrFloat;
@@ -159,10 +158,6 @@ package methodNames
 	add: 'Exception class' -> #signalWithMessage:;
 	add: 'FileStream class' -> #delete:;
 	add: 'ScaledDecimal class' -> #numerator:denominator:scale:;
-	add: 'String class' -> #utf8DecodeFrom:on:;
-	add: 'String class' -> #utf8DecodeNextUnicodeFromUtf8Stream:;
-	add: 'String class' -> #utf8EncodeFrom:on:addMarker:;
-	add: 'String class' -> #utf8EncodeUnicode:;
 	add: 'Time class' -> #hours:minutes:seconds:milliseconds:;
 	yourself.
 
@@ -1153,13 +1148,6 @@ sendLine: aCollection
 !SocketWriteStream categoriesFor: #itcFlush!constants!public! !
 !SocketWriteStream categoriesFor: #sendLine:!constants!public! !
 
-!Stream methodsFor!
-
-itcCrLf
-	self nextPutAll: '
-'! !
-!Stream categoriesFor: #itcCrLf!accessing!public! !
-
 !String methodsFor!
 
 add: aString withDelimiter: delimiter 
@@ -1385,97 +1373,6 @@ trimToSize: maxSize
 !String categoriesFor: #splitString:!converting!public! !
 !String categoriesFor: #trimSeparators!converting!public! !
 !String categoriesFor: #trimToSize:!converting!public! !
-
-!String class methodsFor!
-
-utf8DecodeFrom: readStream on: writeStream 
-	"Izvede UTF-8 dekodiranje iz readStream-a na writeStream. UTF-8 se dekodira v trenutni 8-bitni code page, ki se pobere iz aktivnega procesa."
-
-	| unicode charMap translationService isRuntime |
-	isRuntime := ItcSystemManager isRuntime.
-	charMap := (translationService := #WebTranslationService itcAsClassOrNil) isNil 
-				ifFalse: 
-					[translationService 
-						getUnicodeIntegerTo8bitCodePageMapForCodePage: Processor activeProcess webRequestCodePage].
-	(readStream peek: 3) = #[16rEF 16rBB 16rBF] asString 
-		ifTrue: 
-			["ignore Unicode String header"
-			readStream next: 3].
-	[(unicode := self utf8DecodeNextUnicodeFromUtf8Stream: readStream) isNil] whileFalse: 
-			[unicode < 128 
-				ifTrue: [writeStream nextPut: unicode asCharacter]
-				ifFalse: 
-					[| ch |
-					(charMap isNil or: [(ch := charMap at: unicode ifAbsent: []) isNil]) 
-						ifTrue: 
-							[(unicode >= 256 and: [isRuntime not]) ifTrue: [self halt].
-							writeStream nextPut: (unicode < 256 ifTrue: [unicode asCharacter] ifFalse: [$?])]
-						ifFalse: [ch isString ifTrue: [writeStream nextPutAll: ch] ifFalse: [writeStream nextPut: ch]]]]!
-
-utf8DecodeNextUnicodeFromUtf8Stream: aStream 
-	"Answer next Unicode characted code from UTF-8 encoded character stream."
-
-	| octet1 octet2 octet3 octet4 |
-	aStream atEnd ifTrue: [^nil].
-	octet1 := aStream next asInteger.
-	octet1 > 127 
-		ifFalse: 
-			["0zzzzzzz"
-			^octet1].
-	aStream atEnd ifTrue: [^nil].
-	octet2 := aStream next asInteger.
-	(octet1 bitAnd: 224) == 192 
-		ifTrue: 
-			["110yyyyy 10zzzzzz"
-			^((octet1 bitAnd: 63) bitShift: 6) bitOr: (octet2 bitAnd: 63)].
-	aStream atEnd ifTrue: [^nil].
-	octet3 := aStream next asInteger.
-	(octet1 bitAnd: 240) == 224 
-		ifTrue: 
-			["1110xxxx 10yyyyyy 10zzzzzz"
-			^(((octet1 bitAnd: 15) bitShift: 12) bitOr: ((octet2 bitAnd: 63) bitShift: 6)) 
-				bitOr: (octet3 bitAnd: 63)].
-	octet4 := aStream next asInteger.
-	"11110www 10xxxxxx 10yyyyyy 10zzzzzz"
-	^((octet1 bitAnd: 7) bitShift: 18) bitOr: (((octet2 bitAnd: 63) bitShift: 12) 
-				bitOr: (((octet3 bitAnd: 63) bitShift: 6) bitOr: (octet4 bitAnd: 63)))!
-
-utf8EncodeFrom: readStream on: writeStream addMarker: aBoolean 
-	"Izvede UTF-8 kodiranje iz readStream-a na writeStream. Trenutni 8-bitni code page pobere iz aktivnega procesa."
-
-	| ch utf charMap translationService |
-	charMap := (translationService := #WebTranslationService itcAsClassOrNil) isNil 
-				ifFalse: 
-					[translationService get8bitToUTF8CodePageMapsForCodePage: Processor activeProcess webRequestCodePage].
-	aBoolean ifTrue: [writeStream nextPutAll: #[16rEF 16rBB 16rBF] asString].
-	[readStream atEnd] whileFalse: 
-			[ch := readStream next.
-			ch asInteger > 127 
-				ifFalse: [writeStream nextPut: ch]
-				ifTrue: 
-					[(charMap isNil or: [(utf := charMap at: ch) isNil]) 
-						ifTrue: [writeStream nextPut: $ ]
-						ifFalse: [writeStream nextPutAll: (self utf8EncodeUnicode: utf)]]]!
-
-utf8EncodeUnicode: unicodeNumber 
-	^unicodeNumber > 127 
-		ifFalse: [String with: unicodeNumber asCharacter]
-		ifTrue: 
-			[unicodeNumber > 2047 
-				ifFalse: 
-					[String with: (192 bitOr: (unicodeNumber bitShift: -6)) asCharacter
-						with: (128 bitOr: (unicodeNumber bitAnd: 63)) asCharacter]
-				ifTrue: 
-					[unicodeNumber > 65535 
-						ifFalse: 
-							[String 
-								with: (224 bitOr: (unicodeNumber bitShift: -12)) asCharacter
-								with: (128 bitOr: ((unicodeNumber bitShift: -6) bitAnd: 63)) asCharacter
-								with: (128 bitOr: (unicodeNumber bitAnd: 63)) asCharacter]]]! !
-!String class categoriesFor: #utf8DecodeFrom:on:!OmniBase!public! !
-!String class categoriesFor: #utf8DecodeNextUnicodeFromUtf8Stream:!OmniBase!public! !
-!String class categoriesFor: #utf8EncodeFrom:on:addMarker:!OmniBase!public! !
-!String class categoriesFor: #utf8EncodeUnicode:!OmniBase!public! !
 
 !Symbol methodsFor!
 

@@ -1,6 +1,6 @@
 "Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #Symbol
+Utf8String variableByteSubclass: #Symbol
 	instanceVariableNames: ''
 	classVariableNames: 'Table'
 	poolDictionaries: ''
@@ -40,28 +40,6 @@ argumentCount
 		argCount := argCount max: 1].
 	^argCount!
 
-asBlock
-	"Answer a block capable of sending the receiver to an object"
-
-	| arity |
-	arity := self numArgs + 1.
-	arity = 1 ifTrue: [^[:r | r perform: self]].
-	arity = 2 ifTrue: [^[:r :a | r perform: self with: a]].
-	arity = 3 ifTrue: [^[:r :a :b | r perform: self with: a with: b]].
-	arity = 4 ifTrue: [^[:r :a :b :c| r perform: self with: a with: b with: c]].
-	self error: 'Too many arguments'!
-
-asLowercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to lowercase."
-
-	"Implementation Note: The Win32 function converts in place, so we must first create a copy."
-
-	| copy |
-	copy := self basicCopy.
-	UserLibrary default charLowerBuffA: copy cchLength: copy size.
-	^copy!
-
 asString
 	"Answer a new <readableString> containing the characters of 
 	the receiver."
@@ -75,24 +53,6 @@ asSymbol
 	(i.e. the receiver, since <symbol>s are unique)."
 
 	^self!
-
-asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to uppercase."
-
-	"Implementation Note: The Win32 function converts in place, so we need to create a copy
-	first."
-
-	| copy |
-	copy := self basicCopy.
-	UserLibrary default charUpperBuffA: copy cchLength: copy size.
-	^copy!
-
-basicCopy
-	"Private - Answer a writable copy of the receiver."
-
-	^self species fromAddress: self yourAddress
-!
 
 deepCopy
 	"Answer the receiver - Symbols are unique, so a copy with the same characters
@@ -109,7 +69,7 @@ displayString
 	return self (for better performance), we must override back to a suitable
 	implementation for Symbols which does not include the hash prefix."
 
-	^self basicCopy!
+	^self mutableCopy!
 
 first: anInteger
 	"Answer a new string comprising up to the leftmost anInteger characters of the receiver."
@@ -218,10 +178,9 @@ shallowCopy
 	^self!
 
 species
-	"Answer the generic type of String and its subclasses. Statically bind to
-	the method's class so that subclasses will also answer that class."
+	"Answer the type of String to be used in place of Symbol when making a writable copy."
 
-	^ByteString!
+	^Utf8String!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -232,12 +191,8 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
-!Symbol categoriesFor: #asBlock!converting!public! !
-!Symbol categoriesFor: #asLowercase!converting!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
-!Symbol categoriesFor: #asUppercase!converting!public! !
-!Symbol categoriesFor: #basicCopy!copying!private! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #first:!copying!public! !
@@ -259,7 +214,6 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #stbSaveOn:!binary filing!public! !
 
 Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
-Symbol methodProtocol: #readableString attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
 Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
 Symbol methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asLowercase #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #asString #asSymbol #asUppercase #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #between:and: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #max: #min: #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #sameAs: #select: #size #subStrings: #with:do:)!
 Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
@@ -283,9 +237,6 @@ allInstancesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each and every interned Symbol."
 
 	Table do: [:eachBucket | eachBucket notNil ifTrue: [eachBucket nonCorpsesDo: aMonadicValuable]]!
-
-encode: aCharacter on: aPuttableStream
-	^aPuttableStream nextBytePut: aCharacter ansiValue!
 
 findInterned: aString
 	"Answer the unique <Symbol> for aString if already defined, else nil.	
@@ -323,6 +274,7 @@ initialize
 	Table	-	An Array which is used as a hash table containing WeakArray buckets, in which the currently used
 				instances of the receiver are kept."
 
+	self extraInstanceSpec: EncodingUtf8.
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
 	VMLibrary default registryAt: #Symbol put: self!
@@ -330,10 +282,11 @@ initialize
 intern: aString
 	"Answer the unique Symbol for aString."
 
-	| symbol |
-	(symbol := self findInterned: aString) isNil
-		ifTrue: [
-			symbol := (self basicNew: aString size) initialiseFrom: aString.
+	| symbol utf8 |
+	utf8 := aString asUtf8String.
+	(symbol := self findInterned: utf8) isNil
+		ifTrue: 
+			[symbol := (self basicNew: utf8 size) initialiseFrom: utf8.
 			self addUnique: symbol].
 	^symbol!
 
@@ -347,7 +300,7 @@ intern: aString cookie: cookie
 internCharacter: aCharacter
 	"Answer the Character argument, aCharacter, as a single character unique symbol"
 
-	^self intern: aCharacter asString!
+	^self intern: aCharacter asUtf8String!
 
 isLiteralSymbol: aSymbol
 	"Private - Answer whether the <Symbol> argument is representable
@@ -483,7 +436,6 @@ withAll: anArrayOfCharacter
 	^self intern: (String withAll: anArrayOfCharacter)! !
 !Symbol class categoriesFor: #addUnique:!accessing!private! !
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
-!Symbol class categoriesFor: #encode:on:!helpers!private! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
 !Symbol class categoriesFor: #fromAddress:length:!public! !
 !Symbol class categoriesFor: #fromString:!instance creation!public! !

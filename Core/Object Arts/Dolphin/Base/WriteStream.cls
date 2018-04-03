@@ -19,9 +19,13 @@ basicNextPut: anObject
 	will fail, and the backup Smalltalk code will be activated, grow the collection, and
 	attempt to insert the object directly."
 
-	<primitive: 66>
-	position < writeLimit ifFalse: [self growCollection].
-	^collection at: (position := position + 1) put: anObject!
+	<primitive: 222>
+	position < writeLimit
+		ifFalse: 
+			[self
+				growCollection;
+				primitiveBasicNextPut: anObject].
+	^position := collection encodedAt: position + 1 put: anObject!
 
 basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description
@@ -148,12 +152,12 @@ nextPut: anObject
 	will fail, and the backup Smalltalk code will be activated."
 
 	<primitive: 66>
-	^position < writeLimit
+	^position + collection maxEncoding <= writeLimit
 		ifFalse: 
 			[self
 				growCollection;
-				nextPut: anObject]
-		ifTrue: [collection class encode: anObject on: self]!
+				primitiveNextPut: anObject]
+		ifTrue: [position := collection encodedAt: position + 1 put: anObject]!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
@@ -172,12 +176,10 @@ nextSDWORDPut: anInteger
 			yourself).
 	^anInteger!
 
-nextWordPut: anInteger
-	"Append a 16-bit unsigned integer value as the next 2 bytes on the receiver."
-
-	self
-		nextBytePut: (anInteger bitAnd: 16rFF);
-		nextBytePut: (anInteger bitShift: -8)!
+on: aCollection
+	collection := aCollection.
+	position := readLimit := 0.
+	writeLimit := aCollection size!
 
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 
@@ -195,6 +197,14 @@ position: anInteger
 
 	readLimit := readLimit max: position.
 	super position: anInteger!
+
+primitiveBasicNextPut: anObject
+	<primitive: 222>
+	^position := collection encodedAt: position + 1 put: anObject!
+
+primitiveNextPut: anObject
+	<primitive: 66>
+	position := collection encodedAt: position + 1 put: anObject!
 
 reset
 	readLimit := readLimit max: position.
@@ -239,9 +249,11 @@ tab: tabCount
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !
 !WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!WriteStream categoriesFor: #nextWordPut:!helpers!public! !
+!WriteStream categoriesFor: #on:!accessing!initializing!private! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
+!WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
+!WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !WriteStream categoriesFor: #reset!positioning!public! !
 !WriteStream categoriesFor: #setToEnd!positioning!public! !
 !WriteStream categoriesFor: #space!constants!public! !

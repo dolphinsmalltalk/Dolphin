@@ -50,7 +50,7 @@ readWriteStreamOnString: aString
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
 	| stream |
-	stream := self streamClass write: tempFileName text: true.
+	stream := self streamClass write: tempFileName type: aString encoding.
 	stream nextPutAll: aString.
 	^stream!
 

@@ -16,63 +16,75 @@ className: aString
 	Use this method to ensure the class name is not garbage collected
 	while the receiver is alive"
 
-	className := aString.
-	self lpszClassName: aString!
+	className := aString asUtf16String.
+	self lpszClassName: className!
 
-hbrBackground: anObject 
-	"Set the receiver's hbrBackground field to the value of anObject."
+hbrBackground: anInteger
+	"Set the receiver's 'hbrBackground' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hbrBackground) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #hbrBackground) put: anInteger!
 
-hCursor: anObject 
-	"Set the receiver's hCursor field to the value of anObject."
+hCursor: anInteger
+	"Set the receiver's 'hCursor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hCursor) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #hCursor) put: anInteger!
 
-hIcon: anObject 
-	"Set the receiver's hIcon field to the value of anObject."
+hIcon: anInteger
+	"Set the receiver's 'hIcon' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hIcon) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #hIcon) put: anInteger!
 
-hInstance: anObject 
-	"Set the receiver's hInstance field to the value of anObject."
+hInstance: anInteger
+	"Set the receiver's 'hInstance' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hInstance) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #hInstance) put: anInteger!
 
-lpfnWndProc: anObject 
-	"Set the receiver's lpfnWndProc field to the value of anObject."
+lpfnWndProc: anInteger
+	"Set the receiver's 'lpfnWndProc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lpfnWndProc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #lpfnWndProc) put: anInteger!
 
-lpszClassName: anObject 
-	"Set the receiver's lpszClassName field to the value of anObject."
+lpszClassName
+	"Answer the <Utf16String> value of the receiver's 'lpszClassName' field."
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszClassName) put: anObject yourAddress!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszClassName))!
 
-lpszMenuName: anObject 
-	"Set the receiver's lpszMenuName field to the value of anObject."
+lpszClassName: anUtf16String
+	"Set the receiver's 'lpszClassName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszMenuName) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpszClassName) put: anUtf16String yourAddress!
+
+lpszMenuName
+	"Answer the <Utf16String> value of the receiver's 'lpszMenuName' field."
+
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszMenuName))!
+
+lpszMenuName: anUtf16String
+	"Set the receiver's 'lpszMenuName' field to the value of the argument, anUtf16String"
+
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpszMenuName) put: anUtf16String yourAddress!
 
 menuName: aString
 	"Set the receiver's menuName and lpszMenuName fields to aString.
 	Use this method to ensure the menu name is not garbage collected
 	while the receiver is alive"
 
-	menuName := aString.
-	self lpszMenuName: aString!
+	menuName := aString asUtf16String.
+	self lpszMenuName: menuName!
 
-style: anObject 
-	"Set the receiver's style field to the value of anObject."
+style: anInteger
+	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !WNDCLASS categoriesFor: #className:!accessing!public! !
 !WNDCLASS categoriesFor: #hbrBackground:!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #hCursor:!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #hIcon:!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #hInstance:!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #lpfnWndProc:!**compiled accessors**!public! !
+!WNDCLASS categoriesFor: #lpszClassName!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #lpszClassName:!**compiled accessors**!public! !
+!WNDCLASS categoriesFor: #lpszMenuName!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #lpszMenuName:!**compiled accessors**!public! !
 !WNDCLASS categoriesFor: #menuName:!accessing!public! !
 !WNDCLASS categoriesFor: #style:!**compiled accessors**!public! !
@@ -90,14 +102,14 @@ defineFields
 		typedef struct _WNDCLASS {
 			UINT		style; 
 			WNDPROC	lpfnWndProc; 
-			int		cbClsExtra; 
-			int		cbWndExtra; 
-			HANDLE	hInstance; 
-			HICON	hIcon; 
+			int			cbClsExtra; 
+			int			cbWndExtra; 
+			HINSTANCE	hInstance; 
+			HICON		hIcon; 
 			HCURSOR	hCursor; 
 			HBRUSH	hbrBackground; 
-			LPCTSTR	lpszMenuName; 
-			LPCTSTR	lpszClassName; 
+			LPCWSTR	lpszMenuName; 
+			LPCWSTR	lpszClassName; 
 		} WNDCLASS; "
 
 	self 
@@ -109,7 +121,7 @@ defineFields
 		defineField: #hIcon type: DWORDField writeOnly;
 		defineField: #hCursor type: DWORDField writeOnly;
 		defineField: #hbrBackground type: DWORDField writeOnly;
-		defineField: #lpszMenuName type: (PointerField type: String) beWriteOnly;
-		defineField: #lpszClassName type: (PointerField type: String) beWriteOnly! !
+		defineField: #lpszMenuName type: (PointerField type: Utf16String);
+		defineField: #lpszClassName type: (PointerField type: Utf16String)! !
 !WNDCLASS class categoriesFor: #defineFields!initializing!public! !
 
