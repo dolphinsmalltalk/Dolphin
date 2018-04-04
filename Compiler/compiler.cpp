@@ -10,9 +10,7 @@ Smalltalk compiler.
 #include "stdafx.h"
 
 #include "Compiler.h"
-#include <locale.h>
 #include "..\Compiler_i.h"
-#include <Strsafe.h>
 
 // Disable warnings about using SEH
 #pragma warning ( disable : 4509 )
@@ -1708,13 +1706,14 @@ void Compiler::ParseTerm(int textPosition)
 	case CharConst:
 		{
 			long codePoint = ThisTokenInteger();
-			if (codePoint > 255)
+			if (__isascii(codePoint))
 			{
-				GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(codePoint))), ThisTokenRange());
+				// We only generate the PushChar instruction for ASCII code points
+				GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
 			}
 			else
 			{
-				GenInstructionExtended(PushChar, static_cast<BYTE>(codePoint));
+				GenLiteralConstant(reinterpret_cast<Oop>(m_piVM->NewCharacter(static_cast<DWORD>(codePoint))), ThisTokenRange());
 			}
 			NextToken();
 		}
