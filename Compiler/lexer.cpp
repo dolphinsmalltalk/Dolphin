@@ -11,13 +11,6 @@ Smalltalk lexical analyser
 #include "Lexer.h" 
 #include "Str.h"
 
-// We need these for strtoxl()
-#include <limits.h>
-//#include <math.h>
-#include <malloc.h>
-#include <stdlib.h>
-#include <stdarg.h>
-
 #ifdef DOWNLOADABLE
 #include "downloadableresource.h"
 #else
@@ -733,7 +726,7 @@ void Lexer::ScanLiteralCharacter()
 					int pos = CharPosition();
 					CompileError(LErrExpectCodePoint);
 				}
-				else if (codePoint > MaxCodePoint)
+				else if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
 				{
 					m_thisTokenRange.m_stop = CharPosition();
 					int pos = CharPosition();
