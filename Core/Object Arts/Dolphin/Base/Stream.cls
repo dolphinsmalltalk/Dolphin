@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Stream
 	instanceVariableNames: ''
@@ -21,6 +21,44 @@ atEnd
 	"Answer whether the receiver is at the end of its values."
 
 	^self subclassResponsibility!
+
+basicContentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of undecoded
+	elements from the receiver."
+
+	^Array!
+
+basicNext
+	"Answer the next raw element accessible by the receiver."
+
+	"For all but encoded streams this is the same as #next"
+
+	^self next!
+
+basicNext: countInteger into: aSequenceableCollection startingAt: startInteger 
+	"Destructively replace the elements of the <sequenceableCollection> argument in the
+	<integer> interval (startAt..startAt+count-1) with the next countInteger undecoded elements
+	of the receiver. Answer aSequenceableCollection."
+
+	"Implementation Note: This will fail if the receiver is not readable."
+
+	startInteger to: startInteger + countInteger - 1
+		do: [:i | aSequenceableCollection basicAt: i put: self basicNext].
+	^aSequenceableCollection!
+
+basicNextAvailable: anInteger 
+	"Answer up to anInteger undecoded elements of the receiver's collection. Generally, the
+	answer will be a collection of the same class as the one accessed by the receiver (though
+	this is determined by the receiver), and will contain anInteger undecoded elements, or as
+	many as are left in the receiver's collection."
+
+	| newStream count |
+	count := 0.
+	newStream := self basicContentsSpecies writeStream: anInteger.
+	[count == anInteger or: [self atEnd]] whileFalse: 
+			[newStream basicNextPut: self basicNext.
+			count := count + 1].
+	^newStream contents!
 
 close
 	"Relinquish any external resources associated with the receiver, and put the
@@ -165,6 +203,10 @@ upToEnd
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
 !Stream categoriesFor: #atEnd!public!testing! !
+!Stream categoriesFor: #basicContentsSpecies!accessing!private! !
+!Stream categoriesFor: #basicNext!accessing!public! !
+!Stream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!Stream categoriesFor: #basicNextAvailable:!accessing!public! !
 !Stream categoriesFor: #close!operations!public! !
 !Stream categoriesFor: #contentsSpecies!accessing!private! !
 !Stream categoriesFor: #display:!printing!public! !

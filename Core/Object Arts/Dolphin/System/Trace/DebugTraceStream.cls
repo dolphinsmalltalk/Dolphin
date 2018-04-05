@@ -64,7 +64,7 @@ flush
 initialize
 	"Private - Initialize the receiver."
 
-	buffer := Utf8String writeStream.
+	buffer := String writeStream.
 	bufferProtect := Mutex new.!
 
 isEmpty

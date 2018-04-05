@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Common Controls'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Common Controls.
@@ -17,25 +17,19 @@ package classNames
 	add: #ListViewColumn;
 	add: #LVBKIMAGE;
 	add: #LVCOLUMNW;
-	add: #LVFINDINFOA;
 	add: #LVFINDINFOW;
 	add: #LVHITTESTINFO;
-	add: #LVITEMA;
 	add: #LVITEMW;
 	add: #NMCUSTOMDRAW;
 	add: #NMITEMACTIVATE;
 	add: #NMKEYDOWN;
 	add: #NMLISTVIEW;
 	add: #NMLVCUSTOMDRAW;
-	add: #NMLVFINDITEMA;
 	add: #NMLVFINDITEMW;
-	add: #NMLVGETINFOTIPA;
 	add: #NMLVGETINFOTIPW;
 	add: #NMLVODSTATECHANGE;
-	add: #NMTREEVIEWA;
 	add: #NMTREEVIEWW;
 	add: #NMTVCUSTOMDRAW;
-	add: #NMTVGETINFOTIPA;
 	add: #NMTVGETINFOTIPW;
 	add: #TabView;
 	add: #TabViewXP;
@@ -44,7 +38,6 @@ package classNames
 	add: #TreeView;
 	add: #TVHITTESTINFO;
 	add: #TVINSERTSTRUCTW;
-	add: #TVITEMA;
 	add: #TVITEMEXW;
 	add: #TVITEMW;
 	yourself.
@@ -145,22 +138,7 @@ CCITEM subclass: #TVITEMW
 	classVariableNames: ''
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
-LVITEMW subclass: #LVITEMA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TVITEMW subclass: #TVITEMA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 TVITEMW subclass: #TVITEMEXW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-LVFINDINFOW subclass: #LVFINDINFOA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -216,26 +194,6 @@ NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMLVFINDITEMW subclass: #NMLVFINDITEMA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMLVGETINFOTIPW subclass: #NMLVGETINFOTIPA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMTREEVIEWW subclass: #NMTREEVIEWA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMTVGETINFOTIPW subclass: #NMTVGETINFOTIPA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -1,4 +1,4 @@
-| package |
+Ôªø| package |
 package := Package name: 'Dialect Abstraction Layer'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -1238,45 +1238,45 @@ asPlainAsciiString
 		do: 
 			[:i | 
 			ch := temp at: i.
-			"CP 1251 - there are problems starting with · character that is used in windows encoding also"
-			"ch = $‡ ifTrue: [temp at: i put: $a].
-			ch = $· ifTrue: [temp at: i put: $b].
-			ch = $‚ ifTrue: [temp at: i put: $v].
-			ch = $„ ifTrue: [temp at: i put: $g]."
+			"CP 1251 - there are problems starting with √° character that is used in windows encoding also"
+			"ch = $√† ifTrue: [temp at: i put: $a].
+			ch = $√° ifTrue: [temp at: i put: $b].
+			ch = $√¢ ifTrue: [temp at: i put: $v].
+			ch = $√£ ifTrue: [temp at: i put: $g]."
 
 			"Windows encoding"
-			ch = $ö ifTrue: [temp at: i put: $s].
-			ch = $ä ifTrue: [temp at: i put: $S].
-			ch = $Ë ifTrue: [temp at: i put: $c].
-			ch = $» ifTrue: [temp at: i put: $C].
-			ch = $û ifTrue: [temp at: i put: $z].
-			ch = $é ifTrue: [temp at: i put: $Z].
-			ch = $Ê ifTrue: [temp at: i put: $c].
-			ch = $∆ ifTrue: [temp at: i put: $C].
-			ch = $– ifTrue: [temp at: i put: $D].
-			ch = $ ifTrue: [temp at: i put: $d].
-			ch = $È ifTrue: [temp at: i put: $e].
-			ch = $‘ ifTrue: [temp at: i put: $O].
-			ch = $¡ ifTrue: [temp at: i put: $A].
-			ch = $Ù ifTrue: [temp at: i put: $o].
-			ch = $· ifTrue: [temp at: i put: $a].
-			ch = $… ifTrue: [temp at: i put: $E].
+			ch = $≈° ifTrue: [temp at: i put: $s].
+			ch = $≈† ifTrue: [temp at: i put: $S].
+			ch = $√® ifTrue: [temp at: i put: $c].
+			ch = $√à ifTrue: [temp at: i put: $C].
+			ch = $≈æ ifTrue: [temp at: i put: $z].
+			ch = $≈Ω ifTrue: [temp at: i put: $Z].
+			ch = $√¶ ifTrue: [temp at: i put: $c].
+			ch = $√Ü ifTrue: [temp at: i put: $C].
+			ch = $√ê ifTrue: [temp at: i put: $D].
+			ch = $√∞ ifTrue: [temp at: i put: $d].
+			ch = $√© ifTrue: [temp at: i put: $e].
+			ch = $√î ifTrue: [temp at: i put: $O].
+			ch = $√Å ifTrue: [temp at: i put: $A].
+			ch = $√¥ ifTrue: [temp at: i put: $o].
+			ch = $√° ifTrue: [temp at: i put: $a].
+			ch = $√â ifTrue: [temp at: i put: $E].
 
 			"ISO encoding"
-			ch = $π ifTrue: [temp at: i put: $s].
-			ch = $© ifTrue: [temp at: i put: $S].
-			ch = $æ ifTrue: [temp at: i put: $z].
-			ch = $Æ ifTrue: [temp at: i put: $Z].
+			ch = $¬π ifTrue: [temp at: i put: $s].
+			ch = $¬© ifTrue: [temp at: i put: $S].
+			ch = $¬æ ifTrue: [temp at: i put: $z].
+			ch = $¬Æ ifTrue: [temp at: i put: $Z].
 
 			"German keyboard"
-			ch = $‰ ifTrue: [temp at: i put: $a].
-			ch = $ˆ ifTrue: [temp at: i put: $o].
-			ch = $¸ ifTrue: [temp at: i put: $u].
-			ch = $Î ifTrue: [temp at: i put: $e].
-			ch = $ƒ ifTrue: [temp at: i put: $A].
-			ch = $À ifTrue: [temp at: i put: $E].
-			ch = $÷ ifTrue: [temp at: i put: $O].
-			ch = $‹ ifTrue: [temp at: i put: $U].
+			ch = $√§ ifTrue: [temp at: i put: $a].
+			ch = $√∂ ifTrue: [temp at: i put: $o].
+			ch = $√º ifTrue: [temp at: i put: $u].
+			ch = $√´ ifTrue: [temp at: i put: $e].
+			ch = $√Ñ ifTrue: [temp at: i put: $A].
+			ch = $√ã ifTrue: [temp at: i put: $E].
+			ch = $√ñ ifTrue: [temp at: i put: $O].
+			ch = $√ú ifTrue: [temp at: i put: $U].
 
 			"Replace forbiden characters with blank space"
 			(#(0 1 2 3 4 5 6 7 8 11 12 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 127 129 132 133 134 135 139 144 160 164) 
@@ -1417,7 +1417,7 @@ hours: hours minutes: minutes seconds: seconds milliseconds: msecs
 asFilenameString
 
 	| stream |
-	stream := WriteStream on: (String new: 20).
+	stream := String writeStream: 20.
 	stream
 		nextPutAll: (self date year asLeadingZerosStringOfSize: 4);
 		nextPutAll: (self date monthIndex asLeadingZerosStringOfSize: 2);

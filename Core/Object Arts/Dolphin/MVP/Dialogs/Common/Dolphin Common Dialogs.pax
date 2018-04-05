@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Common Dialogs'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Common Dialogs.

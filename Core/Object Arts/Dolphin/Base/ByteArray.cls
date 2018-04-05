@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection variableByteSubclass: #ByteArray
 	instanceVariableNames: ''
@@ -46,7 +46,7 @@ asAnsiString
 
 	| size |
 	size := self basicSize.
-	^(ByteString new: size)
+	^(AnsiString new: size)
 		replaceFrom: 1
 		to: size
 		with: self

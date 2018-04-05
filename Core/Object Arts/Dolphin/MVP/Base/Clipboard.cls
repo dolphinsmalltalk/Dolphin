@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Clipboard
 	instanceVariableNames: 'isOpen registeredFormats'
@@ -377,20 +377,19 @@ setText: text format: formatName
 
 	self setText: text formatId: (registeredFormats at: formatName)!
 
-setText: textObject formatId: formatId 
+setText: textObject formatId: formatId
 	"Private - Copy the <readableString> text to the clipboard as an entry
 	of the specified <integer> format."
 
-	| hMem pMem len kernel text |
+	| hMem pMem len kernel |
 	kernel := KernelLibrary default.
-	text := textObject asParameter.
-	len := text basicSize.	"want size in bytes"
-	hMem := kernel globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len + 1.
+	len := textObject byteSize.	"want size in bytes"
+	hMem := kernel globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len.
 	pMem := kernel globalLock: hMem.
-	pMem 
+	pMem
 		replaceFrom: 1
-		to: len
-		with: text
+		to: len - textObject class elementSize
+		with: textObject
 		startingAt: 1.
 	kernel globalUnlock: hMem.
 	self setData: hMem formatId: formatId! !

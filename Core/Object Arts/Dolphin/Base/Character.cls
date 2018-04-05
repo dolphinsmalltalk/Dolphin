@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
@@ -621,6 +621,9 @@ onStartup
 
 replacement
 	^Utf8Default!
+
+replacement
+	^$\xFFFD!
 
 space
 	"Answer the space <Character>."

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkScanner
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable comments line errorHandler environment'
@@ -437,13 +437,13 @@ scanLiteralCharacter
 												ifNotNil: 
 													[:codePoint |
 													stop := self previousStepPosition.
-													"Maximum Unicode code point is U+10FFFF"
-													codePoint > 16r10FFFF
-														ifTrue: 
+													"Maximum Unicode code point is U+10FFFF, but last valid char is U+10FFFD"
+													(Character isValidCodePoint: codePoint)
+														ifTrue: [Character value: codePoint]
+														ifFalse: 
 															["Code point out of range"
 															self lexicalError: LErrBadCodePoint range: (tokenStart to: stop).
-															$\0]
-														ifFalse: [Character value: codePoint]]]]
+															$\0]]]]
 						ifNotNil: 
 							[:char |
 							"One of the special chars such as $\t for tab"

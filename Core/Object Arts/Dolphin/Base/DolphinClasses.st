@@ -1,4 +1,4 @@
-"Class Definitions"!
+﻿"Class Definitions"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -640,7 +640,7 @@ ExternalAddress variableByteSubclass: #REFGUID
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #ByteString
+String variableByteSubclass: #AnsiString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -649,10 +649,10 @@ String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
+	classInstanceVariableNames: 'bom'!
 UtfEncodedString variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
-	classVariableNames: 'LeadOffset'
+	classVariableNames: 'LeadOffset SurrogateOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 UtfEncodedString variableByteSubclass: #Utf8String

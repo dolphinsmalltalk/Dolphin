@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Notification subclass: #CompilerNotification
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
@@ -238,7 +238,7 @@ initialize
 		at: LErrQualifiedRefNotClosed put: 'qualified reference not closed';
 		at: LErrBadNumber put: 'illegal number';
 		at: LErrExpectCodePoint put: 'hex code point expected';
-		at: LErrBadCodePoint put: 'code point <1s> out of range'.
+		at: LErrBadCodePoint put: 'invalid code point <1s>'.
 
 	"'Unmatched ' in string literal.'"
 	formats

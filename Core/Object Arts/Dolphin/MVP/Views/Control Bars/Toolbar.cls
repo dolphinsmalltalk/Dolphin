@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags _reserved2 bitmapSize buttonSize tipText layoutManager'
@@ -181,17 +181,18 @@ calcButtonWidths
 	"Private - Answer the actual cummulative width of all the buttons in the receiver."
 
 	| tbinfo sum |
-	tbinfo := TBBUTTONINFO new.
+	tbinfo := TBBUTTONINFOW new.
 	"We only need the size"
 	tbinfo dwMask: TBIF_SIZE.
 	sum := 0.
-	items keysAndValuesDo: [:i :each | | cmd |
-		cmd := each commandId.
-		tbinfo cx: 0.
-		self tbGetButtonInfo: cmd tbbi: tbinfo.
-		sum := sum + tbinfo cx].
-	^sum
-	!
+	items keysAndValuesDo: 
+			[:i :each |
+			| cmd |
+			cmd := each commandId.
+			tbinfo cx: 0.
+			self tbGetButtonInfo: cmd tbbi: tbinfo.
+			sum := sum + tbinfo cx].
+	^sum!
 
 calculateExtent: aLayoutContext 
 	"Private - Answer an extent for the receiver within the specified <LayoutContext>."
@@ -605,10 +606,12 @@ tbAddString: aString
 
 	| buffer index |
 
-	buffer := aString copyWith: $\0.	"Last string must have extra null"
-	^(index := self sendMessage: TB_ADDSTRING wParam: 0 lpParam: buffer) == -1
+	buffer := aString asUtf16String copyWith: $\0.	"Last string must have extra null"
+	^(index := self sendMessage: TB_ADDSTRINGW wParam: 0 lpParam: buffer) == -1
 		ifTrue: [self errorInCommonControlCall]
-		ifFalse: [index]!
+		ifFalse: [index]
+
+!
 
 tbAutoSize
 	"Private - Cause the receiver to be resized."
@@ -672,7 +675,7 @@ tbGetButtonInfo: iID tbbi: binfo
 	or raises an exception if an error occured."
 
 	| i |
-	^(i := self sendMessage: TB_GETBUTTONINFO wParam: iID lpParam: binfo) == -1
+	^(i := self sendMessage: TB_GETBUTTONINFOW wParam: iID lpParam: binfo) == -1
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [i]!
 
@@ -817,14 +820,14 @@ tbnCustHelp: pNMHDR
 
 	^nil!
 
-tbnDropDown: pNMHDR 
-	"Private - Default handler for the TBN_DROPDOWN notification message.
+tbnDropDown: pNMHDR
+	"Private - Default handler for the TBN_DROPDOWNW notification message.
 	Forward on a #onDropDown: event to the presenter."
 
 	| nmtb id |
-	nmtb := NMTOOLBAR fromAddress: pNMHDR.
+	nmtb := NMTOOLBARW fromAddress: pNMHDR.
 	id := nmtb iItem.
-	^(self itemFromId: id) 
+	^(self itemFromId: id)
 		ifNil: [TBDDRET_DEFAULT]
 		ifNotNil: [:button | self presenter onDropDown: button]!
 
@@ -873,7 +876,10 @@ tbnToolbarChange: pNMHDR
 tbPressButton: anIntegerId state: pressBoolean
 	"Private - Press or release the button withanIntegerId."
 
-	(self sendMessage: TB_PRESSBUTTON 	wParam: anIntegerId lParam: pressBoolean asParameter) == 0
+	(self
+		sendMessage: TB_PRESSBUTTON
+		wParam: anIntegerId
+		lParam: pressBoolean asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
 tbSetBitmapSize: aPoint 
@@ -1133,10 +1139,12 @@ initialize
 
 initializeNotificationMap
 	"Private - Initialise the map of Toolbar notification codes to selector/parameter-class pairs.
-	N.B. Must not be stripped in order to preserve notification handlers."
+	N.B. Must not be stripped in order to preserve notification handlers.#
+		self initializeNotificationMap
+	"
 
 	TbnMap := (IdentityDictionary new: 14)			
-			at: TBN_GETBUTTONINFOA	put: #tbnGetButtonInfo:;
+			at: TBN_GETBUTTONINFOW	put: #tbnGetButtonInfo:;
 			at: TBN_BEGINDRAG			put: #tbnBeginDrag:;
 			at: TBN_ENDDRAG				put: #tbnEndDrag:;
 			at: TBN_BEGINADJUST			put: #tbnBeginAdjust:;	

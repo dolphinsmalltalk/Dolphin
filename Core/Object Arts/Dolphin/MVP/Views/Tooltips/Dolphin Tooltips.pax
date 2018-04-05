@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Tooltips'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Tooltips
@@ -14,10 +14,6 @@ package classNames
 	add: #OneOffNoteBubble;
 	add: #TOOLINFOW;
 	add: #Tooltip;
-	yourself.
-
-package methodNames
-	add: #NMTTDISPINFOA -> #toolTipWindow;
 	yourself.
 
 package globalNames
@@ -65,12 +61,6 @@ ControlView subclass: #Tooltip
 
 
 "Loose Methods"!
-
-!NMTTDISPINFOA methodsFor!
-
-toolTipWindow
-	^Tooltip fromHandle: self hwndFrom! !
-!NMTTDISPINFOA categoriesFor: #toolTipWindow!public! !
 
 "End of package definition"!
 

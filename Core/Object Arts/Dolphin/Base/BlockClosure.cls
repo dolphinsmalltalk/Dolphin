@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #BlockClosure
 	instanceVariableNames: 'outer method initialIP info receiver'
@@ -820,7 +820,7 @@ attemptToRecompile: aBlockClosure
 					[:ex | 
 					Notification signal: 'Error creating block: ', ex printString.
 					nil].
-	^newBlock ifNil: [aBlockClosure]!
+	^newBlock ?? aBlockClosure!
 
 attemptToUpgradeBlock: aBlockClosure data: data 
 	| recompiledBlock newMethod |

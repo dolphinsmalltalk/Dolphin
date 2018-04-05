@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
@@ -30,7 +30,7 @@ charLower: aCharacter
 	<stdcall: word CharLowerW intptr>
 	^self invalidCall!
 
-charLowerBuffA: aByteString cchLength: anInteger
+charLowerBuffA: anAnsiString cchLength: anInteger
 	"Convert a byte String to lowercase IN PLACE. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel.
 	N.B. We ignore the return value as it will be a pointer to the argument.
@@ -57,7 +57,7 @@ charUpper: aCharacter
 	<stdcall: word CharUpperW intptr>
 	^self invalidCall!
 
-charUpperBuffA: aByteString cchLength: anInteger
+charUpperBuffA: anAnsiString cchLength: anInteger
 	"Convert a byte String to uppercase IN PLACE. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel.
 	N.B. We ignore the return value as it will be a pointer to the argument.
@@ -218,9 +218,9 @@ getKeyboardState: a256ByteArray
 getKeyNameText: lParam lpString: aString nSize: anInteger
 	"Populate a string with the name of a virtual key code
 		int GetKeyNameText( 
-			LONG lParam,	// second parameter of keyboard message	
-			LPWSTR lpString,	// address of buffer for key name	
-			int nSize 	// maximum length of key-name string length	
+			LONGÂ lParam,	// second parameter of keyboard message	
+			LPWSTRÂ lpString,	// address of buffer for key name	
+			intÂ nSizeÂ 	// maximum length of key-name string length	
 		);"
 
 	<stdcall: sdword GetKeyNameTextW dword lpwstr sdword>
@@ -503,16 +503,16 @@ msgWaitForMultipleObjectsEx: countInteger pHandles: handles
 		dwWakeMask: maskInteger
 		dwFlags: aBoolean 
 	"Waits until when one of the following occurs: 
-		·	either any one of, or all of (the number of handles being specified 
+		Â·	either any one of, or all of (the number of handles being specified 
 			by the argument, countInteger, and whether to wait for a single object
 			or all of the objects being specified by the argument, waitBoolean), 
 			the objects whose handles are specified by the argument, handles 
 			(which may be a single handle, or a DWORDArray) are 
 			in the signaled state; or
-		·	A Win32 message of a type which matches the type mask specified by
+		Â·	A Win32 message of a type which matches the type mask specified by
 			the argument, maskInteger, becomes available in the message queue (
 			uses the same flags as #getQueueStatus:); or
-		·	the number of milliseconds specified by the argument, millisecsInteger,
+		Â·	the number of milliseconds specified by the argument, millisecsInteger,
 			elapses.
 
 	MsgWaitForMultipleObjects should only be called when there are no further messages

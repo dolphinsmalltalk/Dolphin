@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
@@ -815,7 +815,7 @@ buildDefaultStyle
 
 buildItemList: aCollection withIcons: aBoolean
 	| itemList sep typesep |
-	itemList := String writeStream.
+	itemList := self stringClass writeStream.
 	sep := self autoCompletionSeparator.
 	typesep := self autoCompletionImageIdSeparator.
 	aCollection do: 
@@ -1191,7 +1191,8 @@ centerCurrentLine
 				lParam: 0]!
 
 characterAt: anInteger
-	"Answer the <Character> at the specified one-based <integer> index in the receiver's text."
+	"Answer the <Character> at the specified one-based <integer> index in the receiver's text.
+	When the view is in UTF-8 mode, the returned <Character> may be a leading or trailing surrogate."
 
 	| ch |
 	ch := (self sciGetCharAt: anInteger) bitAnd: 16rFF.
@@ -4581,7 +4582,7 @@ plainTextFrom: startInteger to: stopInteger
 	startInteger < 1 ifTrue: [^self errorSubscriptBounds: startInteger].
 	stopInteger < startInteger ifTrue: [^String new].
 	stopInteger > self textLength ifTrue: [^self errorSubscriptBounds: stopInteger].
-	range := TEXTRANGE from: startInteger - 1 to: stopInteger.
+	range := TEXTRANGE from: startInteger - 1 to: stopInteger type: self stringClass.
 	self sciGetTextRange: range.
 	^range text!
 
@@ -5665,7 +5666,7 @@ sciDropSelectionN: selectionInteger
 				lParam: 0]!
 
 sciEncodedFromUTF8: utf8String encoded: encodedString
-	"Private - Translates a UTF8 string into the document encoding. Return the length of the
+	"Private - Translates a UTF-8 string into the document encoding. Return the length of the
 	result in bytes. On error return 0."
 
 	^this isNil
@@ -8984,7 +8985,7 @@ scnMarginRightClick: pSCNotification
 	self presenter trigger: #marginRightClicked: with: (SCNotification fromAddress: pSCNotification).
 	^0!
 
-scnModified: pSCNotification 
+scnModified: pSCNotification
 	"Private - Respond to SCN_MODIFIED notification.The 'position', 'modificationType', 'text',
 	'length', 'linesAdded', 'line', 'foleLevelNow' and 'foldLevelPrev' fields of the
 	notification structure are set.
@@ -8992,16 +8993,15 @@ scnModified: pSCNotification
 	See the Scintilla documentation for more information about this important and heavily
 	overloaded notification."
 
-	| struct eventMask |
-	struct := SCNotification fromAddress: pSCNotification.
-	eventMask := struct modificationType.
-	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT)) 
+	| eventMask |
+	eventMask := pSCNotification sdwordAtOffset: SCNotification.ModificationTypeOffset.
+	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
 		ifTrue: 
 			["Text changed"
 			super enChange]
 		ifFalse: 
-			[(eventMask 
-				anyMask: ##(SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN)) 
+			[(eventMask
+				anyMask: ##(SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN))
 					ifTrue: [self invalidateCalculatedExtent]].
 	^0!
 
@@ -9893,7 +9893,7 @@ stopStyling
 	self startStylingFrom: self textLength + 1!
 
 stringClass
-	^self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [ByteString]!
+	^self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [AnsiString]!
 
 styleAt: anInteger 
 	"Answer a <ScintillaTextStyle> being the the style of the character at the specified character

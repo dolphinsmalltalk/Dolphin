@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractStringTest subclass: #MultiByteStringTest
 	instanceVariableNames: ''
@@ -31,7 +31,8 @@ caseConversionCases
 					Utf8String fromByteArray: #[239 188 161 239 188 162 239 188 163]}}!
 
 reverseTestCases
-	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF8 and UTF16."
+	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF-8 and UTF-16."
+
 	^super reverseTestCases
 		, (#(#(#[16rF0 16r9F 16r8D 16rBA 16r20 16r61] #[16r61 16r20 16rF0 16r9F 16r8D 16rBA]) #(#[230 150 135 229 173 151 229 140 150 227 129 145] #[227 129 145 229 140 150 229 173 151 230 150 135]))
 				collect: [:pair | pair collect: [:b | Utf8String fromByteArray: b]])!
@@ -41,10 +42,40 @@ testAnsiStringRoundTrip
 	ansiAll := Character byteCharacterSet.
 	utf := self assimilateString: ansiAll.
 	ansi := utf asAnsiString.
-	self assert: ansi class sameAs: ByteString.
+	self assert: ansi class sameAs: AnsiString.
 	self assert: ansi size equals: 256.
-	self assert: ansi equals: ansiAll! !
+	self assert: ansi equals: ansiAll!
+
+testEncodeOnPut
+	{Character dolphin.
+		Character codePoint: 16r10FFFD.
+		$a.
+		$\0.
+		Character ansiValue: 128.
+		Character codePoint: 128.
+		Character codePoint: 163.
+		Character codePoint: 255.
+		Character codePoint: 256.
+		Character codePoint: 16rFFFD.
+		Character codePoint: 16r10000} do: 
+				[:each |
+				"Test different initial buffer sizes to check stream growth/non-growth scenarios"
+				#(0 1 2 3 4 8) do: 
+						[:i |
+						| actual utf stream actual2 |
+						stream := self collectionClass writeStream: i.
+						self collectionClass
+							encodeOn: stream put: each;
+							encodeOn: stream put: each.
+						utf := stream contents.
+						stream := utf readStream.
+						actual := stream next.
+						actual2 := stream next.
+						self assert: actual2 equals: actual.
+						self assert: stream atEnd.
+						self assert: actual equals: each]]! !
 !MultiByteStringTest categoriesFor: #caseConversionCases!constants!private! !
 !MultiByteStringTest categoriesFor: #reverseTestCases!private! !
 !MultiByteStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 StreamTest subclass: #PositionableStreamTest
 	instanceVariableNames: ''
@@ -12,7 +12,16 @@ PositionableStreamTest comment: ''!
 !PositionableStreamTest methodsFor!
 
 collections
-	^{''. #[]. Utf16String empty. 'a'. 'abc'. Character byteCharacterSet. Character dolphin asUtf8String}!
+	^{''.
+		#[].
+		Utf16String empty.
+		'a'.
+		'abc'.
+		AnsiString with: (Character value: 163).
+		AnsiString with: (Character ansiValue: 128).
+		Utf8String with: (Character value: 163).
+		Character byteCharacterSet.
+		Character dolphin asUtf8String}!
 
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
@@ -220,8 +229,8 @@ testReverseContents
 	stream := self streamWith: euro.
 	self assert: stream reverseContents = euro.
 	self closeTempStream: stream.
-	stream := self streamWith: '¡Hola!!'.
-	self assert: stream reverseContents = '!!aloH¡'.
+	stream := self streamWith: 'Â¡Hola!!'.
+	self assert: stream reverseContents = '!!aloHÂ¡'.
 	self closeTempStream: stream!
 
 testSkipToAllColon

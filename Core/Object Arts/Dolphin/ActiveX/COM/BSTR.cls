@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalAddress variableByteSubclass: #BSTR
 	instanceVariableNames: ''
@@ -27,7 +27,7 @@ asAnsiString
 	receiver cannot be represented as ANSI code points, then these will be translated to the
 	default character ($?)."
 
-	^self asByteString: ByteString!
+	^self asByteString: AnsiString!
 
 asBSTR
 	"Answer the receiver converted to an AX Automation string."

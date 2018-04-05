@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -583,7 +583,7 @@ displayString
 	representation."
 
 	| stream |
-	stream := Utf8String writeStream: 32.
+	stream := String writeStream: 32.
 	self displayOn: stream.
 	^stream contents
 !
@@ -1124,7 +1124,7 @@ printString
 	as a developer would want to see it."
 
 	| stream |
-	stream := Utf8String writeStream: 32.
+	stream := String writeStream: 32.
 	self printOn: stream.
 	^stream contents!
 

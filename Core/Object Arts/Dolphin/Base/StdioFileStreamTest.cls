@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractFileStreamTest subclass: #StdioFileStreamTest
 	instanceVariableNames: ''
@@ -11,10 +11,10 @@ StdioFileStreamTest comment: ''!
 !StdioFileStreamTest methodsFor!
 
 collections
-	^(super collections reject: [:each | each class elementSize ~~ 1])
-		collect: [:each | 
-			"stdio  streams treat Ctrl+Z as EOF"
-			each reject: [:ch | ch == $\x1A]]!
+	^(super collections reject: [:each | each class elementSize ~~ 1]) collect: 
+			[:each |
+			"The CRT stdio  streams has issues with nulls in text (bugs in positioning) and will treat Ctrl+Z as EOF (expected behaviour)"
+			each reject: [:ch | ch == $\0 or: [ch == $\x1A]]]!
 
 maxPosition
 	^2 ** 63 - 1!

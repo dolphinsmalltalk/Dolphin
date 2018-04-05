@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #STBFiler
 	instanceVariableNames: 'stream context version'
@@ -145,7 +145,7 @@ fixedClasses
 	checked when a class is first read from the file. In order to version these classes it is
 	necessary to increment the global STB version number."
 
-	^#(##(ByteString) ##(Array) ##(ByteArray) ##(LargeInteger) ##(STBClassProxy) ##(STBMetaclassProxy) ##(Symbol) ##(STBCollectionProxy) ##(OrderedCollection) ##(STBIdentityDictionaryProxy) ##(LookupTable) ##(IdentityDictionary))!
+	^#(##(AnsiString) ##(Array) ##(ByteArray) ##(LargeInteger) ##(STBClassProxy) ##(STBMetaclassProxy) ##(Symbol) ##(STBCollectionProxy) ##(OrderedCollection) ##(STBIdentityDictionaryProxy) ##(LookupTable) ##(IdentityDictionary))!
 
 on: aStream
 	"Answer a new instance attached to the binary stream aStream."

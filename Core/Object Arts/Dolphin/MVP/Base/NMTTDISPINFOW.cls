@@ -1,16 +1,20 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMTTDISPINFO subclass: #NMTTDISPINFOW
+NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMTTDISPINFOW guid: (GUID fromString: '{87b4c62e-026e-11d3-9fd7-00a0cc3e4a32}')!
-NMTTDISPINFOW comment: 'NMTTDISPINFOW is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
-
-NMTTDISPINFOW accompanies TTN_NEEDTEXTW notifications that are sent by a Toolbar control to its parent when it wishes to determine the Unicode (double-byte character) tool-tip text to be displayed for a toolbar button which the user is hovering over. See the Win32 documentation for further details.'!
-!NMTTDISPINFOW categoriesForClass!ToolTip-Structs! !
+NMTTDISPINFOW guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
+NMTTDISPINFOW comment: ''!
+!NMTTDISPINFOW categoriesForClass!External-Data-Structured-Win32! !
 !NMTTDISPINFOW methodsFor!
+
+idIsHandle
+	"Answer true if id stored in the receiver's header is a window handle, or false
+	if it is a tool id (e.g. for a toolbar button)."
+
+	^self uFlags anyMask: CommCtrlConstants.TTF_IDISHWND!
 
 lpszText
 	"Answer the <Utf16String> value of the receiver's 'lpszText' field."
@@ -38,6 +42,7 @@ uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uFlags)! !
+!NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
 !NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
 !NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
 !NMTTDISPINFOW categoriesFor: #text:!accessing!private! !
@@ -47,7 +52,7 @@ uFlags
 
 defineFields
 	"Define the fields of the NMTTDISPINFOW structure.
-		NMTTDISPINFOW compileDefinition
+		self compileDefinition
 	
 		typedef 		struct tagNMTTDISPINFOW {
 			NMHDR hdr;

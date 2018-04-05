@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #VMTest
 	instanceVariableNames: 'expiryHandler'
@@ -439,7 +439,7 @@ testEvaluationOrder
 testExtCallArgBstr
 	| beers |
 	self skipUnless: [self has7XOrLater: 54].
-	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
+	{''. 'a'. 'Â£2'. 'a' , (String with: Character null) , 'b'} do: 
 			[:each |
 			| subject expected actual |
 			expected := each size.
@@ -469,10 +469,10 @@ testExtCallArgLpwstr
 	self assert: method argumentTypes asArray equals: #('lpwstr').
 	self assert: method returnType equals: 'lpwstr'.
 	expected := Utf16String fromByteArray: #[97 0 32 0 163 0 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
-	actual := method value: VMLibrary default withArguments: #('a £ or two').
+	actual := method value: VMLibrary default withArguments: #('a Â£ or two').
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
-	actual := method value: VMLibrary default withArguments: {'a £ or two' asUtf8String}.
+	actual := method value: VMLibrary default withArguments: {'a Â£ or two' asUtf8String}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
 	{String empty. Utf8String empty} do: 
@@ -518,7 +518,7 @@ testExtCallRetLpwstr
 	proc := Processor activeProcess.
 	^proc primitiveFailureCode -> proc primitiveFailureData'
 				in: VMLibrary.
-	expected := 'oña' asUtf16String.
+	expected := 'oÃ±a' asUtf16String.
 	actual := method value: VMLibrary default withArguments: {expected yourAddress}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String!
@@ -1367,7 +1367,7 @@ testPrimitiveInstanceCounts2
 	counts
 		keysAndValuesDo: [:eachClass :eachCount | eachClass isNonInstantiable ifTrue: [self assert: eachCount equals: 0]].
 	self assert: (counts at: Symbol) = Symbol primAllInstances size.
-	self assert: (counts at: ByteString) > 30000.
+	self assert: (counts at: AnsiString) > 30000.
 	self assert: (counts at: Object) < 100.
 	self assert: (counts at: VMLibrary) equals: 1.
 	self assert: (counts at: Processor class) equals: 1.
@@ -1435,7 +1435,7 @@ testPrimitiveInstVarAtPut
 	self assert: (method value: immutableOc withArguments: #(1 1)) equals: 'failed1'.
 	immutableBytes := #[10 20 30 40].
 	mutableStrings := {String new: 4. Utf8String new: 4. Utf16String new: 4}.
-	immutableStrings := {ByteString. Utf8String. Utf16String} collect: 
+	immutableStrings := {AnsiString. Utf8String. Utf16String} collect: 
 					[:each |
 					(each fromString: 'abcd')
 						isImmutable: true;
@@ -1736,7 +1736,7 @@ testPrimitiveNextPut
 			self assert: (method value: subject withArguments: {Character codePoint: 16r394}) equals: 'failed4'].
 	(self has7XOrLater: 55) ifFalse: [^self].
 	"Tests of string encodings"
-	{ByteString. Utf8String. Utf16String} do: 
+	{AnsiString. Utf8String. Utf16String} do: 
 			[:each |
 			| stm |
 			self assert: (method value: each writeStream withArguments: #($a)) equals: 'failed2'.
@@ -1745,8 +1745,8 @@ testPrimitiveNextPut
 			self assert: stm position equals: 1.
 			self assert: (method value: stm withArguments: #($b)) equals: 'failed2'].
 	"Unicode symbol requiring one ansi byte"
-	pound := $\xA3.
-	subject := ByteString writeStream: 1.
+	pound := $?.
+	subject := AnsiString writeStream: 1.
 	self assert: (method value: subject withArguments: {pound}) equals: pound.
 	self assert: subject position equals: 1.
 	self assert: (subject contents at: 1) equals: pound.
@@ -1768,7 +1768,7 @@ testPrimitiveNextPut
 	self assert: subject contents equals: pound asUtf16String.
 	"Another unicode symbol requiring one ansi byte"
 	euro := $\x20AC.
-	subject := ByteString writeStream: 1.
+	subject := AnsiString writeStream: 1.
 	self assert: (method value: subject withArguments: {euro}) equals: euro.
 	self assert: subject position equals: 1.
 	self assert: (subject contents at: 1) equals: euro.
@@ -1781,15 +1781,13 @@ testPrimitiveNextPut
 	self assert: subject contents equals: euro asUtf8String.
 	"UTF-16 requires 1 code unit"
 	0 to: 0
-		do: 
-			[:i |
-			self assert: (method value: (Utf16String writeStream: i) withArguments: {euro}) equals: 'failed2'].
+		do: [:i | self assert: (method value: (Utf16String writeStream: i) withArguments: {euro}) equals: 'failed2'].
 	subject := Utf16String writeStream: 1.
 	self assert: (method value: subject withArguments: {euro}) equals: euro.
 	self assert: subject position equals: 1.
 	self assert: subject contents equals: euro asUtf16String.
-	"Unicode symbol outside BMP- Not puttable into a ByteString, should fail"
-	self assert: (method value: ByteString writeStream withArguments: {Character dolphin})
+	"Unicode symbol outside BMP- Not puttable into an AnsiString, should fail"
+	self assert: (method value: AnsiString writeStream withArguments: {Character dolphin})
 		equals: 'failed4'.
 	"UTF-8, requires 4 bytes"
 	0 to: 3
@@ -2051,7 +2049,7 @@ testPrimitiveStringCmp
 			[:each |
 			| subject result operand expected |
 			subject := each first.
-			self assert: subject class == ByteString.
+			self assert: subject class == AnsiString.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
@@ -2073,7 +2071,7 @@ testPrimitiveStringCollate
 			[:each |
 			| subject result operand expected |
 			subject := each first.
-			self assert: subject class == ByteString.
+			self assert: subject class == AnsiString.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #StdioFileStream
 	instanceVariableNames: 'stream flags name oldFd fd crtlib codec'
@@ -64,7 +64,7 @@ attach: anExternalHandle toFd: fdInteger mode: aSymbol text: aBoolean
 					0].
 	aBoolean
 		ifTrue: 
-			[codec := ByteString.
+			[codec := AnsiString.
 			mode := mode copyWith: $t]
 		ifFalse: 
 			[codec := ByteArray.
@@ -94,6 +94,12 @@ basicNext
 			ch := crtlib fgetc: stream.
 			ch == -1 ifFalse: [^ch]].
 	^self errorEndOfStream!
+
+basicNextPut: anObject
+	"Store the byte <Character> or <integer> (in the range 0..255) as the next element of the receiver."
+
+	crtlib fputc: anObject asInteger stream: stream.
+	^anObject!
 
 basicPrint: anObject 
 	anObject basicPrintOn: self!
@@ -326,7 +332,7 @@ nextOrNil
 nextPut: anObject
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
 
-	crtlib fputc: anObject asInteger stream: stream.
+	codec encodeOn: self put: anObject.
 	^anObject!
 
 nextPutAll: aCollection 
@@ -453,6 +459,7 @@ upToEnd
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
 !StdioFileStream categoriesFor: #attach:toFd:mode:text:!initializing!private! !
 !StdioFileStream categoriesFor: #basicNext!accessing!public! !
+!StdioFileStream categoriesFor: #basicNextPut:!public! !
 !StdioFileStream categoriesFor: #basicPrint:!printing!private! !
 !StdioFileStream categoriesFor: #close!operations!public! !
 !StdioFileStream categoriesFor: #contents!accessing!public! !
@@ -549,8 +556,8 @@ initialize
 	self addClassConstant: 'Codecs'
 		value: (IdentityDictionary new
 				at: #binary put: ByteArray;
-				at: #ansi put: ByteString;
-				at: #text put: ByteString;
+				at: #ansi put: AnsiString;
+				at: #text put: AnsiString;
 				at: #utf8 put: Utf8String;
 				yourself)!
 

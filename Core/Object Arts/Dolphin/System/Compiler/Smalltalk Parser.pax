@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Smalltalk Parser'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Parser

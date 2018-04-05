@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'
@@ -403,23 +403,22 @@ nmBeginDrag: pNMHDR
 				ifNotNil: [:dragee | self onBegin: #left drag: dragee]].
 	^nil!
 
-nmBeginLabelEditW: pNMHDR
+nmBeginLabelEdit: pNMHDR
 	"Private - Default handler for the ?VN_BEGINLABELEDITW notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	| object item |
-Sound bell.
 	item := self itemFromNMHDRW: pNMHDR.
 	object := self objectFromHandle: item handle.
 	^self presenter onAboutToEditLabel: object!
 
-nmBeginRDragW: pNMHDR
+nmBeginRDrag: pNMHDR
 	"Private - Default handler for the ??N_BEGINRDRAG notification message.
 	Answer nil to accept default processing.
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	| nm |
-	nm := self notificationWClass fromAddress: pNMHDR.
+	nm := self notificationClass fromAddress: pNMHDR.
 	self isDragSource ifTrue: [self onBegin: #right drag: (self objectFromHandle: nm itemHandle)].
 	^nil!
 
@@ -477,12 +476,6 @@ nmEndLabelEdit: pNMHDR
 	^text = (self getTextBlock value: object) displayString
 		ifFalse: [self presenter onLabelOf: object editedTo: text]!
 
-nmGetDispInfoA: pNMHDR
-	"Private - Handler for a ?VN_GETDISPINFO notification message.
-	N.B. This notification is not necessarily sent by all subclasses."
-
-	^self onDisplayDetailsRequired: (self itemFromNMHDRA: pNMHDR)!
-
 nmGetDispInfoW: pNMHDR
 	"Private - Handler for a ?VN_GETDISPINFO notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
@@ -495,15 +488,6 @@ nmSelChanged: anExternalAddress
 
 	^self onSelChanged: self selectionsByIndex!
 
-nmSelChangedW: anExternalAddress 
-	^self onSelChanged: self selectionsByIndex!
-
-nmSetDispInfoA: pNMHDR
-	"Private - Default handler for the ?VN_SETDISPINFO notification message.
-	Forward as an onDisplayDetailsChanged: event."
-
-	^self onDisplayDetailsChanged: (self itemFromNMHDRA: pNMHDR)!
-
 nmSetDispInfoW: pNMHDR
 	"Private - Default handler for the ?VN_SETDISPINFO notification message.
 	Forward as an onDisplayDetailsChanged: event."
@@ -515,12 +499,6 @@ notificationClass
 	by the receiver's associated Windows control."
 
 	^NMHDR!
-
-notificationWClass
-	"Private - Answer the class of NMHDR associated with certain notifications sent
-	by the receiver's associated Windows control."
-
-	^self notificationClass!
 
 onAboutToEditLabel: anObject
 	"The receiver's element, anObject, is about to have its label edited in the receiver.
@@ -792,19 +770,15 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #largeIconExtent!constants!public! !
 !IconicListAbstract categoriesFor: #largeIconExtent:!constants!public! !
 !IconicListAbstract categoriesFor: #nmBeginDrag:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmBeginLabelEditW:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmBeginRDragW:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmBeginLabelEdit:!event handling-win32!private! !
+!IconicListAbstract categoriesFor: #nmBeginRDrag:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmCustomDraw:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmDeleteItem:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmEndLabelEdit:!public! !
-!IconicListAbstract categoriesFor: #nmGetDispInfoA:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmGetDispInfoW:!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmSelChanged:!event handling-win32!private! !
-!IconicListAbstract categoriesFor: #nmSelChangedW:!public! !
-!IconicListAbstract categoriesFor: #nmSetDispInfoA:!event handling!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #nmSetDispInfoW:!event handling!event handling-win32!private! !
 !IconicListAbstract categoriesFor: #notificationClass!constants!private! !
-!IconicListAbstract categoriesFor: #notificationWClass!constants!private! !
 !IconicListAbstract categoriesFor: #onAboutToEditLabel:!event handling!public! !
 !IconicListAbstract categoriesFor: #onDisplayDetailsChanged:!event handling!private! !
 !IconicListAbstract categoriesFor: #onDisplayDetailsRequired:!event handling!private! !

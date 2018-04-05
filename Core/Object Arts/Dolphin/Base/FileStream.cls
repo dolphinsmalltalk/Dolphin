@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift pageSize'
@@ -18,8 +18,8 @@ The collection instance variable inherited from <Stream> is used to hold a fixed
 FileStream can read and write files as binary or text. It supports a number of import text encodings, as follows:
 	#text		- Default text encoding. When reading will attempt to deduce the encoding of the underlying file. When writing a new file, will write UTF-8 with a BOM.
 	#utf8		- UTF-8 encoded text
-	#utf16		- UTF-16 encoded text
-	#utf32		- UTF-32 encoded text
+	#utf16		- UTF-16 encoded text		(not yet implemented)
+	#utf32		- UTF-32 encoded text		(not yet implemented)
 
 Instance Variables:
 	file				The <File> being streamed over.
@@ -55,7 +55,7 @@ basicNext
 			collection basicAt: (position := position + 1)]!
 
 basicNextPut: anObject
-	"Private - Write anObject as the next basic element of the stream. Answer anObject."
+	"Write anObject as the next basic element of the stream. Answer anObject."
 
 	"Implementation Note: Inline the #beDirty operation as a performance optimization."
 
@@ -66,7 +66,7 @@ basicNextPut: anObject
 beBinary
 	"Treat the elements of the stream as bytes (Integers)."
 
-	#deprecated.	"Only works correctly for switching from ByteString"
+	#deprecated.	"Only works correctly for switching from AnsiString"
 	(collection isKindOf: UtfEncodedString) ifTrue: [self error: 'Unable to switch from UTF encoded content to binary'].
 	collection := collection asByteArray!
 
@@ -141,7 +141,8 @@ initialRead
 	"Private - Initialise the new instance's buffer and establish the file size."
 
 	self readPageFor: 0.
-	logicalFileSize := file size.!
+	logicalFileSize := file size.
+	collection class skipEncodingMarkerFrom: self!
 
 isBinary
 	"Answer whether the receiver's data is binary (i.e. consisting of Integers in the range 0..255)."
@@ -193,7 +194,7 @@ next
 		ifTrue: [self errorEndOfStream]
 		ifFalse: [
 			self position: self position.
-			collection at: (position := position + 1)]!
+			collection class decodeNextFrom: self]!
 
 next: count into: aSequenceableCollection startingAt: startAt
 	"Destructively replace the elements of the argument, aSequenceableCollection,
@@ -345,14 +346,14 @@ position: anInteger
 primitiveBasicNextPut: anInteger
 	<primitive: 222>
 	self position: self position.
-	^position := collection encodedAt: position + 1 put: anInteger!
+	^collection basicAt: (position := position + 1) put: anInteger!
 
 primitiveNextPut: anIntegerOrCharacter
 	"Private - Write anIntegerOrCharacter to the receiver."
 
 	<primitive: 66>
 	self position: self position.
-	^collection class encode: anIntegerOrCharacter on: self!
+	^collection class encodeOn: self put: anIntegerOrCharacter!
 
 readPageFor: anInteger
 	"Private - Read the page containing position anInteger and record the pageBase
@@ -374,7 +375,8 @@ readPageFor: anInteger
 			KernelLibrary default zeroMemory: collection yourAddress + readLimit length: PageSize - readLimit]!
 
 reset
-	self position: 0!
+	self position: 0.
+	collection class skipEncodingMarkerFrom: self!
 
 setToEnd
 	"Set the file pointer to the end of the file. The current page is flushed and the last page in the file
@@ -438,7 +440,7 @@ writePage
 	flags := flags bitAnd: ##(BufferUpdatedMask bitInvert)! !
 !FileStream categoriesFor: #atEnd!public!testing! !
 !FileStream categoriesFor: #basicNext!accessing!public! !
-!FileStream categoriesFor: #basicNextPut:!accessing!private! !
+!FileStream categoriesFor: #basicNextPut:!accessing!public! !
 !FileStream categoriesFor: #beBinary!modes!public! !
 !FileStream categoriesFor: #beText!modes!public! !
 !FileStream categoriesFor: #close!operations!public! !
@@ -464,7 +466,7 @@ writePage
 !FileStream categoriesFor: #nextOrNil!accessing!public! !
 !FileStream categoriesFor: #nextPut:!accessing!public! !
 !FileStream categoriesFor: #nextPutAll:!accessing!public! !
-!FileStream categoriesFor: #on:!accessing!initializing!private! !
+!FileStream categoriesFor: #on:!initializing!private! !
 !FileStream categoriesFor: #ownsFile!accessing!public! !
 !FileStream categoriesFor: #ownsFile:!accessing!public! !
 !FileStream categoriesFor: #position!accessing!public! !
@@ -486,13 +488,19 @@ FileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selec
 
 !FileStream class methodsFor!
 
+bufferClassFor: aFile mode: modeSymbol type: encSymbol
+	| bufClass encoding |
+	encoding := encSymbol == #text
+				ifTrue: [modeSymbol == #truncate ifTrue: [#utf8] ifFalse: [self sniffTextEncoding: aFile]]
+				ifFalse: [encSymbol].
+	bufClass := BufferClasses lookup: encoding.
+	bufClass isNil ifTrue: [self error: 'Unsupported encoding ' , encSymbol].
+	^bufClass!
+
 bufferSize
 	"Answer the size of the buffer to be used."
 
 	^PageSize!
-
-defaultTextEncoding
-	^#ansi!
 
 initialize
 	"Private - Initialize class variables of the receiver."
@@ -510,15 +518,21 @@ initialize
 	"The size of buffer used to hold part of the file contents in memory - chosen to be a
 	reasonably efficient compromise for serial and random I/O."
 	self addClassConstant: 'PageSize' value: 8192.
+	#todo.	"#utf->Utf16String and #utf32 ->Utf32String to be added when implemented."
 	self addClassConstant: 'BufferClasses'
 		value: (IdentityDictionary new
-				at: #utf32 put: Utf32String;
-				at: #utf16 put: Utf16String;
 				at: #utf8 put: Utf8String;
-				at: #text put: String;
 				at: #binary put: ByteArray;
-				at: #ansi put: ByteString;
+				at: #ansi put: AnsiString;
 				yourself)!
+
+newFile: aFile bufferClass: bufClass
+	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
+	^self basicNew
+		on: (bufClass new: PageSize / bufClass elementSize);
+		file: aFile;
+		initialRead;
+		yourself!
 
 on: aFile
 	"Answer an intance of the receiver attached to the open file aFile."
@@ -536,14 +550,11 @@ on: aFile type: aSymbol
 	the encoding specified by the <Symbol> argument. See the class comment for more details on
 	possible the encodings."
 
-	| bufClass |
-	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
-	bufClass := BufferClasses at: aSymbol ifAbsent: [self error: 'Unsupported encoding ' , aSymbol].
-	^self basicNew
-		on: (bufClass new: PageSize / bufClass elementSize);
-		file: aFile;
-		initialRead;
-		yourself!
+	| bufClass encoding |
+	encoding := aSymbol == #text ifTrue: [self sniffTextEncoding: aFile] ifFalse: [aSymbol].
+	bufClass := BufferClasses lookup: encoding.
+	bufClass isNil ifTrue: [self error: 'Unsupported encoding ' , encoding].
+	^self newFile: aFile bufferClass: bufClass!
 
 open: aString mode: modeSymbol check: checkBoolean type: encSymbol
 	"Private - Answer an instance of the receiver opened on aString for accessMode access with
@@ -551,17 +562,22 @@ open: aString mode: modeSymbol check: checkBoolean type: encSymbol
 	(though file exist/file does not exist error notifications depend on the value of
 	checkBoolean). By default we share for read only."
 
-	| answer |
-	answer := self on: (File
-						open: aString
-						mode: modeSymbol
-						check: checkBoolean
-						share: #readWrite)
+	| answer bufClass aFile |
+	aFile := File
+				open: aString
+				mode: modeSymbol
+				check: checkBoolean
+				share: #readWrite.
+	bufClass := self
+				bufferClassFor: aFile
+				mode: modeSymbol
 				type: encSymbol.
+	answer := self newFile: aFile bufferClass: bufClass.
 	answer ownsFile: true.
-	modeSymbol == #append ifTrue: [answer setToEnd].
-	^answer.
-	#todo	"Default sharing should be #read, but causes problems with boot"!
+	modeSymbol == #truncate
+		ifTrue: [bufClass emitEncodingMarkerOn: answer]
+		ifFalse: [modeSymbol == #append ifTrue: [answer setToEnd]].
+	^answer!
 
 read: fileId
 	"Answer an instance of the receiver whose future sequence values consist
@@ -607,6 +623,26 @@ readWrite: aString text: aBoolean
 		check: false
 		type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
+sniffTextEncoding: aFile
+	| buf count ituResult |
+	buf := ByteArray newFixed: 1024.
+	count := aFile read: buf.
+	ituResult := DWORDBytes new.
+	^(AdvApiLibrary default
+		isTextUnicode: buf
+		iSize: count
+		lpiResult: ituResult)
+			ifTrue: 
+				[self halt.
+				#utf16]
+			ifFalse: 
+				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
+				(buf copyFrom: 1 to: 3) = ##($\xFEFF asUtf8String asByteArray)
+					ifTrue: [#utf8]
+					ifFalse: 
+						[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
+						#ansi]]!
+
 write: fileId
 	"Answer an instance of the receiver opened on a new or truncated file 
 	identified by the <readableString> path, fileId."
@@ -647,9 +683,9 @@ write: fileId mode: mode check: check type: fileType
 	is opened. 
 
 	The mode may be one of:
-		#create 	create a new file, position at its start.
+		#create 		create a new file, position at its start.
 		#append	open an existing file, position at its end.
-		#truncate	create or open a file, position at its starte.
+		#truncate	create or open a file, position at its start.
 
 	See also the File class for further information on the mode.
 
@@ -701,9 +737,10 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
+!FileStream class categoriesFor: #bufferClassFor:mode:type:!instance creation!private! !
 !FileStream class categoriesFor: #bufferSize!constants!public! !
-!FileStream class categoriesFor: #defaultTextEncoding!instance creation!private! !
 !FileStream class categoriesFor: #initialize!development!initializing!private! !
+!FileStream class categoriesFor: #newFile:bufferClass:!instance creation!private! !
 !FileStream class categoriesFor: #on:!instance creation!public! !
 !FileStream class categoriesFor: #on:text:!instance creation!public! !
 !FileStream class categoriesFor: #on:type:!instance creation!public! !
@@ -713,6 +750,7 @@ write: aString type: aSymbol
 !FileStream class categoriesFor: #read:type:!instance creation!public! !
 !FileStream class categoriesFor: #readWrite:!instance creation!public! !
 !FileStream class categoriesFor: #readWrite:text:!instance creation!public! !
+!FileStream class categoriesFor: #sniffTextEncoding:!helpers!private! !
 !FileStream class categoriesFor: #write:!instance creation!public! !
 !FileStream class categoriesFor: #write:mode:!instance creation!public! !
 !FileStream class categoriesFor: #write:mode:check:text:!instance creation!public! !

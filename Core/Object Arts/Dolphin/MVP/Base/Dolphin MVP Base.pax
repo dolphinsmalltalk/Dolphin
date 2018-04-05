@@ -1,4 +1,4 @@
-| package |
+ï»¿| package |
 package := Package name: 'Dolphin MVP Base'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework.
@@ -143,8 +143,6 @@ package classNames
 	add: #NCCALCSIZE_PARAMS;
 	add: #NEWTEXTMETRICW;
 	add: #NMHDR;
-	add: #NMTTDISPINFO;
-	add: #NMTTDISPINFOA;
 	add: #NMTTDISPINFOW;
 	add: #NONCLIENTMETRICSW;
 	add: #NOTIFYICONDATA;
@@ -212,7 +210,7 @@ package classNames
 	yourself.
 
 package methodNames
-	add: #ByteString -> #copyToClipboard;
+	add: #AnsiString -> #copyToClipboard;
 	add: #InputState -> #getLastInputInfo;
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
@@ -371,7 +369,6 @@ package methodNames
 	add: #UserLibrary -> #unregisterHotKey:id:;
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
-	add: #UtfEncodedString -> #copyToClipboard;
 	add: 'ConsoleSessionManager class' -> #icon;
 	add: 'Error class' -> #icon;
 	add: 'ExternalLibrary class' -> #icon;
@@ -947,17 +944,7 @@ AbstractLOGFONT subclass: #LOGFONTW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTTDISPINFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMTTDISPINFO subclass: #NMTTDISPINFOA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMTTDISPINFO subclass: #NMTTDISPINFOW
+NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1284,13 +1271,13 @@ SIZEL := SIZE!
 
 "Loose Methods"!
 
-!ByteString methodsFor!
+!AnsiString methodsFor!
 
 copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
 	Clipboard current setText: self formatId: Win32Constants.CF_TEXT! !
-!ByteString categoriesFor: #copyToClipboard!copying!public! !
+!AnsiString categoriesFor: #copyToClipboard!copying!public! !
 
 !ConsoleSessionManager class methodsFor!
 
@@ -1479,9 +1466,9 @@ colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSatu
 !String methodsFor!
 
 copyToClipboard
-	"Copy the text of the receiver to the clipboard."
+	"Copy the receiver to the clipboard."
 
-	self subclassResponsibility!
+	Clipboard current setText: self asUtf16String formatId: Win32Constants.CF_UNICODETEXT!
 
 setTextInto: aView
 	"Private - Sent as part of a double dispatch from View objects to set their text from
@@ -1871,7 +1858,7 @@ enumClipboardFormats: knownFormat
 	will return NO_ERROR), and also if an error occurs.
 
 		UINT EnumClipboardFormats(
-			UINT format 	// specifies a known available clipboard format 
+			UINTÂ formatÂ 	// specifies a known available clipboard format 
 		);"
 
 	<stdcall: dword EnumClipboardFormats dword>
@@ -1988,9 +1975,9 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 	supplied buffer.
 
 		int GetClipboardFormatName( 
-			UINT format,				// clipboard format to retrieve 
-			LPWSTR lpszFormatName, 	// address of buffer for name 
-			int cchMaxCount  			// length of name string in characters 
+			UINTÂ format,				// clipboard format to retrieve 
+			LPWSTRÂ lpszFormatName, 	// address of buffer for name 
+			intÂ cchMaxCountÂ  			// length of name string in characters 
 		);"
 
 	<stdcall: sdword GetClipboardFormatNameW dword lpwstr sdword>
@@ -2059,8 +2046,8 @@ getIconInfo: hIcon piconinfo: anICONINFO
 	"Populate the argument, anICONINFO, with information about the  icon or cursor
 	whose handle is hIcon.
 		BOOL GetIconInfo( 
-			HICON hIcon,			// icon handle	
-			PICONINFO piconinfo 	// address of icon structure	
+			HICONÂ hIcon,			// icon handle	
+			PICONINFOÂ piconinfoÂ 	// address of icon structure	
 		);"
 
 	<stdcall: bool GetIconInfo handle ICONINFO* >
@@ -2557,7 +2544,7 @@ registerClipboardFormat: formatName
 	"Register a new clipboard format name, answering its system wide identifier.
 
 		UINT RegisterClipboardFormat( 
-			LPCTSTR lpszFormat  // address of name string 
+			LPCTSTRÂ lpszFormatÂ  // address of name string 
 		);"
 
 	<stdcall: dword RegisterClipboardFormatW lpwstr>
@@ -2727,8 +2714,8 @@ setClipboardData: uFormat hMem: hMem
 	message.
 
 		HANDLE SetClipboardData( 
-			UINT uFormat,		// clipboard format 
-			HANDLE hMem	// data handle 
+			UINTÂ uFormat,		// clipboard format 
+			HANDLEÂ hMem	// data handle 
 		);"
 
 	<stdcall: handle SetClipboardData dword handle>
@@ -3216,14 +3203,6 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
-
-!UtfEncodedString methodsFor!
-
-copyToClipboard
-	"Copy the receiver to the clipboard."
-
-	Clipboard current setText: self asUtf16String formatId: Win32Constants.CF_UNICODETEXT! !
-!UtfEncodedString categoriesFor: #copyToClipboard!copying!public! !
 
 !Warning class methodsFor!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #ExternalDescriptor
 	instanceVariableNames: 'descriptor'
@@ -183,19 +183,9 @@ convention
 description
 	"Private - Answer the descriptor string for the external function described by the receiver."
 
-	| stream types |
+	| stream |
 	stream := String writeStream: 60.
-	stream
-		nextPutAll: self callingConvention;
-		space;
-		nextPutAll: self returnType.
-	types := self argumentTypes.
-	"types notEmpty ifTrue: [stream nextPut: $,]."
-	types do: 
-			[:each | 
-			stream
-				space;
-				nextPutAll: each].
+	self printDescriptionOn: stream.
 	^stream contents!
 
 descriptor: aCollectionOfBytes
@@ -222,14 +212,30 @@ name: aString
 
 	^self!
 
+printDescriptionOn: stream
+	"Private - Answer the descriptor string for the external function described by the receiver."
+
+	| types |
+	stream
+		nextPutAll: self callingConvention;
+		space;
+		nextPutAll: self returnType.
+	types := self argumentTypes.
+	"types notEmpty ifTrue: [stream nextPut: $,]."
+	types do: 
+			[:each |
+			stream
+				space;
+				nextPutAll: each]!
+
 printOn: aStream
 	"Append a debug description of the receiver to aStream."
 
 	aStream
 		basicPrint: self;
-		nextPut: $(;
-		display: self description;
-		nextPut: $)!
+		nextPut: $(.
+	self printDescriptionOn: aStream.
+	aStream nextPut: $)!
 
 returnType
 	"Private - Answer the return type name of the external function described by the receiver.
@@ -253,6 +259,7 @@ returnType
 !ExternalDescriptor categoriesFor: #literals:!accessing!public! !
 !ExternalDescriptor categoriesFor: #name!accessing!public! !
 !ExternalDescriptor categoriesFor: #name:!accessing!public! !
+!ExternalDescriptor categoriesFor: #printDescriptionOn:!accessing!private! !
 !ExternalDescriptor categoriesFor: #printOn:!printing!public! !
 !ExternalDescriptor categoriesFor: #returnType!accessing!private! !
 

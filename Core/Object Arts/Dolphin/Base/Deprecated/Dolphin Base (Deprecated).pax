@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Base (Deprecated)'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
@@ -76,6 +76,7 @@ package methodNames
 	add: #CRTLibrary -> #thread_errno;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
+	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
@@ -540,6 +541,19 @@ do: operation separatedBy: separator
 	self fieldsDo: operation separatedBy: separator! !
 !ExternalStructure categoriesFor: #do:!enumerating!public! !
 !ExternalStructure categoriesFor: #do:separatedBy:!enumerating!public! !
+
+!File methodsFor!
+
+readCharacter
+	"Answer the next Character from the file or nil if the receiver
+	is positioned past the current EOF.
+	Signal a FileException if an error occurs."
+
+	| string |
+	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
+	string := String new: 1.
+	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
+!File categoriesFor: #readCharacter!operations!public! !
 
 !File class methodsFor!
 

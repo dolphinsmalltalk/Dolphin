@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
@@ -6,7 +6,7 @@ IconicListAbstract subclass: #ListView
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmDummy: #nmDummy: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDragW: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmGetDispInfoA: #nmSetDispInfoA: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #nmDummy: #lvnGetInfoTip: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #lvnIncrementalSearch: #lvnColumnDropDown: #nmDummy: #lvnColumnOverflowClick: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmBeginLabelEditW: #nmEndLabelEdit: #nmGetDispInfoW: #nmSetDispInfoW: #lvnFindItem: #lvnBeginScroll: #lvnEndScroll: #nmDummy: #nmDummy: #lvnLinkClick: #nmDummy: #nmDummy: #lvnGetEmptyMarkup: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
+ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmDummy: #nmDummy: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDrag: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #nmDummy: #lvnGetInfoTip: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #lvnIncrementalSearch: #lvnColumnDropDown: #nmDummy: #lvnColumnOverflowClick: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmBeginLabelEdit: #nmEndLabelEdit: #nmGetDispInfoW: #nmSetDispInfoW: #lvnFindItem: #lvnBeginScroll: #lvnEndScroll: #nmDummy: #nmDummy: #lvnLinkClick: #nmDummy: #nmDummy: #lvnGetEmptyMarkup: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -975,9 +975,6 @@ itemCount
 
 	^self sendMessage: LVM_GETITEMCOUNT!
 
-itemFromNMHDRA: pNMHDR
-	^LVITEMA fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
-
 itemFromNMHDRW: pNMHDR
 	^LVITEMW fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
 
@@ -1402,7 +1399,6 @@ lvnColumnClick: anNMHDR
 	Attempts to maintain current selection and to keep it visible."
 
 	| nmlv |
-Sound bell.
 	nmlv := self notificationClass fromAddress: anNMHDR yourAddress.
 	self columnClicked: nmlv iSubItem + 1.
 	^0!
@@ -2367,7 +2363,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #isVirtual!accessing-styles!public! !
 !ListView categoriesFor: #isVirtual:!accessing-styles!public! !
 !ListView categoriesFor: #itemCount!accessing!public! !
-!ListView categoriesFor: #itemFromNMHDRA:!helpers!private! !
 !ListView categoriesFor: #itemFromNMHDRW:!helpers!private! !
 !ListView categoriesFor: #itemFromPoint:!enquiries!private! !
 !ListView categoriesFor: #itemRect:textOnly:!enquiries!public! !
@@ -2559,18 +2554,16 @@ initializeNotificationMap
 				at: LVN_FIRST - LVN_INSERTITEM + 1 put: #lvnInsertItem:;
 				at: LVN_FIRST - LVN_DELETEITEM + 1 put: #nmDeleteItem:;
 				at: LVN_FIRST - LVN_DELETEALLITEMS + 1 put: #lvnDeleteAllItems:;
-				at: LVN_FIRST - LVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEditW:;
+				at: LVN_FIRST - LVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEdit:;
 				at: LVN_FIRST - LVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
 				at: LVN_FIRST - LVN_COLUMNCLICK + 1 put: #lvnColumnClick:;
 				at: LVN_FIRST - LVN_BEGINDRAG + 1 put: #nmBeginDrag:;
-				at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDragW:;
+				at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDrag:;
 				at: LVN_FIRST - LVN_ODCACHEHINT + 1 put: #nmDummy:;
 				at: LVN_FIRST - LVN_ITEMACTIVATE + 1 put: #lvnItemActivate:;
 				at: LVN_FIRST - LVN_ODSTATECHANGED + 1 put: #lvnODStateChanged:;
 				at: LVN_FIRST - LVN_HOTTRACK + 1 put: #nmDummy:;
-				at: LVN_FIRST - LVN_GETDISPINFOA + 1 put: #nmGetDispInfoA:;
 				at: LVN_FIRST - LVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
-				at: LVN_FIRST - LVN_SETDISPINFOA + 1 put: #nmSetDispInfoA:;
 				at: LVN_FIRST - LVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
 				at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItem:;
 				at: LVN_FIRST - LVN_KEYDOWN + 1 put: #nmKeyDown:;

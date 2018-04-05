@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractStringTest subclass: #ByteStringTest
 	instanceVariableNames: ''
@@ -17,7 +17,7 @@ assimilateString: aString
 	^aString!
 
 collectionClass
-	^ByteString!
+	^AnsiString!
 
 testAsPhrase
 	self assert: #'' asPhrase = ''.

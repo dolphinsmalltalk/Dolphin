@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 WriteStream subclass: #SocketWriteStream
 	instanceVariableNames: 'socket dirty'
@@ -116,7 +116,7 @@ socket: aSocket
 !SocketWriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !SocketWriteStream categoriesFor: #nextPut:!accessing!public! !
 !SocketWriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!SocketWriteStream categoriesFor: #on:!accessing!initializing!private! !
+!SocketWriteStream categoriesFor: #on:!initializing!private! !
 !SocketWriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !SocketWriteStream categoriesFor: #socket!accessing!private! !
 !SocketWriteStream categoriesFor: #socket:!accessing!private! !

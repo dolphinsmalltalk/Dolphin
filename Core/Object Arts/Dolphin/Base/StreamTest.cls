@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #StreamTest
 	instanceVariableNames: ''
@@ -23,23 +23,40 @@ streamOn: aString
 	^self streamClass on: aString!
 
 testUpTo
-	| chars stream |
-	chars := 'abcdefghij'.
-	stream := self streamOn: chars.
-	self assert: (stream upTo: $a) equals: ''.
-	self assert: (stream upTo: $b) equals: ''.
-	self assert: (stream upTo: $d) equals: 'c'.
-	self assert: (stream upTo: $g) equals: 'ef'.
-	self assert: (stream upTo: $z) equals: 'hij'.
-	self assert: stream atEnd.
-	self assert: (stream upTo: $z) equals: ''.
-	stream reset.
-	self assert: (stream upTo: $j) equals: 'abcdefghi'.
-	self assert: stream atEnd.
-	stream reset.
-	self assert: (stream upTo: $z) equals: chars.
-	self assert: stream atEnd.
-	self closeTempStream: stream! !
+	{AnsiString. Utf8String} do: 
+			[:stringClass |
+			| pound chars stream capitalAwithCircumflex |
+			pound := Character value: 16rA3.
+			"A-with-circumflex is also the lead byte for pound in UTF-8"
+			capitalAwithCircumflex := Character value: 16rC2.
+			chars := (stringClass with: capitalAwithCircumflex) , 'bcde' , (stringClass with: pound) , 'ghij'.
+			self assert: chars class equals: stringClass.
+			stream := self streamOn: chars.
+			self assert: stream upToEnd equals: chars.
+			"Search for a potentially multi-byte char at the start"
+			stream reset.
+			self assert: (stream upTo: capitalAwithCircumflex) equals: ''.
+			"Search for a single-byte char"
+			self assert: (stream upTo: $c) equals: 'b'.
+			"Search for another multi-byte char after the start"
+			self assert: (stream upTo: pound) equals: 'de'.
+			"Search for a non-existant char"
+			self assert: (stream upTo: $z) equals: 'ghij'.
+			self assert: stream atEnd.
+			self assert: (stream upTo: $z) equals: ''.
+			stream reset.
+			"Search for what would be lead byte of pound"
+			stream next.
+			self assert: (stream upTo: capitalAwithCircumflex) equals: chars asAnsiString allButFirst.
+			"Search terminating on last character"
+			stream reset.
+			self assert: (stream upTo: $j) equals: chars allButLast.
+			self assert: stream atEnd.
+			"Search for non-existant character"
+			stream reset.
+			self assert: (stream upTo: $z) equals: chars.
+			self assert: stream atEnd.
+			self closeTempStream: stream]	"Utf8String. Utf16String"! !
 !StreamTest categoriesFor: #closeTempStream:!helpers!private! !
 !StreamTest categoriesFor: #streamClass!helpers!private! !
 !StreamTest categoriesFor: #streamOn:!helpers!private! !

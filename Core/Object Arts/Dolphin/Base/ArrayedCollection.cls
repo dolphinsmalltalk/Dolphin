@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #ArrayedCollection
 	instanceVariableNames: ''
@@ -116,6 +116,15 @@ inject: anObject into: aDyadicValuable
 	1 to: self size do: [:i | nextValue := aDyadicValuable value: nextValue value: (self at: i)].
 	^nextValue!
 
+lookup: keyInteger
+	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver.
+	Clearly if the receiver can contain nil values then it will not be possible to distinguish between the absence
+	of the key and the key being associated with a nil value. However, this method expresses the
+	very common pattern of passing an empty block as absent handler to #at:ifAbsent:"
+
+	<primitive: 60>
+	^nil!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
@@ -182,6 +191,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
 !ArrayedCollection categoriesFor: #includes:!public!searching! !
 !ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
+!ArrayedCollection categoriesFor: #lookup:!accessing!public! !
 !ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !

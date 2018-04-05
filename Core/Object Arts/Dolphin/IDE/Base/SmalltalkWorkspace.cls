@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
@@ -1434,7 +1434,7 @@ showTipForIdentifier: anStIdentifierToken
 
 showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |
-	tip := Utf8String writeStream.
+	tip := String writeStream.
 	last := 0.
 	aCollectionOfScintillaIndicators do: 
 			[:each |
@@ -1871,7 +1871,7 @@ defaultTextStyles
 	answer := Set new.
 	answer
 		add: ((ScintillaTextStyle name: #illegal)
-					description: 'Illegal characters, e.g. �';
+					description: 'Illegal characters, e.g. £';
 					forecolor: Color red;
 					isBold: true;
 					yourself);

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
@@ -109,7 +109,7 @@ from: startInteger to: stopInteger
 	^self 
 		from: startInteger
 		to: stopInteger
-		text: (String newFixed: stopInteger - startInteger)!
+		type: String!
 
 from: startInteger to: stopInteger text: aString 
 	"Answer a new instance of the receiver to represent the specified 0-based, 
@@ -118,8 +118,18 @@ from: startInteger to: stopInteger text: aString
 	^self new 
 		setFrom: startInteger
 		to: stopInteger
-		text: aString! !
+		text: aString!
+
+from: startInteger to: stopInteger type: aStringClass
+	"Answer a new instance of the receiver to represent the specified 0-based, 
+	end-exclusive, interval."
+
+	^self 
+		from: startInteger
+		to: stopInteger
+		text: (aStringClass newFixed: stopInteger - startInteger)! !
 !TEXTRANGE class categoriesFor: #defineFields!initializing!public! !
 !TEXTRANGE class categoriesFor: #from:to:!instance creation!public! !
 !TEXTRANGE class categoriesFor: #from:to:text:!instance creation!public! !
+!TEXTRANGE class categoriesFor: #from:to:type:!instance creation!public! !
 

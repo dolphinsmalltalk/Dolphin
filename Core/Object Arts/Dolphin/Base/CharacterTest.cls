@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #CharacterTest
 	instanceVariableNames: ''
@@ -7,7 +7,7 @@ DolphinTest subclass: #CharacterTest
 	classInstanceVariableNames: ''!
 CharacterTest guid: (GUID fromString: '{b5b1b518-3a55-4441-9aa3-32c87f1aedba}')!
 CharacterTest comment: ''!
-!CharacterTest categoriesForClass!Unclassified! !
+!CharacterTest categoriesForClass!Tests-Magnitude-General! !
 !CharacterTest methodsFor!
 
 testAnsiValue
@@ -91,7 +91,7 @@ testClassCodePoint
 	ch := Character codePoint: 16r20AC.
 	self assert: ch codePoint equals: 16r20AC.
 	self assert: ch encoding equals: #ansi.
-	self assert: ch sameAs: ((ByteString fromByteArray: #[128]) at: 1).
+	self assert: ch sameAs: ((AnsiString fromByteArray: #[128]) at: 1).
 	ch := Character codePoint: 16r1F42C.
 	self assert: ch codePoint equals: 16r1F42C.
 	self assert: ch encoding equals: #utf32.
@@ -104,7 +104,7 @@ testClassCodePoint
 
 testCodePoint
 	| euro utf8 utf16 |
-	euro := (ByteString fromByteArray: #[128]) at: 1.
+	euro := (AnsiString fromByteArray: #[128]) at: 1.
 	self assert: euro codePoint equals: 16r20AC.
 	self assert: Character dolphin codePoint equals: 16r1F42C.
 	"Surrogates  - not real code points"
@@ -131,8 +131,8 @@ testEquals
 	self deny: $a equals: $A.
 	self assert: $\0 equals: (Character codePoint: 0).
 	self assert: (Character codePoint: 255) equals: (Character codePoint: 255).
-	self assert: (Character codePoint: 16rFFFF) equals: (Character codePoint: 16rFFFF).
-	self deny: (Character codePoint: 16rFFFE) equals: (Character codePoint: 16rFFFF).
+	self should: [Character codePoint: 16rFFFF] raise: Error.
+	self deny: (Character codePoint: 16rFFFC) equals: (Character codePoint: 16rFFFD).
 	self deny: (Character codePoint: 16r200E) equals: 16r200E!
 
 testIdentity
@@ -292,8 +292,7 @@ testPrintString
 			[:i |
 			self assert: (Character codePoint: i) printString
 				equals: '$\x' , (i printStringRadix: 16 showRadix: false)].
-	(33 to: 126) , (128 to: 255)
-		do: [:i | self deny: ((Character codePoint: i) printString beginsWith: '$\x')].
+	(33 to: 126) do: [:i | self deny: ((Character codePoint: i) printString beginsWith: '$\x')].
 	self assert: (Character codePoint: 0) printString equals: '$\0'.
 	self assert: (Character codePoint: 7) printString equals: '$\a'.
 	self assert: (Character codePoint: 8) printString equals: '$\b'.
@@ -309,7 +308,7 @@ testPrintString
 
 testSize
 	self assert: $a size equals: 0.
-	self assert: (Character codePoint: 16rFFFF) size equals: 0! !
+	self assert: Character dolphin size equals: 0! !
 !CharacterTest categoriesFor: #testAnsiValue!public! !
 !CharacterTest categoriesFor: #testAsciiValue!public! !
 !CharacterTest categoriesFor: #testAsLowercase!public! !

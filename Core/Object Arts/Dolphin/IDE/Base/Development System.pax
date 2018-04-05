@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Development System'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Development System.

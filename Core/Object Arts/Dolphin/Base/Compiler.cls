@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Compiler
 	instanceVariableNames: ''
@@ -291,20 +291,19 @@ identifierFrom: aString
 	unless it forms the first character of the identifier when it is made lowercase, all other
 	letters are made lowercase."
 
-	| identifier startNewWord i |
-	identifier := String new: aString size.
+	| identifier startNewWord first |
+	identifier := String writeStream: aString size.
 	startNewWord := false.
-	i := 1.
-	aString do: [:c |
-		((i == 1 and: [self isAValidInitialIdentifierChar: c]) or: [self isAValidIdentifierChar: c])
-			ifFalse: [startNewWord := i > 1]
-			ifTrue: [
-				identifier at: i put: (startNewWord
-					ifTrue: [c asUppercase]
-					ifFalse: [c asLowercase]).
-				startNewWord := false.
- 				i := i+1]].
-	^identifier trimNulls!
+	first := true.
+	aString do: 
+			[:c |
+			((first and: [self isAValidInitialIdentifierChar: c]) or: [self isAValidIdentifierChar: c])
+				ifFalse: [startNewWord := first not]
+				ifTrue: 
+					[identifier nextPut: (startNewWord ifTrue: [c asUppercase] ifFalse: [c asLowercase]).
+					startNewWord := false.
+					first := false]].
+	^identifier contents!
 
 initialize
 	"Private - Initialize the class variables of the receiver.

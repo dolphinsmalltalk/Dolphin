@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #File
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
@@ -343,17 +343,6 @@ readByte
 
 !
 
-readCharacter
-	"Answer the next Character from the file or nil if the receiver
-	is positioned past the current EOF.
-	Signal a FileException if an error occurs."
-
-	| string |
-	string := String new: 1.
-	^(self read: string count: 1) == 0
-		ifTrue: [nil]
-		ifFalse: [string at: 1]!
-
 readWriteStream
 	"Answer a FileStream on the receiver initially configured to read/write text."
 
@@ -514,7 +503,6 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #read:count:!operations!public! !
 !File categoriesFor: #read:startingAt:count:!operations!public! !
 !File categoriesFor: #readByte!operations!public! !
-!File categoriesFor: #readCharacter!operations!public! !
 !File categoriesFor: #readWriteStream!public!streaming! !
 !File categoriesFor: #reset!positioning!public! !
 !File categoriesFor: #securityAttributes!accessing!public! !
@@ -1102,6 +1090,7 @@ readAllText: aString
 				share: #read.
 	^
 	[| size buffer |
+	#todo.	"Detect the encoding of the file and read in any supported encoding (only UTF-8, UTF-16 and ANSI)"
 	size := file size.
 	buffer := String newFixed: size.
 	file read: buffer count: size.

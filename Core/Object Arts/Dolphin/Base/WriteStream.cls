@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStream subclass: #WriteStream
 	instanceVariableNames: 'writeLimit'
@@ -21,11 +21,12 @@ basicNextPut: anObject
 
 	<primitive: 222>
 	position < writeLimit
+		ifTrue: [collection at: (position := position + 1) put: anObject]
 		ifFalse: 
 			[self
 				growCollection;
 				primitiveBasicNextPut: anObject].
-	^position := collection encodedAt: position + 1 put: anObject!
+	^anObject!
 
 basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description
@@ -178,8 +179,9 @@ nextSDWORDPut: anInteger
 
 on: aCollection
 	collection := aCollection.
+	writeLimit := collection size.
 	position := readLimit := 0.
-	writeLimit := aCollection size!
+!
 
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 
@@ -200,7 +202,7 @@ position: anInteger
 
 primitiveBasicNextPut: anObject
 	<primitive: 222>
-	^position := collection encodedAt: position + 1 put: anObject!
+	^collection at: (position := position + 1) put: anObject!
 
 primitiveNextPut: anObject
 	<primitive: 66>
@@ -249,7 +251,7 @@ tab: tabCount
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !
 !WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!WriteStream categoriesFor: #on:!accessing!initializing!private! !
+!WriteStream categoriesFor: #on:!initializing!private! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
 !WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !

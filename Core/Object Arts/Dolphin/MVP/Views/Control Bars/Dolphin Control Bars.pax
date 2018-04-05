@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Control Bars'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Control Bars.
@@ -12,14 +12,14 @@ package basicPackageVersion: '6.2'.
 package classNames
 	add: #ControlBarAbstract;
 	add: #NMMOUSE;
-	add: #NMTOOLBAR;
+	add: #NMTOOLBARW;
 	add: #StatusBar;
 	add: #StatusBarItem;
 	add: #StatusBarItemAbstract;
 	add: #StatusBarNullItem;
 	add: #TBADDBITMAP;
 	add: #TBBUTTON;
-	add: #TBBUTTONINFO;
+	add: #TBBUTTONINFOW;
 	add: #Toolbar;
 	add: #ToolbarButton;
 	add: #ToolbarIconButton;
@@ -69,7 +69,7 @@ Win32Structure subclass: #TBBUTTON
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #TBBUTTONINFO
+Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -79,7 +79,7 @@ NMHDR subclass: #NMMOUSE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTOOLBAR
+NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

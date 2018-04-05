@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals'
@@ -438,7 +438,7 @@ comment
 		ifNil: ['']
 		ifNotNil: 
 			[comment isInteger 
-				ifTrue: [String readFrom: (self sourceManager getSourceFromDescriptor: comment) readStream]
+				ifTrue: [Utf8String readFrom: (self sourceManager getSourceFromDescriptor: comment) readStream]
 				ifFalse: [comment]]!
 
 comment: aString 
@@ -2015,7 +2015,7 @@ trace: trace prerequisite: aPackage from: from to: to type: type
 	to trace."
 
 	aPackage == self ifTrue: [^self].
-	(trace at: (aPackage ifNil: [_Uncommitted]) ifAbsentPut: [OrderedCollection new: 16])
+	(trace at: (aPackage ?? _Uncommitted) ifAbsentPut: [OrderedCollection new: 16])
 		addLast: {from. to. type}!
 
 tracePrerequisiteGlobals: trace packagedGlobals: globalLookup

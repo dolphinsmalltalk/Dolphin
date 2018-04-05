@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequencedStream subclass: #PositionableStream
 	instanceVariableNames: 'collection position readLimit'
@@ -30,6 +30,14 @@ atEnd
 
 	<primitive: 67>
 	^position >= readLimit!
+
+basicNextAvailable
+	"Answer the next raw element accessible by the receiver, or nil if at the end of the stream.
+	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
+	end of stream, so this method is only useful for text and byte streams, or where the collection
+	being streamed over is known not to contain nils."
+
+	^self atEnd ifFalse: [self basicNext]!
 
 collection
 	"Private - Answer the collection over which the receiver is streaming."
@@ -139,8 +147,9 @@ on: aCollection
 	"Private - Set the <collection> over which the receiver will stream and initialize the receiver."
 
 	collection := aCollection.
+	readLimit := collection size.
 	position := 0.
-	readLimit := aCollection size!
+!
 
 position
 	"Answer the current <integer> position in the stream of  values."
@@ -218,6 +227,7 @@ upToEnd
 
 	^self next: self lastPosition - self position! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
+!PositionableStream categoriesFor: #basicNextAvailable!accessing!public! !
 !PositionableStream categoriesFor: #collection!accessing!private! !
 !PositionableStream categoriesFor: #contents!accessing!public! !
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
@@ -231,7 +241,7 @@ upToEnd
 !PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextWORD!binary filing!public! !
-!PositionableStream categoriesFor: #on:!accessing!initializing!private! !
+!PositionableStream categoriesFor: #on:!initializing!private! !
 !PositionableStream categoriesFor: #position!positioning!public! !
 !PositionableStream categoriesFor: #position:!positioning!public! !
 !PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !

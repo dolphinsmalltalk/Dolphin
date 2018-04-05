@@ -1,11 +1,12 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #SCNotification
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'ModificationTypeOffset'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 SCNotification guid: (GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
+SCNotification addClassConstant: 'ModificationTypeOffset' value: 24!
 SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
@@ -303,6 +304,8 @@ defineFields
 		defineField: #token type: SDWORDField readOnly;
 		defineField: #annotationLinesAdded type: INT_PTRField readOnly;
 		defineField: #updated type: SDWORDField readOnly;
-		defineField: #listCompletionMethod type: SDWORDField readOnly! !
+		defineField: #listCompletionMethod type: SDWORDField readOnly.
+
+	self addClassConstant: 'ModificationTypeOffset' value: (self offsetOf: #modificationType)! !
 !SCNotification class categoriesFor: #defineFields!initializing!public! !
 

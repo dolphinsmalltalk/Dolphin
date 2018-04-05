@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #ControlView
 	instanceVariableNames: 'forecolor oldWndProc'
@@ -309,15 +309,7 @@ ttnGetDispInfo: anNMTTDISPINFO
 					anNMTTDISPINFO text: (self presenter onTipTextRequired: tool).
 					0]]!
 
-ttnGetDispInfoA: pNMHDR 
-	"Private - Default handler for the TTN_GETDISPINFOA notification message."
-
-	"Implementation Note: Tool tips do not appear on Win95 unless we implement
-	the ANSI version."
-
-	^self ttnGetDispInfo: (NMTTDISPINFOA fromAddress: pNMHDR)!
-
-ttnGetDispInfoW: pNMHDR 
+ttnGetDispInfoW: pNMHDR
 	"Private - Default handler for the TTN_GETDISPINFOW notification message."
 
 	"Implementation Note: Tool tips do not appear on NT4.0 unless we implement 
@@ -411,7 +403,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ControlView categoriesFor: #setFont:!accessing!private! !
 !ControlView categoriesFor: #subclassWindow:!operations!private! !
 !ControlView categoriesFor: #ttnGetDispInfo:!event handling-win32!private! !
-!ControlView categoriesFor: #ttnGetDispInfoA:!event handling-win32!private! !
 !ControlView categoriesFor: #ttnGetDispInfoW:!event handling-win32!private! !
 !ControlView categoriesFor: #wantParentNotifications!accessing-styles!public! !
 !ControlView categoriesFor: #wantParentNotifications:!accessing-styles!public! !
@@ -474,8 +465,7 @@ initializeNotificationMap
 
 	"Tooltip support - because these are discontinuous, we can't use an array for the lookup table here"
 	NmMap
-		at: TTN_GETDISPINFOW put: #ttnGetDispInfoW:;
-		at: TTN_GETDISPINFOA put: #ttnGetDispInfoA:.
+		at: TTN_GETDISPINFOW put: #ttnGetDispInfoW:.
 	NmMap shrink!
 
 maxTextLimit

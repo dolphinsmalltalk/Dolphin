@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
@@ -6,7 +6,7 @@ IconicListAbstract subclass: #TreeView
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmSelChanged: #nmGetDispInfoA: #nmSetDispInfoA: #nmDummy: #nmDummy: #nmBeginDrag: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #tvnGetInfoTipA: #tvnGetInfoTipW: #nmDummy: #nmDummy: #tvnItemChangingW: #nmDummy: #tvnItemChangedW: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChangedW: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpandingW: #tvnItemExpandedW: #nmBeginDragW: #nmBeginRDragW: #nmDeleteItem: #nmBeginLabelEditW: #nmEndLabelEdit: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
+TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #nmDummy: #tvnGetInfoTip: #nmDummy: #nmDummy: #tvnItemChanging: #nmDummy: #tvnItemChanged: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChanged: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpanding: #tvnItemExpanded: #nmBeginDrag: #nmBeginRDrag: #nmDeleteItem: #nmBeginLabelEdit: #nmEndLabelEdit: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -534,9 +534,6 @@ itemCount
 
 	^self sendMessage: TVM_GETCOUNT!
 
-itemFromNMHDRA: pNMHDR
-	^TVITEMA fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
-
 itemFromNMHDRW: pNMHDR
 	^TVITEMW fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
 
@@ -565,7 +562,7 @@ nmDeleteItem: pNMHDR
 	handleObjectMap notEmpty
 		ifTrue: 
 			[| nmtv |
-			nmtv := self notificationWClass fromAddress: pNMHDR.
+			nmtv := self notificationClass fromAddress: pNMHDR.
 			(handleObjectMap removeKey: nmtv itemOld hItem ifAbsent: [])
 				ifNotNil: [:object | objectHandleMap removeKey: object]].
 	^nil!
@@ -611,11 +608,6 @@ nmRClick: pNMHDR
 	^true!
 
 notificationClass
-	"Private - Answer the class of NMXXXXVIEW structure associated with the receiver."
-
-	^NMTREEVIEWA!
-
-notificationWClass
 	"Private - Answer the class of NMXXXXVIEW structure associated with the receiver."
 
 	^NMTREEVIEWW!
@@ -793,7 +785,7 @@ onSelChanging: anExternalAddress
 		ifTrue: 
 			["Selection changing notifications are not propagated during state restoral."
 			^true].
-	nmtv := NMTREEVIEWA fromAddress: anExternalAddress.
+	nmtv := NMTREEVIEWW fromAddress: anExternalAddress.
 	action := nmtv action.
 	"The TreeView sends a notification with the undocumented action code 4096 when it wants to reset
 	 selection to the root. It doesn't seem to be happy without a selection, and tries to select the root whenever
@@ -1050,44 +1042,38 @@ tvmSetItem: aTvItem
 		wParam: 0
 		lpParam: aTvItem) asBoolean!
 
-tvnGetInfoTip: nmtv
-	(self objectFromHandle: nmtv itemHandle ifAbsent: [])
-		ifNotNil: [:object | nmtv text: (getInfoTipBlock value: object) displayString].
-	^0!
-
-tvnGetInfoTipA: pNMHDR
+tvnGetInfoTip: pNMHDR
 	"Private - Default handler for the TVN_GETINFOTIPA notification message.
 	Answer nil to accept the default processing."
 
-	^getInfoTipBlock isNil ifFalse: [self tvnGetInfoTip: (NMTVGETINFOTIPA fromAddress: pNMHDR)]!
+	^getInfoTipBlock isNil
+		ifFalse: 
+			[| nmtv |
+			nmtv := NMTVGETINFOTIPW fromAddress: pNMHDR.
+			(self objectFromHandle: nmtv itemHandle ifAbsent: [])
+				ifNotNil: [:object | nmtv text: (getInfoTipBlock value: object) displayString].
+			0]!
 
-tvnGetInfoTipW: pNMHDR
-	"Private - Default handler for the TVN_GETINFOTIPA notification message.
-	Answer nil to accept the default processing."
-
-	Sound bell.
-	^getInfoTipBlock isNil ifFalse: [self tvnGetInfoTip: (NMTVGETINFOTIPW fromAddress: pNMHDR)]!
-
-tvnItemChangedW: anExternalAddress 
+tvnItemChanged: anExternalAddress 
 	^nil!
 
-tvnItemChangingW: anExternalAddress 
+tvnItemChanging: anExternalAddress 
 	^nil!
 
-tvnItemExpandedW: pNMHDR
+tvnItemExpanded: pNMHDR
 	"Private - Default handler for the TVN_ITEMEXPANDEDW notification message.
 	Answer nil to accept the default processing."
 
-Sound bell.
 	^nil!
 
-tvnItemExpanding: nmtv
-	| tviParent |
-	nmtv action = TVE_EXPAND ifFalse: [^nil].
-	"See if we have been expanded before"
+tvnItemExpanding: pNMHDR
+	"Private - Default handler for the TVN_ITEMEXPANDINGW notification message."
+
+	| tviParent nmtv |
+	nmtv := self notificationClass fromAddress: pNMHDR.
+	nmtv action = TVE_EXPAND ifFalse: [^nil].	"See if we have been expanded before"
 	tviParent := nmtv itemNew.
-	tviParent isStateExpandedOnce ifTrue: [^nil].
-	"If not, add the children"
+	tviParent isStateExpandedOnce ifTrue: [^nil].	"If not, add the children"
 	(self objectFromHandle: tviParent hItem ifAbsent: [])
 		ifNotNil: 
 			[:parentObject |
@@ -1095,17 +1081,10 @@ tvnItemExpanding: nmtv
 					[self
 						basicAddAll: (self model childrenOf: parentObject)
 						inHandle: tviParent hItem
-						afterHandle: TVI_LAST].
-
-			"Inform the parent item that we don't want to be informed when we 
+						afterHandle: TVI_LAST].	"Inform the parent item that we don't want to be informed when we 
 			are expanded again"
 			tviParent beStateExpandedOnce].
 	^nil	"accept the default processing"!
-
-tvnItemExpandingW: pNMHDR
-	"Private - Default handler for the TVN_ITEMEXPANDINGW notification message."
-
-	^self tvnItemExpanding: (self notificationWClass fromAddress: pNMHDR)!
 
 tvnSelChanging: pNMHDR
 	"Private - Default handler for the TVN_SELCHANGING notification message.
@@ -1250,7 +1229,6 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #isSmallIcons!public!testing! !
 !TreeView categoriesFor: #isVirtual!accessing-styles!private! !
 !TreeView categoriesFor: #itemCount!accessing!public! !
-!TreeView categoriesFor: #itemFromNMHDRA:!helpers!private! !
 !TreeView categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
 !TreeView categoriesFor: #itemRect:textOnly:!enquiries!public! !
 !TreeView categoriesFor: #minimumIndent!constants!public! !
@@ -1259,7 +1237,6 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #nmNotify:!event handling!event handling-win32!private! !
 !TreeView categoriesFor: #nmRClick:!event handling-win32!public! !
 !TreeView categoriesFor: #notificationClass!constants!private! !
-!TreeView categoriesFor: #notificationWClass!constants!private! !
 !TreeView categoriesFor: #objectFromHandle:ifAbsent:!accessing!private! !
 !TreeView categoriesFor: #onAdd:atIndex:!event handling!private! !
 !TreeView categoriesFor: #onDestroyed!event handling!private! !
@@ -1299,13 +1276,10 @@ wmKeyDown: message wParam: wParam lParam: lParam
 !TreeView categoriesFor: #tvmSetImageList:type:!image management!private! !
 !TreeView categoriesFor: #tvmSetItem:!accessing!private! !
 !TreeView categoriesFor: #tvnGetInfoTip:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnGetInfoTipA:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnGetInfoTipW:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemChangedW:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemChangingW:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemExpandedW:!event handling-win32!private! !
+!TreeView categoriesFor: #tvnItemChanged:!event handling-win32!private! !
+!TreeView categoriesFor: #tvnItemChanging:!event handling-win32!private! !
+!TreeView categoriesFor: #tvnItemExpanded:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnItemExpanding:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemExpandingW:!event handling-win32!private! !
 !TreeView categoriesFor: #tvnSelChanging:!event handling-win32!private! !
 !TreeView categoriesFor: #updateAllNonVirtual!private!updating! !
 !TreeView categoriesFor: #updateAllVirtual!private!updating! !
@@ -1353,26 +1327,21 @@ initializeNotificationMap
 	| tvnMap |
 	tvnMap := (Array new: TVN_FIRST - TVN_LAST withAll: #nmDummy:)
 				at: TVN_FIRST - TVN_SELCHANGING put: #tvnSelChanging:;
-				at: TVN_FIRST - TVN_SELCHANGEDA put: #nmSelChanged:;
-				at: TVN_FIRST - TVN_SELCHANGEDW put: #nmSelChangedW:;
-				at: TVN_FIRST - TVN_GETDISPINFOA put: #nmGetDispInfoA:;
+				at: TVN_FIRST - TVN_SELCHANGEDW put: #nmSelChanged:;
 				at: TVN_FIRST - TVN_GETDISPINFOW put: #nmGetDispInfoW:;
-				at: TVN_FIRST - TVN_SETDISPINFOA put: #nmSetDispInfoA:;
 				at: TVN_FIRST - TVN_SETDISPINFOW put: #nmSetDispInfoW:;
-				at: TVN_FIRST - TVN_ITEMEXPANDINGW put: #tvnItemExpandingW:;
-				at: TVN_FIRST - TVN_ITEMEXPANDEDW put: #tvnItemExpandedW:;
-				at: TVN_FIRST - TVN_BEGINDRAGA put: #nmBeginDrag:;
-				at: TVN_FIRST - TVN_BEGINDRAGW put: #nmBeginDragW:;
-				at: TVN_FIRST - TVN_BEGINRDRAGW put: #nmBeginRDragW:;
+				at: TVN_FIRST - TVN_ITEMEXPANDINGW put: #tvnItemExpanding:;
+				at: TVN_FIRST - TVN_ITEMEXPANDEDW put: #tvnItemExpanded:;
+				at: TVN_FIRST - TVN_BEGINDRAGW put: #nmBeginDrag:;
+				at: TVN_FIRST - TVN_BEGINRDRAGW put: #nmBeginRDrag:;
 				at: TVN_FIRST - TVN_DELETEITEMW put: #nmDeleteItem:;
-				at: TVN_FIRST - TVN_BEGINLABELEDITW put: #nmBeginLabelEditW:;
+				at: TVN_FIRST - TVN_BEGINLABELEDITW put: #nmBeginLabelEdit:;
 				at: TVN_FIRST - TVN_ENDLABELEDITW put: #nmEndLabelEdit:;
 				at: TVN_FIRST - TVN_KEYDOWN put: #nmKeyDown:;
-				at: TVN_FIRST - TVN_GETINFOTIPA put: #tvnGetInfoTipA:;
-				at: TVN_FIRST - TVN_GETINFOTIPW put: #tvnGetInfoTipW:;
+				at: TVN_FIRST - TVN_GETINFOTIPW put: #tvnGetInfoTip:;
 				at: TVN_FIRST - TVN_ASYNCDRAW put: #tvnAsyncDraw:;
-				at: TVN_FIRST - TVN_ITEMCHANGINGW put: #tvnItemChangingW:;
-				at: TVN_FIRST - TVN_ITEMCHANGEDW put: #tvnItemChangedW:;
+				at: TVN_FIRST - TVN_ITEMCHANGINGW put: #tvnItemChanging:;
+				at: TVN_FIRST - TVN_ITEMCHANGEDW put: #tvnItemChanged:;
 				yourself.
 	self addClassConstant: 'TvnMap' value: tvnMap!
 

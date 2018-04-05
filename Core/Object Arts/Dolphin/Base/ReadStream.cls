@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStream subclass: #ReadStream
 	instanceVariableNames: ''
@@ -29,6 +29,23 @@ basicNext
 	^position >= readLimit
 		ifTrue: [self errorEndOfStream]
 		ifFalse: [collection basicAt: (position := position + 1)]!
+
+basicNextAvailable
+	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
+	same type of object that would be returned from the collection if sent #basicAt:. For bytes
+	and strings the basic elements are integers. For Arrays, the basic elements are whatever
+	objects are stored in the array."
+
+	"Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		1 -	The receiver's collection is not a byte object
+		2 -	The receiver is at its end (index >= readLimit).
+		3 -	The next index is beyond the end of the streamed over collection."
+
+	<primitive: 221>
+	^position >= readLimit ifFalse: [collection basicAt: (position := position + 1)]!
 
 isReadable
 	"Answer whether the receiver can be read from (i.e. it implements the 
@@ -84,6 +101,7 @@ nextOrNil
 	^position >= readLimit
 		ifFalse: [collection at: (position := position + 1)]! !
 !ReadStream categoriesFor: #basicNext!accessing!public! !
+!ReadStream categoriesFor: #basicNextAvailable!accessing!public! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !
 !ReadStream categoriesFor: #next:into:startingAt:!accessing!public! !

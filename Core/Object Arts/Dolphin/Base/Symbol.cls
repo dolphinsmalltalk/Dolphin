@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Utf8String variableByteSubclass: #Symbol
 	instanceVariableNames: ''
@@ -215,7 +215,6 @@ stbSaveOn: anSTBOutFiler
 
 Symbol methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
 Symbol methodProtocol: #selector attributes: #(#ansi #readOnly) selectors: #()!
-Symbol methodProtocol: #String attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asLowercase #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #asString #asSymbol #asUppercase #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #between:and: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #max: #min: #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #sameAs: #select: #size #subStrings: #with:do:)!
 Symbol methodProtocol: #symbol attributes: #(#ansi #readOnly) selectors: #(#, #< #<= #> #>= #after: #asLowercase #asString #asSymbol #asUppercase #at: #at:ifAbsent: #before: #between:and: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #do: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #keysAndValuesDo: #last #max: #min: #reverse #reverseDo: #sameAs: #subStrings: #with:do:)!
 
 !Symbol class methodsFor!
@@ -336,6 +335,9 @@ new: anInteger
 
 	^self shouldNotImplement!
 
+readFrom: aStream
+	^self intern: (Utf8String readFrom: aStream)!
+
 resizeTable
 	"Private - Remove unused Symbols from the system - must be done to the exclusion of other processes, e.g:
 		[Symbol resizeTable] forkAt: Processor timingPriority.
@@ -446,6 +448,7 @@ withAll: anArrayOfCharacter
 !Symbol class categoriesFor: #internCharacter:!instance creation!public! !
 !Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
 !Symbol class categoriesFor: #new:!instance creation!public! !
+!Symbol class categoriesFor: #readFrom:!instance creation!public! !
 !Symbol class categoriesFor: #resizeTable!initializing!private! !
 !Symbol class categoriesFor: #resizeTable:!initializing!private! !
 !Symbol class categoriesFor: #stats!development!private! !

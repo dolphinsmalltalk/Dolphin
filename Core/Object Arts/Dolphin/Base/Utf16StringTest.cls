@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultiByteStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''
@@ -23,23 +23,33 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
-testEncodeOn
-	{Character dolphin.
-		Character codePoint: 16r10FFFD.
-		$a.
-		$\0.
-		Character ansiValue: 128.
-		Character codePoint: 128.
-		Character codePoint: 16rFFFD.
-		Character codePoint: 16r10000} do: 
-				[:each |
-				| stream utf16 actual |
-				stream := Utf16String writeStream: 2.
-				Utf16String encode: each on: stream.
-				utf16 := stream contents.
-				self assert: utf16 size equals: (each codePoint > 16rFFFF ifTrue: [2] ifFalse: [1]).
-				actual := utf16 readStream next.
-				self assert: actual equals: each]!
+testClassDecodeFrom
+	#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD) do: 
+			[:each |
+			| stream actual |
+			stream := each asUtf16String readStream.
+			actual := self collectionClass decodeFrom: stream.
+			self assert: actual equals: each].
+
+	"Invalid continuations"
+	#(#(#(16rD800 16rD83D 16rDC2C) $\x1F42C) #(#(16rD800 16rA1) ##(Character value: 16rA1)) #(#(16rD800 16rD800) $\xFFFD))
+		do: 
+			[:each |
+			| stream actual |
+			stream := each first readStream.
+			actual := self collectionClass decodeFrom: stream.
+			self assert: actual equals: $\xFFFD.
+			actual := self collectionClass decodeFrom: stream.
+			self assert: actual equals: each last.
+			self assert: stream atEnd].
+	"Incomplete continuations"
+	#(#(16rD800)) do: 
+			[:each |
+			| stream actual |
+			stream := each readStream.
+			actual := self collectionClass decodeFrom: stream.
+			self assert: actual equals: $\xFFFD.
+			self assert: stream atEnd]!
 
 testMixedConcatenation
 	| subjects |
@@ -87,7 +97,7 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #testEncodeOn!public!unit tests! !
+!Utf16StringTest categoriesFor: #testClassDecodeFrom!public! !
 !Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

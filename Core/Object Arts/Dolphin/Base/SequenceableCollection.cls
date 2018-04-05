@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Collection subclass: #SequenceableCollection
 	instanceVariableNames: ''
@@ -814,7 +814,7 @@ lookup: keyInteger
 	of the key and the key being associated with a nil value. However, this method expresses the
 	very common pattern of passing an empty block as absent handler to #at:ifAbsent:"
 
-	^(keyInteger > 0 and: [keyInteger <= self size]) ifTrue: [self at: keyInteger]!
+	^self at: keyInteger ifAbsent: []!
 
 maxEncoding
 	^1!
@@ -1262,7 +1262,19 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 					ifFalse: [high := index - 1]].
 	^low!
 
-encode: anObject on: aPuttableStream
+decodeNextFrom: aReadStream
+	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
+
+	^aReadStream basicNext!
+
+emitEncodingMarkerOn: aPositionableStream
+	"Emit any encoding marker used for the stream encoding this collection represents onto the
+	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
+	typically only relevant to string encodings, so there is nothing to do by default."
+
+	!
+
+encodeOn: aPuttableStream put: anObject
 	^aPuttableStream basicNextPut: anObject!
 
 ofSize: anInteger
@@ -1277,6 +1289,13 @@ ofSize: anInteger
 
 	^self new: anInteger!
 
+skipEncodingMarkerFrom: aPositionableStream
+	"Skip over any encoding marker used for the stream encoding this collection represents on
+	the <PositionableStream> argument, which is assumed to be at the start of its sequence. This
+	typically only relevant to string encodings, so there is nothing to do by default."
+
+	!
+
 writeStream
 	"Answer a WriteStream on the a new empty instance of the receiver."
 
@@ -1286,10 +1305,13 @@ writeStream: anInteger
 	"Answer a WriteStream on the a new instance of the receiver with
 	initialize size, anInteger."
 
-	^(self new: anInteger) writeStream! !
+	^WriteStream on: (self new: anInteger)! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
-!SequenceableCollection class categoriesFor: #encode:on:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #decodeNextFrom:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #encodeOn:put:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
+!SequenceableCollection class categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
 !SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !
 
