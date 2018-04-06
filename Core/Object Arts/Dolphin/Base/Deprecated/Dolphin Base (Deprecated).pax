@@ -100,8 +100,6 @@ package methodNames
 	add: #MessageBox -> #yesNoCancel;
 	add: #MessageBoxAbstract -> #notify;
 	add: #MessageBoxAbstract -> #warning;
-	add: #Package -> #script:;
-	add: #Package -> #script:put:;
 	add: #Process -> #fpeMask;
 	add: #Process -> #fpeMask:;
 	add: #ShlwapiLibrary -> #pathStripPath:;
@@ -218,11 +216,11 @@ valueType
 !Behavior methodsFor!
 
 makeIndirect
-	#deprecated.
+	Notification deprecated.
 	self isIndirection: true!
 
 makeNullTerminated
-	#deprecated.
+	Notification deprecated.
 	self isNullTerminated: true! !
 !Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
 !Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
@@ -732,18 +730,6 @@ warning
 	self iconStyle: #warning! !
 !MessageBoxAbstract categoriesFor: #notify!modes!public! !
 !MessageBoxAbstract categoriesFor: #warning!modes!public! !
-
-!Package methodsFor!
-
-script: scriptSymbol
-	#deprecated.	"In 4.0, but needed to load some old format packages"
-	self scriptAt: scriptSymbol!
-
-script: scriptSymbol put: aString 
-	#deprecated.	"In 4.0, but needed to load some old format packages"
-	self scriptAt: scriptSymbol put: aString! !
-!Package categoriesFor: #script:!operations!public! !
-!Package categoriesFor: #script:put:!operations!public! !
 
 !Process methodsFor!
 

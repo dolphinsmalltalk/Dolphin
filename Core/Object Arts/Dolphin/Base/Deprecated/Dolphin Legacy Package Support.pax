@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Legacy Package Support'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Legacy Package Support.
@@ -24,6 +24,8 @@ package methodNames
 	add: #Package -> #loadVersion4:filer:;
 	add: #Package -> #loadVersion5:filer:;
 	add: #Package -> #resourceNames;
+	add: #Package -> #script:;
+	add: #Package -> #script:put:;
 	add: #Package -> #versionLookup;
 	add: 'Package class' -> #name:comment:;
 	yourself.
@@ -225,6 +227,14 @@ resourceNames
 	#deprecated.
 	^Set new!
 
+script: scriptSymbol
+	#deprecated.	"In 4.0, but needed to load some old format packages"
+	self scriptAt: scriptSymbol!
+
+script: scriptSymbol put: aString 
+	#deprecated.	"In 4.0, but needed to load some old format packages"
+	self scriptAt: scriptSymbol put: aString!
+
 versionLookup
 	"This dictionary is used for loading legacy packages"
 
@@ -250,6 +260,8 @@ versionLookup
 !Package categoriesFor: #loadVersion4:filer:!binary filing!private! !
 !Package categoriesFor: #loadVersion5:filer:!binary filing!private! !
 !Package categoriesFor: #resourceNames!accessing!public! !
+!Package categoriesFor: #script:!operations!public! !
+!Package categoriesFor: #script:put:!operations!public! !
 !Package categoriesFor: #versionLookup!binary filing!constants!private! !
 
 !Package class methodsFor!
