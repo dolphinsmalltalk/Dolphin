@@ -20,7 +20,7 @@ testAsciiValue
 		do: [:each | self assert: (Character byteCharacterSet at: each) asciiValue equals: each - 1].
 	self should: [(Character ansiValue: 128) asciiValue] raise: Error.
 	self should: [(Character value: 16r20AC) asciiValue] raise: Error.
-	self should: [(Character value: 163) asciiValue] raise: Error.
+	self should: [$£ asciiValue] raise: Error.
 	self should: [Character dolphin asciiValue] raise: Error!
 
 testAsLowercase

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #CompilerLibrary
 	instanceVariableNames: ''
@@ -17,7 +17,7 @@ compile: aCompiler source: aString in: aClass flags: anInteger notifying: notifi
 	on behalf of the compiler, aCompiler, parameterized by the flags, anInteger,
 	notifying, notifier, of any errors or warnings which are detected."
 
-	<stdcall: oop CompileForClass ote lpstr ote sdword oop>
+	<stdcall: oop CompileForClass ote lpvoid ote sdword oop>
 	^self invalidCall!
 
 compileForEvaluation: aCompiler source: aString in: aClass evaluationPools: anArray flags: anInteger notifying: notifier
@@ -25,7 +25,7 @@ compileForEvaluation: aCompiler source: aString in: aClass evaluationPools: anAr
 	on behalf of the compiler, aCompiler, parameterized by the flags, anInteger,
 	notifying, notifier, of any errors or warnings which are detected."
 
-	<stdcall: oop CompileForEval oop lpstr ote ote sdword oop>
+	<stdcall: oop CompileForEval oop lpvoid ote ote sdword oop>
 	^self invalidCall! !
 !CompilerLibrary categoriesFor: #compile:source:in:flags:notifying:!compiling!private! !
 !CompilerLibrary categoriesFor: #compileForEvaluation:source:in:evaluationPools:flags:notifying:!compiling!private! !

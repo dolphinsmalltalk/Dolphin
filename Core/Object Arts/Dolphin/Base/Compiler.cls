@@ -58,7 +58,7 @@ compile: aString in: aClass flags: anInteger
 	| results |
 	results := CompilerLibrary default
 				compile: self
-				source: aString asString
+				source: aString asUtf8String
 				in: aClass
 				flags: anInteger
 				notifying: self.
@@ -101,7 +101,7 @@ compileExpression: aString in: aClass flags: anInteger
 		logged: false
 		flags: anInteger!
 
-compileForEvaluation: aString in: aBehavior evaluationPools: anArray logged: aBoolean flags: anInteger 
+compileForEvaluation: aString in: aBehavior evaluationPools: anArray logged: aBoolean flags: anInteger
 	"Private - Compile the expression source, aString, in the context of the class, aBehavior,
 	parameterized by the flags, anInteger, notifying, notifier, of any errors or warnings 
 	which are detected. Additional shared variables are looked up in the <Array> of <PoolDictionary>,
@@ -136,24 +136,25 @@ compileForEvaluation: aString in: aBehavior evaluationPools: anArray logged: aBo
 		every expression. Any text/temporaries map generated at the same time will
 		account for the extra byte codes in the IP offsets."
 
-	| results expression |
-	results := CompilerLibrary default 
+	| results expression source |
+	source := aString asUtf8String.
+	results := CompilerLibrary default
 				compileForEvaluation: self
-				source: aString
+				source: source
 				in: aBehavior
 				evaluationPools: anArray
 				flags: anInteger
 				notifying: self.
 	expression := results first.
-	results := CompilationResult 
+	results := CompilationResult
 				method: expression
 				rawTextMap: results second
 				rawTempsMap: results third.
-	expression notNil 
+	expression notNil
 		ifTrue: 
 			[expression
 				methodClass: aBehavior;
-				storeSourceString: aString
+				storeSourceString: source
 					evaluationPools: anArray
 					logged: aBoolean;
 				isImmutable: true].
