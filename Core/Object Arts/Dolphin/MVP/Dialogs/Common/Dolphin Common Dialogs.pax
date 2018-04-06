@@ -2,7 +2,7 @@
 package := Package name: 'Dolphin Common Dialogs'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Common Dialogs.
-Copyright (c) Object Arts Ltd. 1997-2005. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 
 This package contains Dialog presenter wrappers for the Windows common dialogs for choosing colours (ColorDialog) and fonts (FontDialog), opening (FileOpenDialog) and saving (FileSaveDialog) files, find (FindDialog) and replace (FindReplaceDialog), and printing (PrintDialog). With the exception of the find and replace dialogs, these are all modal dialogs that are opened with #showModal. For further details see the comments for the specific classes.'.
 
@@ -164,7 +164,7 @@ titleOf: aString
 	configuration."
 
 	| buf lib |
-	buf := Utf16String new: File maxPath.
+	buf := File pathBuffer.
 	lib := ComDlgLibrary default.
 	(lib
 		getFileTitle: aString

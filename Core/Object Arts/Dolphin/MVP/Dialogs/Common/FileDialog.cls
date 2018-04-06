@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
@@ -154,17 +154,16 @@ fileTypesStringFromSpecs: stringPairs
 	where @ is a NULL terminator."
 
 	| stream null |
-
 	stringPairs isNil ifTrue: [^nil].
-
-	stream := Utf8String writeStream: 40.
+	stream := Utf16String writeStream: 40.
 	null := Character null.
-	stringPairs do: [:x | 
-		stream
-			nextPutAll: x first asUtf8String ;
-			nextPut: null;
-			nextPutAll: x last asUtf8String ;
-			nextPut: null ].
+	stringPairs do: 
+			[:x |
+			stream
+				nextPutAll: x first;
+				nextPut: null;
+				nextPutAll: x last;
+				nextPut: null].
 	^stream
 		nextPut: null;
 		contents!
@@ -186,7 +185,7 @@ getFilePath
 	during notifications from the dialog such as CDN_SELCHANGE."
 
 	| len buf |
-	buf := Utf16String new: File maxPath.
+	buf := File pathBuffer.
 	len := view parentView
 				sendMessage: CDM_GETFILEPATH
 				wParam: buf size + 1
@@ -199,7 +198,7 @@ getFileSpec
 	during notifications from the dialog such as CDN_SELCHANGE."
 
 	| len buf |
-	buf := Utf16String new: File maxPath.
+	buf := File pathBuffer.
 	len := view parentView
 				sendMessage: CDM_GETSPEC
 				wParam: buf size + 1
@@ -225,7 +224,7 @@ prepareStruct
 	this common dialog, immediately prior to the call to that API."
 
 	| buf filename defext |
-	buf := Utf16String new: File maxPath.
+	buf := File pathBuffer.
 	filename := self value.
 	filename notNil
 		ifTrue: 

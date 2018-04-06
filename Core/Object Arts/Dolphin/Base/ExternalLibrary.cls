@@ -416,7 +416,7 @@ moduleFileName: aLibOrHandle
 	"Private - Answer the file name of the receiver's loaded module."
 
 	| buf size |
-	buf := Utf16String new: File maxPath.
+	buf := File pathBuffer.
 	size := KernelLibrary default
 				getModuleFileName: aLibOrHandle asParameter
 				lpFilename: buf

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #COMObjectRegistration
 	instanceVariableNames: 'clsid name toolboxImage'
@@ -114,7 +114,7 @@ toolboxImage
 						ifTrue: [toolboxImage := self defaultToolboxBitmap]
 						ifFalse: 
 							[| resLib |
-							path := Utf16String new: File maxPath.
+							path := File pathBuffer.
 							KernelLibrary default
 								expandEnvironmentStrings: pathAndId first
 								lpDst: path

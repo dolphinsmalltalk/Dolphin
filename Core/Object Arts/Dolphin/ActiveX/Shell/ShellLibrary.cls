@@ -84,7 +84,7 @@ findExecutable: lpFile directory: directoryString
 	"Retrieves the name of the executable associated with the specified path."
 
 	| buf hInst |
-	buf := Utf16String new: File maxPath.
+	buf := File pathBuffer.
 	hInst := self
 				findExecutable: lpFile
 				lpDirectory: directoryString
@@ -126,7 +126,7 @@ getSpecialFolderLocation: anInteger
 	"
 
 	| pszPath |
-	pszPath := Utf16String new: File maxPath.
+	pszPath := File pathBuffer.
 	self
 		shGetFolderPath: nil
 		nFolder: anInteger
@@ -146,7 +146,7 @@ isUserAnAdmin
 
 pathFromIDList: idList
 	| pathname |
-	pathname := Utf16String new: File maxPath.
+	pathname := File pathBuffer.
 	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
 
 SHBrowseForFolder: aWin32BROWSEINFO

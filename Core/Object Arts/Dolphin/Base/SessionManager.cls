@@ -999,7 +999,7 @@ systemDirectory
 	session."
 
 	| path len |
-	path := Utf16String new: File maxPath.
+	path := File pathBuffer.
 	len := KernelLibrary default getSystemDirectory: path uSize: path size + 1.
 	^len == 0 ifTrue: [KernelLibrary default systemError] ifFalse: [path leftString: len]!
 

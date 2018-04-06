@@ -564,12 +564,12 @@ commonPrefixOf: path1 and: path2
 	This will be empty if the paths share no common prefix."
 
 	| prefix len |
-	prefix := Utf16String new: File maxPath.
+	prefix := File pathBuffer.
 	len := ShlwapiLibrary default
 				pathCommonPrefix: path1
 				pszFile2: path2
 				achPath: prefix.
-	^(prefix first: len)!
+	^prefix first: len!
 
 composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 
@@ -581,11 +581,11 @@ composePath: path subPath: subpath
 	"Composes a full pathname from path and subpath components."
 
 	| fullName |
-	fullName := Utf16String new: self maxPath.
-	^(ShlwapiLibrary default
+	fullName := self pathBuffer.
+	^ShlwapiLibrary default
 		pathCombine: fullName
 		lpszDir: path
-		lpszFile: subpath)!
+		lpszFile: subpath!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
@@ -852,7 +852,7 @@ fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
 	| fullpath len |
-	fullpath := Utf16String new: self maxPath.
+	fullpath := self pathBuffer.
 	(len := KernelLibrary default
 				getFullPathName: aPathnameString
 				nBufferLength: fullpath size + 1
@@ -1068,7 +1068,7 @@ path: aPathnameString extension: anExtensionString
 pathBuffer
 	"Answer a buffer of sufficient size to contain a full path."
 
-	^String new: self maxPath!
+	^Utf16String new: self maxPath!
 
 pathDelimiter
 	"Answers the character that delimits a path (or parts thereof)"
@@ -1126,7 +1126,7 @@ relativePathOf: aPathString to: aBasePathString
 	treated as if it were a file name)."
 
 	| relPath toPath |
-	relPath := Utf16String new: self maxPath.
+	relPath := self pathBuffer.
 	toPath := aPathString asUtf16String.
 	relPath := (ShlwapiLibrary default
 				pathRelativePathTo: relPath
@@ -1236,10 +1236,12 @@ shortPathOf: aPathnameString
 	"Answers the short path version of aPathnameString"
 
 	| shortpath |
-	shortpath := Utf16String new: self maxPath.
-	((KernelLibrary default getShortPathName: aPathnameString 
-		lpszShortPath: shortpath cchBuffer: shortpath size)==0) ifTrue: [
-			KernelLibrary default systemError].
+	shortpath := self pathBuffer.
+	(KernelLibrary default
+		getShortPathName: aPathnameString
+		lpszShortPath: shortpath
+		cchBuffer: shortpath size) == 0
+		ifTrue: [KernelLibrary default systemError].
 	^shortpath trimNulls!
 
 splitDriveFrom: aString
@@ -1395,7 +1397,7 @@ temporaryFilenameWithPrefix: prefixString
 	the operation fails."
 
 	| returnBuf |
-	returnBuf := Utf16String new: self maxPath.
+	returnBuf := self pathBuffer.
 	(KernelLibrary default
 		getTempFileName: self tempPath
 		lpPrefixString: prefixString
@@ -1408,11 +1410,9 @@ tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
 
 	| buf len |
-	buf := Utf16String new: self maxPath.
+	buf := self pathBuffer.
 	len := KernelLibrary default getTempPath: buf size + 1 lpBuffer: buf.
-	^(buf resize: len)
-
-!
+	^buf resize: len!
 
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session. Note
@@ -1420,7 +1420,7 @@ windowsDirectory
 	Windows directory. See MSDN KB281316  for further information."
 
 	| len path |
-	path := Utf16String new: self maxPath.
+	path := self pathBuffer.
 	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size + 1.
 	len == 0 ifTrue: [^KernelLibrary default systemError].
 	^path leftString: len!

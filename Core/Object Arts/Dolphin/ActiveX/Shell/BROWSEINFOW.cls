@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
@@ -39,7 +39,7 @@ initialize: anInteger
 	"Private - Initialize the state of the receiver."
 
 	super initialize: anInteger.
-	displayName := Utf16String new: File maxPath.
+	displayName := File pathBuffer.
 	self pszDisplayName: displayName!
 
 lpfnHook: anExternalAddress

@@ -54,7 +54,7 @@ urlDownload: url toFile: aStringFilename
 		dwReserved: 0
 		pBSC: nil!
 
-urlDownloadToCacheFile: url 
+urlDownloadToCacheFile: url
 	"Helper method for #urlDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:.
 	Downloads data at url into the local Internet cache and answers the file name of the cache location.
 	An HRESULTError is raised if the target does not exist, or some other error occurs. The HRESULT
@@ -65,11 +65,11 @@ urlDownloadToCacheFile: url
 	has completed)."
 
 	| filename |
-	filename := Utf16String new: File maxPath.	"String auto allocates extra byte for null terminator"
-	self 
+	filename := File pathBuffer.	"String auto allocates extra byte for null terminator"
+	self
 		overlappedURLDownloadToCacheFile: nil
 		szURL: url asUtf16String
-		szFilename: filename 
+		szFilename: filename
 		dwBufLength: filename size
 		dwReserved: 0
 		pBSC: nil.
