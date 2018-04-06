@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMTTDISPINFOW
-	instanceVariableNames: ''
+	instanceVariableNames: 'text'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -26,17 +26,19 @@ lpszText: anUtf16String
 
 	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anUtf16String yourAddress!
 
+text
+	^text!
+
 text: aString
-	"Private - Set the receiver's tip text to a Unicode version of the <readableString> argument,
+	"Set the receiver's tip text to a Unicode version of the <readableString> argument,
 	and answer that."
 
 	"Implementation Note: The answer must be referenced until the TOOLTIPTEXT is no longer required to
 	prevent it being prematurely GC'd, so we answer it in order that the caller can reference it."
 
-	| utf16 |
-	utf16 := aString displayString asUtf16String.
-	self lpszText: utf16.
-	^utf16!
+	text := aString displayString asUtf16String.
+	self lpszText: text.
+	^text!
 
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
@@ -45,7 +47,8 @@ uFlags
 !NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
 !NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
 !NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!NMTTDISPINFOW categoriesFor: #text:!accessing!private! !
+!NMTTDISPINFOW categoriesFor: #text!accessing!public! !
+!NMTTDISPINFOW categoriesFor: #text:!accessing!public! !
 !NMTTDISPINFOW categoriesFor: #uFlags!**compiled accessors**!public! !
 
 !NMTTDISPINFOW class methodsFor!

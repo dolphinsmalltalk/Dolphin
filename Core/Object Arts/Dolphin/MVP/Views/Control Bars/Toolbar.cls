@@ -944,16 +944,16 @@ tbSetToolTips: toolTipHandle
 
 	self sendMessage: TB_SETTOOLTIPS wParam: toolTipHandle!
 
-ttnGetDispInfo: anNMTTDISPINFO 
-	"Private - Generic handler for the TTN_NEEDTEXT(A/W) notification message."
+ttnGetDispInfo: anNMTTDISPINFOW
+	"Private - Handler for the TTN_NEEDTEXTW notification message."
 
-	^(anNMTTDISPINFO idIsHandle 
-		ifTrue: [View withHandle: anNMTTDISPINFO idFrom]
-		ifFalse: [self itemFromId: anNMTTDISPINFO idFrom]) 
+	^(anNMTTDISPINFOW idIsHandle
+		ifTrue: [View withHandle: anNMTTDISPINFOW idFrom]
+		ifFalse: [self itemFromId: anNMTTDISPINFOW idFrom])
 			ifNotNil: 
-				[:tool | 
+				[:tool |
 				"Note that we must keep a reference to the text string to prevent its premature death"
-				tipText := anNMTTDISPINFO text: (self presenter onTipTextRequired: tool).
+				tipText := anNMTTDISPINFOW text: (self presenter onTipTextRequired: tool).
 				0]!
 
 updateAllItems

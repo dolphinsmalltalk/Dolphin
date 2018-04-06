@@ -2,7 +2,7 @@
 package := Package name: 'Dolphin Common Controls'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Common Controls.
-Copyright (c) Object Arts Ltd, 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
+Copyright (c) Object Arts Ltd, 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
 
 This package contains MVP View wrappers for the standard Windows common controls (e.g. the Enhanced List View, Tab View, and Tree View). The other less commonly used common controls are separately packaged.'.
 
@@ -21,6 +21,7 @@ package classNames
 	add: #LVHITTESTINFO;
 	add: #LVITEMW;
 	add: #NMCUSTOMDRAW;
+	add: #NMGETINFOTIP;
 	add: #NMITEMACTIVATE;
 	add: #NMKEYDOWN;
 	add: #NMLISTVIEW;
@@ -148,6 +149,11 @@ NMHDR subclass: #NMCUSTOMDRAW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+NMHDR subclass: #NMGETINFOTIP
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 NMHDR subclass: #NMITEMACTIVATE
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -168,11 +174,6 @@ NMHDR subclass: #NMLVFINDITEMW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMLVGETINFOTIPW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -183,17 +184,22 @@ NMHDR subclass: #NMTREEVIEWW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTVGETINFOTIPW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMGETINFOTIP subclass: #NMLVGETINFOTIPW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

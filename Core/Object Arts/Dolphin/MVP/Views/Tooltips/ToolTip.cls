@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
@@ -295,11 +295,11 @@ ttmSetDelayTime: dwInteger milliseconds: msInteger
 		wParam: dwInteger
 		lParam: msInteger!
 
-ttmSetTitle: aString icon: anInteger 
-	self 
+ttmSetTitle: aString icon: anInteger
+	self
 		sendMessage: TTM_SETTITLEW
 		wParam: anInteger
-		lpParam: aString asUtf16String!
+		szParam: aString!
 
 ttnLinkClick: pNMHDR 
 	"Default handler for the TTN_LINKCLICK message, which is a notification that the 

@@ -295,18 +295,18 @@ subclassWindow: hWnd
 	super subclassWindow: hWnd.
 	self subclassWindow!
 
-ttnGetDispInfo: anNMTTDISPINFO 
-	"Private - Generic handler for the TTN_GETDISPINFO(A/W) notification message."
+ttnGetDispInfo: anNMTTDISPINFOW
+	"Private - Handler for the TTN_GETDISPINFOW notification message."
 
-	^anNMTTDISPINFO idIsHandle 
+	^anNMTTDISPINFOW idIsHandle
 		ifTrue: 
-			[(View withHandle: anNMTTDISPINFO idFrom) 
-				ifNotNil: [:view | view presenter onTipDetailsRequired: anNMTTDISPINFO]]
+			[(View withHandle: anNMTTDISPINFOW idFrom)
+				ifNotNil: [:view | view presenter onTipDetailsRequired: anNMTTDISPINFOW]]
 		ifFalse: 
-			[(self itemFromId: anNMTTDISPINFO idFrom) 
+			[(self itemFromId: anNMTTDISPINFOW idFrom)
 				ifNotNil: 
-					[:tool | 
-					anNMTTDISPINFO text: (self presenter onTipTextRequired: tool).
+					[:tool |
+					anNMTTDISPINFOW text: (self presenter onTipTextRequired: tool).
 					0]]!
 
 ttnGetDispInfoW: pNMHDR

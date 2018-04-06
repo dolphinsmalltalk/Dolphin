@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMTVGETINFOTIPW
+NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -33,25 +33,12 @@ lParam
 pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress!
-
-text: text
-	"Private - Set the receiver's tip text to the UTF-16 string representation of the argument, text,
-	and answer that. If the receiver's #dwFlags field is zero then the text is appended to the existing
-	text, but only up to the maximum number of characters specified by the receiver's
-	#cchTextMax field."
-
-	text displayString asUtf16String copyToBuffer: self pszText ofSize: self cchTextMax!
-
-textClass
-	^Utf16String! !
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress! !
 !NMTVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !NMTVGETINFOTIPW categoriesFor: #hItem!**compiled accessors**!public! !
 !NMTVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
 !NMTVGETINFOTIPW categoriesFor: #lParam!**compiled accessors**!public! !
 !NMTVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
-!NMTVGETINFOTIPW categoriesFor: #text:!accessing!private! !
-!NMTVGETINFOTIPW categoriesFor: #textClass!constants!private! !
 
 !NMTVGETINFOTIPW class methodsFor!
 

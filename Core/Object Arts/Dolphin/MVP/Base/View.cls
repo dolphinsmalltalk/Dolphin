@@ -1463,7 +1463,8 @@ getWindowText
 		getWindowText: handle
 		lpString: text
 		nMaxCount: textLen + 1.
-	^text!
+	"To avoid propagating Utf16Strings everywhere, convert to UTF-8"
+	^text asUtf8String!
 
 getWndProc
 	"Private - Answer the window procedure of the receiver."
