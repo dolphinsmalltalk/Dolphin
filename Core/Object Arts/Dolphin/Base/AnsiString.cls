@@ -99,7 +99,14 @@ nextIndexOf: anElement from: start to: stop
 	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
 
 	<primitive: 52>
-	^self nextIdentityIndexOf: anElement from: start to: stop! !
+	^self nextIdentityIndexOf: anElement from: start to: stop!
+
+trimNulls
+	"Answer a copy of the receiver with trailing nulls removed.
+	Take advantage of some private knowledge about the implementation of
+	#fromAddress:"
+
+	^self species fromAddress: self yourAddress! !
 !AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !AnsiString categoriesFor: #asAnsiString!converting!public! !
 !AnsiString categoriesFor: #asLowercase!converting!public! !
@@ -109,6 +116,7 @@ nextIndexOf: anElement from: start to: stop
 !AnsiString categoriesFor: #first:!copying!public! !
 !AnsiString categoriesFor: #includes:!public!searching! !
 !AnsiString categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!AnsiString categoriesFor: #trimNulls!copying!public! !
 
 !AnsiString class methodsFor!
 
