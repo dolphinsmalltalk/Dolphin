@@ -235,15 +235,15 @@ hasWest
 !Canvas methodsFor!
 
 origin: aPoint
-	#deprecated.	"5.0: Use #viewportOrigin:"
+	Notification deprecated.	"5.0: Use #viewportOrigin:"
 	^self viewportOrigin: aPoint!
 
-setBkMode: mode 
-	#deprecated.
+setBkMode: mode
+	Notification deprecated.
 	^self backgroundMode: mode!
 
 setTextColor: colour
-	#deprecated. "6.0 (reprise)"
+	Notification deprecated.	"6.0 (reprise)"
 	^self forecolor: colour! !
 !Canvas categoriesFor: #origin:!operations!public! !
 !Canvas categoriesFor: #setBkMode:!modes!public! !
@@ -265,7 +265,7 @@ resource_Multiselection_list_box
 !Color class methodsFor!
 
 buttonFace
-	#deprecated.
+	Notification deprecated.
 	^Color face3d! !
 !Color class categoriesFor: #buttonFace!instance creation!public! !
 

@@ -171,8 +171,8 @@ isVertical
 
 	^tabs isVertical!
 
-isVertical: aBoolean 
-	#deprecated.	"D6: Use #tabOrientation:"
+isVertical: aBoolean
+	Notification deprecated.	"D6: Use #tabOrientation:"
 	^tabs isVertical: aBoolean!
 
 layout: aLayoutContext 

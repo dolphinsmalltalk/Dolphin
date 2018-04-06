@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
@@ -229,9 +229,9 @@ isInverted
 
 	^self baseStyleAllMask: TCS_BOTTOM!
 
-isInverted: aBoolean 
-	#deprecated.	"D6: Use #tabOrientation:"
-	(self 
+isInverted: aBoolean
+	Notification deprecated.	"D6: Use #tabOrientation:"
+	(self
 		baseStyleMask: TCS_BOTTOM
 		set: aBoolean
 		recreateIfChanged: self isVertical) ifTrue: [self invalidateLayout]	"Modifiable after creation if not vertical"!
@@ -256,9 +256,9 @@ isVertical
 
 	^self baseStyleAllMask: TCS_VERTICAL!
 
-isVertical: aBoolean 
-	#deprecated.	"D6: Use #tabOrientation:"
-	(self 
+isVertical: aBoolean
+	Notification deprecated.	"D6: Use #tabOrientation:"
+	(self
 		baseStyleMask: TCS_VERTICAL
 		set: aBoolean
 		recreateIfChanged: true) ifTrue: [self invalidateLayout]	"Requires a recreate to take proper effect"!
