@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TextEdit subclass: #MultilineTextEdit
 	instanceVariableNames: ''
@@ -264,18 +264,18 @@ textAtLine: lineIndex
 	"Private - Answer the text of a line at the given line index (1-based)."
 
 	| length text |
+	lineIndex <= 0 ifTrue: [^self errorSubscriptBounds: lineIndex].
 
-	lineIndex <= 0
-		ifTrue: [^self errorSubscriptBounds: lineIndex].
-
-	"Nasty, nasty, nasty..."
+	"EM_GETLINE has an unusual way of specifying the buffer size, which is that the size is in characters is written into the first word.
+	It does not write a null terminator, but our strings have an implicit one anyway"
 	length := self lineLength: lineIndex.
-	text := String new: length + 2.
-	text basicAt: 1 put: (length bitAnd: 16rFF).
-	text basicAt: 2 put: (length bitShift: -8).
-	self sendMessage: EM_GETLINE wParam: lineIndex-1 lpParam: text.
-
-	^text resize: length!
+	text := Utf16String new: length.
+	text basicAt: 1 put: length.
+	self
+		sendMessage: EM_GETLINE
+		wParam: lineIndex - 1
+		lpParam: text.
+	^text!
 
 toggleWordWrap
 	"Toggle the receiver into/out-of word wrap mode.
