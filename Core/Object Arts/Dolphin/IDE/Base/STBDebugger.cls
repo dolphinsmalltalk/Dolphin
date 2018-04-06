@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
@@ -85,7 +85,7 @@ basicNext
 
 initialize
 	printOffsets := true.
-	traceStream := String writeStream.
+	traceStream := Utf8String writeStream.
 	indentLevel := 0.
 	^super initialize!
 
