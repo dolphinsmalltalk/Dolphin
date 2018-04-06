@@ -177,14 +177,11 @@ textCallback
 	bytes dwordAtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
 	self maskIn: self textValidMask!
 
-textClass ^Utf16String!
-
 textInBuffer: aString
 	"Writes aString into a system buffer pointed to by pszText
 	and of size cchTextMax."
 
-	(Utf16String fromString: aString displayString)
-		copyToBuffer: (bytes sdwordAtOffset: self textPointerOffset)
+	aString displayString asUtf16String copyToBuffer: (bytes sdwordAtOffset: self textPointerOffset)
 		ofSize: self cchTextMax!
 
 textPointerOffset
@@ -228,7 +225,6 @@ textValidMask
 !CCITEM categoriesFor: #text!accessing!public! !
 !CCITEM categoriesFor: #text:!accessing!public! !
 !CCITEM categoriesFor: #textCallback!accessing!public! !
-!CCITEM categoriesFor: #textClass!constants!private! !
 !CCITEM categoriesFor: #textInBuffer:!constants!public! !
 !CCITEM categoriesFor: #textPointerOffset!constants!private! !
 !CCITEM categoriesFor: #textValidMask!constants!private! !

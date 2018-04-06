@@ -292,7 +292,7 @@ getWindowText: flagsInteger length: lengthInteger
 		sendMessage: EM_GETTEXTEX
 		wParam: struct yourAddress
 		lpParam: buf.
-	^buf!
+	^buf asUtf8String!
 
 initialize
 	"Private - Allocate Win32 EDITSTREAM structure for communicating with control

@@ -723,7 +723,7 @@ write: aString type: aSymbol
 	"Create a new file/truncate an existing file identified by the <readableString>, aString,
 	for write access (in fact our filestreams require read/write access for buffering, so the
 	result is actually a read/write file stream) through the receiver. The sequence value type
-	is determined by the <symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16,
+	is determined by the <symbol> argument, fileType (i.e. one of #binary, #text, #utf8, #utf16le,
 	or #utf32)."
 
 	^self

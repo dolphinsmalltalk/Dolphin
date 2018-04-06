@@ -186,7 +186,7 @@ row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 	| mask iImage |
 	self
 		iItem: rowInteger - 1;
-		pszText: (text := Utf16String fromString: aString).
+		pszText: (text := aString asUtf16String).
 	mask := LVIF_TEXT.
 	imageInteger notNil ifTrue: [iImage := imageInteger - 1].
 	indentInteger notNil
