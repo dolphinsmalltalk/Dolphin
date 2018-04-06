@@ -204,7 +204,6 @@ package methodNames
 	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
 	add: #ExternalStructure -> #alternateInspectorClass;
 	add: #ExternalStructure -> #publishedAspects;
-	add: #Float -> #aspectDisplayOn:;
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
 	add: #InputState -> #destroyAllWindows;
@@ -1715,7 +1714,7 @@ debugPrintString
 	"Copy of printOn: logic, except using #debugPrintString to print the elements"
 
 	| stream printed |
-	stream := String writeStream: 32.
+	stream := Utf8String writeStream: 32.
 	printed := Processor activeProcess _alreadyPrinted.
 	(printed includes: self) ifTrue: [self printCyclicRefOn: stream. ^stream contents].
 	printed add: self.
@@ -2323,18 +2322,6 @@ publishedAspects
 	^aspects! !
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!development!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!development!public! !
-
-!Float methodsFor!
-
-aspectDisplayOn: aStream
-  	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
-  	argument in a form that a user viewing the receiver as the value of a published aspect would 
-  	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats.
-  	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	[self displayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]! !
-!Float categoriesFor: #aspectDisplayOn:!development!private! !
 
 !Float class methodsFor!
 
@@ -3091,7 +3078,7 @@ aspectDisplayOn: aStream
   	formats.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
   
-  	[self displayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
+  	self displayOn: aStream!
 
 basicInspect
     	"Open and answer an inspector window on the receiver.
@@ -5158,17 +5145,18 @@ applicableTypeConverterCategories
     		yourself!
 
 publishedAspectsOfInstances
-    	"Answer a Set of the aspects published by  instances of the receiver"
-    
+	"Answer a Set of the aspects published by  instances of the receiver"
+
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	aspects removeKey: #value.
-	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #updatePerChar #isFindEnabled) 
+	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #updatePerChar #isFindEnabled)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
-    		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
-    		add: (Aspect choice: #format from: FormatMap keys asSortedCollection);
-    		yourself!
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect choice: #format from: FormatMap keys asSortedCollection);
+		add: (Aspect string: #cueBanner);
+		yourself!
 
 publishedEventsOfInstances
     	"Answer a Set of Symbols that describe the published events triggered
@@ -5715,7 +5703,7 @@ aspectDisplayOn: aStream
   	formats.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
   
-  	[self printOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
+  	self printOn: aStream!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category isPresenterBlockReadOnly'
@@ -102,8 +102,8 @@ displayAspectText: anObject on: aStream
 			aStream nextPut: $=].
 	self displayAspectValueOf: anObject on: aStream!
 
-displayAspectValueOf: anObject on: aStream 
-	(self readFrom: anObject) aspectDisplayOn: aStream!
+displayAspectValueOf: anObject on: aStream
+	[(self readFrom: anObject) aspectDisplayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
 
 displayOn: aStream
 	"Append the receiver to aStream in a format that a user would want to see"

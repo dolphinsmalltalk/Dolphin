@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 KeyedAspect subclass: #InstVarAspect
 	instanceVariableNames: ''
@@ -29,7 +29,7 @@ displayAspectText: anObject on: aStream
 			[aStream
 				display: (self instVarName: anObject);
 				nextPut: $=].
-	(self readFrom: anObject) aspectDisplayOn: aStream!
+	[(self readFrom: anObject) aspectDisplayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
 
 instVarName: anObject
 	"Answer the name of the instance variable described by the receiver in the 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Aspect subclass: #KeyedAspect
 	instanceVariableNames: ''
@@ -18,11 +18,11 @@ KeyedAspect comment: 'Part of the PublishedAspectorInspector framework. KeyedAsp
 displayAspectNameOf: anObject on: aStream 
 	aStream display: self key!
 
-displayAspectText: anObject on: aStream 
+displayAspectText: anObject on: aStream
 	aStream
 		display: self key;
 		nextPut: $=.
-	(self readFrom: anObject) aspectDisplayOn: aStream!
+	[(self readFrom: anObject) aspectDisplayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
 
 getSelector
 	"Private - Answers the selector used for getting the aspect value from the subject"
