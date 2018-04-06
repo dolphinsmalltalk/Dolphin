@@ -56,8 +56,7 @@ asByteString: aClass
 asString
 	"Answer an byte-encoded string representation of the receiver."
 
-	#todo.	"Maybe return a Utf8String as the default byte encoding when converting from a wide string as otherwise the conversion is lossy?"
-	^self asByteString: String!
+	^self asByteString: Utf8String!
 
 asUtf16String
 	"Answer a Utf16String composed of the characters of the receiver (assumed itself to be UTF-16
