@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 StProgramNode subclass: #StMethodNode
 	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
@@ -66,7 +66,7 @@ body: stmtsNode
 
 buildSelector
 	| selectorStream |
-	selectorStream := WriteStream on: (String new: 50).
+	selectorStream := WriteStream on: (Utf8String new: 50).
 	selectorParts do: [:each | selectorStream nextPutAll: each value].
 	^selectorStream contents asSymbol!
 

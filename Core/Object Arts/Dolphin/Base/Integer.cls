@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Number subclass: #Integer
 	instanceVariableNames: ''
@@ -196,7 +196,7 @@ basicPrintDigitsOn: aStream base: anInteger
 	| quotient digits index |
 	quotient := self.
 	index := self digitLength * 8.
-	digits := String new: index.
+	digits := Utf8String new: index.
 	[quotient < anInteger] whileFalse: 
 			[| quoRem |
 			quoRem := quotient quoAndRem: anInteger.
