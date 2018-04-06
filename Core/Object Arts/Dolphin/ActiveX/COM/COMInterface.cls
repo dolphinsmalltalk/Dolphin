@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
@@ -416,7 +416,7 @@ compileFunction: anInteger
 
 	| aStream fn |
 	fn := self functions at: anInteger.
-	aStream := WriteStream on: (String new: 512).
+	aStream := WriteStream on: (Utf8String new: 512).
 	aStream
 		nextPutAll: fn messageSelectorAndArgumentNames;
 		cr;
@@ -494,7 +494,7 @@ Are you sure you want to proceed?'
 						with: cat asString)) 
 					not]) 
 		ifTrue: [^self].
-	aStream := (String new: 256) writeStream.
+	aStream := (Utf8String new: 256) writeStream.
 	functions 
 		from: superclass functions size + 1
 		to: functions size
