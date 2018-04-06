@@ -1,10 +1,19 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Registry Access'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Registry Access.
-Copyright (c) Object Arts Ltd, 1998-2002.
+Copyright (c) Object Arts Ltd, 1998-2018.
 
-This package implements collection classes that provide access to the Windows registration database as if it were a collection of nested dictionaries. Note that the structure is more complicated than a standard Smalltalk Dictionary in that the each registry key entry can have both sub-keys, and sub-values. To map this structure to a Smalltalk <abstractDictionary> the registry key entries are represented as instances of the <RegKey> class. Registry sub-key names are treated as the <readableString> "keys" of a <RegKey>, and the registry sub-keys themselves are treated as the ><RegKey>''s "values", with these in turn being represented by instances of <RegKey>. A separate <abstractDictionary> representation of the sub-values of a registry key is accessed by sending the #subValues message to a <RegKey>, yielding an instance of <RegKeyValues>. The "keys" of a <RegKeyValues> are the <readableString> value names, and the values are <Strings>, <Integer>s, and <ByteArray>s representing the actual values.'.
+This package implements collection classes that provide access to the Windows registration database as if it were a collection of nested dictionaries. Note that the structure is more complicated than a standard Smalltalk Dictionary in that the each registry key entry can have both sub-keys, and sub-values. To map this structure to a Smalltalk <abstractDictionary> the registry key entries are represented as instances of the <RegKey> class. Registry sub-key names are treated as the <readableString> "keys" of a <RegKey>, and the registry sub-keys themselves are treated as the ><RegKey>''s "values", with these in turn being represented by instances of <RegKey>. A separate <abstractDictionary> representation of the sub-values of a registry key is accessed by sending the #subValues message to a <RegKey>, yielding an instance of <RegKeyValues>. The "keys" of a <RegKeyValues> are the <readableString> value names, and the values are <Strings>, <Integer>s, and <ByteArray>s representing the actual values.
+
+Example:
+
+userRoot := RegKey userRoot.
+notes := userRoot createKey: ''Software\Object Arts\Dolphin Smalltalk 7.0\Professional\TestKey''.
+notes subValues at: ''Array'' put: {1. ''Hello world''. Character dolphin}.
+notes subValues at: ''Array''.
+notes subValues removeKey: ''Array''.
+userRoot removeKey: notes pathFromRoot.'.
 
 package basicPackageVersion: '6.0'.
 
@@ -89,12 +98,12 @@ regCloseKey: hKey
 regConnectRegistry: lpMachineName hKey: hKey phkResult: phkResult
 	"
 		LONG RegConnectRegistry( 
-			LPTSTRlpMachineName,	// address of name of remote computer 
+			LPWSTRlpMachineName,	// address of name of remote computer 
 			HKEYhKey,			// predefined registry handle 
 			PHKEYphkResult 		// address of buffer for remote registry handle);
 	"
 
-	<stdcall: sdword RegConnectRegistryA lpstr handle lpvoid>
+	<stdcall: sdword RegConnectRegistryW lpwstr handle lpvoid>
 	^self invalidCall!
 
 regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOptions: dwOptions samDesired: samDesired lpSecurityAttributes: lpSecurityAttributes phkResult: phkResult lpdwDisposition: lpdwDisposition 
@@ -102,9 +111,9 @@ regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOp
 
 		LONG RegCreateKeyEx( 
 			HKEY hKey, 			// handle of an open key 
-			LPCTSTR lpSubKey, 		// address of subkey name 
+			LPCWSTR lpSubKey, 		// address of subkey name 
 			DWORD Reserved, 		// reserved 
-			LPTSTR lpClass, 			// address of class string 
+			LPWSTR lpClass, 			// address of class string 
 			DWORD dwOptions,		// special options flag 
 			REGSAM samDesired, 		// desired security access 
 			LPSECURITY_ATTRIBUTES lpSecurityAttributes, // address of key security structure 
@@ -112,7 +121,7 @@ regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOp
 			LPDWORD lpdwDisposition	// address of disposition value buffer 
 		); "
 
-	<stdcall: sdword RegCreateKeyExA handle lpstr dword lpstr dword dword lpvoid lpvoid DWORD*>
+	<stdcall: sdword RegCreateKeyExW handle lpwstr dword lpwstr dword dword lpvoid lpvoid DWORD*>
 	^self invalidCall!
 
 regDeleteKey: hKey lpSubKey: lpSubKey
@@ -128,7 +137,7 @@ regDeleteKey: hKey lpSubKey: lpSubKey
 			LPCTSTRlpSubKey	// address of name of subkey to delete 
 		);"
 
-	<stdcall: sdword RegDeleteKeyA handle lpstr>
+	<stdcall: sdword RegDeleteKeyW handle lpwstr>
 	^self invalidCall!
 
 regDeleteValue: hKey lpValueName: lpValueName
@@ -139,7 +148,7 @@ regDeleteValue: hKey lpValueName: lpValueName
 			LPCTSTRlpValueName	// address of value name 
 		);"
 
-	<stdcall: sdword RegDeleteValueA handle lpstr>
+	<stdcall: sdword RegDeleteValueW handle lpwstr>
 	^self invalidCall!
 
 regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved: lpReserved lpClass: lpClass lpcbClass: lpcbClass lpftLastWriteTime: lpftLastWriteTime 
@@ -148,7 +157,7 @@ regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved
 		LONG RegEnumKeyEx(
 			HKEY hKey, 			// handle of key to query 
 			DWORD dwIndex, 		// index of subkey to query 
-			LPTSTR lpName, 			// address of buffer for subkey name 
+			LPWSTR lpName, 			// address of buffer for subkey name 
 			LPDWORD lpcbName, 		// address for size of subkey buffer 
 			LPDWORD lpReserved,
 			LPTSTR lpClass,			// address of buffer for class string 
@@ -156,7 +165,7 @@ regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved
 			PFILETIME lpftLastWriteTime	// address for time key last written to 
 		);"
 
-	<stdcall: sdword RegEnumKeyExA handle sdword lpstr DWORD* DWORD* lpstr DWORD* FILETIME*>
+	<stdcall: sdword RegEnumKeyExW handle sdword lpwstr DWORD* DWORD* lpwstr DWORD* FILETIME*>
 	^self invalidCall!
 
 regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcbValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData 
@@ -164,7 +173,7 @@ regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcb
 		LONG RegEnumValue( 
 			HKEY hKey, 			// handle of key to query 
 			DWORD dwIndex, 		// index of value to query 
-			LPTSTR lpValueName, 		// address of buffer for value string 
+			LPWSTR lpValueName, 		// address of buffer for value string 
 			LPDWORD lpcbValueName,	// address for size of value buffer 
 			LPDWORD lpReserved, 		// reserved 
 			LPDWORD lpType, 		// address of buffer for type code 
@@ -172,20 +181,20 @@ regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcb
 			LPDWORD lpcbData 		// address for size of data buffer 
 		); "
 
-	<stdcall: sdword RegEnumValueA handle dword lpstr DWORD* DWORD* DWORD* lpvoid DWORD*>
+	<stdcall: sdword RegEnumValueW handle dword lpwstr DWORD* DWORD* DWORD* lpvoid DWORD*>
 	^self invalidCall!
 
 regOpenKeyEx: hKey lpSubKey: lpSubKey ulOptions: ulOptions samDesired: samDesired phkResult: phkResult 
 	"Opens the specified registry key. Answers appropriate Win32 extended error code.
 		LONG RegOpenKeyEx(
   			HKEY hKey,		// handle of open key 
-			LPCTSTR lpSubKey,	// address of name of subkey to open 
+			LPCWSTR lpSubKey,	// address of name of subkey to open 
 			DWORD ulOptions,	// reserved 
 			REGSAM samDesired,	// security access mask 
 			PHKEY phkResult 	// address of handle of open key 
 		);"
 
-	<stdcall: sdword RegOpenKeyExA handle lpstr dword dword lpvoid>
+	<stdcall: sdword RegOpenKeyExW handle lpwstr dword dword lpvoid>
 	^self invalidCall!
 
 regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserved lpcSubKeys: lpcSubKeys lpcbMaxSubKeyLen: lpcbMaxSubKeyLen lpcbMaxClassLen: lpcbMaxClassLen lpcValues: lpcValues lpcbMaxValueNameLen: lpcbMaxValueNameLen lpcbMaxValueLen: lpcbMaxValueLen lpcbSecurityDescriptor: lpcbSecurityDescriptor lpftLastWriteTime: lpftLastWriteTime 
@@ -206,7 +215,7 @@ regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserv
 			PFILETIME lpftLastWriteTime			// address of buffer for last write time 
 	 ); "
 
-	<stdcall: sdword RegQueryInfoKeyA handle lpstr DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* FILETIME*>
+	<stdcall: sdword RegQueryInfoKeyW handle lpstr DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* FILETIME*>
 	^self invalidCall!
 
 regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData 
@@ -220,21 +229,21 @@ regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lp
 			LPDWORD lpcbData 		// address of data buffer size 
 		);"
 
-	<stdcall: sdword RegQueryValueExA handle lpstr DWORD* DWORD* lpvoid DWORD*>
+	<stdcall: sdword RegQueryValueExW handle lpwstr DWORD* DWORD* lpvoid DWORD*>
 	^self invalidCall!
 
 regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType lpData: lpData cbData: cbData 
 	"Store the type and data for a specified value name associated with an open registry key.
 		LONG RegSetValueEx( 
 			HKEY hKey,		// handle of key
-			LPTSTR lpValueName,	// address of name of value
+			LPWSTR lpValueName,	// address of name of value
 			DWORD lpReserved,	// reserved 
 			DWORD lpType,		// value type 
 			CONST BYTE *lpData, 	// address of data buffer 
 			DWORD lpcbData 	// data buffer size 
 		);"
 
-	<stdcall: sdword RegSetValueExA handle lpstr dword dword lpvoid dword>
+	<stdcall: sdword RegSetValueExW handle lpwstr dword dword lpvoid dword>
 	^self invalidCall! !
 !AdvApiLibrary categoriesFor: #regCloseKey:!public!win32 functions-registry! !
 !AdvApiLibrary categoriesFor: #regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #RegKeyTest
 	instanceVariableNames: 'testKey'
@@ -73,8 +73,9 @@ testIntegerSerialisation
 	self assert: ints = ints2!
 
 testMultiSz
-	#(#() #('') #('' '') #('' 'a') #('a' '' 'b') #('a') #('a' 'ab' 'abc')) do: 
-			[:array | 
+	#(#() #('') #('' '') #('' 'a') #('a' '' 'b') #('a') #('a' 'ab' 'abc') #('🐬' '£ or #' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'ẵṹɋîⱡą āᶇꞡáᵯ ȇꝛôꞎꝍđ ȶé ếꝛőḇẩḹ ŧṷ ťńṵᵭȋḑīḉñỉ ɍṓᶈᶆĕṫ ďꝋḿŝŭḭẽ ⱺᶁ ᶑếș ,ʈįłḝ ġɳįčṩĭƥḯɖấ ɾûțᶒťċḙṩɲṓĉ ,ẗệṁӓ ťǐʂ ᵳǭḽỡḍ ṁᶙšṕȋ ᶆëᶉơḼ' '文字化け'))
+		do: 
+			[:array |
 			testKey valueAt: 'Array' put: array.
 			self assert: (testKey valueAt: 'Array') = array]!
 
@@ -116,8 +117,14 @@ testScintillaTextStyleSerialization
 	styles := SmalltalkWorkspace textStyles asArray.
 	styles storeUnderRegKey: testKey as: 'testScintillaTextStyleSerialization'.
 	rehydratedStyles := Object fromRegKey: (testKey at: 'testScintillaTextStyleSerialization').
-	self deny: rehydratedStyles sameAs: styles.
-	self assert: rehydratedStyles equals: styles! !
+	self deny: rehydratedStyles identicalTo: styles.
+	self assert: rehydratedStyles equals: styles!
+
+testSz
+	{''. $\0 asUtf8String. 'a'. 'ab'. 'abc'. 'abcd'. Character dolphin asUtf16String} do: 
+			[:each |
+			testKey valueAt: 'String' put: each.
+			self assert: (testKey valueAt: 'String') equals: each]! !
 !RegKeyTest categoriesFor: #setUp!private!unit tests! !
 !RegKeyTest categoriesFor: #tearDown!private!unit tests! !
 !RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
@@ -126,4 +133,5 @@ testScintillaTextStyleSerialization
 !RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
 !RegKeyTest categoriesFor: #testParentPath!public!unit tests! !
 !RegKeyTest categoriesFor: #testScintillaTextStyleSerialization!public!unit tests! !
+!RegKeyTest categoriesFor: #testSz!public!unit tests! !
 
