@@ -413,7 +413,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	stream := anSTBInFiler stream.
 	size := stream nextSDWORD.
 	bytes := stream next: size.
-	answer := self intern: (String fromString: bytes).
+	answer := self intern: (Utf8String fromByteArray: bytes).
 	anSTBInFiler register: answer.
 	^answer!
 

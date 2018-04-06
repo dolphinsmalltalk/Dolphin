@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBFiler subclass: #STBInFiler
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
@@ -149,15 +149,16 @@ readObjectOfClass: aClass
 readObjectOfClass: aClass format: anSTBClassConversion
 	"Private - Read the stream for the data to create an instance of aClass."
 
-	| basicSize fullSize newObject |
-	basicSize := (aClass isVariable or: [self version < 3]) ifTrue: [self readInteger] ifFalse: [0].
+	| basicSize fullSize newObject variable |
+	variable := aClass isVariable.
+	basicSize := (variable or: [self version < 3]) ifTrue: [self readInteger] ifFalse: [0].
 	"Create a new object of sufficient size to hold the stored data."
 	anSTBClassConversion isNil
 		ifTrue: 
 			["The object is of the current format.
 			Create an instance of the appropriate class."
 			fullSize := aClass instSize + basicSize.
-			newObject := aClass isVariable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
+			newObject := variable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
 		ifFalse: 
 			["The object is of an old format.
 			Create an Array or ByteArray to hold the stored data. This is
