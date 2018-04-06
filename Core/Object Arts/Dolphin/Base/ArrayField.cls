@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 EmbeddedField subclass: #ArrayField
 	instanceVariableNames: 'arrayLength'
@@ -61,7 +61,7 @@ isFixedSize
 length
 	"Private - Answer the length of the embedded array represented by the receiver."
 
-	#deprecated.
+	Notification deprecated.
 	^self allocationLength!
 
 printAccessorExpressionSuffixOn: aWriteStream

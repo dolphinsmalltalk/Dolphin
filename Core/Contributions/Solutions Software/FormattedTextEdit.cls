@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TextEdit subclass: #FormattedTextEdit
 	instanceVariableNames: 'isFormatting messageBubble format separatorChars placeholderChar'
@@ -16,7 +16,7 @@ applyFormat
 
 	inStream := ReadStream on: (self text reject: [ :char | self isSeparator: char]).
 	formatStream := ReadStream on: self format.
-	outStream := WriteStream on: (String new: self format size).
+	outStream := WriteStream on: (Utf16String new: self format size).
 
 	[formatStream atEnd] whileFalse:
 		[| char formatChar |

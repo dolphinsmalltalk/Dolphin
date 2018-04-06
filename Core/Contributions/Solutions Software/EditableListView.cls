@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'
@@ -876,16 +876,15 @@ stbSaveOn: anSTBOutFiler
 		ifTrue: [anSTBOutFiler saveObject: self]
 		ifFalse: [super stbSaveOn: anSTBOutFiler]!
 
-ttnGetDispInfo: aNMTTDISPINFO
-
+ttnGetDispInfo: aNMTTDISPINFOW
 	"ListView's own info tip notification doesn't fire for custom draw items, so we handle as per a normal control"
 
 	self hotItemTipText
-		ifNil: [presenter onTipDetailsRequired: aNMTTDISPINFO]
-		ifNotNil: [ :text | aNMTTDISPINFO text: text].
+		ifNil: [presenter onTipDetailsRequired: aNMTTDISPINFOW]
+		ifNotNil: [:text | aNMTTDISPINFOW text: text].
 
 	"Note that we must keep a reference to the text string to prevent its premature death"
-	aNMTTDISPINFO lpszText ifNotNil: [ :text | tipText := text].
+	tipText := aNMTTDISPINFOW text.
 	^1!
 
 updateHotItem: nowHot

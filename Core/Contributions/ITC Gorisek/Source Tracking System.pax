@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Source Tracking System'.
 package paxVersion: 1;
 	basicComment: 'Source Tracking System 3.4 for Dolphin Smalltalk 6.1

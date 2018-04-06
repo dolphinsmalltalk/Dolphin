@@ -10,6 +10,9 @@ Utf16StringTest comment: ''!
 !Utf16StringTest categoriesForClass!Unclassified! !
 !Utf16StringTest methodsFor!
 
+assimilate: each 
+	^Character utf16Value: each asInteger!
+
 assimilateString: aString
 	^aString asUtf16String!
 
@@ -28,7 +31,7 @@ testClassDecodeFrom
 			[:each |
 			| stream actual |
 			stream := each asUtf16String readStream.
-			actual := self collectionClass decodeFrom: stream.
+			actual := self collectionClass decodeNextFrom: stream.
 			self assert: actual equals: each].
 
 	"Invalid continuations"
@@ -37,9 +40,9 @@ testClassDecodeFrom
 			[:each |
 			| stream actual |
 			stream := each first readStream.
-			actual := self collectionClass decodeFrom: stream.
+			actual := self collectionClass decodeNextFrom: stream.
 			self assert: actual equals: $\xFFFD.
-			actual := self collectionClass decodeFrom: stream.
+			actual := self collectionClass decodeNextFrom: stream.
 			self assert: actual equals: each last.
 			self assert: stream atEnd].
 	"Incomplete continuations"
@@ -47,7 +50,7 @@ testClassDecodeFrom
 			[:each |
 			| stream actual |
 			stream := each readStream.
-			actual := self collectionClass decodeFrom: stream.
+			actual := self collectionClass decodeNextFrom: stream.
 			self assert: actual equals: $\xFFFD.
 			self assert: stream atEnd]!
 
@@ -94,6 +97,7 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
 	self assert: bstr asUtf8String equals: byteString! !
+!Utf16StringTest categoriesFor: #assimilate:!helpers!private! !
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !

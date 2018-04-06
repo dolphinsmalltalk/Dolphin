@@ -6,14 +6,14 @@ Win32Structure subclass: #TEXTRANGE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TEXTRANGE guid: (GUID fromString: '{87b4c615-026e-11d3-9fd7-00a0cc3e4a32}')!
-TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represent the Windows RichEdit control structure of the same name.
+TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represents the Windows TEXTRANGE and TEXTRANGEW structures.
 
-TEXTRANGE is used in conjunction with the EM_GETTEXTRANGE message to specify the range of text to retrieve from a Rich Edit control and to provide a buffer to copy the text into.
+Most of the ExternalStructures in Dolphin are now for wide character APIs only, and indeed TEXTRANGE is used with wide strings for the <RichTextEdit> control. However, it is also used with Scintilla, which only supports byte string encodings (including UTF-8). Scintilla also uses the structure to retrieve styling bytes, which aren''t characters at all.
 
-We also use this structure where a FINDTEXT is needed because it has exactly the same layout. The FINDTEXT structure is used in conjunction with the EM_FINDTEXT message to contain information about a search operation in a Rich Edit control.
+An example use of TEXTRANGE is with the EM_GETTEXTRANGE message to specify the range of text to retrieve from a Rich Edit control and to provide a buffer to copy the text into.
 
 Instance Variables:
-	text		<String>. Buffer whose address is stored into structure (to prevent premature GC).'!
+	text		<AnsiString|Utf8String|Utf16String|ByteArray>. Buffer whose address is stored into structure (to prevent premature GC).'!
 !TEXTRANGE categoriesForClass!Win-Structs! !
 !TEXTRANGE methodsFor!
 
@@ -37,10 +37,10 @@ cpMin: anObject
 
 	bytes sdwordAtOffset: 0 put: anObject!
 
-lpstrText: anObject 
-	"Set the receiver's lpstrText field to the value of anObject."
+lpstrText: anInteger
+	"Set the receiver's 'lpstrText' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrText) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrText) put: anInteger!
 
 setFrom: start to: stop text: aString
 	"Initialize the receiver with the specified range and text.
@@ -72,7 +72,7 @@ text: buffer
 	"Set the value of the receiver's 'text' instance variable to <String> argument, buffer.
 	Note that buffer should have been allocated from the fixed heap."
 
-	self lpstrText: (text := buffer)! !
+	self lpstrText: (text := buffer) yourAddress! !
 !TEXTRANGE categoriesFor: #cpMax!public! !
 !TEXTRANGE categoriesFor: #cpMax:!public! !
 !TEXTRANGE categoriesFor: #cpMin!public! !
@@ -94,22 +94,15 @@ defineFields
 		typedef 
 		struct tagTEXTRANGE {
 			CHARRANGE chrg;
-			LPSTR lpstrText;
+			LPTSTR lpstrText;
 		} TEXTRANGE;
-"
+
+	Note that because we use this for byte strings and byte arrays with Scintilla, and UTF-16 strings for RichEdit, the lpstrText field is defined as a generic pointer.
+	"
 
 	self
 		defineField: #chrg type: (StructureField type: CHARRANGE) beUncompiled;
-		defineField: #lpstrText type: (PointerField type: String) beWriteOnly!
-
-from: startInteger to: stopInteger 
-	"Answer a new instance of the receiver to represent the specified 0-based, 
-	end-exclusive, interval."
-
-	^self 
-		from: startInteger
-		to: stopInteger
-		type: String!
+		defineField: #lpstrText type: UINT_PTRField writeOnly!
 
 from: startInteger to: stopInteger text: aString 
 	"Answer a new instance of the receiver to represent the specified 0-based, 
@@ -129,7 +122,6 @@ from: startInteger to: stopInteger type: aStringClass
 		to: stopInteger
 		text: (aStringClass newFixed: stopInteger - startInteger)! !
 !TEXTRANGE class categoriesFor: #defineFields!initializing!public! !
-!TEXTRANGE class categoriesFor: #from:to:!instance creation!public! !
 !TEXTRANGE class categoriesFor: #from:to:text:!instance creation!public! !
 !TEXTRANGE class categoriesFor: #from:to:type:!instance creation!public! !
 

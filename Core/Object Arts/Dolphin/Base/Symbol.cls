@@ -45,8 +45,7 @@ asString
 	the receiver."
 
 	<primitive: 217>
-	#todo.	"Return a UTF-8 string here."
-	^self asAnsiString!
+	^self asUtf8String!
 
 asSymbol
 	"Answer the <symbol> containing the characters of the receiver

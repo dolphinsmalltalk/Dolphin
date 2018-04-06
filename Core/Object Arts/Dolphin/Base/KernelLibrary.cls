@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #KernelLibrary
 	instanceVariableNames: ''
@@ -311,8 +311,7 @@ expandEnvironmentStrings: aString
 		lpDst: answer
 		nSize: size) = 0 
 		ifTrue: [self systemError].
-	#todo. "Temporary conversion to ANSI string for compatibility, should be returned untouched."
-	^answer asAnsiString!
+	^answer!
 
 expandEnvironmentStrings: lpSrc lpDst: lpDst nSize: bufSize
 	"Replace environment-variable strings with their defined values. 
@@ -474,8 +473,7 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 				heapFree: self getProcessHeap
 				dwFlags: 0
 				lpMem: ptr].
-	#todo. "Temporary conversion to ANSI for compatibility."
-	^msg asAnsiString
+	^msg
 
 	"
 ('Blah %1 blah %2!!d!!' formatWithArguments: #('abc' 123)) 
@@ -839,8 +837,8 @@ getSystemTime: lpSystemTime
 
 getSystemWindowsDirectory: lpBuffer uSize: uSize 
 	"	UINT GetSystemWindowsDirectory(
-			LPTSTR lpBuffer, 
-			UINT uSize); "
+			LPTSTRÂ lpBuffer, 
+			UINTÂ uSize); "
 
 	<stdcall: dword GetSystemWindowsDirectoryW lpwstr dword>
 	^self invalidCall!
@@ -970,8 +968,8 @@ getWindowsDirectory: lpBuffer uSize: uSize
   	"Answer the path of the windows directory.
 
 		UINT GetWindowsDirectory(
-			LPWSTR lpBuffer, 
-			UINT uSize); "
+			LPWSTRÂ lpBuffer, 
+			UINTÂ uSize); "
   
 	<stdcall: dword GetWindowsDirectoryW lpwstr dword>
 	^self invalidCall!
@@ -980,8 +978,8 @@ globalAlloc: uFlags dwBytes: dwBytes
 	"Allocates the specified number of bytes from the heap.
 
 		HGLOBAL GlobalAlloc( 
-			UINT uFlags, 		// object allocation attributes 
-			DWORD dwBytes  	// number of bytes to allocate 
+			UINTÂ uFlags, 		// object allocation attributes 
+			DWORDÂ dwBytesÂ  	// number of bytes to allocate 
 		);"
 
 	<stdcall: handle GlobalAlloc dword dword>

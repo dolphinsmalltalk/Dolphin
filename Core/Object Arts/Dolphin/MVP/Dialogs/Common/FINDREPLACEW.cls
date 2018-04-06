@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
@@ -32,8 +32,7 @@ findDetails
 findWhat
 	"Answer the String to find"
 
-	#todo. "Temporary conversion to ANSI encoding."
-	^self lpstrFindWhat asAnsiString!
+	^self lpstrFindWhat!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
@@ -120,8 +119,7 @@ ownerView: aView
 replaceWith
 	"Answer the replacement String."
 
-	#todo.	"Temporary conversion to ANSI encoding."
-	^self lpstrReplaceWith asAnsiString!
+	^self lpstrReplaceWith!
 
 wFindWhatLen: anInteger
 	"Set the receiver's 'wFindWhatLen' field to the value of the argument, anInteger"

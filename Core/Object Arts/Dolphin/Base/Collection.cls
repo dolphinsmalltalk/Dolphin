@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Collection
 	instanceVariableNames: ''
@@ -367,7 +367,7 @@ growSize
 
 	^self size max: 2!
 
-identityIncludes: anObject 
+identityIncludes: anObject
 	"Answer whether the argument, anObject, is one of the receiver's elements."
 
 	self do: [:each | anObject == each ifTrue: [^true]].

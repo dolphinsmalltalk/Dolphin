@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEditTest subclass: #RichTextEditTest
 	instanceVariableNames: ''
@@ -30,8 +30,14 @@ testCharNearestPosition
 				[:each | 
 				point := presenter view positionOfChar: each.
 				char := presenter view charNearestPosition: point.
-				self assert: char = each]! !
+				self assert: char = each]!
+
+text
+	"As of v2.0 of the RichEdit control, it strips out CRs internally, and so positions will be out relative to the original text"
+
+	^super text copyWithout: Character cr! !
 !RichTextEditTest categoriesFor: #classToTest!helpers!private! !
 !RichTextEditTest categoriesFor: #margins!private!unit tests! !
 !RichTextEditTest categoriesFor: #testCharNearestPosition!public!unit tests! !
+!RichTextEditTest categoriesFor: #text!public! !
 

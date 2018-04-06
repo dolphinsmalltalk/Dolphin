@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'OA SUnit Extensions'.
 package paxVersion: 1;
 	basicComment: 'Object Arts SUnit Extensions.
@@ -104,7 +104,7 @@ debugWithResult: aResult
 deny: actualObject equals: expectedObject
 	expectedObject ~= actualObject
 		ifFalse: 
-			[self fail: (String writeStream
+			[self fail: (Utf8String writeStream
 						nextPutAll: 'Unexpectedly equal to ';
 						print: expectedObject;
 						nextPutAll: ' Actual: ';

@@ -33,10 +33,10 @@ text: aString
 	"Implementation Note: The answer must be referenced until the TOOLTIPTEXT is no longer required to
 	prevent it being prematurely GC'd, so we answer it in order that the caller can reference it."
 
-	| unicode |
-	unicode := aString displayString asUtf16String.
-	self lpszText: unicode.
-	^unicode!
+	| utf16 |
+	utf16 := aString displayString asUtf16String.
+	self lpszText: utf16.
+	^utf16!
 
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."

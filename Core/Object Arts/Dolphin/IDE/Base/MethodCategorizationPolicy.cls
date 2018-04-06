@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MethodCategorizationPolicy
 	instanceVariableNames: ''
@@ -132,7 +132,7 @@ suggestionsFor: method
 	suggestions := suggestions select: [:s | s isVirtual not and: [s acceptsAdditions]].
 
 	"And finally remove any existing categories."
-	suggestions := suggestions copyWithoutAll: method categories.
+	suggestions := suggestions difference: method categories.
 	^suggestions!
 
 superCategoriesOf: method 

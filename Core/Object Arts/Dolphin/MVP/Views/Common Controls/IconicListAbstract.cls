@@ -472,6 +472,7 @@ nmEndLabelEdit: pNMHDR
 		ifTrue: 
 			["Edit cancelled"
 			^nil].
+	text := text asUtf8String.
 	object := self objectFromHandle: item handle.
 	^text = (self getTextBlock value: object) displayString
 		ifFalse: [self presenter onLabelOf: object editedTo: text]!

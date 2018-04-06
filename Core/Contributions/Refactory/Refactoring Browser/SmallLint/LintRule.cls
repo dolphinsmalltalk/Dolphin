@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #LintRule
 	instanceVariableNames: 'name'
@@ -38,7 +38,7 @@ checkMethod: aSmalllintContext!
 displayName
 	| nameStream |
 	#rbFix.	"Refactored so #displayName implemented in terms of #displayOn:, rather than vice versa"
-	nameStream := WriteStream on: (String new: 64).
+	nameStream := WriteStream on: (Utf8String new: 64).
 	self displayOn: nameStream.
 	^nameStream contents!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
@@ -85,7 +85,7 @@ drawTextOn: aCanvas
 			hdc: aCanvas asParameter 
 			iPartId: BP_PUSHBUTTON
 			iStateId: self iState 
-			pszText: self displayText asUnicodeString 
+			pszText: self displayText asUtf16String 
 			iCharCount: -1 dwTextFlags: 0 dwTextFlags2: 0 
 			pRect: (textPos extent: self extent) asParameter]
 	ifFalse:

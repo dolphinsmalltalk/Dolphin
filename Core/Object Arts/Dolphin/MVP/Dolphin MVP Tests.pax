@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin MVP Tests'.
 package paxVersion: 1;
 	basicComment: ''.

@@ -1,8 +1,8 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Rich Text Presenter'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk RichTextEdit View.
-Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 
 A RichTextPresenter is a <TextPresenter> specialised for the display of RTF. The default view is a wrapper around the satndard Windows RichEdit control (RichTextEdit).'.
 
@@ -14,6 +14,7 @@ package classNames
 	add: #EDITSTREAM;
 	add: #ENLINK;
 	add: #FORMATRANGE;
+	add: #GETTEXTEX;
 	add: #PARAFORMAT;
 	add: #RichText;
 	add: #RichTextEdit;
@@ -68,6 +69,11 @@ Win32Structure subclass: #EDITSTREAM
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #FORMATRANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

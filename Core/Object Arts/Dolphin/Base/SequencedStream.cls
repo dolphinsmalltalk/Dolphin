@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Stream subclass: #SequencedStream
 	instanceVariableNames: ''
@@ -51,7 +51,7 @@ nextLine
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
 	
-	[(nextObject := self nextOrNil) isNil
+	[(nextObject := self nextAvailable) isNil
 		or: [nextObject == $\n or: [nextObject == $\r and: 
 							[self peekFor: $\n.
 							true]]]]
@@ -97,7 +97,8 @@ peekFor: anObject
 
 	| pos next |
 	pos := self position.
-	^(next := self nextOrNil) notNil and: [next = anObject or: 
+	^(next := self nextAvailable) notNil
+		and: [next = anObject or: 
 					[self position: pos.
 					false]]!
 
@@ -144,7 +145,7 @@ skipSeparators
 	frequently that we open code to avoid instantiating a block."
 
 	| next |
-	[(next := self nextOrNil) isNil] whileFalse: 
+	[(next := self nextAvailable) isNil] whileFalse: 
 			[next isSeparator
 				ifFalse: 
 					[self position: self position - 1.

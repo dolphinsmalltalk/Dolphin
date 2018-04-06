@@ -133,7 +133,9 @@ testEquals
 	self assert: (Character codePoint: 255) equals: (Character codePoint: 255).
 	self should: [Character codePoint: 16rFFFF] raise: Error.
 	self deny: (Character codePoint: 16rFFFC) equals: (Character codePoint: 16rFFFD).
-	self deny: (Character codePoint: 16r200E) equals: 16r200E!
+	self deny: (Character codePoint: 16r200E) equals: 16r200E.
+	self deny: (Character utf8Value: 240) equals: (Character codePoint: 240).
+	self deny: (Character utf8Value: 16r80) equals: (Character codePoint: 16r80)!
 
 testIdentity
 	self assert: $a sameAs: (Character codePoint: 97).
@@ -267,7 +269,8 @@ testISurrogate
 	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate].
 	utf := utf asUtf16String.
 	self assert: utf size equals: 2.
-	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate]!
+	1 to: utf size do: [:i | self assert: (utf at: i) isSurrogate].
+	self deny: (Character codePoint: 16r80) isSurrogate!
 
 testIsUtf8Lead
 	| str |
@@ -284,6 +287,47 @@ testIsUtf8Lead
 	str := Character dolphin asUtf16String.
 	self deny: str first isUtf8Lead.
 	self deny: str second isUtf8Lead!
+
+testIsUtf8Surrogate
+	| str |
+	self deny: $\0 isUtf8Surrogate.
+	self deny: $a isUtf8Surrogate.
+	self deny: (Character ansiValue: 127) isUtf8Surrogate.
+	self deny: (Character value: 128) isUtf8Surrogate.
+	self deny: (Character value: 255) isUtf8Surrogate.
+	self deny: (Character ansiValue: 128) isUtf8Surrogate.
+	self deny: (Character ansiValue: 255) isUtf8Surrogate.
+	self deny: (Character value: 2r11000000) isUtf8Surrogate.
+	self deny: (Character value: 16rFFFD) isUtf8Surrogate.
+	self deny: Character dolphin isUtf8Surrogate.
+	self deny: (Character value: 16r1FFFD) isUtf8Surrogate.
+	str := Character dolphin asUtf8String.
+	self assert: str size equals: 4.
+	1 to: 4
+		do: 
+			[:i |
+			| ch b |
+			b := #[240 159 144 172] at: i.
+			ch := str at: i.
+			self assert: ch isSurrogate.
+			self assert: ch isUtf8Surrogate.
+			i = 1
+				ifTrue: 
+					[self assert: ch isUtf8Lead.
+					self deny: ch isUtf8Trail]
+				ifFalse: 
+					[self deny: ch isUtf8Lead.
+					self assert: ch isUtf8Trail].
+			self assert: ch codeUnit equals: b.
+			self deny: ch equals: (Character codePoint: b)].
+	str := Character dolphin asUtf16String.
+	str with: #(16rD83D 16rDC2C)
+		do: 
+			[:ch :c |
+			self assert: ch codeUnit equals: c.
+			self assert: ch isUtf16Surrogate.
+			self deny: ch isUtf8Surrogate.
+			self deny: ch equals: (Character codePoint: c)]!
 
 testPrintString
 	self assert: $a printString equals: '$a'.
@@ -329,6 +373,7 @@ testSize
 !CharacterTest categoriesFor: #testIsUppercase!public! !
 !CharacterTest categoriesFor: #testISurrogate!public! !
 !CharacterTest categoriesFor: #testIsUtf8Lead!public! !
+!CharacterTest categoriesFor: #testIsUtf8Surrogate!public! !
 !CharacterTest categoriesFor: #testPrintString!public! !
 !CharacterTest categoriesFor: #testSize!public! !
 

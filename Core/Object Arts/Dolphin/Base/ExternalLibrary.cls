@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalLibrary
 	instanceVariableNames: 'handle'
@@ -421,8 +421,7 @@ moduleFileName: aLibOrHandle
 				getModuleFileName: aLibOrHandle asParameter
 				lpFilename: buf
 				nSize: buf size + 1.
-	#todo.	"Temporary conversion to ANSI for compatibility"
-	^(buf resize: size) asAnsiString!
+	^buf resize: size!
 
 onExit
 	"Private - Perform shut down processing."

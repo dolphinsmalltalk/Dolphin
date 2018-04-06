@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBViewProxy
 	instanceVariableNames: 'viewClass instVars state placement subViews resolution events version'
@@ -40,10 +40,6 @@ connectModel
 	really an unimplemented message."
 
 	^self error: 'Not yet realized'!
-
-for: aView 
-	#deprecated.
-	self setView: aView!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -241,7 +237,6 @@ viewClass: aClass
 !STBViewProxy categoriesFor: #beTopView!accessing!public! !
 !STBViewProxy categoriesFor: #clearSubViews!accessing!public! !
 !STBViewProxy categoriesFor: #connectModel!models!public! !
-!STBViewProxy categoriesFor: #for:!accessing!public! !
 !STBViewProxy categoriesFor: #getEvents!events!private! !
 !STBViewProxy categoriesFor: #icon!accessing!private! !
 !STBViewProxy categoriesFor: #instVars!accessing!public! !
@@ -265,10 +260,6 @@ viewClass: aClass
 !STBViewProxy categoriesFor: #viewClass:!accessing!public! !
 
 !STBViewProxy class methodsFor!
-
-for: aView 
-	#deprecated.
-	^self forView: aView!
 
 forView: aView 
 	"Answer a new instance representing aView."
@@ -335,7 +326,6 @@ stbVersion
 	 so if you are changing this number, THINK AGAIN."
 
 	^10! !
-!STBViewProxy class categoriesFor: #for:!instance creation!public! !
 !STBViewProxy class categoriesFor: #forView:!instance creation!public! !
 !STBViewProxy class categoriesFor: #initialize!development!initializing!public! !
 !STBViewProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !

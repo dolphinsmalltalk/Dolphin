@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 WindowsEvent subclass: #PositionEvent
 	instanceVariableNames: 'lpwp'
@@ -152,16 +152,6 @@ y
 
 !PositionEvent class methodsFor!
 
-handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
-	#deprecated.
-	^(super
-		handle: wndHandle
-		message: msgInteger
-		wParam: wInteger
-		lParam: lInteger)
-		makeStruct;
-		yourself!
-
 window: aView message: msgInteger wParam: wInteger lParam: lInteger
 	"Answer an instance of the receiver containing the message details specified by the
 	parameters."
@@ -173,6 +163,5 @@ window: aView message: msgInteger wParam: wInteger lParam: lInteger
 		lParam: lInteger)
 		makeStruct;
 		yourself! !
-!PositionEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
 !PositionEvent class categoriesFor: #window:message:wParam:lParam:!instance creation!public! !
 

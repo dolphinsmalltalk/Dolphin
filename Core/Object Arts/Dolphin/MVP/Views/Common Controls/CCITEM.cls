@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #CCITEM
 	instanceVariableNames: 'text'
@@ -91,7 +91,7 @@ maskIn: anInteger
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
 
-	text := self textClass new: anInteger.
+	text := Utf16String new: anInteger.
 	self
 		pszText: text;
 		cchTextMax: anInteger;
@@ -159,13 +159,13 @@ stateValidMask
 text
 	"Answer the text of the receiver"
 
-	^text!
+	^text ifNil: [self pszText]!
 
 text: aString
-	"Sets contents' pszMember to aString. We also hang on to it in our text instance var to
+	"Sets contents' pszMember to Utf16String. We also hang on to it in our text instance var to
 	ensure that its lifetime is sufficiently long for us to safely use it."
 
-	text := self textClass fromString: aString displayString.
+	text := aString displayString asUtf16String.
 	self
 		pszText: text;
 		cchTextMax: text size;
@@ -177,14 +177,13 @@ textCallback
 	bytes dwordAtOffset: self textPointerOffset put: LPSTR_TEXTCALLBACK.
 	self maskIn: self textValidMask!
 
-textClass
-	^self class textClass!
+textClass ^Utf16String!
 
 textInBuffer: aString
 	"Writes aString into a system buffer pointed to by pszText
 	and of size cchTextMax."
 
-	(self textClass fromString: aString displayString)
+	(Utf16String fromString: aString displayString)
 		copyToBuffer: (bytes sdwordAtOffset: self textPointerOffset)
 		ofSize: self cchTextMax!
 
@@ -242,10 +241,6 @@ defineFields
 	"
 
 	self 
-		defineField: #mask type: DWORDField new offset: 0!
-
-textClass
-	^Utf16String! !
+		defineField: #mask type: DWORDField new offset: 0! !
 !CCITEM class categoriesFor: #defineFields!initializing!public! !
-!CCITEM class categoriesFor: #textClass!constants!private! !
 

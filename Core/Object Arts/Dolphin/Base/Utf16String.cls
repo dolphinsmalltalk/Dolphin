@@ -150,13 +150,11 @@ maxEncoding
 
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
-	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
-	Implementation Note: Override the inherited implementation because the byte-character search
-	primitives won't work."
+	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
 
-	^anElement class == Character 
-		ifTrue: [self nextIndexOf: anElement from: start to: stop]
-		ifFalse: [0 "Can only contain characters"]!
+	#todo.	"Remove when primitive is fixed"
+	start to: stop do: [:i | (self at: i) = anElement ifTrue: [^i]].
+	^0!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 

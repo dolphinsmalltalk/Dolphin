@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
 	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
@@ -203,11 +203,10 @@ computerName
 
 	| name nameSize |
 	name := Utf16String new: MAX_COMPUTERNAME_LENGTH.
-	nameSize := DWORD fromInteger: name size+1.
+	nameSize := DWORD fromInteger: name size + 1.
 	(KernelLibrary default getComputerName: name nSize: nameSize asParameter)
 		ifFalse: [KernelLibrary default systemError].
-	#todo. "Temporary conversion to ANSI for compatibility"
-	^(name leftString: nameSize asInteger) asAnsiString!
+	^name leftString: nameSize asInteger!
 
 comShutdown
 	"Private - The system is about to shut down, so clear up any COM hangers on.
@@ -308,8 +307,7 @@ freeConsole
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."
 
-	#todo. "Temporary conversion to Ansi for compatibility"
-	^KernelLibrary default getCommandLine asAnsiString!
+	^KernelLibrary default getCommandLine!
 
 getenv: aString
 	"Answer the value of the specified environment variable, or nil if it does not exist.
@@ -321,8 +319,7 @@ getenv: aString
 	size == 0 ifTrue: [^nil].
 	buf := Utf16String new: size-1.	"Dolphin Strings alloc. extra space for null terminator"
 	KernelLibrary default getEnvironmentVariable: aString lpBuffer: buf nSize: size.
-	#todo. "Temporary conversion to ANSI for compatibility"
-	^buf asAnsiString
+	^buf
 	!
 
 hasActiveServers
@@ -1004,11 +1001,7 @@ systemDirectory
 	| path len |
 	path := Utf16String new: File maxPath.
 	len := KernelLibrary default getSystemDirectory: path uSize: path size + 1.
-	^len == 0
-		ifTrue: [KernelLibrary default systemError]
-		ifFalse: 
-			[#todo.	"Temporary conversion to ANSI for compatibility"
-			(path leftString: len) asAnsiString]!
+	^len == 0 ifTrue: [KernelLibrary default systemError] ifFalse: [path leftString: len]!
 
 tertiaryStartup
 	"Perform last startup operations before the main process is started - this includes firing the onStartup

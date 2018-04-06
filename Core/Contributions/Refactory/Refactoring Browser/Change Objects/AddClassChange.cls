@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
@@ -103,7 +103,7 @@ namesIn: aString
 	[stream skipSeparators.
 	stream atEnd] whileFalse: 
 				[| nameStream |
-				nameStream := WriteStream on: (String new: 10).
+				nameStream := WriteStream on: (Utf8String new: 10).
 				[stream atEnd or: [stream peek isSeparator]] 
 					whileFalse: [nameStream nextPut: stream next].
 				names add: nameStream contents].

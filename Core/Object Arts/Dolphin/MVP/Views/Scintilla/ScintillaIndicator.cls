@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaIndicator
 	instanceVariableNames: 'styleName range tag'
@@ -15,11 +15,11 @@ Instance Variables:
 !ScintillaIndicator categoriesForClass!MVP-Views-Support! !
 !ScintillaIndicator methodsFor!
 
-printOn: aStream 
+printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(;
-		display: self type;
+		display: self styleName;
 		nextPutAll: ': ';
 		display: self range;
 		nextPut: $)!
@@ -48,17 +48,12 @@ tag
 	"Answer a user-defined <Object> associated with the indicator. This could be used, for
 	example, to provide bubble help explaining the indicator."
 
-	^tag!
-
-type
-	#deprecated.
-	^self styleName! !
+	^tag! !
 !ScintillaIndicator categoriesFor: #printOn:!printing!public! !
 !ScintillaIndicator categoriesFor: #range!accessing!public! !
 !ScintillaIndicator categoriesFor: #setStyleName:range:tag:!initializing!private! !
 !ScintillaIndicator categoriesFor: #styleName!public! !
 !ScintillaIndicator categoriesFor: #tag!accessing!public! !
-!ScintillaIndicator categoriesFor: #type!accessing!public! !
 
 !ScintillaIndicator class methodsFor!
 

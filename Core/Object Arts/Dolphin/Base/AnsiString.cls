@@ -16,9 +16,8 @@ At present AnsiString is still the default String type, but this will be changin
 !AnsiString methodsFor!
 
 _beginsString: aString
-	#todo. "Doesn't work for mixed encodings, only both ANSI or both UTF-8"
-	^(CRTLibrary default 
-		strncmp: aString
+	^(CRTLibrary default
+		strncmp: aString asAnsiString
 		string2: self
 		count: self size) == 0!
 
@@ -86,7 +85,21 @@ first: anInteger
 		replaceBytesOf: (self species new: anInteger)
 		from: 1
 		to: anInteger
-		startingAt: 1! !
+		startingAt: 1!
+
+includes: aCharacter
+	"Answer whether the <Character> argument is one of the elements of the receiver."
+
+	"Implementation Note: Ansi strings can only contain the base character set, all instances of which are unique."
+
+	^self identityIncludes: aCharacter!
+
+nextIndexOf: anElement from: start to: stop
+	"Answer the index of the next occurrence of anElement in the receiver between 
+	startIndex and stopIndex inclusive. If there are no such occurrences, answer 0."
+
+	<primitive: 52>
+	^self nextIdentityIndexOf: anElement from: start to: stop! !
 !AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !AnsiString categoriesFor: #asAnsiString!converting!public! !
 !AnsiString categoriesFor: #asLowercase!converting!public! !
@@ -94,6 +107,8 @@ first: anInteger
 !AnsiString categoriesFor: #beginsWith:ignoreCase:!comparing!public! !
 !AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
 !AnsiString categoriesFor: #first:!copying!public! !
+!AnsiString categoriesFor: #includes:!public!searching! !
+!AnsiString categoriesFor: #nextIndexOf:from:to:!public!searching! !
 
 !AnsiString class methodsFor!
 
@@ -118,6 +133,11 @@ encodeOn: aWriteStream put: aCharacter
 
 	^aWriteStream basicNextPut: aCharacter ansiValue!
 
+fromString: aString
+	"Answer an instance of the receiver containing the same characters as the argument, aString."
+
+	^aString asAnsiString!
+
 initialize
 	empty := ''.
 	VMLibrary default registryAt: #String put: self.
@@ -134,6 +154,7 @@ skipEncodingMarkerFrom: aGettableStream
 !AnsiString class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !AnsiString class categoriesFor: #elementSize!constants!public! !
 !AnsiString class categoriesFor: #encodeOn:put:!encode/decode!public! !
+!AnsiString class categoriesFor: #fromString:!instance creation!public! !
 !AnsiString class categoriesFor: #initialize!class initialization!development!public! !
 !AnsiString class categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
 

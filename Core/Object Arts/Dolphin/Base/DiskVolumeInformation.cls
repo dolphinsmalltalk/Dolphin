@@ -173,12 +173,11 @@ getVolumeInformation
 		lpFileSystemFlags: fileSystemFlagsBuffer
 		lpFileSystemNameBuffer: fileSystemNameBuffer
 		nFileSystemNameSize: fileSystemNameBuffer size + 1) ifFalse: [KernelLibrary default systemError].
-	#todo.	"Temporary conversions to ANSI for compatibility."
-	label := volumeNameBuffer trimNulls asAnsiString.
+	label := volumeNameBuffer trimNulls.
 	serialNumber := volumeSerialNumber value.
 	maxComponentLength := maximumComponentLengthBuffer value.
 	fileSystemFlags := fileSystemFlagsBuffer value.
-	fileSystemName := fileSystemNameBuffer trimNulls asAnsiString!
+	fileSystemName := fileSystemNameBuffer trimNulls!
 
 isSparseFileCapable
 	"Answer whether the file system supports sparse files."

@@ -10,6 +10,9 @@ StdioFileStreamTest comment: ''!
 !StdioFileStreamTest categoriesForClass!Unclassified! !
 !StdioFileStreamTest methodsFor!
 
+bufferSize
+	^128!
+
 collections
 	^(super collections reject: [:each | each class elementSize ~~ 1]) collect: 
 			[:each |
@@ -49,6 +52,7 @@ testNextLineUpToEof
 			actual := subject nextLine.
 			self assert: actual equals: expected.
 			subject close]! !
+!StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
 !StdioFileStreamTest categoriesFor: #collections!constants!private! !
 !StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !

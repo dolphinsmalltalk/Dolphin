@@ -424,6 +424,29 @@ size: anInteger
 	self position: anInteger.
 	(KernelLibrary default setEndOfFile: handle) ifFalse: [self signalOsError: false]!
 
+sniffEncoding
+	| ituResult buf count |
+	buf := ByteArray newFixed: 1024.
+	count := self
+				reset;
+				read: buf.
+	ituResult := DWORDBytes new.
+	^(AdvApiLibrary default
+		isTextUnicode: buf
+		iSize: count
+		lpiResult: ituResult)
+			ifTrue: [String.EncodingUtf16]
+			ifFalse: 
+				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
+				(buf copyFrom: 1 to: 3) = ##($\xFEFF asUtf8String asByteArray)
+					ifTrue: 
+						[self position: 3.
+						String.EncodingUtf8]
+					ifFalse: 
+						[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
+						self reset.
+						String.EncodingAnsi]]!
+
 spec: aString
 	"Private - Set the file path to the <readableString> argument."
 
@@ -513,6 +536,7 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #signalOsError:!exceptions!private! !
 !File categoriesFor: #size!accessing!public! !
 !File categoriesFor: #size:!operations!public! !
+!File categoriesFor: #sniffEncoding!helpers!private! !
 !File categoriesFor: #spec:!accessing!private! !
 !File categoriesFor: #write:!operations!public! !
 !File categoriesFor: #write:count:!operations!public! !
@@ -545,7 +569,7 @@ commonPrefixOf: path1 and: path2
 				pathCommonPrefix: path1
 				pszFile2: path2
 				achPath: prefix.
-	^(prefix first: len) asAnsiString!
+	^(prefix first: len)!
 
 composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 
@@ -558,11 +582,10 @@ composePath: path subPath: subpath
 
 	| fullName |
 	fullName := Utf16String new: self maxPath.
-	#todo. "Temporarily force to ANSI"
 	^(ShlwapiLibrary default
 		pathCombine: fullName
 		lpszDir: path
-		lpszFile: subpath) asAnsiString!
+		lpszFile: subpath)!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
@@ -828,16 +851,15 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath len|
+	| fullpath len |
 	fullpath := Utf16String new: self maxPath.
 	(len := KernelLibrary default
-		getFullPathName: aPathnameString
-		nBufferLength: fullpath size + 1
-		lpBuffer: fullpath
-		lpFilePart: nil) == 0
+				getFullPathName: aPathnameString
+				nBufferLength: fullpath size + 1
+				lpBuffer: fullpath
+				lpFilePart: nil) == 0
 		ifTrue: [KernelLibrary default systemError].
-	#todo.	"Temporary conversion to ANSI for compatibility"
-	^(fullpath resize: len) asAnsiString!
+	^fullpath resize: len!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -1089,10 +1111,10 @@ readAllText: aString
 				check: true
 				share: #read.
 	^
-	[| size buffer |
-	#todo.	"Detect the encoding of the file and read in any supported encoding (only UTF-8, UTF-16 and ANSI)"
-	size := file size.
-	buffer := String newFixed: size.
+	[| size buffer bufferClass |
+	bufferClass := {AnsiString. Utf8String. Utf16String} at: file sniffEncoding + 1.
+	size := file size - file position.
+	buffer := bufferClass newFixed: size / bufferClass elementSize.
 	file read: buffer count: size.
 	buffer]
 			ensure: [file close]!
@@ -1103,19 +1125,18 @@ relativePathOf: aPathString to: aBasePathString
 	then there must be a trailing slash, otherwise the last component is ignored (it is
 	treated as if it were a file name)."
 
-	| relPath |
+	| relPath toPath |
 	relPath := Utf16String new: self maxPath.
+	toPath := aPathString asUtf16String.
 	relPath := (ShlwapiLibrary default
 				pathRelativePathTo: relPath
 				pszFrom: aBasePathString
 				dwAttrFrom: 0
-				pszTo: aPathString
-				dwAttrTo: 0)
-					ifTrue: 
-						[#todo.	"Temporarily force to ANSI"
-						relPath asAnsiString trimNulls]
-					ifFalse: [aPathString].
-	^(relPath beginsWith: '.\') ifTrue: [relPath allButFirst: 2] ifFalse: [relPath]!
+				pszTo: toPath
+				dwAttrTo: 0) ifTrue: [relPath] ifFalse: [toPath].
+	^(relPath beginsWith: '.\')
+		ifTrue: [relPath copyFrom: 3 to: (KernelLibrary default lstrlenW: relPath)]
+		ifFalse: [relPath trimNulls]!
 
 removeDirectory: aString
 	(KernelLibrary default removeDirectory: aString) 
@@ -1127,19 +1148,19 @@ removeExtension: aString
 	| drive dir fname errno max |
 	max := aString size.
 	(errno := CRTLibrary default
-				_splitpath_s: aString
-				drive: (drive := String new: _MAX_DRIVE)
+				_wsplitpath_s: aString asUtf16String
+				drive: (drive := Utf16String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := String new: max)
+				dir: (dir := Utf16String new: max)
 				dirLen: max + 1
-				fname: (fname := String new: max)
+				fname: (fname := Utf16String new: max)
 				fnameLen: max + 1
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: 
 			[| path |
 			(errno := CRTLibrary default
-						_makepath_s: (path := String new: max)
+						_wmakepath_s: (path := Utf16String new: max)
 						bufferSize: max + 1
 						drive: drive
 						dir: dir
@@ -1219,8 +1240,7 @@ shortPathOf: aPathnameString
 	((KernelLibrary default getShortPathName: aPathnameString 
 		lpszShortPath: shortpath cchBuffer: shortpath size)==0) ifTrue: [
 			KernelLibrary default systemError].
-	#todo. "Temporary conversion to ANSI for compatibility."
-	^shortpath trimNulls asAnsiString!
+	^shortpath trimNulls!
 
 splitDriveFrom: aString
 	"Splits the pathname, aString, and answers the drive portion.
@@ -1228,8 +1248,8 @@ splitDriveFrom: aString
 
 	| drive errno |
 	^(errno := CRTLibrary default
-				_splitpath_s: aString
-				drive: (drive := String new: _MAX_DRIVE)
+				_wsplitpath_s: aString asUtf16String
+				drive: (drive := Utf16String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
 				dir: nil
 				dirLen: 0
@@ -1245,9 +1265,9 @@ splitExtensionFrom: aString
 	Answers the empty string if there is no extension."
 
 	| ext errno |
-	ext := String new: aString size.
+	ext := Utf16String new: aString size.
 	(errno := CRTLibrary default
-				_splitpath_s: aString
+				_wsplitpath_s: aString asUtf16String
 				drive: nil
 				driveLen: 0
 				dir: nil
@@ -1268,19 +1288,19 @@ splitFilenameFrom: aString
 	| fname ext errno max |
 	max := aString size.
 	(errno := CRTLibrary default
-				_splitpath_s: aString
+				_wsplitpath_s: aString asUtf16String
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
-				fname: (fname := String new: aString size)
+				fname: (fname := Utf16String new: aString size)
 				fnameLen: max + 1
-				ext: (ext := String new: max)
+				ext: (ext := Utf16String new: max)
 				extLen: max + 1) == 0
 		ifTrue: 
 			[(errno := CRTLibrary default
-						strcat_s: fname
-						bufferSize: max + 1
+						wcscat_s: fname
+						numberOfElements: max + 1
 						strSource: ext) == 0
 				ifTrue: [^fname trimNulls]].
 	^CRTError signalWith: errno!
@@ -1293,14 +1313,14 @@ splitPath: aString
 
 	| drive dir fname ext errno |
 	^(errno := CRTLibrary default
-				_splitpath_s: aString
-				drive: (drive := String new: _MAX_DRIVE)
+				_wsplitpath_s: aString asUtf16String
+				drive: (drive := Utf16String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := String new: _MAX_DIR)
+				dir: (dir := Utf16String new: _MAX_DIR)
 				dirLen: ##(_MAX_DIR + 1)
-				fname: (fname := String new: _MAX_FNAME)
+				fname: (fname := Utf16String new: _MAX_FNAME)
 				fnameLen: ##(_MAX_FNAME + 1)
-				ext: (ext := String new: _MAX_EXT)
+				ext: (ext := Utf16String new: _MAX_EXT)
 				extLen: ##(_MAX_EXT + 1)) == 0
 		ifTrue: 
 			["CRT function includes leading period on extension, which we don't"
@@ -1319,10 +1339,10 @@ splitPathFrom: aPathnameString
 
 	| drive dir errno |
 	(errno := CRTLibrary default
-				_splitpath_s: aPathnameString
-				drive: (drive := String new: _MAX_PATH)
+				_wsplitpath_s: aPathnameString asUtf16String
+				drive: (drive := Utf16String new: _MAX_PATH)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := String new: _MAX_DIR)
+				dir: (dir := Utf16String new: _MAX_DIR)
 				dirLen: ##(_MAX_DIR + 1)
 				fname: nil
 				fnameLen: 0
@@ -1330,8 +1350,8 @@ splitPathFrom: aPathnameString
 				extLen: 0) == 0
 		ifTrue: 
 			[(errno := CRTLibrary default
-						strcat_s: drive
-						bufferSize: ##(_MAX_PATH + 1)
+						wcscat_s: drive
+						numberOfElements: ##(_MAX_PATH + 1)
 						strSource: dir) == 0
 				ifTrue: [^drive trimNulls]].
 	^CRTError signalWith: errno!
@@ -1342,12 +1362,12 @@ splitStemFrom: aString
 
 	| fname errno |
 	^(errno := CRTLibrary default
-				_splitpath_s: aString
+				_wsplitpath_s: aString asUtf16String
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
-				fname: (fname := String new: _MAX_FNAME)
+				fname: (fname := Utf16String new: _MAX_FNAME)
 				fnameLen: ##(_MAX_FNAME + 1)
 				ext: nil
 				extLen: 0) == 0
@@ -1382,8 +1402,7 @@ temporaryFilenameWithPrefix: prefixString
 		uUnique: 0
 		lpTempFileName: returnBuf) == 0
 		ifTrue: [^KernelLibrary default systemError].
-	#todo. "Temporary conversion to ANSI for compatibility"
-	^returnBuf trimNulls asAnsiString!
+	^returnBuf trimNulls!
 
 tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
@@ -1391,8 +1410,9 @@ tempPath
 	| buf len |
 	buf := Utf16String new: self maxPath.
 	len := KernelLibrary default getTempPath: buf size + 1 lpBuffer: buf.
-	#todo.	"Temporary conversion to ANSI for compatibility"
-	^(buf resize: len) asAnsiString!
+	^(buf resize: len)
+
+!
 
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session. Note
@@ -1403,18 +1423,16 @@ windowsDirectory
 	path := Utf16String new: self maxPath.
 	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size + 1.
 	len == 0 ifTrue: [^KernelLibrary default systemError].
-	#todo.	"Temporary conversion to ANSI string for compatibility"
-	^(path leftString: len) asAnsiString!
+	^path leftString: len!
 
 workingDirectory
 	"Answer the current working directory."
 
-	| buffer dir |
-	buffer := self pathBuffer.
-	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
-	^dir last = $\
-		ifTrue: [dir]
-		ifFalse: [dir copyWith: $\]!
+	| buf dir |
+	buf := CRTLibrary default _wgetcwd: nil maxlen: 0.
+	dir := Utf16String fromAddress: buf.
+	CRTLibrary default free: buf.
+	^dir last = $\ ifTrue: [dir] ifFalse: [dir copyWith: $\]!
 
 workingDirectory: aString
 	"Set the current working directory."

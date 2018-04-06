@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #HRESULT
 	instanceVariableNames: ''
@@ -43,9 +43,7 @@ displayOn: aStream
 		ifFalse: 
 			["Windows appends trailing line delimiter, and breaks up the text into lines too, 
 			so we remove them."
-			#todo.	"Temporary conversion to ANSI."
-			(buf asAnsiString resize: len) lines do: [:each | aStream nextPutAll: each]
-				separatedBy: [aStream space]]!
+			(buf resize: len) lines do: [:each | aStream nextPutAll: each] separatedBy: [aStream space]]!
 
 errorCode
 	"Answer the Win32 status code extracted from the receiver's code."

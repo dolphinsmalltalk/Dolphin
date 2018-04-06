@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 WriteStream subclass: #ReadWriteStream
 	instanceVariableNames: ''
@@ -76,19 +76,20 @@ next: count into: aSequenceableCollection startingAt: startAt
 	self position: stop.
 	^aSequenceableCollection!
 
-nextOrNil
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
+nextAvailable
+	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
+	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
+	end of stream, so this method is only useful for text and byte streams, or where the collection
+	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit
-		ifFalse: [collection at: (position := position + 1)]! !
+	^position >= readLimit ifFalse: [collection at: (position := position + 1)]! !
 !ReadWriteStream categoriesFor: #basicNext!accessing!public! !
 !ReadWriteStream categoriesFor: #contents!accessing!public! !
 !ReadWriteStream categoriesFor: #isReadable!public!testing! !
 !ReadWriteStream categoriesFor: #next!accessing!public! !
 !ReadWriteStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!ReadWriteStream categoriesFor: #nextOrNil!accessing!public! !
+!ReadWriteStream categoriesFor: #nextAvailable!accessing!public! !
 
 ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!
 

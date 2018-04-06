@@ -23,12 +23,13 @@ streamOn: aString
 	^self streamClass on: aString!
 
 testUpTo
+	| pound capitalAwithCircumflex |
+	pound := Character value: 16rA3.
+	"A-with-circumflex is also the lead byte for pound in UTF-8"
+	capitalAwithCircumflex := Character value: 16rC2.
 	{AnsiString. Utf8String} do: 
 			[:stringClass |
-			| pound chars stream capitalAwithCircumflex |
-			pound := Character value: 16rA3.
-			"A-with-circumflex is also the lead byte for pound in UTF-8"
-			capitalAwithCircumflex := Character value: 16rC2.
+			| chars stream |
 			chars := (stringClass with: capitalAwithCircumflex) , 'bcde' , (stringClass with: pound) , 'ghij'.
 			self assert: chars class equals: stringClass.
 			stream := self streamOn: chars.

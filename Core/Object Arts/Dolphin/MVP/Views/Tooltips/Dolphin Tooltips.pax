@@ -16,6 +16,10 @@ package classNames
 	add: #Tooltip;
 	yourself.
 
+package methodNames
+	add: #NMTTDISPINFOW -> #toolTipWindow;
+	yourself.
+
 package globalNames
 	add: #TooltipConstants;
 	yourself.
@@ -61,6 +65,12 @@ ControlView subclass: #Tooltip
 
 
 "Loose Methods"!
+
+!NMTTDISPINFOW methodsFor!
+
+toolTipWindow
+	^Tooltip fromHandle: self hwndFrom! !
+!NMTTDISPINFOW categoriesFor: #toolTipWindow!accessing!public! !
 
 "End of package definition"!
 

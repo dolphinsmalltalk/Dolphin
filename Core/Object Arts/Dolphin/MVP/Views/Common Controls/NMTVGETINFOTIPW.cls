@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
@@ -36,12 +36,12 @@ pszText
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress!
 
 text: text
-	"Private - Set the receiver's tip text to the ANSI string representation of the argument, text,
+	"Private - Set the receiver's tip text to the UTF-16 string representation of the argument, text,
 	and answer that. If the receiver's #dwFlags field is zero then the text is appended to the existing
 	text, but only up to the maximum number of characters specified by the receiver's
 	#cchTextMax field."
 
-	(self textClass fromString: text displayString) copyToBuffer: self pszText ofSize: self cchTextMax!
+	text displayString asUtf16String copyToBuffer: self pszText ofSize: self cchTextMax!
 
 textClass
 	^Utf16String! !

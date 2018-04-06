@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #VersionInfo
 	instanceVariableNames: 'fileInfo prefix fixedInfo'
@@ -25,11 +25,7 @@ at: valueName
 	| lpstr len |
 	lpstr := ExternalAddress new.
 	len := self queryValue: self prefix , valueName into: lpstr.
-	^len == 0
-		ifTrue: ['']
-		ifFalse: 
-			[#todo.	"Temporary conversion to ANSI for compatibility"
-			(Utf16String fromAddress: lpstr) asAnsiString]!
+	^len == 0 ifTrue: [''] ifFalse: [Utf16String fromAddress: lpstr]!
 
 comments
 	^self at: 'Comments'!

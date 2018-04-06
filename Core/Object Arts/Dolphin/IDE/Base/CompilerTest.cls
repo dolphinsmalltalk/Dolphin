@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #CompilerTest
 	instanceVariableNames: 'defaultCompileFlags'
@@ -231,7 +231,7 @@ testByteArraysInLiteralArrays
 
 testCharacterScanning
 	| result |
-	0 to: 255
+	0 to: 127
 		do: 
 			[:i |
 			| ch |
@@ -240,6 +240,15 @@ testCharacterScanning
 			self assert: result == ch.
 			result := self evaluateExpression: '$\x' , i asHexString.
 			self assert: result == ch].
+	128 to: 255
+		do: 
+			[:i |
+			| ch |
+			ch := Character value: i.
+			result := self evaluateExpression: ch printString.
+			self assert: result = ch.
+			result := self evaluateExpression: '$\x' , i asHexString.
+			self assert: result = ch].
 	result := self evaluateExpression: '$\x4E2D'.
 	self assert: result isKindOf: Character.
 	self assert: result codePoint equals: 16r4E2D.

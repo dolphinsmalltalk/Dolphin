@@ -262,6 +262,18 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 		stream: stream.
 	^aSequenceableCollection!
 
+nextAvailable
+	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
+	receiver's future sequence values. Answer nil if at EOF."
+
+	"Implementation note: See the implementation not in #next."
+
+	^self atEnd
+		ifFalse: 
+			[| ch |
+			ch := crtlib fgetc: stream.
+			ch == -1 ifFalse: [self isText ifTrue: [Character value: ch] ifFalse: [ch]]]!
+
 nextAvailable: anInteger
 	"Answer up to anInteger elements of the receiver's collection. The answer will be a
 	collection of the same species as the one accessed by the receiver, and will contain anInteger
@@ -316,18 +328,6 @@ nextLine
 				ifTrue: [answer copyFrom: 1 to: len - 2]
 				ifFalse: [answer copyFrom: 1 to: len - 1]]
 		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
-
-nextOrNil
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
-
-	"Implementation note: See the implementation not in #next."
-
-	^self atEnd
-		ifFalse: 
-			[| ch |
-			ch := crtlib fgetc: stream.
-			ch == -1 ifFalse: [self isText ifTrue: [Character value: ch] ifFalse: [ch]]]!
 
 nextPut: anObject
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -483,9 +483,9 @@ upToEnd
 !StdioFileStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #next:put:!accessing!public! !
 !StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!StdioFileStream categoriesFor: #nextAvailable!accessing!public! !
 !StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioFileStream categoriesFor: #nextOrNil!accessing!public! !
 !StdioFileStream categoriesFor: #nextPut:!accessing!public! !
 !StdioFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioFileStream categoriesFor: #peek!accessing!public! !
@@ -725,6 +725,9 @@ write: fileId mode: mode check: aBoolean type: typeSymbol
 				flags: 0
 				name: fileId
 				type: typeSymbol.
+	mode == #append
+		ifTrue: [answer setToEnd]
+		ifFalse: [answer contentsSpecies emitEncodingMarkerOn: answer].
 	mode == #append ifTrue: [answer setToEnd].
 	^answer!
 

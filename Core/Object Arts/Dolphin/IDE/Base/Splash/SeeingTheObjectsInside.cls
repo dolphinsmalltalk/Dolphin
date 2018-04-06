@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime'
@@ -340,14 +340,8 @@ startStepProcess
 	startTime := TimeStamp current.
 	stepProcess := 
 			[
-			[[self step] on: Error
-				do: 
-					[:ex | 
-					Transcript
-						show: ex description;
-						cr].
-			Processor sleep: 1000 // self frameRate] 
-					repeat] 
+			[[self step] on: Error do: [:ex | ex toTrace].
+			Processor sleep: 1000 // self frameRate] repeat]
 					forkAt: Processor userBackgroundPriority!
 
 step

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
@@ -41,7 +41,7 @@ pszText
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress!
 
 text
-	^self textClass fromAddress: self pszText!
+	^Utf16String fromAddress: self pszText!
 
 text: text
 	"Private - Set the receiver's tip text to the string representation of the argument, text,
@@ -49,9 +49,14 @@ text: text
 	Answer the potentially truncated text."
 
 	| tipText max |
-	tipText := self textClass fromString: text displayString.
+	tipText := text displayString asUtf16String.
 	max := self cchTextMax.
-	tipText size >= max ifTrue: [tipText := (tipText copyFrom: 1 to: max - 4) , '...'].
+	tipText size >= max
+		ifTrue: 
+			[| last |
+			last := max - 4.
+			(tipText at: last) isSurrogate ifTrue: [last := last - 1].
+			tipText := (tipText copyFrom: 1 to: last) , '...'].
 	tipText copyToBuffer: self pszText ofSize: max.
 	^tipText!
 

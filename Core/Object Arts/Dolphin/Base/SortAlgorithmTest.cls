@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SortAlgorithmTest
 	instanceVariableNames: ''
@@ -16,7 +16,7 @@ add: aCollection sortBlock: block
 	collection := aCollection asArray.
 	comp := 0.
 	sorted := SortedCollection 
-				sortAlgorithm: (self algorithmToTest sortBlock: 
+				sortAlgorithm: (self algorithmToTest newSortBlock: 
 							[:a :b | 
 							comp := comp + 1.
 							block value: a value: b]).
@@ -95,7 +95,7 @@ partialSort: source using: algorithm
 
 sort: aCollection sortBlock: block
 	| sorted |
-	sorted := aCollection asSortedCollectionUsing: (self algorithmToTest sortBlock: block).
+	sorted := aCollection asSortedCollectionUsing: (self algorithmToTest newSortBlock: block).
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
 	^sorted!

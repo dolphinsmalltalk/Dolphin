@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Sound
 	instanceVariableNames: 'name location type fileLocator'
@@ -43,7 +43,7 @@ play: anInteger
 	| soundName |
 	soundName := fileLocator ifNotNil: [fileLocator localFileSpecFor: name] ifNil: [name].
 	^WinMMLibrary default 
-		playSound: soundName
+		playSound: soundName asParameter
 		hmod: location asParameter
 		fdwSound: anInteger!
 

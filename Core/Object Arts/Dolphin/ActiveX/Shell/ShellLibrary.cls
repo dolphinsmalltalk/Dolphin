@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
@@ -93,9 +93,7 @@ findExecutable: lpFile directory: directoryString
 		ifTrue: 
 			["FindExecutable() error reporting not consistent with normal Win32 mechanism"
 			hInst asInteger == 31 ifTrue: [Win32Error signalWith: 16r483] ifFalse: [self systemError]]
-		ifFalse: 
-			[#todo.	"Temporarily force to ANSI"
-			buf trimNulls asAnsiString]!
+		ifFalse: [buf trimNulls]!
 
 findExecutable: lpFile lpDirectory: directoryStringIn lpResult: buf
 	"Retrieves the name and handle of the executable associated with the specified filename.
@@ -135,8 +133,7 @@ getSpecialFolderLocation: anInteger
 		hToken: nil
 		dwFlags: SHGFP_TYPE_CURRENT
 		pszPath: pszPath.
-	#todo. "Temporary conversion to ANSI."
-	^pszPath trimNulls asAnsiString!
+	^pszPath trimNulls!
 
 isUserAnAdmin
 	"Invoke the IsUserAnAdmin() function of the module wrapped by the receiver.
@@ -150,10 +147,7 @@ isUserAnAdmin
 pathFromIDList: idList
 	| pathname |
 	pathname := Utf16String new: File maxPath.
-	^(self SHGetPathFromIDList: idList pszPath: pathname)
-		ifTrue: 
-			[#todo.	"Temporary conversion to ANSI encoding."
-			pathname trimNulls asAnsiString]!
+	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
 
 SHBrowseForFolder: aWin32BROWSEINFO
 

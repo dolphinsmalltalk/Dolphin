@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
@@ -288,9 +288,8 @@ fromFile: aFilename
 
 		ImagePresenter show: 'Basic image' on: 
 			(Bitmap
-				fromFile: (File composePath: SessionManager current windowsDirectory 
-							subPath: 'Soap Bubbles.bmp')
-				usingLocator: FileLocator absolute)
+				fromFile: 'Resources\Beach ball.bmp'
+				usingLocator: FileLocator installRelative)
 	"
 
 	^self  fromFile: aFilename usingLocator: FileLocator default

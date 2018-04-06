@@ -608,7 +608,7 @@ getItemText: anInteger
 				newTextBuffer: 128;
 				yourself.
 	self lvmGetItem: item.
-	^item pszText asAnsiString!
+	^item pszText asUtf8String!
 
 getMultipleSelections
 	"Private - Answer an <Array> of the <integer> the indices of the selected items in the

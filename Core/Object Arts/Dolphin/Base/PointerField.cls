@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalField subclass: #PointerField
 	instanceVariableNames: 'pointerClass'
@@ -74,7 +74,7 @@ readFrom: anExternalStructure
 
 	^self pointerClass fromAddress: (anExternalStructure bytes intPtrAtOffset: offset)!
 
-writeInto: anExternal value: anObject 
+writeInto: anExternalStructure value: anObject
 	"Private - Write the address of the externally addressable Smalltalk object, anObject,
 	into anExternal at the receiver's offset.
 	N.B. Precautions must be taken (such as saving the Object as an
@@ -84,7 +84,7 @@ writeInto: anExternal value: anObject
 	among all instances of a subclass of ExternalStructure (it is part of
 	the class instance variable 'template')."
 
-	^anExternal uintPtrAtOffset: offset put: anObject yourAddress! !
+	^anExternalStructure bytes uintPtrAtOffset: offset put: anObject yourAddress! !
 !PointerField categoriesFor: #byteSize!accessing!private! !
 !PointerField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
 !PointerField categoriesFor: #pointerClass!accessing!private! !

@@ -1681,7 +1681,7 @@ WriteStream subclass: #ReadWriteStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
-	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift pageSize'
+	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift elemsPerPage offset'
 	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AbstractContainerViewTest
 	instanceVariableNames: 'containerView'
@@ -111,10 +111,10 @@ testBorderedNcRectangle
 testNcCalcSize
 	"Border off - simple text"
 
-	| rect params ret clientRect parentRect |
+	| rect params ret parentRect |
 	rect := RECT fromRectangle: containerView rectangle.
 	self assert: rect asRectangle = self initialParentRect.
-	ret := containerView 
+	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
@@ -125,7 +125,7 @@ testNcCalcSize
 	params := NCCALCSIZE_PARAMS new.
 	parentRect := containerView rectangle.
 	params rgrc at: 1 put: (RECT fromRectangle: parentRect).
-	ret := containerView 
+	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
 				lpParam: params asParameter.
@@ -135,7 +135,7 @@ testNcCalcSize
 	containerView hasBorder: true.
 	rect := RECT fromRectangle: containerView rectangle.
 	self assert: rect asRectangle = self initialParentRect.
-	ret := containerView 
+	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
@@ -147,7 +147,7 @@ testNcCalcSize
 	params := NCCALCSIZE_PARAMS new.
 	parentRect := containerView rectangle.
 	params rgrc at: 1 put: (RECT fromRectangle: parentRect).
-	ret := containerView 
+	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
 				lpParam: params asParameter.

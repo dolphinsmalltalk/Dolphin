@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Locale
 	instanceVariableNames: 'lcid dateSeparator decimalSeparator listSeparator timeSeparator currencySymbol amDesignator pmDesignator dayNames monthNames'
@@ -93,7 +93,7 @@ displayOn: aStream
 
 	aStream nextPutAll: self name!
 
-getInfo: anIntegerLcType 
+getInfo: anIntegerLcType
 	"Private - Answer a locale specific date String of the specified type for the receiver's locale.
 	Implementation Note: Try a default maximum size of 20, which will handle most locale info,
 	and if that is not enough fall back on the slower mechanism of enquiring for the size first."
@@ -101,14 +101,14 @@ getInfo: anIntegerLcType
 	| size buf lib |
 	lib := self nlsLib.
 	buf := Utf16String new: 20.
-	size := lib 
+	size := lib
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
 				lpLCData: buf
 				cchData: buf size + 1.
-	size == 0 
+	size == 0
 		ifTrue: 
-			[size := lib 
+			[size := lib
 						getLocaleInfo: lcid
 						lCType: anIntegerLcType
 						lpLCData: nil
@@ -116,13 +116,12 @@ getInfo: anIntegerLcType
 			size == 0 ifTrue: [^lib systemError].
 			"Strings allocate extra space for null automatically"
 			buf := Utf16String new: size - 1.
-			lib 
+			lib
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
 				lpLCData: buf
 				cchData: size].
-	#todo. "Temporary conversion to ANSI for compatibility"
-	^(buf resize: size - 1) asAnsiString!
+	^buf resize: size - 1!
 
 getIntegerInfo: anIntegerLcType
 	"Private - Answer a locale specific single character of the specified type for the 
@@ -243,8 +242,7 @@ printSysDate: aSYSTEMTIME format: aStringOrNil flags: dwFlags
 		lib getDateFormat: self asParameter dwFlags: dwFlags 
 			lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: size].
 	"size includes terminating null"
-	#todo. "Temporary conversion to ANSI for compatibility"
-	^(buf resize: size-1) asAnsiString!
+	^(buf resize: size-1)!
 
 printTime: aTime format: aStringOrNil flags: dwFlags
 	"Private - Append a locale specific string representation of the argument, aTime, to,
@@ -254,16 +252,16 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 	timeParm := aTime asParameter.
 	lib := self nlsLib.
 	buf := Utf16String new: 20.
-	size := lib 
+	size := lib
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
 				lpTime: timeParm
 				lpFormat: aStringOrNil
 				lpTimeStr: buf
 				cchBuf: buf size + 1.
-	size == 0 
+	size == 0
 		ifTrue: 
-			[size := lib 
+			[size := lib
 						getTimeFormat: self asParameter
 						dwFlags: dwFlags
 						lpTime: timeParm
@@ -272,15 +270,14 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 						cchBuf: 0.
 			size == 0 ifTrue: [^lib systemError].
 			buf := Utf16String new: size - 1.	"Strings allocate extra space for null terminator"
-			lib 
+			lib
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
 				lpTime: timeParm
 				lpFormat: aStringOrNil
 				lpTimeStr: buf
 				cchBuf: size].
-	#todo. "Temporary conversion to ANSI for compatibility"
-	^(buf resize: size - 1) asAnsiString!
+	^buf resize: size - 1!
 
 printUnboundedDate: aDate format: aStringOrNil flags: dwFlags
 	"Private - Answer a locale specific formatted date String generated

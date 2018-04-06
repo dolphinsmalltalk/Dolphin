@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
@@ -32,8 +32,7 @@ at: index
 		iFile: index - 1
 		lpszFile: answer
 		cch: cch + 1.
-	#todo. "Temporarily force to ANSI"
-	^answer asAnsiString!
+	^answer!
 
 at: index put: newElement 
 	^self shouldNotImplement!

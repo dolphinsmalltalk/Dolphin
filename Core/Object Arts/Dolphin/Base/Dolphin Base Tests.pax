@@ -9,6 +9,7 @@ package classNames
 	add: #AbstractFileStreamTest;
 	add: #AbstractStringTest;
 	add: #AlwaysSearchPolicyTest;
+	add: #AnsiStringTest;
 	add: #ArrayedCollectionTest;
 	add: #ArrayTest;
 	add: #BagTest;
@@ -18,7 +19,6 @@ package classNames
 	add: #BlockClosureTest;
 	add: #BooleanTest;
 	add: #ByteArrayTest;
-	add: #ByteStringTest;
 	add: #CaseInsensitiveSearchPolicyTest;
 	add: #CharacterTest;
 	add: #ClassBuilderTestClasses;
@@ -513,7 +513,7 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #ByteStringTest
+AbstractStringTest subclass: #AnsiStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

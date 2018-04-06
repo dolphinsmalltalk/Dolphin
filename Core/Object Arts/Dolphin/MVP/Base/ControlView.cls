@@ -312,9 +312,6 @@ ttnGetDispInfo: anNMTTDISPINFO
 ttnGetDispInfoW: pNMHDR
 	"Private - Default handler for the TTN_GETDISPINFOW notification message."
 
-	"Implementation Note: Tool tips do not appear on NT4.0 unless we implement 
-	the Unicode version, so like the MFC we implement both handlers."
-
 	^self ttnGetDispInfo: (NMTTDISPINFOW fromAddress: pNMHDR)!
 
 wantParentNotifications

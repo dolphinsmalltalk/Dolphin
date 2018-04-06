@@ -1,14 +1,14 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-CCITEM subclass: #HDITEM
+CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-HDITEM guid: (GUID fromString: '{cff5da39-bb38-4499-9527-66449b212b87}')!
-HDITEM comment: ''!
-!HDITEM categoriesForClass!Unclassified! !
-!HDITEM methodsFor!
+HDITEMW guid: (GUID fromString: '{cff5da39-bb38-4499-9527-66449b212b87}')!
+HDITEMW comment: ''!
+!HDITEMW categoriesForClass!Unclassified! !
+!HDITEMW methodsFor!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
@@ -108,14 +108,14 @@ paramValidMask
 	^16r8 "HDI_LPARAM"!
 
 pszText
-	"Answer the <String> value of the receiver's 'pszText' field."
+	"Answer the <Utf16String> value of the receiver's 'pszText' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszText))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszText))!
 
-pszText: aString
-	"Set the receiver's 'pszText' field to the value of the argument, aString"
+pszText: anUtf16String
+	"Set the receiver's 'pszText' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pszText) put: aString yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pszText) put: anUtf16String yourAddress!
 
 pvFilter
 	"Answer the <Integer> value of the receiver's 'pvFilter' field."
@@ -126,6 +126,16 @@ pvFilter: anInteger
 	"Set the receiver's 'pvFilter' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: ##(self offsetOf: #pvFilter) put: anInteger!
+
+state
+	"Answer the <Integer> value of the receiver's 'state' field."
+
+	^bytes dwordAtOffset: ##(self offsetOf: #state)!
+
+state: anInteger
+	"Set the receiver's 'state' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: ##(self offsetOf: #state) put: anInteger!
 
 stateMask
 	"Answer the receiver's stateMask field as a Smalltalk object."
@@ -157,41 +167,43 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: ##(self offsetOf: #type) put: anInteger! !
-!HDITEM categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!HDITEM categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #cxy!**compiled accessors**!public! !
-!HDITEM categoriesFor: #cxy:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #dwState!accessing!public! !
-!HDITEM categoriesFor: #dwState:!accessing!public! !
-!HDITEM categoriesFor: #fmt!**compiled accessors**!public! !
-!HDITEM categoriesFor: #fmt:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #handle!accessing!public! !
-!HDITEM categoriesFor: #hbm!**compiled accessors**!public! !
-!HDITEM categoriesFor: #hbm:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #iImage!**compiled accessors**!public! !
-!HDITEM categoriesFor: #iImage:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #imageValidMask!constants!private! !
-!HDITEM categoriesFor: #iOrder!**compiled accessors**!public! !
-!HDITEM categoriesFor: #iOrder:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #lParam!**compiled accessors**!public! !
-!HDITEM categoriesFor: #lParam:!accessing!public! !
-!HDITEM categoriesFor: #paramValidMask!constants!private! !
-!HDITEM categoriesFor: #pszText!**compiled accessors**!public! !
-!HDITEM categoriesFor: #pszText:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #pvFilter!**compiled accessors**!public! !
-!HDITEM categoriesFor: #pvFilter:!**compiled accessors**!public! !
-!HDITEM categoriesFor: #stateMask!accessing!public! !
-!HDITEM categoriesFor: #stateMask:!accessing!public! !
-!HDITEM categoriesFor: #textPointerOffset!constants!private! !
-!HDITEM categoriesFor: #textValidMask!constants!private! !
-!HDITEM categoriesFor: #type!**compiled accessors**!public! !
-!HDITEM categoriesFor: #type:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #cxy!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #cxy:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #dwState!accessing!public! !
+!HDITEMW categoriesFor: #dwState:!accessing!public! !
+!HDITEMW categoriesFor: #fmt!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #fmt:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #handle!accessing!public! !
+!HDITEMW categoriesFor: #hbm!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #hbm:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #iImage!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #imageValidMask!constants!private! !
+!HDITEMW categoriesFor: #iOrder!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #iOrder:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #lParam!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #lParam:!accessing!public! !
+!HDITEMW categoriesFor: #paramValidMask!constants!private! !
+!HDITEMW categoriesFor: #pszText!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #pvFilter!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #pvFilter:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #state!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #state:!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #stateMask!accessing!public! !
+!HDITEMW categoriesFor: #stateMask:!accessing!public! !
+!HDITEMW categoriesFor: #textPointerOffset!constants!private! !
+!HDITEMW categoriesFor: #textValidMask!constants!private! !
+!HDITEMW categoriesFor: #type!**compiled accessors**!public! !
+!HDITEMW categoriesFor: #type:!**compiled accessors**!public! !
 
-!HDITEM class methodsFor!
+!HDITEMW class methodsFor!
 
 defineFields
 	"Define the fields of the HDITEM structure.
-		HDITEM compileDefinition
+		self compileDefinition
 	
 		typedef 		struct _HDITEM {
 			UINT    mask; 
@@ -215,7 +227,7 @@ defineFields
 	super defineFields.
 	self
 		defineField: #cxy type: SDWORDField new offset: 4;
-		defineField: #pszText type: (PointerField type: String) offset: 8;
+		defineField: #pszText type: (PointerField type: Utf16String) offset: 8;
 		defineField: #hbm type: HANDLEField new offset: 12;
 		defineField: #cchTextMax type: SDWORDField new offset: 16;
 		defineField: #fmt type: SDWORDField new offset: 20;
@@ -223,12 +235,9 @@ defineFields
 		defineField: #iImage type: SDWORDField new offset: 28;
 		defineField: #iOrder type: SDWORDField new offset: 32;
 		defineField: #type type: DWORDField new offset: 36;
-		defineField: #pvFilter type: DWORDField new offset: 40.
+		defineField: #pvFilter type: DWORDField new offset: 40;
+		defineField: #state type: DWORDField new offset: 44.
 
-	self byteSize: 44!
-
-textClass
-	^String! !
-!HDITEM class categoriesFor: #defineFields!initializing!public! !
-!HDITEM class categoriesFor: #textClass!constants!private! !
+	self byteSize: 48! !
+!HDITEMW class categoriesFor: #defineFields!initializing!public! !
 

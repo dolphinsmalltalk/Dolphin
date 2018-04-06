@@ -171,8 +171,7 @@ titleOf: aString
 		lpszTitle: buf
 		cbBuf: buf size) < 0
 		ifTrue: [lib systemError: 123].
-	#todo. "Temporary conversion to ANSI"
-	^buf trimNulls asAnsiString! !
+	^buf trimNulls! !
 !File class categoriesFor: #titleOf:!filename manipulation!public! !
 
 !Font class methodsFor!

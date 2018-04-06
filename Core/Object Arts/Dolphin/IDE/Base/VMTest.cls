@@ -13,7 +13,7 @@ SUnitBrowser openOnTestCase: self'!
 !VMTest methodsFor!
 
 assertImmutableAtPut: anObject
-	self assert: anObject isImmutable.
+	anObject isImmutable: true.
 	self should: [anObject at: 0 put: $x] raise: BoundsError.
 	self should: [anObject at: anObject size + 1 put: $x] raise: BoundsError.
 	1 to: anObject size
@@ -1462,8 +1462,8 @@ testPrimitiveInstVarAtPut
 				do: [:s | self assert: (method value: s withArguments: {each. $a codePoint}) equals: 'failed1'].
 			immutableStrings
 				do: [:s | self assert: (method value: s withArguments: {each. $a codePoint}) equals: 'failed1'].
-			self assert: (method value: mutableBytes withArguments: {each. each}) equals: 'failed1'.
-			self assert: (method value: immutableBytes withArguments: {each. each}) equals: 'failed1'].
+			self assert: (method value: mutableBytes withArguments: {each. 255}) equals: 'failed1'.
+			self assert: (method value: immutableBytes withArguments: {each. 255}) equals: 'failed1'].
 	"Invalid index"
 	{SmallInteger minimum - 1. SmallInteger maximum + 1. nil} do: 
 			[:each |
@@ -1745,7 +1745,7 @@ testPrimitiveNextPut
 			self assert: stm position equals: 1.
 			self assert: (method value: stm withArguments: #($b)) equals: 'failed2'].
 	"Unicode symbol requiring one ansi byte"
-	pound := $?.
+	pound := (Character value: 163).
 	subject := AnsiString writeStream: 1.
 	self assert: (method value: subject withArguments: {pound}) equals: pound.
 	self assert: subject position equals: 1.
@@ -1787,7 +1787,7 @@ testPrimitiveNextPut
 	self assert: subject position equals: 1.
 	self assert: subject contents equals: euro asUtf16String.
 	"Unicode symbol outside BMP- Not puttable into an AnsiString, should fail"
-	self assert: (method value: AnsiString writeStream withArguments: {Character dolphin})
+	self assert: (method value: (AnsiString writeStream: 1) withArguments: {Character dolphin})
 		equals: 'failed4'.
 	"UTF-8, requires 4 bytes"
 	0 to: 3
@@ -1963,51 +1963,65 @@ testPrimitiveSize
 	self assert: (method value: Character dolphin asUtf16String withArguments: #()) equals: 2!
 
 testPrimitiveStringAt
-	| array |
-	
+	| method array |
+	method := self createPrimitiveMethodLike: String >> #at: setsFailCode: true.
 	array := String with: $1.
-	self should: [(array at: 1) == $1].
+	self should: [(method value: array withArguments: {1}) == $1].
 	"Some tests are repeated with a new array in case of different behaviour resulting from caching"
-	self should: [(array at: 1) == $1].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 2] raise: BoundsError.
+	self should: [(method value: array withArguments: {1}) == $1].
+	self assert: (method value: array withArguments: {0}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {2}) equals: 'failed1'.
 	array := String with: $1.
-	self should: [array at: 0] raise: BoundsError.
+	self assert: (method value: array withArguments: {0}) equals: 'failed1'.
 	array := String with: $1.
-	self should: [array at: 2] raise: BoundsError.
-
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
+	self assert: (method value: array withArguments: {2}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {SmallInteger maximum}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {SmallInteger minimum}) equals: 'failed1'.
 
 	"LargeIntegers"
-	self should: [array at: SmallInteger maximum+1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)] raise: BoundsError.
-	self should: [array at: SmallInteger minimum-1] raise: BoundsError.
-	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
-
-
+	self assert: (method value: array withArguments: {SmallInteger maximum + 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {(2 raisedToInteger: 31) - 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {2 raisedToInteger: 31}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {(2 raisedToInteger: 32) - 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {2 raisedToInteger: 32}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {SmallInteger minimum - 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {-2 raisedToInteger: 31}) equals: 'failed0'.
+	"Two elements"
 	array := 'ab' copy.
-	self should: [(array at: 1) == $a].
-	self should: [(array at: 1) == $a].
-	self should: [(array at: 2) == $b].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
+	self should: [(method value: array withArguments: {1}) == $a].
+	self should: [(method value: array withArguments: {1}) == $a].
+	self should: [(method value: array withArguments: {2}) == $b].
+	self assert: (method value: array withArguments: {0}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {3}) equals: 'failed1'.
 
 	"Try accessing with non-integer indices"
-	self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self should: [array at: '1'] raise: Error matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self should: [array at: nil] raise: Error matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self should: [array at: #[1]] raise: Error matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self should: [array at: #'1'] raise: Error matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-
-	array := (0 to: 127) collect: [:i | Character value: i].
-	0 to: array size - 1 do: [:i | self should: [(array at: i+1) == (Character value: i)]].
-!
+	self assert: (method value: array withArguments: {$1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {'1'}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {nil}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#[1]}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#'1'}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#(1)}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#(1)}) equals: 'failed0'.
+	{AnsiString. Utf8String. Utf16String} do: 
+			[:eachClass |
+			| subject |
+			subject := eachClass withAll: ((0 to: 127) collect: [:i | Character value: i]).
+			0 to: subject size - 1
+				do: [:i | self assert: (method value: subject withArguments: {i + 1}) sameAs: (Character value: i)]].
+	"Remaining ANSI characters are unique"
+	array := AnsiString withAll: ((128 to: 255) collect: [:i | Character ansiValue: i]).
+	128 to: 255
+		do: [:i | self assert: (method value: array withArguments: {i - 127}) sameAs: (Character ansiValue: i)].
+	"UTF-8 surrogates"
+	array := Utf8String withAll: ((128 to: 255) collect: [:i | Character utf8Value: i]).
+	128 to: 255
+		do: 
+			[:i |
+			| utf8 |
+			utf8 := method value: array withArguments: {i - 127}.
+			self assert: utf8 isUtf8Surrogate.
+			self deny: utf8 equals: (Character value: i).
+			self assert: utf8 equals: (Character utf8Value: i)]!
 
 testPrimitiveStringAtPut
 	| subject method cantHold |
@@ -2090,7 +2104,7 @@ testPrimitiveStringCollate
 
 testPrimitiveStringNextIndexOfFromTo
 	| method foundCases nonIntegerToFrom fromOutOfBounds toOutOfBounds emptyIntervalBounds notFoundCases |
-	method := self createPrimitiveMethodLike: String >> #nextIndexOf:from:to: setsFailCode: true.
+	method := self createPrimitiveMethodLike: AnsiString >> #nextIndexOf:from:to: setsFailCode: true.
 	foundCases := #(#('aabc' $a 1 1 1) #('aabc' $a 1 2 1) #('a' $a 1 1 1) #('aabc' $a 2 3 2) #('abc' $c 1 3 3) #('abac' $a 2 4 3)).
 	nonIntegerToFrom := #(#('aabc' $a $b 4 'failed1') #('aabc' $a nil 4 'failed1') #('aabc' $a 1 nil 'failed0')).
 	fromOutOfBounds := #(#('aabc' $a 0 4 'failed2') #('aabc' $a -1 4 'failed2')).

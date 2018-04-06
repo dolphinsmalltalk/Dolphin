@@ -964,8 +964,7 @@ initializeOldSourcePackage
 isBaseImagePackage
 	"Answer true if the receiver is a basic component of Dolphin "
 
-	#deprecated.
-
+	Notification deprecated.
 	^self isBasePackage!
 
 isBasePackage

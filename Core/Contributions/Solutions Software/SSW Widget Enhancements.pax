@@ -1,7 +1,7 @@
-| package |
+﻿| package |
 package := Package name: 'SSW Widget Enhancements'.
 package paxVersion: 1;
-	basicComment: '� Solutions Software/John Aspinall 2017
+	basicComment: '© Solutions Software/John Aspinall 2017
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.
@@ -20,8 +20,6 @@ package methodNames
 	add: #Canvas -> #erase:;
 	add: #Canvas -> #erase:color:;
 	add: #Canvas -> #prefixTextDisabled:at:;
-	add: #ComboBox -> #cueBanner;
-	add: #ComboBox -> #cueBanner:;
 	add: #ComboBox -> #droppedWidth:;
 	add: #ComboBox -> #hasCueBanner;
 	add: #ControlView -> #freeTheme;
@@ -48,8 +46,6 @@ package methodNames
 	add: #PushButton -> #wmNotify:wParam:lParam:;
 	add: #SystemMetrics -> #hasListViewAlphaBlendedHighlights;
 	add: #SystemMetrics -> #hasListViewHotTracking;
-	add: #TextEdit -> #cueBanner;
-	add: #TextEdit -> #cueBanner:;
 	add: #TextEdit -> #hasCueBanner;
 	add: #TypeConverter -> #isNullConverter;
 	add: #View -> #addToolTipWithHandle:;
@@ -75,7 +71,6 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\Base\Deprecated\Dolphin Base (Deprecated)';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
@@ -177,29 +172,20 @@ highlightText
 
 !ComboBox methodsFor!
 
-cueBanner
-
-	| string |
-
-	string := UnicodeString new: 1024.
-
-	^(self sendMessage: CB_GETCUEBANNER wParam: string yourAddress lParam: string size) = 1
-		ifTrue: [string asString upTo: Character null]
-		ifFalse: [nil]!
-
-cueBanner: aString
-
-	self sendMessage: CB_SETCUEBANNER wParam: 0 lpParam: aString asUnicodeString!
-
 droppedWidth: anInteger
 
 	self sendMessage: CB_SETDROPPEDWIDTH wParam: anInteger!
 
 hasCueBanner
+	"Answer whether the receiver has a textual cue, displayed when the text box is empty."
 
-	^(self sendMessage: CB_GETCUEBANNER wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
-!ComboBox categoriesFor: #cueBanner!event handling!public! !
-!ComboBox categoriesFor: #cueBanner:!event handling!public! !
+	| buf |
+	buf := Utf16String new: 1.
+	^(self
+		sendMessage: CB_GETCUEBANNER
+		wParam: buf yourAddress
+		lParam: buf size + 1) ~~ 0
+		and: [buf first ~~ $\0]! !
 !ComboBox categoriesFor: #droppedWidth:!hierarchy!public!sub views! !
 !ComboBox categoriesFor: #hasCueBanner!public!testing! !
 
@@ -222,8 +208,11 @@ onViewDestroyed
 	super onViewDestroyed!
 
 openTheme
-
-	^self themePartName ifNotNil: [ :themePartName | self propertyAt: #themeHandle put: (ThemeLibrary default openThemeData: self asParameter pszClassList: themePartName asUnicodeString)]!
+	^self themePartName
+		ifNotNil: 
+			[:themePartName |
+			self propertyAt: #themeHandle
+				put: (ThemeLibrary default openThemeData: self asParameter pszClassList: themePartName)]!
 
 theme
 
@@ -252,7 +241,7 @@ shortString
 
 	| stream |
 
-	stream := WriteStream on: (String new: 10).
+	stream := WriteStream on: (Utf8String new: 10).
 
 	self printOn: stream longPicture: false.
 
@@ -380,17 +369,17 @@ tipText: aString
 		ifTrue: [self removePropertyAt: #tipText ifAbsent: []; removePropertyAt: #tipTextBuffer ifAbsent: []]
 		ifFalse: [self propertyAt: #tipText put: aString]!
 
-ttnGetDispInfo: anNMTTDISPINFO 
-	"Private - Generic handler for the TTN_GETDISPINFO(A/W) notification message."
+ttnGetDispInfo: anNMTTDISPINFOW
+	"Private - Handler for the TTN_GETDISPINFOW notification message."
 
-	^(anNMTTDISPINFO idIsHandle and: [anNMTTDISPINFO idFrom = self handle asInteger and: [self tipText notNil]]) 
-	ifTrue: 
-		[anNMTTDISPINFO text: self tipText. 
-		"Note that we must keep a reference to the text string to prevent its premature death"
-		anNMTTDISPINFO lpszText ifNotNil: [ :text | self propertyAt: #tipTextBuffer put: text].
-		0]
-	ifFalse: 
-		[super ttnGetDispInfo: anNMTTDISPINFO]!
+	^(anNMTTDISPINFOW idIsHandle
+		and: [anNMTTDISPINFOW idFrom = self handle asInteger and: [self tipText notNil]])
+			ifTrue: 
+				[anNMTTDISPINFOW text: self tipText.
+				"Note that we must keep a reference to the text string to prevent its premature death"
+				anNMTTDISPINFOW lpszText ifNotNil: [:text | self propertyAt: #tipTextBuffer put: text].
+				0]
+			ifFalse: [super ttnGetDispInfo: anNMTTDISPINFOW]!
 
 wmNotify: message wParam: wParam lParam: lParam
 	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
@@ -430,25 +419,16 @@ hasListViewHotTracking
 
 !TextEdit methodsFor!
 
-cueBanner
-
-	| string |
-
-	string := UnicodeString new: 1024.
-
-	^(self sendMessage: EM_GETCUEBANNER wParam: string yourAddress lParam: string size) = 1
-		ifTrue: [string asString upTo: Character null]
-		ifFalse: [nil]!
-
-cueBanner: aString
-
-	self sendMessage: EM_SETCUEBANNER wParam: false asParameter lParam: aString asUnicodeString yourAddress!
-
 hasCueBanner
+	"Answer whether the receiver has a textual cue, displayed when the text box is empty."
 
-	^(self sendMessage: EM_GETCUEBANNER wParam: (UnicodeString new: 1024) yourAddress lParam: 1024) > 0! !
-!TextEdit categoriesFor: #cueBanner!accessing!public! !
-!TextEdit categoriesFor: #cueBanner:!accessing!public! !
+	| buf |
+	buf := Utf16String new: 1.
+	^(self
+		sendMessage: EM_GETCUEBANNER
+		wParam: buf yourAddress
+		lParam: buf size + 1) ~~ 0
+		and: [buf first ~~ $\0]! !
 !TextEdit categoriesFor: #hasCueBanner!public!testing! !
 
 !TypeConverter methodsFor!

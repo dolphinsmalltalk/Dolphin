@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	instanceVariableNames: 'tempFileName subject'
@@ -20,10 +20,18 @@ assertBufferEmptyOrDirty: aFileStream size: anInteger
 blockWriteIntervals
 	^#(#(1 0) #(1 1) #(1 2) #(1 512) #(2 1) #(2 2) #(2 3) #(2 512) #(511 768) #(1 8191) #(2 8191) #(1 8192) #(1 8193) #(1 8194) #(1 16383) #(1 16384) #(1 16385) #(2 8192) #(2 8193) #(2 8194) #(2 16383) #(2 16384) #(2 16385) #(4095 8192) #(4095 8193) #(4095 8194) #(4095 16383) #(4095 16384) #(4095 16385) #(8191 8191) #(8191 8192) #(8191 8193) #(8191 8194) #(8191 16383) #(8191 16384) #(8191 16385) #(8192 8191) #(8192 8192) #(8192 8193) #(8192 8194) #(8192 16383) #(8192 16384) #(8192 16385) #(8191 31999) #(8191 32000) #(8191 32001) #(8191 32767) #(8191 32768) #(8191 32769) #(8192 31999) #(8192 32000) #(8192 32001) #(8192 32767) #(8192 32768) #(8192 32769) #(1 31999) #(2 31999) #(1 32000) #(2 32000) #(1 32001) #(2 32001) #(1 32767) #(2 32767) #(1 32768) #(2 32768) #(1 32769) #(2 32769))!
 
+bufferSize
+	^self subclassResponsibility!
+
 closeTempStream: aStream 
 	"Private - Clean up the temporary stream argument."
 
 	aStream close!
+
+collections
+	"Can't handle UTF-16 encoding yet"
+
+	^super collections reject: [:each | each isKindOf: Utf16String]!
 
 initializeRandomTestData
 	| r bytes |
@@ -95,13 +103,14 @@ tempReadWriteStream
 tempWriteStream
 	"Private - Answer a writeable FileStream on a temporary file."
 
-	| aFileStream |
-	aFileStream := self streamClass.
-	^aFileStream
+	^self tempWriteStream: #text!
+
+tempWriteStream: aSymbol
+	^self streamClass
 		write: tempFileName
 		mode: #truncate
 		check: false
-		text: true!
+		type: aSymbol!
 
 test1065
 	| r |
@@ -124,26 +133,31 @@ test1065
 				resumable: true]!
 
 test64BitPosition
-	subject := self tempWriteStream.
+	subject := self tempWriteStream: #binary.
 	{2 ** 33 - 1. self maxPosition} do: 
 			[:position |
 			subject position: position.
 			self assert: subject position equals: position]!
 
 testAppend
-	| actual |
-	subject := self tempWriteStream.
-	subject nextPutAll: 'hello'.
+	| actual padding |
+	subject := self tempWriteStream: #utf8.
+	padding := String new: self bufferSize - Utf8String bom size - 1 withAll: $\x20.
+	subject
+		nextPutAll: padding;
+		nextPut: Character dolphin.
 	subject close.
 	subject := self streamClass
 				write: tempFileName
 				mode: #append
 				check: false
-				text: true.
-	subject nextPutAll: ' world'.
+				type: #utf8.
+	subject nextPutAll: ' says hello'.
 	subject close.
 	actual := File readAllText: tempFileName.
-	self assert: actual equals: 'hello world'!
+	self assert: (actual beginsWith: padding).
+	self assert: (actual copyFrom: padding size + 1)
+		equals: Character dolphin asUtf8String , ' says hello'!
 
 testNextPutAllStartingAt
 	| initialData dataToWrite file |
@@ -238,7 +252,7 @@ testNextPutAllStartingAt2
 
 testPositionAfterWrite
 	| actual |
-	subject := self tempWriteStream.
+	subject := self tempWriteStream: #ansi.
 	subject position: 100.
 	subject nextPut: $a.
 	"Reposition to a later point, but don't write anything."
@@ -253,7 +267,7 @@ testPositionAfterWrite
 
 testPositionPastEnd
 	| pos1 pos2 expected actual pos3 |
-	subject := self tempWriteStream.
+	subject := self tempWriteStream: #ansi.
 	pos1 := (FileStream.PageSize * 1.25) truncated.
 	subject position: pos1.
 	subject print: pos1.
@@ -295,7 +309,7 @@ testPositionPastEnd
 
 testRandomWriteOnePage
 	| pos actual |
-	subject := self tempWriteStream.
+	subject := self tempWriteStream: #ansi.
 	pos := FileStream.PageSize - 2.
 	subject position: pos.
 	self assert: subject position equals: pos.
@@ -359,7 +373,9 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #blockWriteIntervals!constants!private! !
+!AbstractFileStreamTest categoriesFor: #bufferSize!constants!private! !
 !AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #collections!constants!private! !
 !AbstractFileStreamTest categoriesFor: #initializeRandomTestData!initializing!private! !
 !AbstractFileStreamTest categoriesFor: #maxPosition!constants!public! !
 !AbstractFileStreamTest categoriesFor: #randomData1!constants!private! !
@@ -372,6 +388,7 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #tempReadStream!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #tempReadWriteStream!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #tempWriteStream!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #tempWriteStream:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #test1065!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #test64BitPosition!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testAppend!public!unit tests! !

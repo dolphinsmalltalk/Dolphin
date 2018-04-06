@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListViewColumn subclass: #EditableListViewColumn
 	instanceVariableNames: 'isEditable setContentsBlock editor forecolor backcolor preDrawBlock getSortContentsBlock isEditableBlock events cachedParent isValidContentsBlock'
@@ -198,7 +198,7 @@ infoTipPrefixTextFor: anItem on: aCanvasHandle
 	"Only appropriate for text-type columns"
 	(self hasEditor not or: [(self editor isKindOf: TextEdit) or: [self editor isKindOf: ComboBox]])
 		ifFalse: [^''].
-	string := self textFromRow: anItem.
+	string := (self textFromRow: anItem) asUtf16String.
 	size := POINTL new.
 	(GDILibrary default
 		getTextExtentPoint32: aCanvasHandle

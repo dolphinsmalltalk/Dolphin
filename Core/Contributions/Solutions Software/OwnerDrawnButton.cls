@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
@@ -266,7 +266,7 @@ unadornedText
 	(self text includes: $&) ifFalse: [^self text].
 
 	readStream := ReadStream on: self text.
-	writeStream := WriteStream on: (String new: self text size).
+	writeStream := WriteStream on: (Utf16String new: self text size).
 
 	[readStream atEnd] whileFalse:
 		[| char |

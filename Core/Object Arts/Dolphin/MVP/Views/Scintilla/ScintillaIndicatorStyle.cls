@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha reserved'
@@ -56,24 +56,6 @@ alpha: anInteger
 				ifFalse: 
 					[self getAlpha: anInteger default: 30	"Magic number from the Scintilla code - no const for this"]).
 	self updateViewProperty: #alpha!
-
-alphaPercent
-	"Answer an <integer> representing the percentage alpha (transparency) for the indicator.
-	Note that this is a percentage (hence the name), and not the usual 0..255 range. Zero
-	represents completely transparent, 100 completely opaque. Note that this is currently only
-	relevant for the #roundBox indicator style."
-
-	#deprecated.
-	^self alpha ifNil: [30] ifNotNil: [:a | a * 100 // SC_ALPHA_OPAQUE]!
-
-alphaPercent: anInteger 
-	"Set the percentage alpha (transparency) for the indicator to the <integer> argument. Note
-	that this is a percentage (hence the name), and not the usual 0..255 range. Zero represents
-	completely transparent, 100 completely opaque. Note that this is currently only relevant for
-	the #roundBox indicator style."
-
-	#deprecated.
-	self alpha: SC_ALPHA_OPAQUE * anInteger // 100!
 
 basicAlpha: anIntegerOrNil
 	alpha := anIntegerOrNil!
@@ -224,8 +206,6 @@ styleName: aSymbol
 	hoverStyle isNil ifFalse: [self updateViewProperty: #hoverStyleName]! !
 !ScintillaIndicatorStyle categoriesFor: #alpha!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #alpha:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
 !ScintillaIndicatorStyle categoriesFor: #basicAlpha:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicForeAlpha:!accessing!private! !
 !ScintillaIndicatorStyle categoriesFor: #basicForecolor!accessing!private! !

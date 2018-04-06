@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SortAlgorithm
 	instanceVariableNames: ''
@@ -115,11 +115,6 @@ sortBlock
 !SortAlgorithm class methodsFor!
 
 newSortBlock: aDyadicValuable
-	^self subclassResponsibility!
-
-sortBlock: aDyadicValuable
-	#deprecated.
-	^self newSortBlock: aDyadicValuable! !
+	^self subclassResponsibility! !
 !SortAlgorithm class categoriesFor: #newSortBlock:!instance creation!public! !
-!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
 

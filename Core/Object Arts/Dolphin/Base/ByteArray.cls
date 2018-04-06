@@ -59,6 +59,8 @@ asByteArray
 	^self!
 
 asString
+	"Assuming that the receiver contains the bytes of an ANSI string, return that string."
+
 	^self asAnsiString!
 
 basicDwordAtOffset: anInteger

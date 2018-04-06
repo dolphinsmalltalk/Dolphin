@@ -925,7 +925,7 @@ references: aVariableName
 
 reformatSource
 	| newSource stream |
-	stream := WriteStream on: (String new: source size + 100).
+	stream := WriteStream on: (Utf8String new: source size + 100).
 	stream 
 		nextPutAll: (source copyFrom: (replacements inject: 1
 						into: 

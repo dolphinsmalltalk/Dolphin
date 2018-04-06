@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
@@ -16,13 +16,13 @@ overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dw
 	HRESULT URLDownloadToCacheFile(
 		LPUNKNOWN lpUnkcaller,
 		LPCSTR szURL,
-		LPTSTR szFileName,
+		LPWSTR szFileName,
 		DWORD dwBufLength,
 		DWORD dwReserved,
 		IBindStatusCallback *pBSC
 		);"
 
-	<overlap stdcall: hresult URLDownloadToCacheFileA IUnknown* lpstr lpstr dword dword lpvoid>
+	<overlap stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
 	^self invalidCall!
 
 overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc 
@@ -49,8 +49,8 @@ urlDownload: url toFile: aStringFilename
 
 	self 
 		overlappedURLDownloadToFile: nil
-		szURL: url asAnsiString
-		szFilename: aStringFilename asAnsiString
+		szURL: url asUtf16String
+		szFilename: aStringFilename asUtf16String
 		dwReserved: 0
 		pBSC: nil!
 
@@ -65,11 +65,11 @@ urlDownloadToCacheFile: url
 	has completed)."
 
 	| filename |
-	filename := String new: File maxPath.	"String auto allocates extra byte for null terminator"
+	filename := Utf16String new: File maxPath.	"String auto allocates extra byte for null terminator"
 	self 
 		overlappedURLDownloadToCacheFile: nil
-		szURL: url asAnsiString
-		szFilename: filename
+		szURL: url asUtf16String
+		szFilename: filename 
 		dwBufLength: filename size
 		dwReserved: 0
 		pBSC: nil.

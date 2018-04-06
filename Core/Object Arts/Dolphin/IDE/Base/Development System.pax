@@ -332,7 +332,6 @@ package methodNames
 	add: #TranscriptShell -> #help;
 	add: #UndefinedObject -> #aspectDisplayOn:;
 	add: #UndefinedObject -> #literalTextStyle;
-	add: #Utf16String -> #aspectDisplayOn:;
 	add: #ValueModel -> #debugPrintString;
 	add: #VariableEnvironment -> #includesMethodUncached:;
 	add: #VariableEnvironment -> #updateCachesForMethod:;
@@ -3278,7 +3277,7 @@ defaultAboutBitmap
 		ifFalse: [DIBSection width: 480 height: 360]!
 
 icon
-	self isBaseImagePackage ifTrue: [^self class dolphinPackageIcon].
+	self isBasePackage ifTrue: [^self class dolphinPackageIcon].
 	^super icon!
 
 publishedAspects
@@ -4888,21 +4887,24 @@ aspectDisplayOn: aStream
 	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
   	argument in a form that a user viewing the receiver as the value of a published aspect would 
   	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats. In this case we want to keep to a reasonable length and remove line delimiters.
+  	formats. In this case we want to keep to a reasonable length and stop at the first line delimiter.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
 
-	| i max size |
+	| count max charStream |
 	aStream nextPut: $'.
-	size := self size.
-	max := size min: Aspect maxDisplayCharacters - 2.
-	i := 0.
-	[i < max] whileTrue: 
-			[| each |
-			each := self at: (i := i + 1).
-			(each == $\r or: [each == $\n])
-				ifTrue: [max := 0]
-				ifFalse: [aStream nextPut: each]].
-	i < size ifTrue: [aStream nextPutAll: ' ...'].
+	max := self size min: Aspect maxDisplayCharacters - 2.
+	charStream := self readStream.
+	count := 0.
+	[charStream atEnd or: [count >= max]] whileFalse: 
+			[| ch |
+			ch := charStream next.
+			(ch == $\r or: [ch == $\n])
+				ifTrue: 
+					["Stop at line delimiter"
+					count := max]
+				ifFalse: [aStream nextPut: ch].
+			count := count + 1].
+	charStream atEnd ifFalse: [aStream nextPutAll: ' ...'].
 	aStream nextPut: $'!
 
 debugPrintString
@@ -5580,12 +5582,6 @@ literalTextStyle
 	^#literalPseudo! !
 !UndefinedObject categoriesFor: #aspectDisplayOn:!development!private! !
 !UndefinedObject categoriesFor: #literalTextStyle!constants!private! !
-
-!Utf16String methodsFor!
-
-aspectDisplayOn: aStream
-	self asString aspectDisplayOn: aStream! !
-!Utf16String categoriesFor: #aspectDisplayOn:!development!private! !
 
 !ValueConverter class methodsFor!
 

@@ -199,7 +199,7 @@ getTextFormat: formatId ifNone: exceptionHandler
 			hText := UserLibrary default getClipboardData: formatId.
 			hText isNull ifTrue: [^exceptionHandler value].
 			pText := KernelLibrary default globalLock: hText.
-			text := String fromAddress: pText.
+			text := Utf16String fromAddress: pText.
 			KernelLibrary default globalUnlock: hText.
 			text]!
 
@@ -208,7 +208,7 @@ getTextIfNone: exceptionHandler
 	of the clipboard. If no text is currently available, the answers the
 	result of evaluating the <niladicValuable> exceptionHandler."
 
-	^self getTextFormat: CF_TEXT ifNone: exceptionHandler!
+	^self getTextFormat: CF_UNICODETEXT ifNone: exceptionHandler!
 
 getTextOrEmpty
 	^self getTextIfNone: ['']!

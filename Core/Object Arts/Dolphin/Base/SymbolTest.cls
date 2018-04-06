@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractStringTest subclass: #SymbolTest
 	instanceVariableNames: ''
@@ -12,6 +12,9 @@ SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are 
 	- the sunit class category'!
 !SymbolTest categoriesForClass!Unclassified! !
 !SymbolTest methodsFor!
+
+assimilate: each 
+	^Character utf8Value: each asInteger!
 
 assimilateString: aString
 	^aString asSymbol!
@@ -111,6 +114,7 @@ testReplaceIdentityWith
 
 testResize
 	self should: [super testResize] raise: Processor constWriteSignal! !
+!SymbolTest categoriesFor: #assimilate:!helpers!private! !
 !SymbolTest categoriesFor: #assimilateString:!helpers!private! !
 !SymbolTest categoriesFor: #collectionClass!helpers!private! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !

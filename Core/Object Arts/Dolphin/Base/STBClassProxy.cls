@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBClassProxy
 	instanceVariableNames: 'packageName locatorKey'
@@ -51,10 +51,6 @@ withClassLocator: aClassLocator
 
 !STBClassProxy class methodsFor!
 
-for: aClass 
-	#deprecated.
-	^self forClass: aClass!
-
 forClass: aClass
 	"Answer a new instance with its locator key representing aClass."
 
@@ -78,7 +74,6 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!STBClassProxy class categoriesFor: #for:!instance creation!public! !
 !STBClassProxy class categoriesFor: #forClass:!instance creation!public! !
 !STBClassProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !STBClassProxy class categoriesFor: #stbVersion!binary filing!public! !

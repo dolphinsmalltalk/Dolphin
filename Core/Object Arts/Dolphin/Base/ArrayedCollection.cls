@@ -92,12 +92,15 @@ identityIncludes: anObject
 		from: 1
 		to: self size) ~~ 0!
 
-includes: target
-	"Answer whether the argument, target, is one of the elements of the receiver.
-	Implementation Note: Override superclass to provide a more efficient implementation."
+includes: anObject
+	"Answer whether the argument, anObject, is one of the elements of the receiver."
 
-	1 to: self size do: [:i | target = (self at: i) ifTrue: [^true]].
-	^false!
+	"Implementation Note: Override superclass only to provide a more efficient implementation."
+
+	^(self
+		nextIndexOf: anObject
+		from: 1
+		to: self size) ~~ 0!
 
 inject: anObject into: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
@@ -131,7 +134,8 @@ nextIdentityIndexOf: anElement from: start to: stop
 	Override the inherited implementation to make use of the primitive"
 
 	<primitive: 59>
-	^super nextIdentityIndexOf: anElement from: start to: stop!
+	start to: stop do: [:i | (self at: i) == anElement ifTrue: [^i]].
+	^0!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 

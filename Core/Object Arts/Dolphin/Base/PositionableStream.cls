@@ -39,6 +39,30 @@ basicNextAvailable
 
 	^self atEnd ifFalse: [self basicNext]!
 
+basicUpTo: anObject
+	"Answer a collection of elements starting with the next element accessed by the receiver,
+	and up to, not inclusive of, the next element that is equal to anObject. Positions the
+	stream after anObject if found. If anObject is not in the collection, answer the entire rest
+	of the collection. If the receiver is at its end, answer an empty Collection."
+
+	| startIndex endIndex |
+	self isReadable ifFalse: [^self shouldNotImplement].
+	startIndex := position + 1.
+	"We can perform a fast scan for anObject in the collection. Most streamed over
+	SequenceableCollections have a primitive implementation of #nextIdentityIndexOf:from:to:"
+	position := collection
+				nextIdentityIndexOf: anObject
+				from: startIndex
+				to: readLimit.
+	position == 0
+		ifTrue: 
+			["Not found. Result is equivalent of #upToEnd"
+			endIndex := position := readLimit]
+		ifFalse: 
+			["Found. Answer the elements before anObject, and leave the stream positioned immediately after it."
+			endIndex := position - 1].
+	^collection copyFrom: startIndex to: endIndex!
+
 collection
 	"Private - Answer the collection over which the receiver is streaming."
 
@@ -56,6 +80,9 @@ contentsSpecies
 
 	^collection species
 !
+
+encoding
+	^collection class encoding!
 
 lastPosition
 	"Private - Answer the last position in the receiver (for the purposes of determining
@@ -200,23 +227,7 @@ upTo: anObject
 	stream after anObject if found. If anObject is not in the collection, answer the entire rest
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
-	| startIndex endIndex |
-	self isReadable ifFalse: [^self shouldNotImplement].
-	startIndex := position + 1.
-	"Override as we can perform a fast scan for anObject in the collection. Most streamed over
-	SequenceableCollections have a primitive implementation of #nextIdentityIndexOf:from:to:"
-	position := collection
-				nextIdentityIndexOf: anObject
-				from: startIndex
-				to: readLimit.
-	position == 0
-		ifTrue: 
-			["Not found. Result is equivalent of #upToEnd"
-			endIndex := position := readLimit]
-		ifFalse: 
-			["Found. Answer the elements before anObject, and leave the stream positioned immediately after it."
-			endIndex := position - 1].
-	^collection copyFrom: startIndex to: endIndex!
+	^collection class decodeFrom: self upTo: anObject!
 
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
@@ -228,9 +239,11 @@ upToEnd
 	^self next: self lastPosition - self position! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
 !PositionableStream categoriesFor: #basicNextAvailable!accessing!public! !
+!PositionableStream categoriesFor: #basicUpTo:!accessing!public! !
 !PositionableStream categoriesFor: #collection!accessing!private! !
 !PositionableStream categoriesFor: #contents!accessing!public! !
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
+!PositionableStream categoriesFor: #encoding!constants!public! !
 !PositionableStream categoriesFor: #lastPosition!accessing!private! !
 !PositionableStream categoriesFor: #nextAvailable!accessing!public! !
 !PositionableStream categoriesFor: #nextAvailable:!accessing!public! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
@@ -119,22 +119,6 @@ hasTicks: aBoolean
 		set: aBoolean not
 		recreateIfChanged: false!
 
-hasTicksBoth
-	#deprecated.
-	^self tickStyle == #bothSides!
-
-hasTicksBoth: aBoolean 
-	#deprecated.
-	self tickStyle: (aBoolean ifTrue: [#bothSides] ifFalse: [#bottom])!
-
-hasTicksTopOrLeft
-	#deprecated.
-	^#(#top #left) includes: self tickStyle!
-
-hasTicksTopOrLeft: aBoolean 
-	#deprecated.
-	self tickStyle: (aBoolean ifTrue: [#top] ifFalse: [#bottom])!
-
 hasToolTips
 	"Answer whether the receiver displays tool tips."
 
@@ -233,14 +217,6 @@ range: anIntegerInterval
 		wParam: true asParameter
 		lParam: anIntegerInterval stop!
 
-selection
-	#deprecated.
-	^self selectionRange!
-
-selection: anIntervalOrNil 
-	#deprecated.
-	self selectionRange: anIntervalOrNil!
-
 selectionRange
 	"Answer the current selection range of the receiver, or nil if their is none."
 
@@ -279,7 +255,7 @@ state
 								receiver: self
 								selector: #ticks:
 								argument: ticks)]].
-	#(#(#pageSize: #pageSize 20) #(#lineSize: #lineSize 1) #(#range: #range nil) #(#selection: #selection nil) #(#thumbLength: #thumbLength nil)) 
+	#(#(#pageSize: #pageSize 20) #(#lineSize: #lineSize 1) #(#range: #range nil) #(#selectionRange: #selectionRange nil) #(#thumbLength: #thumbLength nil)) 
 		do: 
 			[:each | 
 			| value |
@@ -436,10 +412,6 @@ tickStyle: aSymbol
 !Slider categoriesFor: #hasThumb:!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasTicks!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasTicks:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasToolTips!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasToolTips:!accessing-styles!public!updating! !
 !Slider categoriesFor: #initialize!initializing!public! !
@@ -455,8 +427,6 @@ tickStyle: aSymbol
 !Slider categoriesFor: #pageSize:!accessing!public! !
 !Slider categoriesFor: #range!accessing!public! !
 !Slider categoriesFor: #range:!accessing!public! !
-!Slider categoriesFor: #selection!accessing!public! !
-!Slider categoriesFor: #selection:!accessing!public! !
 !Slider categoriesFor: #selectionRange!accessing!public! !
 !Slider categoriesFor: #selectionRange:!accessing!public! !
 !Slider categoriesFor: #state!accessing!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #TextEdit
 	instanceVariableNames: 'teFlags'
@@ -999,7 +999,7 @@ selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
 	EM_REPLACESEL does not return a value."
 
-	self sendMessage: EM_REPLACESEL wParam: 0 lpParam: aString asAnsiString.
+	self sendMessage: EM_REPLACESEL wParam: 0 lpParam: aString asUtf16String.
 !
 
 selectionRange

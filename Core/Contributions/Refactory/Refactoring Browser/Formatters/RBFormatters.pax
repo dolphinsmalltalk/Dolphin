@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'RBFormatters'.
 package paxVersion: 1;
 	basicComment: 'Smalltalk Code Reformatters

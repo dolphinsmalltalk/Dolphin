@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
@@ -146,12 +146,10 @@ wmInitDialog: msgInteger wParam: wParam lParam: lParam
 	path := self value.
 	(path notNil and: [path notEmpty])
 		ifTrue: 
-			[| pathw |
-			pathw := path asUtf16String.
-			view
+			[view
 				sendMessage: BFFM_SETSELECTIONW
 				wParam: true asParameter
-				lpParam: pathw].
+				szParam: path].
 	bfFlags := bfFlags mask: InitializedMask set: true.
 	^0! !
 !BrowseFolderDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !

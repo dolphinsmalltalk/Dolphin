@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #FileTest
 	instanceVariableNames: ''
@@ -325,7 +325,7 @@ testRemoveDirectory
 
 testRemoveExtension
 	| path |
-	self should: [File removeExtension: nil] raise: CRTError.
+	self should: [File removeExtension: nil] raise: Error.
 	self assert: (File removeExtension: 'a.') = 'a'.
 	self assert: (File removeExtension: '.exe') = ''.
 	self assert: (File removeExtension: '.') = ''.
@@ -367,7 +367,7 @@ testRemovePathDelimiter
 !
 
 testSplitDriveFrom
-	self should: [File splitDriveFrom: nil] raise: CRTError.
+	self should: [File splitDriveFrom: nil] raise: Error.
 	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') = 'c:'.
 	self assert: (File splitDriveFrom: 'a\b.txt') = ''.
 	self assert: (File splitDriveFrom: 'b.txt') = ''.
@@ -381,7 +381,7 @@ testSplitDriveFrom
 
 testSplitExtensionFrom
 	| path ext |
-	self should: [File splitExtensionFrom: nil] raise: CRTError.
+	self should: [File splitExtensionFrom: nil] raise: Error.
 	self assert: (File splitExtensionFrom: 'c:\a\a2/b.txt') equals: 'txt'.
 	self assert: (File splitExtensionFrom: 'a\b.txt') equals: 'txt'.
 	self assert: (File splitExtensionFrom: 'b.txt') equals: 'txt'.
@@ -413,7 +413,7 @@ testSplitExtensionFrom
 
 testSplitFilenameFrom
 	| path |
-	self should: [File splitFilenameFrom: nil] raise: CRTError.
+	self should: [File splitFilenameFrom: nil] raise: Error.
 	self assert: (File splitFilenameFrom: '.') equals: '.'.
 	self assert: (File splitFilenameFrom: 'c:\a\a2/b.txt') equals: 'b.txt'.
 	self assert: (File splitFilenameFrom: 'a\b.txt') equals: 'b.txt'.

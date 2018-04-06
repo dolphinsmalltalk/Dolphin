@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -1463,8 +1463,7 @@ getWindowText
 		getWindowText: handle
 		lpString: text
 		nMaxCount: textLen + 1.
-	#todo.	"As a temporary compatbility measure to avoid breaking too much, force to ANSI."
-	^text asAnsiString!
+	^text!
 
 getWndProc
 	"Private - Answer the window procedure of the receiver."
@@ -3099,6 +3098,16 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lParam
 		msg: anIntegerMessageID
 		wParam: wParam
 		lpParam: lParam!
+
+sendMessage: anIntegerMessageID wParam: wParam szParam: lParam
+	"Private - Send the Win32 message anIntegerMessageID with parameters wParam and lpParam (pointer) to the receiver's
+	Window."
+
+	^UserLibrary default
+		sendMessage: handle
+		msg: anIntegerMessageID
+		wParam: wParam
+		lpParam: lParam asUtf16String!
 
 setCapture
 	"Sets mouse capture to the receiver."
@@ -4785,6 +4794,7 @@ zOrderTop
 !View categoriesFor: #sendMessage:wParam:!operations!private! !
 !View categoriesFor: #sendMessage:wParam:lParam:!operations!private! !
 !View categoriesFor: #sendMessage:wParam:lpParam:!operations!private! !
+!View categoriesFor: #sendMessage:wParam:szParam:!operations!private! !
 !View categoriesFor: #setCapture!operations!public! !
 !View categoriesFor: #setEvents:!events!private! !
 !View categoriesFor: #setExtent:!geometry!public! !

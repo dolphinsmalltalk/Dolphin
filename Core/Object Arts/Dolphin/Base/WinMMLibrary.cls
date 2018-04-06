@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #WinMMLibrary
 	instanceVariableNames: ''
@@ -15,7 +15,7 @@ mciGetErrorString: code lpszErrorText: returnString cchErrorText: retsize
 	Answer whether the conversion succeeded.
   		BOOL mciGetErrorString(DWORD fdwError, LPTSTR lpszErrorText, UINT cchErrorText);"
 
-	<stdcall: bool mciGetErrorStringA dword lpvoid dword>
+	<stdcall: bool mciGetErrorStringW dword lpwstr dword>
 	^self invalidCall!
 
 mciSendString: commandString
@@ -28,10 +28,10 @@ mciSendString: commandString lpszReturnString: returnString cchReturn: retsize h
 	Answers zero or an error encoded in the low-word (generic) or
 	high-word (device specific).
 	
-	MCIERROR mciSendString(LPCTSTR lpszCommand, LPTSTR lpszReturnString,
+	MCIERROR mciSendString(LPCWSTR lpszCommand, LPWSTR lpszReturnString,
 		UINT cchReturn, HANDLE hwndCallback);"
 
-	<stdcall: dword mciSendStringA lpvoid lpvoid dword handle>
+	<stdcall: dword mciSendStringW lpwstr lpwstr dword handle>
 	^self invalidCall!
 
 playSound: aString hmod: anExternalHandle fdwSound: anInteger
@@ -39,9 +39,9 @@ playSound: aString hmod: anExternalHandle fdwSound: anInteger
 	A system event may be associated with a sound in the registry. 
 	Answers whether successful.
 			
-		BOOL PlaySound(LPCSTR pszSound, HMODULE hmod, DWORD fdwSound);"
+		BOOL PlaySound(LPCWSTR pszSound, HMODULE hmod, DWORD fdwSound);"
 
-	<stdcall: bool PlaySoundA lpvoid handle dword>
+	<stdcall: bool PlaySoundW lpvoid handle dword>
 	^self invalidCall! !
 !WinMMLibrary categoriesFor: #mciGetErrorString:lpszErrorText:cchErrorText:!public!win32 functions-MCI! !
 !WinMMLibrary categoriesFor: #mciSendString:!public!win32 functions-MCI! !

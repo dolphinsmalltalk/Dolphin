@@ -496,6 +496,9 @@ encodedAt: anInteger put: anObject
 	self at: anInteger put: anObject.
 	^anInteger!
 
+encoding
+	^#pointers!
+
 endsWith: aCollection
 	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
 
@@ -1175,6 +1178,7 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!public! !
+!SequenceableCollection categoriesFor: #encoding!constants!encode/decode!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
@@ -1262,6 +1266,13 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 					ifFalse: [high := index - 1]].
 	^low!
 
+decodeFrom: aReadStream upTo: anObject
+	"Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
+	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
+	stream, then the remainder of the future sequence is answered and the stream is left at end."
+
+	^aReadStream basicUpTo: anObject!
+
 decodeNextFrom: aReadStream
 	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
@@ -1307,6 +1318,7 @@ writeStream: anInteger
 
 	^WriteStream on: (self new: anInteger)! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
+!SequenceableCollection class categoriesFor: #decodeFrom:upTo:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #encodeOn:put:!encode/decode!public! !

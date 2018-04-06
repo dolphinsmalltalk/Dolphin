@@ -355,8 +355,7 @@ getItemText: itemHandle
 	tvItem hItem: itemHandle.
 	tvItem newTextBuffer: 128.
 	self tvmGetItem: tvItem.
-	#todo.	"Temporary, for reasons of compatibility, always return an ANSI string."
-	^tvItem pszText asAnsiString!
+	^tvItem pszText!
 
 getSingleSelection
 	"Private - Answer the 'index' (or in the case of the receiver, the handle) of the selected object in 

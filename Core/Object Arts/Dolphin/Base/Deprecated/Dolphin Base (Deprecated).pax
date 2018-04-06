@@ -42,6 +42,7 @@ package methodNames
 	add: #CRTLibrary -> #_makepath:drive:dir:fname:ext:;
 	add: #CRTLibrary -> #_putenv:;
 	add: #CRTLibrary -> #_splitpath:drive:dir:fname:ext:;
+	add: #CRTLibrary -> #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:;
 	add: #CRTLibrary -> #acos:;
 	add: #CRTLibrary -> #asin:;
 	add: #CRTLibrary -> #atan:;
@@ -69,6 +70,7 @@ package methodNames
 	add: #CRTLibrary -> #sin:;
 	add: #CRTLibrary -> #sqrt:;
 	add: #CRTLibrary -> #strcat:strSource:;
+	add: #CRTLibrary -> #strcat_s:bufferSize:strSource:;
 	add: #CRTLibrary -> #strerror:;
 	add: #CRTLibrary -> #strncpy:strSource:count:;
 	add: #CRTLibrary -> #tan:;
@@ -85,10 +87,25 @@ package methodNames
 	add: #KernelLibrary -> #lstrcmp:lpString2:;
 	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
+	add: #MessageBox -> #abortRetryIgnore;
+	add: #MessageBox -> #error;
+	add: #MessageBox -> #fatalError;
+	add: #MessageBox -> #ok;
+	add: #MessageBox -> #okCancel;
+	add: #MessageBox -> #prompt;
+	add: #MessageBox -> #retryCancel;
+	add: #MessageBox -> #systemModal;
+	add: #MessageBox -> #taskModal;
+	add: #MessageBox -> #yesNo;
+	add: #MessageBox -> #yesNoCancel;
+	add: #MessageBoxAbstract -> #notify;
+	add: #MessageBoxAbstract -> #warning;
 	add: #Package -> #script:;
 	add: #Package -> #script:put:;
 	add: #Process -> #fpeMask;
+	add: #Process -> #fpeMask:;
 	add: #ShlwapiLibrary -> #pathStripPath:;
+	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
@@ -98,6 +115,11 @@ package methodNames
 	add: 'ExternalDescriptor class' -> #oneStringArg;
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
+	add: 'SortAlgorithm class' -> #sortBlock:;
+	add: 'STBClassProxy class' -> #for:;
+	add: 'STBCollectionProxy class' -> #for:;
+	add: 'STBSingletonProxy class' -> #for:;
+	add: 'STBSingletonProxy class' -> #for:using:;
 	add: 'String class' -> #fromUnicodeString:;
 	add: 'String class' -> #unicodeClass;
 	yourself.
@@ -286,6 +308,11 @@ _splitpath: path drive: drive dir: dir fname: fname ext: ext
 	#deprecated.	"Insecure - use _splitpath_s"
 	^self invalidCall!
 
+_splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
+	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
+	#deprecated.	"Use _wsplitpath_s"
+	^self invalidCall!
+
 acos: aFloat
 	<cdecl: double acos double>
 	#deprecated.
@@ -421,6 +448,11 @@ strcat: strDestination strSource: strSource
 	#deprecated.	"This function may cause buffer overruns so is insecure. Use strcat_s instead."
 	^self invalidCall!
 
+strcat_s: destString bufferSize: anInteger strSource: sourceString
+	<cdecl: sdword strcat_s lpstr intptr lpstr>
+	#deprecated. "No longer used in Dolphin base image, or exported from to-go VMs"
+	^self invalidCall!
+
 strerror: errno
 	<cdecl: lpstr strerror sdword>
 	#deprecated.	"Insecure - see MSDN"
@@ -458,6 +490,7 @@ thread_errno
 !CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
@@ -485,6 +518,7 @@ thread_errno
 !CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
@@ -630,6 +664,75 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
 
+!MessageBox methodsFor!
+
+abortRetryIgnore
+	#deprecated.
+	self buttonStyle: #abortRetryIgnore!
+
+error
+	#deprecated.
+	self iconStyle: #error!
+
+fatalError
+	#deprecated.
+	self beFatalError!
+
+ok
+	#deprecated.
+	self buttonStyle: #ok!
+
+okCancel
+	#deprecated.
+	self buttonStyle: #okCancel!
+
+prompt
+	#deprecated.
+	self iconStyle: #prompt!
+
+retryCancel
+	#deprecated.
+	self buttonStyle: #retryCancel!
+
+systemModal
+	#deprecated.
+	self beSystemModal!
+
+taskModal
+	#deprecated.
+	self beTaskModal!
+
+yesNo
+	#deprecated.
+	self buttonStyle: #yesNo!
+
+yesNoCancel
+	#deprecated.
+	self buttonStyle: #yesNoCancel! !
+!MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
+!MessageBox categoriesFor: #error!modes!public! !
+!MessageBox categoriesFor: #fatalError!accessing-styles!public! !
+!MessageBox categoriesFor: #ok!accessing-styles!public! !
+!MessageBox categoriesFor: #okCancel!accessing-styles!public! !
+!MessageBox categoriesFor: #prompt!accessing-styles!public! !
+!MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
+!MessageBox categoriesFor: #systemModal!accessing-styles!public! !
+!MessageBox categoriesFor: #taskModal!accessing-styles!public! !
+!MessageBox categoriesFor: #yesNo!accessing-styles!public! !
+!MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
+
+!MessageBoxAbstract methodsFor!
+
+notify
+	#deprecated.
+	self iconStyle: #notify!
+
+warning
+	#deprecated.
+	self iconStyle: #warning! !
+!MessageBoxAbstract categoriesFor: #notify!modes!public! !
+!MessageBoxAbstract categoriesFor: #warning!modes!public! !
+
 !Package methodsFor!
 
 script: scriptSymbol
@@ -646,8 +749,13 @@ script: scriptSymbol put: aString
 
 fpeMask
 	#deprecated.	"Use Float class>>exceptionMask, or #fpControl"
-	^fpControl bitAnd: CRTConstants._MCW_EM! !
+	^fpControl bitAnd: CRTConstants._MCW_EM!
+
+fpeMask: anInteger
+	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
+	^self setFpControl: anInteger mask: CRTConstants._MCW_EM! !
 !Process categoriesFor: #fpeMask!accessing!public! !
+!Process categoriesFor: #fpeMask:!accessing!private! !
 
 !ShlwapiLibrary methodsFor!
 
@@ -657,10 +765,50 @@ pathStripPath: pszPath
 	^self invalidCall! !
 !ShlwapiLibrary categoriesFor: #pathStripPath:!**auto generated**!public! !
 
+!SortAlgorithm class methodsFor!
+
+sortBlock: aDyadicValuable
+	Notification deprecated.
+	^self newSortBlock: aDyadicValuable! !
+!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
+
+!STBClassProxy class methodsFor!
+
+for: aClass 
+	#deprecated.
+	^self forClass: aClass! !
+!STBClassProxy class categoriesFor: #for:!instance creation!public! !
+
+!STBCollectionProxy class methodsFor!
+
+for: aCollection 
+	#deprecated.
+	^self forCollection: aCollection! !
+!STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
+
+!STBSingletonProxy class methodsFor!
+
+for: aClass 
+	#deprecated.
+	^self forClass: aClass!
+
+for: aClass using: aSelectorSymbol 
+	#deprecated.
+	^self forClass: aClass using: aSelectorSymbol! !
+!STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
+!STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
+
+!Stream methodsFor!
+
+nextOrNil
+	#deprecated.
+	^self nextAvailable! !
+!Stream categoriesFor: #nextOrNil!accessing!public! !
+
 !String methodsFor!
 
 asUnicodeString
-	#deprecated.
+	Notification deprecated.
 	^self asUtf16String! !
 !String categoriesFor: #asUnicodeString!converting!public! !
 

@@ -134,6 +134,11 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 		do: [:i | aSequenceableCollection at: i put: self next].
 	^aSequenceableCollection!
 
+nextAvailable
+	"Answer the next of the receiver's future sequence values, or nil if at the end of the stream."
+
+	^self atEnd ifFalse: [self next]!
+
 nextAvailable: anInteger 
 	"Answer up to anInteger elements of the receiver's collection. Generally, the answer will be
 	a collection of the same class as the one accessed by the receiver (though this is
@@ -153,12 +158,6 @@ nextMatchFor: anObject
 	end of stream exception (via #next) if there are no more elements in the receiver."
 
 	^anObject = self next!
-
-nextOrNil
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
-
-	^self atEnd ifFalse: [self next]!
 
 print: anObject
 	"Ask anObject to append its textual description to the receiver"
@@ -190,7 +189,7 @@ upTo: anObject
 
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
-	[(nextObject := self nextOrNil) isNil or: [nextObject = anObject]] 
+	[(nextObject := self nextAvailable) isNil or: [nextObject = anObject]] 
 		whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
@@ -217,9 +216,9 @@ upToEnd
 !Stream categoriesFor: #next!accessing!public! !
 !Stream categoriesFor: #next:!accessing!public! !
 !Stream categoriesFor: #next:into:startingAt:!accessing!public! !
+!Stream categoriesFor: #nextAvailable!accessing!public! !
 !Stream categoriesFor: #nextAvailable:!accessing!public! !
 !Stream categoriesFor: #nextMatchFor:!accessing!public! !
-!Stream categoriesFor: #nextOrNil!accessing!public! !
 !Stream categoriesFor: #print:!printing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
 !Stream categoriesFor: #skipTo:!positioning!public! !

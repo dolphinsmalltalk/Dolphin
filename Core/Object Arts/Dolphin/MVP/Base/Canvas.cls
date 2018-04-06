@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Canvas
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
@@ -801,10 +801,6 @@ selectPalette: hPalette
 	^GDILibrary default selectPalette: self asParameter hPal: hPalette bForceBackground: false
 !
 
-setBkMode: mode 
-	#deprecated.
-	^self backgroundMode: mode!
-
 setDefaultAttributes
 	"Private - Set the receiver's initial pen, brush and font."
 
@@ -1099,7 +1095,6 @@ windowScaling
 !Canvas categoriesFor: #selectClipRegion:!operations!public! !
 !Canvas categoriesFor: #selectObject:!operations!private! !
 !Canvas categoriesFor: #selectPalette:!colors!public! !
-!Canvas categoriesFor: #setBkMode:!modes!public! !
 !Canvas categoriesFor: #setDefaultAttributes!private!tools! !
 !Canvas categoriesFor: #setTextAlign:!modes!public! !
 !Canvas categoriesFor: #source:!accessing!private! !

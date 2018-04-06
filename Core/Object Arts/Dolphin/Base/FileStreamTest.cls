@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractFileStreamTest subclass: #FileStreamTest
 	instanceVariableNames: ''
@@ -25,13 +25,16 @@ assertBufferEmptyOrDirty: fs size: size
 			self 
 				assert: ((fs isBufferDirty and: [pos > 0]) or: [fs isBufferDirty not and: [pos == 0]])]!
 
+bufferSize
+	^FileStream.PageSize!
+
 maxPosition
-	"Seems to be a minor bug that we can't position a FileStream onto the last page of a 2^63-1 sized file, although not really an issue in practice."
+	"Private - Seems to be a minor bug that we can't position a FileStream onto the last page of a 2^63-1 sized file, although not really an issue in practice."
 
 	^2 ** 63 - 1 - FileStream.PageSize!
 
 maxSize
-	"The maximum size of a file on NTFS (the implementation limit, as opposed to the theoretical
+	"Private - The maximum size of a file on NTFS (the implementation limit, as opposed to the theoretical
 	limit). Realistically this can only be achieved with a sparse file."
 
 	^256 * (1024 ** 4) - (64 * 1024)!
@@ -126,7 +129,7 @@ testWritePastEnd
 	so that previous buffer content is not mirrored into the last page."
 
 	| actual expected r |
-	subject := self tempWriteStream.
+	subject := self tempWriteStream: #ansi.
 	expected := WriteStream with: (String new: FileStream.PageSize * 2).
 	expected reset.
 	r := Random new.
@@ -148,8 +151,9 @@ testWritePastEnd
 	self assert: actual equals: expected! !
 !FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !
 !FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
-!FileStreamTest categoriesFor: #maxPosition!constants!public! !
-!FileStreamTest categoriesFor: #maxSize!constants!public! !
+!FileStreamTest categoriesFor: #bufferSize!constants!private! !
+!FileStreamTest categoriesFor: #maxPosition!constants!private! !
+!FileStreamTest categoriesFor: #maxSize!constants!private! !
 !FileStreamTest categoriesFor: #streamClass!helpers!private! !
 !FileStreamTest categoriesFor: #streamOn:!helpers!private! !
 !FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !

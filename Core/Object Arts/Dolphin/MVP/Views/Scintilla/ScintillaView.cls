@@ -2379,7 +2379,7 @@ find: aString range: anInterval flags: anInteger
 	findText := FINDTEXTEX 
 				from: start
 				to: stop
-				text: aString.
+				text: (self stringClass fromString: aString).
 	self sciFindText: anInteger ft: findText.
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
@@ -2801,13 +2801,6 @@ highlightMismatchedBrace: posInteger
 				wParam: posInteger - 1
 				lParam: 0]!
 
-highlightRange: anInterval withIndicator: idInteger 
-	"Apply the indicator identified by the <integer> argument to the range of text
-	specified by the <Interval> argument."
-
-	#deprecated.
-	self setIndicator: idInteger range: anInterval!
-
 hoverTime
 	"Retrieve the time the mouse must sit still to generate a mouse dwell event."
 
@@ -2952,10 +2945,6 @@ indicatorCount
 	indicators, this is now fixed at 32 and not related to the number of style bits used."
 
 	^INDIC_MAX + 1!
-
-indicatorDefinitions: aSequenceableCollection 
-	#deprecated.
-	self indicatorStyles: aSequenceableCollection!
 
 indicatorIdFromName: anIntegerOrSymbol
 	^anIntegerOrSymbol isInteger
@@ -9382,11 +9371,13 @@ selectionMode: aSymbol
 
 	self sciSetSelectionMode: (self class selectionModes indexOf: aSymbol) - 1!
 
-selectionPlainText: aString 
+selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
 	SCI_REPLACESEL does not return a useful value."
 
-	self modifyText: [self sciReplaceSel: aString]!
+	| text |
+	text := self stringClass fromString: aString.
+	self modifyText: [self sciReplaceSel: text]!
 
 selectionRange
 	"Answers an <Interval> identifying the one-based range of selected text. The start of the
@@ -9900,12 +9891,6 @@ styleAt: anInteger
 	position."
 
 	^self styleWithId: (self styleIdAt: anInteger)!
-
-styleBits
-	"Answer the number of bits available for text styles. This is now always 8."
-
-	#deprecated.
-	^8!
 
 styledTextFrom: startInteger to: stopInteger 
 	"Private - Answer a <ByteArray> containing pairs of bytes that represent the character and
@@ -10915,7 +10900,6 @@ zoomOut
 !ScintillaView categoriesFor: #highlightGuide!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #highlightGuide:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #highlightMismatchedBrace:!**auto generated**!brace highlighting!public!scintilla interface! !
-!ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
 !ScintillaView categoriesFor: #hoverTime!**auto generated**!notifications!public!scintilla interface! !
 !ScintillaView categoriesFor: #hoverTime:!**auto generated**!notifications!public!scintilla interface! !
 !ScintillaView categoriesFor: #identifyTextMatchingSelectionWithStyleName:!public!searching & replacing! !
@@ -10932,7 +10916,6 @@ zoomOut
 !ScintillaView categoriesFor: #indentationGuides:!public!tabs & indentation guides! !
 !ScintillaView categoriesFor: #indentationOfLine:!public!tabs & indentation guides! !
 !ScintillaView categoriesFor: #indicatorCount!constants!indicators!public! !
-!ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
 !ScintillaView categoriesFor: #indicatorIdFromName:!indicators!private! !
 !ScintillaView categoriesFor: #indicatorMaskAt:!**auto generated**!indicators!public!scintilla interface! !
 !ScintillaView categoriesFor: #indicators!indicators!public! !
@@ -11554,7 +11537,6 @@ zoomOut
 !ScintillaView categoriesFor: #stopStyling!public!styling! !
 !ScintillaView categoriesFor: #stringClass!helpers!private! !
 !ScintillaView categoriesFor: #styleAt:!public!styling! !
-!ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 !ScintillaView categoriesFor: #styledTextFrom:to:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #styleIdAt:!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #styleNamed:!enquiries!public!styling! !

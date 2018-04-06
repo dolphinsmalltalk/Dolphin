@@ -46,6 +46,33 @@ testAnsiStringRoundTrip
 	self assert: ansi size equals: 256.
 	self assert: ansi equals: ansiAll!
 
+testBeginsWith
+	| subject comperand pound |
+	super testBeginsWith.
+	pound := String with: (Character value: 163).
+	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
+	self assert: (subject beginsWith: Character dolphin).
+	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
+	self deny: (subject beginsWith: (Character value: 16rF0)).
+	self deny: (subject beginsWith: (String with: (Character value: 16r3D))).
+	self deny: (subject beginsWith: (Character value: 16r3D)).
+	comperand := Character dolphin asUtf8String , 'a' , pound.
+	self assert: (subject beginsWith: comperand).
+	comperand := Character dolphin asUtf16String , 'a' , pound.
+	self assert: (subject beginsWith: comperand)!
+
+testBeginsWithIgnoreCase
+	| subject comperand pound |
+	super testBeginsWith.
+	pound := String with: (Character value: 163).
+	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
+	comperand := Character dolphin asUtf8String , 'A' , pound.
+	self assert: (subject beginsWith: comperand ignoreCase: true).
+	self deny: (subject beginsWith: comperand ignoreCase: false).
+	comperand := comperand asUtf16String.
+	self assert: (subject beginsWith: comperand ignoreCase: true).
+	self deny: (subject beginsWith: comperand ignoreCase: false)!
+
 testEncodeOnPut
 	{Character dolphin.
 		Character codePoint: 16r10FFFD.
@@ -73,9 +100,27 @@ testEncodeOnPut
 						actual2 := stream next.
 						self assert: actual2 equals: actual.
 						self assert: stream atEnd.
-						self assert: actual equals: each]]! !
+						self assert: actual equals: each]]!
+
+testIncludes
+	| subject pound dolphin foreign |
+	super testIncludes.
+	pound := Character value: 163.
+	dolphin := self collectionClass with: Character dolphin.
+	subject := 'a' , dolphin , 'b' , pound asString , 'c'.
+	self assert: (subject includes: $b).
+	self assert: (subject includes: pound).
+	self assert: (subject includes: Character dolphin).
+	dolphin do: [:each | self assert: (subject includes: each)].
+	foreign := self collectionClass == Utf8String
+				ifTrue: [dolphin asUtf16String]
+				ifFalse: [dolphin asUtf8String].
+	foreign do: [:each | self deny: (subject includes: each)]! !
 !MultiByteStringTest categoriesFor: #caseConversionCases!constants!private! !
 !MultiByteStringTest categoriesFor: #reverseTestCases!private! !
 !MultiByteStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testBeginsWith!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
 !MultiByteStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testIncludes!public! !
 

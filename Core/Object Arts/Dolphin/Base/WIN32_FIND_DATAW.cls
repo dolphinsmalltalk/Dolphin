@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
@@ -36,8 +36,7 @@ dwFileAttributes
 fileName
 	"Answer the full filename from the receiver."
 
-	#todo. "Leave in UTF-16 once image is more encoding aware."
-	^self cFileName asAnsiString!
+	^self cFileName!
 
 fileSize
 	"Answer the <integer> size of the file."
@@ -93,8 +92,7 @@ shortFileName
 	| answer |
 	answer := self cAlternateFileName.
 	answer isEmpty ifTrue: [answer := self cFileName].
-	#todo. "Leave in UTF-16 once image is more encoding aware."
-	^answer asAnsiString!
+	^answer!
 
 stem
 	"Answer the stem (name sans extension) of the file described by the receiver."

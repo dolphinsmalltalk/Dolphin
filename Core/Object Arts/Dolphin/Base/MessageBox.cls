@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MessageBoxAbstract subclass: #MessageBox
 	instanceVariableNames: 'button uniqueId flags icon styleFlags'
@@ -57,10 +57,6 @@ Class Variables:
 '!
 !MessageBox categoriesForClass!MVP-Views-Support! !
 !MessageBox methodsFor!
-
-abortRetryIgnore
-	#deprecated.
-	self buttonStyle: #abortRetryIgnore!
 
 assertStylesValid
 	"Private - SHMessageBoxCheck supports only a limited range of the full set of MessageBox
@@ -174,14 +170,6 @@ defaultButton: anInteger
 		ifFalse: [^self error: ('Invalid default button index: <1d>' expandMacrosWith: anInteger)].
 	self setStyle: anInteger - 1 << 8 maskedBy: MB_DEFMASK!
 
-error
-	#deprecated.
-	self iconStyle: #error!
-
-fatalError
-	#deprecated.
-	self beFatalError!
-
 globallyUniqueId
 	^'<1d>:<2d>' expandMacrosWith: SessionManager current appIdString with: self uniqueId!
 
@@ -242,24 +230,12 @@ modality
 modality: aSymbol 
 	self setStyle: (ModeStyles at: aSymbol) maskedBy: MB_MODEMASK!
 
-ok
-	#deprecated.
-	self buttonStyle: #ok!
-
-okCancel
-	#deprecated.
-	self buttonStyle: #okCancel!
-
 open
 	"Display a host system message box for the receiver, and answer a portable symbolic constant 
 	for the button pressed by the user.
 	Note that the message box will beep when opened by the user (if configured)."
 
 	^self basicOpen; result!
-
-prompt
-	#deprecated.
-	self iconStyle: #prompt!
 
 result
 	"Answer a portable symbolic constant describing the button that was pressed by the user
@@ -276,10 +252,6 @@ result
 					[button = IDOK ifTrue: [button := IDYES].
 					button = IDCANCEL ifTrue: [button := IDNO]]].
 	^ButtonMap at: button!
-
-retryCancel
-	#deprecated.
-	self buttonStyle: #retryCancel!
 
 setForeground
 	"Set the receiver's style such that the receiver opens in the foreground."
@@ -317,14 +289,6 @@ showSuppressible
 				pszRegVal: self globallyUniqueId.
 	button == -1 ifTrue: [ShlwapiLibrary default systemError]!
 
-systemModal
-	#deprecated.
-	self beSystemModal!
-
-taskModal
-	#deprecated.
-	self beTaskModal!
-
 uniqueId
 	"Answer the unique id that, should the user decide to suppress this message box, will be
 	stored under the following registry key:
@@ -338,16 +302,7 @@ uniqueId
 	^uniqueId!
 
 uniqueId: anObject 
-	uniqueId := anObject displayString!
-
-yesNo
-	#deprecated.
-	self buttonStyle: #yesNo!
-
-yesNoCancel
-	#deprecated.
-	self buttonStyle: #yesNoCancel! !
-!MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
+	uniqueId := anObject displayString! !
 !MessageBox categoriesFor: #assertStylesValid!helpers!private! !
 !MessageBox categoriesFor: #basicOpen!displaying!private! !
 !MessageBox categoriesFor: #beFatalError!accessing-styles!public! !
@@ -362,8 +317,6 @@ yesNoCancel
 !MessageBox categoriesFor: #confirmOrCancel:!displaying!public! !
 !MessageBox categoriesFor: #defaultButton!accessing!public! !
 !MessageBox categoriesFor: #defaultButton:!accessing-styles!public! !
-!MessageBox categoriesFor: #error!modes!public! !
-!MessageBox categoriesFor: #fatalError!accessing-styles!public! !
 !MessageBox categoriesFor: #globallyUniqueId!helpers!private! !
 !MessageBox categoriesFor: #hasOwner!displaying!private! !
 !MessageBox categoriesFor: #icon:!accessing!public! !
@@ -376,22 +329,14 @@ yesNoCancel
 !MessageBox categoriesFor: #isTaskModal!accessing-styles!public! !
 !MessageBox categoriesFor: #modality!accessing-styles!public! !
 !MessageBox categoriesFor: #modality:!accessing-styles!public! !
-!MessageBox categoriesFor: #ok!accessing-styles!public! !
-!MessageBox categoriesFor: #okCancel!accessing-styles!public! !
 !MessageBox categoriesFor: #open!displaying!public! !
-!MessageBox categoriesFor: #prompt!accessing-styles!public! !
 !MessageBox categoriesFor: #result!accessing!public!wine fix! !
-!MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
 !MessageBox categoriesFor: #setForeground!accessing-styles!public! !
 !MessageBox categoriesFor: #setStyle:maskedBy:!accessing-styles!private! !
 !MessageBox categoriesFor: #showIndirect!displaying!private! !
 !MessageBox categoriesFor: #showSuppressible!operations!public! !
-!MessageBox categoriesFor: #systemModal!accessing-styles!public! !
-!MessageBox categoriesFor: #taskModal!accessing-styles!public! !
 !MessageBox categoriesFor: #uniqueId!accessing!public! !
 !MessageBox categoriesFor: #uniqueId:!accessing!public! !
-!MessageBox categoriesFor: #yesNo!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
 
 !MessageBox class methodsFor!
 

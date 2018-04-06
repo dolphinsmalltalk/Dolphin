@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 View subclass: #MoenTreeView
 	instanceVariableNames: 'anchorNode getTextBlock getImageBlock mtvFlags leading imageManager calculatedExtent parentSpacing selection linePen iconExtent maxTextExtent dtFlags margin textInset theme _mtvReserved1 _mtvReserved2'
@@ -673,12 +673,12 @@ invalidateGeometry
 
 	self invalidateLayout; invalidate!
 
-invalidateItem: element 
+invalidateItem: element
 	"Redraw the receiver's <Object> item, element.
 	If the element is not currently visible in the tree, then does nothing."
 
-	self 
-		updateItem: element
+	self
+		invalidateItem: element
 		andChildren: false
 		imagesOnly: false!
 
@@ -1724,13 +1724,6 @@ updateItem: anObject
 	(self findNodeForObject: anObject) 
 		ifNotNil: [:node | node isVisible ifTrue: [self updateNode: node]]!
 
-updateItem: element andChildren: andChildren imagesOnly: aBoolean 
-	#deprecated.
-	self 
-		invalidateItem: element
-		andChildren: andChildren
-		imagesOnly: aBoolean!
-
 updateNode: aMoenTreeNode 
 	| parent |
 	parent := aMoenTreeNode parent.
@@ -1959,7 +1952,6 @@ zip: aMoenTreeNode
 !MoenTreeView categoriesFor: #updateAll!painting!public! !
 !MoenTreeView categoriesFor: #updateGeometry!private!updating! !
 !MoenTreeView categoriesFor: #updateItem:!event handling!public! !
-!MoenTreeView categoriesFor: #updateItem:andChildren:imagesOnly:!painting!public! !
 !MoenTreeView categoriesFor: #updateNode:!helpers!private! !
 !MoenTreeView categoriesFor: #updateSelection!private!selection! !
 !MoenTreeView categoriesFor: #updateTree:imagesOnly:!painting!public! !

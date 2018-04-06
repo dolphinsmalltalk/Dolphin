@@ -1,11 +1,27 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #HeaderView
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'HDF_CENTER HDF_JUSTIFYMASK HDF_LEFT HDF_RIGHT HDF_SORTDOWN HDF_SORTUP HDI_FORMAT HDM_FIRST HDM_GETITEMW HDM_SETITEMW HDN_BEGINDRAG HDN_BEGINTRACKW HDN_DIVIDERDBLCLICKW HDN_ENDDRAG HDN_ENDTRACKW HDN_FIRST'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HeaderView guid: (GUID fromString: '{7a6b97fa-0fd4-424d-99de-515000f88886}')!
+HeaderView addClassConstant: 'HDF_CENTER' value: 2!
+HeaderView addClassConstant: 'HDF_JUSTIFYMASK' value: 3!
+HeaderView addClassConstant: 'HDF_LEFT' value: 0!
+HeaderView addClassConstant: 'HDF_RIGHT' value: 1!
+HeaderView addClassConstant: 'HDF_SORTDOWN' value: 512!
+HeaderView addClassConstant: 'HDF_SORTUP' value: 1024!
+HeaderView addClassConstant: 'HDI_FORMAT' value: 4!
+HeaderView addClassConstant: 'HDM_FIRST' value: 4608!
+HeaderView addClassConstant: 'HDM_GETITEMW' value: 4619!
+HeaderView addClassConstant: 'HDM_SETITEMW' value: 4620!
+HeaderView addClassConstant: 'HDN_BEGINDRAG' value: -310!
+HeaderView addClassConstant: 'HDN_BEGINTRACKW' value: -326!
+HeaderView addClassConstant: 'HDN_DIVIDERDBLCLICKW' value: -325!
+HeaderView addClassConstant: 'HDN_ENDDRAG' value: -311!
+HeaderView addClassConstant: 'HDN_ENDTRACKW' value: -327!
+HeaderView addClassConstant: 'HDN_FIRST' value: -300!
 HeaderView comment: '#define HDI_WIDTH               0x0001
 #define HDI_HEIGHT              HDI_WIDTH
 #define HDI_TEXT                0x0002
@@ -46,23 +62,25 @@ clearSortIconForColumnAtIndex: anInteger
 
 	| header |
 
-	header := self headerForColumnIndex: anInteger mask: 16r0004. "HDI_FORMAT"
+	header := self headerForColumnIndex: anInteger mask: HDI_FORMAT.
 
-	header fmt: ((header fmt maskClear: 16r400 "HDF_SORTUP") maskClear: 16r0200) "HDF_SORTDOWN".
+	header fmt: ((header fmt maskClear: HDF_SORTUP) maskClear: HDF_SORTDOWN).
 
 	self setHeader: header!
 
 hdmGetItem: aHdItem index: index
-
-	(self sendMessage: ##(16r1200+3) "HDM_GETITEMA" wParam: index lpParam: aHdItem) == 0
-		ifTrue: [^self errorInCommonControlCall]
-!
+	(self
+		sendMessage: HDM_GETITEMW
+		wParam: index
+		lpParam: aHdItem) == 0
+		ifTrue: [^self errorInCommonControlCall]!
 
 hdmSetItem: aHdItem index: index
-
-	(self sendMessage: ##(16r1200+4) "HDM_SETITEMA" wParam: index lpParam: aHdItem) == 0
-		ifTrue: [^self errorInCommonControlCall]
-!
+	(self
+		sendMessage: HDM_SETITEMW
+		wParam: index
+		lpParam: aHdItem) == 0
+		ifTrue: [^self errorInCommonControlCall]!
 
 headerForColumn: aListViewColumn mask: anInteger
 
@@ -71,35 +89,27 @@ headerForColumn: aListViewColumn mask: anInteger
 	^self headerForColumnIndex: aListViewColumn index mask: anInteger!
 
 headerForColumnIndex: aListViewColumnIndex mask: anInteger
-
 	"Private - Stuff the header index into the lparam for easy resetting with setHeader:
 	NB aListViewColumnIndex is 1-based; internal indexing is 0-based"
 
 	| index item |
-
 	index := aListViewColumnIndex - 1.
-	item := HDITEM new.
-	item 
+	item := HDITEMW new.
+	item
 		mask: anInteger;
 		lParam: index.
-
 	self hdmGetItem: item index: index.
-
 	^item!
 
 nmNotify: anNMHDR
 	| msg |
-
 	msg := anNMHDR sdwordAtOffset: 8.
-
-	msg = ##(-300 "HDN_FIRST"  - 10) "HDN_BEGINDRAG" ifTrue: [self trigger: #beginDrag].
-	msg = ##(-300 "HDN_FIRST" - 11) "HDN_ENDDRAG" ifTrue: [self trigger: #endDrag].
-	msg = ##(-300 "HDN_FIRST" - 25) "DIVIDERDBLCLICK" ifTrue: [self trigger: #dividerDoubleClick].
-	msg = ##(-300 "HDN_FIRST" - 26) "HDN_BEGINTRACK" ifTrue: [self trigger: #beginTrack].
-	msg = ##(-300 "HDN_FIRST" - 27) "HDN_ENDTRACK" ifTrue: [self trigger: #endTrack].
-
-	^super nmNotify: anNMHDR
-!
+	msg == HDN_BEGINDRAG ifTrue: [self trigger: #beginDrag].
+	msg == HDN_ENDDRAG ifTrue: [self trigger: #endDrag].
+	msg == HDN_DIVIDERDBLCLICKW ifTrue: [self trigger: #dividerDoubleClick].
+	msg == HDN_BEGINTRACKW ifTrue: [self trigger: #beginTrack].
+	msg == HDN_ENDTRACKW ifTrue: [self trigger: #endTrack].
+	^super nmNotify: anNMHDR!
 
 setAlignment: aSymbol forColumn: aListViewColumn
 
@@ -108,17 +118,18 @@ setAlignment: aSymbol forColumn: aListViewColumn
 	| header alignmentMask |
 
 	alignmentMask := 
-		##(Dictionary new
-			at: #left	put: 16r0000; "HDF_LEFT"
-			at: #right	put: 16r0001; "HDF_RIGHT"
-			at: #center	put: 16r0002; "HDF_CENTER"
+		##(IdentityDictionary new
+			at: #left	put: HDF_LEFT;
+			at: #right	put: HDF_RIGHT;
+			at: #center	put: HDF_CENTER;
 			yourself) at: aSymbol.
 
-	header := self headerForColumn: aListViewColumn mask: 16r0004. "HDI_FORMAT"
+	header := self headerForColumn: aListViewColumn mask: HDI_FORMAT.
 
-	header fmt: ((header fmt maskClear: 16r0003 "HDF_JUSTIFYMASK") maskSet: alignmentMask).
+	header fmt: ((header fmt maskClear: HDF_JUSTIFYMASK) maskSet: alignmentMask).
 
-	self setHeader: header!
+	self setHeader: header
+!
 
 setHeader: aHDITEM
 
@@ -130,13 +141,14 @@ setSortIconForColumn: aListViewColumn
 
 	| header |
 
-	header := self headerForColumn: aListViewColumn mask: 16r0004. "HDI_FORMAT"
+	header := self headerForColumn: aListViewColumn mask: HDI_FORMAT.
 
 	aListViewColumn isSortOrderInverted
-		ifTrue: [header fmt: ((header fmt maskClear: 16r400 "HDF_SORTUP") maskSet: 16r0200) "HDF_SORTDOWN"]
-		ifFalse: [header fmt: ((header fmt maskClear: 16r200 "HDF_SORTDOWN") maskSet: 16r0400) "HDF_SORTUP"].
+		ifTrue: [header fmt: ((header fmt maskClear: HDF_SORTUP) maskSet: HDF_SORTDOWN) ]
+		ifFalse: [header fmt: ((header fmt maskClear: HDF_SORTDOWN) maskSet: HDF_SORTUP)].
 
-	self setHeader: header! !
+	self setHeader: header
+! !
 !HeaderView categoriesFor: #clearSortIconForColumnAtIndex:!helpers!public! !
 !HeaderView categoriesFor: #hdmGetItem:index:!accessing!public! !
 !HeaderView categoriesFor: #hdmSetItem:index:!accessing!public! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LVBKIMAGE
 	instanceVariableNames: 'buf'
@@ -56,12 +56,6 @@ isWatermark
 isWatermark: aBoolean
 	self ulFlags: (self ulFlags mask: LVBKIF_TYPE_WATERMARK set: aBoolean)!
 
-offset: aPoint 
-	#deprecated.	"Use #offsetPercent: or #offsetTile:"
-	self
-		xOffsetPercent: aPoint x;
-		yOffsetPercent: aPoint y!
-
 offsetPercent: aPoint 
 	"Set the position of the top-left corner of image in the background to be the specified
 	absolute position, expressed as a percentage of the client area."
@@ -78,15 +72,17 @@ offsetTile: aPoint
 		xOffsetPercent: aPoint x;
 		yOffsetPercent: aPoint y!
 
-position: aPoint 
+position: aPoint
 	"Set the position of the top-left corner of image in the background to be the specified
 	absolute position, expressed in pixels."
 
-	self 
-		ulFlags: ((self ulFlags maskClear: LVBKIF_STYLE_MASK) maskSet: (aPoint = 0 
+	self
+		ulFlags: ((self ulFlags maskClear: LVBKIF_STYLE_MASK) maskSet: (aPoint = 0
 						ifTrue: [LVBKIF_STYLE_NORMAL]
 						ifFalse: [##(LVBKIF_STYLE_TILE | LVBKIF_FLAG_TILEOFFSET)])).
-	self offset: aPoint!
+	self
+		xOffsetPercent: aPoint x;
+		yOffsetPercent: aPoint y!
 
 pszImage
 	"Answer the receiver's pszImage field as a Smalltalk object."
@@ -137,7 +133,6 @@ yOffsetPercent: anObject
 !LVBKIMAGE categoriesFor: #isTiled:!accessing!public! !
 !LVBKIMAGE categoriesFor: #isWatermark!public!testing! !
 !LVBKIMAGE categoriesFor: #isWatermark:!accessing!public! !
-!LVBKIMAGE categoriesFor: #offset:!public! !
 !LVBKIMAGE categoriesFor: #offsetPercent:!accessing!public! !
 !LVBKIMAGE categoriesFor: #offsetTile:!public! !
 !LVBKIMAGE categoriesFor: #position:!accessing!public! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
@@ -68,9 +68,6 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 	^aSequenceableCollection!
 
 nextAvailable
-	^self atEnd ifFalse: [self next]!
-
-nextOrNil
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
 
@@ -121,7 +118,7 @@ upTo: anObject
 
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
-	[(nextObject := self nextOrNil) isNil or: [nextObject = anObject]] 
+	[(nextObject := self nextAvailable) isNil or: [nextObject = anObject]] 
 		whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
@@ -142,7 +139,6 @@ upToEnd
 !SocketReadStream categoriesFor: #next!accessing!public! !
 !SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #nextAvailable!public! !
-!SocketReadStream categoriesFor: #nextOrNil!accessing!public! !
 !SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
 !SocketReadStream categoriesFor: #readPage!operations!private! !
 !SocketReadStream categoriesFor: #setToEnd!positioning!public! !
