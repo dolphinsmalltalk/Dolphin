@@ -206,6 +206,27 @@ copySelection
 	self sendMessage: WM_COPY
 !
 
+cueBanner
+	"Answer the textual cue to be displayed when this single-line text box is empty and does not
+	have focus, or nil if none is set."
+
+	| buf |
+	buf := Utf16String new: 512.
+	^((self
+		sendMessage: EM_GETCUEBANNER
+		wParam: buf yourAddress
+		lParam: buf size + 1) ~~ 0
+		and: [buf first ~~ $\0]) ifTrue: [buf trimNulls]!
+
+cueBanner: aString
+	"Set a textual cue to be displayed when this single line text box is empty and does not have
+	focus."
+
+	self
+		sendMessage: EM_SETCUEBANNER
+		wParam: 0
+		szParam: aString ?? ''!
+
 cutSelection
 	"Cut the current selection and place on the clipboard."
 
@@ -999,8 +1020,10 @@ selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
 	EM_REPLACESEL does not return a value."
 
-	self sendMessage: EM_REPLACESEL wParam: 0 lpParam: aString asUtf16String.
-!
+	self
+		sendMessage: EM_REPLACESEL
+		wParam: 0
+		szParam: aString!
 
 selectionRange
 	"Answers an interval identifying the selected range of text.
@@ -1110,6 +1133,15 @@ state
 						receiver: self
 						selector: #setMarginWidths:
 						argument: margins)].
+	self cueBanner
+		ifNotNil: 
+			[:cue |
+			cue isEmpty
+				ifFalse: 
+					[state add: (MessageSend
+								receiver: self
+								selector: #cueBanner:
+								argument: cue)]].
 	^state!
 
 suggestedFindText
@@ -1299,6 +1331,8 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #clearSelection!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #command:id:!commands!private! !
 !TextEdit categoriesFor: #copySelection!clipboard operations!commands!public! !
+!TextEdit categoriesFor: #cueBanner!accessing!public! !
+!TextEdit categoriesFor: #cueBanner:!accessing!public! !
 !TextEdit categoriesFor: #cutSelection!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #defaultSelectionRange!constants!private! !
 !TextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
