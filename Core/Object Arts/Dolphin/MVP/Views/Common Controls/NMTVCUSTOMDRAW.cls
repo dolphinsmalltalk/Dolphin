@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
@@ -59,12 +59,7 @@ forecolor: aColor
 iLevel
 	"Answer the receiver's iLevel field as a Smalltalk object."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iLevel)!
-
-itemHandle
-	"Private - Answer the 'handle' of the receiver's node."
-
-	^self dwItemSpec! !
+	^bytes sdwordAtOffset: ##(self offsetOf: #iLevel)! !
 !NMTVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
 !NMTVCUSTOMDRAW categoriesFor: #backcolor:!accessing!public! !
 !NMTVCUSTOMDRAW categoriesFor: #clrText!**compiled accessors**!public! !
@@ -74,7 +69,6 @@ itemHandle
 !NMTVCUSTOMDRAW categoriesFor: #forecolor!accessing!public! !
 !NMTVCUSTOMDRAW categoriesFor: #forecolor:!accessing!public! !
 !NMTVCUSTOMDRAW categoriesFor: #iLevel!**compiled accessors**!public! !
-!NMTVCUSTOMDRAW categoriesFor: #itemHandle!accessing!private! !
 
 !NMTVCUSTOMDRAW class methodsFor!
 

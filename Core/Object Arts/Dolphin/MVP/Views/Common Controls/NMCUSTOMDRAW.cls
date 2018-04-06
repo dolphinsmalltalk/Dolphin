@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
@@ -6,7 +6,6 @@ NMHDR subclass: #NMCUSTOMDRAW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
-NMCUSTOMDRAW isAbstract: true!
 NMCUSTOMDRAW comment: 'NMCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 NMCUSTOMDRAW structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the <ListView> and <TreeView> to request custom draw information for individual items (and optionally sub-items).
@@ -160,9 +159,9 @@ item: anObject
 	item := anObject!
 
 itemHandle
-	"Private - Answer the 'handle' of the receiver's item."
+	"Private - Answer the 'handle' of the receiver's node."
 
-	^self subclassResponsibility!
+	^self dwItemSpec!
 
 lParam
 	"Answer the receiver's lParam field as a Smalltalk object."
