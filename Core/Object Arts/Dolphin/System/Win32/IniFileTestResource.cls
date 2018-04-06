@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #IniFileTestResource
 	instanceVariableNames: ''
@@ -23,7 +23,8 @@ iniFile1
 setUp
 	super setUp.
 	File createDirectory: self fileLocator basePath.
-	(FileStream write: self iniFile1)
+	"Note that it appears that a UTF-8 BOM causes problems with the underlying API. Perhaps not surprising it is a left over from 16-bit Windows."
+	(FileStream write: self iniFile1 type: #ansi)
 		nextPutAll: '[Section1]
 S1Key1=S1Value1
 S1Key2=S1Value2
