@@ -41,7 +41,7 @@ testClassDecodeFrom
 			| stream actual |
 			stream := each first readStream.
 			actual := self collectionClass decodeNextFrom: stream.
-			self assert: actual equals: $\xFFFD.
+			self assert: actual equals: Character replacement.
 			actual := self collectionClass decodeNextFrom: stream.
 			self assert: actual equals: each last.
 			self assert: stream atEnd].
@@ -51,7 +51,7 @@ testClassDecodeFrom
 			| stream actual |
 			stream := each readStream.
 			actual := self collectionClass decodeNextFrom: stream.
-			self assert: actual equals: $\xFFFD.
+			self assert: actual equals: Character replacement.
 			self assert: stream atEnd]!
 
 testMixedConcatenation
@@ -62,6 +62,7 @@ testMixedConcatenation
 		{'cd'.
 			'cd' asUtf8String.
 			'cd' asUtf16String.
+			'一點測試'.
 			#($a $b).
 			OrderedCollection with: $x.
 			($x codePoint to: $z codePoint) collect: [:each | Character codePoint: each]}}
@@ -79,9 +80,10 @@ testMixedConcatenation
 testUtf8StringConversion
 	| utf8Bytes byteString wideString bstr |
 	utf8Bytes := #[228 184 128 233 187 158 230 184 172 232 169 166].
-	byteString := Utf8String fromAddress: utf8Bytes yourAddress length: utf8Bytes size.
+	byteString := Utf8String fromByteArray: utf8Bytes.
 	"Ansi strings don't correctly represent the multi-byte encoding of the test UTF8 string"
 	self assert: byteString size equals: 12.
+	self assert: byteString equals: '一點測試'.
 	wideString := byteString asUtf16String.
 	self assert: wideString size equals: 4.
 	"On VMs before 7.0.54, Utf16Strings may not be properly terminated (#155)"
@@ -89,7 +91,7 @@ testUtf8StringConversion
 		ifTrue: 
 			[| string2 |
 			"Compiler bug #154: Have to use brace array here because a literal array with wide chars does not compile correctly."
-			self assert: wideString asArray equals: {$\x4E00. $\x9EDE. $\x6E2C. $\x8A66}.
+			self assert: wideString asArray equals: #($\x4E00 $\x9EDE $\x6E2C $\x8A66).
 			self assert: wideString asUtf8String equals: byteString.
 			string2 := Utf8String fromUtf16String: wideString.
 			self assert: string2 equals: byteString].

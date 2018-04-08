@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinCollectionTest subclass: #SequenceableCollectionTest
 	instanceVariableNames: ''
@@ -757,14 +757,21 @@ unsortedCollectionClass
 	^self collectionClass!
 
 verifyConcatenation: b with: a
-	| result aSize bSize |
+	| result aSize bSize aElems bElems resultElems |
 	result := a , b.
-	aSize := a size.
-	bSize := b size.
-	self assert: result size equals: aSize + bSize.
-	1 to: aSize do: [:i | self assert: (result at: i) equals: (a at: i)].
+	aSize := 0.
+	aElems := OrderedCollection new.
+	a readStream do: [:e | aElems addLast: e].
+	aSize := aElems size.
+	bElems := OrderedCollection new.
+	b readStream do: [:e | bElems addLast: e].
+	bSize := bElems size.
+	resultElems := OrderedCollection new.
+	result readStream do: [:e | resultElems addLast: e].
+	self assert: resultElems size equals: aSize + bSize.
+	1 to: aSize do: [:i | self assert: (resultElems at: i) equals: (aElems at: i)].
 	1 to: bSize
-		do: [:i | self assert: (result at: i + aSize) equals: (self assimilateResultElement: (b at: i))].
+		do: [:i | self assert: (resultElems at: i + aSize) equals: (self assimilateResultElement: (bElems at: i))].
 	self
 		verifyConcatenationResult: result
 		of: a

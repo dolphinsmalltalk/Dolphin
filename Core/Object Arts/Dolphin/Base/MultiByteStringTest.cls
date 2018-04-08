@@ -35,7 +35,8 @@ reverseTestCases
 
 	^super reverseTestCases
 		, (#(#(#[16rF0 16r9F 16r8D 16rBA 16r20 16r61] #[16r61 16r20 16rF0 16r9F 16r8D 16rBA]) #(#[230 150 135 229 173 151 229 140 150 227 129 145] #[227 129 145 229 140 150 229 173 151 230 150 135]))
-				collect: [:pair | pair collect: [:b | Utf8String fromByteArray: b]])!
+				collect: [:pair | pair collect: [:b | Utf8String fromByteArray: b]])
+			copyWith: #('Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'ẵṹɋîⱡą āᶇꞡáᵯ ȇꝛôꞎꝍđ ȶé ếꝛőḇẩḹ ŧṷ ťńṵᵭȋḑīḉñỉ ɍṓᶈᶆĕṫ ďꝋḿŝŭḭẽ ⱺᶁ ᶑếș ,ʈįłḝ ġɳįčṩĭƥḯɖấ ɾûțᶒťċḙṩɲṓĉ ,ẗệṁӓ ťǐʂ ᵳǭḽỡḍ ṁᶙšṕȋ ᶆëᶉơḼ')!
 
 testAnsiStringRoundTrip
 	| ansiAll utf ansi |
