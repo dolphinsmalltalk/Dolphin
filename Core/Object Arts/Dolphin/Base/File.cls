@@ -1145,28 +1145,30 @@ removeDirectory: aString
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| drive dir fname errno max |
-	max := aString size.
-	(errno := CRTLibrary default
-				_wsplitpath_s: aString asUtf16String
-				drive: (drive := Utf16String new: _MAX_DRIVE)
+	| drive dir fname errno max path crt |
+	path := aString asUtf8String.
+	max := path size.
+	crt := CRTLibrary default.
+	(errno := crt
+				_splitpath_s: path
+				drive: (drive := Utf8String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := Utf16String new: max)
+				dir: (dir := Utf8String new: max)
 				dirLen: max + 1
-				fname: (fname := Utf16String new: max)
+				fname: (fname := Utf8String new: max)
 				fnameLen: max + 1
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: 
-			[| path |
-			(errno := CRTLibrary default
-						_wmakepath_s: (path := Utf16String new: max)
+			[| unextended |
+			(errno := crt
+						_makepath_s: (unextended := Utf8String new: max)
 						bufferSize: max + 1
 						drive: drive
 						dir: dir
 						fname: fname
 						ext: nil) == 0
-				ifTrue: [^path trimNulls]].
+				ifTrue: [^unextended trimNulls]].
 	^CRTError signalWith: errno!
 
 removePathDelimiter: aString
@@ -1250,8 +1252,8 @@ splitDriveFrom: aString
 
 	| drive errno |
 	^(errno := CRTLibrary default
-				_wsplitpath_s: aString asUtf16String
-				drive: (drive := Utf16String new: _MAX_DRIVE)
+				_splitpath_s: aString asUtf8String
+				drive: (drive := Utf8String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
 				dir: nil
 				dirLen: 0
@@ -1266,43 +1268,45 @@ splitExtensionFrom: aString
 	"Splits aPathname string and answers the extension portion.
 	Answers the empty string if there is no extension."
 
-	| ext errno |
-	ext := Utf16String new: aString size.
-	(errno := CRTLibrary default
-				_wsplitpath_s: aString asUtf16String
+	| ext errno path len crt |
+	path := aString asUtf8String.
+	(len := path size) == 0 ifTrue: [^''].
+	crt := CRTLibrary default.
+	(errno := crt
+				_splitpath_s: path
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
 				fname: nil
 				fnameLen: 0
-				ext: ext
-				extLen: ext size + 1) == 0
+				ext: (ext := Utf8String new: len)
+				extLen: len + 1) == 0
 		ifFalse: [^CRTError signalWith: errno].
 	"CRT function includes leading period on extension, which we don't"
-	ext := ext trimNulls.
-	^(ext notEmpty and: [ext first == $.]) ifTrue: [ext copyFrom: 2] ifFalse: [ext]!
+	^ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: (crt strlen: ext)!
 
 splitFilenameFrom: aString
 	"Splits the pathname, aString, and answers the file name portion (including extension).
 	Answers an empty string if there is no filename component in the path."
 
-	| fname ext errno max |
-	max := aString size.
+	| fname ext errno max path |
+	path := aString asUtf8String.
+	max := path size.
 	(errno := CRTLibrary default
-				_wsplitpath_s: aString asUtf16String
+				_splitpath_s: path
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
-				fname: (fname := Utf16String new: aString size)
+				fname: (fname := Utf8String new: max)
 				fnameLen: max + 1
-				ext: (ext := Utf16String new: max)
+				ext: (ext := Utf8String new: max)
 				extLen: max + 1) == 0
 		ifTrue: 
 			[(errno := CRTLibrary default
-						wcscat_s: fname
-						numberOfElements: max + 1
+						strcat_s: fname
+						bufferSize: max + 1
 						strSource: ext) == 0
 				ifTrue: [^fname trimNulls]].
 	^CRTError signalWith: errno!
@@ -1313,22 +1317,30 @@ splitPath: aString
 	Note: We use the C-runtime library to implement this, hence either backward or forward
 	slashes (i.e. $\ or $/) are acceptable as pathname delimiters."
 
-	| drive dir fname ext errno |
-	^(errno := CRTLibrary default
-				_wsplitpath_s: aString asUtf16String
-				drive: (drive := Utf16String new: _MAX_DRIVE)
+	| max path drive dir fname ext errno crt |
+	"To avoid problems with long filenames, we use the length of the input string as the buffer
+	sizes - clearly the component parts can never be larger than this.  In order to support
+	Unicode paths, we work in UTF-8."
+	path := aString asUtf8String.
+	max := path size.
+	max = 0 ifTrue: [^#('' '' '' '')].
+	crt := CRTLibrary default.
+	^(errno := crt
+				_splitpath_s: path
+				drive: (drive := Utf8String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := Utf16String new: _MAX_DIR)
-				dirLen: ##(_MAX_DIR + 1)
-				fname: (fname := Utf16String new: _MAX_FNAME)
-				fnameLen: ##(_MAX_FNAME + 1)
-				ext: (ext := Utf16String new: _MAX_EXT)
-				extLen: ##(_MAX_EXT + 1)) == 0
+				dir: (dir := Utf8String new: max)
+				dirLen: max + 1
+				fname: (fname := Utf8String new: max)
+				fnameLen: max + 1
+				ext: (ext := Utf8String new: max)
+				extLen: max + 1) == 0
 		ifTrue: 
 			["CRT function includes leading period on extension, which we don't"
-			ext := ext trimNulls.
-			(ext notEmpty and: [ext first == $.]) ifTrue: [ext := ext copyFrom: 2].
-			{drive trimNulls. dir trimNulls. fname trimNulls. ext}]
+			{drive trimNulls.
+				dir trimNulls.
+				fname trimNulls.
+				ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: (crt strlen: ext)}]
 		ifFalse: [CRTError signalWith: errno]!
 
 splitPathFrom: aPathnameString
@@ -1339,21 +1351,23 @@ splitPathFrom: aPathnameString
 	API call, PathRemoveFileSpec() does not treat $/ as a path delimiter (only backslash).
 	Also this is carefully implemented to minimise allocations and maximise speed."
 
-	| drive dir errno |
+	| drive dir errno path len |
+	path := aPathnameString asUtf8String.
+	len := path size.
 	(errno := CRTLibrary default
-				_wsplitpath_s: aPathnameString asUtf16String
-				drive: (drive := Utf16String new: _MAX_PATH)
+				_splitpath_s: path
+				drive: (drive := Utf8String new: len)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := Utf16String new: _MAX_DIR)
-				dirLen: ##(_MAX_DIR + 1)
+				dir: (dir := Utf8String new: len)
+				dirLen: len + 1
 				fname: nil
 				fnameLen: 0
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: 
 			[(errno := CRTLibrary default
-						wcscat_s: drive
-						numberOfElements: ##(_MAX_PATH + 1)
+						strcat_s: drive
+						bufferSize: len + 1
 						strSource: dir) == 0
 				ifTrue: [^drive trimNulls]].
 	^CRTError signalWith: errno!
@@ -1362,15 +1376,17 @@ splitStemFrom: aString
 	"Answers the file stem component of the path <String> argument, or an empty string if there
 	is none."
 
-	| fname errno |
+	| fname errno path len |
+	path := aString asUtf8String.
+	len := path size.
 	^(errno := CRTLibrary default
-				_wsplitpath_s: aString asUtf16String
+				_splitpath_s: path
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
-				fname: (fname := Utf16String new: _MAX_FNAME)
-				fnameLen: ##(_MAX_FNAME + 1)
+				fname: (fname := Utf8String new: len)
+				fnameLen: len + 1
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: [fname trimNulls]

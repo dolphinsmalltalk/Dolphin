@@ -65,7 +65,7 @@ createTestDirectories
 	File createDirectoryPath: dir, 'LeafWithFile'.
 	(FileStream write: dir, '\LeafWithFile\blah.txt') nextPutAll: 'Blah blah blah'; close.
 
-	dir := 'c:\FileTest1\BranchWithLeafWithFiles\'.
+	dir := 'c:\FileTest1\BranchWithLeafWithFiles🐬\'.
 	File createDirectoryPath: dir.
 	File createDirectoryPath: dir, 'LeafWithFiles'.
 	(FileStream write: dir, '\LeafWithFiles\blah1.txt') nextPutAll: 'Blah blah blah'; close.
@@ -108,148 +108,128 @@ test64BitSeek
 	f := File temporary.
 	0 to: 31
 		do: 
-			[:i | 
+			[:i |
 			dist := 2 raisedToInteger: i.
 			pointer := f seek: dist sense: FILE_BEGIN.
-			self assert: pointer = dist.
+			self assert: pointer equals: dist.
 			pointer := f seek: -1 sense: FILE_CURRENT.
-			self assert: pointer = (dist - 1).
+			self assert: pointer equals: dist - 1.
 			pointer := f seek: 1 sense: FILE_CURRENT.
-			self assert: pointer = dist.
+			self assert: pointer equals: dist.
 			pointer := f seek: 1 sense: FILE_CURRENT.
-			self assert: pointer = (dist + 1).
+			self assert: pointer equals: dist + 1.
 			pointer := f seek: dist negated sense: FILE_CURRENT.
-			self assert: pointer = 1].
+			self assert: pointer equals: 1].
 	32 to: 62
 		do: 
-			[:i | 
+			[:i |
 			dist := 2 raisedToInteger: i.
 			pointer := f seek: dist sense: FILE_BEGIN.
-			self assert: pointer = dist.
+			self assert: pointer equals: dist.
 			pointer := f seek: -1 sense: FILE_CURRENT.
-			self assert: pointer = (dist - 1).
+			self assert: pointer equals: dist - 1.
 			pointer := f seek: 1 sense: FILE_CURRENT.
-			self assert: pointer = dist.
+			self assert: pointer equals: dist.
 			pointer := f seek: 1 sense: FILE_CURRENT.
-			self assert: pointer = (dist + 1).
+			self assert: pointer equals: dist + 1.
 			pointer := f seek: dist negated sense: FILE_CURRENT.
-			self assert: pointer = 1].
+			self assert: pointer equals: 1].
 	pointer := f seek: -1 sense: FILE_CURRENT.
-	self assert: pointer == 0.
+	self assert: pointer sameAs: 0.
 	"As the 64-bit offset is signed, the maximum seek offset is 2^63-1"
-	self 
-		should: [f seek: 2 ** 63 sense: FILE_BEGIN]
-		raise: Error.
+	self should: [f seek: 2 ** 63 sense: FILE_BEGIN] raise: Error.
 	"Test the condition where the low-word of the return is 16rFFFFFFFF, so GetLastError() is needed to disambiguate from an error condition."
 	dist := 2 ** 32 - 1.
 	pointer := f seek: dist sense: FILE_BEGIN.
 	"Now test maximum seek distance"
 	dist := 2 ** 63 - 1.
 	pointer := f seek: dist sense: FILE_BEGIN.
-	self assert: pointer = dist.
+	self assert: pointer equals: dist.
 	"Although not really a negative seek, it would cause a 64-bit signed file pointer to go negative"
-	self 
+	self
 		should: [f seek: 1 sense: FILE_CURRENT]
 		raise: FileException
 		matching: [:ex | ex statusCode = 131	"ERROR_NEGATIVE_SEEK"].
 	pointer := f seek: dist negated sense: FILE_CURRENT.
-	self assert: pointer = 0.
+	self assert: pointer equals: 0.
 	f close.
 	File delete: f name!
 
 testClassAppendPathSeparator
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
 
-	self assert: (File appendPathDelimiter: 'c:\') = 'c:\'.
-	self assert: (File appendPathDelimiter: 'c:/') = 'c:/'.
-	self assert: (File appendPathDelimiter: 'c:.') = 'c:.\'.
-	self assert: (File appendPathDelimiter: '') = '\'.
-	self assert: (File appendPathDelimiter: 'a') = 'a\'.
-	self assert: (File appendPathDelimiter: 'a\') = 'a\'.
-	self assert: (File appendPathDelimiter: 'a\\') = 'a\\'.
-	self assert: (File appendPathDelimiter: '\') = '\'.
-	self assert: (File appendPathDelimiter: '/') = '/'.
-	self assert: (File appendPathDelimiter: 'a/') = 'a/'!
+	| unicode |
+	self assert: (File appendPathDelimiter: 'c:\') equals: 'c:\'.
+	self assert: (File appendPathDelimiter: 'c:/') equals: 'c:/'.
+	self assert: (File appendPathDelimiter: 'c:.') equals: 'c:.\'.
+	self assert: (File appendPathDelimiter: '') equals: '\'.
+	unicode := 'a' , $\x1F595 asUtf8String.
+	self assert: (File appendPathDelimiter: unicode) equals: unicode , '\'.
+	self assert: (File appendPathDelimiter: 'a\') equals: 'a\'.
+	self assert: (File appendPathDelimiter: 'a\\') equals: 'a\\'.
+	self assert: (File appendPathDelimiter: '\') equals: '\'.
+	self assert: (File appendPathDelimiter: '/') equals: '/'.
+	self assert: (File appendPathDelimiter: 'a/') equals: 'a/'!
 
 testClassRelativePathOfTo
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
 
-	self assert: (self relativePathOf: '.' to: '.') = '.'.
-	self assert: (self relativePathOf: '..' to: '.') = '..'.
-	self assert: (self relativePathOf: '..\' to: '.') = '..\'.
-	self assert: (self relativePathOf: '..' to: '.\') = '..'.
-	self assert: (self relativePathOf: '.' to: '..') = '.'.
-	self assert: (self relativePathOf: '.\' to: '..\') = ''.
-	self assert: (self relativePathOf: '.\' to: '..') = ''.
-	self assert: (self relativePathOf: '.' to: '..\') = '.'.
-	self assert: (self relativePathOf: '.\' to: '..\') = ''.
-	self assert: (self relativePathOf: 'c:\' to: 'd:\') = 'c:\'.
-	self 
-		assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\') = '1\blah.txt'.
-	self 
-		assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1\') = 'blah.txt'.
-	self 
-		assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1') = '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1.txt') 
-				= '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2\') 
-				= '..\1\blah.txt'.
-	self 
-		assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2') = '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2.txt') 
-				= '1\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\1') 
-				= '1\11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\1\') 
-				= '11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21\') 
-				= '..\..\1\11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21') 
-				= '..\1\11\blah.txt'.
-	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21.txt') 
-				= '..\1\11\blah.txt'.
+	self assert: (self relativePathOf: '.' to: '.') equals: '.'.
+	self assert: (self relativePathOf: '..' to: '.') equals: '..'.
+	self assert: (self relativePathOf: '..\' to: '.') equals: '..\'.
+	self assert: (self relativePathOf: '..' to: '.\') equals: '..'.
+	self assert: (self relativePathOf: '.' to: '..') equals: '.'.
+	self assert: (self relativePathOf: '.\' to: '..\') equals: ''.
+	self assert: (self relativePathOf: '.\' to: '..') equals: ''.
+	self assert: (self relativePathOf: '.' to: '..\') equals: '.'.
+	self assert: (self relativePathOf: '.\' to: '..\') equals: ''.
+	self assert: (self relativePathOf: 'c:\' to: 'd:\') equals: 'c:\'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\') equals: '1\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1\') equals: 'blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1') equals: '1\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\1.txt') equals: '1\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2\') equals: '..\1\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2') equals: '1\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\blah.txt' to: 'c:\2.txt') equals: '1\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\1') equals: '1\11\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\1\') equals: '11\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21\') equals: '..\..\1\11\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21') equals: '..\1\11\blah.txt'.
+	self assert: (self relativePathOf: 'c:\1\11\blah.txt' to: 'c:\2\21.txt') equals: '..\1\11\blah.txt'.
 
 	"Example from MS IMoniker documentation"
-	self 
-		assert: (self relativePathOf: 'c:\projects\secret\art\pict1.bmp'
-				to: 'c:\projects\secret\docs\chap1.txt') = '..\art\pict1.bmp'.
-	self 
-		assert: (self relativePathOf: 'c:\projects\secret\docs\chap1.txt'
-				to: 'c:\projects\secret\art\pict1.bmp') = '..\docs\chap1.txt'.
+	self assert: (self relativePathOf: 'c:\projects\secret\art\pict1.bmp'
+				to: 'c:\projects\secret\docs\chap1.txt')
+		equals: '..\art\pict1.bmp'.
+	self assert: (self relativePathOf: 'c:\projects\secret\docs\chap1.txt'
+				to: 'c:\projects\secret\art\pict1.bmp')
+		equals: '..\docs\chap1.txt'.
 	"A common type of useage in Dolphin (image relative path)"
-	self 
-		assert: (self 
+	self assert: (self
 				relativePathOf: 'd:\object arts\dev\dolphin5\Packages\Dolphin\Database\Database Connection.pax.pac'
-				to: 'd:\object arts\dev\dolphin5\') 
-					= 'Packages\Dolphin\Database\Database Connection.pax.pac'.
+				to: 'd:\object arts\dev\dolphin5\')
+		equals: 'Packages\Dolphin\Database\Database Connection.pax.pac'.
 	"Non-canonical path with redundant components - note result is not canonical either"
-	self 
-		assert: (File fullPathOf: (self 
+	self
+		assert: (File fullPathOf: (self
 						relativePathOf: 'd:\dummy\..\object arts\dev\dummy\..\dolphin5\Packages\Dolphin\Database\Database Connection.pax'
 						to: 'd:\object arts\dev\dolphin5\')
-				relativeTo: 'd:\object arts\dev\dolphin5\') 
-					= 'd:\object arts\dev\dolphin5\Packages\Dolphin\Database\Database Connection.pax'.
+				relativeTo: 'd:\object arts\dev\dolphin5\')
+		equals: 'd:\object arts\dev\dolphin5\Packages\Dolphin\Database\Database Connection.pax'.
 
 	"Already a relative path (therefore fails and answers first argument)"
-	self 
-		assert: (self relativePathOf: 'Packages\Dolphin\Database\Database Connection.pax'
-				to: 'd:\object arts\dev\dolphin5\') 
-					= 'Packages\Dolphin\Database\Database Connection.pax'.
-	self 
-		assert: (self relativePathOf: '.\Packages\Dolphin\Database\Database Connection.pax'
-				to: 'd:\object arts\dev\dolphin5\') 
-					= 'Packages\Dolphin\Database\Database Connection.pax'.
-	self 
-		assert: (self relativePathOf: '..\dolphin5\Packages\Dolphin\Database\Database Connection.pax'
-				to: 'd:\object arts\dev\dolphin5\') 
-					= '..\dolphin5\Packages\Dolphin\Database\Database Connection.pax'
-
-
-!
+	self assert: (self relativePathOf: 'Packages\Dolphin\Database\Database Connection.pax'
+				to: 'd:\object arts\dev\dolphin5\')
+		equals: 'Packages\Dolphin\Database\Database Connection.pax'.
+	self assert: (self relativePathOf: '.\Packages\Dolphin\Database\Database Connection.pax'
+				to: 'd:\object arts\dev\dolphin5\')
+		equals: 'Packages\Dolphin\Database\Database Connection.pax'.
+	self assert: (self relativePathOf: '..\dolphin5\Packages\Dolphin\Database\Database Connection.pax'
+				to: 'd:\object arts\dev\dolphin5\')
+		equals: '..\dolphin5\Packages\Dolphin\Database\Database Connection.pax'!
 
 testDeleteDirectory
 	self createTestDirectories.
-	
 	self deleteDirectory: 'c:\FileTest1\EmptyLeaf'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithEmptyLeaf\EmptyLeaf1'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithEmptyLeaves\'.
@@ -259,10 +239,7 @@ testDeleteDirectory
 	self deleteDirectory: 'c:\FileTest1\BranchWithEmptyLeavesAndFile\'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithEmptyLeavesAndFiles\'.
 	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFile\'.
-	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFiles\'.
-
-
-!
+	self deleteDirectory: 'c:\FileTest1\BranchWithLeafWithFiles🐬\'!
 
 testForDirectoriesIn
 	| all windir |
@@ -326,15 +303,15 @@ testRemoveDirectory
 testRemoveExtension
 	| path |
 	self should: [File removeExtension: nil] raise: Error.
-	self assert: (File removeExtension: 'a.') = 'a'.
-	self assert: (File removeExtension: '.exe') = ''.
-	self assert: (File removeExtension: '.') = ''.
-	self assert: (File removeExtension: '') = ''.
-	self assert: (File removeExtension: '1234.1234.exe') = '1234.1234'.
-	self assert: (File removeExtension: '1234.1234.+') = '1234.1234'.
-	self assert: (File removeExtension: 'a.b\c') = 'a.b\c'.
-	self assert: (File removeExtension: 'a.b\') = 'a.b\'.
-	self assert: (File removeExtension: 'c:/a/b.txt') = 'c:/a/b'.
+	self assert: (File removeExtension: 'a.') equals: 'a'.
+	self assert: (File removeExtension: '.exe') equals: ''.
+	self assert: (File removeExtension: '.') equals: ''.
+	self assert: (File removeExtension: '') equals: ''.
+	self assert: (File removeExtension: '1234.1234.exe') equals: '1234.1234'.
+	self assert: (File removeExtension: '1234.1234.+') equals: '1234.1234'.
+	self assert: (File removeExtension: 'a.b\c') equals: 'a.b\c'.
+	self assert: (File removeExtension: 'a.b\') equals: 'a.b\'.
+	self assert: (File removeExtension: 'c:/a/b.txt') equals: 'c:/a/b'.
 	path := String writeStream.
 	path nextPutAll: 'c:\'.
 	self printFilenameOfLength: CRTConstants._MAX_FNAME on: path.
@@ -345,44 +322,39 @@ testRemoveExtension
 	self assert: (File removeExtension: path) equals: (path subStrings: $.) first!
 
 testRemovePathDelimiter
-	self assert: (File removePathDelimiter: '') = ''.
-	self assert: (File removePathDelimiter: '/') = ''.
-	self assert: (File removePathDelimiter: '//') = '/'.
-	self assert: (File removePathDelimiter: '\') = ''.
-	self assert: (File removePathDelimiter: '\/') = '\'.
-	self assert: (File removePathDelimiter: '.') = '.'.
-	self assert: (File removePathDelimiter: './') = '.'.
-	self assert: (File removePathDelimiter: 'c:') = 'c:'.
-	self assert: (File removePathDelimiter: 'c:\') = 'c:'.
-	self assert: (File removePathDelimiter: 'c:\blah.txt') = 'c:\blah.txt'.
-	self assert: (File removePathDelimiter: 'c:\blah') = 'c:\blah'.
-	self assert: (File removePathDelimiter: 'c:\blah\') = 'c:\blah'.
-
-
-
-
-
-
-
-!
+	| unicode |
+	self assert: (File removePathDelimiter: '') equals: ''.
+	self assert: (File removePathDelimiter: '/') equals: ''.
+	self assert: (File removePathDelimiter: '//') equals: '/'.
+	self assert: (File removePathDelimiter: '\') equals: ''.
+	self assert: (File removePathDelimiter: '\/') equals: '\'.
+	self assert: (File removePathDelimiter: '.') equals: '.'.
+	self assert: (File removePathDelimiter: './') equals: '.'.
+	self assert: (File removePathDelimiter: 'c:') equals: 'c:'.
+	self assert: (File removePathDelimiter: 'c:\') equals: 'c:'.
+	self assert: (File removePathDelimiter: 'c:\blah.txt') equals: 'c:\blah.txt'.
+	unicode := 'c:\blah' asUtf8String copyWith: $\x1F595.
+	self assert: (File removePathDelimiter: unicode) equals: unicode.
+	self assert: (File removePathDelimiter: unicode , '\') equals: unicode!
 
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
-	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') = 'c:'.
-	self assert: (File splitDriveFrom: 'a\b.txt') = ''.
-	self assert: (File splitDriveFrom: 'b.txt') = ''.
-	self assert: (File splitDriveFrom: '.txt') = ''.
-	self assert: (File splitDriveFrom: '.') = ''.
-	self assert: (File splitDriveFrom: '') = ''.
-	self assert: (File splitDriveFrom: 'c:/a b\c d.txt') = 'c:'.
-	self assert: (File splitDriveFrom: 'd:\') = 'd:'.
-	self assert: (File splitDriveFrom: 'e:') = 'e:'.
-	self assert: (File splitDriveFrom: 'cons:') = ''!
+	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') equals: 'c:'.
+	self assert: (File splitDriveFrom: 'a\b.txt') equals: ''.
+	self assert: (File splitDriveFrom: 'b.txt') equals: ''.
+	self assert: (File splitDriveFrom: '.txt') equals: ''.
+	self assert: (File splitDriveFrom: '.') equals: ''.
+	self assert: (File splitDriveFrom: '') equals: ''.
+	self assert: (File splitDriveFrom: 'c:/a b\c d.txt') equals: 'c:'.
+	self assert: (File splitDriveFrom: 'd:\') equals: 'd:'.
+	self assert: (File splitDriveFrom: 'e:') equals: 'e:'.
+	self assert: (File splitDriveFrom: 'cons:') equals: ''!
 
 testSplitExtensionFrom
-	| path ext |
+	| path ext unicode |
 	self should: [File splitExtensionFrom: nil] raise: Error.
-	self assert: (File splitExtensionFrom: 'c:\a\a2/b.txt') equals: 'txt'.
+	unicode := $\x1F595 asUtf16String , '2'.
+	self assert: (File splitExtensionFrom: 'c:\a\a2/b.' , unicode) equals: unicode.
 	self assert: (File splitExtensionFrom: 'a\b.txt') equals: 'txt'.
 	self assert: (File splitExtensionFrom: 'b.txt') equals: 'txt'.
 	self assert: (File splitExtensionFrom: 'b.') equals: ''.
@@ -412,7 +384,7 @@ testSplitExtensionFrom
 	self assert: (File splitExtensionFrom: path) equals: ext , ext!
 
 testSplitFilenameFrom
-	| path |
+	| path unicode |
 	self should: [File splitFilenameFrom: nil] raise: Error.
 	self assert: (File splitFilenameFrom: '.') equals: '.'.
 	self assert: (File splitFilenameFrom: 'c:\a\a2/b.txt') equals: 'b.txt'.
@@ -422,7 +394,8 @@ testSplitFilenameFrom
 	self assert: (File splitFilenameFrom: '.txt') equals: '.txt'.
 	self assert: (File splitFilenameFrom: '') equals: ''.
 	self assert: (File splitFilenameFrom: 'c:\a\b\') equals: ''.
-	self assert: (File splitFilenameFrom: 'c:/a b\c d.txt') equals: 'c d.txt'.
+	unicode := 'c ' , $\x1F595 asUtf16String , ' d.txt'.
+	self assert: (File splitFilenameFrom: 'c:/a b\' , unicode) equals: unicode.
 	self assert: (File splitFilenameFrom: '1234.1234.exe') equals: '1234.1234.exe'.
 	self assert: (File splitFilenameFrom: 'a.b\c') equals: 'c'.
 	self assert: (File splitFilenameFrom: 'a.b\') equals: ''.
@@ -433,7 +406,31 @@ testSplitFilenameFrom
 	path nextPutAll: 'c:\'.
 	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
 	path := path contents.
-	self assert: (File splitFilenameFrom: path) equals: (path copyFrom: 4)! !
+	self assert: (File splitFilenameFrom: path) equals: (path copyFrom: 4)!
+
+testSplitStemFrom
+	| path |
+	self should: [File splitStemFrom: nil] raise: Error.
+	self assert: (File splitStemFrom: '.') equals: ''.
+	self assert: (File splitStemFrom: 'c:\a\a2/b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'a\b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'b.') equals: 'b'.
+	self assert: (File splitStemFrom: '.txt') equals: ''.
+	self assert: (File splitStemFrom: '') equals: ''.
+	self assert: (File splitStemFrom: 'c:\a\b\') equals: ''.
+	self assert: (File splitStemFrom: 'c:/a b\c d.txt') equals: 'c d'.
+	self assert: (File splitStemFrom: '1234.1234.exe') equals: '1234.1234'.
+	self assert: (File splitStemFrom: 'a.b\c') equals: 'c'.
+	self assert: (File splitStemFrom: 'a.b\') equals: ''.
+	path := self buildTestPathOfLength: CRTConstants._MAX_PATH.
+	self assert: (File splitStemFrom: path) equals: ((path subStrings: $\) last upTo: $.).
+	"Try a very long filename (> max length), this will still work."
+	path := String writeStream.
+	path nextPutAll: 'c:\'.
+	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
+	path := path contents.
+	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
 !FileTest categoriesFor: #buildTestPathOfLength:!helpers!private! !
 !FileTest categoriesFor: #createTestDirectories!helpers!private! !
 !FileTest categoriesFor: #deleteDirectory:!helpers!public! !
@@ -454,4 +451,5 @@ testSplitFilenameFrom
 !FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
 !FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
 !FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !
+!FileTest categoriesFor: #testSplitStemFrom!public!unit tests! !
 

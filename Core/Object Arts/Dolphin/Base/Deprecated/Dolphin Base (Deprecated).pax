@@ -42,7 +42,6 @@ package methodNames
 	add: #CRTLibrary -> #_makepath:drive:dir:fname:ext:;
 	add: #CRTLibrary -> #_putenv:;
 	add: #CRTLibrary -> #_splitpath:drive:dir:fname:ext:;
-	add: #CRTLibrary -> #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:;
 	add: #CRTLibrary -> #acos:;
 	add: #CRTLibrary -> #asin:;
 	add: #CRTLibrary -> #atan:;
@@ -306,11 +305,6 @@ _splitpath: path drive: drive dir: dir fname: fname ext: ext
 	#deprecated.	"Insecure - use _splitpath_s"
 	^self invalidCall!
 
-_splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
-	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
-	#deprecated.	"Use _wsplitpath_s"
-	^self invalidCall!
-
 acos: aFloat
 	<cdecl: double acos double>
 	#deprecated.
@@ -488,7 +482,6 @@ thread_errno
 !CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
 !CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_splitpath_s:drive:driveLen:dir:dirLen:fname:fnameLen:ext:extLen:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
