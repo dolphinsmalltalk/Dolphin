@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ReadWriteStreamTest subclass: #AbstractFileStreamTest
-	instanceVariableNames: 'tempFileName subject'
+	instanceVariableNames: 'tempFileName filestream'
 	classVariableNames: 'RandomData1 RandomData2'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -27,11 +27,6 @@ closeTempStream: aStream
 	"Private - Clean up the temporary stream argument."
 
 	aStream close!
-
-collections
-	"Can't handle UTF-16 encoding yet"
-
-	^super collections reject: [:each | each isKindOf: Utf16String]!
 
 initializeRandomTestData
 	| r bytes |
@@ -70,8 +65,13 @@ streamWith: aString
 
 	^self readWriteStreamOnString: aString!
 
+strings
+	"Can't handle UTF-16 encoding yet"
+
+	^super strings reject: [:each | each isKindOf: Utf16String]!
+
 tearDown
-	subject notNil ifTrue: [self tearDownTempStream].
+	filestream notNil ifTrue: [self tearDownTempStream].
 	(tempFileName isNil or: [(File exists: tempFileName) not]) ifTrue: [^self].
 	[File delete: tempFileName] on: Error
 		do: 
@@ -85,7 +85,7 @@ tearDown
 	tempFileName := nil!
 
 tearDownTempStream
-	subject close!
+	filestream close!
 
 tempReadStream
 	^self streamClass read: tempFileName!
@@ -120,12 +120,12 @@ test1065
 			[:i |
 			| data written |
 			data := ((1 to: i) collect: [:each | (r next * 256) truncated]) asByteArray.
-			subject := self streamClass write: tempFileName text: false.
-			subject
+			filestream := self streamClass write: tempFileName text: false.
+			filestream
 				next: data size
 				putAll: data
 				startingAt: 1.
-			subject close.
+			filestream close.
 			written := File readAllBytes: tempFileName.
 			self
 				assert: data = written
@@ -133,27 +133,27 @@ test1065
 				resumable: true]!
 
 test64BitPosition
-	subject := self tempWriteStream: #binary.
+	filestream := self tempWriteStream: #binary.
 	{2 ** 33 - 1. self maxPosition} do: 
 			[:position |
-			subject position: position.
-			self assert: subject position equals: position]!
+			filestream position: position.
+			self assert: filestream position equals: position]!
 
 testAppend
 	| actual padding |
-	subject := self tempWriteStream: #utf8.
+	filestream := self tempWriteStream: #utf8.
 	padding := String new: self bufferSize - Utf8String bom size - 1 withAll: $\x20.
-	subject
+	filestream
 		nextPutAll: padding;
 		nextPut: Character dolphin.
-	subject close.
-	subject := self streamClass
+	filestream close.
+	filestream := self streamClass
 				write: tempFileName
 				mode: #append
 				check: false
 				type: #utf8.
-	subject nextPutAll: ' says hello'.
-	subject close.
+	filestream nextPutAll: ' says hello'.
+	filestream close.
 	actual := File readAllText: tempFileName.
 	self assert: (actual beginsWith: padding).
 	self assert: (actual copyFrom: padding size + 1)
@@ -174,22 +174,22 @@ testNextPutAllStartingAt
 			file
 				size: 0;
 				write: initialData.
-			subject := self streamClass on: file text: false.
-			subject reset.
+			filestream := self streamClass on: file text: false.
+			filestream reset.
 			"Verify it was written correctly in the first place"
-			written := subject upToEnd.
+			written := filestream upToEnd.
 			self assert: written equals: initialData.
-			subject position: each first - 1.
+			filestream position: each first - 1.
 			size := each last - each first + 1.
-			subject
+			filestream
 				next: size
 				putAll: dataToWrite
 				startingAt: each first.
-			self assert: subject position equals: each last.
-			self assertBufferEmptyOrDirty: subject size: size.
-			self assert: ((each last >= initialData size and: [subject atEnd])
-						or: [subject next = (initialData at: each last + 1)]).
-			subject close.
+			self assert: filestream position equals: each last.
+			self assertBufferEmptyOrDirty: filestream size: size.
+			self assert: ((each last >= initialData size and: [filestream atEnd])
+						or: [filestream next = (initialData at: each last + 1)]).
+			filestream close.
 			"Expected data will be composed of a (possibly empty) block of the original data, a (possibly empty) block of the
 			new data, and a (possibly empty) block of the original data"
 			expected := (initialData copyFrom: 1 to: each first - 1)
@@ -219,25 +219,25 @@ testNextPutAllStartingAt2
 			| expected actual |
 			"truncate the file"
 			file size: 0.
-			subject := self streamClass on: file text: false.
-			subject
+			filestream := self streamClass on: file text: false.
+			filestream
 				next: each first - 1
 				putAll: initialData
 				startingAt: 1.
-			self assert: subject position equals: each first - 1.
-			subject
+			self assert: filestream position equals: each first - 1.
+			filestream
 				next: each last - each first + 1
 				putAll: dataToWrite
 				startingAt: each first.
-			self assert: subject position equals: each last.
-			self assertBufferEmptyOrDirty: subject.
+			self assert: filestream position equals: each last.
+			self assertBufferEmptyOrDirty: filestream.
 			each last <= initialData size
 				ifTrue: 
-					[subject
+					[filestream
 						next: initialData size - each last
 						putAll: initialData
 						startingAt: each last + 1].
-			subject close.
+			filestream close.
 			"Expected data will be composed of a (possibly empty) block of the original data, a (possibly empty) block of the
 			new data, and a (possibly empty) block of the original data"
 			expected := (initialData copyFrom: 1 to: each first - 1)
@@ -248,17 +248,18 @@ testNextPutAllStartingAt2
 			file
 				reset;
 				read: actual.
-			self assert: actual equals: expected]!
+			self assert: actual equals: expected].
+	file close!
 
 testPositionAfterWrite
 	| actual |
-	subject := self tempWriteStream: #ansi.
-	subject position: 100.
-	subject nextPut: $a.
+	filestream := self tempWriteStream: #ansi.
+	filestream position: 100.
+	filestream nextPut: $a.
 	"Reposition to a later point, but don't write anything."
-	subject position: 200.
+	filestream position: 200.
 	"Only the content up to the last actual write position should be flushed to the file."
-	subject close.
+	filestream close.
 	actual := File readAllText: tempFileName.
 	self assert: actual size equals: 101.
 	"Note that the stream position is (rather unusually for Smalltalk) zero based"
@@ -267,14 +268,14 @@ testPositionAfterWrite
 
 testPositionPastEnd
 	| pos1 pos2 expected actual pos3 |
-	subject := self tempWriteStream: #ansi.
+	filestream := self tempWriteStream: #ansi.
 	pos1 := (FileStream.PageSize * 1.25) truncated.
-	subject position: pos1.
-	subject print: pos1.
+	filestream position: pos1.
+	filestream print: pos1.
 	pos2 := FileStream.PageSize * 2 - 1.
-	subject position: pos2.
-	subject print: pos2.
-	actual := subject contents.
+	filestream position: pos2.
+	filestream print: pos2.
+	actual := filestream contents.
 	expected := String writeStream.
 	expected
 		next: pos1 put: $\0;
@@ -284,43 +285,43 @@ testPositionPastEnd
 		print: pos2.
 	expected := expected contents.
 	self assert: actual equals: expected.
-	subject close.
-	subject := self tempReadStream.
-	subject position: pos1.
-	self assert: subject position equals: pos1.
-	actual := subject upTo: $\0.
+	filestream close.
+	filestream := self tempReadStream.
+	filestream position: pos1.
+	self assert: filestream position equals: pos1.
+	actual := filestream upTo: $\0.
 	self assert: actual equals: pos1 printString.
-	subject position: pos2.
-	self assert: subject position equals: pos2.
-	actual := subject upToEnd.
+	filestream position: pos2.
+	self assert: filestream position equals: pos2.
+	actual := filestream upToEnd.
 	self assert: actual equals: pos2 printString.
 	pos3 := pos1 * 2.
-	subject position: pos3.
-	self assert: subject position equals: pos3.
-	self assert: subject atEnd.
-	self assert: (subject upTo: $\0) equals: ''.
+	filestream position: pos3.
+	self assert: filestream position equals: pos3.
+	self assert: filestream atEnd.
+	self assert: (filestream upTo: $\0) equals: ''.
 	"Move back, but not into the actual stream content, so should still be at end."
-	subject position: pos3 - 100.
-	self assert: subject atEnd.
+	filestream position: pos3 - 100.
+	self assert: filestream atEnd.
 	"Read-only stream should never expand, even if we position past the end."
-	actual := subject contents.
+	actual := filestream contents.
 	self assert: actual equals: expected.
-	self assert: subject size equals: expected size!
+	self assert: filestream size equals: expected size!
 
 testRandomWriteOnePage
 	| pos actual |
-	subject := self tempWriteStream: #ansi.
+	filestream := self tempWriteStream: #ansi.
 	pos := FileStream.PageSize - 2.
-	subject position: pos.
-	self assert: subject position equals: pos.
-	self assert: subject size equals: 0.
-	self assert: subject atEnd.
-	subject nextPut: $a.
+	filestream position: pos.
+	self assert: filestream position equals: pos.
+	self assert: filestream size equals: 0.
+	self assert: filestream atEnd.
+	filestream nextPut: $a.
 	"Reposition behind the point we extended the file to and write something earlier in the page."
-	subject position: pos - 100.
-	subject nextPutAll: 'b'.
+	filestream position: pos - 100.
+	filestream nextPutAll: 'b'.
 	"We expect the content to be flushed up to the first char we wrote (which is the last positionally)"
-	subject close.
+	filestream close.
 	actual := File readAllText: tempFileName.
 	self assert: actual size equals: FileStream.PageSize - 1.
 	"Note that the stream position is (rather unusually for Smalltalk) zero based"
@@ -332,42 +333,42 @@ testReset
 	"#1724"
 
 	| content |
-	subject := self tempWriteStream.
-	subject next: 3 put: $A.
-	subject reset.
-	content := subject upToEnd.
+	filestream := self tempWriteStream.
+	filestream next: 3 put: $A.
+	filestream reset.
+	content := filestream upToEnd.
 	self assert: content equals: 'AAA'.
-	self assert: subject atEnd.
-	subject close.
-	subject := self tempWriteStream.
-	subject next: 9999 put: $A.
-	subject reset.
-	content := subject upToEnd.
+	self assert: filestream atEnd.
+	filestream close.
+	filestream := self tempWriteStream.
+	filestream next: 9999 put: $A.
+	filestream reset.
+	content := filestream upToEnd.
 	self assert: (content size = 9999 and: [content allSatisfy: [:each | each = $A]]).
-	self assert: subject atEnd.
-	subject close!
+	self assert: filestream atEnd.
+	filestream close!
 
 testRewindAfterWrite
 	| actual |
-	subject := self tempWriteStream.
-	subject nextPutAll: 'Hello'.
-	subject position: 1.
-	subject close.
+	filestream := self tempWriteStream.
+	filestream nextPutAll: 'Hello'.
+	filestream position: 1.
+	filestream close.
 	actual := File readAllText: tempFileName.
 	self assert: actual equals: 'Hello'!
 
 testTruncate
 	| actual |
-	subject := self tempWriteStream.
-	subject nextPutAll: 'hello'.
-	subject close.
-	subject := self streamClass
+	filestream := self tempWriteStream.
+	filestream nextPutAll: 'hello'.
+	filestream close.
+	filestream := self streamClass
 				write: tempFileName
 				mode: #truncate
 				check: false
 				text: true.
-	subject nextPutAll: ' world'.
-	subject close.
+	filestream nextPutAll: ' world'.
+	filestream close.
 	actual := File readAllText: tempFileName.
 	self assert: actual equals: ' world'! !
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!helpers!private! !
@@ -375,7 +376,6 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #blockWriteIntervals!constants!private! !
 !AbstractFileStreamTest categoriesFor: #bufferSize!constants!private! !
 !AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #collections!constants!private! !
 !AbstractFileStreamTest categoriesFor: #initializeRandomTestData!initializing!private! !
 !AbstractFileStreamTest categoriesFor: #maxPosition!constants!public! !
 !AbstractFileStreamTest categoriesFor: #randomData1!constants!private! !
@@ -383,6 +383,7 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #setUp!public!running! !
 !AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #strings!constants!private! !
 !AbstractFileStreamTest categoriesFor: #tearDown!public!running! !
 !AbstractFileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #tempReadStream!helpers!private! !

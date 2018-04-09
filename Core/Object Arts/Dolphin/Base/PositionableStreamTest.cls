@@ -11,18 +11,6 @@ PositionableStreamTest comment: ''!
 !PositionableStreamTest categoriesForClass!Unclassified! !
 !PositionableStreamTest methodsFor!
 
-collections
-	^{''.
-		#[].
-		Utf16String empty.
-		'a'.
-		'abc'.
-		AnsiString with: (Character value: 163).
-		AnsiString with: (Character ansiValue: 128).
-		Utf8String with: (Character value: 163).
-		Character byteCharacterSet.
-		Character dolphin asUtf8String}!
-
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
@@ -33,16 +21,32 @@ streamWith: aString
 
 	^self streamClass with: aString copy!
 
+strings
+	^{''.
+		Utf16String empty.
+		'a'.
+		'abc'.
+		AnsiString with: (Character value: 163).
+		AnsiString with: (Character ansiValue: 128).
+		Utf8String with: (Character value: 163).
+		Character byteCharacterSet.
+		'a' , Character dolphin asUtf8String.
+		'a' , Character dolphin asUtf16String}!
+
+subjectCollection: aSequenceableCollection
+	^aSequenceableCollection!
+
 testBasicNext
-	self collections do: 
+	self strings do: 
 			[:each |
-			| subject |
+			| subject collection |
 			subject := self streamOn: each.
-			1 to: each size
+			collection := self subjectCollection: each.
+			1 to: collection size
 				do: 
 					[:i |
 					| expected actual |
-					expected := each basicAt: i.
+					expected := collection basicAt: i.
 					actual := subject basicNext.
 					self assert: actual equals: expected].
 			self assert: subject atEnd.
@@ -225,9 +229,9 @@ testReverseContents
 	stream := self streamWith: ''.
 	self assert: stream reverseContents isEmpty.
 	self closeTempStream: stream.
-	euro := $\x20AC asString.
+	euro := String with: $1 with: $\x20AC.
 	stream := self streamWith: euro.
-	self assert: stream reverseContents = euro.
+	self assert: stream reverseContents = (String with: $\x20AC with: $1).
 	self closeTempStream: stream.
 	stream := self streamWith: '¡Hola!!'.
 	self assert: stream reverseContents = '!!aloH¡'.
@@ -435,9 +439,10 @@ testUpToEnd
 	self assert: stream upToEnd = ''.
 	self assert: stream upToEnd = ''.
 	self closeTempStream: stream! !
-!PositionableStreamTest categoriesFor: #collections!constants!private! !
 !PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
+!PositionableStreamTest categoriesFor: #strings!constants!private! !
+!PositionableStreamTest categoriesFor: #subjectCollection:!public! !
 !PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !

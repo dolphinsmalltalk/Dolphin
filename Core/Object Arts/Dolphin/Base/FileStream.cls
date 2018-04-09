@@ -60,6 +60,31 @@ basicNext
 			[self position: self position.
 			collection basicAt: (position := position + 1)]!
 
+basicNext: count into: aSequenceableCollection startingAt: startAt
+	"Destructively replace the elements of the argument, aSequenceableCollection,
+	in the interval (startAt..startAt+count-1) with the next, count, elements of
+	the receiver. Answer aSequenceableCollection.
+	Implementation Note: For efficiency we implement this as a loop which
+	transfers as many elements as possible on each iteration, optimally a page
+	at a time."
+
+	| startOffset elemsRead |
+	startOffset := startAt - 1.
+	elemsRead := 0.
+	[elemsRead < count] whileTrue: [ | blockSize tmp |
+		self atEnd ifTrue: [self errorEndOfStream].
+		blockSize := (readLimit - position) min: (count - elemsRead).
+		tmp := elemsRead + blockSize.
+		aSequenceableCollection
+			replaceFrom: startAt + elemsRead
+			to: startOffset + tmp
+			with: collection
+			startingAt: position + 1.
+		"Reposition to the start of the next page (or the end of the file)"
+		self position: self position + blockSize.
+		elemsRead := tmp].
+	^aSequenceableCollection!
+
 basicNextPut: anObject
 	"Write anObject as the next basic element of the stream. Answer anObject."
 
@@ -109,7 +134,7 @@ beText
 bufferClassFor: aFile mode: modeSymbol type: encSymbol
 	| bufClass encoding |
 	encoding := encSymbol == #text
-				ifTrue: [aFile size == 0 ifTrue: [#utf8] ifFalse: [String encodings at: aFile sniffEncoding + 1]]
+				ifTrue: [aFile size == 0 ifTrue: [#utf8] ifFalse: [String encodingName: aFile sniffEncoding]]
 				ifFalse: [encSymbol].
 	bufClass := BufferClasses lookup: encoding.
 	bufClass isNil ifTrue: [self error: 'Unsupported encoding ' , encSymbol].
@@ -469,6 +494,7 @@ writePage
 !FileStream categoriesFor: #absolutePosition!accessing!private! !
 !FileStream categoriesFor: #atEnd!public!testing! !
 !FileStream categoriesFor: #basicNext!accessing!public! !
+!FileStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !FileStream categoriesFor: #basicNextPut:!accessing!public! !
 !FileStream categoriesFor: #basicUpTo:!accessing!public! !
 !FileStream categoriesFor: #beBinary!modes!public! !

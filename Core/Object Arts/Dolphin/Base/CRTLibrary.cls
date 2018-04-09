@@ -212,6 +212,10 @@ _strrev: aString
 	^self invalidCall
 !
 
+_wfopen_s: pFile filename: nameString mode: modeString
+	<cdecl: sdword _wfopen_s handle* lpwstr lpwstr>
+	^self invalidCall!
+
 _wgetcwd: aString maxlen: anInteger
 	<cdecl: lpvoid _wgetcwd lpwstr sdword>
 	^self invalidCall!
@@ -261,12 +265,28 @@ fgets: buf n: bufsize stream: aFILE
 	<cdecl: lpstr fgets lpstr sdword handle>
 	^self invalidCall!
 
-fopen_s: pFile filename: nameString mode: modeString
-	<cdecl: sdword fopen_s handle* lpstr lpstr>
+fgetwc: aFILE
+	<cdecl: sdword fgetwc handle>
+	^self invalidCall!
+
+fgetws: buf n: bufsize stream: aFILE
+	<cdecl: lpwstr fgetws lpwstr sdword handle>
 	^self invalidCall!
 
 fputc: charValue stream: aFILE
 	<cdecl: sdword fputc sdword handle>
+	^self invalidCall!
+
+fputs: str stream: aFILE
+	<cdecl: sdword fputs lpstr handle>
+	^self invalidCall!
+
+fputwc: charValue stream: aFILE
+	<cdecl: sdword fputwc sdword handle>
+	^self invalidCall!
+
+fputws: str stream: aFILE
+	<cdecl: sdword fputws lpwstr handle>
 	^self invalidCall!
 
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
@@ -341,13 +361,6 @@ memset: dest c: c count: count
 	"
 
 	<cdecl: sdword memset lpvoid sdword intptr>
-	^self invalidCall!
-
-rewind: aFILE
-	"Rewind to the beginning of the CRT FILE*.
-	Implementation Note: As with other FILE routines, treat the stream argument as an opaque handle."
-
-	<cdecl: void rewind handle>
 	^self invalidCall!
 
 setlocale: category locale: localeString
@@ -463,6 +476,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
@@ -473,8 +487,12 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #fflush:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fputs:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fputwc:stream:!public! !
+!CRTLibrary categoriesFor: #fputws:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #free:!CRT functions-memory allocation!public! !
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
@@ -486,7 +504,6 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #rewind:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
 !CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !

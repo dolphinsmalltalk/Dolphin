@@ -1276,7 +1276,7 @@ decodeFrom: aReadStream upTo: anObject
 decodeNextFrom: aReadStream
 	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
-	^aReadStream basicNext!
+	^aReadStream basicNextAvailable!
 
 emitEncodingMarkerOn: aPositionableStream
 	"Emit any encoding marker used for the stream encoding this collection represents onto the

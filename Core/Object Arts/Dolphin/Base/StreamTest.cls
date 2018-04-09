@@ -29,11 +29,13 @@ testUpTo
 	capitalAwithCircumflex := Character value: 16rC2.
 	{AnsiString. Utf8String} do: 
 			[:stringClass |
-			| chars stream |
-			chars := (stringClass with: capitalAwithCircumflex) , 'bcde' , (stringClass with: pound) , 'ghij'.
+			| chars stream actual |
+			chars := (stringClass with: capitalAwithCircumflex) , (stringClass fromString: 'bcde')
+						, (stringClass with: pound) , (stringClass fromString: 'ghij').
 			self assert: chars class equals: stringClass.
 			stream := self streamOn: chars.
-			self assert: stream upToEnd equals: chars.
+			actual := stream upToEnd.
+			self assert: actual equals: chars.
 			"Search for a potentially multi-byte char at the start"
 			stream reset.
 			self assert: (stream upTo: capitalAwithCircumflex) equals: ''.

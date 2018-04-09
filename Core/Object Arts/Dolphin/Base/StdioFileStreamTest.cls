@@ -13,17 +13,63 @@ StdioFileStreamTest comment: ''!
 bufferSize
 	^128!
 
-collections
-	^(super collections reject: [:each | each class elementSize ~~ 1]) collect: 
-			[:each |
-			"The CRT stdio  streams has issues with nulls in text (bugs in positioning) and will treat Ctrl+Z as EOF (expected behaviour)"
-			each reject: [:ch | ch == $\0 or: [ch == $\x1A]]]!
-
 maxPosition
 	^2 ** 63 - 1!
 
 streamClass
 	^StdioFileStream!
+
+strings
+	^(super strings reject: [:each | each class elementSize ~~ 1]) collect: 
+			[:each |
+			"The CRT stdio  streams has issues with nulls in text (bugs in positioning) and will treat Ctrl+Z as EOF (expected behaviour)"
+			each reject: [:ch | ch == $\0 or: [ch == $\x1A]]]!
+
+subjectCollection: aSequencableCollection
+	^(aSequencableCollection isKindOf: Utf8String)
+		ifTrue: 
+			["StdioUnicodeFileStream behaves as if streaming over wide chars, regardless of whether encoding is UTF-8 or UTF-16LE"
+			Utf16String fromString: aSequencableCollection]
+		ifFalse: [aSequencableCollection]!
+
+testCharacterTranslation
+	"This is mainly to remind us of some of the stdio librarys quirks when in text translation mode, etc"
+
+	{AnsiString. Utf8String. Utf16String} do: 
+			[:eachClass |
+			"Eof"
+			filestream := self streamOn: eachClass empty.
+			filestream nextPut: Character eof.
+			self assert: filestream size equals: 1.
+			self assert: filestream contents equals: ''.
+			self closeTempStream: filestream.
+			self assert: (File readAllText: tempFileName) equals: (eachClass with: Character eof).
+
+			"All the characters except EOF should read/write unchanged"
+			(Character byteCharacterSet reject: [:c | c == Character eof]) do: 
+					[:each |
+					| subject actual expected |
+					subject := self streamOn: eachClass empty.
+					subject nextPut: each.
+					actual := subject contents.
+					self assert: subject atEnd.
+					self closeTempStream: subject.
+					expected := String with: each.
+					self assert: actual equals: expected]]!
+
+testNextColon
+	self strings do: 
+			[:each |
+			| subject elems actual expected |
+			subject := self streamWith: each.
+			elems := each asArray.
+			elems do: [:e | subject nextPut: e].
+			subject reset.
+			actual := subject next: elems size * 2.
+			self assert: subject atEnd.
+			self closeTempStream: subject.
+			expected := each , each.
+			self assert: actual equals: expected]!
 
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
@@ -32,12 +78,11 @@ testNextLineCrOnly
 			[:each |
 			| chars |
 			chars := each , (String with: Character cr) , each.
-			subject := self streamOn: chars.
-			subject reset.
+			filestream := self streamOn: chars.
 			"CRT I/O stream in translated text mode does not recognise single CR as a line ending"
-			self assert: subject nextLine equals: chars.
-			self assert: subject atEnd.
-			subject close]!
+			self assert: filestream nextLine equals: chars.
+			self assert: filestream atEnd.
+			filestream close]!
 
 testNextLineUpToEof
 	#(0 1 2 127 128 129 255 256 257) do: 
@@ -48,14 +93,17 @@ testNextLineUpToEof
 			expected := f contents.
 			f close.
 			self assert: expected size equals: each.
-			subject := self tempReadStream.
-			actual := subject nextLine.
+			filestream := self tempReadStream.
+			actual := filestream nextLine.
 			self assert: actual equals: expected.
-			subject close]! !
+			filestream close]! !
 !StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!StdioFileStreamTest categoriesFor: #collections!constants!private! !
 !StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
+!StdioFileStreamTest categoriesFor: #strings!constants!private! !
+!StdioFileStreamTest categoriesFor: #subjectCollection:!public! !
+!StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
+!StdioFileStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 

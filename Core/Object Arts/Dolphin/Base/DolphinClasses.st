@@ -1397,7 +1397,7 @@ Magnitude subclass: #Association
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
 	instanceVariableNames: 'code'
-	classVariableNames: 'AnsiCharacters AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Mask Utf8TrailMask'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Default Utf8Mask Utf8TrailMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date
@@ -1661,8 +1661,8 @@ SequencedStream subclass: #PositionableStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #StdioFileStream
-	instanceVariableNames: 'stream flags name oldFd fd crtlib codec'
-	classVariableNames: 'Codecs DeviceMask ReadOnlyMask'
+	instanceVariableNames: 'stream flags name oldFd fd crtlib'
+	classVariableNames: 'ClassForEncoding Codecs DeviceMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 PositionableStream subclass: #ReadStream
@@ -1683,6 +1683,36 @@ WriteStream subclass: #ReadWriteStream
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift elemsPerPage offset'
 	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioFileStream subclass: #StdioBinaryFileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioFileStream subclass: #StdioTextFileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioTextFileStream subclass: #StdioAnsiFileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioTextFileStream subclass: #StdioUnicodeFileStream
+	instanceVariableNames: 'offset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioUnicodeFileStream subclass: #StdioUtf16FileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioUnicodeFileStream subclass: #StdioUtf8FileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

@@ -45,6 +45,11 @@ testAsPhrase
 	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase =
 			'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'.!
 
+testClassWith
+	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
+	self assert: (AnsiString with: Character replacement)
+		equals: (AnsiString with: (Character value: 63))!
+
 testIndexOfSubCollectionStartingAtGPF
 	| strings search current |
 	#'1553'.
@@ -94,6 +99,7 @@ testMatch
 !AnsiStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
 !AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
+!AnsiStringTest categoriesFor: #testClassWith!public! !
 !AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
 !AnsiStringTest categoriesFor: #testMatch!public!unit tests! !
 

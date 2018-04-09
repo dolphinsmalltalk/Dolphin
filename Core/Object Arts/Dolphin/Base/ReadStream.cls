@@ -30,6 +30,21 @@ basicNext
 		ifTrue: [self errorEndOfStream]
 		ifFalse: [collection basicAt: (position := position + 1)]!
 
+basicNext: count into: aSequenceableCollection startingAt: startAt
+	"Destructively replace the elements of the argument, aSequenceableCollection,
+	in the interval (startAt..startAt+count-1) with the next, count, elements of
+	the receiver. Answer aSequenceableCollection."
+
+	| stop |
+	stop := self positionAfterNext: count.
+	aSequenceableCollection
+		replaceFrom: startAt
+		to: startAt+count-1
+		with: collection
+		startingAt: position+1.
+	self position: stop.
+	^aSequenceableCollection!
+
 basicNextAvailable
 	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
 	same type of object that would be returned from the collection if sent #basicAt:. For bytes
@@ -93,6 +108,7 @@ nextAvailable
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection at: (position := position + 1)]! !
 !ReadStream categoriesFor: #basicNext!accessing!public! !
+!ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #basicNextAvailable!accessing!public! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !

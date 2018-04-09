@@ -31,6 +31,18 @@ atEnd
 	<primitive: 67>
 	^position >= readLimit!
 
+basicNext: anInteger
+	"Answer a <sequencedReadableCollection> containing the next anInteger number of objects
+	accessible by the receiver."
+
+	"Implementation Note: Subclasses should not generally override this method, but the more
+	flexible #next:into:startingAt: message which this uses."
+
+	^self
+		basicNext: anInteger
+		into: (self contentsSpecies new: anInteger)
+		startingAt: 1!
+
 basicNextAvailable
 	"Answer the next raw element accessible by the receiver, or nil if at the end of the stream.
 	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
@@ -106,7 +118,7 @@ nextAvailable: anInteger
 	"Implementation Note: Override superclass for improved performance."
 
 	self position + anInteger > self lastPosition ifTrue: [^self upToEnd].
-	^self next: anInteger!
+	^self basicNext: anInteger!
 
 nextDOUBLE
 	"Answer a <Float> constructed from the next 8 bytes on the receiver, which are assumed to
@@ -114,7 +126,7 @@ nextDOUBLE
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self next: 8) doubleAtOffset: 0!
+	^(self basicNext: 8) doubleAtOffset: 0!
 
 nextDWORD
 	"Answer a 32-bit unsigned integer constructed from the host system representation contained
@@ -122,7 +134,7 @@ nextDWORD
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self next: 4) dwordAtOffset: 0!
+	^(self basicNext: 4) dwordAtOffset: 0!
 
 nextFLOAT
 	"Answer a <Float> constructed from the next 4 bytes on the receiver, which are assumed to
@@ -130,7 +142,7 @@ nextFLOAT
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self next: VMConstants.FloatSize) floatAtOffset: 0!
+	^(self basicNext: VMConstants.FloatSize) floatAtOffset: 0!
 
 nextInto: aSequenceableCollection
 	"Destructively replace all elements of the argument, aSequenceableCollection,
@@ -152,7 +164,7 @@ nextSDWORD
 		4 - 	The receiver's new position would overflow the SmallInteger range."
 
 	<primitive: 144>
-	^(self next: 4) sdwordAtOffset: 0!
+	^(self basicNext: 4) sdwordAtOffset: 0!
 
 nextSWORD
 	"Answer a 16-bit signed integer constructed from the host system representation contained in
@@ -160,7 +172,7 @@ nextSWORD
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self next: 2) swordAtOffset: 0!
+	^(self basicNext: 2) swordAtOffset: 0!
 
 nextWORD
 	"Answer a 16-bit unsigned integer constructed from the host system representation contained
@@ -168,7 +180,7 @@ nextWORD
 
 	"N.B. This will fail if the receiver is not a byte stream."
 
-	^(self next: 2) wordAtOffset: 0!
+	^(self basicNext: 2) wordAtOffset: 0!
 
 on: aCollection
 	"Private - Set the <collection> over which the receiver will stream and initialize the receiver."
@@ -233,11 +245,21 @@ upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
 
+	"Implementation Note: We implement this in terms of #basicNext:, which is optimized for
+	 particular streams, and which counts by raw elements regardless of encoding."
+
+	^self basicNext: self lastPosition - self position!
+
+upToEnd2
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
+	the current position to the end)."
+
 	"Implementation Note: We implement this in terms of #next:, which is optimized for
 	 particular streams."
 
-	^self next: self lastPosition - self position! !
+	^self basicNext: self lastPosition - self position! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
+!PositionableStream categoriesFor: #basicNext:!accessing!public! !
 !PositionableStream categoriesFor: #basicNextAvailable!accessing!public! !
 !PositionableStream categoriesFor: #basicUpTo:!accessing!public! !
 !PositionableStream categoriesFor: #collection!accessing!private! !
@@ -264,6 +286,7 @@ upToEnd
 !PositionableStream categoriesFor: #size!accessing!public! !
 !PositionableStream categoriesFor: #upTo:!accessing!public! !
 !PositionableStream categoriesFor: #upToEnd!accessing!public! !
+!PositionableStream categoriesFor: #upToEnd2!accessing!public! !
 
 PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 

@@ -24,6 +24,15 @@ atEnd
 			[self readPage.
 			readLimit = 0]!
 
+basicNext: countInteger into: aSequenceableCollection startingAt: startInteger 
+	"Destructively replace the elements of the argument, aSequenceableCollection,
+	in the interval (startAt..startAt+count-1) with the next, count, elements of
+	the receiver. Answer aSequenceableCollection."
+
+	startInteger to: startInteger + countInteger - 1
+		do: [:i | aSequenceableCollection at: i put: self next].
+	^aSequenceableCollection!
+
 contents
 	"We don't maintain past history, so we cannot implement this correctly."
 
@@ -131,6 +140,7 @@ upToEnd
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
 !SocketReadStream categoriesFor: #atEnd!public!testing! !
+!SocketReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #contents!accessing!public! !
 !SocketReadStream categoriesFor: #hasInput!public!testing! !
 !SocketReadStream categoriesFor: #isBinary!public!testing! !

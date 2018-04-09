@@ -128,7 +128,7 @@ decode: anInteger
 decodeNextFrom: aReadStream
 	"Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
 
-	^Character ansiValue: aReadStream basicNext!
+	^aReadStream basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
 
 elementSize
 	"Answer the size of the elements of the receiver in bytes."

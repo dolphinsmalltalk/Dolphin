@@ -56,15 +56,15 @@ tearDownTempStream
 	close the File to which it is attached as this avoids the FileStream>>flush and so is more
 	likely to work in case of test error"
 
-	subject file free!
+	filestream file free!
 
 testFileTimes
 	"Tests that file accesor exists and that #lastWriteTime works (for patch #1397)"
 
 	| now file |
 	now := FILETIME now.
-	subject := self streamClass write: tempFileName.
-	file := subject file.
+	filestream := self streamClass write: tempFileName.
+	file := filestream file.
 	self assert: file lastWriteTime asInteger >= now asInteger!
 
 testSingleByteOverflow
@@ -72,81 +72,81 @@ testSingleByteOverflow
 	doesn't lose the last byte."
 
 	| weak |
-	subject := self tempWriteStream.
+	filestream := self tempWriteStream.
 	"Write bufSize-1 characters - buffer should be dirty but not yet flushed"
-	subject next: self streamClass bufferSize - 1 put: $1.
-	self assert: subject isBufferDirty.
+	filestream next: self streamClass bufferSize - 1 put: $1.
+	self assert: filestream isBufferDirty.
 
 	"Write the last byte - buffer should be dirty and full but not yet flushed"
-	subject nextPut: $2.
-	self assert: subject isBufferDirty.
+	filestream nextPut: $2.
+	self assert: filestream isBufferDirty.
 
 	"Write another byte - overflowing buffer by one, but should still be dirty"
-	subject nextPut: $3.
-	self assert: subject isBufferDirty.
-	weak := WeakArray with: subject.
-	subject := nil.
+	filestream nextPut: $3.
+	self assert: filestream isBufferDirty.
+	weak := WeakArray with: filestream.
+	filestream := nil.
 	[(weak at: 1) isKindOf: DeadObject] whileFalse: [MemoryManager current collectGarbage].
 
 	"Forcibly finalize"
 	MemoryManager current administerLastRites.
-	subject := self streamClass read: tempFileName text: true.
-	self assert: subject size equals: FileStream.PageSize + 1.
-	subject next: FileStream.PageSize - 2.
-	self assert: subject next equals: $1.
-	self assert: subject next equals: $2.
-	self assert: subject next equals: $3.
-	subject close!
+	filestream := self streamClass read: tempFileName text: true.
+	self assert: filestream size equals: FileStream.PageSize + 1.
+	filestream next: FileStream.PageSize - 2.
+	self assert: filestream next equals: $1.
+	self assert: filestream next equals: $2.
+	self assert: filestream next equals: $3.
+	filestream close!
 
 testVeryLargeSparseFile
 	| empty max |
-	subject := self tempWriteStream.
-	subject file beSparse.
-	subject nextPutAll: 'Beginning'.
-	subject position: 2 ** 33 - 1.
-	subject nextPutAll: 'Middle'.
+	filestream := self tempWriteStream.
+	filestream file beSparse.
+	filestream nextPutAll: 'Beginning'.
+	filestream position: 2 ** 33 - 1.
+	filestream nextPutAll: 'Middle'.
 	"Due to FileStream paging implementation, we can in theory only position up to the maximum
 	size - 1 page, however I can't get close to even that on my system (Windows refuses) so just
 	settle on a 4-terrabyte file, which after all is large enough to prove very large file
 	support."
 	max := self maxSize / 64.
-	subject position: max.
-	subject nextPutAll: 'End'.
-	self assert: subject size equals: max + 3.
-	subject reset.
-	self assert: (subject next: 9) equals: 'Beginning'.
+	filestream position: max.
+	filestream nextPutAll: 'End'.
+	self assert: filestream size equals: max + 3.
+	filestream reset.
+	self assert: (filestream next: 9) equals: 'Beginning'.
 	empty := String new: FileStream.PageSize.
-	self assert: (subject next: FileStream.PageSize) equals: empty.
-	subject position: 2 ** 33 - 1.
-	self assert: (subject next: 6) equals: 'Middle'.
-	self assert: (subject next: FileStream.PageSize) equals: empty.
-	subject position: max.
-	self assert: (subject next: 3) equals: 'End'.
-	self assert: subject atEnd!
+	self assert: (filestream next: FileStream.PageSize) equals: empty.
+	filestream position: 2 ** 33 - 1.
+	self assert: (filestream next: 6) equals: 'Middle'.
+	self assert: (filestream next: FileStream.PageSize) equals: empty.
+	filestream position: max.
+	self assert: (filestream next: 3) equals: 'End'.
+	self assert: filestream atEnd!
 
 testWritePastEnd
 	"#457: Tests that the page buffer is zero'd out out when writing beyond the end of the file
 	so that previous buffer content is not mirrored into the last page."
 
 	| actual expected r |
-	subject := self tempWriteStream: #ansi.
+	filestream := self tempWriteStream: #ansi.
 	expected := WriteStream with: (String new: FileStream.PageSize * 2).
 	expected reset.
 	r := Random new.
-	FileStream.PageSize
-		timesRepeat: [subject nextPut: (expected nextPut: (Character ansiValue: (r next * 97 + 32) asInteger))].
-	subject position: FileStream.PageSize - 2.
-	expected position: subject position.
-	subject nextPutAll: (expected nextPutAll: 'abc').
+	FileStream.PageSize timesRepeat: 
+			[filestream nextPut: (expected nextPut: (Character ansiValue: (r next * 97 + 32) asInteger))].
+	filestream position: FileStream.PageSize - 2.
+	expected position: filestream position.
+	filestream nextPutAll: (expected nextPutAll: 'abc').
 	"Go back and read the first page."
-	subject reset.
+	filestream reset.
 	"Reposition into the 2nd page beyond the current end."
-	subject position: FileStream.PageSize * 2 - 5.
-	expected position: subject position.
+	filestream position: FileStream.PageSize * 2 - 5.
+	expected position: filestream position.
 	"Write some more stuff"
-	subject nextPutAll: (expected nextPutAll: 'world').
-	subject reset.
-	actual := subject upToEnd.
+	filestream nextPutAll: (expected nextPutAll: 'world').
+	filestream reset.
+	actual := filestream upToEnd.
 	expected := expected contents.
 	self assert: actual equals: expected! !
 !FileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!private!unit tests! !

@@ -26,7 +26,7 @@ copyFrom: startInteger to: stopInteger
 	| answer mark |
 	mark := self position.
 	self position: startInteger - 1.
-	answer := self next: stopInteger - startInteger + 1.
+	answer := self basicNext: stopInteger - startInteger + 1.
 	self position: mark.
 	^answer!
 
@@ -209,7 +209,7 @@ upToAll: aCollection
 			[| end answer |
 			end := self position.
 			self position: start.
-			answer := self next: end - start - aCollection size.
+			answer := self basicNext: end - start - aCollection size.
 			self position: end.
 			answer]
 		ifFalse: 
