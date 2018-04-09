@@ -262,7 +262,7 @@ fgetc: aFILE
 	^self invalidCall!
 
 fgets: buf n: bufsize stream: aFILE
-	<cdecl: lpstr fgets lpstr sdword handle>
+	<cdecl: sdword fgets lpstr sdword handle>
 	^self invalidCall!
 
 fgetwc: aFILE
@@ -270,7 +270,7 @@ fgetwc: aFILE
 	^self invalidCall!
 
 fgetws: buf n: bufsize stream: aFILE
-	<cdecl: lpwstr fgetws lpwstr sdword handle>
+	<cdecl: intptr fgetws lpwstr sdword handle>
 	^self invalidCall!
 
 fputc: charValue stream: aFILE

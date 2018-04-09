@@ -349,7 +349,7 @@ testShortPath
 	| sysdir tmpDir tmpFile |
 	sysdir := SessionManager current systemDirectory.
 	self assert: (File shortPathOf: sysdir) asAnsiString equals: sysdir.
-	tmpDir := File tempPath , Character dolphin asUtf8String.
+	tmpDir := File tempPath , GUID newUnique asString, Character dolphin asUtf8String.
 	tmpFile := File composePath: tmpDir subPath: $\x1F595 asUtf8String , '.txt'.
 	File createDirectory: tmpDir.
 	

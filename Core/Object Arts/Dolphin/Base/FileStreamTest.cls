@@ -130,7 +130,7 @@ testWritePastEnd
 
 	| actual expected r |
 	filestream := self tempWriteStream: #ansi.
-	expected := WriteStream with: (String new: FileStream.PageSize * 2).
+	expected := WriteStream with: (AnsiString new: FileStream.PageSize * 2).
 	expected reset.
 	r := Random new.
 	FileStream.PageSize timesRepeat: 

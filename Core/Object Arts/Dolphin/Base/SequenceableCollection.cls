@@ -490,7 +490,7 @@ do: operation
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
 encodedAt: anInteger put: anObject
-	"Encoded the specified object beginning at the specified position in the receiver. Answer
+	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
 	the <integer> index of the last element updated."
 
 	self at: anInteger put: anObject.
@@ -1177,7 +1177,7 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
-!SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!public! !
+!SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encoding!constants!encode/decode!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
@@ -1273,6 +1273,12 @@ decodeFrom: aReadStream upTo: anObject
 
 	^aReadStream basicUpTo: anObject!
 
+decodeNext: anInteger from: aReadStream
+	"Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
+	many as are available before the end of stream."
+
+	^aReadStream basicNextAvailable: anInteger!
+
 decodeNextFrom: aReadStream
 	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
@@ -1284,6 +1290,15 @@ emitEncodingMarkerOn: aPositionableStream
 	typically only relevant to string encodings, so there is nothing to do by default."
 
 	!
+
+encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+	^aWriteStream
+		basicNext: sizeInteger
+		putAll: aSequenceableCollection
+		startingAt: startInteger!
+
+encodeOn: aWriteStream nextPutAll: aSequenceableCollection
+	^aWriteStream basicNextPutAll: aSequenceableCollection!
 
 encodeOn: aPuttableStream put: anObject
 	^aPuttableStream basicNextPut: anObject!
@@ -1319,8 +1334,11 @@ writeStream: anInteger
 	^WriteStream on: (self new: anInteger)! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
 !SequenceableCollection class categoriesFor: #decodeFrom:upTo:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #decodeNext:from:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #encodeOn:nextPutAll:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #encodeOn:put:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
 !SequenceableCollection class categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !

@@ -501,7 +501,7 @@ Read: pv cb: cb pcbRead: pcbRead
 	| count |
 	count := cb min: self size - self position.
 	self 
-		next: count
+		basicNext: count
 		into: pv
 		startingAt: 1.
 	pcbRead bytes notNull ifTrue: [pcbRead value: count].

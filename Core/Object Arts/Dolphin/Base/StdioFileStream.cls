@@ -62,13 +62,22 @@ attach: anExternalHandle toFd: fdInteger mode: aString type: aSymbol
 		mode: aString!
 
 basicNext
-	"Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
+	"Private - Answer an <integer> in the range 0..255, being the next of the receiver's future sequence
 	values."
 
 	^self basicNextAvailable ifNil: [self errorEndOfStream]!
 
+basicNext: anInteger
+	"Private - Answer a <sequencedReadableCollection> containing the next anInteger number of objects
+	accessible by the receiver."
+
+	^self
+		basicNext: anInteger
+		into: (self contentsSpecies new: anInteger)
+		startingAt: 1!
+
 basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
-	"Destructively replace the elements of the argument, aSequenceableCollection,
+	"Private - Destructively replace the elements of the argument, aSequenceableCollection,
 	(which must be some sort of byte object or <ExternalStructure> type object
 	which holds bytes) in the interval (startAt..startAt+count-1) with the next, count, 
 	elements of the receiver. Answer aSequenceableCollection."
@@ -84,8 +93,22 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 	read = countInteger ifFalse: [^self errorEndOfStream].
 	^aSequenceableCollection!
 
+basicNext: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| end |
+	(end := startInteger + countInteger - 1) > aSequenceableCollection size
+		ifTrue: [self errorSubscriptBounds: end].
+	crtlib
+		fwrite: aSequenceableCollection yourAddress + startInteger - 1
+		size: aSequenceableCollection class elementSize
+		count: countInteger
+		stream: stream.
+	^aSequenceableCollection!
+
 basicNextAvailable
-	"Answer the next raw element in the stream, or nil if at end."
+	"Private - Answer the next raw element in the stream, or nil if at end."
 
 	"Implementation note: If connected to device then is it possible for fgetc to both block and to return
 	a value other than -1 even when feof() returns true. After a ^Z (EOF) character has been encountered in the
@@ -100,8 +123,27 @@ basicNextAvailable
 			ch := crtlib fgetc: stream.
 			ch == -1 ifFalse: [ch]]!
 
+basicNextAvailable: anInteger
+	"Private - Answer up to anInteger elements of the receiver's collection. The answer will be a
+	collection of the same species as the one accessed by the receiver, and will contain anInteger
+	elements, or as many as are left in the receiver's collection."
+
+	"Implementation Note: Override superclass for improved performance."
+
+	| read buf elemSize |
+	self atEnd ifTrue: [^self encodingClass new: 0].
+	buf := self encodingClass newFixed: anInteger.
+	elemSize := buf class elementSize.
+	read := crtlib
+				fread_s: buf
+				bufferSize: buf size * elemSize
+				elementSize: elemSize
+				count: anInteger
+				stream: stream.
+	^read < anInteger ifTrue: [buf copyFrom: 1 to: read] ifFalse: [buf]!
+
 basicNextPut: anInteger
-	"Store the byte <integer> (range 0..255) as the next element of the receiver."
+	"Private - Store the byte <integer> (range 0..255) as the next element of the receiver."
 
 	crtlib fputc: anInteger stream: stream.
 	^anInteger!
@@ -128,13 +170,14 @@ contents
 	"Answer a <String> or <ByteArray> containing the complete contents of the file
 	accessed by the receiver."
 
-	| len |
-	len := self size.
 	self reset.
-	^len < 0 ifTrue: [self upToEnd] ifFalse: [self nextAvailable: len]!
+	^self upToEnd!
 
 contentsSpecies
 	^self subclassResponsibility!
+
+encodingClass
+	^self contentsSpecies!
 
 errorNotPositionable
 	^self error: 'The stdio stream is not positionable'!
@@ -195,23 +238,6 @@ next
 
 	^self subclassResponsibility!
 
-next: countInteger into: aSequenceableCollection startingAt: startInteger
-	"Destructively replace the elements of the argument, aSequenceableCollection,
-	(which must be some sort of byte object or <ExternalStructure> type object
-	which holds bytes) in the interval (startAt..startAt+count-1) with the next, count, 
-	elements of the receiver. Answer aSequenceableCollection."
-
-	| read start |
-	start := startInteger - 1.
-	read := crtlib
-				fread_s: aSequenceableCollection yourAddress + start
-				bufferSize: aSequenceableCollection byteSize - start
-				elementSize: self contentsSpecies elementSize
-				count: countInteger
-				stream: stream.
-	read = countInteger ifFalse: [^self errorEndOfStream].
-	^aSequenceableCollection!
-
 next: anInteger put: anObject
 	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
 	Answer anObject."
@@ -223,47 +249,13 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
 
-	crtlib
-		fwrite: aSequenceableCollection yourAddress + startInteger - 1
-		size: aSequenceableCollection class elementSize
-		count: countInteger
-		stream: stream.
-	^aSequenceableCollection!
+	^self subclassResponsibility!
 
 nextAvailable
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
 
 	^self subclassResponsibility!
-
-nextAvailable: anInteger
-	"Answer up to anInteger elements of the receiver's collection. The answer will be a
-	collection of the same species as the one accessed by the receiver, and will contain anInteger
-	elements, or as many as are left in the receiver's collection."
-
-	"Implementation Note: Override superclass for improved performance."
-
-	| read buf bufClass |
-	bufClass := self contentsSpecies.
-	self atEnd ifTrue: [^bufClass new: 0].
-	buf := bufClass newFixed: anInteger.
-	read := crtlib
-				fread_s: buf
-				bufferSize: buf byteSize
-				elementSize: bufClass elementSize
-				count: anInteger
-				stream: stream.
-	^read < anInteger ifTrue: [buf copyFrom: 1 to: read] ifFalse: [buf]!
-
-nextLine
-	"Answer a Collection consisting of the receiver contents up to (but not including) the 
-	next line delimiter. If there are no further line delimiters in the receiver, then the 
-	rest of the receiver's contents are answered. If the receiver is at its end, then an empty 
-	collection is answered."
-
-	"Not valid for binary streams"
-
-	^self shouldNotImplement!
 
 nextPut: anObject
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -293,27 +285,14 @@ peek
 	"Answer the next element in the collection, but do not change the position reference. 
 	Answer nil if the receiver is at its end."
 
-	^self atEnd
-		ifFalse: 
-			[| ch |
-			ch := crtlib fgetc: stream.
-			ch == -1
-				ifFalse: 
-					[crtlib ungetc: ch stream: stream.
-					self isText ifTrue: [Character value: ch] ifFalse: [ch]]]!
+	^self subclassResponsibility!
 
 peekFor: anObject
 	"Determine the response to the message peek. If it is the same as the
 	argument, anObject, then increment the position reference and answer true.
 	Otherwise answer false and do not change the position reference"
 
-	^self atEnd not and: 
-			[| ch |
-			ch := crtlib fgetc: stream.
-			ch ~~ -1
-				and: [anObject asInteger == ch or: 
-							[crtlib ungetc: ch stream: stream.
-							false]]]!
+	^self subclassResponsibility!
 
 position
 	"Answer the absolute (zero-based) position of the file pointer."
@@ -332,11 +311,6 @@ reset
 	the stream is not positionable, e.g. it is connected to a console device."
 
 	self isDevice ifTrue: [self errorNotPositionable] ifFalse: [self position: 0]!
-
-reverseContents
-	"Answer a copy of the receiver's contents in reverse order."
-
-	^self contents reverse!
 
 seek: originInteger offset: offsetInteger
 	self isDevice ifTrue: [^self errorNotPositionable].
@@ -392,26 +366,21 @@ tab
 tab: anInteger 
 	"Append the specified number of tabs to the receiver."
 
-	anInteger timesRepeat: [self tab]!
-
-upToEnd
-	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
-	the current position to the end)."
-
-	"Implementation Note: Override to provide a more efficient implementation (#atEnd test is
-	very slow on StdioFileStreams)."
-
-	^self basicNext: self size - self position! !
+	anInteger timesRepeat: [self tab]! !
 !StdioFileStream categoriesFor: #asParameter!converting!public! !
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
 !StdioFileStream categoriesFor: #attach:toFd:mode:type:!initializing!private! !
-!StdioFileStream categoriesFor: #basicNext!accessing!public! !
-!StdioFileStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!StdioFileStream categoriesFor: #basicNextAvailable!accessing!public! !
-!StdioFileStream categoriesFor: #basicNextPut:!public! !
+!StdioFileStream categoriesFor: #basicNext!accessing!private! !
+!StdioFileStream categoriesFor: #basicNext:!accessing!private! !
+!StdioFileStream categoriesFor: #basicNext:into:startingAt:!accessing!private! !
+!StdioFileStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
+!StdioFileStream categoriesFor: #basicNextAvailable!accessing!private! !
+!StdioFileStream categoriesFor: #basicNextAvailable:!accessing!private! !
+!StdioFileStream categoriesFor: #basicNextPut:!accessing!private! !
 !StdioFileStream categoriesFor: #close!operations!public! !
 !StdioFileStream categoriesFor: #contents!accessing!public! !
-!StdioFileStream categoriesFor: #contentsSpecies!accessing!private! !
+!StdioFileStream categoriesFor: #contentsSpecies!constants!private! !
+!StdioFileStream categoriesFor: #encodingClass!accessing!private! !
 !StdioFileStream categoriesFor: #errorNotPositionable!exceptions!private! !
 !StdioFileStream categoriesFor: #externalType!accessing!public! !
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
@@ -425,12 +394,9 @@ upToEnd
 !StdioFileStream categoriesFor: #isWriteable!public!testing! !
 !StdioFileStream categoriesFor: #name!accessing!public! !
 !StdioFileStream categoriesFor: #next!accessing!public! !
-!StdioFileStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #next:put:!accessing!public! !
 !StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #nextAvailable!accessing!public! !
-!StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
-!StdioFileStream categoriesFor: #nextLine!accessing!public! !
 !StdioFileStream categoriesFor: #nextPut:!accessing!public! !
 !StdioFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioFileStream categoriesFor: #open:mode:!instance creation!private! !
@@ -439,7 +405,6 @@ upToEnd
 !StdioFileStream categoriesFor: #position!accessing!public! !
 !StdioFileStream categoriesFor: #position:!positioning!public! !
 !StdioFileStream categoriesFor: #reset!positioning!public! !
-!StdioFileStream categoriesFor: #reverseContents!public! !
 !StdioFileStream categoriesFor: #seek:offset:!helpers!positioning!private! !
 !StdioFileStream categoriesFor: #setStream:name:mode:!initializing!private! !
 !StdioFileStream categoriesFor: #setToEnd!positioning!public! !
@@ -448,8 +413,8 @@ upToEnd
 !StdioFileStream categoriesFor: #space!constants!public! !
 !StdioFileStream categoriesFor: #tab!accessing!public! !
 !StdioFileStream categoriesFor: #tab:!accessing!public! !
-!StdioFileStream categoriesFor: #upToEnd!accessing!public! !
 
+StdioFileStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 StdioFileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!
 StdioFileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #externalType #isBinary #isEmpty #isText #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
 
@@ -461,7 +426,7 @@ attach: anExternalHandle toFd: fdInteger mode: modeSymbol type: aSymbol
 	argument identifies the manner in which the file is opened, #read for a read-only stream
 	(e.g. stdin), or any other mode integer for a writable stream."
 
-	^self basicNew
+	^(self classForEncoding: aSymbol) basicNew
 		attach: anExternalHandle
 		toFd: fdInteger
 		mode: (self attachMode: modeSymbol)

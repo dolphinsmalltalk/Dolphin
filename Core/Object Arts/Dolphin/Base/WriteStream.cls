@@ -13,6 +13,31 @@ Instance Variables:
 !WriteStream categoriesForClass!Collections-Streams! !
 !WriteStream methodsFor!
 
+basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger 
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| stop |
+	stop := position + sizeInteger.
+	stop <= writeLimit 
+		ifTrue: 
+			["The block fits into the current collection and can be
+			written directly"
+
+			collection 
+				replaceFrom: position + 1
+				to: stop
+				with: aSequenceableCollection
+				startingAt: startInteger.
+			position := stop]
+		ifFalse: 
+			["The block will not fit within the current collection, so
+			fall back on the slow way"
+
+			startInteger to: startInteger + sizeInteger - 1
+				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
+	^aSequenceableCollection!
+
 basicNextPut: anObject
 	"Private - Store anObject as the next element of the receiver.  If the receiver is not stream 
 	over an Array or a String, or if the Array or String becomes full, then the primitive 
@@ -27,6 +52,13 @@ basicNextPut: anObject
 				growCollection;
 				primitiveBasicNextPut: anObject].
 	^anObject!
+
+basicNextPutAll: aCollection
+	"Private - Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
+	Answer aCollection"
+
+	<primitive: 173>
+	aCollection do: [:each | self nextPut: each]!
 
 basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description
@@ -106,30 +138,19 @@ next: anInteger put: anObject
 	anInteger timesRepeat: [self nextPut: anObject].
 	^anObject!
 
-next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger 
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
+next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver.
+	Answer aSequenceableCollection.
 
-	| stop |
-	stop := position + sizeInteger.
-	stop <= writeLimit 
-		ifTrue: 
-			["The block fits into the current collection and can be
-			written directly"
+	Note that the element count is in terms of the <sequencedReadableCollection argument.
+	Depending on the receiver's encoding, this may not necessarily result in the receiver's
+	position advancing by the same count. "
 
-			collection 
-				replaceFrom: position + 1
-				to: stop
-				with: aSequenceableCollection
-				startingAt: startInteger.
-			position := stop]
-		ifFalse: 
-			["The block will not fit within the current collection, so
-			fall back on the slow way"
-
-			startInteger to: startInteger + sizeInteger - 1
-				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
-	^aSequenceableCollection!
+	^self collection class
+		encodeOn: self
+		next: sizeInteger
+		putAll: aSequenceableCollection
+		startingAt: startInteger!
 
 nextBytePut: anInteger
 	"Store anObject as the next byte of the receiver. If the receiver is not stream over byte
@@ -232,7 +253,9 @@ tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	tabCount timesRepeat: [self tab]! !
+!WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
 !WriteStream categoriesFor: #basicNextPut:!accessing!private! !
+!WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
 !WriteStream categoriesFor: #basicPrint:!printing!private! !
 !WriteStream categoriesFor: #binaryStore:!binary filing!public!storing! !
 !WriteStream categoriesFor: #contents!accessing!public! !

@@ -10,14 +10,14 @@ StdioAnsiFileStream comment: ''!
 !StdioAnsiFileStream categoriesForClass!Collections-Streams! !
 !StdioAnsiFileStream methodsFor!
 
-basicNextPut: anObject
-	"Store the byte <Character> or <integer> (in the range 0..255) as the next element of the receiver."
-
-	crtlib fputc: anObject stream: stream.
-	^anObject!
-
 contentsSpecies
 	^AnsiString!
+
+getString: anAnsiString
+	^crtlib
+		fgets: anAnsiString
+		n: anAnsiString size + 1
+		stream: stream!
 
 next
 	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
@@ -25,79 +25,63 @@ next
 
 	^Character ansiValue: self basicNext!
 
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
-
-	| bytes |
-	bytes := aSequenceableCollection asAnsiString.
-	crtlib
-		fwrite: bytes yourAddress + startInteger - 1
-		size: 1
-		count: countInteger
-		stream: stream.
-	^aSequenceableCollection!
-
 nextAvailable
 	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
 	an ANSI code point. Answer nil if at EOF."
 
 	^self basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
 
-nextLine
-	"Answer a Collection consisting of the receiver contents up to (but not including) the 
-	next line delimiter. If there are no further line delimiters in the receiver, then the 
-	rest of the receiver's contents are answered. If the receiver is at its end, then an empty 
-	collection is answered."
+nextAvailable: anInteger
+	"Answer up to anInteger elements of the receiver's collection. The answer will be a
+	collection of the same species as the one accessed by the receiver, and will contain anInteger
+	elements, or as many as are left in the receiver's collection."
 
-	| buf answer len last blockSize |
-	self atEnd ifTrue: [^''].
-	answer := AnsiString writeStream.
-	blockSize := 128.
-	buf := AnsiString newFixed: blockSize.
-	
-	[| part |
-	part := crtlib
-				fgets: buf
-				n: buf byteSize
-				stream: stream.
-	part isNil
-		ifTrue: 
-			["Hit eof"
-			^answer contents].
-	answer nextPutAll: part.
-	part size == blockSize]
-			whileTrue.
-	answer := answer contents.
-	len := answer size.
-	"Strip off the line terminator, allowing for binary or text mode"
-	last := answer at: len.
-	^last == $\n
-		ifTrue: 
-			[(len > 1 and: [(answer at: len - 1) == $\r])
-				ifTrue: [answer copyFrom: 1 to: len - 2]
-				ifFalse: [answer copyFrom: 1 to: len - 1]]
-		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
-
-nextPut: aCharacter
-	"Store the ANSI <Character> as the next element of the receiver. An error will be raised if
-	the <Character> is not a valid ANSI code point for the current code page."
-
-	self basicNextPut: aCharacter ansiValue.
-	^aCharacter!
+	^self basicNextAvailable: anInteger!
 
 nextPutAll: aCollection 
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
 	Answer aCollection"
 	
 	crtlib fputs: aCollection asAnsiString stream: stream.
-	^aCollection! !
-!StdioAnsiFileStream categoriesFor: #basicNextPut:!public! !
+	^aCollection!
+
+peek
+	"Answer the next element in the collection, but do not change the position reference. 
+	Answer nil if the receiver is at its end."
+
+	^self basicNextAvailable
+		ifNotNil: 
+			[:ch |
+			crtlib ungetc: ch stream: stream.
+			Character ansiValue: ch]!
+
+peekFor: anObject
+	"Determine the response to the message peek. If it is the same as the
+	argument, anObject, then increment the position reference and answer true.
+	Otherwise answer false and do not change the position reference"
+
+	| ch |
+	^(ch := self basicNextAvailable) notNil
+		and: [ch == anObject ansiValue or: 
+					[crtlib ungetc: ch stream: stream.
+					false]]!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
+	the current position to the end)."
+
+	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block.
+	Note however that due to line end translations, the number of characters read will probably be significantly 
+	fewer than the remaining size of the file."
+
+	^self basicNextAvailable: self size - self position! !
 !StdioAnsiFileStream categoriesFor: #contentsSpecies!accessing!private! !
+!StdioAnsiFileStream categoriesFor: #getString:!accessing!private! !
 !StdioAnsiFileStream categoriesFor: #next!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !StdioAnsiFileStream categoriesFor: #nextAvailable!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #nextPut:!public! !
+!StdioAnsiFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioAnsiFileStream categoriesFor: #nextPutAll:!accessing!public! !
+!StdioAnsiFileStream categoriesFor: #peek!accessing!public! !
+!StdioAnsiFileStream categoriesFor: #peekFor:!accessing!public! !
+!StdioAnsiFileStream categoriesFor: #upToEnd!accessing!public! !
 

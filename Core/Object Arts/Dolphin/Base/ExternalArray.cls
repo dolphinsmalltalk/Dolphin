@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ExternalArray
 	instanceVariableNames: 'length'
@@ -396,7 +396,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 	(#do:, #keysAndValuesDo:, #from:to:do:, and,	of course, #from:to:keysAndValuesDo:)."
 
 	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]! !
-!ExternalArray categoriesFor: #appendToStream:!double dispatch!public! !
+!ExternalArray categoriesFor: #appendToStream:!double dispatch!private! !
 !ExternalArray categoriesFor: #asArray!converting!public! !
 !ExternalArray categoriesFor: #asOrderedCollection!converting!public! !
 !ExternalArray categoriesFor: #at:!accessing!public! !

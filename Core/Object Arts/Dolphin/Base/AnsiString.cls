@@ -101,6 +101,13 @@ nextIndexOf: anElement from: start to: stop
 	<primitive: 52>
 	^self nextIdentityIndexOf: anElement from: start to: stop!
 
+strlen
+	"Answer the length of the receiver (in characters) up to the first null terminator. This may
+	be less than its size if it contains embedded nulls. It can never be greater than the
+	receiver's size."
+
+	^CRTLibrary default strlen: self!
+
 trimNulls
 	"Answer a copy of the receiver with trailing nulls removed.
 	Take advantage of some private knowledge about the implementation of
@@ -116,6 +123,7 @@ trimNulls
 !AnsiString categoriesFor: #first:!copying!public! !
 !AnsiString categoriesFor: #includes:!public!searching! !
 !AnsiString categoriesFor: #nextIndexOf:from:to:!public!searching! !
+!AnsiString categoriesFor: #strlen!accessing!private! !
 !AnsiString categoriesFor: #trimNulls!copying!public! !
 
 !AnsiString class methodsFor!

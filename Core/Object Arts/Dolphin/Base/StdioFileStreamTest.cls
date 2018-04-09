@@ -37,6 +37,7 @@ testCharacterTranslation
 
 	{AnsiString. Utf8String. Utf16String} do: 
 			[:eachClass |
+			| byteCharSet subject actual expected |
 			"Eof"
 			filestream := self streamOn: eachClass empty.
 			filestream nextPut: Character eof.
@@ -44,18 +45,26 @@ testCharacterTranslation
 			self assert: filestream contents equals: ''.
 			self closeTempStream: filestream.
 			self assert: (File readAllText: tempFileName) equals: (eachClass with: Character eof).
-
-			"All the characters except EOF should read/write unchanged"
-			(Character byteCharacterSet reject: [:c | c == Character eof]) do: 
+			#($\n $\r) do: 
 					[:each |
-					| subject actual expected |
 					subject := self streamOn: eachClass empty.
 					subject nextPut: each.
 					actual := subject contents.
 					self assert: subject atEnd.
 					self closeTempStream: subject.
 					expected := String with: each.
-					self assert: actual equals: expected]]!
+					self assert: actual equals: expected].
+
+			"All the characters except EOF should round trip unchanged"
+			byteCharSet := Character byteCharacterSet reject: [:c | c == Character eof].
+			subject := self streamOn: eachClass empty.
+			byteCharSet do: [:each | subject nextPut: each].
+			subject reset.
+			byteCharSet do: 
+					[:each |
+					actual := subject next.
+					self assert: actual equals: each].
+			self closeTempStream: subject]!
 
 testNextColon
 	self strings do: 

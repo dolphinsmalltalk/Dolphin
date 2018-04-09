@@ -123,6 +123,11 @@ reset
 
 	self position: 0!
 
+reverseContents
+	"Answer a copy of the receiver's contents in reverse order."
+
+	^self contents reverse!
+
 setToEnd
 	"Set the position of the receiver to be past the last value (i.e. the stream will have no
 	future sequence values), and will answer true in response to the #atEnd message."
@@ -228,6 +233,7 @@ upToAll: aCollection
 !SequencedStream categoriesFor: #position!positioning!public! !
 !SequencedStream categoriesFor: #position:!positioning!public! !
 !SequencedStream categoriesFor: #reset!positioning!public! !
+!SequencedStream categoriesFor: #reverseContents!accessing!public! !
 !SequencedStream categoriesFor: #setToEnd!positioning!public! !
 !SequencedStream categoriesFor: #skip:!positioning!public! !
 !SequencedStream categoriesFor: #skipSeparators!positioning!public! !

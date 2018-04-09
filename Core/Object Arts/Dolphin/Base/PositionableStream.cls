@@ -36,7 +36,7 @@ basicNext: anInteger
 	accessible by the receiver."
 
 	"Implementation Note: Subclasses should not generally override this method, but the more
-	flexible #next:into:startingAt: message which this uses."
+	flexible #basicNext:into:startingAt: message which this uses."
 
 	^self
 		basicNext: anInteger
@@ -215,11 +215,6 @@ positionAfterNext: anInteger
 reset
 	position := 0!
 
-reverseContents
-	"Answer a copy of the receiver's contents in reverse order."
-
-	^self contents reverse!
-
 setToEnd
 	"Set the position of the receiver to be past the last value in the stream."
 
@@ -248,15 +243,6 @@ upToEnd
 	"Implementation Note: We implement this in terms of #basicNext:, which is optimized for
 	 particular streams, and which counts by raw elements regardless of encoding."
 
-	^self basicNext: self lastPosition - self position!
-
-upToEnd2
-	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
-	the current position to the end)."
-
-	"Implementation Note: We implement this in terms of #next:, which is optimized for
-	 particular streams."
-
 	^self basicNext: self lastPosition - self position! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
 !PositionableStream categoriesFor: #basicNext:!accessing!public! !
@@ -281,12 +267,10 @@ upToEnd2
 !PositionableStream categoriesFor: #position:!positioning!public! !
 !PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
 !PositionableStream categoriesFor: #reset!positioning!public! !
-!PositionableStream categoriesFor: #reverseContents!accessing!public! !
 !PositionableStream categoriesFor: #setToEnd!positioning!public! !
 !PositionableStream categoriesFor: #size!accessing!public! !
 !PositionableStream categoriesFor: #upTo:!accessing!public! !
 !PositionableStream categoriesFor: #upToEnd!accessing!public! !
-!PositionableStream categoriesFor: #upToEnd2!accessing!public! !
 
 PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 

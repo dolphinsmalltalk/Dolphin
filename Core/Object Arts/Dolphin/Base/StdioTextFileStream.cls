@@ -40,6 +40,9 @@ externalType
 
 	^#text!
 
+getString: aString
+	^self subclassResponsibility!
+
 isText
 	"Answer whether the receiver's data is characters.
 	X3J20 (draft) includes rational as to why this message is not called #isCharacter."
@@ -47,9 +50,30 @@ isText
 	^true!
 
 next
-	"Answer a <Character> being the next code point decoded from the receiver's future sequence values."
+	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
+	a Unicode code point. Raise an error if at EOF."
 
-	^self contentsSpecies decodeNextFrom: self!
+	"The stdio API is always working in UTF-16, regardless of the underlying encoding of the stream."
+
+	^(self encodingClass decodeNextFrom: self) ifNil: [self errorEndOfStream]!
+
+next: countInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| ansi end |
+	end := startInteger + countInteger - 1.
+	ansi := self encodingClass
+				fromString: ((startInteger == 1 and: [end == aSequenceableCollection size])
+						ifTrue: [aSequenceableCollection]
+						ifFalse: [aSequenceableCollection copyFrom: startInteger to: end]).
+	^self nextPutAll: ansi!
+
+nextAvailable
+	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
+	an ANSI code point. Answer nil if at EOF."
+
+	^self encodingClass decodeNextFrom: self!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
@@ -57,15 +81,84 @@ nextLine
 	rest of the receiver's contents are answered. If the receiver is at its end, then an empty 
 	collection is answered."
 
-	^self subclassResponsibility! !
+	| buf answer len last blockSize |
+	self atEnd ifTrue: [^''].
+	blockSize := 128.
+	answer := self encodingClass writeStream: blockSize.
+	buf := self encodingClass newFixed: blockSize - 1.
+	
+	[| read |
+	(self getString: buf) == 0
+		ifTrue: 
+			["Hit eof"
+			^answer contents].
+	read := buf strlen.
+	answer
+		basicNext: read
+		putAll: buf
+		startingAt: 1.
+	read == (blockSize - 1)]
+			whileTrue.
+	answer := answer contents.
+	len := answer size.
+	last := answer at: len.
+	^last == $\n
+		ifTrue: 
+			[(len > 1 and: [(answer at: len - 1) == $\r])
+				ifTrue: [answer copyFrom: 1 to: len - 2]
+				ifFalse: [answer copyFrom: 1 to: len - 1]]
+		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
+
+nextPut: aCharacter
+	"Store the <Character> as the next element of the receiver."
+
+	^self encodingClass encodeOn: self put: aCharacter!
+
+peek
+	"Answer the next element in the collection, but do not change the position reference. 
+	Answer nil if the receiver is at its end."
+
+	| pos ch |
+	pos := self position.
+	ch := self nextAvailable.
+	ch notNil ifTrue: [self position: pos].
+	^ch!
+
+peekFor: aCharacter
+	"Answer the next element in the collection, but do not change the position reference. 
+	Answer nil if the receiver is at its end."
+
+	| pos ch |
+	pos := self position.
+	^(ch := self nextAvailable) notNil
+		and: [ch = aCharacter or: 
+					[self position: pos.
+					false]]!
+
+upToEnd
+	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
+	the current position to the end)."
+
+	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block.
+	Note however that due to line end translations, the number of characters read will probably be significantly 
+	fewer than the remaining size of the file."
+
+	^self basicNextAvailable: self size - self position! !
 !StdioTextFileStream categoriesFor: #basicPrint:!printing!private! !
 !StdioTextFileStream categoriesFor: #cr!accessing!public! !
 !StdioTextFileStream categoriesFor: #crtab!accessing!public! !
 !StdioTextFileStream categoriesFor: #crtab:!accessing!public! !
 !StdioTextFileStream categoriesFor: #externalType!accessing!public! !
+!StdioTextFileStream categoriesFor: #getString:!accessing!private! !
 !StdioTextFileStream categoriesFor: #isText!public!testing! !
 !StdioTextFileStream categoriesFor: #next!accessing!public! !
+!StdioTextFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
+!StdioTextFileStream categoriesFor: #nextAvailable!accessing!public! !
 !StdioTextFileStream categoriesFor: #nextLine!accessing!public! !
+!StdioTextFileStream categoriesFor: #nextPut:!accessing!public! !
+!StdioTextFileStream categoriesFor: #peek!accessing!public! !
+!StdioTextFileStream categoriesFor: #peekFor:!accessing!public! !
+!StdioTextFileStream categoriesFor: #upToEnd!accessing!public! !
 
 StdioTextFileStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 StdioTextFileStream methodProtocol: #writeFileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #externalType #flush #isBinary #isEmpty #isText #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!

@@ -12,7 +12,7 @@ StdioUnicodeFileStream comment: ''!
 !StdioUnicodeFileStream methodsFor!
 
 basicNextAvailable
-	"Answer an <integer> in the range 0..65535, being the next of the receiver's future sequence
+	"Private - Answer an <integer> in the range 0..65535, being the next of the receiver's future sequence
 	values. Answer nil if at EOF."
 
 	| ch |
@@ -20,78 +20,36 @@ basicNextAvailable
 	^ch == 16rFFFF ifFalse: [ch]!
 
 basicNextPut: anInteger
-	"Store the byte <integer> (in the range 0..65535) as the next element of the receiver."
+	"Private - Store the byte <integer> (in the range 0..65535) as the next element of the receiver."
 
 	crtlib fputwc: anInteger stream: stream.
 	^anInteger!
 
-next
-	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
-	a Unicode code point. Raise an error if at EOF."
+encodingClass
+	"Private - The stdio buffer is always UTF-16 encoded, and the API calls always in terms of UTF-16 chars, regardless of the underlying file encoding."
 
-	"The stdio API is always working in UTF-16, regardless of the underlying encoding of the stream."
+	^Utf16String!
 
-	^(Utf16String decodeNextFrom: self) ifNil: [self errorEndOfStream]!
+getString: aUtf16String
+	^crtlib
+		fgetws: aUtf16String
+		n: aUtf16String size + 1
+		stream: stream!
 
-next: countInteger putAll: aSequenceableCollection startingAt: startInteger
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
+nextAvailable: anInteger
+	"Answer up to anInteger elements of the receiver's collection. Generally, the answer will be
+	a collection of the same class as the one accessed by the receiver (though this is
+	determined by the receiver), and will contain anInteger elements, or as many as are left in
+	the receiver's collection."
 
-	| end utf16 |
-	end := startInteger + countInteger - 1.
-	utf16 := (startInteger == 1 and: [end == aSequenceableCollection size])
-				ifTrue: [aSequenceableCollection asUtf16String]
-				ifFalse: [(aSequenceableCollection copyFrom: startInteger to: end) asUtf16String].
-	crtlib fputws: utf16 stream: stream.
-	^aSequenceableCollection!
+	"Implementation Note: #atEnd test is very slow on StdioFileStreams, so to be avoided."
 
-nextAvailable
-	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
-	an ANSI code point. Answer nil if at EOF."
-
-	^Utf16String decodeNextFrom: self!
-
-nextLine
-	"Answer a Collection consisting of the receiver contents up to (but not including) the 
-	next line delimiter. If there are no further line delimiters in the receiver, then the 
-	rest of the receiver's contents are answered. If the receiver is at its end, then an empty 
-	collection is answered."
-
-	| buf answer len last blockSize |
-	self atEnd ifTrue: [^''].
-	answer := Utf16String writeStream.
-	blockSize := 128.
-	buf := Utf16String newFixed: blockSize.
-	
-	[| part |
-	part := crtlib
-				fgetws: buf
-				n: buf byteSize
-				stream: stream.
-	part isNil
-		ifTrue: 
-			["Hit eof"
-			^answer contents].
-	answer nextPutAll: part.
-	part size == blockSize]
-			whileTrue.
-	answer := answer contents.
-	len := answer size.
-	"Strip off the line terminator, allowing for binary or text mode"
-	last := answer at: len.
-	^last == $\n
-		ifTrue: 
-			[(len > 1 and: [(answer at: len - 1) == $\r])
-				ifTrue: [answer copyFrom: 1 to: len - 2]
-				ifFalse: [answer copyFrom: 1 to: len - 1]]
-		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
-
-nextPut: anObject
-	"Store the <Character> as the next element of the receiver."
-
-	"Implementation Note: Although the underlying encoding may be UTF-8, we have to work through an API that expects UTF-16"
-
-	^Utf16String encodeOn: self put: anObject!
+	| newStream count next |
+	newStream := self contentsSpecies writeStream: (count := anInteger).
+	[count == 0 or: [(next := self nextAvailable) isNil]] whileFalse: 
+			[newStream nextPut: next.
+			count := count - 1].
+	^newStream contents!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
@@ -112,13 +70,11 @@ setStream: anExternalAddress name: aString mode: modeString
 		setStream: anExternalAddress
 		name: aString
 		mode: modeString! !
-!StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #basicNextPut:!public! !
-!StdioUnicodeFileStream categoriesFor: #next!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #nextAvailable!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #nextPut:!accessing!public! !
+!StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
+!StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
+!StdioUnicodeFileStream categoriesFor: #encodingClass!accessing!constants!private! !
+!StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
+!StdioUnicodeFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
 !StdioUnicodeFileStream categoriesFor: #setStream:name:mode:!initializing!private! !

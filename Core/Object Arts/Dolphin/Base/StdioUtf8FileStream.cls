@@ -20,31 +20,6 @@ contents
 contentsSpecies
 	^Utf8String!
 
-next: anInteger
-	"Answer a <sequencedReadableCollection> of the receiver's content species containing the next anInteger number of objects
-	accessible by the receiver."
-
-	| out i |
-	out := self contentsSpecies writeStream: anInteger.
-	i := 1.
-	[i > anInteger] whileFalse: [out nextPut: self next].
-	^out contents!
-
-next: countInteger into: aSequenceableCollection startingAt: startInteger
-	"Destructively replace the elements of the argument, aSequenceableCollection,
-	(which must be some sort of byte object or <ExternalStructure> type object
-	which holds bytes) in the interval (startAt..startAt+count-1) with the next, count, 
-	elements of the receiver. Answer aSequenceableCollection."
-
-	"N.B. This will read countInteger Unicode characters from the stream, which may read between 1 and 4 bytes for
-	each character."
-
-	| last pos |
-	last := startInteger + countInteger - 1.
-	pos := startInteger.
-	[pos >= last] whileFalse: [pos := aSequenceableCollection encodedAt: pos put: self next].
-	^aSequenceableCollection!
-
 nextAvailable: anInteger
 	"Answer a <sequencedReadableCollection> of the receiver's content species containing the next anInteger number of objects
 	accessible by the receiver."
@@ -88,17 +63,12 @@ upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
 
-	| remainder next |
-	remainder := self contentsSpecies writeStream: 128.
-	[(next := self nextAvailable) isNil] whileFalse: [remainder nextPut: next].
-	^remainder contents! !
-!StdioUtf8FileStream categoriesFor: #contents!public! !
+	^super upToEnd asUtf8String! !
+!StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
 !StdioUtf8FileStream categoriesFor: #contentsSpecies!accessing!private! !
-!StdioUtf8FileStream categoriesFor: #next:!public! !
-!StdioUtf8FileStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!StdioUtf8FileStream categoriesFor: #nextAvailable:!public! !
+!StdioUtf8FileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioUtf8FileStream categoriesFor: #position!accessing!public! !
 !StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
 !StdioUtf8FileStream categoriesFor: #size!accessing!public! !
-!StdioUtf8FileStream categoriesFor: #upToEnd!public! !
+!StdioUtf8FileStream categoriesFor: #upToEnd!accessing!public! !
 

@@ -84,21 +84,6 @@ next
 		ifTrue: [self errorEndOfStream]
 		ifFalse: [collection at: (position := position + 1)]!
 
-next: count into: aSequenceableCollection startingAt: startAt
-	"Destructively replace the elements of the argument, aSequenceableCollection,
-	in the interval (startAt..startAt+count-1) with the next, count, elements of
-	the receiver. Answer aSequenceableCollection."
-
-	| stop |
-	stop := self positionAfterNext: count.
-	aSequenceableCollection
-		replaceFrom: startAt
-		to: startAt+count-1
-		with: collection
-		startingAt: position+1.
-	self position: stop.
-	^aSequenceableCollection!
-
 nextAvailable
 	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
 	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
@@ -112,7 +97,6 @@ nextAvailable
 !ReadStream categoriesFor: #basicNextAvailable!accessing!public! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !
-!ReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #nextAvailable!accessing!public! !
 
 ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!

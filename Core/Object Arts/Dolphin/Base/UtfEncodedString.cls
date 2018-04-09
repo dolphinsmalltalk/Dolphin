@@ -81,7 +81,7 @@ UtfEncodedString methodProtocol: #String attributes: #(#ansi #readOnly) selector
 !UtfEncodedString class methodsFor!
 
 codePage
-	^self subclassResponsibility!
+	"Answer the Windows code page constant for the receiver's encoding."
 
 	^self subclassResponsibility!
 

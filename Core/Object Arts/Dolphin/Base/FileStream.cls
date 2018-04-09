@@ -85,8 +85,72 @@ basicNext: count into: aSequenceableCollection startingAt: startAt
 		elemsRead := tmp].
 	^aSequenceableCollection!
 
+basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| stop |
+	stop := position + sizeInteger.
+	stop <= PageSize
+		ifTrue: 
+			["The block fits into the current page and can be written directly to the buffer"
+			sizeInteger > 0
+				ifTrue: 
+					[collection
+						replaceFrom: position + 1
+						to: stop
+						with: aSequenceableCollection
+						startingAt: startInteger.
+					position := stop.
+					flags := flags bitOr: BufferUpdatedMask]]
+		ifFalse: 
+			[| lastPos lastPageStart startNextPage wholePagesSize writeOffset |
+			lastPos := pageBase + position + sizeInteger - 1.
+			writeOffset := PageSize - position.
+			"Update and write current page"
+			position < PageSize
+				ifTrue: 
+					[collection
+						replaceFrom: position + 1
+						to: PageSize
+						with: aSequenceableCollection
+						startingAt: startInteger.
+					position := PageSize.
+					flags := flags bitOr: BufferUpdatedMask].
+			self flush.
+			"Next write any whole pages"
+			startNextPage := pageBase + PageSize.
+			lastPageStart := (lastPos truncateTo: PageSize) + 1.
+			wholePagesSize := lastPageStart - startNextPage.
+			wholePagesSize > 0
+				ifTrue: 
+					[file position: startNextPage - 1.
+					0 to: wholePagesSize // PageSize - 1
+						do: 
+							[:i |
+							collection
+								replaceFrom: 1
+								to: PageSize
+								with: aSequenceableCollection
+								startingAt: startInteger + writeOffset + (i * PageSize).
+							file write: collection count: PageSize].
+					self assert: [file position = (lastPageStart - 1)]].
+
+			"And finally buffer any trailing data having repositioned to the correct page"
+			self readPageFor: lastPageStart.
+			position := lastPos - lastPageStart + 1.
+			position > 0
+				ifTrue: 
+					[collection
+						replaceFrom: 1
+						to: position
+						with: aSequenceableCollection
+						startingAt: startInteger + writeOffset + wholePagesSize.
+					flags := flags bitOr: BufferUpdatedMask]].
+	^aSequenceableCollection!
+
 basicNextPut: anObject
-	"Write anObject as the next basic element of the stream. Answer anObject."
+	"Private - Write anObject as the next basic element of the stream. Answer anObject."
 
 	"Implementation Note: Inline the #beDirty operation as a performance optimization."
 
@@ -95,7 +159,7 @@ basicNextPut: anObject
 	^anObject!
 
 basicUpTo: anObject 
-	"Answer a <sequencedReadableCollection> of elements starting with the next element accessed
+	"Private - Answer a <sequencedReadableCollection> of elements starting with the next element accessed
 	by the receiver, and up to, but not inclusive of, the next element that is equal to the
 	<Object>, anObject. Positions the stream after anObject if found. If anObject is not in the
 	collection, answer the entire rest of the collection. If the receiver is at its end, then
@@ -270,31 +334,6 @@ next
 		ifFalse: [
 			self position: self position.
 			collection class decodeNextFrom: self]!
-
-next: count into: aSequenceableCollection startingAt: startAt
-	"Destructively replace the elements of the argument, aSequenceableCollection,
-	in the interval (startAt..startAt+count-1) with the next, count, elements of
-	the receiver. Answer aSequenceableCollection.
-	Implementation Note: For efficiency we implement this as a loop which
-	transfers as many elements as possible on each iteration, optimally a page
-	at a time."
-
-	| startOffset elemsRead |
-	startOffset := startAt - 1.
-	elemsRead := 0.
-	[elemsRead < count] whileTrue: [ | blockSize tmp |
-		self atEnd ifTrue: [self errorEndOfStream].
-		blockSize := (readLimit - position) min: (count - elemsRead).
-		tmp := elemsRead + blockSize.
-		aSequenceableCollection
-			replaceFrom: startAt + elemsRead
-			to: startOffset + tmp
-			with: collection
-			startingAt: position + 1.
-		"Reposition to the start of the next page (or the end of the file)"
-		self position: self position + blockSize.
-		elemsRead := tmp].
-	^aSequenceableCollection!
 
 next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger
@@ -495,8 +534,9 @@ writePage
 !FileStream categoriesFor: #atEnd!public!testing! !
 !FileStream categoriesFor: #basicNext!accessing!public! !
 !FileStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!FileStream categoriesFor: #basicNextPut:!accessing!public! !
-!FileStream categoriesFor: #basicUpTo:!accessing!public! !
+!FileStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
+!FileStream categoriesFor: #basicNextPut:!accessing!private! !
+!FileStream categoriesFor: #basicUpTo:!accessing!private! !
 !FileStream categoriesFor: #beBinary!modes!public! !
 !FileStream categoriesFor: #beText!modes!public! !
 !FileStream categoriesFor: #bufferClassFor:mode:type:!instance creation!private! !
@@ -518,7 +558,6 @@ writePage
 !FileStream categoriesFor: #makeBufferOfSize:!buffer!private! !
 !FileStream categoriesFor: #name!accessing!private! !
 !FileStream categoriesFor: #next!accessing!public! !
-!FileStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !FileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !FileStream categoriesFor: #nextAvailable!accessing!public! !
 !FileStream categoriesFor: #nextPut:!accessing!public! !

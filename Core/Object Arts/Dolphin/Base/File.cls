@@ -1165,7 +1165,7 @@ relativePathOf: aPathString to: aBasePathString
 				pszTo: toPath
 				dwAttrTo: 0) ifTrue: [relPath] ifFalse: [toPath].
 	^(relPath beginsWith: '.\')
-		ifTrue: [relPath copyFrom: 3 to: (KernelLibrary default lstrlenW: relPath)]
+		ifTrue: [relPath copyFrom: 3 to: relPath strlen]
 		ifFalse: [relPath trimNulls]!
 
 removeDirectory: aString
@@ -1330,7 +1330,7 @@ splitExtensionFrom: aString
 				extLen: len + 1) == 0
 		ifFalse: [^CRTError signalWith: errno].
 	"CRT function includes leading period on extension, which we don't"
-	^ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: (crt strlen: ext)!
+	^ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: ext strlen!
 
 splitFilenameFrom: aString
 	"Splits the pathname, aString, and answers the file name portion (including extension).
@@ -1386,7 +1386,7 @@ splitPath: aString
 			{drive trimNulls.
 				dir trimNulls.
 				fname trimNulls.
-				ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: (crt strlen: ext)}]
+				ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: ext strlen}]
 		ifFalse: [CRTError signalWith: errno]!
 
 splitPathFrom: aPathnameString
