@@ -623,7 +623,7 @@ replacement
 	^Utf8Default!
 
 replacement
-	^$\xFFFD!
+	^Utf8Default!
 
 space
 	"Answer the space <Character>."

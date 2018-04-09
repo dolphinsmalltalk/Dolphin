@@ -32,7 +32,7 @@ testClassDecodeFrom
 			| stream actual |
 			stream := each readStream.
 			actual := self collectionClass decodeNextFrom: stream.
-			self assert: actual equals: $\xFFFD.
+			self assert: actual equals: Character replacement.
 			actual := self collectionClass decodeNextFrom: stream.
 			self assert: actual equals: $A].
 	"Incomplete continuations"
@@ -41,7 +41,7 @@ testClassDecodeFrom
 			| stream actual |
 			stream := each readStream.
 			actual := self collectionClass decodeNextFrom: stream.
-			self assert: actual equals: $\xFFFD.
+			self assert: actual equals: Character replacement.
 			self assert: stream atEnd]! !
 !Utf8StringTest categoriesFor: #assimilate:!helpers!private! !
 !Utf8StringTest categoriesFor: #assimilateString:!helpers!private! !

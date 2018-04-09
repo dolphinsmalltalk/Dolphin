@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #CPINFOEXW
 	instanceVariableNames: ''
@@ -47,7 +47,7 @@ defaultCharacter
 	"The character used for code points that cannot be represented on the code page described by the receiver."
 
 	| utf16 |
-	utf16 := Utf16String new: 2.
+	utf16 := Utf16String newFixed: 2.
 	(KernelLibrary default
 		multiByteToWideChar: self codepage
 		dwFlags: 0
@@ -68,6 +68,11 @@ MaxCharSize
 
 	^bytes dwordAtOffset: 0!
 
+unicodeDefaultChar
+	"Answer the default Unicode character for the described code page."
+
+	^Character codePoint: self UnicodeDefaultChar!
+
 UnicodeDefaultChar
 	"Answer the <Integer> value of the receiver's 'UnicodeDefaultChar' field."
 
@@ -78,9 +83,19 @@ UnicodeDefaultChar
 !CPINFOEXW categoriesFor: #defaultCharacter!accessing!public! !
 !CPINFOEXW categoriesFor: #LeadByte!**compiled accessors**!public! !
 !CPINFOEXW categoriesFor: #MaxCharSize!**compiled accessors**!public! !
+!CPINFOEXW categoriesFor: #unicodeDefaultChar!accessing!public! !
 !CPINFOEXW categoriesFor: #UnicodeDefaultChar!**compiled accessors**!public! !
 
 !CPINFOEXW class methodsFor!
+
+codePage: anInteger
+	| cpinfo |
+	cpinfo := self newBuffer.
+	KernelLibrary default
+		getCPInfoExW: anInteger
+		dwFlags: 0
+		lpCPInfoEx: cpinfo.
+	^cpinfo!
 
 defineFields
 	"Define the fields of the CPINFOEXW structure.
@@ -106,5 +121,6 @@ defineFields
 		defineField: #codepage type: DWORDField new beReadOnly offset: 20;
 		defineField: #CodePageName type: (StringField type: Utf16String length: 260) beReadOnly offset: 24.
 	self byteSize: 544! !
+!CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
 !CPINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 
