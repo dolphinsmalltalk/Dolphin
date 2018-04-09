@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IniFileAbstract subclass: #IniFileSection
 	instanceVariableNames: 'name'
@@ -50,12 +50,12 @@ getValue: key
 				lpReturnedString: buf
 				nSize: buf size
 				lpFileName: filename.
-	(count == 0 and: [KernelLibrary default getLastError ~~ 0])
+	(count == 0 and: [lib getLastError ~~ 0])
 		ifTrue: 
 			["Not found"
 			^nil].
 	count = (buf size - 2)]
-			whileTrue: [buf := Utf16String new: buf size * 2].
+			whileTrue: [buf := Utf16String newFixed: buf size * 2].
 	^(buf resize: count) asUtf8String!
 
 hash

@@ -438,14 +438,19 @@ sniffEncoding
 			ifTrue: [String.EncodingUtf16]
 			ifFalse: 
 				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
-				(buf copyFrom: 1 to: 3) = ##($\xFEFF asUtf8String asByteArray)
+				(buf beginsWith: Utf8String bom)
 					ifTrue: 
 						[self position: 3.
 						String.EncodingUtf8]
 					ifFalse: 
-						[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
-						self reset.
-						String.EncodingAnsi]]!
+						[(buf beginsWith: Utf16String bom)
+							ifTrue: 
+								[self position: 2.
+								String.EncodingUtf16]
+							ifFalse: 
+								[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
+								self reset.
+								String.EncodingAnsi]]]!
 
 spec: aString
 	"Private - Set the file path to the <readableString> argument."
@@ -559,17 +564,23 @@ appendPathDelimiter: aString
 attributes: aFileNameString
 	^KernelLibrary default getFileAttributes: aFileNameString!
 
-commonPrefixOf: path1 and: path2
+commonPrefixOf: pathString1 and: pathString2
 	"Answer the <readableString> common prefix shared between the two paths.
 	This will be empty if the paths share no common prefix."
 
-	| prefix len |
-	prefix := File pathBuffer.
+	| prefix len path1 path2 |
+	path1 := pathString1 asUtf16String.
+	path2 := pathString2 asUtf16String.
 	len := ShlwapiLibrary default
 				pathCommonPrefix: path1
 				pszFile2: path2
-				achPath: prefix.
-	^prefix first: len!
+				achPath: nil.
+	prefix := Utf16String newFixed: len.
+	ShlwapiLibrary default
+		pathCommonPrefix: path1
+		pszFile2: path2
+		achPath: prefix.
+	^prefix!
 
 composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 
@@ -851,15 +862,24 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath len |
-	fullpath := self pathBuffer.
-	(len := KernelLibrary default
-				getFullPathName: aPathnameString
-				nBufferLength: fullpath size + 1
-				lpBuffer: fullpath
+	| fullpath len path kernel |
+	path := aPathnameString asUtf16String.
+	kernel := KernelLibrary default.
+	(len := kernel
+				getFullPathName: path
+				nBufferLength: 0
+				lpBuffer: nil
 				lpFilePart: nil) == 0
-		ifTrue: [KernelLibrary default systemError].
-	^fullpath resize: len!
+		ifTrue: [kernel systemError].
+	"Note: Returns the length including the terminating null"
+	fullpath := Utf16String newFixed: len - 1.
+	(kernel
+		getFullPathName: path
+		nBufferLength: len
+		lpBuffer: fullpath
+		lpFilePart: nil) == 0
+		ifTrue: [kernel systemError].
+	^fullpath!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -989,20 +1009,30 @@ makePath: anArray
 
 	| size drive dir fname ext path errno |
 	size := 0.
-	(drive := anArray at: 1)
+	(anArray at: 1)
 		ifNotNil: 
-			["Assume the drive doesn't have the colon and that _makepath_s will add it"
+			[:d |
+			"Assume the drive doesn't have the colon and that _makepath_s will add it"
+			drive := d asUtf8String.
 			size := drive size + 1].
-	(dir := anArray at: 2)
+	(anArray at: 2)
 		ifNotNil: 
-			["Assume the terminating path separator is missing"
+			[:d |
+			"Assume the terminating path separator is missing"
+			dir := d asUtf8String.
 			size := size + dir size + 1].
-	(fname := anArray at: 3) ifNotNil: [size := size + fname size].
-	(ext := anArray at: 4)
+	(anArray at: 3)
 		ifNotNil: 
-			["Assume the dot is missing"
+			[:f |
+			fname := f asUtf8String.
+			size := size + fname size].
+	(anArray at: 4)
+		ifNotNil: 
+			[:e |
+			"Assume the dot is missing"
+			ext := e asUtf8String.
 			size := size + ext size + 1].
-	path := String newFixed: size.
+	path := Utf8String newFixed: size.
 	^(errno := CRTLibrary default
 				_makepath_s: path
 				bufferSize: size + 1
@@ -1068,7 +1098,7 @@ path: aPathnameString extension: anExtensionString
 pathBuffer
 	"Answer a buffer of sufficient size to contain a full path."
 
-	^Utf16String new: self maxPath!
+	^Utf16String newFixed: self maxPath!
 
 pathDelimiter
 	"Answers the character that delimits a path (or parts thereof)"
@@ -1112,7 +1142,7 @@ readAllText: aString
 				share: #read.
 	^
 	[| size buffer bufferClass |
-	bufferClass := {AnsiString. Utf8String. Utf16String} at: file sniffEncoding + 1.
+	bufferClass := {AnsiString. Utf8String. Utf16String. Utf32String} at: file sniffEncoding + 1.
 	size := file size - file position.
 	buffer := bufferClass newFixed: size / bufferClass elementSize.
 	file read: buffer count: size.
@@ -1237,14 +1267,30 @@ shortenComponent: aString max: anInteger
 shortPathOf: aPathnameString
 	"Answers the short path version of aPathnameString"
 
-	| shortpath |
-	shortpath := self pathBuffer.
+	| shortpath path len |
+	path := aPathnameString asUtf16String.
+	len := path size.
+	shortpath := Utf16String newFixed: len.
 	(KernelLibrary default
-		getShortPathName: aPathnameString
+		getShortPathName: path
 		lpszShortPath: shortpath
-		cchBuffer: shortpath size) == 0
+		cchBuffer: len + 1) == 0
 		ifTrue: [KernelLibrary default systemError].
 	^shortpath trimNulls!
+
+sniffEncoding: aString
+	"Answer a best guess at the encoding of the file with the specified path. If the file does
+	not exist, an exception is raised."
+
+	| file encoding |
+	file := self
+				open: aString
+				mode: #read
+				check: true
+				share: #read.
+	encoding := file sniffEncoding.
+	file close.
+	^encoding!
 
 splitDriveFrom: aString
 	"Splits the pathname, aString, and answers the drive portion.
@@ -1425,10 +1471,12 @@ temporaryFilenameWithPrefix: prefixString
 tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
 
-	| buf len |
-	buf := self pathBuffer.
-	len := KernelLibrary default getTempPath: buf size + 1 lpBuffer: buf.
-	^buf resize: len!
+	| buf len lib |
+	lib := KernelLibrary default.
+	(len := lib getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [lib systemError].
+	buf := Utf16String newFixed: len - 1.
+	(lib getTempPath: len lpBuffer: buf) == 0 ifTrue: [lib systemError].
+	^buf!
 
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session. Note
@@ -1436,10 +1484,11 @@ windowsDirectory
 	Windows directory. See MSDN KB281316  for further information."
 
 	| len path |
-	path := self pathBuffer.
-	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size + 1.
+	len := KernelLibrary default getSystemWindowsDirectory: nil uSize: 0.
 	len == 0 ifTrue: [^KernelLibrary default systemError].
-	^path leftString: len!
+	path := Utf16String newFixed: len - 1.
+	len := KernelLibrary default getSystemWindowsDirectory: path uSize: len.
+	^path!
 
 workingDirectory
 	"Answer the current working directory."
@@ -1509,6 +1558,7 @@ workingDirectory: aString
 !File class categoriesFor: #replacePath:with:!filename manipulation!public! !
 !File class categoriesFor: #shortenComponent:max:!helpers!private! !
 !File class categoriesFor: #shortPathOf:!filename manipulation!public! !
+!File class categoriesFor: #sniffEncoding:!public! !
 !File class categoriesFor: #splitDriveFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !

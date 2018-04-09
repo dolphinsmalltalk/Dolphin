@@ -159,7 +159,7 @@ getVolumeInformation
 	"Private - Call the Win32 GetVolumeInformation() API to retrieve the label, etc."
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
-	volumeNameBuffer := File pathBuffer.
+	volumeNameBuffer := Utf16String newFixed: File._MAX_PATH.
 	volumeSerialNumber := DWORDBytes new.
 	maximumComponentLengthBuffer := DWORDBytes new.
 	fileSystemFlagsBuffer := DWORDBytes new.

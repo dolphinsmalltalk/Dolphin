@@ -180,7 +180,7 @@ hasCueBanner
 	"Answer whether the receiver has a textual cue, displayed when the text box is empty."
 
 	| buf |
-	buf := Utf16String new: 1.
+	buf := Utf16String newFixed: 1.
 	^(self
 		sendMessage: CB_GETCUEBANNER
 		wParam: buf yourAddress
@@ -423,7 +423,7 @@ hasCueBanner
 	"Answer whether the receiver has a textual cue, displayed when the text box is empty."
 
 	| buf |
-	buf := Utf16String new: 1.
+	buf := Utf16String newFixed: 1.
 	^(self
 		sendMessage: EM_GETCUEBANNER
 		wParam: buf yourAddress

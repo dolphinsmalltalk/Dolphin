@@ -100,7 +100,7 @@ getInfo: anIntegerLcType
 
 	| size buf lib |
 	lib := self nlsLib.
-	buf := Utf16String new: 20.
+	buf := Utf16String newFixed: 20.
 	size := lib
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
@@ -115,7 +115,7 @@ getInfo: anIntegerLcType
 						cchData: 0.
 			size == 0 ifTrue: [^lib systemError].
 			"Strings allocate extra space for null automatically"
-			buf := Utf16String new: size - 1.
+			buf := Utf16String newFixed: size - 1.
 			lib
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
@@ -129,8 +129,12 @@ getIntegerInfo: anIntegerLcType
 
 	| buf lib |
 	lib := self nlsLib.
-	buf := Utf16String new: 15.
-	(lib getLocaleInfo: lcid lCType: anIntegerLcType lpLCData: buf cchData: buf size) == 0
+	buf := Utf16String newFixed: 15.
+	(lib
+		getLocaleInfo: lcid
+		lCType: anIntegerLcType
+		lpLCData: buf
+		cchData: buf size) == 0
 		ifTrue: [lib systemError].
 	^CRTLibrary default atoi: buf!
 
@@ -230,19 +234,35 @@ printSysDate: aSYSTEMTIME format: aStringOrNil flags: dwFlags
 
 	| size buf lib |
 	lib := self nlsLib.
-	buf := Utf16String new: 30.
-	size := lib getDateFormat: self asParameter dwFlags: dwFlags 
-				lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: buf size+1.
-	size == 0 ifTrue: [
-		"Probably too big, find out how big a buffer is needed"
-		size := lib getDateFormat: self asParameter dwFlags: dwFlags 
-				lpDate: aSYSTEMTIME  lpFormat: aStringOrNil lpDateStr: nil cchDate: 0.
-		size == 0 ifTrue: [lib systemError].
-		buf := Utf16String new: size-1.	"Strings allocate extra space for null terminator"
-		lib getDateFormat: self asParameter dwFlags: dwFlags 
-			lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: size].
+	buf := Utf16String newFixed: 30.
+	size := lib
+				getDateFormat: self asParameter
+				dwFlags: dwFlags
+				lpDate: aSYSTEMTIME
+				lpFormat: aStringOrNil
+				lpDateStr: buf
+				cchDate: buf size + 1.
+	size == 0
+		ifTrue: 
+			["Probably too big, find out how big a buffer is needed"
+			size := lib
+						getDateFormat: self asParameter
+						dwFlags: dwFlags
+						lpDate: aSYSTEMTIME
+						lpFormat: aStringOrNil
+						lpDateStr: nil
+						cchDate: 0.
+			size == 0 ifTrue: [lib systemError].
+			buf := Utf16String newFixed: size - 1.	"Strings allocate extra space for null terminator"
+			lib
+				getDateFormat: self asParameter
+				dwFlags: dwFlags
+				lpDate: aSYSTEMTIME
+				lpFormat: aStringOrNil
+				lpDateStr: buf
+				cchDate: size].
 	"size includes terminating null"
-	^(buf resize: size-1)!
+	^buf resize: size - 1!
 
 printTime: aTime format: aStringOrNil flags: dwFlags
 	"Private - Append a locale specific string representation of the argument, aTime, to,
@@ -251,7 +271,7 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 	| size buf timeParm lib |
 	timeParm := aTime asParameter.
 	lib := self nlsLib.
-	buf := Utf16String new: 20.
+	buf := Utf16String newFixed: 20.
 	size := lib
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
@@ -269,7 +289,7 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 						lpTimeStr: nil
 						cchBuf: 0.
 			size == 0 ifTrue: [^lib systemError].
-			buf := Utf16String new: size - 1.	"Strings allocate extra space for null terminator"
+			buf := Utf16String newFixed: size - 1.	"Strings allocate extra space for null terminator"
 			lib
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags

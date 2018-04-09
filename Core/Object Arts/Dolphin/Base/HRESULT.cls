@@ -26,7 +26,7 @@ displayOn: aStream
 	"
 
 	| buf len |
-	buf := Utf16String new: 255.
+	buf := Utf16String newFixed: 255.
 	len := KernelLibrary default
 				formatMessage: ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS)
 				lpSource: 0

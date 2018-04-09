@@ -211,7 +211,7 @@ cueBanner
 	have focus, or nil if none is set."
 
 	| buf |
-	buf := Utf16String new: 512.
+	buf := Utf16String newFixed: 512.
 	^((self
 		sendMessage: EM_GETCUEBANNER
 		wParam: buf yourAddress

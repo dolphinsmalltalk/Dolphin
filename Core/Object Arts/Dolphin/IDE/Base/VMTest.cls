@@ -1292,7 +1292,7 @@ testPrimitiveGreaterThan
 testPrimitiveHashBytes
 	| method |
 	method := self
-				createPrimitiveMethod: (String >> #hash) primitiveIndex
+				createPrimitiveMethod: (Utf8String >> #hash) primitiveIndex
 				in: Object
 				argCount: 0
 				setsFailCode: false.
@@ -2062,8 +2062,7 @@ testPrimitiveStringCmp
 		do: 
 			[:each |
 			| subject result operand expected |
-			subject := each first.
-			self assert: subject class == AnsiString.
+			subject := each first asAnsiString.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
@@ -2084,8 +2083,7 @@ testPrimitiveStringCollate
 		do: 
 			[:each |
 			| subject result operand expected |
-			subject := each first.
-			self assert: subject class == AnsiString.
+			subject := each first asAnsiString.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.

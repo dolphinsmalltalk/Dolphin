@@ -133,7 +133,7 @@ maskIn: anInteger
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
 
-	text := Utf16String new: anInteger.
+	text := Utf16String newFixed: anInteger.
 	self
 		pszText: text;
 		cchTextMax: anInteger;

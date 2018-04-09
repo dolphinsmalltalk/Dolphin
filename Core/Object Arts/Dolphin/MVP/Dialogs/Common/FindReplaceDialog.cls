@@ -25,7 +25,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	replaceWith := Utf16String new: 256.!
+	replaceWith := Utf16String newFixed: 256!
 
 prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32

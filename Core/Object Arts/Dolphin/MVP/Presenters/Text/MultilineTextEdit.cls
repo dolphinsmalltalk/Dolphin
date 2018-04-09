@@ -269,7 +269,7 @@ textAtLine: lineIndex
 	"EM_GETLINE has an unusual way of specifying the buffer size, which is that the size is in characters is written into the first word.
 	It does not write a null terminator, but our strings have an implicit one anyway"
 	length := self lineLength: lineIndex.
-	text := Utf16String new: length.
+	text := Utf16String newFixed: length.
 	text basicAt: 1 put: length.
 	self
 		sendMessage: EM_GETLINE

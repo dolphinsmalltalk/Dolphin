@@ -257,7 +257,7 @@ keyNameFromLParam: lParam
 	Answers nil if the key cannot be translated."
 
 	| buf len |
-	buf := Utf16String new: 32.
+	buf := Utf16String newFixed: 32.
 	len := UserLibrary default
 				getKeyNameText: lParam
 				lpString: buf

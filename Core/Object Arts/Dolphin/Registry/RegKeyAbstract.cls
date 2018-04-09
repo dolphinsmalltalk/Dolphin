@@ -519,7 +519,7 @@ subKeyNamesDo: operation
 	hKey := self asParameter.	"ensure realized at start so not closed by queryKeyInfo"
 	maxSize := self keyInfo maxSubKeyLen + 1.
 	i := 0.
-	keyName := Utf16String new: maxSize.
+	keyName := Utf16String newFixed: maxSize.
 	cbName := DWORDBytes new.
 	lib := self registryLibrary.
 	
@@ -560,70 +560,69 @@ subValueNamesAndValuesDo: operation
 	sub-values, passing its name and an object corresponding to the
 	registry entry as the first and second arguments respectively."
 
-	|  valueName i lib cbValueName dwErr maxNameSize maxDataSize info data cbData type hKey |
+	| valueName i lib cbValueName dwErr maxNameSize maxDataSize info data cbData type hKey |
 	i := 0.
 	hKey := self asParameter.
 	info := self keyInfo.
 	maxNameSize := info maxValueNameLen.
 	maxDataSize := info maxValueLen.
-	valueName := Utf16String new: maxNameSize.					"Strings automatically include space for null-term"
+	valueName := Utf16String newFixed: maxNameSize.	"Strings automatically include space for null-term"
 	data := ByteArray new: maxDataSize.
 	cbValueName := DWORDBytes new.
 	cbData := DWORDBytes new.
 	type := DWORDBytes new.
 	lib := self registryLibrary.
-	[
-		cbValueName value: maxNameSize +1.					"must include Null terminator"
-		cbData value: maxDataSize.
-		dwErr := (lib
+	
+	[cbValueName value: maxNameSize + 1.	"must include Null terminator"
+	cbData value: maxDataSize.
+	dwErr := lib
 				regEnumValue: hKey
 				dwIndex: i
 				lpValueName: valueName
 				lpcbValueName: cbValueName
-				lpReserved: nil 
-				lpType: type 
-				lpData: data 
-				lpcbData: cbData).
-		dwErr = ERROR_SUCCESS]
-        whileTrue: [
-		operation 
-			value: (valueName copyFrom: 1 to: cbValueName asInteger)
-			value: (self objectFromValue: data type: type asInteger size: cbData asInteger).
-		i := i + 1].
+				lpReserved: nil
+				lpType: type
+				lpData: data
+				lpcbData: cbData.
+	dwErr = ERROR_SUCCESS]
+			whileTrue: 
+				[operation value: (valueName copyFrom: 1 to: cbValueName asInteger)
+					value: (self
+							objectFromValue: data
+							type: type asInteger
+							size: cbData asInteger).
+				i := i + 1].
 	self free.
-	dwErr = ERROR_NO_MORE_ITEMS
-		ifFalse: [lib systemError: dwErr]!
+	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [lib systemError: dwErr]!
 
 subValueNamesDo: operation
 	"Evaluate the monadic valuable, operation, for each of the receiver's
 	value names."
 
-	|  valueName i lib cbValueName dwErr maxSize hKey |
+	| valueName i lib cbValueName dwErr maxSize hKey |
 	i := 0.
 	hKey := self asParameter.
 	maxSize := self keyInfo maxValueNameLen.
-	valueName := Utf16String new: maxSize.					"Strings automatically include space for null-term"
-	cbValueName := DWORDBytes new.	
+	valueName := Utf16String newFixed: maxSize.	"Strings automatically include space for null-term"
+	cbValueName := DWORDBytes new.
 	lib := self registryLibrary.
-	[
-		cbValueName value: maxSize +1.					"must include Null terminator"
-		dwErr := (lib
+	
+	[cbValueName value: maxSize + 1.	"must include Null terminator"
+	dwErr := lib
 				regEnumValue: hKey
 				dwIndex: i
 				lpValueName: valueName
 				lpcbValueName: cbValueName
-				lpReserved: nil 
-				lpType: nil 
-				lpData: nil 
-				lpcbData: nil).
-		dwErr = ERROR_SUCCESS]
-        whileTrue: [
-		operation value: (valueName copyFrom: 1 to: cbValueName asInteger).
-		i := i + 1].
+				lpReserved: nil
+				lpType: nil
+				lpData: nil
+				lpcbData: nil.
+	dwErr = ERROR_SUCCESS]
+			whileTrue: 
+				[operation value: (valueName copyFrom: 1 to: cbValueName asInteger).
+				i := i + 1].
 	self free.
-	dwErr = ERROR_NO_MORE_ITEMS
-		ifFalse: [lib systemError: dwErr].
-!
+	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [lib systemError: dwErr]!
 
 subValues
 	"Answer the collection of sub-values under the receiver (a RegKeyValues)."

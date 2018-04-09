@@ -121,15 +121,15 @@ getBytesFormatId: format ifNone: exceptionHandler
 			bytes]!
 
 getFormatName: format
-        "Answer the <readableString> name of the registered clipboard format 
+	"Answer the <readableString> name of the registered clipboard format 
 	identified by the <integer> format, or nil the format is not registered. "
-	
+
 	| name len |
-	name := Utf16String new: 256.
+	name := Utf16String newFixed: 256.
 	len := UserLibrary default
-			getClipboardFormatName: format
-			lpszFormatName: name
-			cchMaxCount: name size.
+				getClipboardFormatName: format
+				lpszFormatName: name
+				cchMaxCount: name size.
 	^len == 0 ifFalse: [(name resize: len) asUtf8String]!
 
 getObject

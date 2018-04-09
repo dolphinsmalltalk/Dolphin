@@ -1458,7 +1458,7 @@ getWindowText
 
 	| textLen text |
 	textLen := self textLength.
-	text := Utf16String new: textLen.
+	text := Utf16String newFixed: textLen.
 	UserLibrary default
 		getWindowText: handle
 		lpString: text

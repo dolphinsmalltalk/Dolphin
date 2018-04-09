@@ -228,6 +228,14 @@ testClassRelativePathOfTo
 				to: 'd:\object arts\dev\dolphin5\')
 		equals: '..\dolphin5\Packages\Dolphin\Database\Database Connection.pax'!
 
+testCommonPrefixOfAnd
+	self
+		assert: ((File commonPrefixOf: KernelLibrary default moduleFileName
+				and: UserLibrary default moduleFileName) sameAs: SessionManager current systemDirectory).
+	self
+		assert: (File commonPrefixOf: VMLibrary default moduleFileName
+				and: UserLibrary default moduleFileName) isEmpty!
+
 testDeleteDirectory
 	self createTestDirectories.
 	self deleteDirectory: 'c:\FileTest1\EmptyLeaf'.
@@ -337,6 +345,23 @@ testRemovePathDelimiter
 	self assert: (File removePathDelimiter: unicode) equals: unicode.
 	self assert: (File removePathDelimiter: unicode , '\') equals: unicode!
 
+testShortPath
+	| sysdir tmpDir tmpFile |
+	sysdir := SessionManager current systemDirectory.
+	self assert: (File shortPathOf: sysdir) asAnsiString equals: sysdir.
+	tmpDir := File tempPath , Character dolphin asUtf8String.
+	tmpFile := File composePath: tmpDir subPath: $\x1F595 asUtf8String , '.txt'.
+	File createDirectory: tmpDir.
+	
+	[| short |
+	(File open: tmpFile mode: #create) close.
+	short := File shortPathOf: tmpFile.
+	self deny: short equals: tmpFile.
+	"This will fail if the short name still includes unicode"
+	short := short asAnsiString.
+	self assert: (File exists: short)]
+			ensure: [File deleteDirectory: tmpDir]!
+
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
 	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') equals: 'c:'.
@@ -442,12 +467,14 @@ testSplitStemFrom
 !FileTest categoriesFor: #test64BitSeek!public!unit tests! !
 !FileTest categoriesFor: #testClassAppendPathSeparator!public!unit tests! !
 !FileTest categoriesFor: #testClassRelativePathOfTo!public!unit tests! !
+!FileTest categoriesFor: #testCommonPrefixOfAnd!public!unit tests! !
 !FileTest categoriesFor: #testDeleteDirectory!public!unit tests! !
 !FileTest categoriesFor: #testForDirectoriesIn!public!unit tests! !
 !FileTest categoriesFor: #testMakePath!public!unit tests! !
 !FileTest categoriesFor: #testRemoveDirectory!public!unit tests! !
 !FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
 !FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
+!FileTest categoriesFor: #testShortPath!public!unit tests! !
 !FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
 !FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
 !FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !

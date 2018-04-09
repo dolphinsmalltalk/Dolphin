@@ -90,12 +90,15 @@ argv
 			argv := Array new: argc.
 			"Open code the access to the array of strings to reduce base system dependencies on external struct classes"
 			lppstr := lib argv.
-			1 to: argc
-				do: 
-					[:i |
-					| offset |
-					offset := (i - 1) * VMConstants.IntPtrSize.
-					argv at: i put: (String fromAddress: (lppstr dwordAtOffset: offset))]].
+			lppstr isNull
+				ifTrue: [argv at: 1 put: (ExternalLibrary moduleFileName: nil)]
+				ifFalse: 
+					[1 to: argc
+						do: 
+							[:i |
+							| offset |
+							offset := (i - 1) * VMConstants.IntPtrSize.
+							argv at: i put: (Utf16String fromAddress: (lppstr dwordAtOffset: offset))]]].
 	^argv!
 
 argvLegacyOptionsRemoved
@@ -202,7 +205,7 @@ computerName
 	Signals an exception if the request fails."
 
 	| name nameSize |
-	name := Utf16String new: MAX_COMPUTERNAME_LENGTH.
+	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
 	nameSize := DWORD fromInteger: name size + 1.
 	(KernelLibrary default getComputerName: name nSize: nameSize asParameter)
 		ifFalse: [KernelLibrary default systemError].
@@ -317,7 +320,7 @@ getenv: aString
 	"N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
 	size := KernelLibrary default getEnvironmentVariable: aString lpBuffer: nil nSize: 0.
 	size == 0 ifTrue: [^nil].
-	buf := Utf16String new: size-1.	"Dolphin Strings alloc. extra space for null terminator"
+	buf := Utf16String newFixed: size-1.	"Dolphin Strings alloc. extra space for null terminator"
 	KernelLibrary default getEnvironmentVariable: aString lpBuffer: buf nSize: size.
 	^buf
 	!
@@ -727,7 +730,8 @@ openConsoleStreams
 							StdioFileStream
 								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
 								toFd: fd
-								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])]
+								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])
+								type: #text]
 						ifFalse: 
 							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
 							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!
@@ -998,10 +1002,12 @@ systemDirectory
 	"Answer the path of the Windows system directory on the host computer for the current
 	session."
 
-	| path len |
-	path := File pathBuffer.
-	len := KernelLibrary default getSystemDirectory: path uSize: path size + 1.
-	^len == 0 ifTrue: [KernelLibrary default systemError] ifFalse: [path leftString: len]!
+	| path len kernel |
+	kernel := KernelLibrary default.
+	(len := kernel getSystemDirectory: nil uSize: 0) == 0 ifTrue: [kernel systemError].
+	path := Utf16String newFixed: len - 1.
+	(KernelLibrary default getSystemDirectory: path uSize: len) == 0 ifTrue: [kernel systemError].
+	^path!
 
 tertiaryStartup
 	"Perform last startup operations before the main process is started - this includes firing the onStartup

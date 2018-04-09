@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IniFileAbstract subclass: #IniFile
 	instanceVariableNames: ''
@@ -75,7 +75,7 @@ keysDo: operation
 				nSize: buf size
 				lpFileName: filename.
 	count = (buf size - 2)]
-			whileTrue: [buf := Utf16String new: buf size * 2].
+			whileTrue: [buf := Utf16String newFixed: buf size * 2].
 	start := 1.
 	buf := buf asUtf8String.
 	

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Windows Ini Files'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Ini Files

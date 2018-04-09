@@ -163,15 +163,19 @@ titleOf: aString
 	The file title may or may not include the extension, depending on the users
 	configuration."
 
-	| buf lib |
-	buf := File pathBuffer.
+	| buf lib len |
 	lib := ComDlgLibrary default.
+	(len := lib
+				getFileTitle: aString
+				lpszTitle: nil
+				cbBuf: 0) < 0
+		ifTrue: [lib systemError: 123].
+	buf := Utf16String newFixed: len - 1.
 	(lib
 		getFileTitle: aString
 		lpszTitle: buf
-		cbBuf: buf size) < 0
-		ifTrue: [lib systemError: 123].
-	^buf trimNulls! !
+		cbBuf: len) < 0 ifTrue: [lib systemError: 123].
+	^buf! !
 !File class categoriesFor: #titleOf:!filename manipulation!public! !
 
 !Font class methodsFor!

@@ -184,26 +184,34 @@ getFilePath
 	"Retrieve the full path of the file as currently specified in the dialog. This can be called
 	during notifications from the dialog such as CDN_SELCHANGE."
 
-	| len buf |
-	buf := File pathBuffer.
-	len := view parentView
+	| len buf dialog |
+	dialog := view parentView.
+	len := dialog
 				sendMessage: CDM_GETFILEPATH
-				wParam: buf size + 1
-				lpParam: buf.
-	buf resize: len - 1.
+				wParam: 0
+				lpParam: nil.
+	buf := Utf16String newFixed: len - 1.
+	dialog
+		sendMessage: CDM_GETFILEPATH
+		wParam: len
+		lpParam: buf.
 	^buf asUtf8String!
 
 getFileSpec
 	"Retrieve the file name (sans path) as currently specified in the dialog. This can be called
 	during notifications from the dialog such as CDN_SELCHANGE."
 
-	| len buf |
-	buf := File pathBuffer.
-	len := view parentView
+	| len buf dialog |
+	dialog := view parentView.
+	len := dialog
 				sendMessage: CDM_GETSPEC
-				wParam: buf size + 1
-				lpParam: buf.
-	buf resize: len - 1.
+				wParam: 0
+				lpParam: nil.
+	buf := Utf16String newFixed: len - 1.
+	dialog
+		sendMessage: CDM_GETSPEC
+		wParam: len
+		lpParam: buf.
 	^buf asUtf8String!
 
 initialDirectory: aString
