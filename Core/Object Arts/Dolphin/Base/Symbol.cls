@@ -2,11 +2,12 @@
 
 Utf8String variableByteSubclass: #Symbol
 	instanceVariableNames: ''
-	classVariableNames: 'Table'
+	classVariableNames: 'CharClassifications Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Symbol isNullTerminated: true!
+Symbol addClassConstant: 'CharClassifications' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)!
 Symbol comment: 'Symbol is the class of <String>s which are guaranteed to be unique throughout the system.
 
 Presently Symbols are limited to the current byte character set, however the intention is to switch to UTF-8 symbols in future in order to allow any characters.
@@ -272,10 +273,18 @@ initialize
 	Table	-	An Array which is used as a hash table containing WeakArray buckets, in which the currently used
 				instances of the receiver are kept."
 
+	| classificationTable |
 	self extraInstanceSpec: EncodingUtf8.
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
-	VMLibrary default registryAt: #Symbol put: self!
+	VMLibrary default registryAt: #Symbol put: self.
+	classificationTable := Array new: 128.
+	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+		do: [:alpha | classificationTable at: alpha codePoint + 1 put: #alphabetic].
+	'01234567890' do: [:digit | classificationTable at: digit codePoint + 1 put: #digit].
+	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary codePoint + 1 put: #binary].
+	classificationTable at: $: codePoint + 1 put: #colon.
+	self addClassConstant: 'CharClassifications' value: classificationTable!
 
 intern: aString
 	"Answer the unique Symbol for aString."
@@ -301,31 +310,35 @@ internCharacter: aCharacter
 	^self intern: aCharacter asUtf8String!
 
 isLiteralSymbol: aSymbol
-	"Private - Answer whether the <Symbol> argument is representable
-	as an unquoted literal symbol."
+	"Private - Answer whether the <Symbol> argument is representable as an unquoted literal
+	symbol."
 
-	| size binChars |
+	| size class |
 	size := aSymbol basicSize.
 	size == 0 ifTrue: [^false].
-	binChars := '!!%&*+,/<=>?@\~|-'.
-	(binChars identityIncludes: (aSymbol at: 1))
-		ifTrue: [2 to: size do: [:i | (binChars identityIncludes: (aSymbol at: i)) ifFalse: [^false]]]
+	class := CharClassifications lookup: (aSymbol basicAt: 1) + 1.
+	class == #binary
+		ifTrue: 
+			[2 to: size
+				do: [:i | (CharClassifications lookup: (aSymbol basicAt: i) + 1) == #binary ifFalse: [^false]]]
 		ifFalse: 
 			[| includesColon initial |
-			initial := true.
+			class == #alphabetic ifFalse: [^false].
+			initial := false.
 			includesColon := false.
-			1 to: size
+			2 to: size
 				do: 
 					[:i |
-					| each |
-					each := aSymbol at: i.
+					class := CharClassifications lookup: (aSymbol basicAt: i) + 1.
 					initial
-						ifTrue: [(each == $_ or: [each isEnglishLetter]) ifTrue: [initial := false] ifFalse: [^false]]
+						ifTrue: 
+							[class == #alphabetic ifFalse: [^false].
+							initial := false]
 						ifFalse: 
-							[each == $:
+							[class == #colon
 								ifTrue: [includesColon := initial := true]
-								ifFalse: [(each == $_ or: [each isEnglishLetter or: [each isDigit]]) ifFalse: [^false]]]].
-			(includesColon and: [aSymbol last ~~ $:]) ifTrue: [^false]].
+								ifFalse: [(class == #alphabetic or: [class == #digit]) ifFalse: [^false]]]].
+			(includesColon and: [class ~~ #colon]) ifTrue: [^false]].
 	^true!
 
 new: anInteger

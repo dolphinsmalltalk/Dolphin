@@ -40,7 +40,6 @@ testAtPut
 		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
 
 testEquals
-	| abc |
 	self equalityTestCases do: 
 			[:each |
 			| subject |
