@@ -40,7 +40,7 @@ namespace ST
 	{
 	public:
 		// TODO: Use Utf8String
-		ByteStringOTE*	m_name;
+		AnsiStringOTE*	m_name;
 		POTE		m_classPool;	/* dictionary of varName, storage */
 		POTE		m_sharedPools;
 		POTE		m_comment;

@@ -264,7 +264,7 @@ void ObjectMemory::reclaimInaccessibleObjects(DWORD gcFlags)
 #ifdef _DEBUG
 					{
 						tracelock lock(TRACESTREAM);
-						TRACESTREAM<< L"Weakling: " << ote<< L" (" << hex << UINT(ote)<< L") lost " << losses<< L" elements" << endl;
+						TRACESTREAM<< L"Weakling: " << ote<< L" (" << hex << UINT(ote)<< L") lost " << dec << losses << L" elements" << endl;
 					}
 #endif
 					// We must also ensure that it and its referenced objects are marked since we're

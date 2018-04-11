@@ -41,7 +41,7 @@
     <DisplayString>{m_instanceClass,na} class</DisplayString>
   </Type>
   <!--Strings and Symbols-->
-  <Type Name="TOTE&lt;ST::ByteString&gt;">
+  <Type Name="TOTE&lt;ST::AnsiString&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed String**</DisplayString>
     <DisplayString Condition="!m_flags.m_free">{m_location,na} (size {m_size})</DisplayString>
@@ -49,7 +49,7 @@
       <ExpandedItem>m_location</ExpandedItem>
     </Expand>
   </Type>
-  <Type Name="ST::ByteString">
+  <Type Name="ST::AnsiString">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString>{m_characters,s}</DisplayString>
     <Expand HideRawView="true"></Expand>
@@ -69,7 +69,7 @@
   <Type Name="TOTE&lt;ST::Utf16String&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Utf16String**</DisplayString>
-    <DisplayString Condition="!m_flags.m_free">{m_location,su} (size {m_size/2})</DisplayString>
+    <DisplayString Condition="!m_flags.m_free">{m_location,su} (size {(m_size&amp;0x7fffffff)/2})</DisplayString>
     <Expand HideRawView="true">
       <ExpandedItem>m_location</ExpandedItem>
     </Expand>
@@ -82,7 +82,7 @@
   <Type Name="TOTE&lt;ST::Utf8String&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Utf16String**</DisplayString>
-    <DisplayString Condition="!m_flags.m_free">{m_location,s8} (size {m_size})</DisplayString>
+    <DisplayString Condition="!m_flags.m_free">{m_location,s8} (size {m_size&amp;0x7fffffff})</DisplayString>
     <Expand HideRawView="true">
       <ExpandedItem>m_location</ExpandedItem>
     </Expand>
@@ -102,7 +102,7 @@
   <Type Name="TOTE&lt;ST::Character&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Character**</DisplayString>
-    <DisplayString>{m_location->m_codePoint>>1,c}</DisplayString>
+    <DisplayString>{m_location->m_code>>1,c}</DisplayString>
     <Expand HideRawView="false"></Expand>   
   </Type>
   
@@ -329,7 +329,7 @@
     <DisplayString Condition="m_oteClass == Pointers.ClassSymbol">{(TOTE&lt;ST::Symbol&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassUtf16String">{(TOTE&lt;ST::Utf16String&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassUtf8String">{(TOTE&lt;ST::Utf8String&gt;*)this,na}</DisplayString>
-    <DisplayString Condition="m_oteClass == Pointers.ClassByteString">{(TOTE&lt;ST::ByteString&gt;*)this,na}</DisplayString>
+    <DisplayString Condition="m_oteClass == Pointers.ClassAnsiString">{(TOTE&lt;ST::AnsiString&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassArray">{(TOTE&lt;ST::Array&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassCompiledMethod">{(TOTE&lt;ST::CompiledMethod&gt;*)this,na}</DisplayString>
     <DisplayString Condition="m_oteClass == Pointers.ClassBlockClosure">{(TOTE&lt;ST::BlockClosure&gt;*)this,na}</DisplayString>
@@ -351,7 +351,7 @@
     
     <Expand HideRawView="true">
       <!--Expand recognised classes by casting to the custom visualization defined above-->
-      <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassByteString">(TOTE&lt;ST::ByteString&gt;*)this</ExpandedItem>
+      <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassAnsiString">(TOTE&lt;ST::AnsiString&gt;*)this</ExpandedItem>
       <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassUtf8String">(TOTE&lt;ST::Utf8String&gt;*)this</ExpandedItem>
       <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassUtf16String">(TOTE&lt;ST::Utf16String&gt;*)this</ExpandedItem>
       <ExpandedItem Condition="!m_flags.m_free&amp;&amp; m_oteClass == Pointers.ClassSymbol">(TOTE&lt;ST::Symbol&gt;*)this</ExpandedItem>
@@ -391,7 +391,7 @@
       <ExpandedItem Condition="m_flags.m_free==0 &amp;&amp; m_flags.m_pointer==0
         &amp;&amp; m_oteClass != Pointers.ClassUtf16String 
         &amp;&amp; m_oteClass != Pointers.ClassUtf8String 
-        &amp;&amp; m_oteClass != Pointers.ClassByteString 
+        &amp;&amp; m_oteClass != Pointers.ClassAnsiString 
         &amp;&amp; m_oteClass != Pointers.ClassSymbol
         &amp;&amp; m_oteClass != Pointers.ClassFloat
         &amp;&amp; m_oteClass != Pointers.ClassExternalHandle

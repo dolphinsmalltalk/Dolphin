@@ -366,7 +366,7 @@ void Interpreter::signalSemaphore(SemaphoreOTE* aSemaphore)
 #if defined(_DEBUG)
 			{
 				if ((excessSignals % 1000) == 0)
-					DebugDump("signalSemaphore: Very large excess signal count %d", excessSignals);
+					DebugDump(L"signalSemaphore: Very large excess signal count %d", excessSignals);
 			}
 #endif
 
@@ -420,7 +420,7 @@ ProcessOTE* Interpreter::wakeHighestPriority()
 			// will give us some work to do. This does mean that the code for sending
 			// interrupts must cater for the possibility that even the active process
 			// may actually be in a wait state when an interrupt is sent to it!
-			trace("WARNING: No processes are Ready to run\n");
+			trace(L"WARNING: No processes are Ready to run\n");
 			queueInterrupt(VMI_IDLEPANIC, Oop(m_bInterruptsDisabled ? Pointers.False : Pointers.True));
 			return scheduler->m_activeProcess;
 		}
@@ -1031,7 +1031,7 @@ ProcessOTE* Interpreter::resume(ProcessOTE* aProcess)
 #ifdef _DEBUG
 	int newActivePriority = activeProcess()->Priority();
 	int highestPriorityWaiting = highestWaitingPriority();
-	HARDASSERT(newActivePriority >= highestPriorityWaiting);
+ 	HARDASSERT(newActivePriority >= highestPriorityWaiting);
 #endif
 
 	return aProcess;	// We resumed something, even if it was the previously active process

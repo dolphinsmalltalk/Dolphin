@@ -39,8 +39,8 @@ using namespace DolphinX;
 #include "STContext.h"
 #include "STBlockClosure.h"
 
-static ByteStringOTE* (__fastcall *ForceNonInlineNewByteStringFromUtf16)(LPCWSTR) = &ByteString::New;
-static ByteStringOTE* (__fastcall *ForceNonInlineNewByteStringWithLen)(const char * __restrict, MWORD) = &ByteString::New;
+static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringFromUtf16)(LPCWSTR) = &AnsiString::New;
+static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringWithLen)(const char * __restrict, MWORD) = &AnsiString::New;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -60,6 +60,7 @@ StructureOTE* __fastcall ExternalStructure::NewRefStruct(BehaviorOTE* classPoint
 
 ///////////////////////////////////////////////////////////////////////////////
 // Answer a new ExternalStructure pointer of the specified class with the specified pointer value
+
 OTE* __fastcall ExternalStructure::NewPointer(BehaviorOTE* classPointer, void* ptr)
 {
 	OTE* resultPointer;
@@ -72,7 +73,7 @@ OTE* __fastcall ExternalStructure::NewPointer(BehaviorOTE* classPointer, void* p
 	{
 		if (behavior.isIndirect())
 		{
-			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(ObjectMemory::newUninitializedByteObject(classPointer, sizeof(BYTE*)));
+			AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(classPointer, sizeof(BYTE*)));
 			ExternalAddress* extAddress = static_cast<ExternalAddress*>(oteBytes->m_location);
 			extAddress->m_pointer = ptr;
 			resultPointer = reinterpret_cast<OTE*>(oteBytes);
@@ -103,15 +104,15 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 	{
 		StructureOTE* otePointers = reinterpret_cast<StructureOTE*>(ObjectMemory::newPointerObject(classPointer));
 		ExternalStructure* extStruct = otePointers->m_location;
-		bytesPointer = ObjectMemory::newUninitializedByteObject(Pointers.ClassByteArray, size);
+		bytesPointer = ObjectMemory::newByteObject<false, false>(Pointers.ClassByteArray, size);
 		extStruct->m_contents = bytesPointer;
 		bytesPointer->m_count = 1;
 		resultPointer = reinterpret_cast<OTE*>(otePointers);
 	}
 	else
 	{
-		bytesPointer = ObjectMemory::newUninitializedByteObject(classPointer, size);
-		// N.B. newUninitializedByteObject does not inc. ref count of class
+		bytesPointer = ObjectMemory::newByteObject<false, false>(classPointer, size);
+		// N.B. newByteObject does not inc. ref count of class when not initializing
 		classPointer->countUp();
 		resultPointer =	reinterpret_cast<OTE*>(bytesPointer);
 	}
@@ -124,13 +125,13 @@ OTE* __fastcall ExternalStructure::New(BehaviorOTE* classPointer, void* ptr)
 ///////////////////////////////////////////////////////////////////////////////
 // Answer a new BSTR from the specified UTF16 string
 
-AddressOTE* __fastcall NewBSTR(WCHAR* pChars, size_t len)
+AddressOTE* __fastcall NewBSTR(const char16_t* pChars, size_t len)
 {
-	AddressOTE* resultPointer = reinterpret_cast<AddressOTE*>(ObjectMemory::newUninitializedByteObject(Pointers.ClassBSTR, sizeof(BYTE*)));
+	AddressOTE* resultPointer = reinterpret_cast<AddressOTE*>(ObjectMemory::newByteObject<false, false>(Pointers.ClassBSTR, sizeof(BYTE*)));
 	ExternalAddress* extAddress = resultPointer->m_location;
 	if (len > 0)
 	{
-		extAddress->m_pointer = reinterpret_cast<BYTE*>(::SysAllocStringLen(pChars, len));
+		extAddress->m_pointer = reinterpret_cast<BYTE*>(::SysAllocStringLen((const OLECHAR*)pChars, len));
 		resultPointer->beFinalizable();
 	}
 	else
@@ -155,11 +156,11 @@ AddressOTE* __fastcall NewBSTR(OTE* ote)
 		switch (strClass->Encoding)
 		{
 		case StringEncoding::Ansi:
-			return NewBSTR<ByteString::CodePage, ByteString::CU>(reinterpret_cast<ByteStringOTE*>(ote)->m_location->m_characters, ote->getSize());
+			return NewBSTR<AnsiString::CodePage, AnsiString::CU>(reinterpret_cast<AnsiStringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf8:
 			return NewBSTR<Utf8String::CodePage, Utf8String::CU>(reinterpret_cast<Utf8StringOTE*>(ote)->m_location->m_characters, ote->getSize());
 		case StringEncoding::Utf16:
-			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(WCHAR));
+			return NewBSTR(reinterpret_cast<Utf16StringOTE*>(ote)->m_location->m_characters, ote->getSize() / sizeof(Utf16String::CU));
 		default:
 			// Unrecognised encoding
 			break;

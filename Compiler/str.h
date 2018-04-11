@@ -8,7 +8,7 @@ Now mapped onto the Standard Template Library string class (BSM, Sep 2002)
 #pragma once
 
 #include <string>
-typedef std::string Str;
+typedef std::basic_string<uint8_t, std::char_traits<uint8_t>, std::allocator<uint8_t>> Str;
 
 #include "..\VMPointers.h"
 
@@ -21,7 +21,7 @@ inline Str MakeString(IDolphin* piVM, const POTE stringPointer)
 		_ASSERTE(IsAString(stringPointer));
 		MWORD stringLen=FetchByteLengthOf(stringPointer);
 		BYTE* bytes = FetchBytesOf(stringPointer);
-		return Str((const char*)bytes, stringLen);
+		return Str((const uint8_t*)bytes, stringLen);
 	}
 }
 
@@ -29,10 +29,10 @@ inline Str MakeString(IDolphin* piVM, const POTE stringPointer)
 //InsertStringFor
 //===============
 // Expand this string to have (insert) for every occurence of (ch)
-inline void InsertStringFor(Str& str, const char* insert, char ch)
+inline void InsertStringFor(Str& str, const uint8_t* insert, uint8_t ch)
 {
 	unsigned i=0;
-	int insertlen = strlen(insert);
+	int insertlen = strlen((const char*)insert);
 	while (i < str.size() && (i = str.find(ch, i)) != Str::npos)
 	{
 		str.replace(i, 1, insert, insertlen);

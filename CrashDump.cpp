@@ -18,7 +18,7 @@
 static const DWORD DefaultStackDepth = 300;
 static const DWORD DefaultWalkbackDepth = static_cast<DWORD>(-1);
 static const int MAXDUMPPARMCHARS = 40;
-extern char achImagePath[];
+extern wchar_t achImagePath[];
 
 // Warning about SEH and destructable objects
 #pragma warning (disable : 4509)
@@ -60,27 +60,27 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, DWORD nSta
 	for (int i=0;i<27;i++)
 		*pStream << L'*';
 
-	char szModule[_MAX_PATH+1];
-	LPSTR szFileName = 0;
+	wchar_t szModule[_MAX_PATH+1];
+	LPWSTR szFileName = 0;
 	{
-		char szPath[_MAX_PATH+1];
-		::GetModuleFileName(GetModuleHandle(NULL), szPath, _MAX_PATH);
-		::GetFullPathName(szPath, _MAX_PATH, szModule, &szFileName);
+		wchar_t szPath[_MAX_PATH+1];
+		::GetModuleFileNameW(GetModuleHandle(NULL), szPath, _MAX_PATH);
+		::GetFullPathNameW(szPath, _MAX_PATH, szModule, &szFileName);
 	}
 
 	*pStream << endl << endl << stNow
 		<< L": " << szFileName
 		<< L" caused an unhandled Win32 Exception " 
 		<< PVOID(exceptionCode) << endl
-		<<L"at " << pExRec->ExceptionAddress;
+		<< L"at " << pExRec->ExceptionAddress;
 
 	// Determine the module in which it occurred
 	MEMORY_BASIC_INFORMATION mbi;
 	::VirtualQuery(pExRec->ExceptionAddress, &mbi, sizeof(mbi));
 	HMODULE hMod = HMODULE(mbi.AllocationBase);
 
-	strcpy(szModule, "<UNKNOWN>");
-	GetModuleFileName(hMod, szModule, _MAX_PATH);
+	wcscpy_s(szModule, L"<UNKNOWN>");
+	::GetModuleFileNameW(hMod, szModule, _MAX_PATH);
 	*pStream<< L" in module " << hMod<< L" (" << szModule<< L")" << endl << endl;
 
 	const DWORD NumParms = pExRec->NumberParameters;
@@ -97,8 +97,8 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, DWORD nSta
 			BYTE* pBytes = reinterpret_cast<BYTE*>(dwParm);
 			if (!IsBadReadPtr(pBytes, MAXDUMPPARMCHARS))
 			{
-				char buf[MAXDUMPPARMCHARS+1];
-				strncpy_s(buf, reinterpret_cast<LPCSTR>(pBytes), MAXDUMPPARMCHARS);
+				wchar_t buf[MAXDUMPPARMCHARS+1];
+				wcsncpy_s(buf, reinterpret_cast<LPCWSTR>(pBytes), MAXDUMPPARMCHARS);
 				buf[MAXDUMPPARMCHARS] = 0;
 				*pStream << buf; 
 			}
@@ -156,8 +156,8 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, DWORD nSta
 				::VirtualQuery(reinterpret_cast<void*>(ctxMain.Eip), &mbi, sizeof(mbi));
 				hMod = HMODULE(mbi.AllocationBase);
 
-				strcpy(szModule, "<UNKNOWN>");
-				GetModuleFileName(hMod, szModule, _MAX_PATH);
+				wcscpy_s(szModule, L"<UNKNOWN>");
+				::GetModuleFileNameW(hMod, szModule, _MAX_PATH);
 				*pStream<< L"In module " << hMod<< L" (" << szModule<< L")" << endl << endl;
 			}
 			else
@@ -178,69 +178,69 @@ void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, wostream* pStream, DWORD nSta
 }
 
 
-wostream* OpenLogStream(const char* achLogPath, const char* achImagePath, wofstream& fStream)
+wostream* OpenLogStream(const wchar_t* achLogPath, const wchar_t* achImagePath, wofstream& fStream)
 {
-	char path[_MAX_PATH];
+	wchar_t path[_MAX_PATH];
 
-	if (achLogPath == NULL || !strlen(achLogPath))
+	if (achLogPath == NULL || !wcslen(achLogPath))
 	{
 		// Write the dump to the errors file
-		char drive[_MAX_DRIVE];
-		char dir[_MAX_DIR];
-		char fname[_MAX_FNAME];
-		_splitpath_s(achImagePath, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, NULL, 0);
-		_makepath(path, drive, dir, fname, ".ERRORS");
+		wchar_t drive[_MAX_DRIVE];
+		wchar_t dir[_MAX_DIR];
+		wchar_t fname[_MAX_FNAME];
+		_wsplitpath_s(achImagePath, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, NULL, 0);
+		_wmakepath(path, drive, dir, fname, L".ERRORS");
 		achLogPath = path;
 	}
 
-	trace("Dolphin: Writing dump to '%.260s'\n", achLogPath);
+	trace(L"Dolphin: Writing dump to '%.260s'\n", achLogPath);
 
 	wostream* pStream = NULL;
 	// Open the error log for appending
 	fStream.open(achLogPath, ios::out | ios::app | ios::ate);
 	if (fStream.fail())
-		trace("Dolphin: Unable to open crash dump log '%.260s', dump follows:\n\n", achLogPath);
+		trace(L"Dolphin: Unable to open crash dump log '%.260s', dump follows:\n\n", achLogPath);
 	else
 		pStream = &fStream;
 
 	return pStream;
 }
 
-void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const char* achImagePath)
+void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* achImagePath)
 {
 	DWORD nStackDepth = DefaultStackDepth;
 	DWORD nWalkbackDepth = DefaultWalkbackDepth;
 	wostream* pStream = NULL;
 	wofstream fStream;
 	CRegKey rkDump;
-	if (OpenDolphinKey(rkDump, "CrashDump", KEY_READ)==ERROR_SUCCESS)
+	if (OpenDolphinKey(rkDump, L"CrashDump", KEY_READ)==ERROR_SUCCESS)
 	{
-		char achLogPath[_MAX_PATH+1];
+		wchar_t achLogPath[_MAX_PATH+1];
 		achLogPath[0] = 0;
 		unsigned long size = _MAX_PATH;
-		rkDump.QueryStringValue("", achLogPath, &size);
+		rkDump.QueryStringValue(L"", achLogPath, &size);
 		pStream = OpenLogStream(achLogPath, achImagePath, fStream);
 
-		if (rkDump.QueryDWORDValue("StackDepth", nStackDepth)!=ERROR_SUCCESS || nStackDepth == 0)
+		if (rkDump.QueryDWORDValue(L"StackDepth", nStackDepth)!=ERROR_SUCCESS || nStackDepth == 0)
 			nStackDepth = DefaultStackDepth;
 
-		if (rkDump.QueryDWORDValue("WalkbackDepth", nWalkbackDepth)!=ERROR_SUCCESS || nWalkbackDepth == 0)
+		if (rkDump.QueryDWORDValue(L"WalkbackDepth", nWalkbackDepth)!=ERROR_SUCCESS || nWalkbackDepth == 0)
 			nWalkbackDepth = DefaultWalkbackDepth;
 	}
 	else
-		pStream = OpenLogStream(NULL, achImagePath, fStream);
+		pStream = OpenLogStream(nullptr, achImagePath, fStream);
 
 	CrashDump(pExceptionInfo, pStream, nStackDepth, nWalkbackDepth);
 }
 
 
-void __cdecl DebugCrashDump(LPCTSTR szFormat, ...)
+void __cdecl DebugCrashDump(const wchar_t* szFormat, ...)
 {
-	TCHAR buf[1024];
+	wchar_t buf[1024];
 
 	va_list args;
 	va_start(args, szFormat);
-	::StringCbVPrintf(buf, sizeof(buf), szFormat, args);
+	::StringCbVPrintfW(buf, sizeof(buf), szFormat, args);
 	va_end(args);
 
 	DWORD dwArgs[1];
@@ -248,7 +248,7 @@ void __cdecl DebugCrashDump(LPCTSTR szFormat, ...)
 	RaiseException(SE_VMDUMPSTATUS, 0, 1, dwArgs);
 }
 
-void __stdcall Dump2(LPCTSTR szMsg, wostream* pStream, int nStackDepth, int nWalkbackDepth)
+void __stdcall Dump2(const wchar_t* szMsg, wostream* pStream, int nStackDepth, int nWalkbackDepth)
 {
 	if (pStream == NULL)
 		pStream = &TRACESTREAM;
@@ -277,20 +277,20 @@ void __stdcall Dump2(LPCTSTR szMsg, wostream* pStream, int nStackDepth, int nWal
 	pStream->flush();
 }
 
-extern"C" void __stdcall Dump(LPCTSTR szMsg, LPCTSTR szPath, int nStackDepth, int nWalkbackDepth)
+extern"C" void __stdcall Dump(const wchar_t* szMsg, const wchar_t* szPath, int nStackDepth, int nWalkbackDepth)
 {
 	wofstream fStream;
 	wostream* pStream = OpenLogStream(szPath, achImagePath, fStream);
 	Dump2(szMsg, pStream, nStackDepth, nWalkbackDepth);
 }
 
-void __stdcall DebugDump(LPCTSTR szFormat, ...)
+void __stdcall DebugDump(const wchar_t* szFormat, ...)
 {
-	TCHAR buf[1024];
+	wchar_t buf[1024];
 
 	va_list args;
 	va_start(args, szFormat);
-	::StringCbVPrintf(buf, sizeof(buf), szFormat, args);
+	::StringCbVPrintfW(buf, sizeof(buf), szFormat, args);
 	va_end(args);
 
 	tracelock lock(TRACESTREAM);

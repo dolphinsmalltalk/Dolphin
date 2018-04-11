@@ -21,14 +21,14 @@
 namespace ST 
 { 
 	class String;
-	class ByteString;
+	class AnsiString;
 	class Symbol;
 	class Utf32String;
 	class Utf16String;
 	class Utf8String;
 };
 typedef TOTE<ST::String> StringOTE;
-typedef TOTE<ST::ByteString> ByteStringOTE;
+typedef TOTE<ST::AnsiString> AnsiStringOTE;
 typedef TOTE<ST::Utf8String> Utf8StringOTE;
 typedef TOTE<ST::Utf16String> Utf16StringOTE;
 typedef TOTE<ST::Utf32String> Utf32StringOTE;
@@ -55,12 +55,13 @@ namespace ST
 		}
 	};
 
-	template <UINT CP, size_t PointersIndex, class OTE, class TChar> class ByteStringT : public ArrayedCollection
+	template <UINT CP, size_t I, class OTE, class TChar> class ByteStringT : public ArrayedCollection
 	{
 	public:
 		typedef TChar CU;
 		typedef const TChar * __restrict PCSZ;
 		static const UINT CodePage = CP;
+		static const size_t PointersIndex = I;
 
 		CU m_characters[1];		// Variable length array of data
 
@@ -69,12 +70,12 @@ namespace ST
 
 		static POTE __fastcall New(size_t cch)
 		{
-			return reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), cch));
+			return reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
 		}
 
 		static POTE __fastcall New(LPCCH value, size_t cch)
 		{
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), cch));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
 			MyType* __restrict string = stringPointer->m_location;
 			string->m_characters[cch] = '\0';
 			memcpy(string->m_characters, value, cch);
@@ -84,7 +85,7 @@ namespace ST
 		static POTE __fastcall New(LPCSTR sz)
 		{
 			size_t cch = strlen(sz);
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), cch));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
 			MyType* __restrict string = stringPointer->m_location;
 			// Copy the string and null terminator
 			memcpy(string->m_characters, sz, cch + sizeof(char));
@@ -96,7 +97,7 @@ namespace ST
 		{
 			int cch = ::WideCharToMultiByte(CP, 0, wsz, -1, nullptr, 0, nullptr, nullptr);
 			// Length includes null terminator since input is null terminated
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), (cch - 1)*sizeof(CU)));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>((cch - 1)*sizeof(CU)));
 			CU* psz = stringPointer->m_location->m_characters;
 			int cch2 = ::WideCharToMultiByte(CP, 0, wsz, -1, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
 			UNREFERENCED_PARAMETER(cch2);
@@ -104,14 +105,14 @@ namespace ST
 			return stringPointer;
 		}
 
-		static POTE __fastcall New(LPCWCH pwch, size_t cwch)
+		static POTE __fastcall New(const char16_t* pwch, size_t cwch)
 		{
-			int cch = ::WideCharToMultiByte(CP, 0, pwch, cwch, nullptr, 0, nullptr, nullptr);
+			int cch = ::WideCharToMultiByte(CP, 0, (LPCWCH)pwch, cwch, nullptr, 0, nullptr, nullptr);
 			// Length does not include null terminator
-			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject(reinterpret_cast<BehaviorOTE*>(Pointers.pointers[PointersIndex - 1]), cch*sizeof(CU)));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch*sizeof(CU)));
 			CU* psz = stringPointer->m_location->m_characters;
 			psz[cch] = '\0';
-			int cch2 = ::WideCharToMultiByte(CP, 0, pwch, cwch, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
+			int cch2 = ::WideCharToMultiByte(CP, 0, (LPCWCH)pwch, cwch, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
 			UNREFERENCED_PARAMETER(cch2);
 			ASSERT(cch2 == cch);
 			return stringPointer;
@@ -131,14 +132,12 @@ namespace ST
 		}
 	};
 
+	// Indexes into the VM's pointer array
+	const size_t ClassByteString = 84;
+	const size_t ClassUtf8String = 104;
+	const size_t ClassUtf16String = 93;
 
-	class ByteString : public ByteStringT<CP_ACP, 84, ByteStringOTE, char> 
-	{
-	public:
-		static POTE __fastcall NewFromUtf8(const uint8_t* pChars, size_t len);
-	};
-
-	class Utf8String : public ByteStringT<CP_UTF8, 104, Utf8StringOTE, uint8_t>
+	class Utf8String : public ByteStringT<CP_UTF8, ClassUtf8String, Utf8StringOTE, uint8_t>
 	{
 	public:
 		static POTE __fastcall NewFromAnsi(const char* pChars, size_t len);
@@ -149,16 +148,23 @@ namespace ST
 		}
 	};
 
-	class Symbol : public ArrayedCollection	// Actually a String subclass
+	class AnsiString : public ByteStringT<CP_ACP, ClassByteString, AnsiStringOTE, char>
 	{
 	public:
-		char m_characters[];
+		static POTE __fastcall NewFromUtf8(const Utf8String::CU* pChars, size_t len);
+	};
+
+	class Symbol : public ArrayedCollection	// Really a subclass of Utf8String
+	{
+	public:
+		Utf8String::CU m_characters[];
 	};
 
 	class Utf16String : public ArrayedCollection	// Actually a string subclass
 	{
 	public:
-		typedef WCHAR CU;
+		typedef char16_t CU;
+		static const size_t PointersIndex = ClassUtf16String;
 
 		CU m_characters[];
 
@@ -176,13 +182,13 @@ namespace ST
 	class Utf32String : public ArrayedCollection	// Actually a string subclass
 	{
 	public:
-		typedef uint32_t CU;
+		typedef char32_t CU;
 
 		CU m_characters[];
 	};
 }
 
 
-wostream& operator<<(wostream& st, const ByteStringOTE*);
+wostream& operator<<(wostream& st, const AnsiStringOTE*);
 wostream& operator<<(wostream& st, const SymbolOTE*);
 

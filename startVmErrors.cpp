@@ -13,7 +13,7 @@
 
 /////////////////////////////////////////////////////////////////////
 
-HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, LPCSTR szFileName)
+HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, LPCWSTR szFileName)
 {
 	return ReportWin32Error(IDP_VMNOTREGISTERED, hr, szFileName);
 }

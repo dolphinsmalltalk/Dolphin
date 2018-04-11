@@ -26,7 +26,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\decode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\dolphin.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\fatalerror.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\finalize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\flotprim.cpp" />

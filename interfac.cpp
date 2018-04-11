@@ -24,7 +24,7 @@ Interpreter interface functions that can be thrown away eventually (or perhaps n
 #include "STArray.h"
 #include <setjmpex.h>
 
-const char* SZREGKEYBASE = "Software\\Object Arts\\Dolphin Smalltalk 6.0";
+const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 6.0";
 
 #include <winreg.h>
 
@@ -34,7 +34,7 @@ const char* SZREGKEYBASE = "Software\\Object Arts\\Dolphin Smalltalk 6.0";
 #include "STInteger.h"		// NewDWORD uses to create new integer, also for winproc return
 #include "STExternal.h"		// Primary purpos of this module is external i/f'ing
 
-extern LPCSTR GetVMFileName();
+extern LPCWSTR GetVMFileName();
 
 #define USESETJMP
 // This is referenced from primasm.asm too
@@ -411,7 +411,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	//
 
 	pushObject((OTE*)Pointers.ClassSymbol);
-	pushNewObject((OTE*)ByteString::New(name));
+	pushNewObject((OTE*)AnsiString::New(name));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
@@ -487,7 +487,7 @@ inline LRESULT Interpreter::lResultFromOop(Oop objectPointer, HWND hWnd, UINT uM
 		return lResult;
 	}
 
-	trace("DolphinWndProc: Non-LRESULT value returned for MSG(hwnd:%p, msg:%u, wParam:%x, lParam:%x)\n",
+	trace(L"DolphinWndProc: Non-LRESULT value returned for MSG(hwnd:%p, msg:%u, wParam:%x, lParam:%x)\n",
 				hWnd, uMsg, wParam, lParam);
 
 	ote->countDown();
@@ -570,7 +570,7 @@ LRESULT CALLBACK Interpreter::DolphinWndProc(HWND hWnd, UINT uMsg, WPARAM wParam
 
 		#ifdef _DEBUG
 		{
-			trace("WARNING: Unwinding DolphinWndProc(%#x, %d, %d, %d) ret: %d\n",
+			trace(L"WARNING: Unwinding DolphinWndProc(%#x, %d, %d, %d) ret: %d\n",
 				hWnd, uMsg, wParam, lParam, lResult);
 		}
 		#endif
@@ -702,7 +702,7 @@ DWORD Interpreter::callbackResultFromOop(Oop objectPointer)
 	WarningWithStackTrace(L"");
 #else
 	tracelock lock(TRACESTREAM);
-	trace("WARNING: Returned non-Integer object from callback\n");
+	trace(L"WARNING: Returned non-Integer object from callback\n");
 #endif
 
 	ote->countDown();

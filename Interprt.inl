@@ -37,7 +37,7 @@ inline void Interpreter::RelinquishAsyncProtect()
 inline void Interpreter::push(LPCSTR pStr)
 {
 	if (pStr)
-		pushNewObject((OTE*)ByteString::New(pStr));
+		pushNewObject((OTE*)AnsiString::New(pStr));
 	else
 		pushNil();
 }

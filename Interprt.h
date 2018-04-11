@@ -67,10 +67,10 @@ public:
 		enum TRACEFLAG { TraceInherit, TraceOff, TraceForce };
 	#endif
 
-	static HRESULT initialize(const char* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys);
+	static HRESULT initialize(const wchar_t* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys);
 
 	// Fire off the startup message
-	static void sendStartup(LPCSTR szImagePath, DWORD dwArg);
+	static void sendStartup(const wchar_t* szImagePath, DWORD dwArg);
 
 	// Clear down current image, etc
 	static void ShutDown();
@@ -650,7 +650,7 @@ private:
 
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp);
-	static Oop* __fastcall primitiveNextByte(Oop* const sp);
+	static Oop* __fastcall primitiveBasicNext(Oop* const sp);
 	static Oop* __fastcall primitiveNextSDWORD(Oop* const sp);
 	static Oop* __fastcall primitiveNextPut(Oop* const sp);
 	static Oop* __fastcall primitiveBasicNextPut(Oop* const sp);
@@ -850,8 +850,12 @@ private:
 	static DWORD		m_dwQueueStatusMask;			// Input flags passed to GetQueueStatus to poll for arriving input events
 
 public:
+	static UINT			m_ansiCodePage;
+	static WCHAR		m_unicodeReplacementChar;
+	static char			m_ansiReplacementChar;
 	static WCHAR		m_ansiToUnicodeCharMap[256];
 	static CHAR			m_unicodeToAnsiCharMap[65536];
+
 
 private:
 	#if defined(_DEBUG)

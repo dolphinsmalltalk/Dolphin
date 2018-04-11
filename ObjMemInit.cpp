@@ -192,7 +192,7 @@ static HMODULE GetCRTHandle()
 HRESULT ObjectMemory::InitializeImage()
 {
 	DWORD dwOldProtect = ProtectConstSpace(PAGE_READWRITE);
-	_Pointers.KernelHandle = ExternalHandle::New(::GetModuleHandle("KERNEL32"));
+	_Pointers.KernelHandle = ExternalHandle::New(::GetModuleHandleW(L"KERNEL32"));
 	_Pointers.KernelHandle->beSticky();
 	_Pointers.VMHandle = ExternalHandle::New(GetModuleContaining(InitializeImage));
 	_Pointers.VMHandle->beSticky();

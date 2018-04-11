@@ -165,7 +165,7 @@ VMPointers		STRUCT 2t
 	ClassMetaclass						POTE	?			; 81
 	ClassCharacter						POTE	?
 	ClassArray							POTE	?
-	ClassByteString						POTE	?
+	ClassAnsiString						POTE	?
 	ClassSymbol							POTE	?
 	ClassSmallInteger					POTE	?
 	ClassProcess						POTE	?

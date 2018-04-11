@@ -1,5 +1,3 @@
-#include "objmem.h"
-#include "objmem.h"
 /******************************************************************************
 
 	File: LoadImage.cpp
@@ -10,6 +8,7 @@
 
 ******************************************************************************/
 #include "ist.h"
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -62,7 +61,7 @@ static HRESULT ImageReadError(ibinstream& imageFile)
 		: ReportError(IDP_UNKNOWNIMAGEERROR);
 }
 
-HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
+HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 #ifdef PROFILE_IMAGELOADSAVE
 	TRACESTREAM<< L"Loading image '" << szImageName << endl;
@@ -377,7 +376,7 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 		PointersOTE* oteObj = reinterpret_cast<PointersOTE*>(ote);
 		if (ote->isPointers() && (oteObj->getSize() % 2 == 1 ||
 			classPointer == _Pointers.ClassByteArray ||
-			classPointer == _Pointers.ClassByteString ||
+			classPointer == _Pointers.ClassAnsiString ||
 			classPointer == _Pointers.ClassUtf8String ||
 			classPointer == _Pointers.ClassSymbol))
 		{
@@ -468,7 +467,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		framePointer += delta;
 		if (framePointer < Oop(stackBase) || framePointer > Oop(stackEnd))
 		{
-			trace("Warning: Process at %#x has corrupt frame pointer at %#x which will be nilled\n", this, pFramePointer);
+			trace(L"Warning: Process at %#x has corrupt frame pointer at %#x which will be nilled\n", this, pFramePointer);
 			*pFramePointer = Oop(Pointers.Nil);
 			break;
 		}
@@ -521,7 +520,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		int size = (pFrame->m_sp - 1) - reinterpret_cast<DWORD>(this) + sizeof(Oop);
 		if (size > 0 && unsigned(size) < oteThis->getSize())
 		{
-			TRACE("WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
+			TRACE(L"WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
 			oteThis->setSize(size);
 		}
 	}

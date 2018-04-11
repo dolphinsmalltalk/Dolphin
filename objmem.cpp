@@ -767,9 +767,9 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	{
 		HARDASSERT(m_nFreeOTEs == 0);
 		// The OT overflowed
-		TRACE("Object table overflow detected at %p (OT next %p, free %p)\n", pFault, otNext, m_pFreePointerList);
+		TRACE(L"Object table overflow detected at %p (OT next %p, free %p)\n", pFault, otNext, m_pFreePointerList);
 		#ifdef MEMSTATS
-			trace("Small Allocated %u, freed %u, large allocated %u, freed %u\n",
+			trace(L"Small Allocated %u, freed %u, large allocated %u, freed %u\n",
 					m_nSmallAllocated, m_nSmallFreed, m_nLargeAllocated, m_nLargeFreed);
 			m_nLargeAllocated = m_nLargeFreed = m_nSmallAllocated = m_nSmallFreed = 0;
 		#endif
@@ -796,7 +796,7 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 					pLink++;
 				}
 				m_nOTSize += extraOTEs;
-				TRACE("Successfully committed more OT space, size now %u\n", m_nOTSize);
+				TRACE(L"Successfully committed more OT space, size now %u\n", m_nOTSize);
 #ifdef _DEBUG
 				Interpreter::DumpOTEPoolStats();
 #endif

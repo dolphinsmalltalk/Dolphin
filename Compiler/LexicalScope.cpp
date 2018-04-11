@@ -548,7 +548,7 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 		piVM->StorePointerWithValue(temps.fields+i, Oop(tempPointer));
 
 		STVarObject& temp = *(STVarObject*)GetObj(tempPointer);
-		piVM->StorePointerWithValue(temp.fields+0, Oop(piVM->NewString(pDecl->GetName().c_str())));
+		piVM->StorePointerWithValue(temp.fields+0, Oop(piVM->NewString(reinterpret_cast<LPCSTR>(pDecl->GetName().c_str()))));
 
 		int nDepth = pDecl->IsStack() 
 			? 0

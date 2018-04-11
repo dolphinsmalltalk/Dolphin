@@ -20,7 +20,7 @@ static HINSTANCE LoadCompiler()
 {
 	static HINSTANCE hCompiler = NULL;
 	if (hCompiler == NULL)
-		hCompiler = ::LoadLibrary("DolphinCR7.DLL");
+		hCompiler = ::LoadLibraryW(L"DolphinCR7.DLL");
 	return hCompiler;
 }
 

@@ -17,17 +17,17 @@ Smalltalk lexical analyser
 #include "..\compiler_i.h"
 #endif
 
-static const char COMMENTDELIM = '"';
-static const char STRINGDELIM = '\'';
-static const char CHARLITERAL = '$';
-static const char LITERAL = '#';
+static const uint8_t COMMENTDELIM = '"';
+static const uint8_t STRINGDELIM = '\'';
+static const uint8_t CHARLITERAL = '$';
+static const uint8_t LITERAL = '#';
 
 ///////////////////////
 
 Lexer::Lexer()
 {
 	m_base = 0;
-	m_buffer = "";
+	m_buffer = (LPUTF8)"";
 	m_cc = '\0';
 	m_cp = NULL;
 	m_integer = 0;
@@ -64,12 +64,12 @@ void Lexer::CompileErrorV(const TEXTRANGE& range, int code, ...)
 	va_end(extras);
 }
 
-void Lexer::SetText(const char* compiletext, int offset)
+void Lexer::SetText(const uint8_t* compiletext, int offset)
 {
 	m_tokenType = None;
 	m_buffer = compiletext;
 	m_cp = m_buffer.c_str();
-	m_token = new char[m_buffer.size() + 1];
+	m_token = new uint8_t[m_buffer.size() + 1];
 	m_lineno = 1;
 	m_base = offset;
 	AdvanceCharPtr(offset);
@@ -78,7 +78,7 @@ void Lexer::SetText(const char* compiletext, int offset)
 // ANSI Binary chars are ...
 // Note that this does include '-', and therefore whitespace is
 // required to separate negation from a binary operator
-bool Lexer::isAnsiBinaryChar(char ch)
+bool Lexer::isAnsiBinaryChar(uint8_t ch)
 {
 	switch (ch)
 	{
@@ -103,7 +103,7 @@ bool Lexer::isAnsiBinaryChar(char ch)
 	return false;
 }
 
-bool Lexer::IsASingleBinaryChar(char ch) const
+bool Lexer::IsASingleBinaryChar(uint8_t ch) const
 {
 	// Returns true if (ch) is a single binary characater
 	// that can't be continued.
@@ -122,7 +122,7 @@ bool Lexer::IsASingleBinaryChar(char ch) const
 inline void Lexer::SkipBlanks()
 {
 	// Skips blanks in the input stream but emits syntax colouring for newlines
-	char ch = m_cc;
+	uint8_t ch = m_cc;
 	while (ch && isspace(ch))
 		ch = NextChar();
 }
@@ -132,7 +132,7 @@ void Lexer::SkipComments()
 	int commentStart = CharPosition();
 	while (m_cc == COMMENTDELIM)
 	{
-		char ch;
+		uint8_t ch;
 		do
 		{
 			ch = NextChar();
@@ -144,13 +144,13 @@ void Lexer::SkipComments()
 			CompileError(TEXTRANGE(commentStart, CharPosition()), LErrCommentNotClosed);
 		}
 
-		const char* ep = m_cp;
+		const uint8_t* ep = m_cp;
 		NextChar();
 		SkipBlanks();
 	}
 }
 
-inline bool issign(char ch)
+inline bool issign(uint8_t ch)
 {
 	return ch == '-' || ch == '+';
 }
@@ -158,7 +158,7 @@ inline bool issign(char ch)
 double Lexer::ThisTokenFloat() const
 {
 	_CRT_DOUBLE result;
-	int retval = _atodbl_l(&result, m_token, m_locale);
+	int retval = _atodbl_l(&result, (LPSTR)m_token, m_locale);
 	if (retval != 0)
 	{
 		// Most likely overflow or underflow. _atodbl will have set an appropriate continuation value
@@ -170,7 +170,7 @@ double Lexer::ThisTokenFloat() const
 
 void Lexer::ScanFloat()
 {
-	char ch = NextChar();
+	uint8_t ch = NextChar();
 	if (isdigit(PeekAtChar()))
 	{
 		m_tokenType = FloatingConst;
@@ -184,7 +184,7 @@ void Lexer::ScanFloat()
 		// Read the exponent, if any
 		if (ch == 'e' || ch == 'd' || ch == 'q')
 		{
-			char peek = PeekAtChar();
+			uint8_t peek = PeekAtChar();
 			if (isdigit(peek) || issign(peek))
 			{
 				if (issign(peek))
@@ -216,7 +216,7 @@ void Lexer::ScanFloat()
 	PushBack(ch);
 }
 
-int Lexer::DigitValue(char ch) const
+int Lexer::DigitValue(uint8_t ch) const
 {
 	return ch >= '0' && ch <= '9'
 		? ch - '0'
@@ -257,11 +257,11 @@ void Lexer::ScanInteger(int radix)
 // Note that the first digit has already been placed in the token buffer
 void Lexer::ScanExponentInteger()
 {
-	char e = NextChar();
-	char* mark = tp;
+	uint8_t e = NextChar();
+	uint8_t* mark = tp;
 	*tp++ = e;
 
-	char ch = PeekAtChar();
+	uint8_t ch = PeekAtChar();
 	if (ch == '-' || ch == '+')
 	{
 		*tp++ = NextChar();
@@ -292,7 +292,7 @@ void Lexer::ScanNumber()
 
 	ScanInteger(10);
 
-	char ch = PeekAtChar();
+	uint8_t ch = PeekAtChar();
 
 	// If they both read the same number of characters or the integer ended
 	// in a radix specifier then we got ourselves an integer but we'll need
@@ -310,7 +310,7 @@ void Lexer::ScanNumber()
 			// Probably a short or long integer with a leading radix.
 
 			*tp++ = NextChar();
-			char* startSuffix = tp;
+			uint8_t* startSuffix = tp;
 			int radix = m_integer;
 			ScanInteger(radix);
 			if (tp == startSuffix)
@@ -365,7 +365,7 @@ void Lexer::ScanNumber()
 // Read string up to terminating quote, ignoring embedded double quotes
 void Lexer::ScanString(int stringStart)
 {
-	char ch;
+	uint8_t ch;
 	do
 	{
 		ch = NextChar();
@@ -393,18 +393,18 @@ void Lexer::ScanName()
 	while (isIdentifierSubsequent(NextChar()))
 		*tp++ = m_cc;
 	*tp = 0;
-	const char* tok = ThisTokenText();
-	if (!strcmp(tok, "true"))
+	LPUTF8 tok = ThisTokenText();
+	if (!strcmp((LPCSTR)tok, "true"))
 		m_tokenType = TrueConst;
-	else if (!strcmp(tok, "false"))
+	else if (!strcmp((LPCSTR)tok, "false"))
 		m_tokenType = FalseConst;
-	else if (!strcmp(tok, "nil"))
+	else if (!strcmp((LPCSTR)tok, "nil"))
 		m_tokenType = NilConst;
 }
 
 void Lexer::ScanQualifiedRef()
 {
-	const char* endLastWord = tp;
+	LPUTF8 endLastWord = tp;
 	*tp++ = m_cc;
 	ScanName();
 	if (m_tokenType != NameConst)
@@ -445,7 +445,7 @@ void Lexer::ScanIdentifierOrKeyword()
 
 void Lexer::ScanSymbol()
 {
-	char* lastColon = NULL;
+	uint8_t* lastColon = NULL;
 	while (isIdentifierFirst(m_cc))
 	{
 		*tp++ = m_cc;
@@ -548,7 +548,7 @@ Lexer::TokenType Lexer::NextToken()
 	m_thisTokenRange.m_start = start;
 
 	tp = m_token;
-	char ch = m_cc;
+	uint8_t ch = m_cc;
 
 	*tp++ = ch;
 
@@ -663,84 +663,123 @@ Lexer::TokenType Lexer::NextToken()
 	return m_tokenType;
 }
 
+int Lexer::ReadUtf8()
+{
+	uint8_t ch = Step();
+	// This is one of the few places we need to be aware of UTF-8 encoding. Generally the only chars that are significant to the compiler are
+	// ascii. This would change if we decided to allow multi-lingual characters in identifiers, for example. But at present we parse only
+	// the ANSI X3J20 lexicon, which only recognises English letters, digits, and some ascii symbols and whitespace characters. That doesn't
+	// prevent the compiler successfully reading multi-lingual characters in literal strings, as they are opaque to the compiler.
+
+	if (__isascii(ch))
+	{
+		return ch;
+	}
+	else
+	{
+		uint32_t codePoint = -1;
+
+		if (ch >= 0xc0)
+		{
+			uint8_t ch2 = Step();
+			if ((ch2 & 0xC0) != 0x80)
+			{
+				return -1;
+			}
+			codePoint = (ch & 0x1F) << 6 | (ch2 & 0x3F);
+
+			if (ch >= 0xE0)
+			{
+				uint8_t ch3 = Step();
+				if ((ch3 & 0xC0) != 0x80)
+				{
+					return -1;
+				}
+				codePoint = (codePoint & 0x3FF) << 6 | (ch3 & 0x3F);
+
+				if (ch >= 0xF0)
+				{
+					uint8_t ch4 = Step();
+					if ((ch4 & 0xC0) != 0x80)
+					{
+						return -1;
+					}
+					codePoint = (codePoint & 0x7FFF) << 6 | (ch4 & 0x3F);
+				}
+			}
+		}
+		return codePoint;
+	}
+}
+
 void Lexer::ScanLiteralCharacter()
 {
 	m_tokenType = CharConst;
 	m_integer = 0;
 
-	char ch = Step();
-	if (!ch)
-	{
-		// Hit Eof.
-		int pos = CharPosition();
-		CompileError(TEXTRANGE(pos, pos), LErrExpectChar);
-		return;
-	}
+	int codePoint = ReadUtf8();
 
-	m_integer = static_cast<uint8_t>(ch);
-
-	if (ch == '\\')
+	if (codePoint == '\\')
 	{
 		// Dolphin supports an extended C-style escaped character syntax (used in many languages)
 		switch (PeekAtChar())
 		{
 		case '0':
 			Step();
-			m_integer = '\0';
+			codePoint = '\0';
 			break;
 		case 'a':
 			Step();
-			m_integer = '\a';
+			codePoint = '\a';
 			break;
 		case 'b':
 			Step();
-			m_integer = '\b';
+			codePoint = '\b';
 			break;
 		case 'f':
 			Step();
-			m_integer = '\f';
+			codePoint = '\f';
 			break;
 		case 'n':
 			Step();
-			m_integer = '\n';
+			codePoint = '\n';
 			break;
 		case 'r':
 			Step();
-			m_integer = '\r';
+			codePoint = '\r';
 			break;
 		case 't':
 			Step();
-			m_integer = '\t';
+			codePoint = '\t';
 			break;
 		case 'v':
 			Step();
-			m_integer = '\v';
+			codePoint = '\v';
 			break;
 		case 'x':
-			{
-				Step();
-				int codePoint = ReadHexCodePoint();
-				if (codePoint < 0)
-				{
-					m_thisTokenRange.m_stop = CharPosition();
-					int pos = CharPosition();
-					CompileError(LErrExpectCodePoint);
-				}
-				else if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
-				{
-					m_thisTokenRange.m_stop = CharPosition();
-					int pos = CharPosition();
-					CompileError(LErrBadCodePoint);
-				}
-				else
-				{
-					m_integer = codePoint;
-				}
-			}
+			Step();
+			codePoint = ReadHexCodePoint();
 			break;
 		default:
 			break;
 		}
+	}
+
+	if (codePoint < 0)
+	{
+		int pos = CharPosition();
+		m_thisTokenRange.m_stop = pos;
+		CompileError(LErrExpectCodePoint);
+	}
+	else if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
+	{
+		int pos = CharPosition();
+		m_thisTokenRange.m_stop = pos;
+		CompileError(LErrBadCodePoint);
+	}
+	else
+	{
+		m_integer = codePoint;
 	}
 }
 

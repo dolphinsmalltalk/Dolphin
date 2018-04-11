@@ -27,6 +27,7 @@ HRESULT RegisterProgID(LPCTSTR lpszCLSID, LPCTSTR lpszProgID, LPCTSTR lpszUserDe
 
 HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpszVerIndProgID, LPCTSTR szDesc, DWORD dwFlags)
 {
+	USES_CONVERSION;
 	UNREFERENCED_PARAMETER(dwFlags);
 
 	static const TCHAR szProgID[] = _T("ProgID");
@@ -45,7 +46,7 @@ HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpsz
 	DWORD dwLen = GetModuleFileName(_AtlBaseModule.m_hInst, szModule, MAX_PATH);
 	if (dwLen == 0)
 		return AtlHresultFromLastError();
-	else if( dwLen == MAX_PATH )
+	else if (dwLen == MAX_PATH)
 		return HRESULT_FROM_WIN32(ERROR_INSUFFICIENT_BUFFER);
 
 	LPOLESTR lpOleStr;
@@ -53,44 +54,55 @@ HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpsz
 	if (FAILED(hRes))
 		return hRes;
 
-	LPTSTR lpsz;
-	{
-		USES_CONVERSION;
-		lpsz = OLE2A(lpOleStr);
-	}
-	CoTaskMemFree(lpOleStr);
-
-	if(lpsz == NULL)
-		return E_OUTOFMEMORY;
-
-	hRes = RegisterProgID(lpsz, lpszProgID, szDesc);
-	if (FAILED(hRes))
-		return hRes;
-
-	hRes = RegisterProgID(lpsz, lpszVerIndProgID, szDesc);
-	if (FAILED(hRes))
-		return hRes;
-
+	LPCTSTR szClsid = OLE2T(lpOleStr);
 	CRegKey key;
+
+	hRes = RegisterProgID(szClsid, lpszProgID, szDesc);
+	if (FAILED(hRes))
+	{
+		goto end;
+	}
+
+	hRes = RegisterProgID(szClsid, lpszVerIndProgID, szDesc);
+	if (FAILED(hRes))
+	{
+		goto end;
+	}
+
 	LONG lRes = key.Open(HKEY_CLASSES_ROOT, _T("CLSID"), KEY_READ | KEY_WRITE);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
-	lRes = key.Create(key, lpsz, REG_NONE, REG_OPTION_NON_VOLATILE, KEY_READ | KEY_WRITE);
+	lRes = key.Create(key, szClsid, REG_NONE, REG_OPTION_NON_VOLATILE, KEY_READ | KEY_WRITE);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
 	lRes = key.SetStringValue(NULL, szDesc);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
 	lRes = key.SetKeyValue(szProgID, lpszProgID);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
 	lRes = key.SetKeyValue(szVIProgID, lpszVerIndProgID);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
 	// Can't be an EXE
 	_ASSERTE(!((_AtlBaseModule.m_hInst == NULL) || (_AtlBaseModule.m_hInst == GetModuleHandle(NULL))));
@@ -98,14 +110,22 @@ HRESULT RegisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpsz
 	_ASSERTE(!(dwFlags & AUTPRXFLAG));
 	lRes = key.SetKeyValue(szIPS32, szModule);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
 	_ASSERTE(dwFlags & THREADFLAGS_APARTMENT);
 	lRes = key.SetKeyValue(szIPS32, szApartment, szThreadingModel);
 	if (lRes != ERROR_SUCCESS)
-		return AtlHresultFromWin32(lRes);
+	{
+		hRes = AtlHresultFromWin32(lRes);
+		goto end;
+	}
 
-	return S_OK;
+end:
+	CoTaskMemFree(lpOleStr);
+	return hRes;
 }
 
 HRESULT UnregisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lpszVerIndProgID)
@@ -138,12 +158,12 @@ HRESULT UnregisterClassHelper(const CLSID& clsid, LPCTSTR lpszProgID, LPCTSTR lp
 	HRESULT hr2 = StringFromCLSID(clsid, &lpOleStr);
 	if (SUCCEEDED(hr2))
 	{
-		LPSTR lpsz = OLE2A(lpOleStr);
+		LPTSTR lpsz = OLE2T(lpOleStr);
 		::CoTaskMemFree(lpOleStr);
 		if(lpsz == NULL)
 			return E_OUTOFMEMORY;
 
-		LONG lRet = key.Open(key, "CLSID", KEY_READ | KEY_WRITE);
+		LONG lRet = key.Open(key, _T("CLSID"), KEY_READ | KEY_WRITE);
 		if (lRet == ERROR_SUCCESS)
 			lRet = key.RecurseDeleteKey(lpsz);
 		if (lRet != ERROR_SUCCESS && lRet != ERROR_FILE_NOT_FOUND && lRet != ERROR_PATH_NOT_FOUND)
@@ -213,9 +233,9 @@ STDAPI DllCanUnloadNow(void)
 	#ifdef _DEBUG
 	{
 		if (hr == S_OK)
-			OutputDebugString("DllCanUnloadNow affirmative\n");
+			OutputDebugString(_T("DllCanUnloadNow affirmative\n"));
 		else
-			OutputDebugString("DllCanUnloadNow negative\n");
+			OutputDebugString(_T("DllCanUnloadNow negative\n"));
 	}
 	#endif
 

@@ -94,9 +94,9 @@ extern "C" int __cdecl argc()
 	return __argc;
 }
 
-extern "C" char** __cdecl argv()
+extern "C" wchar_t** __cdecl argv()
 {
-	return __argv;
+	return __wargv;
 }
 
 // _snprintf_s is inlined. We force a non-inline copy to export from the .def file
@@ -126,15 +126,15 @@ extern "C" FILE* __cdecl StdErr()
 
 #include <atlbase.h>
 
-extern "C" HANDLE __stdcall RegisterAsEventSource(const char* szSource)
+extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 {
-	const char* szSrc = szSource;
-	static const char* szEventLogKeyBase = "SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\";
+	const wchar_t* szSrc = szSource;
+	static const wchar_t* szEventLogKeyBase = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\";
 	
-	char szEventLogKey[256+1];
+	wchar_t szEventLogKey[256+1];
 	szEventLogKey[256] = 0;
-	strcpy(szEventLogKey, szEventLogKeyBase);
-	strncat_s(szEventLogKey, szSource, 256-strlen(szEventLogKeyBase));
+	wcscpy(szEventLogKey, szEventLogKeyBase);
+	wcsncat_s(szEventLogKey, szSource, 256-wcslen(szEventLogKeyBase));
 
 	CRegKey rkeyRegistered;
 	if (rkeyRegistered.Open(HKEY_LOCAL_MACHINE, szEventLogKey, KEY_READ) != ERROR_SUCCESS)
@@ -142,14 +142,14 @@ extern "C" HANDLE __stdcall RegisterAsEventSource(const char* szSource)
 		if (rkeyRegistered.Create(HKEY_LOCAL_MACHINE, szEventLogKey, REG_NONE, REG_OPTION_NON_VOLATILE,
 									(KEY_READ|KEY_WRITE)) == ERROR_SUCCESS)
 		{
-			char vmFileName[MAX_PATH+1];
-			::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), vmFileName, sizeof(vmFileName) - 1);
-			rkeyRegistered.SetStringValue("EventMessageFile", vmFileName);
-			rkeyRegistered.SetDWORDValue("TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
+			wchar_t vmFileName[MAX_PATH+1];
+			::GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), vmFileName, sizeof(vmFileName) - 1);
+			rkeyRegistered.SetStringValue(L"EventMessageFile", vmFileName);
+			rkeyRegistered.SetDWORDValue(L"TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
 												EVENTLOG_WARNING_TYPE|EVENTLOG_INFORMATION_TYPE));
 		}
 		else
-			szSrc = "Dolphin";
+			szSrc = L"Dolphin";
 	}
 
 

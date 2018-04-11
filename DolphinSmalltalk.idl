@@ -282,7 +282,7 @@ library DolphinVM
 		uuid(9318888B-C167-4A56-8DBA-B6B978E5BB3A),
 		pointer_default(unique)
 	]
-	interface IDolphinStart: IUnknown
+	interface IDolphinStart4: IUnknown
 	{
 		HRESULT Initialise(
 					[in]HINSTANCE hInstance, 
@@ -290,6 +290,25 @@ library DolphinVM
 					[in]LPVOID imageData, 
 					[in]UINT imageSize,
 					[in]DWORD dwFlags);
+
+		HRESULT GetVersionInfo([out]/*VS_FIXEDFILEINFO*/void* pFixedInfo);
+		HRESULT Run([in]IUnknown* punkOuter);
+	};
+
+	[
+		// D7.1 and later
+		object,
+		uuid(fdf31048-c85b-4dae-9058-e56fbe0b8e20),
+		pointer_default(unique)
+	]
+	interface IDolphinStart : IUnknown
+	{
+		HRESULT Initialise(
+			[in]HINSTANCE hInstance,
+			[in]LPCWSTR szFileName,
+			[in]LPVOID imageData,
+			[in]UINT imageSize,
+			[in]DWORD dwFlags);
 
 		HRESULT GetVersionInfo([out]/*VS_FIXEDFILEINFO*/void* pFixedInfo);
 		HRESULT Run([in]IUnknown* punkOuter);
@@ -337,7 +356,7 @@ library DolphinVM
 	coclass DolphinSmalltalk60
 	{
 		[default] interface IDolphin;
-		interface IDolphinStart;
+		interface IDolphinStart4;
 	};
 
 	[
@@ -346,7 +365,7 @@ library DolphinVM
 	coclass DolphinSmalltalk61
 	{
 		[default] interface IDolphin;
-		interface IDolphinStart;
+		interface IDolphinStart4;
 	};
 
 	[
@@ -355,11 +374,20 @@ library DolphinVM
 	coclass DolphinSmalltalk62
 	{
 		[default] interface IDolphin;
-		interface IDolphinStart;
+		interface IDolphinStart4;
 	};
 
 	[
 		uuid(EBB3C3FF-6AA8-4B9D-BC0D-92D5695B8C76)		// 7
+	]
+	coclass DolphinSmalltalk70
+	{
+		[default] interface IDolphin;
+		interface IDolphinStart4;
+	};
+
+	[
+		uuid(C579F2C3-AA3C-421A-9A80-8A6B83912E5C)		// 7.1
 	]
 	coclass DolphinSmalltalk
 	{

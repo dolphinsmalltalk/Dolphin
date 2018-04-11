@@ -25,9 +25,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
-      <Filter>FFI</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\fatalerror.cpp">
       <Filter>Diagnostics</Filter>
     </ClCompile>
@@ -142,6 +139,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp">
       <Filter>Primitives</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />

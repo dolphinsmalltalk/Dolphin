@@ -87,6 +87,8 @@ public:
 	// Class pointer access
 	static BehaviorOTE* fetchClassOf(Oop objectPointer);
 
+	static size_t GetBytesElementSize(BytesOTE* ote);
+
 	// Use CRT Small block heap OR pool if size <= this threshold
 	enum { MaxSmallObjectSize = 0x3f8 };
 	enum { PoolObjectSizeLimit = 144 };
@@ -97,9 +99,8 @@ public:
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
-	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
-	static BytesOTE* __fastcall newUninitializedByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
-	static BytesOTE* __fastcall newUninitializedNullTermObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
+	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
+	template <class T> static TOTE<T>* newUninitializedNullTermObject(MWORD instanceByteSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)
@@ -206,8 +207,8 @@ public:
 	static void CheckPoint();
 #endif
 
-	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
-	static HRESULT __stdcall LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
+	static int __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
+	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 
@@ -979,7 +980,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 	else
 	{
 		// We don't need to ref. count the class, so use the basic instantiation method for byte objects
-		ote = ObjectMemory::newUninitializedByteObject(classPointer, bytes);
+		ote = ObjectMemory::newByteObject<false, false>(classPointer, bytes);
 		#ifdef MEMSTATS
 			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
 		#endif
@@ -1039,9 +1040,19 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	return ote;
 }
 
+template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObject(MWORD byteSize)
+{
+	OTE* ote;
+	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
+	ote->m_oteClass = reinterpret_cast<BehaviorOTE*>(Pointers.pointers[T::PointersIndex - 1]);
+	ote->beNullTerminated();
+	return reinterpret_cast<TOTE<T>*>(ote);
+}
+
 inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD cBytes, const void* pBytes)
 {
-	BytesOTE* oteBytes = newUninitializedByteObject(classPointer, cBytes);
+	ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
+	BytesOTE* oteBytes = newByteObject<false, false>(classPointer, cBytes);
 	memcpy(oteBytes->m_location->m_fields, pBytes, cBytes);
 	return oteBytes;
 }

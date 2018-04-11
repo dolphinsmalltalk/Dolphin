@@ -16,7 +16,7 @@
 #include "interprt.h"
 #include "VMExcept.h"
 
-void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const char* achImagePath);
+void CrashDump(EXCEPTION_POINTERS *pExceptionInfo, const wchar_t* achImagePath);
 
 extern void InitializeVtbl();
 extern void DestroyVtbl();
@@ -24,7 +24,7 @@ extern void DestroyVtbl();
 //////////////////////////////////////////////////////////////////
 // Global Variables:
 
-char achImagePath[_MAX_PATH];	// Loaded image path
+wchar_t achImagePath[_MAX_PATH];	// Loaded image path
 
 // Basic registry key path (from HKLM)
 static const char* szRegRoot = "HKEY_LOCAL_MACHINE";
@@ -53,14 +53,14 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 	BOOL bRet = FALSE;
 	DWORD dwHandle;
 
-	char vmFileName[MAX_PATH+1];
-	::GetModuleFileName(GetVMModule(), vmFileName, sizeof(vmFileName) - 1);
+	wchar_t vmFileName[MAX_PATH+1];
+	::GetModuleFileNameW(GetVMModule(), vmFileName, sizeof(vmFileName) - 1);
 
 	DWORD dwLen = ::GetFileVersionInfoSize(vmFileName, &dwHandle);
 	if (dwLen)
 	{
 		LPVOID lpData = alloca(dwLen);
-		if (::GetFileVersionInfo(vmFileName, dwHandle, dwLen, lpData))
+		if (::GetFileVersionInfoW(vmFileName, dwHandle, dwLen, lpData))
 		{
 			void* lpFixedInfo=0;
 			UINT uiBytes=0;
@@ -70,10 +70,10 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 			bRet = TRUE;
 		}
 		else
-			TRACESTREAM<< L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
+			TRACESTREAM << L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
 	}
 	else
-		TRACESTREAM<< L"Fail to get ver info size for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
+		TRACESTREAM << L"Fail to get ver info size for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
 	return bRet;
 }
 
@@ -140,10 +140,10 @@ static long __stdcall unhandledExceptionFilter(EXCEPTION_POINTERS *pExceptionInf
 	return lpTopFilter ? lpTopFilter(pExceptionInfo) : EXCEPTION_CONTINUE_SEARCH;
 }
 
-static HRESULT DolphinInit(LPCSTR szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
+static HRESULT DolphinInit(LPCWSTR szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 	// Find the fileName of the image to load by the VM
-	strncpy_s(achImagePath, szFileName, _MAX_PATH);
+	wcsncpy_s(achImagePath, szFileName, _MAX_PATH);
 	return Interpreter::initialize(achImagePath, imageData, imageSize, isDevSys);
 }
 
@@ -199,7 +199,7 @@ static void __cdecl invalidParameterHandler(
 	uintptr_t pReservered
 	)
 {
-	TRACE("CRT parameter fault in '%ls' of %ls, %ls(%u)", expression, function, file, line);
+	TRACE(L"CRT parameter fault in '%s' of %s, %s(%u)", expression, function, file, line);
 	ULONG_PTR args[1];
 	args[0] = FAST_FAIL_INVALID_ARG;
 	::RaiseException(SE_VMCRTFAULT, 0, 1, (CONST ULONG_PTR*)args);
@@ -207,7 +207,7 @@ static void __cdecl invalidParameterHandler(
 
 #pragma code_seg(INIT_SEG)
 
-HRESULT APIENTRY VMInit(LPCSTR szImageName,
+HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 					LPVOID imageData, UINT imageSize,
 					DWORD flags)
 {

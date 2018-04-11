@@ -55,6 +55,8 @@
 	#include <winver.h>
 	#include <mmsystem.h>
 
+	#undef LoadImage
+
 	#pragma warning(pop)
 
 	#ifndef VM

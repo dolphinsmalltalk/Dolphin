@@ -10,27 +10,27 @@
 #include <process.h>
 #include <stdlib.h>
 
-extern int __stdcall DolphinMessage(UINT flags, const char* msg);
-extern void __stdcall DolphinFatalExit(int exitCode, const char* msg);
+extern int __stdcall DolphinMessage(UINT flags, const wchar_t* msg);
+extern void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg);
 
 #ifndef VM
 
-int __stdcall DolphinMessage(UINT flags, const char* msg)
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 {
-	char szCaption[512];
+	wchar_t szCaption[512];
 	HMODULE hExe = GetModuleHandle(NULL);
-	if (!::LoadString(hExe, IDS_APP_TITLE, szCaption, sizeof(szCaption)-1))
-		GetModuleFileName(hExe, szCaption, sizeof(szCaption));
-	return  ::MessageBox(NULL, msg, szCaption, flags|MB_TASKMODAL);
+	if (!::LoadStringW(hExe, IDS_APP_TITLE, szCaption, sizeof(szCaption)-1))
+		GetModuleFileNameW(hExe, szCaption, sizeof(szCaption));
+	return  ::MessageBoxW(NULL, msg, szCaption, flags|MB_TASKMODAL);
 }
 
 #endif
 
-static int __cdecl DolphinMessageBox(const char* szFormat, UINT flags, va_list args)
+static int __cdecl DolphinMessageBox(const wchar_t* szFormat, UINT flags, va_list args)
 {
-	LPSTR buf;
-	::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_STRING,
-						szFormat, 0, 0, LPSTR(&buf), 0, &args);
+	wchar_t* buf;
+	::FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_STRING,
+						szFormat, 0, 0, LPWSTR(&buf), 0, &args);
 
 	int result = DolphinMessage(flags, buf);
 
@@ -43,8 +43,8 @@ int __cdecl DolphinMessageBox(int nPromptId, UINT flags, ...)
 {
 	va_list args;
 	va_start(args, flags);
-	char szPrompt[512];
-	::LoadString(GetResLibHandle(), nPromptId, szPrompt, sizeof(szPrompt)-1);
+	wchar_t szPrompt[512];
+	::LoadStringW(GetResLibHandle(), nPromptId, szPrompt, sizeof(szPrompt)-1);
 	int result = DolphinMessageBox(szPrompt, flags, args);
 	va_end(args);
 	return result;
@@ -52,29 +52,40 @@ int __cdecl DolphinMessageBox(int nPromptId, UINT flags, ...)
 
 #pragma code_seg()
 
-LPSTR __stdcall GetLastErrorText()
+LPCWSTR __stdcall GetLastErrorText()
 {
 	return GetErrorText(::GetLastError());
 }
 
 // Answer some suitable text for the last system error
-LPSTR __stdcall GetErrorText(DWORD win32ErrorCode)
+LPCWSTR __stdcall GetErrorText(DWORD win32ErrorCode)
 {
-	LPSTR buf;
-	::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		0, win32ErrorCode, 0, LPSTR(&buf), 0, 0);
+	LPWSTR buf;
+	::FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
+		0, win32ErrorCode, 0, LPWSTR(&buf), 0, 0);
 	return buf;
 }
 
-void __stdcall vtrace(const char* szFormat, va_list args)
+void __stdcall vtrace(const wchar_t* szFormat, va_list args)
 {
-	char buf[1024];
-	::vsprintf_s(buf, sizeof(buf), szFormat, args);
-	::OutputDebugString(buf);
+	wchar_t buf[1024];
+	::vswprintf_s(buf, sizeof(buf)/sizeof(buf[0]), szFormat, args);
+	::OutputDebugStringW(buf);
 }
 
-void __cdecl trace(const char* szFormat, ...)
+void __cdecl trace(const wchar_t* szFormat, ...)
 {
+	va_list args;
+	va_start(args, szFormat);
+	vtrace(szFormat, args);
+	va_end(args);
+}
+
+void __cdecl trace(int nPrompt, ...)
+{
+	wchar_t szFormat[256];
+	::LoadStringW(GetResLibHandle(), nPrompt, szFormat, sizeof(szFormat) - 1);
+
 	va_list args;
 	va_start(args, szFormat);
 	vtrace(szFormat, args);
@@ -83,8 +94,8 @@ void __cdecl trace(const char* szFormat, ...)
 
 HRESULT __stdcall ReportErrorV(int nPrompt, HRESULT hr, va_list args)
 {
-	char szFormat[256];
-	::LoadString(GetResLibHandle(), nPrompt, szFormat, sizeof(szFormat)-1);
+	wchar_t szFormat[256];
+	::LoadStringW(GetResLibHandle(), nPrompt, szFormat, sizeof(szFormat)-1);
 
 	DolphinMessageBox(szFormat, MB_SETFOREGROUND|MB_ICONHAND|MB_SYSTEMMODAL, args);
 
@@ -102,11 +113,11 @@ HRESULT __cdecl ReportError(int nPrompt, ...)
 	return hr;
 }
 
-HRESULT __cdecl ReportWin32Error(int nPrompt, DWORD errorCode, LPCSTR arg)
+HRESULT __cdecl ReportWin32Error(int nPrompt, DWORD errorCode, LPCWSTR arg)
 {
-	LPSTR errorText = GetErrorText(errorCode);
+	LPCWSTR errorText = GetErrorText(errorCode);
 	HRESULT hr = ReportError(nPrompt, errorCode, errorText, arg);
-	::LocalFree(errorText);
+	::LocalFree((HLOCAL)errorText);
 	return hr;
 }
 
@@ -121,12 +132,12 @@ void __stdcall FatalException(const EXCEPTION_RECORD& exRec)
 {
 	int nPrompt = exRec.ExceptionCode & 0x2FF;
 
-	char szFormat[256];
-	::LoadString(GetResLibHandle(), nPrompt, szFormat, sizeof(szFormat)-1);
+	wchar_t szFormat[256];
+	::LoadStringW(GetResLibHandle(), nPrompt, szFormat, sizeof(szFormat)-1);
 
-	LPSTR buf;
-	::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,
-						szFormat, 0, 0, LPSTR(&buf), 0, (va_list*)exRec.ExceptionInformation);
+	LPWSTR buf;
+	::FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_STRING|FORMAT_MESSAGE_ARGUMENT_ARRAY,
+						szFormat, 0, 0, LPWSTR(&buf), 0, (va_list*)exRec.ExceptionInformation);
 
 
 	DolphinFatalExit(exRec.ExceptionCode, buf);
@@ -143,9 +154,9 @@ void __stdcall DolphinExit(int exitCode)
 
 #ifndef VM
 
-void __stdcall DolphinFatalExit(int /*exitCode*/, const char* msg)
+void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
 {
-	FatalAppExit(0, msg);
+	FatalAppExitW(0, msg);
 }
 
 #endif

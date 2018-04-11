@@ -21,56 +21,56 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 	return ReportWin32Error(IDP_CREATEVMFAILED, hr);
 }
 
-static const char* FindImageNameArg()
+static const wchar_t* FindImageNameArg()
 {
-	LPCSTR szImage = "DPRO.img7";
-	static char achImageName[_MAX_PATH];
+	LPCWSTR szImage = L"DPRO.img7";
+	static wchar_t achImageName[_MAX_PATH];
 
 	for (int i=1;i<__argc;i++)
 	{
-		char ch = *__argv[i];
-		if (ch != '/' && ch != '-')
+		wchar_t ch = *__wargv[i];
+		if (ch != L'/' && ch != L'-')
 		{
-			szImage = __argv[i];
+			szImage = __wargv[i];
 			break;
 		}
 	}
 
-	char* filePart;
-	::GetFullPathName(szImage, _MAX_PATH, achImageName, &filePart);
+	wchar_t* filePart;
+	::GetFullPathNameW(szImage, _MAX_PATH, achImageName, &filePart);
 	return achImageName;
 }
 
-static HRESULT StartOldImage(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCSTR lpCmdLine, int nCmdShow, 
-						 const char* szImageName, WORD versionMajor)
+static HRESULT StartOldImage(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCWSTR lpCmdLine, int nCmdShow, 
+						 const wchar_t* szImageName, WORD versionMajor)
 {
 	const CLSID* pVMCLSID = NULL;
-	LPCSTR pszVM = NULL;
+	LPCWSTR pszVM = NULL;
 
 	switch(versionMajor)
 	{
 	case 3:		// Dolphin 3.06
 		pVMCLSID = &__uuidof(DolphinSmalltalk3);
-		pszVM = "DolphinVM003.DLL";
+		pszVM = L"DolphinVM003.DLL";
 		break;
 
 	case 4:		// Dolphin 4.01
 		pVMCLSID = &__uuidof(DolphinSmalltalk4);
-		pszVM = "DolphinVM004.DLL";
+		pszVM = L"DolphinVM004.DLL";
 		break;
 
 	case 5:		// Dolphin 5.1
 		pVMCLSID = &__uuidof(DolphinSmalltalk51);
-		pszVM = "DolphinVM005.DLL";
+		pszVM = L"DolphinVM005.DLL";
 		break;
 
 	case 6:		// Dolphin 6
-		pszVM = "DolphinVM006.DLL";
+		pszVM = L"DolphinVM006.DLL";
 		pVMCLSID = &__uuidof(DolphinSmalltalk62);
 		break;
 
 	case 7:		// Dolphin 7 (or unknown)
-		pszVM = "DolphinVM7.DLL";
+		pszVM = L"DolphinVM7.DLL";
 		pVMCLSID = &__uuidof(DolphinSmalltalk);
 		break;
 
@@ -83,18 +83,26 @@ static HRESULT StartOldImage(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCST
 
 	if (SUCCEEDED(hr))
 	{
+		int cbCmdLine = wcslen(lpCmdLine) + 1;
+		char* cmdLine = (char*)malloc(cbCmdLine);
+		::WideCharToMultiByte(CP_ACP, 0, lpCmdLine, -1, cmdLine, cbCmdLine, nullptr, nullptr);
+		int cbImageName = wcslen(szImageName) + 1;
+		char* imageName = (char*)malloc(cbImageName);
+		::WideCharToMultiByte(CP_ACP, 0, lpCmdLine, -1, imageName, cbImageName, nullptr, nullptr);
+
 		// Note that this does now return
-		hr = piDolphin->Start(hInstance, hPrevInstance, lpCmdLine, nCmdShow, 
-						0, szImageName, NULL);
+		hr = piDolphin->Start(hInstance, hPrevInstance, cmdLine, nCmdShow, 0, imageName, NULL);
 		piDolphin->Release();
+		free(cmdLine);
+		free(imageName);
 	}
 
 	return hr;
 }
 
-static HRESULT __stdcall StartDevSys(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCSTR lpCmdLine, int nCmdShow)
+static HRESULT __stdcall StartDevSys(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCWSTR lpCmdLine, int nCmdShow)
 {
-	const char* szImageName = FindImageNameArg();
+	const wchar_t* szImageName = FindImageNameArg();
 
 	ImageFileMapping imageFile;
 	int ret = imageFile.Open(szImageName);
@@ -147,7 +155,7 @@ static HRESULT __stdcall StartDevSys(HINSTANCE hInstance, HINSTANCE hPrevInstanc
 
 /////////////////////////////////////////////////////////////////////
 int APIENTRY 
-WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	::CoInitialize(NULL);
  	int nRet = StartDevSys(hInstance, hPrevInstance, lpCmdLine, nCmdShow);

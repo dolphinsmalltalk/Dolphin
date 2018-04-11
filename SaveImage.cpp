@@ -12,12 +12,6 @@
 
 #if defined(VMDLL)
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <float.h>
-#include <io.h>
-#include <fcntl.h>
 #include "binstream.h"
 #include "zfbinstream.h"
 #include "objmem.h"
@@ -31,6 +25,8 @@
 #include "STCharacter.h"
 #include "STClassDesc.h"
 
+#include "Utf16StringBuf.h"
+
 #ifdef NDEBUG
 	#pragma optimize("s", on)
 	#pragma auto_inline(off)
@@ -43,7 +39,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // Image Save Methods
 
-int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects)
+int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects)
 {
 	// Answer:
 	//	NULL = success
@@ -69,31 +65,31 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 	int nRet = 3;
 
-	const char* saveName;
-	char bak[_MAX_PATH];
+	const wchar_t* saveName;
+	wchar_t bak[_MAX_PATH];
 	if (bBackup)
 	{
-		char folder[_MAX_PATH];
-		char fname[_MAX_FNAME];
+		wchar_t folder[_MAX_PATH];
+		wchar_t fname[_MAX_FNAME];
 		{
-			char dir[_MAX_DIR];
-			char drive[_MAX_DRIVE];
-			_splitpath_s(szFileName, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, NULL, 0);
-			_makepath(folder, drive, dir, NULL, NULL);
-			_makepath(bak, drive, dir, fname, "bak");
+			wchar_t dir[_MAX_DIR];
+			wchar_t drive[_MAX_DRIVE];
+			_wsplitpath_s(szFileName, drive, _MAX_DRIVE, dir, _MAX_DIR, fname, _MAX_FNAME, NULL, 0);
+			_wmakepath(folder, drive, dir, NULL, NULL);
+			_wmakepath(bak, drive, dir, fname, L"bak");
 		}
-		saveName = _tempnam(folder, fname);
+		saveName = _wtempnam(folder, fname);
 	}
 	else
 		saveName = szFileName;
 
 	int fd;
-	int err = ::_sopen_s(&fd, saveName, _O_WRONLY|_O_BINARY|_O_CREAT|_O_TRUNC|_O_SEQUENTIAL, _SH_DENYRW, _S_IWRITE|_S_IREAD);
+	int err = ::_wsopen_s(&fd, (const wchar_t*)saveName, _O_WRONLY|_O_BINARY|_O_CREAT|_O_TRUNC|_O_SEQUENTIAL, _SH_DENYRW, _S_IWRITE|_S_IREAD);
 	if (err != 0)
 	{
 		char buf[256];
 		strerror_s(buf, errno);
-		TRACE("Failed to open image file for save %d:'%s'\n", errno, buf);
+		TRACE(L"Failed to open image file for save %d:'%s'\n", errno, buf);
 		return 2;
 	}
 
@@ -163,7 +159,7 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 
 	#ifdef PROFILE_IMAGELOADSAVE
 		DWORD msToRun = GetTickCount() - dwStartTicks;
-		TRACESTREAM<< L" done (" << (bSaved ? "Succeeded" : "Failed")<< L"), binstreams time " << long(msToRun)<< L"mS" << endl;
+		TRACESTREAM << L" done (" << (bSaved ? "Succeeded" : "Failed")<< L"), binstreams time " << long(msToRun)<< L"mS" << endl;
 	#endif
 	}
 
@@ -171,13 +167,13 @@ int __stdcall ObjectMemory::SaveImageFile(const char* szFileName, bool bBackup, 
 	{
 		if (bSaved)
 		{
-			remove(bak);
-			rename(szFileName, bak);
-			nRet = rename(saveName, szFileName);
+			_wremove(bak);
+			_wrename(szFileName, bak);
+			nRet = _wrename(saveName, szFileName);
 		}
 		else
 		{
-			remove(saveName);
+			_wremove(saveName);
 		}
 	}
 	else

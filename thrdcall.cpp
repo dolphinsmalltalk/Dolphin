@@ -22,8 +22,8 @@
 
 #include "thrdcall.h"
 
-void __cdecl DebugCrashDump(LPCTSTR szFormat, ...);
-void __cdecl DebugDump(LPCSTR szMsg);
+void __cdecl DebugCrashDump(LPCWSTR szFormat, ...);
+void __cdecl DebugDump(LPCWSTR szMsg);
 
 // Disable warning about use of SEH in conjunction with objects with destructors
 #pragma warning (disable : 4509)
@@ -113,9 +113,9 @@ void OverlappedCall::Initialize()
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
 	CRegKey rkOverlap;
-	if (OpenDolphinKey(rkOverlap, "Overlapped")==ERROR_SUCCESS)
+	if (OpenDolphinKey(rkOverlap, L"Overlapped")==ERROR_SUCCESS)
 	{
-		rkOverlap.QueryDWORDValue("TerminateTimeout", s_dwTerminateTimeout);
+		rkOverlap.QueryDWORDValue(L"TerminateTimeout", s_dwTerminateTimeout);
 		s_dwTerminateTimeout = max(s_dwTerminateTimeout, 100);
 	}
 	else
@@ -621,7 +621,7 @@ void OverlappedCall::OnActivateProcess()
 		// And wait for it to finish (non-alertable since we don't want other completions to interfere)
 		DWORD dwRet = ::WaitForSingleObject(m_hEvtCompleted, INFINITE);
 		if (dwRet != WAIT_OBJECT_0)
-			trace("%#x: OverlappedCall(%#x) completion wait terminated abnormally with %#x\n", GetCurrentThreadId(), this, dwRet);
+			trace(L"%#x: OverlappedCall(%#x) completion wait terminated abnormally with %#x\n", GetCurrentThreadId(), this, dwRet);
 	}
 }
 
@@ -934,7 +934,7 @@ void OverlappedCall::OnCallReturned()
 	if (GetProcess()->Thread() != this || m_state != Running)
 	{
 		HARDASSERT(FALSE);
-		::DebugCrashDump("Terminated overlapped call got though to completion (%#x)\nPlease contact Object Arts.", GetProcess()->Thread());
+		::DebugCrashDump(L"Terminated overlapped call got though to completion (%#x)\nPlease contact Object Arts.", GetProcess()->Thread());
 		RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
 	}
 
@@ -955,7 +955,7 @@ void OverlappedCall::OnCallReturned()
 
 	if (m_interpContext.m_stackPointer != activeContext.m_stackPointer)
 	{
-		DebugCrashDump("Overlapped call stack modified before could complete!");
+		DebugCrashDump(L"Overlapped call stack modified before could complete!");
 		DEBUGBREAK();
 	}
 

@@ -3115,17 +3115,19 @@ notSmallInteger:
 	mov		eax, [eax].m_size
 	ASSUME	eax:NOTHING
 
-	test	[ecx].m_flags, MASK m_pointer			; ote->isPointers?
-	jz		isBytes									; Byte objects cannot have inst vars, so can skip next bit
-
-	and		eax, 7fffffffh							; Mask out sign bit of size (used to mark const objects)
-	
-	;; Calculate the length of the indexed part of a pointer object
 	mov		edx, [ecx].m_oteClass					; Get class Oop	from Object into edx
 	ASSUME	edx:PTR OTE								; edx now points at class OTE
 
+	and		eax, 7fffffffh							; Mask out sign bit of size (used to mark const objects)
+
+	test	[ecx].m_flags, MASK m_pointer			; ote->isPointers?
+
 	mov		edx, [edx].m_location					; Load address of class object into edx
 	ASSUME	edx:PTR Behavior						; edx now points at class object
+
+	jz		isBytes									; Byte objects cannot have inst vars, so can skip next bit
+
+	;; Calculate the length of the indexed part of a pointer object
 
 	mov		edx, [edx].m_instanceSpec				; Load InstanceSpecification into edx
 	ASSUME	edx:NOTHING
@@ -3141,27 +3143,25 @@ notSmallInteger:
 
 isBytes:
 	ASSUME	ecx:PTR OTE								; ecx is the receiver OTE
+	ASSUME  edx:PTR Behavior						; edx points to the receiver's class object
 	ASSUME	eax:DWORD								; eax is the size in bytes
 
 	test	[ecx].m_flags, MASK m_weakOrZ			; Is a string?
-	jz		bytes
+	jz		@F
 
 	; Its a string, temporarily use the encoding to determine the element size (in future revised InstanceSpec should be used)
 
-	mov     ecx, [ecx].m_oteClass
-	mov     ecx, [ecx].m_location
-	ASSUME  ecx:PTR Behavior
-	movzx   edx, [ecx].m_instanceSpec.m_extraSpec
+	movzx   edx, [edx].m_instanceSpec.m_extraSpec
 	dec     edx  
 	sub     edx,1  
 	je      words
 
 	sub     edx,1  
-	jne     bytes
+	jne     @F
 
 	shr     eax, 2  
 
-bytes:
+@@:
 	add		eax, eax
 words:
 	or		eax, 1
@@ -3228,31 +3228,31 @@ pointerAt:
 
 	DispatchNext
 
-byteObjectAt:
-	ASSUME	eax:PTR OTE							; EAX is Oop of receiver
-	ASSUME	edx:DWORD							; EDX is the index
-	ASSUME	ecx:PTR OTE							; ECX is the Oop of the receiver's class
-
-	mov		ecx, [eax].m_size
-	ASSUME	ecx:DWORD
-	and		ecx, 7fffffffh						; Ignore sign bit (used to mark const objects)
-	
-	cmp		edx, ecx							; Bounds check
-	mov		ecx, [eax].m_location				; Load object address into ecx on expection it will be in bounds
-	ASSUME	ecx:PTR ByteArray					; EAX points at receiver
-	ja		indexTooLarge						; Index out of bounds (>= size)
-	
-	movzx	eax, BYTE PTR[ecx+edx-1]			; Load required byte, zero extending
-	ASSUME	eax:NOTHING
-
-	MPrefetch
-
-	lea		eax, [eax+eax+1]					; Convert to SmallInteger
-	mov		[_SP-OOPSIZE], eax					; Overwrite receiver with result. No need to count as SmallInteger
-
-	sub		_SP, OOPSIZE									; Pop arg off stack
-
-	DispatchNext
+;byteObjectAt:
+;	ASSUME	eax:PTR OTE							; EAX is Oop of receiver
+;	ASSUME	edx:DWORD							; EDX is the index
+;	ASSUME	ecx:PTR OTE							; ECX is the Oop of the receiver's class
+;
+;	mov		ecx, [eax].m_size
+;	ASSUME	ecx:DWORD
+;	and		ecx, 7fffffffh						; Ignore sign bit (used to mark const objects)
+;	
+;	cmp		edx, ecx							; Bounds check
+;	mov		ecx, [eax].m_location				; Load object address into ecx on expection it will be in bounds
+;	ASSUME	ecx:PTR ByteArray					; EAX points at receiver
+;	ja		indexTooLarge						; Index out of bounds (>= size)
+;	
+;	movzx	eax, BYTE PTR[ecx+edx-1]			; Load required byte, zero extending
+;	ASSUME	eax:NOTHING
+;
+;	MPrefetch
+;
+;	lea		eax, [eax+eax+1]					; Convert to SmallInteger
+;	mov		[_SP-OOPSIZE], eax					; Overwrite receiver with result. No need to count as SmallInteger
+;
+;	sub		_SP, OOPSIZE						; Pop arg off stack
+;
+;	DispatchNext
 
 sendMessageToSmallInteger:						; Sent #basicAt: to a SmallInteger, probably an error
 	mov		ecx, [Pointers.ClassSmallInteger]
@@ -3262,6 +3262,7 @@ indexTooLarge:
 	ASSUME	eax:PTR OTE
 	mov		ecx, [eax].m_oteClass
 
+byteObjectAt:
 sendMessageToClass:
 	ASSUME	eax:Oop										; EAX is receiver, although we don't need it here
 	ASSUME	ecx:PTR OTE									; ECX contains class
@@ -3342,39 +3343,39 @@ BEGINBYTECODE shortSpecialSendBasicAtPut
 	DispatchNext
 
 byteObjectAtPut:
-	ASSUME	ecx:PTR OTE						; ECX is receiver Oop (known byte object)
-	ASSUME	edx:DWORD						; EDX is index
-
-	mov		eax, [ecx].m_location			; Load object address into eax
-	ASSUME	eax:PTR ByteArray				; EAX is pointer to byte object
-	
-	cmp		edx, [ecx].m_size				; Compare offset+HEADERSIZE with object size
-	jg		sendMessage						; Index out of bounds (> size)
-
-	mov		ecx, [_SP]						; Load value to store from stack top
-	
-	add		eax, edx						; Calculate address of byte to write
-	ASSUME	eax:PTR BYTE
-	ASSUME	edx:NOTHING						; EDX is now free
-
-	mov		edx, ecx						; Save value to return later
-	ASSUME	edx:DWORD
-	sar		ecx, 1							; Convert to real integer value
-	jnc		sendMessage						; Not a SmallInteger
-
-	cmp		ecx, 0FFh
-	ja		sendMessage						; Used unsigned comparison for 0<=ecx<=255
-
-	mov		[eax-1], cl						; Store byte into receiver
-	ASSUME	ecx:NOTHING
-
-	MPrefetch
-
-	mov		[_SP-OOPSIZE*2], edx			; Overwrite receiver with value for return
-	sub		_SP, OOPSIZE*2					; Pop Args
-
-	DispatchNext
-
+;	ASSUME	ecx:PTR OTE						; ECX is receiver Oop (known byte object)
+;	ASSUME	edx:DWORD						; EDX is index
+;
+;	mov		eax, [ecx].m_location			; Load object address into eax
+;	ASSUME	eax:PTR ByteArray				; EAX is pointer to byte object
+;	
+;	cmp		edx, [ecx].m_size				; Compare offset+HEADERSIZE with object size
+;	jg		sendMessage						; Index out of bounds (> size)
+;
+;	mov		ecx, [_SP]						; Load value to store from stack top
+;	
+;	add		eax, edx						; Calculate address of byte to write
+;	ASSUME	eax:PTR BYTE
+;	ASSUME	edx:NOTHING						; EDX is now free
+;
+;	mov		edx, ecx						; Save value to return later
+;	ASSUME	edx:DWORD
+;	sar		ecx, 1							; Convert to real integer value
+;	jnc		sendMessage						; Not a SmallInteger
+;
+;	cmp		ecx, 0FFh
+;	ja		sendMessage						; Used unsigned comparison for 0<=ecx<=255
+;
+;	mov		[eax-1], cl						; Store byte into receiver
+;	ASSUME	ecx:NOTHING
+;
+;	MPrefetch
+;
+;	mov		[_SP-OOPSIZE*2], edx			; Overwrite receiver with value for return
+;	sub		_SP, OOPSIZE*2					; Pop Args
+;
+;	DispatchNext
+;
 sendMessage:
 	; This is an unlikely error case (non-indexable receiver, out of bounds), so we don't care about perf here
 	SendSelectorTwoArgs <Pointers.specialSelectors[11*OOPSIZE]>			; #basicAt:put:

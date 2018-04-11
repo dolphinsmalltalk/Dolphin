@@ -89,7 +89,7 @@ inline void Interpreter::subclassWindow(OTE* window, HWND hWnd)
 	}
 	__except (callbackExceptionFilter(GetExceptionInformation()))
 	{
-		trace("WARNING: Unwinding Interpreter::subclassWindow(%#x, %#x)\n", window, hWnd);
+		trace(L"WARNING: Unwinding Interpreter::subclassWindow(%#x, %#x)\n", window, hWnd);
 	}
 }
 
@@ -134,13 +134,13 @@ LRESULT CALLBACK Interpreter::DolphinDlgProc(HWND /*hWnd*/, UINT /*uMsg*/, WPARA
 	return FALSE;
 }
 
-int __stdcall DolphinMessage(UINT flags, const char* msg)
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 {
-	char szCaption[512];
+	wchar_t szCaption[512];
 	HMODULE hExe = GetModuleHandle(NULL);
-	if (!::LoadString(hExe, IDS_APP_TITLE, szCaption, sizeof(szCaption)-1))
-		GetModuleFileName(hExe, szCaption, sizeof(szCaption));
-	return  ::MessageBox(NULL, msg, szCaption, flags|MB_TASKMODAL);
+	if (!::LoadStringW(hExe, IDS_APP_TITLE, szCaption, sizeof(szCaption)-1))
+		::GetModuleFileNameW(hExe, szCaption, sizeof(szCaption));
+	return  ::MessageBoxW(NULL, msg, szCaption, flags|MB_TASKMODAL);
 }
 
 #pragma code_seg(INIT_SEG)
@@ -164,8 +164,8 @@ void Interpreter::GuiShutdown()
 	hHookOldCbtFilter = NULL;
 }
 
-void __stdcall DolphinFatalExit(int /*exitCode*/, const char* msg)
+void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
 {
-	FatalAppExit(0, msg);
+	FatalAppExitW(0, msg);
 }
 

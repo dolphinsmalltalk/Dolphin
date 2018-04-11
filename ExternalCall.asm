@@ -22,10 +22,10 @@ NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@VO
 extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
-NewByteStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VByteString@ST@@@@D@ST@@SIPAV?$TOTE@VByteString@ST@@@@PBDI@Z
-extern NewByteStringWithLen:near32
-NewStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VByteString@ST@@@@D@ST@@SIPAV?$TOTE@VByteString@ST@@@@PB_W@Z
-extern NewStringFromUtf16:near32
+NewAnsiStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VAnsiString@ST@@@@D@ST@@SIPAV?$TOTE@VAnsiString@ST@@@@PBDI@Z
+extern NewAnsiStringWithLen:near32
+NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VAnsiString@ST@@@@D@ST@@SIPAV?$TOTE@VAnsiString@ST@@@@PB_W@Z
+extern NewAnsiStringFromUtf16:near32
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PB_W@Z
 extern NewUtf16String:near32
 NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
@@ -1123,7 +1123,7 @@ ExtCallArgLPSTR:
 
 @@:
 	mov		ecx, ARG
-	call	NewStringFromUtf16							; Assume its an ANSI API and will not understand Utf8 (which is generally true of byte string APIs on Windows, unfortunately)
+	call	NewAnsiStringFromUtf16						; Assume its an ANSI API and will not understand Utf8 (which is generally true of byte string APIs on Windows, unfortunately)
 	ASSUME	ARG:PTR OTE
 
 	mov		[_SP+OOPSIZE], eax
@@ -1924,7 +1924,7 @@ extCallRetLPSTR:
 	not		ecx
 	lea		edx, [ecx-1]						; Get length into edx
 	pop		ecx									; pop RESULT into ECX
-	call	NewByteStringWithLen
+	call	NewAnsiStringWithLen
 	AnswerObjectResult
 
 extCallRetLPPVOID:

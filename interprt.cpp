@@ -41,7 +41,7 @@ BOOL Interpreter::executionTrace = 0;
 //extern unsigned contextDepth;
 static unsigned nTotalBlocksAllocated = 0;
 #endif
-#define VMWNDCLASS "_VMWnd"
+#define VMWNDCLASS L"_VMWnd"
 
 InterpreterRegisters16 Interpreter::m_registers = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -106,7 +106,7 @@ DWORD Interpreter::m_dwQueueStatusMask;
 #endif
 
 #pragma code_seg(INIT_SEG)
-HRESULT Interpreter::initialize(const char* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
+HRESULT Interpreter::initialize(const wchar_t* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 	HRESULT hr = initializeBeforeLoad();
 	if (FAILED(hr))
@@ -142,7 +142,7 @@ HRESULT Interpreter::initializeBeforeLoad()
 	HANDLE hProc = GetCurrentProcess();
 	VERIFY(::DuplicateHandle(hProc, GetCurrentThread(), hProc, &m_hThread, 0, FALSE, DUPLICATE_SAME_ACCESS));
 
-	WNDCLASS wndClass;
+	WNDCLASSW wndClass;
 	wndClass.style = 0;
 	wndClass.lpfnWndProc = VMWndProc;
 	wndClass.cbClsExtra = 0;
@@ -155,10 +155,10 @@ HRESULT Interpreter::initializeBeforeLoad()
 	wndClass.lpszClassName = VMWNDCLASS;
 	m_atomVMWndClass = RegisterClass(&wndClass);
 
-	m_hWndVM = CreateWindow(VMWNDCLASS, "", WS_CHILD, 0, 0, 0, 0, HWND_MESSAGE, NULL, wndClass.hInstance, NULL);
+	m_hWndVM = CreateWindowW(VMWNDCLASS, L"", WS_CHILD, 0, 0, 0, 0, HWND_MESSAGE, NULL, wndClass.hInstance, NULL);
 	if (m_hWndVM == NULL)	// early OSs did not support message-only windows
 	{
-		m_hWndVM = CreateWindow(VMWNDCLASS, "", 0, 0, 0, 0, 0, NULL, NULL, wndClass.hInstance, NULL);
+		m_hWndVM = CreateWindowW(VMWNDCLASS, L"", 0, 0, 0, 0, 0, NULL, NULL, wndClass.hInstance, NULL);
 	}
 	if (m_hWndVM == NULL)
 	{
@@ -236,20 +236,41 @@ HRESULT Interpreter::initializeCharMaps()
 	for (unsigned i = 0; i < 256; i++)
 		byteCharSet[i] = static_cast<char>(i);
 
-	// Map the ansi code units to unicode code points using the current code page. 
-	if (::MultiByteToWideChar(CP_ACP, 0, byteCharSet, 256, nullptr, 0) > 256)
+	CPINFOEX cpInfo;
+	::GetCPInfoExW(::GetACP(), 0, &cpInfo);
+
+	// First check some assumptions about the code page
+	// 1. We expect code page to have a maximum character size of 1.
+	// 2. Empirical evidence is that none of the standard code pages will map any of the ansi code units to more 
+	// than one UTF16 code unit. 
+	// If either assumption is not true, the implementation will not work correctly, so we switch to Windows 1252
+	if (cpInfo.MaxCharSize != 1 || ::MultiByteToWideChar(cpInfo.CodePage, 0, byteCharSet, 256, nullptr, 0) > 256)
 	{
-		// Empirical evidence is that none of the standard code pages will map any of the ansi code units to more 
-		// than one UTF16 code unit. If this assumption is not true, the implementation will not work correctly
-		return ReportError(IDP_UNSUPPORTED_ACP, ::GetACP());
+		trace(IDP_UNSUPPORTED_ACP, m_ansiCodePage);
+		::GetCPInfoExW(1252, 0, &cpInfo);
 	}
 
-	::MultiByteToWideChar(CP_ACP, 0, byteCharSet, 256, m_ansiToUnicodeCharMap, 256);
+	m_ansiCodePage = cpInfo.CodePage;
+	m_ansiReplacementChar = cpInfo.DefaultChar[0];
 
-	// Create the reverse map - it will be very spare, but as it only consumes 64Kb it isn't worth using a hash table
+	::GetCPInfoExW(CP_UTF8, 0, &cpInfo);
+	m_unicodeReplacementChar = cpInfo.UnicodeDefaultChar;
+
+	// Map the ansi code units to unicode code points using the current code page. 
+	::MultiByteToWideChar(m_ansiCodePage, MB_PRECOMPOSED, byteCharSet, 256, m_ansiToUnicodeCharMap, 256);
+
+	// Create the reverse map - it will be very sparse, but as it only consumes 64Kb it isn't worth using a hash table
 	memset(m_unicodeToAnsiCharMap, 0, sizeof(m_unicodeToAnsiCharMap));
-	for (unsigned i = 0; i < 256; i++)
-		m_unicodeToAnsiCharMap[m_ansiToUnicodeCharMap[i]] = static_cast<char>(i);
+	WCHAR wideChars[65536];
+	unsigned i = 0;
+	for (; i < 0xd800; i++)
+		wideChars[i] = static_cast<WCHAR>(i);
+	for (; i <= 0xdfff; i++)
+		wideChars[i] = 0;
+	for (; i <= 0xffff; i++)
+		wideChars[i] = static_cast<WCHAR>(i);
+	
+	VERIFY(::WideCharToMultiByte(m_ansiCodePage, WC_NO_BEST_FIT_CHARS, wideChars, 65536, m_unicodeToAnsiCharMap, 65536, "\0", nullptr) == 65536);
 
 	return S_OK;
 }
@@ -388,7 +409,7 @@ void Interpreter::interpret()
 			? interpreterExceptionFilter(GetExceptionInformation())
 			: EXCEPTION_CONTINUE_SEARCH)
 		{
-			TRACE("interpret: Looping after exception %#x\n\r", dwCode);
+			TRACE(L"interpret: Looping after exception %#x\n\r", dwCode);
 		}
 	}
 	// We don't tend to get here as callback returns go to the enclosing exception handler
@@ -495,7 +516,7 @@ void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS 
 static BOOL WantGPFTrap()
 {
 	CRegKey rk;
-	return OpenDolphinKey(rk, "DisableGPFTrap") != ERROR_SUCCESS;
+	return OpenDolphinKey(rk, L"DisableGPFTrap") != ERROR_SUCCESS;
 }
 
 static BOOL PleaseTrapGPFs()
@@ -697,7 +718,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			}
 			else
 			{
-				TRACE("Stack successfully grown to %u\n\r", pBase->getCurrentAllocation());
+				TRACE(L"Stack successfully grown to %u\n\r", pBase->getCurrentAllocation());
 			}
 
 			// Whether the stack has max'd out or not, we're going to continue executing

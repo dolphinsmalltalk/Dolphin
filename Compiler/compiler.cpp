@@ -42,19 +42,20 @@ void __cdecl DolphinTrace(LPCTSTR format, ...)
 
 extern HMODULE __stdcall GetResLibHandle();
 
-static const char* RTFOPEN = "{";
-static const char* RTFCLOSE = "}";
+static const LPUTF8 VarSelf = (LPUTF8)"self";
+static const LPUTF8 VarSuper = (LPUTF8)"super";
+static const LPUTF8 VarThisContext = (LPUTF8)"thisContext";
 
-const char* s_restrictedSelectors[] =
+LPUTF8 s_restrictedSelectors[] =
 {
-	"==",			// Cannot be overridded or redefined at all
-	"and:", "or:",	// Compiler assumes receiver is a boolean, so can't be overridden/redefined
-	"ifTrue:", "ifFalse:", "ifTrue:ifFalse:", "ifFalse:ifTrue:",	// "ditto"
-	"ifNil:", "ifNotNil:", "ifNil:ifNotNil:", "ifNotNil:ifNil:",
-	"to:do:", "to:by:do:",	// Compiler assumes that the receiver is a number, implementation is effectively fixed
-	"timesRepeat:",			// ditto
-	"basicAt:", "basicAt:put:", "basicSize", "basicClass", "basicNew:",	// Can't be redefined/overridden
-	"yourself",
+	(LPUTF8)"==",			// Cannot be overridded or redefined at all
+	(LPUTF8)"and:", (LPUTF8)"or:",	// Compiler assumes receiver is a boolean, so can't be overridden/redefined
+	(LPUTF8)"ifTrue:", (LPUTF8)"ifFalse:", (LPUTF8)"ifTrue:ifFalse:", (LPUTF8)"ifFalse:ifTrue:",	// "ditto"
+	(LPUTF8)"ifNil:", (LPUTF8)"ifNotNil:", (LPUTF8)"ifNil:ifNotNil:", (LPUTF8)"ifNotNil:ifNil:",
+	(LPUTF8)"to:do:", (LPUTF8)"to:by:do:",	// Compiler assumes that the receiver is a number, implementation is effectively fixed
+	(LPUTF8)"timesRepeat:",			// ditto
+	(LPUTF8)"basicAt:", (LPUTF8)"basicAt:put:", (LPUTF8)"basicSize", (LPUTF8)"basicClass", (LPUTF8)"basicNew:",	// Can't be redefined/overridden
+	(LPUTF8)"yourself",
 
 	// Although these are inlined, this is done only conditionally depending on whether the receiver
 	// is a zero-arg literal block, therefore they can in fact be implemented in other objects than block
@@ -65,17 +66,17 @@ const char* s_restrictedSelectors[] =
 	// "repeat",
 };
 
-#define NumRestrictedSelectors (sizeof(s_restrictedSelectors)/sizeof(char*))
+#define NumRestrictedSelectors (sizeof(s_restrictedSelectors)/sizeof(LPUTF8))
 
 ///////////////////////
 
 
 Compiler::LibCallType Compiler::callTypes[DolphinX::NumCallConventions] = 
 {
-	"stdcall:", DolphinX::ExtCallStdCall,
-		"cdecl:", DolphinX::ExtCallCDecl,
-		"thiscall:", DolphinX::ExtCallThisCall,
-		"fastcall:", DolphinX::ExtCallFastCall
+	(LPUTF8)"stdcall:", DolphinX::ExtCallStdCall,
+	(LPUTF8)"cdecl:", DolphinX::ExtCallCDecl,
+	(LPUTF8)"thiscall:", DolphinX::ExtCallThisCall,
+	(LPUTF8)"fastcall:", DolphinX::ExtCallFastCall
 };
 
 ///////////////////////
@@ -128,14 +129,14 @@ Compiler::~Compiler()
 	}
 }
 
-inline void Compiler::SetFlagsAndText(FLAGS flags, const char* text, int offset)
+inline void Compiler::SetFlagsAndText(FLAGS flags, LPUTF8 text, int offset)
 {
 	m_flags=flags;
 	SetText(text, offset);
 	NextToken();
 }
 	
-void Compiler::PrepareToCompile(FLAGS flags, const char* compiletext, int offset, POTE aClass, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context)
+void Compiler::PrepareToCompile(FLAGS flags, LPUTF8 compiletext, int offset, POTE aClass, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context)
 {
 	// Prepare to compile methods for the given class.
 	// This gets the list of instance variable names for this class
@@ -162,9 +163,9 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	{
 		char szPrompt[256];
 		::LoadString(GetResLibHandle(), IDS_P_NOTACLASS, szPrompt, sizeof(szPrompt)-1);
-		Str actualClassName = recurse ? GetNameOfClass(Oop(m_piVM->FetchClassOf(oopClass)), false) : "invalid object";
-		char buf[512];
-		VERIFY(wsprintf(buf, szPrompt, actualClassName.c_str())>=0);
+		Str actualClassName = recurse ? GetNameOfClass(Oop(m_piVM->FetchClassOf(oopClass)), false) : (LPUTF8)"invalid object";
+		uint8_t buf[512];
+		VERIFY(wsprintf((LPSTR)buf, szPrompt, actualClassName.c_str())>=0);
 		return buf;
 	}
 	else
@@ -175,7 +176,7 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 			STMetaclass* meta = (STMetaclass*)GetObj(oteClass);
 			POTE instClass = meta->instanceClass;
 			Str className = GetNameOfClass(Oop(instClass),false);
-			className += " class";
+			className += (LPUTF8)" class";
 			return className;
 		}
 		else
@@ -187,7 +188,7 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	}
 }
 
-POTE Compiler::CompileExpression(const char* compiletext, Oop compiler, Oop notifier, Oop contextOop, FLAGS flags, unsigned& len, int exprStart)
+POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, FLAGS flags, unsigned& len, int exprStart)
 {
 	POTE classPointer = m_piVM->FetchClassOf(contextOop);
 	PrepareToCompile(flags, compiletext, exprStart, classPointer, compiler, notifier, Nil(), GetVMPointers().ClassCompiledExpression, contextOop);
@@ -204,7 +205,7 @@ POTE Compiler::CompileExpression(const char* compiletext, Oop compiler, Oop noti
 	return oteMethod;
 }
 
-POTE Compiler::CompileForClassHelper(const char* compiletext, Oop compiler, Oop notifier, POTE aClass, FLAGS flags)
+POTE Compiler::CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, FLAGS flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
@@ -230,7 +231,7 @@ POTE Compiler::CompileForClassHelper(const char* compiletext, Oop compiler, Oop 
 	return method;
 }
 
-POTE Compiler::CompileForEvaluationHelper(const char* compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE aWorkspacePool, FLAGS flags)
+POTE Compiler::CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE aWorkspacePool, FLAGS flags)
 {
 	BOOL wasDisabled = m_piVM->DisableAsyncGC(true);
 	POTE method = Nil();
@@ -271,7 +272,7 @@ inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 	{
 		const POTE stringPointer = pointers.specialSelectors[i];
 		_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassSymbol));
-		const char* psz = (const char*)FetchBytesOf(stringPointer);
+		LPUTF8 psz = (LPUTF8)FetchBytesOf(stringPointer);
 		if (name == psz)
 		{
 			return i + ShortSpecialSend;
@@ -284,7 +285,7 @@ inline int Compiler::FindNameAsSpecialMessage(const Str& name) const
 		if (stringPointer != pointers.Nil)
 		{
 			_ASSERTE(m_piVM->IsKindOf(Oop(stringPointer), pointers.ClassSymbol));
-			const char* psz = (const char*)FetchBytesOf(stringPointer);
+			LPUTF8 psz = (LPUTF8)FetchBytesOf(stringPointer);
 			if (name == psz)
 			{
 				return i + FirstExSpecialSend;
@@ -445,7 +446,7 @@ TempVarDecl* Compiler::AddArgument(const Str& name, const TEXTRANGE& range)
 }
 
 // Rename the temporary at location "temporary" to the name "newName"
-void Compiler::RenameTemporary(int temporary, const char* newName, const TEXTRANGE& range)
+void Compiler::RenameTemporary(int temporary, LPUTF8 newName, const TEXTRANGE& range)
 {
 	CheckTemporaryName(newName, range, false);
 	m_pCurrentScope->RenameTemporary(temporary, newName, range);
@@ -453,10 +454,9 @@ void Compiler::RenameTemporary(int temporary, const char* newName, const TEXTRAN
 
 void Compiler::CheckTemporaryName(const Str& name, const TEXTRANGE& range, bool isArg)
 {
-	if (strspn(name.c_str(), GENERATEDTEMPSTART) != 0)
+	if (strspn((LPCSTR)name.c_str(), GENERATEDTEMPSTART) != 0)
 		return;
 
-	char* variableType = NULL;
 	if (IsPseudoVariable(name))
 	{
 		CompileError(range, CErrRedefiningPseudoVar);
@@ -658,12 +658,12 @@ void Compiler::GenPushSelf()
 
 void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 {
-	if (strName == "self")
+	if (strName == VarSelf)
 	{
 		GenPushSelf();
 		m_sendType = SendSelf;
 	}
-	else if (strName == "super" &&	// Cannot supersend from class with no superclass
+	else if (strName == VarSuper &&	// Cannot supersend from class with no superclass
 		((STBehavior*)GetObj(m_class))->superclass != Nil())
 	{
 		// If name is "super" then we must set a flag to tell our expressions
@@ -672,7 +672,7 @@ void Compiler::GenPushVariable(const Str& strName, const TEXTRANGE& range)
 		GenPushSelf();
 		m_sendType = SendSuper;
 	}
-	else if (strName == "thisContext")
+	else if (strName == VarThisContext)
 		GenInstruction(PushActiveFrame);
 	else
 	{
@@ -825,13 +825,13 @@ Oop Compiler::IsPushLiteral(int pos) const
 
 // N.B. Return value has an artificially increased ref. count.
 // Remember this if storing as literal or whatever
-Oop Compiler::NewNumber(const char* textvalue) const// throws SE_VMCALLBACKUNWIND
+Oop Compiler::NewNumber(LPUTF8 textvalue) const// throws SE_VMCALLBACKUNWIND
 {
 	return m_piVM->Perform((Oop)NewString(textvalue), GetVMPointers().asNumberSymbol);
 }
 
 
-Oop Compiler::GenNumber(const char* textvalue, const TEXTRANGE& range)
+Oop Compiler::GenNumber(LPUTF8 textvalue, const TEXTRANGE& range)
 {
 	// Generates code to push a large integer constant.
 	// A redundant ref. count operation occurs here 
@@ -897,7 +897,7 @@ int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 	// Returns the index to the object in the literal frame.
 	//
 	POTE classPointer = m_piVM->FetchClassOf(Oop(stringPointer));
-	const char* szValue = (const char*)FetchBytesOf(stringPointer);
+	LPUTF8 szValue = (LPUTF8)FetchBytesOf(stringPointer);
 
 	for (int i=GetLiteralCount()-1;i>=0;i--)
 	{
@@ -905,7 +905,7 @@ int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 		_ASSERTE(literalPointer);
 
 		if ((m_piVM->FetchClassOf(literalPointer) == classPointer) &&
-			strcmp((const char*)FetchBytesOf(POTE(literalPointer)), szValue) == 0)
+			strcmp((LPCSTR)FetchBytesOf(POTE(literalPointer)), (LPCSTR)szValue) == 0)
 		{
 			return i;
 		}
@@ -1192,7 +1192,7 @@ int Compiler::GenStoreInstVar(BYTE index)
 
 bool Compiler::IsPseudoVariable(const Str& name) const
 {
-	return name == "self" || name == "super" || name == "thisContext";
+	return name == VarSelf || name == VarSuper || name == VarThisContext;
 }
 
 int Compiler::GenStore(const Str& name, const TEXTRANGE& range, int assignmentEnd)
@@ -1319,7 +1319,7 @@ POTE Compiler::ParseEvalExpression(TokenType closingToken)
 	PushNewScope(0);
 
 	// In either case we are always compiling "doit"
-	m_selector="doIt";
+	m_selector= (LPUTF8)"doIt";
 
 	ParseTemporaries();
 	
@@ -1610,8 +1610,8 @@ void Compiler::ParseExpression()
 
 void Compiler::ParseBinaryTerm(int textPosition)
 {
-	const char* szTok = ThisTokenText();
-	if (strlen(szTok) != 1)
+	LPUTF8 szTok = ThisTokenText();
+	if (strlen((LPCSTR)szTok) != 1)
 	{
 		CompileError(CErrInvalExprStart);
 		return;
@@ -1658,9 +1658,9 @@ void Compiler::ParseBraceArray(int textPosition)
 
 	if (m_ok)
 	{
-		GenPushStaticVariable("Smalltalk.Array", TEXTRANGE(textPosition, textPosition));
+		GenPushStaticVariable((LPUTF8)"Smalltalk.Array", TEXTRANGE(textPosition, textPosition));
 		GenInteger(count, ThisTokenRange());
-		GenMessage("newFromStack:", 1, textPosition);
+		GenMessage((LPUTF8)"newFromStack:", 1, textPosition);
 	}
 
 	if (ThisToken() == CloseBrace)
@@ -1741,7 +1741,7 @@ void Compiler::ParseTerm(int textPosition)
 
 	case StringConst:
 		{
-			const char* szLiteral = ThisTokenText();
+			LPUTF8 szLiteral = ThisTokenText();
 			POTE oteString = *szLiteral
 				? NewString(szLiteral)
 				: GetVMPointers().EmptyString;
@@ -1853,53 +1853,53 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 	// There are some special cases to deal with optimized
 	// blocks for conditions and loops 
 	//
-	if (strPattern == "whileTrue:")
+	if (strPattern == (LPUTF8)"whileTrue:")
 	{
 		specialCase = ParseWhileLoopBlock(true, exprMark, range, textPosition);
 	}
-	else if (strPattern == "whileFalse:")
+	else if (strPattern == (LPUTF8)"whileFalse:")
 	{
 		specialCase = ParseWhileLoopBlock(false, exprMark, range, textPosition);
 	}
-	else if (strPattern == "ifTrue:")
+	else if (strPattern == (LPUTF8)"ifTrue:")
 	{
 		if (ParseIfTrue(range))
 		{
 			specialCase=true;
 		}
 	}
-	else if (strPattern == "ifFalse:")
+	else if (strPattern == (LPUTF8)"ifFalse:")
 	{
 		if (ParseIfFalse(range))
 		{
 			specialCase=true;
 		}
 	}
-	else if (strPattern == "and:")
+	else if (strPattern == (LPUTF8)"and:")
 	{
 		if (ParseAndCondition(range))
 			specialCase=true;
 	}
-	else if (strPattern == "or:")
+	else if (strPattern == (LPUTF8)"or:")
 	{
 		if (ParseOrCondition(range))
 			specialCase=true;
 	}
-	else if (strPattern == "ifNil:")
+	else if (strPattern == (LPUTF8)"ifNil:")
 	{
 		if (ParseIfNil(range, textPosition))
 		{
 			specialCase=true;
 		}
 	}
-	else if (strPattern == "ifNotNil:")
+	else if (strPattern == (LPUTF8)"ifNotNil:")
 	{
 		if (ParseIfNotNil(range, textPosition))
 		{
 			specialCase=true;
 		}
 	}
-	else if (strPattern == "timesRepeat:")
+	else if (strPattern == (LPUTF8)"timesRepeat:")
 	{
 		if (ParseTimesRepeatLoop(range))
 		{
@@ -1920,11 +1920,11 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 			m_sendType=SendOther;
 			
 			// to:[by:]do: interface
-			if (strPattern == "to:")
+			if (strPattern == (LPUTF8)"to:")
 				toPointer = m_codePointer;
-			else if (strPattern == "to:by:")
+			else if (strPattern == (LPUTF8)"to:by:")
 				byPointer = m_codePointer;
-			else if (strPattern == "to:do:")
+			else if (strPattern == (LPUTF8)"to:do:")
 			{
 				if (ParseToDoBlock(textPosition, toPointer))
 				{
@@ -1933,7 +1933,7 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 					break;
 				}
 			}
-			else if (strPattern == "to:by:do:")
+			else if (strPattern == (LPUTF8)"to:by:do:")
 			{
 				if (ParseToByDoBlock(textPosition, toPointer, byPointer))
 				{
@@ -1972,7 +1972,7 @@ void Compiler::MaybePatchNegativeNumber()
 {
 	if (ThisTokenIsNumber() && ThisTokenText()[0] == '-')
 	{
-		StepBack(strlen(ThisTokenText())-1);
+		StepBack(strlen((LPCSTR)ThisTokenText())-1);
 		SetTokenType(Binary);
 		_ASSERTE(ThisTokenIsBinary('-'));
 	}
@@ -1985,7 +1985,7 @@ int Compiler::ParseBinaryContinuation(int exprMark, int textPosition)
 	while (m_ok && (ThisToken()==Binary)) 
 	{
 		continuationPointer = m_codePointer;
-		char ch;
+		uint8_t ch;
 		while (isAnsiBinaryChar((ch = PeekAtChar())))
 		{
 			if (ch == '-' && isdigit(PeekAtChar(1)))
@@ -2041,22 +2041,22 @@ int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
 
 		Str strToken = ThisTokenText();
 		// Check for some optimizations
-		if (strToken == "whileTrue")
+		if (strToken == (LPUTF8)"whileTrue")
 		{
 			if (ParseWhileLoop(true, exprMark))
 				isSpecialCase=true;
 		}
-		else if (strToken == "whileFalse") 
+		else if (strToken == (LPUTF8)"whileFalse")
 		{
 			if (ParseWhileLoop(false, exprMark))
 				isSpecialCase=true;
 		}
-		else if (strToken == "repeat")
+		else if (strToken == (LPUTF8)"repeat")
 		{
 			if (ParseRepeatLoop(exprMark))
 				isSpecialCase=true;
 		}
-		else if (strToken == "yourself" && !(m_flags & SendYourself))
+		else if (strToken == (LPUTF8)"yourself" && !(m_flags & SendYourself))
 		{
 			AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
 			// We don't send yourself, since it is a Nop
@@ -2082,7 +2082,7 @@ void Compiler::ParsePrimitive()
 	Str strToken = ThisTokenText();
 	if (next == NameColon)
 	{
-		if (strToken == "primitive:")
+		if (strToken == (LPUTF8)"primitive:")
 		{
 			if (NextToken() != SmallIntegerConst)
 				CompileError(CErrExpectPrimIdx);
@@ -2116,7 +2116,7 @@ void Compiler::ParsePrimitive()
 	{
 		if (next == NameConst)
 		{
-			if (strToken == "virtual")
+			if (strToken == (LPUTF8)"virtual")
 			{
 				if (NextToken() == NameColon)
 				{
@@ -2128,7 +2128,7 @@ void Compiler::ParsePrimitive()
 					}
 				}
 			}
-			else if (strToken == "overlap")
+			else if (strToken == (LPUTF8)"overlap")
 			{
 				if (NextToken() == NameColon)
 				{
@@ -2221,7 +2221,7 @@ void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpecs decl)
 
 		// Because VARIANT is not in the base image, cannot be used as a return type
 		// until ActiveX Automation Package has been loaded
-		POTE structClass = FindClass("VARIANT");
+		POTE structClass = GetVMPointers().ClassVARIANT;
 		if (structClass == Nil())
 		{
 			CompileError(retTypeRange, CErrUndefinedClass);
@@ -2255,7 +2255,7 @@ void Compiler::ParseVirtualCall(DolphinX::ExtCallDeclSpecs decl)
 	
 		if (m_ok)
 		{
-			DolphinX::ExternalMethodDescriptor& argsEtc = buildDescriptorLiteral(args, argcount, decl, "");
+			DolphinX::ExternalMethodDescriptor& argsEtc = buildDescriptorLiteral(args, argcount, decl, (LPUTF8)"");
 			argsEtc.m_proc = PROC((vfnIndex-1)*sizeof(PROC));
 		}
 	}
@@ -2290,7 +2290,7 @@ void Compiler::mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRAN
 	}
 }
 
-DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescriptor types[], int argcount, DolphinX::ExtCallDeclSpecs decl, const char* szProcName)
+DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescriptor types[], int argcount, DolphinX::ExtCallDeclSpecs decl, LPUTF8 szProcName)
 {
 	_ASSERTE(szProcName);
 	_ASSERTE(argcount >= 0 && argcount < 256);
@@ -2303,7 +2303,7 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 		}
 	}
 	
-	unsigned procNameSize = strlen(szProcName)+1;
+	unsigned procNameSize = strlen((LPCSTR)szProcName)+1;
 	unsigned size = sizeof(DolphinX::ExternalMethodDescriptor) + argsLen + procNameSize;
 	int index=AddToFrameUnconditional(Oop(m_piVM->NewByteArray(size)), LastTokenRange());
 	
@@ -2342,7 +2342,7 @@ DolphinX::ExternalMethodDescriptor& Compiler::buildDescriptorLiteral(TypeDescrip
 	argsEtc.m_descriptor.m_argsLen = argsLen;
 	
 	// Shove the procName (store ordinal as string too) on the end
-	strcpy_s((char*)argsEtc.m_descriptor.m_args+argsLen, procNameSize, szProcName);
+	strcpy_s((char*)argsEtc.m_descriptor.m_args+argsLen, procNameSize, (LPCSTR)szProcName);
 	return argsEtc;
 }
 
@@ -2373,7 +2373,7 @@ void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpecs decl, int callPrim)
 
 		// Because VARIANT is not in the base image, cannot be used as a return type
 		// until ActiveX Automation Package has been loaded
-		POTE structClass = FindClass("VARIANT");
+		POTE structClass = GetVMPointers().ClassVARIANT;
 		if (structClass == Nil())
 		{
 			CompileError(retTypeRange, CErrUndefinedClass);
@@ -2517,64 +2517,64 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 			// N.B. THIS SHOULD MATCH THE DolphinX::ExtCallArgTypes ENUM...
 			struct ArgTypeDefn 
 			{
-				LPCSTR						m_szName;
+				LPUTF8						m_szName;
 				DolphinX::ExtCallArgTypes	m_type;
-				LPCSTR						m_szIndirectClass;
+				LPUTF8						m_szIndirectClass;
 			};
 			
 			static ArgTypeDefn argTypes[] =	{
-				{ "sdword", DolphinX::ExtCallArgSDWORD, "SDWORD" },
-				{ "dword", DolphinX::ExtCallArgDWORD, "DWORD" },
-				{ "intptr", DolphinX::ExtCallArgINTPTR, "INT_PTR" },
-				{ "uintptr", DolphinX::ExtCallArgUINTPTR, "UINT_PTR" },
-				{ "lpvoid", DolphinX::ExtCallArgLPVOID, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "handle", DolphinX::ExtCallArgHANDLE, "DWORD" },
-				{ "lppvoid", DolphinX::ExtCallArgLPPVOID, NULL },
-				{ "lpstr", DolphinX::ExtCallArgLPSTR, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "bool", DolphinX::ExtCallArgBOOL, "DWORD" },
-				{ "void", DolphinX::ExtCallArgVOID, LPCSTR(DolphinX::ExtCallArgLPVOID)},
-				{ "double", DolphinX::ExtCallArgDOUBLE, "DOUBLE" },
-				{ "float", DolphinX::ExtCallArgFLOAT, "FLOAT" },
-				{ "hresult", DolphinX::ExtCallArgHRESULT, "HRESULT" },
-				{ "char", DolphinX::ExtCallArgCHAR, LPCSTR(DolphinX::ExtCallArgLPSTR)},
-				{ "byte", DolphinX::ExtCallArgBYTE, LPCSTR(DolphinX::ExtCallArgLPVOID)},
-				{ "sbyte", DolphinX::ExtCallArgSBYTE, LPCSTR(DolphinX::ExtCallArgLPVOID)},
-				{ "word", DolphinX::ExtCallArgWORD, "WORD" },
-				{ "sword", DolphinX::ExtCallArgSWORD, "SWORD" },
-				{ "oop", DolphinX::ExtCallArgOOP, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "lpwstr", DolphinX::ExtCallArgLPWSTR, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "bstr", DolphinX::ExtCallArgBSTR, LPCSTR(DolphinX::ExtCallArgLPPVOID) },
-				{ "qword", DolphinX::ExtCallArgQWORD, "ULARGE_INTEGER" },
-				{ "sqword", DolphinX::ExtCallArgSQWORD, "LARGE_INTEGER" },
-				{ "ote", DolphinX::ExtCallArgOTE, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "variant", DolphinX::ExtCallArgVARIANT, "VARIANT" },
-				{ "varbool", DolphinX::ExtCallArgVARBOOL, "VARIANT_BOOL" },
-				{ "guid", DolphinX::ExtCallArgGUID, "REFGUID" },
-				{ "date", DolphinX::ExtCallArgDATE, "DATE" },
-				// Convert a few class types to the special types to save space and time
-				{ "ExternalAddress", DolphinX::ExtCallArgLPVOID, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "ExternalHandle", DolphinX::ExtCallArgHANDLE, "DWORD" },
-				{ "BSTR", DolphinX::ExtCallArgBSTR, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "VARIANT", DolphinX::ExtCallArgVARIANT, "VARIANT" },
-				{ "SDWORD", DolphinX::ExtCallArgSDWORD, "SDWORD" },
-				{ "DWORD", DolphinX::ExtCallArgDWORD, "DWORD" },
-				{ "LPVOID", DolphinX::ExtCallArgLPVOID, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "DOUBLE", DolphinX::ExtCallArgDOUBLE, "DOUBLE" },
-				{ "FLOAT", DolphinX::ExtCallArgFLOAT, "FLOAT" },
-				{ "HRESULT", DolphinX::ExtCallArgHRESULT, "HRESULT" },
-				{ "BYTE", DolphinX::ExtCallArgBYTE, LPCSTR(DolphinX::ExtCallArgLPVOID)},
-				{ "SBYTE", DolphinX::ExtCallArgSBYTE, LPCSTR(DolphinX::ExtCallArgLPVOID)},
-				{ "WORD", DolphinX::ExtCallArgWORD, "WORD" },
-				{ "SWORD", DolphinX::ExtCallArgSWORD, "SWORD" },
-				{ "LPWSTR", DolphinX::ExtCallArgLPWSTR, LPCSTR(DolphinX::ExtCallArgLPPVOID)},
-				{ "QWORD", DolphinX::ExtCallArgQWORD, "ULARGE_INTEGER" },
-				{ "ULARGE_INTEGER", DolphinX::ExtCallArgQWORD, "ULARGE_INTEGER" },
-				{ "SQWORD", DolphinX::ExtCallArgSQWORD, "LARGE_INTEGER" },
-				{ "LARGE_INTEGER", DolphinX::ExtCallArgSQWORD, "LARGE_INTEGER" },
-				{ "GUID", DolphinX::ExtCallArgGUID, "REFGUID" },
-				{ "IID", DolphinX::ExtCallArgGUID, "REFGUID" },
-				{ "CLSID", DolphinX::ExtCallArgGUID, "REFGUID" },
-				{ "VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, "VARIANT_BOOL" }
+				{ (LPUTF8)"sdword", DolphinX::ExtCallArgSDWORD, (LPUTF8)"SDWORD" },
+				{ (LPUTF8)"dword", DolphinX::ExtCallArgDWORD, (LPUTF8)"DWORD" },
+				{ (LPUTF8)"intptr", DolphinX::ExtCallArgINTPTR, (LPUTF8)"INT_PTR" },
+				{ (LPUTF8)"uintptr", DolphinX::ExtCallArgUINTPTR, (LPUTF8)"UINT_PTR" },
+				{ (LPUTF8)"lpvoid", DolphinX::ExtCallArgLPVOID, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"handle", DolphinX::ExtCallArgHANDLE, (LPUTF8)"DWORD" },
+				{ (LPUTF8)"lppvoid", DolphinX::ExtCallArgLPPVOID, NULL },
+				{ (LPUTF8)"lpstr", DolphinX::ExtCallArgLPSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"bool", DolphinX::ExtCallArgBOOL, (LPUTF8)"DWORD" },
+				{ (LPUTF8)"void", DolphinX::ExtCallArgVOID, (LPUTF8)DolphinX::ExtCallArgLPVOID},
+				{ (LPUTF8)"double", DolphinX::ExtCallArgDOUBLE, (LPUTF8)"DOUBLE" },
+				{ (LPUTF8)"float", DolphinX::ExtCallArgFLOAT, (LPUTF8)"FLOAT" },
+				{ (LPUTF8)"hresult", DolphinX::ExtCallArgHRESULT, (LPUTF8)"HRESULT" },
+				{ (LPUTF8)"char", DolphinX::ExtCallArgCHAR, (LPUTF8)DolphinX::ExtCallArgLPSTR},
+				{ (LPUTF8)"byte", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
+				{ (LPUTF8)"sbyte", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
+				{ (LPUTF8)"word", DolphinX::ExtCallArgWORD, (LPUTF8)"WORD" },
+				{ (LPUTF8)"sword", DolphinX::ExtCallArgSWORD, (LPUTF8)"SWORD" },
+				{ (LPUTF8)"oop", DolphinX::ExtCallArgOOP, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"lpwstr", DolphinX::ExtCallArgLPWSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"bstr", DolphinX::ExtCallArgBSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID },
+				{ (LPUTF8)"qword", DolphinX::ExtCallArgQWORD, (LPUTF8)"ULARGE_INTEGER" },
+				{ (LPUTF8)"sqword", DolphinX::ExtCallArgSQWORD, (LPUTF8)"LARGE_INTEGER" },
+				{ (LPUTF8)"ote", DolphinX::ExtCallArgOTE, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"variant", DolphinX::ExtCallArgVARIANT, (LPUTF8)"VARIANT" },
+				{ (LPUTF8)"varbool", DolphinX::ExtCallArgVARBOOL, (LPUTF8)"VARIANT_BOOL" },
+				{ (LPUTF8)"guid", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"date", DolphinX::ExtCallArgDATE, (LPUTF8)"DATE" },
+				//(LPUTF8) Convert a few class types to the special types to save space and time
+				{ (LPUTF8)"ExternalAddress", DolphinX::ExtCallArgLPVOID, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"ExternalHandle", DolphinX::ExtCallArgHANDLE, (LPUTF8)"DWORD" },
+				{ (LPUTF8)"BSTR", DolphinX::ExtCallArgBSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"VARIANT", DolphinX::ExtCallArgVARIANT, (LPUTF8)"VARIANT" },
+				{ (LPUTF8)"SDWORD", DolphinX::ExtCallArgSDWORD, (LPUTF8)"SDWORD" },
+				{ (LPUTF8)"DWORD", DolphinX::ExtCallArgDWORD, (LPUTF8)"DWORD" },
+				{ (LPUTF8)"LPVOID", DolphinX::ExtCallArgLPVOID, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"DOUBLE", DolphinX::ExtCallArgDOUBLE, (LPUTF8)"DOUBLE" },
+				{ (LPUTF8)"FLOAT", DolphinX::ExtCallArgFLOAT, (LPUTF8)"FLOAT" },
+				{ (LPUTF8)"HRESULT", DolphinX::ExtCallArgHRESULT, (LPUTF8)"HRESULT" },
+				{ (LPUTF8)"BYTE", DolphinX::ExtCallArgBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
+				{ (LPUTF8)"SBYTE", DolphinX::ExtCallArgSBYTE, (LPUTF8)DolphinX::ExtCallArgLPVOID},
+				{ (LPUTF8)"WORD", DolphinX::ExtCallArgWORD, (LPUTF8)"WORD" },
+				{ (LPUTF8)"SWORD", DolphinX::ExtCallArgSWORD, (LPUTF8)"SWORD" },
+				{ (LPUTF8)"LPWSTR", DolphinX::ExtCallArgLPWSTR, (LPUTF8)DolphinX::ExtCallArgLPPVOID},
+				{ (LPUTF8)"QWORD", DolphinX::ExtCallArgQWORD, (LPUTF8)"ULARGE_INTEGER" },
+				{ (LPUTF8)"ULARGE_INTEGER", DolphinX::ExtCallArgQWORD, (LPUTF8)"ULARGE_INTEGER" },
+				{ (LPUTF8)"SQWORD", DolphinX::ExtCallArgSQWORD, (LPUTF8)"LARGE_INTEGER" },
+				{ (LPUTF8)"LARGE_INTEGER", DolphinX::ExtCallArgSQWORD, (LPUTF8)"LARGE_INTEGER" },
+				{ (LPUTF8)"GUID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"IID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"CLSID", DolphinX::ExtCallArgGUID, (LPUTF8)"REFGUID" },
+				{ (LPUTF8)"VARIANT_BOOL", DolphinX::ExtCallArgVARBOOL, (LPUTF8)"VARIANT_BOOL" }
 			};
 
 			answer.range = ThisTokenRange();
@@ -2592,23 +2592,23 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 					if (ThisToken() == Binary && !ThisTokenIsBinary('>'))
 					{
 						// At least a single indirection to a standard type
-						char ch;
+						uint8_t ch;
 						while ((ch = PeekAtChar()) != '>' && isAnsiBinaryChar(ch))
 							Step();
 
 						Str strModifier = ThisTokenText();
-						int indirections = strModifier == "**" ? 2 : strModifier == "*" ? 1 : 0;
+						int indirections = strModifier == (LPUTF8)"**" ? 2 : strModifier == (LPUTF8)"*" ? 1 : 0;
 						if (indirections == 0)
 						{
 							CompileError(TEXTRANGE(ThisTokenRange().m_start, CharPosition()), CErrBadExtTypeQualifier);
 						}
 						answer.range.m_stop = ThisTokenRange().m_stop;
 						NextToken();
-						LPCSTR szClass = argTypes[i].m_szIndirectClass;
+						LPUTF8 szClass = argTypes[i].m_szIndirectClass;
 						// Indirection to a built-in type?
-						if (szClass <=  LPCSTR(DolphinX::ExtCallArgSTRUCT))
+						if (szClass <= LPUTF8(DolphinX::ExtCallArgSTRUCT))
 						{
-							if (!szClass || (indirections > 1 && szClass == LPCSTR(DolphinX::ExtCallArgLPPVOID)))
+							if (!szClass || (indirections > 1 && szClass == LPUTF8(DolphinX::ExtCallArgLPPVOID)))
 								// Cannot indirect this type
 								CompileError(TEXTRANGE(answer.range.m_start, LastTokenRange().m_stop), CErrNotIndirectable, (Oop)NewString(strToken));
 
@@ -2850,7 +2850,7 @@ POTE Compiler::ParseArray()
 				if (ThisTokenIsBinary('-')) 
 				{
 					Oop oopElement;
-					char ch = PeekAtChar();
+					uint8_t ch = PeekAtChar();
 					// Look for negation, but first see if in fact
 					// we have a binary selector
 					if (isAnsiBinaryChar(ch))
@@ -2874,7 +2874,7 @@ POTE Compiler::ParseArray()
 						}
 						else if (tokenType == LargeIntegerConst || tokenType == ScaledDecimalConst) 
 						{
-							Str valuetext = "-";
+							Str valuetext = (LPUTF8)"-";
 							valuetext += ThisTokenText();
 							oopElement = NewNumber(valuetext.c_str());
 							// Return value has an elevated ref. count which we assume here
@@ -2919,7 +2919,7 @@ POTE Compiler::ParseArray()
 			
 		case StringConst:
 			{
-				const char* szLiteral = ThisTokenText();
+				LPUTF8 szLiteral = ThisTokenText();
 				POTE oteString = *szLiteral
 					? NewString(szLiteral)
 					: GetVMPointers().EmptyString;
@@ -3163,7 +3163,7 @@ Oop Compiler::ParseConstExpression()
 	return result;
 }
 
-Oop Compiler::EvaluateExpression(const char* source, int start, int end, POTE oteMethod, Oop contextOop, POTE pools)
+Oop Compiler::EvaluateExpression(LPUTF8 source, int start, int end, POTE oteMethod, Oop contextOop, POTE pools)
 {
 	Str exprSource(source, start, end - start + 1);
 	return EvaluateExpression(exprSource.c_str(), oteMethod, contextOop, pools);
@@ -3206,7 +3206,7 @@ void Compiler::GetInstVars()
 			// Copy the names from the Array into our m_instVars array.
 			POTE ote = (POTE)array.fields[i];
 			BYTE *pb = FetchBytesOf(ote);
-			m_instVars[i] = reinterpret_cast<const char*>(pb);
+			m_instVars[i] = reinterpret_cast<LPUTF8>(pb);
 		}
 		
 		// We don't need the array of inst var names any more
@@ -3509,7 +3509,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 		
 		__try
 		{
-			POTE methodPointer = CompileForClassHelper(szSource, compilerOop, notifier, aClass, flags);
+			POTE methodPointer = CompileForClassHelper((LPUTF8)szSource, compilerOop, notifier, aClass, flags);
 
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);
@@ -3572,7 +3572,7 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 		
 		__try
 		{
-			POTE methodPointer = CompileForEvaluationHelper(szSource, compilerOop, notifier, aClass, aWorkspacePool, flags);
+			POTE methodPointer = CompileForEvaluationHelper((LPUTF8)szSource, compilerOop, notifier, aClass, aWorkspacePool, flags);
 			
 			resultPointer = m_piVM->NewArray(3);
 			STVarObject& result = *(STVarObject*)GetObj(resultPointer);
@@ -3636,7 +3636,7 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 	POTE sourceString = NewString(GetText());
 	m_piVM->StorePointerWithValue(&args.fields[5], Oop(sourceString));
 
-	const char* selector = m_selector.c_str();
+	LPUTF8 selector = m_selector.c_str();
 	if (selector)
 	{
 		POTE sel = NewString(selector);
@@ -3710,7 +3710,7 @@ void Compiler::WarningV(const TEXTRANGE& range, int code, ...)
 			VERIFY(wsprintf(buf, "WARNING %s>>%s line %d: %d\n", GetClassName().c_str(), m_selector.c_str(), GetLineNo(), code)>=0);
 			OutputDebugString(buf);
 			//((CIstApp*)AfxGetApp())->OutputErrorStringToCurrentDoc(buf);
-			OutputDebugString(GetText());
+			OutputDebugString((LPCSTR)GetText());
 			OutputDebugString("\n\r");
 		}
 		else

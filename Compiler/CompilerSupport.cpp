@@ -66,7 +66,7 @@ POTE Compiler::FindDictVariable(POTE dict, const Str& name)// throws SE_VMCALLBA
 // Ditto on the ref. count front **?**
 POTE Compiler::DictAtPut(POTE dict, const Str& name, Oop value)// throws SE_VMCALLBACKUNWIND
 {
-	POTE atPutSelector = InternSymbol("at:put:");
+	POTE atPutSelector = InternSymbol((LPUTF8)"at:put:");
 
 	// SystemDictionary will convert String to Symbol in #at:put:
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
@@ -83,7 +83,7 @@ bool Compiler::CanUnderstand(POTE oteBehavior, POTE oteSelector)
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-Oop Compiler::EvaluateExpression(const char* text, POTE oteMethod, Oop contextOop, POTE pools)
+Oop Compiler::EvaluateExpression(LPUTF8 text, POTE oteMethod, Oop contextOop, POTE pools)
 {
 	STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 	BYTE primitive = exprMethod.header.primitiveIndex;
@@ -133,12 +133,12 @@ POTE Compiler::FindGlobal(const Str& name)
 	return ote;
 }
 
-POTE Compiler::FindClass(const Str& name)
-{
-	POTE ote = FindGlobal(name);
-	// If not actually a class, then return nil
-	return ote != m_piVM->NilPointer() && m_piVM->IsAClass(ote) ? ote : m_piVM->NilPointer();
-}
+//POTE Compiler::FindClass(const Str& name)
+//{
+//	POTE ote = FindGlobal(name);
+//	// If not actually a class, then return nil
+//	return ote != m_piVM->NilPointer() && m_piVM->IsAClass(ote) ? ote : m_piVM->NilPointer();
+//}
 
 
 ///////////////////////////////////////////////////////////////////////

@@ -28,7 +28,19 @@ namespace ST
 	class VariantByteObject : public Object
 	{
 	public:
-		BYTE m_fields[];
+		uint8_t m_fields[];
+	};
+
+	class VariantWordObject : public Object
+	{
+	public:
+		uint16_t m_fields[];
+	};
+
+	class VariantQuadObject : public Object
+	{
+	public:
+		uint32_t m_fields[];
 	};
 
 	class VariantCharObject : public Object
@@ -50,5 +62,7 @@ typedef ST::Object* POBJECT;
 #if defined (VM)
 	#include "ote.h"
 	typedef TOTE<ST::VariantByteObject> BytesOTE;
+	typedef TOTE<ST::VariantWordObject> WordsOTE;
+	typedef TOTE<ST::VariantQuadObject> QuadsOTE;
 	typedef TOTE<ST::VariantObject> PointersOTE;
 #endif

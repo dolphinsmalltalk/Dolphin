@@ -19,7 +19,7 @@ CComModule _Module;
 
 #pragma code_seg(INIT_SEG)
 
-HRESULT __stdcall CreateVM(DWORD dwClsContext, const CLSID* pVMCLSID, LPCSTR pszVM, const IID& iid, void** ppiDolphin)
+HRESULT __stdcall CreateVM(DWORD dwClsContext, const CLSID* pVMCLSID, LPCWSTR pszVM, const IID& iid, void** ppiDolphin)
 {
 	HRESULT hr;
 

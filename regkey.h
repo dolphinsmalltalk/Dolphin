@@ -10,18 +10,16 @@
 #define _ATL_ALL_WARNINGS
 #include <atlbase.h>
 
-extern const char* SZREGKEYBASE;
+extern const wchar_t* SZREGKEYBASE;
 
-inline LONG OpenDolphinKey(CRegKey& rkey, LPCTSTR lpszKeyName, REGSAM samDesired=KEY_READ)
+inline LONG OpenDolphinKey(CRegKey& rkey, LPCWSTR lpszKeyName, REGSAM samDesired=KEY_READ)
 {
-	TCHAR szKey[512];
-	_tcscpy(szKey, SZREGKEYBASE);
+	std::wstring key = SZREGKEYBASE;
 	if (*lpszKeyName)
 	{
-		_tcscat(szKey, _T("\\"));
-		_tcscat(szKey, lpszKeyName);
+		key = key + L"\\" + lpszKeyName;
 	}
 
-	return rkey.Open(HKEY_LOCAL_MACHINE, szKey, samDesired);	
+	return rkey.Open(HKEY_LOCAL_MACHINE, key.c_str(), samDesired);	
 }
 

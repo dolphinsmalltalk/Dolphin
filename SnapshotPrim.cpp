@@ -22,6 +22,8 @@
 // Smalltalk classes
 #include "STString.h"
 
+#include "Utf16StringBuf.h"
+
 #pragma auto_inline(off)
 
 #ifdef VMDLL
@@ -29,18 +31,38 @@
 Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 {
 	Oop arg = *(sp-3);
-	char* szFileName;
-	if (arg == Oop(Pointers.Nil))
-		szFileName = 0;
-	else if (ObjectMemory::fetchClassOf(arg) == Pointers.ClassByteString)
-	{
-		// TODO: Use Utf8String for path
-		ByteStringOTE* oteString = reinterpret_cast<ByteStringOTE*>(arg);
-		ByteString* fileName = oteString->m_location;
-		szFileName = fileName->m_characters;
-	}
-	else
+	if (ObjectMemoryIsIntegerObject(arg))
 		return primitiveFailure(0);
+
+	OTE* oteArg = reinterpret_cast<OTE*>(arg);
+	const wchar_t* szFileName;
+	if (oteArg == Pointers.Nil)
+	{
+		szFileName = nullptr;
+	}
+	else if (!oteArg->isNullTerminated())
+	{
+		return primitiveFailure(0);
+	}
+
+	Utf16StringBuf buf;
+	StringEncoding encoding = String::GetEncoding(oteArg);
+	switch (encoding)
+	{
+	case StringEncoding::Ansi:
+		buf.FromBytes(Interpreter::m_ansiCodePage, reinterpret_cast<AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		szFileName = buf;
+		break;
+	case StringEncoding::Utf8:
+		buf.FromBytes(CP_UTF8, (LPCCH)reinterpret_cast<Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		szFileName = buf;
+		break;
+	case StringEncoding::Utf16:
+		szFileName = (const wchar_t*)reinterpret_cast<Utf16StringOTE*>(oteArg)->m_location->m_characters;
+		break;
+	default:
+		return primitiveFailure(0);
+	}
 
 	bool bBackup = reinterpret_cast<OTE*>(*(sp-2)) == Pointers.True;
 
@@ -78,7 +100,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 	if (!saveResult)
 	{
 		// Success
-		return primitiveSuccess(1);
+		return primitiveSuccess(4);
 	}
 	else
 	{

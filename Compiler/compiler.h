@@ -71,9 +71,9 @@ public:
 
 	void SetVMInterface(IDolphin* piVM) { m_piVM = piVM; }
 
-	POTE CompileExpression(const char* userexpression, Oop compiler, Oop notifier, Oop contextOop, FLAGS flags, unsigned& len, int startAt);
-	Oop EvaluateExpression(const char* text, POTE method, Oop contextOop, POTE pools);
-	Oop EvaluateExpression(const char* source, int start, int end, POTE oteMethod, Oop contextOop, POTE pools);
+	POTE CompileExpression(LPUTF8 userexpression, Oop compiler, Oop notifier, Oop contextOop, FLAGS flags, unsigned& len, int startAt);
+	Oop EvaluateExpression(LPUTF8 text, POTE method, Oop contextOop, POTE pools);
+	Oop EvaluateExpression(LPUTF8 source, int start, int end, POTE oteMethod, Oop contextOop, POTE pools);
 
 	// External interface requirements
 	void GetContext(POTE workspacePools);
@@ -101,11 +101,11 @@ private:
 	bool WantTempsMap() const;
 	bool WantDebugMethod() const;
 
-	POTE CompileForClassHelper(const char* compiletext, Oop compiler, Oop notifier, POTE aClass, FLAGS flags=Default);
-	POTE CompileForEvaluationHelper(const char* compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE workspacePools, FLAGS flags=Default);
+	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, FLAGS flags=Default);
+	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE workspacePools, FLAGS flags=Default);
 
-	void SetFlagsAndText(FLAGS flags, const char* text, int offset);
-	void PrepareToCompile(FLAGS flags, const char* text, int offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context=0);
+	void SetFlagsAndText(FLAGS flags, LPUTF8 text, int offset);
+	void PrepareToCompile(FLAGS flags, LPUTF8 text, int offset, POTE classPointer, Oop compiler, Oop notifier, POTE workspacePools, POTE compiledMethodClass, Oop context=0);
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
@@ -114,10 +114,10 @@ private:
 	Str GetNameOfClass(Oop oopClass, bool recurse=true);
 
 	// Moved from Interpreter as compiler specific (to ease removal of compiler)
-	Oop NewNumber(const char* textvalue) const;
-	POTE NewString(const char*) const;
+	Oop NewNumber(LPUTF8 textvalue) const;
+	POTE NewString(LPUTF8) const;
 	POTE NewString(const Str&) const;
-	POTE InternSymbol(const char*) const;
+	POTE InternSymbol(LPUTF8) const;
 	POTE InternSymbol(const Str&) const;
 
 	// Lookup
@@ -136,6 +136,7 @@ private:
 	int AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	int AddToFrame(Oop object, const TEXTRANGE&);
 	int AddStringToFrame(POTE string, const TEXTRANGE&);
+	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&);
 	POTE AddSymbolToFrame(const char*, const TEXTRANGE&);
 	void InsertByte(int pos, BYTE value, BYTE flags, LexicalScope* pScope);
 	void RemoveByte(int pos);
@@ -154,7 +155,7 @@ private:
 	int GenPopStack();
 	
 	void GenInteger(int val, const TEXTRANGE&);
-	Oop GenNumber(const char* textvalue, const TEXTRANGE&);
+	Oop GenNumber(LPUTF8 textvalue, const TEXTRANGE&);
 	void GenNumber(Oop, const TEXTRANGE&);
 	void GenConstant(int index);
 	void GenLiteralConstant(Oop object, const TEXTRANGE&);
@@ -229,7 +230,7 @@ private:
 
 	struct LibCallType
 	{
-		const char* szCallType;
+		LPUTF8 szCallType;
 		DolphinX::ExtCallDeclSpecs nCallType;
 	};
 	static LibCallType callTypes[DolphinX::NumCallConventions];
@@ -250,7 +251,7 @@ private:
 	void ParseExternalClass(const Str&, TypeDescriptor&);
 	POTE FindExternalClass(const Str&, const TEXTRANGE&);
 	DolphinX::ExtCallArgTypes TypeForStructPointer(POTE oteStructClass);
-	DolphinX::ExternalMethodDescriptor& buildDescriptorLiteral(TypeDescriptor args[], int argcount, DolphinX::ExtCallDeclSpecs decl, const char* procName);
+	DolphinX::ExternalMethodDescriptor& buildDescriptorLiteral(TypeDescriptor args[], int argcount, DolphinX::ExtCallDeclSpecs decl, LPUTF8 procName);
 	void mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRANGE&);
 
 	bool IsAtMethodScope() const;
@@ -296,7 +297,7 @@ private:
 	TempVarDecl* AddTemporary(const Str& name, const TEXTRANGE& range, bool isArg);
 	TempVarDecl* AddArgument(const Str& name, const TEXTRANGE& range);
 	TempVarRef* AddOptimizedTemp(const Str& name, const TEXTRANGE& range=TEXTRANGE());
-	void RenameTemporary(int temporary, const char* newName, const TEXTRANGE& range);
+	void RenameTemporary(int temporary, LPUTF8 newName, const TEXTRANGE& range);
 	void CheckTemporaryName(const Str&, const TEXTRANGE&, bool isArg);
 	void PushNewScope(int textStart, bool bOptimized=false);
 	void PushOptimizedScope(int textStart=-1);
@@ -331,9 +332,9 @@ private:
 public:
 	// Methods required by Disassembler
 	BYTE GetBytecode(size_t ip) { return m_bytecodes[ip].byte; }
-	std::string GetSpecialSelector(size_t index);
+	Str GetSpecialSelector(size_t index);
 	std::wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
-	std::string GetInstVar(size_t index) { return m_instVars[index]; }
+	Str GetInstVar(size_t index) { return m_instVars[index]; }
 
 private:
 #else
@@ -360,7 +361,7 @@ private:
 public:
 	POTE InstVarNamesOf(POTE aBehavior)/* throws SE_VMCALLBACKUNWIND */;
 	POTE FindDictVariable(POTE dict, const Str&)/* throws SE_VMCALLBACKUNWIND */;
-	POTE FindClass(const Str&)/* throws SE_VMCALLBACKUNWIND */;
+	//POTE FindClass(const Str&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE FindGlobal(const Str&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE DictAtPut(POTE dict, const Str&, Oop value)/* throws SE_VMCALLBACKUNWIND */;
 	bool CanUnderstand(POTE oteBehavior, POTE oteSelector);
@@ -532,9 +533,9 @@ inline LexicalScope* Compiler::GetMethodScope() const
 
 ///////////////////////
 
-inline POTE Compiler::NewString(const char* sz) const
+inline POTE Compiler::NewString(LPUTF8 sz) const
 {
-	return m_piVM->NewString(sz);
+	return m_piVM->NewString((LPCSTR)sz);
 }
 
 inline POTE Compiler::NewString(const Str& str) const
@@ -542,9 +543,9 @@ inline POTE Compiler::NewString(const Str& str) const
 	return NewString(str.c_str());
 }
 
-inline POTE Compiler::InternSymbol(const char* sz) const
+inline POTE Compiler::InternSymbol(LPUTF8 sz) const
 {
-	return m_piVM->InternSymbol(sz);
+	return m_piVM->InternSymbol((LPCSTR)sz);
 }
 
 inline POTE Compiler::InternSymbol(const Str& str) const
@@ -561,4 +562,9 @@ inline void Compiler::RemoveByte(int ip)
 inline Str Compiler::GetString(POTE ote) 
 { 
 	return MakeString(m_piVM, ote); 
+}
+
+inline POTE Compiler::AddSymbolToFrame(const char* s, const TEXTRANGE& tokenRange)
+{
+	return AddSymbolToFrame((LPUTF8)s, tokenRange);
 }

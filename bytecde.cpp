@@ -809,13 +809,13 @@ Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp)
 
 		if (cacheHits != 0 || cacheMisses != 0)
 		{
-			char buf[256];
-			_snprintf_s(buf, sizeof(buf)-1, "%u method cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
+			wchar_t buf[256];
+			_snwprintf_s(buf, sizeof(buf)-1, L"%u method cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
 							cacheHits, cacheMisses, 
 							(double)cacheHits / 
 								(cacheHits + cacheMisses?cacheHits+cacheMisses:1),
 							used, MethodCacheSize - used);
-			OutputDebugString(buf);
+			OutputDebugStringW(buf);
 		}
 
 		cacheHits = cacheMisses = 0;

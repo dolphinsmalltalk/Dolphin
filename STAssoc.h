@@ -21,7 +21,7 @@ namespace ST
 	{
 	public:
 		// TODO: Use Utf8String
-		ByteStringOTE* m_key;
+		AnsiStringOTE* m_key;
 		Oop m_value;
 
 		enum { KeyIndex = ObjectFixedSize, ValueIndex, FixedSize };

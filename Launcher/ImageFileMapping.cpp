@@ -3,10 +3,10 @@
 
 const IMAGETYPE ImageFileMapping::ISTIMAGE = IMAGETYPEENCODE("IST");
 
-int ImageFileMapping::Open(LPCSTR szImageName)
+int ImageFileMapping::Open(LPCWSTR szImageName)
 {
 	// Open the image file
-	m_hFile = CreateFile(szImageName,
+	m_hFile = CreateFileW(szImageName,
 				GENERIC_READ,
 				FILE_SHARE_WRITE,	// Prevent anyone else writing to the file while mapped
 				NULL,

@@ -364,7 +364,7 @@ public:
 		case ShortSpecialSend + 30:
 		case ShortSpecialSend + 31:
 		{
-			stream << L"Special Send #" << context.GetSpecialSelector(opcode - ShortSpecialSend);
+			stream << L"Special Send #" << context.GetSpecialSelector(opcode - ShortSpecialSend).c_str();
 		}
 		break;
 
@@ -681,7 +681,7 @@ public:
 
 	void BytecodeDisassembler::PrintInstVarInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
 	{
-		stream << type << L" InstVar[" << dec << index << L"]: " << context.GetInstVar(index);
+		stream << type << L" InstVar[" << dec << index << L"]: " << context.GetInstVar(index).c_str();
 	}
 
 	void BytecodeDisassembler::PrintSendInstruction(size_t ip, std::wostream& stream, int index, int argumentCount)

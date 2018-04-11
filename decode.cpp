@@ -39,7 +39,7 @@ tracestream thinDump;
 
 class UnknownOTE : public OTE {};
 
-static void printChars(wostream& stream, LPCWSTR pwsz, size_t len)
+static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 {
 	size_t end = min(len, 80);
 	for (size_t i = 0; i < end; i++)
@@ -79,13 +79,13 @@ wostream& operator<<(wostream& stream, const StringOTE* oteChars)
 		{
 		case StringEncoding::Ansi:
 		{
-			Utf16StringBuf<ByteString::CodePage, ByteString::CU> buf(reinterpret_cast<const ByteStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			Utf16StringBuf buf(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
 			printChars(stream, buf, buf.Count);
 			break;
 		}
 		case StringEncoding::Utf8:
 		{
-			Utf16StringBuf<Utf8String::CodePage, Utf8String::CU> buf(reinterpret_cast<const Utf8StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
+			Utf16StringBuf buf(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteChars)->m_location->m_characters, oteChars->bytesSize());
 			printChars(stream, buf, buf.Count);
 			break;
 		}
@@ -126,10 +126,10 @@ wostream& operator<<(wostream& st, const MethodOTE* ote)
 	return st;
 }
 
-wostream& operator<<(wostream& st, const ByteStringOTE* ote)
+wostream& operator<<(wostream& st, const AnsiStringOTE* ote)
 {
 	if (ote->isNil()) return st << L"nil";
-	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassByteString))
+	if (!ObjectMemory::isKindOf(Oop(ote), Pointers.ClassAnsiString))
 	{
 		// Expected a String Oop, but got something else
 		st << L"**Non-ByteString: " << reinterpret_cast<const OTE*>(ote) << L"**";
@@ -137,7 +137,7 @@ wostream& operator<<(wostream& st, const ByteStringOTE* ote)
 	else
 	{
 		st << L"'";
-		Utf16StringBuf<ByteString::CodePage, ByteString::CU> buf(ote->m_location->m_characters, ote->bytesSize());
+		Utf16StringBuf buf(Interpreter::m_ansiCodePage, ote->m_location->m_characters, ote->bytesSize());
 		printChars(st, buf, buf.Count);
 		st << L"'";
 
@@ -156,7 +156,7 @@ wostream& operator<<(wostream& st, const Utf8StringOTE* ote)
 	else
 	{
 		st << L"8'";
-		Utf16StringBuf<Utf8String::CodePage, Utf8String::CU> buf(ote->m_location->m_characters, ote->bytesSize());
+		Utf16StringBuf buf(CP_UTF8, (LPCCH)ote->m_location->m_characters, ote->bytesSize());
 		printChars(st, buf, buf.Count);
 		st << L"'";
 
@@ -463,8 +463,8 @@ wostream& operator<<(wostream& stream, const OTE* ote)
 			{
 				if (classPointer == Pointers.ClassSymbol)
 					stream << reinterpret_cast<const SymbolOTE*>(ote);
-				else if (classPointer == Pointers.ClassByteString)
-					stream << reinterpret_cast<const ByteStringOTE*>(ote);
+				else if (classPointer == Pointers.ClassAnsiString)
+					stream << reinterpret_cast<const AnsiStringOTE*>(ote);
 				else if (classPointer == Pointers.ClassUtf8String)
 					stream << reinterpret_cast<const Utf8StringOTE*>(ote);
 				else if (classPointer == Pointers.ClassUtf16String)
@@ -557,7 +557,7 @@ void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
 	{
 		if (nRow == 0)
 		{
-			char szBuffer[32];
+			wchar_t szBuffer[32];
 			wsprintf(szBuffer, lpszLine, pby);
 			out << szBuffer;
 		}
@@ -977,10 +977,10 @@ void Interpreter::AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vect
 		// Recursively walk up to the top of the inheritance hierarchy (found by reaching nil), then append names at 
 		// each level on the way back down
 		AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(pClass->m_superclass), instVarNames);
-		if (pClass->m_instanceVariables->m_oteClass == Pointers.ClassByteString)
+		if (pClass->m_instanceVariables->m_oteClass == Pointers.ClassAnsiString)
 		{
 			// TODO: Use Utf8String
-			ByteStringOTE* oteNamesString = reinterpret_cast<ByteStringOTE*>(pClass->m_instanceVariables);
+			AnsiStringOTE* oteNamesString = reinterpret_cast<AnsiStringOTE*>(pClass->m_instanceVariables);
 			stringstream words(oteNamesString->m_location->m_characters);
 			string each;
 			while (getline(words, each, ' '))
@@ -998,8 +998,8 @@ void Interpreter::AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vect
 			for (MWORD i = 0; i < oteNamesArray->pointersSize(); i++)
 			{
 				// TODO: Use Utf8String
-				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassByteString));
-				ByteStringOTE* oteEach = (ByteStringOTE*)pNames->m_elements[i];
+				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassAnsiString));
+				AnsiStringOTE* oteEach = (AnsiStringOTE*)pNames->m_elements[i];
 				instVarNames.push_back(oteEach->m_location->m_characters);
 			}
 		}
@@ -1049,7 +1049,7 @@ public:
 
 	std::string GetSpecialSelector(size_t index) {
 		_ASSERTE(index < NumSpecialSelectors);
-		return Pointers.specialSelectors[index]->m_location->m_characters;
+		return reinterpret_cast<LPCSTR>(Pointers.specialSelectors[index]->m_location->m_characters);
 	}
 
 private:

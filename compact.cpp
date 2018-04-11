@@ -82,7 +82,7 @@ void ObjectMemory::compactObject(OTE* ote)
 // Perform a compacting GC
 size_t ObjectMemory::compact(Oop* const sp)
 {
-	TRACE("Compacting OT, size %d, free %d, ...\n", m_nOTSize, m_pOT + m_nOTSize - m_pFreePointerList);
+	TRACE(L"Compacting OT, size %d, free %d, ...\n", m_nOTSize, m_pOT + m_nOTSize - m_pFreePointerList);
 	EmptyZct(sp);
 
 	// First perform a normal GC
@@ -127,7 +127,7 @@ size_t ObjectMemory::compact(Oop* const sp)
 	HARDASSERT(last == first);
 	// At this point, last == first, and the first free slot will be that after last
 
-	TRACE("%d OTEs compacted\n", moved);
+	TRACE(L"%d OTEs compacted\n", moved);
 
 	// Now we can update the objects using the forwarding pointers in the old slots
 
@@ -183,7 +183,7 @@ size_t ObjectMemory::compact(Oop* const sp)
 
 	HeapCompact();
 
-	TRACE("... OT compacted, size %d, free %d.\n", m_nOTSize, end - m_pFreePointerList);
+	TRACE(L"... OT compacted, size %d, free %d.\n", m_nOTSize, end - m_pFreePointerList);
 
 	Interpreter::scheduleFinalization();
 

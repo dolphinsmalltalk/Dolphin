@@ -26,6 +26,14 @@
 
 #include "..\DolphinSmalltalk_i.h"
 
+#include <limits.h>
+#include <malloc.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <locale.h>
+#include <Strsafe.h>
+#include <icucommon.h>
+
 #define TODO(s)
 
 #ifdef _DEBUG

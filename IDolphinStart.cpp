@@ -9,6 +9,7 @@
 #include "rc_vm.h"
 #include "DolphinSmalltalk_i.h"
 #include "DolphinSmalltalk.h"
+#include "Utf16StringBuf.h"
 
 extern HINSTANCE hApplicationInstance;
 static IDolphin* piVM=NULL;
@@ -24,13 +25,26 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 									  LPCSTR fileName, LPVOID imageData, UINT imageSize,
 									DWORD dwFlags)
 {
-	HRESULT APIENTRY VMInit(LPCSTR szImageName, LPVOID, UINT, DWORD);
+	if (fileName == nullptr)
+		return Initialise(hInstance, (LPCWSTR)nullptr, imageData, imageSize, dwFlags);
+	else
+	{
+		Utf16StringBuf buf(0, fileName, strlen(fileName));
+		return Initialise(hInstance, (LPCWSTR)buf, imageData, imageSize, dwFlags);
+	}
+}
+
+STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
+	LPCWSTR fileName, LPVOID imageData, UINT imageSize,
+	DWORD dwFlags)
+{
+	HRESULT APIENTRY VMInit(LPCWSTR szImageName, LPVOID, UINT, DWORD);
 
 	if (hInstance == NULL || imageData == NULL || imageSize == 0)
 		return E_INVALIDARG;
 
 	piVM = this;
-	
+
 	Lock();
 
 	hApplicationInstance = hInstance;
@@ -40,7 +54,6 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 
 	return hr;
 }
-
 STDMETHODIMP CDolphinSmalltalk::Run(IUnknown* punkOuter)
 {
 	extern int APIENTRY VMRun(DWORD);

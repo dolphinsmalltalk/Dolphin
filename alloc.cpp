@@ -285,7 +285,7 @@ Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp)
 			}
 			else
 			{
-				BytesOTE* newObj = ObjectMemory::newByteObject(oteClass, size);
+				BytesOTE* newObj = ObjectMemory::newByteObject<true, true>(oteClass, size);
 				*(sp - 1) = reinterpret_cast<Oop>(newObj);
 				ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
 				return sp - 1;
@@ -352,42 +352,83 @@ PointersOTE* __fastcall ObjectMemory::newUninitializedPointerObject(BehaviorOTE*
 	return reinterpret_cast<PointersOTE*>(ote);
 }
 
-BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD byteSize)
+template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD elementCount)
 {
 	Behavior& byteClass = *classPointer->m_location;
-	int nullTerm = byteClass.m_instanceSpec.m_nullTerminated * NULLTERMSIZE;
-
-	// Don't worry, compiler will not really use multiply instruction here
-	MWORD objectSize = byteSize + nullTerm;
-
 	OTE* ote;
-	VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize+SizeOfPointers(0), ote));
-	ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
-		|| ote->heapSpace() == OTEFlags::PoolSpace);
 
-	// Byte objects are initialized to zeros (but not the header)
-	// Note that we round up to initialize to the next DWORD
-	// This can be useful when working on a 32-bit word machine
-	ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(DWORD)));
-
-	ASSERT(ote->getSize()== objectSize+SizeOfPointers(0));
-
-	// These are stored in the object itself
-	classPointer->countUp();
-	ote->m_oteClass = classPointer;
-
-	if (nullTerm)
+	if (!MaybeZ || !byteClass.m_instanceSpec.m_nullTerminated)
 	{
-		ote->beNullTerminated();
-		HARDASSERT(ote->isBytes());
+		ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
+
+		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(elementCount + SizeOfPointers(0), ote));
+		ASSERT((elementCount > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
+			|| ote->heapSpace() == OTEFlags::PoolSpace);
+
+		ASSERT(ote->getSize() == elementCount + SizeOfPointers(0));
+
+		if (Initialized)
+		{
+			// Byte objects are initialized to zeros (but not the header)
+			// Note that we round up to initialize to the next DWORD
+			// This can be useful when working on a 32-bit word machine
+			ZeroMemory(newBytes->m_fields, _ROUND2(elementCount, sizeof(DWORD)));
+			classPointer->countUp();
+		}
+
+		ote->m_oteClass = classPointer;
+		ote->beBytes();
 	}
 	else
 	{
-		ote->beBytes();
+		ASSERT(classPointer->m_location->m_instanceSpec.m_nullTerminated);
+
+		MWORD objectSize;
+
+		switch (reinterpret_cast<const StringClass&>(byteClass).Encoding)
+		{
+		case StringEncoding::Utf16:
+			objectSize = elementCount * sizeof(Utf16String::CU);
+			break;
+		case StringEncoding::Utf32:
+			objectSize = elementCount * sizeof(Utf32String::CU);
+			break;
+		default:
+			objectSize = elementCount * sizeof(AnsiString::CU);
+			break;
+		}
+
+		// TODO: Allocate the correct number of null term bytes based on the encoding
+		objectSize += NULLTERMSIZE;
+
+		VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + SizeOfPointers(0), ote));
+		ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
+			|| ote->heapSpace() == OTEFlags::PoolSpace);
+
+		ASSERT(ote->getSize() == objectSize + SizeOfPointers(0));
+
+		if (Initialized)
+		{
+			// Byte objects are initialized to zeros (but not the header)
+			// Note that we round up to initialize to the next DWORD
+			// This can be useful when working on a 32-bit word machine
+			ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(DWORD)));
+			classPointer->countUp();
+		}
+
+		ote->m_oteClass = classPointer;
+		ote->beNullTerminated();
+		HARDASSERT(ote->isBytes());
 	}
 
 	return reinterpret_cast<BytesOTE*>(ote);
 }
+
+// Explicit instantiations
+template BytesOTE* ObjectMemory::newByteObject<false, false>(BehaviorOTE*, MWORD);
+template BytesOTE* ObjectMemory::newByteObject<false, true>(BehaviorOTE*, MWORD);
+template BytesOTE* ObjectMemory::newByteObject<true, false>(BehaviorOTE*, MWORD);
+template BytesOTE* ObjectMemory::newByteObject<true, true>(BehaviorOTE*, MWORD);
 
 Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp)
 {
@@ -399,7 +440,7 @@ Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp)
 		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
 		if (!(instSpec.m_pointers || instSpec.m_nonInstantiable))
 		{
-			BytesOTE* newObj = ObjectMemory::newByteObject(oteClass, size);
+			BytesOTE* newObj = ObjectMemory::newByteObject<true, true>(oteClass, size);
 			*(sp - 1) = reinterpret_cast<Oop>(newObj);
 			ObjectMemory::AddToZct(reinterpret_cast<OTE*>(newObj));
 			return sp - 1;
@@ -415,42 +456,6 @@ Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp)
 		return primitiveFailure(0);	// Size must be positive SmallInteger
 	}
 }
-
-
-BytesOTE* __fastcall ObjectMemory::newUninitializedByteObject(BehaviorOTE* classPointer, MWORD byteSize)
-{
-	// As a temporary hack, allocate an extra two bytes if null terminated in case it's a wide string. 
-	// This wastes very little memory since we round up the objects to 4 or 8-byte allocations anyway, so in most cases the extra byte fits in the slop
-	// TODO: Consider reinstating notion of word objects. Would be useful for more efficient wide string operations anyway as could then be handled in byte object primitives.
-	int nullTerm = classPointer->m_location->m_instanceSpec.m_nullTerminated * NULLTERMSIZE;
-
-	MWORD objectSize = byteSize + nullTerm;
-
-	OTE* ote;
-	POBJECT newBytes= static_cast<POBJECT>(allocObject(objectSize+SizeOfPointers(0), ote));
-	ASSERT((objectSize > MaxSizeOfPoolObject && ote->heapSpace() == OTEFlags::NormalSpace)
-		|| ote->heapSpace() == OTEFlags::PoolSpace);
-
-	// These are stored in the object itself
-	ASSERT(ote->getSize() == objectSize+SizeOfPointers(0)); newBytes;
-	ote->m_oteClass = classPointer;	// Ref. counting done later if necessary
-	ote->beBytes();
-
-	if (nullTerm)
-		ote->beNullTerminated();
-
-	return reinterpret_cast<BytesOTE*>(ote);
-}
-
-BytesOTE* __fastcall ObjectMemory::newUninitializedNullTermObject(BehaviorOTE* classPointer, MWORD byteSize)
-{
-	OTE* ote;
-	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
-	ote->m_oteClass = classPointer;	// Ref. counting done later if necessary
-	ote->beNullTerminated();
-	return reinterpret_cast<BytesOTE*>(ote);
-}
-
 
 BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 {
@@ -832,7 +837,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 			int nChunks = perPage*nPages;
 			int waste = nPages*wastePerPage;
 			int nFree = m_pools[i].getFree();
-			TRACE("%d: size %d, %d objects on %d pgs (%d per pg, %d free), waste %d (%d per page)\n",
+			TRACE(L"%d: size %d, %d objects on %d pgs (%d per pg, %d free), waste %d (%d per page)\n",
 				i, nSize, nChunks-nFree, nPages, perPage, nFree, waste, wastePerPage);
 			totalChunks += nChunks;
 			pageWaste += waste;
@@ -864,7 +869,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 										double(totalChunks-totalFreeChunks)*100.0);
 
 		TRACESTREAM<< L"===============================================" << endl;
-		TRACE("Total objects	= %d\n"
+		TRACE(L"Total objects	= %d\n"
 			  "Total pool objs	= %d\n"
 			  "Total chunks		= %d\n"
 			  "Total Pages		= %d\n"
