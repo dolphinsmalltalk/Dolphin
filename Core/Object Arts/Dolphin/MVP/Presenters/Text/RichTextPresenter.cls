@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TextPresenter subclass: #RichTextPresenter
 	instanceVariableNames: ''
@@ -48,7 +48,7 @@ chooseSelectionFont
 	struct := dialog winStruct.
 	charFormat populateChooseFont: struct.
 	dialog showModal.
-	dialog isConfirmed ifTrue: [self view selectionCharFormat: (CHARFORMATW fromChooseFont: struct)]!
+	dialog isConfirmed ifTrue: [self view selectionCharFormat: (CHARFORMAT2W fromChooseFont: struct)]!
 
 queryCommand: query
 	"Private - Enters details about a potential command for the receiver into 

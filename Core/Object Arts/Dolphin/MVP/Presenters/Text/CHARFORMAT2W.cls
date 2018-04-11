@@ -1,16 +1,26 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-Win32Structure subclass: #CHARFORMATW
+Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
-CHARFORMATW guid: (GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
-CHARFORMATW comment: 'CHARFORMAT is an <ExternalStructure> class to represent the Win32 structure of the same name.
+CHARFORMAT2W guid: (GUID fromString: '{87b4c5cf-026e-11d3-9fd7-00a0cc3e4a32}')!
+CHARFORMAT2W comment: 'CHARFORMAT2W is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
-The CHARFORMAT structure contains information about character formatting in a rich edit control.'!
-!CHARFORMATW categoriesForClass!External-Data-Structured-Win32! !
-!CHARFORMATW methodsFor!
+The CHARFORMAT2W structure contains information about character formatting in a rich edit control.'!
+!CHARFORMAT2W categoriesForClass!External-Data-Structured-Win32! !
+!CHARFORMAT2W methodsFor!
+
+bAnimation
+	"Answer the <Integer> value of the receiver's 'bAnimation' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #bAnimation)!
+
+bAnimation: anInteger
+	"Set the receiver's 'bAnimation' field to the value of the argument, anInteger"
+
+	bytes byteAtOffset: ##(self offsetOf: #bAnimation) put: anInteger!
 
 bCharSet
 	"Answer the <Integer> value of the receiver's 'bCharSet' field."
@@ -68,6 +78,36 @@ bPitchAndFamily: anInteger
 
 	bytes byteAtOffset: ##(self offsetOf: #bPitchAndFamily) put: anInteger!
 
+bRevAuthor
+	"Answer the <Integer> value of the receiver's 'bRevAuthor' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #bRevAuthor)!
+
+bRevAuthor: anInteger
+	"Set the receiver's 'bRevAuthor' field to the value of the argument, anInteger"
+
+	bytes byteAtOffset: ##(self offsetOf: #bRevAuthor) put: anInteger!
+
+bUnderlineColor
+	"Answer the <Integer> value of the receiver's 'bUnderlineColor' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #bUnderlineColor)!
+
+bUnderlineColor: anInteger
+	"Set the receiver's 'bUnderlineColor' field to the value of the argument, anInteger"
+
+	bytes byteAtOffset: ##(self offsetOf: #bUnderlineColor) put: anInteger!
+
+bUnderlyineType
+	"Answer the <Integer> value of the receiver's 'bUnderlyineType' field."
+
+	^bytes byteAtOffset: ##(self offsetOf: #bUnderlyineType)!
+
+bUnderlyineType: anInteger
+	"Set the receiver's 'bUnderlyineType' field to the value of the argument, anInteger"
+
+	bytes byteAtOffset: ##(self offsetOf: #bUnderlyineType) put: anInteger!
+
 characterSet
 	^(self maskAny: CFM_CHARSET) ifTrue: [self bCharSet]!
 
@@ -87,6 +127,16 @@ color: aColor
 
 	self maskIn: CFM_COLOR.
 	self crTextColor: (aColor ifNil: [Color windowText]) asColorRef asParameter!
+
+crBackColor
+	"Answer the <Integer> value of the receiver's 'crBackColor' field."
+
+	^bytes dwordAtOffset: ##(self offsetOf: #crBackColor)!
+
+crBackColor: anInteger
+	"Set the receiver's 'crBackColor' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: ##(self offsetOf: #crBackColor) put: anInteger!
 
 crTextColor
 	"Answer the <Integer> value of the receiver's 'crTextColor' field."
@@ -206,6 +256,16 @@ isUnderlined: aBoolean
 
 	self setEffect: CFE_UNDERLINE mask: CFM_UNDERLINE set: aBoolean!
 
+lcid
+	"Answer the <Integer> value of the receiver's 'lcid' field."
+
+	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
+
+lcid: anInteger
+	"Set the receiver's 'lcid' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: ##(self offsetOf: #lcid) put: anInteger!
+
 logFont
 	"Answer a <LOGFONTW> configured with the font settings from the receiver. The display resolution is assumed in converting from the point size to font height."
 
@@ -267,7 +327,7 @@ populateChooseFont: aCHOOSEFONT
 	aCHOOSEFONT flags: flags.
 	aCHOOSEFONT color: self color!
 
-populateFromChooseFont: aCHOOSEFONT 
+populateFromChooseFont: aCHOOSEFONT
 	| lf flags |
 	flags := aCHOOSEFONT flags.
 	lf := aCHOOSEFONT lpLogFont.
@@ -278,14 +338,14 @@ populateFromChooseFont: aCHOOSEFONT
 	"Did the user select a point size?"
 	(flags allMask: CF_NOSIZESEL) ifFalse: [self pointSize: aCHOOSEFONT iPointSize / 10].
 	"Did the user make a style selection?"
-	(flags allMask: CF_NOSTYLESEL) 
+	(flags allMask: CF_NOSTYLESEL)
 		ifFalse: 
 			[self
 				isBold: lf lfWeight >= FW_BOLD;
 				isItalic: lf lfItalic asBoolean].
 	(flags allMask: CF_EFFECTS) ifFalse: [^self].
 	self isUnderlined: lf lfUnderline asBoolean.
-			self isStruckThrough: lf lfStrikeOut asBoolean.
+	self isStruckThrough: lf lfStrikeOut asBoolean.
 	self color: aCHOOSEFONT color!
 
 setEffect: effectFlag mask: effectMask set: aBoolean
@@ -301,6 +361,26 @@ size: twips
 	self maskIn: CFM_SIZE.
 	self yHeight: twips
 !
+
+sSpacing
+	"Answer the <Integer> value of the receiver's 'sSpacing' field."
+
+	^bytes swordAtOffset: ##(self offsetOf: #sSpacing)!
+
+sSpacing: anInteger
+	"Set the receiver's 'sSpacing' field to the value of the argument, anInteger"
+
+	bytes swordAtOffset: ##(self offsetOf: #sSpacing) put: anInteger!
+
+sStyle
+	"Answer the <Integer> value of the receiver's 'sStyle' field."
+
+	^bytes swordAtOffset: ##(self offsetOf: #sStyle)!
+
+sStyle: anInteger
+	"Set the receiver's 'sStyle' field to the value of the argument, anInteger"
+
+	bytes swordAtOffset: ##(self offsetOf: #sStyle) put: anInteger!
 
 szFaceName
 	"Answer the <Utf16String> value of the receiver's 'szFaceName' field."
@@ -319,6 +399,26 @@ szFaceName: anUtf16String
 		startingAt: 1.
 	bytes wordAtOffset: ##(self offsetOf: #szFaceName) + size put: 0!
 
+wKerning
+	"Answer the <Integer> value of the receiver's 'wKerning' field."
+
+	^bytes wordAtOffset: ##(self offsetOf: #wKerning)!
+
+wKerning: anInteger
+	"Set the receiver's 'wKerning' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: ##(self offsetOf: #wKerning) put: anInteger!
+
+wWeight
+	"Answer the <Integer> value of the receiver's 'wWeight' field."
+
+	^bytes wordAtOffset: ##(self offsetOf: #wWeight)!
+
+wWeight: anInteger
+	"Set the receiver's 'wWeight' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: ##(self offsetOf: #wWeight) put: anInteger!
+
 yHeight
 	"Answer the <Integer> value of the receiver's 'yHeight' field."
 
@@ -328,61 +428,81 @@ yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: ##(self offsetOf: #yHeight) put: anInteger! !
-!CHARFORMATW categoriesFor: #bCharSet!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #bCharSet:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #beBold!accessing!public! !
-!CHARFORMATW categoriesFor: #beItalic!accessing!public! !
-!CHARFORMATW categoriesFor: #beNotBold!accessing!public! !
-!CHARFORMATW categoriesFor: #beNotItalic!accessing!public! !
-!CHARFORMATW categoriesFor: #beNotUnderlined!accessing!public! !
-!CHARFORMATW categoriesFor: #bePlain!modes!public! !
-!CHARFORMATW categoriesFor: #beUnderlined!accessing!public! !
-!CHARFORMATW categoriesFor: #bPitchAndFamily!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #bPitchAndFamily:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #characterSet!public! !
-!CHARFORMATW categoriesFor: #characterSet:!accessing!public! !
-!CHARFORMATW categoriesFor: #color!accessing!public! !
-!CHARFORMATW categoriesFor: #color:!accessing!public! !
-!CHARFORMATW categoriesFor: #crTextColor!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #crTextColor:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #dwEffects!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #dwEffects:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #dwMask!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #dwMask:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #effectsAny:!accessing!private! !
-!CHARFORMATW categoriesFor: #faceName:!accessing!public! !
-!CHARFORMATW categoriesFor: #font!accessing!public! !
-!CHARFORMATW categoriesFor: #font:!accessing!public! !
-!CHARFORMATW categoriesFor: #height:!accessing!public! !
-!CHARFORMATW categoriesFor: #isBold!public!testing! !
-!CHARFORMATW categoriesFor: #isBold:!accessing!public! !
-!CHARFORMATW categoriesFor: #isItalic!accessing!public! !
-!CHARFORMATW categoriesFor: #isItalic:!accessing!public! !
-!CHARFORMATW categoriesFor: #isStruckThrough!public!testing! !
-!CHARFORMATW categoriesFor: #isStruckThrough:!accessing!public! !
-!CHARFORMATW categoriesFor: #isUnderlined!accessing!public! !
-!CHARFORMATW categoriesFor: #isUnderlined:!accessing!public! !
-!CHARFORMATW categoriesFor: #logFont!public! !
-!CHARFORMATW categoriesFor: #maskAny:!accessing!private! !
-!CHARFORMATW categoriesFor: #maskIn:!accessing!private! !
-!CHARFORMATW categoriesFor: #maskOut:!private! !
-!CHARFORMATW categoriesFor: #pointSize!accessing!public! !
-!CHARFORMATW categoriesFor: #pointSize:!accessing!public! !
-!CHARFORMATW categoriesFor: #populateChooseFont:!private! !
-!CHARFORMATW categoriesFor: #populateFromChooseFont:!private! !
-!CHARFORMATW categoriesFor: #setEffect:mask:set:!accessing!private! !
-!CHARFORMATW categoriesFor: #size:!accessing!public! !
-!CHARFORMATW categoriesFor: #szFaceName!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #szFaceName:!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #yHeight!**compiled accessors**!public! !
-!CHARFORMATW categoriesFor: #yHeight:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bAnimation!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bAnimation:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bCharSet!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bCharSet:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #beBold!accessing!public! !
+!CHARFORMAT2W categoriesFor: #beItalic!accessing!public! !
+!CHARFORMAT2W categoriesFor: #beNotBold!accessing!public! !
+!CHARFORMAT2W categoriesFor: #beNotItalic!accessing!public! !
+!CHARFORMAT2W categoriesFor: #beNotUnderlined!accessing!public! !
+!CHARFORMAT2W categoriesFor: #bePlain!modes!public! !
+!CHARFORMAT2W categoriesFor: #beUnderlined!accessing!public! !
+!CHARFORMAT2W categoriesFor: #bPitchAndFamily!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bPitchAndFamily:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bRevAuthor!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bRevAuthor:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bUnderlineColor!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bUnderlineColor:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bUnderlyineType!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #bUnderlyineType:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #characterSet!public! !
+!CHARFORMAT2W categoriesFor: #characterSet:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #color!accessing!public! !
+!CHARFORMAT2W categoriesFor: #color:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #crBackColor!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #crBackColor:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #crTextColor!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #crTextColor:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #dwEffects!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #dwEffects:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #dwMask!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #dwMask:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #dwSize:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #effectsAny:!accessing!private! !
+!CHARFORMAT2W categoriesFor: #faceName:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #font!accessing!public! !
+!CHARFORMAT2W categoriesFor: #font:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #height:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #isBold!public!testing! !
+!CHARFORMAT2W categoriesFor: #isBold:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #isItalic!accessing!public! !
+!CHARFORMAT2W categoriesFor: #isItalic:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #isStruckThrough!public!testing! !
+!CHARFORMAT2W categoriesFor: #isStruckThrough:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #isUnderlined!accessing!public! !
+!CHARFORMAT2W categoriesFor: #isUnderlined:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #lcid!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #lcid:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #logFont!public! !
+!CHARFORMAT2W categoriesFor: #maskAny:!accessing!private! !
+!CHARFORMAT2W categoriesFor: #maskIn:!accessing!private! !
+!CHARFORMAT2W categoriesFor: #maskOut:!private! !
+!CHARFORMAT2W categoriesFor: #pointSize!accessing!public! !
+!CHARFORMAT2W categoriesFor: #pointSize:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #populateChooseFont:!private! !
+!CHARFORMAT2W categoriesFor: #populateFromChooseFont:!private! !
+!CHARFORMAT2W categoriesFor: #setEffect:mask:set:!accessing!private! !
+!CHARFORMAT2W categoriesFor: #size:!accessing!public! !
+!CHARFORMAT2W categoriesFor: #sSpacing!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #sSpacing:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #sStyle!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #sStyle:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #szFaceName!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #szFaceName:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #wKerning!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #wKerning:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #wWeight!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #wWeight:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #yHeight!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesFor: #yHeight:!**compiled accessors**!public! !
 
-!CHARFORMATW class methodsFor!
+!CHARFORMAT2W class methodsFor!
 
 defineFields
-	"Define the layout of the CHARFORMAT structure
-		CHARFORMAT compileDefinition
+	"Define the layout of the CHARFORMAT2 structure
+		self compileDefinition
 	"
 
 	self defineField: #dwSize type: DWORDField writeOnly beOverride;
@@ -393,12 +513,23 @@ defineFields
 		defineField: #crTextColor type: DWORDField new;
 		defineField: #bCharSet type: BYTEField new;
 		defineField: #bPitchAndFamily type: BYTEField new;
-		defineField: #szFaceName type: (StringField type: Utf16String length: 32)!
+		defineField: #szFaceName type: (StringField type: Utf16String length: 32);
+		defineField: #wWeight type: WORDField new;
+		defineField: #sSpacing type: SWORDField new;
+		defineField: #crBackColor type: DWORDField new;
+		defineField: #lcid type: DWORDField new;
+		defineField: #dwCookie type: DWORDField filler;
+		defineField: #sStyle type: SWORDField new;
+		defineField: #wKerning type: WORDField new;
+		defineField: #bUnderlyineType type: BYTEField new;
+		defineField: #bAnimation type: BYTEField new;
+		defineField: #bRevAuthor type: BYTEField new;
+		defineField: #bUnderlineColor type: BYTEField new!
 
 fromChooseFont: aCHOOSEFRONT 
 	^(self new)
 		populateFromChooseFont: aCHOOSEFRONT;
 		yourself! !
-!CHARFORMATW class categoriesFor: #defineFields!initializing!public! !
-!CHARFORMATW class categoriesFor: #fromChooseFont:!public! !
+!CHARFORMAT2W class categoriesFor: #defineFields!initializing!public! !
+!CHARFORMAT2W class categoriesFor: #fromChooseFont:!public! !
 

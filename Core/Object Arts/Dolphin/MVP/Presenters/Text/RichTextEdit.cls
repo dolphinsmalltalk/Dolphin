@@ -78,7 +78,7 @@ beNonUnderlined
 bePlain
 	"Set the receiver to plain text mode."
 
-	self selectionCharFormat: (CHARFORMATW new
+	self selectionCharFormat: (CHARFORMAT2W new
 				bePlain;
 				yourself)!
 
@@ -129,7 +129,7 @@ color: aColor
 	"Private - Set the colour of the selection in the receiver to aColor."
 
 	| cf |
-	cf := CHARFORMATW new.
+	cf := CHARFORMAT2W new.
 	cf color: aColor.
 	self selectionCharFormat: cf!
 
@@ -256,7 +256,7 @@ forecolor: aColorOrNil
 
 	| cf |
 	super forecolor: aColorOrNil.
-	cf := CHARFORMATW new.
+	cf := CHARFORMAT2W new.
 	cf color: (aColorOrNil notNil ifTrue: [aColorOrNil] ifFalse: [Color windowText]).
 	self defaultCharFormat: cf!
 
@@ -269,7 +269,7 @@ getCharFormat: flagsMask
 	"
 
 	| cf |
-	cf := CHARFORMATW new.
+	cf := CHARFORMAT2W new.
 	"We want all attributes"
 	cf dwMask: 16rFFFFFFFF.
 	self
@@ -310,7 +310,7 @@ isBold
 isBold: set
 	"Private - Turn on/off emboldening for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMATW new
+	self selectionCharFormat: (CHARFORMAT2W new
 				isBold: set;
 				yourself)!
 
@@ -322,7 +322,7 @@ isItalic
 isItalic: set
 	"Private - Turn on/off italics for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMATW new
+	self selectionCharFormat: (CHARFORMAT2W new
 				isItalic: set;
 				yourself)!
 
@@ -349,7 +349,7 @@ isUnderlined
 isUnderlined: set
 	"Turn on/off underlining for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMATW new
+	self selectionCharFormat: (CHARFORMAT2W new
 				isUnderlined: set;
 				yourself)!
 
@@ -360,11 +360,6 @@ isUrlDetectionEnabled: aBoolean
 	aBoolean = self isUrlDetectionEnabled ifTrue: [^self].
 	teFlags := teFlags mask: AutoUrlDetectionMask set: aBoolean.
 	self isOpen ifTrue: [self setAutoUrlDetection: aBoolean]!
-
-maxTextLimit
-	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
-
-	^SmallInteger maximum!
 
 nmNotify: pNMHDR
 	^(RtnMap lookup: (pNMHDR sdwordAtOffset: 8))
@@ -494,7 +489,7 @@ pointSize: anInteger
 	"Private - Set the point size of the currently selected text to, anInteger."
 
 	| cf |
-	cf := CHARFORMATW new.
+	cf := CHARFORMAT2W new.
 	cf pointSize: anInteger.
 	self selectionCharFormat: cf!
 
@@ -710,7 +705,7 @@ selectionColor: aColorOrNil
 	"Set the colour of the selection in the receiver to aColorOrNil. If nil then
 	set the colour to the default window text"
 
-	self selectionCharFormat: (CHARFORMATW new
+	self selectionCharFormat: (CHARFORMAT2W new
 				color: aColorOrNil;
 				yourself)!
 
@@ -723,7 +718,7 @@ selectionFont: aFont
 	"Set the font of the selection in the receiver to aFont"
 
 	| cf |
-	cf := CHARFORMATW new.
+	cf := CHARFORMAT2W new.
 	cf font: aFont.
 	self selectionCharFormat: cf!
 
@@ -743,6 +738,17 @@ selectionParaFormat: options
 	in the receiver to those specified in the <PARAFORMAT>, options."
 
 	self sendMessage: EM_SETPARAFORMAT wParam: 0 lpParam: options asParameter!
+
+selectionPlainText: aString
+	| stex |
+	stex := ByteArray newFixed: 8.
+	stex
+		dwordAtOffset: 0 put: ST_SELECTION | ST_UNICODE;
+		dwordAtOffset: 4 put: aString codePage.
+	self
+		sendMessage: EM_SETTEXTEX
+		wParam: stex yourAddress
+		lpParam: aString!
 
 selectionRichText
 	"Private - Answer the selected RichText in the receiver."
@@ -792,7 +798,7 @@ setFont: aFont
 	aFont isNil
 		ifFalse: 
 			[| cf |
-			cf := CHARFORMATW new.
+			cf := CHARFORMAT2W new.
 			cf font: aFont.
 			self setCharFormat: cf flags: SCF_ALL].
 	self isTextModified: modified!
@@ -942,7 +948,6 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #isUnderlined:!helpers!public! !
 !RichTextEdit categoriesFor: #isUrlDetectionEnabled!public!testing! !
 !RichTextEdit categoriesFor: #isUrlDetectionEnabled:!accessing!public! !
-!RichTextEdit categoriesFor: #maxTextLimit!constants!private! !
 !RichTextEdit categoriesFor: #nmNotify:!event handling-win32!private! !
 !RichTextEdit categoriesFor: #onRightButtonReleased:!event handling!public! !
 !RichTextEdit categoriesFor: #onViewCreated!event handling!public! !
@@ -982,6 +987,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #selectionFont:!operations!public! !
 !RichTextEdit categoriesFor: #selectionParaFormat!accessing!private! !
 !RichTextEdit categoriesFor: #selectionParaFormat:!accessing!private! !
+!RichTextEdit categoriesFor: #selectionPlainText:!private!selection! !
 !RichTextEdit categoriesFor: #selectionRichText!private!selection! !
 !RichTextEdit categoriesFor: #selectionRichText:!private!selection! !
 !RichTextEdit categoriesFor: #selectionRtf!private!selection! !
@@ -1033,6 +1039,11 @@ initializeNotificationMap
 				shrink;
 				yourself!
 
+maxTextLimit
+	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
+
+	^SmallInteger maximum!
+
 registerClass
 	"Private - Ensure the the rich edit window class is registered by loading the relevant library."
 
@@ -1050,6 +1061,7 @@ winClassName
 	^'RichEdit20W'! !
 !RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
 !RichTextEdit class categoriesFor: #initializeNotificationMap!private! !
+!RichTextEdit class categoriesFor: #maxTextLimit!constants!private! !
 !RichTextEdit class categoriesFor: #registerClass!initializing!private! !
 !RichTextEdit class categoriesFor: #richEditDllName!constants!private! !
 !RichTextEdit class categoriesFor: #winClassName!constants!private! !

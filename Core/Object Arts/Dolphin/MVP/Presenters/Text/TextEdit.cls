@@ -1111,7 +1111,7 @@ state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
 	to its current state"
 
-	| state margins sel |
+	| state margins sel limit |
 	state := super state.
 	sel := self selectionRange.
 	sel = self defaultSelectionRange
@@ -1142,6 +1142,13 @@ state
 								receiver: self
 								selector: #cueBanner:
 								argument: cue)]].
+	limit := self textLimit.
+	limit = 30000
+		ifFalse: 
+			[state add: (MessageSend
+						receiver: self
+						selector: #textLimit:
+						argument: limit)].
 	^state!
 
 suggestedFindText
@@ -1166,7 +1173,7 @@ tabFocus
 textLimit
 	"Answer the current text limit for the control (i.e. the amount of text it can hold)."
 
-	^self sendMessage: EM_GETLIMITTEXT!
+	^(self sendMessage: EM_GETLIMITTEXT) asDword!
 
 textLimit: anInteger
 	"Set the maximum text limit for the receiver. The initial default limit is around 32kb.

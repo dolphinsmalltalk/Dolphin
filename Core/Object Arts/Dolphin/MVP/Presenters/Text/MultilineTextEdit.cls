@@ -178,11 +178,6 @@ lineLength: anIntegerLineNumber
 	^self lineLengthFromPosition: (self positionAtLine: anIntegerLineNumber).
 !
 
-maxTextLimit
-	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
-
-	^16rFFFFFFFF!
-
 queryCommand: aCommandQuery 
 	"Private - Enters details about a potential command for the receiver into the 
 	<CommandQuery>."
@@ -365,7 +360,6 @@ wordWrap: aBoolean
 !MultilineTextEdit categoriesFor: #insertText:at:!public!text retrieval & modification! !
 !MultilineTextEdit categoriesFor: #lineCount!accessing!public! !
 !MultilineTextEdit categoriesFor: #lineLength:!accessing!public! !
-!MultilineTextEdit categoriesFor: #maxTextLimit!constants!private! !
 !MultilineTextEdit categoriesFor: #queryCommand:!commands!private! !
 !MultilineTextEdit categoriesFor: #resetCharFormat!operations!public! !
 !MultilineTextEdit categoriesFor: #selectCurrentLine!public!selection! !
@@ -381,4 +375,12 @@ wordWrap: aBoolean
 !MultilineTextEdit categoriesFor: #wmKeyUp:wParam:lParam:!event handling-win32!private! !
 !MultilineTextEdit categoriesFor: #wordWrap!accessing-styles!public! !
 !MultilineTextEdit categoriesFor: #wordWrap:!accessing-styles!public! !
+
+!MultilineTextEdit class methodsFor!
+
+maxTextLimit
+	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
+
+	^16rFFFFFFFF! !
+!MultilineTextEdit class categoriesFor: #maxTextLimit!constants!private! !
 
