@@ -596,7 +596,7 @@ tbAddButtons: tbButtons
 	"Private - Adds a StructureArray of tbButtons to the receiver."
 
 	| index |
-	index := self sendMessage: TB_ADDBUTTONS wParam: tbButtons size lpParam: tbButtons asParameter.
+	index := self sendMessage: TB_ADDBUTTONSW wParam: tbButtons size lpParam: tbButtons asParameter.
 	^index == 0
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [index]!
