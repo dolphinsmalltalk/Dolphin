@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinBaseProduct subclass: #DolphinProfessional
 	instanceVariableNames: ''
@@ -17,19 +17,20 @@ contents
 	contents := super contents.
 
 	"ITC Gorisek & STS"
+	"Many of these have been broken by the addition of Unicode support any may require significant work to fix"
 	contents
-		add: #('Core\Contributions\ITC Gorisek\Dialect Abstraction Layer.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\OmniBase.pax' #plain #imageBased);
+		"add: #('Core\Contributions\ITC Gorisek\Dialect Abstraction Layer.pax' #encrypted #imageBased);
+		add: #('Core\Contributions\ITC Gorisek\OmniBase.pax' #plain #imageBased);"
 		add: #('Core\Contributions\ITC Gorisek\Yaxo\YAXO Base.pax' #plain #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\Yaxo\YAXO DOM.pax' #plain #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\ZLib Interface.pax' #encrypted #imageBased);
+		"add: #('Core\Contributions\ITC Gorisek\ZLib Interface.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\HTTP Client.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\HTML Parser.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\SMTP Support.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\MD5.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\Source Tracking System.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\Source Tracking System Remote Client.pax' #encrypted #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\Source Tracking System Administrator.pax' #encrypted #imageBased);
+		add: #('Core\Contributions\ITC Gorisek\Source Tracking System Administrator.pax' #encrypted #imageBased);"
 		yourself.
 
 	"Add-ons"
