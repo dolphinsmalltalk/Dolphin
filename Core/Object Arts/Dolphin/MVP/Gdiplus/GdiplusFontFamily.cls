@@ -47,7 +47,7 @@ name
 	name := Utf16String newFixed: LF_FACESIZE.
 	(status := GdiplusLibrary default
 				gdipGetFamilyName: self asParameter
-				name: name asParameter
+				name: name
 				language: 0) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
 	^name asString trimNulls! !

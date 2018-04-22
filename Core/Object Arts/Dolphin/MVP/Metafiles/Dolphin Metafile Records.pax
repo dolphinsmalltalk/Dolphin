@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Metafile Records'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk metafile extensions for handling individual metafile records. Allows diagnostic tracing, and also manipulation of the individual records.
@@ -513,7 +513,7 @@ fromAddress: anAddress
 
 	| iType recordClass |
 	iType := anAddress dwordAtOffset: 0.
-	recordClass := (RecordTypes lookup: iType) ifNil: [ENHMETARECORD].
+	recordClass := (RecordTypes lookup: iType) ?? ENHMETARECORD.
 	^anAddress isNull ifFalse: [recordClass basicNew initializeAtAddress: anAddress]! !
 !ENHMETARECORD class categoriesFor: #fromAddress:!instance creation!public! !
 

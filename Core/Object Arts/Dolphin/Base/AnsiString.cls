@@ -149,6 +149,14 @@ encodeOn: aWriteStream put: aCharacter
 
 	^aWriteStream basicNextPut: aCharacter ansiValue!
 
+fromAddress: anAddress
+	"Answer a new String instantiated from the null terminated string at anAddress.
+	Implementation note: We can use the external library call primitive to do the 
+	job for us by performing a simple nop which returns the original pointer (_strninc()
+	has the useful property that it returns NULL for NULL argument too)."
+
+	^VMLibrary default stringFromAddress: anAddress!
+
 fromString: aString
 	"Answer an instance of the receiver containing the same characters as the argument, aString."
 
@@ -170,6 +178,7 @@ skipEncodingMarkerFrom: aGettableStream
 !AnsiString class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !AnsiString class categoriesFor: #elementSize!constants!public! !
 !AnsiString class categoriesFor: #encodeOn:put:!encode/decode!public! !
+!AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
 !AnsiString class categoriesFor: #fromString:!instance creation!public! !
 !AnsiString class categoriesFor: #initialize!class initialization!development!public! !
 !AnsiString class categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !

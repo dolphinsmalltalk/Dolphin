@@ -1291,6 +1291,11 @@ emitEncodingMarkerOn: aPositionableStream
 
 	!
 
+encodedSizeOf: anObject
+	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+
+	^1!
+
 encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 	^aWriteStream
 		basicNext: sizeInteger
@@ -1337,6 +1342,7 @@ writeStream: anInteger
 !SequenceableCollection class categoriesFor: #decodeNext:from:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #encodedSizeOf:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #encodeOn:nextPutAll:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #encodeOn:put:!encode/decode!public! !

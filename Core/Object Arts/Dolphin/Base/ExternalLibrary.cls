@@ -159,12 +159,12 @@ formatMessage: anIntegerId with: arguments
 	^String formatMessage: anIntegerId in: self asParameter withArguments: arguments!
 
 getProcAddress: aStringOrWord
-	"Private - Answer the address of the receiver's procedure named aString."
+	"Private - Answer the address of the receiver's procedure identified by the <AnsiString> name or <integer> ordinal parameter."
 
 	^self getProcAddress: aStringOrWord ifAbsent: [self systemError]!
 
 getProcAddress: nameOrOrdinal ifAbsent: exceptionHandler
-	"Private - Answer the address of the receiver's procedure named by the <readableString>
+	"Private - Answer the address of the receiver's procedure named by the <AnsiString>
 	or <integer> ordinal, nameOrOrdinal. If the receiver does not contain a matching
 	procedure, then answer the result of evaluation the <niladicValuable> exceptionHandler.."
 

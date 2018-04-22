@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #SERVENT
 	instanceVariableNames: ''
@@ -36,7 +36,7 @@ aliases
 	
 	[each := list uintPtrAtOffset: i.
 	each isNull] whileFalse: 
-				[addresses nextPut: (String fromAddress: each).
+				[addresses nextPut: (AnsiString fromAddress: each).
 				i := i + VMConstants.IntPtrSize].
 	^addresses contents!
 
@@ -52,19 +52,19 @@ printFieldsOn: aStream limit: anInteger
 		print: self aliases!
 
 s_name
-	"Answer the receiver's s_name field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 's_name' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: 0)!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: 0)!
 
 s_port
-	"Answer the receiver's s_port field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 's_port' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #s_port)!
 
 s_proto
-	"Answer the receiver's s_proto field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #s_proto))! !
+	^AnsiString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #s_proto))! !
 !SERVENT categoriesFor: #aliases!public! !
 !SERVENT categoriesFor: #port!accessing!public! !
 !SERVENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !
@@ -89,10 +89,10 @@ defineFields
 "
 
 	self
-		defineField: #s_name type: (PointerField type: String) beReadOnly offset: 0;
+		defineField: #s_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
 		defineField: #s_aliases type: (PointerField type: LPSTR) beReadOnly beFiller offset: 4;
 		defineField: #s_port type: SWORDField new beReadOnly offset: 8;
-		defineField: #s_proto type: (PointerField type: String) beReadOnly offset: 12.
+		defineField: #s_proto type: (PointerField type: AnsiString) beReadOnly offset: 12.
 	self byteSize: 16!
 
 fromInteger: anInteger

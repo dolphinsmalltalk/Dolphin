@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
@@ -100,7 +100,7 @@ idlString
 	| pSz answer status |
 	pSz := ExternalAddress new.
 	(status := RPCLibrary default uuidToString: self stringUuid: pSz) == 0 ifFalse: [RPCError signal: status].
-	answer := String fromAddress: pSz.
+	answer := AnsiString fromAddress: pSz.
 	RPCLibrary default rpcStringFree: pSz.
 	^answer
 !

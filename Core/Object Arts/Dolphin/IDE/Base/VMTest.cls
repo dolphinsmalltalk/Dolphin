@@ -1944,9 +1944,9 @@ testPrimitiveShallowCopy
 			[:each |
 			subject := #(#()).
 			result := method value: subject withArguments: #().
-			self deny: result sameAs: subject.
+			self deny: result identicalTo: subject.
 			self assert: result equals: subject.
-			result with: subject do: [:a :b | self assert: a sameAs: b]]!
+			result with: subject do: [:a :b | self assert: a identicalTo: b]]!
 
 testPrimitiveSize
 	| method subject |
@@ -2007,11 +2007,11 @@ testPrimitiveStringAt
 			| subject |
 			subject := eachClass withAll: ((0 to: 127) collect: [:i | Character value: i]).
 			0 to: subject size - 1
-				do: [:i | self assert: (method value: subject withArguments: {i + 1}) sameAs: (Character value: i)]].
+				do: [:i | self assert: (method value: subject withArguments: {i + 1}) identicalTo: (Character value: i)]].
 	"Remaining ANSI characters are unique"
 	array := AnsiString withAll: ((128 to: 255) collect: [:i | Character ansiValue: i]).
 	128 to: 255
-		do: [:i | self assert: (method value: array withArguments: {i - 127}) sameAs: (Character ansiValue: i)].
+		do: [:i | self assert: (method value: array withArguments: {i - 127}) identicalTo: (Character ansiValue: i)].
 	"UTF-8 surrogates"
 	array := Utf8String withAll: ((128 to: 255) collect: [:i | Character utf8Value: i]).
 	128 to: 255
@@ -2151,7 +2151,7 @@ testPrimitiveYourAddress
 			[:each || addr |
 			addr := method value: each withArguments: #().
 			self deny: addr == 0.
-			self assert: (String fromAddress: each) equals: each].
+			self assert: (each class fromAddress: each) equals: each].
 	"Bug: #yourAddress returns 0 for an empty byte array?"
 	#(#[]#[1 2 3]) do: 
 			[:each || addr |
@@ -2182,7 +2182,7 @@ testQwordAtOffset
 	self assert: (bytes qwordAtOffset: 4) equals: 0.
 	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
 	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
-	self assert: (bytes qwordAtOffset: 0) sameAs: 16r3FFFFFFF.
+	self assert: (bytes qwordAtOffset: 0) identicalTo: 16r3FFFFFFF.
 	"Overflows SmallInteger"
 	bytes := ByteArray fromHexString: '0000004000000000'.
 	actual := bytes qwordAtOffset: 0.
@@ -2260,9 +2260,9 @@ testSqwordAtOffset
 	self assert: (bytes sqwordAtOffset: 4) equals: 0.
 	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
 	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
-	self assert: (bytes sqwordAtOffset: 0) sameAs: 16r3FFFFFFF.
+	self assert: (bytes sqwordAtOffset: 0) identicalTo: 16r3FFFFFFF.
 	bytes := ByteArray fromHexString: '000000C0FFFFFFFF'.
-	self assert: (bytes sqwordAtOffset: 0) sameAs: -16r40000000.
+	self assert: (bytes sqwordAtOffset: 0) identicalTo: -16r40000000.
 	"Overflows SmallInteger (any value in lower 32-bits is treated as positive)"
 	bytes := ByteArray fromHexString: '0000004000000000'.
 	actual := bytes sqwordAtOffset: 0.
@@ -2295,7 +2295,7 @@ testSqwordAtOffset
 	"Largest value, smallest negative (-1)"
 	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
 	actual := bytes sqwordAtOffset: 0.
-	self assert: actual sameAs: -1!
+	self assert: actual identicalTo: -1!
 
 testVMPointersImmutable
 	| vmPointers |
@@ -2360,8 +2360,8 @@ verifyPrimitiveAt: opAt performBlock: performAt
 	-100 to: 100
 		do: 
 			[:i |
-			self assert: (opAt value: array value: i + 100 + 1) sameAs: i.
-			self assert: (performAt value: array value: i + 100 + 1) sameAs: i].
+			self assert: (opAt value: array value: i + 100 + 1) identicalTo: i.
+			self assert: (performAt value: array value: i + 100 + 1) identicalTo: i].
 	"Valid case, first and last, with and without named fields"
 	array := {'a'. 'b'}.
 	self assert: (opAt value: array value: 1) equals: 'a'.
@@ -2371,8 +2371,8 @@ verifyPrimitiveAt: opAt performBlock: performAt
 	self assert: (opAt value: array value: 2) equals: 'b'.
 	#(#(2) #[2]) do: 
 			[:a |
-			self assert: (opAt value: a value: 1) sameAs: 2.
-			self assert: (performAt value: a value: 1) sameAs: 2].
+			self assert: (opAt value: a value: 1) identicalTo: 2.
+			self assert: (performAt value: a value: 1) identicalTo: 2].
 	"Non-indexable object"
 	#(1 0 nil) do: 
 			[:each |
@@ -2392,8 +2392,8 @@ verifyPrimitiveAt: opAt performBlock: performAt
 					self should: [performAt value: subject value: each] raise: BoundsError]].
 	"Repeat for an object with one named instance variable and no #at:/#basicAt: override"
 	array := MourningWeakArray with: 2.
-	self assert: (opAt value: array value: 1) sameAs: 2.
-	self assert: (performAt value: array value: 1) sameAs: 2.
+	self assert: (opAt value: array value: 1) identicalTo: 2.
+	self assert: (performAt value: array value: 1) identicalTo: 2.
 	outOfBounds do: 
 			[:each |
 			self should: [opAt value: array value: each] raise: BoundsError.
@@ -2401,13 +2401,13 @@ verifyPrimitiveAt: opAt performBlock: performAt
 
 	"And again for one with a number of named instance variables (a method)"
 	array := Object compiledMethodAt: #addDependent:.
-	self assert: (opAt value: array value: 1) sameAs: #getDependents.
+	self assert: (opAt value: array value: 1) identicalTo: #getDependents.
 	self should: 
 			[| lit |
 			lit := opAt value: array value: 2.
 			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
-	self assert: (opAt value: array value: 3) sameAs: #setDependents:.
-	self assert: (opAt value: array value: array size) sameAs: #add:.
+	self assert: (opAt value: array value: 3) identicalTo: #setDependents:.
+	self assert: (opAt value: array value: array size) identicalTo: #add:.
 	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
 			[:each |
 			self should: [opAt value: array value: each] raise: BoundsError.

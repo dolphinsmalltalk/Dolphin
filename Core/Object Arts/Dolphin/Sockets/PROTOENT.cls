@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
@@ -35,17 +35,17 @@ aliases
 	
 	[each := list uintPtrAtOffset: i.
 	each isNull] whileFalse: 
-				[addresses nextPut: (String fromAddress: each).
+				[addresses nextPut: (AnsiString fromAddress: each).
 				i := i + VMConstants.IntPtrSize].
 	^addresses contents!
 
 p_name
-	"Answer the receiver's p_name field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'p_name' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: 0)!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: 0)!
 
 p_proto
-	"Answer the receiver's p_proto field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'p_proto' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #p_proto)!
 
@@ -83,7 +83,7 @@ defineFields
 "
 
 	self
-		defineField: #p_name type: (PointerField type: String) beReadOnly offset: 0;
+		defineField: #p_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
 		defineField: #p_aliases type: (PointerField type: LPSTR) beReadOnly beFiller offset: 4;
 		defineField: #p_proto type: SWORDField new beReadOnly offset: 8.
 	self byteSize: 12!

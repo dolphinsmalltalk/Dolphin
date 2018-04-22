@@ -34,7 +34,7 @@ getData: hFont
 lfFaceName
 	"Answer the receiver's lfFaceName field as a Smalltalk object."
 
-	^String fromAddress: bytes yourAddress + ##(self offsetOf: #lfFaceName)!
+	^AnsiString fromAddress: bytes yourAddress + ##(self offsetOf: #lfFaceName)!
 
 lfFaceName: anObject 
 	"Set the receiver's lfFaceName field to the value of anObject."
@@ -62,6 +62,6 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #lfFaceName type: (StringField length: LF_FACESIZE)! !
+	self defineField: #lfFaceName type: (StringField type: AnsiString length: LF_FACESIZE)! !
 !LOGFONT class categoriesFor: #defineFields!initializing!public! !
 

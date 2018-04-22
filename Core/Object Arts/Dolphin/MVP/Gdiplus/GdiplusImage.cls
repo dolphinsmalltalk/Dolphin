@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusImage
 	instanceVariableNames: ''
@@ -1542,7 +1542,7 @@ exampleGdipIPropertyItem
 	image property: propItem.
 	propItem := title := nil.
 	propItem := image propertyFromId: PropertyTagImageTitle.
-	^title := String fromAddress: propItem Value!
+	^title := AnsiString fromAddress: propItem Value!
 
 exampleGdipIPropertyItems
 	"This example prompts for a directory.  For each jpeg in the directory, the filename,

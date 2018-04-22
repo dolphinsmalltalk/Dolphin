@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ExternalAddressTest
 	instanceVariableNames: ''
@@ -38,7 +38,8 @@ testREFGUIDfromAddress
 	self assert: (g asString = ref asString)!
 
 testStringsFromAddress
-	#(#BSTR #String #Utf16String) do: [:each | self stringFromAddressTestClass: (Smalltalk at: each)]! !
+	#(#BSTR #AnsiString #Utf8String #Utf16String)
+		do: [:each | self stringFromAddressTestClass: (Smalltalk at: each)]! !
 !ExternalAddressTest categoriesFor: #stringFromAddressTestClass:!helpers!public! !
 !ExternalAddressTest categoriesFor: #testExternalAddressAtAddress!public!unit tests! !
 !ExternalAddressTest categoriesFor: #testExternalAddressFromAddress!public!unit tests! !
