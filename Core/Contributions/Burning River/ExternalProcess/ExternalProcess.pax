@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ExternalProcess'.
 package paxVersion: 1;
 	basicComment: 'Copyright (c) 2003-2004 Robert Jarvis
@@ -29,7 +29,7 @@ package classNames
 	add: #ExternalProcessWaitFailure;
 	add: #ExternalProcessWaitTimeout;
 	add: #PROCESS_INFORMATION;
-	add: #STARTUPINFO;
+	add: #STARTUPINFOW;
 	yourself.
 
 package methodNames
@@ -77,7 +77,7 @@ Win32Structure subclass: #PROCESS_INFORMATION
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #STARTUPINFO
+Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -113,7 +113,7 @@ createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThrea
  	Please see Win32 SDK help for more information."
 
 	<stdcall: bool CreateProcessW lpwstr lpwstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES*
-		bool dword lpvoid lpwstr STARTUPINFO* PROCESS_INFORMATION*>
+		bool dword lpvoid lpwstr STARTUPINFOW* PROCESS_INFORMATION*>
 
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
