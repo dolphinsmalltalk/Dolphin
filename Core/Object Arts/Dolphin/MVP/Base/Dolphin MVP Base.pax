@@ -145,7 +145,7 @@ package classNames
 	add: #NMHDR;
 	add: #NMTTDISPINFOW;
 	add: #NONCLIENTMETRICSW;
-	add: #NOTIFYICONDATA;
+	add: #NOTIFYICONDATAW;
 	add: #NullIcon;
 	add: #OUTLINETEXTMETRICW;
 	add: #PaintEvent;
@@ -849,7 +849,7 @@ Win32Structure subclass: #NONCLIENTMETRICSW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #NOTIFYICONDATA
+Win32Structure subclass: #NOTIFYICONDATAW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
