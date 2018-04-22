@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalAddress variableByteSubclass: #ExternalMemory
 	instanceVariableNames: ''
@@ -115,6 +115,19 @@ allocator
 clear: anExternalAddress
 	self free: anExternalAddress!
 
+copyBytesToGlobalHeap: aByteObject
+	| len pMem hMem kernel |
+	kernel := KernelLibrary default.
+	len := aByteObject byteSize.
+	hMem := kernel globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len.
+	pMem := kernel globalLock: hMem.
+	kernel
+		copyMemory: pMem
+		source: aByteObject
+		length: len.
+	kernel globalUnlock: hMem.
+	^hMem!
+
 DidAlloc: anAddress
 	"Private - Answer whether the specified memory block was allocated from the
 	process heap (0 = no, 1 = yes, -1 = don't know).
@@ -220,6 +233,7 @@ Realloc: anAddress cb: anInteger
 !ExternalMemory class categoriesFor: #Alloc:!operations!private! !
 !ExternalMemory class categoriesFor: #allocator!accessing!private! !
 !ExternalMemory class categoriesFor: #clear:!public!realizing/unrealizing! !
+!ExternalMemory class categoriesFor: #copyBytesToGlobalHeap:!operations!public! !
 !ExternalMemory class categoriesFor: #DidAlloc:!COM Interfaces-OBJIDL.IMalloc!private! !
 !ExternalMemory class categoriesFor: #free:!operations!public! !
 !ExternalMemory class categoriesFor: #Free:!COM Interfaces-OBJIDL.IMalloc!private! !

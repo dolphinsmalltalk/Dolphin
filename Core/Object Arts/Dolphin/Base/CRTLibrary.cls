@@ -390,7 +390,7 @@ strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
 	^self invalidCall!
 
 strlen: aString
-	<cdecl: sdword strlen lpstr>
+	<cdecl: sdword strlen lpvoid>
 	^self invalidCall!
 
 strncmp: string1 string2: string2 count: count

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Bitmap subclass: #DIBSection
 	instanceVariableNames: 'depth imageBits'
@@ -33,6 +33,34 @@ clearCached
 	super clearCached.
 	imageBits := nil.
 	"The depth may doesn't change after creation, so we don't clear it."!
+
+copyToGlobalHeap
+	| hGlobal pGlobal ds header headerSize endHeader colorTable imageSize |
+	ds := self getDIBSECTION.
+	header := ds dsBmih.
+	colorTable := header biBitCount <= 8 ifTrue: [self getColorTable bytes] ifFalse: [#[]].
+	headerSize := header byteSize.
+	imageSize := header biSizeImage.
+	hGlobal := KernelLibrary default globalAlloc: ##(GHND | GMEM_DDESHARE)
+				dwBytes: headerSize + colorTable size + imageSize.
+	pGlobal := KernelLibrary default globalLock: hGlobal.
+	pGlobal
+		replaceFrom: 1
+		to: headerSize
+		with: header
+		startingAt: 1.
+	pGlobal
+		replaceFrom: headerSize + 1
+		to: (endHeader := headerSize + colorTable size)
+		with: colorTable
+		startingAt: 1.
+	pGlobal
+		replaceFrom: endHeader + 1
+		to: endHeader + imageSize
+		with: ds dsBm bmBits
+		startingAt: 1.
+	KernelLibrary default globalUnlock: hGlobal.
+	^hGlobal!
 
 createHandle
 	"Private - Answer an external handle to the image represented by the receiver.
@@ -169,6 +197,7 @@ width: w height: h depth: d
 !DIBSection categoriesFor: #baseLoadFlags!constants!public! !
 !DIBSection categoriesFor: #cacheInfo!helpers!private! !
 !DIBSection categoriesFor: #clearCached!initializing!private! !
+!DIBSection categoriesFor: #copyToGlobalHeap!accessing!private! !
 !DIBSection categoriesFor: #createHandle!private!realizing/unrealizing! !
 !DIBSection categoriesFor: #depth!accessing!public! !
 !DIBSection categoriesFor: #erase!drawing!private! !
@@ -180,6 +209,36 @@ width: w height: h depth: d
 !DIBSection categoriesFor: #width:height:depth:!initializing!private! !
 
 !DIBSection class methodsFor!
+
+fromGlobalHandle: anExternalHandle
+	"Answer a new <DIBSection> instantiated with header and bits from the global memory block
+	with the specified handle. The memory block is assumed to contain a BITMAPINFO structure
+	followed by the image bits."
+
+	| pBitmap header offset dibSection |
+	pBitmap := KernelLibrary default globalLock: anExternalHandle.
+	header := BITMAPINFOHEADER fromAddress: pBitmap.
+	dibSection := self
+				width: header biWidth
+				height: header biHeight
+				depth: header biBitCount.
+	offset := header size + 1.
+	header biBitCount <= 8
+		ifTrue: 
+			[| colorTable |
+			colorTable := StructureArray
+						fromAddress: (pBitmap yourAddress + header byteSize) asExternalAddress
+						length: (2 raisedToInteger: header biBitCount)
+						elementClass: RGBQUAD.
+			dibSection setColorTable: colorTable.
+			offset := offset + colorTable size].
+	dibSection imageBits
+		replaceFrom: 1
+		to: header biSizeImage
+		with: pBitmap
+		startingAt: offset.
+	KernelLibrary default globalUnlock: anExternalHandle.
+	^dibSection!
 
 width: width height: height
 	"Answers a true-colour DIBSection bitmap of dimensions width*height*24 bits/pixel."
@@ -200,6 +259,7 @@ width: width height: height depth: depth
 		height: height 
 		depth: depth
 		! !
-!DIBSection class categoriesFor: #width:height:!accessing!public! !
-!DIBSection class categoriesFor: #width:height:depth:!accessing!public! !
+!DIBSection class categoriesFor: #fromGlobalHandle:!instance creation!public! !
+!DIBSection class categoriesFor: #width:height:!instance creation!public! !
+!DIBSection class categoriesFor: #width:height:depth:!instance creation!public! !
 

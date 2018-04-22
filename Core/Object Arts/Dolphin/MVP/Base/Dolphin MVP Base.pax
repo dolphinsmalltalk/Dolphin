@@ -1276,7 +1276,7 @@ SIZEL := SIZE!
 copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
-	Clipboard current setText: self formatId: Win32Constants.CF_TEXT! !
+	Clipboard current setRegisteredFormat: #AnsiString data: self! !
 !AnsiString categoriesFor: #copyToClipboard!copying!public! !
 
 !ConsoleSessionManager class methodsFor!
@@ -1468,7 +1468,7 @@ colorRGBToHLS: clrRGB pwHue: pwHue pwLuminance: pwLuminance pwSaturation: pwSatu
 copyToClipboard
 	"Copy the receiver to the clipboard."
 
-	Clipboard current setText: self asUtf16String formatId: Win32Constants.CF_UNICODETEXT!
+	Clipboard current setText: self!
 
 setTextInto: aView
 	"Private - Sent as part of a double dispatch from View objects to set their text from
@@ -1484,7 +1484,7 @@ setTextInto: aView
 copyToClipboard
 	"Copy the #String format of the receiver to the clipboard."
 
-	Clipboard current setText: self printString formatId: Win32Constants.CF_TEXT! !
+	Clipboard current setRegisteredFormat: #String data: self! !
 !Symbol categoriesFor: #copyToClipboard!copying!public! !
 
 !UserLibrary methodsFor!

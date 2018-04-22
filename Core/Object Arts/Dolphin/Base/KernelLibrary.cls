@@ -116,6 +116,12 @@ copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	<overlap stdcall: bool CopyFileW lpwstr lpwstr bool>
 	^self invalidCall!
 
+copyMemory: destination source: source length: length
+	^CRTLibrary default
+		memcpy: destination
+		src: source
+		count: length!
+
 createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES 
 	"Create a new directory with the specified <String> path, 
 	answering whether successful.
@@ -760,7 +766,7 @@ getModuleHandle: aString
 
 !
 
-getProcAddress: aHandle lpProcName: aString
+getProcAddress: aHandle lpProcName: aStringOrOrdinal
 	"Answer the address of an exported function with name, aString, in the
 	module with handle, aHandle. If the function fails, NULL is returned,
 	and #getLastError should be used to retrieve extended error information.
@@ -983,6 +989,10 @@ globalAlloc: uFlags dwBytes: dwBytes
 		);"
 
 	<stdcall: handle GlobalAlloc dword dword>
+	^self invalidCall!
+
+globalFree: hGlobal
+	<stdcall: void GlobalFree handle>
 	^self invalidCall!
 
 globalLock: hGlobal
@@ -1665,6 +1675,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file! !
+!KernelLibrary categoriesFor: #copyMemory:source:length:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
@@ -1733,6 +1744,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #globalFree:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #globalLock:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #globalUnlock:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapAlloc:dwFlags:dwBytes:!public!win32 functions-memory management! !

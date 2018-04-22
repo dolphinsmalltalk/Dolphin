@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RichText
 	instanceVariableNames: 'rtf'
-	classVariableNames: 'Converter'
+	classVariableNames: 'Converter ConverterMutex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RichText guid: (GUID fromString: '{87b4c4b2-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -30,19 +30,21 @@ asRichText
 asString
 	"Answers the receiver as a String containing plain text"
 
-	| converter string |
-	converter := self class rtfConverter.
-
-	converter rtfText: self rtf.
-	string := converter plainText.
-	converter setWindowText: ''.
-
-	^string!
+	^ConverterMutex critical: 
+			[| converter string |
+			converter := self class rtfConverter.
+			converter rtfText: self rtf.
+			string := converter plainText.
+			converter setWindowText: ''.
+			string]!
 
 copyToClipboard
 	"Copy a format of the receiver to the clipboard."
 
-	Clipboard current setText: self format: #RichText!
+	| clipboard |
+	clipboard := Clipboard current.
+	(clipboard isFormatRegistered: #RichText) ifFalse: [self class registerClipboardFormat].
+	clipboard setRegisteredFormat: #RichText data: self!
 
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
@@ -128,12 +130,19 @@ fromRtf: anRtfString
 	^super new rtf: anRtfString; yourself!
 
 fromString: aString
-	"Answers an instance of the receiver holding the plain text in aString.
-	Note that we no longer use the converter to convert plain text to
-	rich text, but just wrap it appropriately."
+	"Answers an instance of the receiver holding the plain text in aString."
 
-	^super new rtf: '{\rtf1\ansi ', aString, '
-}'!
+	^ConverterMutex critical: 
+			[| converter richText |
+			converter := self rtfConverter.
+			converter plainText: aString.
+			richText := converter richText.
+			converter setWindowText: ''.
+			richText]!
+
+initialize
+	ConverterMutex := Mutex new.
+	^self registerClipboardFormat!
 
 new
 	"Private - Use #fromRtf: or #fromString:"
@@ -146,13 +155,24 @@ onPreStripImage
 
 	self uninitialize!
 
+registerClipboardFormat
+	| clipboardRtf |
+	clipboardRtf := UserLibrary default registerClipboardFormat: 'RTF in UTF8'.
+	clipboardRtf == 0 ifTrue: [^Win32Error signal].
+	Clipboard current
+		addRegisteredFormat: #RichText
+		id: clipboardRtf
+		converter: (PluggableTypeConverter
+				leftToRight: [:richText | ExternalMemory copyBytesToGlobalHeap: richText rtf]
+				rightToLeft: [:handle | RichText fromRtf: (Utf8String fromGlobalHandle: handle)])!
+
 rtfConverter
 	"Private - Answer an instance of RichTextEdit which can be used to convert 
 	between RTF and plain text or vice versa"
 
-	(Converter isNil or: [Converter isOpen not]) 
+	(Converter isNil or: [Converter isOpen not])
 		ifTrue: 
-			[Converter := (RichTextEdit new)
+			[Converter := RichTextEdit new
 						parentView: View desktop;
 						create;
 						yourself].
@@ -166,8 +186,10 @@ uninitialize
 	Converter := nil! !
 !RichText class categoriesFor: #fromRtf:!instance creation!public! !
 !RichText class categoriesFor: #fromString:!instance creation!public! !
+!RichText class categoriesFor: #initialize!class initialization!public! !
 !RichText class categoriesFor: #new!instance creation!private! !
 !RichText class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!RichText class categoriesFor: #registerClipboardFormat!class initialization!private! !
 !RichText class categoriesFor: #rtfConverter!accessing!private! !
 !RichText class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

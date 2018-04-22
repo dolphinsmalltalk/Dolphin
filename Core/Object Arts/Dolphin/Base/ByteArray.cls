@@ -774,6 +774,17 @@ fromAddress: anAddress length: anInteger
 		from: 1 to: anInteger startingAt: 1
 !
 
+fromGlobalHandle: anExternalHandle
+	"Answer a new <ByteArray> instantiated from the contents of the global heap block with the
+	specified handle."
+
+	| bytes len |
+	bytes := KernelLibrary default globalLock: anExternalHandle.
+	len := ExternalMemory GetSize: bytes.
+	bytes := self fromAddress: bytes length: len.
+	KernelLibrary default globalUnlock: anExternalHandle.
+	^bytes!
+
 fromHexString: aString
 	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."
 
@@ -812,6 +823,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 !ByteArray class categoriesFor: #decode:!encode/decode!public! !
 !ByteArray class categoriesFor: #elementSize!constants!private! !
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
+!ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
 !ByteArray class categoriesFor: #icon!constants!public! !
 !ByteArray class categoriesFor: #stbReadFrom:format:!binary filing!public! !
