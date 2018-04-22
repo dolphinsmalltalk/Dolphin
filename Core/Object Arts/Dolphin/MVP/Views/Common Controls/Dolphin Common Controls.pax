@@ -15,7 +15,7 @@ package classNames
 	add: #IconicListAbstract;
 	add: #ListView;
 	add: #ListViewColumn;
-	add: #LVBKIMAGE;
+	add: #LVBKIMAGEW;
 	add: #LVCOLUMNW;
 	add: #LVFINDINFOW;
 	add: #LVHITTESTINFO;
@@ -89,7 +89,7 @@ Win32Structure subclass: #CCITEM
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #LVBKIMAGE
+Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'

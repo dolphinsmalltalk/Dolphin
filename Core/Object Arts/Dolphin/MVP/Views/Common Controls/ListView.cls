@@ -220,12 +220,12 @@ backImageChanged
 
 	| backImage bk isTiled offset |
 	backImage := self backImage.
-	bk := LVBKIMAGE new.
-	bk bitmap: (backImage notNil 
+	bk := LVBKIMAGEW new.
+	bk bitmap: (backImage notNil
 				ifTrue: 
 					[backImage asBitmap createWatermarkAlphaPercent: self backImageAlphaPercent
 						backcolor: self actualBackcolor]).
-	backImage notNil 
+	backImage notNil
 		ifTrue: 
 			[offset := self backImageOffset.
 			isTiled := self backImageIsTiled.
@@ -1083,14 +1083,14 @@ lvmFindItem: aLvFindInfo startingAt: start
 
 	^self sendMessage: LVM_FINDITEM wParam: start lpParam: aLvFindInfo!
 
-lvmGetBkImage: aLVBKIMAGE 
-	"Private - Set the background image according to the information held in aLVBKIMAGE.
-	Answer whether the request succeeded."
+lvmGetBkImage: aLVBKIMAGEW
+	"Private - Populate the <LVBIMAGEW> argument with details of the receiver's background
+	image. Answer whether the request succeeded."
 
-	^(self 
-		sendMessage: LVM_GETBKIMAGE
+	^(self
+		sendMessage: LVM_GETBKIMAGEW
 		wParam: 0
-		lpParam: aLVBKIMAGE) asBoolean!
+		lpParam: aLVBKIMAGEW) asBoolean!
 
 lvmGetCallbackMask
 	"Private - Answers the callback mask of the underlying control"
@@ -1264,13 +1264,13 @@ lvmRedrawItems: firstIndex to: lastIndex
 
 	^self sendMessage: LVM_REDRAWITEMS wParam: firstIndex lpParam: lastIndex!
 
-lvmSetBkImage: aLVBKIMAGE 
-	"Private - Set the background image according to the information held in aLVBKIMAGE"
+lvmSetBkImage: aLVBKIMAGEW
+	"Private - Set the background image according to the information held in the <LVBKIMAGEW> argument."
 
-	^(self 
-		sendMessage: LVM_SETBKIMAGE
+	^(self
+		sendMessage: LVM_SETBKIMAGEW
 		wParam: 0
-		lpParam: aLVBKIMAGE) asBoolean!
+		lpParam: aLVBKIMAGEW) asBoolean!
 
 lvmSetCallbackMask: anInteger 
 	"Private - Answers the callback mask of the underlying control."

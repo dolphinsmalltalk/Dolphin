@@ -42,7 +42,7 @@ package methodNames
 	add: #ListView -> #columns;
 	add: #ListView -> #hasTrackSelect;
 	add: #ListView -> #hasTrackSelect:;
-	add: #LVBKIMAGE -> #offset:;
+	add: #LVBKIMAGEW -> #offset:;
 	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
 	add: #ScintillaIndicator -> #type;
 	add: #ScintillaIndicatorStyle -> #alphaPercent;
@@ -387,14 +387,14 @@ hasTrackSelect: aBoolean
 !ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
 !ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
 
-!LVBKIMAGE methodsFor!
+!LVBKIMAGEW methodsFor!
 
 offset: aPoint 
 	Notification deprecated.	"Use #offsetPercent: or #offsetTile:"
 	self
 		xOffsetPercent: aPoint x;
 		yOffsetPercent: aPoint y! !
-!LVBKIMAGE categoriesFor: #offset:!public! !
+!LVBKIMAGEW categoriesFor: #offset:!public! !
 
 !MoenTreeView methodsFor!
 
