@@ -135,7 +135,10 @@ basicEditItemLabel: hItem
 	"Private - Initiate in-place editing of the item in the receiver with the specified
 	handle. Answers the handle of the edit control (or 0 if fails)."
 
-	^self sendMessage: TVM_EDITLABELA wParam: 0 lParam: hItem asParameter!
+	^self
+		sendMessage: TVM_EDITLABELW
+		wParam: 0
+		lParam: hItem asParameter!
 
 basicItemFromPoint: aPoint 
 	"Private - Answer a TVHITTESTINFO populated with details of the item under the <Point>
@@ -715,7 +718,7 @@ onItem: anObject addedInParent: aParentObject
 	self
 		basicAddAll: (Array with: anObject)
 		inHandle: parentHandle
-		afterHandle: (previousSiblingHandle ifNil: [TVI_FIRST])!
+		afterHandle: (previousSiblingHandle ?? TVI_FIRST)!
 
 onItem: anObject movedToParent: aParentObject 
 	"Event received when anObject has been moved in the receiver's
