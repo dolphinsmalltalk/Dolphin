@@ -63,15 +63,15 @@ testSymbols
 
 	| a dessicated rehydrated s sym |
 	sym := #testSymbols.
-	s := 'a', Character dolphin asUtf8String, 'Symbol'.
+	s := 'a' , Character dolphin asUtf8String , 'Symbol'.
 	a := {sym. s. sym. s. sym asString asSymbol. s asSymbol}.
 	dessicated := a binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
 	self assert: rehydrated = a.
-	self assert: rehydrated first sameAs: sym.
-	self assert: (rehydrated at: 5) sameAs: sym.
-	self assert: (rehydrated at: 2) sameAs: (rehydrated at: 4).
-	self assert: (rehydrated at: 6) sameAs: s asSymbol.
+	self assert: rehydrated first identicalTo: sym.
+	self assert: (rehydrated at: 5) identicalTo: sym.
+	self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
+	self assert: (rehydrated at: 6) identicalTo: s asSymbol.
 
 	"Try deserializing an old format stream"
 	"#(#testSymbols 'abc' #testSymbols) binaryStoreBytes"
