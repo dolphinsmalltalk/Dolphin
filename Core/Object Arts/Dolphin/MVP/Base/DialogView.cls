@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc'
@@ -38,7 +38,7 @@ basicCreateAt: position extent: size
 
 	^UserLibrary default 
 		createDialog: self resourceLib asParameter
-		lpTemplate: self templateId
+		lpTemplate: self templateId asResourceId
 		hWndParent: self class active asParameter
 		lpDialogFunc: VMLibrary default getDlgProc
 		dwInitParam: 0!

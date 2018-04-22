@@ -97,7 +97,7 @@ createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: d
 	"Create a modeless dialog box from a dialog box template resource. 
 		HWND CreateDialog(
   			HINSTANCE hInstance,		// handle of module containing template
-			LPCTSTR lpTemplate,		// resource identifier
+			LPCWSTR lpTemplate,			// resource identifier
 			HWND hWndParent,			// handle of owner window
 			DLGPROC lpDialogFunc, 		// address of dialog proc
 			LPARAM dwInitParam 		// value passed to wmInitDialog:
@@ -453,7 +453,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 					[struct lpszIcon: IDI_QUESTION.
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
 		ifFalse: 
-			[iconId isInteger not ifTrue: [iconId := iconId asUtf16String].
+			[iconId := iconId asResourceId.
 			struct lpszIcon: iconId asUIntPtr.
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.

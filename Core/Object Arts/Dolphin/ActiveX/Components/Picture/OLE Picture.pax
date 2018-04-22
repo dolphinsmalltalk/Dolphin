@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'OLE Picture'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk OLE Picture component. 

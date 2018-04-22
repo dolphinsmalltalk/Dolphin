@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'
@@ -185,7 +185,7 @@ copyBits
 copyToClipboard
 	"Copy the receiver to the clipboard."
 
-	Clipboard current setBitmap: self copy!
+	Clipboard current setBitmap: self!
 
 createPalette
 	"Private - Attempt the create an answer an HPALETTE for the receiver's palette.
@@ -470,7 +470,7 @@ loadFromFile: pathString extent: anObject
 	self getMap3DColors ifTrue: [fuLoad := fuLoad bitOr: LR_LOADMAP3DCOLORS].
 	^UserLibrary default 
 		loadImage: 0
-		lpszName: pathString asParameter
+		lpszName: pathString asResourceId
 		uType: self imageType
 		cxDesired: 0
 		cyDesired: 0
@@ -481,9 +481,9 @@ loadFromInstance: hModule
 	Answers the bitmaps handle, or nil if the bitmap could not be loaded."
 
 	extent := nil.	"Any old cached extent may be invalid and no longer match the loaded resource."
-	^UserLibrary default 
+	^UserLibrary default
 		loadImage: hModule asParameter
-		lpszName: identifier asParameter
+		lpszName: identifier asResourceId
 		uType: self imageType
 		cxDesired: 0
 		cyDesired: 0
@@ -594,20 +594,20 @@ fromId: anIntegerOrStringId inFile: aString
 
 	^self fromId: anIntegerOrStringId inFile: aString flags: LR_COLOR!
 
-fromId: anIntegerOrStringId inFile: aString flags: anInteger 
+fromId: anIntegerOrStringId inFile: aString flags: anInteger
 	"Answer a new instance with a resourceID of anIntegerOrStringId
 	from the resource library with the path, aString, and the LR_XXX
 	flags in anInteger."
 
 	| reslib icon |
 	reslib := ExternalResourceLibrary open: aString.
-	icon := self fromOwnedHandle: (UserLibrary default 
-				loadImage: reslib asParameter
-				lpszName: anIntegerOrStringId asParameter
-				uType: IMAGE_BITMAP
-				cxDesired: 0
-				cyDesired: 0
-				fuLoad: anInteger).
+	icon := self fromOwnedHandle: (UserLibrary default
+						loadImage: reslib asParameter
+						lpszName: anIntegerOrStringId asResourceId
+						uType: IMAGE_BITMAP
+						cxDesired: 0
+						cyDesired: 0
+						fuLoad: anInteger).
 	icon instanceHandle: reslib handle.
 	^icon!
 

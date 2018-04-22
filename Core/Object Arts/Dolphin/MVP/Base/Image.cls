@@ -162,8 +162,7 @@ identifier
 identifier: id
 	"Set the identifier of the receiver. This can be a string or an integer."
 
-	identifier := id.
-		!
+	identifier := id asResourceId!
 
 imageType
 	"Private - Answer the Win32 image type for the receiver."
@@ -195,7 +194,7 @@ loadFromFile: pathString extent: aPoint
 
 	^UserLibrary default 
 		loadImage: 0
-		lpszName: pathString asParameter
+		lpszName: pathString asResourceId
 		uType: self imageType
 		cxDesired: aPoint x
 		cyDesired: aPoint y

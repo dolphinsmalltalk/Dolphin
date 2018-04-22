@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Image subclass: #OLEPicture
 	instanceVariableNames: 'picture extent hmExtent'
@@ -127,21 +127,20 @@ isPersistent
 
 	^identifier notNil!
 
-loadFromFile: pathString extent: anObject 
+loadFromFile: pathString extent: anObject
 	"Private - Attempts to load the receiver from a disk file/url. If the image
 	could not be loaded (e.g. the file was not found) then a picture 
 	wrapping the standard question mark icon is created. Answers the GDI
 	handle of the picture."
 
-	identifier isNil 
+	identifier isNil
 		ifFalse: 
-			[[self picture: (IPicture fromFile: pathString asParameter)] on: HRESULTError
+			[[self picture: (IPicture fromFile: pathString)] on: HRESULTError
 				do: 
-					[:ex | 
-					Notification 
-						signal: ('Failed to load OLE Picture from file <1p>: <2s>' expandMacrosWith: pathString
+					[:ex |
+					Notification signal: ('Failed to load OLE Picture from file <1p>: <2s>' expandMacrosWith: pathString
 								with: ex messageText)]].
-	picture isNull 
+	picture isNull
 		ifTrue: 
 			["Create a stand-in image"
 			self picture: (IPicture fromIcon: Icon question)].
