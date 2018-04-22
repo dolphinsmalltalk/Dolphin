@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusImage subclass: #GdiplusBitmap
 	instanceVariableNames: ''
@@ -228,7 +228,7 @@ extent: aPoint
 	^self width: aPoint x height: aPoint y!
 
 fromBitmap: aBitmap
-	"Creates a Bitmap object based on a handle to a Windows Microsoft® Windows® 
+	"Creates a Bitmap object based on a handle to a Windows MicrosoftÂ® WindowsÂ® 
 	Graphics Device Interface (GDI) bitmap and a handle to a GDI palette."
 
 	"MSDN: Do not pass to the GDI+ Bitmap constructor a GDI bitmap or a GDI
@@ -253,13 +253,14 @@ fromImage: aGdiplusImage centeredIn: aPoint
 
 	| bitmap scale extent |
 	bitmap := self extent: aPoint.
-	(scale := aPoint x / aGdiplusImage width) * aGdiplusImage height > aPoint y 
+	(scale := aPoint x / aGdiplusImage width) * aGdiplusImage height > aPoint y
 		ifTrue: [scale := aPoint y / aGdiplusImage height].
 	extent := scale * aGdiplusImage extent.
-	bitmap graphics 
+	bitmap graphics
 		drawImage: aGdiplusImage
-		at: ((aPoint - extent) / 2) rounded
-		extent: extent rounded.
+			at: ((aPoint - extent) / 2) rounded
+			extent: extent rounded;
+		free.
 	^bitmap!
 
 fromImage: aGdiplusImage crop: aRectangle
@@ -267,12 +268,13 @@ fromImage: aGdiplusImage crop: aRectangle
 
 	| bitmap |
 	bitmap := self extent: aRectangle extent.
-	bitmap graphics 
+	bitmap graphics
 		drawImage: aGdiplusImage
-		at: Point zero
-		extent: bitmap extent
-		from: aRectangle origin
-		extent: aRectangle extent.
+			at: Point zero
+			extent: bitmap extent
+			from: aRectangle origin
+			extent: aRectangle extent;
+		free.
 	^bitmap!
 
 fromImage: aGdiplusImage extent: aPoint
@@ -280,10 +282,11 @@ fromImage: aGdiplusImage extent: aPoint
 
 	| bitmap |
 	bitmap := self extent: aPoint.
-	bitmap graphics 
+	bitmap graphics
 		drawImage: aGdiplusImage
-		at: 0 @ 0
-		extent: aPoint.
+			at: 0 @ 0
+			extent: aPoint;
+		free.
 	^bitmap!
 
 fromImage: aGdiplusImage scaledBy: aNumber 

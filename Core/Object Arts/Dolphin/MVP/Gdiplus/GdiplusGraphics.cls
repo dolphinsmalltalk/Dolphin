@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusGraphics
 	instanceVariableNames: ''
@@ -271,13 +271,13 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 		unit: nil
 		attributes: nil!
 
-drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aSrcUnit attributes: imageAttributes 
+drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aSrcUnit attributes: imageAttributes
 	"Draw the portion of aGdiplusImage specified by srcOrigin and srcExtent to the receiver at the
 	rectangle specified by dstOrigin and dstExtent. The image is stretched to fit the destination rectangle.
 	srcUnit is the unit of measure for the source rectangle. imageAttributes specifies color adjustments."
 
 	| status |
-	status := GdiplusLibrary default 
+	status := GdiplusLibrary default
 				gdipDrawImageRectRectI: self asParameter
 				image: aGdiplusImage asParameter
 				dstx: dstOrigin x
@@ -288,7 +288,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 				srcy: srcOrigin y
 				srcwidth: srcExtent x
 				srcheight: srcExtent y
-				srcUnit: (aSrcUnit ifNil: [UnitPixel])
+				srcUnit: aSrcUnit ?? UnitPixel
 				imageAttributes: imageAttributes asParameter
 				callback: nil
 				callbackData: nil.
