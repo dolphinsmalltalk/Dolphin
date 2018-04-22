@@ -94,9 +94,14 @@ identifierTokenClass
 
 illegalCharacter
 	| start badChar |
-	start := tokenStart.
-	self lexicalError: LErrBadChar range: (start to: start).
 	badChar := currentCharacter.
+	start := tokenStart - (buffer contentsSpecies encodedSizeOf: badChar) + 1.
+	errorHandler
+		reportError: LErrBadChar
+		at: self errorPosition
+		line: self line
+		range: (start to: start)
+		extras: {badChar}.
 	"Skip over the bad character"
 	self step.
 	^StIllegalCharacterToken

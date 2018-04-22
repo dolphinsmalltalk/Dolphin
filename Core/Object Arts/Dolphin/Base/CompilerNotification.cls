@@ -227,7 +227,7 @@ initialize
 	| formats codes |
 	formats := LookupTable new.
 	formats
-		at: LErrBadChar put: 'illegal character ''<1d>''';
+		at: LErrBadChar put: 'illegal character ''<2d>''';
 		at: LErrCommentNotClosed put: 'comment not closed';
 		at: LErrStringNotClosed put: 'literal string not closed';
 		at: LErrExpectConst put: 'constant expected';

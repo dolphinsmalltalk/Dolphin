@@ -238,7 +238,7 @@ testCharacterScanning
 			ch := Character value: i.
 			result := self evaluateExpression: ch printString.
 			self assert: result == ch.
-			result := self evaluateExpression: '$\x' , i asHexString.
+			result := self evaluateExpression: '$\x' , (i printStringRadix: 16 showRadix: false).
 			self assert: result == ch].
 	128 to: 255
 		do: 
@@ -247,7 +247,7 @@ testCharacterScanning
 			ch := Character value: i.
 			result := self evaluateExpression: ch printString.
 			self assert: result = ch.
-			result := self evaluateExpression: '$\x' , i asHexString.
+			result := self evaluateExpression: '$\x' , (i printStringRadix: 16 showRadix: false).
 			self assert: result = ch].
 	result := self evaluateExpression: '$\x4E2D'.
 	self assert: result isKindOf: Character.
@@ -852,6 +852,25 @@ testLiteralArray
 	self assert: ((Compiler evaluate: '#(-1)') = (Array with: -1)).
 	self assert: ((Compiler evaluate: '#(-a)') = (Array with: #- with: #a)).
 	self assert: ((Compiler evaluate: '#(- 1)') = (Array with: #- with: 1))!
+
+testLiteralStringEncoding
+	"The compiler should produce AnsiString instances for literals that are entirely Ascii, otherwise UTF-8."
+
+	{'abc' asAnsiString.
+		'1234' asAnsiString.
+		$£ asUtf8String.
+		(Character codePoint: 128) asUtf8String.
+		Character dolphin asUtf8String.
+		Character byteCharacterSet copyFrom: 2 to: 128} do: 
+				[:each |
+				| actual array |
+				actual := Compiler evaluate: each printString.
+				self assert: actual equals: each.
+				self assert: actual isKindOf: each class.
+				array := '#(' , each printString , ')'.
+				actual := (Compiler evaluate: array) first.
+				self assert: actual equals: each.
+				self assert: actual isKindOf: each class]!
 
 testNestedCopyingBlocks
 	| method value value2 |
@@ -1534,6 +1553,7 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #testIntegerScanning!public!unit tests! !
 !CompilerTest categoriesFor: #testIntegerScanningBoundaries!public!unit tests! !
 !CompilerTest categoriesFor: #testLiteralArray!public!unit tests! !
+!CompilerTest categoriesFor: #testLiteralStringEncoding!public!unit tests! !
 !CompilerTest categoriesFor: #testNestedCopyingBlocks!public!unit tests! !
 !CompilerTest categoriesFor: #testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 !CompilerTest categoriesFor: #testRadixInteger!public!unit tests! !

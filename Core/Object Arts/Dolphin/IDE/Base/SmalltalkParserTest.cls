@@ -65,7 +65,7 @@ testCharacterScanning
 			char := subject next.
 			self assertToken: char isChar: ch.
 			self assert: subject next isEof.
-			source := ' $\x<1s> ' expandMacrosWith: i asHexString.
+			source := ' $\x<1s> ' expandMacrosWith: (i printStringRadix: 16 showRadix: false).
 			subject := self scannerClass on: source readStream.
 			char := subject next.
 			self assertToken: char isChar: ch.
