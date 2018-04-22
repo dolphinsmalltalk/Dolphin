@@ -114,7 +114,7 @@ public:
 	STDMETHOD_(POTE, NewString)( 
             /* [in] */ LPCSTR szValue,
             /* [in] */ int len);
-        
+ 
 	STDMETHOD_(Oop, NewSignedInteger)( 
             /* [in] */ SDWORD value);
         
@@ -163,6 +163,10 @@ public:
 
 	STDMETHOD_(BSTR, DebugPrintString)(
 			/* [in] */ Oop oop);
+
+	STDMETHOD_(POTE, NewUtf8String)(
+		/* [in] */ LPCSTR szValue,
+		/* [in] */ int len);
 };
 
 #ifdef VMDLL

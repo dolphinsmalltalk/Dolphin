@@ -98,7 +98,6 @@ Compiler::Compiler() :
 		m_ok(true),
 		m_oopWorkspacePools(NULL),
 		m_pCurrentScope(NULL),
-		m_piVM(NULL),
 		m_primitiveIndex(0),
 		m_selector(),
 		m_sendType(SendOther),
@@ -329,7 +328,7 @@ TempVarRef* Compiler::AddTempRef(const Str& strName, VarRefType refType, const T
 	if (pDecl->IsReadOnly() && refType > vrtRead)
 	{
 		CompileError(TEXTRANGE(range.m_start, expressionEnd), CErrAssignmentToArgument, 
-						(Oop)NewString(strName));
+						(Oop)NewUtf8String(strName));
 		return NULL;
 	}
 
@@ -346,7 +345,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const Str& name, POTE& oteStatic
 
 	Oop scope = reinterpret_cast<Oop>(m_class == nil ? GetVMPointers().ClassUndefinedObject : m_class);
 	POTE oteBinding = reinterpret_cast<POTE>(m_piVM->PerformWith(scope, GetVMPointers().fullBindingForSymbol, 
-												reinterpret_cast<Oop>(NewString(name))));
+												reinterpret_cast<Oop>(NewUtf8String(name))));
 	STVarObject* pools = NULL;
 	// Look in Workspace pools (if any) next
 	if (oteBinding == nil && m_oopWorkspacePools != nil)
@@ -629,7 +628,7 @@ inline void Compiler::GenPushStaticVariable(const Str& strName, const TEXTRANGE&
 		
 	case STATICNOTFOUND:
 	default:
-		CompileError(range, CErrUndeclared, (Oop)NewString(strName));
+		CompileError(range, CErrUndeclared, (Oop)NewUtf8String(strName));
 		return;
 	}
 
@@ -827,7 +826,7 @@ Oop Compiler::IsPushLiteral(int pos) const
 // Remember this if storing as literal or whatever
 Oop Compiler::NewNumber(LPUTF8 textvalue) const// throws SE_VMCALLBACKUNWIND
 {
-	return m_piVM->Perform((Oop)NewString(textvalue), GetVMPointers().asNumberSymbol);
+	return m_piVM->Perform((Oop)NewAnsiString(textvalue), GetVMPointers().asNumberSymbol);
 }
 
 
@@ -945,7 +944,7 @@ bool Compiler::GenPushImmediate(Oop objectPointer, const TEXTRANGE& range)
 			Oop asciiValue = pChar->fields[0];
 			_ASSERT(IsIntegerObject(asciiValue));
 			MWORD codePoint = IntegerValueOf(asciiValue);
-			if (codePoint > 255)
+			if (codePoint > 127)
 			{
 				return false;
 			}
@@ -1227,7 +1226,7 @@ int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assign
 	case STATICCONSTANT:
 		m_piVM->RemoveReference(reinterpret_cast<Oop>(oteStatic));
 		CompileError(TEXTRANGE(range.m_start, assignmentEnd),
-						CErrAssignConstant, (Oop)NewString(name));
+						CErrAssignConstant, (Oop)NewUtf8String(name));
 		break;
 
 	case STATICVARIABLE:
@@ -1245,7 +1244,7 @@ int Compiler::GenStaticStore(const Str& name, const TEXTRANGE& range, int assign
 	default:
 		if (IsPseudoVariable(name))
 			CompileError(TEXTRANGE(range.m_start, assignmentEnd), 
-						CErrAssignConstant, (Oop)NewString(name));
+						CErrAssignConstant, (Oop)NewAnsiString(name));
 		else
 			CompileError(range, CErrUndeclared);
 		break;
@@ -1739,16 +1738,27 @@ void Compiler::ParseTerm(int textPosition)
 		NextToken();
 		break;
 
-	case StringConst:
+	case AnsiStringConst:
 		{
 			LPUTF8 szLiteral = ThisTokenText();
 			POTE oteString = *szLiteral
-				? NewString(szLiteral)
+				? NewAnsiString(szLiteral)
 				: GetVMPointers().EmptyString;
             GenConstant(AddStringToFrame(oteString, ThisTokenRange()));
 			NextToken();
 		}
 		break;
+
+	case Utf8StringConst:
+	{
+		LPUTF8 szLiteral = ThisTokenText();
+		POTE oteString = *szLiteral
+			? NewUtf8String(szLiteral)
+			: GetVMPointers().EmptyString;
+		GenConstant(AddStringToFrame(oteString, ThisTokenRange()));
+		NextToken();
+	}
+	break;
 
 	case ExprConstBegin:
 		{
@@ -2390,7 +2400,8 @@ void Compiler::ParseLibCall(DolphinX::ExtCallDeclSpecs decl, int callPrim)
 	int argcount;
 	
 	TokenType tok = ThisToken();
-	if (tok != StringConst && tok != NameConst && tok != SmallIntegerConst)
+	// Function names must be ASCII, or an ordinal
+	if (tok != AnsiStringConst && tok != NameConst && tok != SmallIntegerConst)
 		CompileError(CErrExpectFnName);
 	else
 	{
@@ -2458,7 +2469,7 @@ void Compiler::ParseExternalClass(const Str& strClass, TypeDescriptor& descripto
 				NextToken();
 				if (behavior.instSpec.indirect)
 					// One level of indirection implied, cannot have 3
-					CompileError(descriptor.range, CErrNotIndirectable, (Oop)NewString(strClass));
+					CompileError(descriptor.range, CErrNotIndirectable, (Oop)NewUtf8String(strClass));
 				else
 				{
 					// Double indirections always use LPPVOID type
@@ -2610,7 +2621,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 						{
 							if (!szClass || (indirections > 1 && szClass == LPUTF8(DolphinX::ExtCallArgLPPVOID)))
 								// Cannot indirect this type
-								CompileError(TEXTRANGE(answer.range.m_start, LastTokenRange().m_stop), CErrNotIndirectable, (Oop)NewString(strToken));
+								CompileError(TEXTRANGE(answer.range.m_start, LastTokenRange().m_stop), CErrNotIndirectable, (Oop)NewUtf8String(strToken));
 
 							if (indirections > 1)
 								answer.type = DolphinX::ExtCallArgLPPVOID;
@@ -2917,11 +2928,11 @@ POTE Compiler::ParseArray()
 			}
 			break;
 			
-		case StringConst:
+		case AnsiStringConst:
 			{
 				LPUTF8 szLiteral = ThisTokenText();
 				POTE oteString = *szLiteral
-					? NewString(szLiteral)
+					? NewAnsiString(szLiteral)
 					: GetVMPointers().EmptyString;
 				Oop oopString = reinterpret_cast<Oop>(oteString);
 				elems.push_back(oopString);
@@ -2930,7 +2941,21 @@ POTE Compiler::ParseArray()
 				NextToken();
 			}
 			break;
-			
+
+		case Utf8StringConst:
+			{
+				LPUTF8 szLiteral = ThisTokenText();
+				POTE oteString = *szLiteral
+					? NewUtf8String(szLiteral)
+					: GetVMPointers().EmptyString;
+				Oop oopString = reinterpret_cast<Oop>(oteString);
+				elems.push_back(oopString);
+				m_piVM->AddReference(oopString);
+				m_piVM->MakeImmutable(oopString, TRUE);
+				NextToken();
+			}
+			break;
+
 		case ExprConstBegin:
 			{
 				Oop oopConst = ParseConstExpression();
@@ -3566,7 +3591,6 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 		else
 		{
 			prevLocale = _wcsdup(prevLocale);
-			_wsetlocale(LC_ALL, L"C");
 		}
 #endif
 		
@@ -3633,13 +3657,13 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 	int offset = GetTextOffset();
 	args.fields[4] = IntegerObjectOf(offset);
 
-	POTE sourceString = NewString(GetText());
+	POTE sourceString = NewUtf8String(GetText());
 	m_piVM->StorePointerWithValue(&args.fields[5], Oop(sourceString));
 
 	LPUTF8 selector = m_selector.c_str();
 	if (selector)
 	{
-		POTE sel = NewString(selector);
+		POTE sel = NewUtf8String(selector);
 		m_piVM->StorePointerWithValue(&args.fields[6], Oop(sel));
 	}
 	else

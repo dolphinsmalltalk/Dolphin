@@ -2103,7 +2103,7 @@ POTE Compiler::NewMethod()
 		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
 	}
 	
-	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, Oop(NewString(GetSelector())));
+	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, Oop(NewUtf8String(GetSelector())));
 	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.methodClass, Oop(m_class));
 
 #if defined(_DEBUG)

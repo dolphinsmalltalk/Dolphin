@@ -115,8 +115,10 @@ private:
 
 	// Moved from Interpreter as compiler specific (to ease removal of compiler)
 	Oop NewNumber(LPUTF8 textvalue) const;
-	POTE NewString(LPUTF8) const;
-	POTE NewString(const Str&) const;
+	POTE NewAnsiString(const char*) const;
+	POTE NewAnsiString(const Str&) const;
+	POTE NewUtf8String(LPUTF8) const;
+	POTE NewUtf8String(const Str&) const;
 	POTE InternSymbol(LPUTF8) const;
 	POTE InternSymbol(const Str&) const;
 
@@ -376,8 +378,6 @@ public:
 	STDMETHOD_(POTE, CompileForEval)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE workspacePools, FLAGS flags, Oop notifier);
 
 private:
-	IDolphin* m_piVM;
-
 	// Parse state
 	bool m_ok;								// Parse still ok? 
 	bool m_instVarsInitialized;
@@ -533,14 +533,24 @@ inline LexicalScope* Compiler::GetMethodScope() const
 
 ///////////////////////
 
-inline POTE Compiler::NewString(LPUTF8 sz) const
+inline POTE Compiler::NewAnsiString(const char* sz) const
 {
 	return m_piVM->NewString((LPCSTR)sz);
 }
 
-inline POTE Compiler::NewString(const Str& str) const
+inline POTE Compiler::NewAnsiString(const Str& str) const
 {
-	return NewString(str.c_str());
+	return NewAnsiString((LPCSTR)str.c_str());
+}
+
+inline POTE Compiler::NewUtf8String(LPUTF8 sz) const
+{
+	return m_piVM->NewUtf8String((LPCSTR)sz);
+}
+
+inline POTE Compiler::NewUtf8String(const Str& str) const
+{
+	return NewUtf8String(str.c_str());
 }
 
 inline POTE Compiler::InternSymbol(LPUTF8 sz) const

@@ -39,7 +39,7 @@ protected:
 		None, NameConst, NameColon, 
 			SmallIntegerConst, LargeIntegerConst, FloatingConst, ScaledDecimalConst, CharConst, 
 			SymbolConst, TrueConst, FalseConst, NilConst,
-			ArrayBegin, ByteArrayBegin, StringConst, ExprConstBegin, Special,
+			ArrayBegin, ByteArrayBegin, AnsiStringConst, Utf8StringConst, ExprConstBegin, Special,
 			Binary, Return, Assignment, CloseParen, CloseStatement, CloseSquare, CloseBrace, Cascade, Eof 
 	};
 	
@@ -51,7 +51,7 @@ public:
 	void PushBack(uint8_t ch);
 	VOID StepBack(int n);
 	TokenType NextToken();
-	void ScanString(int);
+	TokenType ScanString(int);
 	void ScanNumber();
 	int DigitValue(uint8_t ch) const;
 	void ScanInteger(int radix);
@@ -174,8 +174,11 @@ protected:
 
 	int CharPosition() const;
 
+	IDolphin* m_piVM;
+
 private:
 	int ReadUtf8();
+	int ReadUtf8(uint8_t ch);
 	int ReadHexCodePoint();
 	uint8_t NextChar();
 
@@ -260,7 +263,7 @@ inline void Lexer::SetTokenType(TokenType tok)
 inline uint8_t Lexer::NextChar()
 {
 	m_cc=*m_cp ? *m_cp++ : '\0';
-	if (m_cc=='\n')
+	if (m_cc == '\n')
 		m_lineno++;
 	return m_cc;
 }

@@ -33,6 +33,15 @@ CDolphinSmalltalk::~CDolphinSmalltalk()
 {
 }
 
+static Oop ExternaliseRef(Oop oop)
+{
+#ifdef _DEBUG
+	Interpreter::AddVMReference(oop);
+	ObjectMemory::countDown(oop);
+#endif
+	return oop;
+}
+
 /////////////////////////////////////////////////////////////////////
 // IDolphin
 
@@ -100,7 +109,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::Perform(
         /* [in] */ Oop receiver,
         /* [in] */ POTE selector)
 {
-	return Interpreter::perform(receiver, reinterpret_cast<SymbolOTE*>(selector));
+	return ExternaliseRef(Interpreter::perform(receiver, reinterpret_cast<SymbolOTE*>(selector)));
 }
     
 STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWith( 
@@ -108,7 +117,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWith(
         /* [in] */ POTE selector,
         /* [in] */ Oop arg)
 {
-	return Interpreter::performWith(receiver, reinterpret_cast<SymbolOTE*>(selector), arg);
+	return ExternaliseRef(Interpreter::performWith(receiver, reinterpret_cast<SymbolOTE*>(selector), arg));
 }
     
 STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWithWith( 
@@ -117,7 +126,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWithWith(
         /* [in] */ Oop arg1,
         /* [in] */ Oop arg2)
 {
-	return Interpreter::performWithWith(receiver, reinterpret_cast<SymbolOTE*>(selector), arg1, arg2);
+	return ExternaliseRef(Interpreter::performWithWith(receiver, reinterpret_cast<SymbolOTE*>(selector), arg1, arg2));
 }
     
 STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWithWithWith( 
@@ -127,7 +136,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWithWithWith(
         /* [in] */ Oop arg2,
         /* [in] */ Oop arg3)
 {
-		return Interpreter::performWithWithWith(receiver, reinterpret_cast<SymbolOTE*>(selector), arg1, arg2, arg3);
+	return ExternaliseRef(Interpreter::performWithWithWith(receiver, reinterpret_cast<SymbolOTE*>(selector), arg1, arg2, arg3));
 }
     
 STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWithArguments( 
@@ -135,7 +144,7 @@ STDMETHODIMP_(Oop) CDolphinSmalltalk::PerformWithArguments(
         /* [in] */ POTE selector,
         /* [in] */ Oop argArray)
 {
-		return Interpreter::performWithArguments(receiver, reinterpret_cast<SymbolOTE*>(selector), argArray);
+	return ExternaliseRef(Interpreter::performWithArguments(receiver, reinterpret_cast<SymbolOTE*>(selector), argArray));
 }
 
 
@@ -162,9 +171,16 @@ STDMETHODIMP_(POTE) CDolphinSmalltalk::NewString(
         /* [in] */ LPCSTR szValue,
         /* [in] */ int len)
 {
-	return (POTE)Utf8String::New(szValue, len=-1?strlen(szValue):len);
+	return (POTE)AnsiString::New(szValue, len=-1?strlen(szValue):len);
 }
     
+STDMETHODIMP_(POTE) CDolphinSmalltalk::NewUtf8String(
+	/* [in] */ LPCSTR szValue,
+	/* [in] */ int len)
+{
+	return (POTE)Utf8String::New(szValue, len = -1 ? strlen(szValue) : len);
+}
+
 STDMETHODIMP_(Oop) CDolphinSmalltalk::NewSignedInteger( 
         /* [in] */ SDWORD value)
 {

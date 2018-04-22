@@ -38,6 +38,7 @@ Lexer::Lexer()
 	m_tokenType = None;
 	tp = NULL;
 	m_locale = _create_locale(LC_ALL, "C");
+	m_piVM = nullptr;
 }
 
 Lexer::~Lexer()
@@ -363,9 +364,10 @@ void Lexer::ScanNumber()
 }
 
 // Read string up to terminating quote, ignoring embedded double quotes
-void Lexer::ScanString(int stringStart)
+Lexer::TokenType Lexer::ScanString(int stringStart)
 {
 	uint8_t ch;
+	bool isAscii = true;
 	do
 	{
 		ch = NextChar();
@@ -383,9 +385,14 @@ void Lexer::ScanString(int stringStart)
 				else
 					break;
 			}
+			else if (ch > 127)
+				isAscii = false;
+
 			*tp++ = ch;
 		}
 	} while (ch);
+
+	return isAscii ? AnsiStringConst : Utf8StringConst;
 }
 
 void Lexer::ScanName()
@@ -409,7 +416,6 @@ void Lexer::ScanQualifiedRef()
 	ScanName();
 	if (m_tokenType != NameConst)
 	{
-
 		m_tokenType = NameConst;
 	}
 	else
@@ -589,9 +595,7 @@ Lexer::TokenType Lexer::NextToken()
 			int stringStart = CharPosition();
 			// String constant; remove quote
 			tp--;
-			ScanString(stringStart);
-
-			m_tokenType = StringConst;
+			m_tokenType = ScanString(stringStart);
 		}
 
 		else if (ch == CHARLITERAL)
@@ -653,7 +657,8 @@ Lexer::TokenType Lexer::NextToken()
 		else
 		{
 			int pos = CharPosition();
-			CompileError(TEXTRANGE(pos, pos), LErrBadChar);
+			int cp = ReadUtf8(ch);
+			CompileError(TEXTRANGE(pos, pos), LErrBadChar, (Oop)m_piVM->NewCharacter(cp));
 		}
 
 		*tp = '\0';
@@ -666,11 +671,11 @@ Lexer::TokenType Lexer::NextToken()
 int Lexer::ReadUtf8()
 {
 	uint8_t ch = Step();
-	// This is one of the few places we need to be aware of UTF-8 encoding. Generally the only chars that are significant to the compiler are
-	// ascii. This would change if we decided to allow multi-lingual characters in identifiers, for example. But at present we parse only
-	// the ANSI X3J20 lexicon, which only recognises English letters, digits, and some ascii symbols and whitespace characters. That doesn't
-	// prevent the compiler successfully reading multi-lingual characters in literal strings, as they are opaque to the compiler.
+	return ReadUtf8(ch);
+}
 
+int Lexer::ReadUtf8(uint8_t ch)
+{
 	if (__isascii(ch))
 	{
 		return ch;
@@ -717,61 +722,74 @@ void Lexer::ScanLiteralCharacter()
 	m_tokenType = CharConst;
 	m_integer = 0;
 
+	// This is one of the few places we need to be aware of UTF-8 encoding. Generally the only chars that are significant to the compiler are
+	// ascii. This would change if we decided to allow multi-lingual characters in identifiers, for example. But at present we parse only
+	// the ANSI X3J20 lexicon, which only recognises English letters, digits, and some ascii symbols and whitespace characters. That doesn't
+	// prevent the compiler successfully reading multi-lingual characters in literal strings, as they are opaque to the compiler.
 	int codePoint = ReadUtf8();
 
-	if (codePoint == '\\')
+	if (codePoint == 0)
+	{
+		// Reached EOF
+		int pos = CharPosition();
+		m_thisTokenRange.m_stop = pos;
+		CompileError(LErrExpectChar);
+		return;
+	}
+	else if(codePoint == '\\')
 	{
 		// Dolphin supports an extended C-style escaped character syntax (used in many languages)
 		switch (PeekAtChar())
 		{
 		case '0':
 			Step();
-			codePoint = '\0';
-			break;
+			m_integer = '\0';
+			return;
 		case 'a':
 			Step();
-			codePoint = '\a';
-			break;
+			m_integer = '\a';
+			return;
 		case 'b':
 			Step();
-			codePoint = '\b';
-			break;
+			m_integer = '\b';
+			return;
 		case 'f':
 			Step();
-			codePoint = '\f';
-			break;
+			m_integer = '\f';
+			return;
 		case 'n':
 			Step();
-			codePoint = '\n';
-			break;
+			m_integer = '\n';
+			return;
 		case 'r':
 			Step();
-			codePoint = '\r';
-			break;
+			m_integer = '\r';
+			return;
 		case 't':
 			Step();
-			codePoint = '\t';
-			break;
+			m_integer = '\t';
+			return;
 		case 'v':
 			Step();
-			codePoint = '\v';
-			break;
+			m_integer = '\v';
+			return;
 		case 'x':
 			Step();
 			codePoint = ReadHexCodePoint();
+			if (codePoint < 0)
+			{
+				int pos = CharPosition();
+				m_thisTokenRange.m_stop = pos;
+				CompileError(LErrExpectCodePoint);
+				return;
+			}
 			break;
 		default:
 			break;
 		}
 	}
 
-	if (codePoint < 0)
-	{
-		int pos = CharPosition();
-		m_thisTokenRange.m_stop = pos;
-		CompileError(LErrExpectCodePoint);
-	}
-	else if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
+	if (codePoint > MaxCodePoint || U_IS_UNICODE_NONCHAR(codePoint))
 	{
 		int pos = CharPosition();
 		m_thisTokenRange.m_stop = pos;

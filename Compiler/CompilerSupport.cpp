@@ -59,7 +59,7 @@ POTE Compiler::FindDictVariable(POTE dict, const Str& name)// throws SE_VMCALLBA
 	// some Smalltalk (dict lookupKey: aString)
 	//
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
-	Oop stringPointer = Oop(NewString(name));
+	Oop stringPointer = Oop(NewUtf8String(name));
 	return (POTE)m_piVM->PerformWith(Oop(dict), GetVMPointers().lookupKeySymbol, stringPointer);
 }
 
@@ -70,7 +70,7 @@ POTE Compiler::DictAtPut(POTE dict, const Str& name, Oop value)// throws SE_VMCA
 
 	// SystemDictionary will convert String to Symbol in #at:put:
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
-	POTE symbolPointer = NewString(name);
+	POTE symbolPointer = NewUtf8String(name);
 	return (POTE)m_piVM->PerformWithWith(Oop(dict), atPutSelector, Oop(symbolPointer), value);
 }
 
@@ -107,7 +107,7 @@ Oop Compiler::EvaluateExpression(LPUTF8 text, POTE oteMethod, Oop contextOop, PO
 		result = reinterpret_cast<STVariableBinding*>(GetObj(reinterpret_cast<POTE>(exprMethod.aLiterals[0])))->value;
 		break;
 	default:
-		return m_piVM->PerformWithWithWith(Oop(oteMethod), GetVMPointers().evaluateExpressionSelector, Oop(NewString(text)), contextOop, Oop(pools));
+		return m_piVM->PerformWithWithWith(Oop(oteMethod), GetVMPointers().evaluateExpressionSelector, Oop(NewUtf8String(text)), contextOop, Oop(pools));
 	}
 
 	m_piVM->AddReference(result);

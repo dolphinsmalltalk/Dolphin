@@ -205,9 +205,19 @@ library DolphinVM
 		uuid(57528932-AA27-46C2-B172-B2AFD6FED643),
 		pointer_default(unique)
 	]
-	interface IDolphin : IDolphin6
+	interface IDolphin7 : IDolphin6
 	{
 		BSTR DebugPrintString([in]Oop);
+	};
+
+	[
+		object,
+		uuid(FBBF2E4A-0452-4669-812B-1BE19860A567),
+		pointer_default(unique)
+	]
+	interface IDolphin : IDolphin7
+	{
+		POTE NewUtf8String([in]LPCSTR szValue, [in, defaultvalue(-1)]int len);
 	};
 
 	// Please do not rely on any of the internal representation exposed by these inline
@@ -346,7 +356,7 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk51
 	{
-		[default] interface IDolphin;
+		[default] interface IDolphin6;
 		interface IDolphinStart3;
 	};
 
@@ -355,7 +365,7 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk60
 	{
-		[default] interface IDolphin;
+		[default] interface IDolphin6;
 		interface IDolphinStart4;
 	};
 
@@ -364,7 +374,7 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk61
 	{
-		[default] interface IDolphin;
+		[default] interface IDolphin6;
 		interface IDolphinStart4;
 	};
 
@@ -373,7 +383,7 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk62
 	{
-		[default] interface IDolphin;
+		[default] interface IDolphin6;
 		interface IDolphinStart4;
 	};
 
@@ -382,7 +392,7 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk70
 	{
-		[default] interface IDolphin;
+		[default] interface IDolphin6;
 		interface IDolphinStart4;
 	};
 
