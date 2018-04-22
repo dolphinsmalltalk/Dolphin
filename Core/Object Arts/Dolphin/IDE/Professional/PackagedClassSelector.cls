@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassSelector subclass: #PackagedClassSelector
 	instanceVariableNames: 'packagesPresenter'
@@ -70,7 +70,7 @@ newClass
 	aClass := self selectionOrNil.
 	package := self packagesPresenter singlePackage 
 				ifNil: [aClass isNil ifFalse: [aClass owningPackage]].
-	(self systemModel createSubclassOf: (aClass ifNil: [Object]) inPackage: package) 
+	(self systemModel createSubclassOf: (aClass ?? Object) inPackage: package) 
 		ifNotNil: 
 			[:newClass | 
 			self updateClasses.

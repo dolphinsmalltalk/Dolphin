@@ -194,7 +194,7 @@ browseTests
 buildTestSuite
 	| packages suite parentEnvironment testEnvironment classSelections |
 	packages := self selectionEnvironment.
-	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: classSelections).
+	suite := TestSuite named: ('Tests in <1p>' expandMacrosWith: packages).
 	classSelections := TestCase allSubclasses 
 				select: [:eachClass | eachClass isAbstract not and: [packages includesClass: eachClass]].
 	parentEnvironment := ClassEnvironment new classes: classSelections.
