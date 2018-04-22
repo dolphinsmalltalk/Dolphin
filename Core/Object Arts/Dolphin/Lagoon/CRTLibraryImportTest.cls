@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
@@ -46,7 +46,7 @@ testStubCrtExports
 			[| unexported |
 			procs := (CRTLibrary selectMethods: [:each | each isExternalCall])
 						collect: [:each | each functionName].
-			missing := procs select: [:each | (l getProcAddress: each ifAbsent: []) isNil].
+			missing := procs select: [:each | (l getProcAddress: each asAnsiString ifAbsent: []) isNil].
 			unexported := missing difference: expected.
 			self assert: unexported isEmpty
 				description: 
