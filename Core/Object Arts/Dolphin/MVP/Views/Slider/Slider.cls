@@ -312,11 +312,6 @@ tbmSetToolTips: aHandle
 
 	^self sendMessage: TBM_SETTOOLTIPS wParam: aHandle!
 
-tbmSetUnicodeFormat: aBoolean 
-	"Private - Set the UNICODE character format for the control"
-
-	^self sendMessage: TBM_SETUNICODEFORMAT wParam: aBoolean asParameter!
-
 thumbLength
 	"Answer the length, in pixels, of the thumb, or nil if the thumb metrics are left up to the control."
 
@@ -438,7 +433,6 @@ tickStyle: aSymbol
 !Slider categoriesFor: #tbmSetBuddy:handle:!helpers!private! !
 !Slider categoriesFor: #tbmSetTipSide:!helpers!private! !
 !Slider categoriesFor: #tbmSetToolTips:!helpers!private! !
-!Slider categoriesFor: #tbmSetUnicodeFormat:!helpers!private! !
 !Slider categoriesFor: #thumbLength!accessing!public! !
 !Slider categoriesFor: #thumbLength:!accessing!public! !
 !Slider categoriesFor: #thumbRectangle!accessing!public! !
