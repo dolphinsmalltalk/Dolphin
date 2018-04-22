@@ -399,7 +399,7 @@ scanLiteralArrayToken
 	token := StLiteralArrayToken
 				start: tokenStart
 				comments: nil
-				value: (String with: $# with: currentCharacter).
+				value: (AnsiString with: $# with: currentCharacter).
 	self step.
 	^token!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AbstractParserErrorTest
 	instanceVariableNames: ''
@@ -849,7 +849,7 @@ testErrorsInvalidExpressionStart
 testErrorsLexicalBadChar
 	"Non-ascii letters"
 
-	(Array with: (Character value: 128)) , ((Character byteCharacterSet select: [:each | each isLetter])
+	{$\x80. Character dolphin} , ((Character byteCharacterSet select: [:each | each isLetter])
 				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 		do: 
 			[:each |
