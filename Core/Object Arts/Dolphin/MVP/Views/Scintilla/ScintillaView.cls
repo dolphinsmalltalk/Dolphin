@@ -842,7 +842,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 	aCollectionOfScintillaAnnotations isEmpty ifTrue: [^#()].
 	currentLine := 0.
 	"We need a pair of stream buffers to build the annotation text and styles for a line"
-	text := Utf8String writeStream.
+	text := String writeStream.
 	styleBytes := ByteArray writeStream.
 	firstInLine := true.
 	rawAnnotations := OrderedCollection new.
@@ -8780,7 +8780,7 @@ scnAutoCSelection: pSCNotification
 	struct := SCNotification fromAddress: pSCNotification.
 	self presenter trigger: #autoComplete:startingAt:accept:
 		withArguments: (Array 
-				with: struct text
+				with: (self stringClass fromAddress: struct text)
 				with: struct scPosition + 1
 				with: accept).
 	accept value ifFalse: [self cancelAutoCompletion].
@@ -9116,7 +9116,7 @@ scnURIDropped: pSCNotification
 
 	^0!
 
-scnUserListSelection: anExternalAddress 
+scnUserListSelection: anExternalAddress
 	"Private - Respond to SCN_USERLISTSELECTION notification. The 'message', 'wParam',
 	'lParam' and 'text' fields of the notification structure are set (though note that
 	the message and lParam fields are always zero).
@@ -9124,12 +9124,13 @@ scnUserListSelection: anExternalAddress
 		'User has selected an item in a user list. The list type is available in wParam and the text chosen in text.'
 	"
 
-	| struct |
+	| struct text |
 	struct := SCNotification fromAddress: anExternalAddress.
-	self presenter 
+	text := self stringClass fromAddress: struct text.
+	self presenter
 		trigger: #userList:selection:
 		with: struct wParam
-		with: struct text.
+		with: text.
 	^0!
 
 scnZoom: anExternalAddress 
@@ -9958,10 +9959,10 @@ stylerClass
 
 	^self styler class!
 
-stylerClass: aScintillaStylerClass 
+stylerClass: aScintillaStylerClass
 	"Set the class of the receiver's dynamic styler, replacing the styler with a new instance of the specified class."
 
-	self styler: (aScintillaStylerClass ifNil: [NullScintillaStyler]) new!
+	self styler: (aScintillaStylerClass ?? NullScintillaStyler) new!
 
 styleUnderCaret
 	"Answer a <ScintillaTextStyle> representing the style of the character under the caret."

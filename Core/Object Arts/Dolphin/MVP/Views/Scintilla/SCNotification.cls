@@ -14,12 +14,12 @@ Note that the ''text'' field is not null terminated (the number of characters is
 !SCNotification methodsFor!
 
 annotationLinesAdded
-	"Answer the receiver's annotationLinesAdded field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'annotationLinesAdded' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #annotationLinesAdded)!
 
 ch
-	"Answer the receiver's ch field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ch' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #ch)!
 
@@ -29,12 +29,12 @@ character
 	^Character codePoint: self ch!
 
 foldLevelNow
-	"Answer the receiver's foldLevelNow field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'foldLevelNow' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #foldLevelNow)!
 
 foldLevelPrev
-	"Answer the receiver's foldLevelPrev field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'foldLevelPrev' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #foldLevelPrev)!
 
@@ -143,7 +143,7 @@ isShiftDown
 	^self modifiers allMask: SCMOD_SHIFT!
 
 length
-	"Answer the receiver's length field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'length' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #length)!
 
@@ -153,42 +153,42 @@ line
 	^self scLine + 1!
 
 linesAdded
-	"Answer the receiver's linesAdded field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'linesAdded' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #linesAdded)!
 
 listCompletionMethod
-	"Answer the receiver's listCompletionMethod field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'listCompletionMethod' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #listCompletionMethod)!
 
 listType
-	"Answer the receiver's listType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'listType' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #listType)!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #lParam)!
 
 margin
-	"Answer the receiver's margin field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'margin' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #margin)!
 
 message
-	"Answer the receiver's message field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'message' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #message)!
 
 modificationType
-	"Answer the receiver's modificationType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'modificationType' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #modificationType)!
 
 modifiers
-	"Answer the receiver's modifiers field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'modifiers' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #modifiers)!
 
@@ -201,47 +201,42 @@ position
 	^self scPosition + 1!
 
 scLine
-	"Answer the receiver's scLine field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'scLine' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #scLine)!
 
 scPosition
-	"Answer the receiver's scPosition field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'scPosition' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #scPosition)!
 
 text
-	"Answer the receiver's text field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'text' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #text))!
-
-text: anObject 
-	"Set the receiver's text field to the value of anObject."
-
-	bytes uintPtrAtOffset: ##(self offsetOf: #text) put: anObject yourAddress!
+	^bytes uintPtrAtOffset: ##(self offsetOf: #text)!
 
 token
-	"Answer the receiver's token field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'token' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #token)!
 
 updated
-	"Answer the receiver's updated field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'updated' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #updated)!
 
 wParam
-	"Answer the receiver's wParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #wParam)!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #x)!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #y)! !
 !SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
@@ -268,7 +263,6 @@ y
 !SCNotification categoriesFor: #scLine!**compiled accessors**!public! !
 !SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
 !SCNotification categoriesFor: #text!**compiled accessors**!public! !
-!SCNotification categoriesFor: #text:!**compiled accessors**!public! !
 !SCNotification categoriesFor: #token!**compiled accessors**!public! !
 !SCNotification categoriesFor: #updated!**compiled accessors**!public! !
 !SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
@@ -288,7 +282,7 @@ defineFields
 		defineField: #ch type: SDWORDField readOnly;
 		defineField: #modifiers type: SDWORDField readOnly;
 		defineField: #modificationType type: SDWORDField readOnly;
-		defineField: #text type: (PointerField type: String);
+		defineField: #text type: UINT_PTRField  readOnly;
 		defineField: #length type: INT_PTRField readOnly;
 		defineField: #linesAdded type: INT_PTRField readOnly;
 		defineField: #message type: SDWORDField readOnly;

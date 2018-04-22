@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor reserved1 reserved2 reserved3 reserved4'
@@ -39,7 +39,7 @@ alpha: anInteger
 alphaValue
 	"Private - Answer the integer alpha value to be passed to Scintilla"
 
-	^self alpha ifNil: [SC_ALPHA_NOALPHA]!
+	^self alpha ?? SC_ALPHA_NOALPHA!
 
 backcolor
 	^self basicBackcolor ifNotNil: [:rgbVal | RGB fromInteger: rgbVal]!
