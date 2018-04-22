@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #MemoryMappedFileTest
 	instanceVariableNames: ''
@@ -74,7 +74,7 @@ testReadOnly
 	| fname file mmf view data |
 	fname := File temporaryFilename.
 	data := 'Blah blah'.
-	file := FileStream write: fname.
+	file := FileStream write: fname type: #ansi.
 	file nextPutAll: data.
 	file close.
 	mmf := MemoryMappedFile open: fname mode: #read.

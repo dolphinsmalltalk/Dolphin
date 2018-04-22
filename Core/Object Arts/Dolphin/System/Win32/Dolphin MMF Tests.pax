@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin MMF Tests'.
 package paxVersion: 1;
 	basicComment: 'Tests for the Dolphin Memory-Mapped Files Package
@@ -22,6 +22,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: '..\..\Base\Dolphin Base Tests';
 	add: 'Dolphin Memory-Mapped Files';
+	add: '..\Random\Dolphin Random Stream';
 	yourself).
 
 package!
