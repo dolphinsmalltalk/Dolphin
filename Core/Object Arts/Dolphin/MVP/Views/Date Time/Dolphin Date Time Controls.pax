@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Date Time Controls'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Date & Time Common Controls.

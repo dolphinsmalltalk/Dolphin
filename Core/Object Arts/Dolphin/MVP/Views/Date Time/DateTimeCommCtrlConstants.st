@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #DateTimeCommCtrlConstants put: (PoolConstantsDictionary named: #DateTimeCommCtrlConstants)!
 DateTimeCommCtrlConstants at: 'DTM_GETMCCOLOR' put: 16r1007!
@@ -6,7 +6,7 @@ DateTimeCommCtrlConstants at: 'DTM_GETMCFONT' put: 16r100A!
 DateTimeCommCtrlConstants at: 'DTM_GETMONTHCAL' put: 16r1008!
 DateTimeCommCtrlConstants at: 'DTM_GETRANGE' put: 16r1003!
 DateTimeCommCtrlConstants at: 'DTM_GETSYSTEMTIME' put: 16r1001!
-DateTimeCommCtrlConstants at: 'DTM_SETFORMAT' put: 16r1005!
+DateTimeCommCtrlConstants at: 'DTM_SETFORMATW' put: 16r1032!
 DateTimeCommCtrlConstants at: 'DTM_SETMCCOLOR' put: 16r1006!
 DateTimeCommCtrlConstants at: 'DTM_SETMCFONT' put: 16r1009!
 DateTimeCommCtrlConstants at: 'DTM_SETRANGE' put: 16r1004!

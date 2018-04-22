@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DateTimeCommonControl subclass: #DateTimePicker
 	instanceVariableNames: 'displayFormat'
@@ -51,7 +51,7 @@ displayFormat: aStringOrNil
 dtmSetFormat: aStringFormat
 	"Set the display format of the receiver to aStringFormat"
 
-	self sendMessage: DTM_SETFORMAT wParam: 0 lpParam: aStringFormat asParameter.!
+	self sendMessage: DTM_SETFORMATW wParam: 0 lpParam: aStringFormat asUtf16String.!
 
 dtmSetSystemTime: wFlags lpSysTime: aSYSTEMTIME
 	"Set the receivers system time to aSYSTEMTIME or set it to none if the argument is nil."
