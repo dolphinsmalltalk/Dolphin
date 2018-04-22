@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ProcessTest
 	instanceVariableNames: ''
@@ -16,12 +16,12 @@ assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sou
 	self assert: copyBlockClosure isKindOf: BlockClosure.
 	self assert: srcBlockClosure isKindOf: BlockClosure.
 	srcBlockClosure isClean
-		ifTrue: [self assert: copyBlockClosure sameAs: srcBlockClosure]
+		ifTrue: [self assert: copyBlockClosure identicalTo: srcBlockClosure]
 		ifFalse: 
-			[self deny: copyBlockClosure sameAs: srcBlockClosure.
+			[self deny: copyBlockClosure identicalTo: srcBlockClosure.
 			self assert: copyBlockClosure initialIP equals: srcBlockClosure initialIP.
-			self assert: copyBlockClosure method sameAs: srcBlockClosure method.
-			self assert: copyBlockClosure argumentCount sameAs: srcBlockClosure argumentCount.
+			self assert: copyBlockClosure method identicalTo: srcBlockClosure method.
+			self assert: copyBlockClosure argumentCount identicalTo: srcBlockClosure argumentCount.
 			self
 				assert: ((copyBlockClosure outer isNil and: [srcBlockClosure outer isNil]) or: 
 							[| copyOuter srcOuter |

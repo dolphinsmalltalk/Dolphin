@@ -43,7 +43,7 @@ testAnsiStringRoundTrip
 	ansiAll := Character byteCharacterSet.
 	utf := self assimilateString: ansiAll.
 	ansi := utf asAnsiString.
-	self assert: ansi class sameAs: AnsiString.
+	self assert: ansi class identicalTo: AnsiString.
 	self assert: ansi size equals: 256.
 	self assert: ansi equals: ansiAll!
 

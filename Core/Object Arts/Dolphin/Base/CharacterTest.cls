@@ -24,11 +24,11 @@ testAsciiValue
 	self should: [Character dolphin asciiValue] raise: Error!
 
 testAsLowercase
-	self assert: $a asLowercase sameAs: $a.
-	self assert: $A asLowercase sameAs: $a.
-	self assert: $\0 asLowercase sameAs: $\0.
+	self assert: $a asLowercase identicalTo: $a.
+	self assert: $A asLowercase identicalTo: $a.
+	self assert: $\0 asLowercase identicalTo: $\0.
 	"Euro symbol - still a unique ANSI encoded char"
-	self assert: (Character ansiValue: 128) asLowercase sameAs: (Character ansiValue: 128).
+	self assert: (Character ansiValue: 128) asLowercase identicalTo: (Character ansiValue: 128).
 	"Turkish, but 8-bit"
 	self assert: (Character codePoint: 16rC7) asLowercase equals: (Character codePoint: 16rE7).
 	"Cyrillic, 16-bit"
@@ -43,11 +43,11 @@ testAsLowercase
 testAsUppercase
 	"Ascii chars have unique instances in the ANSI set"
 
-	self assert: $A asUppercase sameAs: $A.
-	self assert: $a asUppercase sameAs: $A.
-	self assert: $\0 asUppercase sameAs: $\0.
+	self assert: $A asUppercase identicalTo: $A.
+	self assert: $a asUppercase identicalTo: $A.
+	self assert: $\0 asUppercase identicalTo: $\0.
 	"Euro symbol - still a unique ANSI encoded char"
-	self assert: (Character ansiValue: 128) asUppercase sameAs: (Character ansiValue: 128).
+	self assert: (Character ansiValue: 128) asUppercase identicalTo: (Character ansiValue: 128).
 	"Turkish, but 8-bit"
 	self assert: (Character codePoint: 16rE7) asUppercase equals: (Character codePoint: 16rC7).
 	"Cyrillic, 16-bit"
@@ -82,16 +82,16 @@ testAsUtf8String
 testClassCodePoint
 	| ch |
 	ch := Character codePoint: 0.
-	self assert: ch sameAs: $\0.
+	self assert: ch identicalTo: $\0.
 	ch := Character codePoint: 127.
-	self assert: ch sameAs: $\x7F.
+	self assert: ch identicalTo: $\x7F.
 	ch := Character codePoint: 128.
 	self assert: ch encoding equals: #utf32.
 	"Euro symbol"
 	ch := Character codePoint: 16r20AC.
 	self assert: ch codePoint equals: 16r20AC.
 	self assert: ch encoding equals: #ansi.
-	self assert: ch sameAs: ((AnsiString fromByteArray: #[128]) at: 1).
+	self assert: ch identicalTo: ((AnsiString fromByteArray: #[128]) at: 1).
 	ch := Character codePoint: 16r1F42C.
 	self assert: ch codePoint equals: 16r1F42C.
 	self assert: ch encoding equals: #utf32.
@@ -138,9 +138,9 @@ testEquals
 	self deny: (Character utf8Value: 16r80) equals: (Character codePoint: 16r80)!
 
 testIdentity
-	self assert: $a sameAs: (Character codePoint: 97).
-	self assert: (Character codePoint: 255) sameAs: (Character codePoint: 255).
-	self deny: (Character codePoint: 256) sameAs: (Character codePoint: 256)!
+	self assert: $a identicalTo: (Character codePoint: 97).
+	self assert: (Character codePoint: 255) identicalTo: (Character codePoint: 255).
+	self deny: (Character codePoint: 256) identicalTo: (Character codePoint: 256)!
 
 testIsAlphaNumeric
 	self assert: $a isAlphaNumeric.

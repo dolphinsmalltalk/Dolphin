@@ -722,19 +722,19 @@ testResize
 	| subject actual original |
 	subject := self newCollection: #().
 	actual := subject resize: 0.
-	self assert: actual sameAs: subject.
+	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self newCollection: #()).
 	actual := subject resize: 1.
 	self assert: subject size equals: 1.
-	self assert: actual sameAs: subject.
+	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self collectionClass ofSize: 1).
 	actual := subject resize: 0.
 	self assert: subject size equals: 0.
-	self assert: actual sameAs: subject.
+	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self collectionClass ofSize: 0).
 	actual := subject resize: 2.
 	self assert: subject size equals: 2.
-	self assert: actual sameAs: subject.
+	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self collectionClass ofSize: 2).
 	original := self newCollection: #($a).
 	subject := original copy.

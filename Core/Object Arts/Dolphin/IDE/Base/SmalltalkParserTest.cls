@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SmalltalkParserTest
 	instanceVariableNames: ''
@@ -12,7 +12,9 @@ SmalltalkParserTest comment: 'SUnitBrowser openOnTestCase: self'!
 
 assertToken: aStToken isChar: aCharacter
 	self assert: aStToken isLiteralToken.
-	self assert: aStToken value == aCharacter!
+	aCharacter codePoint < 16r80
+		ifTrue: [self assert: aStToken value identicalTo: aCharacter]
+		ifFalse: [self assert: aStToken value equals: aCharacter]!
 
 parserClass
 	^SmalltalkParser!
@@ -203,7 +205,7 @@ testFloatScanning
 			self assert: actual equals: expected].
 
 	"Integer terminated by a period, not a float"
-	self assert: (self scannerClass on: '5.' readStream) next value sameAs: 5.
+	self assert: (self scannerClass on: '5.' readStream) next value identicalTo: 5.
 	self assert: (self scannerClass on: '1.0e-316' readStream) next value equals: 10.0 ** -316.
 
 	"Test termination on non-numeric character - these expressions are in error"

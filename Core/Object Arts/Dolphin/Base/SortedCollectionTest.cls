@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 OrderedCollectionTest subclass: #SortedCollectionTest
 	instanceVariableNames: ''
@@ -45,11 +45,11 @@ testResize
 	| subject actual |
 	subject := self newCollection: #().
 	actual := subject resize: 0.
-	self assert: actual sameAs: subject.
+	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self newCollection: #()).
 	subject := self newCollection: #($c $a $b).
 	actual := subject resize: 2.
-	self assert: actual sameAs: subject.
+	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self newCollection: #($a $b)).
 	self shouldnt: [subject resize: 3] implement: #resize:!
 

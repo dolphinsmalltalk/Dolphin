@@ -43,7 +43,7 @@ testAdd
 	self assert: (section keys noDifference: newValues keys).
 	self assert: (section values noDifference: newValues values).
 	assoc := 'Key1' -> 'Modified1'.
-	self assert: (section add: assoc) sameAs: assoc.
+	self assert: (section add: assoc) identicalTo: assoc.
 	self assert: (section associationAt: assoc key) equals: assoc.
 	section add: '' -> 'Modified2'.
 	section add: 'Key4' -> 'Added'.
@@ -81,7 +81,7 @@ testAtIfAbsentPut
 				yourself.
 	section := subject at: 'Section1'.
 	self assert: (subject at: 'Section1' ifAbsentPut: [newValues]) equals: section.
-	self assert: (subject at: 'S5' ifAbsentPut: [newValues]) sameAs: newValues.
+	self assert: (subject at: 'S5' ifAbsentPut: [newValues]) identicalTo: newValues.
 	self assert: (subject at: 'S5') associations equals: newValues associations asArray!
 
 testAtPut

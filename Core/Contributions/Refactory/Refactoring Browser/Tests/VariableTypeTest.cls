@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #VariableTypeTest
 	instanceVariableNames: ''
@@ -43,7 +43,7 @@ testLintRuleTypes
 	typer := RefactoryTyper new.
 	types := typer guessTypesFor: 'name' in: LintRuleTest.
 	self assert: types size = 1.
-	self assert: (types includes: (typer model classFor: String))!
+	self assert: (types includes: (typer model classFor: Utf8String))!
 
 testParseTreeTypes
 	| types model |
