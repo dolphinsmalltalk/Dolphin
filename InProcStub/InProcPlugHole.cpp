@@ -15,7 +15,7 @@
 CInProcPlugHole::CInProcPlugHole() : m_hDolphinThread(NULL), m_piMarshalledPeer(NULL), m_dwVMStarterId(0), 
 	m_pImageData(NULL), m_cImageSize(0)
 {
-	TRACE("%#x: CInProcPlugHole %#x instantiated\n", GetCurrentThreadId(), this);
+	TRACE(L"%#x: CInProcPlugHole %#x instantiated\n", GetCurrentThreadId(), this);
 
 	achImagePath[0] = 0;
 	m_hPeerAvailable = ::CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -23,7 +23,7 @@ CInProcPlugHole::CInProcPlugHole() : m_hDolphinThread(NULL), m_piMarshalledPeer(
 
 CInProcPlugHole::~CInProcPlugHole()
 {
-	TRACE("%#x: ~CInProcPlugHole(%s)\n", GetCurrentThreadId(), GetImagePath());
+	TRACE(L"%#x: ~CInProcPlugHole(%s)\n", GetCurrentThreadId(), GetImagePath());
 	ReleasePeer();
 	::CloseHandle(m_hPeerAvailable);
 }
@@ -51,9 +51,9 @@ void CInProcPlugHole::WaitForPeerToStart() const
 	#ifdef _DEBUG
 	{
 		if (m_piMarshalledPeer == NULL)
-			TRACE("%#x: WaitForPeerToStart: Peer failed to connect %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
+			TRACE("L%#x: WaitForPeerToStart: Peer failed to connect %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
 		else
-			TRACE("%#x: WaitForPeerToStart: Peer connected after %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
+			TRACE("L%#x: WaitForPeerToStart: Peer connected after %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
 	}
 	#endif
 
@@ -68,13 +68,13 @@ HRESULT CInProcPlugHole::StartVM(CLSCTX ctx)
 
 	// 2: Start the VM passing it the plug hole to the plug-in
 
-	TRACE("%#x: StartVM(%s, %d, %#x)\n", GetCurrentThreadId(), achImagePath, m_pImageData, ctx);
+	TRACE(L"%#x: StartVM(%s, %d, %#x)\n", GetCurrentThreadId(), achImagePath, m_pImageData, ctx);
 
 	IUnknown* piPlugHole;
 	HRESULT hr = static_cast<CComObject<CInProcPlugHole>*>(this)->QueryInterface(&piPlugHole);
 	if (FAILED(hr))
 	{
-		trace("Failed to locate plug hole interface (%#x)\n", hr);
+		trace(L"Failed to locate plug hole interface (%#x)\n", hr);
 		return hr;
 	}
 
@@ -89,7 +89,7 @@ HRESULT CInProcPlugHole::StartVM(CLSCTX ctx)
 	if (FAILED(hr))
 		return hr;
 
-	TRACE("%#x: Started Dolphin main thread %#x...\n", GetCurrentThreadId(), m_hDolphinThread);
+	TRACE(L"%#x: Started Dolphin main thread %#x...\n", GetCurrentThreadId(), m_hDolphinThread);
 
 	return S_OK;
 }
@@ -107,7 +107,7 @@ IIPDolphinPtr CInProcPlugHole::GetPeerForCurrentThread()
 	IIPDolphinPtr& piPeer = m_mapPeers[CoGetCurrentProcess()];
 	if (piPeer == NULL)
 	{
-		TRACE("%#x: New peer requested for COM thread id %#x\n", GetCurrentThreadId(), CoGetCurrentProcess());
+		TRACE(L"%#x: New peer requested for COM thread id %#x\n", GetCurrentThreadId(), CoGetCurrentProcess());
 
 		LARGE_INTEGER pos;
 		pos.QuadPart = 0;
@@ -171,14 +171,14 @@ DWORD CInProcPlugHole::WaitForPeerToTerminate()
 		if (SUCCEEDED(hr))
 		{
 			::GetExitCodeThread(m_hDolphinThread, &dwExitCode);
-			TRACE("%#x: Dolphin thread %p exited with code %d\n", GetCurrentThreadId(), m_hDolphinThread, dwExitCode);
+			TRACE(L"%#x: Dolphin thread %p exited with code %d\n", GetCurrentThreadId(), m_hDolphinThread, dwExitCode);
 
 			// Note that we can't release the last ref to the peer, because it is held
 			// by the image, which has now completely shut down
 		}
 		else
 		{
-			trace("%#x: Dolphin thread %p failed to exit (%#x)\n", GetCurrentThreadId(), m_hDolphinThread, hr);
+			trace(L"%#x: Dolphin thread %p failed to exit (%#x)\n", GetCurrentThreadId(), m_hDolphinThread, hr);
 		}
 
 		::CloseHandle(m_hDolphinThread);
@@ -187,9 +187,9 @@ DWORD CInProcPlugHole::WaitForPeerToTerminate()
 	return dwExitCode;
 }
 
-void CInProcPlugHole::SetImageInfo(LPCSTR szImagePath, LPVOID imageData, DWORD imageSize)
+void CInProcPlugHole::SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, DWORD imageSize)
 {
-	strcpy(achImagePath, szImagePath);
+	wcscpy(achImagePath, szImagePath);
 	m_pImageData = imageData;
 	m_cImageSize = imageSize;
 }
@@ -201,7 +201,7 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 
 	// Find a suitable image if one has not already been specified and a CLSID is available 
 	// to look up in the registry for an Image subkey.
-	if (strlen(achImagePath) == 0)
+	if (wcslen(achImagePath) == 0)
 	{
 		// The stub is being used to load a standard Dolphin image, rather than one bound 
 		// up with the stub, so we have to look up the image to load in the registry
@@ -210,16 +210,15 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 		if (SUCCEEDED(hr))
 		{
 
-			LPCSTR szCLSID = W2A(wszCLSID);
-			char szKey[5+1+38+1+5+1] = "CLSID\\";
-			strcat(szKey, szCLSID);
-			strcat(szKey, "\\Image");
-			_ASSERTE(strlen(szKey) < sizeof(szKey));
+			wchar_t szKey[5+1+38+1+5+1] = L"CLSID\\";
+			wcscat(szKey, wszCLSID);
+			wcscat(szKey, L"\\Image");
+			_ASSERTE(wcslen(szKey) < sizeof(szKey));
 			CRegKey rKey;
 			if (ERROR_SUCCESS == rKey.Open(HKEY_CLASSES_ROOT, szKey))
 			{
 				DWORD dwChars = _MAX_PATH;
-				rKey.QueryStringValue("", achImagePath, &dwChars);
+				rKey.QueryStringValue(L"", achImagePath, &dwChars);
 			}
 			CoTaskMemFree(wszCLSID);
 		}
@@ -288,7 +287,7 @@ HRESULT CInProcPlugHole::GetPeer(IIPDolphin** ppiPeer, REFCLSID rclsid, CLSCTX c
 {
 	_ASSERTE(!m_hDolphinThread);
 	
-	TRACE("%#x: GetPeer(%s@%d, %#x)\n", GetCurrentThreadId(), achImagePath, m_pImageData, ctx);
+	TRACE(L"%#x: GetPeer(%s@%d, %#x)\n", GetCurrentThreadId(), achImagePath, m_pImageData, ctx);
 
 	HRESULT hr = S_OK;
 
@@ -319,7 +318,7 @@ HRESULT CInProcPlugHole::Shutdown()
 	// No we actually seem to get it from each, but only the first will be
 	// acted upon.
 
-	TRACE("%#x: Shutdown(%s)\n", GetCurrentThreadId(), GetImagePath());
+	TRACE(L"%#x: Shutdown(%s)\n", GetCurrentThreadId(), GetImagePath());
 	
 	IIPDolphinPtr piPeer;
 	{
@@ -329,7 +328,7 @@ HRESULT CInProcPlugHole::Shutdown()
 			ReleasePeer();
 		else
 		{
-			TRACE("%#x: CInProcPlugHole(%s)::Shutdown() thread %#x: No peer available\n", GetCurrentThreadId(), GetImagePath());
+			TRACE(L"%#x: CInProcPlugHole(%s)::Shutdown() thread %#x: No peer available\n", GetCurrentThreadId(), GetImagePath());
 			return 0;
 		}
 	}
@@ -337,7 +336,7 @@ HRESULT CInProcPlugHole::Shutdown()
 	_ASSERTE(piPeer != NULL);
 
 	HRESULT hr = piPeer->OnShutdown();
-	TRACE("%#x: Shutdown() peer shutdown request returned %#x\n", GetCurrentThreadId(), hr);
+	TRACE(L"%#x: Shutdown() peer shutdown request returned %#x\n", GetCurrentThreadId(), hr);
 
 	piPeer.Release();
 
@@ -348,7 +347,7 @@ HRESULT CInProcPlugHole::Shutdown()
 
 HRESULT CInProcPlugHole::RegisterServer()
 {
-	TRACE("%#x: RegisterServer(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
+	TRACE(L"%#x: RegisterServer(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
 
 	// Only attempt to register the image classes if bound to the stub
 	if (m_pImageData == NULL)
@@ -358,21 +357,21 @@ HRESULT CInProcPlugHole::RegisterServer()
 	HRESULT hr = GetPeer(&piPeer);
 	if (FAILED(hr))
 	{
-		trace("%#x: CInProcPlugHole(%s)::RegisterServer() No peer available\n", GetCurrentThreadId(), GetImagePath());
+		trace(L"%#x: CInProcPlugHole(%s)::RegisterServer() No peer available\n", GetCurrentThreadId(), GetImagePath());
 		return hr;
 	}
 
 	_ASSERTE(piPeer != NULL);
 
 	hr = piPeer->RegisterServer();
-	TRACE("RegisterServer() request returned %#x\n", hr);
+	TRACE(L"RegisterServer() request returned %#x\n", hr);
 
 	return hr;
 }
 
 HRESULT CInProcPlugHole::UnregisterServer()
 {
-	TRACE("%#x: UnregisterServer(%s)\n", GetCurrentThreadId(), GetImagePath());
+	TRACE(L"%#x: UnregisterServer(%s)\n", GetCurrentThreadId(), GetImagePath());
 
 	// Only attempt to unregister the image classes if bound to the stub
 	if (m_pImageData == NULL)
@@ -382,47 +381,47 @@ HRESULT CInProcPlugHole::UnregisterServer()
 	HRESULT hr = GetPeer(&piPeer);
 	if (FAILED(hr))
 	{
-		trace("%#x: CInProcPlugHole(%s)::UnregisterServer() No peer available\n", GetCurrentThreadId(), GetImagePath());
+		trace(L"%#x: CInProcPlugHole(%s)::UnregisterServer() No peer available\n", GetCurrentThreadId(), GetImagePath());
 		return hr;
 	}
 
 	hr = piPeer->UnregisterServer();
-	TRACE("%#x: UnregisterServer() request returned %#x\n", GetCurrentThreadId(), hr);
+	TRACE(L"%#x: UnregisterServer() request returned %#x\n", GetCurrentThreadId(), hr);
 
 	return hr;
 }
 
 HRESULT CInProcPlugHole::CanUnloadNow()
 {
-	TRACE("%#x: CanUnloadNow(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
+	TRACE(L"%#x: CanUnloadNow(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
 	
 	IIPDolphinPtr piPeer = GetPeerNoWait();
 	if (piPeer == NULL)
 	{
-		TRACE("%#x: CInProcPlugHole(%s)::CanUnloadNow() No peer available\n", GetCurrentThreadId(), GetImagePath());
+		TRACE(L"%#x: CInProcPlugHole(%s)::CanUnloadNow() No peer available\n", GetCurrentThreadId(), GetImagePath());
 		return S_OK;
 	}
 
 	HRESULT hr = piPeer->CanUnloadNow();
-	TRACE("%#x: CanUnloadNow() request returned %d\n", GetCurrentThreadId(), hr);
+	TRACE(L"%#x: CanUnloadNow() request returned %d\n", GetCurrentThreadId(), hr);
 
 	return hr;
 }
 
 HRESULT CInProcPlugHole::GetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
-	TRACE("%#x: GetClassObject(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
+	TRACE(L"%#x: GetClassObject(%s) thread %#x\n", GetCurrentThreadId(), GetImagePath());
 	
 	IIPDolphinPtr piPeer;
 	HRESULT hr = GetPeer(&piPeer, rclsid);
 	if (FAILED(hr))
 	{
-		trace("%#x: CInProcPlugHole(%s)::GetClassObject() thread %#x: No peer available\n", GetCurrentThreadId(), GetImagePath());
+		trace(L"%#x: CInProcPlugHole(%s)::GetClassObject() thread %#x: No peer available\n", GetCurrentThreadId(), GetImagePath());
 		return hr;
 	}
 
 	hr = piPeer->GetClassObject(rclsid, riid, ppv);
-	TRACE("%#x: GetClassObject() request returned %d\n", GetCurrentThreadId(), hr);
+	TRACE(L"%#x: GetClassObject() request returned %d\n", GetCurrentThreadId(), hr);
 
 	return hr;
 }
@@ -439,7 +438,7 @@ STDMETHODIMP CInProcPlugHole::get_Peer(/*IIPDolphin*/IUnknown **ppiPeer)
 
 STDMETHODIMP CInProcPlugHole::put_Peer(/*IIPDolphin*/IUnknown* piPeer)
 {
-	TRACE("%#x: CInProcPlugHole(%s)::put_Peer(%#x)\n", GetCurrentThreadId(), GetImagePath(), piPeer);
+	TRACE(L"%#x: CInProcPlugHole(%s)::put_Peer(%#x)\n", GetCurrentThreadId(), GetImagePath(), piPeer);
 
 	ObjectLock lock(this);
 

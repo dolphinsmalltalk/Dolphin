@@ -56,7 +56,7 @@ CoWaitFp GetCoWait()
 
 	if (pFn == NULL)
 	{
-		HMODULE hLib = ::LoadLibrary("OLE32");
+		HMODULE hLib = ::LoadLibrary(L"OLE32");
 		pFn = reinterpret_cast<CoWaitFp>(::GetProcAddress(hLib, "CoWaitForMultipleHandles"));
 		::FreeLibrary(hLib);
 		if (!pFn)

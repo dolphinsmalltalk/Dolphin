@@ -17,20 +17,20 @@ HMODULE __stdcall GetResLibHandle()
 	return GetModuleHandle(NULL);
 }
 
-static LPSTR GetErrorText(HRESULT hr)
+static LPWSTR GetErrorText(HRESULT hr)
 {
 	// Answer some suitable text for the last system error
-	LPSTR buf;
+	LPWSTR buf;
 	::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		0, hr, 0, LPSTR(&buf), 0, 0);
+		0, hr, 0, LPWSTR(&buf), 0, 0);
 	return buf;
 }
 
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 {
-	LPSTR buf = GetErrorText(hr);
+	LPCWSTR buf = GetErrorText(hr);
 	HRESULT ret = ReportError(IDP_CREATEVMFAILED, hr, buf);
-	::LocalFree(buf);
+	::LocalFree((HLOCAL)buf);
 	return ret;
 }
 

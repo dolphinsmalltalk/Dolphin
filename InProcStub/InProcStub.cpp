@@ -41,7 +41,7 @@ public :
 
 CIPDolphinModule _Module;
 
-static char achModulePath[_MAX_PATH+1];
+static wchar_t achModulePath[_MAX_PATH+1];
 static CInProcPlugHole* s_pPlugHole = NULL;
 
 #include "..\CritSect.h"
@@ -62,14 +62,14 @@ HMODULE __stdcall GetResLibHandle()
 
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 {
-	LPSTR buf = GetErrorText(hr);
+	LPCWSTR buf = GetErrorText(hr);
 	HRESULT ret = ReportError(IDP_CREATEVMFAILED, hr, buf);
-	::LocalFree(buf);
+	::LocalFree((HLOCAL)buf);
 	return ret;
 }
 
 #ifndef TO_GO
-HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, const char*)
+HRESULT __stdcall ErrorVMNotRegistered(HRESULT hr, LPCWSTR)
 {
 	return ReportWin32Error(IDP_VMNOTREGISTERED, hr);
 }
@@ -84,12 +84,12 @@ HRESULT __stdcall ErrorVMVersionMismatch(ImageHeader* pHeader, VS_FIXEDFILEINFO*
 
 BOOL CIPDolphinModule::OnProcessAttach()
 {
-	TRACE("%#x: OnProcessAttach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
+	TRACE(L"%#x: OnProcessAttach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
 
 	// Get the plugin DLL name and split off the directory component
 	::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), achModulePath, sizeof(achModulePath));
 	
-	LPCSTR szImagePath = achModulePath;
+	LPCWSTR szImagePath = achModulePath;
 
 	HMODULE hModule = _AtlBaseModule.GetModuleInstance();
 
@@ -118,7 +118,7 @@ void CIPDolphinModule::OnProcessDetach()
 	s_pPlugHole->Release();
 	s_pPlugHole = NULL;
 
-	TRACE("%#x: OnProcessDetach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
+	TRACE(L"%#x: OnProcessDetach: Module lock count %d\n", GetCurrentThreadId(), _Module.GetLockCount());
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -147,11 +147,11 @@ BOOL WINAPI CIPDolphinModule::DllMain(DWORD dwReason, LPVOID /* lpReserved */) t
 		break;
 
 	case DLL_THREAD_ATTACH:
-		TRACE("%#x: Thread attached to in-proc stub\n", GetCurrentThreadId());
+		TRACE(L"%#x: Thread attached to in-proc stub\n", GetCurrentThreadId());
 		break;
 
 	case DLL_THREAD_DETACH:
-		TRACE("%#x: Thread detached from in-proc stub\n", GetCurrentThreadId());
+		TRACE(L"%#x: Thread detached from in-proc stub\n", GetCurrentThreadId());
 		if (s_pPlugHole)
 			s_pPlugHole->ThreadDetach();
 		break;
@@ -277,7 +277,7 @@ STDAPI DllRegisterServer(void)
 		else
 		{
 			// No typelib bound
-			trace("Warning: Module does not contain a type library (%#x)\n", hr);
+			trace(L"Warning: Module does not contain a type library (%#x)\n", hr);
 			hr = S_OK;
 		}
 
@@ -289,7 +289,7 @@ STDAPI DllRegisterServer(void)
 		}
 		else
 		{
-			trace("RegisterTypeLib failed: %#x\n", hr);
+			trace(L"RegisterTypeLib failed: %#x\n", hr);
 			hr = SELFREG_E_TYPELIB;
 		}
 	}
@@ -336,7 +336,7 @@ HRESULT CInProcPlugHole::FinalConstruct()
 	// There is a circular reference from the plug hole to the image peer, and we want the
 	// image side to tell us whether the image should be kept up (except for some cases
 	// where we protect the code with a Lock()/Unlock() pair for safety).
-	TRACE("%#x: CInProcPlugHole::FinalConstruct() Removing my module lock\n", GetCurrentThreadId());
+	TRACE(L"%#x: CInProcPlugHole::FinalConstruct() Removing my module lock\n", GetCurrentThreadId());
 
 	_Module.Unlock();
 	return S_OK;
@@ -344,7 +344,7 @@ HRESULT CInProcPlugHole::FinalConstruct()
 
 void CInProcPlugHole::FinalRelease()
 {
-	TRACE("%#x: CInProcPlugHole::FinalRelease() Replacing my module lock\n", GetCurrentThreadId());
+	TRACE(L"%#x: CInProcPlugHole::FinalRelease() Replacing my module lock\n", GetCurrentThreadId());
 
 	// Add back in the module lock to balance FinalConstruct
 	_Module.Lock();

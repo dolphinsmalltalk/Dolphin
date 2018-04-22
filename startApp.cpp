@@ -23,7 +23,7 @@ HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId)
 		return hr;
 
 	// retrieve the file name of this process, ie this .exe
-	char fileName[MAX_PATH] = "";
+	wchar_t fileName[MAX_PATH] = L"";
 	GetModuleFileName(hModule, fileName, sizeof(fileName) - 1);
 
 	hr = piDolphin->Initialise(hModule, fileName, imageFile.GetRawData(), imageFile.GetRawSize(), /*IsDevSys*/0);
