@@ -442,7 +442,7 @@ testExtCallArgBstr
 	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
 			[:each |
 			| subject expected actual |
-			expected := each size.
+			expected := each asUtf16String size.
 			actual := OLEAutLibrary default sysStringLen: each.
 			self assert: actual equals: expected.
 			subject := each asUtf8String.
@@ -1224,8 +1224,8 @@ testPrimitiveFindString
 	foundCases := #(#('abc' 'a' 1 1) #('abc' 'b' 1 2) #('abc' 'c' 1 3) #('abc' 'ab' 1 1) #('abc' 'b' 2 2) #('abc' 'bc' 2 2) #('abc' 'c' 3 3))
 				asOrderedCollection.
 	unlikely := '!!@#^%'.
-	comment := Object comment.
-	large := Object comment , unlikely.
+	comment := Object comment asAnsiString.
+	large := comment , unlikely.
 	foundCases addLast: {large. unlikely. 1. comment size + 1}.
 	foundCases addLast: {large , comment. unlikely. large size // 2. comment size + 1}.
 	foundCases
@@ -1717,7 +1717,8 @@ testPrimitiveNewVirtualFailure
 testPrimitiveNextPut
 	| method subject pound euro |
 	method := self createPrimitiveMethodLike: WriteStream >> #nextPut: setsFailCode: true.
-	subject := String writeStream.
+	subject := AnsiString writeStream.
+	self assert: subject collection isKindOf: AnsiString.
 	"Past limit"
 	self assert: (method value: subject withArguments: #($a)) equals: 'failed2'.
 	"Smalltalk backup code will extend the collection"
@@ -1727,7 +1728,7 @@ testPrimitiveNextPut
 	self assert: subject contents equals: 'ab'.
 	subject position: 0.0.
 	self assert: (method value: subject withArguments: #($a)) equals: 'failed0'.
-	subject := String writeStream: 2.
+	subject := AnsiString writeStream: 2.
 	"Not a character"
 	self assert: (method value: subject withArguments: #(1)) equals: 'failed4'.
 	(self has7XOrLater: 53)
@@ -2151,7 +2152,7 @@ testPrimitiveYourAddress
 			[:each || addr |
 			addr := method value: each withArguments: #().
 			self deny: addr == 0.
-			self assert: (each class fromAddress: each) equals: each].
+			self assert: (each class fromAddress: each yourAddress) equals: each].
 	"Bug: #yourAddress returns 0 for an empty byte array?"
 	#(#[]#[1 2 3]) do: 
 			[:each || addr |

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #AddParameterTest
 	instanceVariableNames: ''
@@ -105,7 +105,7 @@ testAddParameterThatReferencesSelf
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:)
-				= (RBParser parseMethod: 'testFoo: anObject bar: ' , (String new basicPrintString copyWithout: $\x20)
+				= (RBParser parseMethod: 'testFoo: anObject bar: ' , (AnsiString new basicPrintString copyWithout: $\x20)
 								, '
 								^self class + anObject').
 	self assert: (class parseTreeFor: #callFoo)

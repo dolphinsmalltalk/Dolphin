@@ -50,7 +50,7 @@ testAnsiStringRoundTrip
 testBeginsWith
 	| subject comperand pound |
 	super testBeginsWith.
-	pound := String with: (Character value: 163).
+	pound := '£'.
 	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
 	self assert: (subject beginsWith: Character dolphin).
 	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
