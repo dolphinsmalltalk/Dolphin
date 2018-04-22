@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #Win32Constants put: (PoolConstantsDictionary named: #Win32Constants)!
 Win32Constants at: 'ABOVE_NORMAL_PRIORITY_CLASS' put: 16r8000!
@@ -791,6 +791,9 @@ Win32Constants at: 'TA_RIGHT' put: 16r2!
 Win32Constants at: 'TA_TOP' put: 16r0!
 Win32Constants at: 'TA_UPDATECP' put: 16r1!
 Win32Constants at: 'TEST' put: 16r59!
+Win32Constants at: 'TIME_ZONE_ID_DAYLIGHT' put: 16r2!
+Win32Constants at: 'TIME_ZONE_ID_STANDARD' put: 16r1!
+Win32Constants at: 'TIME_ZONE_ID_UNKNOWN' put: 16r0!
 Win32Constants at: 'TME_CANCEL' put: -16r80000000!
 Win32Constants at: 'TME_HOVER' put: 16r1!
 Win32Constants at: 'TME_LEAVE' put: 16r2!

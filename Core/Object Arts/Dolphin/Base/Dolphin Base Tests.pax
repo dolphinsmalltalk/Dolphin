@@ -414,7 +414,7 @@ DolphinTest subclass: #StreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #TimeStampTest
-	instanceVariableNames: 'current'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

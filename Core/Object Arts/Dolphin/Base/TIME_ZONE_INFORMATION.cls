@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #TIME_ZONE_INFORMATION
-	instanceVariableNames: ''
+	instanceVariableNames: 'zoneId'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -33,6 +33,13 @@ bias
 
 	^bytes sdwordAtOffset: 0!
 
+currentBias
+	"Answer the <Integer> bias current for the time zone when the information was queried from Windows. This accounts for daylight saving, etc."
+
+	zoneId == Win32Constants.TIME_ZONE_ID_STANDARD ifTrue: [^self bias + self standardBias].
+	zoneId == Win32Constants.TIME_ZONE_ID_DAYLIGHT ifTrue: [^self bias + self daylightBias].
+	^self bias!
+
 daylightBias
 	"Answer the <Integer> value of the receiver's 'daylightBias' field."
 
@@ -51,7 +58,7 @@ daylightName
 printableFields
 	| printable |
 	printable := super printableFields.
-	printable remove: #StandardDate; remove: #DaylightDate.
+	printable remove: #standardDate; remove: #daylightDate.
 	^printable!
 
 standardBias
@@ -67,8 +74,17 @@ standardDate
 standardName
 	"Answer the <Utf16String> value of the receiver's 'standardName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #standardName)! !
+	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #standardName)!
+
+zoneId
+	"Answer the TIME_ZONE_ID_XXX value that was current when the information was retrieved."
+
+	^zoneId!
+
+zoneId: anInteger
+	zoneId := anInteger! !
 !TIME_ZONE_INFORMATION categoriesFor: #bias!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #currentBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
@@ -76,6 +92,8 @@ standardName
 !TIME_ZONE_INFORMATION categoriesFor: #standardBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #standardDate!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #standardName!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #zoneId!accessing!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #zoneId:!accessing!private! !
 
 !TIME_ZONE_INFORMATION class methodsFor!
 
