@@ -64,8 +64,6 @@ inline void Process::SetThread(void* handle)
 // The overlapped thread has completed a call, return to the idle state
 void OverlappedCall::CallFinished()
 {
-	//beResting();
-	//	m_interpContext.m_oopMessageSelector = reinterpret_cast<SymbolOTE*>(Pointers.Nil);
 	m_interpContext.m_oopNewMethod = reinterpret_cast<MethodOTE*>(Pointers.Nil);
 	m_nCallDepth--;
 }
@@ -227,7 +225,7 @@ void OverlappedCall::compact()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << *this<< L" compacting " << m_oteProcess << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L"Compacting " << *this << endl;
 	}
 	#endif
 
@@ -306,12 +304,11 @@ bool OverlappedCall::QueueForMe(PAPCFUNC pfnAPC)
 wostream& operator<<(wostream& stream, const OverlappedCall& oc)
 {
 	return stream<< L"OverlappedCall(" << &oc 
-		<< L", process: " << oc.m_oteProcess
-		<< L", hThread: " << oc.m_hThread 
 		<< L", id:" << oc.m_dwThreadId 
 		<< L", state: " << oc.m_state
 		<< L", suspend:" << oc.m_nSuspendCount 
 		<< L", calls:" << oc.m_nCallDepth
+		<< L", process: " << oc.m_oteProcess
 #ifdef _DEBUG
 		<< L", refs: " << oc.m_dwRefs 
 #endif
@@ -330,14 +327,15 @@ OverlappedCall::OverlappedCall(ProcessOTE* oteProcess) :
 			m_oteProcess(oteProcess),
 			m_nSuspendCount(0), m_nCallDepth(0), 
 			m_state(OverlappedCall::Starting),
-			m_bCompletionRequestPending(false)
+			m_bCompletionRequestPending(false),
+			m_bCallPrimitiveFailed(false)
 {
 	HARDASSERT(::GetCurrentThreadId() == Interpreter::MainThreadId());
 
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << m_dwThreadId<< L": " << *this<< L" created" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L": Created " << *this << endl;
 	}
 	#endif
 
@@ -356,7 +354,7 @@ OverlappedCall::~OverlappedCall()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << m_dwThreadId<< L": " << *this<< L" destroyed" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L": Destroy " << *this << endl;
 	}
 	#endif
 
@@ -437,7 +435,7 @@ DWORD OverlappedCall::WaitForRequest()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << m_dwThreadId<< L": " << *this<< L"::Run() processed APCs while waiting" << endl;
+			TRACESTREAM << hex << GetCurrentThreadId() << L": Processed APCs while waiting for " << *this << endl;
 		}
 		#endif
 	}
@@ -457,8 +455,7 @@ int OverlappedCall::ProcessRequests()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << m_dwThreadId<< L": Calling " << *this<< L" to " << *m_pMethod << 
-				endl<< L"	for " << m_oteProcess << endl;
+			TRACESTREAM << hex << GetCurrentThreadId() << L": Calling " << *m_pMethod << "; " << *this << endl;
 		}
 		#endif
 
@@ -467,7 +464,7 @@ int OverlappedCall::ProcessRequests()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << hex << m_dwThreadId<< L": Resting..." << endl;
+			TRACESTREAM << hex << GetCurrentThreadId() << L": Resting; " << m_dwThreadId << endl;
 		}
 		#endif
 	}
@@ -475,7 +472,7 @@ int OverlappedCall::ProcessRequests()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << *this<< L" exiting on " << dwRet << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L": Exiting (" << dwRet << L"); " << m_dwThreadId << endl;
 	}
 	#endif
 
@@ -494,27 +491,35 @@ void OverlappedCall::PerformCall()
 
 	HARDASSERT(m_oteProcess->m_location->Thread() == this);
 
-	#if TRACING == 1
-	{
-		TRACELOCK();
-		TRACESTREAM << hex << m_dwThreadId<< L": " << *this<< L" to " << *m_pMethod<< L" completes." << endl;
-	}
-	#endif
-
-	InterpreterRegisters& regs = Interpreter::GetRegisters();
-	ASSERT(m_interpContext.m_pActiveProcess == regs.m_pActiveProcess);
-
 	if (retVal != NULL)
 	{
+		#if TRACING == 1
+		{
+			TRACELOCK();
+			TRACESTREAM << hex << GetCurrentThreadId() << L": Completed " << *m_pMethod << "; " << *this << endl;
+		}
+		#endif
+
+		InterpreterRegisters& regs = Interpreter::GetRegisters();
+		ASSERT(m_interpContext.m_pActiveProcess == regs.m_pActiveProcess);
 		regs.StoreSPInFrame();
 	}
 	else
 	{
-		// The call failed as if it were a primitive failure - the args have
-		// not been popped and we need to activate the backup smalltalk code
+		#if TRACING == 1
+		{
+			TRACELOCK();
+			TRACESTREAM << hex << GetCurrentThreadId() << L": Call failed;  " << GetLastErrorText() << endl;
+		}
+		#endif
 
-		Interpreter::activateNewMethod(m_interpContext.m_oopNewMethod->m_location);
-		regs.PrepareToSuspendProcess();
+		// The call failed as if it were a primitive failure - the args have
+		// not been popped and we need to activate the backup smalltalk code. 
+		// However, since the calling Process is in a wait state, we need to 
+		// notify the main thread to wake it up
+		m_bCallPrimitiveFailed = true;
+		NotifyInterpreterOfCallReturn();
+		WaitForInterpreter();
 	}
 
 	#ifdef _DEBUG
@@ -535,7 +540,7 @@ bool OverlappedCall::Initiate(CompiledMethod* pMethod, unsigned argCount)
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::Initiate (main thread part)" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L": Initiate; " << *this << endl;
 	}
 	#endif
 
@@ -616,8 +621,19 @@ void OverlappedCall::OnActivateProcess()
 	{
 		m_bCompletionRequestPending = false;
 
+		if (m_bCallPrimitiveFailed)
+		{
+			m_bCallPrimitiveFailed = false;
+
+			ASSERT(m_interpContext.m_stackPointer == Interpreter::m_registers.m_stackPointer);
+			ASSERT(m_interpContext.m_basePointer == Interpreter::m_registers.m_basePointer);
+			Interpreter::m_registers.m_oopNewMethod = m_interpContext.m_oopNewMethod;
+			Interpreter::activateNewMethod(m_interpContext.m_oopNewMethod->m_location);
+		}
+
 		// Let the overlapped thread continue
 		::SetEvent(m_hEvtGo);
+
 		// And wait for it to finish (non-alertable since we don't want other completions to interfere)
 		DWORD dwRet = ::WaitForSingleObject(m_hEvtCompleted, INFINITE);
 		if (dwRet != WAIT_OBJECT_0)
@@ -648,7 +664,7 @@ bool OverlappedCall::QueueTerminate()
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::QueueTerminate" << endl;
+			TRACESTREAM << hex << GetCurrentThreadId()<< L": Queue terminate; " << *this << endl;
 		}
 		#endif
 
@@ -677,8 +693,8 @@ void __stdcall OverlappedCall::SuspendAPC(DWORD dwParam)
 
 	#if TRACING == 1
 	{
-		tracelock lock(pThis->thinDump);
-		pThis->thinDump << hex << GetCurrentThreadId()<< L": SuspendAPC(" << *pThis<< L")" << endl;
+		CAutoLock<tracestream> lock(pThis->thinDump);
+		pThis->thinDump << hex << GetCurrentThreadId()<< L": SuspendAPC; " << *pThis << endl;
 	}
 	#endif
 
@@ -706,7 +722,7 @@ bool OverlappedCall::QueueSuspend()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::SuspendThread()" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": Queue suspend;  " << *this << endl;
 	}
 	#endif
 
@@ -720,7 +736,7 @@ DWORD OverlappedCall::Resume()
 	#if TRACING == 1
 	{
 		tracelock lock(::thinDump);
-		::thinDump << hex << GetCurrentThreadId()<< L": " << *this<< L"::ResumeThread()" << endl;
+		::thinDump << hex << GetCurrentThreadId()<< L": Resume; " << *this << endl;
 	}
 	#endif
 	InterlockedDecrement(&m_nSuspendCount);
@@ -741,12 +757,12 @@ void OverlappedCall::SuspendThread()
 		dwRet;
 #if TRACING == 1
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::SuspendThread() Suspend count is " << dwRet << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": Suspending (count=" << m_nSuspendCount << "); " << *this << dwRet << endl;
 	}
 	else
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::SuspendThread() ignored as suspend count <= 0" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId()<< L": Suspend ignored (count=" << m_nSuspendCount << "); " << *this << endl;
 #endif
 	}
 }
@@ -759,19 +775,50 @@ DWORD OverlappedCall::ResumeThread()
 ///////////////////////////////////////////////////////////////////////////////
 // Thread main function
 
+int OverlappedCall::MainExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
+{
+	switch (pExInfo->ExceptionRecord->ExceptionCode)
+	{
+	case SE_VMTERMINATETHREAD:
+		return EXCEPTION_EXECUTE_HANDLER;
+
+	case EXCEPTION_FLT_STACK_CHECK:
+	case EXCEPTION_INT_DIVIDE_BY_ZERO:
+	case EXCEPTION_ACCESS_VIOLATION:
+	case SE_VMCRTFAULT:
+		return EXCEPTION_EXECUTE_HANDLER;
+	}
+
+	return EXCEPTION_CONTINUE_SEARCH;
+}
+
+static void __cdecl InvalidCrtParameterHandler(
+	wchar_t const* expression,
+	wchar_t const* function,
+	wchar_t const* file,
+	unsigned int line,
+	uintptr_t pReservered
+)
+{
+	TRACE(L"%x: CRT parameter fault in '%s' of %s, %s(%u)", GetCurrentThreadId(), expression, function, file, line);
+	TODO("Raise an exception and report the error in a similar way to the main VM thread");
+	return;
+}
+
 int OverlappedCall::TryMain()
 {
 	int ret;
 	__try
 	{
+		_set_thread_local_invalid_parameter_handler(InvalidCrtParameterHandler);
 		ret = Main();
 	}
-	__except(GetExceptionCode() == SE_VMTERMINATETHREAD ? EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH)
+	__except(MainExceptionFilter(GetExceptionInformation()))
 	{
 		#if TRACING == 1
 		{
 			TRACELOCK();
-			TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L" received terminate exception" << endl;
+			TRACESTREAM << hex << GetCurrentThreadId()<< L": Terminating; " << *this << endl;
 		}
 		#endif
 		
@@ -836,8 +883,8 @@ void __stdcall OverlappedCall::TerminatedAPC(DWORD dwParam)
 
 	#if TRACING == 1
 	{
-		tracelock lock(pThis->thinDump);
-		pThis->thinDump << hex << GetCurrentThreadId()<< L": TerminatedAPC(" << *pThis<< L")" << endl;
+		CAutoLock<tracestream> lock(pThis->thinDump);
+		pThis->thinDump << hex << GetCurrentThreadId()<< L": TerminatedAPC; " << *pThis << endl;
 	}
 	#endif
 
@@ -856,8 +903,8 @@ void OverlappedCall::RemoveFromPendingTerminations()
 		HARDASSERT(myProc->Thread() == this);
 		myProc->ClearThread();
 
-		// Return it to the scheduling queues
-		Interpreter::sleep(oteProc);
+		// Return it to the scheduling queues - we resume it to cause a scheduling decision to be made. 
+		Interpreter::resume(oteProc);
 		// Remove the reference that was from the pending terminations list
 		oteProc->countDown();
 	}
@@ -894,6 +941,24 @@ void OverlappedCall::NotifyInterpreterOfCallReturn()
 	Interpreter::SetWakeupEvent();
 }
 
+void OverlappedCall::WaitForInterpreter()
+{
+	// Wait for main thread to process the async signal and permit us to continue
+	DWORD dwRet;
+	while ((dwRet = ::WaitForSingleObjectEx(m_hEvtGo, 5000, TRUE)) != WAIT_OBJECT_0)
+	{
+		thinDump << hex << GetCurrentThreadId() << L": OnCallReturned, wait interrupted (" << dwRet << "); " << *this << endl;
+		if (dwRet == WAIT_ABANDONED)
+		{
+			// Event deleted, etc, so terminate the thread
+			RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
+		}
+
+		// Interrupted to process an APC (probably a suspend/terminate) or due to a timeout
+		HARDASSERT(dwRet == WAIT_IO_COMPLETION || dwRet == WAIT_TIMEOUT);
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // The call on the worker thread has returned to the assembler call primitive.
 // We can't complete the call until the main thread is ready to accept it, so 
@@ -910,26 +975,13 @@ void OverlappedCall::OnCallReturned()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::OnCallReturned() waiting to complete" << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L": OnCallReturned, waiting to complete; " << *this << endl;
 	}
 	#endif
 
 	//if (inPrim) DebugBreak();
 
-	// Wait for main thread to process the async signal and permit us to continue
-	DWORD dwRet;
-	while ((dwRet = ::WaitForSingleObjectEx(m_hEvtGo, 5000, TRUE)) != WAIT_OBJECT_0)
-	{
-		thinDump << hex << GetCurrentThreadId()<< L": " << *this<< L"::OnCallReturned() wait interrupted with " << dwRet << endl;
-		if (dwRet == WAIT_ABANDONED)
-		{
-			// Event deleted, etc, so terminate the thread
-			RaiseException(SE_VMTERMINATETHREAD, EXCEPTION_NONCONTINUABLE, 0, NULL);
-		}
-		
-		// Interrupted to process an APC (probably a suspend/terminate) or due to a timeout
-		HARDASSERT(dwRet == WAIT_IO_COMPLETION || dwRet == WAIT_TIMEOUT);
-	}
+	WaitForInterpreter();
 
 	if (GetProcess()->Thread() != this || m_state != Running)
 	{
@@ -944,7 +996,7 @@ void OverlappedCall::OnCallReturned()
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM << hex << GetCurrentThreadId()<< L": " << *this<< L"::OnCallReturned() Completing... " << endl;
+		TRACESTREAM << hex << GetCurrentThreadId() << L": OnCallReturned, completing; " << *this << endl;
 	}
 	#endif
 
@@ -1016,7 +1068,7 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM<< L"primAsync32: Prepare to call " << method << endl;
+		TRACESTREAM << L"primAsync32: Prepare to call " << *method << L" from " << Interpreter::actualActiveProcessPointer() << endl;
 	}
 	#endif
 
@@ -1040,7 +1092,7 @@ Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
 	#if TRACING == 1
 	{
 		TRACELOCK();
-		TRACESTREAM<< L"registers.sp = " << m_registers.m_stackPointer<< L" frame.sp = " <<
+		TRACESTREAM << L"registers.sp = " << m_registers.m_stackPointer<< L" frame.sp = " <<
 				m_registers.m_pActiveFrame->stackPointer() << endl;
 	}
 	#endif

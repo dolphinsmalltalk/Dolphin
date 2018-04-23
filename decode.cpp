@@ -280,7 +280,7 @@ wostream& operator<<(wostream& st, const ProcessOTE* ote)
 	Oop* sp = NULL;
 	if (proc == Interpreter::actualActiveProcess())
 	{
-		st << L" [ACTIVE]";
+		st << L"*";
 		topFrame = Interpreter::activeFrame();
 	}
 	else

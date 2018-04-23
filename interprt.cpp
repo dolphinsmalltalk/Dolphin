@@ -344,6 +344,12 @@ static MWORD ResizeProcInContext(InterpreterRegisters& reg)
 	return size;
 }
 
+void Interpreter::checkReferences(Oop* const sp)
+{
+	m_registers.m_stackPointer = sp;
+	checkReferences(GetRegisters());
+}
+
 // Check references without upsetting the current active process size (otherwise
 // this may mask bugs in the release version)
 void Interpreter::checkReferences(InterpreterRegisters& reg)

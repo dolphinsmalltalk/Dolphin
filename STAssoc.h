@@ -20,8 +20,7 @@ namespace ST
 	class VariableBinding // : public Object
 	{
 	public:
-		// TODO: Use Utf8String
-		AnsiStringOTE* m_key;
+		StringOTE* m_key;
 		Oop m_value;
 
 		enum { KeyIndex = ObjectFixedSize, ValueIndex, FixedSize };

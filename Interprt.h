@@ -30,6 +30,7 @@ using namespace ST;
 	#define TRACEARG(x)	,(x)
 	#define	TRACEPARM	,TRACEFLAG traceFlag
 	#define TRACEDEFAULT	TRACEPARM=TraceOff
+	#define CHECKREFERENCESSP(sp)	Interpreter::checkReferences(sp)
 	#define CHECKREFERENCES	Interpreter::checkReferences(Interpreter::GetRegisters());
 	#define CHECKREFERENCESIF(x) { if (x) CHECKREFERENCES }
 	#define CHECKREFSNOFIX \
@@ -44,6 +45,7 @@ using namespace ST;
 	#define TRACEARG(x)
 	#define TRACEDEFAULT
 	#define CHECKREFERENCES
+	#define CHECKREFERENCESSP(sp)
 	#define CHECKREFERENCESIF(x)
 	#define CHECKREFSNOFIX
 #endif
@@ -93,6 +95,7 @@ public:
 		static void RemoveVMReference(Oop);
 		static void RemoveVMReference(OTE*);
 
+		static void checkReferences(Oop* const sp);
 		static void checkReferences(InterpreterRegisters&);
 
 		// Only needed for non-Debug because of C++ walkback code
@@ -865,8 +868,8 @@ private:
 		static int	m_nFreeVMRef;
 		static int	m_nMaxVMRefs;				// Current size of VM References array
 
-		enum { VMREFSINITIAL = 16 };
-		enum { VMREFSGROWTH = 16 };
+		enum { VMREFSINITIAL = 128 };
+		enum { VMREFSGROWTH = 64 };
 	#endif
 };
 

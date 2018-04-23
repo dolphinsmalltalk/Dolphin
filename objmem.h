@@ -64,8 +64,8 @@ public:
 	static Oop storePointerWithValue(Oop& oopSlot, Oop oopValue);
 	static OTE* storePointerWithValue(OTE*& oteSlot, OTE* oteValue);
 	static Oop storePointerWithValue(Oop& oopSlot, OTE* oteValue);
-	static Oop nilOutPointer(Oop& objectPointer);
-	static OTE* nilOutPointer(OTE*& ote);
+	static void nilOutPointer(Oop& objectPointer);
+	static void nilOutPointer(OTE*& ote);
 
 	// Use these versions to store values which are not themselves ref. counted
 	static Oop storePointerWithUnrefCntdValue(Oop&, Oop);
@@ -189,6 +189,7 @@ public:
 
 #ifdef _DEBUG
 	// Recalc and consistency check
+	static void checkReferences(Oop* const sp);
 	static void checkReferences();
 	static void addRefsFrom(OTE* ote);
 	static void checkPools();
@@ -682,30 +683,30 @@ inline Oop ObjectMemory::storePointerOfObjectWithValue(MWORD fieldIndex, Pointer
 // Useful for overwriting structure members
 inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, Oop oopValue)
 {
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
 	countUp(oopValue);	// Increase the reference count on stored object
-	countDown(oopSlot);
-	return oopSlot = oopValue;
+	Oop oldValue = oopSlot;
+	oopSlot = oopValue;
+	countDown(oldValue);
+	return oopValue;
 }
 
 // Useful for overwriting structure members
 inline Oop ObjectMemory::storePointerWithUnrefCntdValue(Oop& oopSlot, Oop oopValue)
 {
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
-	countDown(oopSlot);
-	return oopSlot = oopValue;
+	Oop oldValue = oopSlot;
+	oopSlot = oopValue;
+	countDown(oldValue);
+	return oopValue;
 }
 
 // Useful for overwriting structure members
 inline OTE* ObjectMemory::storePointerWithValue(OTE*& oteSlot, OTE* oteValue)
 {
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
 	oteValue->countUp();			// Increase the reference count on stored object
-	oteSlot->countDown();
-	return (oteSlot = oteValue);
+	OTE* oteOldValue = oteSlot;
+	oteSlot = oteValue;
+	oteOldValue->countDown();
+	return oteValue;
 }
 
 // Useful for overwriting structure members
@@ -714,20 +715,24 @@ inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, OTE* oteValue)
 	// Sadly compiler refuses to inline the count up code, and macro seems to generate
 	// bad code(!) so inline by hand
 	oteValue->countUp();			// Increase the reference count on stored object
-	countDown(oopSlot);
-	return oopSlot = Oop(oteValue);
+	Oop oldValue = oopSlot;
+	oopSlot = reinterpret_cast<Oop>(oteValue);
+	countDown(oldValue);
+	return oopSlot;
 }
 
-inline Oop ObjectMemory::nilOutPointer(Oop& objectPointer)
+inline void ObjectMemory::nilOutPointer(Oop& objectPointer)
 {
+	Oop oldValue = objectPointer;
+	objectPointer = reinterpret_cast<Oop>(Pointers.Nil);
 	countDown(objectPointer);
-	return objectPointer = Oop(Pointers.Nil);
 }
 
-inline OTE* ObjectMemory::nilOutPointer(OTE*& ote)
+inline void ObjectMemory::nilOutPointer(OTE*& ote)
 {
+	OTE* oldValue = ote;
+	ote = const_cast<OTE*>(Pointers.Nil);
 	ote->countDown();
-	return ote = const_cast<OTE*>(Pointers.Nil);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

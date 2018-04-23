@@ -260,9 +260,13 @@ procAddressNotCached:
 	test	eax, eax										; Returns null if not a valid proc name
 	jnz		performCall
 
+	mov		edx, callContext
+	ASSUME	edx:PTR InterpRegisters
 	add		esp, 16											; Remove args pushed for aborted call
-	PrimitiveFailureCode 1
-
+	mov		edx, [edx].m_pActiveProcess
+	xor		eax, eax
+	mov		(Process PTR[edx]).m_primitiveFailureCode, SMALLINTONE
+	ret
 asyncDLL32Call ENDP
 
 getProcAddress PROC

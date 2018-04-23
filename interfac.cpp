@@ -204,7 +204,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 		//ASSERT(!memcmp(&savedContext, &m_registers, sizeof(InterpreterRegisters)));
 	#endif
 
-	// Must countUp to prevent it being GC'd since the stack no longer has ref. count
+	// Must countUp to prevent it being GC'd since it is no longer ref'd from the stack
 	VERIFY(retVal == popAndCountUp());
 	return retVal;
 }

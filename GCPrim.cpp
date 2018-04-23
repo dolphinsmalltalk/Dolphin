@@ -36,6 +36,7 @@ bool Interpreter::disableAsyncGC(bool bDisable)
 		if (m_nOTOverflows > 0)
 		{
 			m_nOTOverflows = 0;
+			CHECKREFERENCES
 			queueInterrupt(VMI_OTOVERFLOW, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
 		}
 		return true;
@@ -52,6 +53,7 @@ void Interpreter::NotifyOTOverflow()
 	}
 	else
 	{
+		CHECKREFERENCES
 		queueInterrupt(VMI_OTOVERFLOW, ObjectMemoryIntegerObjectOf(ObjectMemory::GetOTSize()));
 	}
 }
@@ -91,6 +93,8 @@ void Interpreter::asyncGC(DWORD gcFlags)
 // This has been usurped for GC primitive
 Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , unsigned argCount)
 {
+	CHECKREFERENCESSP(sp);
+
 	DWORD gcFlags = 0;
 	if (argCount)
 	{

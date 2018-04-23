@@ -1594,7 +1594,12 @@ Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const)
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
-	TerminateOverlapped(actualActiveProcessPointer());
+	ProcessOTE* oteActive = actualActiveProcessPointer();
+	OverlappedCall* pOverlapped = oteActive->m_location->GetOverlappedCall();
+	if (pOverlapped != nullptr && pOverlapped->IsInCall())
+	{
+		TerminateOverlapped(oteActive);
+	}
 	return primitiveSuccess(0);
 }
 
@@ -1765,6 +1770,9 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 
 			if (activeProcessPointer() == oteProc)
 				Reschedule();
+
+			// The process must wait for the associated overlapped call thread to terminate
+			return true;
 		}
 		else
 		{
@@ -1774,12 +1782,10 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 			HARDASSERT(FALSE);	// Actually I don't think we can get here
 		}
 
-		// The process was in/is in an overlapped call
-		return true;
 	}
-	else
-		// The process is not in an overlapped call
-		return false;
+
+	// The process can be terminated immediately
+	return false;
 }
 
 inline bool Process::SuspendOverlappedCall()
@@ -1788,7 +1794,7 @@ inline bool Process::SuspendOverlappedCall()
 	if (pOverlapped == NULL || !pOverlapped->IsInCall())
 		return false;
 
-#ifdef _DEBUG
+#if 1 //def _DEBUG
 	TRACESTREAM << hex << GetCurrentThreadId()<< L": Suspending " << *pOverlapped<< L" in process " << (OTE*)m_name << endl;
 #endif
 	return pOverlapped->QueueSuspend();
@@ -1800,7 +1806,7 @@ inline bool Process::ResumeOverlappedCall()
 	if (pOverlapped == NULL || !pOverlapped->IsInCall())
 		return false;
 
-#ifdef _DEBUG
+#if 1//def _DEBUG
 	TRACESTREAM << hex << GetCurrentThreadId()<< L": Resuming " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(m_name) << endl;
 #endif
 	pOverlapped->Resume();

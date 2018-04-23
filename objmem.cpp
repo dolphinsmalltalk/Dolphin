@@ -767,7 +767,7 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 	{
 		HARDASSERT(m_nFreeOTEs == 0);
 		// The OT overflowed
-		TRACE(L"Object table overflow detected at %p (OT next %p, free %p)\n", pFault, otNext, m_pFreePointerList);
+		TRACE(L"OT overflowed at %p (OT next %p, free %p), sp=%p (m_stackPointer=%p)\n", pFault, otNext, m_pFreePointerList, pExInfo->ContextRecord->Esi, Interpreter::m_registers.m_stackPointer);
 		#ifdef MEMSTATS
 			trace(L"Small Allocated %u, freed %u, large allocated %u, freed %u\n",
 					m_nSmallAllocated, m_nSmallFreed, m_nLargeAllocated, m_nLargeFreed);

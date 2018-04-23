@@ -225,6 +225,7 @@ private:
 	// Queue a notification to the interpreter thread that an overlapped thread
 	// has received a termination signal
 	bool NotifyInterpreterOfTermination();
+	void WaitForInterpreter();
 
 	void RemoveFromPendingTerminations();
 
@@ -263,6 +264,7 @@ private:
 
 	// Thread entry point function
 	static unsigned __stdcall ThreadMain(void* pThis);
+	static int MainExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 
 	// APC functions (APCs are used to queue messages between threads)
 	static void __stdcall SuspendAPC(DWORD dwParam);
@@ -311,6 +313,7 @@ public:
 private:
 	SHAREDLONG				m_nSuspendCount;
 	bool					m_bCompletionRequestPending;
+	bool					m_bCallPrimitiveFailed;
 };
 
 
