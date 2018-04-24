@@ -10,6 +10,7 @@ Smalltalk lexical analyser
 #include "stdafx.h"
 #include "Lexer.h" 
 #include "Str.h"
+#include <icu.h>
 
 #ifdef DOWNLOADABLE
 #include "downloadableresource.h"

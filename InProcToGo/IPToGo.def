@@ -11,16 +11,16 @@ WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
 DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
 GenericCallback
 VTable
-AnswerDWORD=?AnswerDWORD@@YGKK@Z
-AnswerQWORD=?AnswerQWORD@@YG?AUQWORD@@KK@Z
-AnswerDQWORD=?AnswerDQWORD@@YG?AUDQWORD@@KKKK@Z
+AnswerDWORD
+AnswerQWORD
+AnswerDQWORD
 Dump
 argc
 argv
 StdIn
 StdOut
 StdErr
-IsUserBreakRequested=?IsUserBreakRequested@Interpreter@@CG_NXZ
+IsUserBreakRequested
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24

@@ -35,6 +35,10 @@ Decodes byte codes to stdout
 #include "disassembler.h"
 #include "Utf16StringBuf.h"
 
+#ifdef _DEBUG
+#include <vector>
+#endif
+
 tracestream thinDump;
 
 class UnknownOTE : public OTE {};
@@ -969,7 +973,7 @@ BOOL Interpreter::isCallbackFrame(Oop framePointer)
 	return bRet;
 }
 
-void Interpreter::AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<string>& instVarNames)
+void AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<string>& instVarNames)
 {
 	if (reinterpret_cast<POTE>(oteClass) != Pointers.Nil)
 	{
@@ -1037,7 +1041,7 @@ public:
 	std::string GetInstVar(size_t index) { 
 		if (!instVarNamesInitialized)
 		{
-			Interpreter::AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(method->m_methodClass), instVarNames);
+			AppendAllInstVarNames(reinterpret_cast<ClassDescriptionOTE*>(method->m_methodClass), instVarNames);
 			instVarNamesInitialized = true;
 		}
 		return instVarNames[index]; 

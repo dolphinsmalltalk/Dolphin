@@ -21,7 +21,7 @@
 ******************************************************************************/
 #pragma once
 
-#include <bytecdes.h>
+#include "bytecdes.h"
 
 #if defined(VM)
 namespace ST

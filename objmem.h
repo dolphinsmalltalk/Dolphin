@@ -35,8 +35,12 @@ using namespace ST;
 //#pragma inline_depth(32)
 //#pragma inline_recursion(off)
 
+#ifndef MinSmallInteger
 #define MinSmallInteger -0x40000000
+#endif
+#ifndef MaxSmallInteger
 #define MaxSmallInteger 0x3FFFFFFF
+#endif
 
 #define PoolGranularity 8
 
@@ -284,6 +288,7 @@ public:
 	};
 
 	friend class OTEPool;
+	friend class BootLoader;
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -731,7 +736,7 @@ inline void ObjectMemory::nilOutPointer(Oop& objectPointer)
 inline void ObjectMemory::nilOutPointer(OTE*& ote)
 {
 	OTE* oldValue = ote;
-	ote = const_cast<OTE*>(Pointers.Nil);
+	ote = reinterpret_cast<OTE*>(Pointers.Nil);
 	ote->countDown();
 }
 
@@ -1050,12 +1055,14 @@ template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObj
 	OTE* ote;
 	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
 	ote->m_oteClass = reinterpret_cast<BehaviorOTE*>(Pointers.pointers[T::PointersIndex - 1]);
+	ASSERT((OTE*)(ote->m_oteClass) != Pointers.Nil);
 	ote->beNullTerminated();
 	return reinterpret_cast<TOTE<T>*>(ote);
 }
 
 inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD cBytes, const void* pBytes)
 {
+	ASSERT((OTE*)classPointer != Pointers.Nil);
 	ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
 	BytesOTE* oteBytes = newByteObject<false, false>(classPointer, cBytes);
 	memcpy(oteBytes->m_location->m_fields, pBytes, cBytes);

@@ -40,6 +40,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interprt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\InterprtInit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\largeintprim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\LoadImage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\objmem.cpp" />
@@ -72,7 +73,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
@@ -144,6 +144,17 @@
     <None Include="$(MSBuildThisFileDirectory)..\istasm.inc" />
     <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm" />
     <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl">
+      <AdditionalOptions>/no_robust %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>3</WarningLevel>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>ActiveXHost.tlb</TypeLibraryName>
+      <HeaderFileName>ActiveXHost.h</HeaderFileName>
+      <DllDataFileName>axdlldata.c</DllDataFileName>
+      <ProxyFileName>ActiveXHost_p.c</ProxyFileName>
+    </Midl>
   </ItemGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -218,7 +218,7 @@ HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 
 	DolphinInitInstance();
 
-	return DolphinInit(szImageName, imageData, imageSize, flags&1);
+	return DolphinInit(szImageName, imageData, imageSize, flags & 1);
 }
 
 int APIENTRY VMRun(DWORD dwArg)

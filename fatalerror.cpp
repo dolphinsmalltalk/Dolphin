@@ -26,7 +26,7 @@ int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 
 #endif
 
-static int __cdecl DolphinMessageBox(const wchar_t* szFormat, UINT flags, va_list args)
+int __cdecl DolphinMessageBoxV(const wchar_t* szFormat, UINT flags, va_list args)
 {
 	wchar_t* buf;
 	::FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_STRING,
@@ -45,7 +45,7 @@ int __cdecl DolphinMessageBox(int nPromptId, UINT flags, ...)
 	va_start(args, flags);
 	wchar_t szPrompt[512];
 	::LoadStringW(GetResLibHandle(), nPromptId, szPrompt, sizeof(szPrompt)-1);
-	int result = DolphinMessageBox(szPrompt, flags, args);
+	int result = DolphinMessageBoxV(szPrompt, flags, args);
 	va_end(args);
 	return result;
 }
@@ -97,7 +97,7 @@ HRESULT __stdcall ReportErrorV(int nPrompt, HRESULT hr, va_list args)
 	wchar_t szFormat[256];
 	::LoadStringW(GetResLibHandle(), nPrompt, szFormat, sizeof(szFormat)-1);
 
-	DolphinMessageBox(szFormat, MB_SETFOREGROUND|MB_ICONHAND|MB_SYSTEMMODAL, args);
+	DolphinMessageBoxV(szFormat, MB_SETFOREGROUND|MB_ICONHAND|MB_SYSTEMMODAL, args);
 
 	return hr;
 }

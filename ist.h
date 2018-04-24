@@ -132,4 +132,4 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #define _ATL_NO_COM_SUPPORT
 #endif
 
-#include <icucommon.h>
+#include <icu.h>

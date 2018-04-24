@@ -16,7 +16,7 @@ StdIn
 StdOut
 StdErr
 RegisterAsEventSource
-IsUserBreakRequested=?IsUserBreakRequested@Interpreter@@CG_NXZ
+IsUserBreakRequested
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24

@@ -12,7 +12,6 @@
 ///////////////////////////////////
 #include "ObjMem.h"
 #include "OopQ.h"
-#include <vector>
 #include <fpieee.h>
 #include "STExternal.h"
 #include "STBehavior.h"
@@ -63,6 +62,7 @@ typedef volatile LONG SHAREDLONG;
 class Interpreter
 {
 	friend class ObjectMemory; 
+	friend class BootLoader;
 
 public:
 	#ifdef _DEBUG
@@ -167,7 +167,6 @@ public:
 		static const wchar_t* activeMethod();
 		static void decodeMethod(CompiledMethod*, wostream* pstream=NULL);
 		static void decodeMethodAt(CompiledMethod*, unsigned ip, wostream&);
-		static void AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<std::string>& instVarNames);
 #endif
 
 	// Contexts
@@ -860,7 +859,7 @@ public:
 	static CHAR			m_unicodeToAnsiCharMap[65536];
 
 
-private:
+public:
 	#if defined(_DEBUG)
 		// List of VM referenced objects (generic mechanism for avoiding GC problems with
 		// objects ref'd only from the VM)

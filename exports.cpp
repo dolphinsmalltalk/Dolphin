@@ -31,20 +31,8 @@ __declspec(naked) DWORD __stdcall AnswerDWORD(DWORD /*arg*/)
 // Keep this as simple as possible, or the MS compiler gets horribly confused and either
 // does too much work, or returns the structure in the WRONG way (which it does if we
 // add a constructor by attempting to return as a >8 byte structure rather than in EAX/EDX)
-struct QWORD
-{
-	DWORD m_dw1;
-	DWORD m_dw2;
-};
 
-/*struct QWORD2 : public QWORD
-{
-	QWORD2(DWORD dw1, DWORD dw2) { m_dw1 = dw1; m_dw2 = dw2; }
-};
-*/
-
-
-__declspec(naked) QWORD __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
+__declspec(naked) __int64 __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
 {
 	// In fact the compiler generates such crap code, we'll just do the job oursel
 	_asm 
@@ -53,13 +41,6 @@ __declspec(naked) QWORD __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
 		mov		edx, [esp+8]
 		ret		8
 	}
-
-/*	QWORD answer;
-	answer.m_dw1 = dw1;
-	answer.m_dw2 = dw2;
-	return answer;
-*/
-//	return QWORD2(dw1, dw2);
 }
 
 // In this case we get better code generation if we do use a constructor, and

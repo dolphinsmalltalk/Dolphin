@@ -285,11 +285,6 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 
 				pBody = reinterpret_cast<Object*>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
 				ote->m_location = pBody;
-#ifdef OAD
-				TRACESTREAM<< L"Allocated virtual space at " << ote->m_location
-					<< L", max " << dec << vObjHeader.getMaxAllocation() <<
-					", size " << byteSize << endl;
-#endif
 			}
 			else
 			{

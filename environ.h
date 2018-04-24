@@ -25,8 +25,8 @@
 
 	// Modify the following defines if you have to target a platform prior to the ones specified below.
 	// Refer to MSDN for the latest info on corresponding values for different platforms.
-	#ifndef WINVER				// Allow use of features specific to Windows 8 and later
-	#define WINVER 0x0602
+	#ifndef WINVER				// Allow use of features specific to Windows 10 and later. This does not mean the VM will only run on Windows 10.
+	#define WINVER 0x0A00
 	#endif
 
 	#ifndef _WIN32_WINNT		
@@ -71,9 +71,14 @@
 
 	#ifdef _DEBUG
 		#define _CRTDBG_MAP_ALLOC
-		#define DEBUG_ONLY
+		#ifndef DEBUG_ONLY
+			#define DEBUG_ONLY
+		#endif
+		#undef TRACE
 		#define TRACE				::trace
-		#define VERIFY				_ASSERTE
+		#ifndef VERIFY
+			#define VERIFY				_ASSERTE
+		#endif	
 	#else
 		#include <crtdbg.h>
 		#define DEBUG_ONLY(f)      ((void)0)
@@ -91,8 +96,9 @@
 		#define ASSUME(e)    (__assume(e))
 	#endif
 
-	#define ASSERT_VALID(pOb)  ((void)0)
-	#define AfxCheckMemory()
+	#ifndef ASSERT_VALID
+		#define ASSERT_VALID(pOb)  ((void)0)
+	#endif
 
 	#ifdef _M_IX86
 		#define	DEBUGBREAK()			{ _asm int 3 }
