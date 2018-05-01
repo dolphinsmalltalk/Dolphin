@@ -122,6 +122,11 @@ protected:
 		return m_buffer.c_str();
 	}
 
+	Str GetTextRange(const TEXTRANGE& r)
+	{
+		return m_buffer.substr(r.m_start, r.m_stop - r.m_start + 1);
+	}
+
 	int GetTextOffset() const
 	{
 		return m_base;

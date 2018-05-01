@@ -16,7 +16,7 @@ Smalltalk compiler bytecode optimizer.
 #define CHECKREFERENCES
 
 #ifdef _DEBUG
-static int compilationTrace = 1;
+static int compilationTrace = 0;
 
 #elif !defined(USE_VM_DLL)
 #undef NDEBUG

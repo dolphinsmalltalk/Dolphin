@@ -70,7 +70,9 @@ namespace ST
 
 		static POTE __fastcall New(size_t cch)
 		{
-			return reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
+			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
+			ASSERT(stringPointer->isNullTerminated());
+			return stringPointer;
 		}
 
 		static POTE __fastcall New(LPCCH value, size_t cch)
@@ -79,6 +81,7 @@ namespace ST
 			MyType* __restrict string = stringPointer->m_location;
 			string->m_characters[cch] = '\0';
 			memcpy(string->m_characters, value, cch);
+			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
 
@@ -89,6 +92,7 @@ namespace ST
 			MyType* __restrict string = stringPointer->m_location;
 			// Copy the string and null terminator
 			memcpy(string->m_characters, sz, cch + sizeof(char));
+			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
 
@@ -102,6 +106,7 @@ namespace ST
 			int cch2 = ::WideCharToMultiByte(CP, 0, wsz, -1, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
 			UNREFERENCED_PARAMETER(cch2);
 			ASSERT(cch2 == cch);
+			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
 
@@ -115,21 +120,22 @@ namespace ST
 			int cch2 = ::WideCharToMultiByte(CP, 0, (LPCWCH)pwch, cwch, reinterpret_cast<LPSTR>(psz), cch, nullptr, nullptr);
 			UNREFERENCED_PARAMETER(cch2);
 			ASSERT(cch2 == cch);
+			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
 
-		static POTE NewLiteral(LPCSTR szValue)
-		{
-			size_t cch = strlen(szValue);
-			if (cch > 0)
-			{
-				MyOTE* oteLiteral = NewWithLen(szValue, cch);
-				oteLiteral->beImmutable();
-				return oteLiteral;
-			}
-			else
-				return Pointers.EmptyString;
-		}
+		//static POTE NewLiteral(LPCSTR szValue)
+		//{
+		//	size_t cch = strlen(szValue);
+		//	if (cch > 0)
+		//	{
+		//		MyOTE* oteLiteral = NewWithLen(szValue, cch);
+		//		oteLiteral->beImmutable();
+		//		return oteLiteral;
+		//	}
+		//	else
+		//		return Pointers.EmptyString;
+		//}
 	};
 
 	// Indexes into the VM's pointer array

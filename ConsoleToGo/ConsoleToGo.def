@@ -49,6 +49,7 @@ uncompress
 	_spawnvp
 	_splitpath_s
 	_statusfp
+	strcat_s
 	_stricmp
 	_stricoll
 	_strnicmp

@@ -10,7 +10,7 @@
 ******************************************************************************/
 #include "ist.h"
 
-#if defined(VMDLL)
+#if defined(CANSAVEIMAGE)
 
 #include "binstream.h"
 #include "zfbinstream.h"

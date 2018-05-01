@@ -556,6 +556,7 @@ inline unsigned ObjectMemory::GetOTSize()
 
 inline MemoryManager* ObjectMemory::memoryManager()
 {
+	ASSERT(!Pointers.MemoryManager->m_oteClass->isMetaclass());
 	return Pointers.MemoryManager->m_location;
 }
 
@@ -867,6 +868,7 @@ inline POBJECT ObjectMemory::FixedSizePool::allocate()
 	#if defined(_DEBUG) //	&& defined(		// JGFoster
 		if (_crtDbgFlag & _CRTDBG_CHECK_ALWAYS_DF)
 			HARDASSERT(isValid());
+		memset(&pChunk->next, 0xCD, sizeof(pChunk->next));
 	#endif
 
 	return reinterpret_cast<POBJECT>(pChunk);

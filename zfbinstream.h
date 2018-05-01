@@ -10,7 +10,7 @@
 #pragma once
 
 #include "binstream.h"
-#include "zlib.h"
+#include "zlib\zlib.h"
 
 class zfbinstream : public ibinstream, public obinstream
 {

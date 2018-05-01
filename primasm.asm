@@ -748,6 +748,8 @@ DWORD		unusedPrimitive									; case 253
 DWORD		unusedPrimitive									; case 254
 DWORD		unusedPrimitive									; case 255
 
+public _primitivesTable
+
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)
 	public _primitiveCounters

@@ -172,7 +172,6 @@
     <ClCompile Include="..\InProcStub\CoWait.cpp">
       <PrecompiledHeader />
     </ClCompile>
-    <ClCompile Include="..\wingui.cpp" />
     <ClCompile Include="dlldatax.c">
       <PrecompiledHeader />
     </ClCompile>

@@ -36,7 +36,7 @@ BEGIN
             VALUE "FileDescription", "Dolphin Smalltalk Virtual Machine"
             VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
             VALUE "InternalName", "Dolphin"
-            VALUE "LegalCopyright", "Copyright © Object Arts Ltd 1997-2016. STS © David Gorisek 2000-2016"
+            VALUE "LegalCopyright", "Copyright © Object Arts Ltd 1997-2018. STS © David Gorisek 2000-2016"
             VALUE "OriginalFilename", "DolphinVM7.DLL"
             VALUE "PrivateBuild", "11192015"
             VALUE "ProductName", "Dolphin Smalltalk 7"

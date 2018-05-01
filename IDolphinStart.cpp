@@ -40,7 +40,7 @@ STDMETHODIMP CDolphinSmalltalk::Initialise(HINSTANCE hInstance,
 {
 	HRESULT APIENTRY VMInit(LPCWSTR szImageName, LPVOID, UINT, DWORD);
 
-	if (hInstance == NULL || imageData == NULL || imageSize == 0)
+	if (hInstance == NULL)
 		return E_INVALIDARG;
 
 	piVM = this;

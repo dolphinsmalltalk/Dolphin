@@ -7,10 +7,6 @@ Interpreter/Windows GUI interface functions
 							
 #include "Ist.h"
 
-#ifdef _CONSOLE
-	#error Not for use in console VM
-#endif
-
 #ifndef _DEBUG
 	//#pragma optimize("s", on)
 	#pragma auto_inline(off)
@@ -22,18 +18,51 @@ Interpreter/Windows GUI interface functions
 #include <wtypes.h>
 #include "rc_vm.h"
 
-static HHOOK hHookOldCbtFilter;
-
 #pragma code_seg()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 
+#ifdef _CONSOLE
+
+void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg)
+{
+	int result = fwprintf(stderr, L"%s\n", msg);
+	FatalExit(exitCode);
+}
+
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
+{
+	fwprintf(stderr, L"%s\n", msg);
+	return 0;
+}
+
+Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
+{
+	return NULL;
+}
+
+#pragma code_seg(INIT_SEG)
+HRESULT Interpreter::initializeImage()
+{
+	// Nothing to do
+	return S_OK;
+}
+
+#pragma code_seg(TERM_SEG)
+void Interpreter::GuiShutdown()
+{
+}
+
+#else
+
+static HHOOK hHookOldCbtFilter;
+
 Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
 {
 	Oop argPointer = *sp;
 	OTE* underConstruction = m_oteUnderConstruction;
-	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp-1));
+	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 1));
 
 	if (!underConstruction->isNil() && underConstruction != receiverPointer)
 	{
@@ -49,7 +78,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
 		if (underConstruction != receiverPointer)
 		{
 			ASSERT(underConstruction->isNil());
-			m_oteUnderConstruction= receiverPointer;
+			m_oteUnderConstruction = receiverPointer;
 			receiverPointer->countUp();
 		}
 	}
@@ -61,7 +90,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
 			if (underConstruction == receiverPointer)
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM<< L"WARNING: Unhooking create for " << hex << underConstruction<< L" before HCBT_CREATEWND" << endl;
+				TRACESTREAM << L"WARNING: Unhooking create for " << hex << underConstruction << L" before HCBT_CREATEWND" << endl;
 				ObjectMemory::nilOutPointer(m_oteUnderConstruction);
 			}
 			else
@@ -113,17 +142,18 @@ LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lPar
 
 			ASSERT(wParam != NULL); // should be non-NULL HWND
 
-			// set m_bDlgCreate to TRUE if it is a dialog box
-			//  (this controls what kind of subclassing is done later)
-			//pThreadState->m_bDlgCreate = (lpcs->lpszClass == WC_DIALOG);
+									// set m_bDlgCreate to TRUE if it is a dialog box
+									//  (this controls what kind of subclassing is done later)
+									//pThreadState->m_bDlgCreate = (lpcs->lpszClass == WC_DIALOG);
 
-			// Pass to Smalltalk for subclassing (catch unwind failures so not thrown out)
+									// Pass to Smalltalk for subclassing (catch unwind failures so not thrown out)
 			subclassWindow(underConstruction, HWND(wParam));
 		}
 	}
 
 	return ::CallNextHookEx(hHookOldCbtFilter, code, wParam, lParam);
 }
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 
@@ -169,3 +199,4 @@ void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
 	FatalAppExitW(0, msg);
 }
 
+#endif

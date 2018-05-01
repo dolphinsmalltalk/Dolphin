@@ -363,15 +363,23 @@ Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp)
 		Oop oopReceiver = *(sp - 1);
 		if (!ObjectMemoryIsIntegerObject(oopReceiver))
 		{
+			static const BYTE criticalPointerObjectFlags = static_cast<BYTE>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
+			static const BYTE criticalByteObjectFlags = static_cast<BYTE>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask | OTEFlags::WeakOrZMask);
+
+			OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
+
 			// Ensure the masks cannot affect the critical bits of the flags
 			// the AND mask, must have the pointer, mark, and free bits set, to keep these bits
 			// the OR mask, must have those bits reset so as not to add them
-			BYTE andMask = (mask >> 8) | (OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
-			BYTE orMask = mask & static_cast<BYTE>(~(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask));
+			BYTE criticalFlags = oteReceiver->m_flags.m_pointer ? criticalPointerObjectFlags : criticalByteObjectFlags;
+			BYTE andMask = (mask >> 8) | criticalFlags;
+			BYTE orMask = mask & static_cast<BYTE>(~criticalFlags);
 
-			OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
 			BYTE oldFlags = oteReceiver->m_ubFlags;
 			oteReceiver->m_ubFlags = (oldFlags & andMask) | orMask;
+
+			ASSERT(oteReceiver->isNullTerminated() == oteReceiver->m_oteClass->m_location->m_instanceSpec.m_nullTerminated);
+
 			*(sp - 1) = ObjectMemoryIntegerObjectOf(oldFlags);
 			return sp - 1;
 		}

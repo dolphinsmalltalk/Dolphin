@@ -895,6 +895,7 @@ int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 	// Adds (object) to the literal frame if it is not already there.
 	// Returns the index to the object in the literal frame.
 	//
+	m_piVM->AddReference((Oop)stringPointer);
 	POTE classPointer = m_piVM->FetchClassOf(Oop(stringPointer));
 	LPUTF8 szValue = (LPUTF8)FetchBytesOf(stringPointer);
 
@@ -906,13 +907,16 @@ int Compiler::AddStringToFrame(POTE stringPointer, const TEXTRANGE& range)
 		if ((m_piVM->FetchClassOf(literalPointer) == classPointer) &&
 			strcmp((LPCSTR)FetchBytesOf(POTE(literalPointer)), (LPCSTR)szValue) == 0)
 		{
+			m_piVM->RemoveReference((Oop)stringPointer);
 			return i;
 		}
 	}
 	
 	Oop oopString = reinterpret_cast<Oop>(stringPointer);
 	m_piVM->MakeImmutable(oopString, TRUE);
-	return AddToFrameUnconditional(oopString, range);
+	int i = AddToFrameUnconditional(oopString, range);
+	m_piVM->RemoveReference((Oop)stringPointer);
+	return i;
 }
 
 void Compiler::GenLiteralConstant(Oop object, const TEXTRANGE& range)
@@ -3166,13 +3170,9 @@ Oop Compiler::ParseConstExpression()
 				}
 			}
 
-			// Note that when we evaluate the expression the expression method will be automatically
-			// destroyed as currently its reference count is zero. The method is passed into the 
-			// image for evaluation, and is pushed onto the stack increasing its count to 1. On 
-			// return when it is popped off the stack its count will drop to zero and it will be
-			// reclaimed.
-			
+			m_piVM->AddReference((Oop)oteMethod);
 			result = this->EvaluateExpression(GetText(), tokRange.m_stop+1, tokRange.m_stop + len - 1, oteMethod, contextOop, Nil());
+			m_piVM->RemoveReference((Oop)oteMethod);
 		}
 		else
 			result= Oop(Nil());
@@ -3576,9 +3576,11 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 		return Nil();
 	
 	POTE resultPointer = Nil();
-	
+
+#if 0
 	CHECKREFERENCES
-		
+#endif
+
 	wchar_t* prevLocale = NULL;
 	__try
 	{
@@ -3631,7 +3633,9 @@ STDMETHODIMP_(POTE) Compiler::CompileForEval(IUnknown* piVM, Oop compilerOop, co
 #endif
 	}
 	
+#if 0
 	CHECKREFERENCES
+#endif
 
 	return resultPointer;
 }
@@ -3701,9 +3705,10 @@ void Compiler::_CompileErrorV(int code, const TEXTRANGE& range, va_list extras)
 	{
 		if (m_flags & Boot)
 		{	
-			char buf[1024];
-			wsprintf(buf, "ERROR %s>>%s line %d: %d\n\r", GetClassName().c_str(), m_selector.c_str(), GetLineNo(), code);
-			OutputDebugString(buf);
+			Str erroneousText = GetTextRange(range);
+			fprintf(stdout, "ERROR %d in %s>>%s line %d,(%d..%d): %s\n\r", code, GetClassName().c_str(), m_selector.c_str(), GetLineNo(), range.m_start, range.m_stop,
+				erroneousText.c_str());
+			fprintf(stdout, (LPCSTR)GetText());
 		}
 		else
 		{

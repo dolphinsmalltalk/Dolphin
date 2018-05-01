@@ -28,6 +28,10 @@
 	#define VM 1
 #endif
 
+#if defined(VMDLL)
+	#define CANSAVEIMAGE 1
+#endif
+
 // Enable templated overloads for secure version of old-style CRT functions that manipulate buffers but take no size arguments
 
 #undef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES

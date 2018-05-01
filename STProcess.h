@@ -38,9 +38,7 @@ namespace ST
 	// Really a subclass of Link, but VM doesn't care about that
 	class Process : public Object
 	{
-	private:
-		friend class Interpreter;
-
+	public:
 		// Really a member of Link superclass
 		ProcessOTE*		m_nextLink;
 		Oop				m_suspendedFrame;

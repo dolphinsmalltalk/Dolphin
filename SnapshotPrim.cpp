@@ -26,7 +26,7 @@
 
 #pragma auto_inline(off)
 
-#ifdef VMDLL
+#if defined(CANSAVEIMAGE)
 
 Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp)
 {

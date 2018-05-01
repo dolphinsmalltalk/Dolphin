@@ -72,6 +72,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
   </ItemGroup>
   <ItemGroup>

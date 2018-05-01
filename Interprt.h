@@ -867,7 +867,7 @@ public:
 		static int	m_nFreeVMRef;
 		static int	m_nMaxVMRefs;				// Current size of VM References array
 
-		enum { VMREFSINITIAL = 128 };
+		enum { VMREFSINITIAL = 16 };
 		enum { VMREFSGROWTH = 64 };
 	#endif
 };

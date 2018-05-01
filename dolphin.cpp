@@ -77,22 +77,6 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 	return bRet;
 }
 
-HRESULT InitApplication()
-{
-	#if defined(VMDLL) && !defined(_DEBUG)
-		::DisableThreadLibraryCalls(GetVMModule());
-	#endif
-	return S_OK;
-}
-
-static inline void DolphinInitInstance()
-{
-	// Ensure that Dolphin has a message queue, or the box will not appear
-	MSG dummy;
-	::PeekMessage(&dummy, 0, 0, 0, PM_NOREMOVE|PM_NOYIELD);
-
-	InitializeVtbl();
-}
 
 #pragma code_seg()
 
@@ -147,24 +131,6 @@ static HRESULT DolphinInit(LPCWSTR szFileName, LPVOID imageData, UINT imageSize,
 	return Interpreter::initialize(achImagePath, imageData, imageSize, isDevSys);
 }
 
-static bool DolphinRun(DWORD dwArg)
-{
-	Interpreter::sendStartup(achImagePath, dwArg);
-
-	// Start the interpreter (should not return here)
-	__try
-	{
-		Interpreter::interpret();
-	}
-	__except(ignoreUnwindsFilter(GetExceptionInformation()))
-	{
-		_ASSERTE(FALSE);
-	}
-
-	return true;
-}
-
-
 #pragma code_seg(TERM_SEG)
 
 void DolphinExitInstance()
@@ -205,12 +171,48 @@ static void __cdecl invalidParameterHandler(
 	::RaiseException(SE_VMCRTFAULT, 0, 1, (CONST ULONG_PTR*)args);
 }
 
+#ifndef BOOT
+
+void DolphinRun(DWORD dwArg)
+{
+	Interpreter::sendStartup(achImagePath, dwArg);
+
+	// Start the interpreter (should not return here)
+	__try
+	{
+		Interpreter::interpret();
+	}
+	__except (ignoreUnwindsFilter(GetExceptionInformation()))
+	{
+		_ASSERTE(FALSE);
+	}
+}
+
 #pragma code_seg(INIT_SEG)
 
+HRESULT InitApplication()
+{
+#if defined(VMDLL) && !defined(_DEBUG)
+	::DisableThreadLibraryCalls(GetVMModule());
+#endif
+	return S_OK;
+}
+
+static inline void DolphinInitInstance()
+{
+	// Ensure that Dolphin has a message queue, or the box will not appear
+	MSG dummy;
+	::PeekMessage(&dummy, 0, 0, 0, PM_NOREMOVE | PM_NOYIELD);
+
+	InitializeVtbl();
+}
 HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 					LPVOID imageData, UINT imageSize,
 					DWORD flags)
 {
+	if (imageData == NULL || imageSize == 0)
+		return E_INVALIDARG;
+
 	// Perform instance initialization:
 	HRESULT hr = InitApplication();
 	if (FAILED(hr))
@@ -221,8 +223,12 @@ HRESULT APIENTRY VMInit(LPCWSTR szImageName,
 	return DolphinInit(szImageName, imageData, imageSize, flags & 1);
 }
 
+#endif
+
 int APIENTRY VMRun(DWORD dwArg)
 {
+	extern void DolphinRun(DWORD dwArg);
+
 	int exitCode = 0;
 	EXCEPTION_RECORD exRec = { 0 };
 

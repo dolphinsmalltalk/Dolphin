@@ -284,8 +284,6 @@ struct BlockCopyExtension
 
 enum { ExLongPushImmediateInstructionSize = 5, BlockCopyInstructionSize = 7 };
 
-enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
-
 inline int lengthOfByteCode(BYTE opCode)
 {
 	return opCode < FirstDoubleByteInstruction ? 1 : 

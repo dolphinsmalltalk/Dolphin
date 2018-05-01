@@ -99,7 +99,7 @@ struct VMPointers //: public Object
 			SymbolOTE* callbackPerformWithWithSymbol;			// 50
 			SymbolOTE* callbackPerformWithWithWithSymbol;		// 51
 			SymbolOTE* callbackPerformWithArgumentsSymbol;		// 52
-			/**/Oop _unusedSelector4;								// 53
+			/**/Oop _unusedSelector53;								// 53
 			SymbolOTE* subclassWindowSymbol;					// 54
 			SymbolOTE* errorInstVarAtPutSymbol;				// 55
 
@@ -115,14 +115,14 @@ struct VMPointers //: public Object
 			SymbolOTE* canUnderstandSymbol;						// 62
 			SymbolOTE* negativeSymbol;							// 63
 			SymbolOTE* evaluateExpressionSelector;				// 64
-			/**/POTE _unusedSelector6;								// 65
+			/**/POTE _unusedSelector65;								// 65
 
 				// 66..85
 			SymbolOTE* compilerNotificationCallback;			// 66
-			POTE _unusedSelector7;								// 67
+			POTE _unusedSelector67;								// 67
 
 			SymbolOTE* genericCallbackSelector;					// 68
-			/**/Oop _unusedSelector3;								// 69
+			/**/Oop _unusedSelector69;								// 69
 			SymbolOTE* virtualCallbackSelector;					// 70
 			SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73,74
 			Oop _reservedSymbols[6];							// 75, 76,77,78,79,80

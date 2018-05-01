@@ -9,6 +9,8 @@
 
 #include "bytecdes.h"
 
+enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
+
 #ifndef min
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
@@ -424,6 +426,14 @@ public:
 
 		case IsZero:
 			stream << L"IsZero";
+			break;
+
+		case SpecialSendNotIdentical:
+			stream << L"Special Send #~~";
+			break;
+
+		case SpecialSendNot:
+			stream << L"Special Send #not";
 			break;
 
 		case PushInstVar:

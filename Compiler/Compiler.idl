@@ -17,7 +17,11 @@ library CompilerLib
 	importlib("stdole32.tlb");
 	importlib("stdole2.tlb");
 
+	cpp_quote("#ifndef POTE_DEFINED")
 	typedef void* POTE;
+	cpp_quote("#define POTE_DEFINED")
+	cpp_quote("#endif")
+	
 	typedef UINT_PTR Oop;
 
 	typedef enum ReservedCodeRanges {

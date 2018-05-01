@@ -19,7 +19,11 @@
 inline POBJECT ObjectMemory::allocChunk(MWORD chunkSize)
 {
 	#if defined(PRIVATE_HEAP)
-		return static_cast<POBJECT>(::HeapAlloc(m_hHeap, HEAP_NO_SERIALIZE, chunkSize));
+		POBJECT pObj = static_cast<POBJECT>(::HeapAlloc(m_hHeap, HEAP_NO_SERIALIZE, chunkSize));
+		#ifdef _DEBUG
+			memset(pObj, 0xCD, chunkSize);
+		#endif
+		return pObj;
 	#else
 		return malloc(chunkSize);
 	#endif

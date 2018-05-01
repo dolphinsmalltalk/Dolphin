@@ -1,12 +1,10 @@
 #include "ist.h"
 
+#ifdef _CONSOLE
+
 #ifndef _DEBUG
 	#pragma optimize("s", on)
 	#pragma auto_inline(off)
-#endif
-
-#ifndef _CONSOLE
-	#error Intended for use only in console VMs
 #endif
 
 #include <process.h>
@@ -44,3 +42,4 @@ void Interpreter::GuiShutdown()
 {
 }
 
+#endif

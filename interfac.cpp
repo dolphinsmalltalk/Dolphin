@@ -415,6 +415,7 @@ SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCAL
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);
+	ASSERT(symbolPointer->isNullTerminated());
 	// Since it is a symbol, we don't need the extra ref. added by callback
 	// and this won't cause it to be added to the Zct (see previous assertion)
 	symbolPointer->countDown();

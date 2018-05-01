@@ -16,6 +16,13 @@
 
 /////////////////////////////////////////////////////////////////////
 
+// Currently this behaves in the same was as the default _matherr function.
+int __cdecl _matherr(struct _exception *except)
+{
+	UNREFERENCED_PARAMETER(except);
+	return 0;
+}
+
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 {
 	return ReportWin32Error(IDP_CREATEVMFAILED, hr);
@@ -23,17 +30,23 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 
 static const wchar_t* FindImageNameArg()
 {
+	//AllocConsole();
+
 	LPCWSTR szImage = L"DPRO.img7";
 	static wchar_t achImageName[_MAX_PATH];
 
 	for (int i=1;i<__argc;i++)
 	{
-		wchar_t ch = *__wargv[i];
+		const wchar_t* arg = __wargv[i];
+		wchar_t ch = *arg;
 		if (ch != L'/' && ch != L'-')
 		{
 			szImage = __wargv[i];
 			break;
 		}
+
+		if (wcscmp(arg, L"-AllocConsole") == 0)
+			AllocConsole();
 	}
 
 	wchar_t* filePart;

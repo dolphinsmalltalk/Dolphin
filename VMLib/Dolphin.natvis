@@ -15,7 +15,7 @@
     <DisplayString Condition="m_pointers &amp;&amp; m_indexable">variableSubclass with {m_fixedFields,d} field(s), mourner={(bool)m_mourner}}</DisplayString>
     <DisplayString Condition="m_pointers">subclass with {m_fixedFields,d} field(s), mourner={(bool)m_mourner}</DisplayString>
     <DisplayString Condition="!m_pointers">variableByteSubclass, mourner={(bool)m_mourner}, indirect={(bool)m_indirect}, nullTerm={(bool)m_nullTerminated}</DisplayString>
-    <Expand HideRawView="true"></Expand>
+    <Expand HideRawView="false"></Expand>
   </Type>
   <Type Name="TOTE&lt;ST::Class&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
