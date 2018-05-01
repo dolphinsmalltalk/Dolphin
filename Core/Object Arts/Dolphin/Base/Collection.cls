@@ -422,13 +422,14 @@ newSelection
 
 	^self species new!
 
-noDifference: aCollection 
+noDifference: aCollection
 	"Answer whether the receiver contains the same elements as the <collection> argument
 	(i.e. the symmetric difference is empty)."
 
+	| size |
 	aCollection == self ifTrue: [^true].
-	aCollection size = self size ifFalse: [^false].
-	^(self symmetricDifference: aCollection) isEmpty!
+	aCollection size = (size := self size) ifFalse: [^false].
+	^(self intersection: aCollection) size = size!
 
 notEmpty
 	"Answer whether the receiver contains any elements."
