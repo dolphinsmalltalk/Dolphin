@@ -11,6 +11,9 @@ StdioUtf16FileStream comment: ''!
 !StdioUtf16FileStream methodsFor!
 
 contentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of elements
+	from the receiver."
+
 	^Utf16String!
 
 position
@@ -29,7 +32,7 @@ size
 	"Answer the size of the file in wide characters, excluding the BOM."
 
 	^super size - offset bitShift: -1! !
-!StdioUtf16FileStream categoriesFor: #contentsSpecies!accessing!private! !
+!StdioUtf16FileStream categoriesFor: #contentsSpecies!constants!private! !
 !StdioUtf16FileStream categoriesFor: #position!accessing!public! !
 !StdioUtf16FileStream categoriesFor: #position:!positioning!public! !
 !StdioUtf16FileStream categoriesFor: #size!accessing!public! !

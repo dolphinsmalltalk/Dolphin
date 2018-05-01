@@ -92,7 +92,7 @@ testEncodeOnPut
 						[:i |
 						| actual utf stream actual2 |
 						stream := self collectionClass writeStream: i.
-						self collectionClass
+						stream collection
 							encodeOn: stream put: each;
 							encodeOn: stream put: each.
 						utf := stream contents.

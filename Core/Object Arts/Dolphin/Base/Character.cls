@@ -547,7 +547,10 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	self addClassConstant: 'CharacterSet' value: CharacterSet.
+	self addClassConstant: 'CharacterSet'
+		value: ((AnsiString fromByteArray: (0 to: 255) asByteArray)
+				isImmutable: true;
+				yourself).
 	self addClassConstant: 'EscapeChars'
 		value: ((Array new: 14)
 				at: 0 + 1 put: $0;

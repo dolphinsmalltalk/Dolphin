@@ -50,30 +50,23 @@ isText
 	^true!
 
 next
-	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
-	a Unicode code point. Raise an error if at EOF."
+	"Answer a <Character> being the next of the receiver's future sequence values. Raise an
+	error if at EOF."
 
-	"The stdio API is always working in UTF-16, regardless of the underlying encoding of the stream."
-
-	^(self encodingClass decodeNextFrom: self) ifNil: [self errorEndOfStream]!
+	^(self bufferPrototype decodeNextFrom: self) ifNil: [self errorEndOfStream]!
 
 next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
 
-	| ansi end |
+	| block end |
 	end := startInteger + countInteger - 1.
-	ansi := self encodingClass
+	block := self bufferClass
 				fromString: ((startInteger == 1 and: [end == aSequenceableCollection size])
 						ifTrue: [aSequenceableCollection]
 						ifFalse: [aSequenceableCollection copyFrom: startInteger to: end]).
-	^self nextPutAll: ansi!
-
-nextAvailable
-	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
-	an ANSI code point. Answer nil if at EOF."
-
-	^self encodingClass decodeNextFrom: self!
+	self nextPutAll: block.
+	^aSequenceableCollection!
 
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
@@ -84,8 +77,8 @@ nextLine
 	| buf answer len last blockSize |
 	self atEnd ifTrue: [^''].
 	blockSize := 128.
-	answer := self encodingClass writeStream: blockSize.
-	buf := self encodingClass newFixed: blockSize - 1.
+	answer := self contentsSpecies writeStream: blockSize.
+	buf := self bufferClass newFixed: blockSize - 1.
 	
 	[| read |
 	(self getString: buf) == 0
@@ -112,7 +105,7 @@ nextLine
 nextPut: aCharacter
 	"Store the <Character> as the next element of the receiver."
 
-	^self encodingClass encodeOn: self put: aCharacter!
+	^self bufferPrototype encodeOn: self put: aCharacter!
 
 peek
 	"Answer the next element in the collection, but do not change the position reference. 
@@ -153,7 +146,6 @@ upToEnd
 !StdioTextFileStream categoriesFor: #isText!public!testing! !
 !StdioTextFileStream categoriesFor: #next!accessing!public! !
 !StdioTextFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioTextFileStream categoriesFor: #nextAvailable!accessing!public! !
 !StdioTextFileStream categoriesFor: #nextLine!accessing!public! !
 !StdioTextFileStream categoriesFor: #nextPut:!accessing!public! !
 !StdioTextFileStream categoriesFor: #peek!accessing!public! !

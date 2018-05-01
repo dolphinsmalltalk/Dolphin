@@ -10,41 +10,39 @@ Utf8StringTest comment: ''!
 !Utf8StringTest categoriesForClass!Unclassified! !
 !Utf8StringTest methodsFor!
 
-assimilate: each 
-	^Character utf8Value: each asInteger!
-
 assimilateString: aString
 	^aString asUtf8String!
 
 collectionClass
 	^Utf8String!
 
-testClassDecodeFrom
+testDecodeFrom
+	| subject |
+	subject := self collectionClass new.
 	#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD) do: 
 			[:each |
 			| stream actual |
 			stream := each asUtf8String readStream.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: each].
 	"Invalid continuations"
 	#(#[16rC0 16r41] #[16rE0 16r80 16r41] #[16rF0 16r80 16r80 16r41]) do: 
 			[:each |
 			| stream actual |
 			stream := each readStream.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: $A].
 	"Incomplete continuations"
 	#(#[16rC0] #[16rE0 16r80] #[16rF0 16r80 16r80]) do: 
 			[:each |
 			| stream actual |
 			stream := each readStream.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
 			self assert: stream atEnd]! !
-!Utf8StringTest categoriesFor: #assimilate:!helpers!private! !
 !Utf8StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf8StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf8StringTest categoriesFor: #testClassDecodeFrom!public! !
+!Utf8StringTest categoriesFor: #testDecodeFrom!public! !
 

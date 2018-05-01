@@ -72,9 +72,7 @@ next
 		3 -	The next index is beyond the end of the streamed over collection."
 
 	<primitive: 65>
-	^position >= readLimit
-		ifTrue: [self errorEndOfStream]
-		ifFalse: [collection at: (position := position + 1)]!
+	^collection decodeNextFrom: self!
 
 nextAvailable
 	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
@@ -83,7 +81,7 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit ifFalse: [collection at: (position := position + 1)]! !
+	^collection decodeNextFrom: self! !
 !ReadWriteStream categoriesFor: #basicNext!accessing!public! !
 !ReadWriteStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !ReadWriteStream categoriesFor: #contents!accessing!public! !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

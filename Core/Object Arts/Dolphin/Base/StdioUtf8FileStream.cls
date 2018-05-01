@@ -18,19 +18,10 @@ contents
 	^self upToEnd!
 
 contentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of elements
+	from the receiver."
+
 	^Utf8String!
-
-nextAvailable: anInteger
-	"Answer a <sequencedReadableCollection> of the receiver's content species containing the next anInteger number of objects
-	accessible by the receiver."
-
-	| out i next |
-	out := self contentsSpecies writeStream: anInteger.
-	i := 1.
-	[i > anInteger or: [(next := self nextAvailable) isNil]] whileFalse: 
-			[out nextPut: next.
-			i := i + 1].
-	^out contents!
 
 position
 	"Answer the absolute (zero-based) position of the file pointer."
@@ -65,8 +56,7 @@ upToEnd
 
 	^super upToEnd asUtf8String! !
 !StdioUtf8FileStream categoriesFor: #contents!accessing!public! !
-!StdioUtf8FileStream categoriesFor: #contentsSpecies!accessing!private! !
-!StdioUtf8FileStream categoriesFor: #nextAvailable:!accessing!public! !
+!StdioUtf8FileStream categoriesFor: #contentsSpecies!constants!private! !
 !StdioUtf8FileStream categoriesFor: #position!accessing!public! !
 !StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
 !StdioUtf8FileStream categoriesFor: #size!accessing!public! !

@@ -142,7 +142,7 @@ test64BitPosition
 testAppend
 	| actual padding |
 	filestream := self tempWriteStream: #utf8.
-	padding := String new: self bufferSize - Utf8String bom size - 1 withAll: $\x20.
+	padding := String new: self bufferSize - Utf8String.Bom size - 1 withAll: $\x20.
 	filestream
 		nextPutAll: padding;
 		nextPut: Character dolphin.

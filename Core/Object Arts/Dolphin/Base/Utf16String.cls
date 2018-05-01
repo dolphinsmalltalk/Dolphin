@@ -2,14 +2,15 @@
 
 UtfEncodedString variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
-	classVariableNames: 'LeadOffset SurrogateOffset'
+	classVariableNames: 'Bom LeadOffset SurrogateOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Utf16String guid: (GUID fromString: '{87b4c51e-026e-11d3-9fd7-00a0cc3e4a32}')!
 Utf16String isNullTerminated: true!
+Utf16String addClassConstant: 'Bom' value: #[255 254 ]!
 Utf16String addClassConstant: 'LeadOffset' value: 55232!
 Utf16String addClassConstant: 'SurrogateOffset' value: 56613888!
-Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. It is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
+Utf16String comment: 'Utf16String is the class of <Strings>s that use a the two or four byte UTF-16 LE encoding. UTF-16 is the standard encoding used for strings in the Windows APIs. Most of the time it is not necessary to worry about converting to UTF-16, however, since the class library and VM will normally be able to provide automatic conversions when required. However, it is recommended that Utf8String be used internally for all strings, and that conversion to/from UTF-16 be performed at interface boundaries where necessary.
 
 The cautionary notes in the abstract superclass (UtfEncodedString) should be read carefully to understand the compromises made in introducing a variable width encoding into the SequenceableCollection hierarchy.'!
 !Utf16String categoriesForClass!Collections-Text! !
@@ -72,6 +73,9 @@ at: anInteger
 	<primitive: 63>
 	^Character utf16Value: (self wordAtOffset: anInteger + anInteger - 2)!
 
+bom
+	^Bom!
+
 byteSize
 	"Private - Answer the size in bytes of this object, including the null terminator."
 
@@ -83,6 +87,38 @@ copyToBuffer: anAddress ofSize: anInteger
 		bufferSize: anInteger
 		strSource: self
 		count: CRTConstants._TRUNCATE!
+
+decode: anInteger
+	"Answer a <Character> that corresponds to the UTF-16 code unit, anInteger. Note that this
+	can be a surrogate character."
+
+	^Character utf16Value: anInteger!
+
+decodeNextFrom: aReadStream
+	"Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
+	is assumed to be over a Utf16String (or a stream over a double-byte object) ."
+
+	^aReadStream basicNextAvailable
+		ifNotNil: 
+			[:c |
+			^(c bitAnd: 16rFFFFC00) == 16rD800
+				ifTrue: 
+					["Lead surrogate encountered"
+					aReadStream basicNextAvailable
+						ifNil: 
+							["Lead surrogate but no trailing surrogate, answer the replacement character"
+							Character replacement]
+						ifNotNil: 
+							[:c2 |
+							(c2 bitAnd: 16rFFFFFC00) == 16rDC00
+								ifTrue: 
+									["Valid surrogate pair"
+									Character codePoint: (c << 10) + c2 - SurrogateOffset]
+								ifFalse: 
+									["No trailing surrogate, answer the replacement character"
+									aReadStream pop.
+									Character replacement]]]
+				ifFalse: [Character utf16Value: c]]!
 
 displayOn: aStream
 	"Append the receiver in end-user form to aStream.
@@ -108,6 +144,31 @@ encodedAt: anInteger put: aCharacter
 						basicAt: anInteger put: (codePoint bitShift: -10) + 16rD800;
 						basicAt: anInteger + 1 put: (codePoint bitAnd: 16r3FF) + 16rDC00.
 					anInteger + 1]
+				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
+
+encodedSizeOf: aCharacter
+	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+
+	^aCharacter codePoint <= 16rFFFF ifTrue: [1] ifFalse: [2]!
+
+encodeOn: aPuttableStream put: aCharacter
+	"Encode the <Character> argument onto the <WriteStream> argument using the UTF-16
+	encoding. This requires either one or two 2-byte code units be written to the stream, depending
+	on whether the code point is in the basic multi-lingual plane (one code unit), or beyond the BMP
+	(two code units). An error is raised if the <Character> has an invalid code point."
+
+	| codePoint |
+	codePoint := aCharacter codePoint.
+	^codePoint <= 16rFFFF
+		ifTrue: [aPuttableStream basicNextPut: codePoint]
+		ifFalse: 
+			[codePoint <= Win32Constants.MAX_UCSCHAR
+				ifTrue: 
+					[#todo.	"http://www.unicode.org/faq/utf_bom.html suggests there might be a simpler (more efficient) calculation, but it looks incorrect to me"
+					codePoint := codePoint - 16r10000.
+					aPuttableStream
+						basicNextPut: (codePoint bitShift: -10) + 16rD800;
+						basicNextPut: (codePoint bitAnd: 16r3FF) + 16rDC00]
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
 findString: aString startingAt: anInteger 
@@ -240,6 +301,12 @@ shallowCopy
 
 	^self class fromAddress: self yourAddress length: self size!
 
+skipEncodingMarkerFrom: aGettableStream
+	"Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
+	is assumed to be at the start of its sequence."
+
+	^Error notYetImplemented!
+
 stbSaveOn: anSTBOutFiler
 	"At present this is needed because STB doesn't work correctly with double-byte objects. It
 	is may be desirable, anyway, to save as UTF-8 to save space, and the intention is that
@@ -294,10 +361,15 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #asUppercase!converting!public! !
 !Utf16String categoriesFor: #asUtf16String!converting!public! !
 !Utf16String categoriesFor: #at:!accessing!public! !
+!Utf16String categoriesFor: #bom!constants!encode/decode!private! !
 !Utf16String categoriesFor: #byteSize!accessing!private! !
 !Utf16String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
+!Utf16String categoriesFor: #decode:!encode/decode!public! !
+!Utf16String categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !Utf16String categoriesFor: #displayOn:!printing!public! !
 !Utf16String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!Utf16String categoriesFor: #encodedSizeOf:!encode/decode!public! !
+!Utf16String categoriesFor: #encodeOn:put:!encode/decode!public! !
 !Utf16String categoriesFor: #findString:startingAt:!public!searching! !
 !Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !Utf16String categoriesFor: #maxEncoding!constants!private! !
@@ -307,6 +379,7 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #resize:!mutating!public! !
 !Utf16String categoriesFor: #reverse!copying!public! !
 !Utf16String categoriesFor: #shallowCopy!copying!public! !
+!Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
 !Utf16String categoriesFor: #stbSaveOn:!binary filing!public! !
 !Utf16String categoriesFor: #strcspn:start:!private!searching! !
 !Utf16String categoriesFor: #strlen!accessing!private! !
@@ -323,67 +396,10 @@ codePage
 
 	^Win32Constants.CP_UNICODE!
 
-decode: anInteger
-	"Answer a <Character> that corresponds to the UTF-16 code unit, anInteger. Note that this
-	can be a surrogate character."
-
-	^Character utf16Value: anInteger!
-
-decodeNextFrom: aReadStream
-	"Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
-	is assumed to be over a Utf16String (or a stream over a double-byte object) ."
-
-	^aReadStream basicNextAvailable
-		ifNotNil: 
-			[:c |
-			^(c bitAnd: 16rFFFFC00) == 16rD800
-				ifTrue: 
-					["Lead surrogate encountered"
-					aReadStream basicNextAvailable
-						ifNil: 
-							["Lead surrogate but no trailing surrogate, answer the replacement character"
-							Character replacement]
-						ifNotNil: 
-							[:c2 |
-							(c2 bitAnd: 16rFFFFFC00) == 16rDC00
-								ifTrue: 
-									["Valid surrogate pair"
-									Character codePoint: (c << 10) + c2 - SurrogateOffset]
-								ifFalse: 
-									["No trailing surrogate, answer the replacement character"
-									aReadStream pop.
-									Character replacement]]]
-				ifFalse: [Character utf16Value: c]]!
-
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
 	^2!
-
-encodedSizeOf: aCharacter
-	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
-
-	^aCharacter codePoint <= 16rFFFF ifTrue: [1] ifFalse: [2]!
-
-encodeOn: aPuttableStream put: aCharacter
-	"Encode the <Character> argument onto the <WriteStream> argument using the UTF-16
-	encoding. This requires either one or two 2-byte code units be written to the stream, depending
-	on whether the code point is in the basic multi-lingual plane (one code unit), or beyond the BMP
-	(two code units). An error is raised if the <Character> has an invalid code point."
-
-	| codePoint |
-	codePoint := aCharacter codePoint.
-	^codePoint <= 16rFFFF
-		ifTrue: [aPuttableStream basicNextPut: codePoint]
-		ifFalse: 
-			[codePoint <= Win32Constants.MAX_UCSCHAR
-				ifTrue: 
-					[#todo.	"http://www.unicode.org/faq/utf_bom.html suggests there might be a simpler (more efficient) calculation, but it looks incorrect to me"
-					codePoint := codePoint - 16r10000.
-					aPuttableStream
-						basicNextPut: (codePoint bitShift: -10) + 16rD800;
-						basicNextPut: (codePoint bitAnd: 16r3FF) + 16rDC00]
-				ifFalse: [self errorInvalidCodePoint: codePoint]]!
 
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
@@ -458,14 +474,8 @@ initialize
 	self extraInstanceSpec: EncodingUtf16.
 	self addClassConstant: 'LeadOffset' value: 16rD800 - (16r10000 >> 10).
 	self addClassConstant: 'SurrogateOffset' value: (16rD800 << 10) + 16rDC00 - 16r10000.
-	bom := #[255 254]
+	self addClassConstant: 'Bom' value: #[255 254]
 !
-
-skipEncodingMarkerFrom: aGettableStream
-	"Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
-	is assumed to be at the start of its sequence."
-
-	^Error notYetImplemented!
 
 with: aCharacter
 	"Answer a new instance of the receiver containing the single <Character> element,
@@ -482,11 +492,7 @@ with: aCharacter
 				encodedAt: 1 put: cp;
 				yourself]! !
 !Utf16String class categoriesFor: #codePage!constants!public! !
-!Utf16String class categoriesFor: #decode:!encode/decode!public! !
-!Utf16String class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !Utf16String class categoriesFor: #elementSize!constants!public! !
-!Utf16String class categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!Utf16String class categoriesFor: #encodeOn:put:!encode/decode!public! !
 !Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
 !Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
 !Utf16String class categoriesFor: #fromAtomId:!instance creation!public! !
@@ -494,6 +500,5 @@ with: aCharacter
 !Utf16String class categoriesFor: #fromString:!instance creation!public! !
 !Utf16String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !Utf16String class categoriesFor: #initialize!development!initializing!public! !
-!Utf16String class categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
 !Utf16String class categoriesFor: #with:!instance creation!public! !
 

@@ -26,12 +26,14 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
-testClassDecodeFrom
+testDecodeFrom
+	| subject |
+	subject := self collectionClass new.
 	#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD) do: 
 			[:each |
 			| stream actual |
 			stream := each asUtf16String readStream.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: each].
 
 	"Invalid continuations"
@@ -40,9 +42,9 @@ testClassDecodeFrom
 			[:each |
 			| stream actual |
 			stream := each first readStream.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: each last.
 			self assert: stream atEnd].
 	"Incomplete continuations"
@@ -50,7 +52,7 @@ testClassDecodeFrom
 			[:each |
 			| stream actual |
 			stream := each readStream.
-			actual := self collectionClass decodeNextFrom: stream.
+			actual := subject decodeNextFrom: stream.
 			self assert: actual equals: Character replacement.
 			self assert: stream atEnd]!
 
@@ -103,7 +105,7 @@ testUtf8StringConversion
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #testClassDecodeFrom!public! !
+!Utf16StringTest categoriesFor: #testDecodeFrom!public! !
 !Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

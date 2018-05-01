@@ -14,7 +14,9 @@ String addClassConstant: 'EncodingUtf32' value: 3!
 String addClassConstant: 'EncodingUtf8' value: 1!
 String addClassConstant: 'LineDelimiter' value: '
 '!
-String comment: 'String is the abstract class of <ArrayedCollection>s representing strings of <Character>s. It has subclasses for strings in the most common encodings, e.g. Latin1, UTF-8, and UTF-16.
+String comment: 'String is the abstract class of <ArrayedCollection>s representing strings of <Character>s. It has subclasses for strings in the most common encodings, e.g. Latin1, UTF-8, and UTF-16. 
+
+The default and preferred string type is Utf8String, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16 encoded strings. Utf16String is the concreted subclass to  represent UTF-16 encoded strings.
 
 N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null terminated. Space for the null terminator is implicity included when a String is allocated, but is not reported when the size of the String is requested.
 
@@ -36,7 +38,17 @@ String complies with the following ANSI protocols:
 	appended in their original order, i.e. concatenate the argument to the receiver."
 
 	<primitive: 218>
-	^super , aSequencedReadableCollection!
+	^self class == aSequencedReadableCollection class
+		ifTrue: [
+			"For concatenation of the same string encoding we can use efficient array block copy operations"
+			super , aSequencedReadableCollection]
+		ifFalse: 
+			[
+			"For mixed encoding, we stream into a Utf8String"
+			(Utf8String writeStream: self size + aSequencedReadableCollection size)
+				nextPutAll: self;
+				nextPutAll: aSequencedReadableCollection;
+				contents]!
 
 _cmp: comparand
 	"Private - Answer the receiver's <integer> ordinal collation order with respect to 
@@ -389,6 +401,28 @@ contains: aString
 copyToBuffer: anAddress ofSize: anInteger
 	^self subclassResponsibility!
 
+decode: anInteger
+	"Answer a <Character> that corresponds to the <integer> code unit, anInteger, in the
+	receiver's encoding."
+
+	^self subclassResponsibility!
+
+decodeNext: anInteger from: aReadStream
+	"Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
+	many as are available before the end of stream."
+
+	| newStream count next |
+	newStream := self class writeStream: (count := anInteger).
+	[count == 0 or: [(next := aReadStream nextAvailable) isNil]] whileFalse: 
+			[newStream nextPut: next.
+			count := count - 1].
+	^newStream contents!
+
+decodeNextFrom: aReadStream
+	"Answer the next <Character> in the receiver's encoding from the <ReadStream> argument ."
+
+	^self subclassResponsibility!
+
 displayOn: aStream
 	"Append the receiver in end-user form to aStream. Since this message is intended
 	for producing end-user text, the receiver is appended to the stream as-is."
@@ -403,6 +437,13 @@ displayString
 	common operation."
 
 	^self!
+
+encodeOn: aWriteStream put: aCharacter
+	"Encode the <Character> argument onto the <WriteStream> argument using the character
+	encoding of the receiver, e.g. for Utf8String, this would be the relevant sequence of 1 to 4
+	UTF-8 encoded bytes necessary to represent the Unicode code point of the character."
+
+	^self subclassResponsibility!
 
 encoding
 	^self class encoding!
@@ -822,16 +863,27 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	stop to: start by: -1 do: [:i | aByteObject basicAt: i put: (self byteAt: i + fromOffset)].
 	^aByteObject!
 
-replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger 
+replaceFrom: startInteger to: stopInteger with: aReadableString startingAt: startAtInteger
 	"Replace the characters of the receiver at the <integer> index positions startInteger
 	through stopInteger inclusive with consecutive characters of the <readableString>
 	aReadableString beginning at <integer> index position startAtInteger. Answer the receiver."
 
-	aReadableString 
-		replaceBytesOf: self
-		from: startInteger
-		to: stopInteger
-		startingAt: startAtInteger!
+	aReadableString class == self class
+		ifTrue: 
+			[aReadableString
+				replaceBytesOf: self
+				from: startInteger
+				to: stopInteger
+				startingAt: startAtInteger]
+		ifFalse: 
+			[| stream current |
+			stream := aReadableString readStream.
+			stream position: startAtInteger - 1.
+			current := startInteger.
+			[current > stopInteger] whileFalse: 
+					[| ch |
+					(ch := stream nextAvailable) isNil ifTrue: [BoundsError signalWith: stream position + 1].
+					current := (self encodedAt: current put: ch) + 1]]!
 
 reverse
 	"Answer a copy of the receiver but with its elements in reverse order."
@@ -1158,8 +1210,12 @@ withNormalizedLineDelimiters
 !String categoriesFor: #codePage!constants!public! !
 !String categoriesFor: #contains:!public! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
+!String categoriesFor: #decode:!encode/decode!public! !
+!String categoriesFor: #decodeNext:from:!encode/decode!public! !
+!String categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
+!String categoriesFor: #encodeOn:put:!encode/decode!public! !
 !String categoriesFor: #encoding!constants!public! !
 !String categoriesFor: #equals:!comparing!public! !
 !String categoriesFor: #expandMacros!printing!public! !
@@ -1245,17 +1301,6 @@ codePage
 
 	^Character.AnsiCodePage!
 
-decode: anInteger
-	"Answer a <Character> that corresponds to the <integer> code unit, anInteger, in the
-	receiver's encoding."
-
-	^self subclassResponsibility!
-
-decodeNextFrom: aReadStream
-	"Answer the next <Character> in the receiver's encoding from the <ReadStream> argument ."
-
-	^self subclassResponsibility!
-
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
@@ -1267,13 +1312,6 @@ empty
 	so there should never be more than one empty literal string."
 
 	^empty!
-
-encodeOn: aWriteStream put: aCharacter
-	"Encode the <Character> argument onto the <WriteStream> argument using the character
-	encoding of the receiver, e.g. for Utf8String, this would be the relevant sequence of 1 to 4
-	UTF-8 encoded bytes necessary to represent the Unicode code point of the character."
-
-	^self subclassResponsibility!
 
 encoding
 	"Answer a <Symbol> naming the encoding of instances of the receiver, which will be one of #ansi, #utf8, #utf16 or #utf32."
@@ -1412,7 +1450,7 @@ fromId: resourceId in: anExternalLibraryOrHandle
 fromString: aString
 	"Answer an instance of the receiver containing the same characters as the argument, aString."
 
-	^self subclassResponsibility!
+	^aString asUtf8String!
 
 fromUtf16String: anAddressOrUtf16String
 	"Answer a byte-encoded String representation of the UTF16 string at the specified
@@ -1619,11 +1657,8 @@ withAll: newElements
 !String class categoriesFor: #ansiClass!constants!public! !
 !String class categoriesFor: #basicEncoding!accessing!public! !
 !String class categoriesFor: #codePage!constants!public! !
-!String class categoriesFor: #decode:!encode/decode!public! !
-!String class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
-!String class categoriesFor: #encodeOn:put:!encode/decode!public! !
 !String class categoriesFor: #encoding!accessing!constants!public! !
 !String class categoriesFor: #encodingName:!enquiries!public! !
 !String class categoriesFor: #encodings!constants!public! !

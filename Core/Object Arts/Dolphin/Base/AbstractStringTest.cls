@@ -512,11 +512,12 @@ verifyConcatenationResult: resultString of: receiverString with: argumentString
 	UTF string is being concatenated with an AnsiString, in which case the result will be of the
 	same type as the argument."
 
-	| expectedClass |
-	expectedClass := receiverString species.
-	(expectedClass == AnsiString and: [argumentString isString])
-		ifTrue: [expectedClass := argumentString species].
-	self assert: resultString isKindOf: expectedClass! !
+	| expected |
+	expected := Utf8String writeStream
+				nextPutAll: receiverString;
+				nextPutAll: argumentString;
+				contents.
+	self assert: resultString equals: expected! !
 !AbstractStringTest categoriesFor: #assimilate:!helpers!private! !
 !AbstractStringTest categoriesFor: #assimilateString:!helpers!private! !
 !AbstractStringTest categoriesFor: #caseConversionCases!constants!private! !

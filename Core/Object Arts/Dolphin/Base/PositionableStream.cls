@@ -102,14 +102,6 @@ lastPosition
 
 	^readLimit!
 
-nextAvailable
-	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
-	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
-	end of stream, so this method is only useful for text and byte streams, or where the collection
-	being streamed over is known not to contain nils."
-
-	^self atEnd ifFalse: [self next]!
-
 nextAvailable: anInteger 
 	"Answer up to anInteger elements of the receiver's collection. The answer will be a
 	collection of the same species as the one accessed by the receiver, and will contain anInteger
@@ -234,7 +226,7 @@ upTo: anObject
 	stream after anObject if found. If anObject is not in the collection, answer the entire rest
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
-	^collection class decodeFrom: self upTo: anObject!
+	^collection decodeFrom: self upTo: anObject!
 
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
@@ -253,7 +245,6 @@ upToEnd
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
 !PositionableStream categoriesFor: #encoding!constants!public! !
 !PositionableStream categoriesFor: #lastPosition!accessing!private! !
-!PositionableStream categoriesFor: #nextAvailable!accessing!public! !
 !PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
 !PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
 !PositionableStream categoriesFor: #nextDWORD!binary filing!public! !

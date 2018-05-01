@@ -82,7 +82,7 @@ next
 	<primitive: 65>
 	^position >= readLimit
 		ifTrue: [self errorEndOfStream]
-		ifFalse: [collection at: (position := position + 1)]!
+		ifFalse: [collection decodeNextFrom: self]!
 
 nextAvailable
 	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
@@ -91,7 +91,7 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit ifFalse: [collection at: (position := position + 1)]! !
+	^collection decodeNextFrom: self! !
 !ReadStream categoriesFor: #basicNext!accessing!public! !
 !ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #basicNextAvailable!accessing!public! !

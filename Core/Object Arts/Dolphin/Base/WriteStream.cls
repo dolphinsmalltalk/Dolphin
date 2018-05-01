@@ -146,19 +146,11 @@ next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 	Depending on the receiver's encoding, this may not necessarily result in the receiver's
 	position advancing by the same count. "
 
-	^self collection class
+	^collection
 		encodeOn: self
 		next: sizeInteger
 		putAll: aSequenceableCollection
 		startingAt: startInteger!
-
-nextBytePut: anInteger
-	"Store anObject as the next byte of the receiver. If the receiver is not stream over byte
-	object then the primitive will fail, and the backup Smalltalk code will be activated."
-
-	<primitive: 222>
-	position < writeLimit ifFalse: [self growCollection].
-	^collection byteAt: (position := position + 1) put: anInteger!
 
 nextDWORDPut: anInteger 
 	"Append a 32-bit unsigned integer representation as the next 4 bytes on the receiver."
@@ -269,7 +261,6 @@ tab: tabCount
 !WriteStream categoriesFor: #next!accessing!public! !
 !WriteStream categoriesFor: #next:put:!accessing!public! !
 !WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!WriteStream categoriesFor: #nextBytePut:!accessing!public! !
 !WriteStream categoriesFor: #nextDWORDPut:!binary filing!public! !
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !

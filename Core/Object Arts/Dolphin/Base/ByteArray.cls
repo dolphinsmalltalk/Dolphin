@@ -187,6 +187,9 @@ copyStringFrom: start to: stop
 
 	^self copy: String from: start to: stop!
 
+decode: anInteger 
+	^anInteger!
+
 doubleAtOffset: anInteger
 	"Answer the double precision floating point value at offset (i.e. zero relative) 
 	anInteger in the receiver, as a Smalltalk Float object (double precision).
@@ -709,6 +712,7 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #byteSize!accessing!private! !
 !ByteArray categoriesFor: #copy:from:to:!copying!private! !
 !ByteArray categoriesFor: #copyStringFrom:to:!copying!public! !
+!ByteArray categoriesFor: #decode:!encode/decode!public! !
 !ByteArray categoriesFor: #doubleAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
@@ -756,14 +760,16 @@ wordAtOffset: anInteger put: anObject
 
 !ByteArray class methodsFor!
 
-decode: anInteger 
-	^anInteger!
-
 elementSize
 	"Private - Answer the size of the receiver's constituent elements in bytes."
 
 	^1.
 !
+
+empty
+	"Answer an empty (zero length) instance of the receiver."
+
+	^#[]!
 
 fromAddress: anAddress length: anInteger
 	"Answer a new instance of the receiver, of size anInteger, copied from the first anInteger
@@ -820,8 +826,8 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := stream next: size.
 	anSTBInFiler register: answer.
 	^answer! !
-!ByteArray class categoriesFor: #decode:!encode/decode!public! !
 !ByteArray class categoriesFor: #elementSize!constants!private! !
+!ByteArray class categoriesFor: #empty!instance creation!public! !
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
 !ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !

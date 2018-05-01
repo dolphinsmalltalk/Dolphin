@@ -649,15 +649,15 @@ String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: 'bom'!
+	classInstanceVariableNames: ''!
 UtfEncodedString variableByteSubclass: #Utf16String
 	instanceVariableNames: ''
-	classVariableNames: 'LeadOffset SurrogateOffset'
+	classVariableNames: 'Bom LeadOffset SurrogateOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 UtfEncodedString variableByteSubclass: #Utf8String
 	instanceVariableNames: ''
-	classVariableNames: 'LeadByteMask2 LeadByteMask3 LeadByteMask4 TrailByteMask'
+	classVariableNames: 'Bom LeadByteMask2 LeadByteMask3 LeadByteMask4 TrailByteMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Utf8String variableByteSubclass: #Symbol
@@ -1381,7 +1381,7 @@ InstructionInterpreter subclass: #MessageSendCollector
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1681,7 +1681,7 @@ WriteStream subclass: #ReadWriteStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
-	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift elemsPerPage offset'
+	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
 	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

@@ -11,6 +11,9 @@ StdioBinaryFileStream comment: ''!
 !StdioBinaryFileStream methodsFor!
 
 contentsSpecies
+	"Private - Answer the class of Object to be used when answering collections of elements
+	from the receiver."
+
 	^ByteArray!
 
 externalType
@@ -39,19 +42,6 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 		stream: stream.
 	^aSequenceableCollection!
 
-nextAvailable
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
-
-	^self basicNextAvailable!
-
-nextAvailable: anInteger
-	"Answer up to anInteger elements of the receiver's collection. The answer will be a
-	collection of the same species as the one accessed by the receiver, and will contain anInteger
-	elements, or as many as are left in the receiver's collection."
-
-	^self basicNextAvailable: anInteger!
-
 nextLine
 	"Answer a Collection consisting of the receiver contents up to (but not including) the 
 	next line delimiter. If there are no further line delimiters in the receiver, then the 
@@ -61,11 +51,6 @@ nextLine
 	"Not valid for binary streams"
 
 	^self shouldNotImplement!
-
-nextPut: anObject
-	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
-
-	^self basicNextPut: anObject!
 
 peek
 	"Answer the next element in the collection, but do not change the position reference. 
@@ -95,14 +80,11 @@ upToEnd
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
 	^self basicNext: self size - self position! !
-!StdioBinaryFileStream categoriesFor: #contentsSpecies!accessing!private! !
+!StdioBinaryFileStream categoriesFor: #contentsSpecies!constants!private! !
 !StdioBinaryFileStream categoriesFor: #externalType!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #next!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #nextAvailable!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #nextPut:!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #peek!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #peekFor:!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #upToEnd!accessing!public! !

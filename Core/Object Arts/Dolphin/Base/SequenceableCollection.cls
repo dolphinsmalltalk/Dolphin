@@ -479,6 +479,24 @@ copyWithoutAll: oldElements
 		do: [:element | (oldElements includes: element) ifFalse: [aStream nextPut: element]].
 	^aStream contents!
 
+decodeFrom: aReadStream upTo: anObject
+	"Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
+	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
+	stream, then the remainder of the future sequence is answered and the stream is left at end."
+
+	^aReadStream basicUpTo: anObject!
+
+decodeNext: anInteger from: aReadStream
+	"Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
+	many as are available before the end of stream."
+
+	^aReadStream basicNextAvailable: anInteger!
+
+decodeNextFrom: aReadStream
+	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
+
+	^aReadStream basicNextAvailable!
+
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's elements.
 	Answers the receiver. The elements are enumerated in index order."
@@ -489,12 +507,36 @@ do: operation
 
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
+emitEncodingMarkerOn: aPositionableStream
+	"Emit any encoding marker used for the stream encoding this collection represents onto the
+	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
+	typically only relevant to string encodings, so there is nothing to do by default."
+
+	!
+
 encodedAt: anInteger put: anObject
 	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
 	the <integer> index of the last element updated."
 
 	self at: anInteger put: anObject.
 	^anInteger!
+
+encodedSizeOf: anObject
+	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+
+	^1!
+
+encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+	^aWriteStream
+		basicNext: sizeInteger
+		putAll: aSequenceableCollection
+		startingAt: startInteger!
+
+encodeOn: aWriteStream nextPutAll: aSequenceableCollection
+	^aWriteStream basicNextPutAll: aSequenceableCollection!
+
+encodeOn: aPuttableStream put: anObject
+	^aPuttableStream basicNextPut: anObject!
 
 encoding
 	^#pointers!
@@ -1067,6 +1109,13 @@ sixth
 
 	^self at: 6!
 
+skipEncodingMarkerFrom: aPositionableStream
+	"Skip over any encoding marker used for the stream encoding this collection represents on
+	the <PositionableStream> argument, which is assumed to be at the start of its sequence. This
+	typically only relevant to string encodings, so there is nothing to do by default."
+
+	!
+
 skipOver: stream
 	"Private - Answer whether the receiver matches the contents of <sequencedStream> stream
 	taking account of any case differences. Answers true if a complete match is
@@ -1176,8 +1225,16 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWith:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
+!SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #decodeNext:from:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
+!SequenceableCollection categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
 !SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!SequenceableCollection categoriesFor: #encodedSizeOf:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #encodeOn:nextPutAll:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!public! !
 !SequenceableCollection categoriesFor: #encoding!constants!encode/decode!public! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
@@ -1238,6 +1295,7 @@ writeStream
 !SequenceableCollection categoriesFor: #second!accessing!public! !
 !SequenceableCollection categoriesFor: #select:!enumerating!public! !
 !SequenceableCollection categoriesFor: #sixth!accessing!public! !
+!SequenceableCollection categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
 !SequenceableCollection categoriesFor: #skipOver:!private!searching! !
 !SequenceableCollection categoriesFor: #swap:with:!operations!public! !
 !SequenceableCollection categoriesFor: #third!accessing!public! !
@@ -1266,47 +1324,12 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 					ifFalse: [high := index - 1]].
 	^low!
 
-decodeFrom: aReadStream upTo: anObject
-	"Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
-	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
-	stream, then the remainder of the future sequence is answered and the stream is left at end."
-
-	^aReadStream basicUpTo: anObject!
-
-decodeNext: anInteger from: aReadStream
-	"Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
-	many as are available before the end of stream."
-
-	^aReadStream basicNextAvailable: anInteger!
-
-decodeNextFrom: aReadStream
-	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
-
-	^aReadStream basicNextAvailable!
-
 emitEncodingMarkerOn: aPositionableStream
 	"Emit any encoding marker used for the stream encoding this collection represents onto the
 	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
 	typically only relevant to string encodings, so there is nothing to do by default."
 
 	!
-
-encodedSizeOf: anObject
-	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
-
-	^1!
-
-encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
-	^aWriteStream
-		basicNext: sizeInteger
-		putAll: aSequenceableCollection
-		startingAt: startInteger!
-
-encodeOn: aWriteStream nextPutAll: aSequenceableCollection
-	^aWriteStream basicNextPutAll: aSequenceableCollection!
-
-encodeOn: aPuttableStream put: anObject
-	^aPuttableStream basicNextPut: anObject!
 
 ofSize: anInteger
 	"Private - Answer a new instance of the receiver with anInteger nil elements.
@@ -1320,13 +1343,6 @@ ofSize: anInteger
 
 	^self new: anInteger!
 
-skipEncodingMarkerFrom: aPositionableStream
-	"Skip over any encoding marker used for the stream encoding this collection represents on
-	the <PositionableStream> argument, which is assumed to be at the start of its sequence. This
-	typically only relevant to string encodings, so there is nothing to do by default."
-
-	!
-
 writeStream
 	"Answer a WriteStream on the a new empty instance of the receiver."
 
@@ -1338,16 +1354,8 @@ writeStream: anInteger
 
 	^WriteStream on: (self new: anInteger)! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
-!SequenceableCollection class categoriesFor: #decodeFrom:upTo:!encode/decode!public! !
-!SequenceableCollection class categoriesFor: #decodeNext:from:!encode/decode!public! !
-!SequenceableCollection class categoriesFor: #decodeNextFrom:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
-!SequenceableCollection class categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!SequenceableCollection class categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!public! !
-!SequenceableCollection class categoriesFor: #encodeOn:nextPutAll:!encode/decode!public! !
-!SequenceableCollection class categoriesFor: #encodeOn:put:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
-!SequenceableCollection class categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
 !SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !
 

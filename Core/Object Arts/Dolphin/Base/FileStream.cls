@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ReadWriteStream subclass: #FileStream
-	instanceVariableNames: 'file flags pageBase logicalFileSize sizeShift elemsPerPage offset'
+	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
 	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -237,17 +237,18 @@ file
 	^file!
 
 file: aFile mode: modeSymbol type: encSymbol
-	| bufClass |
+	| bufClass buffer |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	bufClass := self
 				bufferClassFor: aFile
 				mode: modeSymbol
 				type: encSymbol.
+	buffer := bufClass new: PageSize / bufClass elementSize.
 	self
-		on: (bufClass new: PageSize / bufClass elementSize) file: aFile;
+		on: buffer file: aFile;
 		initialRead;
 		yourself.
-	(logicalFileSize == 0 and: [modeSymbol ~~ #read]) ifTrue: [bufClass emitEncodingMarkerOn: self].
+	(logicalFileSize == 0 and: [modeSymbol ~~ #read]) ifTrue: [buffer emitEncodingMarkerOn: self].
 	offset := position.
 	modeSymbol == #append ifTrue: [self setToEnd]!
 
@@ -281,7 +282,7 @@ initialRead
 
 	self readPageFor: 0.
 	logicalFileSize := file size.
-	collection class skipEncodingMarkerFrom: self!
+	collection skipEncodingMarkerFrom: self!
 
 isBinary
 	"Answer whether the receiver's data is binary (i.e. consisting of Integers in the range 0..255)."
@@ -333,7 +334,7 @@ next
 		ifTrue: [self errorEndOfStream]
 		ifFalse: [
 			self position: self position.
-			collection class decodeNextFrom: self]!
+			collection decodeNextFrom: self]!
 
 next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger
@@ -407,7 +408,7 @@ nextAvailable
 	^self atEnd
 		ifFalse: 
 			[self position: self position.
-			collection at: (position := position + 1)]!
+			collection decodeNextFrom: self]!
 
 nextPut: anIntegerOrCharacter
 	"Write anIntegerOrCharacter to the receiver and answer the argument."
@@ -429,8 +430,6 @@ on: aCollection file: aFile
 	file := aFile.
 	self beFinalizable.
 	flags := 0.
-	elemsPerPage := collection size.
-	sizeShift := PageSize / elemsPerPage >> 1.
 	offset := 0!
 
 ownsFile
@@ -470,7 +469,7 @@ primitiveNextPut: anIntegerOrCharacter
 
 	<primitive: 66>
 	self position: self position.
-	^collection class encodeOn: self put: anIntegerOrCharacter!
+	^collection encodeOn: self put: anIntegerOrCharacter!
 
 readPageFor: anInteger
 	"Private - Read the page containing position anInteger and record the pageBase

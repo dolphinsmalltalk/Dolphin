@@ -438,12 +438,12 @@ sniffEncoding
 			ifTrue: [String.EncodingUtf16]
 			ifFalse: 
 				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
-				(buf beginsWith: Utf8String bom)
+				(buf beginsWith: Utf8String.Bom)
 					ifTrue: 
 						[self position: 3.
 						String.EncodingUtf8]
 					ifFalse: 
-						[(buf beginsWith: Utf16String bom)
+						[(buf beginsWith: Utf16String.Bom)
 							ifTrue: 
 								[self position: 2.
 								String.EncodingUtf16]

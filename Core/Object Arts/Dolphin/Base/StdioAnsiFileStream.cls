@@ -25,19 +25,6 @@ next
 
 	^Character ansiValue: self basicNext!
 
-nextAvailable
-	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
-	an ANSI code point. Answer nil if at EOF."
-
-	^self basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
-
-nextAvailable: anInteger
-	"Answer up to anInteger elements of the receiver's collection. The answer will be a
-	collection of the same species as the one accessed by the receiver, and will contain anInteger
-	elements, or as many as are left in the receiver's collection."
-
-	^self basicNextAvailable: anInteger!
-
 nextPutAll: aCollection 
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
 	Answer aCollection"
@@ -64,24 +51,11 @@ peekFor: anObject
 	^(ch := self basicNextAvailable) notNil
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
-					false]]!
-
-upToEnd
-	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
-	the current position to the end)."
-
-	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block.
-	Note however that due to line end translations, the number of characters read will probably be significantly 
-	fewer than the remaining size of the file."
-
-	^self basicNextAvailable: self size - self position! !
+					false]]! !
 !StdioAnsiFileStream categoriesFor: #contentsSpecies!accessing!private! !
 !StdioAnsiFileStream categoriesFor: #getString:!accessing!private! !
 !StdioAnsiFileStream categoriesFor: #next!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #nextAvailable!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioAnsiFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioAnsiFileStream categoriesFor: #peek!accessing!public! !
 !StdioAnsiFileStream categoriesFor: #peekFor:!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #upToEnd!accessing!public! !
 

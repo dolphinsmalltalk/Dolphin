@@ -87,7 +87,7 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 	read := crtlib
 				fread_s: aSequenceableCollection yourAddress + start
 				bufferSize: aSequenceableCollection byteSize - start
-				elementSize: self contentsSpecies elementSize
+				elementSize: self bufferClass elementSize
 				count: countInteger
 				stream: stream.
 	read = countInteger ifFalse: [^self errorEndOfStream].
@@ -131,8 +131,8 @@ basicNextAvailable: anInteger
 	"Implementation Note: Override superclass for improved performance."
 
 	| read buf elemSize |
-	self atEnd ifTrue: [^self encodingClass new: 0].
-	buf := self encodingClass newFixed: anInteger.
+	self atEnd ifTrue: [^self bufferClass new: 0].
+	buf := self bufferClass newFixed: anInteger.
 	elemSize := buf class elementSize.
 	read := crtlib
 				fread_s: buf
@@ -147,6 +147,16 @@ basicNextPut: anInteger
 
 	crtlib fputc: anInteger stream: stream.
 	^anInteger!
+
+bufferClass
+	"Answer the class used to encode the stdio buffer."
+
+	^self contentsSpecies!
+
+bufferPrototype
+	"Private - Answer a prototypical instance of the type of collection over which this class streams."
+
+	^self bufferClass empty!
 
 close
 	"Relinquish any external resources associated with the receiver, and put the
@@ -174,10 +184,10 @@ contents
 	^self upToEnd!
 
 contentsSpecies
-	^self subclassResponsibility!
+	"Private - Answer the class of Object to be used when answering collections of elements
+	from the receiver."
 
-encodingClass
-	^self contentsSpecies!
+	^self subclassResponsibility!
 
 errorNotPositionable
 	^self error: 'The stdio stream is not positionable'!
@@ -252,10 +262,18 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	^self subclassResponsibility!
 
 nextAvailable
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
+	"Answer a <Character> being the next of the receiver's future sequence values interpreted as
+	an ANSI code point. Answer nil if at EOF."
 
-	^self subclassResponsibility!
+	^self bufferPrototype decodeNextFrom: self!
+
+nextAvailable: anInteger
+	"Answer up to anInteger elements of the receiver's collection. Generally, the answer will be
+	a collection of the same class as the one accessed by the receiver (though this is
+	determined by the receiver), and will contain anInteger elements, or as many as are left in
+	the receiver's collection."
+
+	^self bufferPrototype decodeNext: anInteger from: self!
 
 nextPut: anObject
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -377,10 +395,11 @@ tab: anInteger
 !StdioFileStream categoriesFor: #basicNextAvailable!accessing!private! !
 !StdioFileStream categoriesFor: #basicNextAvailable:!accessing!private! !
 !StdioFileStream categoriesFor: #basicNextPut:!accessing!private! !
+!StdioFileStream categoriesFor: #bufferClass!constants!private! !
+!StdioFileStream categoriesFor: #bufferPrototype!constants!private! !
 !StdioFileStream categoriesFor: #close!operations!public! !
 !StdioFileStream categoriesFor: #contents!accessing!public! !
 !StdioFileStream categoriesFor: #contentsSpecies!constants!private! !
-!StdioFileStream categoriesFor: #encodingClass!accessing!private! !
 !StdioFileStream categoriesFor: #errorNotPositionable!exceptions!private! !
 !StdioFileStream categoriesFor: #externalType!accessing!public! !
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
@@ -397,6 +416,7 @@ tab: anInteger
 !StdioFileStream categoriesFor: #next:put:!accessing!public! !
 !StdioFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !StdioFileStream categoriesFor: #nextAvailable!accessing!public! !
+!StdioFileStream categoriesFor: #nextAvailable:!accessing!public! !
 !StdioFileStream categoriesFor: #nextPut:!accessing!public! !
 !StdioFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioFileStream categoriesFor: #open:mode:!instance creation!private! !
