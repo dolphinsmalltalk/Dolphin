@@ -1254,15 +1254,17 @@ setEvents: anEventsCollectionOrNil
 		ifFalse: [_EventsRegister at: self put: anEventsCollectionOrNil]!
 
 setSpecialBehavior: anInteger
-	"Private - Set the special behavior bits of the receiver according to the
-	low order word of the argument, anInteger. The high order byte of that word
-	specifies the AND (or 'keep') mask, used to specify what bits to leave as they
-	are, and the low order byte of that word specifies the OR (or 'add') mask, used
-	to specify what bits to set. To query the current value, use the mask 16rFF00.
+	"Private - Set the special behavior bits of the receiver according to the low order word of
+	the argument, anInteger. The high order byte of that word specifies the AND (or 'keep')
+	mask, used to specify what bits to leave as they are, and the low order byte of that word
+	specifies the OR (or 'add') mask, used to specify what bits to set. To query the current
+	value, use the mask 16rFF00."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	the receiver is an immediate object."
+	"Note: Using this operations requires knowledge and care to avoid corrupting object state."
+
+	"Primitive failure reasons: 
+		0 - anInteger is not a SmallInteger 
+		1 - the receiver is an immediate object."
 
 	<primitive: 69>
 	^self primitiveFailed!
