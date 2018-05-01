@@ -13,9 +13,6 @@ SymbolTest comment: 'This is the unit test for the class Symbol. Unit tests are 
 !SymbolTest categoriesForClass!Unclassified! !
 !SymbolTest methodsFor!
 
-assimilate: each 
-	^Character utf8Value: each asInteger!
-
 assimilateString: aString
 	^aString asSymbol!
 
@@ -113,7 +110,6 @@ testReplaceIdentityWith
 
 testResize
 	self should: [super testResize] raise: Processor constWriteSignal! !
-!SymbolTest categoriesFor: #assimilate:!helpers!private! !
 !SymbolTest categoriesFor: #assimilateString:!helpers!private! !
 !SymbolTest categoriesFor: #collectionClass!helpers!private! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !

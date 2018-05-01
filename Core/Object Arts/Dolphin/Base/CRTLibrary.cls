@@ -372,6 +372,10 @@ setlocale: category locale: localeString
 	^self invalidCall
 !
 
+strcat_s: destString bufferSize: anInteger strSource: sourceString
+	<cdecl: sdword strcat_s lpstr intptr lpstr>
+	^self invalidCall!
+
 strcmp: string1 string2: string2 
 	"Answer the order between the <String> arguments, string1 and string2.
 
@@ -505,6 +509,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
+!CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !

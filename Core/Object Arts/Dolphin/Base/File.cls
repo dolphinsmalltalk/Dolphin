@@ -1290,7 +1290,7 @@ sniffEncoding: aString
 				share: #read.
 	encoding := file sniffEncoding.
 	file close.
-	^encoding!
+	^String encodingName: encoding!
 
 splitDriveFrom: aString
 	"Splits the pathname, aString, and answers the drive portion.

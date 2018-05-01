@@ -127,6 +127,7 @@ basicPrimaryStartup
 	self openLibraries.	"Now we can open the permanent libraries"
 	self imagePath: imagePath.	"Split off the extension now can use lib functions."
 	ExternalCallback onStartup.	"Old callbacks will be invalid"
+	Character onStartup.
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
 	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"

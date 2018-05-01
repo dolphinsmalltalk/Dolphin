@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MemoryManager
 	instanceVariableNames: 'finalizer lastRequests hospice hospiceHighWater maxObjects undertaker bereavements bereaved bereavedHighWater gcInterval lastGCTime lastGCDuration objectHeaderSize events'
@@ -410,7 +410,7 @@ registerObjects
 	"Private - Register the finalize and bereavement queue Semaphores with the VM."
 
 	VMLibrary default
-		registryAt: #MemoryManager put: self;
+		registryAt: #memoryManager put: self;
 		registryAt: #Corpse put: DeadObject current;
 		registryAt: #FinalizeQueue put: hospice;
 		registryAt: #FinalizeSemaphore put: lastRequests;
@@ -524,9 +524,7 @@ initialize
 		GCInterval		-	Minimum idle time (milliseconds) between scheduled GC's"
 
 	GCInterval := 15000.
-	Current isNil ifTrue: [Current := super new initialize].
-	"GUID is not properly set up by boot"
-	self setGuid: (GUID fromString: '{703BD0AD-FBFF-4D00-866B-B80387F7B1D7}')!
+	Current isNil ifTrue: [Current := super new initialize]!
 
 new
 	"The receiver is a singleton class."

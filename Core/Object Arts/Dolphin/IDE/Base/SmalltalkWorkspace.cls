@@ -900,7 +900,7 @@ maybeShowCompletionList
 				| char |
 				char := view characterAt: last.
 				((char == $^ and: [styleName == #specialCharacter])
-					or: [char == Character space and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
+					or: [char == $\x20and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
 						ifTrue: 
 							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxAutoCompletionListSize]]!
 

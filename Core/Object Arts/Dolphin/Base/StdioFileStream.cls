@@ -559,7 +559,7 @@ open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 			mode := 'w+'].
 	modeSymbol == #read ifTrue: [mode := 'r'].
 	encoding := typeSymbol == #text
-				ifTrue: [exists ifTrue: [String encodingName: (File sniffEncoding: path)] ifFalse: [#ansi]]
+				ifTrue: [exists ifTrue: [File sniffEncoding: path] ifFalse: [#ansi]]
 				ifFalse: [typeSymbol].
 	encoding == #binary
 		ifTrue: [mode := mode copyWith: $b]

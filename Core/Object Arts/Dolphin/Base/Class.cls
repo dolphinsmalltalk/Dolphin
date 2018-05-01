@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassDescription subclass: #Class
 	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'
@@ -523,22 +523,23 @@ requiresInstallation
 
 	^name notNil!
 
-setClassVarNames: anArray 
-	"Private - Change the set of class variables to be those specified in anArray.
-	Existing variables which are still required are left untouched, those no
-	longer required are deleted, and new ones may be added (initialised to nil).
-	Answer whether any class variables were removed as this indicates that a
-	recompilation is required."
+setClassVarNames: anArray
+	"Private - Change the set of class variables to be those specified in anArray. Existing
+	variables which are still required are left untouched, those no longer required are deleted,
+	and new ones may be added (initialised to nil). Answer whether any class variables were
+	added (which may shadow existing bindings to spool or global variables) or removed as this
+	indicates that a recompilation is required."
 
-	| removed added original |
-	classPool := self classPool.
-	original := classPool keys.
+	| removed added original classVars |
+	classVars := self classPool.
+	original := classVars keys.
 	removed := original difference: anArray.
-	removed do: [:each | classPool removeKey: each].
 	added := anArray difference: original.
-	added do: [:each | classPool at: each put: nil].
-	classPool isEmpty ifTrue: [classPool := nil].
-	^removed notEmpty or: [added notEmpty and: [self hasCompilationFailures]]!
+	^(added notEmpty or: [removed notEmpty]) and: 
+			[removed do: [:each | classVars removeKey: each].
+			added do: [:each | classVars at: each put: nil].
+			classPool := classVars notEmpty ifTrue: [classVars].
+			true]!
 
 setGuid: id
 	"Private - Set the value of the receiver's 'guid' instance variable to the 

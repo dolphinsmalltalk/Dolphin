@@ -671,7 +671,7 @@ hasBytecodeRepresentation: anObject
 	^anObject isImmediate or: 
 			[anObject isNil or: 
 					[anObject == true
-						or: [anObject == false or: [anObject class == Character and: [anObject codePoint <= 255]]]]]!
+						or: [anObject == false or: [anObject class == Character and: [anObject codePoint <= 127]]]]]!
 
 initialize
 	"Private - Initialize the receiver's class variables - see class comment for further details.
@@ -689,7 +689,7 @@ initialize
 				at: #Metaclass put: 81;
 				at: #Character put: 82;
 				at: #Array put: 83;
-				at: #String put: 84;
+				at: #AnsiString put: 84;
 				at: #Symbol put: 85;
 				at: #SmallInteger put: 86;
 				at: #Process put: 87;
@@ -733,7 +733,7 @@ initialize
 				at: #ImageVersionMinor put: 130;
 				at: #interruptHotKey put: 131;
 				at: #CRTHandle put: 132;
-				at: #MemoryManager put: 133;
+				at: #memoryManager put: 133;
 				at: #BYTE put: 134;
 				at: #SBYTE put: 135;
 				at: #WORD put: 136;

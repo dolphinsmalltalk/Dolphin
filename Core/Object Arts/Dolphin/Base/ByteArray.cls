@@ -46,10 +46,10 @@ asAnsiString
 
 	| size |
 	size := self basicSize.
-	^(AnsiString new: size)
-		replaceFrom: 1
+	^self
+		replaceBytesOf: (AnsiString new: size)
+		from: 1
 		to: size
-		with: self
 		startingAt: 1!
 
 asByteArray

@@ -93,15 +93,6 @@ hash
 	<primitive: 147>
 	^self identityHash!
 
-initialiseFrom: aString
-	"Private - Initialize the receiver to contain the characters of aString.
-	Sent to String because replaceFrom:with:startAt: is invalid for symbols"
-
-	aString
-		replaceBytesOf: self
-		from: 1 to: aString size startingAt: 1
-!
-
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that can
 	represents its value."
@@ -198,7 +189,6 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #first:!copying!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
 !Symbol categoriesFor: #hash!comparing!public! !
-!Symbol categoriesFor: #initialiseFrom:!initializing!private! !
 !Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
@@ -289,13 +279,9 @@ initialize
 intern: aString
 	"Answer the unique Symbol for aString."
 
-	| symbol utf8 |
-	utf8 := aString asUtf8String.
-	(symbol := self findInterned: utf8) isNil
-		ifTrue: 
-			[symbol := (self basicNew: utf8 size) initialiseFrom: utf8.
-			self addUnique: symbol].
-	^symbol!
+	| utf8 |
+	^(self findInterned: (utf8 := aString asUtf8String))
+		ifNil: [self addUnique: (utf8 shallowCopy becomeA: Symbol)]!
 
 intern: aString cookie: cookie
 	"Private - Callback from VM, returns the unique Symbol for aString.

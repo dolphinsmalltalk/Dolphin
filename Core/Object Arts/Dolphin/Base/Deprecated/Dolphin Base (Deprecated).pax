@@ -70,7 +70,6 @@ package methodNames
 	add: #CRTLibrary -> #sin:;
 	add: #CRTLibrary -> #sqrt:;
 	add: #CRTLibrary -> #strcat:strSource:;
-	add: #CRTLibrary -> #strcat_s:bufferSize:strSource:;
 	add: #CRTLibrary -> #strerror:;
 	add: #CRTLibrary -> #strncpy:strSource:count:;
 	add: #CRTLibrary -> #tan:;
@@ -446,11 +445,6 @@ strcat: strDestination strSource: strSource
 	#deprecated.	"This function may cause buffer overruns so is insecure. Use strcat_s instead."
 	^self invalidCall!
 
-strcat_s: destString bufferSize: anInteger strSource: sourceString
-	<cdecl: sdword strcat_s lpstr intptr lpstr>
-	#deprecated. "No longer used in Dolphin base image, or exported from to-go VMs"
-	^self invalidCall!
-
 strerror: errno
 	<cdecl: lpstr strerror sdword>
 	#deprecated.	"Insecure - see MSDN"
@@ -516,7 +510,6 @@ thread_errno
 !CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !

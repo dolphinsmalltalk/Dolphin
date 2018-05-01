@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #BootSessionManager
 	instanceVariableNames: 'productDetails'
@@ -20,6 +20,15 @@ basicTertiaryStartup
 	"Perform tertiary system startup operations."
 
 	"Nothing to do - this SessionManager should never be installed on startup anyway?"!
+
+createInputState
+	super createInputState.
+	(File exists: 'Rescue.st') ifTrue: [SourceManager default fileIn: 'Rescue.st'].
+	self stdout 
+		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
+		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.'; cr; flush.
+
+	!
 
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
@@ -68,10 +77,7 @@ logError: anException
 			do: [:e | ]!
 
 main
-	self stdout 
-		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
-		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2004.'; cr; cr;
-		nextPutAll: 'Loading boot script...'; cr; flush.
+	self stdout nextPutAll: 'Loading boot script...'; cr; flush.
 
 	self class sourceManager fileIn: 'Boot.st'.
 !
@@ -304,6 +310,7 @@ updateBootImage
 	self reloadSystemPackage! !
 !BootSessionManager categoriesFor: #allocConsole!operations!private! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
+!BootSessionManager categoriesFor: #createInputState!initializing!private! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
 !BootSessionManager categoriesFor: #initializeSystemPackage!initializing!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !

@@ -181,6 +181,9 @@ fpControl
 
 	^fpControl!
 
+fpControl: anInteger
+	fpControl := anInteger!
+
 frameAtAddress: spInteger
 	"Private - Answer a frame representing the real stack frame at the specified SP (a
 	SmallInteger address/2 in the receiver), or nil if the address is not within this process."
@@ -711,6 +714,7 @@ topFrame
 !Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !
 !Process categoriesFor: #finalize!finalizing!private! !
 !Process categoriesFor: #fpControl!accessing!public! !
+!Process categoriesFor: #fpControl:!accessing!private! !
 !Process categoriesFor: #frameAtAddress:!private!stack frames! !
 !Process categoriesFor: #frameAtIndex:!private!stack frames! !
 !Process categoriesFor: #frameClass!private!stack frames! !

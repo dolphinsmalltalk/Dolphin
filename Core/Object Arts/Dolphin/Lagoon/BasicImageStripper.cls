@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #BasicImageStripper
 	instanceVariableNames: ''
@@ -297,6 +297,7 @@ stripClassInfoNotifying: notifier
 					each
 						basicClassPool: nil;
 						basicSharedPools: nil.
+					"If retaining inst vars, they are collapsed into a string for compactness"
 					each instanceVariableString: (keepInstVars ifTrue: [each instanceVariableString])].
 			self endTag].
 	self finishedWithAll: #(#stripClassInfo #retainInstVarNames #stripClassInfoNotifying:)!

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Registry Serialisation'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Registry Serialisation.
@@ -180,7 +180,7 @@ storeUnderRegKey: aRegKey as: aString
 				ifTrue: 
 					[(String writeStream)
 						display: self class;
-						nextPut: Character null;
+						nextPut: $\0;
 						display: size;
 						contents]
 				ifFalse: [self class name])

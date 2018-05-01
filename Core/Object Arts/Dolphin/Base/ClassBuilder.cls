@@ -443,7 +443,7 @@ mutateAllInstancesOf: oldClass toBeInstancesOf: newClass
 						intoANewInstanceOf: newClass
 						via: mappingArray.
 			"We need to manually move the special behavior as #become: does not"
-			newInst setSpecialBehavior: (oldInst setSpecialBehavior: 0).
+			newInst setSpecialBehavior: (oldInst setSpecialBehavior: 16rFF00).
 			oldInst become: newInst]!
 
 mutateClass: oldClass toBeASubclassOf: newSuperclass
@@ -604,11 +604,13 @@ requiresMutation
 		or: [self instanceShapeIsBeingChanged
 		or: [self instanceVariablesAreBeingChanged]]!
 
-setClassVariablesOf: aClass 
+setClassVariablesOf: aClass
 	"Private - Set class variables of aClass to those described by
 	the receiver's classVariables inst var."
 
-	(classVariables notNil and: [aClass setClassVarNames: self classVariables]) 
+	| oldClassVars |
+	oldClassVars := aClass classVarNames.
+	(classVariables notNil and: [aClass setClassVarNames: self classVariables])
 		ifTrue: [self recompilationRequired: true]!
 
 setCommentOf: aClass
@@ -627,17 +629,18 @@ setInstanceVariablesOf: aClass
 setNewClassCategories
 	currentClass classCategories: self categories!
 
-setSharedPoolsOf: aClass 
+setSharedPoolsOf: aClass
 	"Private - Set the shared pools of aClass to those described by
 	the receiver's sharedPools inst var."
 
-	| oldPoolNameSet newPoolNameSet |
-	sharedPools notNil ifFalse: [^self].
-	oldPoolNameSet := aClass sharedPoolNames.
-	aClass setSharedPoolNames: self sharedPools.
-	newPoolNameSet := aClass sharedPoolNames.
-	(oldPoolNameSet intersection: newPoolNameSet) size = oldPoolNameSet size 
-		ifFalse: [self recompilationRequired: true]!
+	| oldPoolNames newPoolNames |
+	oldPoolNames := aClass sharedPoolNames.
+	newPoolNames := self sharedPools.
+	(newPoolNames noDifference: oldPoolNames)
+		ifFalse: 
+			[| s |
+			aClass setSharedPoolNames: newPoolNames.
+			self recompilationRequired: true]!
 
 sharedPools
 	"Private - Answer an Array of proposed pool dictionary names."
@@ -651,9 +654,9 @@ sharedPools: anArray
 
 sharedPoolString: aString
 	"Set the receiver's sharedPools from the pool name list aString.
-	It is an error for names to be duplicated in the list."
+	Any duplicate names in the list are dropped."
 
-	self sharedPools: aString subStrings!
+	self sharedPools: (aString subStrings distinct collect: [:each | each asSymbol])!
 
 superclass: aClass
 	"Private - Set the target superclass."
@@ -835,20 +838,21 @@ validateInstanceVarsForCreate
 		againstSuperclass: superclass!
 
 validateInstanceVarsForModify
-	"Private - Ensure that the proposed instance variable name list does not
-	contain a reserved word or a duplicate name defined either in the list
-	itself or anywhere in the proposed superclass or subclass chain."
+	"Private - Ensure that the proposed instance variable name list does not contain a reserved
+	word or a duplicate name defined either in the list itself or anywhere in the proposed
+	superclass or subclass chain."
 
 	| instVarSet proposedInstVarArray |
 	proposedInstVarArray := self instanceVariables.
 	instVarSet := self class validateInstanceVars: proposedInstVarArray againstSuperclass: superclass.
-	currentClass isMeta 
+	currentClass isMeta
 		ifFalse: 
-			[(self isFixedLayout and: [currentClass instVarNames ~= proposedInstVarArray]) 
-				ifTrue: [self error: ('You must not change the instance variable layout of <1p>' expandMacrosWith: currentClass)].
-			(self isFixedInitialLayout and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1]) 
-				ifTrue: [self error: ('New inst vars must come after those already in <1p>' expandMacrosWith: currentClass)]].
-	currentClass allSubclasses 
+			[(self isFixedLayout and: [currentClass instVarNames ~= proposedInstVarArray])
+				ifTrue: [self error: 'You must not change the instance variable layout of ' , currentClass name].
+			(self isFixedInitialLayout
+				and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1])
+					ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
+	currentClass allSubclasses
 		do: [:cls | cls instVarNames do: [:name | self class validateInstVarName: name using: instVarSet]]!
 
 validatePoolNames

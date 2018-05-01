@@ -675,14 +675,8 @@ testMixedConcatenation
 			ByteArray new.
 			OrderedCollection new.
 			1 to: 0}.
-		{'c'. 'c' asUtf8String. 'c' asUtf16String. #[255]. OrderedCollection with: 123. 200 to: 200}.
-		{'cd'.
-			'cd' asUtf8String.
-			'cd' asUtf16String.
-			#[1 255].
-			OrderedCollection with: 123 with: $x.
-			200 to: 201}}
-			do: 
+		{'c'. 'c' asUtf8String. 'c' asUtf16String. OrderedCollection with: ${}.
+		{'cd'. 'cd' asUtf8String. 'cd' asUtf16String. OrderedCollection with: $£ with: $x}} do: 
 				[:args |
 				args do: 
 						[:eachCase |
