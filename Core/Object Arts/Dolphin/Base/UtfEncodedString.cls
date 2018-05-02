@@ -91,7 +91,7 @@ codePage
 	^self subclassResponsibility!
 
 decodeFrom: aReadStream upTo: aCharacter
-	"Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
+	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
 	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
 	stream, then the remainder of the future sequence is answered and the stream is left at end."
 
@@ -117,7 +117,7 @@ encodedAt: anInteger put: aCharacter
 	^self subclassResponsibility!
 
 encodedSizeOf: anObject
-	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver."
 
 	^self subclassResponsibility!
 
@@ -136,7 +136,7 @@ maxEncoding
 	^self subclassResponsibility!
 
 skipEncodingMarkerFrom: aPositionableStream
-	"Skip over any encoding marker used for the stream encoding this collection represents on the <PositionableStream> argument, which 
+	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <PositionableStream> argument, which 
 	is assumed to be at the start of its sequence."
 
 	"For UTF-8, we advance over the BOM, if present"
@@ -156,14 +156,14 @@ skipEncodingMarkerFrom: aPositionableStream
 !UtfEncodedString categoriesFor: #asArray!public! !
 !UtfEncodedString categoriesFor: #bom!constants!encode/decode!private! !
 !UtfEncodedString categoriesFor: #copyWith:!copying!public! !
-!UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!public! !
+!UtfEncodedString categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
 !UtfEncodedString categoriesFor: #emitEncodingMarkerOn:!accessing!public! !
 !UtfEncodedString categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!UtfEncodedString categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!public! !
+!UtfEncodedString categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!UtfEncodedString categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
 !UtfEncodedString categoriesFor: #growSize!accessing!private! !
 !UtfEncodedString categoriesFor: #maxEncoding!constants!private! !
-!UtfEncodedString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
+!UtfEncodedString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 
 !UtfEncodedString class methodsFor!
 

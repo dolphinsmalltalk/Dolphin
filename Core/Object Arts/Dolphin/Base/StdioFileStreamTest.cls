@@ -20,10 +20,10 @@ streamClass
 	^StdioFileStream!
 
 strings
-	^(super strings reject: [:each | each class elementSize ~~ 1]) collect: 
+	^(super strings reject: [:each | each first class elementSize ~~ 1]) collect: 
 			[:each |
 			"The CRT stdio  streams has issues with nulls in text (bugs in positioning) and will treat Ctrl+Z as EOF (expected behaviour)"
-			each reject: [:ch | ch == $\0 or: [ch == $\x1A]]]!
+			{each first reject: [:ch | ch == $\0 or: [ch == $\x1A]]. each last}]!
 
 subjectCollection: aSequencableCollection
 	^(aSequencableCollection isKindOf: Utf8String)
@@ -66,20 +66,6 @@ testCharacterTranslation
 					self assert: actual equals: each].
 			self closeTempStream: subject]!
 
-testNextColon
-	self strings do: 
-			[:each |
-			| subject elems actual expected |
-			subject := self streamWith: each.
-			elems := each asArray.
-			elems do: [:e | subject nextPut: e].
-			subject reset.
-			actual := subject next: elems size * 2.
-			self assert: subject atEnd.
-			self closeTempStream: subject.
-			expected := each , each.
-			self assert: actual equals: expected]!
-
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
 
@@ -112,7 +98,6 @@ testNextLineUpToEof
 !StdioFileStreamTest categoriesFor: #strings!constants!private! !
 !StdioFileStreamTest categoriesFor: #subjectCollection:!public! !
 !StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !
-!StdioFileStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !StdioFileStreamTest categoriesFor: #testNextLineUpToEof!public!unit tests! !
 

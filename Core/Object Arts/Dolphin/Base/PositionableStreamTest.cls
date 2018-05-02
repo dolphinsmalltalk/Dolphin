@@ -22,24 +22,24 @@ streamWith: aString
 	^self streamClass with: aString copy!
 
 strings
-	^{''.
-		Utf16String empty.
-		'a'.
-		'abc'.
-		AnsiString with: (Character value: 163).
-		AnsiString with: (Character ansiValue: 128).
-		Utf8String with: (Character value: 163).
-		Character byteCharacterSet.
-		'a' , Character dolphin asUtf8String.
-		'a' , Character dolphin asUtf16String}!
+	^{#('' 0).
+		{Utf16String empty. 0}.
+		#('a' 1).
+		#('abc' 3).
+		{'£€1' asAnsiString. 3}.
+		{'a£€1' asUtf8String. 4}.
+		{Character byteCharacterSet. 256}.
+		{'a' , Character dolphin asUtf8String , 'b'. 3}.
+		{'a' , Character dolphin asUtf16String , 'b'. 3}}!
 
 subjectCollection: aSequenceableCollection
 	^aSequenceableCollection!
 
 testBasicNext
 	self strings do: 
-			[:each |
-			| subject collection |
+			[:pair |
+			| each subject collection |
+			each := pair first.
 			subject := self streamOn: each.
 			collection := self subjectCollection: each.
 			1 to: collection size

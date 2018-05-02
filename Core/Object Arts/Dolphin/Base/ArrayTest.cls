@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollectionTest subclass: #ArrayTest
 	instanceVariableNames: ''
@@ -44,25 +44,20 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#() #(1) #(1 2)).
-	(Array
-		with: String empty
-		with: Utf16String empty
-		with: ByteArray new
-		with: OrderedCollection new
-		with: (1 to: 0)) do: 
-				[:eachEmpty |
-				subjects do: 
-						[:eachArray |
-						| result |
-						result := eachArray , eachEmpty.
-						self deny: eachArray == result.
-						self assert: result equals: eachArray]].
-	(Array
-		with: 'a'
-		with: 'a' asUtf16String
-		with: #[255]
-		with: (OrderedCollection with: 1234)
-		with: (100 to: 100)) do: 
+	{String empty. Utf16String empty. ByteArray new. OrderedCollection new. 1 to: 0} do: 
+			[:eachEmpty |
+			subjects do: 
+					[:eachArray |
+					| result |
+					result := eachArray , eachEmpty.
+					self deny: eachArray == result.
+					self assert: result equals: eachArray]].
+	{'£' asAnsiString.
+		'€🐬' asUtf8String.
+		'🐬' asUtf16String.
+		#[255].
+		OrderedCollection with: 1234.
+		100 to: 100} do: 
 				[:eachOne |
 				subjects do: 
 						[:eachArray |
@@ -70,12 +65,12 @@ testMixedConcatenation
 						result := self verifyConcatenation: eachOne with: eachArray.
 						self deny: eachArray == result.
 						self assert: result class == Array]].
-	(Array
-		with: 'ab'
-		with: 'ab' asUtf16String
-		with: #[1 255]
-		with: (OrderedCollection with: 1234 with: $x)
-		with: (100 to: 101)) do: 
+	{'a£b' asAnsiString.
+		'🐬€' asUtf8String.
+		'ab🐬' asUtf16String.
+		#[1 255].
+		OrderedCollection with: 1234 with: $x.
+		100 to: 101} do: 
 				[:eachTwo |
 				subjects do: 
 						[:eachArray |

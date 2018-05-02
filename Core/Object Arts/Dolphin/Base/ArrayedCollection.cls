@@ -65,6 +65,17 @@ at: index put: newElement
 	<primitive: 61>
 	^self errorAt: index put: newElement!
 
+decodeNext: anInteger from: aReadStream
+	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
+	many as are available before the end of stream."
+
+	^aReadStream basicNextAvailable: anInteger!
+
+decodeNextFrom: aReadStream
+	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
+
+	^aReadStream basicNextAvailable!
+
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the elements of the 
 	receiver. Answers the receiver. The elements are evaluated in index order.
@@ -190,6 +201,8 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
+!ArrayedCollection categoriesFor: #decodeNext:from:!encode/decode!private! !
+!ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !ArrayedCollection categoriesFor: #findFirst:!public!searching! !
 !ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !

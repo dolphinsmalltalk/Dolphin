@@ -401,14 +401,8 @@ contains: aString
 copyToBuffer: anAddress ofSize: anInteger
 	^self subclassResponsibility!
 
-decode: anInteger
-	"Answer a <Character> that corresponds to the <integer> code unit, anInteger, in the
-	receiver's encoding."
-
-	^self subclassResponsibility!
-
 decodeNext: anInteger from: aReadStream
-	"Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
+	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
 	many as are available before the end of stream."
 
 	| newStream count next |
@@ -419,7 +413,7 @@ decodeNext: anInteger from: aReadStream
 	^newStream contents!
 
 decodeNextFrom: aReadStream
-	"Answer the next <Character> in the receiver's encoding from the <ReadStream> argument ."
+	"Private - Answer the next <Character> in the receiver's encoding from the <ReadStream> argument ."
 
 	^self subclassResponsibility!
 
@@ -439,7 +433,7 @@ displayString
 	^self!
 
 encodeOn: aWriteStream put: aCharacter
-	"Encode the <Character> argument onto the <WriteStream> argument using the character
+	"Private - Encode the <Character> argument onto the <WriteStream> argument using the character
 	encoding of the receiver, e.g. for Utf8String, this would be the relevant sequence of 1 to 4
 	UTF-8 encoded bytes necessary to represent the Unicode code point of the character."
 
@@ -1210,12 +1204,11 @@ withNormalizedLineDelimiters
 !String categoriesFor: #codePage!constants!public! !
 !String categoriesFor: #contains:!public! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
-!String categoriesFor: #decode:!encode/decode!public! !
-!String categoriesFor: #decodeNext:from:!encode/decode!public! !
-!String categoriesFor: #decodeNextFrom:!encode/decode!public! !
+!String categoriesFor: #decodeNext:from:!encode/decode!private! !
+!String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
-!String categoriesFor: #encodeOn:put:!encode/decode!public! !
+!String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !String categoriesFor: #encoding!constants!public! !
 !String categoriesFor: #equals:!comparing!public! !
 !String categoriesFor: #expandMacros!printing!public! !
@@ -1660,7 +1653,7 @@ withAll: newElements
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
 !String class categoriesFor: #encoding!accessing!constants!public! !
-!String class categoriesFor: #encodingName:!enquiries!public! !
+!String class categoriesFor: #encodingName:!enquiries!private! !
 !String class categoriesFor: #encodings!constants!public! !
 !String class categoriesFor: #errorInvalidCodePoint:!exceptions!private! !
 !String class categoriesFor: #formatMessage:in:withArguments:!instance creation!public! !

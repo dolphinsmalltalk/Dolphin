@@ -187,9 +187,6 @@ copyStringFrom: start to: stop
 
 	^self copy: String from: start to: stop!
 
-decode: anInteger 
-	^anInteger!
-
 doubleAtOffset: anInteger
 	"Answer the double precision floating point value at offset (i.e. zero relative) 
 	anInteger in the receiver, as a Smalltalk Float object (double precision).
@@ -249,9 +246,6 @@ dwordAtOffset: anInteger put: anObject
 	
 	<primitive: 121>
 	^self retryDwordAtOffset: anInteger put: anObject!
-
-encoding
-	^#binary!
 
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) 
@@ -712,12 +706,10 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #byteSize!accessing!private! !
 !ByteArray categoriesFor: #copy:from:to:!copying!private! !
 !ByteArray categoriesFor: #copyStringFrom:to:!copying!public! !
-!ByteArray categoriesFor: #decode:!encode/decode!public! !
 !ByteArray categoriesFor: #doubleAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
-!ByteArray categoriesFor: #encoding!constants!encode/decode!public! !
 !ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #hash!comparing!primitives!public! !

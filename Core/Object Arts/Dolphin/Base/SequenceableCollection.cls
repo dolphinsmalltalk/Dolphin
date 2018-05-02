@@ -22,16 +22,23 @@ SequenceableCollection comment: 'SequenceableCollection is the class of Collecti
 	| size newSize |
 	size := self size.
 	newSize := size + aSequencedReadableCollection size.
-	^(self copyLikeOfSize: newSize)
-		replaceFrom: 1
-			to: size
-			with: self
-			startingAt: 1;
-		replaceFrom: size + 1
-			to: newSize
-			with: aSequencedReadableCollection
-			startingAt: 1;
-		yourself!
+	^aSequencedReadableCollection maxEncoding == 1
+		ifTrue: 
+			[(self copyLikeOfSize: newSize)
+				replaceFrom: 1
+					to: size
+					with: self
+					startingAt: 1;
+				replaceFrom: size + 1
+					to: newSize
+					with: aSequencedReadableCollection
+					startingAt: 1;
+				yourself]
+		ifFalse: 
+			[(self species writeStream: newSize)
+				nextPutAll: self;
+				nextPutAll: aSequencedReadableCollection;
+				contents]!
 
 _sameAsString: comparand
 	"Private - Answer whether the receiver collates the same as <readableString>
@@ -480,22 +487,22 @@ copyWithoutAll: oldElements
 	^aStream contents!
 
 decodeFrom: aReadStream upTo: anObject
-	"Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
+	"Private - Answer the future sequence values of the <ReadStream>, aReadStream, up to but not including, the <Object>, anObject.
 	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
 	stream, then the remainder of the future sequence is answered and the stream is left at end."
 
 	^aReadStream basicUpTo: anObject!
 
 decodeNext: anInteger from: aReadStream
-	"Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
+	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
 	many as are available before the end of stream."
 
 	^aReadStream basicNextAvailable: anInteger!
 
 decodeNextFrom: aReadStream
-	"Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
+	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
-	^aReadStream basicNextAvailable!
+	^self at: aReadStream advancePosition!
 
 do: operation 
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's elements.
@@ -508,7 +515,7 @@ do: operation
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
 emitEncodingMarkerOn: aPositionableStream
-	"Emit any encoding marker used for the stream encoding this collection represents onto the
+	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the
 	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
 	typically only relevant to string encodings, so there is nothing to do by default."
 
@@ -522,7 +529,7 @@ encodedAt: anInteger put: anObject
 	^anInteger!
 
 encodedSizeOf: anObject
-	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver."
 
 	^1!
 
@@ -537,9 +544,6 @@ encodeOn: aWriteStream nextPutAll: aSequenceableCollection
 
 encodeOn: aPuttableStream put: anObject
 	^aPuttableStream basicNextPut: anObject!
-
-encoding
-	^#pointers!
 
 endsWith: aCollection
 	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
@@ -1110,7 +1114,7 @@ sixth
 	^self at: 6!
 
 skipEncodingMarkerFrom: aPositionableStream
-	"Skip over any encoding marker used for the stream encoding this collection represents on
+	"Private - Skip over any encoding marker used for the stream encoding this collection represents on
 	the <PositionableStream> argument, which is assumed to be at the start of its sequence. This
 	typically only relevant to string encodings, so there is nothing to do by default."
 
@@ -1225,17 +1229,16 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWith:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
-!SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!public! !
-!SequenceableCollection categoriesFor: #decodeNext:from:!encode/decode!public! !
-!SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #decodeNext:from:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
-!SequenceableCollection categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!SequenceableCollection categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!SequenceableCollection categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!public! !
-!SequenceableCollection categoriesFor: #encodeOn:nextPutAll:!encode/decode!public! !
-!SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!public! !
-!SequenceableCollection categoriesFor: #encoding!constants!encode/decode!public! !
+!SequenceableCollection categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #encodeOn:nextPutAll:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !
@@ -1295,7 +1298,7 @@ writeStream
 !SequenceableCollection categoriesFor: #second!accessing!public! !
 !SequenceableCollection categoriesFor: #select:!enumerating!public! !
 !SequenceableCollection categoriesFor: #sixth!accessing!public! !
-!SequenceableCollection categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
+!SequenceableCollection categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #skipOver:!private!searching! !
 !SequenceableCollection categoriesFor: #swap:with:!operations!public! !
 !SequenceableCollection categoriesFor: #third!accessing!public! !
@@ -1325,7 +1328,7 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 	^low!
 
 emitEncodingMarkerOn: aPositionableStream
-	"Emit any encoding marker used for the stream encoding this collection represents onto the
+	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the
 	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
 	typically only relevant to string encodings, so there is nothing to do by default."
 
@@ -1354,7 +1357,7 @@ writeStream: anInteger
 
 	^WriteStream on: (self new: anInteger)! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
-!SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!public! !
+!SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
 !SequenceableCollection class categoriesFor: #writeStream:!instance creation!public!streaming! !

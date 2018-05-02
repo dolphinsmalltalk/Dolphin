@@ -74,18 +74,13 @@ copyToBuffer: anAddress ofSize: anInteger
 		strSource: self
 		count: CRTConstants._TRUNCATE!
 
-decode: anInteger
-	"Answer a <Character> that corresponds to the ANSI code unit, anInteger."
-
-	^Character ansiValue: anInteger!
-
 decodeNextFrom: aReadStream
-	"Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
+	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
 
 	^aReadStream basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
 
 encodeOn: aWriteStream put: aCharacter
-	"Encode the <Character> argument onto the <WriteStream> argument as a single byte ANSI code unit.
+	"Private - Encode the <Character> argument onto the <WriteStream> argument as a single byte ANSI code unit.
 	 An error is raised if the <Character> has code point that is not representable in the ANSI encoding."
 
 	^aWriteStream basicNextPut: aCharacter ansiValue!
@@ -128,7 +123,7 @@ reverse
 	^copy!
 
 skipEncodingMarkerFrom: aGettableStream
-	"Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
+	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
 	is assumed to be at the start of its sequence."
 
 	"Nothing to do for ANSI strings"
@@ -154,14 +149,13 @@ trimNulls
 !AnsiString categoriesFor: #asUppercase!converting!public! !
 !AnsiString categoriesFor: #beginsWith:ignoreCase:!comparing!public! !
 !AnsiString categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!AnsiString categoriesFor: #decode:!encode/decode!public! !
-!AnsiString categoriesFor: #decodeNextFrom:!encode/decode!public! !
-!AnsiString categoriesFor: #encodeOn:put:!encode/decode!public! !
+!AnsiString categoriesFor: #decodeNextFrom:!encode/decode!private! !
+!AnsiString categoriesFor: #encodeOn:put:!encode/decode!private! !
 !AnsiString categoriesFor: #first:!copying!public! !
 !AnsiString categoriesFor: #includes:!public!searching! !
 !AnsiString categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !AnsiString categoriesFor: #reverse!copying!public! !
-!AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
+!AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !AnsiString categoriesFor: #strlen!accessing!private! !
 !AnsiString categoriesFor: #trimNulls!copying!public! !
 

@@ -34,8 +34,9 @@ testIsEmpty
 
 testNextColon
 	self strings do: 
-			[:each |
-			| subject elems actual expected |
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
 			subject := self streamWith: each.
 			elems := each asArray.
 			elems do: [:e | subject nextPut: e].
@@ -48,8 +49,9 @@ testNextColon
 
 testNextPut
 	self strings do: 
-			[:each |
-			| subject elems actual expected |
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
 			elems := each asArray.
 			subject := self streamWith: each.
 			elems do: [:e | subject nextPut: e].

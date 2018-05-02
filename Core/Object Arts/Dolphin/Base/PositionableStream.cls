@@ -18,6 +18,9 @@ Instance Variables
 !PositionableStream categoriesForClass!Collections-Streams! !
 !PositionableStream methodsFor!
 
+advancePosition
+	^position := position + 1!
+
 atEnd
 	"Answer whether the receiver cannot access any more objects."
 
@@ -93,9 +96,6 @@ contentsSpecies
 	^collection species
 !
 
-encoding
-	^collection class encoding!
-
 lastPosition
 	"Private - Answer the last position in the receiver (for the purposes of determining
 	attempts to read off the end, etc)."
@@ -110,7 +110,7 @@ nextAvailable: anInteger
 	"Implementation Note: Override superclass for improved performance."
 
 	self position + anInteger > self lastPosition ifTrue: [^self upToEnd].
-	^self basicNext: anInteger!
+	^collection decodeNext: anInteger from: self!
 
 nextDOUBLE
 	"Answer a <Float> constructed from the next 8 bytes on the receiver, which are assumed to
@@ -236,6 +236,7 @@ upToEnd
 	 particular streams, and which counts by raw elements regardless of encoding."
 
 	^self basicNext: self lastPosition - self position! !
+!PositionableStream categoriesFor: #advancePosition!positioning!private! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
 !PositionableStream categoriesFor: #basicNext:!accessing!public! !
 !PositionableStream categoriesFor: #basicNextAvailable!accessing!public! !
@@ -243,7 +244,6 @@ upToEnd
 !PositionableStream categoriesFor: #collection!accessing!private! !
 !PositionableStream categoriesFor: #contents!accessing!public! !
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
-!PositionableStream categoriesFor: #encoding!constants!public! !
 !PositionableStream categoriesFor: #lastPosition!accessing!private! !
 !PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
 !PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !

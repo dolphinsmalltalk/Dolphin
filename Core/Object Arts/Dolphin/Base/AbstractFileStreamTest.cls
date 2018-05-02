@@ -68,7 +68,7 @@ streamWith: aString
 strings
 	"Can't handle UTF-16 encoding yet"
 
-	^super strings reject: [:each | each isKindOf: Utf16String]!
+	^super strings reject: [:each | each first isKindOf: Utf16String]!
 
 tearDown
 	filestream notNil ifTrue: [self tearDownTempStream].

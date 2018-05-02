@@ -57,14 +57,8 @@ copyToBuffer: anAddress ofSize: anInteger
 		strSource: self
 		count: CRTConstants._TRUNCATE!
 
-decode: anInteger
-	"Answer a <Character> that corresponds to the UTF-8 code unit, anInteger. The result could be
-	a UTF-8 surrogate character."
-
-	^Character utf8Value: anInteger!
-
 decodeNextFrom: aReadStream
-	"Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
+	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument ."
 
 	"0xxxxxxx	0x00..0x7F	1-byte character encoding for ASCII
 	110xxxxx	0xC0..0xDF	Lead byte of a 2-byte character encoding
@@ -166,7 +160,7 @@ encodedAt: anInteger put: aCharacter
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
 encodedSizeOf: aCharacter
-	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver."
 
 	^aCharacter isUtf8
 		ifTrue: [1]
@@ -176,7 +170,7 @@ encodedSizeOf: aCharacter
 			codePoint < 16r800 ifTrue: [2] ifFalse: [codePoint < 16rFFFF ifTrue: [3] ifFalse: [4]]]!
 
 encodeOn: aPuttableStream put: aCharacter
-	"Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding.
+	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-8 encoding.
 	This requires between one and four byte code units to be written to the stream, depending on
 	the magnitude of the code point. An error is raised if the <Character> has an invalid code
 	point, or is a UTF-16 surrogate. If the <Character> is a UTF-8 surrogate, the surrogate code
@@ -309,11 +303,10 @@ strlen
 !Utf8String categoriesFor: #asUtf8String!converting!public! !
 !Utf8String categoriesFor: #bom!constants!encode/decode!private! !
 !Utf8String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Utf8String categoriesFor: #decode:!encode/decode!public! !
-!Utf8String categoriesFor: #decodeNextFrom:!encode/decode!public! !
+!Utf8String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Utf8String categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!Utf8String categoriesFor: #encodeOn:put:!encode/decode!public! !
+!Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !Utf8String categoriesFor: #hash!comparing!public! !
 !Utf8String categoriesFor: #maxEncoding!constants!private! !
 !Utf8String categoriesFor: #nextIndexOf:from:to:!public!searching! !

@@ -95,7 +95,7 @@ identifierTokenClass
 illegalCharacter
 	| start badChar |
 	badChar := currentCharacter.
-	start := tokenStart - (buffer encodedSizeOf: badChar) + 1.
+	start := tokenStart - (buffer collection encodedSizeOf: badChar) + 1.
 	errorHandler
 		reportError: LErrBadChar
 		at: self errorPosition

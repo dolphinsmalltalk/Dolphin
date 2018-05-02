@@ -88,14 +88,8 @@ copyToBuffer: anAddress ofSize: anInteger
 		strSource: self
 		count: CRTConstants._TRUNCATE!
 
-decode: anInteger
-	"Answer a <Character> that corresponds to the UTF-16 code unit, anInteger. Note that this
-	can be a surrogate character."
-
-	^Character utf16Value: anInteger!
-
 decodeNextFrom: aReadStream
-	"Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
+	"Private - Read the next <Character> in the receiver's encoding from the <ReadStream> argument, which
 	is assumed to be over a Utf16String (or a stream over a double-byte object) ."
 
 	^aReadStream basicNextAvailable
@@ -147,12 +141,12 @@ encodedAt: anInteger put: aCharacter
 				ifFalse: [self class errorInvalidCodePoint: codePoint]]!
 
 encodedSizeOf: aCharacter
-	"Answer the number of basic slots occupied by the argument when encoded in the receiver."
+	"Private - Answer the number of basic slots occupied by the argument when encoded in the receiver."
 
 	^aCharacter codePoint <= 16rFFFF ifTrue: [1] ifFalse: [2]!
 
 encodeOn: aPuttableStream put: aCharacter
-	"Encode the <Character> argument onto the <WriteStream> argument using the UTF-16
+	"Private - Encode the <Character> argument onto the <WriteStream> argument using the UTF-16
 	encoding. This requires either one or two 2-byte code units be written to the stream, depending
 	on whether the code point is in the basic multi-lingual plane (one code unit), or beyond the BMP
 	(two code units). An error is raised if the <Character> has an invalid code point."
@@ -302,7 +296,7 @@ shallowCopy
 	^self class fromAddress: self yourAddress length: self size!
 
 skipEncodingMarkerFrom: aGettableStream
-	"Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
+	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
 	is assumed to be at the start of its sequence."
 
 	^Error notYetImplemented!
@@ -364,12 +358,11 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #bom!constants!encode/decode!private! !
 !Utf16String categoriesFor: #byteSize!accessing!private! !
 !Utf16String categoriesFor: #copyToBuffer:ofSize:!copying!private! !
-!Utf16String categoriesFor: #decode:!encode/decode!public! !
-!Utf16String categoriesFor: #decodeNextFrom:!encode/decode!public! !
+!Utf16String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !Utf16String categoriesFor: #displayOn:!printing!public! !
 !Utf16String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
-!Utf16String categoriesFor: #encodedSizeOf:!encode/decode!public! !
-!Utf16String categoriesFor: #encodeOn:put:!encode/decode!public! !
+!Utf16String categoriesFor: #encodedSizeOf:!encode/decode!private! !
+!Utf16String categoriesFor: #encodeOn:put:!encode/decode!private! !
 !Utf16String categoriesFor: #findString:startingAt:!public!searching! !
 !Utf16String categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
 !Utf16String categoriesFor: #maxEncoding!constants!private! !
@@ -379,7 +372,7 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #resize:!mutating!public! !
 !Utf16String categoriesFor: #reverse!copying!public! !
 !Utf16String categoriesFor: #shallowCopy!copying!public! !
-!Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!public! !
+!Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !Utf16String categoriesFor: #stbSaveOn:!binary filing!public! !
 !Utf16String categoriesFor: #strcspn:start:!private!searching! !
 !Utf16String categoriesFor: #strlen!accessing!private! !

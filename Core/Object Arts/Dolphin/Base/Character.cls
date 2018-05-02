@@ -222,7 +222,7 @@ displayOn: aStream
 encoding
 	"Answer a <Symbol> naming the encoding of the character, which will be one of #ansi, #utf8, #utf16 or #utf32."
 
-	^String encodings at: self basicEncoding + 1!
+	^String encodingName: self basicEncoding!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
