@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -177,11 +177,10 @@ closeConsole
 	"Disconnect from and close any open console, including the standard input and output
 	streams."
 
-	self 
+	self
 		closeConsoleStreams;
-		unregisterConsoleCtrlHandler;
-		freeConsole
-!
+		unregisterConsoleCtrlHandler.
+	hConsole isNull ifFalse: [self freeConsole]!
 
 closeConsoleStreams
 	"Private - Close the standard console I/O streams."
@@ -306,7 +305,8 @@ freeConsole
 		SessionManager current freeConsole
 	"
 
-	KernelLibrary default freeConsole!
+	KernelLibrary default freeConsole.
+	hConsole := nil!
 
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."

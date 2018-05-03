@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
@@ -26,7 +26,7 @@ allocConsole
 	kernel := KernelLibrary default.
 	(self isUnattended and: [kernel attachConsole: ATTACH_PARENT_PROCESS])
 		ifFalse: 
-			[| hConsole hMenu user |
+			[| hMenu user |
 			kernel allocConsole.
 			"Remove the close button from the console window as otherwise if the user
 			closes it Windows will kill this process with no way to intercept."

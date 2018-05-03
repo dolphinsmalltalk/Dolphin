@@ -14,7 +14,9 @@ allocConsole
 	"Private - Open a console window for this session."
 
 	"Attach to the existing console so that the output goes to the build log"
-	KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS!
+	(KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS) ifFalse: [
+		KernelLibrary default allocConsole]
+!
 
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
