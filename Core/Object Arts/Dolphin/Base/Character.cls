@@ -247,6 +247,11 @@ isAtomic
 
 	^code <= 255!
 
+isCharacter
+	"Answer whether the receiver conforms to the <Character> protocol."
+
+	^true!
+
 isControl
 	"Answer whether the receiver is a control character."
 
@@ -439,6 +444,7 @@ shallowCopy
 !Character categoriesFor: #isAlphaNumeric!public!testing! !
 !Character categoriesFor: #isAscii!public!testing! !
 !Character categoriesFor: #isAtomic!public!testing! !
+!Character categoriesFor: #isCharacter!public!testing! !
 !Character categoriesFor: #isControl!public!testing! !
 !Character categoriesFor: #isDigit!public!testing! !
 !Character categoriesFor: #isEnglishLetter!public!testing! !

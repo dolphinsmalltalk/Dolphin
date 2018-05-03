@@ -20,48 +20,8 @@ streamClass
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
-	^self streamClass on: aString!
-
-testUpTo
-	| pound capitalAwithCircumflex |
-	pound := Character value: 16rA3.
-	"A-with-circumflex is also the lead byte for pound in UTF-8"
-	capitalAwithCircumflex := Character value: 16rC2.
-	{AnsiString. Utf8String} do: 
-			[:stringClass |
-			| chars stream actual |
-			chars := (stringClass with: capitalAwithCircumflex) , (stringClass fromString: 'bcde')
-						, (stringClass with: pound) , (stringClass fromString: 'ghij').
-			self assert: chars class equals: stringClass.
-			stream := self streamOn: chars.
-			actual := stream upToEnd.
-			self assert: actual equals: chars.
-			"Search for a potentially multi-byte char at the start"
-			stream reset.
-			self assert: (stream upTo: capitalAwithCircumflex) equals: ''.
-			"Search for a single-byte char"
-			self assert: (stream upTo: $c) equals: 'b'.
-			"Search for another multi-byte char after the start"
-			self assert: (stream upTo: pound) equals: 'de'.
-			"Search for a non-existant char"
-			self assert: (stream upTo: $z) equals: 'ghij'.
-			self assert: stream atEnd.
-			self assert: (stream upTo: $z) equals: ''.
-			stream reset.
-			"Search for what would be lead byte of pound"
-			stream next.
-			self assert: (stream upTo: capitalAwithCircumflex) equals: chars asAnsiString allButFirst.
-			"Search terminating on last character"
-			stream reset.
-			self assert: (stream upTo: $j) equals: chars allButLast.
-			self assert: stream atEnd.
-			"Search for non-existant character"
-			stream reset.
-			self assert: (stream upTo: $z) equals: chars.
-			self assert: stream atEnd.
-			self closeTempStream: stream]	"Utf8String. Utf16String"! !
+	^self streamClass on: aString! !
 !StreamTest categoriesFor: #closeTempStream:!helpers!private! !
 !StreamTest categoriesFor: #streamClass!helpers!private! !
 !StreamTest categoriesFor: #streamOn:!helpers!private! !
-!StreamTest categoriesFor: #testUpTo!public! !
 

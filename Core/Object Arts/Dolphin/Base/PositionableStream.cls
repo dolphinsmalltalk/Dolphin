@@ -35,7 +35,7 @@ atEnd
 	^position >= readLimit!
 
 basicNext: anInteger
-	"Answer a <sequencedReadableCollection> containing the next anInteger number of objects
+	"Private - Answer a <sequencedReadableCollection> containing the next anInteger number of objects
 	accessible by the receiver."
 
 	"Implementation Note: Subclasses should not generally override this method, but the more
@@ -43,19 +43,22 @@ basicNext: anInteger
 
 	^self
 		basicNext: anInteger
-		into: (self contentsSpecies new: anInteger)
+		into: (collection copyLikeOfSize: anInteger)
 		startingAt: 1!
 
 basicNextAvailable
-	"Answer the next raw element accessible by the receiver, or nil if at the end of the stream.
+	"Private - Answer the next raw element accessible by the receiver, or nil if at the end of the stream.
 	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
 	end of stream, so this method is only useful for text and byte streams, or where the collection
 	being streamed over is known not to contain nils."
 
 	^self atEnd ifFalse: [self basicNext]!
 
+basicNextAvailable: anInteger
+	^self basicNext: (self lastPosition - position min: anInteger)!
+
 basicUpTo: anObject
-	"Answer a collection of elements starting with the next element accessed by the receiver,
+	"Private - Answer a collection of elements starting with the next element accessed by the receiver,
 	and up to, not inclusive of, the next element that is equal to anObject. Positions the
 	stream after anObject if found. If anObject is not in the collection, answer the entire rest
 	of the collection. If the receiver is at its end, answer an empty Collection."
@@ -102,15 +105,14 @@ lastPosition
 
 	^readLimit!
 
-nextAvailable: anInteger 
+nextAvailable: anInteger
 	"Answer up to anInteger elements of the receiver's collection. The answer will be a
 	collection of the same species as the one accessed by the receiver, and will contain anInteger
 	elements, or as many as are left in the receiver's collection."
 
-	"Implementation Note: Override superclass for improved performance."
+	"Implementation Note: Override superclass as in many cases we can implement this as a block copy."
 
-	self position + anInteger > self lastPosition ifTrue: [^self upToEnd].
-	^collection decodeNext: anInteger from: self!
+	^collection decodeNextAvailable: anInteger from: self!
 
 nextDOUBLE
 	"Answer a <Float> constructed from the next 8 bytes on the receiver, which are assumed to
@@ -238,9 +240,10 @@ upToEnd
 	^self basicNext: self lastPosition - self position! !
 !PositionableStream categoriesFor: #advancePosition!positioning!private! !
 !PositionableStream categoriesFor: #atEnd!public!testing! !
-!PositionableStream categoriesFor: #basicNext:!accessing!public! !
-!PositionableStream categoriesFor: #basicNextAvailable!accessing!public! !
-!PositionableStream categoriesFor: #basicUpTo:!accessing!public! !
+!PositionableStream categoriesFor: #basicNext:!accessing!private! !
+!PositionableStream categoriesFor: #basicNextAvailable!accessing!private! !
+!PositionableStream categoriesFor: #basicNextAvailable:!private! !
+!PositionableStream categoriesFor: #basicUpTo:!accessing!private! !
 !PositionableStream categoriesFor: #collection!accessing!private! !
 !PositionableStream categoriesFor: #contents!accessing!public! !
 !PositionableStream categoriesFor: #contentsSpecies!accessing!private! !

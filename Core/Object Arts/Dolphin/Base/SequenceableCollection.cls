@@ -493,7 +493,7 @@ decodeFrom: aReadStream upTo: anObject
 
 	^aReadStream basicUpTo: anObject!
 
-decodeNext: anInteger from: aReadStream
+decodeNextAvailable: anInteger from: aReadStream
 	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
 	many as are available before the end of stream."
 
@@ -544,6 +544,9 @@ encodeOn: aWriteStream nextPutAll: aSequenceableCollection
 
 encodeOn: aPuttableStream put: anObject
 	^aPuttableStream basicNextPut: anObject!
+
+encoding
+	^#pointers!
 
 endsWith: aCollection
 	"Answer whether the receiver ends with the sequence of objects in the <Collection> argument"
@@ -1230,7 +1233,7 @@ writeStream
 !SequenceableCollection categoriesFor: #copyWithout:!copying!public! !
 !SequenceableCollection categoriesFor: #copyWithoutAll:!copying!public! !
 !SequenceableCollection categoriesFor: #decodeFrom:upTo:!encode/decode!private! !
-!SequenceableCollection categoriesFor: #decodeNext:from:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !SequenceableCollection categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
@@ -1239,6 +1242,7 @@ writeStream
 !SequenceableCollection categoriesFor: #encodeOn:next:putAll:startingAt:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encodeOn:nextPutAll:!encode/decode!private! !
 !SequenceableCollection categoriesFor: #encodeOn:put:!encode/decode!private! !
+!SequenceableCollection categoriesFor: #encoding!constants!encode/decode!private! !
 !SequenceableCollection categoriesFor: #endsWith:!comparing!public! !
 !SequenceableCollection categoriesFor: #errorFirstObject:!exceptions!private! !
 !SequenceableCollection categoriesFor: #errorLastObject:!exceptions!private! !

@@ -20,10 +20,12 @@ streamClass
 	^StdioFileStream!
 
 strings
+	| pred |
+	pred := [:ch | ch == $\0 or: [ch == $\x1A]].
 	^(super strings reject: [:each | each first class elementSize ~~ 1]) collect: 
 			[:each |
 			"The CRT stdio  streams has issues with nulls in text (bugs in positioning) and will treat Ctrl+Z as EOF (expected behaviour)"
-			{each first reject: [:ch | ch == $\0 or: [ch == $\x1A]]. each last}]!
+			{each first reject: pred. each last reject: pred}]!
 
 subjectCollection: aSequencableCollection
 	^(aSequencableCollection isKindOf: Utf8String)

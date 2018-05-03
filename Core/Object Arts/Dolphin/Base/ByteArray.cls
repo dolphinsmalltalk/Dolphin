@@ -247,6 +247,16 @@ dwordAtOffset: anInteger put: anObject
 	<primitive: 121>
 	^self retryDwordAtOffset: anInteger put: anObject!
 
+encodedAt: anInteger put: anObject
+	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
+	the <integer> index of the last element updated."
+
+	self at: anInteger put: anObject asInteger.
+	^anInteger!
+
+encoding
+	^#binary!
+
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) 
 	anInteger in the receiver, as a Smalltalk Float object (double precision).
@@ -710,6 +720,8 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
+!ByteArray categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!ByteArray categoriesFor: #encoding!constants!encode/decode!private! !
 !ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #hash!comparing!primitives!public! !

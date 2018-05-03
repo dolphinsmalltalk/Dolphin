@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollectionTest subclass: #ByteArrayTest
 	instanceVariableNames: ''
@@ -73,45 +73,31 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#[] #[1] #[1 2]).
-	(Array
-		with: String empty
-		with: Utf16String empty
-		with: Array new
-		with: OrderedCollection new
-		with: (1 to: 0)) do: 
-				[:eachEmpty |
+	{String empty. Utf16String empty. Array new. OrderedCollection new. 1 to: 0} do: 
+			[:eachEmpty |
+			subjects do: 
+					[:eachArray |
+					| result |
+					result := eachArray , eachEmpty.
+					self deny: eachArray identicalTo: result.
+					self assert: result equals: eachArray]].
+	{'a'.
+		'a' asUtf16String.
+		#(255).
+		OrderedCollection with: 123.
+		100 to: 100.
+		'ab'.
+		'ab' asUtf16String.
+		#(1 255).
+		OrderedCollection with: 123 with: 255.
+		100 to: 101} do: 
+				[:each |
 				subjects do: 
 						[:eachArray |
 						| result |
-						result := eachArray , eachEmpty.
-						self deny: eachArray == result.
-						self assert: result equals: eachArray]].
-	(Array
-		with: 'a'
-		with: 'a' asUtf16String
-		with: #(255)
-		with: (OrderedCollection with: 123)
-		with: (100 to: 100)) do: 
-				[:eachOne |
-				subjects do: 
-						[:eachArray |
-						| result |
-						result := self verifyConcatenation: eachOne with: eachArray.
-						self deny: eachArray == result.
-						self assert: result class == self collectionClass]].
-	(Array
-		with: 'ab'
-		with: 'a' asUtf16String
-		with: #(1 255)
-		with: (OrderedCollection with: 123 with: 255)
-		with: (100 to: 101)) do: 
-				[:eachTwo |
-				subjects do: 
-						[:eachArray |
-						| result |
-						result := self verifyConcatenation: eachTwo with: eachArray.
-						self deny: eachArray == result.
-						self assert: result class == self collectionClass]]!
+						result := self verifyConcatenation: each with: eachArray.
+						self deny: eachArray identicalTo: result.
+						self assert: result class identicalTo: self collectionClass]]!
 
 testSbyteAtOffset
 	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) = each].

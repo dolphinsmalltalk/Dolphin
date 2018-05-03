@@ -136,7 +136,7 @@ upToEnd
 	Note however that due to line end translations, the number of characters read will probably be significantly 
 	fewer than the remaining size of the file."
 
-	^self basicNextAvailable: self size - self position! !
+	^self basicNextAvailable: self size - self position + 1! !
 !StdioTextFileStream categoriesFor: #basicPrint:!printing!private! !
 !StdioTextFileStream categoriesFor: #cr!accessing!public! !
 !StdioTextFileStream categoriesFor: #crtab!accessing!public! !

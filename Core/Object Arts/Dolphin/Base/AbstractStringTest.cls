@@ -18,15 +18,9 @@ assimilateString: aString
 	^self subclassResponsibility!
 
 caseConversionCases
-	"#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP') #('a\0b' 'A\0B'))"
-
-	^{{AnsiString fromByteArray: #[97 98 99 32 163 49 50].
-			AnsiString fromByteArray: #[65 66 67 32 163 49 50]}.
-		{AnsiString fromByteArray: #[111 241 97]. AnsiString fromByteArray: #[79 209 65]}.
-		{AnsiString
-				fromByteArray: #[225 114 118 237 122 116 117 114 111 32 116 252 107 246 114 102 250 114 243 103 233 112].
-			AnsiString
-				fromByteArray: #[193 82 86 205 90 84 85 82 79 32 84 220 75 214 82 70 218 82 211 71 201 80]}.
+	^{{'abc £12' asAnsiString. 'ABC £12' asAnsiString}.
+		{'oña' asAnsiString. 'OÑA' asAnsiString}.
+		{'árvízturo tükörfúrógép' asAnsiString. 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP' asAnsiString}.
 		{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
 
 equalityTestCases

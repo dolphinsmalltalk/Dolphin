@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStreamTest subclass: #WriteStreamTest
 	instanceVariableNames: ''
@@ -9,14 +9,6 @@ WriteStreamTest guid: (GUID fromString: '{9d14176b-5486-40dc-bc22-694add104427}'
 WriteStreamTest comment: ''!
 !WriteStreamTest categoriesForClass!Unclassified! !
 !WriteStreamTest methodsFor!
-
-readOperationNotImplemented: aBlock 
-	"It is an error to attempt to read from a WriteStream"
-
-	self 
-		should: aBlock
-		raise: Error
-		matching: [:ex | ex description beginsWith: self streamClass name , ' should not implement']!
 
 streamClass
 	^WriteStream!
@@ -57,6 +49,16 @@ testNewContents
 	contents := stream contents.
 	self assert: contents = 'hello'.
 	self closeTempStream: stream!
+
+testNextAvailableColon
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream nextAvailable: 5]!
+
+testNextColon
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream next: 5]!
 
 testNextLine
 	| stream |
@@ -101,7 +103,9 @@ testSkipToAllColon
 	self readOperationNotImplemented: [stream skipToAll: 'a']!
 
 testUpTo
-	self readOperationNotImplemented: [super testUpTo]!
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream upTo: $a]!
 
 testUpToAllColon
 	| chars stream |
@@ -114,13 +118,19 @@ testUpToAllColon
 testUpToEnd
 	| stream |
 	stream := self streamOn: 'abc'.
-	self readOperationNotImplemented: [stream upToEnd]! !
-!WriteStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
+	self readOperationNotImplemented: [stream upToEnd]!
+
+testUpToUtf
+	| stream |
+	stream := self streamOn: '1£/🐬'.
+	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
 !WriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
 !WriteStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
@@ -130,4 +140,5 @@ testUpToEnd
 !WriteStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
+!WriteStreamTest categoriesFor: #testUpToUtf!public!unit tests! !
 

@@ -401,7 +401,7 @@ contains: aString
 copyToBuffer: anAddress ofSize: anInteger
 	^self subclassResponsibility!
 
-decodeNext: anInteger from: aReadStream
+decodeNextAvailable: anInteger from: aReadStream
 	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
 	many as are available before the end of stream."
 
@@ -1204,7 +1204,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #codePage!constants!public! !
 !String categoriesFor: #contains:!public! !
 !String categoriesFor: #copyToBuffer:ofSize:!constants!copying!private! !
-!String categoriesFor: #decodeNext:from:!encode/decode!private! !
+!String categoriesFor: #decodeNextAvailable:from:!encode/decode!private! !
 !String categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !String categoriesFor: #displayOn:!printing!public! !
 !String categoriesFor: #displayString!printing!public! !
@@ -1652,7 +1652,7 @@ withAll: newElements
 !String class categoriesFor: #codePage!constants!public! !
 !String class categoriesFor: #elementSize!constants!public! !
 !String class categoriesFor: #empty!instance creation!public! !
-!String class categoriesFor: #encoding!accessing!constants!public! !
+!String class categoriesFor: #encoding!constants!public! !
 !String class categoriesFor: #encodingName:!enquiries!private! !
 !String class categoriesFor: #encodings!constants!public! !
 !String class categoriesFor: #errorInvalidCodePoint:!exceptions!private! !

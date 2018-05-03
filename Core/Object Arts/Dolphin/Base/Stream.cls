@@ -47,7 +47,7 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 	^aSequenceableCollection!
 
 basicNextAvailable: anInteger 
-	"Answer up to anInteger undecoded elements of the receiver's collection. Generally, the
+	"Private - Answer up to anInteger undecoded elements of the receiver's collection. Generally, the
 	answer will be a collection of the same class as the one accessed by the receiver (though
 	this is determined by the receiver), and will contain anInteger undecoded elements, or as
 	many as are left in the receiver's collection."
@@ -200,7 +200,7 @@ upToEnd
 !Stream categoriesFor: #basicContentsSpecies!accessing!private! !
 !Stream categoriesFor: #basicNext!accessing!public! !
 !Stream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!Stream categoriesFor: #basicNextAvailable:!accessing!public! !
+!Stream categoriesFor: #basicNextAvailable:!accessing!private! !
 !Stream categoriesFor: #close!operations!public! !
 !Stream categoriesFor: #contentsSpecies!constants!private! !
 !Stream categoriesFor: #display:!printing!public! !

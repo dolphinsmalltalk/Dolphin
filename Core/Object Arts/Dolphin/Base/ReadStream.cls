@@ -46,7 +46,7 @@ basicNext: count into: aSequenceableCollection startingAt: startAt
 	^aSequenceableCollection!
 
 basicNextAvailable
-	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
+	"Private - Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
 	same type of object that would be returned from the collection if sent #basicAt:. For bytes
 	and strings the basic elements are integers. For Arrays, the basic elements are whatever
 	objects are stored in the array."
@@ -94,7 +94,7 @@ nextAvailable
 	^collection decodeNextFrom: self! !
 !ReadStream categoriesFor: #basicNext!accessing!public! !
 !ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!ReadStream categoriesFor: #basicNextAvailable!accessing!public! !
+!ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !
 !ReadStream categoriesFor: #nextAvailable!accessing!public! !

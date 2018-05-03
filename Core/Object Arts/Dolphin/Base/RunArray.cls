@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection subclass: #RunArray
 	instanceVariableNames: 'values runs'
@@ -62,6 +62,11 @@ at: index put: newElement
 
 	^self shouldNotImplement
 !
+
+decodeNextFrom: aReadStream
+	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
+
+	^self at: aReadStream advancePosition!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy
@@ -132,6 +137,7 @@ species
 !RunArray categoriesFor: #at:!accessing!public! !
 !RunArray categoriesFor: #at:ifAbsent:!accessing!public! !
 !RunArray categoriesFor: #at:put:!accessing!public! !
+!RunArray categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !RunArray categoriesFor: #postCopy!copying!public! !
 !RunArray categoriesFor: #resize:!mutating!public! !
 !RunArray categoriesFor: #runs:values:!accessing!private! !

@@ -11,6 +11,9 @@ AbstractFileStreamTest comment: ''!
 !AbstractFileStreamTest categoriesForClass!Unclassified! !
 !AbstractFileStreamTest methodsFor!
 
+arrayedCollections
+	^self strings , self byteArrays!
+
 assertBufferEmptyOrDirty: fs 
 	!
 
@@ -27,6 +30,9 @@ closeTempStream: aStream
 	"Private - Clean up the temporary stream argument."
 
 	aStream close!
+
+collections
+	^self arrayedCollections!
 
 initializeRandomTestData
 	| r bytes |
@@ -370,12 +376,17 @@ testTruncate
 	filestream nextPutAll: ' world'.
 	filestream close.
 	actual := File readAllText: tempFileName.
-	self assert: actual equals: ' world'! !
+	self assert: actual equals: ' world'!
+
+writeableCollections
+	^self strings , self byteArrays! !
+!AbstractFileStreamTest categoriesFor: #arrayedCollections!private! !
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
 !AbstractFileStreamTest categoriesFor: #blockWriteIntervals!constants!private! !
 !AbstractFileStreamTest categoriesFor: #bufferSize!constants!private! !
 !AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
+!AbstractFileStreamTest categoriesFor: #collections!private!unit tests! !
 !AbstractFileStreamTest categoriesFor: #initializeRandomTestData!initializing!private! !
 !AbstractFileStreamTest categoriesFor: #maxPosition!constants!public! !
 !AbstractFileStreamTest categoriesFor: #randomData1!constants!private! !
@@ -401,4 +412,5 @@ testTruncate
 !AbstractFileStreamTest categoriesFor: #testReset!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testRewindAfterWrite!public!unit tests! !
 !AbstractFileStreamTest categoriesFor: #testTruncate!public!unit tests! !
+!AbstractFileStreamTest categoriesFor: #writeableCollections!constants!private! !
 

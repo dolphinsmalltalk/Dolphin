@@ -11,32 +11,71 @@ PositionableStreamTest comment: ''!
 !PositionableStreamTest categoriesForClass!Unclassified! !
 !PositionableStreamTest methodsFor!
 
+arrayedCollections
+	^self strings, self byteArrays, self arrays!
+
+arrays
+	^#(#(#()) #(#(#x)) #(#(#x #y)))!
+
+byteArrays
+	^#(#(#[] #()) #(#[1] #(1)) #(#[1 255] #(1 255)))!
+
+collections
+	^self strings , self byteArrays , self arrays, self intervals , self orderedCollections, self runArrays!
+
+intervals
+	^{{1 to: 0. #()}. {2 to: 2. #(2)}. {1 to: 5. #(1 2 3 4 5)}. {3 to: 1 by: -1. #(3 2 1)}}!
+
+orderedCollections
+	^{{OrderedCollection new. #()}.
+		{OrderedCollection with: #x. #(x)}.
+		{OrderedCollection with: #x with: #y. #(#x #y)}.
+		{(1 to: 10) asOrderedCollection
+				removeFirst;
+				yourself.
+			#(2 3 4 5 6 7 8 9 10)}}!
+
+readOperationNotImplemented: aBlock 
+	"It is an error to attempt to read from a WriteStream"
+
+	self 
+		should: aBlock
+		raise: Error
+		matching: [:ex | ex description beginsWith: self streamClass name , ' should not implement']!
+
+runArrays
+	^{{RunArray new. #()}.
+		{RunArray with: #x. #(#x)}.
+		{RunArray with: #x with: #y. #(#x #y)}.
+		{(1 to: 5) asRunArray. #(1 2 3 4 5)}}!
+
 streamOn: aString 
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
 
 	^self streamClass on: aString!
 
-streamWith: aString 
-	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <String> argument."
+streamWith: aSequenceableCollection
+	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <SequenceableCollection> argument."
 
-	^self streamClass with: aString copy!
+	^self streamClass with: aSequenceableCollection copy!
 
 strings
-	^{#('' 0).
-		{Utf16String empty. 0}.
-		#('a' 1).
-		#('abc' 3).
-		{'£€1' asAnsiString. 3}.
-		{'a£€1' asUtf8String. 4}.
-		{Character byteCharacterSet. 256}.
-		{'a' , Character dolphin asUtf8String , 'b'. 3}.
-		{'a' , Character dolphin asUtf16String , 'b'. 3}}!
+	^{#('' #()).
+		{Utf8String empty. #()}.
+		{Utf16String empty. #()}.
+		#('a' #($a)).
+		#('abc' #($a $b $c)).
+		{'£€1' asAnsiString. #($£ $\x20AC $1)}.
+		{'a£€1' asUtf8String. #($a $£ $\x20AC $1)}.
+		{Character byteCharacterSet. Character byteCharacterSet asArray}.
+		{'a' , Character dolphin asUtf8String , '文'. #($a $\x1F42C $\x6587)}.
+		{'a' , Character dolphin asUtf16String , '文'. #($a $\x1F42C $\x6587)}}!
 
 subjectCollection: aSequenceableCollection
 	^aSequenceableCollection!
 
 testBasicNext
-	self strings do: 
+	self arrayedCollections do: 
 			[:pair |
 			| each subject collection |
 			each := pair first.
@@ -54,16 +93,55 @@ testBasicNext
 			self closeTempStream: subject]!
 
 testContents
-	| stream |
-	stream := self streamWith: ''.
-	self assert: stream contents isEmpty.
-	self closeTempStream: stream.
-	stream := self streamWith: 'hello'.
-	self assert: stream contents = 'hello'.
-	self closeTempStream: stream!
+	self collections do: 
+			[:pair |
+			| each stream |
+			each := pair first.
+			stream := self streamWith: each.
+			self assert: stream contents equals: each.
+			self closeTempStream: stream]!
 
 testNew
 	self should: [self streamClass new] raise: Error!
+
+testNextAvailableColon
+	self collections do: 
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
+			subject := self streamOn: each.
+			elems := each asArray.
+			0 to: elems size
+				do: 
+					[:i |
+					subject reset.
+					actual := subject nextAvailable: i.
+					expected := elems copyFrom: 1 to: i.
+					self assert: actual asArray equals: expected].
+			self assert: subject atEnd.
+			self assert: (subject nextAvailable: 1) isEmpty.
+			subject reset.
+			self assert: (subject nextAvailable: elems size + 1) equals: each.
+			self closeTempStream: subject]!
+
+testNextColon
+	self collections do: 
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
+			subject := self streamOn: each.
+			elems := each asArray.
+			self should: [subject next: elems size + 1] raise: Stream endOfStreamSignal.
+			0 to: elems size
+				do: 
+					[:i |
+					subject reset.
+					actual := subject next: i.
+					expected := elems copyFrom: 1 to: i.
+					self assert: actual asArray equals: expected].
+			self assert: subject atEnd.
+			self should: [subject next: 1] raise: Stream endOfStreamSignal.
+			self closeTempStream: subject]!
 
 testNextLine
 	"No line delimiters"
@@ -153,6 +231,23 @@ testNextLineCrOnly
 			self assert: stream nextLine equals: each.
 			self assert: stream atEnd.
 			self closeTempStream: stream]!
+
+testNextPut
+	self writeableCollections do: 
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
+			elems := pair last.
+			subject := self streamWith: each.
+			subject isWriteable
+				ifTrue: 
+					[elems do: [:e | subject nextPut: e].
+					actual := subject contents.
+					self assert: subject atEnd.
+					self closeTempStream: subject.
+					expected := each , each.
+					self assert: actual equals: expected]
+				ifFalse: [elems size > 0 ifTrue: [self writeOperationNotImplemented: [subject nextPut: elems first]]]]!
 
 testNextWord
 	"Single words"
@@ -328,6 +423,25 @@ testSkipToAllColon
 	self assert: stream atEnd.
 	self closeTempStream: stream!
 
+testUpTo
+	self collections do: 
+			[:pair |
+			| each subject elems |
+			each := pair first.
+			elems := pair last.
+			subject := self streamWith: each.
+			subject reset.
+			self assert: (subject upTo: Object new) equals: each.
+			self assert: subject atEnd.
+			elems do: 
+					[:target |
+					| actual expected |
+					subject reset.
+					expected := elems copyFrom: 1 to: (elems indexOf: target) - 1.
+					actual := subject upTo: target.
+					self assert: actual asArray equals: expected].
+			self closeTempStream: subject]!
+
 testUpToAllColon
 	| chars stream |
 	chars := 'aababcabcdabcde'.
@@ -420,25 +534,84 @@ testUpToAllColon
 	self closeTempStream: stream!
 
 testUpToEnd
-	| chars stream |
-	chars := 'abc'.
-	stream := self streamOn: chars.
-	stream reset.
-	self assert: stream upToEnd = 'abc'.
-	stream
-		reset;
-		next.
-	self assert: stream upToEnd = 'bc'.
-	stream
-		reset;
-		next: 2.
-	self assert: stream upToEnd = 'c'.
-	stream
-		reset;
-		next: 3.
-	self assert: stream upToEnd = ''.
-	self assert: stream upToEnd = ''.
-	self closeTempStream: stream! !
+	self collections do: 
+			[:pair |
+			| each subject elems |
+			each := pair first.
+			elems := pair last.
+			subject := self streamWith: each.
+			subject reset.
+			self assert: subject upToEnd equals: each.
+			self assert: subject atEnd.
+			2 to: elems size
+				do: 
+					[:i |
+					| actual expected |
+					subject reset.
+					i timesRepeat: [subject next].
+					i < elems size ifTrue: [self deny: subject atEnd].
+					expected := elems copyFrom: i + 1.
+					actual := subject upToEnd.
+					self assert: actual asArray equals: expected].
+			self closeTempStream: subject]!
+
+testUpToUtf
+	| pound capitalAwithCircumflex |
+	pound := Character value: 16rA3.
+	"A-with-circumflex is also the lead byte for pound in UTF-8"
+	capitalAwithCircumflex := Character value: 16rC2.
+	{AnsiString. Utf8String} do: 
+			[:stringClass |
+			| chars stream actual |
+			chars := (stringClass with: capitalAwithCircumflex) , (stringClass fromString: 'bcde')
+						, (stringClass with: pound) , (stringClass fromString: 'ghij').
+			self assert: chars class equals: stringClass.
+			stream := self streamOn: chars.
+			actual := stream upToEnd.
+			self assert: actual equals: chars.
+			"Search for a potentially multi-byte char at the start"
+			stream reset.
+			self assert: (stream upTo: capitalAwithCircumflex) equals: ''.
+			"Search for a single-byte char"
+			self assert: (stream upTo: $c) equals: 'b'.
+			"Search for another multi-byte char after the start"
+			self assert: (stream upTo: pound) equals: 'de'.
+			"Search for a non-existant char"
+			self assert: (stream upTo: $z) equals: 'ghij'.
+			self assert: stream atEnd.
+			self assert: (stream upTo: $z) equals: ''.
+			stream reset.
+			"Search for what would be lead byte of pound"
+			stream next.
+			self assert: (stream upTo: capitalAwithCircumflex) equals: chars asAnsiString allButFirst.
+			"Search terminating on last character"
+			stream reset.
+			self assert: (stream upTo: $j) equals: chars allButLast.
+			self assert: stream atEnd.
+			"Search for non-existant character"
+			stream reset.
+			self assert: (stream upTo: $z) equals: chars.
+			self assert: stream atEnd.
+			self closeTempStream: stream]	"Utf8String. Utf16String"!
+
+writeableCollections
+	^self strings , self byteArrays , self arrays , self orderedCollections!
+
+writeOperationNotImplemented: aBlock 
+	"It is an error to attempt to write to a ReadStream"
+
+	self 
+		should: aBlock
+		raise: Error
+		matching: [:ex | ex description beginsWith: self streamClass name , ' does not understand']! !
+!PositionableStreamTest categoriesFor: #arrayedCollections!private!unit tests! !
+!PositionableStreamTest categoriesFor: #arrays!private!unit tests! !
+!PositionableStreamTest categoriesFor: #byteArrays!private!unit tests! !
+!PositionableStreamTest categoriesFor: #collections!private!unit tests! !
+!PositionableStreamTest categoriesFor: #intervals!private!unit tests! !
+!PositionableStreamTest categoriesFor: #orderedCollections!private!unit tests! !
+!PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
+!PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
 !PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
 !PositionableStreamTest categoriesFor: #strings!constants!private! !
@@ -446,12 +619,19 @@ testUpToEnd
 !PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
+!PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testUpToUtf!public! !
+!PositionableStreamTest categoriesFor: #writeableCollections!private!unit tests! !
+!PositionableStreamTest categoriesFor: #writeOperationNotImplemented:!private!unit tests! !
 

@@ -95,13 +95,16 @@ decodeFrom: aReadStream upTo: aCharacter
 	The stream is left positioned after anObject. If there are no occurrences of anObject in the future sequence values of the
 	stream, then the remainder of the future sequence is answered and the stream is left at end."
 
-	^aCharacter isAscii
-		ifTrue: [aReadStream basicUpTo: aCharacter]
-		ifFalse: 
-			[| newStream ch |
-			newStream := self class writeStream: 128.
-			[(ch := aReadStream nextAvailable) isNil or: [ch = aCharacter]] whileFalse: [newStream nextPut: ch].
-			^newStream contents]!
+	^anObject isCharacter
+		ifTrue: 
+			[anObject isAscii
+				ifTrue: [aReadStream basicUpTo: anObject]
+				ifFalse: 
+					[| newStream ch |
+					newStream := self class writeStream: 128.
+					[(ch := aReadStream nextAvailable) isNil or: [ch = anObject]] whileFalse: [newStream nextPut: ch].
+					^newStream contents]]
+		ifFalse: [aReadStream upToEnd]!
 
 emitEncodingMarkerOn: aPositionableStream
 	"Emit any encoding marker used for the stream encoding this collection represents onto the

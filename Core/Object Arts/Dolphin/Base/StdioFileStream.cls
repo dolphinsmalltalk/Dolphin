@@ -34,8 +34,9 @@ atEnd
 	^(crtlib feof: stream) or: 
 			["feof returns non-zero only when an attempt has been made to read past the
 			 end of stream. If attached to a file (as opposed to a device) we may be
-			 positioned beyond the end of stream"
-			self isDevice not and: [self position >= self size]]!
+			 positioned beyond the end of stream. The only reliable way to tell is to 
+			attempt to read another character."
+			self isDevice not and: [self basicPeek isNil]]!
 
 attach: anExternalHandle toFd: fdInteger mode: aString type: aSymbol
 	"Private - Attach the stdio descriptor identified by fdInteger (usually one of 0=stdin,
@@ -147,6 +148,25 @@ basicNextPut: anInteger
 
 	crtlib fputc: anInteger stream: stream.
 	^anInteger!
+
+basicPeek
+	| ch |
+	ch := crtlib fgetc: stream.
+	^ch == -1
+		ifFalse: 
+			[crtlib ungetc: ch stream: stream.
+			ch]!
+
+basicUpTo: anObject
+	"Private - Answer a collection of elements starting with the next element accessed by the receiver,
+	and up to, not inclusive of, the next element that is equal to anObject. Positions the
+	stream after anObject if found. If anObject is not in the collection, answer the entire rest
+	of the collection. If the receiver is at its end, answer an empty Collection."
+
+	| newStream elem |
+	newStream := self contentsSpecies writeStream.
+	[(elem := self nextAvailable) isNil or: [elem = anObject]] whileFalse: [newStream nextPut: elem].
+	^newStream contents!
 
 bufferClass
 	"Answer the class used to encode the stdio buffer."
@@ -273,7 +293,7 @@ nextAvailable: anInteger
 	determined by the receiver), and will contain anInteger elements, or as many as are left in
 	the receiver's collection."
 
-	^self bufferPrototype decodeNext: anInteger from: self!
+	^self bufferPrototype decodeNextAvailable: anInteger from: self!
 
 nextPut: anObject
 	"Store the <Character> or <integer> (in the range 0..255) as the next element of the receiver."
@@ -384,7 +404,15 @@ tab
 tab: anInteger 
 	"Append the specified number of tabs to the receiver."
 
-	anInteger timesRepeat: [self tab]! !
+	anInteger timesRepeat: [self tab]!
+
+upTo: anObject
+	"Answer a collection of elements starting with the next element accessed by the receiver,
+	and up to, not inclusive of, the next element that is equal to anObject. Positions the
+	stream after anObject if found. If anObject is not in the collection, answer the entire rest
+	of the collection. If the receiver is at its end, answer an empty Collection."
+
+	^self bufferPrototype decodeFrom: self upTo: anObject! !
 !StdioFileStream categoriesFor: #asParameter!converting!public! !
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
 !StdioFileStream categoriesFor: #attach:toFd:mode:type:!initializing!private! !
@@ -395,6 +423,8 @@ tab: anInteger
 !StdioFileStream categoriesFor: #basicNextAvailable!accessing!private! !
 !StdioFileStream categoriesFor: #basicNextAvailable:!accessing!private! !
 !StdioFileStream categoriesFor: #basicNextPut:!accessing!private! !
+!StdioFileStream categoriesFor: #basicPeek!accessing!private! !
+!StdioFileStream categoriesFor: #basicUpTo:!accessing!private! !
 !StdioFileStream categoriesFor: #bufferClass!constants!private! !
 !StdioFileStream categoriesFor: #bufferPrototype!constants!private! !
 !StdioFileStream categoriesFor: #close!operations!public! !
@@ -433,6 +463,7 @@ tab: anInteger
 !StdioFileStream categoriesFor: #space!constants!public! !
 !StdioFileStream categoriesFor: #tab!accessing!public! !
 !StdioFileStream categoriesFor: #tab:!accessing!public! !
+!StdioFileStream categoriesFor: #upTo:!accessing!public! !
 
 StdioFileStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 StdioFileStream methodProtocol: #FileStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #externalType #isBinary #isEmpty #isText #position #position: #reset #setToEnd)!

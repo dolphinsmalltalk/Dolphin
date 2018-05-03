@@ -844,6 +844,11 @@ isAtomic
 
 	^false!
 
+isCharacter
+	"Answer whether the receiver conforms to the <Character> protocol."
+
+	^false!
+
 isFinalizable
 	"Answer whether the receiver is marked as requiring finalization.
 	Finalizable objects will receive a #finalize message after the garbage
@@ -924,7 +929,7 @@ isNumber
 	^false!
 
 isString
-	"Answer whether the receiver is a <String>."
+	"Answer whether the receiver is a <readableString>."
 
 	^false!
 
@@ -1610,6 +1615,7 @@ yourself
 !Object categoriesFor: #instVarAt:put:!accessing!private! !
 !Object categoriesFor: #instVarNamed:!accessing!private! !
 !Object categoriesFor: #isAtomic!public!testing! !
+!Object categoriesFor: #isCharacter!public!testing! !
 !Object categoriesFor: #isFinalizable!public!testing! !
 !Object categoriesFor: #isImmediate!private!testing! !
 !Object categoriesFor: #isImmutable!public!testing! !

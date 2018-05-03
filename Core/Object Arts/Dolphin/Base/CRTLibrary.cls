@@ -428,9 +428,15 @@ synchronizeLocale
 	self setlocale: 0 locale: ''!
 
 ungetc: c stream: stream
-	"Pushes the character with integer code point, c, back onto the FILE*, stream."
+	"Pushes the byte, c, back onto the FILE*, stream."
 
 	<cdecl: sdword ungetc sdword handle>
+	^self invalidCall!
+
+ungetwc: c stream: stream
+	"Pushes the UTF-16 code unit, c, back onto the FILE*, stream."
+
+	<cdecl: sdword ungetwc sdword handle>
 	^self invalidCall!
 
 wcscspn: aWideString strCharSet: strCharSet
@@ -519,6 +525,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #ungetwc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !

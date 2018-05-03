@@ -15,15 +15,25 @@ basicNextAvailable
 	"Private - Answer an <integer> in the range 0..65535, being the next of the receiver's future sequence
 	values. Answer nil if at EOF."
 
-	| ch |
-	ch := crtlib fgetwc: stream.
-	^ch == 16rFFFF ifFalse: [ch]!
+	^(crtlib feof: stream)
+		ifFalse: 
+			[| ch |
+			ch := crtlib fgetwc: stream.
+			ch == 16rFFFF ifFalse: [ch]]!
 
 basicNextPut: anInteger
 	"Private - Store the byte <integer> (in the range 0..65535) as the next element of the receiver."
 
 	crtlib fputwc: anInteger stream: stream.
 	^anInteger!
+
+basicPeek
+	| ch |
+	ch := crtlib fgetwc: stream.
+	^ch == 16rFFFF
+		ifFalse: 
+			[crtlib ungetwc: ch stream: stream.
+			ch]!
 
 bufferClass
 	"Private - The stdio buffer is always UTF-16 encoded, and the API calls always in terms of
@@ -58,6 +68,7 @@ setStream: anExternalAddress name: aString mode: modeString
 		mode: modeString! !
 !StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
 !StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
+!StdioUnicodeFileStream categoriesFor: #basicPeek!accessing!private! !
 !StdioUnicodeFileStream categoriesFor: #bufferClass!constants!private! !
 !StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
 !StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !

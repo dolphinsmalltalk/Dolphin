@@ -49,7 +49,7 @@ streamOn: aString
 	stream := self streamWith: aString.
 	name := stream name.
 	stream close.
-	^self streamClass read: name text: true!
+	^self streamClass read: name text: aString isString!
 
 tearDownTempStream
 	"Private - Clean up the test subject. Don't do this by closing the FileStream, but directly
