@@ -14,10 +14,10 @@ testByteArray
 	"#1483"
 
 	#(#[] #[255] #[1 2] #[1 2 3 4 5]) do: 
-			[:each | 
+			[:each |
 			| a dessicated rehydrated s |
 			s := 'abc'.
-			a := Array 
+			a := Array
 						with: each
 						with: s
 						with: each
@@ -25,10 +25,10 @@ testByteArray
 						with: 'def'.
 			dessicated := a binaryStoreBytes.
 			rehydrated := Object fromBinaryStoreBytes: dessicated.
-			self assert: rehydrated = a.
-			self assert: (rehydrated at: 1) == (rehydrated at: 3).
-			self assert: (rehydrated at: 2) == (rehydrated at: 4).
-			self assert: (rehydrated at: 1) ~~ each]!
+			self assert: rehydrated equals: a.
+			self assert: (rehydrated at: 1) identicalTo: (rehydrated at: 3).
+			self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
+			self deny: (rehydrated at: 1) identicalTo: each]!
 
 testCharacters
 	{$a.
@@ -54,7 +54,7 @@ testStrings
 				a := Array with: each with: s.
 				dessicated := a binaryStoreBytes.
 				rehydrated := Object fromBinaryStoreBytes: dessicated.
-				self assert: rehydrated = a.
+				self assert: rehydrated equals: a.
 				self assert: rehydrated first equals: each.
 				self assert: rehydrated second equals: s]!
 
@@ -67,7 +67,7 @@ testSymbols
 	a := {sym. s. sym. s. sym asString asSymbol. s asSymbol}.
 	dessicated := a binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
-	self assert: rehydrated = a.
+	self assert: rehydrated equals: a.
 	self assert: rehydrated first identicalTo: sym.
 	self assert: (rehydrated at: 5) identicalTo: sym.
 	self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
@@ -77,17 +77,17 @@ testSymbols
 	"#(#testSymbols 'abc' #testSymbols) binaryStoreBytes"
 	dessicated := #[33 83 84 66 32 49 32 98 0 0 0 3 0 0 0 186 0 0 0 0 0 0 0 82 0 0 0 11 0 0 0 116 101 115 116 83 121 109 98 111 108 115 82 0 0 0 3 0 0 0 97 98 99 160 1 0 0].
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
-	self assert: rehydrated = #(#testSymbols 'abc' #testSymbols).
-	self assert: rehydrated first == rehydrated last.
-	self assert: rehydrated first == #testSymbols!
+	self assert: rehydrated equals: #(#testSymbols 'abc' #testSymbols).
+	self assert: rehydrated first identicalTo: rehydrated last.
+	self assert: rehydrated first identicalTo: #testSymbols!
 
 testTranscript
 	| stb i t |
 	i := Transcript identityHash.
 	stb := Transcript binaryStoreBytes.
 	t := Object fromBinaryStoreBytes: stb.
-	self assert: t identityHash = i.
-	self assert: t == Transcript! !
+	self assert: t identityHash equals: i.
+	self assert: t identicalTo: Transcript! !
 !STBTest categoriesFor: #testByteArray!public!unit tests! !
 !STBTest categoriesFor: #testCharacters!public!unit tests! !
 !STBTest categoriesFor: #testStrings!public!unit tests! !

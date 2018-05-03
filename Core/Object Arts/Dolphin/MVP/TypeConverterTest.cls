@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #TypeConverterTest
 	instanceVariableNames: 'edit'
@@ -27,8 +27,7 @@ testInvalidBooleanFormat
 				isTextModified: true;
 				updateModel]
 		raise: InvalidFormat.
-	self assert: edit model value isNil.
-!
+	self assertIsNil: edit model value!
 
 testInvalidDateFormat
 	edit typeconverter: DateToText new.
@@ -39,19 +38,19 @@ testInvalidDateFormat
 				isTextModified: true;
 				updateModel]
 		raise: InvalidFormat.
-	self assert: edit model value isNil!
+	self assertIsNil: edit model value!
 
 testInvalidNumberFormat
 	edit typeconverter: NumberToText new.
 	edit value: 100.
-	self assert: edit model value =100.
+	self assert: edit model value equals: 100.
 	self shouldnt: 
 			[edit
 				text: 'abcd';
 				isTextModified: true;
 				updateModel]
-		raise: InvalidFormat. "#1362"
-	self assert: edit model value isNil!
+		raise: InvalidFormat.	"#1362"
+	self assertIsNil: edit model value!
 
 testInvalidTimeFormat
 	edit typeconverter: TimeToText new.
@@ -62,7 +61,7 @@ testInvalidTimeFormat
 				isTextModified: true;
 				updateModel]
 		raise: InvalidFormat.
-	self assert: edit model value isNil!
+	self assertIsNil: edit model value!
 
 testLeftNullValue
 	edit typeconverter: NumberToText new.
@@ -73,13 +72,13 @@ testLeftNullValue
 				isTextModified: true;
 				updateModel]
 		raise: InvalidFormat.
-	self assert: edit model value isNil.
+	self assertIsNil: edit model value.
 	self assert: edit text isEmpty.
 	edit
 		text: 'xyz';
 		isTextModified: true;
 		updateModel.
-	self assert: edit model value isNil.
+	self assertIsNil: edit model value.
 	self assert: edit text isEmpty	"#1257"! !
 !TypeConverterTest categoriesFor: #setUp!public!unit tests! !
 !TypeConverterTest categoriesFor: #tearDown!public!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableListItemsTest subclass: #TabViewTest
 	instanceVariableNames: ''
@@ -23,16 +23,16 @@ testSetTextImageDoesNotAffectSelection
 	| objects |
 	objects := self objectsToTest.
 	presenter view viewMode: #smallIcons.
-	(presenter model)
+	presenter model
 		removeAll;
 		addAll: objects.
 	presenter selectionByIndex: 2.
-	self 
+	self
 		shouldnt: [presenter view getImageBlock: [:each | each icon imageIndex + 1]]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selectionByIndex == 2.
-	self 
+	self assert: presenter selectionByIndex identicalTo: 2.
+	self
 		shouldnt: [presenter selectionByIndex: 2]
 		trigger: #selectionChanging:
 		against: presenter! !

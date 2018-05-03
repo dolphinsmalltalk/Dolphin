@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListViewTest subclass: #MultiSelectListViewTest
 	instanceVariableNames: ''
@@ -21,31 +21,31 @@ testNewSelectionsClickOutsideListWithModifiers
 	| event |
 	self setUpForSelectionTesting.
 	presenter selectionsByIndex: #(1).
-	(OrderedCollection new)
+	OrderedCollection new
 		add: #(#control);
 		add: #(#shift);
 		add: #(#control #shift);
 		do: 
 				[:modifiers |
 				event := self mouseDownEventOnItem: 0 buttons: (modifiers copyWith: #left).
-				self assert: (presenter newSelectionsFromEvent: event) = #(1)].!
+				self assert: (presenter newSelectionsFromEvent: event) equals: #(1)]!
 
 testNewSelectionsCtrlClickOnSelectedItem
 	| event |
 	self setUpForSelectionTesting.
 	presenter selectionsByIndex: #(1 3).
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	self assert: (presenter newSelectionsFromEvent: event) = #(3).
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(3).
 	presenter selectionsByIndex: #(1).
-	self assert: (presenter newSelectionsFromEvent: event) = #().!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #()!
 
 testNewSelectionsCtrlClickOnUnselectedItem
 	| event |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #control).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1).
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1).
 	presenter selectionsByIndex: #(3).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 3).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3)!
 
 testNewSelectionsCtrlShiftClickAdditive
 	| event |
@@ -54,11 +54,11 @@ testNewSelectionsCtrlShiftClickAdditive
 		selectionsByIndex: #(1 3);
 		anchorIndex: 3.
 	event := self mouseDownEventOnItem: 7 buttons: #(#left #control #shift).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 4 5 6 7).
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 4 5 6 7).
 	presenter selectionsByIndex: #(1 3 5 7).
 	"Programatically changing selection does not change the anchor."
-	self assert: presenter anchorIndex = 3.
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 4 5 6 7).!
+	self assert: presenter anchorIndex equals: 3.
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 4 5 6 7)!
 
 testNewSelectionsCtrlShiftClickSubtractive
 	| event |
@@ -70,23 +70,23 @@ testNewSelectionsCtrlShiftClickSubtractive
 	"In Windows Explorer and other applications that use ListView or a similar control,
 	(2) would not be selected at this point. Why is it in Dolphin?
 	(See comment at the end of #newSelectionsFromEvent:.)"
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 2 7).
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 2 7).
 	presenter selectionsByIndex: #(1 3 5 7).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 2 7).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 2 7)!
 
 testNewSelectionsInitialShiftClick
 	| event |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left #shift).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1).
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1).
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self assert: (presenter newSelectionsFromEvent: event) = #(3).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(3)!
 
 testNewSelectionsNonLeftClicksWithModifiers
 	self setUpForSelectionTesting.
 	presenter selectionsByIndex: #(1 3 5).
 	"Right or middle clicks with any modifiers will never modify the selection. Just cover a few example cases."
-	(OrderedCollection new)
+	OrderedCollection new
 		add: 1 -> #(#right #control);
 		add: 2 -> #(#middle #shift);
 		add: 3 -> #(#right #control #shift);
@@ -95,21 +95,21 @@ testNewSelectionsNonLeftClicksWithModifiers
 				[:assoc |
 				| event |
 				event := self mouseDownEventOnItem: assoc key buttons: assoc value.
-				self assert: (presenter newSelectionsFromEvent: event) = #(1 3 5)].!
+				self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 5)]!
 
 testNewSelectionsRightClickOutsideSelection
 	| event |
 	self setUpForSelectionTesting.
 	presenter selectionsByIndex: #(1 3 5).
 	event := self mouseDownEventOnItem: 2 buttons: #(#right).
-	self assert: (presenter newSelectionsFromEvent: event) = #(2).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(2)!
 
 testNewSelectionsRightClickWithinSelection
 	| event |
 	self setUpForSelectionTesting.
 	presenter selectionsByIndex: #(1 3 5).
 	event := self mouseDownEventOnItem: 3 buttons: #(#right).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1 3 5).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1 3 5)!
 
 testNewSelectionsShiftClickWithSelectionMark
 	| event |
@@ -117,7 +117,7 @@ testNewSelectionsShiftClickWithSelectionMark
 	presenter anchorIndex: 3.
 	event := self mouseDownEventOnItem: 5 buttons: #(#left #shift).
 	"It does not really matter what is currently selected, only what is marked and what is clicked"
-	(OrderedCollection new)
+	OrderedCollection new
 		add: #();
 		add: #(3);
 		add: #(1 2 3);
@@ -125,9 +125,9 @@ testNewSelectionsShiftClickWithSelectionMark
 		do: 
 				[:oldSelections |
 				presenter selectionsByIndex: oldSelections.
-				self assert: (presenter newSelectionsFromEvent: event) = #(3 4 5)].
+				self assert: (presenter newSelectionsFromEvent: event) equals: #(3 4 5)].
 	event := self mouseDownEventOnItem: 3 buttons: #(#left #shift).
-	self assert: (presenter newSelectionsFromEvent: event) = #(3).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(3)!
 
 testSelectionsByIndex
 	| objects sel |

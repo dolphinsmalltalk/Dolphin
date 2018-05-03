@@ -102,10 +102,10 @@ testExpressionSolver
 			(case includes: 'y')
 				ifTrue: 
 					[solution := expr solveFor: 'y'.
-					self assert: solution == expr].
+					self assert: solution identicalTo: expr].
 			solution := expr solveFor: 'x'.
 			pair second
-				ifNil: [self assert: solution isNil]
+				ifNil: [self assertIsNil: solution]
 				ifNotNil: [:expected | self assert: solution formattedCode equals: expected]]!
 
 testExternalCallEquality
@@ -126,29 +126,29 @@ testExternalCalls
 	self assert: (KernelLibrary parseTreeFor: #loadLibraryEx:hFile:dwFlags:) isPrimitive.
 	"Zero args"
 	tree := SmalltalkParser parseMethod: 'blah <stdcall: void blah>'.
-	self assert: tree formattedCode trimBlanks = 'blah
+	self assert: tree formattedCode trimBlanks equals: 'blah
 	<stdcall: void blah>'.
 	ffiCall := tree tag.
 	self assert: ffiCall argumentTypes isEmpty.
-	self assert: ffiCall returnType typeOrdinal = ExtCallArgVOID.
-	self assert: ffiCall returnType indirections = 0.
-	self assert: ffiCall returnType structClass isNil.
+	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgVOID.
+	self assert: ffiCall returnType indirections equals: 0.
+	self assertIsNil: ffiCall returnType structClass.
 
 	"One simple arg"
 	tree := SmalltalkParser parseMethod: 'blah: x <stdcall: dword blah sdword>'.
-	self assert: tree formattedCode trimBlanks = 'blah: x
+	self assert: tree formattedCode trimBlanks equals: 'blah: x
 	<stdcall: dword blah sdword>'.
 	ffiCall := tree tag.
-	self assert: ffiCall returnType typeOrdinal = ExtCallArgDWORD.
-	self assert: ffiCall returnType indirections = 0.
-	self assert: ffiCall returnType structClass isNil.
-	self assert: ffiCall argumentTypes size = 1.
+	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgDWORD.
+	self assert: ffiCall returnType indirections equals: 0.
+	self assertIsNil: ffiCall returnType structClass.
+	self assert: ffiCall argumentTypes size equals: 1.
 	ffiCall argumentTypes with: (Array with: ExtCallArgSDWORD)
 		do: 
 			[:eachArg :eachType |
-			self assert: eachArg typeOrdinal = eachType.
-			self assert: eachArg indirections = 0.
-			self assert: eachArg structClass isNil].
+			self assert: eachArg typeOrdinal equals: eachType.
+			self assert: eachArg indirections equals: 0.
+			self assertIsNil: eachArg structClass].
 
 	"Void is not a valid argument type (can only be used for return)"
 	self
@@ -182,15 +182,15 @@ testExternalCalls
 	src nextPut: $>.
 	src := src contents.
 	tree := SmalltalkParser parseMethod: src.
-	self assert: tree formattedCode trimBlanks = src.
+	self assert: tree formattedCode trimBlanks equals: src.
 	ffiCall := tree tag.
-	self assert: ffiCall argumentTypes size = types size.
+	self assert: ffiCall argumentTypes size equals: types size.
 	ffiCall argumentTypes with: (1 to: types size)
 		do: 
 			[:eachArg :eachType |
-			self assert: eachArg typeOrdinal = eachType.
-			self assert: eachArg indirections = 0.
-			self assert: eachArg structClass isNil]!
+			self assert: eachArg typeOrdinal equals: eachType.
+			self assert: eachArg indirections equals: 0.
+			self assertIsNil: eachArg structClass]!
 
 testFloatScanning
 	Float reset.

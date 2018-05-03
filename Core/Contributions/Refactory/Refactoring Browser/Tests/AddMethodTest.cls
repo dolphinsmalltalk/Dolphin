@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #AddMethodTest
 	instanceVariableNames: ''
@@ -16,15 +16,13 @@ setUp
 
 testAddMethod
 	| refactoring |
-	refactoring := AddMethodRefactoring 
+	refactoring := AddMethodRefactoring
 				addMethod: 'printString1 ^super printString'
 				toClass: BasicLintRuleTest
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #BasicLintRuleTest) 
-				parseTreeFor: #printString1) 
-					= (RBParser parseMethod: 'printString1 ^super printString')!
+	self assert: ((refactoring model classNamed: #BasicLintRuleTest) parseTreeFor: #printString1)
+		equals: (RBParser parseMethod: 'printString1 ^super printString')!
 
 testBadMethod
 	self shouldFail: (AddMethodRefactoring 
@@ -41,14 +39,14 @@ testExistingSelector
 testModelAddMethod
 	| refactoring class |
 	class := model metaclassNamed: #Bar.
-	refactoring := AddMethodRefactoring 
+	refactoring := AddMethodRefactoring
 				model: model
 				addMethod: 'printString1 ^super printString'
 				toClass: class
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #printString1) 
-				= (RBParser parseMethod: 'printString1 ^super printString')!
+	self assert: (class parseTreeFor: #printString1)
+		equals: (RBParser parseMethod: 'printString1 ^super printString')!
 
 testModelExistingSelector
 	| refactoring |

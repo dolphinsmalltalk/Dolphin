@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListBoxTest subclass: #MultiSelectListBoxTest
 	instanceVariableNames: ''
@@ -17,26 +17,26 @@ initializePresenter
 testLastSelectionCacheUpdatedOnRemove
 	super testLastSelectionCacheUpdatedOnRemove.
 	presenter selectionsByIndex: #(2 4).
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(2 4).
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(2 4).
 	self
 		shouldnt: 
 			[presenter model removeAll: (Array with: presenter model first with: (presenter model at: 3))]
 		triggerAnyOf: #(#selectionChanging: #selectionChanged)
 		against: presenter.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(1 2).
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1 2).
 	self
 		should: [presenter model removeAll: presenter model copy]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #().
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #().
 	presenter model addAll: self objectsToTest.
 	presenter selectionsByIndex: #(1 3 5).
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(1 3 5).
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1 3 5).
 	self
 		should: [presenter model remove: presenter model last]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(1 3)!
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1 3)!
 
 testSelectionsByIndex
 	| objects sel |

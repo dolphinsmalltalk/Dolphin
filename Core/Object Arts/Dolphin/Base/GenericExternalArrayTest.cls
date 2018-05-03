@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalArrayTest subclass: #GenericExternalArrayTest
 	instanceVariableNames: ''
@@ -22,11 +22,11 @@ elementToValue: element
 
 testElementSize
 	self elementClassNames do: 
-			[:each | 
+			[:each |
 			| class array |
 			class := Smalltalk at: each.
 			array := self arrayClass length: 1 elementClass: class.
-			self assert: array elementSize = class elementSize]!
+			self assert: array elementSize equals: class elementSize]!
 
 testInvalidLength
 	"#1051."

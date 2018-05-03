@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #IconTest
 	instanceVariableNames: ''
@@ -16,8 +16,8 @@ testImageIndexDoesntRealize
 	| icon |
 	Object icon imageIndex.
 	icon := Object icon.
-	self assert: icon basicHandle isNil.
+	self assertIsNil: icon basicHandle.
 	icon imageIndex.
-	self assert: icon basicHandle isNil! !
+	self assertIsNil: icon basicHandle! !
 !IconTest categoriesFor: #testImageIndexDoesntRealize!public! !
 

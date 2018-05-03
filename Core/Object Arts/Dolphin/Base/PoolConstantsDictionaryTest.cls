@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractDictionaryTest subclass: #PoolConstantsDictionaryTest
 	instanceVariableNames: ''
@@ -19,7 +19,7 @@ makeKey: anObject
 testAtIfAbsentString
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary at: 'key' ifAbsent: [2]) == 1!
+	self assert: (dictionary at: 'key' ifAbsent: [2]) identicalTo: 1!
 
 testIncludesKey
 	| dictionary |
@@ -33,7 +33,7 @@ testIncludesKey
 testRemoveKeyString
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary removeKey: 'key') == 1.
+	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
 !PoolConstantsDictionaryTest categoriesFor: #collectionClass!helpers!private! !
 !PoolConstantsDictionaryTest categoriesFor: #makeKey:!helpers!private! !

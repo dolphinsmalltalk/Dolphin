@@ -76,7 +76,7 @@ testMixedConcatenation
 								[:each |
 								| result |
 								result := self verifyConcatenation: eachCase with: each.
-								self deny: each == result]]].
+								self deny: each identicalTo: result]]].
 	^self!
 
 testUtf8StringConversion

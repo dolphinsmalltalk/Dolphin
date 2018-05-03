@@ -169,7 +169,7 @@ testNextLine
 					[:each |
 					| stream |
 					stream := self streamOn: each , eachDelim.
-					self assert: stream nextLine = each.
+					self assert: stream nextLine equals: each.
 					self assert: stream atEnd.
 					self closeTempStream: stream]].
 	"Finishes with pair of line delimiters"
@@ -253,39 +253,39 @@ testNextWord
 	"Single words"
 
 	#('a' 'ab' 'abc') do: 
-			[:each | 
+			[:each |
 			| stream |
 			stream := self streamOn: each.
-			self assert: stream nextWord = each.
+			self assert: stream nextWord equals: each.
 			self assert: stream atEnd.
-			self assert: stream nextWord isNil.
+			self assertIsNil: stream nextWord.
 			self closeTempStream: stream].
 	"Empty of just separators (i.e. no words)"
-	#('' ' ' '	' '  ') , (Array 
+	#('' ' ' '	' '  ') , (Array
 				with: (String with: Character lf)
 				with: (String with: Character cr)
-				with: String lineDelimiter) 
+				with: String lineDelimiter)
 		do: 
-			[:each | 
+			[:each |
 			| stream |
 			stream := self streamOn: each.
-			self assert: stream nextWord isNil.
+			self assertIsNil: stream nextWord.
 			self assert: stream atEnd.
 			self closeTempStream: stream].
 
 	"Two words of one or more characters separated by one or more delimiters"
-	#('a a' 'a  a' ' a a' 'a a ' ' a a ' '  a  a  ') 
-		, #('a ab' 'a  ab' ' a ab' 'a ab ' ' a ab ' '  a  ab  ') 
-			, #('ab a' 'ab  a' ' ab a' 'ab a ' ' ab a ' '  ab  a  ') 
-			, #('ab ab' 'ab  ab' ' ab ab' 'ab ab ' ' ab ab ' '  ab  ab  ') 
+	#('a a' 'a  a' ' a a' 'a a ' ' a a ' '  a  a  ')
+		, #('a ab' 'a  ab' ' a ab' 'a ab ' ' a ab ' '  a  ab  ')
+			, #('ab a' 'ab  a' ' ab a' 'ab a ' ' ab a ' '  ab  a  ')
+			, #('ab ab' 'ab  ab' ' ab ab' 'ab ab ' ' ab ab ' '  ab  ab  ')
 			, #('abc abc' 'abc  abc' ' abc abc' 'abc abc ' ' abc abc ' '  abc  abc  ') do: 
-				[:each | 
+				[:each |
 				| stream words |
 				words := each subStrings.
 				stream := self streamOn: each.
-				self assert: stream nextWord = words first.
-				self assert: stream nextWord = words second.
-				self assert: stream nextWord isNil.
+				self assert: stream nextWord equals: words first.
+				self assert: stream nextWord equals: words second.
+				self assertIsNil: stream nextWord.
 				self assert: stream atEnd.
 				self closeTempStream: stream]!
 
@@ -326,10 +326,10 @@ testReverseContents
 	self closeTempStream: stream.
 	euro := String with: $1 with: $\x20AC.
 	stream := self streamWith: euro.
-	self assert: stream reverseContents = (String with: $\x20AC with: $1).
+	self assert: stream reverseContents equals: (String with: $\x20AC with: $1).
 	self closeTempStream: stream.
 	stream := self streamWith: '¡Hola!!'.
-	self assert: stream reverseContents = '!!aloH¡'.
+	self assert: stream reverseContents equals: '!!aloH¡'.
 	self closeTempStream: stream!
 
 testSkipToAllColon
@@ -340,7 +340,7 @@ testSkipToAllColon
 	"1 char sequence found at start"
 	stream reset.
 	self assert: (stream skipToAll: 'a').
-	self assert: stream position = 1.	"Remember stream position is zero based"
+	self assert: stream position equals: 1.	"Remember stream position is zero based"
 
 	"1 char sequence found at end"
 	stream reset.
@@ -350,12 +350,12 @@ testSkipToAllColon
 	"1 char sequence found in middle"
 	stream reset.
 	self assert: (stream skipToAll: 'c').
-	self assert: stream position = (chars indexOf: $c).
+	self assert: stream position equals: (chars indexOf: $c).
 
 	"2 char sequence found at start"
 	stream reset.
 	self assert: (stream skipToAll: 'ab').
-	self assert: stream position = 3.
+	self assert: stream position equals: 3.
 
 	"2 char sequence found at end"
 	stream reset.
@@ -365,12 +365,12 @@ testSkipToAllColon
 	"2 char sequence found in middle"
 	stream reset.
 	self assert: (stream skipToAll: 'ca').
-	self assert: stream position = ((chars indexOf: $c) + 1).
+	self assert: stream position equals: (chars indexOf: $c) + 1.
 
 	"3 char sequence found at start"
 	stream reset.
 	self assert: (stream skipToAll: 'aba').
-	self assert: stream position = 4.
+	self assert: stream position equals: 4.
 
 	"3 char sequence found at end"
 	stream reset.
@@ -380,7 +380,7 @@ testSkipToAllColon
 	"3 char sequence found in middle"
 	stream reset.
 	self assert: (stream skipToAll: 'cab').
-	self assert: stream position = ((chars indexOf: $c) + 2).
+	self assert: stream position equals: (chars indexOf: $c) + 2.
 
 	"1 char, not found"
 	stream reset.
@@ -449,87 +449,87 @@ testUpToAllColon
 
 	"1 char sequence found at start"
 	stream reset.
-	self assert: (stream upToAll: 'a') = ''.
-	self assert: stream position = 1.	"Remember stream position is zero based"
+	self assert: (stream upToAll: 'a') equals: ''.
+	self assert: stream position equals: 1.	"Remember stream position is zero based"
 
 	"1 char sequence found at end"
 	stream reset.
-	self assert: (stream upToAll: 'e') = 'aababcabcdabcd'.
+	self assert: (stream upToAll: 'e') equals: 'aababcabcdabcd'.
 	self assert: stream atEnd.
 
 	"1 char sequence found in middle"
 	stream reset.
-	self assert: (stream upToAll: 'c') = 'aabab'.
-	self assert: stream position = (chars indexOf: $c).
+	self assert: (stream upToAll: 'c') equals: 'aabab'.
+	self assert: stream position equals: (chars indexOf: $c).
 
 	"2 char sequence found at start"
 	stream reset.
-	self assert: (stream upToAll: 'ab') = 'a'.
-	self assert: stream position = 3.
+	self assert: (stream upToAll: 'ab') equals: 'a'.
+	self assert: stream position equals: 3.
 
 	"2 char sequence found at end"
 	stream reset.
-	self assert: (stream upToAll: 'de') = 'aababcabcdabc'.
+	self assert: (stream upToAll: 'de') equals: 'aababcabcdabc'.
 	self assert: stream atEnd.
 
 	"2 char sequence found in middle"
 	stream reset.
-	self assert: (stream upToAll: 'ca') = 'aabab'.
-	self assert: stream position = ((chars indexOf: $c) + 1).
+	self assert: (stream upToAll: 'ca') equals: 'aabab'.
+	self assert: stream position equals: (chars indexOf: $c) + 1.
 
 	"3 char sequence found at start"
 	stream reset.
-	self assert: (stream upToAll: 'aba') = 'a'.
-	self assert: stream position = 4.
+	self assert: (stream upToAll: 'aba') equals: 'a'.
+	self assert: stream position equals: 4.
 
 	"3 char sequence found at end"
 	stream reset.
-	self assert: (stream upToAll: 'cde') = 'aababcabcdab'.
+	self assert: (stream upToAll: 'cde') equals: 'aababcabcdab'.
 	self assert: stream atEnd.
 
 	"3 char sequence found in middle"
 	stream reset.
-	self assert: (stream upToAll: 'cab') = 'aabab'.
-	self assert: stream position = ((chars indexOf: $c) + 2).
+	self assert: (stream upToAll: 'cab') equals: 'aabab'.
+	self assert: stream position equals: (chars indexOf: $c) + 2.
 
 	"1 char, not found"
 	stream reset.
-	self assert: (stream upToAll: 'f') = chars.
+	self assert: (stream upToAll: 'f') equals: chars.
 	self assert: stream atEnd.
 
 	"2 chars, both not found"
 	stream reset.
-	self assert: (stream upToAll: 'gh') = chars.
+	self assert: (stream upToAll: 'gh') equals: chars.
 	self assert: stream atEnd.
 
 	"2 chars, second not found, first at start"
 	stream reset.
-	self assert: (stream upToAll: 'ah') = chars.
+	self assert: (stream upToAll: 'ah') equals: chars.
 	self assert: stream atEnd.
 
 	"2 chars, second not found, first middle"
 	stream reset.
-	self assert: (stream upToAll: 'ch') = chars.
+	self assert: (stream upToAll: 'ch') equals: chars.
 	self assert: stream atEnd.
 
 	"2 chars, second not found, first end"
 	stream reset.
-	self assert: (stream upToAll: 'eh') = chars.
+	self assert: (stream upToAll: 'eh') equals: chars.
 	self assert: stream atEnd.
 
 	"3 chars, first not found"
 	stream reset.
-	self assert: (stream upToAll: 'fab') = chars.
+	self assert: (stream upToAll: 'fab') equals: chars.
 	self assert: stream atEnd.
 
 	"3 chars, second not found at all"
 	stream reset.
-	self assert: (stream upToAll: 'cfb') = chars.
+	self assert: (stream upToAll: 'cfb') equals: chars.
 	self assert: stream atEnd.
 
 	"3 chars, last not found at all"
 	stream reset.
-	self assert: (stream upToAll: 'abf') = chars.
+	self assert: (stream upToAll: 'abf') equals: chars.
 	self assert: stream atEnd.
 	self closeTempStream: stream!
 

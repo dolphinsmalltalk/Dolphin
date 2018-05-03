@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	instanceVariableNames: ''
@@ -198,63 +198,63 @@ testErrorsTempsNotClosedRecovery
 	| source ast |
 	source := 'blah | 1+2 ^3'.
 	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	1 + 2.
 	^3'.
 	source := 'blah | a 1 + 2. a := 3'.
 	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	| a |
 	1 + 2.
 	a := 3'.
 	source := 'blah |'.
 	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	'.
 	source := 'blah | '.
 	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	'.
 	source := 'blah | a b'.
 	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	| a b |
 	'.
 	source := 'blah | a a := 1. ^a'.
 	ast := [SmalltalkParser parseMethod: source] on: self compilationErrorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	| a |
 	'':=''.
 	1.
 	^a'.
 	self assert: ast argumentNames isEmpty.
-	self assert: ast allTemporaryVariables asArray = #('a').
+	self assert: ast allTemporaryVariables asArray equals: #('a').
 	source := '[:a | | b ]'.
 	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
 	self assert: ast isBlock.
-	self assert: ast argumentNames asArray = #('a').
-	self assert: ast allTemporaryVariables asArray = #('b').
+	self assert: ast argumentNames asArray equals: #('a').
+	self assert: ast allTemporaryVariables asArray equals: #('b').
 	source := '[:a | |]'.
 	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
-	self assert: ast formattedCode = '[:a | ]'.
+	self assert: ast formattedCode equals: '[:a | ]'.
 	self assert: ast isBlock.
-	self assert: ast argumentNames asArray = #('a').
+	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables isEmpty.
 	source := '[:a ||'.
 	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
-	self assert: ast formattedCode = '[:a | ]'.
+	self assert: ast formattedCode equals: '[:a | ]'.
 	self assert: ast isBlock.
-	self assert: ast argumentNames asArray = #('a').
+	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables isEmpty.
 	source := '[:a ||]'.
 	ast := [SmalltalkParser parseExpression: source] on: self compilationErrorClass
 				do: [:ex | ex resume].
-	self assert: ast formattedCode = '[:a | ]'.
+	self assert: ast formattedCode equals: '[:a | ]'.
 	self assert: ast isBlock.
-	self assert: ast argumentNames asArray = #('a').
+	self assert: ast argumentNames asArray equals: #('a').
 	self assert: ast allTemporaryVariables isEmpty!
 
 testInfoHardBreakpoint

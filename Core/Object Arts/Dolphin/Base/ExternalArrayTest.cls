@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ExternalArrayTest
 	instanceVariableNames: ''
@@ -33,42 +33,42 @@ testAtAndAtPut
 	| array |
 	array := self newNumericArray: 0.
 	#(-1 0 1 2) do: 
-			[:each | 
+			[:each |
 			self should: [array at: each] raise: BoundsError.
 			self should: [array at: each put: (self elementFromValue: each)] raise: BoundsError].
 	array := self newNumericArray: 1.
 	#(-1 0 2 3) do: 
-			[:each | 
+			[:each |
 			self should: [array at: each] raise: BoundsError.
 			self should: [array at: each put: (self elementFromValue: each)] raise: BoundsError].
 	#(1) do: 
-			[:each | 
+			[:each |
 			| elem |
 			elem := self elementFromValue: each.
-			self assert: (array at: each put: elem) = elem.
-			self assert: (self elementToValue: (array at: each)) = each].
+			self assert: (array at: each put: elem) equals: elem.
+			self assert: (self elementToValue: (array at: each)) equals: each].
 	array := self newNumericArray: 2.
 	#(-1 0 3) do: 
-			[:each | 
+			[:each |
 			self should: [array at: each] raise: BoundsError.
 			self should: [array at: each put: (self elementFromValue: each)] raise: BoundsError].
 	#(1 2) do: 
-			[:each | 
+			[:each |
 			| elem |
 			elem := self elementFromValue: each.
-			self assert: (array at: each put: elem) = elem.
-			self assert: (self elementToValue: (array at: each)) = each].
+			self assert: (array at: each put: elem) equals: elem.
+			self assert: (self elementToValue: (array at: each)) equals: each].
 	array := self newNumericArray: 3.
 	#(-1 0 4) do: 
-			[:each | 
+			[:each |
 			self should: [array at: each] raise: BoundsError.
 			self should: [array at: each put: (self elementFromValue: each)] raise: BoundsError].
 	#(1 2 3) do: 
-			[:each | 
+			[:each |
 			| elem |
 			elem := self elementFromValue: each.
-			self assert: (array at: each put: elem) = elem.
-			self assert: (self elementToValue: (array at: each)) = each]!
+			self assert: (array at: each put: elem) equals: elem.
+			self assert: (self elementToValue: (array at: each)) equals: each]!
 
 testFromToKeysAndValuesDo
 	"Empty array"
@@ -77,16 +77,16 @@ testFromToKeysAndValuesDo
 	array := self newNumericArray: 0.
 	pairs := OrderedCollection new.
 	#(#(1 0)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
 			self assert: pairs isEmpty].
 	#(#(0 -1) #(-1 0) #(0 1) #(1 1) #(2 2) #(2 1) #(3 2)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue]]
@@ -95,26 +95,26 @@ testFromToKeysAndValuesDo
 	"Array of 1 element"
 	array := self newNumericArray: 1.
 	#(#(1 0) #(2 1)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
 			self assert: pairs isEmpty].
 	#(#(1 1)) do: 
-			[:each | 
+			[:each |
 			| expected |
 			pairs := OrderedCollection new.
-			array 
+			array
 				from: 1
 				to: 1
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
-			self assert: pairs asArray = expected].
+			self assert: pairs asArray equals: expected].
 	#(#(1 2) #(2 2) #(3 2)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
@@ -123,26 +123,26 @@ testFromToKeysAndValuesDo
 	"Array of two elements"
 	array := self newNumericArray: 2.
 	#(#(1 0) #(2 1) #(3 2)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			self assert: pairs isEmpty].
 	#(#(1 1) #(1 2) #(2 2)) do: 
-			[:each | 
+			[:each |
 			| expected |
 			pairs := OrderedCollection new.
-			array 
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
-			self assert: pairs asArray = expected].
+			self assert: pairs asArray equals: expected].
 	#(#(1 3) #(2 3) #(3 3)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
@@ -151,26 +151,26 @@ testFromToKeysAndValuesDo
 	pairs := OrderedCollection new.
 	array := self newNumericArray: 3.
 	#(#(1 0) #(2 1) #(3 2) #(4 3)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			self assert: pairs isEmpty].
 	#(#(1 1) #(1 2) #(2 2) #(1 3) #(2 3) #(3 3)) do: 
-			[:each | 
+			[:each |
 			| expected |
 			pairs := OrderedCollection new.
-			array 
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			expected := (each first to: each last) collect: [:i | i -> (self canonicalizeValue: i) printString].
-			self assert: pairs asArray = expected].
+			self assert: pairs asArray equals: expected].
 	#(#(1 4) #(2 4) #(3 4) #(4 4)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]

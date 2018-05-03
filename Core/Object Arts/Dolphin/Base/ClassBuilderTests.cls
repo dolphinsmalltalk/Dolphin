@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: 'wasOAD'
@@ -121,9 +121,9 @@ testMoveClassToSuperclassWithInstVars
 	| newClass |
 	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
 	newClass := self classBuilderTestSubclass1.
-	self assert: newClass superclass == Object.
-	self assert: newClass instVarNames = #('var3' 'var4').
-	self assert: newClass instSize = 2!
+	self assert: newClass superclass identicalTo: Object.
+	self assert: newClass instVarNames equals: #('var3' 'var4').
+	self assert: newClass instSize equals: 2!
 
 testMoveClassToSuperclassWithNoInstVars
 	| newClass |
@@ -134,25 +134,25 @@ testMoveClassToSuperclassWithNoInstVars
 		poolDictionaries: ''.
 	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
 	newClass := self classBuilderTestSubclass1.
-	self assert: newClass superclass == Object.
-	self assert: newClass instVarNames = #().
-	self assert: newClass instSize = 0!
+	self assert: newClass superclass identicalTo: Object.
+	self assert: newClass instVarNames equals: #().
+	self assert: newClass instSize equals: 0!
 
 testMoveVariable
 	"test moving an iVar up, sideways and down"
 
-	self assert: self classBuilderTestClass instVarNames = #('var1' 'var2').
-	self assert: self classBuilderTestSubclass1 instVarNames = #('var3' 'var4').
-	self assert: self classBuilderTestSubclass2 instVarNames = #('var3' 'var4').
-	Object 
+	self assert: self classBuilderTestClass instVarNames equals: #('var1' 'var2').
+	self assert: self classBuilderTestSubclass1 instVarNames equals: #('var3' 'var4').
+	self assert: self classBuilderTestSubclass2 instVarNames equals: #('var3' 'var4').
+	Object
 		subclass: #ClassBuilderTestClass
 		instanceVariableNames: 'var1 testVar var2'
 		classVariableNames: ''
 		poolDictionaries: ''
 		category: 'Tests-Kernel-Classes'.
-	self assert: self classBuilderTestClass instVarNames = #('var1' 'testVar' 'var2').
-	self assert: self classBuilderTestSubclass1 instVarNames = #('var3' 'var4').
-	self assert: self classBuilderTestSubclass2 instVarNames = #('var3' 'var4')!
+	self assert: self classBuilderTestClass instVarNames equals: #('var1' 'testVar' 'var2').
+	self assert: self classBuilderTestSubclass1 instVarNames equals: #('var3' 'var4').
+	self assert: self classBuilderTestSubclass2 instVarNames equals: #('var3' 'var4')!
 
 testPoolVariablePrecedence
 	"Base class has only pool1"
@@ -212,17 +212,17 @@ testReparentSubClassWithSameAllInstVars
 		category: 'Tests-Kernel-Classes'.
 
 	"test state of new class"
-	self assert: testClass instSize = 4.
-	self assert: testClass instVarNames = #('var1' 'var2' 'var3' 'var4').
-	self assert: testClass allInstVarNames = #('var1' 'var2' 'var3' 'var4').
+	self assert: testClass instSize equals: 4.
+	self assert: testClass instVarNames equals: #('var1' 'var2' 'var3' 'var4').
+	self assert: testClass allInstVarNames equals: #('var1' 'var2' 'var3' 'var4').
 
 	"test transparency of mapping. Accessors for var1 and var2 were inherited, so are no longer available."
-	self assert: testInstance var3 = 'foo'.
-	self assert: testInstance var4 = #bar.
-	self assert: (testInstance instVarAt: 1) = 42.
-	self assert: (testInstance instVarAt: 2) = 'hello'.
-	self assert: (testInstance instVarAt: 3) = 'foo'.
-	self assert: (testInstance instVarAt: 4) = #bar!
+	self assert: testInstance var3 equals: 'foo'.
+	self assert: testInstance var4 equals: #bar.
+	self assert: (testInstance instVarAt: 1) equals: 42.
+	self assert: (testInstance instVarAt: 2) equals: 'hello'.
+	self assert: (testInstance instVarAt: 3) equals: 'foo'.
+	self assert: (testInstance instVarAt: 4) equals: #bar!
 
 testReshapeClass
 	"see if reshaping classes works"
@@ -233,7 +233,7 @@ testReshapeClass
 	testInstance := testClass new.
 	testInstance var1: 42.
 	testInstance var2: 'hello'.
-	newClass := Object 
+	newClass := Object
 				subclass: #ClassBuilderTestClass
 				instanceVariableNames: 'foo var1 bar var2 mumble'
 				classVariableNames: ''
@@ -242,20 +242,20 @@ testReshapeClass
 	newMeta := newClass class.
 
 	"test transparency of mapping"
-	self assert: testInstance var1 = 42.
-	self assert: testInstance var2 = 'hello'.
-	self assert: (testInstance instVarAt: 1) isNil.
-	self assert: (testInstance instVarAt: 2) = 42.
-	self assert: (testInstance instVarAt: 3) isNil.
-	self assert: (testInstance instVarAt: 4) = 'hello'.
-	self assert: (testInstance instVarAt: 5) isNil.
+	self assert: testInstance var1 equals: 42.
+	self assert: testInstance var2 equals: 'hello'.
+	self assertIsNil: (testInstance instVarAt: 1).
+	self assert: (testInstance instVarAt: 2) equals: 42.
+	self assertIsNil: (testInstance instVarAt: 3).
+	self assert: (testInstance instVarAt: 4) equals: 'hello'.
+	self assertIsNil: (testInstance instVarAt: 5).
 
 	"test transparency of reshapes"
-	self assert: testInstance class == newClass.
-	self assert: testClass == newClass.
+	self assert: testInstance class identicalTo: newClass.
+	self assert: testClass identicalTo: newClass.
 	"Issue: Dolphin's ClassBuilder fails here because it does not become over the metaclasses, only the classes."
-	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeClass) 
-		ifTrue: [self assert: testMeta == newMeta]!
+	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeClass)
+		ifTrue: [self assert: testMeta identicalTo: newMeta]!
 
 testReshapeClassWithJugglingInstVars
 	"see if reshapes of classes juggle their instVars correctly"
@@ -266,7 +266,7 @@ testReshapeClassWithJugglingInstVars
 	testInstance := testClass new.
 	testInstance perform: 'var1:' asSymbol with: 42.
 	testInstance perform: 'var2:' asSymbol with: 'hello'.
-	newClass := Object 
+	newClass := Object
 				subclass: #ClassBuilderTestClass
 				instanceVariableNames: 'var2 foo bar mumble var1'
 				classVariableNames: ''
@@ -275,20 +275,20 @@ testReshapeClassWithJugglingInstVars
 	newMeta := newClass class.
 
 	"test transparency of mapping"
-	self assert: (testInstance perform: 'var1' asSymbol) = 42.
-	self assert: (testInstance perform: 'var2' asSymbol) = 'hello'.
-	self assert: (testInstance instVarAt: 1) = 'hello'.
-	self assert: (testInstance instVarAt: 2) isNil.
-	self assert: (testInstance instVarAt: 3) isNil.
-	self assert: (testInstance instVarAt: 4) isNil.
-	self assert: (testInstance instVarAt: 5) = 42.
+	self assert: (testInstance perform: 'var1' asSymbol) equals: 42.
+	self assert: (testInstance perform: 'var2' asSymbol) equals: 'hello'.
+	self assert: (testInstance instVarAt: 1) equals: 'hello'.
+	self assertIsNil: (testInstance instVarAt: 2).
+	self assertIsNil: (testInstance instVarAt: 3).
+	self assertIsNil: (testInstance instVarAt: 4).
+	self assert: (testInstance instVarAt: 5) equals: 42.
 
 	"test transparency of reshapes"
-	self assert: testInstance class == newClass.
-	self assert: testClass == newClass.
+	self assert: testInstance class identicalTo: newClass.
+	self assert: testClass identicalTo: newClass.
 	"Dolphin's class builder fails because it does not become over the metaclasses."
 	(self runKnownBug: 'ClassBuilder does not "become" metaclass'
-		test: #testReshapeClassWithJugglingInstVars) ifTrue: [self assert: testMeta == newMeta]!
+		test: #testReshapeClassWithJugglingInstVars) ifTrue: [self assert: testMeta identicalTo: newMeta]!
 
 testReshapeSubClass
 	"see if reshaping a class updates the instances of its subclass correctly"
@@ -301,7 +301,7 @@ testReshapeSubClass
 	testInstance var2: 'hello'.
 	testInstance var3: 'foo'.
 	testInstance var4: #bar.
-	Object 
+	Object
 		subclass: #ClassBuilderTestClass
 		instanceVariableNames: 'var1 foo var2 bar mumble '
 		classVariableNames: ''
@@ -309,24 +309,24 @@ testReshapeSubClass
 		category: 'Tests-Kernel-Classes'.
 
 	"test transparency of mapping"
-	self assert: testInstance var1 = 42.
-	self assert: testInstance var2 = 'hello'.
-	self assert: testInstance var3 = 'foo'.
-	self assert: testInstance var4 = #bar.
-	self assert: (testInstance instVarAt: 1) = 42.
-	self assert: (testInstance instVarAt: 2) isNil.
-	self assert: (testInstance instVarAt: 3) = 'hello'.
-	self assert: (testInstance instVarAt: 4) isNil.
-	self assert: (testInstance instVarAt: 5) isNil.
-	self assert: (testInstance instVarAt: 6) = 'foo'.
-	self assert: (testInstance instVarAt: 7) = #bar.
+	self assert: testInstance var1 equals: 42.
+	self assert: testInstance var2 equals: 'hello'.
+	self assert: testInstance var3 equals: 'foo'.
+	self assert: testInstance var4 equals: #bar.
+	self assert: (testInstance instVarAt: 1) equals: 42.
+	self assertIsNil: (testInstance instVarAt: 2).
+	self assert: (testInstance instVarAt: 3) equals: 'hello'.
+	self assertIsNil: (testInstance instVarAt: 4).
+	self assertIsNil: (testInstance instVarAt: 5).
+	self assert: (testInstance instVarAt: 6) equals: 'foo'.
+	self assert: (testInstance instVarAt: 7) equals: #bar.
 
 	"test transparency of reshapes"
-	self assert: testInstance class == self classBuilderTestSubclass1.
-	self assert: testClass == self classBuilderTestSubclass1.
+	self assert: testInstance class identicalTo: self classBuilderTestSubclass1.
+	self assert: testClass identicalTo: self classBuilderTestSubclass1.
 	"Dolphin's class builder fails because it does not become over the metaclasses."
-	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeSubClass) 
-		ifTrue: [self assert: testMeta == self classBuilderTestSubclass1 class]!
+	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeSubClass)
+		ifTrue: [self assert: testMeta identicalTo: self classBuilderTestSubclass1 class]!
 
 testUnderscoreWarning
 	"#1419"
@@ -335,22 +335,22 @@ testUnderscoreWarning
 	testClass := self classBuilderTestClass.
 	self assert: testClass classPool isEmpty.
 	
-	[testClass := Object 
+	[testClass := Object
 				subclass: #ClassBuilderTestClass
 				instanceVariableNames: 'var1 var2'
 				classVariableNames: 'A'
 				poolDictionaries: ''
-				classInstanceVariableNames: ''] 
+				classInstanceVariableNames: '']
 			on: Warning
 			do: [:ex | warning := ex].
-	self assert: warning isNil.
+	self assertIsNil: warning.
 	
-	[testClass := Object 
+	[testClass := Object
 				subclass: #ClassBuilderTestClass
 				instanceVariableNames: 'var1 var2'
 				classVariableNames: '_A'
 				poolDictionaries: ''
-				classInstanceVariableNames: ''] 
+				classInstanceVariableNames: '']
 			on: Warning
 			do: [:ex | warning := ex].
 	self deny: warning isNil! !

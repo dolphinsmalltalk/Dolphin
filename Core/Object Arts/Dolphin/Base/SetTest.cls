@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinCollectionTest subclass: #SetTest
 	instanceVariableNames: 'primes'
@@ -14,11 +14,11 @@ assertCommutativelyEqual: aSet other: anotherSet
 	self assert: aSet equals: anotherSet.
 	self assert: anotherSet equals: aSet!
 
-assertIs: copySet shallowCopyOf: sourceSet 
-	self assert: copySet ~~ sourceSet.
-	self assert: copySet size == sourceSet size.
+assertIs: copySet shallowCopyOf: sourceSet
+	self deny: copySet identicalTo: sourceSet.
+	self assert: copySet size identicalTo: sourceSet size.
 	sourceSet asArray with: copySet asArray
-		do: [:eachSource :eachCopy | self assert: eachSource == eachCopy]!
+		do: [:eachSource :eachCopy | self assert: eachSource identicalTo: eachCopy]!
 
 assertValidSet: aSet 
 	| any |
@@ -29,8 +29,8 @@ collectionClass
 	^Set!
 
 denyCommutativelyEqual: aSet other: anotherSet
-	self deny: aSet = anotherSet.
-	self deny: anotherSet = aSet!
+	self deny: aSet equals: anotherSet.
+	self deny: anotherSet equals: aSet!
 
 elements
 	^#(1 'a' #a)!
@@ -181,7 +181,7 @@ testRemove
 	set := self newSet.
 	elements := self elements.
 	self should: [set remove: elements second hash] raise: NotFoundError.
-	self assert: (set remove: elements second) == elements second.
+	self assert: (set remove: elements second) identicalTo: elements second.
 	self should: [set remove: elements second] raise: NotFoundError!
 
 testShallowCopy

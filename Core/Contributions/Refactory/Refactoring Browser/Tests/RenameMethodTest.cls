@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RenameMethodTest
 	instanceVariableNames: ''
@@ -35,18 +35,18 @@ testMultipleSelectors
 
 testRenamePermuteArgs
 	| refactoring class |
-	refactoring := RenameMethodRefactoring 
+	refactoring := RenameMethodRefactoring
 				renameMethod: ('rename:' , 'two:') asSymbol
 				in: RefactoryTestDataApp
 				to: ('rename:' , 'two:') asSymbol
 				permutation: #(2 1).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol) = (RBParser 
-						parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
-	self assert: (class parseTreeFor: #exampleCall) 
-				= (RBParser parseMethod: 'exampleCall ^self rename: 2 two: 1')!
+	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol)
+		equals: (RBParser
+				parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
+	self assert: (class parseTreeFor: #exampleCall)
+		equals: (RBParser parseMethod: 'exampleCall ^self rename: 2 two: 1')!
 
 testRenamePrimitive
 	| refactoring count |
@@ -62,45 +62,43 @@ testRenamePrimitive
 	"All refs should have been rewritten"
 	model allReferencesTo: #basicAt:put: do: [:method | self assert: false].
 	model allReferencesTo: ('at:' , 'bar:') asSymbol do: [:method | count := count - 1].
-	self assert: count = 0!
+	self assert: count equals: 0!
 
 testRenameTestMethod
 	| refactoring class |
-	refactoring := RenameMethodRefactoring 
+	refactoring := RenameMethodRefactoring
 				renameMethod: ('rename' , 'ThisMethod:') asSymbol
 				in: RefactoryTestDataApp
 				to: #renameThisMethod2:
 				permutation: (1 to: 1).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self assert: (class parseTreeFor: #renameThisMethod2:) 
-				= (RBParser parseMethod: 'renameThisMethod2: anArg
+	self assert: (class parseTreeFor: #renameThisMethod2:)
+		equals: (RBParser parseMethod: 'renameThisMethod2: anArg
 	^self').
-	self assert: (class parseTreeFor: #callMethod) 
-				= (RBParser parseMethod: 'callMethod
+	self assert: (class parseTreeFor: #callMethod)
+		equals: (RBParser parseMethod: 'callMethod
 	^(self renameThisMethod2: 5)').
-	self 
-		assert: (class parseTreeFor: #symbolReference) = (RBParser 
-						parseMethod: 'symbolReference
+	self assert: (class parseTreeFor: #symbolReference)
+		equals: (RBParser parseMethod: 'symbolReference
 		^ #(#renameThisMethod2: #(4 #renameThisMethod2:))').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)!
 
 testRenameTestMethod1
 	| refactoring class |
-	refactoring := RenameMethodRefactoring 
+	refactoring := RenameMethodRefactoring
 				renameMethod: ('test' , 'Method1') asSymbol
 				in: RefactoryTestDataApp
 				to: #testMethod2
 				permutation: (1 to: 0).
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #testMethod2) = (RBParser 
-						parseMethod: 'testMethod2
+	self assert: (class parseTreeFor: #testMethod2)
+		equals: (RBParser
+				parseMethod: 'testMethod2
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
-	self 
-		assert: ((refactoring model classNamed: #BasicLintRuleTest) parseTreeFor: #classBlock:) 
-				= (RBParser parseMethod: 'classBlock: aBlock
+	self assert: ((refactoring model classNamed: #BasicLintRuleTest) parseTreeFor: #classBlock:)
+		equals: (RBParser parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)! !
 !RenameMethodTest categoriesFor: #setUp!public!set up! !

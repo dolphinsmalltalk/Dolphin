@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusGraphicsFromImageInitializerTest
 	instanceVariableNames: ''
@@ -23,8 +23,8 @@ testCreateHandle
 	image := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model image: image.
 	model createHandle.
-	self assert: constructorArgs size = 2.
-	self assert: constructorArgs first == image asParameter.
+	self assert: constructorArgs size equals: 2.
+	self assert: constructorArgs first identicalTo: image asParameter.
 	self assertLastArgIsHandle! !
 !GdiplusGraphicsFromImageInitializerTest categoriesFor: #gdipGetImageGraphicsContext:graphics:!accessing!public! !
 !GdiplusGraphicsFromImageInitializerTest categoriesFor: #setUp!public!setup! !

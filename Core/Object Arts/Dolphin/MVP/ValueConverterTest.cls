@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ValueConverterTest
 	instanceVariableNames: 'converter value startTime newTime changed'
@@ -24,22 +24,25 @@ setUp
 	!
 
 testValue
-	self assert: value value = startTime.
-	self assert: converter value = startTime displayString.
-	self should: [value value: newTime] trigger: #valueChanged against: converter.
-	self assert: converter value = newTime displayString.!
+	self assert: value value equals: startTime.
+	self assert: converter value equals: startTime displayString.
+	self
+		should: [value value: newTime]
+		trigger: #valueChanged
+		against: converter.
+	self assert: converter value equals: newTime displayString!
 
 testValueColon
-	self assert: value value = startTime.
+	self assert: value value equals: startTime.
 	changed := false.
 	"The underlying ValueModel should also trigger a change event"
-	self 
+	self
 		should: [converter value: newTime displayString]
 		trigger: #valueChanged
 		against: value.
 	self assert: changed.
-	self assert: converter value = newTime displayString.
-	self assert: value value = newTime! !
+	self assert: converter value equals: newTime displayString.
+	self assert: value value equals: newTime! !
 !ValueConverterTest categoriesFor: #onValueChanged!helpers!public! !
 !ValueConverterTest categoriesFor: #setUp!public!Running! !
 !ValueConverterTest categoriesFor: #testValue!public!unit tests! !

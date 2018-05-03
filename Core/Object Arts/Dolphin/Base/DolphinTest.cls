@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #DolphinTest
 	instanceVariableNames: ''
@@ -17,17 +17,17 @@ assertIs: cloneObject deepCopyOf: sourceObject
 		deepCopyOf: sourceObject
 		visited: IdentityDictionary new!
 
-assertIs: cloneObject deepCopyOf: sourceObject visited: anIdentityDictionary 
-	((sourceObject isNil and: [cloneObject isNil]) or: [anIdentityDictionary includes: cloneObject]) 
+assertIs: cloneObject deepCopyOf: sourceObject visited: anIdentityDictionary
+	((sourceObject isNil and: [cloneObject isNil]) or: [anIdentityDictionary includes: cloneObject])
 		ifTrue: [^self].
 	self assert: (cloneObject ~~ sourceObject or: [sourceObject deepCopy == sourceObject]).
-	self assert: cloneObject basicClass == sourceObject basicClass.
-	self assert: cloneObject basicSize == sourceObject basicSize.
+	self assert: cloneObject basicClass identicalTo: sourceObject basicClass.
+	self assert: cloneObject basicSize identicalTo: sourceObject basicSize.
 	anIdentityDictionary at: cloneObject put: sourceObject.
 	1 to: cloneObject class instSize + self basicSize
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				assertIs: (cloneObject instVarAt: i)
 				deepCopyOf: (sourceObject instVarAt: i)
 				visited: anIdentityDictionary]!

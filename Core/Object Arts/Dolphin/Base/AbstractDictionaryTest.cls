@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinCollectionTest subclass: #AbstractDictionaryTest
 	instanceVariableNames: ''
@@ -23,8 +23,8 @@ collectionClass
 	self subclassResponsibility!
 
 denyCommutativelyEqual: aDictionary other: anotherDictionary
-	self deny: aDictionary = anotherDictionary.
-	self deny: anotherDictionary = aDictionary!
+	self deny: aDictionary equals: anotherDictionary.
+	self deny: anotherDictionary equals: aDictionary!
 
 makeKey: anObject
 	^anObject asInteger!
@@ -47,20 +47,19 @@ newEmpty
 testAtIfAbsent
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary at: #key ifAbsent: [2]) == 1.
-	self assert: (dictionary at: #value ifAbsent: [2]) == 2!
+	self assert: (dictionary at: #key ifAbsent: [2]) identicalTo: 1.
+	self assert: (dictionary at: #value ifAbsent: [2]) identicalTo: 2!
 
 testAtIfAbsentPut
 	| dictionary initialSize |
 	dictionary := self newDictionary.
 	initialSize := dictionary size.
-	self assert: (dictionary at: #key ifAbsentPut: [2]) == 1.
-	self assert: dictionary size == initialSize.
-	self assert: (dictionary at: #value ifAbsentPut: [2]) == 2.
-	self assert: dictionary size == (initialSize+1).
-	self assert: (dictionary at: #value ifAbsentPut: [3]) == 2.
-	self assert: dictionary size == (initialSize+1).
-!
+	self assert: (dictionary at: #key ifAbsentPut: [2]) identicalTo: 1.
+	self assert: dictionary size identicalTo: initialSize.
+	self assert: (dictionary at: #value ifAbsentPut: [2]) identicalTo: 2.
+	self assert: dictionary size identicalTo: initialSize + 1.
+	self assert: (dictionary at: #value ifAbsentPut: [3]) identicalTo: 2.
+	self assert: dictionary size identicalTo: initialSize + 1!
 
 testAtIfAbsentPutModifyingCollection
 	"Test at:ifAbsentPut: when modifying the collection in the block"
@@ -70,16 +69,16 @@ testAtIfAbsentPutModifyingCollection
 	key1 := self makeKey: $a.
 	key3 := self makeKey: (Character codePoint: $a codePoint + dictionary basicSize).
 	key2 := self makeKey: $b.
-	self assert: key3 ~= key2.
+	self deny: key3 equals: key2.
 	"For this test to work the first and third keys must collide, so verify that"
 	self assert: (dictionary findKeyOrNil: key3) equals: (dictionary findKeyOrNil: key1).
 	dictionary at: key1
 		ifAbsentPut: 
 			[dictionary at: key3 put: 4.
 			1].
-	self assert: dictionary size = 2.
-	self assert: (dictionary at: key3) == 4.
-	self assert: (dictionary at: key1) == 1.
+	self assert: dictionary size equals: 2.
+	self assert: (dictionary at: key3) identicalTo: 4.
+	self assert: (dictionary at: key1) identicalTo: 1.
 	"Another test, this time attempting to create duplicate key entries"
 	dictionary := self newEmpty.
 	dictionary at: key1
@@ -90,25 +89,25 @@ testAtIfAbsentPutModifyingCollection
 				at: key1 put: 10].
 	keys := OrderedCollection new.
 	dictionary keysDo: [:each | keys addLast: each].
-	self
-		assert: keys asSortedCollection asArray = (Array
-						with: key1
-						with: key2
-						with: key3)!
+	self assert: keys asSortedCollection asArray
+		equals: (Array
+				with: key1
+				with: key2
+				with: key3)!
 
 testAtIfAbsentPutValue
 	| initialSize x dictionary |
 	dictionary := self newDictionary.
 	initialSize := dictionary size.
 	x := Object new.
-	self assert: (dictionary at: #key ifAbsentPutValue: x) == 1.
-	self assert: dictionary size == initialSize.
-	self assert: (dictionary at: #value ifAbsentPutValue: x) == x.
-	self assert: dictionary size == (initialSize + 1).
-	self assert: (dictionary at: #value ifAbsentPutValue: x) == x.
-	self assert: dictionary size == (initialSize + 1).
-	self assert: (dictionary at: #value ifAbsentPutValue: 3) == x.
-	self assert: dictionary size == (initialSize + 1)!
+	self assert: (dictionary at: #key ifAbsentPutValue: x) identicalTo: 1.
+	self assert: dictionary size identicalTo: initialSize.
+	self assert: (dictionary at: #value ifAbsentPutValue: x) identicalTo: x.
+	self assert: dictionary size identicalTo: initialSize + 1.
+	self assert: (dictionary at: #value ifAbsentPutValue: x) identicalTo: x.
+	self assert: dictionary size identicalTo: initialSize + 1.
+	self assert: (dictionary at: #value ifAbsentPutValue: 3) identicalTo: x.
+	self assert: dictionary size identicalTo: initialSize + 1!
 
 testCyclicRefPrinting
 	| dictionary |
@@ -179,7 +178,7 @@ testNilKey
 testRemoveKey
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary removeKey: #key) == 1.
+	self assert: (dictionary removeKey: #key) identicalTo: 1.
 	self should: [dictionary removeKey: #key] raise: NotFoundError!
 
 testStrongTalkTests
@@ -190,7 +189,7 @@ testStrongTalkTests
 	[d := self collectionClass new.
 	(d respondsTo: #removeAssociation:ifAbsent:) ifFalse: [^self].
 	d at: #this put: #that.
-	self assert: (d at: #this) = #that.
+	self assert: (d at: #this) equals: #that.
 	new := false.
 	d at: #this
 		ifAbsentPut: 
@@ -209,14 +208,14 @@ testStrongTalkTests
 	self assert: (oc size = 2 and: [oc noDifference: d associations]).
 	d add: #hi -> #mom.
 	self checkValidity: d.
-	self assert: (d associationAt: #hi) value = #mom.
+	self assert: (d associationAt: #hi) value equals: #mom.
 	self assert: (d includesAssociation: #hi -> #mom).
 	self assert: (d includesAssociation: #yo -> #momma) not.
-	self checkValidity: ((d copy)
+	self checkValidity: (d copy
 				at: #hi put: #there;
 				yourself).
 	self checkValidity: d.
-	self assert: (d at: #hi) = #mom.
+	self assert: (d at: #hi) equals: #mom.
 	new := false.
 	d removeAssociation: #this -> #that ifAbsent: [new := true].
 	self checkValidity: d.

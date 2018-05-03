@@ -28,11 +28,11 @@ testCompositeLintRuleTypes
 	| typer types |
 	typer := RefactoryTyper new runOn: CompositeLintRuleTest.
 	types := typer guessTypesFor: 'rules'.
-	#rbFix. "Dolphin's ExternalArray is also a candidate, and this test seems liable to break easily if one adds more collection like classes"
+	#rbFix.	"Dolphin's ExternalArray is also a candidate, and this test seems liable to break easily if one adds more collection like classes"
 	"self assert: types size = 1."
 	self assert: (types includes: (typer model classFor: Collection)).
 	types := typer typesFor: '-rules-'.
-	self assert: types size = 2.
+	self assert: types size equals: 2.
 	self assert: (types includes: (typer model classFor: LintRule)).
 	self assert: (types includes: (typer model classFor: LintRuleTest)).
 	self assert: (typer guessTypesFor: 'asdf') isEmpty.
@@ -42,18 +42,17 @@ testLintRuleTypes
 	| typer types |
 	typer := RefactoryTyper new.
 	types := typer guessTypesFor: 'name' in: LintRuleTest.
-	self assert: types size = 1.
+	self assert: types size equals: 1.
 	self assert: (types includes: (typer model classFor: Utf8String))!
 
 testParseTreeTypes
 	| types model |
 	model := RBNamespace new.
-	types := RefactoryTyper 
+	types := RefactoryTyper
 				typesFor: 'foo'
-				in: (RBParser 
-						parseExpression: 'foo printString; testBasicLintRuleTypes; testParseTreeTypes')
+				in: (RBParser parseExpression: 'foo printString; testBasicLintRuleTypes; testParseTreeTypes')
 				model: model.
-	self assert: types size = 1.
+	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !
 !VariableTypeTest categoriesFor: #testBasicLintRuleTypes!public!unit tests! !
 !VariableTypeTest categoriesFor: #testCompositeLintRuleTypes!public!tests! !

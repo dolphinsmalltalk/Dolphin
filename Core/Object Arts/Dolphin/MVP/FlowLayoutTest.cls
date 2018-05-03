@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManagerTest subclass: #FlowLayoutTest
 	instanceVariableNames: ''
@@ -31,7 +31,7 @@ testVerticalCentreing
 		text: 'Wobble';
 		extent: edit calculateExtent.
 	shell update.
-	self assert: static position y = (edit position y + ((edit extent y - static extent y) // 2))!
+	self assert: static position y equals: edit position y + ((edit extent y - static extent y) // 2)!
 
 testWrap
 	| layout children cx hGap cy vGap |
@@ -46,39 +46,40 @@ testWrap
 		horizontalGap: 10;
 		verticalGap: 5.
 	children := #(#red #green #blue #yellow) collect: 
-					[:each | 
+					[:each |
 					| child |
 					child := shell addSubView: ColorView new.
 					child extent: cx @ cy.
 					child model value: (Color perform: each).
 					child].
-	shell 
-		extent: (shell 
-				calcRectangleFromClientRectangle: (0 @ 0 extent: (cx * 4 + (hGap * 3)) @ (cy * 2 + (vGap * 3)))) 
+	shell
+		extent: (shell
+				calcRectangleFromClientRectangle: (0 @ 0 extent: (cx * 4 + (hGap * 3)) @ (cy * 2 + (vGap * 3))))
 					extent.
 	shell update.
-	1 to: 4 do: [:i | self assert: (children at: i) position = (((i - 1) * (cx + hGap)) @ 0)].
+	1 to: 4 do: [:i | self assert: (children at: i) position equals: ((i - 1) * (cx + hGap)) @ 0].
 	"Shrink down by one pel will be enough to force last color onto new line, But shrinking to
 	just enough space to 3 should make no difference)"
 	(Array with: 1 with: cx + hGap - 1) do: 
-			[:each | 
+			[:each |
 			shell extent: shell extent - (each @ 0).
 			shell update.
-			1 to: 3 do: [:i | self assert: (children at: i) position = (((i - 1) * (cx + hGap)) @ 0)].
-			self assert: (children at: 4) position = (0 @ (cy + vGap))].
+			1 to: 3 do: [:i | self assert: (children at: i) position equals: ((i - 1) * (cx + hGap)) @ 0].
+			self assert: (children at: 4) position equals: 0 @ (cy + vGap)].
 	"Repeat for 2 blocks"
 	(Array with: 1 with: cx + hGap - 1) do: 
-			[:each | 
+			[:each |
 			shell extent: shell extent - (each @ 0).
 			shell update.
-			1 to: 2 do: [:i | self assert: (children at: i) position = (((i - 1) * (cx + hGap)) @ 0)].
-			3 to: 4 do: [:i | self assert: (children at: i) position = (((i - 3) * (cx + hGap)) @ (cy + vGap))]].
+			1 to: 2 do: [:i | self assert: (children at: i) position equals: ((i - 1) * (cx + hGap)) @ 0].
+			3 to: 4
+				do: [:i | self assert: (children at: i) position equals: ((i - 3) * (cx + hGap)) @ (cy + vGap)]].
 	"And 1 block"
 	(Array with: 1 with: cx + hGap) do: 
-			[:each | 
+			[:each |
 			shell extent: shell extent - (each @ 0).
 			shell update.
-			1 to: 4 do: [:i | self assert: (children at: i) position = (0 @ ((i - 1) * (cy + vGap)))]]! !
+			1 to: 4 do: [:i | self assert: (children at: i) position equals: 0 @ ((i - 1) * (cy + vGap))]]! !
 !FlowLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
 !FlowLayoutTest categoriesFor: #testVerticalCentreing!public!unit tests! !
 !FlowLayoutTest categoriesFor: #testWrap!public!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusBaseTest
 	instanceVariableNames: ''
@@ -21,9 +21,9 @@ testComparisonEquality
 
 	model := self concreteGdiplusBaseSubclass fromInitializer: (GdiplusTestInitializer new arg1: 123).
 	self assert: model
-				= (self concreteGdiplusBaseSubclass fromInitializer: (GdiplusTestInitializer new arg1: 123)).
+		equals: (self concreteGdiplusBaseSubclass fromInitializer: (GdiplusTestInitializer new arg1: 123)).
 	self deny: model
-				= (self concreteGdiplusBaseSubclass fromInitializer: (GdiplusTestInitializer new arg1: 456)).
+		equals: (self concreteGdiplusBaseSubclass fromInitializer: (GdiplusTestInitializer new arg1: 456)).
 	model hash!
 
 testComparisonIdentity
@@ -32,7 +32,7 @@ testComparisonIdentity
 	| initializer |
 	model := self concreteGdiplusBaseSubclass
 				fromInitializer: (initializer := GdiplusTestInitializer new arg1: 123).
-	self assert: model = (self concreteGdiplusBaseSubclass fromInitializer: initializer).
+	self assert: model equals: (self concreteGdiplusBaseSubclass fromInitializer: initializer).
 	model hash! !
 !GdiplusBaseTest categoriesFor: #concreteGdiplusBaseSubclass!private! !
 !GdiplusBaseTest categoriesFor: #testComparisonEquality!public!unit tests! !

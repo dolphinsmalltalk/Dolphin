@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PointTest
 	instanceVariableNames: ''
@@ -14,19 +14,18 @@ PointTest comment: 'This is the unit test for the class Point. Unit tests are a 
 !PointTest methodsFor!
 
 testAbs
-
-	self assert: (0@0) abs = (0@0).
-	self assert: (1@1) abs = (1@1).
-	self assert: (-1@1) abs = (1@1).
-	self assert: (1@-1) abs = (1@1).
-	self assert: (-1@-1) abs = (1@1).!
+	self assert: (0 @ 0) abs equals: 0 @ 0.
+	self assert: (1 @ 1) abs equals: 1 @ 1.
+	self assert: (-1 @ 1) abs equals: 1 @ 1.
+	self assert: (1 @ -1) abs equals: 1 @ 1.
+	self assert: (-1 @ -1) abs equals: 1 @ 1!
 
 testEquals
-	self assert: 0 @ 0 = 0.
-	self assert: 0 = (0 @ 0).
-	self assert: 1 @ 1 = (1 @ 1).
-	self assert: 1 @ 2 ~= (2 @ 1).
-	self assert: 1 @ 2 ~= 1.5!
+	self assert: 0 @ 0 equals: 0.
+	self assert: 0 equals: 0 @ 0.
+	self assert: 1 @ 1 equals: 1 @ 1.
+	self deny: 1 @ 2 equals: 2 @ 1.
+	self deny: 1 @ 2 equals: 1.5!
 
 testIsZero
 	self assert: (0 @ 0) isZero.

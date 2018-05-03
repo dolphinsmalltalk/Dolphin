@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #SelectableItemsTest
 	instanceVariableNames: ''
@@ -18,8 +18,8 @@ assertContains: anObject
 	| sel |
 	sel := presenter selectionOrNil.
 	presenter selection: anObject.
-	self assert: (presenter selection==anObject).
-	presenter selectionOrNil: sel.!
+	self assert: presenter selection identicalTo: anObject.
+	presenter selectionOrNil: sel!
 
 denyContains: anObject 
 	"Private - Asserts that the receiver does not contain anObject. We do this by trying to select the object since this allows

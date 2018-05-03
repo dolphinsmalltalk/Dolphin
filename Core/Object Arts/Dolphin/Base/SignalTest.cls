@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SignalTest
 	instanceVariableNames: ''
@@ -14,8 +14,8 @@ testMessageText
 	| signal text |
 	signal := Signal description: 'Wibble'.
 	text := [signal signal] on: signal do: [:ex | ex messageText].
-	self assert: text = 'Wibble'.
+	self assert: text equals: 'Wibble'.
 	text := [signal signal: 'Wobble'] on: signal do: [:ex | ex messageText].
-	self assert: text = 'Wobble'! !
+	self assert: text equals: 'Wobble'! !
 !SignalTest categoriesFor: #testMessageText!public!unit tests! !
 

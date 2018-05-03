@@ -22,22 +22,22 @@ testDoubleArray
 	mmf := MemoryMappedFile onFile: file.
 	view := mmf mapView.
 	array2 := DOUBLEArray fromAddress: view length: 10000.
-	self assert: array2 = array.
+	self assert: array2 equals: array.
 	"Write through the view"
 	array2 at: 1 put: 123.45.
 	array2 at: array2 size put: 456.78.
-	self assert: array2 first = 123.45.
-	self assert: array2 last = 456.78.
+	self assert: array2 first equals: 123.45.
+	self assert: array2 last equals: 456.78.
 	mmf free.
 	view free.
 	file close.
 	file := File open: fname.
 	f := Float new.
 	file read: f.
-	self assert: f = 123.45.
+	self assert: f equals: 123.45.
 	file seek: -1 * f size sense: (Win32Constants at: 'FILE_END').
 	file read: f.
-	self assert: f = 456.78.
+	self assert: f equals: 456.78.
 	file close.
 	"If this fails then one or other thing is holding the file open"
 	File delete: fname!
@@ -79,7 +79,7 @@ testReadOnly
 	file close.
 	mmf := MemoryMappedFile open: fname mode: #read.
 	view := mmf mapView.
-	self assert: (view copyFrom: 1 to: data size) = data asByteArray.
+	self assert: (view copyFrom: 1 to: data size) equals: data asByteArray.
 	"Memory is read-only"
 	self should: [view at: 1 put: 0] raise: GPFault.
 	view free.

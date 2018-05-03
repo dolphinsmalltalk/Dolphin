@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #FloatTest
 	instanceVariableNames: 'fpeMask'
@@ -220,7 +220,7 @@ testArcTan2
 	self assert: (-0.0 arcTan: 100) equals: 0.
 	self assert: (-0.0 arcTan: -100) equals: pi * -1.
 	self assert: (0 arcTan: 0) equals: 0.
-	self assert: (-0.0 arcTan: 0) = 0.
+	self assert: (-0.0 arcTan: 0) equals: 0.
 	self assert: (0 arcTan: -0.0) equals: pi.
 	self assert: (-0.0 arcTan: -0.0) equals: pi negated!
 
@@ -446,7 +446,7 @@ testFractionComparisons
 			self assert: each equals: each asFloat.
 			self assert: each hash equals: each asFloat hash].
 	"This will overflow on conversion to a Fraction, just a kick the tyres test really"
-	self assert: (((200 factorial - 1) / 2) hash isKindOf: SmallInteger)!
+	self assert: ((200 factorial - 1) / 2) hash isKindOf: SmallInteger!
 
 testFractionPart
 	self assert: 1.25 fractionPart equals: 0.25.
@@ -521,15 +521,15 @@ testInfinityComparisons
 			self assert: each <= Float.Infinity.
 			self assert: Float.Infinity > each.
 			self assert: Float.Infinity >= each.
-			self deny: each = Float.Infinity.
+			self deny: each equals: Float.Infinity.
 			self assert: each > Float.NegativeInfinity.
 			self assert: each >= Float.NegativeInfinity.
 			self assert: Float.NegativeInfinity < each.
 			self assert: Float.NegativeInfinity <= each].
-	self assert: Float.Infinity = Float.Infinity.
+	self assert: Float.Infinity equals: Float.Infinity.
 	self assert: Float.Infinity > Float.NegativeInfinity.
 	self assert: Float.Infinity >= Float.NegativeInfinity.
-	self assert: Float.NegativeInfinity = Float.NegativeInfinity.
+	self assert: Float.NegativeInfinity equals: Float.NegativeInfinity.
 	self assert: Float.NegativeInfinity < Float.Infinity.
 	self assert: Float.NegativeInfinity <= Float.Infinity.
 	"These don't work currently - bug in the primitive"
@@ -541,8 +541,8 @@ testInfinityComparisons
 testIntegerAsFloat
 	"assert IEEE 754 round to nearest even mode is honoured"
 
-	self deny: 16r1FFFFFFFFFFFF0801 asFloat = 16r1FFFFFFFFFFFF0800 asFloat.	"this test is on 65 bits"
-	self deny: 16r1FFFFFFFFFFFF0802 asFloat = 16r1FFFFFFFFFFFF0800 asFloat.	"this test is on 64 bits"
+	self deny: 16r1FFFFFFFFFFFF0801 asFloat equals: 16r1FFFFFFFFFFFF0800 asFloat.	"this test is on 65 bits"
+	self deny: 16r1FFFFFFFFFFFF0802 asFloat equals: 16r1FFFFFFFFFFFF0800 asFloat.	"this test is on 64 bits"
 	self assert: 16r1FFFFFFFFFFF1F800 asFloat equals: 16r1FFFFFFFFFFF20000 asFloat.	"nearest even is upper"
 	self assert: 16r1FFFFFFFFFFFF0800 asFloat equals: 16r1FFFFFFFFFFFF0000 asFloat	"nearest even is lower"!
 
@@ -552,7 +552,7 @@ testIntegerComparisons
 		do: 
 			[:each |
 			self assert: each asFloat equals: each.
-			self assert: (each hash isKindOf: SmallInteger).
+			self assert: each hash isKindOf: SmallInteger.
 			self assert: each asFloat hash equals: each hash.
 			self assert: (each hash = 0 or: [each hash sign = each sign])]!
 
@@ -956,20 +956,20 @@ testRounded
 	int := 5000000000000001.
 	x := int asFloat.
 	y := (5 asFloat squared squared squared squared timesTwoPower: 15) + 1.
-	self assert: x = y.
-	self assert: x asTrueFraction = int.
+	self assert: x equals: y.
+	self assert: x asTrueFraction equals: int.
 
 	"this one should be true for any float
 	in order to conform to ISO/IEC 10967-2"
-	self assert: x rounded = x asTrueFraction rounded.
-	self assert: x negated rounded = x negated asTrueFraction rounded.
+	self assert: x rounded equals: x asTrueFraction rounded.
+	self assert: x negated rounded equals: x negated asTrueFraction rounded.
 
 	"a random test"
 	r := Random new.
 	10000 timesRepeat: 
 			[x := r next * 1.9999e16 + 1.0e12.
-			self assert: x rounded = x asTrueFraction rounded.
-			self assert: x negated rounded = x negated asTrueFraction rounded]!
+			self assert: x rounded equals: x asTrueFraction rounded.
+			self assert: x negated rounded equals: x negated asTrueFraction rounded]!
 
 testSign
 	self assert: 0.0 sign equals: 0.

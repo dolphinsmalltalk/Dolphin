@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #MemoryManagerTest
 	instanceVariableNames: ''
@@ -14,31 +14,30 @@ testBytesUsedByObject
 	| meman granularity |
 	meman := MemoryManager current.
 	granularity := 8.
-	self assert: meman objectHeaderSize = 0.
-	self assert: (meman bytesUsedByObject: 1) = 0.
+	self assert: meman objectHeaderSize equals: 0.
+	self assert: (meman bytesUsedByObject: 1) equals: 0.
 	"Byte object"
 	"Zero length object has no body"
-	self assert: (meman bytesUsedByObject: #[]) = (0 + 16).
-	self assert: (meman bytesUsedByObject: #[1]) = (granularity + 16).
-	self assert: (meman bytesUsedByObject: #[1 2]) = (granularity + 16).
-	self assert: (meman bytesUsedByObject: #[1 2 3]) = (granularity + 16).
-	self assert: (meman bytesUsedByObject: (1 to: granularity) asByteArray) = (granularity + 16).
-	self 
-		assert: (meman bytesUsedByObject: (1 to: granularity + 1) asByteArray) = (granularity * 2 + 16).
+	self assert: (meman bytesUsedByObject: #[]) equals: 0 + 16.
+	self assert: (meman bytesUsedByObject: #[1]) equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: #[1 2]) equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: #[1 2 3]) equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: (1 to: granularity) asByteArray) equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: (1 to: granularity + 1) asByteArray)
+		equals: granularity * 2 + 16.
 
 	"Null termianted byte object"
 	"Cannot have a zero length string because they are null terminated"
-	self assert: (meman bytesUsedByObject: '') = (granularity + 16).
-	self assert: (meman bytesUsedByObject: '1') = (granularity + 16).
-	self assert: (meman bytesUsedByObject: '12') = (granularity + 16).
-	self assert: (meman bytesUsedByObject: '123') = (granularity + 16).
-	self assert: (meman bytesUsedByObject: '1234') = (granularity + 16).
+	self assert: (meman bytesUsedByObject: '') equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: '1') equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: '12') equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: '123') equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: '1234') equals: granularity + 16.
 
 	"Pointer object with no inst vars"
-	self assert: (meman bytesUsedByObject: #()) = (0 + 16).
-	self assert: (meman bytesUsedByObject: #(1)) = (granularity + 16).
-	self assert: (meman bytesUsedByObject: #(1 2)) = (4 * 2 + 16).
-!
+	self assert: (meman bytesUsedByObject: #()) equals: 0 + 16.
+	self assert: (meman bytesUsedByObject: #(1)) equals: granularity + 16.
+	self assert: (meman bytesUsedByObject: #(1 2)) equals: 4 * 2 + 16!
 
 testOtOverflow
 	| subject objects max events handler |

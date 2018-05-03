@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #STLFilerTest
 	instanceVariableNames: ''
@@ -40,8 +40,8 @@ testClassReadWrite
 	data := Array with: STLFilerTest with: STLFilerTest.
 	answer := self simpleReadWriteOf: data.
 	self assert: answer equals: data.
-	self assert: answer first == STLFilerTest.
-	self assert: answer first == answer last!
+	self assert: answer first identicalTo: STLFilerTest.
+	self assert: answer first identicalTo: answer last!
 
 testIntegerReadWrite
 
@@ -67,8 +67,8 @@ testRectangleReadWrite
 
 	"Check that muliple references are identical"
 	answer := self simpleReadWriteOf: (Array with: myRectangle with: myRectangle).
-	self assert: answer first = myRectangle.
-	self assert: answer first == answer last!
+	self assert: answer first equals: myRectangle.
+	self assert: answer first identicalTo: answer last!
 
 testResourceReadWrite
 	| rid shell shell1 shell2 in contents1 contents2 |
@@ -79,15 +79,15 @@ testResourceReadWrite
 	in := STLInFiler on: contents1 readStream.
 	in context: View desktop.
 	shell1 := in next.
-	self assert: (shell1 isKindOf: ShellView).
+	self assert: shell1 isKindOf: ShellView.
 	self assert: shell1 isOpen.
 	contents2 := self writeLiteralsFor: shell1.
 	in := STLInFiler on: contents2 readStream.
 	in context: View desktop.
 	shell2 := in next.
-	self assert: (shell2 isKindOf: ShellView).
+	self assert: shell2 isKindOf: ShellView.
 	self assert: shell2 isOpen.
-	self assert: contents1 size = contents2 size]
+	self assert: contents1 size equals: contents2 size]
 			ensure: 
 				[shell destroy.
 				shell1 destroy.
@@ -116,17 +116,17 @@ testSymbolReadWrite
 	self assert: deserialized equals: data.
 
 	"Check that muliple references are identical"
-	self assert: deserialized first == testSymbol.
-	self assert: deserialized first == deserialized second!
+	self assert: deserialized first identicalTo: testSymbol.
+	self assert: deserialized first identicalTo: deserialized second!
 
 testSystemDictionaryReadWrite
 	| sysdict array array2 |
 	sysdict := self simpleReadWriteOf: Smalltalk.
-	self assert: sysdict == Smalltalk.
+	self assert: sysdict identicalTo: Smalltalk.
 	array := Array with: Smalltalk.
 	array2 := self simpleReadWriteOf: array.
 	self assert: array2 equals: array.
-	self assert: array first == Smalltalk!
+	self assert: array first identicalTo: Smalltalk!
 
 writeLiteralsFor: value
 	| out |

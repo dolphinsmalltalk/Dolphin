@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #StaticPathTest
 	instanceVariableNames: ''
@@ -21,11 +21,11 @@ testLayout
 	"If this fires test won't work because there isn't enough text to require ellipses"
 	self assert: actualExtent x < preferredExtent x.
 	displayedText := presenter getWindowText.
-	self assert: (displayedText indexOfSubCollection: '...') ~~ 0.
+	self deny: (displayedText indexOfSubCollection: '...') identicalTo: 0.
 	presenter topShell extent: (presenter topShell calcExtentFromClientExtent: preferredExtent).
 	presenter ensureLayoutValid.
 	displayedText := presenter getWindowText.
-	self assert: (displayedText indexOfSubCollection: '...') == 0! !
+	self assert: (displayedText indexOfSubCollection: '...') identicalTo: 0! !
 !StaticPathTest categoriesFor: #classToTest!helpers!private! !
 !StaticPathTest categoriesFor: #testLayout!public!unit tests! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollectionTest subclass: #SequencedGrowableCollectionTest
 	instanceVariableNames: ''
@@ -15,129 +15,133 @@ testAddAllFirst
 	| sequence |
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems |
 			sequence := self newCollection: #().
 			elems := (1 to: each) asArray.
 			sequence addAllFirst: elems.
-			self assert: sequence = (self newCollection: elems).
-			sequence size > 1 
+			self assert: sequence equals: (self newCollection: elems).
+			sequence size > 1
 				ifTrue: 
 					[sequence removeFirst.
 					elems := (2 to: each) asArray].
 			sequence addAllFirst: #().
-			self assert: sequence size = elems size.
-			self assert: sequence = (self newCollection: elems)].
+			self assert: sequence size equals: elems size.
+			self assert: sequence equals: (self newCollection: elems)].
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems topped |
 			sequence := self newCollection: #(1).
 			elems := (1 to: each) asArray.
 			sequence addAllFirst: elems.
-			self assert: sequence = (self newCollection: elems , #(1)).
+			self assert: sequence equals: (self newCollection: elems , #(1)).
 			topped := sequence copyFrom: 2.
 			sequence removeFirst.
 			sequence addAllFirst: #().
-			self assert: sequence = topped].
+			self assert: sequence equals: topped].
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems topped |
 			sequence := self newCollection: #(1 2).
 			elems := (1 to: each) asArray.
 			sequence addAllFirst: elems.
-			self assert: sequence = (self newCollection: elems , #(1 2)).
+			self assert: sequence equals: (self newCollection: elems , #(1 2)).
 			topped := sequence copyFrom: 2.
 			sequence removeFirst.
 			sequence addAllFirst: #().
-			self assert: sequence = topped].
+			self assert: sequence equals: topped].
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems topped |
 			sequence := self newCollection: #(1 2 3).
 			elems := (1 to: each) asArray.
 			sequence addAllFirst: elems.
-			self assert: sequence = (self newCollection: elems , #(1 2 3)).
+			self assert: sequence equals: (self newCollection: elems , #(1 2 3)).
 			topped := sequence copyFrom: 2.
 			sequence removeFirst.
 			sequence addAllFirst: #().
-			self assert: sequence = topped].
-!
+			self assert: sequence equals: topped]!
 
 testAddAllFirst2
 	| sequence |
 	sequence := self newCollection: #(1 2 3).
 	sequence removeFirst.
-	self assert: sequence = (self newCollection: #(2 3)).
+	self assert: sequence equals: (self newCollection: #(2 3)).
 	sequence addAllFirst: #(1).
-	self assert: sequence = (self newCollection: #(1 2 3)).
-	sequence removeFirst; removeFirst.
-	self assert: sequence = (self newCollection: #(3)).
+	self assert: sequence equals: (self newCollection: #(1 2 3)).
+	sequence
+		removeFirst;
+		removeFirst.
+	self assert: sequence equals: (self newCollection: #(3)).
 	sequence addAllFirst: #(2).
-	self assert: sequence = (self newCollection: #(2 3)).
+	self assert: sequence equals: (self newCollection: #(2 3)).
 	sequence addAllFirst: #(1).
-	self assert: sequence = (self newCollection: #(1 2 3)).
-	sequence removeFirst; removeFirst.
-	self assert: sequence = (self newCollection: #(3)).
+	self assert: sequence equals: (self newCollection: #(1 2 3)).
+	sequence
+		removeFirst;
+		removeFirst.
+	self assert: sequence equals: (self newCollection: #(3)).
 	sequence addAllFirst: #(1 2).
-	self assert: sequence = (self newCollection: #(1 2 3)).
-	sequence removeFirst; removeFirst.
-	self assert: sequence = (self newCollection: #(3)).
+	self assert: sequence equals: (self newCollection: #(1 2 3)).
+	sequence
+		removeFirst;
+		removeFirst.
+	self assert: sequence equals: (self newCollection: #(3)).
 	sequence addAllFirst: #(0 1 2).
-	self assert: sequence = (self newCollection: #(0 1 2 3)).
-!
+	self assert: sequence equals: (self newCollection: #(0 1 2 3))!
 
 testAddAllLast
 	| sequence |
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems |
 			sequence := self newCollection: #().
 			elems := (1 to: each) asArray.
 			sequence addAllLast: elems.
-			self assert: sequence = (self newCollection: elems).
-			sequence size > 1 
+			self assert: sequence equals: (self newCollection: elems).
+			sequence size > 1
 				ifTrue: 
 					[sequence removeFirst.
 					elems := (2 to: each) asArray].
 			sequence addAllLast: #().
-			self assert: sequence = (self newCollection: elems)].
+			self assert: sequence equals: (self newCollection: elems)].
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems |
 			sequence := self newCollection: #(1).
 			elems := (1 to: each) asArray.
 			sequence addAllLast: elems.
-			self assert: sequence = (self newCollection: #(1) , elems).
+			self assert: sequence equals: (self newCollection: #(1) , elems).
 			sequence removeFirst.
 			sequence addAllLast: #().
-			self assert: sequence = (self newCollection: elems)].
+			self assert: sequence equals: (self newCollection: elems)].
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems |
 			sequence := self newCollection: #(1 2).
 			elems := (1 to: each) asArray.
 			sequence addAllLast: elems.
-			self assert: sequence = (self newCollection: #(1 2) , elems).
+			self assert: sequence equals: (self newCollection: #(1 2) , elems).
 			sequence removeFirst.
 			sequence addAllLast: #().
-			self assert: sequence = (self newCollection: #(2) , elems)].
+			self assert: sequence equals: (self newCollection: #(2) , elems)].
 	0 to: 6
 		do: 
-			[:each | 
+			[:each |
 			| elems |
 			sequence := self newCollection: #(1 2 3).
 			elems := (1 to: each) asArray.
 			sequence addAllLast: elems.
-			self assert: sequence = (self newCollection: #(1 2 3) , elems).
+			self assert: sequence equals: (self newCollection: #(1 2 3) , elems).
 			sequence removeFirst.
 			sequence addAllLast: #().
-			self assert: sequence = (self newCollection: #(2 3) , elems)]!
+			self assert: sequence equals: (self newCollection: #(2 3) , elems)]!
 
 testAddFirst
 	| subject interval |

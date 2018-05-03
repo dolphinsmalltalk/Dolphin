@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AddMethodChangeTest
 	instanceVariableNames: ''
@@ -15,17 +15,17 @@ changeClass
 
 testPrintOn
 	| change |
-	change := self changeClass 
+	change := self changeClass
 				compile: 'isAbstract ^false'
 				in: AddMethodChangeTest class
 				classified: 'testing'.
-	self assert: change printString readStream nextLine 
-				= '!!AddMethodChangeTest class methodsFor: ''testing''!!'.
+	self assert: change printString readStream nextLine
+		equals: '!!AddMethodChangeTest class methodsFor: ''testing''!!'.
 	#'1593'.
 	change protocols: #().
-	self assert: change protocol isNil.
-	self 
-		assert: change printString readStream nextLine = '!!AddMethodChangeTest class methodsFor: ''''!!'! !
+	self assertIsNil: change protocol.
+	self assert: change printString readStream nextLine
+		equals: '!!AddMethodChangeTest class methodsFor: ''''!!'! !
 !AddMethodChangeTest categoriesFor: #changeClass!public!unit tests! !
 !AddMethodChangeTest categoriesFor: #testPrintOn!public!unit tests! !
 

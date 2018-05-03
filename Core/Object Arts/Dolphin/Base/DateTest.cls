@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #DateTest
 	instanceVariableNames: ''
@@ -13,36 +13,36 @@ DateTest comment: ''!
 testFromDays
 	| date today |
 	date := Date fromDays: 1.
-	self assert: (date asDays) = 1.
+	self assert: date asDays equals: 1.
 	today := Date today.
 	date := Date fromDays: today asDays.
-	self assert: today = date!
+	self assert: today equals: date!
 
 testFromSeconds
 	| date today |
 	date := Date fromSeconds: 0.
-	self assert: (date asDays) = 0.
+	self assert: date asDays equals: 0.
 	date := Date fromSeconds: 1.
-	self assert: (date asDays) = 0.
-	date := Date fromSeconds: 86400-1.
-	self assert: (date asDays) = 0.
-	date := Date fromSeconds: (86400*2)-1.
-	self assert: (date asDays) = 1.
-	date := Date fromSeconds: (86400*2).
-	self assert: (date asDays) = 2.
+	self assert: date asDays equals: 0.
+	date := Date fromSeconds: 86400 - 1.
+	self assert: date asDays equals: 0.
+	date := Date fromSeconds: 86400 * 2 - 1.
+	self assert: date asDays equals: 1.
+	date := Date fromSeconds: 86400 * 2.
+	self assert: date asDays equals: 2.
 	date := Date fromSeconds: -1.
-	self assert: (date asDays) = -1.
+	self assert: date asDays equals: -1.
 	date := Date fromSeconds: -86400.
-	self assert: (date asDays) = -1.
+	self assert: date asDays equals: -1.
 	date := Date fromSeconds: -86401.
-	self assert: (date asDays) = -2.
-	date := Date fromSeconds: -86400*2.
-	self assert: (date asDays) = -2.
-	date := Date fromSeconds: -86400*2-1.
-	self assert: (date asDays) = -3.
+	self assert: date asDays equals: -2.
+	date := Date fromSeconds: -86400 * 2.
+	self assert: date asDays equals: -2.
+	date := Date fromSeconds: -86400 * 2 - 1.
+	self assert: date asDays equals: -3.
 	today := Date today.
 	date := Date fromSeconds: today asSeconds.
-	self assert: today = date! !
+	self assert: today equals: date! !
 !DateTest categoriesFor: #testFromDays!public!unit tests! !
 !DateTest categoriesFor: #testFromSeconds!public!unit tests! !
 

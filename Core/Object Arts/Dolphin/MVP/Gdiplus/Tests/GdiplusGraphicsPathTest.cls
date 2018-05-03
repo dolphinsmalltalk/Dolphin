@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusGraphicsPathTest
 	instanceVariableNames: 'fillMode'
@@ -27,8 +27,7 @@ setSampleNew
 
 testBounds
 	self setSample3Points.
-	self 
-		assert: (Point zero extent: model bounds extent - 1) = (Point zero extent: 200 @ 150)!
+	self assert: (Point zero extent: model bounds extent - 1) equals: (Point zero extent: 200 @ 150)!
 
 testConstructor3Points
 	self setSample3Points.
@@ -42,15 +41,15 @@ testConstructorPoints
 
 testFillMode
 	self setSampleNew.
-	self assert: model fillMode = 0.
+	self assert: model fillMode equals: 0.
 	model class enumsFillMode do: 
-			[:e | 
+			[:e |
 			model fillMode: e value.
-			self assert: model fillMode = e value]!
+			self assert: model fillMode equals: e value]!
 
 testPointCount
 	self setSample3Points.
-	self assert: model pointCount = 3! !
+	self assert: model pointCount equals: 3! !
 !GdiplusGraphicsPathTest categoriesFor: #setSample3Points!public! !
 !GdiplusGraphicsPathTest categoriesFor: #setSampleEllipse!public! !
 !GdiplusGraphicsPathTest categoriesFor: #setSampleNew!public! !

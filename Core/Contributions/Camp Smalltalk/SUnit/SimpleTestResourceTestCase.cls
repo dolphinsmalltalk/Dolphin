@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #SimpleTestResourceTestCase
 	instanceVariableNames: 'resource'
@@ -45,7 +45,7 @@ testResourceInitRelease
 testResourcesCollection
 	| collection |
 	collection := self resources.
-	self assert: collection size = 1! !
+	self assert: collection size equals: 1! !
 !SimpleTestResourceTestCase categoriesFor: #dummy!public! !
 !SimpleTestResourceTestCase categoriesFor: #error!public! !
 !SimpleTestResourceTestCase categoriesFor: #fail!public! !

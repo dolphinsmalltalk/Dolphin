@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
@@ -84,24 +84,24 @@ testBinaryMethodSignature
 	styler := SmalltalkMethodStyler new.
 	text := '||x x'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #binarySelector '||') #(##(3 to: 3) #argDecl 'x') #(##(4 to: 4) #whitespace ' ') #(##(5 
-						to: 5) #identifier 'x')).
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #binarySelector '||') #(##(3 to: 3) #argDecl 'x') #(##(4 to: 4) #whitespace ' ') #(##(5
+				to: 5) #identifier 'x')).
 	text := '||x||'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #binarySelector '||') #(##(3 to: 3) #argDecl 'x') #(##(4 to: 4) #tempOpenBar '|') #(##(5 
-						to: 5) #tempCloseBar '|'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #binarySelector '||') #(##(3 to: 3) #argDecl 'x') #(##(4 to: 4) #tempOpenBar '|') #(##(5
+				to: 5) #tempCloseBar '|'))!
 
 testEmptyTemps
 	"The scanner treats a double vertical bar as a binary selector, yet it could be an empty temporary declarations list in a method."
@@ -110,64 +110,69 @@ testEmptyTemps
 	styler := SmalltalkMethodStyler new.
 	text := 'a||x||y'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #unarySelector 'a') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4 
-						to: 4) #identifier 'x') #(##(5 to: 6) #binaryMessage '||') #(##(7 to: 7) #identifier 'y'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #unarySelector 'a') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4
+				to: 4) #identifier 'x') #(##(5 to: 6) #binaryMessage '||') #(##(7 to: 7) #identifier 'y'))!
 
 testLegacyLiteralArray
 	"Smalltalk-80 supported optional # prefix on symbols and embedded literal arrays - we still need to recognise these as literals."
 
-	| styler text  tokens |
+	| styler text tokens |
 	styler := SmalltalkExpressionStyler new.
 	text := '(#(a b c: | (1)))'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens = #(#(##(1 to: 1) #specialCharacter '(') #(##(2 to: 3) #literalArray '#(') #(##(4 to: 4) #literalSymbol 'a') #(##(5 to: 5) #whitespace ' ') #(##(6 to: 6) #literalSymbol 'b') #(##(7 to: 7) #whitespace ' ') #(##(8 to: 9) #literalSymbol 'c:') #(##(10 to: 10) #whitespace ' ') #(##(11 to: 11) #literalSymbol '|') #(##(12 to: 12) #whitespace ' ') #(##(13 to: 13) #literalArray '(') #(##(14 to: 14) #literalNumber '1') #(##(15 to: 16) #literalArray '))') #(##(17 to: 17) #specialCharacter ')'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #specialCharacter '(') #(##(2 to: 3) #literalArray '#(') #(##(4 to: 4) #literalSymbol 'a') #(##(5
+				to: 5) #whitespace ' ') #(##(6 to: 6) #literalSymbol 'b') #(##(7 to: 7) #whitespace ' ') #(##(8
+				to: 9) #literalSymbol 'c:') #(##(10 to: 10) #whitespace ' ') #(##(11 to: 11) #literalSymbol '|') #(##(12
+				to: 12) #whitespace ' ') #(##(13 to: 13) #literalArray '(') #(##(14 to: 14) #literalNumber '1') #(##(15
+				to: 16) #literalArray '))') #(##(17 to: 17) #specialCharacter ')'))!
 
 testLiteralArray
 	| styler text tokens |
 	styler := SmalltalkExpressionStyler new.
 	text := '#(nil true false #a 1 1.2 ''a'' #[1] 2)'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 5) #literalPseudo 'nil') #(##(6 to: 6) #whitespace ' ') #(##(7 
-						to: 10) #literalPseudo 'true') #(##(11 to: 11) #whitespace ' ') #(##(12 to: 16) #literalPseudo 'false') #(##(17 
-						to: 17) #whitespace ' ') #(##(18 to: 19) #literalSymbol '#a') #(##(20 to: 20) #whitespace ' ') #(##(21 
-						to: 21) #literalNumber '1') #(##(22 to: 22) #whitespace ' ') #(##(23 to: 25) #literalNumber '1.2') #(##(26 
-						to: 26) #whitespace ' ') #(##(27 to: 29) #literalString '''a''') #(##(30 to: 30) #whitespace ' ') #(##(31 
-						to: 34) #literalBytes '#[1]') #(##(35 to: 35) #whitespace ' ') #(##(36 to: 36) #literalNumber '2') #(##(37 
-						to: 37) #literalArray ')'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 5) #literalPseudo 'nil') #(##(6 to: 6) #whitespace ' ') #(##(7
+				to: 10) #literalPseudo 'true') #(##(11 to: 11) #whitespace ' ') #(##(12 to: 16) #literalPseudo 'false') #(##(17
+				to: 17) #whitespace ' ') #(##(18 to: 19) #literalSymbol '#a') #(##(20 to: 20) #whitespace ' ') #(##(21
+				to: 21) #literalNumber '1') #(##(22 to: 22) #whitespace ' ') #(##(23 to: 25) #literalNumber '1.2') #(##(26
+				to: 26) #whitespace ' ') #(##(27 to: 29) #literalString '''a''') #(##(30 to: 30) #whitespace ' ') #(##(31
+				to: 34) #literalBytes '#[1]') #(##(35 to: 35) #whitespace ' ') #(##(36 to: 36) #literalNumber '2') #(##(37
+				to: 37) #literalArray ')'))!
 
 testLiteralBytes
 	| styler text tokens |
 	styler := SmalltalkExpressionStyler new.
 	text := '[#[1 2]] 1 #(#[1 2]3)'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #specialCharacter '[') #(##(2 to: 4) #literalBytes '#[1') #(##(5 to: 5) #whitespace ' ') #(##(6 
-						to: 7) #literalBytes '2]') #(##(8 to: 8) #specialCharacter ']') #(##(9 to: 9) #whitespace ' ') #(##(10 
-						to: 10) #literalNumber '1') #(##(11 to: 11) #whitespace ' ') #(##(12 to: 13) #literalArray '#(') #(##(14 
-						to: 16) #literalBytes '#[1') #(##(17 to: 17) #whitespace ' ') #(##(18 to: 19) #literalBytes '2]') #(##(20 
-						to: 20) #literalNumber '3') #(##(21 to: 21) #literalArray ')'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #specialCharacter '[') #(##(2 to: 4) #literalBytes '#[1') #(##(5 to: 5) #whitespace ' ') #(##(6
+				to: 7) #literalBytes '2]') #(##(8 to: 8) #specialCharacter ']') #(##(9 to: 9) #whitespace ' ') #(##(10
+				to: 10) #literalNumber '1') #(##(11 to: 11) #whitespace ' ') #(##(12 to: 13) #literalArray '#(') #(##(14
+				to: 16) #literalBytes '#[1') #(##(17 to: 17) #whitespace ' ') #(##(18 to: 19) #literalBytes '2]') #(##(20
+				to: 20) #literalNumber '3') #(##(21 to: 21) #literalArray ')'))!
 
 testNegativeOrSubtract
 	"The - operator can be ambiguous if used in an expression without spaces, e.g. x-1."
@@ -176,54 +181,54 @@ testNegativeOrSubtract
 	styler := SmalltalkExpressionStyler new.
 	text := 'x-1'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #identifier 'x') #(##(2 to: 2) #binaryMessage '-') #(##(3 to: 3) #literalNumber '1')).
-	#('''a''-1' '1.0-1' 'nil-1' 'true-1' 'false-1' '#x-1' '$x-1' 'self-1' '(x)-1' 'self x-1' '[] -1') 
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #identifier 'x') #(##(2 to: 2) #binaryMessage '-') #(##(3 to: 3) #literalNumber '1')).
+	#('''a''-1' '1.0-1' 'nil-1' 'true-1' 'false-1' '#x-1' '$x-1' 'self-1' '(x)-1' 'self x-1' '[] -1')
 		do: 
-			[:each | 
+			[:each |
 			| tok |
 			mock text: each.
-			styler 
+			styler
 				colorTextFrom: 1
 				to: each size
 				in: mock.
 			tokens := mock tokens asArray.
 			tok := tokens last.
-			self assert: tok last = '1'.
-			self assert: tok second = #literalNumber.
+			self assert: tok last equals: '1'.
+			self assert: tok second equals: #literalNumber.
 			tok := tokens at: tokens size - 1.
-			self assert: tok last = '-'.
-			self assert: tok second = #binaryMessage].
+			self assert: tok last equals: '-'.
+			self assert: tok second equals: #binaryMessage].
 	#('self x:-1' '1.-1' '^-1' 'x:=-1' '1--1' '1+-1' '|x|-1') do: 
-			[:each | 
+			[:each |
 			| tok |
 			mock text: each.
-			styler 
+			styler
 				colorTextFrom: 1
 				to: each size
 				in: mock.
 			tokens := mock tokens asArray.
 			tok := tokens last.
-			self assert: tok last = '-1'.
-			self assert: tok second = #literalNumber].
+			self assert: tok last equals: '-1'.
+			self assert: tok second equals: #literalNumber].
 	styler := SmalltalkMethodStyler new.
 	#('x:a-1' 'a-1') do: 
-			[:each | 
+			[:each |
 			| tok |
 			mock text: each.
-			styler 
+			styler
 				colorTextFrom: 1
 				to: each size
 				in: mock.
 			tokens := mock tokens asArray.
 			tok := tokens last.
-			self assert: tok last = '-1'.
-			self assert: tok second = #literalNumber]!
+			self assert: tok last equals: '-1'.
+			self assert: tok second equals: #literalNumber]!
 
 testOptimizedExpressionInArray
 	| styler text tokens |
@@ -231,71 +236,71 @@ testOptimizedExpressionInArray
 	"The Object ref inside the ##() expression should be treated as an identifier, whilst that in the literal array is a symbol."
 	text := '#(##(Object)Object)'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 5) #specialCharacter '##(') #(##(6 to: 11) #identifier 'Object') #(##(12 
-						to: 12) #specialCharacter ')') #(##(13 to: 18) #literalSymbol 'Object') #(##(19 to: 19) #literalArray ')')).
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 5) #specialCharacter '##(') #(##(6 to: 11) #identifier 'Object') #(##(12
+				to: 12) #specialCharacter ')') #(##(13 to: 18) #literalSymbol 'Object') #(##(19 to: 19) #literalArray ')')).
 	"This one has some nested parens to confuse matters"
 	text := '#(##(1+(2*3)))'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 5) #specialCharacter '##(') #(##(6 to: 6) #literalNumber '1') #(##(7 
-						to: 7) #binaryMessage '+') #(##(8 to: 8) #specialCharacter '(') #(##(9 to: 9) #literalNumber '2') #(##(10 
-						to: 10) #binaryMessage '*') #(##(11 to: 11) #literalNumber '3') #(##(12 to: 13) #specialCharacter '))') #(##(14 
-						to: 14) #literalArray ')'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 5) #specialCharacter '##(') #(##(6 to: 6) #literalNumber '1') #(##(7
+				to: 7) #binaryMessage '+') #(##(8 to: 8) #specialCharacter '(') #(##(9 to: 9) #literalNumber '2') #(##(10
+				to: 10) #binaryMessage '*') #(##(11 to: 11) #literalNumber '3') #(##(12 to: 13) #specialCharacter '))') #(##(14
+				to: 14) #literalArray ')'))!
 
 testPrimitiveTag
 	| styler text tokens |
 	styler := SmalltalkMethodStyler new.
 	text := 'x<primitive:1>self'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 14) #tag '<primitive:1>') #(##(15 to: 18) #identifier 'self')).
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 14) #tag '<primitive:1>') #(##(15 to: 18) #identifier 'self')).
 	text := 'x:y<primitive:1>y'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #keywordSelector 'x:') #(##(3 to: 3) #argDecl 'y') #(##(4 to: 16) #tag '<primitive:1>') #(##(17 
-						to: 17) #identifier 'y')).
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #keywordSelector 'x:') #(##(3 to: 3) #argDecl 'y') #(##(4 to: 16) #tag '<primitive:1>') #(##(17
+				to: 17) #identifier 'y')).
 	text := '|y<primitive: 1>self|y'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #binarySelector '|') #(##(2 to: 2) #argDecl 'y') #(##(3 to: 13) #tag '<primitive:') #(##(14 
-						to: 14) #whitespace ' ') #(##(15 to: 16) #tag '1>') #(##(17 to: 20) #identifier 'self') #(##(21 
-						to: 21) #binaryMessage '|') #(##(22 to: 22) #identifier 'y')).
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #binarySelector '|') #(##(2 to: 2) #argDecl 'y') #(##(3 to: 13) #tag '<primitive:') #(##(14
+				to: 14) #whitespace ' ') #(##(15 to: 16) #tag '1>') #(##(17 to: 20) #identifier 'self') #(##(21
+				to: 21) #binaryMessage '|') #(##(22 to: 22) #identifier 'y')).
 	text := 'x|| <primitive:1>self'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4 
-						to: 4) #whitespace ' ') #(##(5 to: 17) #tag '<primitive:1>') #(##(18 to: 21) #identifier 'self'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #tempCloseBar '|') #(##(4
+				to: 4) #whitespace ' ') #(##(5 to: 17) #tag '<primitive:1>') #(##(18 to: 21) #identifier 'self'))!
 
 testPseudoSignature
 	"The pseudo variables are valid as unary selectors too."
@@ -305,13 +310,13 @@ testPseudoSignature
 	"Each of the identical identifiers will be coloured differently, except that the last two will be the same"
 	text := 'nil nil'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 3) #unarySelector 'nil') #(##(4 to: 4) #whitespace ' ') #(##(5 to: 7) #literalPseudo 'nil'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 3) #unarySelector 'nil') #(##(4 to: 4) #whitespace ' ') #(##(5 to: 7) #literalPseudo 'nil'))!
 
 testScanningFloats
 	#('5.1234' '0.0' '0.5' '1.2e1' '1.2d2' '1.2e-1' '1.2e+1' '1.2d-2' '1.2d+2' '1.0e308' '1.0e+308' '2.2250738585072014e-308' '1.7976931348623158e308' '1.7976931348623158e+308' '0.5e0' '0.5d0' '0.5q0' '0.5e+0' '0.5d+0' '0.5q+0' '0.5e-0' '0.5d-0' '0.5q-0') 
@@ -370,42 +375,42 @@ testTempBarsAtExpressionStart
 	styler := SmalltalkExpressionStyler new.
 	text := '|a|a a'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #tempOpenBar '|') #(##(2 to: 2) #tempDecl 'a') #(##(3 to: 3) #tempCloseBar '|') #(##(4 
-						to: 4) #identifier 'a') #(##(5 to: 5) #whitespace ' ') #(##(6 to: 6) #unaryMessage 'a')).
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #tempOpenBar '|') #(##(2 to: 2) #tempDecl 'a') #(##(3 to: 3) #tempCloseBar '|') #(##(4
+				to: 4) #identifier 'a') #(##(5 to: 5) #whitespace ' ') #(##(6 to: 6) #unaryMessage 'a')).
 	text := '||'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens = #(#(##(1 to: 1) #tempOpenBar '|') #(##(2 to: 2) #tempCloseBar '|')).
+	self assert: tokens equals: #(#(##(1 to: 1) #tempOpenBar '|') #(##(2 to: 2) #tempCloseBar '|')).
 	text := '##(|a|)'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 3) #specialCharacter '##(') #(##(4 to: 4) #tempOpenBar '|') #(##(5 to: 5) #tempDecl 'a') #(##(6 
-						to: 6) #tempCloseBar '|') #(##(7 to: 7) #specialCharacter ')')).
+	self assert: tokens
+		equals: #(#(##(1 to: 3) #specialCharacter '##(') #(##(4 to: 4) #tempOpenBar '|') #(##(5 to: 5) #tempDecl 'a') #(##(6
+				to: 6) #tempCloseBar '|') #(##(7 to: 7) #specialCharacter ')')).
 	text := '##(||)'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 3) #specialCharacter '##(') #(##(4 to: 4) #tempOpenBar '|') #(##(5 to: 5) #tempCloseBar '|') #(##(6 
-						to: 6) #specialCharacter ')'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 3) #specialCharacter '##(') #(##(4 to: 4) #tempOpenBar '|') #(##(5 to: 5) #tempCloseBar '|') #(##(6
+				to: 6) #specialCharacter ')'))!
 
 testTempBarsOrBinarySelector
 	"The scanner treats a double vertical bar as a binary selector, yet it can be the close of block arg decls and the open of block temp decls"
@@ -414,48 +419,49 @@ testTempBarsOrBinarySelector
 	styler := SmalltalkExpressionStyler new.
 	text := '[:a||b|a||b]'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #specialCharacter '[:') #(##(3 to: 3) #blockArgDecl 'a') #(##(4 to: 4) #tempCloseBar '|') #(##(5 
-						to: 5) #tempOpenBar '|') #(##(6 to: 6) #tempDecl 'b') #(##(7 to: 7) #tempCloseBar '|') #(##(8 to: 8) #identifier 'a') #(##(9 
-						to: 10) #binaryMessage '||') #(##(11 to: 11) #identifier 'b') #(##(12 to: 12) #specialCharacter ']')).
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #specialCharacter '[:') #(##(3 to: 3) #blockArgDecl 'a') #(##(4 to: 4) #tempCloseBar '|') #(##(5
+				to: 5) #tempOpenBar '|') #(##(6 to: 6) #tempDecl 'b') #(##(7 to: 7) #tempCloseBar '|') #(##(8 to: 8) #identifier 'a') #(##(9
+				to: 10) #binaryMessage '||') #(##(11 to: 11) #identifier 'b') #(##(12 to: 12) #specialCharacter ']')).
 	text := '[:a| ||a||a]'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #specialCharacter '[:') #(##(3 to: 3) #blockArgDecl 'a') #(##(4 to: 4) #tempCloseBar '|') #(##(5 
-						to: 5) #whitespace ' ') #(##(6 to: 6) #tempOpenBar '|') #(##(7 to: 7) #tempCloseBar '|') #(##(8 
-						to: 8) #identifier 'a') #(##(9 to: 10) #binaryMessage '||') #(##(11 to: 11) #identifier 'a') #(##(12 
-						to: 12) #specialCharacter ']')).
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #specialCharacter '[:') #(##(3 to: 3) #blockArgDecl 'a') #(##(4 to: 4) #tempCloseBar '|') #(##(5
+				to: 5) #whitespace ' ') #(##(6 to: 6) #tempOpenBar '|') #(##(7 to: 7) #tempCloseBar '|') #(##(8
+				to: 8) #identifier 'a') #(##(9 to: 10) #binaryMessage '||') #(##(11 to: 11) #identifier 'a') #(##(12
+				to: 12) #specialCharacter ']')).
 	text := '[:a|||a|||a]'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #specialCharacter '[:') #(##(3 to: 3) #blockArgDecl 'a') #(##(4 to: 4) #tempCloseBar '|') #(##(5 
-						to: 5) #tempOpenBar '|') #(##(6 to: 6) #tempCloseBar '|') #(##(7 to: 7) #identifier 'a') #(##(8 
-						to: 10) #binaryMessage '|||') #(##(11 to: 11) #identifier 'a') #(##(12 to: 12) #specialCharacter ']')).
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #specialCharacter '[:') #(##(3 to: 3) #blockArgDecl 'a') #(##(4 to: 4) #tempCloseBar '|') #(##(5
+				to: 5) #tempOpenBar '|') #(##(6 to: 6) #tempCloseBar '|') #(##(7 to: 7) #identifier 'a') #(##(8
+				to: 10) #binaryMessage '|||') #(##(11 to: 11) #identifier 'a') #(##(12 to: 12) #specialCharacter ']')).
 	styler := SmalltalkMethodStyler new.
 	text := 'x| |'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #whitespace ' ') #(##(4 to: 4) #tempCloseBar '|'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #unarySelector 'x') #(##(2 to: 2) #tempOpenBar '|') #(##(3 to: 3) #whitespace ' ') #(##(4
+				to: 4) #tempCloseBar '|'))!
 
 testUnaryMessageSequence
 	| styler text tokens |
@@ -463,53 +469,53 @@ testUnaryMessageSequence
 	"Each of the identical identifiers will be coloured differently, except that the last two will be the same"
 	text := 'a a a a'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 1) #unarySelector 'a') #(##(2 to: 2) #whitespace ' ') #(##(3 to: 3) #identifier 'a') #(##(4 
-						to: 4) #whitespace ' ') #(##(5 to: 5) #unaryMessage 'a') #(##(6 to: 6) #whitespace ' ') #(##(7 
-						to: 7) #unaryMessage 'a'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 1) #unarySelector 'a') #(##(2 to: 2) #whitespace ' ') #(##(3 to: 3) #identifier 'a') #(##(4
+				to: 4) #whitespace ' ') #(##(5 to: 5) #unaryMessage 'a') #(##(6 to: 6) #whitespace ' ') #(##(7 to: 7) #unaryMessage 'a'))!
 
 testUnaryMessageToArray
 	| styler text tokens |
 	styler := SmalltalkMethodStyler new.
 	text := '#(1 2)reverse'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens 
-				= #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 3) #literalNumber '1') #(##(4 to: 4) #whitespace ' ') #(##(5 
-						to: 5) #literalNumber '2') #(##(6 to: 6) #literalArray ')') #(##(7 to: 13) #unaryMessage 'reverse'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #literalArray '#(') #(##(3 to: 3) #literalNumber '1') #(##(4 to: 4) #whitespace ' ') #(##(5
+				to: 5) #literalNumber '2') #(##(6 to: 6) #literalArray ')') #(##(7 to: 13) #unaryMessage 'reverse'))!
 
 testUnaryMessageToBlock
 	| styler text tokens |
 	styler := SmalltalkMethodStyler new.
 	text := '[]x'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens = #(#(##(1 to: 2) #specialCharacter '[]') #(##(3 to: 3) #unaryMessage 'x'))!
+	self assert: tokens
+		equals: #(#(##(1 to: 2) #specialCharacter '[]') #(##(3 to: 3) #unaryMessage 'x'))!
 
 testUnaryMessageToByteArray
 	| styler text tokens |
 	styler := SmalltalkMethodStyler new.
 	text := '#[1]x'.
 	mock text: text.
-	styler 
+	styler
 		colorTextFrom: 1
 		to: text size
 		in: mock.
 	tokens := mock tokens asArray.
-	self assert: tokens = #(#(##(1 to: 4) #literalBytes '#[1]') #(##(5 to: 5) #unaryMessage 'x'))! !
+	self assert: tokens equals: #(#(##(1 to: 4) #literalBytes '#[1]') #(##(5 to: 5) #unaryMessage 'x'))! !
 !SmalltalkStylerTest categoriesFor: #restyleFromEachPosition:resumeable:!private!unit tests! !
 !SmalltalkStylerTest categoriesFor: #scannerClass!private!unit tests! !
 !SmalltalkStylerTest categoriesFor: #scanNumeric:class:!private!unit tests! !

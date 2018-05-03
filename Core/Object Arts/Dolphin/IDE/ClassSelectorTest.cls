@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableItemsTest subclass: #ClassSelectorTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC dolphinTestD dolphinTestE dolphinTestF dolphinTestG dolphinTestH dolphinTestI'
@@ -21,7 +21,7 @@ create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	| newClass |
 	newClass := self create: aClassSymbol subclassOf: aClass.
 	(Smalltalk at: aClassSymbol) owningPackage: aPackage.
-	self assert: (newClass owningPackage == aPackage).
+	self assert: newClass owningPackage identicalTo: aPackage.
 	^newClass!
 
 createClassesABC
@@ -171,25 +171,25 @@ testHierarchyMove
 
 	"Check that moving a selected class doesn't alter selection or trigger #selectionChanged events"
 	self resetSelection.
-	self 
+	self
 		shouldnt: [self createClassesDEF]
 		trigger: #selectionChanged
 		against: presenter.
 	presenter selection: dolphinTestF.
-	self 
+	self
 		shouldnt: [self create: #DolphinTestF subclassOf: dolphinTestA]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection = dolphinTestF.
+	self assert: presenter selection equals: dolphinTestF.
 
 	"Check that moving the parent of a selected class doesn't alter selection or trigger #selectionChanged events"
 	presenter selection: dolphinTestE.
-	self assert: presenter selection superclass == dolphinTestD.
-	self 
+	self assert: presenter selection superclass identicalTo: dolphinTestD.
+	self
 		shouldnt: [self create: #DolphinTestD subclassOf: dolphinTestB]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection = dolphinTestE.
+	self assert: presenter selection equals: dolphinTestE.
 
 	"Tidy up"
 	self removeClassesDEF.
@@ -200,43 +200,41 @@ testPackageMove
 
 	| abc def |
 	self resetSelection.
-	abc := self createClassesABC. "Package A"
-	def := self createClassesDEF. "Package B"
+	abc := self createClassesABC.	"Package A"
+	def := self createClassesDEF.	"Package B"
 
 	"Make some changes to the packaging which shouldn't alter the displayed classes"
 	dolphinTestF owningPackage: packageA.
-	def do: [:each | self assertContains: each ].
-
+	def do: [:each | self assertContains: each].
 	dolphinTestD owningPackage: packageA.
-	def do: [:each | self assertContains: each ].
-	self assert: dolphinTestD owningPackage==packageA.
-	self assert: dolphinTestE owningPackage==packageB.
-	self assert: dolphinTestF owningPackage==packageA.
-
+	def do: [:each | self assertContains: each].
+	self assert: dolphinTestD owningPackage identicalTo: packageA.
+	self assert: dolphinTestE owningPackage identicalTo: packageB.
+	self assert: dolphinTestF owningPackage identicalTo: packageA.
 	dolphinTestE owningPackage: packageC.
-	def do: [:each | self assertContains: each ].
-	self assert: dolphinTestD owningPackage==packageA.
-	self assert: dolphinTestE owningPackage==packageC.
-	self assert: dolphinTestF owningPackage==packageA.
+	def do: [:each | self assertContains: each].
+	self assert: dolphinTestD owningPackage identicalTo: packageA.
+	self assert: dolphinTestE owningPackage identicalTo: packageC.
+	self assert: dolphinTestF owningPackage identicalTo: packageA.
 
 	"Check that moving the package of the selected class doesn't alter selection or trigger #selectionChanged events."
-	def := self createClassesDEF. "Package B"
+	def := self createClassesDEF.	"Package B"
 	self resetSelection.
 	presenter selection: dolphinTestF.
-	self 
+	self
 		shouldnt: [dolphinTestF owningPackage: packageA]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection = dolphinTestF.
+	self assert: presenter selection equals: dolphinTestF.
 
 	"Check that moving the package of the parent of a selected class doesn't alter selection or trigger #selectionChanged events"
 	presenter selection: dolphinTestE.
-	self assert: presenter selection superclass==dolphinTestD.
-	self 
+	self assert: presenter selection superclass identicalTo: dolphinTestD.
+	self
 		shouldnt: [dolphinTestD owningPackage: packageA]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection = dolphinTestE.
+	self assert: presenter selection equals: dolphinTestE.
 
 	"Tidy up"
 	self removeClassesDEF.
@@ -247,37 +245,37 @@ testSelection
 
 	self resetSelection.
 	self createClassesABC do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				should: [presenter selection: each]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: presenter selection == each].
+			self assert: presenter selection identicalTo: each].
 
 	"remove should not upset selection"
 	presenter selection: dolphinTestA.
-	self 
+	self
 		shouldnt: [dolphinTestC removeFromSystem]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection == dolphinTestA.
+	self assert: presenter selection identicalTo: dolphinTestA.
 
 	"add should not upset selection"
-	self 
+	self
 		shouldnt: [self createClassesABC]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection == dolphinTestA.
+	self assert: presenter selection identicalTo: dolphinTestA.
 	self
 		removeClassesABC;
 		createClassesABC.
 
 	"remove of selected object should trigger #selectionChanged and leave no selection"
-	(Array 
+	(Array
 		with: dolphinTestC
 		with: dolphinTestB
 		with: dolphinTestA) do: 
-				[:each | 
+				[:each |
 				| selAfterRemoval |
 				presenter selection: each.
 				"Because the PCS is using a TreeListPresenter connected to the model
@@ -286,23 +284,22 @@ testSelection
 				which means we get list style selection change behaviour on removal (i.e.
 				selection is lost) rather than tree style (where selection is moved to the
 				previous sibling or parent). "
-
 				selAfterRemoval := self removalOfSelectionLeaves: each.
-				self 
+				self
 					should: [each removeFromSystem]
 					trigger: #selectionChanged
 					against: presenter.
-				self assert: presenter selectionOrNil == selAfterRemoval].
+				self assert: presenter selectionOrNil identicalTo: selAfterRemoval].
 
 	"No selection tests"
 	self createClassesABC do: 
-			[:each | 
+			[:each |
 			presenter selection: each.
-			self 
+			self
 				should: [presenter resetSelection]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: presenter selectionOrNil isNil.
+			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self removeClassesABC! !
 !ClassSelectorTest categoriesFor: #create:subclassOf:!helpers!private! !

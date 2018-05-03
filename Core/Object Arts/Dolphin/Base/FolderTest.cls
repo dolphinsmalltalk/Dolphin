@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #FolderTest
 	instanceVariableNames: 'c windows system root oa'
@@ -24,18 +24,18 @@ setUp
 	oa := self folderClass pathname: 'Object Arts\'.!
 
 testFolderName
-	self assert: root folderName = self rootFolder.
+	self assert: root folderName equals: self rootFolder.
 	self assert: (c folderName endsWith: '(C:)').
-	self assert: windows folderName = 'c:\windows\'.
-	self assert: system folderName = 'c:\windows\system32\'.
-	self assert: oa folderName = ((self rootFolder copyWithout: $\), '\Object Arts\').!
+	self assert: windows folderName equals: 'c:\windows\'.
+	self assert: system folderName equals: 'c:\windows\system32\'.
+	self assert: oa folderName equals: (self rootFolder copyWithout: $\) , '\Object Arts\'!
 
 testName
-	self assert: root name = self rootFolder.
+	self assert: root name equals: self rootFolder.
 	self assert: (c name endsWith: '(C:)').
-	self assert: windows name = 'windows'.
-	self assert: system name = 'system32'.
-	self assert: oa name = 'Object Arts'.! !
+	self assert: windows name equals: 'windows'.
+	self assert: system name equals: 'system32'.
+	self assert: oa name equals: 'Object Arts'! !
 !FolderTest categoriesFor: #folderClass!constants!private! !
 !FolderTest categoriesFor: #rootFolder!public!unit tests! !
 !FolderTest categoriesFor: #setUp!public!Running! !

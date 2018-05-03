@@ -53,7 +53,7 @@ testResetAfterWrite
 	stream := self streamWith: String new.
 	stream nextPut: $a.
 	stream reset.
-	self assert: stream next = $a.
+	self assert: stream next equals: $a.
 	self closeTempStream: stream! !
 !ReadWriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !ReadWriteStreamTest categoriesFor: #streamOn:!helpers!private! !

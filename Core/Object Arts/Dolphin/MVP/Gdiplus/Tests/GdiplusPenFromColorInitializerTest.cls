@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusPenFromColorInitializerTest
 	instanceVariableNames: ''
@@ -21,19 +21,19 @@ setUp
 testCreateHandle
 	model color: (ARGB fromInteger: 1) width: 0.5.
 	model createHandle.
-	self assert: constructorArgs size = 4.
-	self assert: constructorArgs first == 1.
-	self assert: constructorArgs second = 0.5.
-	self assert: constructorArgs third = UnitWorld.
+	self assert: constructorArgs size equals: 4.
+	self assert: constructorArgs first identicalTo: 1.
+	self assert: constructorArgs second equals: 0.5.
+	self assert: constructorArgs third equals: UnitWorld.
 	self assertLastArgIsHandle!
 
 testCreateHandleDefaultWidth
 	model color: (ARGB fromInteger: 1) width: nil.
 	model createHandle.
-	self assert: constructorArgs size = 4.
-	self assert: constructorArgs first == 1.
-	self assert: constructorArgs second = 1.0.
-	self assert: constructorArgs third = UnitWorld.
+	self assert: constructorArgs size equals: 4.
+	self assert: constructorArgs first identicalTo: 1.
+	self assert: constructorArgs second equals: 1.0.
+	self assert: constructorArgs third equals: UnitWorld.
 	self assertLastArgIsHandle! !
 !GdiplusPenFromColorInitializerTest categoriesFor: #gdipCreatePen1:width:unit:pen:!accessing!public! !
 !GdiplusPenFromColorInitializerTest categoriesFor: #setUp!public!setup! !

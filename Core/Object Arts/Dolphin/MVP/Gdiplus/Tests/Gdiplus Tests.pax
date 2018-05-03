@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Gdiplus Tests'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk GDI+ Binding tests

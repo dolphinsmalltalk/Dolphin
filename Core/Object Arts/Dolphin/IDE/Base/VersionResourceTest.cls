@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #VersionResourceTest
 	instanceVariableNames: 'updatePath sourceModule sourceSize sourceBytes'
@@ -10,24 +10,24 @@ VersionResourceTest comment: ''!
 !VersionResourceTest categoriesForClass!Unclassified! !
 !VersionResourceTest methodsFor!
 
-assertResource: res atVersion: newVersion 
-	self assert: res fileVersion = newVersion.
-	self assert: res fixedInfo fileVersionString = newVersion.
-	self assert: res productVersion = newVersion.
-	self assert: res fixedInfo productVersionString = newVersion.
+assertResource: res atVersion: newVersion
+	self assert: res fileVersion equals: newVersion.
+	self assert: res fixedInfo fileVersionString equals: newVersion.
+	self assert: res productVersion equals: newVersion.
+	self assert: res fixedInfo productVersionString equals: newVersion.
 	res stringTables do: 
-			[:each | 
-			self assert: (each at: 'FileVersion') = newVersion.
-			self assert: (each at: 'ProductVersion') = newVersion]!
+			[:each |
+			self assert: (each at: 'FileVersion') equals: newVersion.
+			self assert: (each at: 'ProductVersion') equals: newVersion]!
 
-assertVersionResource: versionResource equalTo: versionResource2 
+assertVersionResource: versionResource equalTo: versionResource2
 	| newStrings |
-	self assert: versionResource languageId = versionResource2 languageId.
+	self assert: versionResource languageId equals: versionResource2 languageId.
 	newStrings := versionResource2 stringTables.
 	self assert: (newStrings keys noDifference: versionResource stringTables keys).
 	newStrings values with: versionResource stringTables values
 		do: [:eachTable1 :eachTable2 | self assert: (eachTable1 associations noDifference: eachTable2 associations)].
-	self assert: versionResource pack = versionResource2 pack!
+	self assert: versionResource pack equals: versionResource2 pack!
 
 modifyVersionResource: versionResource
 	(versionResource stringTables values first)
@@ -56,12 +56,12 @@ testRoundTripUnpackPack
 	| packedBytes repackedBytes versionResource versionResource2 |
 	versionResource := VersionResource new unpack: sourceBytes yourAddress.
 	packedBytes := versionResource pack.
-	self assert: sourceBytes = packedBytes.
+	self assert: sourceBytes equals: packedBytes.
 	self modifyVersionResource: versionResource.
 	packedBytes := versionResource pack.
 	versionResource2 := VersionResource new unpack: packedBytes yourAddress.
 	repackedBytes := versionResource2 pack.
-	self assert: packedBytes = repackedBytes.
+	self assert: packedBytes equals: repackedBytes.
 	self assertVersionResource: versionResource equalTo: versionResource2!
 
 testRoundTripUpdate
@@ -69,7 +69,7 @@ testRoundTripUpdate
 	versionResource := VersionResource new unpack: sourceBytes yourAddress.
 	versionResource updateFile: updatePath.
 	versionResource2 := VersionResource forPath: updatePath.
-	self assert: sourceBytes = versionResource2 pack.
+	self assert: sourceBytes equals: versionResource2 pack.
 	self assertVersionResource: versionResource2 equalTo: versionResource.
 	self modifyVersionResource: versionResource.
 	versionResource updateFile: updatePath.
@@ -83,12 +83,12 @@ testVersionStrings
 	#'1598'.
 	res := VersionResource forPath: updatePath.
 	originalVersion := '1.0.0.1'.
-	self assert: res fileVersion = originalVersion.
+	self assert: res fileVersion equals: originalVersion.
 	newVersion := '101.202.303.404'.
 	res fileVersion: newVersion.
-	self assert: res fileVersion = newVersion.
-	self assert: res fixedInfo fileVersionString = newVersion.
-	self assert: res productVersion = originalVersion.
+	self assert: res fileVersion equals: newVersion.
+	self assert: res fixedInfo fileVersionString equals: newVersion.
+	self assert: res productVersion equals: originalVersion.
 	res productVersion: newVersion.
 	self assertResource: res atVersion: newVersion.
 	res bumpProductVersion.

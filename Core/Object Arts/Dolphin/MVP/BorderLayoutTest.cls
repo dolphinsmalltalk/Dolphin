@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManagerTest subclass: #BorderLayoutTest
 	instanceVariableNames: ''
@@ -19,17 +19,17 @@ testResourceBrowserPreview
 	| resourceId resourceView bmp container toolbox resources |
 	resourceId := ResourceIdentifier class: ResourceBrowser name: 'Default view'.
 	resourceView := 
-			[Smalltalk developmentSystem loadViewResource: resourceId resource inContext: View desktop] 
+			[Smalltalk developmentSystem loadViewResource: resourceId resource inContext: View desktop]
 					on: Error
 					do: [:x | ].
-	bmp := resourceView notNil 
+	bmp := resourceView notNil
 				ifTrue: 
 					[resourceView invalidateLayoutDeeply.
 					Bitmap fromView: resourceView]
 				ifFalse: [Error icon].
 	toolbox := resourceView viewNamed: 'resourceToolbox'.
 	resources := resourceView viewNamed: 'resources'.
-	self assert: (resources viewNamed: 'resources') extent x = resources extent x.
+	self assert: (resources viewNamed: 'resources') extent x equals: resources extent x.
 	resourceView destroy! !
 !BorderLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
 !BorderLayoutTest categoriesFor: #testResourceBrowserPreview!public!unit tests! !

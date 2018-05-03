@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PackageTest
 	instanceVariableNames: 'loadedPackages checkTimestamps'
@@ -13,39 +13,39 @@ PackageTest comment: ''!
 checkNoTestPackageContents
 	| scribbleTestClass scribbleClass |
 	scribbleTestClass := Smalltalk lookup: #ScribbleTest.
-	self assert: scribbleTestClass isNil.
+	self assertIsNil: scribbleTestClass.
 	scribbleClass := Smalltalk at: #Scribble.
-	self assert: (scribbleClass compiledMethodAt: #looseA ifAbsent: []) isNil.
-	self assert: (scribbleClass compiledMethodAt: #looseC ifAbsent: []) isNil.
-	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: []) isNil!
+	self assertIsNil: (scribbleClass compiledMethodAt: #looseA ifAbsent: []).
+	self assertIsNil: (scribbleClass compiledMethodAt: #looseC ifAbsent: []).
+	self assertIsNil: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: [])!
 
 checkTestPackageContents
 	| scribbleTestPackage scribbleTestClass scribbleTest scribbleTestResourceMethod scribbleTestDefaultViewId scribbleTestViewId scribbleClass resourceIds |
 	scribbleTestPackage := loadedPackages first.
 	self assert: (scribbleTestPackage name beginsWith: 'ScribbleTest').
 	scribbleTestClass := Smalltalk at: #ScribbleTest.
-	self assert: scribbleTestClass notNil.
+	self denyIsNil: scribbleTestClass.
 	self assert: (scribbleTestPackage classes identityIncludes: scribbleTestClass).
 	scribbleTestResourceMethod := scribbleTestClass class
 				compiledMethodAt: #resource_Default_scribble_test_view.
-	self assert: scribbleTestResourceMethod owningPackage = scribbleTestPackage.
+	self assert: scribbleTestResourceMethod owningPackage equals: scribbleTestPackage.
 	scribbleClass := Smalltalk at: #Scribble.
-	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage = scribbleTestPackage.
-	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage = scribbleTestPackage.
+	self assert: (scribbleClass compiledMethodAt: #looseA) owningPackage equals: scribbleTestPackage.
+	self assert: (scribbleClass compiledMethodAt: #looseC) owningPackage equals: scribbleTestPackage.
 	self assert: (scribbleClass class compiledMethodAt: #resource_Scribble_test) owningPackage
-				= scribbleTestPackage.
+		equals: scribbleTestPackage.
 	resourceIds := scribbleTestPackage allResourceIdentifiers.
-	self assert: resourceIds size = 2.
+	self assert: resourceIds size equals: 2.
 	scribbleTestDefaultViewId := ResourceIdentifier class: scribbleTestClass
 				name: 'Default scribble test view'.
 	self assert: (resourceIds includes: scribbleTestDefaultViewId).
-	self assert: scribbleTestDefaultViewId owningPackage = scribbleTestPackage.
+	self assert: scribbleTestDefaultViewId owningPackage equals: scribbleTestPackage.
 	scribbleTestViewId := ResourceIdentifier class: scribbleClass name: 'Scribble test'.
 	self assert: (resourceIds includes: scribbleTestViewId).
-	self assert: scribbleTestViewId owningPackage = scribbleTestPackage.
+	self assert: scribbleTestViewId owningPackage equals: scribbleTestPackage.
 	
 	[scribbleTest := scribbleTestClass show.
-	self assert: scribbleTest a = 'A']
+	self assert: scribbleTest a equals: 'A']
 			ensure: [scribbleTest view topView destroy]!
 
 d5ForwardRefTestPacContents
@@ -264,7 +264,7 @@ testLooseResourceIdentifiers
 	self assert: (notLoose allSatisfy: [:each | each owningClass owningPackage = each owningPackage])!
 
 testTimestampInitialized
-	self assert: Package new timestamp asInteger = 0! !
+	self assert: Package new timestamp asInteger equals: 0! !
 !PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #checkTestPackageContents!private!unit tests! !
 !PackageTest categoriesFor: #d5ForwardRefTestPacContents!private!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableListItemsTest subclass: #ListBoxTest
 	instanceVariableNames: ''
@@ -16,14 +16,15 @@ classToTest
 
 testLastSelectionCacheUpdatedOnRemove
 	"#717"
+
 	| objects |
 	objects := self objectsToTest.
 	presenter model addAll: objects.
 	self assert: presenter hasSelection not.
 	presenter selection: objects second.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(2).
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(2).
 	presenter model removeAtIndex: 1.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(1)! !
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1)! !
 !ListBoxTest categoriesFor: #classToTest!helpers!private! !
 !ListBoxTest categoriesFor: #testLastSelectionCacheUpdatedOnRemove!public!unit tests! !
 

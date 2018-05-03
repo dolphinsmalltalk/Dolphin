@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #ProtectInstanceVariableTest
 	instanceVariableNames: ''
@@ -12,18 +12,15 @@ ProtectInstanceVariableTest comment: ''!
 
 testProtectInstanceVariable
 	| refactoring class |
-	refactoring := ProtectInstanceVariableRefactoring 
-				variable: 'rewrite' , 'Rule1'
+	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite' , 'Rule1'
 				class: SubclassOfClassToRename.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #SubclassOfClassToRename.
-	self 
-		assert: (class parseTreeFor: #calls1) = (RBParser 
-						parseMethod: 'calls1
+	self assert: (class parseTreeFor: #calls1)
+		equals: (RBParser parseMethod: 'calls1
 								^rewriteRule1 := (rewriteRule1 := self calls)').
-	self 
-		assert: (class parseTreeFor: #calls) = (RBParser 
-						parseMethod: 'calls
+	self assert: (class parseTreeFor: #calls)
+		equals: (RBParser parseMethod: 'calls
 								^rewriteRule1 := rewriteRule1 , rewriteRule1').
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1') asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1:') asSymbol)!

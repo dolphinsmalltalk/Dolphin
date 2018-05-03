@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #ARGBTest
 	instanceVariableNames: ''
@@ -13,25 +13,25 @@ ARGBTest comment: ''!
 assertComponents: anArray isCode: anInteger
 	"Test the multiple constructors"
 
-	self 
-		assert: (ARGB 
+	self
+		assert: (ARGB
 				alpha: anArray first
 				red: anArray second
 				green: anArray third
-				blue: anArray fourth) asParameter 
-				= anInteger.
-	self assert: (ARGB fromArray: anArray) asParameter = anInteger.
-	self 
-		assert: (ARGB 
+				blue: anArray fourth) asParameter
+		equals: anInteger.
+	self assert: (ARGB fromArray: anArray) asParameter equals: anInteger.
+	self
+		assert: (ARGB
 				a: anArray first
 				r: anArray second
 				g: anArray third
-				b: anArray fourth) asParameter 
-				= anInteger!
+				b: anArray fourth) asParameter
+		equals: anInteger!
 
 testConstructionCommon
 	model := ARGB stdColor: #red.
-	self assert: model asParameter = 4294901760	"16rFFFF0000"!
+	self assert: model asParameter equals: 4294901760	"16rFFFF0000"!
 
 testConstructionValues
 	"#(
@@ -42,25 +42,25 @@ testConstructionValues
 	#(#(16rFF 16rFF 16rFF 16rFF) 16rFFFFFFFF)
 	)"
 
-	#(#(#(0 0 0 0) 0) #(#(255 0 0 0) 4278190080) #(#(255 255 0 0) 4294901760) #(#(255 255 255 0) 4294967040) #(#(255 255 255 255) 4294967295)) 
+	#(#(#(0 0 0 0) 0) #(#(255 0 0 0) 4278190080) #(#(255 255 0 0) 4294901760) #(#(255 255 255 0) 4294967040) #(#(255 255 255 255) 4294967295))
 		do: 
-			[:each | 
+			[:each |
 			| values |
 			values := each first.
 			self assertComponents: values isCode: each second.
-			self assert: (ARGB fromInteger: each second) red = values second.
-			self assert: (ARGB fromInteger: each second) green = values third.
-			self assert: (ARGB fromInteger: each second) blue = values fourth]!
+			self assert: (ARGB fromInteger: each second) red equals: values second.
+			self assert: (ARGB fromInteger: each second) green equals: values third.
+			self assert: (ARGB fromInteger: each second) blue equals: values fourth]!
 
 testEquality
 	model := ARGB stdColor: #red.
-	self assert: model = (ARGB stdColor: #red).
-	self deny: model = (ARGB stdColor: #blue).
+	self assert: model equals: (ARGB stdColor: #red).
+	self deny: model equals: (ARGB stdColor: #blue).
 	model hash!
 
 testPrintString
 	model := ARGB fromArray: #(1 2 3 4).
-	self assert: model printString = '(ARGB alpha: 1 red: 2 green: 3 blue: 4)'! !
+	self assert: model printString equals: '(ARGB alpha: 1 red: 2 green: 3 blue: 4)'! !
 !ARGBTest categoriesFor: #assertComponents:isCode:!asserting!public! !
 !ARGBTest categoriesFor: #testConstructionCommon!public!unit tests! !
 !ARGBTest categoriesFor: #testConstructionValues!public!unit tests! !

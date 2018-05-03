@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #LinkButtonTest
 	instanceVariableNames: ''
@@ -16,7 +16,7 @@ classToTest
 testClickLinkFiresCommand
 	| text |
 	presenter text: 'Test'.
-	self assert: presenter commandDescription description = 'Test'.
+	self assert: presenter commandDescription description equals: 'Test'.
 	"This command will cause the shell to be hidden when fired"
 	presenter command: #hide.
 	self assert: presenter isWindowVisible.
@@ -26,7 +26,7 @@ testClickLinkFiresCommand
 	"Now try clicking over an area of the text that is not part of the link"
 	text := 'Click <a>here</a> to hide me'.
 	presenter text: text.
-	self assert: presenter commandDescription description = 'Click here to hide me'.
+	self assert: presenter commandDescription description equals: 'Click here to hide me'.
 	SessionManager inputState pumpMessages.
 	self assert: presenter isWindowVisible.
 	self leftClickAt: 10 @ 10.
@@ -36,11 +36,11 @@ testGetSetText
 	presenter text: 'Test'.
 	"SysLink control seems to have a bug, and returns the length of the text plus the null
 	terminator in response to WM_GETTEXTLENGTH (the null is supposed to be excluded)"
-	self assert: presenter text = '<a>Test</a>'!
+	self assert: presenter text equals: '<a>Test</a>'!
 
 testQueryCommandEnablement
 	presenter text: 'Test'.
-	self assert: presenter commandDescription description = 'Test'.
+	self assert: presenter commandDescription description equals: 'Test'.
 	"This command will cause the shell to be hidden when fired"
 	presenter command: #test.
 	self assert: presenter isWindowVisible.

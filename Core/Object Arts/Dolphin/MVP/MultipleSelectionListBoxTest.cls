@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #MultipleSelectionListBoxTest
 	instanceVariableNames: 'box'
@@ -10,11 +10,11 @@ MultipleSelectionListBoxTest comment: 'Test that the behaviour of the deprecated
 !MultipleSelectionListBoxTest categoriesForClass!Unclassified! !
 !MultipleSelectionListBoxTest methodsFor!
 
-assertAllSelectionAre: anArray 
-	self assert: box selection = anArray.
-	self assert: box selectionOrNil = anArray.
-	self assert: box selectionByIndex = anArray.
-	self assert: (box selectionIfNone: [#()]) = anArray!
+assertAllSelectionAre: anArray
+	self assert: box selection equals: anArray.
+	self assert: box selectionOrNil equals: anArray.
+	self assert: box selectionByIndex equals: anArray.
+	self assert: (box selectionIfNone: [#()]) equals: anArray!
 
 classToTest
 	^MultipleSelectionListBox!
@@ -105,102 +105,102 @@ testSelectionCacheUpdated
 	box model list: (1 to: 6) asOrderedCollection.
 	box selections: #(1 3 5).
 	box model remove: 2.
-	self assert: (box instVarNamed: 'lastSelIndices') = box selectionsByIndex.
+	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex.
 	box model addFirst: 0.
-	self assert: (box instVarNamed: 'lastSelIndices') = box selectionsByIndex.
+	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex.
 	box model add: 4.5 afterIndex: 4.
-	self assert: (box instVarNamed: 'lastSelIndices') = box selectionsByIndex.
+	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex.
 	box model remove: 1.
-	self assert: (box instVarNamed: 'lastSelIndices') = box selectionsByIndex!
+	self assert: (box instVarNamed: 'lastSelIndices') equals: box selectionsByIndex!
 
 testSelectionIfAbsent
 	"Test legacy selection behaviour is maintained (even though it is incorrect)"
 
 	| selections |
 	box model list: (1 to: 6) asOrderedCollection.
-	#(#selection:ifAbsent: #selectionByIndex:ifAbsent: #selections:ifAbsent: #selectionsByIndex:ifAbsent:) 
+	#(#selection:ifAbsent: #selectionByIndex:ifAbsent: #selections:ifAbsent: #selectionsByIndex:ifAbsent:)
 		do: 
-			[:each | 
+			[:each |
 			| missing answer |
 			missing := OrderedCollection new.
-			self 
+			self
 				should: 
-					[answer := box 
+					[answer := box
 								perform: each
 								with: (0 to: 7)
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
 			"Might answer argument, or actual selections"
-			self assert: box selections = (1 to: 6) asArray.
-			self assert: missing asArray = #(0 7).
-			self assert: answer == missing.
+			self assert: box selections equals: (1 to: 6) asArray.
+			self assert: missing asArray equals: #(0 7).
+			self assert: answer identicalTo: missing.
 			"Apply the same selection again - no change so no event"
 			missing := nil.
-			self 
+			self
 				shouldnt: 
-					[answer := box 
+					[answer := box
 								perform: each
 								with: (0 to: 7)
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
-			self assert: missing asArray = #(0 7).
-			self assert: answer == missing.
-			self assert: box selections = (1 to: 6) asArray.
+			self assert: missing asArray equals: #(0 7).
+			self assert: answer identicalTo: missing.
+			self assert: box selections equals: (1 to: 6) asArray.
 			"Apply the same selection again, but this time with none of the selections being missing - again no change"
 			missing := nil.
-			self 
+			self
 				shouldnt: 
-					[answer := box 
+					[answer := box
 								perform: each
 								with: (1 to: 6)
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
-			self assert: missing isNil.
+			self assertIsNil: missing.
 			"		self assert: (answer noDifference: (1 to: 6))."
-			self assert: box selections = (1 to: 6) asArray.
+			self assert: box selections equals: (1 to: 6) asArray.
 			"Remove a selection or two"
 			selections := #(0 2 4 5).
-			self 
+			self
 				should: 
-					[answer := box 
+					[answer := box
 								perform: each
 								with: selections
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
-			self assert: box selections = (selections select: [:eachSel | eachSel between: 1 and: 6]).
-			self assert: missing asArray = #(0).
-			self assert: answer == missing.
+			self assert: box selections equals: (selections select: [:eachSel | eachSel between: 1 and: 6]).
+			self assert: missing asArray equals: #(0).
+			self assert: answer identicalTo: missing.
 			"Add a couple back"
-			self 
+			self
 				should: 
 					[selections := #(2 3 4 5 6 8).
-					answer := box 
+					answer := box
 								perform: each
 								with: selections
 								with: [:nope | missing := nope]]
 				trigger: #selectionChanged
 				against: box.
-			self assert: box selections = (selections select: [:each | each between: 1 and: 6]).
-			self assert: missing asArray = #(8).
-			self assert: answer == missing.
+			self assert: box selections equals: (selections select: [:each | each between: 1 and: 6]).
+			self assert: missing asArray equals: #(8).
+			self assert: answer identicalTo: missing.
 
 			"Reset selection"
-			self 
+			self
 				should: 
-					[box 
+					[box
 						perform: each
 						with: #()
 						with: [self assert: false]]
 				trigger: #selectionChanged
 				against: box.
 			"And again - should be no change"
-			self 
+			self
 				shouldnt: 
-					[box 
+					[box
 						perform: each
 						with: #()
 						with: [self assert: false]]

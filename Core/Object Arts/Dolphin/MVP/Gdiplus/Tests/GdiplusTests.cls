@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
@@ -15,7 +15,7 @@ assertPersistedValid
 	| recreated |
 	recreated := Object fromBinaryStoreBytes: model binaryStoreBytes.
 	"Asking recreated for it's handle should find any errors"
-	self assert: recreated handle class == ExternalHandle!
+	self assert: recreated handle class identicalTo: ExternalHandle!
 
 compare: x to: y
 	"Compare that the two <Float> values are equivalent to within the specified <Float> difference."

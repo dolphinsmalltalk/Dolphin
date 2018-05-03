@@ -30,31 +30,28 @@ borderRectangleOf: aView
 
 	^0 @ 0 extent: aView extent - 1 asPoint!
 
-checkBorderedNcRectangle: borderWidth 
+checkBorderedNcRectangle: borderWidth
 	"Private - Check that applying a border correctly changes the NC and Client rectagle calcs"
 
 	| clientRect parentRect calcClientRect calcNcRect |
 	clientRect := containerView clientRectangle.
 	parentRect := containerView rectangle.
-	self assert: clientRect position = Point zero.
-	self assert: clientRect extent = (parentRect extent - (borderWidth * 2) asPoint).
-	self assert: parentRect position = containerView position.
-
+	self assert: clientRect position equals: Point zero.
+	self assert: clientRect extent equals: parentRect extent - (borderWidth * 2) asPoint.
+	self assert: parentRect position equals: containerView position.
 	calcClientRect := containerView calcClientRectangleFromRectangle: parentRect.
-	self assert: calcClientRect position = Point zero.
-	self assert: calcClientRect extent = (parentRect extent - (borderWidth * 2) asPoint).
-
+	self assert: calcClientRect position equals: Point zero.
+	self assert: calcClientRect extent equals: parentRect extent - (borderWidth * 2) asPoint.
 	calcNcRect := containerView calcRectangleFromClientRectangle: clientRect.
-	self assert: calcNcRect position = (Point zero - (borderWidth) asPoint).
-	self assert: calcNcRect extent = (clientRect extent + (2*borderWidth) asPoint).
-	self assert: calcNcRect extent = parentRect extent.
-
+	self assert: calcNcRect position equals: Point zero - borderWidth asPoint.
+	self assert: calcNcRect extent equals: clientRect extent + (2 * borderWidth) asPoint.
+	self assert: calcNcRect extent equals: parentRect extent.
 	calcNcRect := containerView calcRectangleFromClientRectangle: calcClientRect.
-	self assert: calcNcRect position = (Point zero - borderWidth asPoint).
-	self assert: calcNcRect extent = (clientRect extent + (2*borderWidth) asPoint).
-	self assert: calcNcRect extent = parentRect extent!
+	self assert: calcNcRect position equals: Point zero - borderWidth asPoint.
+	self assert: calcNcRect extent equals: clientRect extent + (2 * borderWidth) asPoint.
+	self assert: calcNcRect extent equals: parentRect extent!
 
-checkPoints: aPointsArray inBitmap: bitmap color: color 
+checkPoints: aPointsArray inBitmap: bitmap color: color
 	"
 	ImagePresenter showOn: bitmap
 	"
@@ -62,8 +59,8 @@ checkPoints: aPointsArray inBitmap: bitmap color: color
 	| bitmapCanvas requiredColor foundColorValue |
 	bitmapCanvas := bitmap canvas.
 	requiredColor := color asRGB.
-	aPointsArray 
-		do: [:each | self assert: (foundColorValue := bitmapCanvas pixelAt: each) = requiredColor]!
+	aPointsArray
+		do: [:each | self assert: (foundColorValue := bitmapCanvas pixelAt: each) equals: requiredColor]!
 
 checkRectangle: rect inBitmap: bitmap color: color 
 	"
@@ -113,13 +110,13 @@ testNcCalcSize
 
 	| rect params ret parentRect |
 	rect := RECT fromRectangle: containerView rectangle.
-	self assert: rect asRectangle = self initialParentRect.
+	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
-	self assert: ret = 0.
-	self assert: rect asRectangle = self initialParentRect.
+	self assert: ret equals: 0.
+	self assert: rect asRectangle equals: self initialParentRect.
 
 	"Border off advanced test"
 	params := NCCALCSIZE_PARAMS new.
@@ -129,19 +126,19 @@ testNcCalcSize
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
 				lpParam: params asParameter.
-	self assert: ret = 0.
+	self assert: ret equals: 0.
 
 	"Border on simple test"
 	containerView hasBorder: true.
 	rect := RECT fromRectangle: containerView rectangle.
-	self assert: rect asRectangle = self initialParentRect.
+	self assert: rect asRectangle equals: self initialParentRect.
 	ret := containerView
 				sendMessage: WM_NCCALCSIZE
 				wParam: false asParameter
 				lpParam: rect asParameter.
-	self assert: ret = 0.
-	self assert: rect topLeft = (self initialParentRect topLeft + 1 asPoint).
-	self assert: rect bottomRight = (self initialParentRect bottomRight - 1 asPoint).
+	self assert: ret equals: 0.
+	self assert: rect topLeft equals: self initialParentRect topLeft + 1 asPoint.
+	self assert: rect bottomRight equals: self initialParentRect bottomRight - 1 asPoint.
 
 	"Border on advanced test"
 	params := NCCALCSIZE_PARAMS new.
@@ -151,7 +148,7 @@ testNcCalcSize
 				sendMessage: WM_NCCALCSIZE
 				wParam: true asParameter
 				lpParam: params asParameter.
-	self assert: ret = 0!
+	self assert: ret equals: 0!
 
 testNonBorderedNcRectangle
 	"Check that applying a border correctly changes the NC and Client rectagle calcs"
@@ -160,24 +157,18 @@ testNonBorderedNcRectangle
 	self deny: containerView hasBorder.
 	clientRect := containerView clientRectangle.
 	parentRect := containerView rectangle.
-	self assert: clientRect position=Point zero.
-	self assert: clientRect extent=parentRect extent.
-	self assert: parentRect position=containerView position.
-
+	self assert: clientRect position equals: Point zero.
+	self assert: clientRect extent equals: parentRect extent.
+	self assert: parentRect position equals: containerView position.
 	calcClientRect := containerView calcClientRectangleFromRectangle: parentRect.
-	self assert: calcClientRect position=Point zero.
-	self assert: calcClientRect extent=parentRect extent.	
-
+	self assert: calcClientRect position equals: Point zero.
+	self assert: calcClientRect extent equals: parentRect extent.
 	calcNcRect := containerView calcRectangleFromClientRectangle: clientRect.
-	self assert: calcNcRect position=Point zero.
-	self assert: calcNcRect extent=clientRect extent.	
-
-	calcNcRect := containerView calcRectangleFromClientRectangle: calcClientRect .
-	self assert: calcNcRect position=Point zero.
-	self assert: calcNcRect extent=clientRect extent.	
-
-
-	!
+	self assert: calcNcRect position equals: Point zero.
+	self assert: calcNcRect extent equals: clientRect extent.
+	calcNcRect := containerView calcRectangleFromClientRectangle: calcClientRect.
+	self assert: calcNcRect position equals: Point zero.
+	self assert: calcNcRect extent equals: clientRect extent!
 
 waitForScreenUpdate
 	containerView topView update.

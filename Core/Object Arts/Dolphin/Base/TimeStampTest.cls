@@ -33,7 +33,7 @@ testAsMilliseconds
 	self assert: current asMilliseconds
 		equals: current date asMilliseconds + current time asMilliseconds.
 	self assert: 1 equals: (TimeStamp fromMilliseconds: 1) asMilliseconds.
-	self deny: 1 = (TimeStamp fromMilliseconds: 2) asMilliseconds.
+	self deny: 1 equals: (TimeStamp fromMilliseconds: 2) asMilliseconds.
 	self assert: 9999999999999999999999999999
 		equals: (TimeStamp fromMilliseconds: 9999999999999999999999999999) asMilliseconds!
 
@@ -42,7 +42,7 @@ testAsSeconds
 	current := self currentTimeStamp.
 	self assert: current asSeconds equals: current date asSeconds + current time asSeconds.
 	self assert: 1 equals: (TimeStamp fromSeconds: 1) asSeconds.
-	self deny: 1 = (TimeStamp fromSeconds: 2) asSeconds.
+	self deny: 1 equals: (TimeStamp fromSeconds: 2) asSeconds.
 	self assert: 99999999999999999 equals: (TimeStamp fromSeconds: 99999999999999999) asSeconds!
 
 testCurrentUTC

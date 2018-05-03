@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #AnnouncementSetTest
 	instanceVariableNames: ''
@@ -11,14 +11,14 @@ AnnouncementSetTest comment: 'SUnit tests for announcement sets'!
 !AnnouncementSetTest methodsFor!
 
 testIncludeOnlyOnce
-	|set|
-	set := AnnouncementMockA, AnnouncementMockB, AnnouncementMockA.
-	self assert: set size = 2!
+	| set |
+	set := AnnouncementMockA , AnnouncementMockB , AnnouncementMockA.
+	self assert: set size equals: 2!
 
 testInstanceCreation
-	|set|
-	set := AnnouncementMockA, AnnouncementMockB.
-	self assert: set size = 2 ! !
+	| set |
+	set := AnnouncementMockA , AnnouncementMockB.
+	self assert: set size equals: 2! !
 !AnnouncementSetTest categoriesFor: #testIncludeOnlyOnce!public!testing! !
 !AnnouncementSetTest categoriesFor: #testInstanceCreation!public!testing! !
 

@@ -60,7 +60,7 @@ createPrimitiveMethod: anInteger in: aBehavior argCount: argc setsFailCode: aBoo
 		nextPutAll: '> ^''failed'''.
 	aBoolean ifTrue: [text nextPutAll: ', Processor activeProcess primitiveFailureCode printString'].
 	method := Compiler compile: text contents in: aBehavior.
-	self assert: method ~~ nil.
+	self deny: method identicalTo: nil.
 	^method!
 
 createPrimitiveMethodLike: aCompiledMethod setsFailCode: aBoolean
@@ -70,7 +70,7 @@ createPrimitiveMethodLike: aCompiledMethod setsFailCode: aBoolean
 		argCount: aCompiledMethod argumentCount
 		setsFailCode: aBoolean!
 
-earlyTermination: aBoolean 
+earlyTermination: aBoolean
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
 	problems in the VM, so debugging at the Smalltalk level is not terribly useful anyway."
 
@@ -84,7 +84,7 @@ earlyTermination: aBoolean
 			
 			[a := 2.
 			KernelLibrary default sleep: 30] ifCurtailed: [a := 0].
-			a := 3] 
+			a := 3]
 					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting description: 'Proc should be blocked on the overlapped call semaphore'.
 	self assert: a == 2 description: 'Not at stage 2'.
@@ -93,18 +93,17 @@ earlyTermination: aBoolean
 	aCopy := a.
 	list := proc suspendingList.
 	state := proc state.
-	state == #dead 
+	state == #dead
 		ifTrue: [self assert: aCopy == 0 | (aCopy == 3)]
 		ifFalse: 
-			["On occasion NT will put Dolphin to sleep for 50mS+ and consequentlty the Process will have finished up anyway"
+			[| count |
+			"On occasion NT will put Dolphin to sleep for 50mS+ and consequentlty the Process will have finished up anyway"
 
 			"The Process will not be able to terminate until the overlapped call completes"
-			| count |
-			self 
-				assert: (list == Processor pendingTerminations or: [list == (proc instVarNamed: 'threadSync')]).
+			self assert: (list == Processor pendingTerminations or: [list == (proc instVarNamed: 'threadSync')]).
 			"a will still be run, because the VM will not reschedule the process to run the curtailment block until the overlapped
 		call can be terminated."
-			self assert: aCopy == 2.
+			self assert: aCopy identicalTo: 2.
 
 			"Let the sleep: complete (allow a reasonable period so we can be fairly sure  it does)"
 			count := 0.
@@ -112,7 +111,7 @@ earlyTermination: aBoolean
 					[Processor sleep: 1.
 					count := count + 1].
 			"The curtailment block should now have run"
-			self assert: a == 0.
+			self assert: a identicalTo: 0.
 			"and the process should have died"
 			self assert: proc isTerminated.
 			self assert: Processor pendingTerminations isEmpty]!
@@ -132,14 +131,15 @@ exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger w
 		startingAt: startAtInteger.
 	"The fixed fields should not have been touched"
 	fieldsAfter := captureFields value: target.
-	self assert: fieldsAfter = fieldsBefore.
+	self assert: fieldsAfter equals: fieldsBefore.
 	"Build the expected result using low-level operations to avoid inadvertently using the primitive under test"
 	expected := targetCollection class ofSize: targetCollection size.
 	1 to: startInteger - 1 do: [:i | expected at: i put: (targetCollection at: i)].
-	startInteger to: stopInteger do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
+	startInteger to: stopInteger
+		do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
 	stopInteger + 1 to: targetCollection size do: [:i | expected at: i put: (targetCollection at: i)].
 	"Did it work?"
-	self assert: target = expected!
+	self assert: target equals: expected!
 
 exerciseReplaceElementsOf: targetCollection with: sourceCollection
 	| target |
@@ -343,35 +343,39 @@ suspendAndTerminate
 	| proc a i |
 	"1) Call requests completion, but is suspended before Interpreter allows it to complete, then terminated"
 	self assert: Processor pendingTerminations isEmpty.
-
-	proc := [a := 1. KernelLibrary default sleep: 10. a := 2] forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
-	self assert: (proc isWaiting).		"proc should be blocked on the overlapped call semaphore"
-	self assert: a == 1.
-	proc suspend.				"suspend it before it gets a chance to queue its termination request"
-	self assert: (proc isSuspended).
-	Processor sleep: 20.			"wait for the overlapped call to complete"
-	self assert: (proc isSuspended).
-	self assert: a ==1.
+	proc := 
+			[a := 1.
+			KernelLibrary default sleep: 10.
+			a := 2] forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
+	self assert: proc isWaiting.	"proc should be blocked on the overlapped call semaphore"
+	self assert: a identicalTo: 1.
+	proc suspend.	"suspend it before it gets a chance to queue its termination request"
+	self assert: proc isSuspended.
+	Processor sleep: 20.	"wait for the overlapped call to complete"
+	self assert: proc isSuspended.
+	self assert: a identicalTo: 1.
 	proc terminate.
 	i := 1.
-	[Processor sleep: 10. proc isTerminated or: [i > 100]] whileFalse: [i := i + 1].
+	
+	[Processor sleep: 10.
+	proc isTerminated or: [i > 100]] whileFalse: [i := i + 1].
 	self assert: proc isTerminated.
-	self assert: a == 1.
-
-	self assert: Processor pendingTerminations isEmpty.
+	self assert: a identicalTo: 1.
+	self assert: Processor pendingTerminations isEmpty
 
 	"2) Ditto, but resumed and so allowed to complete"!
 
 testBSTRArg
 	"#1377 - Make sure there is no problem in the VM's automatic conversion of a string to a BSTR.
 	In an unpatched VM this typically crashes the whole system."
+
 	| dom |
 	dom := IXMLDOMDocument new.
 	1000 timesRepeat: 
 			[| instr |
 			instr := dom createProcessingInstruction: 'ATarget' data: 'Some data'.
-			self assert: instr data = 'Some data'.
-			self assert: instr target = 'ATarget'.
+			self assert: instr data equals: 'Some data'.
+			self assert: instr target equals: 'ATarget'.
 			instr free]!
 
 testCRTFault
@@ -400,7 +404,7 @@ testDwordAtOffsetPut
 	4 to: max
 		by: 4
 		do: 
-			[:each | 
+			[:each |
 			bytes := ByteArray new: each - 1.
 			self should: [bytes dwordAtOffset: each - 4 put: 1] raise: BoundsError.
 			bytes := ByteArray new: each.
@@ -408,25 +412,25 @@ testDwordAtOffsetPut
 			dword := (2 raisedToInteger: 31) - 1.
 			self assert: dword isImmutable.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = dword.
+			self assert: (bytes dwordAtOffset: each - 4) equals: dword.
 			"This large integer will be 8-bytes long"
 			dword := dword + 1.
 			self assert: dword isImmutable.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = dword.
+			self assert: (bytes dwordAtOffset: each - 4) equals: dword.
 			dword := 16rFFFFFFFF.
 			self assert: dword isImmutable.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: bytes = ((ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF]).
+			self assert: bytes equals: (ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF].
 			bytes dwordAtOffset: each - 4 put: #[16rAA 16rBB 16rCC 16rDD].
-			self assert: (bytes dwordAtOffset: each - 4) = 16rDDCCBBAA.
+			self assert: (bytes dwordAtOffset: each - 4) equals: 16rDDCCBBAA.
 			dword := DWORD fromInteger: 16r11223344.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = 16r11223344.
+			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
 			dword isImmutable: true.
 			bytes := ByteArray new: each.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = 16r11223344.
+			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
 			bytes := ByteArray new: each.
 			bytes isImmutable: true.
 			self should: [bytes dwordAtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
@@ -498,7 +502,7 @@ testExtCallRetHRESULT
 			| result |
 			result := method value: VMLibrary default withArguments: {each}.
 			self assert: result equals: each.
-			self assert: each class == result class].
+			self assert: each class identicalTo: result class].
 	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code."
 	#(-1 -16r40000000 -16r40000001 -16r80000000) do: 
 			[:each |
@@ -506,7 +510,7 @@ testExtCallRetHRESULT
 			result := method value: VMLibrary default withArguments: {each}.
 			self assert: result key equals: -1.
 			self assert: result value equals: each.
-			self assert: each class == result value class]!
+			self assert: each class identicalTo: result value class]!
 
 testExtCallRetLpwstr
 	| expected actual method |
@@ -714,11 +718,11 @@ testImmutableResize
 testImmutableStringCompare
 	| s1 s2 |
 	s1 := 'abc'.
-	s2 := String 
+	s2 := String
 				with: $a
 				with: $b
 				with: $c.
-	self assert: s1 = s2!
+	self assert: s1 equals: s2!
 
 testImmutableWriteAccessors
 	| class inst |
@@ -1000,26 +1004,26 @@ testIntDivideByZero
 testMakeLargeUnsigned
 	| bytes |
 	bytes := ByteArray new: 8.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) == 0.
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: 0.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: 1.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) == 1.
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: 1.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: SmallInteger maximum.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) == SmallInteger maximum.
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: SmallInteger maximum.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: SmallInteger minimum.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) 
-				= ((2 raisedToInteger: 64) + SmallInteger minimum).
+	self assert: (VMLibrary default makeLargeUnsigned: bytes)
+		equals: (2 raisedToInteger: 64) + SmallInteger minimum.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: (2 raisedToInteger: 31).
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) = (2 raisedToInteger: 31).
-	self assert: (VMLibrary default makeLargeUnsigned: Float fmax) 
-				= (#[255 255 255 255 255 255 239 127] qwordAtOffset: 0).
-	self assert: (VMLibrary default makeLargeUnsigned: Float fminNormalized) 
-				= (Float fminNormalized shallowCopy becomeA: LargeInteger).
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 31).
+	self assert: (VMLibrary default makeLargeUnsigned: Float fmax)
+		equals: (#[255 255 255 255 255 255 239 127] qwordAtOffset: 0).
+	self assert: (VMLibrary default makeLargeUnsigned: Float fminNormalized)
+		equals: (Float fminNormalized shallowCopy becomeA: LargeInteger).
 	"#1130"
-	#(16r7FFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFF) 
+	#(16r7FFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFF)
 		do: [:each | (VMLibrary default makeLargeUnsigned: each) = each]!
 
 testMustBeBoolean
@@ -1047,11 +1051,11 @@ testMustBeBoolean
 	self assert: (pseudoTrue and: [true]).
 	self deny: (pseudoFalse and: [true]).
 	"short jump if false"
-	self assert: (pseudoTrue ifTrue: [1] ifFalse: [2]) = 1.
-	self assert: (pseudoFalse ifTrue: [1] ifFalse: [2]) = 2.
+	self assert: (pseudoTrue ifTrue: [1] ifFalse: [2]) equals: 1.
+	self assert: (pseudoFalse ifTrue: [1] ifFalse: [2]) equals: 2.
 	"Near jump if false"
-	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) = (1 + 2 + 3 + 4).
-	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) = 2!
+	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 1 + 2 + 3 + 4.
+	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 2!
 
 testOverlappedCallsSuspendAndTerminate
 	5 timesRepeat: [self suspendAndTerminate]!
@@ -1318,7 +1322,7 @@ testPrimitiveInstanceCounts
 	| stats counts |
 	stats := MemoryManager current primInstanceStats: nil.
 	"Kick a couple of tyres"
-	self assert: stats size \\ 3 == 0.
+	self assert: stats size \\ 3 identicalTo: 0.
 	counts := IdentityDictionary new.
 	1 to: stats size
 		by: 3
@@ -1366,7 +1370,7 @@ testPrimitiveInstanceCounts2
 	"Some sanity checks that the stats look reasonable."
 	counts
 		keysAndValuesDo: [:eachClass :eachCount | eachClass isNonInstantiable ifTrue: [self assert: eachCount equals: 0]].
-	self assert: (counts at: Symbol) = Symbol primAllInstances size.
+	self assert: (counts at: Symbol) equals: Symbol primAllInstances size.
 	self assert: (counts at: AnsiString) > 30000.
 	self assert: (counts at: Object) < 100.
 	self assert: (counts at: VMLibrary) equals: 1.
@@ -1505,12 +1509,11 @@ testPrimitiveIsKindOf
 					[self deny: (method value: subject withArguments: {Behavior}).
 					self deny: (method value: subject withArguments: {Object class})]].
 	proto := ProtoObject new.
-	self assert: (proto isKindOf: ProtoObject).
-	self assert: (proto isKindOf: nil).
+	self assert: proto isKindOf: ProtoObject.
+	self assert: proto isKindOf: nil.
 	self deny: (proto isKindOf: ProtoObject class).
 	self deny: (proto isKindOf: 1).
-	self deny: (proto isKindOf: Object).
-!
+	self deny: (proto isKindOf: Object)!
 
 testPrimitiveIsNullBytes
 	| addr handle |
@@ -2067,7 +2070,7 @@ testPrimitiveStringCmp
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
-			self assert: result class == expected class.
+			self assert: result class identicalTo: expected class.
 			self assert: result equals: expected].
 	(self has7XOrLater: 52)
 		ifTrue: 
@@ -2088,7 +2091,7 @@ testPrimitiveStringCollate
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
-			self assert: result class == expected class.
+			self assert: result class identicalTo: expected class.
 			self assert: result equals: expected].
 	(self has7XOrLater: 52)
 		ifTrue: 
@@ -2138,29 +2141,30 @@ testPrimitiveSubtract
 			[:each |
 			| subject result operand expected |
 			subject := each first.
-			self assert: subject class == SmallInteger.
+			self assert: subject class identicalTo: SmallInteger.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
-			self assert: result class == expected class.
+			self assert: result class identicalTo: expected class.
 			self assert: result equals: expected]!
 
 testPrimitiveYourAddress
 	| method |
 	method := self createPrimitiveMethodLike: Object >> #yourAddress setsFailCode: false.
 	#('' 'abc') do: 
-			[:each || addr |
+			[:each |
+			| addr |
 			addr := method value: each withArguments: #().
-			self deny: addr == 0.
+			self deny: addr identicalTo: 0.
 			self assert: (each class fromAddress: each yourAddress) equals: each].
 	"Bug: #yourAddress returns 0 for an empty byte array?"
-	#(#[]#[1 2 3]) do: 
-			[:each || addr |
+	#(#[] #[1 2 3]) do: 
+			[:each |
+			| addr |
 			addr := method value: each withArguments: #().
-			self deny: addr == 0.
+			self deny: addr identicalTo: 0.
 			self assert: (ByteArray fromAddress: addr length: each size) equals: each].
-	self assert: (method value: nil withArguments: #()) equals: 0.
-!
+	self assert: (method value: nil withArguments: #()) equals: 0!
 
 testQwordAtOffset
 	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
@@ -2224,18 +2228,18 @@ testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
 	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF 16r80000000 16rFFFFFFFF) do: 
-			[:each | 
+			[:each |
 			| signed expected dword |
 			self assert: each isImmutable.
 			expected := each > 16r7FFFFFFF ifTrue: [each - 16rFFFFFFFF - 1] ifFalse: [each].
 			signed := VMLibrary default signedFromUnsigned: each.
-			self assert: signed = expected.
-			each class == SmallInteger 
+			self assert: signed equals: expected.
+			each class == SmallInteger
 				ifFalse: 
 					[dword := each + 1 - 1.
 					self assert: dword isImmutable.
 					signed := VMLibrary default signedFromUnsigned: dword.
-					self assert: signed = expected.
+					self assert: signed equals: expected.
 					self assert: signed isImmutable]].
 	self should: [VMLibrary default signedFromUnsigned: 16r100000000] raise: Error.
 	self should: [VMLibrary default signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
@@ -2341,13 +2345,13 @@ testWeakMournerNotifications
 	MemoryManager current collectGarbage.
 	"Weak array should have been notified of loss of obj1 and obj3"
 	self assert: (losses at: id1) equals: 2.
-	self assert: subject1 first == DeadObject current.
-	self assert: subject1 second == obj2.
-	self assert: subject1 third == DeadObject current.
+	self assert: subject1 first identicalTo: DeadObject current.
+	self assert: subject1 second identicalTo: obj2.
+	self assert: subject1 third identicalTo: DeadObject current.
 	self assert: (losses at: id2) equals: 2.
-	self assert: subject2 first == DeadObject current.
-	self assert: subject2 second == obj2.
-	self assert: subject2 third == DeadObject current.
+	self assert: subject2 first identicalTo: DeadObject current.
+	self assert: subject2 second identicalTo: obj2.
+	self assert: subject2 third identicalTo: DeadObject current.
 	obj2 := subject1 := subject2 := nil.
 	MemoryManager current collectGarbage.
 	"Garbage weak array should not have been notified of loss of obj2 as it was collected in same GC cycle"

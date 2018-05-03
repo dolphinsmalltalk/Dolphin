@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #CanvasTest
 	instanceVariableNames: ''
@@ -16,20 +16,20 @@ testFont
 	| canvas font newFont oldFont |
 	canvas := Canvas forDesktop.
 	font := canvas font.
-	self assert: font notNil.
+	self denyIsNil: font.
 	newFont := Font name: 'Arial' pointSize: 10.
 	oldFont := canvas font: newFont.
-	self assert: oldFont notNil.
-	self assert: font = oldFont.
-	self assert: canvas font = newFont.
+	self denyIsNil: oldFont.
+	self assert: font equals: oldFont.
+	self assert: canvas font equals: newFont.
 	font := canvas font: oldFont.
-	self assert: font == newFont.
-	self assert: canvas font == oldFont!
+	self assert: font identicalTo: newFont.
+	self assert: canvas font identicalTo: oldFont!
 
 testOutlineTextMetrics
 	"For #1349"
 
-	| font canvas otm last|
+	| font canvas otm last |
 	(Canvas canUnderstand: #outlineTextMetrics) ifFalse: [^self].
 	font := Font name: 'Comic Sans MS' pointSize: 22.
 	canvas := Canvas forDisplay.
@@ -42,16 +42,16 @@ testOutlineTextMetrics
 	so the structures may not be strictly equal based on a byte-by-byte comparison."
 	last := (TEXTMETRICW offsetOf: #tmCharSet) + 1.
 	self assert: (canvas textMetrics bytes copyFrom: 1 to: last)
-				= (otm otmTextMetrics bytes copyFrom: 1 to: last).
+		equals: (otm otmTextMetrics bytes copyFrom: 1 to: last).
 	"Canvas is no longer needed"
 	canvas free.
 	"The tricky bit about getting the OTM is the way that the structure varies in size and 
 	the certain strings are then stored in the variable length portion at the end, the offset
 	of the strings being specified by other fields."
-	self assert: otm styleName = 'Regular'.
-	self assert: otm fullName = 'Microsoft Comic Sans'.
-	self assert: otm faceName = font name.
-	self assert: otm familyName = font name! !
+	self assert: otm styleName equals: 'Regular'.
+	self assert: otm fullName equals: 'Microsoft Comic Sans'.
+	self assert: otm faceName equals: font name.
+	self assert: otm familyName equals: font name! !
 !CanvasTest categoriesFor: #testFont!public!unit tests! !
 !CanvasTest categoriesFor: #testOutlineTextMetrics!public!unit tests! !
 

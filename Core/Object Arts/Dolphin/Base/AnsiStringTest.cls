@@ -20,30 +20,29 @@ collectionClass
 	^AnsiString!
 
 testAsPhrase
-	self assert: #'' asPhrase = ''.
-	self assert: #= asPhrase = '='.
-	self assert: ':=' asSymbol asPhrase = '='.
-	self assert: ':=:=' asSymbol asPhrase = '= ='.
-	self assert: #x asPhrase = 'X'.
-	self assert: #nl asPhrase = 'Nl'.
-	self assert: #x: asPhrase = 'X'.
-	self assert: ':' asSymbol asPhrase = ''.
-	self assert: '::' asSymbol asPhrase = ''.
-	self assert: ':a' asSymbol asPhrase = 'A'.
-	self assert: ':A' asSymbol asPhrase = 'A'.
-	self assert: ':a:' asSymbol asPhrase = 'A'.
-	self assert: ':A:' asSymbol asPhrase = 'A'.
-	self assert: '::a:' asSymbol asPhrase = 'A'.
-	self assert: '::A:' asSymbol asPhrase = 'A'.
-	self assert: '::a:b::c:D::E:f::G::h:' asSymbol asPhrase = 'A B C D E F G H'.
-	self assert: #assert: asPhrase = 'Assert'.
-	self assert: #testAsPhrase asPhrase = 'Test As Phrase'.
-	self assert: #newCopy: asPhrase = 'New Copy'.
-	self 
-		assert: #replaceFrom:to:with:startingAt: asPhrase = 'Replace From To With Starting At'.
-	self assert: #AXMethodName asPhrase = 'AXMethod Name'.
-	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase =
-			'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'.!
+	self assert: #'' asPhrase equals: ''.
+	self assert: #= asPhrase equals: '='.
+	self assert: ':=' asSymbol asPhrase equals: '='.
+	self assert: ':=:=' asSymbol asPhrase equals: '= ='.
+	self assert: #x asPhrase equals: 'X'.
+	self assert: #nl asPhrase equals: 'Nl'.
+	self assert: #x: asPhrase equals: 'X'.
+	self assert: ':' asSymbol asPhrase equals: ''.
+	self assert: '::' asSymbol asPhrase equals: ''.
+	self assert: ':a' asSymbol asPhrase equals: 'A'.
+	self assert: ':A' asSymbol asPhrase equals: 'A'.
+	self assert: ':a:' asSymbol asPhrase equals: 'A'.
+	self assert: ':A:' asSymbol asPhrase equals: 'A'.
+	self assert: '::a:' asSymbol asPhrase equals: 'A'.
+	self assert: '::A:' asSymbol asPhrase equals: 'A'.
+	self assert: '::a:b::c:D::E:f::G::h:' asSymbol asPhrase equals: 'A B C D E F G H'.
+	self assert: #assert: asPhrase equals: 'Assert'.
+	self assert: #testAsPhrase asPhrase equals: 'Test As Phrase'.
+	self assert: #newCopy: asPhrase equals: 'New Copy'.
+	self assert: #replaceFrom:to:with:startingAt: asPhrase equals: 'Replace From To With Starting At'.
+	self assert: #AXMethodName asPhrase equals: 'AXMethod Name'.
+	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase
+		equals: 'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'!
 
 testClassWith
 	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
@@ -57,9 +56,9 @@ testIndexOfSubCollectionStartingAtGPF
 	strings := OrderedCollection new.
 	1 to: 1000
 		do: 
-			[:i | 
+			[:i |
 			current := String new: 970.
-			self assert: (current indexOfSubCollection: search startingAt: 965) == 0.
+			self assert: (current indexOfSubCollection: search startingAt: 965) identicalTo: 0.
 			strings add: current]!
 
 testMatch

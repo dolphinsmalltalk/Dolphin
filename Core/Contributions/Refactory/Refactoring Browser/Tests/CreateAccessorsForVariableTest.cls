@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #CreateAccessorsForVariableTest
 	instanceVariableNames: ''
@@ -16,46 +16,44 @@ setUp
 
 testExistingInstanceVariableAccessors
 	| ref |
-	ref := CreateAccessorsForVariableRefactoring 
+	ref := CreateAccessorsForVariableRefactoring
 				variable: 'name'
 				class: LintRuleTest
 				classVariable: false.
 	self executeRefactoring: ref.
 	self assert: ref changes changes isEmpty.
-	self assert: ref setterMethod == #name:.
-	self assert: ref getterMethod == #name!
+	self assert: ref setterMethod identicalTo: #name:.
+	self assert: ref getterMethod identicalTo: #name!
 
 testNewClassVariableAccessors
 	| ref class |
-	ref := CreateAccessorsForVariableRefactoring 
+	ref := CreateAccessorsForVariableRefactoring
 				variable: 'Foo1'
 				class: LintRuleTest
 				classVariable: true.
 	self executeRefactoring: ref.
 	class := ref model metaclassNamed: #LintRuleTest.
 	self deny: ref changes changes isEmpty.
-	self assert: ref setterMethod == #foo1:.
-	self assert: ref getterMethod == #foo1.
-	self 
-		assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^Foo1').
-	self assert: (class parseTreeFor: #foo1:) 
-				= (RBParser parseMethod: 'foo1: anObject Foo1 := anObject')!
+	self assert: ref setterMethod identicalTo: #foo1:.
+	self assert: ref getterMethod identicalTo: #foo1.
+	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1 ^Foo1').
+	self assert: (class parseTreeFor: #foo1:)
+		equals: (RBParser parseMethod: 'foo1: anObject Foo1 := anObject')!
 
 testNewInstanceVariableAccessors
 	| ref class |
-	ref := CreateAccessorsForVariableRefactoring 
+	ref := CreateAccessorsForVariableRefactoring
 				variable: 'foo1'
 				class: LintRuleTest
 				classVariable: false.
 	self executeRefactoring: ref.
 	class := ref model classNamed: #LintRuleTest.
 	self deny: ref changes changes isEmpty.
-	self assert: ref setterMethod == #foo1:.
-	self assert: ref getterMethod == #foo1.
-	self 
-		assert: (class parseTreeFor: #foo1) = (RBParser parseMethod: 'foo1 ^foo1').
-	self assert: (class parseTreeFor: #foo1:) 
-				= (RBParser parseMethod: 'foo1: anObject foo1 := anObject')!
+	self assert: ref setterMethod identicalTo: #foo1:.
+	self assert: ref getterMethod identicalTo: #foo1.
+	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1 ^foo1').
+	self assert: (class parseTreeFor: #foo1:)
+		equals: (RBParser parseMethod: 'foo1: anObject foo1 := anObject')!
 
 testNonExistantName
 	self

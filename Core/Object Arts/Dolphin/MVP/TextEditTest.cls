@@ -42,7 +42,7 @@ testPositionOfChar
 					extent := canvas textExtent: (lineText copyFrom: 1 to: i - startOfLine).
 					point := extent x @ ((line - 1) * lineHeight) + self margins.
 					pos := presenter view positionOfChar: i.
-					self assert: pos = point]].
+					self assert: pos equals: point]].
 	canvas free!
 
 text

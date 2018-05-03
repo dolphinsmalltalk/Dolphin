@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusInitializerTests
 	instanceVariableNames: 'constructorArgs'
@@ -12,7 +12,7 @@ GdiplusInitializerTests comment: ''!
 !GdiplusInitializerTests methodsFor!
 
 assertLastArgIsHandle
-	self assert: constructorArgs last class == ExternalHandle!
+	self assert: constructorArgs last class identicalTo: ExternalHandle!
 
 testErrorWith
 	self should: [model gdiplusErrorWith: 0] raise: GdiplusError.

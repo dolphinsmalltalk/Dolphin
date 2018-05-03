@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromBitmapInitializerTest
 	instanceVariableNames: ''
@@ -20,21 +20,21 @@ setUp
 
 testCreateHandle
 	| bitmap |
-	bitmap := Bitmap 
+	bitmap := Bitmap
 				gdipCopyOfIcon: GdiplusBitmap icon
 				extent: 32 @ 32
 				backcolor: Color black.
 	model bitmap: bitmap.
 	model createHandle.
-	self assert: constructorArgs size = 3.
-	self assert: constructorArgs first == bitmap basicHandle.
+	self assert: constructorArgs size equals: 3.
+	self assert: constructorArgs first identicalTo: bitmap basicHandle.
 	"depends on dc color depth"
-	self assert: constructorArgs second isNil.
+	self assertIsNil: constructorArgs second.
 	self assertLastArgIsHandle!
 
 testCreateHandleFreesDC
 	| bitmap |
-	bitmap := Bitmap 
+	bitmap := Bitmap
 				gdipCopyOfIcon: GdiplusBitmap icon
 				extent: 32 @ 32
 				backcolor: Color black.
@@ -44,7 +44,7 @@ testCreateHandleFreesDC
 	self deny: bitmap hdc isNil.
 	"SW: note comment in GdiplusBitmap class>>fromBitmap: ... not sure if this should succeed"
 	model createHandle.
-	self assert: bitmap hdc isNil! !
+	self assertIsNil: bitmap hdc! !
 !GdiplusBitmapFromBitmapInitializerTest categoriesFor: #gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
 !GdiplusBitmapFromBitmapInitializerTest categoriesFor: #setUp!public!setup! !
 !GdiplusBitmapFromBitmapInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !

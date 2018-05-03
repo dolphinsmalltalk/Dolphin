@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #AbstractInstanceVariableTest
 	instanceVariableNames: ''
@@ -16,18 +16,16 @@ setUp
 
 testAbstractInstanceVariable
 	| refactoring class |
-	refactoring := AbstractInstanceVariableRefactoring variable: 'class'
-				class: TransformationRuleTest.
+	refactoring := AbstractInstanceVariableRefactoring variable: 'class' class: TransformationRuleTest.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #TransformationRuleTest.
-	self assert: (class parseTreeFor: #class1) 
-				= (RBParser parseMethod: 'class1 ^class').
-	self assert: (class parseTreeFor: #class:) 
-				= (RBParser parseMethod: 'class: anObject
+	self assert: (class parseTreeFor: #class1) equals: (RBParser parseMethod: 'class1 ^class').
+	self assert: (class parseTreeFor: #class:)
+		equals: (RBParser parseMethod: 'class: anObject
 	class := anObject').
-	self 
-		assert: (class parseTreeFor: #superSends) = (RBParser 
-						parseMethod: 'superSends
+	self assert: (class parseTreeFor: #superSends)
+		equals: (RBParser
+				parseMethod: 'superSends
 	| rule |
 	rule := ParseTreeRewriter new.
 	rule addSearch: ''super `@message: ``@args'' 
@@ -38,9 +36,9 @@ testAbstractInstanceVariable
 						ifNone: [nil]) isNil] 
 							-> ''self `@message: ``@args'').
 	self rewriteUsing: rule').
-	self 
-		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
-						parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeFor: #checkMethod:)
+		equals: (RBParser
+				parseMethod: 'checkMethod: aSmalllintContext 
 	self class: aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) 
 		ifTrue: 
@@ -54,54 +52,51 @@ testAbstractInstanceVariable
 testAbstractWithAssignmentUsed
 	| refactoring class |
 	class := model classNamed: #Foo.
-	refactoring := AbstractInstanceVariableRefactoring 
+	refactoring := AbstractInstanceVariableRefactoring
 				model: model
 				variable: 'instVarName2'
 				class: class.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #foo) 
-				= (RBParser parseMethod: 'foo
+	self assert: (class parseTreeFor: #foo)
+		equals: (RBParser parseMethod: 'foo
 						^self instVarName21: 3').
-	self 
-		assert: (class parseTreeFor: #instVarName2:) = (RBParser 
-						parseMethod: 'instVarName2: anObject
+	self assert: (class parseTreeFor: #instVarName2:)
+		equals: (RBParser parseMethod: 'instVarName2: anObject
 						self instVarName21: anObject').
-	self 
-		assert: (class parseTreeFor: #instVarName21:) = (RBParser 
-						parseMethod: 'instVarName21: anObject
+	self assert: (class parseTreeFor: #instVarName21:)
+		equals: (RBParser parseMethod: 'instVarName21: anObject
 						^instVarName2 := anObject').
-	self assert: (class parseTreeFor: #instVarName2) 
-				= (RBParser parseMethod: 'instVarName2
+	self assert: (class parseTreeFor: #instVarName2)
+		equals: (RBParser parseMethod: 'instVarName2
 						^instVarName2').
-	self 
-		assert: ((model classNamed: #Bar) parseTreeFor: #foo) = (RBParser 
-						parseMethod: 'foo
+	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo
 						instVarName1 := instVarName1 + self instVarName2 + ClassVarName1')!
 
 testAbstractWithDefaultNamesUsed
 	| refactoring class |
 	class := model classNamed: #Foo.
-	refactoring := AbstractInstanceVariableRefactoring 
+	refactoring := AbstractInstanceVariableRefactoring
 				model: model
 				variable: 'instVarName1'
 				class: class.
 	self executeRefactoring: refactoring.
-	self 
-		assert: (class parseTreeFor: #bar) = (RBParser 
-						parseMethod: 'bar
+	self assert: (class parseTreeFor: #bar)
+		equals: (RBParser
+				parseMethod: 'bar
 						"Add one to instVarName1"
 
 						self instVarName11: self instVarName11 + 1').
-	self 
-		assert: (class parseTreeFor: #instVarName11:) = (RBParser 
-						parseMethod: 'instVarName11: anObject
+	self assert: (class parseTreeFor: #instVarName11:)
+		equals: (RBParser parseMethod: 'instVarName11: anObject
 						instVarName1 := anObject').
-	self assert: (class parseTreeFor: #instVarName11) 
-				= (RBParser parseMethod: 'instVarName11
+	self assert: (class parseTreeFor: #instVarName11)
+		equals: (RBParser parseMethod: 'instVarName11
 						^instVarName1').
-	self 
-		assert: ((model classNamed: #Bar) parseTreeFor: #foo) = (RBParser 
-						parseMethod: 'foo
+	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo
 						self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')!
 
 testInheritedName
@@ -113,19 +108,18 @@ testMetaclassInstanceVariables
 	class := model metaclassNamed: #Foo.
 	class addInstanceVariable: 'foo'.
 	class compile: 'zzz ^foo := foo + foo * 2' classified: #(#testing).
-	refactoring := AbstractInstanceVariableRefactoring 
+	refactoring := AbstractInstanceVariableRefactoring
 				model: model
 				variable: 'foo'
 				class: class.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #foo1) 
-				= (RBParser parseMethod: 'foo1
+	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1
 						^foo').
-	self assert: (class parseTreeFor: #foo:) 
-				= (RBParser parseMethod: 'foo: anObject
+	self assert: (class parseTreeFor: #foo:)
+		equals: (RBParser parseMethod: 'foo: anObject
 						^foo := anObject').
-	self assert: (class parseTreeFor: #zzz) 
-				= (RBParser parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')!
+	self assert: (class parseTreeFor: #zzz)
+		equals: (RBParser parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')!
 
 testNonExistantName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo'

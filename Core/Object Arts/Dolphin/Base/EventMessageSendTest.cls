@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #EventMessageSendTest
 	instanceVariableNames: ''
@@ -37,7 +37,7 @@ testReceiverWithGC
 	| m |
 	m := EventMessageSend receiver: Object new selector: #yourself.
 	MemoryManager current collectGarbage.
-	self assert: m value = DeadObject current!
+	self assert: m value equals: DeadObject current!
 
 testTwoArguments
 	| m |

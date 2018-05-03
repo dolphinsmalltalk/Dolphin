@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #XMLDOMNodeTest
 	instanceVariableNames: ''
@@ -13,11 +13,10 @@ XMLDOMNodeTest comment: ''!
 testDisplayOn
 	| elem |
 	elem := (IXMLDOMDocument new loadText: '<a/>') firstChild.
-	self assert: elem displayString = 'an IXMLDOMElement'!
+	self assert: elem displayString equals: 'an IXMLDOMElement'!
 
 testDownCast
-	self assert: (IXMLDOMDocument new loadText: '<a/>') firstChild class == IXMLDOMElement
-!
+	self assert: (IXMLDOMDocument new loadText: '<a/>') firstChild class identicalTo: IXMLDOMElement!
 
 testSetNodeTypeAndValue
 	| doc elem root |
@@ -25,23 +24,23 @@ testSetNodeTypeAndValue
 	root := doc addElement: 'Root'.
 	elem := root addElement: 'Blah'.
 	elem setNodeTypeAndValue: nil.
-	self assert: elem nodeTypedValue isNil.
+	self assertIsNil: elem nodeTypedValue.
 	elem setNodeTypeAndValue: 'a string'.
-	self assert: elem dataType = 'string'.
-	self assert: elem nodeTypedValue = 'a string'.
+	self assert: elem dataType equals: 'string'.
+	self assert: elem nodeTypedValue equals: 'a string'.
 	elem setNodeTypeAndValue: nil.
-	self assert: elem nodeTypedValue isNil.
+	self assertIsNil: elem nodeTypedValue.
 	elem setNodeTypeAndValue: 123.
-	self assert: elem dataType = 'i4'.
-	self assert: elem nodeTypedValue = 123.
+	self assert: elem dataType equals: 'i4'.
+	self assert: elem nodeTypedValue equals: 123.
 	elem setNodeTypeAndValue: 123.456.
-	self assert: elem dataType = 'r8'.
-	self assert: elem nodeTypedValue = 123.456.
+	self assert: elem dataType equals: 'r8'.
+	self assert: elem nodeTypedValue equals: 123.456.
 	elem setNodeTypeAndValue: true.
-	self assert: elem dataType = 'boolean'.
+	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue.
 	elem setNodeTypeAndValue: false.
-	self assert: elem dataType = 'boolean'.
+	self assert: elem dataType equals: 'boolean'.
 	self assert: elem nodeTypedValue not! !
 !XMLDOMNodeTest categoriesFor: #testDisplayOn!public!unit tests! !
 !XMLDOMNodeTest categoriesFor: #testDownCast!public!unit tests! !

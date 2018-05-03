@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #SUnitTest
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
@@ -12,10 +12,10 @@ SUnitTest comment: ''!
 
 assertForTestResult: aResult runCount: aRunCount passed: aPassedCount failed: aFailureCount errors: anErrorCount skipped: anInteger
 	self
-		assert: aResult runCount = aRunCount;
-		assert: aResult passedCount = aPassedCount;
-		assert: aResult failureCount = aFailureCount;
-		assert: aResult errorCount = anErrorCount!
+		assert: aResult runCount equals: aRunCount;
+		assert: aResult passedCount equals: aPassedCount;
+		assert: aResult failureCount equals: aFailureCount;
+		assert: aResult errorCount equals: anErrorCount!
 
 error
 	3 zork!
@@ -105,8 +105,8 @@ testRan
 	self assert: case hasRun!
 
 testRanOnlyOnce
-	self assert: hasRanOnce ~= true.
-	hasRanOnce := true.!
+	self deny: hasRanOnce equals: true.
+	hasRanOnce := true!
 
 testResult
 	| case result |

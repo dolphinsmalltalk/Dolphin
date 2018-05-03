@@ -75,21 +75,21 @@ newDescending: anInteger
 	s algorithm: (self algorithmToTest sortBlock: [:a :b | a >= b]).
 	^s!
 
-partialSort: source using: algorithm 
+partialSort: source using: algorithm
 	1 to: source size
 		do: 
-			[:i | 
+			[:i |
 			i to: source size
 				do: 
-					[:j | 
+					[:j |
 					| array sorted |
 					array := source asArray copy.
-					algorithm 
+					algorithm
 						sort: array
 						from: i
 						to: j.
-					self assert: (source copyFrom: 1 to: i - 1) = (array copyFrom: 1 to: i - 1).
-					self assert: (source copyFrom: j + 1) = (array copyFrom: j + 1).
+					self assert: (source copyFrom: 1 to: i - 1) equals: (array copyFrom: 1 to: i - 1).
+					self assert: (source copyFrom: j + 1) equals: (array copyFrom: j + 1).
 					sorted := array copyFrom: i to: j.
 					self assertSorted: sorted by: algorithm sortBlock]]!
 
@@ -113,85 +113,85 @@ testAdd
 	| s |
 	s := self newAscending: 3.
 	s add: #a.
-	self assert: s size = 1.
+	self assert: s size equals: 1.
 	self assertSorted: s.
 	s add: #b.
-	self assert: s size = 2.
+	self assert: s size equals: 2.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
 	s add: #c.
-	self assert: s size = 3.
+	self assert: s size equals: 3.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
 	s remove: #a.
-	self assert: s size = 2.
+	self assert: s size equals: 2.
 	self assertSorted: s.
-	self assert: (s at: 1) = #b.
-	self assert: (s at: 2) = #c.
+	self assert: (s at: 1) equals: #b.
+	self assert: (s at: 2) equals: #c.
 	s add: #a.
-	self assert: s size = 3.
+	self assert: s size equals: 3.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
 	s remove: #b.
-	self assert: s size = 2.
+	self assert: s size equals: 2.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #c.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #c.
 	s add: #b.
-	self assert: s size = 3.
+	self assert: s size equals: 3.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
 	s remove: #c.
-	self assert: s size = 2.
+	self assert: s size equals: 2.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
 	s add: #c.
-	self assert: s size = 3.
+	self assert: s size equals: 3.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
 
 	"Addition will cause it to grow at end"
 	s add: #d.
-	self assert: s size = 4.
+	self assert: s size equals: 4.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
-	self assert: (s at: 4) = #d.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
+	self assert: (s at: 4) equals: #d.
 
 	"Grow in middle"
 	s := (self newAscending: 3)
 				addAll: #(#a #c #d);
 				yourself.
 	s add: #b.
-	self assert: s size = 4.
+	self assert: s size equals: 4.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
-	self assert: (s at: 4) = #d.
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
+	self assert: (s at: 4) equals: #d.
 
 	"Grow from start"
 	s := (self newAscending: 3)
 				addAll: #(#b #c #d);
 				yourself.
 	s add: #a.
-	self assert: s size = 4.
+	self assert: s size equals: 4.
 	self assertSorted: s.
-	self assert: (s at: 1) = #a.
-	self assert: (s at: 2) = #b.
-	self assert: (s at: 3) = #c.
-	self assert: (s at: 4) = #d!
+	self assert: (s at: 1) equals: #a.
+	self assert: (s at: 2) equals: #b.
+	self assert: (s at: 3) equals: #c.
+	self assert: (s at: 4) equals: #d!
 
 testDefault
 	| sorted |

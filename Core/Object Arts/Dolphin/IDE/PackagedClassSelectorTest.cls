@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassSelectorTest subclass: #PackagedClassSelectorTest
 	instanceVariableNames: ''
@@ -20,8 +20,8 @@ assertContains: anObject
 	| sel |
 	sel := presenter selectableItems selectionOrNil.
 	presenter selectableItems selection: anObject ifAbsent: [].
-	self assert: (presenter selectableItems selection==anObject).
-	presenter selectableItems selectionOrNil: sel.!
+	self assert: presenter selectableItems selection identicalTo: anObject.
+	presenter selectableItems selectionOrNil: sel!
 
 classToTest
 	^PackagedClassSelector!
@@ -107,7 +107,7 @@ testFilteredPackagedHierarchyMove
 	presenter selection: dolphinTestF.
 	self create: #DolphinTestF subclassOf: dolphinTestA.
 	self assertContains: dolphinTestF.
-	self assert: presenter selection == dolphinTestF.
+	self assert: presenter selection identicalTo: dolphinTestF.
 	self assertContains: dolphinTestD.
 	self assertContains: dolphinTestE.
 

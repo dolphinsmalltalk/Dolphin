@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #RadioButtonSetPresenterTest
 	instanceVariableNames: 'radioSet'
@@ -63,19 +63,19 @@ testEvents
 		against: radioSet!
 
 testInitialValue
-	self assert: radioSet value = #option1.
-	self assert: self selectedButton = #option1!
+	self assert: radioSet value equals: #option1.
+	self assert: self selectedButton equals: #option1!
 
 testValueSelection
 	radioSet value: #option2.
-	self assert: radioSet value = #option2.
-	self assert: self selectedButton = #option2.
+	self assert: radioSet value equals: #option2.
+	self assert: self selectedButton equals: #option2.
 	radioSet value: #option1.
-	self assert: radioSet value = #option1.
-	self assert: self selectedButton = #option1.
+	self assert: radioSet value equals: #option1.
+	self assert: self selectedButton equals: #option1.
 	radioSet value: nil.
-	self assert: radioSet value isNil.
-	self assert: self selectedButton isNil! !
+	self assertIsNil: radioSet value.
+	self assertIsNil: self selectedButton! !
 !RadioButtonSetPresenterTest categoriesFor: #selectedButton!private!unit tests! !
 !RadioButtonSetPresenterTest categoriesFor: #selectedButtons!private!unit tests! !
 !RadioButtonSetPresenterTest categoriesFor: #setUp!public!running! !

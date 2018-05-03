@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #TrueTest
 	instanceVariableNames: ''
@@ -11,8 +11,8 @@ TrueTest comment: ''!
 !TrueTest methodsFor!
 
 testAND
-	self assert: (true & true) = true.
-	self assert: (true & false) = false!
+	self assert: true & true equals: true.
+	self assert: true & false equals: false!
 
 testNew
 	self should: [True new] raise: Error!
@@ -24,7 +24,7 @@ testPrintOn
 	| stream |
 	stream := String writeStream.
 	true printOn: stream.
-	self assert: stream contents = 'true'! !
+	self assert: stream contents equals: 'true'! !
 !TrueTest categoriesFor: #testAND!public!testing! !
 !TrueTest categoriesFor: #testNew!public!testing! !
 !TrueTest categoriesFor: #testNot!public!testing! !

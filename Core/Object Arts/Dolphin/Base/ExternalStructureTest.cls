@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ExternalStructureTest
 	instanceVariableNames: ''
@@ -14,26 +14,26 @@ testEquals
 	| s1 s2 s3 s4 |
 	s1 := POINTL newPointer.
 	s2 := POINTL newPointer.
-	self assert: s1 = s1.
-	self assert: s1 = s2.
+	self assert: s1 equals: s1.
+	self assert: s1 equals: s2.
 	s1 := (1 @ 2) asParameter.
-	self assert: s1 ~= s2.
-	self assert: s1 = s1.
+	self deny: s1 equals: s2.
+	self assert: s1 equals: s1.
 	s3 := POINTL fromAddress: s1 yourAddress.
-	self assert: s3 = s3.
-	self assert: s1 = s3.
-	self assert: s2 ~= s3.
-	self assert: s3 ~= s2.
+	self assert: s3 equals: s3.
+	self assert: s1 equals: s3.
+	self deny: s2 equals: s3.
+	self deny: s3 equals: s2.
 	s2 := (1 @ 2) asParameter.
-	self assert: s1 = s2.
-	self assert: s2 = s1.
-	self assert: s1 = s3.
-	self assert: s3 = s1.
-	self assert: s3 = s2.
-	self assert: s2 = s3.
+	self assert: s1 equals: s2.
+	self assert: s2 equals: s1.
+	self assert: s1 equals: s3.
+	self assert: s3 equals: s1.
+	self assert: s3 equals: s2.
+	self assert: s2 equals: s3.
 	s4 := POINTL fromAddress: s2 yourAddress.
-	self assert: s1 = s4.
-	self assert: s4 = s1!
+	self assert: s1 equals: s4.
+	self assert: s4 equals: s1!
 
 testIsNull
 	| struct |

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEditTest subclass: #ScintillaViewTest
 	instanceVariableNames: ''
@@ -35,13 +35,13 @@ testTokensFromTo
 	presenter stylerClass: SmalltalkExpressionStyler.
 	styler := StStyler new.
 	#('' ' ' ' 	 ' ' a' 'a ' ' a ' ' a #a' 'a #a ' ' a #a ' ' a #a 1.2 '''' ''blah blah'' (') do: 
-			[:text | 
+			[:text |
 			presenter text: text.
 			presenter restyleAll.
 			tokens := (presenter tokensFrom: 1 to: presenter textLength) asArray.
-			expected := (SmalltalkScanner on: presenter text readStream) contents 
+			expected := (SmalltalkScanner on: presenter text readStream) contents
 						collect: [:each | (styler styleNameFor: each) -> (text copyFrom: each start to: each stop)].
-			self assert: tokens = expected]! !
+			self assert: tokens equals: expected]! !
 !ScintillaViewTest categoriesFor: #classToTest!helpers!private! !
 !ScintillaViewTest categoriesFor: #initializePresenter!public!Running! !
 !ScintillaViewTest categoriesFor: #margins!private!unit tests! !

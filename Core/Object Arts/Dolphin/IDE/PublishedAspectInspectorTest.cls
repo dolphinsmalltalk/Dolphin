@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PublishedAspectInspectorTest
 	instanceVariableNames: 'inspector treePresenter displayPresenter'
@@ -41,7 +41,7 @@ repaint
 			[inspector view update.
 			Processor sleep: 1500]!
 
-seqCollMoveDownTest: testClass 
+seqCollMoveDownTest: testClass
 	| inspectee collection |
 	inspectee := testClass withAll: (1 to: 5).
 	inspector value: inspectee.
@@ -50,25 +50,24 @@ seqCollMoveDownTest: testClass
 	self repaint.
 	0 to: 1
 		do: 
-			[:j | 
+			[:j |
 			| listPresenter |
-			self assert: treePresenter view itemCount == (collection size + 1 + j).
+			self assert: treePresenter view itemCount identicalTo: collection size + 1 + j.
 			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 			listPresenter selectionByIndex: 1.
 			2 to: 5
 				do: 
-					[:i | 
+					[:i |
 					self aspectPresenter moveDown.
 					self repaint.
-					self assert: treePresenter view itemCount == (collection size + 1 + j).
+					self assert: treePresenter view itemCount identicalTo: collection size + 1 + j.
 					listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
-					self assert: listPresenter selectionByIndex = i.
-					self assert: collection asArray = ((2 to: i) , (Array with: 1) , (i + 1 to: 5))].
+					self assert: listPresenter selectionByIndex equals: i.
+					self assert: collection asArray equals: (2 to: i) , (Array with: 1) , (i + 1 to: 5)].
 			collection := Array withAll: (1 to: 5).
 			inspectee := Array with: collection.
 			inspector value: inspectee.
-			treePresenter 
-				selection: (treePresenter model childrenOf: treePresenter model roots first) first.
+			treePresenter selection: (treePresenter model childrenOf: treePresenter model roots first) first.
 			treePresenter view expandAll]!
 
 seqCollMoveFirstTest: testClass
@@ -76,7 +75,7 @@ seqCollMoveFirstTest: testClass
 	last := 5.
 	inspectee := testClass withAll: (1 to: last).
 	inspector value: inspectee.
-	self assert: treePresenter view itemCount == (last + 1).
+	self assert: treePresenter view itemCount identicalTo: last + 1.
 	self repaint.
 	1 to: inspectee size
 		do: 
@@ -86,10 +85,10 @@ seqCollMoveFirstTest: testClass
 			listPresenter selectionByIndex: i.
 			self aspectPresenter moveFirst.
 			self repaint.
-			self assert: treePresenter view itemCount == (last + 1).
+			self assert: treePresenter view itemCount identicalTo: last + 1.
 			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
-			self assert: listPresenter selectionByIndex = 1.
-			self assert: inspectee asArray = ((Array with: i) , (1 to: i - 1) , (i + 1 to: last)).
+			self assert: listPresenter selectionByIndex equals: 1.
+			self assert: inspectee asArray equals: (Array with: i) , (1 to: i - 1) , (i + 1 to: last).
 			inspectee
 				replaceFrom: 1
 				to: last
@@ -102,21 +101,21 @@ seqCollMoveLastTest: testClass
 	last := 5.
 	inspectee := testClass withAll: (1 to: last).
 	inspector value: inspectee.
-	self assert: treePresenter view itemCount == (last + 1).
+	self assert: treePresenter view itemCount identicalTo: last + 1.
 	self repaint.
 	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 	1 to: inspectee size
 		do: 
-			[:i | 
+			[:i |
 			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 			listPresenter selectionByIndex: i.
 			self aspectPresenter moveLast.
 			self repaint.
-			self assert: treePresenter view itemCount == (last + 1).
+			self assert: treePresenter view itemCount identicalTo: last + 1.
 			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
-			self assert: listPresenter selectionByIndex = last.
-			self assert: inspectee asArray = ((1 to: i - 1) , (i + 1 to: last) , (Array with: i)).
-			inspectee 
+			self assert: listPresenter selectionByIndex equals: last.
+			self assert: inspectee asArray equals: (1 to: i - 1) , (i + 1 to: last) , (Array with: i).
+			inspectee
 				replaceFrom: 1
 				to: last
 				with: (1 to: last)
@@ -127,18 +126,19 @@ seqCollMoveUpTest: testClass
 	| inspectee listPresenter |
 	inspectee := testClass withAll: (1 to: 5).
 	inspector value: inspectee.
-	self assert: treePresenter view itemCount == 6.
+	self assert: treePresenter view itemCount identicalTo: 6.
 	self repaint.
 	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 	listPresenter selectionByIndex: 5.
-	4 to: 1 by: -1 do: [:i |
-		self aspectPresenter moveUp.
-		self repaint.
-		self assert: inspectee asArray = ((1 to: i-1), (Array with: 5), (i to: 4)).
-		self assert: listPresenter selectionByIndex = i.
-		self assert: treePresenter view itemCount == 6]
-
-!
+	4 to: 1
+		by: -1
+		do: 
+			[:i |
+			self aspectPresenter moveUp.
+			self repaint.
+			self assert: inspectee asArray equals: (1 to: i - 1) , (Array with: 5) , (i to: 4).
+			self assert: listPresenter selectionByIndex equals: i.
+			self assert: treePresenter view itemCount identicalTo: 6]!
 
 tearDown
 	inspector isNil
@@ -152,92 +152,92 @@ testAddRemoveCollectionElement
 	| inspectee listPresenter |
 	inspectee := OrderedCollection new.
 	self createInspectorOn: inspectee.
-	self assert: treePresenter view itemCount == 1.
+	self assert: treePresenter view itemCount identicalTo: 1.
 	self repaint.
 	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 	self aspectPresenter addItem: 1.
 	"The item always remains expanded"
-	self assert: treePresenter view itemCount == 2.
+	self assert: treePresenter view itemCount identicalTo: 2.
 	treePresenter view expandAll.
 	self repaint.
-	self assert: treePresenter view itemCount == 2.
+	self assert: treePresenter view itemCount identicalTo: 2.
 	listPresenter selectionByIndex: 1.
 	self aspectPresenter removeItem.
-	self assert: treePresenter view itemCount == 1.
+	self assert: treePresenter view itemCount identicalTo: 1.
 	self repaint.
 	self aspectPresenter addItem: 1.
 	listPresenter selectionByIndex: 1.
 	self aspectPresenter addItem: 2.
 	"The item always remains expanded"
-	self assert: treePresenter view itemCount == 3.
+	self assert: treePresenter view itemCount identicalTo: 3.
 	self repaint.
 	self aspectPresenter removeItem.
 	self aspectPresenter removeItem.
-	self assert: treePresenter view itemCount == 1.
+	self assert: treePresenter view itemCount identicalTo: 1.
 	self repaint!
 
 testAspectChanged
 	| inspectee accessors tvItem hItem |
 	inspectee := Association new.
 	self createInspectorOn: inspectee.
-	self assert: treePresenter view itemCount == 3.
+	self assert: treePresenter view itemCount identicalTo: 3.
 	self repaint.
 	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = 'nil'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
+	self assert: (self getAccessorKeyText: accessors first) equals: 'key'.
+	self assert: (self getAccessorValueText: accessors first) equals: 'nil'.
+	self assert: (self getAccessorKeyText: accessors last) equals: 'value'.
+	self assert: (self getAccessorValueText: accessors last) equals: 'nil'.
 	"Set key to a scalar"
 	inspectee key: 1.
 	inspector aspectChanged: #key of: inspectee.
 	self repaint.
 	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = '1'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self assert: treePresenter view itemCount == 3.
+	self assert: (self getAccessorKeyText: accessors first) equals: 'key'.
+	self assert: (self getAccessorValueText: accessors first) equals: '1'.
+	self assert: (self getAccessorKeyText: accessors last) equals: 'value'.
+	self assert: (self getAccessorValueText: accessors last) equals: 'nil'.
+	self assert: treePresenter view itemCount identicalTo: 3.
 	"Set back to nil"
 	inspectee key: nil.
 	inspector aspectChanged: #key of: inspectee.
 	self repaint.
 	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = 'nil'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self assert: treePresenter view itemCount == 3.
+	self assert: (self getAccessorKeyText: accessors first) equals: 'key'.
+	self assert: (self getAccessorValueText: accessors first) equals: 'nil'.
+	self assert: (self getAccessorKeyText: accessors last) equals: 'value'.
+	self assert: (self getAccessorValueText: accessors last) equals: 'nil'.
+	self assert: treePresenter view itemCount identicalTo: 3.
 	"Now set to something with sub-aspects"
 	inspectee key: (1 to: 2).
 	inspector aspectChanged: #key of: inspectee.
 	accessors := treePresenter model childrenOf: treePresenter model roots first.
 	hItem := treePresenter view handleFromObject: accessors first.
-	self assert: (treePresenter view getItemText: hItem) = 'key'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self isUsingListTreeView 
+	self assert: (treePresenter view getItemText: hItem) equals: 'key'.
+	self assert: (self getAccessorKeyText: accessors last) equals: 'value'.
+	self assert: (self getAccessorValueText: accessors last) equals: 'nil'.
+	self isUsingListTreeView
 		ifFalse: 
 			[tvItem := treePresenter view getItemState: hItem.
-			self assert: treePresenter view itemCount == 3.
+			self assert: treePresenter view itemCount identicalTo: 3.
 			self assert: tvItem cChildren > 0].
 	treePresenter expand: accessors first.
 	self repaint.
-	self assert: treePresenter view itemCount == 6.
+	self assert: treePresenter view itemCount identicalTo: 6.
 	"Set back to nil"
 	inspectee key: nil.
 	inspector aspectChanged: #key of: inspectee.
 	self repaint.
 	accessors := treePresenter model childrenOf: treePresenter model roots first.
-	self assert: (self getAccessorKeyText: accessors first) = 'key'.
-	self assert: (self getAccessorValueText: accessors first) = 'nil'.
-	self assert: (self getAccessorKeyText: accessors last) = 'value'.
-	self assert: (self getAccessorValueText: accessors last) = 'nil'.
-	self assert: treePresenter view itemCount == 3.
+	self assert: (self getAccessorKeyText: accessors first) equals: 'key'.
+	self assert: (self getAccessorValueText: accessors first) equals: 'nil'.
+	self assert: (self getAccessorKeyText: accessors last) equals: 'value'.
+	self assert: (self getAccessorValueText: accessors last) equals: 'nil'.
+	self assert: treePresenter view itemCount identicalTo: 3.
 	self repaint.
 	"Now nil the root"
 	inspectee oneWayBecome: nil.
 	inspector aspectChanged: #yourself.
-	self assert: treePresenter view itemCount == 1.
+	self assert: treePresenter view itemCount identicalTo: 1.
 	self repaint!
 
 testCommandMenuItemEditor
@@ -256,13 +256,13 @@ testContextMenuEdit
 	
 	[| contextMenu accessor items |
 	contextMenu := inspectee contextMenu.
-	self assert: contextMenu isNil.
+	self assertIsNil: contextMenu.
 	self createInspectorOn: inspectee.
 	accessor := self aspectAccessorNamed: #contextMenu.
 	treePresenter selection: accessor.
 	self aspectPresenter value: Menu new.
 	contextMenu := inspectee contextMenu.
-	self assert: contextMenu notNil.
+	self denyIsNil: contextMenu.
 	self assert: contextMenu isEmpty.
 	self repaint.
 	accessor := self aspectAccessorNamed: #items.
@@ -270,27 +270,27 @@ testContextMenuEdit
 	self assert: accessor value isEmpty.
 	self aspectPresenter addItem: CommandMenuItem new.
 	accessor := self aspectAccessorNamed: #items.
-	self assert: accessor value size = 1.
-	self assert: contextMenu ~~ inspectee contextMenu.
+	self assert: accessor value size equals: 1.
+	self deny: contextMenu identicalTo: inspectee contextMenu.
 	"Original context menu should not have been changed"
 	self assert: contextMenu isEmpty.
-	self assert: inspectee contextMenu size = 1.
-	self assert: inspectee contextMenu items ~~ accessor value.
-	self assert: inspectee contextMenu items first command == accessor value first command.
+	self assert: inspectee contextMenu size equals: 1.
+	self deny: inspectee contextMenu items identicalTo: accessor value.
+	self assert: inspectee contextMenu items first command identicalTo: accessor value first command.
 	treePresenter view expandAll.
 	contextMenu := inspectee contextMenu.
 	accessor := self aspectAccessorNamed: #description.
-	self assert: accessor value = 'No Command'.
+	self assert: accessor value equals: 'No Command'.
 	treePresenter selection: accessor.
 	self aspectPresenter value: 'Blah blah'.
-	self assert: accessor value = 'Blah blah'.
+	self assert: accessor value equals: 'Blah blah'.
 	"Should propagate up and retitle the item"
-	self assert: (self getAccessorValueText: (self aspectAccessorNamed: 1)) = 'Blah blah'.
+	self assert: (self getAccessorValueText: (self aspectAccessorNamed: 1)) equals: 'Blah blah'.
 	"Should also have propagated into the View's menu, which should have been replaced, original not changed"
-	self assert: contextMenu items first description = 'No Command'.
-	self assert: inspectee contextMenu ~~ contextMenu.
+	self assert: contextMenu items first description equals: 'No Command'.
+	self deny: inspectee contextMenu identicalTo: contextMenu.
 	"Obviously the description update should have propagated through"
-	self assert: inspectee contextMenu items first description = accessor value.
+	self assert: inspectee contextMenu items first description equals: accessor value.
 
 	"Now try copying and pasting a menu item over a new menu item"
 	treePresenter selection: (self aspectAccessorNamed: 1).
@@ -299,15 +299,15 @@ testContextMenuEdit
 	treePresenter selection: accessor.
 	self aspectPresenter addItem: CommandMenuItem new.
 	items := inspectee contextMenu items.
-	self assert: items size = 2.
-	self assert: items last description = 'No Command'.
+	self assert: items size equals: 2.
+	self assert: items last description equals: 'No Command'.
 	accessor := self aspectAccessorNamed: 2.
 	treePresenter selection: accessor.
 	inspector pasteAspect.
 	items := inspectee contextMenu items.
-	self assert: items size = 2.
+	self assert: items size equals: 2.
 	"If the paste worked, then the inspectee's second context menu item should have been updated"
-	self assert: items last description = 'Blah blah'] 
+	self assert: items last description equals: 'Blah blah']
 			ensure: [inspectee destroy]!
 
 testCopyAndPasteMenu
@@ -319,33 +319,33 @@ testCopyAndPasteMenu
 	
 	[| menuBar1 accessor menuBar2 |
 	menuBar1 := inspectee1 menuBar.
-	self assert: menuBar1 isNil.
+	self assertIsNil: menuBar1.
 	self createInspectorOn: inspectee1.
 	accessor := self aspectAccessorNamed: #menuBar.
 	treePresenter selection: accessor.
-	self assert: accessor value isNil.
-	self aspectPresenter 
+	self assertIsNil: accessor value.
+	self aspectPresenter
 		value: (MenuBar fromStrings: #('&File' 'Open//fileOpen' '-' '&Save/Ctrl+S/fileSave')).
 	self repaint.
 	menuBar1 := inspectee1 menuBar.
-	self assert: menuBar1 notNil.
-	self assert: menuBar1 size = 3.
-	self assert: menuBar1 items first text = 'Open'.
+	self denyIsNil: menuBar1.
+	self assert: menuBar1 size equals: 3.
+	self assert: menuBar1 items first text equals: 'Open'.
 	inspector copyAspect.
 	inspector value: inspectee2.
 	self repaint.
-	self assert: inspectee2 menuBar isNil.
+	self assertIsNil: inspectee2 menuBar.
 	accessor := self aspectAccessorNamed: #menuBar.
 	treePresenter selection: accessor.
-	self assert: accessor value isNil.
+	self assertIsNil: accessor value.
 	inspector pasteAspect.
 	self repaint.
-	self assert: accessor value notNil.
+	self denyIsNil: accessor value.
 	menuBar2 := inspectee2 menuBar.
-	self assert: menuBar2 notNil.
-	self deny: menuBar1 == menuBar2.
-	self assert: menuBar2 size = 3.
-	self assert: menuBar2 items first text = 'Open'] 
+	self denyIsNil: menuBar2.
+	self deny: menuBar1 identicalTo: menuBar2.
+	self assert: menuBar2 size equals: 3.
+	self assert: menuBar2 items first text equals: 'Open']
 			ensure: 
 				[inspectee1 destroy.
 				inspectee2 destroy]!
@@ -358,34 +358,34 @@ testImmutableAspect
 	[| extent accessor originalExtent |
 	extent := inspectee extent.
 	originalExtent := extent copy.
-	self assert: extent ~~ originalExtent.
+	self deny: extent identicalTo: originalExtent.
 	self assert: extent isZero not.
 	self createInspectorOn: inspectee.
 	accessor := self aspectAccessorNamed: #extent.
 	self assert: accessor isMutable not.
 	treePresenter selection: accessor.
-	self assert: accessor value = extent.
-	self assert: accessor value ~~ extent.
+	self assert: accessor value equals: extent.
+	self deny: accessor value identicalTo: extent.
 	treePresenter view expandAll.
 	accessor := self aspectAccessorNamed: #y.
 	treePresenter selection: accessor.
 	self aspectPresenter value: 150.
 	self repaint.
 	accessor := self aspectAccessorNamed: #y.
-	self assert: (self getAccessorKeyText: accessor) = 'y'.
-	self assert: (self getAccessorValueText: accessor) = '150'.
+	self assert: (self getAccessorKeyText: accessor) equals: 'y'.
+	self assert: (self getAccessorValueText: accessor) equals: '150'.
 	accessor := self aspectAccessorNamed: #extent.
-	self assert: (self getAccessorKeyText: accessor) = 'extent'.
-	self 
-		assert: (self getAccessorValueText: accessor) = ('<1d>@150' expandMacrosWith: originalExtent x).
+	self assert: (self getAccessorKeyText: accessor) equals: 'extent'.
+	self assert: (self getAccessorValueText: accessor)
+		equals: ('<1d>@150' expandMacrosWith: originalExtent x).
 
 	"Note that the original extent object should not have changed"
-	self assert: extent = originalExtent.
+	self assert: extent equals: originalExtent.
 	"But the view's extent should have"
-	self assert: inspectee extent ~~ extent.
-	self assert: inspectee extent y = 150.
+	self deny: inspectee extent identicalTo: extent.
+	self assert: inspectee extent y equals: 150.
 	"The view must not be referencing the same copy of the immutable object as the aspect tree"
-	self assert: accessor value ~~ inspectee extent] 
+	self deny: accessor value identicalTo: inspectee extent]
 			ensure: [inspectee destroy]!
 
 testImmutableAspect2
@@ -397,78 +397,78 @@ testImmutableAspect2
 	accessor := self aspectAccessorNamed: #format.
 	self assert: accessor isMutable not.
 	treePresenter selection: accessor.
-	self assert: accessor value = originalFormat.
+	self assert: accessor value equals: originalFormat.
 	"The value of the accessor is still the original object, but its sub-aspect values should 
 	 be pointing at a copy"
-	self assert: accessor value == originalFormat.
+	self assert: accessor value identicalTo: originalFormat.
 	treePresenter view expandAll.
 	accessor := self aspectAccessorNamed: 1.
-	self assert: accessor value = 'false'.
-	self assert: accessor subject = originalFormat.
-	self assert: accessor subject ~~ originalFormat.
+	self assert: accessor value equals: 'false'.
+	self assert: accessor subject equals: originalFormat.
+	self deny: accessor subject identicalTo: originalFormat.
 	accessor2 := self aspectAccessorNamed: 2.
-	self assert: accessor2 value = 'true'.
-	self assert: accessor2 subject = originalFormat.
-	self assert: accessor2 subject ~~ originalFormat.
-	self assert: accessor2 subject == accessor subject.
+	self assert: accessor2 value equals: 'true'.
+	self assert: accessor2 subject equals: originalFormat.
+	self deny: accessor2 subject identicalTo: originalFormat.
+	self assert: accessor2 subject identicalTo: accessor subject.
 	treePresenter selection: accessor.
 	self aspectPresenter value: 'no'.
 	self repaint.
 	accessor := self aspectAccessorNamed: 1.
-	self assert: (self getAccessorKeyText: accessor) = '1'.
-	self assert: (self getAccessorValueText: accessor) = '''no'''.
+	self assert: (self getAccessorKeyText: accessor) equals: '1'.
+	self assert: (self getAccessorValueText: accessor) equals: '''no'''.
 	accessor := self aspectAccessorNamed: #format.
-	self assert: (self getAccessorKeyText: accessor) = 'format'.
-	self assert: (self getAccessorValueText: accessor) = 'an Array'.
+	self assert: (self getAccessorKeyText: accessor) equals: 'format'.
+	self assert: (self getAccessorValueText: accessor) equals: 'an Array'.
 
 	"Note that the original object should not have changed"
-	self assert: originalFormat = #('false' 'true').
+	self assert: originalFormat equals: #('false' 'true').
 	"But the inspectee's should have"
-	self assert: inspectee format ~~ originalFormat.
-	self assert: inspectee format = #('no' 'true').
+	self deny: inspectee format identicalTo: originalFormat.
+	self assert: inspectee format equals: #('no' 'true').
 	"The inspectee should still be referencing the same copy of the immutable object as the aspect tree,
 	but again not the sub-aspects"
-	self assert: accessor value == inspectee format.
+	self assert: accessor value identicalTo: inspectee format.
 	1 to: 2
 		do: 
-			[:i | 
+			[:i |
 			| each |
 			each := self aspectAccessorNamed: i.
-			self assert: each subject ~~ inspectee format.
-			self assert: each subject = inspectee format].
+			self deny: each subject identicalTo: inspectee format.
+			self assert: each subject equals: inspectee format].
 
 	"Now update the other sub-aspect"
 	accessor2 := self aspectAccessorNamed: 2.
-	self assert: accessor2 value = 'true'.
-	self assert: accessor2 subject ~= originalFormat.
-	self assert: accessor2 subject ~~ originalFormat.
+	self assert: accessor2 value equals: 'true'.
+	self deny: accessor2 subject equals: originalFormat.
+	self deny: accessor2 subject identicalTo: originalFormat.
 	accessor := self aspectAccessorNamed: 1.
-	self assert: accessor2 subject == accessor subject.
+	self assert: accessor2 subject identicalTo: accessor subject.
 	treePresenter selection: accessor2.
 	self aspectPresenter value: 'yes'.
 	self repaint.
 	accessor := self aspectAccessorNamed: 2.
-	self assert: (self getAccessorKeyText: accessor2) = '2'.
-	self assert: (self getAccessorValueText: accessor2) = '''yes'''.
+	self assert: (self getAccessorKeyText: accessor2) equals: '2'.
+	self assert: (self getAccessorValueText: accessor2) equals: '''yes'''.
 	accessor := self aspectAccessorNamed: #format.
-	self assert: (self getAccessorKeyText: accessor) = 'format'.
-	self assert: (self getAccessorValueText: accessor) = 'an Array'.
+	self assert: (self getAccessorKeyText: accessor) equals: 'format'.
+	self assert: (self getAccessorValueText: accessor) equals: 'an Array'.
 
 	"Note that the original object should not have changed"
-	self assert: originalFormat = #('false' 'true').
+	self assert: originalFormat equals: #('false' 'true').
 	"But the inspectee's should have"
-	self assert: inspectee format ~~ originalFormat.
-	self assert: inspectee format = #('no' 'yes').
+	self deny: inspectee format identicalTo: originalFormat.
+	self assert: inspectee format equals: #('no' 'yes').
 	"The inspectee should still be referencing the same copy of the immutable object as the aspect tree,
 	but again not the sub-aspects"
-	self assert: accessor value == inspectee format.
+	self assert: accessor value identicalTo: inspectee format.
 	1 to: 2
 		do: 
-			[:i | 
+			[:i |
 			| each |
 			each := self aspectAccessorNamed: i.
-			self assert: each subject ~~ inspectee format.
-			self assert: each subject = inspectee format]!
+			self deny: each subject identicalTo: inspectee format.
+			self assert: each subject equals: inspectee format]!
 
 testListViewColumnsEdit
 	| inspectee |
@@ -478,33 +478,33 @@ testListViewColumnsEdit
 	[| columnsList accessor |
 	columnsList := inspectee columnsList.
 	"The ListView in D5 has been reimplemented to all columns, including primary, are held in a single collection"
-	self assert: columnsList == inspectee allColumns.
-	self assert: columnsList size = 1.
+	self assert: columnsList identicalTo: inspectee allColumns.
+	self assert: columnsList size equals: 1.
 	self createInspectorOn: inspectee.
 	accessor := self aspectAccessorNamed: #columnsList.
-	self assert: accessor value size = 1.
+	self assert: accessor value size equals: 1.
 	treePresenter selection: accessor.
 	"Even though the aspect is immutable, the value of the accessor should still be that of the original columnsList"
-	self assert: accessor value == columnsList.
-	self assert: accessor value == inspectee allColumns.
-	self assert: inspectee columnsList == columnsList.
+	self assert: accessor value identicalTo: columnsList.
+	self assert: accessor value identicalTo: inspectee allColumns.
+	self assert: inspectee columnsList identicalTo: columnsList.
 	"but, so the editor should be looking at a copy of it"
-	self deny: self aspectPresenter listModel list == columnsList.
+	self deny: self aspectPresenter listModel list identicalTo: columnsList.
 
 	"If not looking at a copy, this will fail anyway as the View will think it had two columns all along"
 	self aspectPresenter addItem: ListViewColumn new.
 	"Should still be looking at a different value to the one stored back by the above."
-	self deny: self aspectPresenter listModel list == inspectee columnsList.
+	self deny: self aspectPresenter listModel list identicalTo: inspectee columnsList.
 	self repaint.
 	"The columns list should now have been replaced..."
-	self assert: columnsList ~~ inspectee columnsList.
-	self assert: inspectee columnsList size = 2.
+	self deny: columnsList identicalTo: inspectee columnsList.
+	self assert: inspectee columnsList size equals: 2.
 	"The accessor should still be pulling the value out of its original source"
-	self assert: accessor value == inspectee allColumns.
-	self deny: self aspectPresenter listModel list == inspectee columnsList.
+	self assert: accessor value identicalTo: inspectee allColumns.
+	self deny: self aspectPresenter listModel list identicalTo: inspectee columnsList.
 
 	"Original should not have been changed"
-	self assert: columnsList size = 1.
+	self assert: columnsList size equals: 1.
 
 	"Now add another column"
 	columnsList := inspectee columnsList.
@@ -513,14 +513,14 @@ testListViewColumnsEdit
 	self aspectPresenter addItem: ListViewColumn new.
 	self repaint.
 	"The columns list should now have been replaced..."
-	self assert: columnsList ~~ inspectee columnsList.
-	self assert: inspectee columnsList size = 3.
+	self deny: columnsList identicalTo: inspectee columnsList.
+	self assert: inspectee columnsList size equals: 3.
 	"The accessor should still be pulling the value out of its original source"
-	self assert: accessor value == inspectee allColumns.
+	self assert: accessor value identicalTo: inspectee allColumns.
 
 	"And should not be the same as the one the aspect presenter is viewing."
 	self aspectPresenter listModel ~~ inspectee columnsList.
-	self assert: columnsList size = 2.
+	self assert: columnsList size equals: 2.
 
 	"Delete the midle one"
 	columnsList := inspectee columnsList.
@@ -529,43 +529,43 @@ testListViewColumnsEdit
 	self aspectPresenter removeItem.
 	self repaint.
 	"The columns list should now have been replaced..."
-	self assert: columnsList ~~ inspectee columnsList.
-	self assert: columnsList size = 3.
-	self assert: inspectee columnsList size = 2.
+	self deny: columnsList identicalTo: inspectee columnsList.
+	self assert: columnsList size equals: 3.
+	self assert: inspectee columnsList size equals: 2.
 	"The accessor should still be pulling the value out of its original source"
-	self assert: accessor value == inspectee allColumns.
+	self assert: accessor value identicalTo: inspectee allColumns.
 	"And should not be the same as the one the aspect presenter is viewing."
 	self aspectPresenter listModel ~~ inspectee columnsList.
 
 	"Now edit the secondary column"
 	columnsList := inspectee columnsList.
-	self deny: self aspectPresenter listModel == columnsList.
+	self deny: self aspectPresenter listModel identicalTo: columnsList.
 	treePresenter selection: (self aspectAccessorNamed: 2).
 
 	"N.B. Although the list is immutable, and therefore copied, the copy is only shallow 
 	 and the keyed sub-aspects are not themselves copied and so will be updated in place.
 	 I think that this should probably be changed so that one can state that not only is
 	 the collection  itself immutable, but that its keyed sub-aspects are too."
-	self assert: treePresenter selection subject last == columnsList last.
+	self assert: treePresenter selection subject last identicalTo: columnsList last.
 	treePresenter view expandAll.
 	treePresenter selection: (accessor := self aspectAccessorNamed: #text).
 	self assert: accessor value isEmpty.
 	self aspectPresenter value: 'Yet more blah'.
 	self repaint.
-	self assert: accessor value = 'Yet more blah'.
+	self assert: accessor value equals: 'Yet more blah'.
 	"Should propagate up and retitle the column"
-	self assert: (self getAccessorValueText: (self aspectAccessorNamed: 2)) 
-				= 'a ListViewColumn(''Yet more blah'')'.
+	self assert: (self getAccessorValueText: (self aspectAccessorNamed: 2))
+		equals: 'a ListViewColumn(''Yet more blah'')'.
 	"But not the ListView as not primary!!"
-	self assert: ('a ListView(*, ''Column 1'')' 
+	self assert: ('a ListView(*, ''Column 1'')'
 				match: (self getAccessorValueText: (self aspectAccessorNamed: #yourself))).
 	self deny: columnsList first text isEmpty.
 
 
 	"Note that the original will have changed, because the keyed sub-aspects of the columns list are not themselves immutable"
-	self assert: inspectee columnsList ~~ columnsList.
+	self deny: inspectee columnsList identicalTo: columnsList.
 	"Obviously the description update should have propagated through"
-	self assert: inspectee columnsList last text = accessor value.
+	self assert: inspectee columnsList last text equals: accessor value.
 	columnsList := inspectee columnsList.
 	treePresenter selection: (self aspectAccessorNamed: 2).
 
@@ -573,7 +573,7 @@ testListViewColumnsEdit
 	 and the keyed sub-aspects are not themselves copied and so will be updated in place.
 	 I think that this should probably be changed so that one can state that not only is
 	 the collection  itself immutable, but that its keyed sub-aspects are too."
-	self assert: treePresenter selection subject last == columnsList last.
+	self assert: treePresenter selection subject last identicalTo: columnsList last.
 	treePresenter collapse: (self aspectAccessorNamed: 2).
 
 	"Now edit the primary column"
@@ -581,23 +581,24 @@ testListViewColumnsEdit
 	treePresenter selection: (self aspectAccessorNamed: 1).
 	treePresenter view expandAll.
 	treePresenter selection: (accessor := self aspectAccessorNamed: #text).
-	self assert: accessor value = 'Column 1'.
+	self assert: accessor value equals: 'Column 1'.
 	self aspectPresenter value: 'Blah blah'.
 	self repaint.
-	self assert: accessor value = 'Blah blah'.
+	self assert: accessor value equals: 'Blah blah'.
 	"Should propagate up and retitle the column"
-	self assert: (self getAccessorValueText: (self aspectAccessorNamed: 1)) 
-				= 'a ListViewColumn(''Blah blah'')'.
+	self assert: (self getAccessorValueText: (self aspectAccessorNamed: 1))
+		equals: 'a ListViewColumn(''Blah blah'')'.
 	"And the ListView!!"
-	self assert: ('a ListView(*, ''Blah blah'')' match: (self getAccessorValueText: (self aspectAccessorNamed: #yourself))).
+	self assert: ('a ListView(*, ''Blah blah'')'
+				match: (self getAccessorValueText: (self aspectAccessorNamed: #yourself))).
 
 	"Should also have propagated into the View's menu, which should have been replaced"
 
 	"Note that the original will have changed, because the keyed sub-aspects of the columns list are not themselves immutable"
-	self deny: columnsList first text = 'Column 1'.
-	self assert: inspectee columnsList ~~ columnsList.
+	self deny: columnsList first text equals: 'Column 1'.
+	self deny: inspectee columnsList identicalTo: columnsList.
 	"Obviously the description update should have propagated through"
-	self assert: inspectee columnsList first text = accessor value] 
+	self assert: inspectee columnsList first text equals: accessor value]
 			ensure: [inspectee topView destroy]!
 
 testMoveDown
@@ -637,25 +638,25 @@ testRefresh
 	| inspectee roots children |
 	inspectee := 1 @ 2 corner: 3 @ 4.
 	self createInspectorOn: inspectee.
-	self assert: treePresenter view itemCount == 5.
+	self assert: treePresenter view itemCount identicalTo: 5.
 	inspector refresh.
-	self assert: treePresenter view itemCount == 5!
+	self assert: treePresenter view itemCount identicalTo: 5!
 
 testRemoveCollectionElements1
 	| inspectee inner listPresenter root |
-	inner := OrderedCollection 
+	inner := OrderedCollection
 				with: 1
 				with: 2
 				with: 3.
 	inspectee := OrderedCollection with: inner.
 	self createInspectorOn: inspectee.
 	self repaint.
-	self assert: treePresenter view itemCount = 2.
+	self assert: treePresenter view itemCount equals: 2.
 	root := treePresenter model roots first.
 	treePresenter selection: (treePresenter model childrenOf: root) first.
-	self assert: treePresenter view itemCount = 2.
+	self assert: treePresenter view itemCount equals: 2.
 	treePresenter view expandAll.
-	self assert: treePresenter view itemCount = 5.
+	self assert: treePresenter view itemCount equals: 5.
 	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 	listPresenter selectionByIndex: 2.
 	self aspectPresenter removeItem.
@@ -670,32 +671,32 @@ testRootAspectVisible
 	inspectee := 1 @ 2 corner: 3 @ 4.
 	self createInspectorOn: inspectee.
 	inspector isRootAspectVisible: false.
-	self assert: treePresenter view itemCount == 4.
+	self assert: treePresenter view itemCount identicalTo: 4.
 	roots := treePresenter model roots.
-	self assert: (roots collect: [:each | each name]) asArray = #(#bottom #left #right #top).
+	self assert: (roots collect: [:each | each name]) asArray equals: #(#bottom #left #right #top).
 	inspector isRootAspectVisible: true.
-	self assert: treePresenter view itemCount == 5.
+	self assert: treePresenter view itemCount identicalTo: 5.
 	roots := treePresenter model roots.
 	children := treePresenter model childrenOf: roots first.
-	self assert: roots size = 1.
-	self assert: children size = 4.
-	self assert: (children collect: [:each | each name]) asArray = #(#bottom #left #right #top)!
+	self assert: roots size equals: 1.
+	self assert: children size equals: 4.
+	self assert: (children collect: [:each | each name]) asArray equals: #(#bottom #left #right #top)!
 
 testSetToNil
 	| inspectee listPresenter root |
 	inspectee := OrderedCollection with: 1 @ 2.
 	self createInspectorOn: inspectee.
-	self assert: treePresenter view itemCount == 2.
+	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint.
 	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
-	self assert: treePresenter view itemCount == 2.
+	self assert: treePresenter view itemCount identicalTo: 2.
 	treePresenter view expandAll.
 	self repaint.
-	self assert: treePresenter view itemCount == 4.
+	self assert: treePresenter view itemCount identicalTo: 4.
 	root := treePresenter model roots first.
 	treePresenter selection: (treePresenter model childrenOf: root) first.
 	inspector setAspectValue: nil.
-	self assert: treePresenter view itemCount == 2.
+	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint! !
 !PublishedAspectInspectorTest categoriesFor: #aspectAccessorNamed:!helpers!private! !
 !PublishedAspectInspectorTest categoriesFor: #aspectPresenter!accessing!private! !

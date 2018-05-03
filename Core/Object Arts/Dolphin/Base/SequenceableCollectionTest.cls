@@ -35,16 +35,20 @@ newUnsortedCollection: aCollection
 testAsByteArray
 	| sequence |
 	sequence := #().
-	self assert: (self newCollection: sequence) asByteArray = (self byteArrayForSequence: sequence).
+	self assert: (self newCollection: sequence) asByteArray
+		equals: (self byteArrayForSequence: sequence).
 	sequence := #(65).
-	self assert: (self newCollection: sequence) asByteArray = (self byteArrayForSequence: sequence).
+	self assert: (self newCollection: sequence) asByteArray
+		equals: (self byteArrayForSequence: sequence).
 	sequence := #(65 66).
-	self assert: (self newCollection: sequence) asByteArray = (self byteArrayForSequence: sequence).
+	self assert: (self newCollection: sequence) asByteArray
+		equals: (self byteArrayForSequence: sequence).
 	sequence := #(65 66 67).
-	self assert: (self newCollection: sequence) asByteArray = (self byteArrayForSequence: sequence).
+	self assert: (self newCollection: sequence) asByteArray
+		equals: (self byteArrayForSequence: sequence).
 	sequence := #(65 66 67 68).
-	self assert: (self newCollection: sequence) asByteArray = (self byteArrayForSequence: sequence).
-!
+	self assert: (self newCollection: sequence) asByteArray
+		equals: (self byteArrayForSequence: sequence)!
 
 testAt
 	| subject |
@@ -113,13 +117,13 @@ testBinarySearch
 	| searchee lessThan |
 	lessThan := [:x :y | x < y].
 	searchee := self newCollection: 'abcdefghijklmnopqrstuvwxyz'.
-	(searchee respondsTo: #binarySearchFor:using:) 
+	(searchee respondsTo: #binarySearchFor:using:)
 		ifFalse: 
 			["Binary search method introduced in D6"
 			^self].
-	self assert: (searchee binarySearchFor: (searchee at: 1) using: lessThan) = 1.
-	self assert: (searchee binarySearchFor: (searchee at: 8) using: lessThan) = 8.
-	self assert: (searchee binarySearchFor: (searchee at: 26) using: lessThan) = 26!
+	self assert: (searchee binarySearchFor: (searchee at: 1) using: lessThan) equals: 1.
+	self assert: (searchee binarySearchFor: (searchee at: 8) using: lessThan) equals: 8.
+	self assert: (searchee binarySearchFor: (searchee at: 26) using: lessThan) equals: 26!
 
 testConcatenation
 	| a b |
@@ -139,73 +143,66 @@ testCopyFromTo
 	self should: [source copyFrom: -1 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: 0] raise: BoundsError.
 	self should: [source copyFrom: 0 to: 0] raise: BoundsError.
-	self assert: (source copyFrom: 1 to: 0) = empty.
+	self assert: (source copyFrom: 1 to: 0) equals: empty.
 	self should: [source copyFrom: 1 to: 1] raise: BoundsError.
 	self should: [source copyFrom: 1 to: 2] raise: BoundsError.
 	self should: [source copyFrom: 1 to: 3] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 2] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 3] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 4] raise: BoundsError.
-
 	source := self newCollection: #($1).
 	self should: [source copyFrom: -2 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: 0] raise: BoundsError.
 	self should: [source copyFrom: 0 to: 0] raise: BoundsError.
-	self assert: (source copyFrom: 1 to: 0) = empty.
-	self assert: (source copyFrom: 1 to: 1) = (self newCopy: source).
+	self assert: (source copyFrom: 1 to: 0) equals: empty.
+	self assert: (source copyFrom: 1 to: 1) equals: (self newCopy: source).
 	self should: [source copyFrom: 1 to: 2] raise: BoundsError.
 	self should: [source copyFrom: 1 to: 3] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 2] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 3] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 4] raise: BoundsError.
-
 	source := self newCollection: #($1 $2).
 	self should: [source copyFrom: -2 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: 0] raise: BoundsError.
 	self should: [source copyFrom: 0 to: 0] raise: BoundsError.
-	self assert: (source copyFrom: 1 to: 0) = empty.
-	self assert: (source copyFrom: 1 to: 1) = (self newCopy: #($1)).
-	self assert: (source copyFrom: 1 to: 2) = (self newCopy: source).
+	self assert: (source copyFrom: 1 to: 0) equals: empty.
+	self assert: (source copyFrom: 1 to: 1) equals: (self newCopy: #($1)).
+	self assert: (source copyFrom: 1 to: 2) equals: (self newCopy: source).
 	self should: [source copyFrom: 1 to: 3] raise: BoundsError.
-	self assert: (source copyFrom: 2 to: 2) = (self newCopy: #($2)).
+	self assert: (source copyFrom: 2 to: 2) equals: (self newCopy: #($2)).
 	self should: [source copyFrom: 2 to: 3] raise: BoundsError.
 	self should: [source copyFrom: 2 to: 4] raise: BoundsError.
-
 	source := self newCollection: #($1 $2 $3).
 	self should: [source copyFrom: -2 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: 0] raise: BoundsError.
 	self should: [source copyFrom: 0 to: 0] raise: BoundsError.
-	self assert: (source copyFrom: 1 to: 0) = empty.
-	self assert: (source copyFrom: 1 to: 1) = (self newCopy: #($1)).
-	self assert: (source copyFrom: 1 to: 2) = (self newCopy: #($1 $2)).
-	self assert: (source copyFrom: 1 to: 3) = (self newCopy: source).
-	self assert: (source copyFrom: 2 to: 2) = (self newCopy: #($2)).
-	self assert: (source copyFrom: 2 to: 3) = (self newCopy: #($2 $3)).
-	self assert: (source copyFrom: 3 to: 3) = (self newCopy: #($3)).
+	self assert: (source copyFrom: 1 to: 0) equals: empty.
+	self assert: (source copyFrom: 1 to: 1) equals: (self newCopy: #($1)).
+	self assert: (source copyFrom: 1 to: 2) equals: (self newCopy: #($1 $2)).
+	self assert: (source copyFrom: 1 to: 3) equals: (self newCopy: source).
+	self assert: (source copyFrom: 2 to: 2) equals: (self newCopy: #($2)).
+	self assert: (source copyFrom: 2 to: 3) equals: (self newCopy: #($2 $3)).
+	self assert: (source copyFrom: 3 to: 3) equals: (self newCopy: #($3)).
 	self should: [source copyFrom: 2 to: 4] raise: BoundsError.
-
 	source := self newCollection: #($1 $2 $3 $4).
 	self should: [source copyFrom: -2 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: -1] raise: BoundsError.
 	self should: [source copyFrom: -1 to: 0] raise: BoundsError.
 	self should: [source copyFrom: 0 to: 0] raise: BoundsError.
-	self assert: (source copyFrom: 1 to: 0) = empty.
-	self assert: (source copyFrom: 1 to: 1) = (self newCopy: #($1)).
-	self assert: (source copyFrom: 1 to: 2) = (self newCopy: #($1 $2)).
-	self assert: (source copyFrom: 1 to: 3) = (self newCopy: #($1 $2 $3)).
-	self assert: (source copyFrom: 1 to: 4) = (self newCopy: source).
-	self assert: (source copyFrom: 2 to: 2) = (self newCopy: #($2)).
-	self assert: (source copyFrom: 2 to: 3) = (self newCopy: #($2 $3)).
-	self assert: (source copyFrom: 2 to: 4) = (self newCopy: #($2 $3 $4)).
-	self assert: (source copyFrom: 3 to: 3) = (self newCopy: #($3)).
-	self assert: (source copyFrom: 4 to: 4) = (self newCopy: #($4)).
-	self should: [source copyFrom: 4 to: 5] raise: BoundsError.
-
-
-!
+	self assert: (source copyFrom: 1 to: 0) equals: empty.
+	self assert: (source copyFrom: 1 to: 1) equals: (self newCopy: #($1)).
+	self assert: (source copyFrom: 1 to: 2) equals: (self newCopy: #($1 $2)).
+	self assert: (source copyFrom: 1 to: 3) equals: (self newCopy: #($1 $2 $3)).
+	self assert: (source copyFrom: 1 to: 4) equals: (self newCopy: source).
+	self assert: (source copyFrom: 2 to: 2) equals: (self newCopy: #($2)).
+	self assert: (source copyFrom: 2 to: 3) equals: (self newCopy: #($2 $3)).
+	self assert: (source copyFrom: 2 to: 4) equals: (self newCopy: #($2 $3 $4)).
+	self assert: (source copyFrom: 3 to: 3) equals: (self newCopy: #($3)).
+	self assert: (source copyFrom: 4 to: 4) equals: (self newCopy: #($4)).
+	self should: [source copyFrom: 4 to: 5] raise: BoundsError!
 
 testCopyReplaceAllWith
 	| testCases |
@@ -339,35 +336,34 @@ testFirst
 	| first |
 	self should: [(self newCollection: #()) first] raise: BoundsError.
 	first := (self newCollection: #(49)) at: 1.
-	self assert: (self newCollection: #(49)) first = first.
-	self assert: (self newCollection: #(49 50)) first = first!
+	self assert: (self newCollection: #(49)) first equals: first.
+	self assert: (self newCollection: #(49 50)) first equals: first!
 
 testFirstColon
 	| empty one two three |
 	empty := self newCollection: #().
-	self assert: (empty first: 0) = (self newCopy: empty).
+	self assert: (empty first: 0) equals: (self newCopy: empty).
 	self should: [empty first: 1] raise: Error.
 	self should: [empty first: 2] raise: Error.
 	self should: [empty first: -1] raise: Error.
 	one := self newCollection: #($1).
-	self assert: (one first: 0) = (self newCopy: empty).
-	self assert: (one first: 1) = (self newCopy: one).
+	self assert: (one first: 0) equals: (self newCopy: empty).
+	self assert: (one first: 1) equals: (self newCopy: one).
 	self should: [one first: 2] raise: Error.
 	self should: [one first: -1] raise: Error.
 	two := self newCollection: #($1 $2).
-	self assert: (two first: 0) = (self newCopy: empty).
-	self assert: (two first: 1) = (self newCopy: one).
-	self assert: (two first: 2) = (self newCopy: two).
+	self assert: (two first: 0) equals: (self newCopy: empty).
+	self assert: (two first: 1) equals: (self newCopy: one).
+	self assert: (two first: 2) equals: (self newCopy: two).
 	self should: [two first: 3] raise: Error.
 	self should: [one first: -1] raise: Error.
 	three := self newCollection: #($1 $2 $3).
-	self assert: (three first: 0) = (self newCopy: empty).
-	self assert: (three first: 1) = (self newCopy: one).
-	self assert: (three first: 2) = (self newCopy: two).
-	self assert: (three first: 3) = (self newCopy: three).
+	self assert: (three first: 0) equals: (self newCopy: empty).
+	self assert: (three first: 1) equals: (self newCopy: one).
+	self assert: (three first: 2) equals: (self newCopy: two).
+	self assert: (three first: 3) equals: (self newCopy: three).
 	self should: [two first: 4] raise: Error.
-	self should: [one first: -1] raise: Error.
-!
+	self should: [one first: -1] raise: Error!
 
 testFromToKeysAndValuesDo
 	"Empty array"
@@ -376,16 +372,16 @@ testFromToKeysAndValuesDo
 	array := self newNumericArray: 0.
 	pairs := OrderedCollection new.
 	#(#(1 0)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
 			self assert: pairs isEmpty].
 	#(#(0 -1) #(-1 0) #(0 1) #(1 1) #(2 2) #(2 1) #(3 2)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue]]
@@ -394,26 +390,26 @@ testFromToKeysAndValuesDo
 	"Array of 1 element"
 	array := self newNumericArray: 1.
 	#(#(1 0) #(2 1)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue].
 			self assert: pairs isEmpty].
 	#(#(1 1)) do: 
-			[:each | 
+			[:each |
 			| expected |
 			pairs := OrderedCollection new.
-			array 
+			array
 				from: 1
 				to: 1
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			expected := (each first to: each last) collect: [:i | i -> i printString].
-			self assert: pairs asArray = expected].
+			self assert: pairs asArray equals: expected].
 	#(#(1 2) #(2 2) #(3 2)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
@@ -422,26 +418,26 @@ testFromToKeysAndValuesDo
 	"Array of two elements"
 	array := self newNumericArray: 2.
 	#(#(1 0) #(2 1) #(3 2)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			self assert: pairs isEmpty].
 	#(#(1 1) #(1 2) #(2 2)) do: 
-			[:each | 
+			[:each |
 			| expected |
 			pairs := OrderedCollection new.
-			array 
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			expected := (each first to: each last) collect: [:i | i -> i printString].
-			self assert: pairs asArray = expected].
+			self assert: pairs asArray equals: expected].
 	#(#(1 3) #(2 3) #(3 3)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
@@ -450,26 +446,26 @@ testFromToKeysAndValuesDo
 	pairs := OrderedCollection new.
 	array := self newNumericArray: 3.
 	#(#(1 0) #(2 1) #(3 2) #(4 3)) do: 
-			[:each | 
-			array 
+			[:each |
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			self assert: pairs isEmpty].
 	#(#(1 1) #(1 2) #(2 2) #(1 3) #(2 3) #(3 3)) do: 
-			[:each | 
+			[:each |
 			| expected |
 			pairs := OrderedCollection new.
-			array 
+			array
 				from: each first
 				to: each last
 				keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString].
 			expected := (each first to: each last) collect: [:i | i -> i printString].
-			self assert: pairs asArray = expected].
+			self assert: pairs asArray equals: expected].
 	#(#(1 4) #(2 4) #(3 4) #(4 4)) do: 
-			[:each | 
+			[:each |
 			self should: 
-					[array 
+					[array
 						from: each first
 						to: each last
 						keysAndValuesDo: [:eachKey :eachValue | pairs addLast: eachKey -> eachValue displayString]]
@@ -477,29 +473,29 @@ testFromToKeysAndValuesDo
 
 testFromToKeysAndValuesDo2
 	#(#() #(65) #(65 66) #(65 66 67) #(65 66 67 68)) do: 
-			[:sequence | 
+			[:sequence |
 			| enum collection |
 			enum := OrderedCollection new.
 			collection := self newCollection: sequence.
 			"Deliberate enumeration over an empty interval - should be valid"
-			collection 
+			collection
 				from: sequence size + 1
 				to: sequence size
 				keysAndValuesDo: [:i :each | enum add: each].
 			self assert: enum isEmpty.
-			collection 
+			collection
 				from: 1
 				to: sequence size
 				keysAndValuesDo: [:i :each | enum add: each].
-			self assert: enum asArray = collection asArray.
+			self assert: enum asArray equals: collection asArray.
 			self should: 
-					[collection 
+					[collection
 						from: 0
 						to: sequence size
 						keysAndValuesDo: [:i :each | enum add: each]]
 				raise: BoundsError.
 			self should: 
-					[collection 
+					[collection
 						from: 1
 						to: sequence size + 1
 						keysAndValuesDo: [:i :each | enum add: each]]
@@ -633,36 +629,35 @@ testIndexOfAnyOfStartingAt
 
 testLast
 	self should: [(self newCollection: #()) last] raise: BoundsError.
-	self assert: (self newCollection: #(49)) last = (self assimilate: 49).
-	self assert: (self newCollection: #(49 50)) last = (self assimilate: 50).
-	self assert: (self newCollection: #(49 50 51)) last = (self assimilate: 51)!
+	self assert: (self newCollection: #(49)) last equals: (self assimilate: 49).
+	self assert: (self newCollection: #(49 50)) last equals: (self assimilate: 50).
+	self assert: (self newCollection: #(49 50 51)) last equals: (self assimilate: 51)!
 
 testLastColon
 	| empty one two three |
 	empty := self newCollection: #().
-	self assert: (empty last: 0) = (self newCopy: empty).
+	self assert: (empty last: 0) equals: (self newCopy: empty).
 	self should: [empty last: 1] raise: BoundsError.
 	self should: [empty last: 2] raise: BoundsError.
 	self should: [empty last: -1] raise: Error.
 	one := self newCollection: #($2).
-	self assert: (one last: 0) = (self newCopy: empty).
-	self assert: (one last: 1) = (self newCopy: one).
+	self assert: (one last: 0) equals: (self newCopy: empty).
+	self assert: (one last: 1) equals: (self newCopy: one).
 	self should: [one last: 2] raise: BoundsError.
 	self should: [one last: -1] raise: Error.
 	two := self newCollection: #($1 $2).
-	self assert: (two last: 0) = (self newCopy: empty).
-	self assert: (two last: 1) = (self newCopy: #($2)).
-	self assert: (two last: 2) = (self newCopy: two).
+	self assert: (two last: 0) equals: (self newCopy: empty).
+	self assert: (two last: 1) equals: (self newCopy: #($2)).
+	self assert: (two last: 2) equals: (self newCopy: two).
 	self should: [two last: 3] raise: BoundsError.
 	self should: [one last: -1] raise: Error.
 	three := self newCollection: #($1 $2 $3).
-	self assert: (three last: 0) = (self newCopy: empty).
-	self assert: (three last: 1) = (self newCopy: #($3)).
-	self assert: (three last: 2) = (self newCopy: #($2 $3)).
-	self assert: (three last: 3) = (self newCopy: three).
+	self assert: (three last: 0) equals: (self newCopy: empty).
+	self assert: (three last: 1) equals: (self newCopy: #($3)).
+	self assert: (three last: 2) equals: (self newCopy: #($2 $3)).
+	self assert: (three last: 3) equals: (self newCopy: three).
 	self should: [two last: 4] raise: BoundsError.
-	self should: [one last: -1] raise: Error.
-!
+	self should: [one last: -1] raise: Error!
 
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
@@ -684,33 +679,31 @@ testMixedConcatenation
 								[:each |
 								| result |
 								result := self verifyConcatenation: eachCase with: each.
-								self deny: each == result]]]!
+								self deny: each identicalTo: result]]]!
 
 testReplaceFromToWithStartingAt
 	| a |
 	a := self newCollection: #($1 $2 $3 $4 $5).
-	a 
+	a
 		replaceFrom: 2
 		to: 4
 		with: (self newCollection: #($a $b $c $d $e))
 		startingAt: 2.
-	self assert: a = (self newCollection: #($1 $b $c $d $5)).
+	self assert: a equals: (self newCollection: #($1 $b $c $d $5)).
 	a := self newCollection: #($1 $2 $3 $4 $5).
-	a 
+	a
 		replaceFrom: 2
 		to: 4
 		with: a
 		startingAt: 3.
-	self assert: a = (self newCollection: #($1 $3 $4 $5 $5)).
+	self assert: a equals: (self newCollection: #($1 $3 $4 $5 $5)).
 	a := self newCollection: #($1 $2 $3 $4 $5).
-	a 
+	a
 		replaceFrom: 2
 		to: 4
 		with: a
 		startingAt: 1.
-	self assert: a = (self newCollection: #($1 $1 $2 $3 $5))
-
-!
+	self assert: a equals: (self newCollection: #($1 $1 $2 $3 $5))!
 
 testResize
 	| subject actual original |
@@ -773,11 +766,12 @@ verifyConcatenation: b with: a
 	^result!
 
 verifyConcatenationResult: resultCollection of: receiverCollection with: argumentCollection
-	self assert: (resultCollection isKindOf: receiverCollection species)!
+	self assert: resultCollection isKindOf: receiverCollection species!
 
-verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger 
-	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) = foundInteger.
-	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger) = foundInteger! !
+verifyIndexOfAnyOf: searchFor startingAt: startInteger in: searchee is: foundInteger
+	self assert: (searchee indexOfAnyOf: searchFor startingAt: startInteger) equals: foundInteger.
+	self assert: (searchee indexOfAnyOf: searchFor asArray startingAt: startInteger)
+		equals: foundInteger! !
 !SequenceableCollectionTest categoriesFor: #assimilateResultElement:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !SequenceableCollectionTest categoriesFor: #newCopy:!helpers!private! !

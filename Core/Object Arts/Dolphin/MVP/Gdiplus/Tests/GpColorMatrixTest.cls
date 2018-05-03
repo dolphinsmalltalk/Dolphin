@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GpColorMatrixTest
 	instanceVariableNames: 'matrix'
@@ -12,31 +12,29 @@ GpColorMatrixTest comment: ''!
 
 assertIsIdentity
 	1 to: 5
-		do: 
-			[:r | 
-			1 to: 5 do: [:c | self assert: (matrix atPoint: r @ c) = (r = c ifTrue: [1] ifFalse: [0])]]!
+		do: [:r | 1 to: 5 do: [:c | self assert: (matrix atPoint: r @ c) equals: (r = c ifTrue: [1] ifFalse: [0])]]!
 
 setUp
 	super setUp.
 	matrix := GpColorMatrix identity!
 
 testAccessing
-	((OrderedCollection new)
+	(OrderedCollection new
 		add: 1 @ 1;
 		add: 2 @ 1;
 		add: 1 @ 2;
 		add: 5 @ 5;
 		yourself) do: 
-				[:each | 
+				[:each |
 				matrix atPoint: each put: 0.5.
-				self assert: (matrix atPoint: each) = 0.5]!
+				self assert: (matrix atPoint: each) equals: 0.5]!
 
 testConstruction
 	matrix := GpColorMatrix withAll: GpColorMatrix identityArray.
 	self assertIsIdentity!
 
 testIdentity
-	self assert: (matrix atPoint: 1 @ 1) = 1.
+	self assert: (matrix atPoint: 1 @ 1) equals: 1.
 	self assertIsIdentity! !
 !GpColorMatrixTest categoriesFor: #assertIsIdentity!public!unit tests! !
 !GpColorMatrixTest categoriesFor: #setUp!public!setup! !

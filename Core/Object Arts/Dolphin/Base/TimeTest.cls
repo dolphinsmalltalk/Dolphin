@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #TimeTest
 	instanceVariableNames: ''
@@ -10,78 +10,78 @@ TimeTest comment: ''!
 !TimeTest categoriesForClass!Unclassified! !
 !TimeTest methodsFor!
 
-comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expected 
+comparePrintStreamFor: time hr24: hr24 showSeconds: showSeconds expected: expected
 	| output aStream fmt |
 	aStream := String writeStream.
-	fmt := hr24 
+	fmt := hr24
 				ifTrue: [showSeconds ifTrue: ['HH:mm.ss'] ifFalse: ['HH:mm']]
 				ifFalse: [showSeconds ifTrue: ['h:mm.ss tt'] ifFalse: ['h:mm tt']].
 	time printOn: aStream format: fmt.
 	output := aStream contents.
-	self assert: output = expected!
+	self assert: output equals: expected!
 
-hoursShould: expectedHours for: seconds 
-	self assert: (Time fromSeconds: seconds) hours = expectedHours!
+hoursShould: expectedHours for: seconds
+	self assert: (Time fromSeconds: seconds) hours equals: expectedHours!
 
-millisecondsShould: expectedMs for: mS 
-	self assert: (Time fromMilliseconds: mS) milliseconds = expectedMs!
+millisecondsShould: expectedMs for: mS
+	self assert: (Time fromMilliseconds: mS) milliseconds equals: expectedMs!
 
-minutesShould: expectedMinutes for: seconds 
-	self assert: (Time fromSeconds: seconds) minutes = expectedMinutes!
+minutesShould: expectedMinutes for: seconds
+	self assert: (Time fromSeconds: seconds) minutes equals: expectedMinutes!
 
-secondsShould: expectedSeconds for: seconds 
-	self assert: (Time fromSeconds: seconds) seconds = expectedSeconds!
+secondsShould: expectedSeconds for: seconds
+	self assert: (Time fromSeconds: seconds) seconds equals: expectedSeconds!
 
 testClassReadFrom
-	self assert: (Time readFrom: '00' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00am' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00pm' readStream) asSeconds = (60 * 60 * 12).
-	self assert: (Time readFrom: '1' readStream) asSeconds = (60 * 60).
-	self assert: (Time readFrom: '1am' readStream) asSeconds = (60 * 60).
-	self assert: (Time readFrom: '1pm' readStream) asSeconds = (60 * 60 * 13).
-	self assert: (Time readFrom: '00:00' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00:00am' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00:00pm' readStream) asSeconds = (60 * 60 * 12).
-	self assert: (Time readFrom: '00:01' readStream) asSeconds = 60.
-	self assert: (Time readFrom: '00:01am' readStream) asSeconds = 60.
-	self assert: (Time readFrom: '00:01pm' readStream) asSeconds = (60 * 60 * 12 + 60).
-	self assert: (Time readFrom: '00:00:00' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00:00:00am' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00:00:00pm' readStream) asSeconds = (60 * 60 * 12).
-	self assert: (Time readFrom: '00:00:01' readStream) asSeconds = 1.
-	self assert: (Time readFrom: '00:00:01am' readStream) asSeconds = 1.
-	self assert: (Time readFrom: '00:00:01pm' readStream) asSeconds = (60 * 60 * 12 + 1).
-	self assert: (Time readFrom: '00:00:00:00' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00:00:00:00am' readStream) asSeconds = 0.
-	self assert: (Time readFrom: '00:00:00:00pm' readStream) asSeconds = (60 * 60 * 12).
-	self assert: (Time readFrom: '00:00:00:01' readStream) asMilliseconds = 1.
-	self assert: (Time readFrom: '00:00:00:01am' readStream) asMilliseconds = 1.
-	self assert: (Time readFrom: '00:00:00:01pm' readStream) asMilliseconds 
-				= (60 * 60 * 12 * 1000 + 1).
-	self assert: (Time readFrom: '00:59' readStream) asSeconds = (59 * 60).
-	self assert: (Time readFrom: '00:10' readStream) asSeconds = (60 * 10).
-	self assert: (Time readFrom: '01:00' readStream) asSeconds = (60 * 60).
-	self assert: (Time readFrom: '10:00' readStream) asSeconds = (60 * 60 * 10).
-	self assert: (Time fromString: '00:00:00:1') asMilliseconds = 1.
-	self assert: (Time fromString: '00:00:00.1') asMilliseconds = 100.
-	self assert: (Time fromString: '00:00:00.0') asMilliseconds = 0.
-	self assert: (Time fromString: '00:00:00.999') asMilliseconds = 999.
-	self assert: (Time fromString: '00:00:00.9994') asMilliseconds = 999.
-	self assert: (Time fromString: '00:00:00.9995') asMilliseconds = 1000.
-	self assert: (Time fromString: '00:00:00.01') asMilliseconds = 10.
-	self assert: (Time fromString: '00:00:00.001') asMilliseconds = 1.
-	self assert: (Time fromString: '00:00:00.0014') asMilliseconds = 1.
-	self assert: (Time fromString: '00:00:00.00049') asMilliseconds = 0.
-	self assert: (Time fromString: '00:00:00.0005') asMilliseconds = 1.
-	self assert: (Time fromString: '00:00:00.0015') asMilliseconds = 2.
-	self assert: (Time readFrom: '11:59:59:999' readStream) asMilliseconds 
-				= (60 * 60 * 12 * 1000 - 1).
-	self assert: (Time readFrom: '23:59:59:999' readStream) asMilliseconds 
-				= (60 * 60 * 24 * 1000 - 1).
-	self assert: (Time readFrom: '13:00' readStream) asSeconds = (60 * 60 * 13).
-	self assert: (Time readFrom: '11:59 PM' readStream) asSeconds = (60 * 60 * 24 - 60).
-	self assert: (Time readFrom: '12:00 PM' readStream) asSeconds = (60 * 60 * 12).
-	self assert: (Time readFrom: '12:00 AM' readStream) asSeconds = 0.
+	self assert: (Time readFrom: '00' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00am' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00pm' readStream) asSeconds equals: 60 * 60 * 12.
+	self assert: (Time readFrom: '1' readStream) asSeconds equals: 60 * 60.
+	self assert: (Time readFrom: '1am' readStream) asSeconds equals: 60 * 60.
+	self assert: (Time readFrom: '1pm' readStream) asSeconds equals: 60 * 60 * 13.
+	self assert: (Time readFrom: '00:00' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00:00am' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00:00pm' readStream) asSeconds equals: 60 * 60 * 12.
+	self assert: (Time readFrom: '00:01' readStream) asSeconds equals: 60.
+	self assert: (Time readFrom: '00:01am' readStream) asSeconds equals: 60.
+	self assert: (Time readFrom: '00:01pm' readStream) asSeconds equals: 60 * 60 * 12 + 60.
+	self assert: (Time readFrom: '00:00:00' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00:00:00am' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00:00:00pm' readStream) asSeconds equals: 60 * 60 * 12.
+	self assert: (Time readFrom: '00:00:01' readStream) asSeconds equals: 1.
+	self assert: (Time readFrom: '00:00:01am' readStream) asSeconds equals: 1.
+	self assert: (Time readFrom: '00:00:01pm' readStream) asSeconds equals: 60 * 60 * 12 + 1.
+	self assert: (Time readFrom: '00:00:00:00' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00:00:00:00am' readStream) asSeconds equals: 0.
+	self assert: (Time readFrom: '00:00:00:00pm' readStream) asSeconds equals: 60 * 60 * 12.
+	self assert: (Time readFrom: '00:00:00:01' readStream) asMilliseconds equals: 1.
+	self assert: (Time readFrom: '00:00:00:01am' readStream) asMilliseconds equals: 1.
+	self assert: (Time readFrom: '00:00:00:01pm' readStream) asMilliseconds
+		equals: 60 * 60 * 12 * 1000 + 1.
+	self assert: (Time readFrom: '00:59' readStream) asSeconds equals: 59 * 60.
+	self assert: (Time readFrom: '00:10' readStream) asSeconds equals: 60 * 10.
+	self assert: (Time readFrom: '01:00' readStream) asSeconds equals: 60 * 60.
+	self assert: (Time readFrom: '10:00' readStream) asSeconds equals: 60 * 60 * 10.
+	self assert: (Time fromString: '00:00:00:1') asMilliseconds equals: 1.
+	self assert: (Time fromString: '00:00:00.1') asMilliseconds equals: 100.
+	self assert: (Time fromString: '00:00:00.0') asMilliseconds equals: 0.
+	self assert: (Time fromString: '00:00:00.999') asMilliseconds equals: 999.
+	self assert: (Time fromString: '00:00:00.9994') asMilliseconds equals: 999.
+	self assert: (Time fromString: '00:00:00.9995') asMilliseconds equals: 1000.
+	self assert: (Time fromString: '00:00:00.01') asMilliseconds equals: 10.
+	self assert: (Time fromString: '00:00:00.001') asMilliseconds equals: 1.
+	self assert: (Time fromString: '00:00:00.0014') asMilliseconds equals: 1.
+	self assert: (Time fromString: '00:00:00.00049') asMilliseconds equals: 0.
+	self assert: (Time fromString: '00:00:00.0005') asMilliseconds equals: 1.
+	self assert: (Time fromString: '00:00:00.0015') asMilliseconds equals: 2.
+	self assert: (Time readFrom: '11:59:59:999' readStream) asMilliseconds
+		equals: 60 * 60 * 12 * 1000 - 1.
+	self assert: (Time readFrom: '23:59:59:999' readStream) asMilliseconds
+		equals: 60 * 60 * 24 * 1000 - 1.
+	self assert: (Time readFrom: '13:00' readStream) asSeconds equals: 60 * 60 * 13.
+	self assert: (Time readFrom: '11:59 PM' readStream) asSeconds equals: 60 * 60 * 24 - 60.
+	self assert: (Time readFrom: '12:00 PM' readStream) asSeconds equals: 60 * 60 * 12.
+	self assert: (Time readFrom: '12:00 AM' readStream) asSeconds equals: 0.
 	self should: [Time readFrom: '13:00 PM' readStream] raise: Error.
 	self should: [Time readFrom: '13:00 AM' readStream] raise: Error.
 	self should: [Time readFrom: '24:00' readStream] raise: Error.

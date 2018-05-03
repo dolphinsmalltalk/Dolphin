@@ -65,16 +65,14 @@ testInstVarAtPut
 		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
 testPrintLiteral
-	self assert: #_ printString = '#_'.
-	self assert: #'1' printString = '#''1'''.
-	self assert: #'urn:foo' printString = '#''urn:foo'''.
-	self assert: #urn:foo: printString = '#urn:foo:'.
-	self assert: #':' printString = '#'':'''.
-	self assert: #'::' printString = '#''::'''.
-	self assert: #'u::' printString = '#''u::'''.
-	self assert: #'u:u' printString = '#''u:u'''
-
-!
+	self assert: #_ printString equals: '#_'.
+	self assert: #'1' printString equals: '#''1'''.
+	self assert: #'urn:foo' printString equals: '#''urn:foo'''.
+	self assert: #urn:foo: printString equals: '#urn:foo:'.
+	self assert: #':' printString equals: '#'':'''.
+	self assert: #'::' printString equals: '#''::'''.
+	self assert: #'u::' printString equals: '#''u::'''.
+	self assert: #'u:u' printString equals: '#''u:u'''!
 
 testPrintString
 	"Test whether all non-literal symbols print correctly as quoted symbols"

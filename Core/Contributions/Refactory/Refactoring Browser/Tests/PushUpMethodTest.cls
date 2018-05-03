@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #PushUpMethodTest
 	instanceVariableNames: ''
@@ -12,27 +12,27 @@ PushUpMethodTest comment: ''!
 
 testPushUpAndCopyDown
 	| class |
-	model 
+	model
 		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''''.
-	model 
+	model
 		defineClass: 'SomeClass subclass: #SomeSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	model 
+	model
 		defineClass: 'SomeSubclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	model 
+	model
 		defineClass: 'SomeSubclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #(#accessing).
-	self executeRefactoring: (PushUpMethodRefactoring 
+	self executeRefactoring: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
 				from: class).
-	self assert: (class superclass parseTreeFor: #yourself) 
-				= (RBParser parseMethod: 'yourself ^1').
+	self assert: (class superclass parseTreeFor: #yourself)
+		equals: (RBParser parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
 	class := model classNamed: #Foo2.
 	self assert: (class directlyDefinesMethod: #yourself).
-	self assert: (class parseTreeFor: #yourself) 
-				= ((model classNamed: #Object) parseTreeFor: #yourself)!
+	self assert: (class parseTreeFor: #yourself)
+		equals: ((model classNamed: #Object) parseTreeFor: #yourself)!
 
 testPushUpClassMethod
 	| class |
@@ -47,20 +47,17 @@ testPushUpClassMethod
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
 	self proceedThroughWarning: 
-			[refactoring := PushUpMethodRefactoring pushUp: #(#isComposite)
-						from: CompositeLintRuleTest.
+			[refactoring := PushUpMethodRefactoring pushUp: #(#isComposite) from: CompositeLintRuleTest.
 			self executeRefactoring: refactoring].
-	self 
-		assert: ((refactoring model classNamed: #BasicLintRuleTest) 
-				parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
-	self 
-		assert: ((refactoring model classNamed: ('Foo' , 'LintRuleTest') asSymbol) 
-				parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^false').
-	self 
-		assert: ((refactoring model classNamed: #LintRuleTest) 
-				parseTreeFor: #isComposite) = (RBParser parseMethod: 'isComposite ^true').
-	self deny: ((refactoring model classNamed: #CompositeLintRuleTest) 
-				directlyDefinesMethod: #isComposite)!
+	self assert: ((refactoring model classNamed: #BasicLintRuleTest) parseTreeFor: #isComposite)
+		equals: (RBParser parseMethod: 'isComposite ^false').
+	self
+		assert: ((refactoring model classNamed: ('Foo' , 'LintRuleTest') asSymbol) parseTreeFor: #isComposite)
+		equals: (RBParser parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: #LintRuleTest) parseTreeFor: #isComposite)
+		equals: (RBParser parseMethod: 'isComposite ^true').
+	self
+		deny: ((refactoring model classNamed: #CompositeLintRuleTest) directlyDefinesMethod: #isComposite)!
 
 testPushUpReferencesInstVar
 	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:)

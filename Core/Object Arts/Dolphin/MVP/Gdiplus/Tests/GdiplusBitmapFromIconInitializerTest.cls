@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromIconInitializerTest
 	instanceVariableNames: ''
@@ -23,17 +23,17 @@ testCreateHandle
 	icon := GdiplusBitmap icon.
 	model icon: icon.
 	model createHandle.
-	self assert: constructorArgs size = 2.
-	self assert: constructorArgs first == icon basicHandle.
+	self assert: constructorArgs size equals: 2.
+	self assert: constructorArgs first identicalTo: icon basicHandle.
 	self assertLastArgIsHandle!
 
 testCreateHandleRealizesIcon
 	| icon |
 	icon := Icon fromId: 43 in: ShellLibrary default.
 	model icon: icon.
-	self assert: icon basicHandle isNil.
+	self assertIsNil: icon basicHandle.
 	model createHandle.
-	self assert: icon basicHandle notNil! !
+	self denyIsNil: icon basicHandle! !
 !GdiplusBitmapFromIconInitializerTest categoriesFor: #gdipCreateBitmapFromHICON:bitmap:!accessing!public! !
 !GdiplusBitmapFromIconInitializerTest categoriesFor: #setUp!public!setup! !
 !GdiplusBitmapFromIconInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !

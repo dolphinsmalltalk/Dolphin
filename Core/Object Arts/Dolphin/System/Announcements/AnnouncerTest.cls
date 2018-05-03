@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #AnnouncerTest
 	instanceVariableNames: 'announcer'
@@ -25,13 +25,12 @@ setUp
 	announcer := self newAnnouncer!
 
 testAnnounceClass
-	self assert: (announcer announce: AnnouncementMockA) 
-		class = AnnouncementMockA!
+	self assert: (announcer announce: AnnouncementMockA) class equals: AnnouncementMockA!
 
 testAnnounceInstance
 	| instance |
 	instance := AnnouncementMockA new.
-	self assert: (announcer announce: instance) = instance!
+	self assert: (announcer announce: instance) equals: instance!
 
 testAnnouncingReentrant
 	" Test that it is safe to announce when handling announcement,
@@ -59,74 +58,58 @@ testNoArgBlock
 
 	| counter |
 	counter := nil.
-	announcer subscribe: AnnouncementMockA do: [ counter := 1 ].
+	announcer subscribe: AnnouncementMockA do: [counter := 1].
 	announcer announce: AnnouncementMockA new.
-	self assert: counter = 1!
+	self assert: counter equals: 1!
 
 testSubscribeBlock
 	| announcement instance |
-	announcer
-		subscribe: AnnouncementMockA
-		do: [ :ann | announcement := ann ].
-		
+	announcer subscribe: AnnouncementMockA do: [:ann | announcement := ann].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
-	
+	self assert: announcement equals: instance.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement isNil!
+	self assertIsNil: announcement!
 
 testSubscribeSend
 	| announcement instance |
 	announcer
 		subscribe: AnnouncementMockA
 		send: #value:
-		to: [ :ann | announcement := ann ].
-		
+		to: [:ann | announcement := ann].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
-	
+	self assert: announcement equals: instance.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB new.
-	self assert: announcement isNil!
+	self assertIsNil: announcement!
 
 testSubscribeSet
 	| announcement instance |
-	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockC
-		do: [ :ann | announcement := ann ].
-		
+	announcer subscribe: AnnouncementMockA , AnnouncementMockC do: [:ann | announcement := ann].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement = instance.
-	
+	self assert: announcement equals: instance.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement isNil.
-	
+	self assertIsNil: announcement.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement = instance!
+	self assert: announcement equals: instance!
 
 testSubscribeSubclass
 	| announcement instance |
-	announcer
-		subscribe: AnnouncementMockB
-		do: [ :ann | announcement := ann ].
-		
+	announcer subscribe: AnnouncementMockB do: [:ann | announcement := ann].
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockA.
-	self assert: announcement isNil.
-
+	self assertIsNil: announcement.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockB.
-	self assert: announcement = instance.
-	
+	self assert: announcement equals: instance.
 	announcement := nil.
 	instance := announcer announce: AnnouncementMockC.
-	self assert: announcement = instance.!
+	self assert: announcement equals: instance!
 
 testSymbolIdentifier
 	| passed |
@@ -150,45 +133,35 @@ testTwoArgBlock
 	self assert: flag!
 
 testUnsubscribeBlock
-	| announcement receiver|
-	announcer
-		subscribe: AnnouncementMockA
-		do: (receiver := [ :ann | announcement := ann ]).
-	announcer
-		unsubscribe: receiver.
-
+	| announcement receiver |
+	announcer subscribe: AnnouncementMockA do: (receiver := [:ann | announcement := ann]).
+	announcer unsubscribe: receiver.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
-	self assert: announcement isNil!
+	self assertIsNil: announcement!
 
 testUnsubscribeSend
 	| announcement receiver |
 	announcer
 		subscribe: AnnouncementMockA
 		send: #value:
-		to: (receiver := [ :ann | announcement := ann ]).
-	announcer
-		unsubscribe: receiver.
-
+		to: (receiver := [:ann | announcement := ann]).
+	announcer unsubscribe: receiver.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
-	self assert: announcement isNil!
+	self assertIsNil: announcement!
 
 testUnsubscribeSet
 	| announcement receiver |
-	announcer
-		subscribe: AnnouncementMockA , AnnouncementMockB
-		do: (receiver := [ :ann | announcement := ann ]).
-	announcer
-		unsubscribe: receiver.
-
+	announcer subscribe: AnnouncementMockA , AnnouncementMockB
+		do: (receiver := [:ann | announcement := ann]).
+	announcer unsubscribe: receiver.
 	announcement := nil.
 	announcer announce: AnnouncementMockA new.
-	self assert: announcement isNil.
-	
+	self assertIsNil: announcement.
 	announcement := nil.
 	announcer announce: AnnouncementMockB new.
-	self assert: announcement isNil.! !
+	self assertIsNil: announcement! !
 !AnnouncerTest categoriesFor: #newAnnouncer!private! !
 !AnnouncerTest categoriesFor: #setUp!private!running! !
 !AnnouncerTest categoriesFor: #testAnnounceClass!public!testing! !

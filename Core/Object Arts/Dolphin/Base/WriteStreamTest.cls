@@ -34,7 +34,7 @@ testContents
 	self assert: stream contents isEmpty.
 	self closeTempStream: stream.
 	stream := self streamWith: 'hello'.
-	self assert: stream contents = 'hello'.
+	self assert: stream contents equals: 'hello'.
 	self closeTempStream: stream!
 
 testNewContents
@@ -42,12 +42,12 @@ testNewContents
 	stream := self streamWith: String new.
 	self assert: stream contents isEmpty.
 	stream nextPut: $h.
-	self assert: stream contents = 'h'.
+	self assert: stream contents equals: 'h'.
 	self closeTempStream: stream.
 	stream := self streamWith: 'hel'.
 	stream nextPutAll: 'lo'.
 	contents := stream contents.
-	self assert: contents = 'hello'.
+	self assert: contents equals: 'hello'.
 	self closeTempStream: stream!
 
 testNextAvailableColon
@@ -90,10 +90,10 @@ testSetToEnd
 	string := 'hello'.
 	stream := WriteStream with: String new.
 	stream nextPutAll: string.
-	self assert: stream position = string size.
+	self assert: stream position equals: string size.
 	stream setToEnd.
-	self assert: stream position = string size.
-	self assert: stream contents = string!
+	self assert: stream position equals: string size.
+	self assert: stream contents equals: string!
 
 testSkipToAllColon
 	| chars stream |

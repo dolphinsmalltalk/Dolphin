@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableListItemsTest subclass: #ListViewTest
 	instanceVariableNames: ''
@@ -52,11 +52,11 @@ getItem: anInteger
 mouseDownEventOnItem: itemIndex buttons: anArray
 	| mouseButton keys position |
 	mouseButton := anArray intersection: #(#left #right #middle).
-	self assert: mouseButton size = 1.
+	self assert: mouseButton size equals: 1.
 	mouseButton := mouseButton anyOne.
 	keys := (anArray collect: 
 					[:each |
-					##((IdentityDictionary new)
+					##(IdentityDictionary new
 						at: #left put: MK_LBUTTON;
 						at: #right put: MK_RBUTTON;
 						at: #middle put: MK_MBUTTON;
@@ -69,22 +69,21 @@ mouseDownEventOnItem: itemIndex buttons: anArray
 				ifFalse: [(presenter itemRect: itemIndex) origin + (1 @ 1)].
 	^MouseEvent
 		window: presenter
-		message: (##((IdentityDictionary new)
+		message: (##(IdentityDictionary new
 				at: #left put: WM_LBUTTONDOWN;
 				at: #right put: WM_RBUTTONDOWN;
 				at: #middle put: WM_MBUTTONDOWN;
 				yourself) at: mouseButton)
 		wParam: keys
-		lParam: (DWORD fromPoint: position) asInteger.!
+		lParam: (DWORD fromPoint: position) asInteger!
 
-setColumns: cols 
+setColumns: cols
 	| list |
-	(presenter view)
-		columnsList: cols.
+	presenter view columnsList: cols.
 	list := self getColumns.
-	self 
-		assert: (list collect: [:each | each text]) asArray = (cols collect: [:each | each text]) asArray.
-	self assert: presenter view columnOrder = (1 to: cols size).
+	self assert: (list collect: [:each | each text]) asArray
+		equals: (cols collect: [:each | each text]) asArray.
+	self assert: presenter view columnOrder equals: (1 to: cols size).
 	^list!
 
 setUpForSelectionTesting
@@ -101,23 +100,23 @@ testChangeViewMode
 	| column |
 	self assert: presenter isVirtual.
 	presenter viewMode: #report.
-	self assert: presenter viewMode == #report.
+	self assert: presenter viewMode identicalTo: #report.
 	column := presenter primaryColumn.
 	presenter getTextBlock: [:each | each first].
 	column getTextBlock: [:each | each second].
 	presenter model list: #(#('1' '2') #('11' '22')).
 	2 timesRepeat: 
 			[presenter model keysAndValuesDo: 
-					[:i :each | 
+					[:i :each |
 					| text |
 					text := presenter getItemText: i.
-					self assert: text = each second].
+					self assert: text equals: each second].
 			presenter viewMode: #smallIcons.
 			presenter model keysAndValuesDo: 
-					[:i :each | 
+					[:i :each |
 					| text |
 					text := presenter getItemText: i.
-					self assert: text = each first].
+					self assert: text equals: each first].
 			presenter viewMode: #report.
 			"Switch to non-virtual"
 			presenter isVirtual: false.
@@ -128,11 +127,11 @@ testColumnsList
 
 	| cols |
 	cols := self getColumns.
-	self assert: cols size = 1.
-	self assert: cols first text = 'Column 1'.
-	self assert: presenter view columnOrder = (1 to: 1).
+	self assert: cols size equals: 1.
+	self assert: cols first text equals: 'Column 1'.
+	self assert: presenter view columnOrder equals: (1 to: 1).
 	cols := (1 to: 6) collect: 
-					[:each | 
+					[:each |
 					(ListViewColumn text: each displayString)
 						isAutoResize: true;
 						yourself].
@@ -165,7 +164,7 @@ testColumnsList
 	self setColumns: cols.
 
 	"Remove two from the middle."
-	cols := (cols copy)
+	cols := cols copy
 				removeAtIndex: 2;
 				removeAtIndex: 2;
 				yourself.
@@ -176,30 +175,31 @@ testColumnsList
 
 testLastSelectionCacheUpdatedOnRemove
 	"#717"
+
 	| objects |
 	objects := self objectsToTest.
 	presenter model addAll: objects.
 	self assert: presenter hasSelection not.
 	presenter selection: objects second.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(2).
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(2).
 	presenter model removeAtIndex: 1.
-	self assert: (presenter instVarNamed: 'lastSelIndices') = #(1)!
+	self assert: (presenter instVarNamed: 'lastSelIndices') equals: #(1)!
 
 testNewSelectionsLeftClickOutsideList
 	| event |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 0 buttons: #(#left).
-	self assert: (presenter newSelectionsFromEvent: event) = #().
+	self assert: (presenter newSelectionsFromEvent: event) equals: #().
 	presenter selectionsByIndex: #(3).
-	self assert: (presenter newSelectionsFromEvent: event) = #().!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #()!
 
 testNewSelectionsSimpleLeftClick
 	| event |
 	self setUpForSelectionTesting.
 	event := self mouseDownEventOnItem: 1 buttons: #(#left).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1).
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1).
 	presenter selectionsByIndex: #(3).
-	self assert: (presenter newSelectionsFromEvent: event) = #(1).!
+	self assert: (presenter newSelectionsFromEvent: event) equals: #(1)!
 
 testNilRow
 	"#2157"
@@ -212,8 +212,8 @@ testNilRow
 	txt := 'this is nil'.
 	c getTextBlock: [:it | it ifNil: [txt]].
 	item := self getItem: 1.
-	self assert: item pszText = txt.
-	self assert: item iImage = (nil icon imageIndex - 1)!
+	self assert: item pszText equals: txt.
+	self assert: item iImage equals: nil icon imageIndex - 1!
 
 testProgrammaticSelectionVisible
 	"#1381"
@@ -252,19 +252,19 @@ testSetTextImageDoesNotAffectSelection
 	presenter view isVirtual: false.
 	0 to: 1
 		do: 
-			[:i | 
+			[:i |
 			presenter model removeAll.
 			presenter view isVirtual: i asBoolean.
 			presenter model addAll: objects.
 			presenter selectionByIndex: 2.
-			self 
+			self
 				shouldnt: 
 					["Remove an object after the selection"
 					presenter view getImageBlock: [:each | each icon imageIndex + 1]]
 				trigger: #selectionChanged
 				against: presenter.
-			self assert: presenter selectionByIndex == 2.
-			self 
+			self assert: presenter selectionByIndex identicalTo: 2.
+			self
 				shouldnt: [presenter selectionByIndex: 2]
 				trigger: #selectionChanging:
 				against: presenter]! !

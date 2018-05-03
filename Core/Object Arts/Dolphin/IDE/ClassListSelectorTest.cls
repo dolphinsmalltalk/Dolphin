@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassSelectorTest subclass: #ClassListSelectorTest
 	instanceVariableNames: ''
@@ -20,8 +20,8 @@ assertContains: anObject
 	| sel |
 	sel := presenter selectableItems selectionOrNil.
 	presenter selectableItems selection: anObject.
-	self assert: (presenter selectableItems selection==anObject).
-	presenter selectableItems selectionOrNil: sel.!
+	self assert: presenter selectableItems selection identicalTo: anObject.
+	presenter selectableItems selectionOrNil: sel!
 
 classToTest
 	^ClassListSelector
@@ -86,11 +86,11 @@ testAddRemoveListItems
 	self assertContains: dolphinTestA.
 	self assert: (presenter selectableItems view includesItem: dolphinTestA).
 	presenter selectableItems selection: dolphinTestA.
-	self assert: self listPresenter selectionOrNil isNil.
+	self assertIsNil: self listPresenter selectionOrNil.
 	self assertContains: dolphinTestB.
 	self assert: (presenter selectableItems view includesItem: dolphinTestB).
 	presenter selectableItems selection: dolphinTestB.
-	self assert: self listPresenter selectionOrNil == dolphinTestB.
+	self assert: self listPresenter selectionOrNil identicalTo: dolphinTestB.
 
 	"Now remove a child, then a branch, then the last child of that branch. The branch should go too"
 	self listModel remove: dolphinTestF.
@@ -130,7 +130,7 @@ testAddRemoveListItems
 	ProtoObject withAllSubclasses reverseDo: [:each | self listModel add: each].
 	"Now remove tree from bottom up"
 	ProtoObject withAllSubclasses reverseDo: 
-			[:each | 
+			[:each |
 			self listModel remove: each.
 			self deny: (self treeModel filter value: each)].
 	self denyContains: ProtoObject.
