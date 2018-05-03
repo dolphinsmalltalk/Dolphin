@@ -1927,15 +1927,16 @@ testPrimitiveSetSpecialBehavior
 	self assert: (method value: subject withArguments: #(16rFF00)) equals: before.
 	self assert: (method value: subject withArguments: #(16rFFFF)) equals: before.
 	nullTermMask := _WeakMask bitXor: _PointersMask.
-	after := before | nullTermMask | _FinalizeMask.
+	after := before | _FinalizeMask.
 	self assert: subject getSpecialBehavior equals: after.
 	self deny: subject isWeak.
 	self assert: subject isFinalizable.
+	"The VM does not allow the null termination bit to be changed"
 	self assert: (method value: subject withArguments: {nullTermMask}) equals: after.
-	self assert: subject getSpecialBehavior equals: before | nullTermMask.
+	self assert: subject getSpecialBehavior equals: before.
 	self deny: subject isWeak.
 	self deny: subject isFinalizable.
-	self assert: (method value: subject withArguments: #(0)) equals: before | nullTermMask.
+	self assert: (method value: subject withArguments: #(0)) equals: before.
 	self assert: subject getSpecialBehavior equals: before.
 	self deny: subject isWeak.
 	self deny: subject isFinalizable!
