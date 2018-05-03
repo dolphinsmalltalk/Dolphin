@@ -102,6 +102,7 @@ uncompress
 	strncpy_s
 	strpbrk
 	ungetc
+	ungetwc
 	wcscspn
 	wcsncmp
 	wcsncpy_s

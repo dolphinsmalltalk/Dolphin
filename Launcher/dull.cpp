@@ -30,8 +30,6 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 
 static const wchar_t* FindImageNameArg()
 {
-	//AllocConsole();
-
 	LPCWSTR szImage = L"DPRO.img7";
 	static wchar_t achImageName[_MAX_PATH];
 
@@ -44,9 +42,6 @@ static const wchar_t* FindImageNameArg()
 			szImage = __wargv[i];
 			break;
 		}
-
-		if (wcscmp(arg, L"-AllocConsole") == 0)
-			AllocConsole();
 	}
 
 	wchar_t* filePart;
