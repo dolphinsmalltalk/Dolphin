@@ -372,8 +372,12 @@ testCaseAsserts
 		rewrite: #(
 			#('self assert: ``@expr = ``@expected' "->" 'self assert: ``@expr equals: ``@expected')
 			#('self assert: ``@expr ~= ``@expected' "->" 'self deny:``@expr equals: ``@expected')
+			#('self deny: ``@expr = ``@expected' "->" 'self deny: ``@expr equals: ``@expected')
+			#('self deny: ``@expr ~= ``@expected' "->" 'self assert: ``@expr equals: ``@expected')
 			#('self assert: ``@expr == ``@expected' "->" 'self assert: ``@expr identicalTo:``@expected')
+			#('self deny: ``@expr == ``@expected' "->" 'self deny: ``@expr identicalTo:``@expected')
 			#('self assert: ``@expr ~~ ``@expected' "->" 'self deny: ``@expr identicalTo:``@expected')
+			#('self deny:``@expr ~~ ``@expected' "->" 'self assert: ``@expr identicalTo:``@expected')
 			#('self assert: (``@expr isKindOf: ``@expected)' "->" 'self assert: ``@expr isKindOf: ``@expected')
 			#('self assert: ``@expr isNil' "->" 'self assertIsNil: ``@expr')
 			#('self assert: ``@expr notNil' "->" 'self denyIsNil: ``@expr')
