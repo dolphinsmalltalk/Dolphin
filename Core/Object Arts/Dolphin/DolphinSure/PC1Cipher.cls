@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #PC1Cipher
 	instanceVariableNames: 'key box i j'
@@ -7,7 +7,7 @@ Object subclass: #PC1Cipher
 	classInstanceVariableNames: ''!
 PC1Cipher guid: (GUID fromString: '{611b2a17-3b8e-4bd9-94e2-38ce0d22736c}')!
 PC1Cipher comment: 'This class provides a stream encoder/decoder using the PC1 algorithm.
-Portions ©1997 by Stefan Matthias Aust'!
+Portions Â©1997 by Stefan Matthias Aust'!
 !PC1Cipher categoriesForClass!Cryptography-Support! !
 !PC1Cipher methodsFor!
 
@@ -64,7 +64,8 @@ cipherBytes: aByteArray
 cipherString: aString
 	"Answer an encoded (or decoded) version of aString."
 
-	^ aString collect: [:each | (self cipherByte: each asInteger) asCharacter].!
+	Notification deprecated.	"This doesn't work - Strings can't be treated as arbitrary arrays of bytes any longer"
+	^aString collect: [:each | (self cipherByte: each asInteger) asCharacter]!
 
 key
 	"Answer the key of the receiver"
@@ -136,7 +137,7 @@ example1
 
 	| encoder |
 	encoder := self withStrength: 128.
-	^encoder key -> (encoder cipherString: 'This is a PC1 test')
+	^encoder key -> (encoder cipherBytes: 'This is a ğŸ¬ PC1 test' asByteArray)
 !
 
 example2
@@ -146,8 +147,8 @@ example2
 
 	| encoder |
 	encoder := self withKeyString: 'Dolphin'.
-	^encoder cipherString: '%`÷Úå1g^@Tµª8ŞŒs$'
-!
+	^Utf8String fromByteArray: (encoder
+				cipherBytes: #[37 96 247 218 229 49 17 103 94 64 244 105 11 180 138 185 67 97 61 196 101 126 196])!
 
 generateRandomWithBits: bitSize 
 	"Answers a random <Integer> with the supplied bitSize. 
