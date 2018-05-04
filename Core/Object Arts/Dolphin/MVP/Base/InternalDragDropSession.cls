@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'

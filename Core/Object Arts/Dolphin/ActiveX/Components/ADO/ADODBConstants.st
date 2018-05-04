@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ADODBConstants put: (PoolConstantsDictionary named: #ADODBConstants)!
 ADODBConstants at: 'adAddNew' put: 16r1000400!

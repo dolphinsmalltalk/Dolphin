@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Progress Dialog'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Progress Dialog.

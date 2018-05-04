@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
@@ -184,13 +184,13 @@ defineFields
 
 		typedef struct FARSTRUCT tagVARDESC {
 			MEMBERID memid;
-			OLECHAR FAR* lpstrSchema;	// Reserved for future use.    
+			OLECHAR FAR* lpstrSchema;	// Reserved for future use.Â  Â  
 			union {
 										// VAR_PERINSTANCE, the offset of this 
 										// variable within the instance.
 				unsigned long oInst;
 										// VAR_CONST, the value of the constant.
-				VARIANT FAR* lpvarValue;    
+				VARIANT FAR* lpvarValue;Â  Â  
 
 			} UNION_NAME(u);
 			ELEMDESC elemdescVar;	***

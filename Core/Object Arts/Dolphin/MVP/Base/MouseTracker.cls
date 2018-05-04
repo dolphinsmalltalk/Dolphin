@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CapturingInteractor subclass: #MouseTracker
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis isTracking trackPosition constrain'

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'

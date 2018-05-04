@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ExternalStructure subclass: #XFORM
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 XFORM guid: (GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
-XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

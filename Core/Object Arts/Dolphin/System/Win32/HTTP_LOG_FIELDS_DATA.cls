@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 HttpServerStructure subclass: #HTTP_LOG_FIELDS_DATA
 	instanceVariableNames: ''

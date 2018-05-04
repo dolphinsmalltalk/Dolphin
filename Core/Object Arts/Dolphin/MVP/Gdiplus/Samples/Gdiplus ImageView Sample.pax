@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Gdiplus ImageView Sample'.
 package paxVersion: 1;
 	basicComment: 'Evaluate

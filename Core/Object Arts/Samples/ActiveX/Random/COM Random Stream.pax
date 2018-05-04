@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'COM Random Stream'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Random Stream COM Server Sample
@@ -46,6 +46,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation';
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\System\Random\Dolphin Random Stream';
 	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
 	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).

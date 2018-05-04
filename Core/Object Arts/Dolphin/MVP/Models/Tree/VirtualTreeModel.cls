@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TreeModelAbstract subclass: #VirtualTreeModel
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Learn Smalltalk'.
 package paxVersion: 1;
 	basicComment: ''.

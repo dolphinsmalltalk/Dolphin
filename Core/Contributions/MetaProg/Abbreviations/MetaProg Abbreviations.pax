@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'MetaProg Abbreviations'.
 package paxVersion: 1;
 	basicComment: 'The MetaProg Abbreviations package adds an enhancement to all code windows. 

@@ -86,7 +86,7 @@ encodeOn: aWriteStream put: aCharacter
 	^aWriteStream basicNextPut: aCharacter ansiValue!
 
 first: anInteger
-	"Answer a new string comprising the leftmost anInteger characters of the receiver. "
+	"Answer a new string comprising the leftmost anInteger code units (ascii characters) of the receiver. "
 
 	"Implementation Note: Rather than implement in terms of the generic #copyFrom:to: method, we
 	can take advantage of the fact that this selector is specific to Strings, and implement more

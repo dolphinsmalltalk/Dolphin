@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #InplaceTextEditor
 	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Presenter
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'

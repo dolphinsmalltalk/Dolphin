@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Metafiles'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Image class wrapper for Windows Enhanced Metafiles.

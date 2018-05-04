@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'File System Monitor'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk File System Monitor Sample

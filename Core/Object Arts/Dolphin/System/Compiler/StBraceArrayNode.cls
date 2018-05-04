@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 StValueNode subclass: #StBraceArrayNode
 	instanceVariableNames: 'left statements periods right'

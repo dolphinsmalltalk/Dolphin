@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #InlineTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'

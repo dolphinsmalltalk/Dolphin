@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'AvatarChat'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Avatar Chat Sample. 

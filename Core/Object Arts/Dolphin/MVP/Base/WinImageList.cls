@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #WinImageList
 	instanceVariableNames: 'extent initialSize growBy createFlags'

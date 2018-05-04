@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MoenTreeNode
 	instanceVariableNames: 'object contour offset position parent child sibling clip extent flags'

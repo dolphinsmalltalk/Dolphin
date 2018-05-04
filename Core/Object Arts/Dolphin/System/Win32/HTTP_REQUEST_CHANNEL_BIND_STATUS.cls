@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''

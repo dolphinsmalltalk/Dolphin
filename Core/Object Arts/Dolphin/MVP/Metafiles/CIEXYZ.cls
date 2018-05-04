@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #CIEXYZ
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ExternalStructure subclass: #CIEXYZ
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CIEXYZ guid: (GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
-CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRSETVIEWPORTEXTEX
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRSETVIEWPORTEXTEX
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETVIEWPORTEXTEX guid: (GUID fromString: '{4f4dcf23-8e3c-4b18-8546-b833b55d3305}')!
-EMRSETVIEWPORTEXTEX comment: '<EMRSETVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRSETVIEWPORTEXTEX comment: '<EMRSETVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

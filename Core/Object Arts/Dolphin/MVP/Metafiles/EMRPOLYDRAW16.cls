@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRPOLYDRAW16
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRPOLYDRAW16
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYDRAW16 guid: (GUID fromString: '{f3d1f8c2-c73d-4ae7-9717-b798c4956a06}')!
-EMRPOLYDRAW16 comment: '<EMRPOLYDRAW16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRPOLYDRAW16 comment: '<EMRPOLYDRAW16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

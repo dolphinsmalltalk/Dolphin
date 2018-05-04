@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
@@ -246,15 +246,15 @@ defineFields
 		struct EXCEPINFO 
 		{
 			unsigned short wCode;			// An error code describing the error.
-			unsigned short wReserved;    
+			unsigned short wReserved;Â  Â  
 			BSTR bstrSource;				// Source of the exception.
 			BSTR bstrDescription;			// Textual description of the error.
 			BSTR bstrHelpFile;				// Help file path.
-			unsigned long dwHelpContext;	// Help context ID.    
+			unsigned long dwHelpContext;	// Help context ID.Â  Â  
 			void FAR* pvReserved;			// Pointer to function that fills in Help and description info.
 			HRESULT (STDAPICALLTYPE FAR* pfnDeferredFillIn)(struct tagEXCEPINFO FAR*);
 			SCODE scode;					// Error code
-		}; 
+		};Â 
 	"
 
 	self

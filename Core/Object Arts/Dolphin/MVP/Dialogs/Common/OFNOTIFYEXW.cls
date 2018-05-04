@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ NMHDR subclass: #OFNOTIFYEXW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OFNOTIFYEXW guid: (GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
-OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

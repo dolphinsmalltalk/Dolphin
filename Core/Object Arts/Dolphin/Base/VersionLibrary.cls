@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #VersionLibrary
 	instanceVariableNames: ''
@@ -31,10 +31,10 @@ getFileVersionInfo: lpstrFilename
 getFileVersionInfo: lpstrFilename dwHandle: dwHandle dwLen: dwLen lpData: lpData
 	"Returns version information about the specified file.
 		BOOL GetFileVersionInfo( 
-			LPTSTR lptstrFilename,	// pointer to filename string	
-			DWORD dwHandle,	// ignored	
-			DWORD dwLen,	// size of buffer	
-			LPVOID lpData 	// pointer to buffer to receive file-version info.	
+			LPTSTRÂ lptstrFilename,	// pointer to filename string	
+			DWORDÂ dwHandle,	// ignored	
+			DWORDÂ dwLen,	// size of buffer	
+			LPVOIDÂ lpDataÂ 	// pointer to buffer to receive file-version info.	
 		);"
 
 	<stdcall: bool GetFileVersionInfoW lpwstr dword dword lpvoid>
@@ -45,8 +45,8 @@ getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
 	"Answer the size of the version information reported by the host OS.
 
 		DWORD GetFileVersionInfoSize( 
-			LPTSTR lptstrFilename,	// pointer to filename string	
-			LPDWORD lpdwHandle 	// pointer to variable to receive zero	
+			LPTSTRÂ lptstrFilename,	// pointer to filename string	
+			LPDWORDÂ lpdwHandleÂ 	// pointer to variable to receive zero	
 		);"
 
 	<stdcall: dword GetFileVersionInfoSizeW lpwstr DWORD* >
@@ -56,10 +56,10 @@ getFileVersionInfoSize: lpstrFilename lpdwHandle: aDWORD
 verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: puLen
 	"Query selected version information from the specified version information resource
 		BOOL VerQueryValue( 
-			const LPVOID pBlock,	// address of buffer for version resource	
-			LPWSTR lpSubBlock,	// address of value to retrieve	
-			LPVOID *lplpBuffer,	// address of buffer for version value pointer	
-			PUINT puLen 	// address of length buffer	
+			const LPVOIDÂ pBlock,	// address of buffer for version resource	
+			LPWSTRÂ lpSubBlock,	// address of value to retrieve	
+			LPVOIDÂ *lplpBuffer,	// address of buffer for version value pointer	
+			PUINTÂ puLenÂ 	// address of length buffer	
 		);" 
 
 	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid DWORD* >

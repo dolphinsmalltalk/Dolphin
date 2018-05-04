@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #ValueConvertingControlView
 	instanceVariableNames: 'typeconverter'

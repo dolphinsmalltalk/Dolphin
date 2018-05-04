@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRSELECTOBJECT
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRSELECTOBJECT
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSELECTOBJECT guid: (GUID fromString: '{7a1bcb22-ae68-4f89-8318-06efd07dfcdb}')!
-EMRSELECTOBJECT comment: '<EMRSELECTOBJECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTOBJECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRSELECTOBJECT comment: '<EMRSELECTOBJECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSELECTOBJECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

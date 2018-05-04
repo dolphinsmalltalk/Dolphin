@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TabView subclass: #TabViewXP
 	instanceVariableNames: 'theme lastSelection _tvxReserved1 _tvxReserved2 _tvxReserved3'

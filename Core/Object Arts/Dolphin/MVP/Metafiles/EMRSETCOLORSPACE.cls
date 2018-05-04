@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETCOLORSPACE guid: (GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
-EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

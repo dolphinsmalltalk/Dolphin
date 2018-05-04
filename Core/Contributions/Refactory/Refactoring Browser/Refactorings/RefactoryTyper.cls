@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RefactoryTyper
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'

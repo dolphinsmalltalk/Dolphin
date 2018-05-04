@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ODBCConstants put: (PoolConstantsDictionary named: #ODBCConstants)!
 ODBCConstants at: 'SQL_ACCESSIBLE_PROCEDURES' put: 16r14!

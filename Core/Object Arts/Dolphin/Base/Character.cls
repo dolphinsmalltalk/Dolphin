@@ -631,9 +631,6 @@ onStartup
 replacement
 	^Utf8Default!
 
-replacement
-	^Utf8Default!
-
 space
 	"Answer the space <Character>."
 

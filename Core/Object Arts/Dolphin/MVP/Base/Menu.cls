@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'

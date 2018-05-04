@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRTRANSPARENTBLT
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRTRANSPARENTBLT
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRTRANSPARENTBLT guid: (GUID fromString: '{e45acb58-6465-4c29-84da-a3b8e0b9b384}')!
-EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRTRANSPARENTBLT comment: '<EMRTRANSPARENTBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRTRANSPARENTBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

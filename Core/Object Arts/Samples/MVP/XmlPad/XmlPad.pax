@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'XmlPad'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk XmlPad Sample. 

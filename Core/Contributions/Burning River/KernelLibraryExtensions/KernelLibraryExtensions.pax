@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'KernelLibraryExtensions'.
 package paxVersion: 1;
 	basicComment: 'Copyright (c) 2003-2004 Robert Jarvis

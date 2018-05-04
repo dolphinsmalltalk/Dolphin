@@ -1142,7 +1142,7 @@ readAllText: aString
 				share: #read.
 	^
 	[| size buffer bufferClass |
-	bufferClass := {AnsiString. Utf8String. Utf16String. Utf32String} at: file sniffEncoding + 1.
+	bufferClass := {AnsiString. Utf8String. Utf16String} at: file sniffEncoding + 1.
 	size := file size - file position.
 	buffer := bufferClass newFixed: size / bufferClass elementSize.
 	file read: buffer count: size.

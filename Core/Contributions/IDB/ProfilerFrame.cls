@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProfilerFrame
 	instanceVariableNames: 'compiledCode methodClass receiverClass selector ip isBlock'

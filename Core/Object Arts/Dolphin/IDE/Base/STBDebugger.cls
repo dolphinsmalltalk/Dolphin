@@ -85,7 +85,7 @@ basicNext
 
 initialize
 	printOffsets := true.
-	traceStream := Utf8String writeStream.
+	traceStream := String writeStream.
 	indentLevel := 0.
 	^super initialize!
 

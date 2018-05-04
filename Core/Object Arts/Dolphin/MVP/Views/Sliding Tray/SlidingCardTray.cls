@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: 'theme slider pinSize pinInteractor _sctReserved1 _sctReserved2'

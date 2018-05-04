@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectionChangeEvent subclass: #SelectionChangingEvent
 	instanceVariableNames: 'permit'

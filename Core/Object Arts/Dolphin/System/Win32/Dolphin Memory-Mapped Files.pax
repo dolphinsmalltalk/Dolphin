@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Memory-Mapped Files'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Memory-Mapped Files

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Date Time Presenters'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Date & Time Presenters

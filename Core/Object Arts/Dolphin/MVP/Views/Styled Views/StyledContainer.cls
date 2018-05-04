@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #StyledContainer
 	instanceVariableNames: 'edges styledPen styledBrush cornerRadii isAntialiased styledShadow _spare4'

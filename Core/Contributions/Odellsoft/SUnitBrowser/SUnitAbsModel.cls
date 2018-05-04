@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SUnitAbsModel
 	instanceVariableNames: 'configuration listItems selectedItems builder browser state'

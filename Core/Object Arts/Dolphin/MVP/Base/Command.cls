@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Command
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'

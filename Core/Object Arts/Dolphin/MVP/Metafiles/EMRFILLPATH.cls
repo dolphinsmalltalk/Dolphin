@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRFILLPATH
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRFILLPATH
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRFILLPATH guid: (GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
-EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRFILLPATH comment: '<EMRFILLPATH> is an <ExternalStructure> class to wrap the struct ''Win32.EMRFILLPATH'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

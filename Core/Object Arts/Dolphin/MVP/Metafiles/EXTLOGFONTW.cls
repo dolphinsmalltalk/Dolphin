@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #EXTLOGFONTW
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ExternalStructure subclass: #EXTLOGFONTW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EXTLOGFONTW guid: (GUID fromString: '{2cdcae37-591a-42a5-a44a-b92e4c362921}')!
-EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EXTLOGFONTW comment: '<EXTLOGFONT> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGFONT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

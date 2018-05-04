@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''

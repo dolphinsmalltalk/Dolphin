@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SocketAbstract subclass: #Socket
 	instanceVariableNames: 'address readSemaphore writeSemaphore connectSemaphore readStream writeStream'

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ADODB'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk ADODB 2.5 Package. 

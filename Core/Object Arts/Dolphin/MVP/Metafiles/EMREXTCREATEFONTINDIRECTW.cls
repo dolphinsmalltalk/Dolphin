@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTCREATEFONTINDIRECTW guid: (GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
-EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

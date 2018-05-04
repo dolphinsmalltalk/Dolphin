@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'InheritableFile'.
 package paxVersion: 1;
 	basicComment: 'Copyright (c) 2002-2004 Robert Jarvis

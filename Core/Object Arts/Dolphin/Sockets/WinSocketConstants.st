@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #WinSocketConstants put: (PoolConstantsDictionary named: #WinSocketConstants)!
 WinSocketConstants at: 'AF_12844' put: 16r19!

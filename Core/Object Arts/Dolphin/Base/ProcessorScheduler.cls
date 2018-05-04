@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProcessorScheduler
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'

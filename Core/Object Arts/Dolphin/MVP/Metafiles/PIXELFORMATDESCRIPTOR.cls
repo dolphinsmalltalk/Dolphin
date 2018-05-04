@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ExternalStructure subclass: #PIXELFORMATDESCRIPTOR
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PIXELFORMATDESCRIPTOR guid: (GUID fromString: '{9b1f091d-48dd-4f2d-98c3-6e6348abdb67}')!
-PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+PIXELFORMATDESCRIPTOR comment: '<PIXELFORMATDESCRIPTOR> is an <ExternalStructure> class to wrap the struct ''Win32.PIXELFORMATDESCRIPTOR'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

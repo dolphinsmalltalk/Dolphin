@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'DolphinSure Example Authority'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Example Authority for DolphinSure Sample

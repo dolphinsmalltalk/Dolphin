@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ClassBrowserPlugin subclass: #DebugInfoPlugin
 	instanceVariableNames: 'disassemblyPresenter sourcePresenter textMapPresenter toggleDebugPresenter toggleOptimisedPresenter method'

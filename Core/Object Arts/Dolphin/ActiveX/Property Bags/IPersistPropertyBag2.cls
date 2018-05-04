@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IPersistPropertyBag subclass: #IPersistPropertyBag2
 	instanceVariableNames: ''

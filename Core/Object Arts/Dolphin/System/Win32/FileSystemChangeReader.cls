@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #FileSystemChangeReader
 	instanceVariableNames: 'handle directory watchSubDirs notificationMask callback buffer overlapStruct filters'

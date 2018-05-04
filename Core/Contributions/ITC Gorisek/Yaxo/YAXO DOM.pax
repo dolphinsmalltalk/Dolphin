@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'YAXO DOM'.
 package paxVersion: 1;
 	basicComment: 'Yaxo: Yet another XML Framework

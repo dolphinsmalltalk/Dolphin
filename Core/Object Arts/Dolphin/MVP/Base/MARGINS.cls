@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #MARGINS
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ Win32Structure subclass: #MARGINS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MARGINS guid: (GUID fromString: '{d92a9b7d-a1dc-4ef4-97e5-869e7a720a83}')!
-MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
 	"Defines the margins of windows that have visual styles applied."

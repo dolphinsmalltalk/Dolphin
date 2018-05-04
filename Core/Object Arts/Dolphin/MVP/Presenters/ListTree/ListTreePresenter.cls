@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListPresenter subclass: #ListTreePresenter
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ListPresenter subclass: #ListTreePresenter
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListTreePresenter guid: (GUID fromString: '{b4f22156-df92-493f-81c9-6e74fd4fdcce}')!
-ListTreePresenter comment: 'Copyright � Chris Uppal, 2002, 2003.
+ListTreePresenter comment: 'Copyright © Chris Uppal, 2002, 2003.
 chris.uppal@metagnostic.org
 
 These presenters are intended to pair with ListTreeViews, however in almost all cases they are not needed since it suffices to clip a ListPresenter or TreePresenter to the TreeView.  One case where that wouldn''t work is where you need a TreePresenter that understands that the selection may be multiple (which TreePresenter doesn''t) *and* knows about trees (which ListPresenter) doesn''t.

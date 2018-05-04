@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''

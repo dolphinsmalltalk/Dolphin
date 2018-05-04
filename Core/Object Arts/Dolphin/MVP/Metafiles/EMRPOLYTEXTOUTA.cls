@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYTEXTOUTA guid: (GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
-EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

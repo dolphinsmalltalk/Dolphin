@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Tutorial Player'.
 package paxVersion: 1;
 	basicComment: ''.

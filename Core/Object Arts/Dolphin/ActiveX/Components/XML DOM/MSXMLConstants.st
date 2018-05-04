@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #MSXMLConstants put: (PoolConstantsDictionary named: #MSXMLConstants)!
 MSXMLConstants at: 'NODE_ATTRIBUTE' put: 16r2!

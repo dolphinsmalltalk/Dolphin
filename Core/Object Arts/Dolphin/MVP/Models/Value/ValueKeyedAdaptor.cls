@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ValueAdaptor subclass: #ValueKeyedAdaptor
 	instanceVariableNames: 'key putSelector getSelector'

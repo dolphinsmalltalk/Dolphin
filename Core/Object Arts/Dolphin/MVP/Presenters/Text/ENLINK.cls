@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #ENLINK
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ NMHDR subclass: #ENLINK
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ENLINK guid: (GUID fromString: '{af755b00-4b08-4d23-991b-a340afd83bc2}')!
-ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+ENLINK comment: '<ENLINK> is an <ExternalStructure> class to wrap the struct ''Win32.ENLINK'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

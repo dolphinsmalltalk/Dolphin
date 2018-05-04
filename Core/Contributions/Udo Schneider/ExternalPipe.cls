@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalPipe
 	instanceVariableNames: 'readHandle writeHandle streams'
@@ -117,7 +117,7 @@ example2
 				cr;
 				flush]] 
 			fork.
-	"Wait unt�l external process is alive"
+	"Wait untíl external process is alive"
 	[process isAlive] whileFalse.
 	"Ask for input as long as the process is running."
 	[process isTerminated] whileFalse: 

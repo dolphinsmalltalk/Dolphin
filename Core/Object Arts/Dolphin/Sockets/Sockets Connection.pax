@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Sockets Connection'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk TCP/IP Sockets Connection Support

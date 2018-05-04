@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'PersonalMoney'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Personal Accounts Sample.

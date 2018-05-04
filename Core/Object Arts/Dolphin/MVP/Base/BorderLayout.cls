@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'

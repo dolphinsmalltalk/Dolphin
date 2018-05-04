@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 POINTL subclass: #POINTS
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ POINTL subclass: #POINTS
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 POINTS guid: (GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
-POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

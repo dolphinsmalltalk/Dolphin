@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ContainerView subclass: #ShellView
 	instanceVariableNames: 'menuBar acceleratorTable combinedAcceleratorTable lastFocus defaultButton largeIcon smallIcon maxExtent minExtent flashes svFlags _svReserved2'

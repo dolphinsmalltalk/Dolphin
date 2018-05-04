@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'

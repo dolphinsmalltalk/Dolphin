@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ENHMETARECORD subclass: #EMREXTFLOODFILL
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ENHMETARECORD subclass: #EMREXTFLOODFILL
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTFLOODFILL guid: (GUID fromString: '{bd14ca2b-d9cd-4146-ad72-d15f18031a50}')!
-EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMREXTFLOODFILL comment: '<EMREXTFLOODFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTFLOODFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

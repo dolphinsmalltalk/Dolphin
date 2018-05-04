@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ExternalLibrary subclass: #Msimg32Library
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Msimg32Library guid: (GUID fromString: '{5a76781d-d74e-48fe-8991-46ae340fcc94}')!
-Msimg32Library comment: 'Msimg32Library is the <ExternalLibrary> class to represent the dynamic link library, ''MSIMG32.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
+Msimg32Library comment: 'Msimg32Library is the <ExternalLibrary> class to represent the dynamic link library, ''MSIMG32.DLL''.It was generated generated from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library. It contains methods for each of the functions defined by the corresponding module in that type library.
 
 The type library contains the following helpstring for this module
 	"Extension component for Windows GDI that contains new APIs"

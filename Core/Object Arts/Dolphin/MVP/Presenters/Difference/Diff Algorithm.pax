@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Diff Algorithm'.
 package paxVersion: 1;
 	basicComment: 'Diff Algorithm Package

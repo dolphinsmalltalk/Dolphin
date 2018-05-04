@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'

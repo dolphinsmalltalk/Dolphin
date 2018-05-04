@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #BITMAPFILEHEADER
 	instanceVariableNames: ''
@@ -18,11 +18,11 @@ defineFields
 	"Define the Win32 BITMAPFILEHEADER structure
 
 		typedef struct tagBITMAPFILEHEADER {  // bmfh 
-			   WORD   bfType; 
-			   DWORD   bfSize; 
-			   WORD   bfReserved1; 
-			   WORD   bfReserved2; 
-			   DWORD   bfOffBits; 
+			Â  Â WORD   bfType; 
+			Â  Â DWORD   bfSize; 
+			Â  Â WORD   bfReserved1; 
+			Â  Â WORD   bfReserved2; 
+			Â  Â DWORD   bfOffBits; 
 		} BITMAPFILEHEADER;"
 
 	self

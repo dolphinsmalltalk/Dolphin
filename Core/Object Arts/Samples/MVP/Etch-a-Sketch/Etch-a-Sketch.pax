@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Etch-a-Sketch'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Etch-A-Sketch(tm) Sample. 

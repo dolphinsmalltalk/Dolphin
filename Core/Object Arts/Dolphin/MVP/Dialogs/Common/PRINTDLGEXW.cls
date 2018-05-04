@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ CommonDialogStructure subclass: #PRINTDLGEXW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PRINTDLGEXW guid: (GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
-PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

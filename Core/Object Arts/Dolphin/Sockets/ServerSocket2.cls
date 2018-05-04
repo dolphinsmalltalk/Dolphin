@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SocketAbstract2 subclass: #ServerSocket2
 	instanceVariableNames: ''

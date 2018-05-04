@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaAttribute subclass: #ScintillaTextStyle
 	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved1'

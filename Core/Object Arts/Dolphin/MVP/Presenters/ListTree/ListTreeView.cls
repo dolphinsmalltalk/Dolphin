@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListView subclass: #ListTreeView
 	instanceVariableNames: 'hasExplicitTreeModel treeModel dummy3 expanded hiddenExpanded options indentSeparation getChildrenBlock hasChildrenBlock getParentBlock sortBlock doSortChildrenBlock dummy2 dummy1'
@@ -6,7 +6,7 @@ ListView subclass: #ListTreeView
 	poolDictionaries: 'ListTreeConstants'
 	classInstanceVariableNames: 'stateImageManager stateImageBlock'!
 ListTreeView guid: (GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da10950ab}')!
-ListTreeView comment: 'Copyright � Chris Uppal, 2002 - 2004.
+ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
 An implementation of a kind of TreeView that supports multiple columns.  It uses the same technique as (I guess) M$ do for Outlook Express''s message folder.  I.e. it''s really a ListView that indents the primary column''s items according to how deep in the tree they are, and uses the rows ''state'' images to show open/closed indicators.  There is also a version of this class that supports multiple-selection, but is otherwise identical (see MultipleSelectionListTreeView).

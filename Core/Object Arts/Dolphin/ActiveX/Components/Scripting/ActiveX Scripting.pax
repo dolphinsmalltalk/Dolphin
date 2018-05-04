@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Scripting'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk ActiveX Script Control Support. 
