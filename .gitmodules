@@ -1,0 +1,3 @@
+[submodule "Core/DolphinVM"]
+	path = Core/DolphinVM
+	url = ../DolphinVM.git
