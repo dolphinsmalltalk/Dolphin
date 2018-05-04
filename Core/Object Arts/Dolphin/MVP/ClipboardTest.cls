@@ -11,6 +11,7 @@ ClipboardTest comment: ''!
 !ClipboardTest methodsFor!
 
 setUp
+	self skipUnless: [SessionManager current isUnattended not].
 	Clipboard current empty!
 
 tearDown
