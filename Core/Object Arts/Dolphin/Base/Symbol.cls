@@ -71,15 +71,6 @@ displayString
 
 	^self mutableCopy!
 
-first: anInteger
-	"Answer a new string comprising up to the leftmost anInteger characters of the receiver."
-
-	^self 
-		replaceBytesOf: (self species new: anInteger)
-		from: 1 
-		to: anInteger
-		startingAt: 1!
-
 forwardTo: anObject
 	"Send the <Object> argument the receiver as a niladic message,
 	answering the result. Assumes the receiver is a unary selector."
@@ -186,7 +177,6 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #asSymbol!converting!public! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
-!Symbol categoriesFor: #first:!copying!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
 !Symbol categoriesFor: #hash!comparing!public! !
 !Symbol categoriesFor: #isAtomic!public! !
