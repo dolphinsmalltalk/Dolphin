@@ -144,7 +144,7 @@ VMPointers		STRUCT 2t
 	callbackPerformWithArgumentsSymbol	POTE	?
 										POTE	?			; Unused
 	subclassWindowSymbol				POTE	?			; 54
-	errorInstVarAtPutSymbol				POTE	?			; 55
+	instVarAtPutSymbol					POTE	?			; 55
 
 	lookupKeySymbol						POTE	?			; 56 #bindingFor - compiler only
 	wndProcSelector						POTE	?			; 57

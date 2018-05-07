@@ -1182,7 +1182,7 @@ BEGINBYTECODE shortPopStoreInstVar
 
 storeError:
 	;; An attempt was made to store out of bounds, or into an immutable object
-	;; We must send #errorInstVarAt:put:, leaving the IP of the current frame
+	;; We must send #instVarAt:put:, leaving the IP of the current frame
 	;; at the store instruction
 	ASSUME	edx:PTR OTE							;; edx is still the Oop of the receiver
 	ASSUME	ecx:DWORD							;; ecx is store offset
@@ -1196,7 +1196,7 @@ storeError:
 	mov [_SP+OOPSIZE], ecx						;; Push index
 	mov [_SP+(OOPSIZE*2)], eax					;; Push arg
 	add _SP, OOPSIZE*2							;; Two args
-	SendSelectorTwoArgs <Pointers.errorInstVarAtPutSymbol>
+	SendSelectorTwoArgs <Pointers.instVarAtPutSymbol>
 	
 ENDBYTECODE shortPopStoreInstVar
 
@@ -1717,7 +1717,7 @@ StoreInstVarAndDispatch MACRO
 
 storeError:	
 	;; An attempt was made to store out of bounds, or into an immutable object
-	;; We must send #errorInstVarAt:put:, leaving the IP of the current frame
+	;; We must send #instVarAt:put:, leaving the IP of the current frame
 	;; at the store instruction
 	ASSUME	edx:PTR OTE							;; edx is still the Oop of the receiver
 	ASSUME	ecx:DWORD							;; ecx is store offset
@@ -1730,7 +1730,7 @@ storeError:
 	mov [_SP+(OOPSIZE*2)], ecx					;; Push index
 	mov [_SP+(OOPSIZE*3)], eax					;; Push arg
 	add _SP, OOPSIZE*3							;; Receiver + Two args
-	SendSelectorTwoArgs <Pointers.errorInstVarAtPutSymbol>
+	SendSelectorTwoArgs <Pointers.instVarAtPutSymbol>
 
 ENDM
 

@@ -99,9 +99,9 @@ struct VMPointers //: public Object
 			SymbolOTE* callbackPerformWithWithSymbol;			// 50
 			SymbolOTE* callbackPerformWithWithWithSymbol;		// 51
 			SymbolOTE* callbackPerformWithArgumentsSymbol;		// 52
-			/**/Oop _unusedSelector53;								// 53
+			/**/Oop _unusedSelector53;							// 53
 			SymbolOTE* subclassWindowSymbol;					// 54
-			SymbolOTE* errorInstVarAtPutSymbol;				// 55
+			SymbolOTE* instVarAtPutSymbol;						// 55
 
 			// 56..65
 			SymbolOTE* lookupKeySymbol;							// 56
@@ -154,7 +154,7 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassExternalAddress;						// 100
 
 			// 101..110
-			BehaviorOTE* ClassExternalHandle;
+			BehaviorOTE* ClassExternalHandle;					// 101
 			POTE Dispatcher;									// 102 - Actually this doesn't need to be a class at all
 			BehaviorOTE* ClassLPVOID;							// 103
 			BehaviorOTE* ClassUtf8String;						// 104
