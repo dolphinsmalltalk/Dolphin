@@ -1,19 +1,15 @@
 * text=auto
-
 # SML and CHG files are text but the image keeps index pointers into them. To avoid apparent source
 # corruption we must avoid these indices changing by always forcing use of CRLF line endings.
-*.sml eol=crlf 
+*.sml filter=lfs diff=lfs merge=lfs -text
 *.chg eol=crlf
-
 # If files are downloaded using git on Mac or Linux, then saving a package from Windows
 # will create a number of false-positive changes (files that differ only in line endings).
-
 *.pac eol=crlf
 *.pax eol=crlf
 *.st  eol=crlf
 *.cls eol=crlf 
-
 *.cls linguist-language=Smalltalk
 *.st linguist-language=Smalltalk
 *.pax linguist-language=Smalltalk
-
+*.img7 filter=lfs diff=lfs merge=lfs -text
