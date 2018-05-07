@@ -342,6 +342,7 @@ resizeTable: anInteger
 	N.B. The argument is not the size of the resulting symbol table, which is answered."
 
 	 | newSize insts |
+	Table := nil.
 	insts := self allInstances.
 	newSize := (Integer primesUpTo: insts size // anInteger) last.
 	Table := Array new: newSize.

@@ -19,7 +19,8 @@ atEnd
 close
 	"Close the source stream"
 
-	stream close!
+	stream close.
+	stream := nil!
 
 cr
 	"Emit a line-delimiter to the source stream"

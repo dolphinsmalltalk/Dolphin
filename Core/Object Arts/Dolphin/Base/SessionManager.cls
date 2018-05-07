@@ -732,7 +732,7 @@ openConsoleStreams
 								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
 								toFd: fd
 								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])
-								type: #text]
+								type: #ansi]
 						ifFalse: 
 							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
 							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!

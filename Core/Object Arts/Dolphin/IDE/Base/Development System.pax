@@ -256,7 +256,6 @@ package methodNames
 	add: #Process -> #step;
 	add: #Process -> #step:;
 	add: #Process -> #walkback:topFrame:resumable:;
-	add: #ProcessorScheduler -> #debugBreak:;
 	add: #ProcessorScheduler -> #singleStep:;
 	add: #ProtoObject -> #basicInspect;
 	add: #ProtoObject -> #debugPrintString;
@@ -3664,16 +3663,6 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 
 !ProcessorScheduler methodsFor!
 
-debugBreak: interruptArg
-	"Private - A halt instruction was encountered.
-	Note that async events are not re-enabled if the event is forwarded to a debugger."
-
-	| debugger |
-	debugger := activeProcess debugger.
-	debugger isNil
-		ifTrue: [self enableInterrupts]
-		ifFalse: [debugger onBreak: interruptArg]!
-
 singleStep: interruptArg
 	"Private - A single step has occurred.
 	Note that interrupts are NOT re-enabled here if the event if forwarded to the debugger."
@@ -3684,7 +3673,6 @@ singleStep: interruptArg
 		ifTrue: [self enableInterrupts]
 		ifFalse: [debugger onStep: interruptArg]
 ! !
-!ProcessorScheduler categoriesFor: #debugBreak:!development!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #singleStep:!development!interrupts-handling!private! !
 
 !ProgressBar class methodsFor!

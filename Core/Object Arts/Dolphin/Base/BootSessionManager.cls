@@ -96,6 +96,11 @@ onPreSaveImage
 	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage]
 !
 
+openConsole
+	self
+		allocConsole;
+		openConsoleStreams!
+
 openSources
 	"Private - Open the source files with names derived from the current image path."
 
@@ -286,7 +291,7 @@ startUI
 traceStream
 	"Answer a <puttableStream> onto the session's trace output device."
 
-	^stdioStreams isNil ifTrue: [super traceStream] ifFalse: [self stderr]!
+	^stdioStreams isNil ifTrue: [super traceStream] ifFalse: [self stdout]!
 
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
@@ -319,6 +324,7 @@ updateBootImage
 !BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
 !BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
+!BootSessionManager categoriesFor: #openConsole!operations!public! !
 !BootSessionManager categoriesFor: #openSources!operations-source files!private! !
 !BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
 !BootSessionManager categoriesFor: #productDetails!accessing!private!product! !

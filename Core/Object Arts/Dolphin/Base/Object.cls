@@ -637,16 +637,16 @@ errorCantHold: anObject
 
 	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)!
 
-errorInstVarAt: anInteger put: anObject 
-	^anInteger isInteger 
-		ifTrue: 
-			[(anInteger between: 1 and: self class instSize + self basicSize) 
+errorInstVarAt: anInteger put: anObject
+	^self isImmutable
+		ifTrue: [Processor constWriteSignal signalWith: self]
+		ifFalse: 
+			[anInteger isInteger
 				ifTrue: 
-					[self isImmutable 
-						ifTrue: [Processor constWriteSignal signalWith: self]
-						ifFalse: [self errorCantHold: anObject]]
-				ifFalse: [self errorSubscriptBounds: anInteger]]
-		ifFalse: [Error nonIntegerIndex: anInteger]!
+					[(anInteger between: 1 and: self class instSize + self basicSize)
+						ifTrue: [self errorCantHold: anObject]
+						ifFalse: [self errorSubscriptBounds: anInteger]]
+				ifFalse: [Error nonIntegerIndex: anInteger]]!
 
 errorNotFound: anObject
 	"Raise a NotFoundError indicating that anObject was not found 
