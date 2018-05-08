@@ -23,15 +23,6 @@ basicTertiaryStartup
 
 	"Nothing to do - this SessionManager should never be installed on startup anyway?"!
 
-createInputState
-	super createInputState.
-	(File exists: 'Rescue.st') ifTrue: [SourceManager default fileIn: 'Rescue.st'].
-	self stdout 
-		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
-		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.'; cr; flush.
-
-	!
-
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
 
@@ -104,7 +95,11 @@ openConsole
 openSources
 	"Private - Open the source files with names derived from the current image path."
 
-	self class sourceManager openSources: self imagePath!
+	self class sourceManager openSources: self imagePath.
+	(File exists: 'Rescue.st') ifTrue: [SourceManager default fileIn: 'Rescue.st'].
+	self stdout 
+		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
+		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.'; cr; flush.!
 
 primaryStartup
 	"Private - Perform very early startup actions.
@@ -317,7 +312,6 @@ updateBootImage
 	self reloadSystemPackage! !
 !BootSessionManager categoriesFor: #allocConsole!operations!private! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!BootSessionManager categoriesFor: #createInputState!initializing!private! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
 !BootSessionManager categoriesFor: #initializeSystemPackage!initializing!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
