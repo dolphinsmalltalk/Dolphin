@@ -345,7 +345,8 @@ timeZoneInformation
 	timeZoneInfo := TIME_ZONE_INFORMATION new.
 	rc := KernelLibrary default getTimeZoneInformation: timeZoneInfo.
 	rc = -1 ifTrue: [^KernelLibrary default systemError].
-	^{rc. timeZoneInfo}! !
+	timeZoneInfo zoneId: rc.
+	^timeZoneInfo! !
 !Locale categoriesFor: #amDesignator!enquiries!public! !
 !Locale categoriesFor: #asParameter!converting!public! !
 !Locale categoriesFor: #currency!enquiries!public! !
