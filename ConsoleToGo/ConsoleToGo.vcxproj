@@ -159,11 +159,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Interprt.inl" />
-    <None Include="..\InterprtPrim.inl" />
-    <None Include="..\InterprtProc.inl" />
-    <None Include="..\istasm.inc" />
-    <None Include="..\ObjMemPriv.inl" />
     <None Include="ConsoleToGo.def" />
     <None Include="data1.bin" />
   </ItemGroup>
@@ -171,35 +166,6 @@
     <ResourceCompile Include="ConsoleToGo.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\bytecdes.h" />
-    <ClInclude Include="..\environ.h" />
-    <ClInclude Include="..\InterpRegisters.h" />
-    <ClInclude Include="..\Interprt.h" />
-    <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\Objmem.h" />
-    <ClInclude Include="..\oopq.h" />
-    <ClInclude Include="..\ote.h" />
-    <ClInclude Include="..\RaiseThreadException.h" />
-    <ClInclude Include="..\STExternal.h" />
-    <ClInclude Include="..\STFloat.h" />
-    <ClInclude Include="..\STHashedCollection.h" />
-    <ClInclude Include="..\STInteger.h" />
-    <ClInclude Include="..\STLinkedList.h" />
-    <ClInclude Include="..\STMagnitude.h" />
-    <ClInclude Include="..\STMemoryManager.h" />
-    <ClInclude Include="..\STMessage.h" />
-    <ClInclude Include="..\STMethod.h" />
-    <ClInclude Include="..\STMethodContext.h" />
-    <ClInclude Include="..\STObject.h" />
-    <ClInclude Include="..\STProcess.h" />
-    <ClInclude Include="..\STStackFrame.h" />
-    <ClInclude Include="..\STStream.h" />
-    <ClInclude Include="..\STString.h" />
-    <ClInclude Include="..\STVirtualObject.h" />
-    <ClInclude Include="..\thrdcall.h" />
-    <ClInclude Include="..\TraceStream.h" />
-    <ClInclude Include="..\VMExcept.h" />
-    <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

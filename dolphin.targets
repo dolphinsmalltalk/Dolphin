@@ -36,6 +36,14 @@
   <Target Name='CleanVersionHeader' AfterTargets='AfterClean'>
     <Delete Files='$(VersionHeader)'/>
   </Target>
+  <Target Name="Mc"
+          Inputs="@(MessageTable)"
+          Outputs="@(MessageTable->'$(IntDir)%(Filename).rc');@(MessageTable->'$(IntDir)%(Filename).h');@(MessageTable->'$(IntDir)%(Filename)_MSG00001.bin')"
+          BeforeTargets="BeforeResourceCompile">
+    <Message Text="Building message table %(MessageTable.Filename).mc" Importance="Normal" />
+    <Exec Command="mc -b -r $(IntDir) -h $(IntDir) %(MessageTable.FullPath)"
+                   Outputs="@(MessageTable->'$(IntDir)%(Filename).rc');@(MessageTable->'$(IntDir)%(Filename).h');@(MessageTable->'$(IntDir)%(Filename)_MSG00001.bin')"/>
+  </Target>
   <ItemDefinitionGroup>
     <ResourceCompile>
       <AdditionalIncludeDirectories>$(IntDir);$(SolutionDir);$(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

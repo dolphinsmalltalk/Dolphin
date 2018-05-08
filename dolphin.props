@@ -89,4 +89,9 @@
       <SetChecksum>true</SetChecksum>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup Condition="'$(BuildingInsideVisualStudio)'=='true'">
+    <AvailableItemName Include="MessageTable">
+      <Targets>Mc</Targets>
+    </AvailableItemName>
+  </ItemGroup>
 </Project>

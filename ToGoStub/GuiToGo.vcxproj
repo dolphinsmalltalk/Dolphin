@@ -64,10 +64,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <CustomBuildStep>
       <Message>Copying "$(TargetPath)" to "$(SolutionDir)..\..\$(TargetFileName)"</Message>
-      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"
-</Command>
+      <Command>copy "$(TargetPath)" "$(SolutionDir)..\..\$(TargetFileName)"</Command>
       <Outputs>$(SolutionDir)..\..\$(TargetFileName)</Outputs>
-      <Inputs> $(TargetPath)</Inputs>
+      <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;TO_GO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -162,87 +161,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\GUIStub\stub.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Interprt.inl" />
-    <None Include="..\InterprtPrim.inl" />
-    <None Include="..\InterprtProc.inl" />
-    <None Include="..\ObjMemPriv.inl" />
-    <None Include="..\ote.inl" />
     <None Include="..\Res\hsplit.cur" />
     <None Include="..\Res\Ist.rc2" />
-    <CustomBuild Include="..\Res\Messages.mc">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling message table</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Compiling message table</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mc "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">mc "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
-    </CustomBuild>
     <None Include="..\Res\vsplit.cur" />
     <None Include="togo.def" />
+    <MessageTable Include="..\Res\Messages.mc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="togostub.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\ActiveXHost.h" />
-    <ClInclude Include="..\bytecdes.h" />
-    <ClInclude Include="..\Compiler_i.h" />
-    <ClInclude Include="..\dlldatax.h" />
-    <ClInclude Include="..\DolphinIF.h" />
-    <ClInclude Include="..\DolphinSmalltalk.h" />
-    <ClInclude Include="..\DolphinSmalltalk_i.h" />
-    <ClInclude Include="..\DolphinX.h" />
-    <ClInclude Include="..\environ.h" />
-    <ClInclude Include="..\InterpRegisters.h" />
-    <ClInclude Include="..\Interprt.h" />
-    <ClInclude Include="..\ist.h" />
-    <ClInclude Include="..\Objmem.h" />
-    <ClInclude Include="..\oopq.h" />
-    <ClInclude Include="..\ote.h" />
-    <ClInclude Include="..\RaiseThreadException.h" />
-    <ClInclude Include="..\regkey.h" />
-    <ClInclude Include="..\segdefs.h" />
-    <ClInclude Include="..\startvm.h" />
-    <ClInclude Include="..\StdAfx.h" />
-    <ClInclude Include="..\STExternal.h" />
-    <ClInclude Include="..\STFloat.h" />
-    <ClInclude Include="..\STHashedCollection.h" />
-    <ClInclude Include="..\STInteger.h" />
-    <ClInclude Include="..\STLinkedList.h" />
-    <ClInclude Include="..\STMagnitude.h" />
-    <ClInclude Include="..\STMemoryManager.h" />
-    <ClInclude Include="..\STMessage.h" />
-    <ClInclude Include="..\STMethod.h" />
-    <ClInclude Include="..\STMethodContext.h" />
-    <ClInclude Include="..\STObject.h" />
-    <ClInclude Include="..\STProcess.h" />
-    <ClInclude Include="..\STStackFrame.h" />
-    <ClInclude Include="..\STStream.h" />
-    <ClInclude Include="..\STString.h" />
-    <ClInclude Include="..\STVirtualObject.h" />
-    <ClInclude Include="..\thrdcall.h" />
-    <ClInclude Include="..\TraceStream.h" />
-    <ClInclude Include="..\VMExcept.h" />
-    <ClInclude Include="..\VMPointers.h" />
-    <ClInclude Include="..\zlib\deflate.h" />
-    <ClInclude Include="..\zlib\infblock.h" />
-    <ClInclude Include="..\zlib\infcodes.h" />
-    <ClInclude Include="..\zlib\inffast.h" />
-    <ClInclude Include="..\zlib\inffixed.h" />
-    <ClInclude Include="..\zlib\inftrees.h" />
-    <ClInclude Include="..\zlib\infutil.h" />
-    <ClInclude Include="..\zlib\trees.h" />
-    <ClInclude Include="..\zlib\zconf.h" />
-    <ClInclude Include="..\zlib\zfstream.h" />
-    <ClInclude Include="..\zlib\zlib.h" />
-    <ClInclude Include="..\zlib\zutil.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

@@ -188,14 +188,7 @@
     <None Include="DolphinSmalltalk.tlb" />
     <None Include="Res\hsplit.cur" />
     <None Include="Res\ist.rc2" />
-    <CustomBuild Include="Res\MESSAGES.MC">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mc "%(FullPath)"
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">mc "%(FullPath)"
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">$(ProjectDir)%(Filename).rc;$(ProjectDir)%(Filename).h;%(Outputs)</Outputs>
-    </CustomBuild>
+    <MessageTable Include="Res\MESSAGES.MC" />
     <None Include="Res\vsplit.cur" />
     <None Include="VM.def" />
   </ItemGroup>
@@ -212,9 +205,6 @@
       <Project>{241d4e3e-44c0-40b7-be1b-5249916fe631}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="rc_vm.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="VMLib\Dolphin.natvis" />
