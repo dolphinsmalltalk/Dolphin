@@ -26,12 +26,12 @@ assertImmutableBasicAtPut: anObject
 	1 to: anObject size
 		do: [:each | self should: [anObject basicAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableInstVarAtPut: anObject 
+assertImmutableInstVarAtPut: anObject
 	| size |
 	self assert: anObject isImmutable.
-	self should: [anObject instVarAt: 0 put: $x] raise: BoundsError.
+	self should: [anObject instVarAt: 0 put: $x] raise: Processor constWriteSignal.
 	size := anObject class instSize + anObject basicSize.
-	self should: [anObject instVarAt: size + 1 put: $x] raise: BoundsError.
+	self should: [anObject instVarAt: size + 1 put: $x] raise: Processor constWriteSignal.
 	1 to: size
 		do: [:each | self should: [anObject instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
@@ -1327,7 +1327,7 @@ testPrimitiveInstanceCounts
 	1 to: stats size
 		by: 3
 		do: [:i | counts at: (stats at: i) put: (stats at: i + 1)].
-	self assert: (counts at: Symbol) > 30000.
+	self assert: (counts at: Symbol) > 25000.
 	self assert: (counts at: VMLibrary) equals: 1.
 	counts keysAndValuesDo: 
 			[:class :count |

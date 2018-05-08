@@ -59,8 +59,8 @@ testEquals
 testInstVarAtPut
 	| literal |
 	literal := #abc.
-	(Array with: 0 with: literal size + 1) 
-		do: [:each | self should: [literal instVarAt: each put: $x] raise: BoundsError].
+	(Array with: 0 with: literal size + 1)
+		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal].
 	1 to: literal size
 		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
