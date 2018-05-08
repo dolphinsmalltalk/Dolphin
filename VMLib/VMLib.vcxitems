@@ -74,6 +74,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c">
+      <CompileAs>CompileAsCpp</CompileAs>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
