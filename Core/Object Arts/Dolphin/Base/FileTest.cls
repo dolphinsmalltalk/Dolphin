@@ -233,8 +233,8 @@ testCommonPrefixOfAnd
 		assert: ((File commonPrefixOf: KernelLibrary default moduleFileName
 				and: UserLibrary default moduleFileName) sameAs: SessionManager current systemDirectory).
 	self
-		assert: (File commonPrefixOf: VMLibrary default moduleFileName
-				and: UserLibrary default moduleFileName) isEmpty!
+		assert: (File commonPrefixOf: 'D:\dev\Dolphin\DolphinVM7.DLL'
+				and: 'C:\dev\Dolphin\DolphinVM7.DLL') isEmpty!
 
 testDeleteDirectory
 	self createTestDirectories.
