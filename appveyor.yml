@@ -1,0 +1,25 @@
+version: 7.0.53.{build}
+pull_requests:
+  do_not_increment_build_number: true
+skip_tags: true
+skip_branch_with_pr: true
+image: Visual Studio 2017
+build_script:
+- cmd: >-
+    FetchVM
+
+    BootDPro
+test_script:
+- cmd: TestDPRO
+artifacts:
+- path: dpro.*
+  name: DPro
+- path: RegressionTests.xml
+  name: DPro
+notifications:
+- provider: Email
+  to:
+  - bower@object-arts.com
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: false
