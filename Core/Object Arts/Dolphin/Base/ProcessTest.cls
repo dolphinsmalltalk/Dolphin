@@ -103,7 +103,7 @@ assertDisparateEnvironments: copyProcess2 source: sourceProcess2
 			env := env outer].
 	env := copyProcess2 exceptionEnvironment.
 	[env isNil] whileFalse: 
-			[self deny: (sourceHandlers identityIncludes: env).
+			[self deny: (sourceHandlers identityIncludes: env) description: 'Handler was not copied'.
 			env := env outer]!
 
 assertExceptionHandler: copyExceptionHandler in: copyProcess2 isCopyOf: srcExceptionHandler in: sourceProcess2 visited: anIdentitySet
@@ -136,22 +136,17 @@ assertExceptionHandler: copyExceptionHandler in: copyProcess2 isCopyOf: srcExcep
 			self assert: copyExceptionHandler isKindOf: ExceptionHandlerSet.
 			srcHandlers := srcExceptionHandler instVarNamed: 'handlers'.
 			copyHandlers := copyExceptionHandler instVarNamed: 'handlers'.
-			copyHandlers with: srcHandlers
+			1 to: copyHandlers size
+				by: 2
 				do: 
-					[:eachCopy :eachSrc |
-					self assert: eachCopy key identicalTo: eachSrc key.
+					[:i |
+					self assert: (copyHandlers at: i) identicalTo: (srcHandlers at: i).
 					self
-						assertBlock: eachCopy value
+						assertBlock: (copyHandlers at: i + 1)
 						in: copyProcess2
-						isCopyOf: eachSrc value
+						isCopyOf: (srcHandlers at: i + 1)
 						in: sourceProcess2
-						visited: anIdentitySet
-					"self
-						assertExceptionHandler: eachCopy
-						in: copyProcess2
-						isCopyOf: eachSrc
-						in: sourceProcess2
-						visited: anIdentitySet"]]
+						visited: anIdentitySet]]
 		ifFalse: 
 			[self assert: copyExceptionHandler isKindOf: ExceptionHandler.
 			self

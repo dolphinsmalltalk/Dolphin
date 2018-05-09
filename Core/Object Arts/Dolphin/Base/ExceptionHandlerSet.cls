@@ -14,7 +14,10 @@ actionFor: exception
 	"Private - Answer a <monadicBlock> handler for the <exceptionDescription> 
 	argument, exception or nil if the receiver has no appropriate handler."
 
-	^(handlers detect: [:h | h key handles: exception] ifNone: [^nil]) value!
+	1 to: handlers size
+		by: 2
+		do: [:i | ((handlers at: i) handles: exception) ifTrue: [^handlers at: i + 1]].
+	^nil!
 
 initialize
 	"Private - Initialize the instance variables of the receiver."
@@ -25,17 +28,26 @@ on: exceptionSelector do: monadicBlock
 	"Private - Record the <exceptionSelector> and <monadicBlock> to be
 	used as the receivers exception selector and handler block respectively."
 
-	handlers addLast: (exceptionSelector -> monadicBlock)
-! !
+	handlers
+		addLast: exceptionSelector;
+		addLast: monadicBlock!
+
+setHandlers: aCollection
+	handlers := aCollection! !
 !ExceptionHandlerSet categoriesFor: #actionFor:!debugger-step over!helpers!private! !
 !ExceptionHandlerSet categoriesFor: #initialize!initializing!private! !
 !ExceptionHandlerSet categoriesFor: #on:do:!debugger-step over!initializing!private! !
+!ExceptionHandlerSet categoriesFor: #setHandlers:!initializing!private! !
 
 !ExceptionHandlerSet class methodsFor!
+
+handlers: aSequencedReadableCollectionOfAssociations
+	^self basicNew setHandlers: aSequencedReadableCollectionOfAssociations!
 
 new
 	"Answer a new, initialized, instance of the receiver."
 
 	^super new initialize! !
+!ExceptionHandlerSet class categoriesFor: #handlers:!debugger-step over!instance creation!private! !
 !ExceptionHandlerSet class categoriesFor: #new!debugger-step over!instance creation!public! !
 
