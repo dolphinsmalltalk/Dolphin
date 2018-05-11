@@ -6,7 +6,7 @@ ExceptionHandlerAbstract subclass: #ExceptionHandlerSet
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExceptionHandlerSet guid: (GUID fromString: '{87b4c576-026e-11d3-9fd7-00a0cc3e4a32}')!
-ExceptionHandlerSet comment: ''!
+ExceptionHandlerSet comment: 'ExceptionHandlerSet is a private class that is part of the implementation of ANSI Smalltalk Exceptions in Dolphin. It is used to represent a collection of exception filters and handler blocks. The implementation is subject to change and should not be instantiated directly.'!
 !ExceptionHandlerSet categoriesForClass!Kernel-Exception Handling! !
 !ExceptionHandlerSet methodsFor!
 
@@ -19,35 +19,14 @@ actionFor: exception
 		do: [:i | ((handlers at: i) handles: exception) ifTrue: [^handlers at: i + 1]].
 	^nil!
 
-initialize
-	"Private - Initialize the instance variables of the receiver."
-
-	handlers := OrderedCollection new!
-
-on: exceptionSelector do: monadicBlock
-	"Private - Record the <exceptionSelector> and <monadicBlock> to be
-	used as the receivers exception selector and handler block respectively."
-
-	handlers
-		addLast: exceptionSelector;
-		addLast: monadicBlock!
-
-setHandlers: aCollection
-	handlers := aCollection! !
+setHandlers: aSequenceableCollection
+	handlers := aSequenceableCollection! !
 !ExceptionHandlerSet categoriesFor: #actionFor:!debugger-step over!helpers!private! !
-!ExceptionHandlerSet categoriesFor: #initialize!initializing!private! !
-!ExceptionHandlerSet categoriesFor: #on:do:!debugger-step over!initializing!private! !
 !ExceptionHandlerSet categoriesFor: #setHandlers:!initializing!private! !
 
 !ExceptionHandlerSet class methodsFor!
 
 handlers: aSequencedReadableCollectionOfAssociations
-	^self basicNew setHandlers: aSequencedReadableCollectionOfAssociations!
-
-new
-	"Answer a new, initialized, instance of the receiver."
-
-	^super new initialize! !
+	^self basicNew setHandlers: aSequencedReadableCollectionOfAssociations! !
 !ExceptionHandlerSet class categoriesFor: #handlers:!debugger-step over!instance creation!private! !
-!ExceptionHandlerSet class categoriesFor: #new!debugger-step over!instance creation!public! !
 

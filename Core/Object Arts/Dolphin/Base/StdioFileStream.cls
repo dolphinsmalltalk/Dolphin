@@ -564,7 +564,7 @@ on: aFile type: aSymbol
 		mode: mode!
 
 open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
-	| stream encoding path exists mode |
+	| stream concreteClass path exists mode |
 	path := fileId asUtf16String.
 	exists := File exists: fileId.
 	modeSymbol == #create
@@ -589,15 +589,16 @@ open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 			[(aBoolean and: [exists not]) ifTrue: [CRTError signalWith: 2].
 			mode := 'w+'].
 	modeSymbol == #read ifTrue: [mode := 'r'].
-	encoding := typeSymbol == #text
-				ifTrue: [exists ifTrue: [File sniffEncoding: path] ifFalse: [#ansi]]
-				ifFalse: [typeSymbol].
-	encoding == #binary
+	concreteClass := typeSymbol == #text
+				ifTrue: 
+					[exists ifTrue: [self classForEncoding: (File sniffEncoding: path)] ifFalse: [StdioAnsiFileStream]]
+				ifFalse: [self classForEncoding: typeSymbol].
+	concreteClass == StdioBinaryFileStream
 		ifTrue: [mode := mode copyWith: $b]
 		ifFalse: 
-			[encoding == #utf8 ifTrue: [mode := mode , 't, ccs=UTF-8'].
-			encoding == #utf16le ifTrue: [mode := mode , 't, ccs=UTF-16LE']].
-	stream := (self classForEncoding: encoding) basicNew.
+			[concreteClass == StdioUtf8FileStream ifTrue: [mode := mode , 't, ccs=UTF-8'].
+			concreteClass == StdioUtf16FileStream ifTrue: [mode := mode , 't, ccs=UTF-16LE']].
+	stream := concreteClass basicNew.
 	stream open: path mode: mode.
 	modeSymbol == #append ifTrue: [stream setToEnd].
 	^stream!
