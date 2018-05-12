@@ -1,0 +1,25 @@
+version: 7.0.56.{build}
+pull_requests:
+  do_not_increment_build_number: true
+skip_tags: true
+skip_branch_with_pr: true
+image: Visual Studio 2017
+configuration: Release
+build:
+  project: DolphinVM.sln
+  verbosity: minimal
+test_script:
+- cmd: AppVeyorTestDolphinVM
+artifacts:
+- path: Dolphin\dpro.*
+  name: DPro
+- path: Release
+  name: Release
+deploy: off
+notifications:
+- provider: Email
+  to:
+  - bower@object-arts.com
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: false
