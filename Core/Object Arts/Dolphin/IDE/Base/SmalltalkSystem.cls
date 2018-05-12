@@ -1740,6 +1740,11 @@ dropTextFile: aString
 
 	SmalltalkWorkspaceDocument filename: aString!
 
+dropXmlFile: aString
+	"Private - Open an XML file. Use the XmlPad for this, if available."
+
+	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
+
 educationCenter
 	"Open the Education Centre contents page"
 
@@ -2582,6 +2587,9 @@ openWorkspace
 	ws := self workspaceShellClass open.
 	ws notNil ifTrue: [ws show].
 	^ws!
+
+openXmlFile: aString
+	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
 
 overlappingObjectsError: anError 
 	"Private - The resumeable <Error>, anError, was raised when an attempt to install a new 
@@ -4138,6 +4146,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #dropPackageFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #dropScriptFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #dropTextFile:!commands!private! !
+!SmalltalkSystem categoriesFor: #dropXmlFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #educationCenter!commands!public! !
 !SmalltalkSystem categoriesFor: #environment!constants!public! !
 !SmalltalkSystem categoriesFor: #expressionStylerClass!constants!public! !
@@ -4240,6 +4249,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #openViewComposerOnNewViewFor:!commands!public! !
 !SmalltalkSystem categoriesFor: #openViewComposerOnViewOf:!commands!public! !
 !SmalltalkSystem categoriesFor: #openWorkspace!commands!public! !
+!SmalltalkSystem categoriesFor: #openXmlFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #overlappingObjectsError:!exceptions!private! !
 !SmalltalkSystem categoriesFor: #pacFileDialogType!constants!private! !
 !SmalltalkSystem categoriesFor: #packageBrowserClass!options!public! !

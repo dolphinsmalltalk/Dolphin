@@ -45,25 +45,6 @@ editTimeStamp
 	Date today printOn: stream longPicture: false.
 	documentPresenter replaceSelection: stream contents!
 
-openFile: pathString 
-	"Open the file with the <readableString> path, pathString, prompting in the standard Notepad
-	fashion if it doesn't exist."
-
-	(File exists: pathString) 
-		ifTrue: 
-			[self
-				filename: pathString;
-				fileLoad]
-		ifFalse: 
-			[| resp mb |
-			mb := MessageBox new.
-			mb
-				buttonStyle: #yesNoCancel;
-				caption: 'Dolphin Notepad'.
-			resp := mb warning: ('Cannot find the <1p> file.<n><n>Do you want to create a new file?' 
-								expandMacrosWith: pathString).
-			resp == #yes ifTrue: [self filename: pathString] ifFalse: [resp == #cancel ifTrue: [self exit]]]!
-
 saveChangesPrompt
 	| docName |
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
@@ -79,7 +60,6 @@ streamIn: aStream
 !Notepad categoriesFor: #aboutNotepad!commands!public! !
 !Notepad categoriesFor: #chooseFont!commands!public! !
 !Notepad categoriesFor: #editTimeStamp!commands!public! !
-!Notepad categoriesFor: #openFile:!operations!public! !
 !Notepad categoriesFor: #saveChangesPrompt!private! !
 !Notepad categoriesFor: #streamIn:!private!streaming! !
 
