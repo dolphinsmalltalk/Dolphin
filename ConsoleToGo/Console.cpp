@@ -45,7 +45,7 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 	return hr;
 }
 
-int __cdecl main(int argc, char* argv[])
+int __cdecl wmain(int argc, wchar_t* argv[])
 {
 	// The VM is created through COM, or if TO GO may still be needed to load compiler
 	::CoInitialize(NULL);

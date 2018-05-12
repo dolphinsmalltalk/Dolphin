@@ -35,7 +35,7 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 }
 
 int APIENTRY 
-WinMain(HINSTANCE hModule, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+wWinMain(HINSTANCE hModule, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	::CoInitialize(NULL);
  	HRESULT hr = RunEmbeddedImage(hModule, IDR_IMAGE);
