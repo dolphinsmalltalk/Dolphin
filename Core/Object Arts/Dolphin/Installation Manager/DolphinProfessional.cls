@@ -23,7 +23,7 @@ contents
 		add: #('Core\Contributions\ITC Gorisek\OmniBase.pax' #plain #imageBased);"
 		add: #('Core\Contributions\ITC Gorisek\Yaxo\YAXO Base.pax' #plain #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\Yaxo\YAXO DOM.pax' #plain #imageBased);
-		add: #('Core\Contributions\ITC Gorisek\ZLib Interface.pax' #encrypted #imageBased);
+		"add: #('Core\Contributions\ITC Gorisek\ZLib Interface.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\SMTP Support.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\MD5.pax' #encrypted #imageBased);
 		add: #('Core\Contributions\ITC Gorisek\Source Tracking System.pax' #encrypted #imageBased);
