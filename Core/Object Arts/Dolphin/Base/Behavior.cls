@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Behavior
 	instanceVariableNames: 'superclass methodDictionary instanceSpec subclasses'
@@ -126,18 +126,6 @@ allSelectors
 	answer := IdentitySet new.
 	self withAllSuperclassesDo: [:each | answer addAll: each selectors].
 	^answer!
-
-allSharedPools
-	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
-	the receiver and each of its superclasses."
-
-	| pools seen |
-	pools := Array writeStream: 5.
-	seen := IdentitySet new.
-	self withAllSuperclassesDo: 
-			[:c |
-			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
-	^pools contents!
 
 allSubclasses
 	"Answer a <collection> of the receiver's subclasses in 
@@ -284,6 +272,15 @@ basicNew: aSmallInteger
 	self isNonInstantiable ifTrue: [^self error: 'Cannot instantiate abstract class'].
 	^self primitiveFailed!
 
+basicNewFixed: aSmallInteger
+	"Private - As #newFixed:, but must not be overridden by subclasses."
+
+	<primitive: 76>
+	self isFixed ifTrue: [^Error notIndexable: self].
+	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
+	self isPointers ifTrue: [^self errorNotPinnable].
+	^self primitiveFailed!
+
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil."
@@ -389,6 +386,9 @@ errorNonInstantiable
 	"Private - Report an error that an attempt was made to instantiate an abstract class."
 
 	^self error: 'Cannot instantiate abstract class'!
+
+errorNotPinnable
+	^self error: 'Pointer objects cannot be pinned'!
 
 extraInstanceSpec
 	"Private - Answer the user class instance specification of the receiver (a 16-Bit Integer)."
@@ -702,7 +702,7 @@ newFixed: aSmallInteger
 	<primitive: 76>
 	self isFixed ifTrue: [^Error notIndexable: self].
 	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
-	self isPointers ifTrue: [^self error: 'Pointer objects cannot be pinned'].
+	self isPointers ifTrue: [^self errorNotPinnable].
 	^self primitiveFailed!
 
 primAllInstances
@@ -924,24 +924,6 @@ shallowCopy
 
 	^self!
 
-sharedPools
-	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
-	locally in the receiver."
-
-	| pools |
-	pools := OrderedCollection new.
-	self sharedPoolsDo: [:each | pools addLast: each].
-	^pools!
-
-sharedPoolsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
-	the receiver in order of precedence."
-
-	| environment |
-	environment := self environment.
-	self sharedPoolNames
-		do: [:symbol | (environment lookup: symbol) ifNotNil: [:p | aMonadicValuable value: p]]!
-
 sourceCodeAt: aSymbol
 	"Answer a <String> that is the source code of the receiver's method with selector, aSymbol.
 	Report an error if the selector cannot be found."
@@ -1131,7 +1113,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #allInstVarNames!instance variables!public! !
 !Behavior categoriesFor: #allMethodsDo:!enumerating!public! !
 !Behavior categoriesFor: #allSelectors!methods-accessing!public! !
-!Behavior categoriesFor: #allSharedPools!pool variables!public! !
 !Behavior categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
 !Behavior categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!private! !
@@ -1144,6 +1125,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #basicCompile:flags:!compiling!private! !
 !Behavior categoriesFor: #basicNew!instance creation!private! !
 !Behavior categoriesFor: #basicNew:!instance creation!private! !
+!Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
 !Behavior categoriesFor: #bindingFor:!compiling!public! !
 !Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
 !Behavior categoriesFor: #changedMethods!methods-accessing!private! !
@@ -1158,6 +1140,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
 !Behavior categoriesFor: #environment!constants!public! !
 !Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
+!Behavior categoriesFor: #errorNotPinnable!error handling!private! !
 !Behavior categoriesFor: #extraInstanceSpec!instance specification-accessing!private! !
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
@@ -1219,8 +1202,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSuperclass:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #shallowCopy!copying!public! !
-!Behavior categoriesFor: #sharedPools!pool variables!public! !
-!Behavior categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
 !Behavior categoriesFor: #storeCategoriesOfMethod:!compiling!private! !
 !Behavior categoriesFor: #subclasses!class hierarchy-accessing!public! !

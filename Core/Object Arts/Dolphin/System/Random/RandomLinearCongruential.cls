@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Random subclass: #RandomLinearCongruential
 	instanceVariableNames: 'multiplier increment modulus'

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #PackageManager
 	instanceVariableNames: 'packages processEvents packagedGlobals looseMethods events defaultPackage basePackages'
@@ -846,7 +846,7 @@ onMethodAdded: aCompilationResult
 	method := aCompilationResult method.
 	package := aCompilationResult package.
 	self assert: [method isLoose not].
-	default := self defaultPackage ifNil: [package].
+	default := self defaultPackage ?? package.
 	owner := self packageOfClass: method methodClass.
 	(default isNil or: [default == owner]) 
 		ifTrue: [self addPackagedMethod: method to: owner]

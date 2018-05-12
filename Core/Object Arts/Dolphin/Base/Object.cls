@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -637,16 +637,16 @@ errorCantHold: anObject
 
 	^self error: ('Can''t hold <1p>' expandMacrosWith: anObject)!
 
-errorInstVarAt: anInteger put: anObject 
-	^anInteger isInteger 
-		ifTrue: 
-			[(anInteger between: 1 and: self class instSize + self basicSize) 
+errorInstVarAt: anInteger put: anObject
+	^self isImmutable
+		ifTrue: [Processor constWriteSignal signalWith: self]
+		ifFalse: 
+			[anInteger isInteger
 				ifTrue: 
-					[self isImmutable 
-						ifTrue: [Processor constWriteSignal signalWith: self]
-						ifFalse: [self errorCantHold: anObject]]
-				ifFalse: [self errorSubscriptBounds: anInteger]]
-		ifFalse: [Error nonIntegerIndex: anInteger]!
+					[(anInteger between: 1 and: self class instSize + self basicSize)
+						ifTrue: [self errorCantHold: anObject]
+						ifFalse: [self errorSubscriptBounds: anInteger]]
+				ifFalse: [Error nonIntegerIndex: anInteger]]!
 
 errorNotFound: anObject
 	"Raise a NotFoundError indicating that anObject was not found 
@@ -844,6 +844,11 @@ isAtomic
 
 	^false!
 
+isCharacter
+	"Answer whether the receiver conforms to the <Character> protocol."
+
+	^false!
+
 isFinalizable
 	"Answer whether the receiver is marked as requiring finalization.
 	Finalizable objects will receive a #finalize message after the garbage
@@ -924,7 +929,7 @@ isNumber
 	^false!
 
 isString
-	"Answer whether the receiver is a <String>."
+	"Answer whether the receiver is a <readableString>."
 
 	^false!
 
@@ -1254,15 +1259,17 @@ setEvents: anEventsCollectionOrNil
 		ifFalse: [_EventsRegister at: self put: anEventsCollectionOrNil]!
 
 setSpecialBehavior: anInteger
-	"Private - Set the special behavior bits of the receiver according to the
-	low order word of the argument, anInteger. The high order byte of that word
-	specifies the AND (or 'keep') mask, used to specify what bits to leave as they
-	are, and the low order byte of that word specifies the OR (or 'add') mask, used
-	to specify what bits to set. To query the current value, use the mask 16rFF00.
+	"Private - Set the special behavior bits of the receiver according to the low order word of
+	the argument, anInteger. The high order byte of that word specifies the AND (or 'keep')
+	mask, used to specify what bits to leave as they are, and the low order byte of that word
+	specifies the OR (or 'add') mask, used to specify what bits to set. To query the current
+	value, use the mask 16rFF00."
 
-	Primitive failure reasons:
-		0 -	anInteger is not a SmallInteger
-		1 -	the receiver is an immediate object."
+	"Note: Using this operations requires knowledge and care to avoid corrupting object state."
+
+	"Primitive failure reasons: 
+		0 - anInteger is not a SmallInteger 
+		1 - the receiver is an immediate object."
 
 	<primitive: 69>
 	^self primitiveFailed!
@@ -1608,6 +1615,7 @@ yourself
 !Object categoriesFor: #instVarAt:put:!accessing!private! !
 !Object categoriesFor: #instVarNamed:!accessing!private! !
 !Object categoriesFor: #isAtomic!public!testing! !
+!Object categoriesFor: #isCharacter!public!testing! !
 !Object categoriesFor: #isFinalizable!public!testing! !
 !Object categoriesFor: #isImmediate!private!testing! !
 !Object categoriesFor: #isImmutable!public!testing! !

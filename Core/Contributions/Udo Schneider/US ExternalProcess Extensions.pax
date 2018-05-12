@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'US ExternalProcess Extensions'.
 package paxVersion: 1;
 	basicComment: '$id: US ExternalProcess Extensions 0.011$

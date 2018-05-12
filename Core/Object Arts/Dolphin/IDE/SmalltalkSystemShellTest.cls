@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SmalltalkSystemShellTest
 	instanceVariableNames: 'systemShell'
@@ -23,7 +23,7 @@ tearDown
 	super tearDown!
 
 testIconOrdering
-	| initialContents sampleApps finalContents  |
+	| initialContents sampleApps finalContents |
 	"1782"
 	initialContents := self systemFolderPresenter contents asArray.
 	sampleApps := initialContents detect: [:each | each description = 'Sample Applications'].
@@ -31,7 +31,7 @@ testIconOrdering
 	self systemFolderPresenter onActionPerformed.
 	self systemFolderPresenter up.
 	finalContents := self systemFolderPresenter contents asArray.
-	self assert: finalContents = initialContents! !
+	self assert: finalContents equals: initialContents! !
 !SmalltalkSystemShellTest categoriesFor: #setUp!private!unit tests! !
 !SmalltalkSystemShellTest categoriesFor: #systemFolderPresenter!private!unit tests! !
 !SmalltalkSystemShellTest categoriesFor: #tearDown!private!unit tests! !

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Scintilla View'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Scintilla Control Wrapper
@@ -148,7 +148,7 @@ ExternalLibrary subclass: #ScintillaLibrary
 	classInstanceVariableNames: ''!
 NMHDR subclass: #SCNotification
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'ModificationTypeOffset'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #ScintillaTextStylesDialog

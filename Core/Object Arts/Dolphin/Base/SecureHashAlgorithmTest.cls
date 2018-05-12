@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SecureHashAlgorithmTest
 	instanceVariableNames: 'hash'
@@ -17,21 +17,21 @@ testExample1
 	"This is the first example from the specification document (FIPS PUB 180-1)"
 
 	hash := SecureHashAlgorithm new hashMessage: 'abc'.
-	self assert: hash = 16rA9993E364706816ABA3E25717850C26C9CD0D89D!
+	self assert: hash equals: 16rA9993E364706816ABA3E25717850C26C9CD0D89D!
 
 testExample2
 	"This is the second example from the specification document (FIPS PUB 180-1)"
 
-	hash := SecureHashAlgorithm new 
+	hash := SecureHashAlgorithm new
 				hashMessage: 'abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq'.
-	self assert: hash = 16r84983E441C3BD26EBAAE4AA1F95129E5E54670F1!
+	self assert: hash equals: 16r84983E441C3BD26EBAAE4AA1F95129E5E54670F1!
 
 testExample3
 	"This is the third example from the specification document (FIPS PUB 180-1). 
 	This example may take several minutes."
 
 	hash := SecureHashAlgorithm new hashMessage: (String new: 1000000 withAll: $a).
-	self assert: hash = 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F! !
+	self assert: hash equals: 16r34AA973CD4C4DAA4F61EEB2BDBAD27316534016F! !
 !SecureHashAlgorithmTest categoriesFor: #testExample1!public!testing / examples! !
 !SecureHashAlgorithmTest categoriesFor: #testExample2!public!testing / examples! !
 !SecureHashAlgorithmTest categoriesFor: #testExample3!public!testing / examples! !

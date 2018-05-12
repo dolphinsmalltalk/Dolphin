@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'EnumRECT'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk EnumRect COM Sample.

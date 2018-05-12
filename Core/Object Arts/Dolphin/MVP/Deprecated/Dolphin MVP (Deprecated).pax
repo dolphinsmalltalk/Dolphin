@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin MVP (Deprecated)'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Graphical User Interface framework (Deprecated Classes and Methods).
@@ -27,7 +27,11 @@ package methodNames
 	add: #BorderLayout -> #hasSouth;
 	add: #BorderLayout -> #hasWest;
 	add: #Canvas -> #origin:;
+	add: #Canvas -> #setBkMode:;
 	add: #Canvas -> #setTextColor:;
+	add: #Clipboard -> #getObjectBinaryStoreBytes;
+	add: #Clipboard -> #getObjectBinaryStoreBytesIfNone:;
+	add: #Clipboard -> #setText:format:;
 	add: #GUISessionManager -> #whatsThis:;
 	add: #ListBox -> #basicSelectionByIndex:;
 	add: #ListModel -> #updateAtIndex:;
@@ -38,10 +42,27 @@ package methodNames
 	add: #ListView -> #columns;
 	add: #ListView -> #hasTrackSelect;
 	add: #ListView -> #hasTrackSelect:;
+	add: #LVBKIMAGEW -> #offset:;
+	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
+	add: #ScintillaIndicator -> #type;
+	add: #ScintillaIndicatorStyle -> #alphaPercent;
+	add: #ScintillaIndicatorStyle -> #alphaPercent:;
+	add: #ScintillaView -> #highlightRange:withIndicator:;
+	add: #ScintillaView -> #indicatorDefinitions:;
+	add: #ScintillaView -> #styleBits;
 	add: #ScrollingDecorator -> #continuousTracking;
 	add: #ScrollingDecorator -> #continuousTracking:;
 	add: #ShellView -> #hasThickFrame;
 	add: #ShellView -> #hasThickFrame:;
+	add: #Slider -> #hasTicksBoth;
+	add: #Slider -> #hasTicksBoth:;
+	add: #Slider -> #hasTicksTopOrLeft;
+	add: #Slider -> #hasTicksTopOrLeft:;
+	add: #Slider -> #selection;
+	add: #Slider -> #selection:;
+	add: #STBViewProxy -> #for:;
+	add: #SystemMetrics -> #hasFlashWindow;
+	add: #SystemMetrics -> #hasMenuImages;
 	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
 	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
 	add: #TextEdit -> #isLowercase;
@@ -76,6 +97,8 @@ package methodNames
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
+	add: 'PositionEvent class' -> #handle:message:wParam:lParam:;
+	add: 'STBViewProxy class' -> #for:;
 	add: 'WindowsEvent class' -> #fromMSG:;
 	add: 'WindowsEvent class' -> #handle:message:wParam:lParam:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
@@ -106,8 +129,11 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Views\Control Bars\Dolphin Control Bars';
 	add: '..\Models\List\Dolphin List Models';
 	add: '..\Presenters\List\Dolphin List Presenter';
+	add: '..\Views\MoenTree\Dolphin MoenTree View';
 	add: '..\Base\Dolphin MVP Base';
+	add: '..\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\Views\Scrollbars\Dolphin Scrollbars';
+	add: '..\Views\Slider\Dolphin Slider Control';
 	add: '..\Presenters\Text\Dolphin Text Presenter';
 	add: '..\Type Converters\Dolphin Type Converters';
 	yourself).
@@ -212,13 +238,18 @@ hasWest
 !Canvas methodsFor!
 
 origin: aPoint
-	#deprecated.	"5.0: Use #viewportOrigin:"
+	Notification deprecated.	"5.0: Use #viewportOrigin:"
 	^self viewportOrigin: aPoint!
 
+setBkMode: mode
+	Notification deprecated.
+	^self backgroundMode: mode!
+
 setTextColor: colour
-	#deprecated. "6.0 (reprise)"
+	Notification deprecated.	"6.0 (reprise)"
 	^self forecolor: colour! !
 !Canvas categoriesFor: #origin:!operations!public! !
+!Canvas categoriesFor: #setBkMode:!modes!public! !
 !Canvas categoriesFor: #setTextColor:!modes!public! !
 
 !ChoicePresenter class methodsFor!
@@ -234,10 +265,34 @@ resource_Multiselection_list_box
 	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MultipleSelectionListBox)  98 17 0 0 98 2 8 1412499713 1025 416 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1114638 ##(Smalltalk.STBSingletonProxy)  8 ##(Smalltalk.SearchPolicy)  8 #identity 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294906339 459270 ##(Smalltalk.Message)  8 #displayString 98 0 544 32 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 882 251 351 416 818 8 #horizontalExtent: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 244 5 0 0 185 0 0 0] 98 0 882 193 193 0 27 )! !
 !ChoicePresenter class categoriesFor: #resource_Multiselection_list_box!public!resources-views! !
 
+!Clipboard methodsFor!
+
+getObjectBinaryStoreBytes
+	"Answer the STB binary store bytes for the <object> stored on the the clipboard, or raise an
+	exception if none is available."
+
+	Notification deprecated.
+	^self getObjectBinaryStoreBytesIfNone: [self errorFormatNotAvailable: #Object]!
+
+getObjectBinaryStoreBytesIfNone: exceptionHandler
+	"Answer the STB binary store bytes for an <object> stored on the clipboard. If no object is
+	currently available, the answers the result of evaluating the <niladicValuable>
+	exceptionHandler."
+
+	Notification deprecated.
+	^(self getObjectIfNone: [^exceptionHandler value]) binaryStoreBytes!
+
+setText: text format: formatName
+	Notification deprecated.	"Just use setData:format:"
+	self setRegisteredFormat: formatName data: text! !
+!Clipboard categoriesFor: #getObjectBinaryStoreBytes!accessing!public! !
+!Clipboard categoriesFor: #getObjectBinaryStoreBytesIfNone:!accessing!public! !
+!Clipboard categoriesFor: #setText:format:!accessing!public! !
+
 !Color class methodsFor!
 
 buttonFace
-	#deprecated.
+	Notification deprecated.
 	^Color face3d! !
 !Color class categoriesFor: #buttonFace!instance creation!public! !
 
@@ -332,6 +387,25 @@ hasTrackSelect: aBoolean
 !ListView categoriesFor: #hasTrackSelect!accessing-styles!public! !
 !ListView categoriesFor: #hasTrackSelect:!accessing-styles!public! !
 
+!LVBKIMAGEW methodsFor!
+
+offset: aPoint 
+	Notification deprecated.	"Use #offsetPercent: or #offsetTile:"
+	self
+		xOffsetPercent: aPoint x;
+		yOffsetPercent: aPoint y! !
+!LVBKIMAGEW categoriesFor: #offset:!public! !
+
+!MoenTreeView methodsFor!
+
+updateItem: element andChildren: andChildren imagesOnly: aBoolean 
+	#deprecated.
+	self 
+		invalidateItem: element
+		andChildren: andChildren
+		imagesOnly: aBoolean! !
+!MoenTreeView categoriesFor: #updateItem:andChildren:imagesOnly:!painting!public! !
+
 !PaintEvent class methodsFor!
 
 handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
@@ -342,6 +416,70 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		hdc: hdc
 		paintStruct: ps! !
 !PaintEvent class categoriesFor: #handle:wParam:hdc:paintStruct:!instance creation!public! !
+
+!PositionEvent class methodsFor!
+
+handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
+	#deprecated.
+	^(super
+		handle: wndHandle
+		message: msgInteger
+		wParam: wInteger
+		lParam: lInteger)
+		makeStruct;
+		yourself! !
+!PositionEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
+
+!ScintillaIndicator methodsFor!
+
+type
+	Notification deprecated.
+	^self styleName! !
+!ScintillaIndicator categoriesFor: #type!accessing!public! !
+
+!ScintillaIndicatorStyle methodsFor!
+
+alphaPercent
+	"Answer an <integer> representing the percentage alpha (transparency) for the indicator.
+	Note that this is a percentage (hence the name), and not the usual 0..255 range. Zero
+	represents completely transparent, 100 completely opaque. Note that this is currently only
+	relevant for the #roundBox indicator style."
+
+	#deprecated.
+	^self alpha ifNil: [30] ifNotNil: [:a | a * 100 // SC_ALPHA_OPAQUE]!
+
+alphaPercent: anInteger 
+	"Set the percentage alpha (transparency) for the indicator to the <integer> argument. Note
+	that this is a percentage (hence the name), and not the usual 0..255 range. Zero represents
+	completely transparent, 100 completely opaque. Note that this is currently only relevant for
+	the #roundBox indicator style."
+
+	#deprecated.
+	self alpha: SC_ALPHA_OPAQUE * anInteger // 100! !
+!ScintillaIndicatorStyle categoriesFor: #alphaPercent!accessing!public! !
+!ScintillaIndicatorStyle categoriesFor: #alphaPercent:!accessing!public! !
+
+!ScintillaView methodsFor!
+
+highlightRange: anInterval withIndicator: idInteger 
+	"Apply the indicator identified by the <integer> argument to the range of text
+	specified by the <Interval> argument."
+
+	#deprecated.
+	self setIndicator: idInteger range: anInterval!
+
+indicatorDefinitions: aSequenceableCollection 
+	#deprecated.
+	self indicatorStyles: aSequenceableCollection!
+
+styleBits
+	"Answer the number of bits available for text styles. This is now always 8."
+
+	#deprecated.
+	^8! !
+!ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
+!ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
+!ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 
 !ScrollingDecorator methodsFor!
 
@@ -366,6 +504,68 @@ hasThickFrame: aBoolean
 	self isResizable: aBoolean! !
 !ShellView categoriesFor: #hasThickFrame!accessing-styles!public! !
 !ShellView categoriesFor: #hasThickFrame:!accessing-styles!public! !
+
+!Slider methodsFor!
+
+hasTicksBoth
+	#deprecated.
+	^self tickStyle == #bothSides!
+
+hasTicksBoth: aBoolean 
+	#deprecated.
+	self tickStyle: (aBoolean ifTrue: [#bothSides] ifFalse: [#bottom])!
+
+hasTicksTopOrLeft
+	#deprecated.
+	^#(#top #left) includes: self tickStyle!
+
+hasTicksTopOrLeft: aBoolean 
+	#deprecated.
+	self tickStyle: (aBoolean ifTrue: [#top] ifFalse: [#bottom])!
+
+selection
+	Notification deprecated.
+	^self selectionRange!
+
+selection: anIntervalOrNil 
+	Notification deprecated.
+	self selectionRange: anIntervalOrNil! !
+!Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
+!Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
+!Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
+!Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
+!Slider categoriesFor: #selection!accessing!public! !
+!Slider categoriesFor: #selection:!accessing!public! !
+
+!STBViewProxy methodsFor!
+
+for: aView 
+	#deprecated.
+	self setView: aView! !
+!STBViewProxy categoriesFor: #for:!accessing!public! !
+
+!STBViewProxy class methodsFor!
+
+for: aView 
+	#deprecated.
+	^self forView: aView! !
+!STBViewProxy class categoriesFor: #for:!instance creation!public! !
+
+!SystemMetrics methodsFor!
+
+hasFlashWindow
+	"Answer whether the host supports the FlashWindowEx API."
+
+	#deprecated.
+	^true!
+
+hasMenuImages
+	"Answer whether the host supports images on menus."
+
+	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
+	^VMLibrary default isWindowsXPOrGreater! !
+!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
+!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
 
 !TextEdit methodsFor!
 

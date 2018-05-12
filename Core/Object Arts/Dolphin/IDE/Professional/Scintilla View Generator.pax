@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Scintilla View Generator'.
 package paxVersion: 1;
 	basicComment: 'Tool to regenerate ScintillaView when upgrading to a new version of Scintilla.

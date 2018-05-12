@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
@@ -53,29 +53,29 @@ h_addr
 	^self h_addr_list dwordAtOffset: 0!
 
 h_addr_list
-	"Answer the receiver's h_addr_list field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'h_addr_list' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #h_addr_list)) asExternalAddress!
 
 h_addrtype
-	"Answer the receiver's h_addrtype field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'h_addrtype' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #h_addrtype)!
 
 h_aliases
-	"Answer the receiver's h_aliases field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'h_aliases' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #h_aliases)) asExternalAddress!
 
 h_length
-	"Answer the receiver's h_length field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'h_length' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #h_length)!
 
 h_name
-	"Answer the receiver's h_name field as a Smalltalk object."
+	"Answer the <AnsiString> value of the receiver's 'h_name' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: 0)!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: 0)!
 
 host
 	"Answer the host name embedded in the receiver, trimming trailing nulls."
@@ -124,24 +124,22 @@ defineFields
 "
 
 	self
-		defineField: #h_name type: (PointerField type: String) beReadOnly offset: 0;
+		defineField: #h_name type: (PointerField type: AnsiString) beReadOnly offset: 0;
 		defineField: #h_aliases type: LPVOIDField new beReadOnly offset: 4;
 		defineField: #h_addrtype type: SWORDField new beReadOnly offset: 8;
 		defineField: #h_length type: SWORDField new beReadOnly offset: 10;
 		defineField: #h_addr_list type: LPVOIDField new beReadOnly offset: 12.
 	self byteSize: 16!
 
-host: aStringHostName 
+host: aStringHostName
 	"Answer a new instance of the receiver describing a host with the name 
 	held in aStringHostName.
 		(self host: SessionManager current computerName) address
 	"
 
 	| answer |
-	answer := WS2_32Library default gethostbyname: aStringHostName.
-	^answer isNull 
-		ifTrue: [SocketError signalWith: Processor activeProcess lastError]
-		ifFalse: [answer]! !
+	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
+	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
 !HOSTENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !HOSTENT class categoriesFor: #host:!instance creation!public! !
 

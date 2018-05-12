@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ShellView subclass: #HelloWorld
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ShellView subclass: #HelloWorld
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 HelloWorld guid: (GUID fromString: '{87b4c720-026e-11d3-9fd7-00a0cc3e4a32}')!
-HelloWorld comment: 'A sample illustrating just about the simplest of all applications;a window displaying the text "Hello World" within an elliptical border. To demonstrate this evaluate the following:
+HelloWorld comment: 'A sample illustrating just about the simplest of all applications; a window displaying hello (in Chinese) within an elliptical border. To demonstrate this evaluate the following:
 
 HelloWorld show.'!
 !HelloWorld categoriesForClass!MVP-Views!Samples! !
@@ -19,18 +19,27 @@ defaultExtent
 
 	^##(400 @ 400)!
 
+helloWorldText
+	"Answer the text to be displayed."
+
+	^Utf8String
+		with: $\x4F60
+		with: $\x597D
+		with: $\x20
+		with: Character dolphin!
+
 minExtent
 	"Answers the minimum extent for the receiver, in this case 3/4 of the original default size"
 
 	^self defaultExtent * 3 // 4!
 
-onPaintRequired: aPaintEvent 
+onPaintRequired: aPaintEvent
 	"A portion of the receiver window has been exposed and needs repainting.
 	The supplied aPaintEvent holds details about the exposed area.
 	Within #onPaintRequired: you MUST ask for a Canvas from aPaintEvent 
 	(not the receiver window) to paint the contents on."
 
-	| canvas rect  textFont  textExtent  textToShow |
+	| canvas rect textFont textExtent textToShow |
 	canvas := aPaintEvent canvas.
 
 	"We're going to draw an ellipse inside a rectangle that is inset
@@ -41,7 +50,7 @@ onPaintRequired: aPaintEvent
 	text will be when displayed."
 	textFont := Font name: 'Arial' pointSize: 32.
 	canvas font: textFont.
-	textToShow := 'Hello World'.
+	textToShow := self helloWorldText.
 	textExtent := canvas textExtent: textToShow.
 
 	"Draw the ellipse with a grey background and red border"
@@ -66,6 +75,7 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isResize ifTrue: [self invalidate].
 	^super onPositionChanged: aPositionEvent! !
 !HelloWorld categoriesFor: #defaultExtent!constants!private! !
+!HelloWorld categoriesFor: #helloWorldText!constants!public! !
 !HelloWorld categoriesFor: #minExtent!accessing!public! !
 !HelloWorld categoriesFor: #onPaintRequired:!event handling!public! !
 !HelloWorld categoriesFor: #onPositionChanged:!event handling!public! !

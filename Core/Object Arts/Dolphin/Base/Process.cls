@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -181,9 +181,8 @@ fpControl
 
 	^fpControl!
 
-fpeMask: anInteger
-	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
-	^self setFpControl: anInteger mask: CRTConstants._MCW_EM!
+fpControl: anInteger
+	fpControl := anInteger!
 
 frameAtAddress: spInteger
 	"Private - Answer a frame representing the real stack frame at the specified SP (a
@@ -715,7 +714,7 @@ topFrame
 !Process categoriesFor: #exceptionEnvironment:!accessing!debugger-step over!private! !
 !Process categoriesFor: #finalize!finalizing!private! !
 !Process categoriesFor: #fpControl!accessing!public! !
-!Process categoriesFor: #fpeMask:!accessing!private! !
+!Process categoriesFor: #fpControl:!accessing!private! !
 !Process categoriesFor: #frameAtAddress:!private!stack frames! !
 !Process categoriesFor: #frameAtIndex:!private!stack frames! !
 !Process categoriesFor: #frameClass!private!stack frames! !

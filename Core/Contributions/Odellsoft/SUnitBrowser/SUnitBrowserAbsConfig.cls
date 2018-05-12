@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SUnitBrowserAbsConfig
 	instanceVariableNames: 'properties'
@@ -13,7 +13,7 @@ SUnitBrowserAbsConfig comment: ''!
 initialize
 
 	super initialize.
-	self properties: LookupTable new!
+	self properties: IdentityDictionary new!
 
 properties
 

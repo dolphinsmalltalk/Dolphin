@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ListBoxTest subclass: #SingleSelectListBoxTest
 	instanceVariableNames: ''
@@ -16,36 +16,36 @@ testSelectionModeChange
 	objects := self objectsToTest.
 	presenter model addAll: objects.
 	self assert: presenter hasSelection not.
-	self assert: presenter selectionOrNil isNil.
+	self assertIsNil: presenter selectionOrNil.
 	"Must trigger a selection change when switching to multi-select, as otherwise observers do not know the mode change has occurred."
-	self 
+	self
 		should: [presenter view isMultiSelect: true]
 		trigger: #selectionChanged
 		against: presenter.
 	self assert: presenter hasSelection not.
-	self assert: presenter selectionOrNil isNil.
-	self assert: presenter view selectionMode == #multi.
-	self 
+	self assertIsNil: presenter selectionOrNil.
+	self assert: presenter view selectionMode identicalTo: #multi.
+	self
 		shouldnt: [presenter view selectionMode: #toggle]
 		trigger: #selectionChanged
 		against: presenter.
-	self 
+	self
 		shouldnt: [presenter view selectionMode: #multi]
 		trigger: #selectionChanged
 		against: presenter.
-	self 
+	self
 		should: [presenter view isMultiSelect: false]
 		trigger: #selectionChanged
 		against: presenter.
 	presenter selection: objects second.
-	self assert: presenter view selectionsByIndex = #(2).
+	self assert: presenter view selectionsByIndex equals: #(2).
 	self should: [presenter view getMultipleSelections] raise: Error.
-	self 
+	self
 		should: [presenter view isMultiSelect: true]
 		trigger: #selectionChanged
 		against: presenter.
 	"#115: Changing list box selection mode fails if there are selections"
-	self assert: presenter view selectionsByIndex = #(2)! !
+	self assert: presenter view selectionsByIndex equals: #(2)! !
 !SingleSelectListBoxTest categoriesFor: #testSelectionModeChange!public!unit tests! !
 
 !SingleSelectListBoxTest class methodsFor!

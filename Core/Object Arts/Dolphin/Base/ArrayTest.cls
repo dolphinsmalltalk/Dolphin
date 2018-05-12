@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollectionTest subclass: #ArrayTest
 	instanceVariableNames: ''
@@ -14,11 +14,10 @@ collectionClass
 	^Array!
 
 testCyclicRefPrinting
-
 	| array |
 	array := Array new: 1.
 	array at: 1 put: array.
-	self assert: array debugPrintString = '#(... a cyclic ref to an Array...)'!
+	self assert: array debugPrintString equals: '#(... a cyclic ref to an Array...)'!
 
 testIsLiteral
 	| example1 |
@@ -33,56 +32,49 @@ testLiteralStoreOn
 	#(1 2) storeOn: stream.
 	storeString := stream contents.
 	rehydrated := Compiler evaluate: storeString.
-	self assert: rehydrated class == Array.
+	self assert: rehydrated class identicalTo: Array.
 	self assert: rehydrated isLiteral.
-	self assert: rehydrated = #(1 2).
-
-!
+	self assert: rehydrated equals: #(1 2)!
 
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
 
 	| subjects |
 	subjects := #(#() #(1) #(1 2)).
-	(Array
-		with: String empty
-		with: Utf16String empty
-		with: ByteArray new
-		with: OrderedCollection new
-		with: (1 to: 0)) do: 
-				[:eachEmpty |
-				subjects do: 
-						[:eachArray |
-						| result |
-						result := eachArray , eachEmpty.
-						self deny: eachArray == result.
-						self assert: result equals: eachArray]].
-	(Array
-		with: 'a'
-		with: 'a' asUtf16String
-		with: #[255]
-		with: (OrderedCollection with: 1234)
-		with: (100 to: 100)) do: 
+	{String empty. Utf16String empty. ByteArray new. OrderedCollection new. 1 to: 0} do: 
+			[:eachEmpty |
+			subjects do: 
+					[:eachArray |
+					| result |
+					result := eachArray , eachEmpty.
+					self deny: eachArray identicalTo: result.
+					self assert: result equals: eachArray]].
+	{'£' asAnsiString.
+		'€🐬' asUtf8String.
+		'🐬' asUtf16String.
+		#[255].
+		OrderedCollection with: 1234.
+		100 to: 100} do: 
 				[:eachOne |
 				subjects do: 
 						[:eachArray |
 						| result |
 						result := self verifyConcatenation: eachOne with: eachArray.
-						self deny: eachArray == result.
-						self assert: result class == Array]].
-	(Array
-		with: 'ab'
-		with: 'ab' asUtf16String
-		with: #[1 255]
-		with: (OrderedCollection with: 1234 with: $x)
-		with: (100 to: 101)) do: 
+						self deny: eachArray identicalTo: result.
+						self assert: result class identicalTo: Array]].
+	{'a£b' asAnsiString.
+		'🐬€' asUtf8String.
+		'ab🐬' asUtf16String.
+		#[1 255].
+		OrderedCollection with: 1234 with: $x.
+		100 to: 101} do: 
 				[:eachTwo |
 				subjects do: 
 						[:eachArray |
 						| result |
 						result := self verifyConcatenation: eachTwo with: eachArray.
-						self deny: eachArray == result.
-						self assert: result class == Array]]!
+						self deny: eachArray identicalTo: result.
+						self assert: result class identicalTo: Array]]!
 
 testNonLiteralStoreOn
 	| stream storeString rehydrated array |
@@ -92,9 +84,9 @@ testNonLiteralStoreOn
 	array storeOn: stream.
 	storeString := stream contents.
 	rehydrated := Compiler evaluate: storeString.
-	self assert: rehydrated class == Array.
+	self assert: rehydrated class identicalTo: Array.
 	self deny: rehydrated isLiteral.
-	self assert: rehydrated = array! !
+	self assert: rehydrated equals: array! !
 !ArrayTest categoriesFor: #collectionClass!helpers!private! !
 !ArrayTest categoriesFor: #testCyclicRefPrinting!public! !
 !ArrayTest categoriesFor: #testIsLiteral!public!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: '_reserved'
@@ -28,25 +28,25 @@ anchorIndex: anInteger
 
 	self sendMessage: LB_SETANCHORINDEX wParam: anInteger - 1.!
 
-basicAdd: anObject 
+basicAdd: anObject
 	"Private - Adds a string for the <Object> argument to the listbox control at the end of the
 	list. Answers the argument."
 
-	self 
+	self
 		sendMessage: LB_ADDSTRING
 		wParam: 0
-		lpParam: (self displayStringFor: anObject).
+		szParam: (self displayStringFor: anObject).
 	^anObject!
 
-basicAdd: anObject atIndex: anInteger 
+basicAdd: anObject atIndex: anInteger
 	"Private - Adds a string for the <Object> argument to the listbox control at the specified
 	1-based <integer> index. If anInteger is zero then the string is added to the end of the
 	list. Answer anObject."
 
-	self 
+	self
 		sendMessage: LB_INSERTSTRING
 		wParam: anInteger - 1
-		lpParam: (self displayStringFor: anObject).
+		szParam: (self displayStringFor: anObject).
 	^anObject!
 
 basicClear

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TypeConverter subclass: #PluggableTypeConverter
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
@@ -41,8 +41,10 @@ rightToLeftBlock: anObject
 	rightToLeftBlock := anObject!
 
 setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable
-	leftToRightBlock := leftMonadicValuable.
-	rightToLeftBlock := rightMonadicValuable! !
+	| noop |
+	noop := [:obj | obj].
+	leftToRightBlock := leftMonadicValuable ?? noop.
+	rightToLeftBlock := rightMonadicValuable ?? noop! !
 !PluggableTypeConverter categoriesFor: #leftToRight:!operations!private! !
 !PluggableTypeConverter categoriesFor: #leftToRightBlock!accessing!public! !
 !PluggableTypeConverter categoriesFor: #leftToRightBlock:!accessing!public! !

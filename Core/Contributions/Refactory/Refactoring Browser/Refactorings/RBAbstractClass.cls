@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #RBAbstractClass
 	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'
@@ -233,6 +233,7 @@ instanceVariableNames: aCollectionOfStrings
 	instanceVariableNames := OrderedCollection withAll: aCollectionOfStrings!
 
 isAbstract
+	self realClass ifNotNil: [:real | real isNonInstantiable ifTrue: [^true]].
 	(self whichMethodsReferToSymbol: #subclassResponsibility) notEmpty ifTrue: [^true].
 	model allReferencesToClass: self do: [:each | ^false].
 	^true!

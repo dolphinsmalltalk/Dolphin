@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ComparisonPolicy
 	instanceVariableNames: ''
@@ -19,7 +19,7 @@ equality
 	^SearchPolicy equality!
 
 identity
-	#deprecated.	"5.0 This whole class has been replaced by SearchPolicy, which implements the <comparisonPolicy> protocol"
+	Notification deprecated.	"5.0 This whole class has been replaced by SearchPolicy, which implements the <comparisonPolicy> protocol"
 	^SearchPolicy identity!
 
 never

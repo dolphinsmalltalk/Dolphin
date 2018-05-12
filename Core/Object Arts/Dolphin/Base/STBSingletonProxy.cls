@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBSingletonProxy
 	instanceVariableNames: 'class selector'
@@ -35,14 +35,6 @@ stbFixup: inFiler at: anInteger
 
 !STBSingletonProxy class methodsFor!
 
-for: aClass 
-	#deprecated.
-	^self forClass: aClass!
-
-for: aClass using: aSelectorSymbol 
-	#deprecated.
-	^self forClass: aClass using: aSelectorSymbol!
-
 forClass: aClass 
 	"Answers an instance of the receiver that represents the singleton class, aClass.
 	It is assumed that aClass will exist in the destination image and #current will
@@ -59,8 +51,6 @@ forClass: aClass using: aSelectorSymbol
 		class: aClass;
 		selector: aSelectorSymbol;
 		yourself! !
-!STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
-!STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
 !STBSingletonProxy class categoriesFor: #forClass:!instance creation!public! !
 !STBSingletonProxy class categoriesFor: #forClass:using:!instance creation!public! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineMethodFromComponentTest
 	instanceVariableNames: ''
@@ -13,23 +13,20 @@ InlineMethodFromComponentTest comment: ''!
 testInlineComponentIntoCascadedMessage
 	| refactoring |
 	self proceedThroughWarning: 
-			[refactoring := InlineMethodFromComponentRefactoring 
-						inline: (self convertInterval: (35 to: 79)
-								for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
+			[refactoring := InlineMethodFromComponentRefactoring
+						inline: (self convertInterval: (35 to: 79) for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
 						inMethod: #inlineComponent
 						forClass: RefactoryTestDataApp.
-			(refactoring model classNamed: #Behavior) 
-				compile: 'hasImmediateInstances ^self format = 0'
+			(refactoring model classNamed: #Behavior) compile: 'hasImmediateInstances ^self format = 0'
 				classified: #(#accessing).
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			#rbFix.	"We don't want a prompt to choose between Behaviour and SmallInteger class"
 			refactoring options at: #implementorToInline
 				put: [:ref :imps | (imps select: [:each | each name == #Behavior]) first].
 			self executeRefactoring: refactoring].
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineComponent) = (RBParser 
-							parseMethod: 'inlineComponent
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineComponent)
+		equals: (RBParser
+				parseMethod: 'inlineComponent
 	| a aBehavior |
 	a := 5.
 	aBehavior := a class.
@@ -41,14 +38,13 @@ testInlineComponentMethodMax
 	| refactoring |
 	self proceedThroughWarning: 
 			[| class |
-			refactoring := InlineMethodFromComponentRefactoring 
-						inline: (self convertInterval: (47 to: 58)
-								for: (RefactoryTestDataApp sourceCodeAt: #inlineMax))
+			refactoring := InlineMethodFromComponentRefactoring
+						inline: (self convertInterval: (47 to: 58) for: (RefactoryTestDataApp sourceCodeAt: #inlineMax))
 						inMethod: #inlineMax
 						forClass: RefactoryTestDataApp.
 			self setupInlineExpressionFor: refactoring toReturn: true.
 			class := refactoring model classNamed: #Magnitude.
-			class 
+			class
 				compile: 'max: aMagnitude 
 					"Answer the receiver or the argument, whichever has the greater magnitude."
 
@@ -58,10 +54,9 @@ testInlineComponentMethodMax
 				classified: #(#accessing).
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineMax) = (RBParser 
-							parseMethod: 'inlineMax
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineMax)
+		equals: (RBParser
+				parseMethod: 'inlineMax
 								| x y q |
 								x := 5.
 								y := 10.
@@ -73,9 +68,8 @@ testInlineComponentMethodMax
 testInlineEmptyComponentMethod
 	| refactoring |
 	self proceedThroughWarning: 
-			[refactoring := InlineMethodFromComponentRefactoring 
-						inline: (self convertInterval: (35 to: 91)
-								for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
+			[refactoring := InlineMethodFromComponentRefactoring
+						inline: (self convertInterval: (35 to: 91) for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
 						inMethod: #inlineComponent
 						forClass: RefactoryTestDataApp.
 			self setupInlineExpressionFor: refactoring toReturn: false.
@@ -83,10 +77,9 @@ testInlineEmptyComponentMethod
 			refactoring options at: #implementorToInline
 				put: [:ref :imps | (imps select: [:each | each name == #Object]) first].
 			self executeRefactoring: refactoring].
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineComponent) = (RBParser 
-							parseMethod: 'inlineComponent
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineComponent)
+		equals: (RBParser
+				parseMethod: 'inlineComponent
 	| a anObject |
 	a := 5.
 	anObject := a class.
@@ -106,33 +99,32 @@ testModelInlineMethodWithSameVariableNames
 	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
-	(model classNamed: #Object) 
+	(model classNamed: #Object)
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a a9: b b9: c'
 		classified: #(#accessing).
 	self proceedThroughWarning: 
-			[refactoring := InlineMethodFromComponentRefactoring 
+			[refactoring := InlineMethodFromComponentRefactoring
 						model: model
 						inline: (72 to: 84)
 						inMethod: #foo
 						forClass: (model classNamed: #Object).
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
-				= (RBParser 
-						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')!
+	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a + b + c')!
 
 testModelInlineMethodWithSameVariableNames1
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: #Rectangle.
-	class 
-		compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
+	class compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
 		classified: #(#accessing).
-	(model classNamed: #Object) 
+	(model classNamed: #Object)
 		compile: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle rectangleRelativeTo: temp'
 		classified: #(#accessing).
 	self proceedThroughWarning: 
-			[refactoring := InlineMethodFromComponentRefactoring 
+			[refactoring := InlineMethodFromComponentRefactoring
 						model: model
 						inline: (77 to: 112)
 						inMethod: #foo
@@ -140,29 +132,29 @@ testModelInlineMethodWithSameVariableNames1
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
-				= (RBParser 
-						parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')!
+	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle origin extent: temp extent')!
 
 testModelInlineMethodWithSameVariableNames2
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: self class name.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
-	(model classNamed: #Object) 
+	(model classNamed: #Object)
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c a9: b b9: a'
 		classified: #(#accessing).
 	self proceedThroughWarning: 
-			[refactoring := InlineMethodFromComponentRefactoring 
+			[refactoring := InlineMethodFromComponentRefactoring
 						model: model
 						inline: (72 to: 84)
 						inMethod: #foo
 						forClass: (model classNamed: #Object).
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo) 
-				= (RBParser 
-						parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')! !
+	self assert: ((refactoring model classNamed: #Object) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c + b + a')! !
 !InlineMethodFromComponentTest categoriesFor: #testInlineComponentIntoCascadedMessage!public!tests! !
 !InlineMethodFromComponentTest categoriesFor: #testInlineComponentMethodMax!public!tests! !
 !InlineMethodFromComponentTest categoriesFor: #testInlineEmptyComponentMethod!public!tests! !

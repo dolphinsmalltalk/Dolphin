@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromPointsInitializerTest
 	instanceVariableNames: ''
@@ -19,20 +19,20 @@ setUp
 	model := GdiplusLinearGradientBrushFromPointsInitializer new library: self!
 
 testCreateHandle
-	model 
+	model
 		point1: 1 @ 2
 		point2: 3 @ 4
 		color1: (ARGB fromInteger: 1)
 		color2: (ARGB fromInteger: 2).
 	model createHandle.
-	self assert: constructorArgs size = 6.
-	self assert: constructorArgs first class == POINTL.
-	self assert: constructorArgs first asPoint = (1 @ 2).
-	self assert: constructorArgs second class == POINTL.
-	self assert: constructorArgs second asPoint = (3 @ 4).
-	self assert: constructorArgs third = 1.
-	self assert: constructorArgs fourth = 2.
-	self assert: (constructorArgs at: 5) = WrapModeTile! !
+	self assert: constructorArgs size equals: 6.
+	self assert: constructorArgs first class identicalTo: POINTL.
+	self assert: constructorArgs first asPoint equals: 1 @ 2.
+	self assert: constructorArgs second class identicalTo: POINTL.
+	self assert: constructorArgs second asPoint equals: 3 @ 4.
+	self assert: constructorArgs third equals: 1.
+	self assert: constructorArgs fourth equals: 2.
+	self assert: (constructorArgs at: 5) equals: WrapModeTile! !
 !GdiplusLinearGradientBrushFromPointsInitializerTest categoriesFor: #gdipCreateLineBrushI:point2:color1:color2:wrapMode:lineGradient:!accessing!public! !
 !GdiplusLinearGradientBrushFromPointsInitializerTest categoriesFor: #setUp!public!setup! !
 !GdiplusLinearGradientBrushFromPointsInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !

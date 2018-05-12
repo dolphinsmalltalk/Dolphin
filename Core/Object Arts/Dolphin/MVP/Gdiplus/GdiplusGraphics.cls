@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusGraphics
 	instanceVariableNames: ''
@@ -271,13 +271,13 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 		unit: nil
 		attributes: nil!
 
-drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aSrcUnit attributes: imageAttributes 
+drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aSrcUnit attributes: imageAttributes
 	"Draw the portion of aGdiplusImage specified by srcOrigin and srcExtent to the receiver at the
 	rectangle specified by dstOrigin and dstExtent. The image is stretched to fit the destination rectangle.
 	srcUnit is the unit of measure for the source rectangle. imageAttributes specifies color adjustments."
 
 	| status |
-	status := GdiplusLibrary default 
+	status := GdiplusLibrary default
 				gdipDrawImageRectRectI: self asParameter
 				image: aGdiplusImage asParameter
 				dstx: dstOrigin x
@@ -288,7 +288,7 @@ drawImage: aGdiplusImage at: dstOrigin extent: dstExtent from: srcOrigin extent:
 				srcy: srcOrigin y
 				srcwidth: srcExtent x
 				srcheight: srcExtent y
-				srcUnit: (aSrcUnit ifNil: [UnitPixel])
+				srcUnit: aSrcUnit ?? UnitPixel
 				imageAttributes: imageAttributes asParameter
 				callback: nil
 				callbackData: nil.
@@ -416,14 +416,16 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 	and style) specified by aFont, text format information (layout and display manipulations)
 	specified by aStringFormat, and aBrush to fill the string."
 
-	| status font format brush |
+	| status font format brush text |
 	font := aFont ifNil: [GdiplusFont new].
 	format := aStringFormat ifNil: [GdiplusStringFormat new].
 	brush := aBrush ifNil: [GdiplusSolidBrush new].
+	"Note that we must conver to UTF-16 explicitly to ensure we pass the correct string length."
+	text := aString asUtf16String.
 	(status := GdiplusLibrary default
 				gdipDrawString: self asParameter
-				str: aString asUtf16String
-				length: -1
+				str: text
+				length: text size
 				font: font asParameter
 				layoutRect: (RECTF fromRectangle: aRectangle)
 				stringFormat: format asParameter
@@ -589,12 +591,14 @@ measureString: aString font: aFont
 measureString: aString font: aFont rect: aRectangle format: aStringFormat
 	"Answer a Rectangle that is the bounds of aString inside aRectangle as specified by aFont and aStringFormat."
 
-	| status boundRect |
+	| status boundRect text |
 	boundRect := RECTF new.
+	"Note that we must conver to UTF-16 explicitly to ensure we pass the correct string length."
+	text := aString asUtf16String.
 	(status := GdiplusLibrary default
 				gdipMeasureString: self asParameter
-				str: aString asUtf16String
-				length: aString size
+				str: text
+				length: text size
 				font: aFont asParameter
 				layoutRect: (RECTF fromRectangle: aRectangle)
 				stringFormat: aStringFormat asParameter

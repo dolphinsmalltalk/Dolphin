@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #ContinuationTest
 	instanceVariableNames: 'tmp tmp2'
@@ -21,36 +21,36 @@ runCase
 testBlockTemps
 	| y |
 	#(1 2 3) do: 
-			[:i | 
+			[:i |
 			| x |
 			x := i.
 			tmp ifNil: [tmp2 := 
-							[:cc | 
+							[:cc |
 							tmp := cc.
 							[:q | ]] callCC].
 			tmp2 value: x.
 			x := 17].
 	y := 
-			[:cc | 
+			[:cc |
 			tmp value: cc.
 			42] callCC.
-	self assert: y = 1.
+	self assert: y equals: 1.
 	tmp := tmp2 := nil!
 
 testBlockVars
 	| continuation |
 	tmp := 0.
 	tmp := 
-			[:cc | 
+			[:cc |
 			continuation := cc.
 			0] callCC + tmp.
-	tmp2 ifNotNil: [:x | tmp2 value]
-		ifNil: 
-			[#(1 2 3) do: [:i | 
-					[:cc | 
+	tmp2
+		ifNotNil: [:x | tmp2 value]
+		ifNil: [#(1 2 3) do: [:i | 
+					[:cc |
 					tmp2 := cc.
 					continuation value: i] callCC]].
-	self assert: tmp = 6.
+	self assert: tmp equals: 6.
 	tmp := 0.
 	tmp2 := nil!
 
@@ -58,10 +58,10 @@ testMethodTemps
 	| i continuation |
 	i := 0.
 	i := i + 
-					[:cc | 
+					[:cc |
 					continuation := cc.
 					1] callCC.
-	self assert: i ~= 3.
+	self deny: i equals: 3.
 	i = 2 ifFalse: [continuation value: 2]!
 
 testSimpleCallCC

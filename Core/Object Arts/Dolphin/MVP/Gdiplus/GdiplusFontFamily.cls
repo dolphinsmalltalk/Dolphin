@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusBase subclass: #GdiplusFontFamily
 	instanceVariableNames: ''
@@ -44,10 +44,10 @@ name
 	"Answer the String name of the receiver (e.g., 'Arial')."
 
 	| status name |
-	name := Utf16String new: LF_FACESIZE.
+	name := Utf16String newFixed: LF_FACESIZE.
 	(status := GdiplusLibrary default
 				gdipGetFamilyName: self asParameter
-				name: name asParameter
+				name: name
 				language: 0) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetFamilyName failed' with: status].
 	^name asString trimNulls! !

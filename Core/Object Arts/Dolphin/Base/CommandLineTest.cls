@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #CommandLineTest
 	instanceVariableNames: ''
@@ -16,117 +16,117 @@ test_getOpt_01
 	| commandLine optionChar |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7').
 	optionChar := commandLine getOpt: 'abc:'.
-	self assert: optionChar isNil.	"No options provided"!
+	self assertIsNil: optionChar	"No options provided"!
 
 test_getOpt_02
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine x |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-b').
-	self 
-		assert: (x := commandLine getOpt: 'abc:') == $a;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') == $b;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: (x := commandLine getOpt: 'abc:') identicalTo: $a;
+		assertIsNil: commandLine optArg;
+		assert: (commandLine getOpt: 'abc:') identicalTo: $b;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7');
+		yourself!
 
 test_getOpt_03
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-ab').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $a;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') == $b;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $a;
+		assertIsNil: commandLine optArg;
+		assert: (commandLine getOpt: 'abc:') identicalTo: $b;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7');
+		yourself!
 
 test_getOpt_04
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c' 'foo').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $c;
-		assert: commandLine optArg = 'foo';
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $c;
+		assert: commandLine optArg equals: 'foo';
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7');
+		yourself!
 
 test_getOpt_05
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-cfoo').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $c;
-		assert: commandLine optArg = 'foo';
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $c;
+		assert: commandLine optArg equals: 'foo';
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7');
+		yourself!
 
 test_getOpt_06
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' 'arg1').
-	self 
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7' 'arg1');
-		yourself.!
+	self
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7' 'arg1');
+		yourself!
 
 test_getOpt_07
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' 'arg1').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $a;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7' 'arg1');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $a;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7' 'arg1');
+		yourself!
 
 test_getOpt_08
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c' 'foo' 'arg1').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $c;
-		assert: commandLine optArg = 'foo';
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7' 'arg1');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $c;
+		assert: commandLine optArg equals: 'foo';
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7' 'arg1');
+		yourself!
 
 test_getOpt_09
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '--' '-b').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $a;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7' '-b');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $a;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7' '-b');
+		yourself!
 
 test_getOpt_10
 	"http://www.gnu.org/software/libc/manual/html_node/Example-of-Getopt.html"
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $a;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7' '-');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $a;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7' '-');
+		yourself!
 
 test_getOpt_11
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
@@ -134,13 +134,13 @@ test_getOpt_11
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-x').
-	self 
-		assert: (commandLine getOpt: 'abc:') == $?;
-		assert: commandLine optOpt = $x;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
+	self
+		assert: (commandLine getOpt: 'abc:') identicalTo: $?;
+		assert: commandLine optOpt equals: $x;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
 		should: [commandLine arguments] raise: CommandLineError;
-		yourself.!
+		yourself!
 
 test_getOpt_12
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
@@ -148,13 +148,13 @@ test_getOpt_12
 
 	| commandLine x |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c').
-	self 
-		assert: (x := commandLine getOpt: 'abc:') == $?;
-		assert: commandLine optOpt = $c;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
+	self
+		assert: (x := commandLine getOpt: 'abc:') identicalTo: $?;
+		assert: commandLine optOpt equals: $c;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
 		should: [commandLine arguments] raise: CommandLineError;
-		yourself.!
+		yourself!
 
 test_getOpt_13
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
@@ -162,13 +162,13 @@ test_getOpt_13
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-c').
-	self 
-		assert: (commandLine getOpt: 'abc::') == $c;
-		assert: commandLine optOpt isNil;
-		assert: commandLine optArg isNil;
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: (commandLine getOpt: 'abc::') identicalTo: $c;
+		assertIsNil: commandLine optOpt;
+		assertIsNil: commandLine optArg;
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7');
+		yourself!
 
 test_getOpt_14
 	"http://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
@@ -176,27 +176,26 @@ test_getOpt_14
 
 	| commandLine |
 	commandLine := CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--' '-a' '-b' '-c').
-	self 
-		assert: (commandLine getOpt: 'abc:') isNil;
-		assert: commandLine arguments = #('DPRO.img7' '-a' '-b' '-c');
-		yourself.!
+	self
+		assertIsNil: (commandLine getOpt: 'abc:');
+		assert: commandLine arguments equals: #('DPRO.img7' '-a' '-b' '-c');
+		yourself!
 
 testAccessors
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-a' '-b' '-c' 'foo' 'bar'))
-		options: 'abc:';
-		yourself.
+				options: 'abc:';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #($a $b $c);
-		assert: (options at: $a) isNil;
-		assert: (options at: $b) isNil;
-		assert: (options at: $c) = 'foo';
-		assert: arguments = #('DPRO.img7' 'bar');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #($a $b $c);
+		assertIsNil: (options at: $a);
+		assertIsNil: (options at: $b);
+		assert: (options at: $c) equals: 'foo';
+		assert: arguments equals: #('DPRO.img7' 'bar');
+		yourself!
 
 testBlockNoArgument
 
@@ -209,33 +208,29 @@ testBlockNoArgument
 !
 
 testBlockOptionalArgumentAbsent
-
 	| fooValue barValue |
 	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' '--bar'))
 		addOptionAllowingArgument: 'foo' whenPresentDo: [:value | fooValue := value];
 		addOptionAllowingArgument: 'bar' whenPresentDo: [:value | barValue := value];
 		processOptions.
 	self
-		assert: fooValue isNil;
-		assert: barValue isNil;
-		yourself.!
+		assertIsNil: fooValue;
+		assertIsNil: barValue;
+		yourself!
 
 testBlockOptionalArgumentPresent
-
 	| fooValue |
 	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
 		addOptionAllowingArgument: 'foo' whenPresentDo: [:value | fooValue := value];
 		processOptions.
-	self assert: fooValue = 'bar'.!
+	self assert: fooValue equals: 'bar'!
 
 testBlockRequiredArgumentPresent
-
 	| fooValue |
 	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
 		addOptionRequiringArgument: 'foo' whenPresentDo: [:value | fooValue := value];
 		processOptions.
-	self assert: fooValue = 'bar'.
-!
+	self assert: fooValue equals: 'bar'!
 
 testLongAmbiguousOption
 
@@ -253,19 +248,18 @@ testLongAmbiguousOption
 !
 
 testLongEquals
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo=bar'))
-		addOptionRequiringArgument: 'foo';
-		yourself.
+				addOptionRequiringArgument: 'foo';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #('foo');
-		assert: (options at: 'foo') = 'bar';
-		assert: arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('foo');
+		assert: (options at: 'foo') equals: 'bar';
+		assert: arguments equals: #('DPRO.img7');
+		yourself!
 
 testLongMissingRequiredArgument
 
@@ -282,66 +276,62 @@ testLongMissingRequiredArgument
 !
 
 testLongNoArgument
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
-		addOption: 'foo';
-		yourself.
+				addOption: 'foo';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #('foo');
-		assert: (options at: 'foo') isNil;
-		assert: arguments = #('DPRO.img7' 'bar');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('foo');
+		assertIsNil: (options at: 'foo');
+		assert: arguments equals: #('DPRO.img7' 'bar');
+		yourself!
 
 testLongOptionalArgumentAbsent
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' '--bar'))
-		addOptionAllowingArgument: 'foo';
-		addOptionAllowingArgument: 'bar';
-		yourself.
+				addOptionAllowingArgument: 'foo';
+				addOptionAllowingArgument: 'bar';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #('bar' 'foo');
-		assert: (options at: 'bar') isNil;
-		assert: (options at: 'foo') isNil;
-		assert: arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('bar' 'foo');
+		assertIsNil: (options at: 'bar');
+		assertIsNil: (options at: 'foo');
+		assert: arguments equals: #('DPRO.img7');
+		yourself!
 
 testLongOptionalArgumentPresent
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
-		addOptionAllowingArgument: 'foo';
-		yourself.
+				addOptionAllowingArgument: 'foo';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #('foo');
-		assert: (options at: 'foo') = 'bar';
-		assert: arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('foo');
+		assert: (options at: 'foo') equals: 'bar';
+		assert: arguments equals: #('DPRO.img7');
+		yourself!
 
 testLongRequiredArgumentPresent
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar'))
-		addOptionRequiringArgument: 'foo';
-		yourself.
+				addOptionRequiringArgument: 'foo';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #('foo');
-		assert: (options at: 'foo') = 'bar';
-		assert: arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('foo');
+		assert: (options at: 'foo') equals: 'bar';
+		assert: arguments equals: #('DPRO.img7');
+		yourself!
 
 testLongUnexpectedArgument
 
@@ -386,22 +376,20 @@ testMissingRequiredArgument
 !
 
 testPartialLong
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--fo' 'bar'))
-		addOptionRequiringArgument: 'foo';
-		yourself.
+				addOptionRequiringArgument: 'foo';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #('foo');
-		assert: (options at: 'foo') = 'bar';
-		assert: arguments = #('DPRO.img7');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #('foo');
+		assert: (options at: 'foo') equals: 'bar';
+		assert: arguments equals: #('DPRO.img7');
+		yourself!
 
 testRepeatBlockOptionalArgumentAbsent
-
 	| fooCount barCount |
 	fooCount := 0.
 	barCount := 0.
@@ -410,28 +398,25 @@ testRepeatBlockOptionalArgumentAbsent
 		addOptionAllowingArgument: 'bar' whenPresentDo: [:value | barCount := barCount + 1];
 		processOptions.
 	self
-		assert: fooCount = 2;
-		assert: barCount = 1;
-		yourself.!
+		assert: fooCount equals: 2;
+		assert: barCount equals: 1;
+		yourself!
 
 testRepeatBlockOptionalArgumentPresent
-
 	| fooValue |
 	fooValue := ''.
 	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '--foo' 'bar' '--foo' 'BAR'))
 		addOptionAllowingArgument: 'foo' whenPresentDo: [:value | fooValue := fooValue , value];
 		processOptions.
-	self assert: fooValue = 'barBAR'.!
+	self assert: fooValue equals: 'barBAR'!
 
 testRepeatShortBlockNoArgument
-
 	| fooCount |
 	fooCount := 0.
 	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-f' 'bar' '-f'))
 		addOption: $f whenPresentDo: [fooCount := fooCount + 1];
 		processOptions.
-	self assert: fooCount = 2.
-!
+	self assert: fooCount equals: 2!
 
 testShortBlockNoArgument
 
@@ -444,7 +429,6 @@ testShortBlockNoArgument
 !
 
 testShortBlockOptionalArgumentAbsent
-
 	| fooValue barValue |
 	fooValue := Object new.
 	barValue := Object new.
@@ -453,35 +437,32 @@ testShortBlockOptionalArgumentAbsent
 		addOptionAllowingArgument: $b whenPresentDo: [:value | barValue := value];
 		processOptions.
 	self
-		assert: fooValue isNil;
-		assert: barValue isNil;
-		yourself.!
+		assertIsNil: fooValue;
+		assertIsNil: barValue;
+		yourself!
 
 testShortBlockRequiredArgumentPresent
-
 	| fooValue |
 	(CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '-f' 'bar'))
 		addOptionRequiringArgument: $f whenPresentDo: [:value | fooValue := value];
 		processOptions.
-	self assert: fooValue = 'bar'.
-!
+	self assert: fooValue equals: 'bar'!
 
 testSlashPrefix
-
 	| commandLine options arguments |
 	commandLine := (CommandLine argv: #('Dolphin7.exe' 'DPRO.img7' '/a' '/b' '/c' 'foo' 'bar'))
-		options: 'abc:';
-		yourself.
+				options: 'abc:';
+				yourself.
 	options := commandLine options.
 	arguments := commandLine arguments.
-	self 
-		assert: options class == Dictionary;
-		assert: options keys asSortedCollection asArray = #($a $b $c);
-		assert: (options at: $a) isNil;
-		assert: (options at: $b) isNil;
-		assert: (options at: $c) = 'foo';
-		assert: arguments = #('DPRO.img7' 'bar');
-		yourself.!
+	self
+		assert: options class identicalTo: Dictionary;
+		assert: options keys asSortedCollection asArray equals: #($a $b $c);
+		assertIsNil: (options at: $a);
+		assertIsNil: (options at: $b);
+		assert: (options at: $c) equals: 'foo';
+		assert: arguments equals: #('DPRO.img7' 'bar');
+		yourself!
 
 testUnrecognizedOption
 

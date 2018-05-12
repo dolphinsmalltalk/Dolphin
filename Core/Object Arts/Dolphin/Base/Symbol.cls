@@ -1,13 +1,16 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-String variableByteSubclass: #Symbol
+Utf8String variableByteSubclass: #Symbol
 	instanceVariableNames: ''
-	classVariableNames: 'Table'
+	classVariableNames: 'CharClassifications Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Symbol guid: (GUID fromString: '{87b4c51d-026e-11d3-9fd7-00a0cc3e4a32}')!
 Symbol isNullTerminated: true!
+Symbol addClassConstant: 'CharClassifications' value: #(nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #binary nil nil nil #binary #binary nil nil nil #binary #binary #binary #binary nil #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #colon nil #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil nil #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic nil #binary nil #binary nil)!
 Symbol comment: 'Symbol is the class of <String>s which are guaranteed to be unique throughout the system.
+
+Presently Symbols are limited to the current byte character set, however the intention is to switch to UTF-8 symbols in future in order to allow any characters.
 
 Symbol complies with the following ANSI protocols:
 	Object
@@ -18,18 +21,6 @@ Symbol complies with the following ANSI protocols:
 	symbol'!
 !Symbol categoriesForClass!Collections-Text! !
 !Symbol methodsFor!
-
-_equalsByteString: aString
-	"Private - Answer whether the receiver is equivalent to the byte <String>, aString. 
-	Double-dispatched from String>>=."
-
-	^false!
-
-_equalsUtf16String: aUtf16String
-	"Private - Answer whether the receiver is equivalent to the <Utf16String> argument.
-	Double-dispatched from Utf16String>>=."
-
-	^false!
 
 = aSymbol
 	"Symbols equality is the same as symbol identity since instances with the same
@@ -50,46 +41,18 @@ argumentCount
 		argCount := argCount max: 1].
 	^argCount!
 
-asAnsiString
-	"Answer a new ANSI-encoded <readableString> containing the characters of 
-	the receiver."
-
-	| size |
-	size := self size.
-	^self
-		replaceBytesOf: (String new: size)
-		from: 1
-		to: size
-		startingAt: 1!
-
-asBlock
-	"Answer a block capable of sending the receiver to an object"
-
-	| arity |
-	arity := self numArgs + 1.
-	arity = 1 ifTrue: [^[:r | r perform: self]].
-	arity = 2 ifTrue: [^[:r :a | r perform: self with: a]].
-	arity = 3 ifTrue: [^[:r :a :b | r perform: self with: a with: b]].
-	arity = 4 ifTrue: [^[:r :a :b :c| r perform: self with: a with: b with: c]].
-	self error: 'Too many arguments'!
-
 asString
 	"Answer a new <readableString> containing the characters of 
 	the receiver."
 
-	^String fromString: self!
+	<primitive: 217>
+	^self asUtf8String!
 
 asSymbol
 	"Answer the <symbol> containing the characters of the receiver
 	(i.e. the receiver, since <symbol>s are unique)."
 
 	^self!
-
-basicCopy
-	"Private - Answer a writable copy of the receiver."
-
-	^self species fromAddress: self yourAddress
-!
 
 deepCopy
 	"Answer the receiver - Symbols are unique, so a copy with the same characters
@@ -106,7 +69,7 @@ displayString
 	return self (for better performance), we must override back to a suitable
 	implementation for Symbols which does not include the hash prefix."
 
-	^self basicCopy!
+	^self mutableCopy!
 
 forwardTo: anObject
 	"Send the <Object> argument the receiver as a niladic message,
@@ -120,15 +83,6 @@ hash
 
 	<primitive: 147>
 	^self identityHash!
-
-initialiseFrom: aString
-	"Private - Initialize the receiver to contain the characters of aString.
-	Sent to String because replaceFrom:with:startAt: is invalid for symbols"
-
-	aString
-		replaceBytesOf: self
-		from: 1 to: aString size startingAt: 1
-!
 
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that can
@@ -206,10 +160,9 @@ shallowCopy
 	^self!
 
 species
-	"Answer the generic type of String and its subclasses. Statically bind to
-	the method's class so that subclasses will also answer that class."
+	"Answer the type of String to be used in place of Symbol when making a writable copy."
 
-	^String!
+	^Utf8String!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -218,20 +171,14 @@ stbSaveOn: anSTBOutFiler
 		writePreambleFor: self;
 		writeInteger: self size.
 	anSTBOutFiler stream nextPutAll: self asByteArray! !
-!Symbol categoriesFor: #_equalsByteString:!comparing!private! !
-!Symbol categoriesFor: #_equalsUtf16String:!comparing!private! !
 !Symbol categoriesFor: #=!comparing!public! !
 !Symbol categoriesFor: #argumentCount!accessing!public! !
-!Symbol categoriesFor: #asAnsiString!converting!public! !
-!Symbol categoriesFor: #asBlock!converting!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
-!Symbol categoriesFor: #basicCopy!copying!private! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !
 !Symbol categoriesFor: #hash!comparing!public! !
-!Symbol categoriesFor: #initialiseFrom:!initializing!private! !
 !Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
@@ -278,16 +225,17 @@ findInterned: aString
 	(Table at: aString hashCharacters \\ Table basicSize + 1)
 		ifNotNil: 
 			[:bucket |
-			| corpse |
-			corpse := DeadObject current.
 			"Inline ArrayedCollection>>do: to avoid full block for best performance"
 			1 to: bucket size
 				do: 
 					[:i |
 					| each |
 					each := bucket at: i.
-					(each ~~ corpse and: [(aString trueCompare: each) == 0]) ifTrue: [^each]]].
+					(each ~~ DeadObject.Current and: [(aString _cmp: each) == 0]) ifTrue: [^each]]].
 	^nil!
+
+fromAddress: anInteger length: anInteger2
+	^self intern: (String fromAddress: anInteger length: anInteger2)!
 
 fromString: aString
 	"Answer a unique instance of the receiver whose contents are copied from aString."
@@ -305,19 +253,25 @@ initialize
 	Table	-	An Array which is used as a hash table containing WeakArray buckets, in which the currently used
 				instances of the receiver are kept."
 
+	| classificationTable |
+	self extraInstanceSpec: EncodingUtf8.
 	Table isNil ifTrue: [Table := Array new: 3989].
 	empty := #''.
-	VMLibrary default registryAt: #Symbol put: self!
+	VMLibrary default registryAt: #Symbol put: self.
+	classificationTable := Array new: 128.
+	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+		do: [:alpha | classificationTable at: alpha codePoint + 1 put: #alphabetic].
+	'01234567890' do: [:digit | classificationTable at: digit codePoint + 1 put: #digit].
+	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary codePoint + 1 put: #binary].
+	classificationTable at: $: codePoint + 1 put: #colon.
+	self addClassConstant: 'CharClassifications' value: classificationTable!
 
 intern: aString
 	"Answer the unique Symbol for aString."
 
-	| symbol |
-	(symbol := self findInterned: aString) isNil
-		ifTrue: [
-			symbol := (super new: aString size) initialiseFrom: aString.
-			self addUnique: symbol].
-	^symbol!
+	| utf8 |
+	^(self findInterned: (utf8 := aString asUtf8String))
+		ifNil: [self addUnique: (utf8 shallowCopy becomeA: Symbol)]!
 
 intern: aString cookie: cookie
 	"Private - Callback from VM, returns the unique Symbol for aString.
@@ -329,41 +283,48 @@ intern: aString cookie: cookie
 internCharacter: aCharacter
 	"Answer the Character argument, aCharacter, as a single character unique symbol"
 
-	^self intern: aCharacter asString!
+	^self intern: aCharacter asUtf8String!
 
 isLiteralSymbol: aSymbol
-	"Private - Answer whether the <Symbol> argument is representable
-	as an unquoted literal symbol."
+	"Private - Answer whether the <Symbol> argument is representable as an unquoted literal
+	symbol."
 
-	| size binChars |
+	| size class |
 	size := aSymbol basicSize.
 	size == 0 ifTrue: [^false].
-	binChars := '!!%&*+,/<=>?@\~|-'.
-	(binChars identityIncludes: (aSymbol at: 1))
-		ifTrue: [2 to: size do: [:i | (binChars identityIncludes: (aSymbol at: i)) ifFalse: [^false]]]
+	class := CharClassifications lookup: (aSymbol basicAt: 1) + 1.
+	class == #binary
+		ifTrue: 
+			[2 to: size
+				do: [:i | (CharClassifications lookup: (aSymbol basicAt: i) + 1) == #binary ifFalse: [^false]]]
 		ifFalse: 
 			[| includesColon initial |
-			initial := true.
+			class == #alphabetic ifFalse: [^false].
+			initial := false.
 			includesColon := false.
-			1 to: size
+			2 to: size
 				do: 
 					[:i |
-					| each |
-					each := aSymbol at: i.
+					class := CharClassifications lookup: (aSymbol basicAt: i) + 1.
 					initial
-						ifTrue: [(each == $_ or: [each isEnglishLetter]) ifTrue: [initial := false] ifFalse: [^false]]
+						ifTrue: 
+							[class == #alphabetic ifFalse: [^false].
+							initial := false]
 						ifFalse: 
-							[each == $:
+							[class == #colon
 								ifTrue: [includesColon := initial := true]
-								ifFalse: [(each == $_ or: [each isEnglishLetter or: [each isDigit]]) ifFalse: [^false]]]].
-			(includesColon and: [aSymbol last ~~ $:]) ifTrue: [^false]].
+								ifFalse: [(class == #alphabetic or: [class == #digit]) ifFalse: [^false]]]].
+			(includesColon and: [class ~~ #colon]) ifTrue: [^false]].
 	^true!
 
-new
+new: anInteger
 	"Instances of the receiver can only be created by using the #intern: and #internCharacter:
 	messages."
 
 	^self shouldNotImplement!
+
+readFrom: aStream
+	^self intern: (Utf8String readFrom: aStream)!
 
 resizeTable
 	"Private - Remove unused Symbols from the system - must be done to the exclusion of other processes, e.g:
@@ -381,6 +342,7 @@ resizeTable: anInteger
 	N.B. The argument is not the size of the resulting symbol table, which is answered."
 
 	 | newSize insts |
+	Table := nil.
 	insts := self allInstances.
 	newSize := (Integer primesUpTo: insts size // anInteger) last.
 	Table := Array new: newSize.
@@ -441,7 +403,7 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	stream := anSTBInFiler stream.
 	size := stream nextSDWORD.
 	bytes := stream next: size.
-	answer := self intern: (String fromString: bytes).
+	answer := self intern: (Utf8String fromByteArray: bytes).
 	anSTBInFiler register: answer.
 	^answer!
 
@@ -456,10 +418,17 @@ stbReadFromProxy: anSTBInFiler
 	"Then read the string and intern it"
 	answer := anSTBInFiler basicNext asSymbol.
 	anSTBInFiler fixup: ref to: answer.
-	^answer! !
+	^answer!
+
+with: aCharacter
+	^self internCharacter: aCharacter!
+
+withAll: anArrayOfCharacter
+	^self intern: (String withAll: anArrayOfCharacter)! !
 !Symbol class categoriesFor: #addUnique:!accessing!private! !
 !Symbol class categoriesFor: #allInstancesDo:!enumerating!public! !
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
+!Symbol class categoriesFor: #fromAddress:length:!public! !
 !Symbol class categoriesFor: #fromString:!instance creation!public! !
 !Symbol class categoriesFor: #icon!constants!public! !
 !Symbol class categoriesFor: #initialize!development!initializing!public! !
@@ -467,10 +436,13 @@ stbReadFromProxy: anSTBInFiler
 !Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !
 !Symbol class categoriesFor: #internCharacter:!instance creation!public! !
 !Symbol class categoriesFor: #isLiteralSymbol:!parsing!private! !
-!Symbol class categoriesFor: #new!instance creation!public! !
+!Symbol class categoriesFor: #new:!instance creation!public! !
+!Symbol class categoriesFor: #readFrom:!instance creation!public! !
 !Symbol class categoriesFor: #resizeTable!initializing!private! !
 !Symbol class categoriesFor: #resizeTable:!initializing!private! !
 !Symbol class categoriesFor: #stats!development!private! !
 !Symbol class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !Symbol class categoriesFor: #stbReadFromProxy:!binary filing!private! !
+!Symbol class categoriesFor: #with:!public! !
+!Symbol class categoriesFor: #withAll:!public! !
 

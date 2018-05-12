@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #SourceBrowser
 	instanceVariableNames: 'listPresenter changedOnly refreshBlock packagesFilter statusModel'

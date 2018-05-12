@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalInteger subclass: #HRESULT
 	instanceVariableNames: ''
@@ -21,17 +21,19 @@ asUnsignedInteger
 	^bytes dwordAtOffset: 0!
 
 displayOn: aStream
-	"Append a textual representation of the receiver to aStream."
+	"Append a textual representation of the receiver to aStream.
+		(HRESULT fromInteger: Win32Errors.E_ABORT) displayString.
+	"
 
 	| buf len |
-	buf := String new: 255.
+	buf := Utf16String newFixed: 255.
 	len := KernelLibrary default
 				formatMessage: ##(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS)
 				lpSource: 0
 				dwMessageId: self asInteger
 				dwLanguageId: 0
 				lpBuffer: buf
-				nSize: buf basicSize
+				nSize: buf size + 1
 				arguments: 0.
 	len == 0
 		ifTrue: 
@@ -41,18 +43,7 @@ displayOn: aStream
 		ifFalse: 
 			["Windows appends trailing line delimiter, and breaks up the text into lines too, 
 			so we remove them."
-			| lines first |
-			lines := buf lines.
-			first := true.
-			lines
-				from: 1
-				to: lines size - 1
-				do: 
-					[:l |
-					first ifTrue: [first := false] ifFalse: [aStream space].
-					aStream
-						nextPutAll: l;
-						space]]!
+			(buf resize: len) lines do: [:each | aStream nextPutAll: each] separatedBy: [aStream space]]!
 
 errorCode
 	"Answer the Win32 status code extracted from the receiver's code."

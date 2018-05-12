@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RenameInstanceVariableTest
 	instanceVariableNames: ''
@@ -24,7 +24,7 @@ testNonExistantName
 
 testRenameInstVar
 	| refactoring class |
-	refactoring := RenameInstanceVariableRefactoring 
+	refactoring := RenameInstanceVariableRefactoring
 				rename: 'classBlock'
 				to: 'asdf'
 				in: BasicLintRuleTest.
@@ -32,17 +32,16 @@ testRenameInstVar
 	class := refactoring model classNamed: #BasicLintRuleTest.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
-	self 
-		assert: (class parseTreeFor: #checkClass:) = (RBParser 
-						parseMethod: 'checkClass: aSmalllintContext 
+	self assert: (class parseTreeFor: #checkClass:)
+		equals: (RBParser
+				parseMethod: 'checkClass: aSmalllintContext 
 								^asdf value: aSmalllintContext value: result').
-	self 
-		assert: (class parseTreeFor: #classBlock:) = (RBParser 
-						parseMethod: 'classBlock: aBlock
+	self assert: (class parseTreeFor: #classBlock:)
+		equals: (RBParser parseMethod: 'classBlock: aBlock
 								asdf := aBlock testMethod1').
-	self 
-		assert: (class parseTreeFor: #initialize) = (RBParser 
-						parseMethod: 'initialize
+	self assert: (class parseTreeFor: #initialize)
+		equals: (RBParser
+				parseMethod: 'initialize
 								super initialize.
 								asdf := [:context :aResult | ].
 								methodBlock := [:context :aResult | ].

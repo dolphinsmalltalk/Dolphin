@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Automation Development'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk ActiveX Automation Development Tools.
@@ -3378,9 +3378,9 @@ tracing: aSymbol
 !AXTypeInfoObject class methodsFor!
 
 classCommentStyleMap
-	ClassCommentStyleMap isNil 
+	ClassCommentStyleMap isNil
 		ifTrue: 
-			[ClassCommentStyleMap := (LookupTable new)
+			[ClassCommentStyleMap := IdentityDictionary new
 						at: #none put: NoClassComment;
 						at: #once put: 0;
 						at: #overwrite put: OverwriteClassComments;
@@ -3403,9 +3403,9 @@ guidClashSignal
 	^GuidClash!
 
 highLevelWrapperStyleMap
-	HighLevelWrapperStyleMap isNil 
+	HighLevelWrapperStyleMap isNil
 		ifTrue: 
-			[HighLevelWrapperStyleMap := (LookupTable new)
+			[HighLevelWrapperStyleMap := IdentityDictionary new
 						at: #none put: RawMethodsOnly;
 						at: #minimal put: MinimizeWrappers;
 						at: #full put: 0;
@@ -3425,9 +3425,9 @@ icon
 	^AXTypeLibraryAnalyzer icon!
 
 tracingStyleMap
-	TracingStyleMap isNil 
+	TracingStyleMap isNil
 		ifTrue: 
-			[TracingStyleMap := (LookupTable new)
+			[TracingStyleMap := IdentityDictionary new
 						at: #off put: 0;
 						at: #on put: Trace;
 						at: #only put: TraceOnly;

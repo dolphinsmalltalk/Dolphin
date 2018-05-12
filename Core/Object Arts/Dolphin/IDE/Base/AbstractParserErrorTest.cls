@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #AbstractParserErrorTest
 	instanceVariableNames: ''
@@ -105,8 +105,9 @@ lexicalError: aString range: anInterval line: lineInteger code: codeInteger
 maxLiterals
 	^VMConstants.MaxLiterals!
 
-parseError: each 
-	self parserClass parseExpression: each first onError: [:string :pos | ^self assert: pos = each last].
+parseError: each
+	self parserClass parseExpression: each first
+		onError: [:string :pos | ^self assert: pos equals: each last].
 	self error: 'Parser didn''t fail'!
 
 parseExprError: aString in: aClass range: anInterval line: lineInteger code: anInteger
@@ -302,7 +303,7 @@ testErrorsAssignBlockArgument
 testErrorsAssignClass
 	| source |
 	source := ' Object := nil '.
-	self 
+	self
 		parseExprError: source
 		range: (2 to: source size - 1)
 		line: 1
@@ -313,10 +314,10 @@ testErrorsAssignClass
 	[Smalltalk at: #CompilerTestGlobal put: Object.
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := 1']
 		raise: Compiler notificationClass.
-	self assert: (Smalltalk at: #CompilerTestGlobal) = 1.
+	self assert: (Smalltalk at: #CompilerTestGlobal) equals: 1.
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := ''2''']
 		raise: Compiler notificationClass.
-	self assert: (Smalltalk at: #CompilerTestGlobal) = '2'] 
+	self assert: (Smalltalk at: #CompilerTestGlobal) equals: '2']
 			ensure: [Smalltalk removeKey: #CompilerTestGlobal ifAbsent: []]!
 
 testErrorsAssignConstant
@@ -849,7 +850,7 @@ testErrorsInvalidExpressionStart
 testErrorsLexicalBadChar
 	"Non-ascii letters"
 
-	(Array with: (Character value: 128)) , ((Character byteCharacterSet select: [:each | each isLetter])
+	{$\x80. Character dolphin} , ((Character byteCharacterSet select: [:each | each isLetter])
 				difference: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
 		do: 
 			[:each |
@@ -1104,7 +1105,7 @@ testErrorsPrimitivesCloseTagRecovery
 	| source ast |
 	source := 'blah <primitive: 10 ^self invalidCall'.
 	ast := [SmalltalkParser parseMethod: source] on: SmalltalkParser errorClass do: [:ex | ex resume].
-	self assert: ast formattedCode = 'blah
+	self assert: ast formattedCode equals: 'blah
 	<primitive: 10>
 	^self invalidCall'!
 
@@ -1406,19 +1407,19 @@ testOverriddenBlockArgumentError
 testOverriddenBlockArgumentWarning
 	| method block block3 block2 |
 	method := self getTestMethod: #testOverriddenBlockArgumentWarning.
-	self assert: method tempCount = 0.
+	self assert: method tempCount equals: 0.
 	self deny: method needsContext.
 	block := method value: DolphinCompilerTestMethods new withArguments: #().
 	block2 := block value: 1.
-	self assert: block2 tempCount = 1.
-	self assert: block2 argumentCount = 0.
-	self assert: block2 stackTempCount = 1.
+	self assert: block2 tempCount equals: 1.
+	self assert: block2 argumentCount equals: 0.
+	self assert: block2 stackTempCount equals: 1.
 	block3 := block2 value.
-	self assert: block3 tempCount = 1.
-	self assert: block3 argumentCount = 0.
-	self assert: block3 size = 1.
-	self assert: (block3 at: 1) = 2.
-	self assert: block3 value = 2!
+	self assert: block3 tempCount equals: 1.
+	self assert: block3 argumentCount equals: 0.
+	self assert: block3 size equals: 1.
+	self assert: (block3 at: 1) equals: 2.
+	self assert: block3 value equals: 2!
 
 testOverriddenMethodArgumentError
 	| source start |
@@ -1440,28 +1441,28 @@ testOverriddenMethodArgumentError
 testOverriddenMethodArgumentWarning
 	| block2 method block1 |
 	method := self getTestMethod: #testOverriddenMethodArgumentWarning:.
-	self assert: method tempCount = 1.
+	self assert: method tempCount equals: 1.
 	self deny: method needsContext.
 	block1 := method value: DolphinCompilerTestMethods new withArguments: #(1).
 	block2 := block1 value.
-	self assert: block2 tempCount = 1.
-	self assert: block2 argumentCount = 0.
-	self assert: block2 size = 1.
-	self assert: (block2 at: 1) = 2.
-	self assert: block2 value = 2!
+	self assert: block2 tempCount equals: 1.
+	self assert: block2 argumentCount equals: 0.
+	self assert: block2 size equals: 1.
+	self assert: (block2 at: 1) equals: 2.
+	self assert: block2 value equals: 2!
 
 testRestrictedSelectors
 	self restrictedSelectors do: 
-			[:each | 
+			[:each |
 			| source argc |
 			source := String writeStream.
 			argc := each argumentCount.
-			argc = 0 
+			argc = 0
 				ifTrue: [source nextPutAll: each]
 				ifFalse: 
-					[each isInfix 
+					[each isInfix
 						ifTrue: 
-							[self assert: argc = 1.
+							[self assert: argc equals: 1.
 							source
 								nextPutAll: each;
 								space;
@@ -1470,7 +1471,7 @@ testRestrictedSelectors
 							[| i |
 							i := 1.
 							(each subStrings: $:) do: 
-									[:eachKeyword | 
+									[:eachKeyword |
 									source
 										nextPutAll: eachKeyword;
 										nextPut: $:;
@@ -1483,7 +1484,7 @@ testRestrictedSelectors
 				crtab;
 				nextPutAll: '^1 + 2'.
 			source := source contents.
-			self 
+			self
 				parseMethodWarning: source
 				in: self class
 				range: (1 to: (source indexOf: Character cr) - 1)

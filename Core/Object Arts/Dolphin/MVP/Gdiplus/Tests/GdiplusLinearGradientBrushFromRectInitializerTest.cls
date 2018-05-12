@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusLinearGradientBrushFromRectInitializerTest
 	instanceVariableNames: ''
@@ -20,19 +20,19 @@ setUp
 
 testCreateHandle
 	| rectangle |
-	model 
+	model
 		rect: (rectangle := 1 @ 2 corner: 3 @ 4)
 		color1: (ARGB fromInteger: 1)
 		color2: (ARGB fromInteger: 2)
 		mode: LinearGradientModeBackwardDiagonal.
 	model createHandle.
-	self assert: constructorArgs size = 6.
-	self assert: constructorArgs first class == RECT.
-	self assert: constructorArgs first asRectangle = rectangle.
-	self assert: constructorArgs second = 1.
-	self assert: constructorArgs third = 2.
-	self assert: constructorArgs fourth = LinearGradientModeBackwardDiagonal.
-	self assert: (constructorArgs at: 5) = WrapModeTile.
+	self assert: constructorArgs size equals: 6.
+	self assert: constructorArgs first class identicalTo: RECT.
+	self assert: constructorArgs first asRectangle equals: rectangle.
+	self assert: constructorArgs second equals: 1.
+	self assert: constructorArgs third equals: 2.
+	self assert: constructorArgs fourth equals: LinearGradientModeBackwardDiagonal.
+	self assert: (constructorArgs at: 5) equals: WrapModeTile.
 	self assertLastArgIsHandle! !
 !GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #gdipCreateLineBrushFromRectI:color1:color2:mode:wrapMode:lineGradient:!accessing!public! !
 !GdiplusLinearGradientBrushFromRectInitializerTest categoriesFor: #setUp!public!setup! !

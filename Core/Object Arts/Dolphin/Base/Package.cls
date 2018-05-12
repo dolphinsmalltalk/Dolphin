@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals'
@@ -438,7 +438,7 @@ comment
 		ifNil: ['']
 		ifNotNil: 
 			[comment isInteger 
-				ifTrue: [String readFrom: (self sourceManager getSourceFromDescriptor: comment) readStream]
+				ifTrue: [Utf8String readFrom: (self sourceManager getSourceFromDescriptor: comment) readStream]
 				ifFalse: [comment]]!
 
 comment: aString 
@@ -511,21 +511,6 @@ errorFileCorrupt
 	file is corrupt."
 
 	self error: ('FileIn of <1s> package has failed, file is corrupt' expandMacrosWith: self name)!
-
-fileInClassDefinitions: aFileStream 
-	"Private - Load all package classes from the filestream up to the end marker.
-	Note that this is only used for loading binary legacy (pre 4.0) packages."
-
-	| filer |
-	aFileStream beText.
-	filer := ChunkSourceFiler on: aFileStream.
-	
-	[filer atEnd ifTrue: [^self errorFileCorrupt].
-	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition'] 
-			whileFalse.
-	aFileStream skipSeparators.
-	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
-	aFileStream beBinary!
 
 fileInClasses
 	"Private - Load all packaged classes from external files"
@@ -979,8 +964,7 @@ initializeOldSourcePackage
 isBaseImagePackage
 	"Answer true if the receiver is a basic component of Dolphin "
 
-	#deprecated.
-
+	Notification deprecated.
 	^self isBasePackage!
 
 isBasePackage
@@ -1085,16 +1069,14 @@ loadPAC
 	| filename stream |
 	filename := self packageFileName.
 	Notification signal: ('Loading package <1p> from: <2s>' expandMacrosWith: self name with: filename).
-	stream := FileStream read: filename text: false.
-	timestamp := stream file lastWriteTime asInteger.
+	stream := FileStream read: filename text: true.
 	
-	[(STBInFiler peekForSignatureIn: stream) 
+	[timestamp := stream file lastWriteTime asInteger.
+	(STBInFiler peekForSignatureIn: stream)
 		ifTrue: 
 			[stream reset.
 			self loadLegacyPAC: stream]
-		ifFalse: 
-			[stream beText.
-			self loadPAC: stream]] 
+		ifFalse: [self loadPAC: stream]]
 			ensure: [stream close]!
 
 loadPAC: stream 
@@ -2032,7 +2014,7 @@ trace: trace prerequisite: aPackage from: from to: to type: type
 	to trace."
 
 	aPackage == self ifTrue: [^self].
-	(trace at: (aPackage ifNil: [_Uncommitted]) ifAbsentPut: [OrderedCollection new: 16])
+	(trace at: (aPackage ?? _Uncommitted) ifAbsentPut: [OrderedCollection new: 16])
 		addLast: {from. to. type}!
 
 tracePrerequisiteGlobals: trace packagedGlobals: globalLookup
@@ -2389,7 +2371,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #endClassDefinitionsMarker!constants!private! !
 !Package categoriesFor: #environment!constants!private! !
 !Package categoriesFor: #errorFileCorrupt!exceptions!private! !
-!Package categoriesFor: #fileInClassDefinitions:!development!public!source filing! !
 !Package categoriesFor: #fileInClasses!private!source filing! !
 !Package categoriesFor: #fileInScript:!private!source filing! !
 !Package categoriesFor: #fileLocator!accessing!public! !
@@ -2609,21 +2590,20 @@ fromFile: path
 	answer setPackageFileName: pathname.
 	^answer!
 
-fromPACFile: pathname 
+fromPACFile: pathname
 	"Private - Answer a new instance of the receiver created from the .PAC file at the
 	specified <readableString> path, pathname, or raise an error if the file does not contain a
 	package."
 
 	| pacStream answer |
-	pacStream := FileStream read: pathname text: false.
+	pacStream := FileStream read: pathname text: true.
 	answer := 
-			[(STBInFiler peekForSignatureIn: pacStream) 
+			[(STBInFiler peekForSignatureIn: pacStream)
 				ifTrue: 
-					[pacStream reset.
-					(STBInFiler on: pacStream) next]
-				ifFalse: 
-					[pacStream beText.
-					self readFrom: pacStream]] 
+					[pacStream close.
+					pacStream := FileStream read: pathname text: false.
+					self binaryReadFrom: pacStream]
+				ifFalse: [self readFrom: pacStream]]
 					ensure: [pacStream close].
 	answer isNil ifTrue: [self errorInvalidPACFile: pathname].
 	^answer!

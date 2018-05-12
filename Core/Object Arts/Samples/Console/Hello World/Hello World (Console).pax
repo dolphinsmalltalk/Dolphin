@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Hello World (Console)'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Command-line Hello World Sample.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
@@ -227,16 +227,33 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #hItem type: DWORDField new offset: 4;
-		defineField: #dwState type: DWORDField new offset: 8;
-		defineField: #stateMask type: DWORDField new offset: 12;
-		defineField: #pszText type: (PointerField type: self textClass) offset: 16;
-		defineField: #cchTextMax type: SDWORDField new offset: 20;
-		defineField: #iImage type: SDWORDField new offset: 24;
-		defineField: #iSelectedImage type: SDWORDField new offset: 28;
-		defineField: #cChildren type: SDWORDField new offset: 32;
-		defineField: #lParam type: UINT_PTRField new offset: 36.
-	self assert: [self byteSize = 40]
-! !
+		defineField: #hItem
+			type: DWORDField new
+			offset: 4;
+		defineField: #dwState
+			type: DWORDField new
+			offset: 8;
+		defineField: #stateMask
+			type: DWORDField new
+			offset: 12;
+		defineField: #pszText
+			type: (PointerField type: Utf16String)
+			offset: 16;
+		defineField: #cchTextMax
+			type: SDWORDField new
+			offset: 20;
+		defineField: #iImage
+			type: SDWORDField new
+			offset: 24;
+		defineField: #iSelectedImage
+			type: SDWORDField new
+			offset: 28;
+		defineField: #cChildren
+			type: SDWORDField new
+			offset: 32;
+		defineField: #lParam
+			type: UINT_PTRField new
+			offset: 36.
+	self assert: [self byteSize = 40]! !
 !TVITEMW class categoriesFor: #defineFields!initializing!public! !
 

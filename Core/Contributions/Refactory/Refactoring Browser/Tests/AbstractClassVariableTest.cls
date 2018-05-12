@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #AbstractClassVariableTest
 	instanceVariableNames: ''
@@ -16,30 +16,28 @@ setUp
 
 testAbstractClassVariable
 	| refactoring meta class |
-	refactoring := AbstractClassVariableRefactoring 
-				variable: 'RecursiveSelfRule'
+	refactoring := AbstractClassVariableRefactoring variable: 'RecursiveSelfRule'
 				class: TransformationRuleTest.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #TransformationRuleTest.
 	meta := class metaclass.
-	self assert: (meta parseTreeFor: #recursiveSelfRule) 
-				= (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
-	self 
-		assert: (meta parseTreeFor: #recursiveSelfRule:) = (RBParser 
-						parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
-	self assert: (meta parseTreeFor: #nuke) 
-				= (RBParser parseMethod: 'nuke
+	self assert: (meta parseTreeFor: #recursiveSelfRule)
+		equals: (RBParser parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').
+	self assert: (meta parseTreeFor: #recursiveSelfRule:)
+		equals: (RBParser parseMethod: 'recursiveSelfRule: anObject RecursiveSelfRule := anObject').
+	self assert: (meta parseTreeFor: #nuke)
+		equals: (RBParser parseMethod: 'nuke
 							self recursiveSelfRule: nil').
-	self 
-		assert: (meta parseTreeFor: #initializeAfterLoad1) = (RBParser 
-						parseMethod: 'initializeAfterLoad1
+	self assert: (meta parseTreeFor: #initializeAfterLoad1)
+		equals: (RBParser
+				parseMethod: 'initializeAfterLoad1
 							self recursiveSelfRule: ParseTreeSearcher new.
 							self recursiveSelfRule
 								addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 										-> [:aNode :answer | true]').
-	self 
-		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
-						parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeFor: #checkMethod:)
+		equals: (RBParser
+				parseMethod: 'checkMethod: aSmalllintContext 
 							class := aSmalllintContext selectedClass.
 							(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 									[(self class recursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
@@ -62,54 +60,51 @@ testModelAbstractClassVariable
 	| refactoring meta class |
 	class := model classNamed: #Foo.
 	meta := class metaclass.
-	refactoring := AbstractClassVariableRefactoring 
+	refactoring := AbstractClassVariableRefactoring
 				model: model
 				variable: 'ClassVarName1'
 				class: class.
 	self executeRefactoring: refactoring.
-	self assert: (meta parseTreeFor: #classVarName1) 
-				= (RBParser parseMethod: 'classVarName1 ^ClassVarName1').
-	self 
-		assert: (meta parseTreeFor: #classVarName1:) = (RBParser 
-						parseMethod: 'classVarName1: anObject ^ClassVarName1 := anObject').
-	self 
-		assert: (meta parseTreeFor: #foo) = (RBParser 
-						parseMethod: 'foo
+	self assert: (meta parseTreeFor: #classVarName1)
+		equals: (RBParser parseMethod: 'classVarName1 ^ClassVarName1').
+	self assert: (meta parseTreeFor: #classVarName1:)
+		equals: (RBParser parseMethod: 'classVarName1: anObject ^ClassVarName1 := anObject').
+	self assert: (meta parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo
 					^self classVarName1: self classVarName1 * self classVarName1 * self classVarName1').
-	self assert: (class parseTreeFor: #classVarName1) 
-				= (RBParser parseMethod: 'classVarName1
+	self assert: (class parseTreeFor: #classVarName1)
+		equals: (RBParser parseMethod: 'classVarName1
 							^self class classVarName1').
-	self 
-		assert: (class parseTreeFor: #classVarName1:) = (RBParser 
-						parseMethod: 'classVarName1: anObject
+	self assert: (class parseTreeFor: #classVarName1:)
+		equals: (RBParser parseMethod: 'classVarName1: anObject
 							^self class classVarName1: anObject').
-	self 
-		assert: (class parseTreeFor: #asdf) = (RBParser 
-						parseMethod: 'asdf
+	self assert: (class parseTreeFor: #asdf)
+		equals: (RBParser
+				parseMethod: 'asdf
 						^self classVarName1: (self class classVarName1: self class classVarName1 + 1)').
-	self 
-		assert: ((model classNamed: #Bar) parseTreeFor: #foo) = (RBParser 
-						parseMethod: 'foo
+	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo
 					instVarName1 := instVarName1 + instVarName2 + self class classVarName1').
-	self 
-		assert: ((model classNamed: #Bar) parseTreeFor: #foo) = (RBParser 
-						parseMethod: 'foo
+	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
+		equals: (RBParser
+				parseMethod: 'foo
 						instVarName1 := instVarName1 + instVarName2 + self class classVarName1')!
 
 testModelAbstractClassVariableOverridenMethodsInSubclass
 	| refactoring meta class |
 	class := model classNamed: #Foo.
 	meta := class metaclass.
-	refactoring := AbstractClassVariableRefactoring 
+	refactoring := AbstractClassVariableRefactoring
 				model: model
 				variable: 'ClassVarName2'
 				class: class.
 	self executeRefactoring: refactoring.
-	self assert: (meta parseTreeFor: #classVarName21) 
-				= (RBParser parseMethod: 'classVarName21 ^ClassVarName2').
-	self 
-		assert: (meta parseTreeFor: #classVarName21:) = (RBParser 
-						parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')!
+	self assert: (meta parseTreeFor: #classVarName21)
+		equals: (RBParser parseMethod: 'classVarName21 ^ClassVarName2').
+	self assert: (meta parseTreeFor: #classVarName21:)
+		equals: (RBParser parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')!
 
 testNonExistantName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo

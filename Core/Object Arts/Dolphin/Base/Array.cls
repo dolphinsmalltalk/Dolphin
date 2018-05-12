@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection variableSubclass: #Array
 	instanceVariableNames: ''
@@ -114,6 +114,11 @@ Array methodProtocol: #Array attributes: #(#ansi #readOnly) selectors: #(#, #aft
 
 !Array class methodsFor!
 
+empty
+	"Answer an empty (zero length) instance of the receiver."
+
+	^#()!
+
 newFromStack: aSmallInteger
 	"Private - Answer an instance of the receiver with the specified number of instance
 	variables (indexed and fixed), populated from that many entries on the stack. "
@@ -179,6 +184,7 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 		with: element3
 		with: element4
 		with: element5! !
+!Array class categoriesFor: #empty!instance creation!public! !
 !Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
 !Array class categoriesFor: #with:!instance creation!public! !
 !Array class categoriesFor: #with:with:!instance creation!public! !

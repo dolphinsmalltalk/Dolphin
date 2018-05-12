@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'RBChangeObjects'.
 package paxVersion: 1;
 	basicComment: 'Refactoring Browser Change Objects

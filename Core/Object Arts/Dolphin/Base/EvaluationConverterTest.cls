@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #EvaluationConverterTest
 	instanceVariableNames: ''
@@ -10,13 +10,13 @@ EvaluationConverterTest comment: ''!
 !EvaluationConverterTest categoriesForClass!Unclassified! !
 !EvaluationConverterTest methodsFor!
 
-checkWith: string 
+checkWith: string
 	| eval2 text eval |
 	eval := self converter leftToRight: string.
-	self assert: eval notNil.
+	self denyIsNil: eval.
 	text := self converter rightToLeft: eval.
 	eval2 := self converter leftToRight: text.
-	self assert: eval = eval2!
+	self assert: eval equals: eval2!
 
 converter
 	^EvaluationConverter new!

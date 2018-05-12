@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBFiler subclass: #STBInFiler
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
@@ -146,35 +146,36 @@ readObjectOfClass: aClass
 	converter := converters lookup: aClass.
 	^aClass stbReadFrom: self format: converter!
 
-readObjectOfClass: aClass format: anSTBClassConversion 
+readObjectOfClass: aClass format: anSTBClassConversion
 	"Private - Read the stream for the data to create an instance of aClass."
 
-	| basicSize fullSize newObject |
-	basicSize := (self version < 3 or: [aClass isVariable]) ifTrue: [self readInteger] ifFalse: [0].
+	| basicSize fullSize newObject variable |
+	variable := aClass isVariable.
+	basicSize := (variable or: [self version < 3]) ifTrue: [self readInteger] ifFalse: [0].
 	"Create a new object of sufficient size to hold the stored data."
-	anSTBClassConversion isNil 
+	anSTBClassConversion isNil
 		ifTrue: 
 			["The object is of the current format.
 			Create an instance of the appropriate class."
 			fullSize := aClass instSize + basicSize.
-			newObject := aClass isVariable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
+			newObject := variable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
 		ifFalse: 
 			["The object is of an old format.
 			Create an Array or ByteArray to hold the stored data. This is
 			passed to the converter block which answers an instance of the
 			real class initialised from it."
 			fullSize := anSTBClassConversion instSize + basicSize.
-			newObject := (anSTBClassConversion isBytes ifTrue: [ByteArray] ifFalse: [Array]) basicNew: fullSize].
+			newObject := anSTBClassConversion dataClass basicNew: fullSize].
 	"Register the new object before reading its instance variables, in case of circular references"
 	self register: newObject.
 
 	"Read the object's instance data."
-	aClass isBytes 
+	aClass isBytes
 		ifTrue: 
 			["Many of these objects will be Strings, so some optimization may be possible"
 			1 to: fullSize do: [:i | newObject basicAt: i put: stream next]]
 		ifFalse: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]].
-	anSTBClassConversion notNil 
+	anSTBClassConversion notNil
 		ifTrue: 
 			["Initialise a new instance from the old format object data and become it."
 			newObject become: (anSTBClassConversion converterBlock value: newObject)].
@@ -210,9 +211,9 @@ readObjectWithPrefix: anInteger
 readVersion
 	| char |
 	version := 0.
-	[(char := Character value: stream next) isDigit]
+	[(char := Character ansiValue: stream next) isDigit]
 		whileTrue: [version := version * 10 + char digitValue].
-	char == Character space ifFalse: [self class errorNotSTB]!
+	char == $\x20 ifFalse: [self class errorNotSTB]!
 
 register: anObject
 	"Private - Add anObject to the readMap."
@@ -287,7 +288,7 @@ peekForSignatureIn: aReadStream
 
 	| position |
 	position := aReadStream position.
-	^(aReadStream next: self signature size) = self signature
+	^(aReadStream next: self signature size) asByteArray = self signature
 		or: [aReadStream position: position. false]! !
 !STBInFiler class categoriesFor: #initialize!development!initializing!public! !
 !STBInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !

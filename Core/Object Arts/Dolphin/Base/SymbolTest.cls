@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractStringTest subclass: #SymbolTest
 	instanceVariableNames: ''
@@ -25,6 +25,9 @@ newCollection: aCollection
 newCopy: aCollection
 	^String withAll: (self assimilateElements: aCollection)!
 
+newEmptyCollection: anInteger
+	^Symbol intern: (String new: anInteger)!
+
 testAtPut
 	| literal |
 	literal := #abc.
@@ -33,25 +36,43 @@ testAtPut
 	1 to: literal size
 		do: [:each | self should: [literal at: each put: $x] raise: Processor constWriteSignal]!
 
+testEquals
+	self equalityTestCases do: 
+			[:each |
+			| subject |
+			subject := self assimilateString: each.
+			"Identical must be equal"
+			self assert: subject equals: subject.
+			"Same characters must be equal"
+			self assert: subject equals: (self assimilateString: each).
+			each isEmpty ifFalse: [self deny: each equals: each asUppercase].
+			self deny: subject equals: each asAnsiString.
+			self deny: subject equals: each asUtf8String.
+			self deny: subject equals: each asUtf16String.
+			"Not equal to ByteArrays"
+			self deny: each asByteArray equals: each.
+			self deny: each equals: each asByteArray.
+			"Nor Arrays of characters"
+			self deny: each asArray equals: each.
+			self deny: each equals: each asArray]!
+
 testInstVarAtPut
 	| literal |
 	literal := #abc.
-	(Array with: 0 with: literal size + 1) 
-		do: [:each | self should: [literal instVarAt: each put: $x] raise: BoundsError].
+	(Array with: 0 with: literal size + 1)
+		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal].
 	1 to: literal size
 		do: [:each | self should: [literal instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
 testPrintLiteral
-	self assert: #_ printString = '#_'.
-	self assert: #'1' printString = '#''1'''.
-	self assert: #'urn:foo' printString = '#''urn:foo'''.
-	self assert: #urn:foo: printString = '#urn:foo:'.
-	self assert: #':' printString = '#'':'''.
-	self assert: #'::' printString = '#''::'''.
-	self assert: #'u::' printString = '#''u::'''.
-	self assert: #'u:u' printString = '#''u:u'''
-
-!
+	self assert: #_ printString equals: '#_'.
+	self assert: #'1' printString equals: '#''1'''.
+	self assert: #'urn:foo' printString equals: '#''urn:foo'''.
+	self assert: #urn:foo: printString equals: '#urn:foo:'.
+	self assert: #':' printString equals: '#'':'''.
+	self assert: #'::' printString equals: '#''::'''.
+	self assert: #'u::' printString equals: '#''u::'''.
+	self assert: #'u:u' printString equals: '#''u:u'''!
 
 testPrintString
 	"Test whether all non-literal symbols print correctly as quoted symbols"
@@ -91,7 +112,9 @@ testResize
 !SymbolTest categoriesFor: #collectionClass!helpers!private! !
 !SymbolTest categoriesFor: #newCollection:!helpers!private! !
 !SymbolTest categoriesFor: #newCopy:!helpers!private! !
+!SymbolTest categoriesFor: #newEmptyCollection:!public! !
 !SymbolTest categoriesFor: #testAtPut!public!unit tests! !
+!SymbolTest categoriesFor: #testEquals!public!unit tests! !
 !SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
 !SymbolTest categoriesFor: #testPrintString!helpers!public! !

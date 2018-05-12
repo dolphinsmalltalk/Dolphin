@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusImageFromIStreamInitializerTest
 	instanceVariableNames: ''
@@ -23,8 +23,8 @@ testCreateHandle
 	pStream := IStream onHGLOBAL.
 	model iStream: pStream.
 	model createHandle.
-	self assert: constructorArgs size = 2.
-	self assert: constructorArgs first == pStream.
+	self assert: constructorArgs size equals: 2.
+	self assert: constructorArgs first identicalTo: pStream.
 	self assertLastArgIsHandle!
 
 testIsPersistent

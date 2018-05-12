@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
@@ -815,7 +815,7 @@ buildDefaultStyle
 
 buildItemList: aCollection withIcons: aBoolean
 	| itemList sep typesep |
-	itemList := String writeStream.
+	itemList := self stringClass writeStream.
 	sep := self autoCompletionSeparator.
 	typesep := self autoCompletionImageIdSeparator.
 	aCollection do: 
@@ -1191,9 +1191,14 @@ centerCurrentLine
 				lParam: 0]!
 
 characterAt: anInteger
-	"Answer the <Character> at the specified one-based <integer> index in the receiver's text."
+	"Answer the <Character> at the specified one-based <integer> index in the receiver's text.
+	When the view is in UTF-8 mode, the returned <Character> may be a leading or trailing surrogate."
 
-	^Character value: ((self sciGetCharAt: anInteger) bitAnd: 16rFF)!
+	| ch |
+	ch := (self sciGetCharAt: anInteger) bitAnd: 16rFF.
+	^self sciGetCodePage == CP_UTF8
+		ifTrue: [Character utf8Value: ch]
+		ifFalse: [Character ansiValue: ch]!
 
 charCloseToPosition: aPoint
 	"Answer the one-based index of the character closest to the specified <Point> within the
@@ -1237,14 +1242,15 @@ clearRange: anInterval
 	self sciDeleteRange: anInterval start lengthDelete: anInterval size!
 
 codePage
-	"Answer a <Symbol> naming the code page currently in use, either #utf8, or nil if multi-byte
-	character support is disabled."
+	"Answer a <Symbol> naming the code page currently in use. Note that the multi-byte code
+	pages supported by Scintilla such as 932, or 936, will not work correctly in Dolphin as
+	there is basic support for multi-byte strings other than in UTF representations. Where
+	international character support is desired, the UTF-8 mode should be used."
 
 	^CodePages lookup: self sciGetCodePage!
 
 codePage: aSymbol
-	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8 or
-	nil)."
+	"Set the code page currently in use to that named by the <Symbol> argument (one of #utf8, #ansi)."
 
 	self sciSetCodePage: (aSymbol ifNil: [0] ifNotNil: [CodePages keyAtValue: aSymbol])!
 
@@ -1527,7 +1533,7 @@ defaultBraceChars
 	"Private - Answer a <String> containing the set of <Character>s that Scintilla considers to be brace
 	characters by default."
 
-	^##((LookupTable new)
+	^##((IdentityDictionary new)
 		at: #normal put: '()[]{}<>';
 		yourself)!
 
@@ -2373,7 +2379,7 @@ find: aString range: anInterval flags: anInteger
 	findText := FINDTEXTEX 
 				from: start
 				to: stop
-				text: aString.
+				text: (self stringClass fromString: aString).
 	self sciFindText: anInteger ft: findText.
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
@@ -2795,13 +2801,6 @@ highlightMismatchedBrace: posInteger
 				wParam: posInteger - 1
 				lParam: 0]!
 
-highlightRange: anInterval withIndicator: idInteger 
-	"Apply the indicator identified by the <integer> argument to the range of text
-	specified by the <Interval> argument."
-
-	#deprecated.
-	self setIndicator: idInteger range: anInterval!
-
 hoverTime
 	"Retrieve the time the mouse must sit still to generate a mouse dwell event."
 
@@ -2946,10 +2945,6 @@ indicatorCount
 	indicators, this is now fixed at 32 and not related to the number of style bits used."
 
 	^INDIC_MAX + 1!
-
-indicatorDefinitions: aSequenceableCollection 
-	#deprecated.
-	self indicatorStyles: aSequenceableCollection!
 
 indicatorIdFromName: anIntegerOrSymbol
 	^anIntegerOrSymbol isInteger
@@ -4470,6 +4465,9 @@ newLine
 				wParam: 0
 				lParam: 0]!
 
+newTextBuffer: anInteger
+	^self stringClass newFixed: anInteger!
+
 nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
 
@@ -4548,10 +4546,10 @@ plainText
 						wParam: 0
 						lpParam: nil].
 	^len = 0
-		ifTrue: ['']
+		ifTrue: [self stringClass empty]
 		ifFalse: 
 			[| result |
-			result := String newFixed: len - 1.
+			result := self stringClass newFixed: len - 1.
 			ScintillaLibrary default
 				directFunction: this
 				msg: SCI_GETTEXT
@@ -4573,7 +4571,7 @@ plainTextFrom: startInteger to: stopInteger
 	startInteger < 1 ifTrue: [^self errorSubscriptBounds: startInteger].
 	stopInteger < startInteger ifTrue: [^String new].
 	stopInteger > self textLength ifTrue: [^self errorSubscriptBounds: stopInteger].
-	range := TEXTRANGE from: startInteger - 1 to: stopInteger.
+	range := TEXTRANGE from: startInteger - 1 to: stopInteger type: self stringClass.
 	self sciGetTextRange: range.
 	^range text!
 
@@ -5657,7 +5655,7 @@ sciDropSelectionN: selectionInteger
 				lParam: 0]!
 
 sciEncodedFromUTF8: utf8String encoded: encodedString
-	"Private - Translates a UTF8 string into the document encoding. Return the length of the
+	"Private - Translates a UTF-8 string into the document encoding. Return the length of the
 	result in bytes. On error return 0."
 
 	^this isNil
@@ -8782,7 +8780,7 @@ scnAutoCSelection: pSCNotification
 	struct := SCNotification fromAddress: pSCNotification.
 	self presenter trigger: #autoComplete:startingAt:accept:
 		withArguments: (Array 
-				with: struct text
+				with: (self stringClass fromAddress: struct text)
 				with: struct scPosition + 1
 				with: accept).
 	accept value ifFalse: [self cancelAutoCompletion].
@@ -8976,7 +8974,7 @@ scnMarginRightClick: pSCNotification
 	self presenter trigger: #marginRightClicked: with: (SCNotification fromAddress: pSCNotification).
 	^0!
 
-scnModified: pSCNotification 
+scnModified: pSCNotification
 	"Private - Respond to SCN_MODIFIED notification.The 'position', 'modificationType', 'text',
 	'length', 'linesAdded', 'line', 'foleLevelNow' and 'foldLevelPrev' fields of the
 	notification structure are set.
@@ -8984,16 +8982,15 @@ scnModified: pSCNotification
 	See the Scintilla documentation for more information about this important and heavily
 	overloaded notification."
 
-	| struct eventMask |
-	struct := SCNotification fromAddress: pSCNotification.
-	eventMask := struct modificationType.
-	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT)) 
+	| eventMask |
+	eventMask := pSCNotification sdwordAtOffset: SCNotification.ModificationTypeOffset.
+	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
 		ifTrue: 
 			["Text changed"
 			super enChange]
 		ifFalse: 
-			[(eventMask 
-				anyMask: ##(SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN)) 
+			[(eventMask
+				anyMask: ##(SC_MOD_CHANGESTYLE | SC_MOD_CHANGEFOLD | SC_MOD_CHANGEANNOTATION | SC_MOD_CHANGEMARGIN))
 					ifTrue: [self invalidateCalculatedExtent]].
 	^0!
 
@@ -9119,7 +9116,7 @@ scnURIDropped: pSCNotification
 
 	^0!
 
-scnUserListSelection: anExternalAddress 
+scnUserListSelection: anExternalAddress
 	"Private - Respond to SCN_USERLISTSELECTION notification. The 'message', 'wParam',
 	'lParam' and 'text' fields of the notification structure are set (though note that
 	the message and lParam fields are always zero).
@@ -9127,12 +9124,13 @@ scnUserListSelection: anExternalAddress
 		'User has selected an item in a user list. The list type is available in wParam and the text chosen in text.'
 	"
 
-	| struct |
+	| struct text |
 	struct := SCNotification fromAddress: anExternalAddress.
-	self presenter 
+	text := self stringClass fromAddress: struct text.
+	self presenter
 		trigger: #userList:selection:
 		with: struct wParam
-		with: struct text.
+		with: text.
 	^0!
 
 scnZoom: anExternalAddress 
@@ -9374,11 +9372,13 @@ selectionMode: aSymbol
 
 	self sciSetSelectionMode: (self class selectionModes indexOf: aSymbol) - 1!
 
-selectionPlainText: aString 
+selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
 	SCI_REPLACESEL does not return a useful value."
 
-	self modifyText: [self sciReplaceSel: aString]!
+	| text |
+	text := self stringClass fromString: aString.
+	self modifyText: [self sciReplaceSel: text]!
 
 selectionRange
 	"Answers an <Interval> identifying the one-based range of selected text. The start of the
@@ -9734,8 +9734,8 @@ setWhitespaceBackcolor
 
 setWhitespaceForecolor
 	whitespaceForecolor 
-		ifTrue: [self sciSetWhitespaceFore: false fore: nil]
-		ifFalse: [self sciSetWhitespaceFore: true fore: whitespaceForecolor asRGB]!
+		ifNil: [self sciSetWhitespaceFore: false fore: nil]
+		ifNotNil: [self sciSetWhitespaceFore: true fore: whitespaceForecolor asRGB]!
 
 showAutoCompletionList: aCollection prefixLength: anInteger
 	"Display a auto-completion list built from the displayStrings of the elements of the
@@ -9884,17 +9884,14 @@ stopStyling
 
 	self startStylingFrom: self textLength + 1!
 
+stringClass
+	^self sciGetCodePage == CP_UTF8 ifTrue: [Utf8String] ifFalse: [AnsiString]!
+
 styleAt: anInteger 
 	"Answer a <ScintillaTextStyle> being the the style of the character at the specified character
 	position."
 
 	^self styleWithId: (self styleIdAt: anInteger)!
-
-styleBits
-	"Answer the number of bits available for text styles. This is now always 8."
-
-	#deprecated.
-	^8!
 
 styledTextFrom: startInteger to: stopInteger 
 	"Private - Answer a <ByteArray> containing pairs of bytes that represent the character and
@@ -9962,10 +9959,10 @@ stylerClass
 
 	^self styler class!
 
-stylerClass: aScintillaStylerClass 
+stylerClass: aScintillaStylerClass
 	"Set the class of the receiver's dynamic styler, replacing the styler with a new instance of the specified class."
 
-	self styler: (aScintillaStylerClass ifNil: [NullScintillaStyler]) new!
+	self styler: (aScintillaStylerClass ?? NullScintillaStyler) new!
 
 styleUnderCaret
 	"Answer a <ScintillaTextStyle> representing the style of the character under the caret."
@@ -10904,7 +10901,6 @@ zoomOut
 !ScintillaView categoriesFor: #highlightGuide!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #highlightGuide:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
 !ScintillaView categoriesFor: #highlightMismatchedBrace:!**auto generated**!brace highlighting!public!scintilla interface! !
-!ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
 !ScintillaView categoriesFor: #hoverTime!**auto generated**!notifications!public!scintilla interface! !
 !ScintillaView categoriesFor: #hoverTime:!**auto generated**!notifications!public!scintilla interface! !
 !ScintillaView categoriesFor: #identifyTextMatchingSelectionWithStyleName:!public!searching & replacing! !
@@ -10921,7 +10917,6 @@ zoomOut
 !ScintillaView categoriesFor: #indentationGuides:!public!tabs & indentation guides! !
 !ScintillaView categoriesFor: #indentationOfLine:!public!tabs & indentation guides! !
 !ScintillaView categoriesFor: #indicatorCount!constants!indicators!public! !
-!ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
 !ScintillaView categoriesFor: #indicatorIdFromName:!indicators!private! !
 !ScintillaView categoriesFor: #indicatorMaskAt:!**auto generated**!indicators!public!scintilla interface! !
 !ScintillaView categoriesFor: #indicators!indicators!public! !
@@ -11070,6 +11065,7 @@ zoomOut
 !ScintillaView categoriesFor: #multiPasteMode!clipboard operations!multiple selection and virtual space!public! !
 !ScintillaView categoriesFor: #multiPasteMode:!clipboard operations!multiple selection and virtual space!public! !
 !ScintillaView categoriesFor: #newLine!**auto generated**!commands!public!scintilla interface!text retrieval & modification! !
+!ScintillaView categoriesFor: #newTextBuffer:!helpers!private! !
 !ScintillaView categoriesFor: #nmNotify:!event handling-win32!private! !
 !ScintillaView categoriesFor: #onEraseRequired:!event handling!public! !
 !ScintillaView categoriesFor: #onKillFocus!event handling!public! !
@@ -11540,8 +11536,8 @@ zoomOut
 !ScintillaView categoriesFor: #stopDwellTimer!notifications!private! !
 !ScintillaView categoriesFor: #stopRecording!**auto generated**!macro recording!public!scintilla interface! !
 !ScintillaView categoriesFor: #stopStyling!public!styling! !
+!ScintillaView categoriesFor: #stringClass!helpers!private! !
 !ScintillaView categoriesFor: #styleAt:!public!styling! !
-!ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 !ScintillaView categoriesFor: #styledTextFrom:to:!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #styleIdAt:!**auto generated**!public!scintilla interface!styling! !
 !ScintillaView categoriesFor: #styleNamed:!enquiries!public!styling! !
@@ -11816,6 +11812,7 @@ initialize
 	self initializeNotificationMap.
 	self addClassConstant: 'CodePages'
 		value: ((IdentityDictionary new)
+				at: CP_ACP put: #ansi;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
 				isImmutable: true;

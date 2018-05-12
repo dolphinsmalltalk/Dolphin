@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DragDropSession subclass: #InternalDragDropSession
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
@@ -132,7 +132,7 @@ getExtendedOperation
 
 giveCursorFeedback
 	| cursorSelector |
-	cursorSelector := ##((LookupTable new)
+	cursorSelector := ##((IdentityDictionary new)
 				at: #none put: #ddNone;
 				at: #move put: #ddMove;
 				at: #copy put: #ddCopy;

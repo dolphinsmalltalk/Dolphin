@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #ClosedCommandDescriptionTest
 	instanceVariableNames: 'dialog'
@@ -20,15 +20,16 @@ tearDown
 	dialog  destroy.!
 
 testArgument
-
-
 	"self halt."
-	self assert: dialog view combinedAcceleratorTable commands anyOne command arguments first == dialog !
+
+	self assert: dialog view combinedAcceleratorTable commands anyOne command arguments first
+		identicalTo: dialog!
 
 testReceiver
 	"self halt."
 
-	self assert: dialog view combinedAcceleratorTable commands anyOne receiver == dialog model subject! !
+	self assert: dialog view combinedAcceleratorTable commands anyOne receiver
+		identicalTo: dialog model subject! !
 !ClosedCommandDescriptionTest categoriesFor: #setUp!public!unit tests! !
 !ClosedCommandDescriptionTest categoriesFor: #tearDown!public!unit tests! !
 !ClosedCommandDescriptionTest categoriesFor: #testArgument!public!unit tests! !

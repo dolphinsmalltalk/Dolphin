@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineTemporaryTest
 	instanceVariableNames: ''
@@ -12,16 +12,14 @@ InlineTemporaryTest comment: ''!
 
 testInlineTemporary
 	| refactoring |
-	refactoring := InlineTemporaryRefactoring 
-				inline: (self convertInterval: (24 to: 72)
-						for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
+	refactoring := InlineTemporaryRefactoring
+				inline: (self convertInterval: (24 to: 72) for: (RefactoryTestDataApp sourceCodeAt: #inlineMethod))
 				from: #inlineMethod
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineMethod) = (RBParser 
-							parseMethod: 'inlineMethod
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineMethod)
+		equals: (RBParser
+				parseMethod: 'inlineMethod
 										^self
 													foo;
 													inlineMethod;

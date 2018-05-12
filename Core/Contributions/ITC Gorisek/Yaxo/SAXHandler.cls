@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SAXHandler
 	instanceVariableNames: 'document driver eod'
@@ -153,7 +153,7 @@ convertWideStream: aReadStream
 		next;
 		next.
 	wideString := aReadStream upToEnd.
-	^(UnicodeString fromAddress: wideString yourAddress length: wideString size // 2) 
+	^(Utf16String fromAddress: wideString yourAddress length: wideString size // 2) 
 		asString readStream!
 
 new

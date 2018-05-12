@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #GRADIENT_TRIANGLE
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ Win32Structure subclass: #GRADIENT_TRIANGLE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GRADIENT_TRIANGLE guid: (GUID fromString: '{55c55d30-6be7-45da-86bb-0f8bea48586a}')!
-GRADIENT_TRIANGLE comment: '<GRADIENT_TRIANGLE> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_TRIANGLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+GRADIENT_TRIANGLE comment: '<GRADIENT_TRIANGLE> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_TRIANGLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
 	"Specifies the index of three vertices in the pVertex array in the GradientFill function. These three vertices form one triangle."

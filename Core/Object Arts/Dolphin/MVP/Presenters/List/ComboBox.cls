@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 BasicListAbstract subclass: #ComboBox
 	instanceVariableNames: 'droppedHeight'
@@ -40,25 +40,25 @@ adjustRectangle: aRectangle
 				height: self actualHeight;
 				yourself]!
 
-basicAdd: anObject 
+basicAdd: anObject
 	"Private - Adds a string for the <Object> argument to the listbox control at the end of the
 	list. Answers the argument."
 
-	self 
+	self
 		sendMessage: CB_ADDSTRING
 		wParam: 0
-		lpParam: (self displayStringFor: anObject).
+		szParam: (self displayStringFor: anObject).
 	^anObject!
 
-basicAdd: anObject atIndex: anInteger 
+basicAdd: anObject atIndex: anInteger
 	"Private - Adds a string for the <Object> argument to the listbox control at the specified
 	1-based <integer> index. If anInteger is zero then the string is added to the end of the
 	list. Answer anObject."
 
-	self 
+	self
 		sendMessage: CB_INSERTSTRING
 		wParam: anInteger - 1
-		lpParam: (self displayStringFor: anObject).
+		szParam: (self displayStringFor: anObject).
 	^anObject!
 
 basicClear
@@ -147,6 +147,26 @@ command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
 	^(CbnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
+
+cueBanner
+	"Answer the textual cue to be displayed when this combo box is empty and does not have
+	focus, or nil if none is set."
+
+	| buf |
+	buf := Utf16String newFixed: 512.
+	^((self
+		sendMessage: CB_GETCUEBANNER
+		wParam: buf yourAddress
+		lParam: buf size + 1) ~~ 0
+		and: [buf first ~~ $\0]) ifTrue: [buf trimNulls]!
+
+cueBanner: aString
+	"Set a textual cue to be displayed when the combo box is empty and does not have focus."
+
+	self
+		sendMessage: CB_SETCUEBANNER
+		wParam: 0
+		szParam: aString ?? ''!
 
 defaultWindowStyle
 	"Private - Answer a default window base style to use when creating a combobox."
@@ -322,6 +342,8 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !ComboBox categoriesFor: #cbnSelChange!event handling-win32!private!selection! !
 !ComboBox categoriesFor: #cbnSetFocus!event handling-win32!private! !
 !ComboBox categoriesFor: #command:id:!commands!private! !
+!ComboBox categoriesFor: #cueBanner!event handling!public! !
+!ComboBox categoriesFor: #cueBanner:!event handling!public! !
 !ComboBox categoriesFor: #defaultWindowStyle!constants!private! !
 !ComboBox categoriesFor: #droppedHeight!accessing!public! !
 !ComboBox categoriesFor: #droppedHeight:!accessing!public! !

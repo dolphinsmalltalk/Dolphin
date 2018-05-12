@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RemoveClassTest
 	instanceVariableNames: ''
@@ -16,15 +16,11 @@ testBadName
 
 testRemoveClass
 	| refactoring |
-	refactoring := RemoveClassRefactoring 
-				classNames: (Array with: ('Foo' , 'LintRuleTest') asSymbol).
+	refactoring := RemoveClassRefactoring classNames: (Array with: ('Foo' , 'LintRuleTest') asSymbol).
 	self executeRefactoring: refactoring.
-	self 
-		assert: (refactoring model classNamed: ('Foo' , 'LintRuleTest') asSymbol) 
-				isNil.
-	self 
-		assert: (refactoring model classNamed: #TransformationRuleTest) superclass 
-				= (refactoring model classNamed: #LintRuleTest)!
+	self assertIsNil: (refactoring model classNamed: ('Foo' , 'LintRuleTest') asSymbol).
+	self assert: (refactoring model classNamed: #TransformationRuleTest) superclass
+		equals: (refactoring model classNamed: #LintRuleTest)!
 
 testRemoveReferenced
 	self 

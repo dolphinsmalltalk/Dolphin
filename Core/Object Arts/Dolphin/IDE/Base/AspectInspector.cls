@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 InspectorAbstract subclass: #AspectInspector
 	instanceVariableNames: 'aspectTreePresenter'
@@ -178,7 +178,7 @@ pasteAspect
 	"Paste a copy of the currently clipboard object to the current aspect"
 
 	| objectCopy |
-	objectCopy := Object fromBinaryStoreBytes: Clipboard current getObjectBinaryStoreBytes.
+	objectCopy := Clipboard current getObject.
 	self setAspectValue: objectCopy!
 
 queryCommand: query 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStreamTest subclass: #WriteStreamTest
 	instanceVariableNames: ''
@@ -10,14 +10,6 @@ WriteStreamTest comment: ''!
 !WriteStreamTest categoriesForClass!Unclassified! !
 !WriteStreamTest methodsFor!
 
-readOperationNotImplemented: aBlock 
-	"It is an error to attempt to read from a WriteStream"
-
-	self 
-		should: aBlock
-		raise: Error
-		matching: [:ex | ex description beginsWith: self streamClass name , ' should not implement']!
-
 streamClass
 	^WriteStream!
 
@@ -28,13 +20,21 @@ streamOn: aString
 		reset;
 		yourself!
 
+testBasicNext
+	| stream |
+	stream := self streamWith: 'abc'.
+	
+	stream reset.
+	"It is an error to attempt to read from a WriteStream"
+	self should: [stream basicNext] raise: Error!
+
 testContents
 	| stream |
 	stream := self streamWith: ''.
 	self assert: stream contents isEmpty.
 	self closeTempStream: stream.
 	stream := self streamWith: 'hello'.
-	self assert: stream contents = 'hello'.
+	self assert: stream contents equals: 'hello'.
 	self closeTempStream: stream!
 
 testNewContents
@@ -42,13 +42,23 @@ testNewContents
 	stream := self streamWith: String new.
 	self assert: stream contents isEmpty.
 	stream nextPut: $h.
-	self assert: stream contents = 'h'.
+	self assert: stream contents equals: 'h'.
 	self closeTempStream: stream.
 	stream := self streamWith: 'hel'.
 	stream nextPutAll: 'lo'.
 	contents := stream contents.
-	self assert: contents = 'hello'.
+	self assert: contents equals: 'hello'.
 	self closeTempStream: stream!
+
+testNextAvailableColon
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream nextAvailable: 5]!
+
+testNextColon
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream next: 5]!
 
 testNextLine
 	| stream |
@@ -80,10 +90,10 @@ testSetToEnd
 	string := 'hello'.
 	stream := WriteStream with: String new.
 	stream nextPutAll: string.
-	self assert: stream position = string size.
+	self assert: stream position equals: string size.
 	stream setToEnd.
-	self assert: stream position = string size.
-	self assert: stream contents = string!
+	self assert: stream position equals: string size.
+	self assert: stream contents equals: string!
 
 testSkipToAllColon
 	| chars stream |
@@ -93,7 +103,9 @@ testSkipToAllColon
 	self readOperationNotImplemented: [stream skipToAll: 'a']!
 
 testUpTo
-	self readOperationNotImplemented: [super testUpTo]!
+	| stream |
+	stream := self streamOn: 'abc'.
+	self readOperationNotImplemented: [stream upTo: $a]!
 
 testUpToAllColon
 	| chars stream |
@@ -106,12 +118,19 @@ testUpToAllColon
 testUpToEnd
 	| stream |
 	stream := self streamOn: 'abc'.
-	self readOperationNotImplemented: [stream upToEnd]! !
-!WriteStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
+	self readOperationNotImplemented: [stream upToEnd]!
+
+testUpToUtf
+	| stream |
+	stream := self streamOn: '1£/🐬'.
+	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
 !WriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
+!WriteStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !WriteStreamTest categoriesFor: #testContents!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
+!WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
@@ -121,4 +140,5 @@ testUpToEnd
 !WriteStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
+!WriteStreamTest categoriesFor: #testUpToUtf!public!unit tests! !
 

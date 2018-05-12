@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'VBScript Regular Expressions'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk VBScript Regular Expressions Package

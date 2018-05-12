@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
 	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime'
@@ -30,7 +30,7 @@ addInsideObject: anObject minScale: minScale maxScale: maxScale
 	(anObject testCollisionIn: self backSurface) or: [anObject scale r > maxScale ]] 
 			whileFalse.
 	self model add: anObject.
-	anObject drawOn: self graphics!
+!
 
 background
 	^background 
@@ -54,9 +54,6 @@ defaultExtent
 
 dismiss
 	self topShell close!
-
-dolphinInside
-	^dolphinInside!
 
 dolphinInsideBaseColor
 	^ARGB 
@@ -90,31 +87,44 @@ dolphinOutline
 			self baseStyle = 1 
 				ifFalse: [dolphinOutline := GdiplusBitmap fromImage: dolphinOutline scaledBy: self baseScale]]!
 
-dolphins
-	^dolphins!
-
-drawInfoTextOn: graphics 
-	| version copyright fontCopyright brush infoString |
+drawInfoTextOn: graphics
+	| version copyright fontCopyright brush infoString stringFormat |
 	version := VMLibrary default versionInfo.
-	copyright := version legalCopyright copyReplaceAll: '. ' with: String lineDelimiter.
+	copyright := version legalCopyright subStrings: $..
 	brush := GdiplusSolidBrush color: ARGB white.
-	fontCopyright := GdiplusFont 
+	fontCopyright := GdiplusFont
 				name: 'Arial'
 				emSize: 9
 				style: nil
 				unit: UnitPoint.
-	infoString := copyright lines first , ', ' , copyright lines second , '.' , String lineDelimiter 
-				, 'Dolphin ' , SessionManager current versionString 
-				, ' is Open Source under the MIT License.'.
-	SessionManager current bootInfo 
-		ifNotNil: [:bootInfo | infoString := infoString , String lineDelimiter , 'Image boot info: ' , bootInfo].
+	infoString := Utf16String writeStream.
+	infoString
+		nextPutAll: copyright first;
+		nextPutAll: ', ';
+		nextPutAll: copyright second;
+		nextPut: $.;
+		cr;
+		nextPutAll: 'Dolphin ';
+		nextPutAll: SessionManager current versionString;
+		nextPutAll: ' is Open Source under the MIT License.'.
+	SessionManager current bootInfo
+		ifNotNil: 
+			[:bootInfo |
+			infoString
+				cr;
+				nextPutAll: 'Image boot info: ';
+				nextPutAll: bootInfo].
+	stringFormat := GdiplusStringFormat near.
 	graphics
 		textRenderingHint: TextRenderingHintAntiAlias;
-		drawString: infoString
+		drawString: infoString contents
 			font: fontCopyright
 			at: (48 @ 630 * self baseScale) rounded
-			format: GdiplusStringFormat near
-			brush: brush!
+			format: stringFormat
+			brush: brush.
+	fontCopyright free.
+	brush free.
+	stringFormat free!
 
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
@@ -122,36 +132,44 @@ elapsedTime
 	^TimeStamp current asMilliseconds - startTime asMilliseconds!
 
 fill
-	| dolphinPt |
+	| dolphinPt graphics min max pts |
 	self model removeAll.
 
 	"Render the Dolphin outline so we can fit out objects inside"
 	self render.
-	dolphinInside := (self randomFrom: self dolphins) copy.
-	dolphinInside rotation: (self random next * 360) rounded.
+	dolphinInside := (self randomFrom: dolphins) copy.
+	dolphinInside rotation: (random next * 360) rounded.
+	graphics := self graphics.
 
 	"Find a suitable position and scale for the dolphin inside"
+	min := self dolphinMinScale.
+	max := self dolphinMaxScale.
+	pts := self points.
 	
-	[dolphinPt := self randomFrom: self points.
+	[dolphinPt := self randomFrom: pts.
 	dolphinInside position: dolphinPt.
-	(self 
+	(self
 		addInsideObject: dolphinInside
-		minScale: self dolphinMinScale
-		maxScale: self dolphinMaxScale) notNil 
-		and: [dolphinInside scale >= self dolphinMinScale]] 
+		minScale: min
+		maxScale: max) notNil
+		and: [dolphinInside scale >= min]]
 			whileFalse.
-
+	dolphinInside drawOn: graphics.
 	"Now fill in the remaining objects inside"
-	self points do: 
-			[:pt | 
+	min := self insideObjectMinScale.
+	max := self insideObjectMaxScale.
+	pts do: 
+			[:pt |
 			| object |
-			object := (self randomFrom: self objects) copy.
+			object := (self randomFrom: objects) copy.
 			object position: pt.
-			object rotation: (self random next * 180) truncated - 90.
-			self 
+			object rotation: (random next * 180) truncated - 90.
+			self
 				addInsideObject: object
-				minScale: self insideObjectMinScale
-				maxScale: self insideObjectMaxScale].
+				minScale: min
+				maxScale: max.
+			object drawOn: graphics].
+	graphics free.
 
 	"Re-render to fill the Dolphin with objects of the correct scale"
 	dolphinInside color: self dolphinInsideBaseColor.
@@ -169,6 +187,7 @@ initialize
 	insideObjectsScale := 0.1.
 	dolphinIntensity := 0.
 	self loadTextureMap: 'ObjectsInside'.
+	random := Random new.
 	self startStepProcess!
 
 insideObjectMaxScale
@@ -185,38 +204,32 @@ isActionPoint: aPoint
 		ifTrue: [self isPointInDolphin: aPoint]
 		ifFalse: [self rectangle containsPoint: aPoint]!
 
-isPointInDolphin: aPoint 
+isPointInDolphin: aPoint
 	"Answer true if aPoint is within the dolphin inside. Do this most easily by looking for pixel colours"
 
 	| pixel |
 	pixel := self backSurface pixelAt: aPoint.
-	^pixel = self dolphinInside color asARGB!
+	^pixel = dolphinInside color asARGB!
 
-loadTextureMap: mapName 
-	| textureFileName mapFileName texture map |
+loadTextureMap: mapName
+	| textureFileName mapFileName texture map scale |
 	textureFileName := 'Resources\' , (File default: mapName extension: 'png').
 	texture := GdiplusBitmap fromFile: textureFileName usingLocator: FileLocator installRelative.
 	mapFileName := 'Resources\' , (File default: mapName extension: 'txt').
 	map := FileStream read: (FileLocator installRelative localFileSpecFor: mapFileName) text: true.
 	textureMap := LookupTable new.
-	(map contents subStrings: Character lf) do: 
-			[:each | 
-			| elements pos ext bm |
-			elements := each subStrings: $,.
+	scale := self baseScale.
+	[map atEnd] whileFalse: 
+			[| elements pos ext bm |
+			elements := map nextLine subStrings: $,.
 			pos := elements second trimBlanks asNumber @ elements third trimBlanks asNumber.
 			ext := elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber.
 			bm := GdiplusBitmap fromImage: texture crop: (pos extent: ext).
-			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: self baseScale)].
+			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: scale)].
 	sun := textureMap removeKey: 'SeeingTheObjects.png'.
-	dolphins := OrderedCollection new.
-	dolphins
-		add: (textureMap removeKey: 'Dolphin1.png');
-		add: (textureMap removeKey: 'Dolphin2.png').
+	dolphins := {textureMap removeKey: 'Dolphin1.png'. textureMap removeKey: 'Dolphin2.png'}.
 	objects := textureMap values.
 	^textureMap!
-
-objects
-	^objects!
 
 onDestroyed
 	self stopStepProcess.
@@ -255,9 +268,9 @@ pointResolution
 points
 	"Compute a set of point locations that are inside the dolphin"
 
-	^points 
+	^points
 		ifNil: 
-			[| extent mask |
+			[| mask |
 			points := OrderedCollection new.
 			"Add some know good points"
 			points
@@ -270,29 +283,29 @@ points
 			6 to: mask width - 6
 				by: self pointResolution x
 				do: 
-					[:x | 
+					[:x |
 					6 to: mask height - 6
 						by: self pointResolution y
 						do: 
-							[:y | 
+							[:y |
 							| pt |
-							pt := ((self random next * 2 + x) @ (self random next * 2 + y)) rounded.
-							((mask pixelAt: pt) alpha = 0 and: [self random next > 0.2]) ifTrue: [points add: pt]]].
+							pt := ((random next * 2 + x) @ (random next * 2 + y)) rounded.
+							((mask pixelAt: pt) alpha = 0 and: [random next > 0.2]) ifTrue: [points add: pt]]].
 			points]!
 
 random
 	^random ifNil: [random := Random new] !
 
-randomFrom: anOrderedCollection 
+randomFrom: anOrderedCollection
 	| index |
-	index := (self random next * anOrderedCollection size) truncated + 1.
+	index := (random next * anOrderedCollection size) truncated + 1.
 	^anOrderedCollection at: index!
 
 render
 	"Private - Render the background image"
 
 	
-	[| graphics |
+	[| graphics dolphin back |
 	graphics := self graphics.
 	graphics clear: ARGB white.
 	self model do: 
@@ -302,22 +315,22 @@ render
 			each scale: existingScale * insideObjectsScale.
 			each drawOn: graphics.
 			each scale: existingScale].
+	back := self background.
 	graphics
-		drawImage: self background
+		drawImage: back
 		at: Point zero
-		extent: self background extent.
+		extent: back extent.
+	dolphin := self dolphinOutline.
 	graphics
-		drawImage: self dolphinOutline
+		drawImage: dolphin
 		at: Point zero
-		extent: self dolphinOutline extent.
-	self sun
-		ifNotNil: 
-			[:sun |
-			sun
-				position: self sunPosition;
-				drawOn: graphics].
+		extent: dolphin extent.
+	sun
+		position: self sunPosition;
+		drawOn: graphics.
 	self drawInfoTextOn: graphics.
-	super render]
+	super render.
+	graphics free]
 			on: Error
 			do: 
 				[:ex |
@@ -340,20 +353,14 @@ startStepProcess
 	startTime := TimeStamp current.
 	stepProcess := 
 			[
-			[[self step] on: Error
-				do: 
-					[:ex | 
-					Transcript
-						show: ex description;
-						cr].
-			Processor sleep: 1000 // self frameRate] 
-					repeat] 
+			[[self step] on: Error do: [:ex | ex toTrace].
+			Processor sleep: 1000 // self frameRate] repeat]
 					forkAt: Processor userBackgroundPriority!
 
 step
-	self sun rotation: self sun rotation - (1.3 * insideObjectsScale).
-	dolphinIntensity > 0 ifTrue: [
-		self dolphinInside color: (self dolphinInsideIntensityColor intensity: dolphinIntensity)].
+	sun rotation: sun rotation - (1.3 * insideObjectsScale).
+	dolphinIntensity > 0
+		ifTrue: [dolphinInside color: (self dolphinInsideIntensityColor intensity: dolphinIntensity)].
 	self stepInsideObjectsScale.
 	self stepDolphinInsideIntensity.
 	self invalidate!
@@ -371,30 +378,19 @@ stepInsideObjectsScale
 
 	insideObjectsScale := self elapsedTime / self insideObjectScaleInPeriod min: 0.9!
 
-stepProcess
-	^stepProcess!
-
 stopStepProcess
 	stepProcess 
 		ifNotNil: 
 			[stepProcess terminate.
 			stepProcess := nil]!
 
-sun
-	^sun!
-
 sunPosition
-	^(612 @ 98) * self baseScale!
-
-textureMap
-	^textureMap
-! !
+	^(612 @ 98) * self baseScale! !
 !SeeingTheObjectsInside categoriesFor: #addInsideObject:minScale:maxScale:!private! !
 !SeeingTheObjectsInside categoriesFor: #background!accessing!private! !
 !SeeingTheObjectsInside categoriesFor: #baseScale!constants!public! !
 !SeeingTheObjectsInside categoriesFor: #defaultExtent!accessing!private! !
 !SeeingTheObjectsInside categoriesFor: #dismiss!event handling!private! !
-!SeeingTheObjectsInside categoriesFor: #dolphinInside!accessing!public! !
 !SeeingTheObjectsInside categoriesFor: #dolphinInsideBaseColor!constants!public! !
 !SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityColor!constants!public! !
 !SeeingTheObjectsInside categoriesFor: #dolphinInsideIntensityPeriod!constants!operations!public! !
@@ -402,7 +398,6 @@ textureMap
 !SeeingTheObjectsInside categoriesFor: #dolphinMaxScale!public! !
 !SeeingTheObjectsInside categoriesFor: #dolphinMinScale!public! !
 !SeeingTheObjectsInside categoriesFor: #dolphinOutline!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #dolphins!accessing!private! !
 !SeeingTheObjectsInside categoriesFor: #drawInfoTextOn:!operations!private! !
 !SeeingTheObjectsInside categoriesFor: #elapsedTime!operations!public! !
 !SeeingTheObjectsInside categoriesFor: #fill!event handling!private! !
@@ -415,7 +410,6 @@ textureMap
 !SeeingTheObjectsInside categoriesFor: #isActionPoint:!event handling!private! !
 !SeeingTheObjectsInside categoriesFor: #isPointInDolphin:!event handling!private!testing! !
 !SeeingTheObjectsInside categoriesFor: #loadTextureMap:!accessing!private! !
-!SeeingTheObjectsInside categoriesFor: #objects!accessing!private! !
 !SeeingTheObjectsInside categoriesFor: #onDestroyed!event handling!private! !
 !SeeingTheObjectsInside categoriesFor: #onLeftButtonPressed:!event handling!private! !
 !SeeingTheObjectsInside categoriesFor: #onMouseMoved:!event handling!private! !
@@ -431,11 +425,8 @@ textureMap
 !SeeingTheObjectsInside categoriesFor: #step!operations!public! !
 !SeeingTheObjectsInside categoriesFor: #stepDolphinInsideIntensity!operations!private! !
 !SeeingTheObjectsInside categoriesFor: #stepInsideObjectsScale!operations!private! !
-!SeeingTheObjectsInside categoriesFor: #stepProcess!accessing!private! !
 !SeeingTheObjectsInside categoriesFor: #stopStepProcess!initializing!private! !
-!SeeingTheObjectsInside categoriesFor: #sun!private! !
 !SeeingTheObjectsInside categoriesFor: #sunPosition!constants!public! !
-!SeeingTheObjectsInside categoriesFor: #textureMap!accessing!private! !
 
 !SeeingTheObjectsInside class methodsFor!
 

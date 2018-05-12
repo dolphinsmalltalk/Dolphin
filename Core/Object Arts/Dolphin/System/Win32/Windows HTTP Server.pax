@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Windows HTTP Server'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Win32 HTTP Server

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Icon subclass: #IconWithExtent
 	instanceVariableNames: 'extent'
@@ -24,7 +24,7 @@ loadFromInstance: hModule
 
 	^UserLibrary default 
 			loadImage: hModule asParameter 
-			lpszName: identifier
+			lpszName: identifier asResourceId
 			uType: IMAGE_ICON
 			cxDesired: self extent x
 			cyDesired: self extent y

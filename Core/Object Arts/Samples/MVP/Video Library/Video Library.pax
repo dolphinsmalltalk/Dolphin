@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Video Library'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Video Library Sample. 

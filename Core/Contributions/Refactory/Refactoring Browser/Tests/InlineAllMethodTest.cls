@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineAllMethodTest
 	instanceVariableNames: ''
@@ -12,18 +12,15 @@ InlineAllMethodTest comment: ''!
 
 testInlineMethodWithMultipleSendersInMethod
 	| refactoring |
-	refactoring := InlineAllSendersRefactoring sendersOf: #caller2
-				in: RefactoryTestDataApp.
+	refactoring := InlineAllSendersRefactoring sendersOf: #caller2 in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #inlineLast) = (RBParser 
-							parseMethod: 'inlineLast
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #inlineLast)
+		equals: (RBParser
+				parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]] ').
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #multipleCalls) = (RBParser 
-							parseMethod: 'multipleCalls
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #multipleCalls)
+		equals: (RBParser
+				parseMethod: 'multipleCalls
 	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)].
 	(1 to: 10) inject: 1 into: [:sum1 :each1 | sum1 * (self foo: each1)]')!
 
@@ -34,14 +31,12 @@ testRecursiveMethod
 	class
 		compile: 'foo ^self foo' classified: #(#accessing);
 		compile: 'bar ^self foo' classified: #(#accessing).
-	self executeRefactoring: (InlineAllSendersRefactoring 
+	self executeRefactoring: (InlineAllSendersRefactoring
 				model: model
 				sendersOf: #foo
 				in: class).
-	self assert: (class parseTreeFor: #foo) 
-				= (RBParser parseMethod: 'foo ^self foo').
-	self assert: (class parseTreeFor: #bar) 
-				= (RBParser parseMethod: 'bar ^self foo')! !
+	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^self foo').
+	self assert: (class parseTreeFor: #bar) equals: (RBParser parseMethod: 'bar ^self foo')! !
 !InlineAllMethodTest categoriesFor: #testInlineMethodWithMultipleSendersInMethod!public!tests! !
 !InlineAllMethodTest categoriesFor: #testRecursiveMethod!public!tests! !
 

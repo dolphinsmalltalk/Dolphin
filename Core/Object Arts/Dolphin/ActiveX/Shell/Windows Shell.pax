@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Windows Shell'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Shell Support
@@ -17,7 +17,7 @@ package basicScriptAt: #preuninstall put: 'View unregisterShellMessages'.
 
 package classNames
 	add: #BrowseFolderDialog;
-	add: #BROWSEINFO;
+	add: #BROWSEINFOW;
 	add: #DroppedFilesList;
 	add: #IShellFolder;
 	add: #ITEMIDLIST;
@@ -85,7 +85,7 @@ Win32Structure subclass: #SHITEMID
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #BROWSEINFO
+CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
 	classVariableNames: ''
 	poolDictionaries: ''

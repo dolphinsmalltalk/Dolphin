@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ComDlgLibrary
 	instanceVariableNames: ''
@@ -19,7 +19,7 @@ chooseColor: aWinCHOOSECOLOR
 			LPCHOOSECOLOR  lpcc 	// address of structure with initialization data
 		);"
 
-	<stdcall: bool ChooseColorA lpvoid>
+	<stdcall: bool ChooseColorW CHOOSECOLORW*>
 	^self invalidCall!
 
 chooseFont: aWinCHOOSEFONT
@@ -31,7 +31,7 @@ chooseFont: aWinCHOOSEFONT
 		LPCHOOSEFONT  lpcf 	// address of structure with initialization data
 	);"
 
-	<stdcall: bool ChooseFontA lpvoid>
+	<stdcall: bool ChooseFontW lpvoid>
 	^self invalidCall
 !
 
@@ -52,19 +52,19 @@ findText: aWinFINDREPLACE
 			LPFINDREPLACE  lpfr 	// address of structure with initialization data
 		);"
 
-	<stdcall: handle FindTextA lpvoid>
+	<stdcall: handle FindTextW lpvoid>
 	^self invalidCall
 !
 
 getFileTitle: lpszFile lpszTitle: lpszTitle cbBuf: cbBuf
 	"Answer the title of the file identified by the lpszFile parameter.
 		short GetFileTitle(
-			LPCTSTR lpszFile, 	// pointer to full path and filename for file 	
-			LPTSTR lpszTitle, 	// pointer to buffer that receives filename 	
+			LPCWSTR lpszFile, 	// pointer to full path and filename for file 	
+			LPWSTR lpszTitle, 	// pointer to buffer that receives filename 	
 			WORD cbBuf 	// length of buffer 	
 		);"
 
-	<stdcall: sword GetFileTitleA lpstr lpstr word>
+	<stdcall: sword GetFileTitleW lpwstr lpwstr word>
 	^self invalidCall!
 
 getOpenFileName: aWinOPENFILENAME
@@ -75,7 +75,7 @@ getOpenFileName: aWinOPENFILENAME
 			LPOPENFILENAME  lpofn 	// address of structure with initialization data
 		);"
 
-	<stdcall: bool GetOpenFileNameA lpvoid>
+	<stdcall: bool GetOpenFileNameW lpvoid>
 	^self invalidCall!
 
 getSaveFileName: aWinOPENFILENAME
@@ -86,19 +86,7 @@ getSaveFileName: aWinOPENFILENAME
 			LPOPENFILENAME  lpofn 	// address of structure with initialization data
 		);"
 
-	<stdcall: bool GetSaveFileNameA lpvoid>
-	^self invalidCall
-!
-
-printDlg: aWinPRINTDLG
-	"Displays a Print dialog box or a Print Setup dialog box. The Print dialog box enables the user to 
-	specify the properties of a particular print job.
-
-		BOOL PrintDlg(
-			LPPRINTDLG  lppd 	// address of structure with initialization data
-		);"
-
-	<stdcall: bool PrintDlgA lpvoid>
+	<stdcall: bool GetSaveFileNameW lpvoid>
 	^self invalidCall
 !
 
@@ -111,7 +99,7 @@ replaceText: aWinFINDREPLACE
 			LPFINDREPLACE  lpfr 	// address of structure with initialization data
 		);"
 
-	<stdcall: handle ReplaceTextA lpvoid>
+	<stdcall: handle ReplaceTextW FINDREPLACEW*>
 	^self invalidCall
 !
 
@@ -126,7 +114,6 @@ systemError
 !ComDlgLibrary categoriesFor: #getFileTitle:lpszTitle:cbBuf:!primitives!private!win32 functions-file! !
 !ComDlgLibrary categoriesFor: #getOpenFileName:!primitives!private!win32 functions-common dialog box! !
 !ComDlgLibrary categoriesFor: #getSaveFileName:!primitives!private!win32 functions-common dialog box! !
-!ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
 !ComDlgLibrary categoriesFor: #replaceText:!primitives!private!win32 functions-common dialog box! !
 !ComDlgLibrary categoriesFor: #systemError!exceptions!public! !
 

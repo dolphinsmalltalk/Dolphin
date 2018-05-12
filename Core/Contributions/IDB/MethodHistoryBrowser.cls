@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'
@@ -40,7 +40,7 @@ for
 Dolphin Smalltalk 6.x
 
 Version 6b
-� 2005 Ian Bartholomew
+© 2005 Ian Bartholomew
 http://www.idb.me.uk'!
 
 canPrint

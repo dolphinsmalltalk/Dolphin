@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Continuations'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Call Continuations.
@@ -137,7 +137,10 @@ deepenProcessCopy: aProcessCopier
 
 deepenProcessCopy: aProcessCopier
 	super deepenProcessCopy: aProcessCopier.
-	handlers := handlers collect: [:each | each key -> (aProcessCopier visit: each value)]! !
+	handlers := handlers shallowCopy.
+	2 to: handlers size
+		by: 2
+		do: [:i | handlers at: i put: (aProcessCopier visit: (handlers at: i))]! !
 !ExceptionHandlerSet categoriesFor: #deepenProcessCopy:!copying!private! !
 
 !Object methodsFor!

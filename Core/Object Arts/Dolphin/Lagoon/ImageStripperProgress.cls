@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
@@ -269,7 +269,7 @@ show
 	can only be loaded from DLLs that have been loaded as normal code modules."
 	hWnd := UserLibrary default 
 				createDialog: self resourceLib asParameter
-				lpTemplate: self template
+				lpTemplate: self template asResourceId
 				hWndParent: nil
 				lpDialogFunc: VMLibrary default getDlgProc
 				dwInitParam: 0.
@@ -300,12 +300,12 @@ subclassWindow: anIntegerOrHandle
 	oldWndProc := VMConstants.IsWin64
 				ifTrue: 
 					[UserLibrary default
-						setWindowULongPtrW: handle
+						setWindowULongPtr: handle
 						nIndex: GWL_WNDPROC
 						dwNewLong: VMLibrary default getWndProc]
 				ifFalse: 
 					[UserLibrary default
-						setWindowULongW: handle
+						setWindowULong: handle
 						nIndex: GWL_WNDPROC
 						dwNewLong: VMLibrary default getWndProc]!
 

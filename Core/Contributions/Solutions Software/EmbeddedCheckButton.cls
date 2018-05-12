@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CheckButton subclass: #EmbeddedCheckButton
 	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled'
@@ -99,7 +99,7 @@ drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textRec
 				hdc: aCanvas asParameter 
 				iPartId: self iPartId
 				iStateId: iStateId
-				pszText: self text asUnicodeString 
+				pszText: self text asUtf16String 
 				iCharCount: -1 
 				dwTextFlags: ##(DT_WORDBREAK | DT_LEFT | DT_EDITCONTROL | DT_NOCLIP)
 				dwTextFlags2: 0 
@@ -238,7 +238,7 @@ textRectIn: aRectangle on: aCanvas iStateId: iStateId
 		[ThemeLibrary default 
 			getThemeTextExtent: self theme hdc: aCanvas asParameter 
 			iPartId: self iPartId iStateId: iStateId 
-			pszText: self text asUnicodeString iCharCount: -1 
+			pszText: self text asUtf16String iCharCount: -1 
 			dwTextFlags: ##(DT_WORDBREAK |  DT_EDITCONTROL | DT_LEFT | DT_CALCRECT) 
 			pBoundingRect: formatRect pExtentRect: formatRect]
 	ifFalse: 

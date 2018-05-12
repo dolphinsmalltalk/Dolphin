@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #MoveVariableDefinitionTest
 	instanceVariableNames: ''
@@ -12,16 +12,15 @@ MoveVariableDefinitionTest comment: ''!
 
 testMoveDefinition
 	| refactoring |
-	refactoring := MoveVariableDefinitionRefactoring 
+	refactoring := MoveVariableDefinitionRefactoring
 				bindTight: (self convertInterval: (19 to: 22)
 						for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				in: RefactoryTestDataApp
 				selector: #moveDefinition.
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #moveDefinition) = (RBParser 
-							parseMethod: 'moveDefinition
+	self assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #moveDefinition)
+		equals: (RBParser
+				parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
 										| temp |
@@ -35,16 +34,16 @@ testMoveDefinition
 
 testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage
 	| refactoring |
-	refactoring := MoveVariableDefinitionRefactoring 
+	refactoring := MoveVariableDefinitionRefactoring
 				bindTight: (self convertInterval: (48 to: 58)
 						for: (RefactoryTestDataApp sourceCodeAt: #referencesConditionFor:))
 				in: RefactoryTestDataApp
 				selector: #referencesConditionFor:.
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #RefactoryTestDataApp) 
-				parseTreeFor: #referencesConditionFor:) = (RBParser 
-							parseMethod: 'referencesConditionFor: aClass 
+	self
+		assert: ((refactoring model classNamed: #RefactoryTestDataApp) parseTreeFor: #referencesConditionFor:)
+		equals: (RBParser
+				parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
 								^(RBCondition withBlock: 
 										[| association |association := Smalltalk associationAt: aClass name

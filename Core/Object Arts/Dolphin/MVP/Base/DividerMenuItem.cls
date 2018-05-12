@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MenuItem subclass: #DividerMenuItem
 	instanceVariableNames: ''
@@ -57,7 +57,7 @@ isDivider
 	^true!
 
 populateItemInfo: aMENUITEMINFO 
-	"Private - Copy the receiver's item information into the <MENUITEMINFOA> argument."
+	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	aMENUITEMINFO type: self styleFlags!
 

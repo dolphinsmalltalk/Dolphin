@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Internet Explorer'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Internet Explorer* Package.

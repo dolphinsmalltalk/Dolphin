@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableItemsTest subclass: #SelectableTreeItemsTest
 	instanceVariableNames: ''
@@ -44,7 +44,7 @@ testAddRemove
 	objects := self objectsToTest.
 	1 to: objects size
 		do: 
-			[:n | 
+			[:n |
 			| classes |
 			classes := objects copyFrom: 1 to: n.
 			classes do: [:each | self treeModel add: each asChildOf: each superclass].
@@ -67,7 +67,7 @@ testAddRemove
 	self treeModel removeAll.
 	objects do: [:each | self denyContains: each].
 	self assert: presenter model isEmpty.
-	self assert: presenter view size = 0!
+	self assert: presenter view size equals: 0!
 
 testHierarchyMove
 	"Test moving classes around the hierarchy"
@@ -88,26 +88,26 @@ testHierarchyMove
 
 	"Check that moving a selected class doesn't alter selection
 	or trigger #selectionChanged events"
-	self 
+	self
 		shouldnt: [self addAllObjects: objects]
 		trigger: #selectionChanged
 		against: presenter.
 	presenter selection: Number.
-	self 
+	self
 		shouldnt: [self treeModel move: Number asChildOf: Object]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection = Number.
+	self assert: presenter selection equals: Number.
 
 	"Check that moving the parent of a selected class doesn't alter selection.
 	and trigger a #selectionChanged event"
 	presenter selection: ArithmeticValue.
-	self assert: (self treeModel parentOf: presenter selection) == Magnitude.
-	self 
+	self assert: (self treeModel parentOf: presenter selection) identicalTo: Magnitude.
+	self
 		shouldnt: [self treeModel move: Magnitude asChildOf: Object]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection == ArithmeticValue.
+	self assert: presenter selection identicalTo: ArithmeticValue.
 
 	"Tidy up"
 	self treeModel removeAll!
@@ -119,14 +119,14 @@ testSelection
 	objects := self objectsToTest.
 	self addAllObjects: objects.
 	objects do: 
-			[:each | 
-			self 
+			[:each |
+			self
 				should: [presenter selection: each]
 				trigger: #selectionChanged
 				butNot: #selectionChanging:
 				against: presenter.
-			self assert: presenter selection == each].
-	self 
+			self assert: presenter selection identicalTo: each].
+	self
 		should: [presenter resetSelection]
 		trigger: #selectionChanged
 		butNot: #selectionChanging:
@@ -134,49 +134,49 @@ testSelection
 
 	"remove should not upset selection"
 	presenter selection: objects first.
-	self 
+	self
 		shouldnt: [self treeModel remove: objects last]
 		triggerAnyOf: #(#selectionChanged #selectionChanging:)
 		against: presenter.
-	self assert: presenter selection == objects first.
+	self assert: presenter selection identicalTo: objects first.
 
 	"add should not upset selection"
-	self 
+	self
 		shouldnt: [self treeModel add: objects last asChildOf: objects last superclass]
 		triggerAnyOf: #(#selectionChanged #selectionChanging:)
 		against: presenter.
-	self assert: presenter selection == objects first.
+	self assert: presenter selection identicalTo: objects first.
 	"remove of selected object should trigger #selectionChanged and leave the parent of the selection selected"
-	(Array 
+	(Array
 		with: Number
 		with: Point3D
 		with: Point
 		with: ArithmeticValue) do: 
-				[:each | 
+				[:each |
 				presenter selection: each.
-				self 
+				self
 					should: [self treeModel remove: each]
 					trigger: #selectionChanged
 					butNot: #selectionChanging:
 					against: presenter.
 				"If the selected object has siblings, the next of those should be selected, if not the parent"
-				presenter selection = each superclass 
+				presenter selection = each superclass
 					ifTrue: 
 						["Parent selected, should be no remaining siblings"
 						self assert: (self treeModel childrenOf: presenter selection) isEmpty]
-					ifFalse: [self assert: presenter selection superclass = each superclass]].
+					ifFalse: [self assert: presenter selection superclass equals: each superclass]].
 
 	"No selection tests"
 	objects do: [:each | self treeModel add: each asChildOf: each superclass].
 	objects do: 
-			[:each | 
+			[:each |
 			presenter selection: each.
-			self 
+			self
 				should: [presenter resetSelection]
 				trigger: #selectionChanged
 				butNot: #selectionChanging:
 				against: presenter.
-			self assert: presenter selectionOrNil isNil.
+			self assertIsNil: presenter selectionOrNil.
 			self should: [presenter selection] raise: Error].
 	self treeModel removeAll!
 
@@ -200,12 +200,12 @@ testSetImageBlockDoesNotAffectSelection
 	objects := self addAllTestObjects.
 	presenter view viewMode: #smallIcons.
 	presenter selection: objects last.
-	self 
+	self
 		shouldnt: [presenter view getImageBlock: [:each | each icon imageIndex + 1]]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection == objects last.
-	self 
+	self assert: presenter selection identicalTo: objects last.
+	self
 		shouldnt: [presenter selection: objects last]
 		trigger: #selectionChanging:
 		against: presenter!
@@ -214,14 +214,14 @@ testSetTextBlockDoesNotAffectSelection
 	| objects |
 	objects := self addAllTestObjects.
 	presenter selection: objects last.
-	self 
+	self
 		shouldnt: 
 			["Remove an object after the selection"
 			presenter view getTextBlock: [:each | each printString , ' &c']]
 		trigger: #selectionChanged
 		against: presenter.
-	self assert: presenter selection == objects last.
-	self 
+	self assert: presenter selection identicalTo: objects last.
+	self
 		shouldnt: [presenter selection: objects last]
 		trigger: #selectionChanging:
 		against: presenter!

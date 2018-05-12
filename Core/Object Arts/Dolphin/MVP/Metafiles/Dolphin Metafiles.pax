@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Metafiles'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Image class wrapper for Windows Enhanced Metafiles.
@@ -109,9 +109,9 @@ copyEnhMetaFile: hemf lpszFile: lpszFile
 
 		HENHMETAFILE __stdcall CopyEnhMetaFile(
 			HENHMETAFILE hemf,
-			LPCSTR lpszFile);"
+			LPCWSTR lpszFile);"
 
-	<stdcall: handle CopyEnhMetaFileA handle lpstr>
+	<stdcall: handle CopyEnhMetaFileW handle lpwstr>
 	^self invalidCall!
 
 createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDescription
@@ -120,11 +120,11 @@ createEnhMetaFile: hdc lpFileName: lpFileName lpRect: lpRect lpDescription: lpDe
 
 		HDC __stdcall CreateEnhMetaFile(
 			HDC HDC,
-			LPCSTR lpFileName,
+			LPCWSTR lpFileName,
 			int* lpRect,
-			LPCSTR lpDescription);"
+			LPCWSTR lpDescription);"
 
-	<stdcall: handle CreateEnhMetaFileA handle lpstr sdword* lpstr>
+	<stdcall: handle CreateEnhMetaFileW handle lpwstr sdword* lpwstr>
 	^self invalidCall!
 
 deleteEnhMetaFile: hemf
@@ -156,9 +156,9 @@ getEnhMetaFile: lpszMetaFile
 	Helpstring: Creates handle for given file-based enhanced-format metafile
 
 		HENHMETAFILE __stdcall GetEnhMetaFile(
-			LPCSTR lpszMetaFile);"
+			LPCWSTR lpszMetaFile);"
 
-	<stdcall: handle GetEnhMetaFileA lpstr>
+	<stdcall: handle GetEnhMetaFileW lpwstr>
 	^self invalidCall!
 
 getEnhMetaFileBits: hemf cbBuffer: cbBuffer lpbBuffer: lpbBuffer
@@ -180,9 +180,9 @@ getEnhMetaFileDescription: hemf cchBuffer: cchBuffer lpszDescription: lpszDescri
 		UINT __stdcall GetEnhMetaFileDescription(
 			HENHMETAFILE hemf,
 			UINT cchBuffer,
-			LPSTR lpszDescription);"
+			LPWSTR lpszDescription);"
 
-	<stdcall: dword GetEnhMetaFileDescriptionA handle dword lpstr>
+	<stdcall: dword GetEnhMetaFileDescriptionW handle dword lpwstr>
 	^self invalidCall!
 
 getEnhMetaFileHeader: hemf cbBuffer: cbBuffer lpemnh: lpemnh

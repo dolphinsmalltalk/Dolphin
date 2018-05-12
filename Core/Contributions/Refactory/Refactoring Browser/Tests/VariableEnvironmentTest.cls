@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 BrowserEnvironmentTest subclass: #VariableEnvironmentTest
 	instanceVariableNames: ''
@@ -15,22 +15,22 @@ testAddRemove
 	refs := VariableEnvironment new.
 	refs addClass: RefactoringManager instanceVariable: 'refactorings'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: RefactoringManager instanceVariable: 'refactorings'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0.
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0.
 	refs addClass: RefactoringManager instanceVariableReader: 'refactorings'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: RefactoringManager instanceVariableReader: 'refactorings'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0.
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0.
 	refs addClass: RefactoringManager instanceVariableWriter: 'refactorings'.
 	self assert: refs numberSelectors > 0.
-	self assert: refs numberClasses = 1.
+	self assert: refs numberClasses equals: 1.
 	refs removeClass: RefactoringManager instanceVariableWriter: 'refactorings'.
-	self assert: refs numberSelectors = 0.
-	self assert: refs numberClasses = 0!
+	self assert: refs numberSelectors equals: 0.
+	self assert: refs numberClasses equals: 0!
 
 testInstVars
 	| refs writers readers |
@@ -40,7 +40,7 @@ testInstVars
 	self universalTestFor: refs.
 	self universalTestFor: writers.
 	self universalTestFor: readers.
-	self assert: refs numberSelectors = (writers | readers) numberSelectors! !
+	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
 !VariableEnvironmentTest categoriesFor: #testAddRemove!public!tests! !
 !VariableEnvironmentTest categoriesFor: #testInstVars!public!tests! !
 

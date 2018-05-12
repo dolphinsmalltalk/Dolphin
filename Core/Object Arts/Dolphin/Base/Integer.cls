@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Number subclass: #Integer
 	instanceVariableNames: ''
@@ -162,6 +162,10 @@ asInteger
 	^self
 !
 
+asResourceId
+	^self
+!
+
 asScaledDecimal: anInteger 
 	"Answer a <ScaledDecimal> number, with the fractional precision 
 	of 0 (i.e. the argument is effectively ignored). See ANSI 5.6.5.3 p127."
@@ -196,7 +200,7 @@ basicPrintDigitsOn: aStream base: anInteger
 	| quotient digits index |
 	quotient := self.
 	index := self digitLength * 8.
-	digits := String new: index.
+	digits := Utf8String new: index.
 	[quotient < anInteger] whileFalse: 
 			[| quoRem |
 			quoRem := quotient quoAndRem: anInteger.
@@ -751,6 +755,7 @@ truncated
 !Integer categoriesFor: #asExternalHandle!converting!public! !
 !Integer categoriesFor: #asFraction!converting!public! !
 !Integer categoriesFor: #asInteger!converting!public! !
+!Integer categoriesFor: #asResourceId!converting!public! !
 !Integer categoriesFor: #asScaledDecimal:!converting!public! !
 !Integer categoriesFor: #asSDword!converting!public! !
 !Integer categoriesFor: #asUIntPtr!converting!public! !

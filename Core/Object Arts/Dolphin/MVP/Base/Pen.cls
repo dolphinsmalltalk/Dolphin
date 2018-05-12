@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Pen
 	instanceVariableNames: 'logPen'
@@ -167,9 +167,9 @@ withStyle: styleFlags width: anInteger color: aColour
 			yourself)
 !
 
-withStyleName: name 
-	^self 
-		withStyle: (self styleNames indexOf: name) - 1
+withStyleName: aString
+	^self
+		withStyle: (self styleNames indexOf: aString) - 1
 		width: 0
 		color: Color black! !
 !Pen class categoriesFor: #black!instance creation!public! !

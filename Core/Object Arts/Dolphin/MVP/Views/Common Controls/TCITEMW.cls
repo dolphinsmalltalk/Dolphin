@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
@@ -143,7 +143,7 @@ defineFields
 		UINT mask;			// value specifying which members to retrieve or set 
 		DWORD dwState;		// Current item state
 		DWORD dwStateMask;	// Mask of valid bits in dwState
-		LPSTR pszText;		// pointer to string containing tab text 
+		LPWSTR pszText;		// pointer to string containing tab text 
 		int cchTextMax;		// size of buffer pointed to by the pszText member 
 		int iImage;			// index to tab control's image 
 		LPARAM lParam;		// application-defined data associated with tab 

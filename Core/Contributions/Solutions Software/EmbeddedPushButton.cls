@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 EmulatedPushButton subclass: #EmbeddedPushButton
 	instanceVariableNames: 'isDisplayingEmbedded embeddedRectangle embeddedDisplayState embeddedText text'
@@ -219,12 +219,12 @@ text: aString
 	text := aString.
 	self handle notNull ifTrue: [super text: aString]!
 
-ttnGetDispInfo: anNMTTDISPINFO 
+ttnGetDispInfo: anNMTTDISPINFOW
 	"Pull in the tip text defined by my column, if any"
 
-	(self parentView activeColumn infoTipFromRow: self parentView activeEditorModel withPrefix: '') ifNotNil: [ :tipText | self tipText: tipText].
-	
-	^super ttnGetDispInfo: anNMTTDISPINFO!
+	(self parentView activeColumn infoTipFromRow: self parentView activeEditorModel withPrefix: '')
+		ifNotNil: [:tipText | self tipText: tipText].
+	^super ttnGetDispInfo: anNMTTDISPINFOW!
 
 validateUserInterface
 	"Set the enabled state of the receiver"

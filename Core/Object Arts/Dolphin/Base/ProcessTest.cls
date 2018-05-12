@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ProcessTest
 	instanceVariableNames: ''
@@ -16,12 +16,12 @@ assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sou
 	self assert: copyBlockClosure isKindOf: BlockClosure.
 	self assert: srcBlockClosure isKindOf: BlockClosure.
 	srcBlockClosure isClean
-		ifTrue: [self assert: copyBlockClosure sameAs: srcBlockClosure]
+		ifTrue: [self assert: copyBlockClosure identicalTo: srcBlockClosure]
 		ifFalse: 
-			[self deny: copyBlockClosure sameAs: srcBlockClosure.
+			[self deny: copyBlockClosure identicalTo: srcBlockClosure.
 			self assert: copyBlockClosure initialIP equals: srcBlockClosure initialIP.
-			self assert: copyBlockClosure method sameAs: srcBlockClosure method.
-			self assert: copyBlockClosure argumentCount sameAs: srcBlockClosure argumentCount.
+			self assert: copyBlockClosure method identicalTo: srcBlockClosure method.
+			self assert: copyBlockClosure argumentCount identicalTo: srcBlockClosure argumentCount.
 			self
 				assert: ((copyBlockClosure outer isNil and: [srcBlockClosure outer isNil]) or: 
 							[| copyOuter srcOuter |
@@ -35,40 +35,40 @@ assertBlock: copyBlockClosure in: copyProcess2 isCopyOf: srcBlockClosure in: sou
 								visited: anIdentitySet])].
 	^true!
 
-assertBlockFrame: copyFrame isCopyOf: srcFrame visited: anIdentitySet 
+assertBlockFrame: copyFrame isCopyOf: srcFrame visited: anIdentitySet
 	"Should be a shallow copy of the context with separate slots, but the same values for the temps"
 
 	| copyBlock srcBlock |
-	self assert: (srcFrame isKindOf: BlockFrame).
-	self assert: (copyFrame isKindOf: BlockFrame).
+	self assert: srcFrame isKindOf: BlockFrame.
+	self assert: copyFrame isKindOf: BlockFrame.
 	"	self assert: copyFrame homeFrame asInteger = srcFrame homeFrame asInteger."
 	srcBlock := srcFrame basicBP.
 	copyBlock := copyFrame basicBP.
-	self assert: srcBlock ~~ copyBlock.
-	self assert: srcBlock method = copyBlock method.
-	self assert: srcBlock initialIP = copyBlock initialIP.
-	self assert: srcBlock argumentCount = copyBlock argumentCount.
+	self deny: srcBlock identicalTo: copyBlock.
+	self assert: srcBlock method equals: copyBlock method.
+	self assert: srcBlock initialIP equals: copyBlock initialIP.
+	self assert: srcBlock argumentCount equals: copyBlock argumentCount.
 	"The method context must not be shared"
-	self 
+	self
 		assertContext: copyBlock outer
 		in: copyFrame process
 		isCopyOf: srcBlock outer
 		in: srcFrame process
 		visited: anIdentitySet!
 
-assertContext: copyContext in: copyProcess2 isCopyOf: srcContext in: sourceProcess2 visited: anIdentitySet 
+assertContext: copyContext in: copyProcess2 isCopyOf: srcContext in: sourceProcess2 visited: anIdentitySet
 	(anIdentitySet includes: copyContext) ifTrue: [^true].
 	anIdentitySet add: copyContext.
-	self assert: (copyContext isKindOf: self methodContextClass).
-	self assert: (srcContext isKindOf: self methodContextClass).
-	self assert: copyContext ~~ srcContext.
-	self assert: ((copyContext outer == 0 and: [srcContext outer == 0]) 
+	self assert: copyContext isKindOf: self methodContextClass.
+	self assert: srcContext isKindOf: self methodContextClass.
+	self deny: copyContext identicalTo: srcContext.
+	self assert: ((copyContext outer == 0 and: [srcContext outer == 0])
 				or: [copyContext outer ~= srcContext outer]).
-	self assert: copyContext size = srcContext size.
+	self assert: copyContext size equals: srcContext size.
 	1 to: copyContext size
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				assertObject: (copyContext at: i)
 				in: copyProcess2
 				isOrIsCopyOf: (srcContext at: i)
@@ -76,18 +76,18 @@ assertContext: copyContext in: copyProcess2 isCopyOf: srcContext in: sourceProce
 				visited: anIdentitySet].
 	^true!
 
-assertContextFrame: copyFrame isCopyOf: srcFrame visited: anIdentitySet 
+assertContextFrame: copyFrame isCopyOf: srcFrame visited: anIdentitySet
 	| copyContext srcContext |
-	self assert: (srcFrame isKindOf: StackFrame).
-	self assert: (copyFrame isKindOf: StackFrame).
+	self assert: srcFrame isKindOf: StackFrame.
+	self assert: copyFrame isKindOf: StackFrame.
 	srcContext := srcFrame basicBP.
 	copyContext := copyFrame basicBP.
-	self assert: srcContext ~~ copyContext.
-	self assert: (copyFrame process indexOfSP: copyContext outer) = copyFrame asInteger.
-	self assert: (copyFrame process indexOfSP: copyContext outer) 
-				= (srcFrame process indexOfSP: srcContext outer).
+	self deny: srcContext identicalTo: copyContext.
+	self assert: (copyFrame process indexOfSP: copyContext outer) equals: copyFrame asInteger.
+	self assert: (copyFrame process indexOfSP: copyContext outer)
+		equals: (srcFrame process indexOfSP: srcContext outer).
 	"The method context must not be shared"
-	self 
+	self
 		assertContext: copyContext
 		in: copyFrame process
 		isCopyOf: srcContext
@@ -103,7 +103,7 @@ assertDisparateEnvironments: copyProcess2 source: sourceProcess2
 			env := env outer].
 	env := copyProcess2 exceptionEnvironment.
 	[env isNil] whileFalse: 
-			[self deny: (sourceHandlers identityIncludes: env).
+			[self deny: (sourceHandlers identityIncludes: env) description: 'Handler was not copied'.
 			env := env outer]!
 
 assertExceptionHandler: copyExceptionHandler in: copyProcess2 isCopyOf: srcExceptionHandler in: sourceProcess2 visited: anIdentitySet
@@ -132,23 +132,23 @@ assertExceptionHandler: copyExceptionHandler in: copyProcess2 isCopyOf: srcExcep
 	(srcExceptionHandler isKindOf: ExceptionHandlerSet)
 		ifTrue: 
 			[| copyHandlers srcHandlers |
-			self deny: copyExceptionHandler == srcExceptionHandler.
-			self assert: (copyExceptionHandler isKindOf: ExceptionHandlerSet).
+			self deny: copyExceptionHandler identicalTo: srcExceptionHandler.
+			self assert: copyExceptionHandler isKindOf: ExceptionHandlerSet.
 			srcHandlers := srcExceptionHandler instVarNamed: 'handlers'.
 			copyHandlers := copyExceptionHandler instVarNamed: 'handlers'.
-			copyHandlers with: srcHandlers
+			1 to: copyHandlers size
+				by: 2
 				do: 
-					[:eachCopy :eachSrc |
-					self assert: eachCopy key == eachSrc key.
-					self assertBlock: eachCopy value in: copyProcess2 isCopyOf: eachSrc value in: sourceProcess2 visited: anIdentitySet.
-					"self
-						assertExceptionHandler: eachCopy
+					[:i |
+					self assert: (copyHandlers at: i) identicalTo: (srcHandlers at: i).
+					self
+						assertBlock: (copyHandlers at: i + 1)
 						in: copyProcess2
-						isCopyOf: eachSrc
+						isCopyOf: (srcHandlers at: i + 1)
 						in: sourceProcess2
-						visited: anIdentitySet"]]
+						visited: anIdentitySet]]
 		ifFalse: 
-			[self assert: (copyExceptionHandler isKindOf: ExceptionHandler).
+			[self assert: copyExceptionHandler isKindOf: ExceptionHandler.
 			self
 				assertBlock: (copyExceptionHandler instVarNamed: 'handler')
 				in: copyProcess2
@@ -230,42 +230,42 @@ assertStack: copyTopFrame copiedCorrectlyFrom: srcTopFrame
 			copyFrame := copyFrame sender].
 	self assertDisparateEnvironments: copyTopFrame process source: srcTopFrame process!
 
-assertStackFrame: copyFrame isCopyOf: srcFrame visited: anIdentitySet 
+assertStackFrame: copyFrame isCopyOf: srcFrame visited: anIdentitySet
 	| srcBase |
-	self assert: copyFrame asInteger = srcFrame asInteger.
-	self assert: copyFrame sp = srcFrame sp.
-	self assert: copyFrame bp = srcFrame bp.
-	self assert: copyFrame ip = srcFrame ip.
-	self assert: copyFrame method == srcFrame method.
-	self 
+	self assert: copyFrame asInteger equals: srcFrame asInteger.
+	self assert: copyFrame sp equals: srcFrame sp.
+	self assert: copyFrame bp equals: srcFrame bp.
+	self assert: copyFrame ip equals: srcFrame ip.
+	self assert: copyFrame method identicalTo: srcFrame method.
+	self
 		assertObject: copyFrame receiver
 		in: copyFrame process
 		isOrIsCopyOf: srcFrame receiver
 		in: srcFrame process
 		visited: anIdentitySet.
-	self assert: copyFrame argumentCount = srcFrame argumentCount.
+	self assert: copyFrame argumentCount equals: srcFrame argumentCount.
 	1 to: copyFrame argumentCount
 		do: 
-			[:i | 
-			self 
+			[:i |
+			self
 				assertObject: (copyFrame argAt: i)
 				in: copyFrame process
 				isOrIsCopyOf: (srcFrame argAt: i)
 				in: srcFrame process
 				visited: anIdentitySet].
 	srcBase := copyFrame basicBP.
-	srcBase isInteger 
-		ifTrue: [self assert: copyFrame bp == srcFrame bp]
+	srcBase isInteger
+		ifTrue: [self assert: copyFrame bp identicalTo: srcFrame bp]
 		ifFalse: 
-			[(srcBase isKindOf: BlockClosure) 
+			[(srcBase isKindOf: BlockClosure)
 				ifTrue: 
-					[self 
+					[self
 						assertBlockFrame: copyFrame
 						isCopyOf: srcFrame
 						visited: anIdentitySet]
 				ifFalse: 
-					[self assert: (srcBase isKindOf: self methodContextClass).
-					self 
+					[self assert: srcBase isKindOf: self methodContextClass.
+					self
 						assertContextFrame: copyFrame
 						isCopyOf: srcFrame
 						visited: anIdentitySet]]!
@@ -301,15 +301,15 @@ testCopy
 		display: copyProcess suspendedFrame;
 		cr.
 "
-	self 
+	self
 		assertProcess: (shared at: #copyProcess)
 		copiedCorrectlyFrom: (shared at: #sourceProcess)
 		below: nil.
-	self assert: (shared at: #state) == 0.
+	self assert: (shared at: #state) identicalTo: 0.
 	sem signal.
-	self assert: (shared at: #state) == 1.
+	self assert: (shared at: #state) identicalTo: 1.
 	(shared at: #copyProcess) resume.
-	self assert: (shared at: #state) == 2!
+	self assert: (shared at: #state) identicalTo: 2!
 
 testCopyExceptionHandlers
 	| shared waitForCopy |
@@ -319,12 +319,12 @@ testCopyExceptionHandlers
 	shared at: #state
 		put: (
 			[shared at: #copyProcess put: (shared at: #sourceProcess) copy.
-			Processor activeProcess == (shared at: #sourceProcess) 
+			Processor activeProcess == (shared at: #sourceProcess)
 				ifTrue: 
-					[self assert: (shared at: #copyProcess) state == #suspended.
+					[self assert: (shared at: #copyProcess) state identicalTo: #suspended.
 					self assertStack: (shared at: #copyProcess) topFrame sender
 						copiedCorrectlyFrom: (shared at: #sourceProcess) topFrame sender].
-			HRESULTError signalWith: -1] 
+			HRESULTError signalWith: -1]
 					on: HRESULTError
 					do: [:ex | ex return: Processor activeProcess identityHash]).
 	Trace
@@ -335,11 +335,11 @@ testCopyExceptionHandlers
 	Trace
 		display: Processor activeProcess id printString , ': 2 ' , String lineDelimiter;
 		flush.
-	self assert: (shared at: #state) == Processor activeProcess identityHash.
+	self assert: (shared at: #state) identicalTo: Processor activeProcess identityHash.
 	"N.B. Don't terminate the copy process, as this will run the unwind handlers, one of which
 	disconnects the TestRunner from update events so it stops refreshing and showing progress.
 	Also don't let if finalize and terminate itself"
-	(shared at: #copyProcess) == Processor activeProcess 
+	(shared at: #copyProcess) == Processor activeProcess
 		ifTrue: 
 			[waitForCopy signal.
 			Processor activeProcess beUnfinalizable.
@@ -359,18 +359,18 @@ testCopyExceptionHandlers
 	Trace
 		display: Processor activeProcess id printString , ': 6 ' , String lineDelimiter;
 		flush.
-	self assert: (shared at: #state) == (shared at: #copyProcess) identityHash.
+	self assert: (shared at: #state) identicalTo: (shared at: #copyProcess) identityHash.
 	Trace
 		display: Processor activeProcess id printString , ': 7 ' , String lineDelimiter;
-		flush.!
+		flush!
 
 testCopyNestedBlocks
 	| sem sourceProcess copyProcess |
 	sem := Semaphore new.
 	sourceProcess := self forkNested: sem.
 	copyProcess := sourceProcess copy.
-	self assert: copyProcess state == #suspended.
-	self 
+	self assert: copyProcess state identicalTo: #suspended.
+	self
 		assertProcess: copyProcess
 		copiedCorrectlyFrom: sourceProcess
 		below: nil!
@@ -387,46 +387,45 @@ testCopyWhileUnwinding
 	err signal] ensure: 
 				[shared at: #copyProcess put: Processor activeProcess copy.
 				shared at: #state put: (shared at: #state) + 1.
-				sem signal]] 
+				sem signal]]
 			on: err
-			do: [:ex | shared at: #state put: (shared at: #state) + 1]] 
+			do: [:ex | shared at: #state put: (shared at: #state) + 1]]
 			forkAt: 3.
-	self assert: (shared at: #state) = 1.
+	self assert: (shared at: #state) equals: 1.
 	sem wait.
-	self assert: (shared at: #state) = 4.
+	self assert: (shared at: #state) equals: 4.
 	(shared at: #copyProcess) resume.
 	sem wait.
-	self assert: (shared at: #state) = 5!
+	self assert: (shared at: #state) equals: 5!
 
 testForkedBlockHomeFrame
 	"Bug #52 - access to out-of-proc home frame, e.g. when debugging ProgressDialog operation block"
 
-	[self assert: (Processor activeProcess topFrame homeFrame) isNil] fork. Processor sleep: 10!
+	[self assertIsNil: Processor activeProcess topFrame homeFrame] fork.
+	Processor sleep: 10!
 
 testOverlappedErrno
 	self assert: (CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
-	self assert: Processor activeProcess errno = 2!
+	self assert: Processor activeProcess errno equals: 2!
 
 testOverlappedLastError
 	| temp1 temp2 |
 	KernelLibrary default setLastError: 0.
-	self assert: KernelLibrary default getLastError = 0.
+	self assert: KernelLibrary default getLastError equals: 0.
 	KernelLibrary default threadSetLastError: 0.
-	self assert: KernelLibrary default threadGetLastError = 0.
+	self assert: KernelLibrary default threadGetLastError equals: 0.
 	temp1 := File temporaryFilename.
 	temp2 := File temporaryFilename.
 	File
 		delete: temp1;
 		delete: temp2.
-	self 
+	self
 		should: [File copy: temp1 to: temp2]
 		raise: Win32Error
-		matching: 
-			[:ex | 
-			ex statusCode = 2].
-	self assert: Processor activeProcess lastError = 2.
-	self assert: KernelLibrary default getLastError = 0.
-	self assert: KernelLibrary default threadGetLastError = 2!
+		matching: [:ex | ex statusCode = 2].
+	self assert: Processor activeProcess lastError equals: 2.
+	self assert: KernelLibrary default getLastError equals: 0.
+	self assert: KernelLibrary default threadGetLastError equals: 2!
 
 testSchedulerTermination
 	| process sema gotHere sema2 |
@@ -455,11 +454,11 @@ testSeparateContexts
 			x := x + 1] forkAt: Processor userInterruptPriority.
 	Processor sleep: 1.
 	copyProcess := sourceProcess copy.
-	self assert: x == 0.
+	self assert: x identicalTo: 0.
 	sem signal.
-	self assert: x == 1.
+	self assert: x identicalTo: 1.
 	copyProcess resume.
-	self assert: x == 1!
+	self assert: x identicalTo: 1!
 
 testUnwindFromActiveProcess
 	| sema process |

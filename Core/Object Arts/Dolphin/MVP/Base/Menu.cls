@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
@@ -103,10 +103,10 @@ basicRealize
 	| info |
 	super basicRealize.
 	self applyFlags.
-	info := MENUITEMINFOA new.
+	info := MENUITEMINFOW new.
 	items keysAndValuesDo: 
-			[:i :each | 
-			each 
+			[:i :each |
+			each
 				insertIntoMenu: self
 				at: i
 				info: info]!
@@ -328,12 +328,12 @@ initialize
 	flags := self defaultFlags!
 
 insertIntoMenu: aMenuItem at: anInteger
-	self isRealized 
+	self isRealized
 		ifTrue: 
-			[aMenuItem 
+			[aMenuItem
 				insertIntoMenu: self
 				at: anInteger - 1
-				info: MENUITEMINFOA new]!
+				info: MENUITEMINFOW new]!
 
 insertIntoMenu: parentMenu at: position info: aMENUITEMINFO 
 	"Append the receiver to the <Menu>, parentMenu, which can be nil if this is to be a 
@@ -517,7 +517,7 @@ printOn: aStream
 		basicPrint: self;
 		nextPut: $(; display: self text; nextPut: $)!
 
-queryAllAlong: aCommandPolicy 
+queryAllAlong: aCommandPolicy
 	"Private - Query the command status for the receiver and each of its command items and
 	immediate sub-menus using the specified <commandPolicy>. The checked/enabled/default status
 	of each item is updated to reflect the command status (as determined by the <commandTarget>s
@@ -531,17 +531,17 @@ queryAllAlong: aCommandPolicy
 	| query itemInfo |
 	query := self queryAlong: aCommandPolicy.
 	query isEnabled ifTrue: [query receiver onAboutToDisplayMenu: self].
-	itemInfo := MENUITEMINFOA new.
+	itemInfo := MENUITEMINFOW new.
 	items keysAndValuesDo: 
-			[:i :menuItem | 
+			[:i :menuItem |
 			| itemQuery |
 			itemQuery := menuItem queryAlong: aCommandPolicy.
 			"Set the checked and enabled states, update the text (if desired), etc"
-			itemInfo 
+			itemInfo
 				menuItem: menuItem
 				text: itemQuery text
-				state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED]) 
-						| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED]) 
+				state: (itemQuery isChecked ifTrue: [MFS_CHECKED] ifFalse: [MFS_UNCHECKED])
+						| (itemQuery isEnabled ifTrue: [MFS_ENABLED] ifFalse: [MFS_DISABLED])
 							| (itemQuery isDefault ifTrue: [MFS_DEFAULT] ifFalse: [0]).
 			self setItem: i info: itemInfo]!
 

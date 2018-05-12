@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #InlineParameterTest
 	instanceVariableNames: ''
@@ -18,20 +18,18 @@ testInlineBlockFailure
 
 testInlineLiteralArray
 	| refactoring class |
-	refactoring := InlineParameterRefactoring 
+	refactoring := InlineParameterRefactoring
 				inlineParameter: 'aSymbol'
 				in: RefactoryTestDataApp
 				selector: ('inline' , 'ParameterMethod:') asSymbol.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #inlineParameterMethod) = (RBParser 
-						parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
-	self 
-		assert: (class parseTreeFor: #sendInlineParameterMethod) = (RBParser 
-						parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
-	self deny: (class 
-				directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)! !
+	self assert: (class parseTreeFor: #inlineParameterMethod)
+		equals: (RBParser
+				parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
+	self assert: (class parseTreeFor: #sendInlineParameterMethod)
+		equals: (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
+	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)! !
 !InlineParameterTest categoriesFor: #testInlineBlockFailure!failure tests!public! !
 !InlineParameterTest categoriesFor: #testInlineLiteralArray!public!tests! !
 

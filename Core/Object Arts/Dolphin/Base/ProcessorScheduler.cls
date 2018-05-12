@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProcessorScheduler
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
@@ -184,6 +184,16 @@ crtFault: aByteArray
 	"The C runtime library will have set the errno, so we can just signal a CRTError and let it
 	pick up the code"
 	^CRTError signal!
+
+debugBreak: interruptArg
+	"Private - A halt instruction was encountered.
+	Note that async events are not re-enabled if the event is forwarded to a debugger."
+
+	| debugger |
+	debugger := activeProcess debugger.
+	debugger isNil
+		ifTrue: [self enableInterrupts]
+		ifFalse: [debugger onBreak: interruptArg]!
 
 enableAsyncEvents: aBoolean 
 	"Private - Enable/disable asynchronous interrupts and semaphore signals. This does not
@@ -646,6 +656,7 @@ zeroDivide: interruptArg
 !ProcessorScheduler categoriesFor: #constWrite:!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #constWriteSignal!accessing!private! !
 !ProcessorScheduler categoriesFor: #crtFault:!interrupts-handling!private! !
+!ProcessorScheduler categoriesFor: #debugBreak:!development!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #enableAsyncEvents:!interrupts-status!private! !
 !ProcessorScheduler categoriesFor: #enableInterrupts!interrupts-status!private! !
 !ProcessorScheduler categoriesFor: #forkMain!private!processes-accessing! !
@@ -716,7 +727,7 @@ initializeInterruptSelectors
 	Note that we have to store a copy of the literal array (which is marked immutable by the compiler) because the debugger adds/removes
 	some interrupt selectors when it is installed/uninstalled."
 
-	InterruptSelectors := #(#terminate: #stackOverflow: #unusedInterrupt: #unusedInterrupt: #gpFault: #idlePanic: #interruptWith: #onStartup: #kill: #fpException: #userBreak: #zeroDivide: #otOverflow: #constWrite: #win32Fault: #fpStackFault: #noMemory: #hospiceOverflow: #bereavedOverflow: #crtFault:) 
+	InterruptSelectors := #(#terminate: #stackOverflow: #debugBreak: #unusedInterrupt: #gpFault: #idlePanic: #interruptWith: #onStartup: #kill: #fpException: #userBreak: #zeroDivide: #otOverflow: #constWrite: #win32Fault: #fpStackFault: #noMemory: #hospiceOverflow: #bereavedOverflow: #crtFault:) 
 				copy!
 
 interruptSelectors

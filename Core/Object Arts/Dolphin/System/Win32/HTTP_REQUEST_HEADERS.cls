@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	instanceVariableNames: ''

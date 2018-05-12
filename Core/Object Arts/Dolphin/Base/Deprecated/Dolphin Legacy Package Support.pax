@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Legacy Package Support'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Legacy Package Support.
@@ -12,6 +12,7 @@ package basicPackageVersion: '6.1.1'.
 package methodNames
 	add: #Package -> #basicLoadVersion4:filer:;
 	add: #Package -> #errorUnknownFileVersion:;
+	add: #Package -> #fileInClassDefinitions:;
 	add: #Package -> #initializeLegacyResources;
 	add: #Package -> #loadGlobalsFromFiler:;
 	add: #Package -> #loadLegacyPAC:;
@@ -23,6 +24,8 @@ package methodNames
 	add: #Package -> #loadVersion4:filer:;
 	add: #Package -> #loadVersion5:filer:;
 	add: #Package -> #resourceNames;
+	add: #Package -> #script:;
+	add: #Package -> #script:put:;
 	add: #Package -> #versionLookup;
 	add: 'Package class' -> #name:comment:;
 	yourself.
@@ -69,6 +72,21 @@ errorUnknownFileVersion: foundVersion
 			'Unknown package file version found ', foundVersion displayString,
 			'. Current version is ', self class packageFileVersion displayString!
 
+fileInClassDefinitions: aFileStream 
+	"Private - Load all package classes from the filestream up to the end marker.
+	Note that this is only used for loading binary legacy (pre 4.0) packages."
+
+	| filer |
+	aFileStream beText.
+	filer := ChunkSourceFiler on: aFileStream.
+	
+	[filer atEnd ifTrue: [^self errorFileCorrupt].
+	(Compiler evaluate: filer nextChunk logged: true) = 'end-class-definition'] 
+			whileFalse.
+	aFileStream skipSeparators.
+	aFileStream next ~= $X ifTrue: [^self errorFileCorrupt].
+	aFileStream beBinary!
+
 initializeLegacyResources
 	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
 	below to it. Obviously, those resources that already belong to classes in the package will be ok, so really
@@ -92,6 +110,7 @@ loadLegacyPAC: aReadStream
 	(mixed STB binary and source text) on the <readableStream> argument, aReadStream."
 
 	| binaryFiler version selector |
+	aReadStream beBinary.
 	binaryFiler := STBInFiler on: aReadStream.
 
 	"Load the package. We ignore this (since it represents the receiver)."
@@ -208,6 +227,14 @@ resourceNames
 	#deprecated.
 	^Set new!
 
+script: scriptSymbol
+	#deprecated.	"In 4.0, but needed to load some old format packages"
+	self scriptAt: scriptSymbol!
+
+script: scriptSymbol put: aString 
+	#deprecated.	"In 4.0, but needed to load some old format packages"
+	self scriptAt: scriptSymbol put: aString!
+
 versionLookup
 	"This dictionary is used for loading legacy packages"
 
@@ -221,6 +248,7 @@ versionLookup
 		yourself	"same format as 4, except VM version loaded here")	"same format as 4, except VM version loaded here"! !
 !Package categoriesFor: #basicLoadVersion4:filer:!binary filing!private! !
 !Package categoriesFor: #errorUnknownFileVersion:!binary filing!exceptions!private! !
+!Package categoriesFor: #fileInClassDefinitions:!development!private!source filing! !
 !Package categoriesFor: #initializeLegacyResources!helpers!private! !
 !Package categoriesFor: #loadGlobalsFromFiler:!binary filing!private! !
 !Package categoriesFor: #loadLegacyPAC:!binary filing!private! !
@@ -232,6 +260,8 @@ versionLookup
 !Package categoriesFor: #loadVersion4:filer:!binary filing!private! !
 !Package categoriesFor: #loadVersion5:filer:!binary filing!private! !
 !Package categoriesFor: #resourceNames!accessing!public! !
+!Package categoriesFor: #script:!operations!public! !
+!Package categoriesFor: #script:put:!operations!public! !
 !Package categoriesFor: #versionLookup!binary filing!constants!private! !
 
 !Package class methodsFor!

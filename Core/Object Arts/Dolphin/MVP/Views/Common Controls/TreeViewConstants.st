@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #TreeViewConstants put: (PoolConstantsDictionary named: #TreeViewConstants)!
 TreeViewConstants at: 'TV_FIRST' put: 16r1100!
@@ -45,59 +45,42 @@ TreeViewConstants at: 'TVIS_SELECTED' put: 16r2!
 TreeViewConstants at: 'TVIS_STATEIMAGEMASK' put: 16rF000!
 TreeViewConstants at: 'TVIS_USERMASK' put: 16rF000!
 TreeViewConstants at: 'TVM_DELETEITEM' put: 16r1101!
-TreeViewConstants at: 'TVM_EDITLABELA' put: 16r110E!
+TreeViewConstants at: 'TVM_EDITLABELW' put: 16r1141!
 TreeViewConstants at: 'TVM_ENSUREVISIBLE' put: 16r1114!
 TreeViewConstants at: 'TVM_EXPAND' put: 16r1102!
 TreeViewConstants at: 'TVM_GETCOUNT' put: 16r1105!
 TreeViewConstants at: 'TVM_GETIMAGELIST' put: 16r1108!
 TreeViewConstants at: 'TVM_GETINDENT' put: 16r1106!
-TreeViewConstants at: 'TVM_GETITEMA' put: 16r110C!
 TreeViewConstants at: 'TVM_GETITEMRECT' put: 16r1104!
 TreeViewConstants at: 'TVM_GETITEMW' put: 16r113E!
 TreeViewConstants at: 'TVM_GETNEXTITEM' put: 16r110A!
 TreeViewConstants at: 'TVM_GETVISIBLECOUNT' put: 16r1110!
 TreeViewConstants at: 'TVM_HITTEST' put: 16r1111!
-TreeViewConstants at: 'TVM_INSERTITEMA' put: 16r1100!
 TreeViewConstants at: 'TVM_INSERTITEMW' put: 16r1132!
 TreeViewConstants at: 'TVM_SELECTITEM' put: 16r110B!
 TreeViewConstants at: 'TVM_SETBKCOLOR' put: 16r111D!
 TreeViewConstants at: 'TVM_SETIMAGELIST' put: 16r1109!
 TreeViewConstants at: 'TVM_SETINDENT' put: 16r1107!
-TreeViewConstants at: 'TVM_SETITEMA' put: 16r110D!
 TreeViewConstants at: 'TVM_SETITEMW' put: 16r113F!
 TreeViewConstants at: 'TVM_SETTEXTCOLOR' put: 16r111E!
 TreeViewConstants at: 'TVN_ASYNCDRAW' put: -16r1A4!
-TreeViewConstants at: 'TVN_BEGINDRAGA' put: -16r197!
 TreeViewConstants at: 'TVN_BEGINDRAGW' put: -16r1C8!
-TreeViewConstants at: 'TVN_BEGINLABELEDITA' put: -16r19A!
 TreeViewConstants at: 'TVN_BEGINLABELEDITW' put: -16r1CB!
-TreeViewConstants at: 'TVN_BEGINRDRAGA' put: -16r198!
 TreeViewConstants at: 'TVN_BEGINRDRAGW' put: -16r1C9!
-TreeViewConstants at: 'TVN_DELETEITEMA' put: -16r199!
 TreeViewConstants at: 'TVN_DELETEITEMW' put: -16r1CA!
-TreeViewConstants at: 'TVN_ENDLABELEDITA' put: -16r19B!
 TreeViewConstants at: 'TVN_ENDLABELEDITW' put: -16r1CC!
 TreeViewConstants at: 'TVN_FIRST' put: -16r190!
-TreeViewConstants at: 'TVN_GETDISPINFOA' put: -16r193!
 TreeViewConstants at: 'TVN_GETDISPINFOW' put: -16r1C4!
-TreeViewConstants at: 'TVN_GETINFOTIPA' put: -16r19D!
 TreeViewConstants at: 'TVN_GETINFOTIPW' put: -16r19E!
-TreeViewConstants at: 'TVN_ITEMCHANGEDA' put: -16r1A2!
 TreeViewConstants at: 'TVN_ITEMCHANGEDW' put: -16r1A3!
-TreeViewConstants at: 'TVN_ITEMCHANGINGA' put: -16r1A0!
 TreeViewConstants at: 'TVN_ITEMCHANGINGW' put: -16r1A1!
-TreeViewConstants at: 'TVN_ITEMEXPANDEDA' put: -16r196!
 TreeViewConstants at: 'TVN_ITEMEXPANDEDW' put: -16r1C7!
-TreeViewConstants at: 'TVN_ITEMEXPANDINGA' put: -16r195!
 TreeViewConstants at: 'TVN_ITEMEXPANDINGW' put: -16r1C6!
 TreeViewConstants at: 'TVN_KEYDOWN' put: -16r19C!
 TreeViewConstants at: 'TVN_LAST' put: -16r1F3!
-TreeViewConstants at: 'TVN_SELCHANGEDA' put: -16r192!
 TreeViewConstants at: 'TVN_SELCHANGEDW' put: -16r1C3!
 TreeViewConstants at: 'TVN_SELCHANGING' put: -16r191!
-TreeViewConstants at: 'TVN_SELCHANGINGA' put: -16r191!
 TreeViewConstants at: 'TVN_SELCHANGINGW' put: -16r1C2!
-TreeViewConstants at: 'TVN_SETDISPINFOA' put: -16r194!
 TreeViewConstants at: 'TVN_SETDISPINFOW' put: -16r1C5!
 TreeViewConstants at: 'TVN_SINGLEEXPAND' put: -16r19F!
 TreeViewConstants at: 'TVS_CHECKBOXES' put: 16r100!

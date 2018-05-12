@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'DolphinSure'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk "DolphinSure" encryption and signature support.
@@ -48,6 +48,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\Base\Dolphin';
+	add: '..\System\Random\Dolphin Random Stream';
 	add: '..\Registry\Dolphin Registry Access';
 	yourself).
 

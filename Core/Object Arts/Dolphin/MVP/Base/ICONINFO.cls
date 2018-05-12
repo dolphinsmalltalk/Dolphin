@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
@@ -89,7 +89,7 @@ yHotspot
 !ICONINFO class methodsFor!
 
 defineFields
-	"Define the fields of the Win32 ICONINFO�structure.
+	"Define the fields of the Win32 ICONINFO structure.
 
 		ICONINFO compileDefinition
 

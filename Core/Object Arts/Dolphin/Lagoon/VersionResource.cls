@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
@@ -271,7 +271,7 @@ writeHeaderTo: aWriteStream type: wType key: keyString value: valueBytes length:
 		nextPutAll: (word value: wLength) bytes;
 		nextPutAll: (word value: wValueLength) bytes;
 		nextPutAll: (word value: wType) bytes;
-		next: szKey byteSize
+		next: keySize
 			putAll: szKey yourAddress asExternalAddress
 			startingAt: 1;
 		padTo: 4 put: 0;
@@ -329,15 +329,16 @@ writeTextHeaderTo: aWriteStream key: keyString value: valueString
 				value: #[]
 				length: 0]
 		ifFalse: 
-			[| valueBytes szValue |
+			[| valueBytes length szValue |
 			szValue := valueString asUtf16String.
-			valueBytes := ByteArray fromAddress: szValue yourAddress length: szValue byteSize.
+			length := valueString size + 1.
+			valueBytes := ByteArray fromAddress: szValue yourAddress length: length << 1.
 			self
 				writeHeaderTo: aWriteStream
 				type: 1
 				key: keyString
 				value: valueBytes
-				length: valueString size + 1]!
+				length: length]!
 
 writeTranslationsTo: aWriteStream
 	"Private - Append String blocks containing the receiver's version info strings to

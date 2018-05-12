@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IdbToolShell subclass: #ILLibraryShell
 	instanceVariableNames: 'libraryWorkspace libraryFilename libraryStatus imageStatus modifiedStatus'
@@ -24,7 +24,7 @@ for
 Dolphin Smalltalk 6.x
 
 Version 6a
-� 2005 Ian Bartholomew
+© 2005 Ian Bartholomew
 http://www.idb.me.uk'!
 
 addImage
@@ -110,7 +110,7 @@ exportExe
 	filename isNil ifTrue: [^self].
 	Cursor wait showWhile: 
 			[| fileStream |
-			fileStream := (FileStream readWrite: filename) beBinary.
+			fileStream := (FileStream readWrite: filename text: false).
 			[self model exportExeTo: fileStream] ensure: [fileStream close]]!
 
 exportIcon

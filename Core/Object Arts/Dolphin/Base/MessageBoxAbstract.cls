@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MessageBoxAbstract
 	instanceVariableNames: 'text caption owner'
@@ -71,10 +71,6 @@ iconStyleFlag: anInteger
 
 	^self subclassResponsibility!
 
-notify
-	#deprecated.
-	self iconStyle: #notify!
-
 notify: notifyString 
 	"Display a bubble message box with the current caption, the
 	notification icon, and the specified informational message."
@@ -112,10 +108,6 @@ text: aString
 
 	text := aString!
 
-warning
-	#deprecated.
-	self iconStyle: #warning!
-
 warning: warningString 
 	"Display a Windows message box for the receiver with the currently configured caption,
 	and the warning message, warningString, and an OK button. Answer the receiver (after 
@@ -133,7 +125,6 @@ warning: warningString
 !MessageBoxAbstract categoriesFor: #iconStyle:!accessing-styles!public! !
 !MessageBoxAbstract categoriesFor: #iconStyleFlag!accessing-styles!private! !
 !MessageBoxAbstract categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!MessageBoxAbstract categoriesFor: #notify!modes!public! !
 !MessageBoxAbstract categoriesFor: #notify:!operations!public! !
 !MessageBoxAbstract categoriesFor: #open!displaying!public! !
 !MessageBoxAbstract categoriesFor: #owner!accessing!public! !
@@ -141,17 +132,15 @@ warning: warningString
 !MessageBoxAbstract categoriesFor: #ownerHandle!accessing!private! !
 !MessageBoxAbstract categoriesFor: #text!accessing!public! !
 !MessageBoxAbstract categoriesFor: #text:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #warning!modes!public! !
 !MessageBoxAbstract categoriesFor: #warning:!operations!public! !
 
 !MessageBoxAbstract class methodsFor!
 
-defaultCaption: anInteger
+defaultCaption: aSymbol
 	"Private - Answer a suitable default caption based on style of the 
 	message box."
 
-	^DefaultCaptions at: anInteger ifAbsent: [
-		SessionManager current applicationName]!
+	^DefaultCaptions at: aSymbol ifAbsent: [SessionManager current applicationName]!
 
 errorMsg: aString 
 	"Display a message with the default error caption, standard error icon, the specified
@@ -184,7 +173,7 @@ initialize
 				yourself.
 
 	"Where there is no entry in the table for the message box type, the application name is used."
-	DefaultCaptions := (LookupTable new)
+	DefaultCaptions := (IdentityDictionary new)
 				at: #confirm put: 'Please confirm...';
 				at: #notify put: 'Note';
 				shrink;

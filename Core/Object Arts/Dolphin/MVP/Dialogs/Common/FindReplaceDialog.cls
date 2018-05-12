@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 FindDialog subclass: #FindReplaceDialog
 	instanceVariableNames: 'replaceWith'
@@ -25,7 +25,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	replaceWith := String new: 256.!
+	replaceWith := Utf16String newFixed: 256!
 
 prepareStruct
 	"Private - Initialize the parameter structure to be passed to the Win32
@@ -40,12 +40,12 @@ prepareStruct
 		wReplaceWithLen: self replaceWith size!
 
 replaceWith
-	"Private - Answer the receievrs replceWith String."
+	"Private - Answer the receiver's replaceWith String."
 
 	^replaceWith!
 
 replaceWith: aString
-	"Private - Set the receivers replaceWith String to include aString."
+	"Private - Set the receiver's replaceWith String to include aString."
 
 	| size |
 	size := self replaceWith size min: aString size.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusGraphicsFromHDCInitializerTest
 	instanceVariableNames: ''
@@ -20,15 +20,15 @@ setUp
 
 testCreateHandle
 	| bitmap canvas |
-	bitmap := Bitmap 
+	bitmap := Bitmap
 				gdipCopyOfIcon: GdiplusBitmap icon
 				extent: 32 @ 32
 				backcolor: Color black.
 	canvas := bitmap canvas.
 	model canvas: canvas.
 	model createHandle.
-	self assert: constructorArgs size = 2.
-	self assert: constructorArgs first == canvas asParameter.
+	self assert: constructorArgs size equals: 2.
+	self assert: constructorArgs first identicalTo: canvas asParameter.
 	self assertLastArgIsHandle! !
 !GdiplusGraphicsFromHDCInitializerTest categoriesFor: #gdipCreateFromHDC:graphics:!accessing!public! !
 !GdiplusGraphicsFromHDCInitializerTest categoriesFor: #setUp!public!setup! !

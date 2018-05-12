@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
@@ -133,7 +133,7 @@ maskIn: anInteger
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
 
-	text := Utf16String new: anInteger.
+	text := Utf16String newFixed: anInteger.
 	self
 		pszText: text;
 		cchTextMax: anInteger;
@@ -160,11 +160,11 @@ text
 	^text!
 
 text: aString
-	"Sets contents' pszMember to aString. We also hang on to it in our
+	"Sets contents' pszMember to a Utf16String. We also hang on to it in our
 	text instance var to ensure that its lifetime is sufficiently long
 	for us to safely use it."
 
-	text := Utf16String fromString: aString displayString.
+	text := aString displayString asUtf16String.
 	self
 		pszText: text;
 		cchTextMax: text size;

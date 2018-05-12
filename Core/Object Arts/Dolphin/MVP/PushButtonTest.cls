@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PushButtonTest
 	instanceVariableNames: 'shell shellButtonA shellButtonB dialog dialogButtonA dialogButtonB'
@@ -11,9 +11,8 @@ PushButtonTest comment: ''!
 !PushButtonTest methodsFor!
 
 assertButton: aPushButton isDefault: aBoolean
-	self assert: aPushButton isDefault=aBoolean.
-	aBoolean ifTrue: [
-		self assert: aPushButton topShell defaultButtonId=aPushButton id ]!
+	self assert: aPushButton isDefault equals: aBoolean.
+	aBoolean ifTrue: [self assert: aPushButton topShell defaultButtonId equals: aPushButton id]!
 
 setUp
 	super setUp.

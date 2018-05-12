@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #GdiplusConstants put: (PoolConstantsDictionary named: #GdiplusConstants)!
 GdiplusConstants at: 'Aborted' put: 16r9!

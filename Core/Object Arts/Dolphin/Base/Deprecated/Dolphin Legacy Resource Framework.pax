@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Legacy Resource Framework'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Legacy Resource Framework.

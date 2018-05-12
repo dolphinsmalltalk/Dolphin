@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #IntegerTest
 	instanceVariableNames: ''
@@ -18,25 +18,24 @@ testClassReadFromRadix
 	| stream |
 	0 to: 35
 		do: 
-			[:i | 
-			self 
-				assert: (Integer readFrom: (Character digitValue: i) asString readStream radix: 36) = i].
-	2 to: 36 do: [:i | self assert: (Integer readFrom: '10' readStream radix: i) = i].
+			[:i |
+			self assert: (Integer readFrom: (Character digitValue: i) asString readStream radix: 36) equals: i].
+	2 to: 36 do: [:i | self assert: (Integer readFrom: '10' readStream radix: i) equals: i].
 	"Not an error if digit out of range of radix, just terminates the integer"
 	stream := '20' readStream.
-	self assert: (Integer readFrom:  stream radix: 2) = 0.
-	self assert: stream position = 0.
+	self assert: (Integer readFrom: stream radix: 2) equals: 0.
+	self assert: stream position equals: 0.
 	stream := '12' readStream.
-	self assert: (Integer readFrom: stream radix: 2) = 1.
-	self assert: stream position = 1.!
+	self assert: (Integer readFrom: stream radix: 2) equals: 1.
+	self assert: stream position equals: 1!
 
 testFactorial
 	#(0 1 2 3 4 5 6 7 8 9 10 11 97 100 101 1000 1001) do: 
-			[:each | 
+			[:each |
 			| factorial |
 			factorial := 1.
 			2 to: each do: [:i | factorial := i * factorial].
-			self assert: factorial = each factorial2p].
+			self assert: factorial equals: each factorial2p].
 	self should: [-1 factorial] raise: Error!
 
 testIndexedAccess
@@ -75,23 +74,23 @@ testNew
 testPrimesUpTo
 	| primes |
 	primes := Integer primesUpTo: 100.
-	self assert: primes asArray 
-				= #(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97)!
+	self assert: primes asArray
+		equals: #(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97)!
 
 testSetBit
-	1 to: 128 do: [:i | self assert: (0 setBit: i) = (2 raisedToInteger: i - 1)].
+	1 to: 128 do: [:i | self assert: (0 setBit: i) equals: (2 raisedToInteger: i - 1)].
 	0 to: 128
 		do: 
-			[:twoPower | 
+			[:twoPower |
 			| i |
 			i := 2 raisedToInteger: twoPower.
 			1 to: 128
 				do: 
-					[:j | 
+					[:j |
 					| expected |
 					expected := 2 raisedToInteger: j - 1.
 					j - 1 = twoPower ifFalse: [expected := expected + i].
-					self assert: (i setBit: j) = expected]]!
+					self assert: (i setBit: j) equals: expected]]!
 
 testTwoComplementRightShift
 	| large small |

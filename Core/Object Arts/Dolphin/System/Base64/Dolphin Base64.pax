@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Base64'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Base64 Codec

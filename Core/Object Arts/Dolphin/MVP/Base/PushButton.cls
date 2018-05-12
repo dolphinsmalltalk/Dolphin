@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommandButton subclass: #PushButton
 	instanceVariableNames: 'image isDefault note _reserved1 _reserved2'
@@ -212,12 +212,13 @@ setDefault: aBoolean
 	self topShell view setDefaultButton: self state: aBoolean!
 
 setNote
+	| text |
 	(self style = #link and: [SystemMetrics current hasButtonNotes]) ifFalse: [^self].
+	text := self note asUtf16String.
 	(self
 		sendMessage: BCM_SETNOTE
 		wParam: 0
-		lpParam: self note asUtf16String) == 0
-		ifTrue: [Win32Error signal]!
+		lpParam: text) == 0 ifTrue: [Win32Error signal]!
 
 style
 	^ButtonStyleMap 

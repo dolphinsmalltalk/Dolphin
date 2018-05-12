@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #GUIDTest
 	instanceVariableNames: ''
@@ -10,30 +10,30 @@ GUIDTest comment: ''!
 !GUIDTest categoriesForClass!Tests-Network-UUID! !
 !GUIDTest methodsFor!
 
-assertNull: guid 
-	self assert: guid size = 16.
-	self assert: guid = GUID null.
+assertNull: guid
+	self assert: guid size equals: 16.
+	self assert: guid equals: GUID null.
 	self assert: guid isNull.
-	self assert: guid asString size = 38.
+	self assert: guid asString size equals: 38.
 	self assert: (guid asByteArray allSatisfy: [:each | each = 0])!
 
 testComparison
 	| guid1 guid2 |
 	guid1 := GUID newUnique.
 	guid2 := GUID newUnique.
-	self assert: guid1 = guid1.
-	self assert: guid2 = guid2.
-	self deny: guid1 = guid2.
-	self deny: guid1 hash = guid2 hash!
+	self assert: guid1 equals: guid1.
+	self assert: guid2 equals: guid2.
+	self deny: guid1 equals: guid2.
+	self deny: guid1 hash equals: guid2 hash!
 
 testFromString
 	| guid string src |
 	src := GUID newUnique.
 	string := src asString.
 	guid := GUID fromString: string.
-	self assert: guid size = 16.
-	self assert: guid asString size = 38.
-	self assert: src = guid!
+	self assert: guid size equals: 16.
+	self assert: guid asString size equals: 38.
+	self assert: src equals: guid!
 
 testFromStringNull
 	self assertNull: (GUID fromString: GUID null asString)!
@@ -41,9 +41,9 @@ testFromStringNull
 testNewUnique
 	| uuid |
 	uuid := GUID newUnique.
-	self assert: uuid size = 16.
+	self assert: uuid size equals: 16.
 	self deny: uuid isNull.
-	self assert: uuid asString size = 38!
+	self assert: uuid asString size equals: 38!
 
 testNull
 	self assertNull: GUID null!
@@ -53,11 +53,11 @@ testOrder
 			[| guid1 guid2 |
 			guid1 := GUID newUnique.
 			guid2 := GUID newUnique.
-			(guid1 asString last: 12) = (guid2 asString last: 12) 
+			(guid1 asString last: 12) = (guid2 asString last: 12)
 				ifTrue: 
 					[self assert: guid1 asInteger < guid2 asInteger.
 					self assert: guid2 asInteger > guid1 asInteger.
-					self deny: guid1 = guid2]]!
+					self deny: guid1 equals: guid2]]!
 
 testStoreOn
 	| subject stored |

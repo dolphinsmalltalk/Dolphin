@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'XmlPad'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk XmlPad Sample. 
@@ -10,6 +10,19 @@ Try me out with:
 
 XmlPad show'.
 
+package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAAASAQAABgAAAFhtbFBhZBIBAAAKAAAAWG1s
+UGFkLmV4ZZoAAAASAQAABgAAAFhtbFBhZFIAAAAUAAAAWG1sUGFkU2Vzc2lvbk1hbmFnZXL//ycA
+AAAAAAYDDwBWZXJzaW9uUmVzb3VyY2UGARAAVlNfRklYRURGSUxFSU5GT3IAAAA0AAAAvQTv/gAA
+AQABAAcAAQAAAAEABwABAAAAPwAAAAAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAAOoAAADwAAAAYgAA
+AAIAAAASAQAACAAAADA0MDkwNGIw6gAAAPAAAABiAAAADgAAABIBAAAOAAAATGVnYWxDb3B5cmln
+aHQSAQAAIwAAAENvcHlyaWdodCDCqSBPYmplY3QgQXJ0cyAxOTk3LTIwMTguEgEAABAAAABPcmln
+aW5hbEZpbGVuYW1lEgEAAAoAAABYbWxQYWQuZXhlEgEAAAsAAABQcm9kdWN0TmFtZRIBAAAhAAAA
+RG9scGhpbiBYbWxQYWQgU2FtcGxlIEFwcGxpY2F0aW9uEgEAAA4AAABQcm9kdWN0VmVyc2lvbhIB
+AAAHAAAANy4xLjAuMRIBAAAPAAAARmlsZURlc2NyaXB0aW9uEgEAACEAAABEb2xwaGluIFhtbFBh
+ZCBTYW1wbGUgQXBwbGljYXRpb24SAQAACwAAAEZpbGVWZXJzaW9uEgEAAAcAAAA3LjEuMC4xEgEA
+AAgAAABDb21tZW50cxIBAAAcAAAAUG93ZXJlZCBieSBEb2xwaGluIFNtYWxsdGFsa8oAAADQAAAA
+YgAAAAEAAAAGAgoARFdPUkRBcnJheXIAAAAEAAAACQSwBAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAA==').
 
 package classNames
 	add: #XmlFormatter;
@@ -20,7 +33,6 @@ package classNames
 package methodNames
 	add: #IXMLDOMEntityReference -> #formatAsText;
 	add: #IXMLDOMNode -> #formatAsText;
-	add: #SmalltalkSystem -> #dropXmlFile:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -30,7 +42,6 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\IDE\Base\Development System';
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog';
@@ -85,14 +96,6 @@ formatAsText
 formatAsText
 	^self isText! !
 !IXMLDOMNode categoriesFor: #formatAsText!public! !
-
-!SmalltalkSystem methodsFor!
-
-dropXmlFile: aString 
-	"Private - Open an XML file. Use the XmlPad for this."
-
-	XmlPad filename: aString! !
-!SmalltalkSystem categoriesFor: #dropXmlFile:!commands!private! !
 
 "End of package definition"!
 

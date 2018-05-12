@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringBrowserTest subclass: #ReferenceFinderTest
 	instanceVariableNames: ''
@@ -15,38 +15,38 @@ testAllPaths
 	paths := ReferenceFinder findAllPathsTo: RefactoringManager instance.
 	self deny: paths isEmpty.
 	paths do: 
-			[:each | 
-			self assert: each last == RefactoringManager instance.
-			self assert: each first == Smalltalk]!
+			[:each |
+			self assert: each last identicalTo: RefactoringManager instance.
+			self assert: each first identicalTo: Smalltalk]!
 
 testAllPathsToInstance
 	| paths |
 	paths := ReferenceFinder findAllPathsToInstanceOf: RefactoringManager.
 	self deny: paths isEmpty.
 	paths do: 
-			[:each | 
-			self assert: each last class == RefactoringManager.
-			self assert: each first == Smalltalk]!
+			[:each |
+			self assert: each last class identicalTo: RefactoringManager.
+			self assert: each first identicalTo: Smalltalk]!
 
 testFound
 	| path |
 	path := ReferenceFinder findPathTo: RefactoringManager instance.
-	self assert: path last == RefactoringManager instance.
+	self assert: path last identicalTo: RefactoringManager instance.
 	self assert: (path at: path size - 1) isVariableBinding.
-	#rbFix. "Dolphin's class pool variable names are strings, not Symbols"
-	self assert: (path at: path size - 1) key = 'Instance'.
-	self assert: path first == Smalltalk!
+	#rbFix.	"Dolphin's class pool variable names are strings, not Symbols"
+	self assert: (path at: path size - 1) key equals: 'Instance'.
+	self assert: path first identicalTo: Smalltalk!
 
 testNotFound
 	| path |
 	path := ReferenceFinder findPathTo: Object new.
-	self assert: path isNil!
+	self assertIsNil: path!
 
 testPathToInstance
 	| path |
 	path := ReferenceFinder findPathToInstanceOf: RefactoringManager.
-	self assert: path last class == RefactoringManager.
-	self assert: path first == Smalltalk! !
+	self assert: path last class identicalTo: RefactoringManager.
+	self assert: path first identicalTo: Smalltalk! !
 !ReferenceFinderTest categoriesFor: #testAllPaths!public!tests! !
 !ReferenceFinderTest categoriesFor: #testAllPathsToInstance!public!tests! !
 !ReferenceFinderTest categoriesFor: #testFound!*-RB fixes!public!tests! !

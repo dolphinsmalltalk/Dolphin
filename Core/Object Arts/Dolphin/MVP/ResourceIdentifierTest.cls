@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ResourceIdentifierTest
 	instanceVariableNames: 'tempViewResource'
@@ -36,7 +36,7 @@ testAssignResource
 	rid assign: self tempViewResource.
 	self assert: (self class respondsTo: #resource_Test_view).
 	readBack := rid resource.
-	self assert: readBack = self tempViewResource] 
+	self assert: readBack equals: self tempViewResource]
 			ensure: 
 				[self class class removeSelector: #resource_Test_view ifAbsent: [].
 				self assert: (self class respondsTo: #resource_Test_view) not]!
@@ -54,10 +54,10 @@ testResourceSelector
 	| rid selector |
 	rid := ResourceIdentifier class: self class name: 'Default view'.
 	selector := rid class selectorFromName: rid name.
-	self assert: selector == #resource_Default_view.
-	self assert: (rid class nameFromSelector: selector) = rid name.
+	self assert: selector identicalTo: #resource_Default_view.
+	self assert: (rid class nameFromSelector: selector) equals: rid name.
 	rid := ResourceIdentifier class: self class name: '1Default:view'.
-	self assert: (rid class selectorFromName: rid name) == #resource_1Defaultview! !
+	self assert: (rid class selectorFromName: rid name) identicalTo: #resource_1Defaultview! !
 !ResourceIdentifierTest categoriesFor: #setUp!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #tempViewResource!private!unit tests! !
 !ResourceIdentifierTest categoriesFor: #testAssignResource!public!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Keyboard
 	instanceVariableNames: 'state'
@@ -257,14 +257,14 @@ keyNameFromLParam: lParam
 	Answers nil if the key cannot be translated."
 
 	| buf len |
-	buf := Utf16String new: 32.
+	buf := Utf16String newFixed: 32.
 	len := UserLibrary default
 				getKeyNameText: lParam
 				lpString: buf
 				nSize: buf basicSize + 1.	"includes null term"
 	"Despite what the help says, the function does not call SetLastError(), so no
 	point signalling a system error here"
-	^len == 0 ifFalse: [(buf resize: len) asUtf8String]!
+	^len == 0 ifFalse: [buf resize: len]!
 
 keyNameFromScanCode: anInteger 
 	"Private - Answer the name of the specified key scan code.

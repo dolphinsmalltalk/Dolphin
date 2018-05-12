@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex'
@@ -338,7 +338,7 @@ nextChunk
 		ifTrue: 
 			[| next |
 			chunk := String writeStream: 512.
-			[(next := stream nextOrNil) isNil or: [next == $!! and: [(stream peekFor: $!!) not]]] whileFalse: 
+			[(next := stream nextAvailable) isNil or: [next == $!! and: [(stream peekFor: $!!) not]]] whileFalse: 
 					[((next == $\r and: 
 							[stream peekFor: $\n.
 							true]) or: [next == $\n])

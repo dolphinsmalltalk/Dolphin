@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MenuItem subclass: #CommandMenuItem
 	instanceVariableNames: 'commandDescription image _reserved'
@@ -135,7 +135,7 @@ itemWithId: anInteger
 	^anInteger = self id ifTrue: [self]!
 
 populateItemInfo: aMENUITEMINFO 
-	"Private - Copy the receiver's item information into the <MENUITEMINFOA> argument."
+	"Private - Copy the receiver's item information into the <MENUITEMINFOW> argument."
 
 	aMENUITEMINFO commandMenuItem: self!
 

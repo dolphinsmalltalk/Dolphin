@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
@@ -22,7 +22,7 @@ key
 	"Answer the <readableString> key of this version info block."
 
 	key isNil ifTrue: [
-		key := self szKey asString].
+		key := self szKey].
 	^key!
 
 printOn: target
@@ -63,9 +63,12 @@ valueString
 	"Answer the <Utf16String> value of the receiver (assumes this is a String block).
 	Note that the string will be zero terminated if non-empty."
 
-	^self wValueLength = 0
+	| words |
+	"wValueLength is in words (i.e. 16-bit units), not bytes. See https://msdn.microsoft.com/en-us/library/windows/desktop/ms646987(v=vs.85).aspx"
+	words := self wValueLength.
+	^words == 0
 		ifTrue: [Utf16String new]
-		ifFalse: [Utf16String fromAddress: self yourAddress asInteger + self valueOffset]!
+		ifFalse: [Utf16String fromAddress: self yourAddress asInteger + self valueOffset length: words - 1]!
 
 wLength
 	"Answer the receiver's wLength field as a Smalltalk object."

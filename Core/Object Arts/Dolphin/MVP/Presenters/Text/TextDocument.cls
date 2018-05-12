@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel'
@@ -80,6 +80,24 @@ onViewOpened
 			item model: statusModel].
 	self restoreUserSettings!
 
+openFile: pathString 
+	"Open the file with the <readableString> path, pathString, prompting in the standard Notepad
+	fashion if it doesn't exist."
+
+	(File exists: pathString) 
+		ifTrue: 
+			[self
+				filename: pathString;
+				fileLoad]
+		ifFalse: 
+			[| resp mb |
+			mb := MessageBox new.
+			mb
+				buttonStyle: #yesNoCancel.
+			resp := mb warning: ('Cannot find the <1p> file.<n><n>Do you want to create a new file?' 
+								expandMacrosWith: pathString).
+			resp == #yes ifTrue: [self filename: pathString] ifFalse: [resp == #cancel ifTrue: [self exit]]]!
+
 restoreUserSettings
 	"Private - Hook for subclass to override to restore user options from the registry or isolated storage, etc"
 
@@ -99,6 +117,7 @@ saveUserSettings
 !TextDocument categoriesFor: #model:!accessing!public! !
 !TextDocument categoriesFor: #onViewClosed!event handling!public! !
 !TextDocument categoriesFor: #onViewOpened!event handling!public! !
+!TextDocument categoriesFor: #openFile:!operations!public! !
 !TextDocument categoriesFor: #restoreUserSettings!operations!options!private! !
 !TextDocument categoriesFor: #saveUserSettings!helpers!private! !
 

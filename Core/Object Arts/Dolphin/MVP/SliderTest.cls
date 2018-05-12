@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #SliderTest
 	instanceVariableNames: ''
@@ -18,16 +18,16 @@ testRange
 	presenter hasAutoTicks: true.
 	0 to: 5
 		do: 
-			[:start | 
+			[:start |
 			start + 1 to: start + 10
 				do: 
-					[:stop | 
+					[:stop |
 					1 to: (stop - start) // 2
 						do: 
-							[:step | 
+							[:step |
 							range := start to: stop by: step.
 							presenter range: range.
-							self assert: presenter range = range]]]! !
+							self assert: presenter range equals: range]]]! !
 !SliderTest categoriesFor: #classToTest!helpers!private! !
 !SliderTest categoriesFor: #testRange!public!unit tests! !
 

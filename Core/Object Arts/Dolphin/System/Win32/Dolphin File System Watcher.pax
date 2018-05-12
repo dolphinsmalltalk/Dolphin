@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin File System Watcher'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk File System Watcher

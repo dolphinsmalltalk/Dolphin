@@ -215,7 +215,7 @@ menuFileOutSmalltalkX
 
 menuFileOutSqueak
 	| filename stream fileStream applyConversion contents |
-	filename := (FileSaveDialog new)
+	filename := FileSaveDialog new
 				caption: 'File Out as Squeak Changes Set';
 				fileTypes: #(#('Squeak Changes Set (*.st)' '*.st'));
 				value: 'FileOutSqueakChanges.st';
@@ -224,19 +224,19 @@ menuFileOutSqueak
 	stream := WriteStream on: String new.
 	self fileOutChangesForSqueak: changesPresenter selectionOrNil on: stream.
 	contents := stream contents.
-	(Smalltalk at: #WebTranslationService ifAbsent: []) isNil 
+	(Smalltalk at: #WebTranslationService ifAbsent: []) isNil
 		ifFalse: 
 			["check if file out contains extended character set chars"
-			(contents detect: [:eachChar | eachChar asInteger > 128] ifNone: []) notNil 
+			(contents detect: [:eachChar | eachChar asInteger > 128] ifNone: []) notNil
 				ifTrue: 
-					[applyConversion := ChoicePrompter 
+					[applyConversion := ChoicePrompter
 								choices: #('Save CP1250 source text as UTF-8' 'No conversion, save file as it is')
 								caption: 'Select extended char set conversion'.
 					applyConversion isNil ifTrue: [^nil]]].
-	applyConversion = 'Save CP1250 source text as UTF-8' 
+	applyConversion = 'Save CP1250 source text as UTF-8'
 		ifTrue: 
 			[Processor activeProcess webRequestCodePage: 'windows-1250'.
-			contents := contents asUTF8].
+			contents := contents asUtf8String].
 	fileStream := FileStream write: filename.
 	[fileStream nextPutAll: contents] ensure: [fileStream close]!
 

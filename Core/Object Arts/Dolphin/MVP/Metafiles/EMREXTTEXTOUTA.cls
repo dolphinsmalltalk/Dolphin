@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ EMREXTTEXTOUT subclass: #EMREXTTEXTOUTA
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTTEXTOUTA guid: (GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
-EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+EMREXTTEXTOUTA comment: '<EMREXTTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 
@@ -55,7 +55,7 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #text type: (StringField type: String length: 1)!
+	self defineField: #text type: (StringField type: AnsiString length: 1)!
 
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."

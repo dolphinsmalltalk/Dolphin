@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Image subclass: #Icon
 	instanceVariableNames: ''
@@ -220,7 +220,7 @@ load: anObject fromInstance: hModule extent: aPoint
 	hico := ExternalHandle new.
 	^(CommCtrlLibrary default 
 		loadIconWithScaleDown: hModule
-		pszName: anObject asParameter
+		pszName: anObject asResourceId
 		cx: aPoint x
 		cy: aPoint y
 		phico: hico) >= 0 
@@ -232,7 +232,7 @@ loadFromInstance: hModule
 	it does not appear to work for instance 0; the system. Hence this method 
 	which tries the old way. Answers the loaded handle or nil if the load failed"
 
-	^UserLibrary default loadIcon: hModule asParameter lpIconName: identifier asParameter!
+	^UserLibrary default loadIcon: hModule asParameter lpIconName: identifier asResourceId!
 
 valueWithHandle: operation forExtent: aPoint 
 	"Private - Evaluate the <monadicValuable>, operation, with a handle for the receiver's icon at the best possible

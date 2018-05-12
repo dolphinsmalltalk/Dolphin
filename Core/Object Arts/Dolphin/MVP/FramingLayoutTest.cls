@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 LayoutManagerTest subclass: #FramingLayoutTest
 	instanceVariableNames: ''
@@ -44,54 +44,54 @@ testFramingCalculationSerialisation
 
 testResizeParentRelative
 	| layout button rect offsets marginExtents |
-	layout :=  shell layoutManager.
+	layout := shell layoutManager.
 	shell insets: (5 @ 10 corner: 15 @ 20).
 	button := shell addSubView: PushButton new.
-	(button arrangement)
+	button arrangement
 		leftFraming: #fixedParentLeft;
 		rightFraming: #fixedParentRight;
 		topFraming: #fixedParentTop;
 		bottomFraming: #fixedParentBottom.
 	shell extent: (shell calcExtentFromClientExtent: 300 @ 200).
-	self assert: shell clientExtent = (300 @ 200).
+	self assert: shell clientExtent equals: 300 @ 200.
 	shell show.
 	"Resize the button to check that the offset calculations are working correctly"
 	rect := 5 @ 10 extent: shell clientExtent - shell insets origin - shell insets corner.
 	layout resize: button to: rect.
-	self assert: button rectangle = rect.
+	self assert: button rectangle equals: rect.
 	offsets := button arrangement offsets.
-	self assert: offsets = Rectangle new.
+	self assert: offsets equals: Rectangle new.
 	"And again - this time the offsets are non-zero"
 	rect := rect insetBy: 5.
 	layout resize: button to: rect.
-	self assert: button rectangle = rect.
+	self assert: button rectangle equals: rect.
 	offsets := button arrangement offsets.
-	self assert: offsets = (Rectangle new insetBy: 5).
+	self assert: offsets equals: (Rectangle new insetBy: 5).
 
 	"Now resize the shell"
 	shell extent: (shell calcExtentFromClientExtent: 400 @ 300).
-	self assert: shell clientExtent = (400 @ 300).
+	self assert: shell clientExtent equals: 400 @ 300.
 	rect := (shell clientRectangle insetBy: shell insets) insetBy: 5.
-	self assert: button rectangle = rect.
-	self assert: offsets = (Rectangle new insetBy: 5).
+	self assert: button rectangle equals: rect.
+	self assert: offsets equals: (Rectangle new insetBy: 5).
 
 	"Now increase the size of the insets"
 	shell insets: (150 @ 110 corner: 165 @ 105).
 	shell validateLayout.
 	rect := (shell clientRectangle insetBy: shell insets) insetBy: 5.
-	self assert: button rectangle = rect.
+	self assert: button rectangle equals: rect.
 	offsets := button arrangement offsets.
-	self assert: offsets = (Rectangle new insetBy: 5).
+	self assert: offsets equals: (Rectangle new insetBy: 5).
 
 	"And reduce the size of the shell so that there is insufficient space to display the button"
 	marginExtents := shell insets origin + shell insets corner + button arrangement offsets extent abs.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
 	self assert: button rectangle extent isZero.
 	"Allow just enough for the button to become visible (a 5x5 area is needed on XP)"
-	marginExtents := shell insets origin + shell insets corner + button arrangement offsets extent abs 
+	marginExtents := shell insets origin + shell insets corner + button arrangement offsets extent abs
 				+ 5.
 	shell extent: (shell calcExtentFromClientExtent: marginExtents).
-	self assert: button rectangle extent = (5 @ 5)! !
+	self assert: button rectangle extent equals: 5 @ 5! !
 !FramingLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
 !FramingLayoutTest categoriesFor: #testCircularEdgeConstraint!public!unit tests! !
 !FramingLayoutTest categoriesFor: #testFramingCalculationSerialisation!public!unit tests! !

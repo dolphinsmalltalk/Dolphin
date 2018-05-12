@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStreamTest subclass: #ReadWriteStreamTest
 	instanceVariableNames: ''
@@ -32,15 +32,32 @@ testIsEmpty
 	self deny: stream isEmpty.
 	self closeTempStream: stream!
 
+testNextColon
+	super testNextColon.
+	self writeableCollections do: 
+			[:pair |
+			| each subject elems actual expected |
+			each := pair first.
+			subject := self streamWith: each.
+			elems := pair last.
+			elems do: [:e | subject nextPut: e].
+			subject reset.
+			actual := subject next: elems size * 2.
+			self assert: subject atEnd.
+			self closeTempStream: subject.
+			expected := each , each.
+			self assert: actual equals: expected]!
+
 testResetAfterWrite
 	| stream |
 	stream := self streamWith: String new.
 	stream nextPut: $a.
 	stream reset.
-	self assert: stream next = $a.
+	self assert: stream next equals: $a.
 	self closeTempStream: stream! !
 !ReadWriteStreamTest categoriesFor: #streamClass!helpers!private! !
 !ReadWriteStreamTest categoriesFor: #streamOn:!helpers!private! !
 !ReadWriteStreamTest categoriesFor: #testIsEmpty!public!unit tests! !
+!ReadWriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !ReadWriteStreamTest categoriesFor: #testResetAfterWrite!public!unit tests! !
 

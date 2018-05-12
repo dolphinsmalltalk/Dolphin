@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Collection
 	instanceVariableNames: ''
@@ -367,7 +367,7 @@ growSize
 
 	^self size max: 2!
 
-identityIncludes: anObject 
+identityIncludes: anObject
 	"Answer whether the argument, anObject, is one of the receiver's elements."
 
 	self do: [:each | anObject == each ifTrue: [^true]].
@@ -406,6 +406,9 @@ isEmpty
 	^self size == 0
 !
 
+max
+	^ self inject: self anyOne into: [:max :each | max max: each]!
+
 maxPrint
 	"Private - Answer the maximum number of characters to be printed onto a stream as 
 	the string representation of the receiver."
@@ -419,13 +422,14 @@ newSelection
 
 	^self species new!
 
-noDifference: aCollection 
+noDifference: aCollection
 	"Answer whether the receiver contains the same elements as the <collection> argument
 	(i.e. the symmetric difference is empty)."
 
+	| size |
 	aCollection == self ifTrue: [^true].
-	aCollection size = self size ifFalse: [^false].
-	^(self symmetricDifference: aCollection) isEmpty!
+	aCollection size = (size := self size) ifFalse: [^false].
+	^(self intersection: aCollection) size = size!
 
 notEmpty
 	"Answer whether the receiver contains any elements."
@@ -632,6 +636,7 @@ union: comperand
 !Collection categoriesFor: #inject:into:!enumerating!public! !
 !Collection categoriesFor: #intersection:!public!set operations! !
 !Collection categoriesFor: #isEmpty!public!testing! !
+!Collection categoriesFor: #max!public!searching! !
 !Collection categoriesFor: #maxPrint!constants!private! !
 !Collection categoriesFor: #newSelection!enumerating!private! !
 !Collection categoriesFor: #noDifference:!public!set operations! !

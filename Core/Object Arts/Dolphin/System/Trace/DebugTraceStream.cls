@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Stream subclass: #DebugTraceStream
 	instanceVariableNames: 'buffer bufferProtect'
@@ -9,7 +9,7 @@ DebugTraceStream guid: (GUID fromString: '{42675a9e-7ef6-4e38-8ff1-c6cd5d1563cc}
 DebugTraceStream comment: 'DebugTraceStream is a singleton class that implements the <puttableStream> protocol (and some) on top of the Win32 OutputDebugString() API. Like the Transcript the output is buffered until either an end of line is emitted (i.e. #cr is sent) or the the stream is explicitly flushed (i.e. #flush is sent). For convenience the singleton instance is assigned to the global named ''Trace''.
 
 Instance Variables:
-	buffer		<WriteStream> on <String>. Stream used to buffer output until flushed.
+	buffer		<WriteStream> on <Utf8String>. Stream used to buffer output until flushed.
 	bufferProtect	<Mutex> protecting the stream buffer.
 
 Class Variables:
@@ -26,8 +26,7 @@ basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description
 	to the receiver."
 
-	bufferProtect critical: [printee basicPrintOn: buffer]
-!
+	self nextPutAll: printee basicPrintString!
 
 close
 	self flush!
@@ -46,7 +45,7 @@ crtab: count
 	"Append a new line to the receiver followed by <integer>, count, tabs."
 
 	self cr.
-	count timesRepeat: [self tab]!
+	self tab: count!
 
 display: anObject
 	"Ask anObject to append its end-user textual description to the receiver."
@@ -88,7 +87,7 @@ next: anInteger put: anObject
 	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
 	Answer anObject."
 
-	anInteger timesRepeat: [self nextPut: anObject].
+	self nextPutAll: (Utf8String new: anInteger withAll: anObject).
 	^anObject!
 
 next: size putAll: aSequenceableCollection startingAt: start
@@ -101,19 +100,19 @@ next: size putAll: aSequenceableCollection startingAt: start
 nextPut: newElem
 	"Append the <character>, newElem, to the receiver."
 
-	self nextPutAll: newElem asString.
+	self nextPutAll: (Utf8String with: newElem).
 	^newElem!
 
 nextPutAll: insertString
 	"Append the <readableString>, insertString, to the text of the receiver."
 
-	bufferProtect critical: [buffer nextPutAll: insertString].
+	bufferProtect critical: [buffer nextPutAll: insertString asUtf8String].
 	^insertString!
 
 print: anObject
 	"Prints anObject at the end of the receiver."
 
-	bufferProtect critical: [anObject printOn: buffer]!
+	self nextPutAll: anObject printString!
 
 space
 	"Append a space to the receiver."
@@ -123,12 +122,13 @@ space
 tab
 	"Store a tab character as the next element of the receiver."
 
-	self nextPutAll: $\t!
+	self nextPut: $\t!
 
 tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
-	tabCount timesRepeat: [self tab]! !
+	self next: tabCount put: $\t
+! !
 !DebugTraceStream categoriesFor: #atEnd!public!testing! !
 !DebugTraceStream categoriesFor: #basicPrint:!printing!private! !
 !DebugTraceStream categoriesFor: #close!operations!public! !
@@ -159,8 +159,7 @@ current
 
 initialize
 	Current := self basicNew initialize.
-	Trace := Current
-! !
+	Trace := Current! !
 !DebugTraceStream class categoriesFor: #current!instance creation!public! !
 !DebugTraceStream class categoriesFor: #initialize!initializing!public! !
 

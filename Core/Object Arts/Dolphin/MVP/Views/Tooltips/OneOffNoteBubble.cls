@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #OneOffNoteBubble
 	instanceVariableNames: ''
@@ -10,10 +10,8 @@ OneOffNoteBubble comment: ''!
 !OneOffNoteBubble categoriesForClass!Kernel-Objects! !
 !OneOffNoteBubble class methodsFor!
 
-addPreviouslyViewedNote: aSymbol 
-	self previouslyViewedNotes: ((self previouslyViewedNotes)
-				add: aSymbol;
-				yourself)!
+addPreviouslyViewedNote: aSymbol
+	self registryKey valueAt: aSymbol put: TimeStamp current displayString!
 
 defaultCaption
 	^'One-Off Note'!
@@ -23,6 +21,9 @@ defaultTimeout
 
 defaultWidth
 	^300!
+
+icon
+	^Tooltip icon!
 
 name: aSymbol text: aString 
 	"
@@ -45,7 +46,7 @@ name: aSymbol text: aString for: aView
 		for: aView
 		timeout: self defaultTimeout + (aString subStrings size * 500)!
 
-name: aSymbol text: aString for: aView timeout: milliseconds 
+name: aSymbol text: aString for: aView timeout: milliseconds
 	"
 	self name: #testNote text: 'This is a test'
 	"
@@ -53,7 +54,7 @@ name: aSymbol text: aString for: aView timeout: milliseconds
 	| bubble |
 	(self previouslyViewedNotes includes: aSymbol) ifTrue: [^self].
 	self addPreviouslyViewedNote: aSymbol.
-	bubble := (MessageBubble new)
+	bubble := MessageBubble new
 				caption: self defaultCaption;
 				maxWidth: self defaultWidth;
 				willFade: true;
@@ -61,51 +62,55 @@ name: aSymbol text: aString for: aView timeout: milliseconds
 	aView notNil ifTrue: [bubble position: aView rectangle center].
 	bubble notify: aString!
 
-oneOffNotesRegistryKey
-	"Private - Answers the <readableString> registry key for the previously viewd notes"
-
-	^'<1s>\<2s>\OneOffNotes' expandMacrosWith: SessionManager current productRegistryKey
-		with: SessionManager current applicationShortName!
-
 previouslyViewedNotes
-	"Private - Answers the a <Set> of <Symbols> indicating the OneOffNotes that have already been views.
+	"Private - Answers the a <Set> of <Symbols> indicating the OneOffNotes that have already been viewed.
 
 	self previouslyViewedNotes
 	"
 
-	| entryValue |
-	entryValue := [(RegKey userRoot at: self oneOffNotesRegistryKey) valueAt: ''] on: NotFoundError
-				do: [:x | ^Set new].
-	entryValue isEmpty ifTrue: [^Set new].
-	^Object fromBinaryStoreBytes: entryValue!
+	^(RegKey userRoot at: self registryKeyName ifAbsent: [])
+		ifNil: [Set new]
+		ifNotNil: [:regkey | regkey subValues keys collect: [:each | each asSymbol]]!
 
-previouslyViewedNotes: aSet 
-	"Set the previously views notes to aSet of <Symbols>"
+previouslyViewedNotes: aCollection
+	"Set the previously views notes to aCollection of <Symbols>"
 
-	| regKey |
-	regKey := RegKey userRoot createKey: self oneOffNotesRegistryKey.
-	regKey valueAt: '' put: aSet binaryStoreBytes!
+	| regKey timeStamp |
+	self resetPreviouslyViewedNotes.
+	regKey := self registryKey.
+	timeStamp := TimeStamp current displayString.
+	aCollection do: [:each | regKey valueAt: each put: timeStamp]!
 
-removePreviouslyViewedNote: aSymbol 
-	self previouslyViewedNotes: ((self previouslyViewedNotes)
-				remove: aSymbol;
-				yourself)!
+registryKey
+	^RegKey userRoot createKey: self registryKeyName!
+
+registryKeyName
+	"Private - Answers the <readableString> registry key for the previously viewed notes"
+
+	^'<1s>\<2s>\OneOffNotes' expandMacrosWith: SessionManager current productRegistryKey
+		with: SessionManager current applicationShortName!
+
+removePreviouslyViewedNote: aSymbol
+	self registryKey removeSubValue: aSymbol ifAbsent: []!
 
 resetPreviouslyViewedNotes
 	"
 	self resetPreviouslyViewedNotes.
 	"
-	self previouslyViewedNotes: Set new! !
+
+	RegKey userRoot removeKey: self registryKeyName ifAbsent: []! !
 !OneOffNoteBubble class categoriesFor: #addPreviouslyViewedNote:!private! !
 !OneOffNoteBubble class categoriesFor: #defaultCaption!constants!private! !
 !OneOffNoteBubble class categoriesFor: #defaultTimeout!constants!private! !
 !OneOffNoteBubble class categoriesFor: #defaultWidth!constants!private! !
+!OneOffNoteBubble class categoriesFor: #icon!constants!development!public! !
 !OneOffNoteBubble class categoriesFor: #name:text:!instance creation!public! !
 !OneOffNoteBubble class categoriesFor: #name:text:for:!instance creation!public! !
 !OneOffNoteBubble class categoriesFor: #name:text:for:timeout:!instance creation!public! !
-!OneOffNoteBubble class categoriesFor: #oneOffNotesRegistryKey!constants!public! !
 !OneOffNoteBubble class categoriesFor: #previouslyViewedNotes!accessing!public! !
 !OneOffNoteBubble class categoriesFor: #previouslyViewedNotes:!accessing!public! !
+!OneOffNoteBubble class categoriesFor: #registryKey!private! !
+!OneOffNoteBubble class categoriesFor: #registryKeyName!constants!private! !
 !OneOffNoteBubble class categoriesFor: #removePreviouslyViewedNote:!private! !
 !OneOffNoteBubble class categoriesFor: #resetPreviouslyViewedNotes!private! !
 

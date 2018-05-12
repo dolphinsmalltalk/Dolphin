@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaViewGenerator
 	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors'
@@ -1393,7 +1393,7 @@ generateNotificationMap
 getAndResetCommentQueue
 	| answer |
 	answer := commentQueue contents.
-	commentQueue := WriteStream on: (String new: 160).
+	commentQueue := WriteStream on: (Utf8String new: 160).
 	^answer!
 
 ignoredMessages
@@ -1558,7 +1558,7 @@ ignoredMessages
 
 initialize
 	events := OrderedCollection new: 256.
-	commentQueue := WriteStream on: (String new: 160).
+	commentQueue := WriteStream on: (Utf8String new: 160).
 	lexerConstantPrefixes := Set new.
 	previewChanges := true.
 	commands := LookupTable new.

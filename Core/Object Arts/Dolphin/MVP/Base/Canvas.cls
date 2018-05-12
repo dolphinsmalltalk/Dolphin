@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Canvas
 	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
@@ -324,9 +324,9 @@ fontNames
 
 fonts: aString do: operation 
 	"Enumerate the fonts in a specified font family that are available on the receiver's device.
-	The triadic valuable argument, operation, is passed the LOGFONT, TEXTMETRIC and font 
+	The triadic valuable argument, operation, is passed the LOGFONTW, TEXTMETRICW and font 
 	type as its three arguments, and should answer true to continue the enueration, false to 
-	terminate it (it must 	not contain a ^-return).
+	terminate it (it must not contain a ^-return).
 
 		int CALLBACK EnumFontsProc(
 			lplf lplf,	// pointer to logical-font data 
@@ -342,7 +342,7 @@ fonts: aString do: operation
 						value: lplf
 						value: lptm
 						value: dwType]
-				descriptor: (ExternalDescriptor returnType: 'sdword' argumentTypes: 'LOGFONT* lpvoid dword uintptr').
+				descriptor: (ExternalDescriptor returnType: 'sdword' argumentTypes: 'LOGFONTW* lpvoid dword uintptr').
 	answer := GDILibrary default 
 				enumFonts: self asParameter
 				lpFaceName: aString
@@ -368,14 +368,17 @@ formatText: text in: rect
 	^self formatText: text in: rect flags: ##(DT_WORDBREAK | DT_LEFT)
 !
 
-formatText: aString in: aRectangle flags: anInteger 
+formatText: aString in: aRectangle flags: anInteger
 	"Formats the specified <readableString> text within the specified <Rectangle> and using the
 	specified <Integer> mode flags. Answers the height of the formatted text in pixels."
 
-	^UserLibrary default 
+	| text |
+	"We need to do an explicit conversion to UTF16 here, because we want to pass the correct number of code units."
+	text := aString asUtf16String.
+	^UserLibrary default
 		drawTextEx: self asParameter
-		lpchText: aString
-		cchText: aString size
+		lpchText: text
+		cchText: text size
 		lprc: aRectangle asParameter
 		dwDTFormat: anInteger
 		lpDTParams: nil!
@@ -553,17 +556,17 @@ outlineTextMetrics
 
 	| answer size lib |
 	lib := GDILibrary default.
-	size := lib 
+	size := lib
 				getOutlineTextMetrics: self asParameter
 				cbData: 0
 				lpotm: nil.
 	"Only true-type fonts have OTM info, so if the current font is not a TT font return nil."
 	size == 0 ifTrue: [^nil].
-	answer := OUTLINETEXTMETRIC new: size.
-	(lib 
+	answer := OUTLINETEXTMETRICW new: size.
+	(lib
 		getOutlineTextMetrics: self asParameter
 		cbData: size
-		lpotm: answer) == 0 
+		lpotm: answer) == 0
 		ifTrue: [lib systemError].
 	^answer!
 
@@ -798,10 +801,6 @@ selectPalette: hPalette
 	^GDILibrary default selectPalette: self asParameter hPal: hPalette bForceBackground: false
 !
 
-setBkMode: mode 
-	#deprecated.
-	^self backgroundMode: mode!
-
 setDefaultAttributes
 	"Private - Set the receiver's initial pen, brush and font."
 
@@ -843,23 +842,28 @@ stretchBlt: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent rop: r
 text: aString at: aPoint
 	"Draw aString on the receiver starting at aPoint."
 
+	| text |
+	"We need to do an explicit conversion to UTF16 here, because we have to pass the correct number of code units."
+	text := aString asUtf16String.
 	^GDILibrary default
 		textOut: self asParameter
 		nXStart: aPoint x
 		nYStart: aPoint y
-		lpString: aString
-		cbString: aString size
+		lpString: text
+		cbString: text size
 !
 
-textExtent: string
+textExtent: aString
 	"Answer the extent of string using the receivers currently selected font."
 
-	| size |
+	| size text |
 	size := POINTL new.
-	(GDILibrary default 
+	"We need to do an explicit conversion to UTF16 here, because we have to pass the correct number of code units."
+	text := aString asUtf16String.
+	(GDILibrary default
 		getTextExtentPoint32: self asParameter
-		lpString: string
-		cbString: string size
+		lpString: text
+		c: text size
 		lpSize: size asParameter) ifFalse: [^GDILibrary default systemError].
 	^size asPoint!
 
@@ -883,11 +887,13 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 	^anIntegerWidth @ height!
 
 textMetrics
-	"Answer the standard Win32 TEXTMETRICs for the currently selected font."
+	"Answer the standard Win32 TEXTMETRICs for the currently selected font.
+		Canvas forDisplay textMetrics
+	"
 
 	| answer |
-	answer := TEXTMETRIC new.
-	(GDILibrary default getTextMetrics: self asParameter lptm: answer) 
+	answer := TEXTMETRICW new.
+	(GDILibrary default getTextMetrics: self asParameter lptm: answer)
 		ifFalse: [GDILibrary default systemError].
 	^answer!
 
@@ -1089,7 +1095,6 @@ windowScaling
 !Canvas categoriesFor: #selectClipRegion:!operations!public! !
 !Canvas categoriesFor: #selectObject:!operations!private! !
 !Canvas categoriesFor: #selectPalette:!colors!public! !
-!Canvas categoriesFor: #setBkMode:!modes!public! !
 !Canvas categoriesFor: #setDefaultAttributes!private!tools! !
 !Canvas categoriesFor: #setTextAlign:!modes!public! !
 !Canvas categoriesFor: #source:!accessing!private! !

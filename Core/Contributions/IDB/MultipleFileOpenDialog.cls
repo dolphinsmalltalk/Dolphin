@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 FileOpenDialog subclass: #MultipleFileOpenDialog
 	instanceVariableNames: 'buffer maxFileCount'
@@ -71,15 +71,15 @@ prepareStruct
 	we can only recover the first String."
 
 	| filename |
-	buffer := String new: self maxFileCount * 30 + File maxPath.
+	buffer := Utf16String newFixed: self maxFileCount * 30 + File maxPath.
 	filename := self value.
-	filename notNil 
+	filename notNil
 		ifTrue: 
-			[buffer 
+			[buffer
 				replaceFrom: 1
 				to: filename size
 				with: filename].
-	(self winStruct)
+	self winStruct
 		fileTypes: (self fileTypesStringFromSpecs: self fileTypes);
 		nMaxFile: buffer size;
 		fileName: buffer;

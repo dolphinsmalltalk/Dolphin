@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB Common'.
 package paxVersion: 1;
 	basicComment: 'Common classes and methods for IDB Goodies

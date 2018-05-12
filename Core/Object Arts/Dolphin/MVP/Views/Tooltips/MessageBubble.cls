@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MessageBoxAbstract subclass: #MessageBubble
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
@@ -51,7 +51,7 @@ activateTooltip: aTOOLINFO
 addTool
 	| ti hwnd |
 	hwnd := self ownerHandle.
-	ti := (TOOLINFOA new)
+	ti := TOOLINFOW new
 				uFlags: (itemFlags bitOr: TTF_IDISHWND);
 				text: self text;
 				hwnd: hwnd;
@@ -110,7 +110,7 @@ createTooltip
 	tooltip create!
 
 defaultCaption
-	^MessageBox defaultCaption: self iconStyleFlag!
+	^self class defaultCaption: self iconStyle!
 
 font
 	"Answer the <Font> to be used for the tip text, or nil if the default font is to be applied.

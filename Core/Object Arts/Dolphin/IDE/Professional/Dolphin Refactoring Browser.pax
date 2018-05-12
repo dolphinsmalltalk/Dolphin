@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Refactoring Browser'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Refactoring Browser Native UI Integration

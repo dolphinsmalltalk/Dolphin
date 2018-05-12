@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IdbShell subclass: #ILEditorShell
 	instanceVariableNames: 'editorWorkspace colorSelector backupImage imageStatus locationStatus zoneStatus zoomStatus modifiedStatus'
@@ -24,7 +24,7 @@ for
 Dolphin Smalltalk 6.x
 
 Version 6a
-� 2005 Ian Bartholomew
+© 2005 Ian Bartholomew
 http://www.idb.me.uk'!
 
 addImage

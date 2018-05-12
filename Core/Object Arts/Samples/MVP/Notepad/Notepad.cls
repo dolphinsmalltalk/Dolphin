@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TextDocument subclass: #Notepad
 	instanceVariableNames: ''
@@ -45,25 +45,6 @@ editTimeStamp
 	Date today printOn: stream longPicture: false.
 	documentPresenter replaceSelection: stream contents!
 
-openFile: pathString 
-	"Open the file with the <readableString> path, pathString, prompting in the standard Notepad
-	fashion if it doesn't exist."
-
-	(File exists: pathString) 
-		ifTrue: 
-			[self
-				filename: pathString;
-				fileLoad]
-		ifFalse: 
-			[| resp mb |
-			mb := MessageBox new.
-			mb
-				buttonStyle: #yesNoCancel;
-				caption: 'Dolphin Notepad'.
-			resp := mb warning: ('Cannot find the <1p> file.<n><n>Do you want to create a new file?' 
-								expandMacrosWith: pathString).
-			resp == #yes ifTrue: [self filename: pathString] ifFalse: [resp == #cancel ifTrue: [self exit]]]!
-
 saveChangesPrompt
 	| docName |
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
@@ -79,7 +60,6 @@ streamIn: aStream
 !Notepad categoriesFor: #aboutNotepad!commands!public! !
 !Notepad categoriesFor: #chooseFont!commands!public! !
 !Notepad categoriesFor: #editTimeStamp!commands!public! !
-!Notepad categoriesFor: #openFile:!operations!public! !
 !Notepad categoriesFor: #saveChangesPrompt!private! !
 !Notepad categoriesFor: #streamIn:!private!streaming! !
 
@@ -118,7 +98,7 @@ icon
 	"Answers an Icon that can be used to represent this class.
 	Use the one from the real Windows Notepad for fun."
 
-	^Icon fromId: (VMLibrary default isWindowsXPOrGreater ifTrue: [2] ifFalse: [1]) in: self resourceLib!
+	^Icon fromId: 2 in: self resourceLib!
 
 initialize
 	"Private - Initialize the receiver's class variables

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #ExampleSetTest
 	instanceVariableNames: 'full empty'
@@ -20,7 +20,7 @@ testAdd
 
 testGrow
 	empty addAll: (1 to: 100).
-	self assert: empty size = 100!
+	self assert: empty size equals: 100!
 
 testIllegal
 	self 
@@ -35,10 +35,10 @@ testIncludes
 	self assert: (full includes: #abc)!
 
 testOccurrences
-	self assert: (empty occurrencesOf: 0) = 0.
-	self assert: (full occurrencesOf: 5) = 1.
+	self assert: (empty occurrencesOf: 0) equals: 0.
+	self assert: (full occurrencesOf: 5) equals: 1.
 	full add: 5.
-	self assert: (full occurrencesOf: 5) = 1!
+	self assert: (full occurrencesOf: 5) equals: 1!
 
 testRemove
 	full remove: 5.

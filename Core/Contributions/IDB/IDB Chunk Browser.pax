@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB Chunk Browser'.
 package paxVersion: 1;
 	basicComment: 'Chunk Browser

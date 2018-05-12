@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IniFileAbstract subclass: #IniFile
 	instanceVariableNames: ''
@@ -22,7 +22,7 @@ at: keyString put: valueDictionary
 	"Store the key-value pairs in the <abstractDictionary> argument as a named section of the initialization file."
 
 	| kvps |
-	kvps := String writeStream.
+	kvps := Utf16String writeStream.
 	valueDictionary keysAndValuesDo: 
 			[:eachKey :eachValue |
 			kvps
@@ -33,7 +33,7 @@ at: keyString put: valueDictionary
 	kvps nextPut: $\0.
 	kvps := kvps contents.
 	(KernelLibrary default
-		writePrivateProfileSection: keyString shallowCopy
+		writePrivateProfileSection: keyString asUtf16String shallowCopy
 		lpString: kvps
 		lpFileName: filename) == 0
 		ifTrue: [Win32Error signal].
@@ -49,7 +49,7 @@ getValue: aString
 hasSectionNamed: aString
 	^(KernelLibrary default
 		getPrivateProfileSection: aString
-		lpReturnedString: (String newFixed: 3)
+		lpReturnedString: (Utf16String newFixed: 3)
 		nSize: 3
 		lpFileName: filename) ~~ 0
 		or: 
@@ -67,7 +67,7 @@ keysDo: operation
 	"Evaluate the <monadicValuable>, operation, for each of the receiver's section names."
 
 	| buf lib count start end |
-	buf := String new: 512.
+	buf := Utf16String newFixed: 512.
 	lib := KernelLibrary default.
 	
 	[count := lib
@@ -75,8 +75,9 @@ keysDo: operation
 				nSize: buf size
 				lpFileName: filename.
 	count = (buf size - 2)]
-			whileTrue: [buf := String new: buf size * 2].
+			whileTrue: [buf := Utf16String newFixed: buf size * 2].
 	start := 1.
+	buf := buf asUtf8String.
 	
 	[end := buf
 				nextIndexOf: $\0
@@ -91,7 +92,8 @@ removeKey: aString ifAbsent: aNiladicValuable
 	answer the result of evaluating the <niladicValuable>, operation. Otherwise, answer the named <IniFileSection>."
 
 	| value key |
-	key := aString shallowCopy.
+	"The APIs write to the key, even though they shouldn't"
+	key := aString asUtf16String shallowCopy.
 	(self hasSectionNamed: key) ifFalse: [^aNiladicValuable value].
 	value := self getValue: key.
 	^(KernelLibrary default

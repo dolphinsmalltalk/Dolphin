@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''

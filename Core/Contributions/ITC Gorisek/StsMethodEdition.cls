@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 StsEdition subclass: #StsMethodEdition
 	instanceVariableNames: 'classSymbol selector isPrivate categoriesString source'
@@ -364,7 +364,7 @@ source: aString
 sourceForFileout
 	| rs ws ch |
 	rs := ReadStream on: self source.
-	ws := WriteStream on: (String new: rs size + 10).
+	ws := WriteStream on: (Utf8String new: rs size + 10).
 	[rs atEnd] whileFalse: 
 			[ch := rs next.
 			ws nextPut: ch.

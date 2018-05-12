@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CommonDialog subclass: #BrowseFolderDialog
 	instanceVariableNames: 'style bfFlags'
@@ -121,36 +121,35 @@ title: aString
 	self winStruct title: aString!
 
 validateFailed: msgInteger wParam: wParam lParam: lParam 
-	"Private - Handler for BFFM_VALIDATEFAILED message sent through hook. lParam is address of
+	"Private - Handler for BFFM_VALIDATEFAILEDW message sent through hook. lParam is address of
 	data which failed validation (i.e. path string). Answer 0 to dismiss dialog, non-zero to
 	leave open."
 
 	| badPath |
-	badPath := String fromAddress: lParam.
-	badPath.
+	badPath := Utf16String fromAddress: lParam.
 	^1!
 
 winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
-	^BROWSEINFO!
+	^BROWSEINFOW!
 
-wmInitDialog: msgInteger wParam: wParam lParam: lParam 
+wmInitDialog: msgInteger wParam: wParam lParam: lParam
 	"Private - Handler for BFFM_INITIALIZED message sent through callback.
 	Set up the initially selected folder to the starting value of the receiver's model."
 
 	| path |
-	super 
+	super
 		wmInitDialog: msgInteger
 		wParam: wParam
 		lParam: lParam.
 	path := self value.
-	(path notNil and: [path notEmpty]) 
+	(path notNil and: [path notEmpty])
 		ifTrue: 
-			[view 
-				sendMessage: BFFM_SETSELECTION
+			[view
+				sendMessage: BFFM_SETSELECTIONW
 				wParam: true asParameter
-				lpParam: path].
+				szParam: path].
 	bfFlags := bfFlags mask: InitializedMask set: true.
 	^0! !
 !BrowseFolderDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !

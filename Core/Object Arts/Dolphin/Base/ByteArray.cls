@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollection variableByteSubclass: #ByteArray
 	instanceVariableNames: ''
@@ -41,20 +41,26 @@ addressAtOffset: anInteger
 
 	^(self dwordAtOffset: anInteger) asExternalAddress!
 
+asAnsiString
+	"Answer an ANSI-encoded String the characters of have the same encoding as the byte elements of the receiver."
+
+	| size |
+	size := self basicSize.
+	^self
+		replaceBytesOf: (AnsiString new: size)
+		from: 1
+		to: size
+		startingAt: 1!
+
 asByteArray
 	"Answer a <ByteArray> containing the same elements as the receiver.
 	In this case no conversion is required."
 
 	^self!
 
-asAnsiString
-	"Answer a byte String containing the same elements as the receiver."
-
-	| size |
-	size := self basicSize.
-	^(String new: size) replaceFrom: 1 to: size with: self startingAt: 1!
-
 asString
+	"Assuming that the receiver contains the bytes of an ANSI string, return that string."
+
 	^self asAnsiString!
 
 basicDwordAtOffset: anInteger
@@ -120,6 +126,23 @@ basicUIntPtrAtOffset: anInteger put: anObject
 			(intVal >= 0 and: [intVal <= VMConstants.UIntPtrMax]) 
 				ifTrue: [^self basicUIntPtrAtOffset: anInteger put: intVal]].
 	^self errorCantHold: anObject!
+
+byteAt: anInteger
+	"Answer the byte at offset anInteger in the receiver"
+
+	<primitive: 60>
+	^self basicAt: anInteger!
+
+byteAt: aSmallInteger put: value
+	"Replace the byte at the specified index in the receiver with the specified integer byte value.
+
+	Primitive Failure Reasons:
+		0	- aSmallInteger is not a SmallInteger
+		1	- aSmallInteger out of bounds (not in the range 1..receiver's mutable size) 
+		2	- the argument, value, is not a SmallInteger in the range 0..255."
+
+	<primitive: 61>
+	^self errorAt: aSmallInteger put: value!
 
 byteAtOffset: anInteger
 	"Answer the byte at offset anInteger in the receiver"
@@ -223,6 +246,16 @@ dwordAtOffset: anInteger put: anObject
 	
 	<primitive: 121>
 	^self retryDwordAtOffset: anInteger put: anObject!
+
+encodedAt: anInteger put: anObject
+	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
+	the <integer> index of the last element updated."
+
+	self at: anInteger put: anObject asInteger.
+	^anInteger!
+
+encoding
+	^#binary!
 
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) 
@@ -668,12 +701,15 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #_sameAsString:!comparing!private! !
 !ByteArray categoriesFor: #=!comparing!primitives!public! !
 !ByteArray categoriesFor: #addressAtOffset:!accessing!public! !
+!ByteArray categoriesFor: #asAnsiString!public! !
 !ByteArray categoriesFor: #asByteArray!converting!public! !
 !ByteArray categoriesFor: #asString!converting!public! !
 !ByteArray categoriesFor: #basicDwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #basicDwordAtOffset:put:!accessing!primitives!private! !
 !ByteArray categoriesFor: #basicUIntPtrAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #basicUIntPtrAtOffset:put:!accessing!primitives!private! !
+!ByteArray categoriesFor: #byteAt:!accessing!public! !
+!ByteArray categoriesFor: #byteAt:put:!accessing!public! !
 !ByteArray categoriesFor: #byteAtOffset:!accessing!public! !
 !ByteArray categoriesFor: #byteAtOffset:put:!accessing!public! !
 !ByteArray categoriesFor: #bytesAtOffset:put:!accessing!public! !
@@ -684,6 +720,8 @@ wordAtOffset: anInteger put: anObject
 !ByteArray categoriesFor: #doubleAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
+!ByteArray categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
+!ByteArray categoriesFor: #encoding!constants!encode/decode!private! !
 !ByteArray categoriesFor: #floatAtOffset:!accessing!primitives!public! !
 !ByteArray categoriesFor: #floatAtOffset:put:!accessing!primitives!public! !
 !ByteArray categoriesFor: #hash!comparing!primitives!public! !
@@ -732,6 +770,11 @@ elementSize
 	^1.
 !
 
+empty
+	"Answer an empty (zero length) instance of the receiver."
+
+	^#[]!
+
 fromAddress: anAddress length: anInteger
 	"Answer a new instance of the receiver, of size anInteger, copied from the first anInteger
 	bytes at the specified address."
@@ -740,6 +783,17 @@ fromAddress: anAddress length: anInteger
 		replaceBytesOf: (self new: anInteger)
 		from: 1 to: anInteger startingAt: 1
 !
+
+fromGlobalHandle: anExternalHandle
+	"Answer a new <ByteArray> instantiated from the contents of the global heap block with the
+	specified handle."
+
+	| bytes len |
+	bytes := KernelLibrary default globalLock: anExternalHandle.
+	len := ExternalMemory GetSize: bytes.
+	bytes := self fromAddress: bytes length: len.
+	KernelLibrary default globalUnlock: anExternalHandle.
+	^bytes!
 
 fromHexString: aString
 	"Answer a new instance of the receiver instantiated from the contents of the hexadecimal <String> argument."
@@ -777,7 +831,9 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	anSTBInFiler register: answer.
 	^answer! !
 !ByteArray class categoriesFor: #elementSize!constants!private! !
+!ByteArray class categoriesFor: #empty!instance creation!public! !
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
+!ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
 !ByteArray class categoriesFor: #icon!constants!public! !
 !ByteArray class categoriesFor: #stbReadFrom:format:!binary filing!public! !

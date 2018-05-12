@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #COMObjectRegistration
 	instanceVariableNames: 'clsid name toolboxImage'
@@ -95,30 +95,30 @@ printOn: target
 toolboxImage
 	"Answer the 16x16 <Bitmap> intended for use in toolboxes as the icon for the control described by the receiver."
 
-	toolboxImage isNil 
+	toolboxImage isNil
 		ifTrue: 
 			[| toolboxBitmap32 myKey |
 			myKey := ((RegKey classesRoot: #read) at: 'CLSID') at: self clsid asString.
 			toolboxBitmap32 := myKey at: 'ToolboxBitmap32' ifPresent: [:k | k value].
-			toolboxBitmap32 isNil 
+			toolboxBitmap32 isNil
 				ifTrue: [toolboxImage := self defaultToolboxBitmap]
 				ifFalse: 
-					["Should be able to use PathParseIconLocation here, but it can't cope with spaces between the path and the icon id."
-					| id path pathAndId |
+					[| id path pathAndId |
+					"Should be able to use PathParseIconLocation here, but it can't cope with spaces between the path and the icon id."
 					pathAndId := toolboxBitmap32 subStrings: $,.
-					id := Integer readFrom: ((pathAndId last readStream)
+					id := Integer readFrom: (pathAndId last readStream
 										skipSeparators;
 										yourself).
 					"Some icon ids come back as negative. Why?"
-					id < 0 
+					id < 0
 						ifTrue: [toolboxImage := self defaultToolboxBitmap]
 						ifFalse: 
 							[| resLib |
 							path := File pathBuffer.
-							KernelLibrary default 
+							KernelLibrary default
 								expandEnvironmentStrings: pathAndId first
 								lpDst: path
-								nSize: path byteSize.
+								nSize: path size + 1.
 							resLib := ExternalResourceLibrary open: path.
 							toolboxImage := Bitmap fromId: id in: resLib.
 							toolboxImage setMap3DColors: true]]].

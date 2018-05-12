@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DragDropObject subclass: #InternalDragDropObject
 	instanceVariableNames: 'availableFormats'

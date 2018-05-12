@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Locale
 	instanceVariableNames: 'lcid dateSeparator decimalSeparator listSeparator timeSeparator currencySymbol amDesignator pmDesignator dayNames monthNames'
@@ -45,7 +45,7 @@ dateFormats: aBoolean
 					[:format | 
 					formats add: format.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpstr').
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	(self nlsLib 
 		enumDateFormats: enum asParameter
 		locale: self asParameter
@@ -93,30 +93,30 @@ displayOn: aStream
 
 	aStream nextPutAll: self name!
 
-getInfo: anIntegerLcType 
+getInfo: anIntegerLcType
 	"Private - Answer a locale specific date String of the specified type for the receiver's locale.
 	Implementation Note: Try a default maximum size of 20, which will handle most locale info,
 	and if that is not enough fall back on the slower mechanism of enquiring for the size first."
 
 	| size buf lib |
 	lib := self nlsLib.
-	buf := String new: 20.
-	size := lib 
+	buf := Utf16String newFixed: 20.
+	size := lib
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
 				lpLCData: buf
 				cchData: buf size + 1.
-	size == 0 
+	size == 0
 		ifTrue: 
-			[size := lib 
+			[size := lib
 						getLocaleInfo: lcid
 						lCType: anIntegerLcType
 						lpLCData: nil
 						cchData: 0.
 			size == 0 ifTrue: [^lib systemError].
 			"Strings allocate extra space for null automatically"
-			buf := String new: size - 1.
-			lib 
+			buf := Utf16String newFixed: size - 1.
+			lib
 				getLocaleInfo: lcid
 				lCType: anIntegerLcType
 				lpLCData: buf
@@ -129,8 +129,12 @@ getIntegerInfo: anIntegerLcType
 
 	| buf lib |
 	lib := self nlsLib.
-	buf := String new: 15.
-	(lib getLocaleInfo: lcid lCType: anIntegerLcType lpLCData: buf cchData: 11) == 0
+	buf := Utf16String newFixed: 15.
+	(lib
+		getLocaleInfo: lcid
+		lCType: anIntegerLcType
+		lpLCData: buf
+		cchData: buf size) == 0
 		ifTrue: [lib systemError].
 	^CRTLibrary default atoi: buf!
 
@@ -230,19 +234,35 @@ printSysDate: aSYSTEMTIME format: aStringOrNil flags: dwFlags
 
 	| size buf lib |
 	lib := self nlsLib.
-	buf := String new: 30.
-	size := lib getDateFormat: self asParameter dwFlags: dwFlags 
-				lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: buf size+1.
-	size == 0 ifTrue: [
-		"Probably too big, find out how big a buffer is needed"
-		size := lib getDateFormat: self asParameter dwFlags: dwFlags 
-				lpDate: aSYSTEMTIME  lpFormat: aStringOrNil lpDateStr: nil cchDate: 0.
-		size == 0 ifTrue: [lib systemError].
-		buf := String new: size-1.	"Strings allocate extra space for null terminator"
-		lib getDateFormat: self asParameter dwFlags: dwFlags 
-			lpDate: aSYSTEMTIME lpFormat: aStringOrNil lpDateStr: buf cchDate: size].
+	buf := Utf16String newFixed: 30.
+	size := lib
+				getDateFormat: self asParameter
+				dwFlags: dwFlags
+				lpDate: aSYSTEMTIME
+				lpFormat: aStringOrNil
+				lpDateStr: buf
+				cchDate: buf size + 1.
+	size == 0
+		ifTrue: 
+			["Probably too big, find out how big a buffer is needed"
+			size := lib
+						getDateFormat: self asParameter
+						dwFlags: dwFlags
+						lpDate: aSYSTEMTIME
+						lpFormat: aStringOrNil
+						lpDateStr: nil
+						cchDate: 0.
+			size == 0 ifTrue: [lib systemError].
+			buf := Utf16String newFixed: size - 1.	"Strings allocate extra space for null terminator"
+			lib
+				getDateFormat: self asParameter
+				dwFlags: dwFlags
+				lpDate: aSYSTEMTIME
+				lpFormat: aStringOrNil
+				lpDateStr: buf
+				cchDate: size].
 	"size includes terminating null"
-	^buf resize: size-1!
+	^buf resize: size - 1!
 
 printTime: aTime format: aStringOrNil flags: dwFlags
 	"Private - Append a locale specific string representation of the argument, aTime, to,
@@ -251,17 +271,17 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 	| size buf timeParm lib |
 	timeParm := aTime asParameter.
 	lib := self nlsLib.
-	buf := String new: 20.
-	size := lib 
+	buf := Utf16String newFixed: 20.
+	size := lib
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
 				lpTime: timeParm
 				lpFormat: aStringOrNil
 				lpTimeStr: buf
 				cchBuf: buf size + 1.
-	size == 0 
+	size == 0
 		ifTrue: 
-			[size := lib 
+			[size := lib
 						getTimeFormat: self asParameter
 						dwFlags: dwFlags
 						lpTime: timeParm
@@ -269,8 +289,8 @@ printTime: aTime format: aStringOrNil flags: dwFlags
 						lpTimeStr: nil
 						cchBuf: 0.
 			size == 0 ifTrue: [^lib systemError].
-			buf := String new: size - 1.	"Strings allocate extra space for null terminator"
-			lib 
+			buf := Utf16String newFixed: size - 1.	"Strings allocate extra space for null terminator"
+			lib
 				getTimeFormat: self asParameter
 				dwFlags: dwFlags
 				lpTime: timeParm
@@ -325,7 +345,7 @@ timeFormats
 					[:format | 
 					formats add: format.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpstr').
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	(self nlsLib 
 		enumTimeFormats: enum asParameter
 		locale: self asParameter
@@ -455,7 +475,7 @@ systemLocales: anInteger
 					[:locale | 
 					locales addLast: locale.
 					true]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpstr').
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'lpwstr').
 	KernelLibrary default enumSystemLocales: enum asParameter dwFlags: anInteger.
 	enum free.
 	^locales collect: [:s | self lcid: (Integer readFrom: s asUppercase readStream radix: 16)]!

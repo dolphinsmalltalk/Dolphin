@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #CRTLibrary
 	instanceVariableNames: ''
@@ -123,13 +123,6 @@ _get_osfhandle: anInteger
 	<cdecl: handle _get_osfhandle sdword>
 	^self invalidCall!
 
-_getcwd: aString maxlen: anInteger
-	"Copy up to anInteger characters of the the current working directory path over the <String>
-	buffer, aString."
-
-	<cdecl: lpstr _getcwd lpstr sdword>
-	^self invalidCall!
-
 _isatty: anInteger
 	<cdecl: bool _isatty sdword>
 	^self invalidCall!
@@ -219,6 +212,14 @@ _strrev: aString
 	^self invalidCall
 !
 
+_wfopen_s: pFile filename: nameString mode: modeString
+	<cdecl: sdword _wfopen_s handle* lpwstr lpwstr>
+	^self invalidCall!
+
+_wgetcwd: aString maxlen: anInteger
+	<cdecl: lpvoid _wgetcwd lpwstr sdword>
+	^self invalidCall!
+
 atoi: aString
 	"Convert a String to an integer.
 
@@ -261,19 +262,39 @@ fgetc: aFILE
 	^self invalidCall!
 
 fgets: buf n: bufsize stream: aFILE
-	<cdecl: lpstr fgets lpstr sdword handle>
+	<cdecl: sdword fgets lpstr sdword handle>
 	^self invalidCall!
 
-fopen_s: pFile filename: nameString mode: modeString
-	<cdecl: sdword fopen_s handle* lpstr lpstr>
+fgetwc: aFILE
+	<cdecl: sdword fgetwc handle>
+	^self invalidCall!
+
+fgetws: buf n: bufsize stream: aFILE
+	<cdecl: intptr fgetws lpwstr sdword handle>
 	^self invalidCall!
 
 fputc: charValue stream: aFILE
 	<cdecl: sdword fputc sdword handle>
 	^self invalidCall!
 
+fputs: str stream: aFILE
+	<cdecl: sdword fputs lpstr handle>
+	^self invalidCall!
+
+fputwc: charValue stream: aFILE
+	<cdecl: sdword fputwc sdword handle>
+	^self invalidCall!
+
+fputws: str stream: aFILE
+	<cdecl: sdword fputws lpwstr handle>
+	^self invalidCall!
+
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
+	^self invalidCall!
+
+free: memblock
+	<cdecl: void free lpvoid>
 	^self invalidCall!
 
 fwrite: data size: sizeInteger count: countInteger stream: aFILE 
@@ -293,6 +314,13 @@ iswcntrl: aCharacter
 	<cdecl: bool iswcntrl char>
 	^self invalidCall
 !
+
+iswgraph: aCharacter
+	"Answer whether the argument is a printable character other than a space.
+		int iswgraph( wint_t c )"
+
+	<cdecl: bool iswgraph char>
+	^self invalidCall!
 
 iswprint: aCharacter
 	"Answer whether the argument is a printable character.
@@ -335,13 +363,6 @@ memset: dest c: c count: count
 	<cdecl: sdword memset lpvoid sdword intptr>
 	^self invalidCall!
 
-rewind: aFILE
-	"Rewind to the beginning of the CRT FILE*.
-	Implementation Note: As with other FILE routines, treat the stream argument as an opaque handle."
-
-	<cdecl: void rewind handle>
-	^self invalidCall!
-
 setlocale: category locale: localeString
 	"Set a specified locale category.
 
@@ -370,6 +391,10 @@ strcspn: string strCharSet: strCharSet
 
 strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
 	<cdecl: sdword strerror_s lpstr intptr sdword>
+	^self invalidCall!
+
+strlen: aString
+	<cdecl: sdword strlen lpvoid>
 	^self invalidCall!
 
 strncmp: string1 string2: string2 count: count
@@ -403,13 +428,29 @@ synchronizeLocale
 	self setlocale: 0 locale: ''!
 
 ungetc: c stream: stream
-	"Pushes the character with integer code point, c, back onto the FILE*, stream."
+	"Pushes the byte, c, back onto the FILE*, stream."
 
 	<cdecl: sdword ungetc sdword handle>
 	^self invalidCall!
 
+ungetwc: c stream: stream
+	"Pushes the UTF-16 code unit, c, back onto the FILE*, stream."
+
+	<cdecl: sdword ungetwc sdword handle>
+	^self invalidCall!
+
 wcscspn: aWideString strCharSet: strCharSet
 	<cdecl: dword wcscspn lpvoid lpwstr>
+	^self invalidCall!
+
+wcsncmp: string1 string2: string2 count: count
+	"Answer the order between the <Utf16String> arguments, string1 and string2,
+	considering up to <integer>, count, characters.
+
+		int wcscmp( const wchar_t *string1, const wchar_t *string2, size_t count );
+	"
+
+	<cdecl: sdword wcsncmp lpwstr lpwstr intptr>
 	^self invalidCall!
 
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
@@ -432,7 +473,6 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #_fseeki64:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_ftelli64:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #_get_osfhandle:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_getcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #_isatty:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_makepath_s:bufferSize:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_open_osfhandle:flags:!CRT functions-file handling!public! !
@@ -446,6 +486,8 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strnicmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #_strrev:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #_wfopen_s:filename:mode:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #_wgetcwd:maxlen:!CRT functions-directory control!public! !
 !CRTLibrary categoriesFor: #atoi:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #close!public!realizing/unrealizing! !
@@ -455,29 +497,37 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #fflush:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fputc:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fputs:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fputwc:stream:!public! !
+!CRTLibrary categoriesFor: #fputws:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #free:!CRT functions-memory allocation!public! !
 !CRTLibrary categoriesFor: #fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #initialize!initializing!private! !
 !CRTLibrary categoriesFor: #iswcntrl:!CRT functions-character classification!public! !
+!CRTLibrary categoriesFor: #iswgraph:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswprint:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #rewind:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
 !CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcmp:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strcspn:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strerror_s:bufferSize:errnum:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #strlen:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #strpbrk:strCharSet:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #synchronizeLocale!CRT functions-localization!private! !
 !CRTLibrary categoriesFor: #ungetc:stream:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #ungetwc:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #wcscspn:strCharSet:!CRT functions-string manipulation!public! !
+!CRTLibrary categoriesFor: #wcsncmp:string2:count:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 
 !CRTLibrary class methodsFor!

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ToolbarConstants put: (PoolConstantsDictionary named: #ToolbarConstants)!
 ToolbarConstants at: 'BTNS_AUTOSIZE' put: 16r10!
@@ -38,8 +38,8 @@ ToolbarConstants at: 'STD_REDOW' put: 16r4!
 ToolbarConstants at: 'STD_REPLACE' put: 16rD!
 ToolbarConstants at: 'STD_UNDO' put: 16r3!
 ToolbarConstants at: 'TB_ADDBITMAP' put: 16r413!
-ToolbarConstants at: 'TB_ADDBUTTONS' put: 16r414!
-ToolbarConstants at: 'TB_ADDSTRING' put: 16r41C!
+ToolbarConstants at: 'TB_ADDBUTTONSW' put: 16r444!
+ToolbarConstants at: 'TB_ADDSTRINGW' put: 16r44D!
 ToolbarConstants at: 'TB_AUTOSIZE' put: 16r421!
 ToolbarConstants at: 'TB_BOTTOM' put: 16r7!
 ToolbarConstants at: 'TB_BUTTONCOUNT' put: 16r418!
@@ -54,8 +54,8 @@ ToolbarConstants at: 'TB_ENDTRACK' put: 16r8!
 ToolbarConstants at: 'TB_GETBITMAP' put: 16r42C!
 ToolbarConstants at: 'TB_GETBITMAPFLAGS' put: 16r429!
 ToolbarConstants at: 'TB_GETBUTTON' put: 16r417!
-ToolbarConstants at: 'TB_GETBUTTONINFO' put: 16r441!
-ToolbarConstants at: 'TB_GETBUTTONTEXT' put: 16r42D!
+ToolbarConstants at: 'TB_GETBUTTONINFOW' put: 16r43F!
+ToolbarConstants at: 'TB_GETBUTTONTEXTW' put: 16r44B!
 ToolbarConstants at: 'TB_GETIDEALSIZE' put: 16r463!
 ToolbarConstants at: 'TB_GETITEMRECT' put: 16r41D!
 ToolbarConstants at: 'TB_GETMAXSIZE' put: 16r453!
@@ -63,10 +63,11 @@ ToolbarConstants at: 'TB_GETPADDING' put: 16r456!
 ToolbarConstants at: 'TB_GETRECT' put: 16r433!
 ToolbarConstants at: 'TB_GETROWS' put: 16r428!
 ToolbarConstants at: 'TB_GETSTATE' put: 16r412!
+ToolbarConstants at: 'TB_GETSTRINGW' put: 16r45B!
 ToolbarConstants at: 'TB_GETTOOLTIPS' put: 16r423!
 ToolbarConstants at: 'TB_HIDEBUTTON' put: 16r404!
 ToolbarConstants at: 'TB_INDETERMINATE' put: 16r405!
-ToolbarConstants at: 'TB_INSERTBUTTON' put: 16r415!
+ToolbarConstants at: 'TB_INSERTBUTTONW' put: 16r443!
 ToolbarConstants at: 'TB_ISBUTTONCHECKED' put: 16r40A!
 ToolbarConstants at: 'TB_ISBUTTONENABLED' put: 16r409!
 ToolbarConstants at: 'TB_ISBUTTONHIDDEN' put: 16r40C!
@@ -74,12 +75,14 @@ ToolbarConstants at: 'TB_ISBUTTONINDETERMINATE' put: 16r40D!
 ToolbarConstants at: 'TB_ISBUTTONPRESSED' put: 16r40B!
 ToolbarConstants at: 'TB_LINEDOWN' put: 16r1!
 ToolbarConstants at: 'TB_LINEUP' put: 16r0!
+ToolbarConstants at: 'TB_MAPACCELERATORW' put: 16r45A!
 ToolbarConstants at: 'TB_PAGEDOWN' put: 16r3!
 ToolbarConstants at: 'TB_PAGEUP' put: 16r2!
 ToolbarConstants at: 'TB_PRESSBUTTON' put: 16r403!
 ToolbarConstants at: 'TB_REPLACEBITMAP' put: 16r42E!
-ToolbarConstants at: 'TB_SAVERESTORE' put: 16r41A!
+ToolbarConstants at: 'TB_SAVERESTOREW' put: 16r44C!
 ToolbarConstants at: 'TB_SETBITMAPSIZE' put: 16r420!
+ToolbarConstants at: 'TB_SETBUTTONINFOW' put: 16r440!
 ToolbarConstants at: 'TB_SETBUTTONSIZE' put: 16r41F!
 ToolbarConstants at: 'TB_SETCMDID' put: 16r42A!
 ToolbarConstants at: 'TB_SETEXTENDEDSTYLE' put: 16r454!
@@ -115,7 +118,9 @@ ToolbarConstants at: 'TBN_DROPDOWN' put: -16r2C6!
 ToolbarConstants at: 'TBN_ENDADJUST' put: -16r2C0!
 ToolbarConstants at: 'TBN_ENDDRAG' put: -16r2BE!
 ToolbarConstants at: 'TBN_FIRST' put: -16r2BC!
-ToolbarConstants at: 'TBN_GETBUTTONINFOA' put: -16r2BC!
+ToolbarConstants at: 'TBN_GETBUTTONINFOW' put: -16r2D0!
+ToolbarConstants at: 'TBN_GETDISPINFOW' put: -16r2CD!
+ToolbarConstants at: 'TBN_GETINFOTIPW' put: -16r2CF!
 ToolbarConstants at: 'TBN_QUERYDELETE' put: -16r2C3!
 ToolbarConstants at: 'TBN_QUERYINSERT' put: -16r2C2!
 ToolbarConstants at: 'TBN_RESET' put: -16r2C1!

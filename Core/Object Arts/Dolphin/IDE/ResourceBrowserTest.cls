@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ResourceBrowserTest
 	instanceVariableNames: 'resourceBrowser testClass'
@@ -58,7 +58,7 @@ testAddRemoveResource
 
 testBasicContents
 	self assert: self resourceList notEmpty.
-	self assert: (self resourceList first isKindOf: ResourceIdentifier).
+	self assert: self resourceList first isKindOf: ResourceIdentifier.
 	self assert: self resourceList size > 100.
 	self assert: (self resourceList includes: (ResourceIdentifier class: Shell)).
 	self assert: (self resourceList includes: (ResourceIdentifier class: SystemBrowserShell))! !

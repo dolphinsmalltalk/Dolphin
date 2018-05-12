@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass toolBackgroundColor testBrowserClass defaultPublishedAspectsLiteralsMap'
@@ -1740,6 +1740,11 @@ dropTextFile: aString
 
 	SmalltalkWorkspaceDocument filename: aString!
 
+dropXmlFile: aString
+	"Private - Open an XML file. Use the XmlPad for this, if available."
+
+	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
+
 educationCenter
 	"Open the Education Centre contents page"
 
@@ -2130,11 +2135,11 @@ methodExplorerClass: toolClass
 	
 	methodExplorerClass := toolClass!
 
-methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean 
-	| filter searchString search env caption |
+methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
+	| filter searchString search caption |
 	searchString := aString isEmpty ifTrue: [Clipboard current getTextOrEmpty] ifFalse: [aString].
 	self findDetails pattern: searchString.
-	aBoolean 
+	aBoolean
 		ifTrue: [findDetails := self promptForSearchString: findDetails caption: 'Methods Containing ...'].
 	(findDetails isNil or: [findDetails pattern isEmpty]) ifTrue: [^nil].
 	search := MethodSourceSearch newFindDetails: findDetails copy.
@@ -2142,15 +2147,18 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 	"Consolidate into a SelectorEnvironment, rather than keeping a dynamic PluggableEnvironment
 	otherwise there is a danger the entire source file may be scanned again"
 	caption := 'Finding Methods Containing <1p>' expandMacrosWith: search pattern.
-	env := self 
-				selectMethods: filter
-				in: aBrowserEnvironment
-				withProgress: caption.
-	env label: ('Methods containing <1s>: <2p> in <3d>' 
-				expandMacrosWith: search searchMode asPhrase asLowercase
-				with: search pattern
-				with: aBrowserEnvironment).
-	^env!
+	^(self
+		selectMethods: filter
+		in: aBrowserEnvironment
+		withProgress: caption)
+			ifNotNil: 
+				[:env |
+				env
+					label: ('Methods containing <1s>: <2p> in <3d>'
+								expandMacrosWith: search searchMode asPhrase asLowercase
+								with: search pattern
+								with: aBrowserEnvironment);
+					yourself]!
 
 methodsThatFailedToCompileIn: aBrowserEnvironment 
 	| failed |
@@ -2579,6 +2587,9 @@ openWorkspace
 	ws := self workspaceShellClass open.
 	ws notNil ifTrue: [ws show].
 	^ws!
+
+openXmlFile: aString
+	Smalltalk at: #XmlPad ifPresent: [:xmlpad | xmlpad filename: aString]!
 
 overlappingObjectsError: anError 
 	"Private - The resumeable <Error>, anError, was raised when an attempt to install a new 
@@ -4135,6 +4146,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #dropPackageFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #dropScriptFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #dropTextFile:!commands!private! !
+!SmalltalkSystem categoriesFor: #dropXmlFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #educationCenter!commands!public! !
 !SmalltalkSystem categoriesFor: #environment!constants!public! !
 !SmalltalkSystem categoriesFor: #expressionStylerClass!constants!public! !
@@ -4237,6 +4249,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #openViewComposerOnNewViewFor:!commands!public! !
 !SmalltalkSystem categoriesFor: #openViewComposerOnViewOf:!commands!public! !
 !SmalltalkSystem categoriesFor: #openWorkspace!commands!public! !
+!SmalltalkSystem categoriesFor: #openXmlFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #overlappingObjectsError:!exceptions!private! !
 !SmalltalkSystem categoriesFor: #pacFileDialogType!constants!private! !
 !SmalltalkSystem categoriesFor: #packageBrowserClass!options!public! !

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Debug Trace Stream'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Debug Trace Stream.

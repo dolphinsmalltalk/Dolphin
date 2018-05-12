@@ -1,8 +1,8 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'AutoUrlDetectionMask ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
+	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
 RichTextEdit guid: (GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -78,7 +78,9 @@ beNonUnderlined
 bePlain
 	"Set the receiver to plain text mode."
 
-	self selectionCharFormat: (CHARFORMAT new bePlain; yourself)!
+	self selectionCharFormat: (CHARFORMAT2W new
+				bePlain;
+				yourself)!
 
 beUnderlined
 	"Set the receiver to underline text mode."
@@ -127,7 +129,7 @@ color: aColor
 	"Private - Set the colour of the selection in the receiver to aColor."
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMAT2W new.
 	cf color: aColor.
 	self selectionCharFormat: cf!
 
@@ -225,38 +227,37 @@ find: aFindDetails range: anInterval
 		range: anInterval
 		flags: frFlags!
 
-find: findString range: findRange flags: frFlags 
+find: findString range: findRange flags: frFlags
 	"Attempt to find the text findString in the receivers text within findRange. flags are from
 	FINDREPLACE. Answer the (1-based) position of the found string, or 0 if nothing matched."
 
 	| findText start stop range |
-	findRange isNil 
+	findRange isNil
 		ifTrue: 
 			[start := 0.
 			stop := self textLength]
 		ifFalse: 
 			[start := findRange start - 1.
 			stop := findRange stop].
-	findText := FINDTEXTEX 
+	findText := FINDTEXTEX
 				from: start
 				to: stop
-				text: findString.
-	self 
-		sendMessage: EM_FINDTEXTEX
+				text: findString asUtf16String.
+	self
+		sendMessage: EM_FINDTEXTEXW
 		wParam: frFlags
-		lpParam: findText asParameter.
+		lpParam: findText.
 	range := findText chrgText.
 	^range cpMin + 1 to: range cpMax!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	"Sets the foreground colour of the receiver to aColorOrNil.
 	If aColorOrNil is nil then use the default color"
 
 	| cf |
 	super forecolor: aColorOrNil.
-	cf := CHARFORMAT new.
-	cf 
-		color: (aColorOrNil notNil ifTrue: [aColorOrNil] ifFalse: [Color windowText]).
+	cf := CHARFORMAT2W new.
+	cf color: (aColorOrNil notNil ifTrue: [aColorOrNil] ifFalse: [Color windowText]).
 	self defaultCharFormat: cf!
 
 getCharFormat: flagsMask
@@ -268,17 +269,30 @@ getCharFormat: flagsMask
 	"
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMAT2W new.
 	"We want all attributes"
 	cf dwMask: 16rFFFFFFFF.
-	self sendMessage: EM_GETCHARFORMAT wParam: flagsMask lpParam: cf asParameter.
+	self
+		sendMessage: EM_GETCHARFORMAT
+		wParam: flagsMask
+		lpParam: cf asParameter.
 	^cf!
 
-getTextRange: range
-	^self 
-		sendMessage: EM_GETTEXTRANGE
-		wParam: 0
-		lpParam: range!
+getWindowText: flagsInteger length: lengthInteger
+	| buf struct |
+	buf := Utf16String newFixed: lengthInteger.
+	struct := GETTEXTEX newBuffer
+				cb: lengthInteger + 1 << 1;
+				flags: GT_USECRLF | flagsInteger;
+				codepage: CP_UNICODE;
+				yourself.
+	"The docs say the return value is the number of chars (not byte) copied including the null, but actually it is
+	the number of chars excluding the null. We ignore it anyway."
+	self
+		sendMessage: EM_GETTEXTEX
+		wParam: struct yourAddress
+		lpParam: buf.
+	^buf asUtf8String!
 
 initialize
 	"Private - Allocate Win32 EDITSTREAM structure for communicating with control
@@ -296,7 +310,9 @@ isBold
 isBold: set
 	"Private - Turn on/off emboldening for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMAT new isBold: set; yourself)!
+	self selectionCharFormat: (CHARFORMAT2W new
+				isBold: set;
+				yourself)!
 
 isItalic
 	"Answer true if receiver's current selection is italic."
@@ -306,7 +322,9 @@ isItalic
 isItalic: set
 	"Private - Turn on/off italics for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMAT new isItalic: set; yourself)!
+	self selectionCharFormat: (CHARFORMAT2W new
+				isItalic: set;
+				yourself)!
 
 isSelectionKept
 	"Answer true if the receiver is set to maintain selection after losing focus.
@@ -331,7 +349,9 @@ isUnderlined
 isUnderlined: set
 	"Turn on/off underlining for the receiver's current selection."
 
-	self selectionCharFormat: (CHARFORMAT new isUnderlined: set; yourself)!
+	self selectionCharFormat: (CHARFORMAT2W new
+				isUnderlined: set;
+				yourself)!
 
 isUrlDetectionEnabled
 	^teFlags allMask: AutoUrlDetectionMask!
@@ -340,11 +360,6 @@ isUrlDetectionEnabled: aBoolean
 	aBoolean = self isUrlDetectionEnabled ifTrue: [^self].
 	teFlags := teFlags mask: AutoUrlDetectionMask set: aBoolean.
 	self isOpen ifTrue: [self setAutoUrlDetection: aBoolean]!
-
-maxTextLimit
-	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
-
-	^SmallInteger maximum!
 
 nmNotify: pNMHDR
 	^(RtnMap lookup: (pNMHDR sdwordAtOffset: 8))
@@ -448,14 +463,9 @@ pastePlainText
 	self replaceSelection: Clipboard current getText!
 
 plainText
-	"Answer a string containing the plain text contents of the receiver.
-	The standard getWindowText accessor can't be used for large (>64k) 
-	amounts of text."
+	"Answer a <Utf16String> containing the plain text contents of the receiver."
 
-	| aStream |
-	aStream := String writeStream: 1024.
-	self printTextOn: aStream.
- 	^aStream contents!
+	^self getWindowText: 0 length: self textLength!
 
 plainTextFrom: start to: stop
 	"Answer a string containing the plain text contents of the receiver
@@ -464,8 +474,14 @@ plainTextFrom: start to: stop
 	| range num text |
 	start < 1 ifTrue: [^self errorSubscriptBounds: start].
 	stop < start ifTrue: [^String new].
-	range := TEXTRANGE from: start - 1 to: stop.
-	num := self getTextRange: range.
+	range := TEXTRANGE
+				from: start - 1
+				to: stop
+				type: Utf16String.
+	num := self
+				sendMessage: EM_GETTEXTRANGE
+				wParam: 0
+				lpParam: range.
 	text := range text.
 	^num = text size ifTrue: [text] ifFalse: [self errorSubscriptBounds: stop]!
 
@@ -473,7 +489,7 @@ pointSize: anInteger
 	"Private - Set the point size of the currently selected text to, anInteger."
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMAT2W new.
 	cf pointSize: anInteger.
 	self selectionCharFormat: cf!
 
@@ -505,38 +521,47 @@ printRtfOn: puttableStream
 	"Append the receiver control's RTF contents to the argument,
 	puttableStream, i.e. this method is used to GET RTF from the receiver."
 
-	^self printTextOn: puttableStream format: SF_RTF
-!
+	^self printRtfOn: puttableStream format: ##(CP_UTF8 << 16 | SF_USECODEPAGE)!
+
+printRtfOn: puttableStream format: formatMask
+	"Private - Stream the RTF contents of the receiver to the stream aStream. i.e. this method
+	is used to GET text from the receiver. The RTF is always streamed in UTF-8, so the stream
+	needs to be over a string that supports unicode encodings or there will be data loss."
+
+	| stringClass |
+	stringClass := formatMask >> 16 == CP_UTF8 ifTrue: [Utf8String] ifFalse: [AnsiString].
+	^self streamOut: formatMask | SF_RTF
+		format: (ExternalCallback block: 
+					[:dwCookie :pbBuff :cb :pcb |
+					| str |
+					str := stringClass fromAddress: pbBuff length: cb.
+					"We don't want the null terminator, if present"
+					(str basicAt: cb) = 0 ifTrue: [str := str resize: cb - 1].
+					puttableStream nextPutAll: str.
+					pcb value: cb.
+					0	"Continue streaming"]
+				descriptor: StreamingDescriptor)!
 
 printTextOn: aStream
-	"Write the receiver control's contents to aStream in plain text format.
-	i.e. this method is used to GET plain text from the receiver."
+	"Private - Stream the plain text contents of the receiver to the <puttableStream>, aStream."
 
 	^self printTextOn: aStream format: SF_TEXT!
 
-printTextOn: puttableStream format: formatMask 
-	"Private - Stream the RTF contents of the receiver to the stream aStream.
-	i.e. this method is used to GET text from the receiver."
-
-	| callback result |
-	callback := ExternalCallback block: 
-					[:dwCookie :pbBuff :cb :pcb | 
-					| str |
-					str := String fromAddress: pbBuff length: cb.
-					puttableStream 
-						next: ((str basicAt: cb) == 0 ifTrue: [cb - 1] ifFalse: [cb])
-						putAll: str
-						startingAt: 1.	"We want to ignore the null terminator, which may or may not be present"
+printTextOn: aStream format: anInteger
+	^self streamOut: anInteger | SF_UNICODE
+		format: (ExternalCallback block: 
+					[:dwCookie :pbBuff :cb :pcb |
+					| str cch |
+					"Control sends block size in bytes, not chars"
+					cch := cb bitShift: -1.
+					str := Utf16String fromAddress: pbBuff length: cch.
+					"Ignore any null terminator"
+					(str basicAt: cch) = 0 ifTrue: [str := str allButLast].
+					aStream nextPutAll: str.
 					pcb value: cb.
-					0	"The help is incorrect, zero continues the streaming"]
-				descriptor: StreamingDescriptor.
-	winStruct pfnCallback: callback asParameter yourAddress.
-	result := self 
-				sendMessage: EM_STREAMOUT
-				wParam: formatMask
-				lpParam: winStruct.
-	callback free.
-	^result!
+					"Continue streaming"
+					0]
+				descriptor: StreamingDescriptor)!
 
 privGetRichText
 	"Private - Answer the <RichText> contents of the receiver."
@@ -561,47 +586,58 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-readRtfFrom: gettableStream
-	"Replace the receiver control's contents with the RTF data read
-	from the argument, gettableStream."
- 
-	^self readTextFrom: gettableStream format: SF_RTF!
+readRtfFrom: aPositionableStream
+	"Replace the receiver control's contents with the RTF data read from the argument,
+	gettableStream."
+
+	^self
+		streamIn: (ExternalCallback block: 
+					[:dwCookie :pbBuff :cb :pcb |
+					| text size |
+					text := aPositionableStream nextAvailable: cb.
+					size := text size.
+					pbBuff
+						replaceFrom: 1
+						to: size
+						with: text
+						startingAt: 1.
+					pcb value: size.
+					0]
+				descriptor: StreamingDescriptor)
+		format: SF_RTF!
 
 readTextFrom: gettableStream
 	"Replace the receiver control's contents with the plain text 
 	read from the argument, gettableStream."
 
-	^self readTextFrom: gettableStream format: SF_TEXT.
+	^self readTextFrom: gettableStream format: ##(SF_TEXT | SF_UNICODE).
 !
 
 readTextFrom: gettableStream format: formatMask
-	"Private - Read text from the stream, gettableStream.
-	The receiver holds on the to the stream it is reading, because
-	the RichEdit control appears to read from it asynchronously.
-	Answer the number of characters read from aStream.
-	Implementation Note: Extend the life of the old 'stream' to the end of the method 
-	in case control still using it - BUT we must be very careful not to cause a reference 
-	to the old callback to be kept in this method context, otherwise we'll build a huge 
-	linked list of callbacks, blocks, and method contexts, etc."
+	"Private - Stream text from the stream, gettableStream, into the RichEdit control. The
+	receiver holds on the to the stream it is reading, because the RichEdit control appears to
+	read from it asynchronously. Answer the number of characters read from aStream.
+	Implementation Note: Extend the life of the old 'stream' to the end of the method in case
+	control still using it - BUT we must be very careful not to cause a reference to the old
+	callback to be kept in this method context, otherwise we'll build a huge linked list of
+	callbacks, blocks, and method contexts, etc."
 
-	| answer callback |
-	callback :=
-		ExternalCallback
-			block: (self streamingBlockFor: gettableStream)
-			descriptor: StreamingDescriptor.
-
-	winStruct
-		pfnCallback: callback asParameter yourAddress.
-
-	answer := self sendMessage: EM_STREAMIN wParam: formatMask lpParam: winStruct.
-	self isTextModified: false.
-
-	"It seems we have to increase the limit again after streaming in."
-	self setMaxTextLimit.
-
-	streamIn isNil ifFalse: [streamIn free].
-	streamIn := callback.
-	^answer!
+	^self
+		streamIn: (ExternalCallback block: 
+					[:dwCookie :pbBuff :cb :pcb |
+					| text size |
+					text := (gettableStream nextAvailable: cb) asUtf16String.
+					size := text size bitShift: 1.
+					pbBuff
+						replaceFrom: 1
+						to: size
+						with: text
+						startingAt: 1.
+					pcb value: size.
+					"Continue streaming"
+					0]
+				descriptor: StreamingDescriptor)
+		format: formatMask!
 
 resetCharFormat
 	"Resets the formatting attributes of the selection to the default mode."
@@ -625,7 +661,7 @@ rtfText
 	"Private - Answer a String containing the RTF contents of the receiver."
 
 	| aStream |
-	aStream := String writeStream: 1024.
+	aStream := Utf8String writeStream: 1024.
 	self printRtfOn: aStream.
 	^aStream contents!
 
@@ -636,6 +672,17 @@ rtfText: aString
 
 	self readRtfFrom: aString readStream
 !
+
+selection
+	"Answer a string containing the plain text of the selection in the receiver."
+
+	| selection cch |
+	cch := self basicSelectionRange size - 1.
+	cch == 0 ifTrue: [^''].
+	selection := self getWindowText: GT_SELECTION length: cch.
+	"Strip off the final null if present"
+	(selection basicAt: cch) == 0 ifTrue: [selection resize: cch - 1].
+	^selection!
 
 selectionCharFormat
 	"Private - Gets the attributes of the selection in the receiver."
@@ -654,11 +701,11 @@ selectionColor
 
 	^self selectionCharFormat color!
 
-selectionColor: aColorOrNil 
+selectionColor: aColorOrNil
 	"Set the colour of the selection in the receiver to aColorOrNil. If nil then
 	set the colour to the default window text"
 
-	self selectionCharFormat: ((CHARFORMAT new)
+	self selectionCharFormat: (CHARFORMAT2W new
 				color: aColorOrNil;
 				yourself)!
 
@@ -671,7 +718,7 @@ selectionFont: aFont
 	"Set the font of the selection in the receiver to aFont"
 
 	| cf |
-	cf := CHARFORMAT new.
+	cf := CHARFORMAT2W new.
 	cf font: aFont.
 	self selectionCharFormat: cf!
 
@@ -692,6 +739,17 @@ selectionParaFormat: options
 
 	self sendMessage: EM_SETPARAFORMAT wParam: 0 lpParam: options asParameter!
 
+selectionPlainText: aString
+	| stex |
+	stex := ByteArray newFixed: 8.
+	stex
+		dwordAtOffset: 0 put: ST_SELECTION | ST_UNICODE;
+		dwordAtOffset: 4 put: aString codePage.
+	self
+		sendMessage: EM_SETTEXTEX
+		wParam: stex yourAddress
+		lpParam: aString!
+
 selectionRichText
 	"Private - Answer the selected RichText in the receiver."
 
@@ -703,14 +761,15 @@ selectionRichText: aRichText
 	This is the backend of a double-dispatch protocol between TextEdits and 
 	RichText/Strings."
 
-	^self readTextFrom: aRichText rtf readStream format: ##(SFF_SELECTION|SF_RTF)!
+	^self readTextFrom: aRichText rtf readStream
+		format: ##(SFF_SELECTION | (CP_UTF8 << 16) | SF_USECODEPAGE | SF_RTF)!
 
 selectionRtf
-	"Private - Answer the selected text in the receiver as an RTF <readableString>."
+	"Private - Answer the selected text in the receiver as an RTF <Utf8String>."
 
 	| s |
-	s := String writeStream: 512.
-	self printTextOn: s format: ##(SFF_SELECTION|SF_RTF).
+	s := Utf8String writeStream: 512.
+	self printRtfOn: s format: ##(CP_UTF8 << 16 | SF_USECODEPAGE | SFF_SELECTION).
 	^s contents!
 
 setAutoUrlDetection: aBoolean 
@@ -729,17 +788,17 @@ setControlBackcolor: aColor
 		wParam: 0
 		lParam: aColor asColorRef asParameter!
 
-setFont: aFont 
+setFont: aFont
 	"Private - Sets the font for the entire receiver text to be aFont. Overridden here because
 	the Windows RichEdit control does not correctly redraw on font change"
 
 	| modified |
 	modified := self isTextModified.
 	super setFont: aFont.
-	aFont isNil 
+	aFont isNil
 		ifFalse: 
 			[| cf |
-			cf := CHARFORMAT new.
+			cf := CHARFORMAT2W new.
 			cf font: aFont.
 			self setCharFormat: cf flags: SCF_ALL].
 	self isTextModified: modified!
@@ -750,11 +809,18 @@ setMaxTextLimit
 	self textLimit: self maxTextLimit!
 
 setWindowText: aString
-	"Private - Set the plain text contents of the receiver to aString. The standard
-	setWindowText: accessor can't be used for large (>64k) amounts of text."
+	"Private - Set the contents of the receiver to aString, interpreting as plain text or RTF depending on the content."
 
-	self readTextFrom: aString readStream
-!
+	"Unusually the RichEdit control will accept different string encodings through EM_SETTEXTEX,
+	so we don't need to first translate to UTF-16, but just pass along whatever we get."
+
+	| stex |
+	stex := ByteArray newFixed: 8.
+	stex dwordAtOffset: 4 put: aString codePage.
+	self
+		sendMessage: EM_SETTEXTEX
+		wParam: stex yourAddress
+		lpParam: aString!
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
@@ -775,21 +841,46 @@ state
 	 by messages added to the end of the sequence here."
 	^sequence!
 
-streamingBlockFor: gettableStream
-	"Private - Answer a 4 argument block suitable for use with the RTE streaming
-	callback that sources its text from the <gettableStream> argument."
+streamIn: callback format: anInteger
+	| answer |
+	winStruct pfnCallback: callback asParameter.
+	answer := self
+				sendMessage: EM_STREAMIN
+				wParam: anInteger
+				lpParam: winStruct.
+	self isTextModified: false.
+	"It seems we have to increase the limit again after streaming in."
+	self setMaxTextLimit.
+	streamIn isNil ifFalse: [streamIn free].
+	streamIn := callback.
+	^answer!
 
-	^[ :dwCookie :pbBuff :cb :pcb | | text size |
-		text := gettableStream nextAvailable: cb.
-		size := text size.
-		pbBuff replaceFrom: 1 to: size with: text startingAt: 1.
-		pcb value: size.
-		0	"The help is confusing/wrong. We must return 0 to continue streaming."]!
+streamOut: formatMask format: callback
+	| result |
+	winStruct pfnCallback: callback asParameter.
+	result := self
+				sendMessage: EM_STREAMOUT
+				wParam: formatMask
+				lpParam: winStruct.
+	callback free.
+	^result!
 
 text
 	"Answer the text contents of the receiver (N.B. this will be RichText)."
 
 	^self privGetRichText!
+
+textLength
+	"Private - Answers the length of text for the receiver. This is the number of 16-bit code
+	units required to represent the content in UTF-16, and therefore the size of Utf16String
+	required to hold that content."
+
+	| gtlex |
+	gtlex := ByteArray newFixed: 8.
+	gtlex
+		dwordAtOffset: 0 put: ##(GTL_USECRLF | GTL_PRECISE | GTL_NUMCHARS);
+		dwordAtOffset: 4 put: CP_UNICODE.
+	^self sendMessage: EM_GETTEXTLENGTHEX wParam: gtlex yourAddress!
 
 textLimit: anInteger
 	"Set the maximum text limit for the receiver. 
@@ -845,7 +936,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #find:range:flags:!public!searching and replacing! !
 !RichTextEdit categoriesFor: #forecolor:!accessing!public! !
 !RichTextEdit categoriesFor: #getCharFormat:!helpers!private! !
-!RichTextEdit categoriesFor: #getTextRange:!helpers!private! !
+!RichTextEdit categoriesFor: #getWindowText:length:!accessing!private! !
 !RichTextEdit categoriesFor: #initialize!initializing!private! !
 !RichTextEdit categoriesFor: #isBold!helpers!public! !
 !RichTextEdit categoriesFor: #isBold:!helpers!private! !
@@ -857,7 +948,6 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #isUnderlined:!helpers!public! !
 !RichTextEdit categoriesFor: #isUrlDetectionEnabled!public!testing! !
 !RichTextEdit categoriesFor: #isUrlDetectionEnabled:!accessing!public! !
-!RichTextEdit categoriesFor: #maxTextLimit!constants!private! !
 !RichTextEdit categoriesFor: #nmNotify:!event handling-win32!private! !
 !RichTextEdit categoriesFor: #onRightButtonReleased:!event handling!public! !
 !RichTextEdit categoriesFor: #onViewCreated!event handling!public! !
@@ -875,6 +965,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #positionAtLine:!accessing!public! !
 !RichTextEdit categoriesFor: #positionOfChar:!accessing!public! !
 !RichTextEdit categoriesFor: #printRtfOn:!public!streaming! !
+!RichTextEdit categoriesFor: #printRtfOn:format:!private!streaming! !
 !RichTextEdit categoriesFor: #printTextOn:!public!streaming! !
 !RichTextEdit categoriesFor: #printTextOn:format:!private!streaming! !
 !RichTextEdit categoriesFor: #privGetRichText!private!updating! !
@@ -887,6 +978,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #richText:!accessing!private! !
 !RichTextEdit categoriesFor: #rtfText!accessing!private! !
 !RichTextEdit categoriesFor: #rtfText:!accessing!private! !
+!RichTextEdit categoriesFor: #selection!accessing!public! !
 !RichTextEdit categoriesFor: #selectionCharFormat!accessing!private! !
 !RichTextEdit categoriesFor: #selectionCharFormat:!accessing!private! !
 !RichTextEdit categoriesFor: #selectionColor!accessing!public! !
@@ -895,6 +987,7 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #selectionFont:!operations!public! !
 !RichTextEdit categoriesFor: #selectionParaFormat!accessing!private! !
 !RichTextEdit categoriesFor: #selectionParaFormat:!accessing!private! !
+!RichTextEdit categoriesFor: #selectionPlainText:!private!selection! !
 !RichTextEdit categoriesFor: #selectionRichText!private!selection! !
 !RichTextEdit categoriesFor: #selectionRichText:!private!selection! !
 !RichTextEdit categoriesFor: #selectionRtf!private!selection! !
@@ -905,8 +998,10 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !RichTextEdit categoriesFor: #setMaxTextLimit!operations!private! !
 !RichTextEdit categoriesFor: #setWindowText:!accessing!private! !
 !RichTextEdit categoriesFor: #state!accessing!private! !
-!RichTextEdit categoriesFor: #streamingBlockFor:!private!streaming! !
+!RichTextEdit categoriesFor: #streamIn:format:!private!streaming! !
+!RichTextEdit categoriesFor: #streamOut:format:!private!streaming! !
 !RichTextEdit categoriesFor: #text!accessing!public! !
+!RichTextEdit categoriesFor: #textLength!accessing!private! !
 !RichTextEdit categoriesFor: #textLimit:!operations!public! !
 !RichTextEdit categoriesFor: #winFinalize!event handling!private! !
 !RichTextEdit categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
@@ -923,7 +1018,7 @@ initialize
 
 	"Descriptor for stream out callback"
 	StreamingDescriptor := ExternalDescriptor argumentTypes: 'dword lpvoid sdword DWORD*'.
-	ParagraphAlignmentMap := (LookupTable new)
+	ParagraphAlignmentMap := (IdentityDictionary new)
 				at: #left put: PFA_LEFT;
 				at: #right put: PFA_RIGHT;
 				at: #center put: PFA_CENTER;
@@ -944,26 +1039,30 @@ initializeNotificationMap
 				shrink;
 				yourself!
 
-onStartup
-	"Private - The system is starting, register the rich edit window class etc"
+maxTextLimit
+	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
 
-	self registerClass!
+	^SmallInteger maximum!
 
 registerClass
-	"Private - Register the rich edit window class."
+	"Private - Ensure the the rich edit window class is registered by loading the relevant library."
 
-	#todo "Use RichEd20.dll if it is present".
-	ExternalLibrary open: 'RICHED32.DLL'.
-	!
+	(Library isNil or: [Library isOpen not])
+		ifTrue: [Library := ExternalLibrary open: self richEditDllName]!
+
+richEditDllName
+	^'riched20.dll'
+	"^'msftedit.dll'"!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
-	#todo "Use RichEdit20(A/W) if RichEd20.dll is present".
-	^'RichEdit'! !
+	self registerClass.
+	^'RichEdit20W'! !
 !RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
 !RichTextEdit class categoriesFor: #initializeNotificationMap!private! !
-!RichTextEdit class categoriesFor: #onStartup!event handling!private! !
-!RichTextEdit class categoriesFor: #registerClass!event handling!private! !
+!RichTextEdit class categoriesFor: #maxTextLimit!constants!private! !
+!RichTextEdit class categoriesFor: #registerClass!initializing!private! !
+!RichTextEdit class categoriesFor: #richEditDllName!constants!private! !
 !RichTextEdit class categoriesFor: #winClassName!constants!private! !
 

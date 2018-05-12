@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #URLMonLibrary
 	instanceVariableNames: ''
@@ -16,13 +16,13 @@ overlappedURLDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dw
 	HRESULT URLDownloadToCacheFile(
 		LPUNKNOWN lpUnkcaller,
 		LPCSTR szURL,
-		LPTSTR szFileName,
+		LPWSTR szFileName,
 		DWORD dwBufLength,
 		DWORD dwReserved,
 		IBindStatusCallback *pBSC
 		);"
 
-	<overlap stdcall: hresult URLDownloadToCacheFileA IUnknown* lpstr lpstr dword dword lpvoid>
+	<overlap stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
 	^self invalidCall!
 
 overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc 
@@ -49,12 +49,12 @@ urlDownload: url toFile: aStringFilename
 
 	self 
 		overlappedURLDownloadToFile: nil
-		szURL: url
-		szFilename: aStringFilename
+		szURL: url asUtf16String
+		szFilename: aStringFilename asUtf16String
 		dwReserved: 0
 		pBSC: nil!
 
-urlDownloadToCacheFile: url 
+urlDownloadToCacheFile: url
 	"Helper method for #urlDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:.
 	Downloads data at url into the local Internet cache and answers the file name of the cache location.
 	An HRESULTError is raised if the target does not exist, or some other error occurs. The HRESULT
@@ -65,10 +65,10 @@ urlDownloadToCacheFile: url
 	has completed)."
 
 	| filename |
-	filename := String new: File maxPath.	"String auto allocates extra byte for null terminator"
-	self 
+	filename := File pathBuffer.	"String auto allocates extra byte for null terminator"
+	self
 		overlappedURLDownloadToCacheFile: nil
-		szURL: url
+		szURL: url asUtf16String
 		szFilename: filename
 		dwBufLength: filename size
 		dwReserved: 0

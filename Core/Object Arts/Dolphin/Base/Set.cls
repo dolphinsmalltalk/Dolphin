@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Collection variableSubclass: #Set
 	instanceVariableNames: 'tally'
@@ -179,7 +179,7 @@ elements: anOrderedCollection
 equals: comperand
 	"Answer whether the receiver is equivalent to the <Object>, comperand."
 
-	#deprecated.
+	Notification deprecated.
 	^self = comperand!
 
 find: target

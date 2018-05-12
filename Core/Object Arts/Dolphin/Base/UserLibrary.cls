@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #UserLibrary
 	instanceVariableNames: ''
@@ -27,14 +27,54 @@ charLower: aCharacter
 	"Answer the lowercase equivalent of aCharacter. This will be dependent on the semantics of the 
 	language selected by the user during setup or by using Control Panel."
 
-	<stdcall: word CharLowerW char>
+	<stdcall: word CharLowerW intptr>
+	^self invalidCall!
+
+charLowerBuffA: anAnsiString cchLength: anInteger
+	"Convert a byte String to lowercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharLowerBuffA(LPSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharLowerBuffA lpstr dword>
+	^self invalidCall!
+
+charLowerBuffW: aUtf16String cchLength: anInteger
+	"Convert a UTF-16 String to lowercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharLowerBuffW(LPWSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharLowerBuffW lpwstr dword>
 	^self invalidCall!
 
 charUpper: aCharacter
 	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
 	of the language selected by the user during setup or by using Control Panel."
 
-	<stdcall: word CharUpperW char>
+	<stdcall: word CharUpperW intptr>
+	^self invalidCall!
+
+charUpperBuffA: anAnsiString cchLength: anInteger
+	"Convert a byte String to uppercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharUpperBuffA(LPSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharUpperBuffA lpstr dword>
+	^self invalidCall!
+
+charUpperBuffW: aString cchLength: anInteger
+	"Convert a UTF-16 String to uppercase IN PLACE. This will be dependent on the semantics of the 
+	language selected by the user during setup or by using Control Panel.
+	N.B. We ignore the return value as it will be a pointer to the argument.
+
+		DWORD CharUpperBuffW(LPWSTR  lpsz, DWORD cchLength);"
+
+	<stdcall: dword CharUpperBuffW lpwstr dword>
 	^self invalidCall!
 
 copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags 
@@ -57,7 +97,7 @@ createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: d
 	"Create a modeless dialog box from a dialog box template resource. 
 		HWND CreateDialog(
   			HINSTANCE hInstance,		// handle of module containing template
-			LPCTSTR lpTemplate,		// resource identifier
+			LPCWSTR lpTemplate,			// resource identifier
 			HWND hWndParent,			// handle of owner window
 			DLGPROC lpDialogFunc, 		// address of dialog proc
 			LPARAM dwInitParam 		// value passed to wmInitDialog:
@@ -92,7 +132,7 @@ defWindowProc: hWnd msg: msg wParam: wParam lParam: lParam
 			LPARAM lParam 	// second message parameter
 		);"
 
-	<stdcall: uintptr DefWindowProcA handle dword uintptr uintptr>
+	<stdcall: uintptr DefWindowProcW handle dword uintptr uintptr>
 	^self invalidCall!
 
 destroyWindow: aWindowHandle
@@ -116,7 +156,7 @@ dispatchMessage: aMSG
   			CONST MSG *lpmsg 	// pointer to structure with message
 		);"
 
-	<stdcall: sdword DispatchMessageA MSG* >
+	<stdcall: sdword DispatchMessageW MSG* >
 	^self invalidCall!
 
 enableWindow: aWindowHandle bEnable: aBoolean
@@ -178,9 +218,9 @@ getKeyboardState: a256ByteArray
 getKeyNameText: lParam lpString: aString nSize: anInteger
 	"Populate a string with the name of a virtual key code
 		int GetKeyNameText( 
-			LONG lParam,	// second parameter of keyboard message	
-			LPWSTR lpString,	// address of buffer for key name	
-			int nSize 	// maximum length of key-name string length	
+			LONGÂ lParam,	// second parameter of keyboard message	
+			LPWSTRÂ lpString,	// address of buffer for key name	
+			intÂ nSizeÂ 	// maximum length of key-name string length	
 		);"
 
 	<stdcall: sdword GetKeyNameTextW dword lpwstr sdword>
@@ -212,7 +252,7 @@ getMessage: aMSG hWnd: aWindowHandle wMsgFilterMin: anIntFilterMin wMsgFilterMax
 	it doesn't really (because of the error return value) so to avoid errors, as
 	suggested in the help), we have it return a signed integer)"
 
-	<stdcall: sdword GetMessageA MSG* handle dword dword>
+	<stdcall: sdword GetMessageW MSG* handle dword dword>
 	^self invalidCall!
 
 getParent: hWnd
@@ -344,10 +384,10 @@ loadCursor: anInstanceHandle lpCursorName: anIntegerID
 
 		HCURSOR LoadCursor(
   			HINSTANCE  hInstance,	// handle of application instance
-			LPCTSTR  lpCursorName 	// name string or cursor resource identifier  
+			LPCWSTR  lpCursorName 	// name string or cursor resource identifier  
 		);"
 
-	<stdcall: handle LoadCursorA handle lpvoid>
+	<stdcall: handle LoadCursorW handle lpvoid>
 	^self invalidCall!
 
 loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIntegerLength
@@ -362,7 +402,7 @@ loadString: anExternalHandle uID: anIntegerID lpBuffer: aString nBufferMax: anIn
 			int nBufferMax 		// size of buffer
 		);"
 
-	<stdcall: sdword LoadStringA handle dword lpstr sdword>
+	<stdcall: sdword LoadStringW handle dword lpwstr sdword>
 	^self invalidCall!
 
 mapVirtualKey: keyCode uMapType: mapType
@@ -380,7 +420,7 @@ mapVirtualKey: keyCode uMapType: mapType
 			UINT uCode,
 			UINT uMapType);"
 
-	<stdcall: dword MapVirtualKeyA dword dword>
+	<stdcall: dword MapVirtualKeyW dword dword>
 	^self invalidCall!
 
 messageBeep: anInteger
@@ -400,10 +440,10 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 				ifFalse: 
 					["#2107: getActiveWindow may return nil, e.g. in a headless app with no windows"
 					anExternalHandle ifNil: [UserLibrary default getActiveWindow ?? 0]].
-	struct := MSGBOXPARAMS new.
+	struct := MSGBOXPARAMSW new.
 	dwStyle := styleInteger.
-	struct lpszText: textString.
-	struct lpszCaption: captionString.
+	struct text: textString.
+	struct caption: captionString.
 	iconId := iconIdentifier.
 	iconId isNil
 		ifTrue: 
@@ -413,11 +453,7 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 					[struct lpszIcon: IDI_QUESTION.
 					dwStyle := (dwStyle maskClear: MB_ICONMASK) maskSet: MB_USERICON]]
 		ifFalse: 
-			["#1633: On NT systems if the icon has a string resource identifier it must
-			be passed as a UTF16 string even though we are calling the ANSI version of
-			the MessageBoxIndirect() function!!. This is obviously a Windows bug which we
-			need to work around."
-			iconId isInteger not ifTrue: [iconId := iconId asUtf16String].
+			[iconId := iconId asResourceId.
 			struct lpszIcon: iconId asUIntPtr.
 			hInstance notNil ifTrue: [struct hInstance: hInstance asParameter]].
 	struct dwStyle: dwStyle.
@@ -459,7 +495,7 @@ messageBoxIndirect: aMSGBOXPARAMS
 			LPMSGBOXPARRAMS lpMsgBoxParams;
 		);"
 
-	<stdcall: sdword MessageBoxIndirectA MSGBOXPARAMS*>
+	<stdcall: sdword MessageBoxIndirectW MSGBOXPARAMSW*>
 	^self invalidCall!
 
 msgWaitForMultipleObjectsEx: countInteger pHandles: handles 
@@ -467,16 +503,16 @@ msgWaitForMultipleObjectsEx: countInteger pHandles: handles
 		dwWakeMask: maskInteger
 		dwFlags: aBoolean 
 	"Waits until when one of the following occurs: 
-		·	either any one of, or all of (the number of handles being specified 
+		Â·	either any one of, or all of (the number of handles being specified 
 			by the argument, countInteger, and whether to wait for a single object
 			or all of the objects being specified by the argument, waitBoolean), 
 			the objects whose handles are specified by the argument, handles 
 			(which may be a single handle, or a DWORDArray) are 
 			in the signaled state; or
-		·	A Win32 message of a type which matches the type mask specified by
+		Â·	A Win32 message of a type which matches the type mask specified by
 			the argument, maskInteger, becomes available in the message queue (
 			uses the same flags as #getQueueStatus:); or
-		·	the number of milliseconds specified by the argument, millisecsInteger,
+		Â·	the number of milliseconds specified by the argument, millisecsInteger,
 			elapses.
 
 	MsgWaitForMultipleObjects should only be called when there are no further messages
@@ -509,7 +545,7 @@ overlappedMsgBoxIndirect: aMSGBOXPARAMS
 			LPMSGBOXPARRAMS lpMsgBoxParams;
 		);"
 
-	<overlap stdcall: sdword MessageBoxIndirectA MSGBOXPARAMS* >
+	<overlap stdcall: sdword MessageBoxIndirectW MSGBOXPARAMSW* >
 	^self invalidCall!
 
 peekMessage: aMSG hWnd: aWindowHandle uMsgFilterMin: anIntFilterMin uMsgFilterMax: uMsgFilterMax wRemoveMsg: anIntFlags
@@ -530,7 +566,7 @@ peekMessage: aMSG hWnd: aWindowHandle uMsgFilterMin: anIntFilterMin uMsgFilterMa
 			UINT  wRemoveMsg 		// removal flags
 		);"
 
-	<stdcall: bool PeekMessageA MSG* handle dword dword dword>
+	<stdcall: bool PeekMessageW MSG* handle dword dword dword>
 	^self invalidCall!
 
 postMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
@@ -543,7 +579,7 @@ postMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 		LPARAM lParam 		// second message parameter
 	   );"
 
-	<stdcall: intptr PostMessageA handle dword uintptr intptr>
+	<stdcall: intptr PostMessageW handle dword uintptr intptr>
 	^self invalidCall !
 
 postQuitMessage: anInteger
@@ -563,7 +599,7 @@ postThreadMessage: anIntegerId msg: msg wParam: wParam lParam: lParam
 			WPARAM  wParam,	// first message parameter
 			LPARAM  lParam 	// second message parameter);"
 
-	<stdcall: bool PostThreadMessageA handle dword uintptr uintptr>
+	<stdcall: bool PostThreadMessageW handle dword uintptr uintptr>
 	^self invalidCall !
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
@@ -587,7 +623,7 @@ sendMessage: aWindowHandle msg: msg wParam: wParam lParam: lParam
 		LPARAM lParam 		// second message parameter
 	   );"
 
-	<stdcall: intptr SendMessageA handle dword uintptr uintptr>
+	<stdcall: intptr SendMessageW handle dword uintptr uintptr>
 	^self invalidCall !
 
 setActiveWindow: aHandle
@@ -653,7 +689,7 @@ setWindowDWORD: aWindowHandle nIndex: offset dwNewDWORD: value
 	integer as its last argument, and always returns a positive integer constructed by treating
 	the return value as unsigned."
 
-	<stdcall: dword SetWindowLongA handle sdword dword>
+	<stdcall: dword SetWindowLongW handle sdword dword>
 	^self invalidCall!
 
 setWindowText: aWindowHandle lpString: aString
@@ -676,46 +712,6 @@ showWindow: aWindowHandle nCmdShow: flags
 		);"
 
 	<stdcall: bool ShowWindow handle sdword>
-	^self invalidCall!
-
-stringLowerA: aString 
-	"Convert aString to lower case IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		LPTSTR CharLower(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: void CharLowerA lpvoid>
-	^self invalidCall!
-
-stringLowerW: aUtf16String 
-	"Convert a <Utf16String> to lower case IN PLACE. This will be dependent on the semantics
-	of the language selected by the user during setup or by using Control Panel. N.B. We ignore
-	the return value as it will be a pointer to the argument.
-
-	LPWSTR CharLower(LPWSTR lpsz); // single character or pointer to string "
-
-	<stdcall: void CharLowerW lpvoid>
-	^self invalidCall!
-
-stringUpperA: aString 
-	"Convert aString to uppercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		LPTSTR CharUpper(LPTSTR  lpsz); 	// single character or pointer to string "
-
-	<stdcall: void CharUpperA lpvoid>
-	^self invalidCall!
-
-stringUpperW: aUtf16String 
-	"Convert a <Utf16String> to uppercase IN PLACE. This will be dependent on the semantics of
-	the language selected by the user during setup or by using Control Panel. N.B. We ignore the
-	return value as it will be a pointer to the argument.
-
-	LPWSTR CharUpperW(LPWSTR lpsz);"
-
-	<stdcall: void CharUpperW lpvoid>
 	^self invalidCall!
 
 translateMessage: aMSG
@@ -743,16 +739,20 @@ vkKeyScan: aChar
 	"Translate a character to the corresponding virtual-key code 
 	and shift state for the current keyboard.
 		SHORT VkKeyScan(
-			TCHAR ch 	// character to translate
+			WCHAR ch 	// character to translate
 	   );"
 
-	<stdcall: sword VkKeyScanA char>
+	<stdcall: sword VkKeyScanW char>
 	^self invalidCall
 
 ! !
 !UserLibrary categoriesFor: #blockInput:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #charLower:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charLowerBuffA:cchLength:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #charUpper:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
+!UserLibrary categoriesFor: #charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 !UserLibrary categoriesFor: #createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
@@ -804,10 +804,6 @@ vkKeyScan: aChar
 !UserLibrary categoriesFor: #setWindowDWORD:nIndex:dwNewDWORD:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setWindowText:lpString:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #showWindow:nCmdShow:!public!win32 functions-window! !
-!UserLibrary categoriesFor: #stringLowerA:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringLowerW:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringUpperA:!public!win32 functions-string manipulation! !
-!UserLibrary categoriesFor: #stringUpperW:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #translateMessage:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #updateWindow:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #vkKeyScan:!public!win32 functions-keyboard input! !

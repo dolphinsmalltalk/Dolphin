@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'OA SUnit Extensions'.
 package paxVersion: 1;
 	basicComment: 'Object Arts SUnit Extensions.
@@ -10,12 +10,14 @@ Extensions to the basic SUnit unit testing packages, including the ability to te
 package methodNames
 	add: #TestCase -> #<=;
 	add: #TestCase -> #=;
+	add: #TestCase -> #assert:identicalTo:;
 	add: #TestCase -> #assert:isKindOf:;
 	add: #TestCase -> #assert:sameAs:;
 	add: #TestCase -> #assertIsNil:;
 	add: #TestCase -> #debugWithResult;
 	add: #TestCase -> #debugWithResult:;
 	add: #TestCase -> #deny:equals:;
+	add: #TestCase -> #deny:identicalTo:;
 	add: #TestCase -> #deny:sameAs:;
 	add: #TestCase -> #denyIsNil:;
 	add: #TestCase -> #hash;
@@ -68,6 +70,10 @@ package!
 
 	^self class == aTestCase class and: [self selector == aTestCase selector]!
 
+assert: actualObject identicalTo: expectedObject
+	expectedObject == actualObject
+		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
+
 assert: actualObject isKindOf: expectedType
 	(actualObject isKindOf: expectedType)
 		ifFalse: 
@@ -80,8 +86,8 @@ assert: actualObject isKindOf: expectedType
 						contents)]!
 
 assert: actualObject sameAs: expectedObject
-	expectedObject == actualObject
-		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
+	Notification deprecated.
+	self assert: actualObject identicalTo: expectedObject!
 
 assertIsNil: anObject
 	anObject
@@ -112,7 +118,7 @@ deny: actualObject equals: expectedObject
 						nextPutAll: '.';
 						contents)]!
 
-deny: actualObject sameAs: expectedObject
+deny: actualObject identicalTo: expectedObject
 	expectedObject ~~ actualObject
 		ifFalse: 
 			[self fail: (String writeStream
@@ -120,6 +126,10 @@ deny: actualObject sameAs: expectedObject
 						print: actualObject;
 						nextPutAll: '.';
 						contents)]!
+
+deny: actualObject sameAs: expectedObject
+	Notification deprecated.
+	self deny: actualObject identicalTo: expectedObject!
 
 denyIsNil: anObject
 	anObject ifNil: [self fail: 'Expected non-nil result']!
@@ -173,7 +183,7 @@ should: aBlock trigger: eventSymbol1 butNot: eventSymbol2 against: anObject
 		butNoneOf: (Array with: eventSymbol2)
 		against: anObject!
 
-should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anObject 
+should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anObject
 	"Example usage:
 		self 
 			should: [Object trigger: #testTwoArgs:arg2:]
@@ -182,8 +192,8 @@ should: aZeroArgBlock trigger: aSymbol matching: discriminatorBlock against: anO
 			against: Object.
 	"
 
-	self assert: aSymbol argumentCount = discriminatorBlock argumentCount.
-	self 
+	self assert: aSymbol argumentCount equals: discriminatorBlock argumentCount.
+	self
 		should: aZeroArgBlock
 		triggerAllOf: (Array with: aSymbol)
 		matching: [:message | discriminatorBlock valueWithArguments: message arguments]
@@ -204,27 +214,26 @@ should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlockO
 		butNoneOf: #()
 		against: anObject!
 
-should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock butNoneOf: aCollectionOfSymbols2 against: anObject 
+should: aZeroArgBlock triggerAllOf: aCollectionOfSymbols matching: aOneArgBlock butNoneOf: aCollectionOfSymbols2 against: anObject
 	| fired allEvents |
 	fired := Bag new.
 	allEvents := aCollectionOfSymbols union: aCollectionOfSymbols2.
 	"The expected and unexpected event sets should be disjoint"
-	self assert: allEvents size = (aCollectionOfSymbols size + aCollectionOfSymbols2 size).
+	self assert: allEvents size equals: aCollectionOfSymbols size + aCollectionOfSymbols2 size.
 	
 	[allEvents do: 
-			[:each | 
+			[:each |
 			"If the event selector is part of nil's protocol, then no MNU will be raised, 
 			and the test will be invalid"
-
 			self deny: (nil respondsTo: each).
 			anObject when: each sendTo: nil].
 	aZeroArgBlock on: MessageNotUnderstood
 		do: 
-			[:mnu | 
+			[:mnu |
 			(mnu receiver ~~ nil or: [(allEvents includes: mnu selector) not]) ifTrue: [mnu pass].
-			((aCollectionOfSymbols2 includes: mnu selector) or: [aOneArgBlock value: mnu message]) 
+			((aCollectionOfSymbols2 includes: mnu selector) or: [aOneArgBlock value: mnu message])
 				ifTrue: [fired add: mnu selector].
-			mnu resume: mnu receiver]] 
+			mnu resume: mnu receiver]]
 			ensure: [anObject removeEventsTriggeredFor: nil].
 	"If this assertion fails, then the object did not trigger one or more of the expected events"
 	self assert: (aCollectionOfSymbols difference: fired) isEmpty.
@@ -260,12 +269,14 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 		against: anObject! !
 !TestCase categoriesFor: #<=!comparing!public! !
 !TestCase categoriesFor: #=!comparing!public! !
+!TestCase categoriesFor: #assert:identicalTo:!asserting!public! !
 !TestCase categoriesFor: #assert:isKindOf:!asserting!public! !
 !TestCase categoriesFor: #assert:sameAs:!asserting!public! !
 !TestCase categoriesFor: #assertIsNil:!asserting!public! !
 !TestCase categoriesFor: #debugWithResult!public!running! !
 !TestCase categoriesFor: #debugWithResult:!private!running! !
 !TestCase categoriesFor: #deny:equals:!asserting!public! !
+!TestCase categoriesFor: #deny:identicalTo:!public! !
 !TestCase categoriesFor: #deny:sameAs:!public! !
 !TestCase categoriesFor: #denyIsNil:!asserting!public! !
 !TestCase categoriesFor: #hash!comparing!public! !

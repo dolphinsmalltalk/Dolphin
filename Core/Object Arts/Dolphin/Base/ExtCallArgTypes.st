@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ExtCallArgTypes put: (PoolConstantsDictionary named: #ExtCallArgTypes)!
 ExtCallArgTypes at: 'ExtCallArgBOOL' put: 16r9!

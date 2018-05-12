@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #BootSessionManager
 	instanceVariableNames: 'productDetails'
@@ -14,7 +14,9 @@ allocConsole
 	"Private - Open a console window for this session."
 
 	"Attach to the existing console so that the output goes to the build log"
-	KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS!
+	(KernelLibrary default attachConsole: ATTACH_PARENT_PROCESS) ifFalse: [
+		KernelLibrary default allocConsole]
+!
 
 basicTertiaryStartup
 	"Perform tertiary system startup operations."
@@ -68,10 +70,7 @@ logError: anException
 			do: [:e | ]!
 
 main
-	self stdout 
-		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
-		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2004.'; cr; cr;
-		nextPutAll: 'Loading boot script...'; cr; flush.
+	self stdout nextPutAll: 'Loading boot script...'; cr; flush.
 
 	self class sourceManager fileIn: 'Boot.st'.
 !
@@ -88,10 +87,19 @@ onPreSaveImage
 	self class environment at: #Delay ifPresent: [:d | d onPreSaveImage]
 !
 
+openConsole
+	self
+		allocConsole;
+		openConsoleStreams!
+
 openSources
 	"Private - Open the source files with names derived from the current image path."
 
-	self class sourceManager openSources: self imagePath!
+	self class sourceManager openSources: self imagePath.
+	(File exists: 'Rescue.st') ifTrue: [SourceManager default fileIn: 'Rescue.st'].
+	self stdout 
+		nextPutAll: 'Dolphin Smalltalk Boot'; cr; 
+		nextPutAll: 'Copyright (c) Object Arts Ltd, 1997-2018.'; cr; flush.!
 
 primaryStartup
 	"Private - Perform very early startup actions.
@@ -278,7 +286,7 @@ startUI
 traceStream
 	"Answer a <puttableStream> onto the session's trace output device."
 
-	^stdioStreams isNil ifTrue: [super traceStream] ifFalse: [self stderr]!
+	^stdioStreams isNil ifTrue: [super traceStream] ifFalse: [self stdout]!
 
 unhandledException: anException
 	"Private - The unhandled Exception, anException, occurred in the active Process.
@@ -310,6 +318,7 @@ updateBootImage
 !BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
 !BootSessionManager categoriesFor: #onPreSaveImage!event handling!public! !
+!BootSessionManager categoriesFor: #openConsole!operations!public! !
 !BootSessionManager categoriesFor: #openSources!operations-source files!private! !
 !BootSessionManager categoriesFor: #primaryStartup!operations-startup!private! !
 !BootSessionManager categoriesFor: #productDetails!accessing!private!product! !

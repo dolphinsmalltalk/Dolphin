@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #MoenTreeViewTest
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'
@@ -11,9 +11,9 @@ MoenTreeViewTest comment: 'SUnitBrowser openOnTestCase: self'!
 !MoenTreeViewTest methodsFor!
 
 assertChildNode: node
-	self assert: node parent ~~ treeView anchorNode.
+	self deny: node parent identicalTo: treeView anchorNode.
 	self assertNodeInTree: node.
-	self assert: node parent parent notNil!
+	self denyIsNil: node parent parent!
 
 assertCollapsedChild: node 
 	self assert: node isExpanded not.
@@ -25,9 +25,9 @@ assertCollapsedRoot: node
 	self assertPopulatedRoot: node.
 !
 
-assertCorrectlyPopulatedNode: node 
+assertCorrectlyPopulatedNode: node
 	self assert: node hasExpanded.
-	(treeModel hasChildren: node object) 
+	(treeModel hasChildren: node object)
 		ifTrue: 
 			[| children childObjects child |
 			children := OrderedCollection new.
@@ -35,11 +35,11 @@ assertCorrectlyPopulatedNode: node
 			[child isNil] whileFalse: 
 					[children add: child.
 					child := child sibling].
-			children do: [:each | self assert: (treeView findNodeForObject: each object) == each].
+			children do: [:each | self assert: (treeView findNodeForObject: each object) identicalTo: each].
 			childObjects := children collect: [:each | each object].
 			self assert: ((treeModel childrenOf: node object) noDifference: childObjects)]
 		ifFalse: 
-			[self assert: node child isNil.
+			[self assertIsNil: node child.
 			self assert: (treeView hasChildren: node) not]!
 
 assertExpandedRoot: node 
@@ -63,8 +63,8 @@ assertInitialState
 	self assert: (treeView hasChildren: nodeE).
 	self assert: (treeView hasChildren: nodeF) not!
 
-assertNodeInTree: node 
-	self assert: (treeView findNodeForObject: node object) == node!
+assertNodeInTree: node
+	self assert: (treeView findNodeForObject: node object) identicalTo: node!
 
 assertPopulatedChild: node 
 	self assertChildNode: node.
@@ -74,36 +74,34 @@ assertPopulatedRoot: node
 	self assertRootNode: node.
 	self assertCorrectlyPopulatedNode: node!
 
-assertRootNode: node 
+assertRootNode: node
 	"Private - N.B. This is using private knowledge of the MoenTreeView's implementation."
 
-	self assert: node parent == treeView anchorNode
-!
+	self assert: node parent identicalTo: treeView anchorNode!
 
 assertRootsInOrder
-	treeView anchorNode children with: (treeView model roots) do: [:eachNode :eachObject |
-		self assert: eachNode object = eachObject]!
+	treeView anchorNode children with: treeView model roots
+		do: [:eachNode :eachObject | self assert: eachNode object equals: eachObject]!
 
-assertUnexpandedChild: node 
+assertUnexpandedChild: node
 	self assertUnexpandedNode: node.
-	self assert: node parent notNil!
+	self denyIsNil: node parent!
 
-assertUnexpandedNode: node 
+assertUnexpandedNode: node
 	self assert: node isExpanded not.
 	self assert: node hasExpanded not.
-	self assert: node child isNil.
-	self assertNodeInTree: node.!
+	self assertIsNil: node child.
+	self assertNodeInTree: node!
 
 assertUnexpandedRoot: node 
 	self assertUnexpandedNode: node.
 	self assertRootNode: node.!
 
 assertUnlinkedNode: aMoenTreeNode
-	self assert: aMoenTreeNode child isNil.
-	self assert: aMoenTreeNode parent isNil.
-	self assert: aMoenTreeNode sibling isNil.
-	self assert: (treeView findNodeForObject: aMoenTreeNode object) isNil.
-!
+	self assertIsNil: aMoenTreeNode child.
+	self assertIsNil: aMoenTreeNode parent.
+	self assertIsNil: aMoenTreeNode sibling.
+	self assertIsNil: (treeView findNodeForObject: aMoenTreeNode object)!
 
 createModel
 	treeModel := TreeModel withRoots: #('A' 'B' 'C' 'D' 'E' 'F')
@@ -153,7 +151,7 @@ destroyTree
 			treeView isOpen ifTrue: [treeView destroy].
 			treeView := nil]!
 
-moveChild: childObject of: parentNode toRoot: rootNode 
+moveChild: childObject of: parentNode toRoot: rootNode
 	"Private - parent will get expanded"
 
 	| node rootExpanded childExpanded rootObject |
@@ -166,28 +164,28 @@ moveChild: childObject of: parentNode toRoot: rootNode
 	treeModel move: childObject asChildOf: rootObject.
 	node := treeView findNodeForObject: childObject.
 	self assertPopulatedChild: node.
-	self assert: node isExpanded == childExpanded.
-	self assert: rootNode isExpanded == rootExpanded.
+	self assert: node isExpanded identicalTo: childExpanded.
+	self assert: rootNode isExpanded identicalTo: rootExpanded.
 	self assertPopulatedRoot: rootNode.
 	self assertPopulatedRoot: parentNode.
 
 	"Now move it back"
 	treeModel move: childObject asChildOf: parentNode object.
 	node := treeView findNodeForObject: childObject.
-	self assert: rootNode isExpanded == rootExpanded.
+	self assert: rootNode isExpanded identicalTo: rootExpanded.
 	self assertPopulatedRoot: rootNode.
-	self assert: node isExpanded == childExpanded.
+	self assert: node isExpanded identicalTo: childExpanded.
 	self assertPopulatedChild: node.
 	self assertPopulatedRoot: parentNode.
 	^node!
 
-moveChild: anObject of: parentNode toUnexpandedRoot: rootNode 
+moveChild: anObject of: parentNode toUnexpandedRoot: rootNode
 	"Private - child's parent not expanded."
 
 	| node |
 	treeModel move: anObject asChildOf: rootNode object.
 	"CB is lost because F is unexpanded"
-	self assert: (treeView findNodeForObject: anObject) isNil.
+	self assertIsNil: (treeView findNodeForObject: anObject).
 	self assertPopulatedRoot: nodeC.
 	self assertUnexpandedRoot: rootNode.
 
@@ -199,7 +197,7 @@ moveChild: anObject of: parentNode toUnexpandedRoot: rootNode
 	self assertUnexpandedChild: node.	"New node created so reverts to unexpanded state"
 	^node!
 
-moveChild: childExpanded toChildlessRoot: rootExpanded 
+moveChild: childExpanded toChildlessRoot: rootExpanded
 	"NNC x RNC - child's parent not expanded."
 
 	"Now move it back"
@@ -213,13 +211,13 @@ moveChild: childExpanded toChildlessRoot: rootExpanded
 	treeView expand: 'F'.
 	rootExpanded ifFalse: [treeView collapse: 'F'].
 	self assert: nodeF hasExpanded.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"CA and CB will be the collapsed children (one has a child, the other does not)"
 	treeView
 		expand: 'CA';
 		expand: 'CB'.
-	childExpanded 
+	childExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'CA';
@@ -227,16 +225,16 @@ moveChild: childExpanded toChildlessRoot: rootExpanded
 			self assertCollapsedChild: nodeC child.
 			self assertCollapsedChild: nodeC child sibling].
 	"parent will get expanded"
-	self 
+	self
 		moveChild: 'CB'
 		of: nodeC
 		toRoot: nodeF.
-	self 
+	self
 		moveChild: 'CA'
 		of: nodeC
 		toRoot: nodeF!
 
-moveChild: childExpanded toRootWithChildren: rootExpanded 
+moveChild: childExpanded toRootWithChildren: rootExpanded
 	| node |
 	self createTree.
 	self assertInitialState.
@@ -245,13 +243,13 @@ moveChild: childExpanded toRootWithChildren: rootExpanded
 	treeView expand: 'D'.
 	rootExpanded ifFalse: [treeView collapse: 'D'].
 	self assert: nodeD hasExpanded.
-	self assert: nodeD child object = 'DA'.
+	self assert: nodeD child object equals: 'DA'.
 
 	"CA and CB will be the collapsed children (one has a child, the other does not)"
 	treeView
 		expand: 'CA';
 		expand: 'CB'.
-	childExpanded 
+	childExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'CA';
@@ -263,7 +261,7 @@ moveChild: childExpanded toRootWithChildren: rootExpanded
 	"NN[C|E] x RC[C|E]"
 	treeModel move: 'CB' asChildOf: 'D'.
 	node := treeView findNodeForObject: 'CB'.
-	self assert: nodeD isExpanded == rootExpanded.
+	self assert: nodeD isExpanded identicalTo: rootExpanded.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedChild: node.
 	self assertPopulatedRoot: nodeC.
@@ -271,7 +269,7 @@ moveChild: childExpanded toRootWithChildren: rootExpanded
 	"Now move it back"
 	treeModel move: 'CB' asChildOf: 'C'.
 	node := treeView findNodeForObject: 'CB'.
-	self assert: nodeD isExpanded == rootExpanded.
+	self assert: nodeD isExpanded identicalTo: rootExpanded.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedChild: node.
 	self assertPopulatedRoot: nodeC.
@@ -279,7 +277,7 @@ moveChild: childExpanded toRootWithChildren: rootExpanded
 	"NC[C|E] x RC[C|E]"
 	treeModel move: 'CA' asChildOf: 'D'.
 	node := treeView findNodeForObject: 'CA'.
-	self assert: nodeD isExpanded == rootExpanded.
+	self assert: nodeD isExpanded identicalTo: rootExpanded.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedChild: node.
 	self assertPopulatedRoot: nodeC.
@@ -287,12 +285,12 @@ moveChild: childExpanded toRootWithChildren: rootExpanded
 	"Now move it back"
 	treeModel move: 'CA' asChildOf: 'C'.
 	node := treeView findNodeForObject: 'CA'.
-	self assert: nodeD isExpanded == rootExpanded.
+	self assert: nodeD isExpanded identicalTo: rootExpanded.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedChild: node.
 	self assertPopulatedRoot: nodeC!
 
-moveChildToUnexpandedRoot: isExpanded 
+moveChildToUnexpandedRoot: isExpanded
 	"CB is lost because F is unexpanded"
 
 	"Now move it back"
@@ -307,13 +305,13 @@ moveChildToUnexpandedRoot: isExpanded
 	"F will be the collapsed root with no children"
 	self assert: nodeF isExpanded not.
 	self assert: nodeF hasExpanded not.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"CA and CB will be the collapsed children (one has a child, the other does not)"
 	treeView
 		expand: 'CA';
 		expand: 'CB'.
-	isExpanded 
+	isExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'CA';
@@ -321,11 +319,11 @@ moveChildToUnexpandedRoot: isExpanded
 	"parent will get expanded"
 	self assertPopulatedRoot: nodeC.
 	"child's parent not expanded."
-	self 
+	self
 		moveChild: 'CB'
 		of: nodeC
 		toUnexpandedRoot: nodeF.
-	self 
+	self
 		moveChild: 'CA'
 		of: nodeC
 		toUnexpandedRoot: nodeF.
@@ -334,7 +332,7 @@ moveChildToUnexpandedRoot: isExpanded
 	treeView
 		expand: 'CA';
 		expand: 'CB'.
-	isExpanded 
+	isExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'CA';
@@ -342,45 +340,45 @@ moveChildToUnexpandedRoot: isExpanded
 
 
 	"NNC x RCU - child's parent not expanded."
-	self 
+	self
 		moveChild: 'CB'
 		of: nodeC
 		toUnexpandedRoot: nodeD.
 
 	"NCC x RCU - neither child nor child's parent expanded."
-	self 
+	self
 		moveChild: 'CA'
 		of: nodeC
 		toUnexpandedRoot: nodeD.
 	self destroyTree!
 
-moveRoots: moveeExpanded toRoots: toExpanded 
+moveRoots: moveeExpanded toRoots: toExpanded
 	"A & F will be the previously expanded root with no children"
 
 	self createTree.
 	self assertInitialState.
 	treeView expand: 'F'.
 	self assert: nodeF hasExpanded.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 	treeView expand: 'A'.
 	self assert: nodeA isExpanded.
 	self assert: nodeA hasExpanded.
-	self assert: nodeA child isNil.
+	self assertIsNil: nodeA child.
 	"B & D will be the expanded root with children"
 	treeView
 		expand: 'D';
 		expand: 'B'.
 	self assert: nodeD hasExpanded.
-	self assert: nodeD child notNil.
-	moveeExpanded 
+	self denyIsNil: nodeD child.
+	moveeExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'B';
 				collapse: 'A'].
 	self assert: nodeB hasExpanded.
-	self assert: nodeB isExpanded == moveeExpanded.
-	self assert: nodeB child notNil.
-	toExpanded 
+	self assert: nodeB isExpanded identicalTo: moveeExpanded.
+	self denyIsNil: nodeB child.
+	toExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'D';
@@ -390,58 +388,57 @@ moveRoots: moveeExpanded toRoots: toExpanded
 	treeModel move: 'A' asChildOf: 'F'.
 	self assertPopulatedRoot: nodeF.
 	self assertPopulatedChild: nodeA.
-	self assert: nodeA isExpanded = moveeExpanded.
-	self assert: nodeF isExpanded = toExpanded.
+	self assert: nodeA isExpanded equals: moveeExpanded.
+	self assert: nodeF isExpanded equals: toExpanded.
 
 	"Now move it back"
 	treeModel move: 'A' asChildOf: nil.
 	self assertPopulatedRoot: nodeF.
 	self assertPopulatedRoot: nodeA.
-	self assert: nodeA isExpanded = moveeExpanded.
-	self assert: nodeF isExpanded = toExpanded.
+	self assert: nodeA isExpanded equals: moveeExpanded.
+	self assert: nodeF isExpanded equals: toExpanded.
 
 	"RNC x RCC"
 	treeModel move: 'A' asChildOf: 'D'.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedChild: nodeA.
-	self assert: nodeA isExpanded = moveeExpanded.
-	self assert: nodeD isExpanded = toExpanded.
+	self assert: nodeA isExpanded equals: moveeExpanded.
+	self assert: nodeD isExpanded equals: toExpanded.
 
 	"Now move it back"
 	treeModel move: 'A' asChildOf: nil.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedRoot: nodeA.
-	self assert: nodeA isExpanded = moveeExpanded.
-	self assert: nodeD isExpanded = toExpanded.
+	self assert: nodeA isExpanded equals: moveeExpanded.
+	self assert: nodeD isExpanded equals: toExpanded.
 
 	"RCC x RNC"
 	treeModel move: 'B' asChildOf: 'F'.
 	self assertPopulatedRoot: nodeF.
 	self assertPopulatedChild: nodeB.
-	self assert: nodeB isExpanded = moveeExpanded.
-	self assert: nodeF isExpanded = toExpanded.
+	self assert: nodeB isExpanded equals: moveeExpanded.
+	self assert: nodeF isExpanded equals: toExpanded.
 
 	"Now move it back"
 	treeModel move: 'B' asChildOf: nil.
 	self assertPopulatedRoot: nodeF.
 	self assertPopulatedRoot: nodeB.
-	self assert: nodeB isExpanded = moveeExpanded.
-	self assert: nodeF isExpanded = toExpanded.
+	self assert: nodeB isExpanded equals: moveeExpanded.
+	self assert: nodeF isExpanded equals: toExpanded.
 
 	"RCC x RCC"
 	treeModel move: 'B' asChildOf: 'D'.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedChild: nodeB.
-	self assert: nodeB isExpanded = moveeExpanded.
-	self assert: nodeD isExpanded = toExpanded.
+	self assert: nodeB isExpanded equals: moveeExpanded.
+	self assert: nodeD isExpanded equals: toExpanded.
 
 	"Now move it back"
 	treeModel move: 'B' asChildOf: nil.
 	self assertPopulatedRoot: nodeD.
 	self assertPopulatedRoot: nodeB.
-	self assert: nodeB isExpanded = moveeExpanded.
-	self assert: nodeD isExpanded = toExpanded.
-!
+	self assert: nodeB isExpanded equals: moveeExpanded.
+	self assert: nodeD isExpanded equals: toExpanded!
 
 moveRootsToUnexpandedRoots: isExpanded
 	self createTree.
@@ -451,13 +448,13 @@ moveRootsToUnexpandedRoots: isExpanded
 	treeView expand: 'F'.
 	self assert: nodeF isExpanded.
 	self assert: nodeF hasExpanded.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 	"B & D will be the expanded root with children"
 	treeView expand: 'D'.
 	self assert: nodeD hasExpanded.
 	self assert: nodeD isExpanded.
-	self assert: nodeD child notNil.
-	isExpanded 
+	self denyIsNil: nodeD child.
+	isExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'F';
@@ -466,11 +463,11 @@ moveRootsToUnexpandedRoots: isExpanded
 	"RNC x RNU"
 	treeModel move: 'F' asChildOf: 'A'.
 	self assertUnexpandedRoot: nodeA.
-	self assert: (treeView findNodeForObject: 'F') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'F').
 
 	"Now move it back (new node created)"
 	treeModel move: 'F' asChildOf: nil.
-	self assert: (treeView findNodeForObject: 'F') ~~ nodeF.
+	self deny: (treeView findNodeForObject: 'F') identicalTo: nodeF.
 	nodeF := treeView findNodeForObject: 'F'.
 	self assertUnexpandedRoot: nodeF.
 	self assertUnexpandedRoot: nodeA.
@@ -483,11 +480,11 @@ moveRootsToUnexpandedRoots: isExpanded
 	treeModel move: 'F' asChildOf: 'B'.
 	self assertUnexpandedRoot: nodeB.
 	self assertUnlinkedNode: nodeF.
-	self assert: (treeView findNodeForObject: 'F') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'F').
 
 	"Now move it back (new node created)"
 	treeModel move: 'F' asChildOf: nil.
-	self assert: (treeView findNodeForObject: 'F') ~~ nodeF.
+	self deny: (treeView findNodeForObject: 'F') identicalTo: nodeF.
 	nodeF := treeView findNodeForObject: 'F'.
 	self assertUnexpandedRoot: nodeF.
 	self assertUnexpandedRoot: nodeA.
@@ -495,11 +492,11 @@ moveRootsToUnexpandedRoots: isExpanded
 	"RCC x RNU"
 	treeModel move: 'D' asChildOf: 'A'.
 	self assertUnexpandedRoot: nodeA.
-	self assert: (treeView findNodeForObject: 'D') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'D').
 
 	"Now move it back (new node created)"
 	treeModel move: 'D' asChildOf: nil.
-	self assert: (treeView findNodeForObject: 'D') ~~ nodeD.
+	self deny: (treeView findNodeForObject: 'D') identicalTo: nodeD.
 	nodeD := treeView findNodeForObject: 'D'.
 	self assertUnexpandedRoot: nodeD.
 	self assertUnexpandedRoot: nodeA.
@@ -511,11 +508,11 @@ moveRootsToUnexpandedRoots: isExpanded
 	"RCC x RCU"
 	treeModel move: 'D' asChildOf: 'B'.
 	self assertUnexpandedRoot: nodeB.
-	self assert: (treeView findNodeForObject: 'D') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'D').
 
 	"Now move it back (new node created)"
 	treeModel move: 'D' asChildOf: nil.
-	self assert: (treeView findNodeForObject: 'D') ~~ nodeD.
+	self deny: (treeView findNodeForObject: 'D') identicalTo: nodeD.
 	nodeD := treeView findNodeForObject: 'D'.
 	self assertUnexpandedRoot: nodeD.
 	self assertUnexpandedRoot: nodeB.
@@ -532,11 +529,11 @@ moveUnexpandedChild: parentExpanded toUnexpandedRoot: targetNode
 	treeModel move: 'CB' asChildOf: object.
 	self assertPopulatedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
-	self assert: (treeView findNodeForObject: 'CB') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CB').
 
 	"Now move it back"
 	treeModel move: 'CB' asChildOf: 'C'.
-	self assert: (treeView findNodeForObject: 'CB') ~~ node.
+	self deny: (treeView findNodeForObject: 'CB') identicalTo: node.
 	node := treeView findNodeForObject: 'CB'.
 	self assertPopulatedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
@@ -544,48 +541,46 @@ moveUnexpandedChild: parentExpanded toUnexpandedRoot: targetNode
 
 	"NCU x RCU - child's parent expanded but not child expanded."
 	node := treeView findNodeForObject: 'CA'.
-	self assert: node parent = nodeC.
+	self assert: node parent equals: nodeC.
 	treeModel move: 'CA' asChildOf: object.
 	self assertPopulatedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
-	self assert: (treeView findNodeForObject: 'CA') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CA').
 
 	"Now move it back"
 	treeModel move: 'CA' asChildOf: 'C'.
-	self assert: (treeView findNodeForObject: 'CA') ~~ node.
+	self deny: (treeView findNodeForObject: 'CA') identicalTo: node.
 	node := treeView findNodeForObject: 'CA'.
 	self assertPopulatedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
 	self assertUnexpandedChild: node!
 
 moveUnexpandedChildOfUnexpandedParentToRoot: targetNode
-
 	| object |
 	object := targetNode object.
-
 	self assertUnexpandedRoot: targetNode.
 
 	"NNU x RCU - child's parent not expanded."
 	treeModel move: 'CB' asChildOf: object.
 	self assertUnexpandedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
-	self assert: (treeView findNodeForObject: 'CB') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CB').
 
 	"Now move it back"
 	treeModel move: 'CB' asChildOf: 'C'.
 	self assertUnexpandedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
-	self assert: (treeView findNodeForObject: 'CB') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CB').
 
 	"NCU x RCU - neither child nor child's parent expanded."
 	treeModel move: 'CA' asChildOf: object.
 	self assertUnexpandedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode.
-	self assert: (treeView findNodeForObject: 'CA') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CA').
 
 	"Now move it back"
 	treeModel move: 'CA' asChildOf: 'C'.
-	self assert: (treeView findNodeForObject: 'CA') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CA').
 	self assertUnexpandedRoot: nodeC.
 	self assertUnexpandedRoot: targetNode!
 
@@ -609,8 +604,8 @@ moveUnexpandedChildToRoot: isExpanded target: anObject
 
 	"Now move it back"
 	treeModel move: 'CB' asChildOf: 'C'.
-	self assert: (treeView findNodeForObject: 'CB') isNil.
-	self assert: node parent isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CB').
+	self assertIsNil: node parent.
 	self assertPopulatedRoot: targetNode.
 	self assertUnexpandedRoot: nodeC.
 
@@ -623,9 +618,9 @@ moveUnexpandedChildToRoot: isExpanded target: anObject
 
 	"Now move it back"
 	treeModel move: 'CA' asChildOf: 'C'.
-	self assert: (treeView findNodeForObject: 'CA') isNil.
-	self assert: node parent isNil.
-	self assert: node parent isNil.
+	self assertIsNil: (treeView findNodeForObject: 'CA').
+	self assertIsNil: node parent.
+	self assertIsNil: node parent.
 	self assertPopulatedRoot: targetNode.
 	self assertUnexpandedRoot: nodeC.
 	treeView expandNode: nodeC.
@@ -648,7 +643,7 @@ moveUnexpandedChildToRoot: isExpanded target: anObject
 	"NCU x RCC - child's parent expanded but not child expanded."
 	self assert: nodeC isExpanded.
 	node := treeView findNodeForObject: 'CA'.
-	self assert: node parent = nodeC.
+	self assert: node parent equals: nodeC.
 	treeModel move: 'CA' asChildOf: anObject.
 	self assertPopulatedRoot: targetNode.
 	self assertUnexpandedChild: node.
@@ -680,7 +675,7 @@ moveUnexpandedChildToRoot: isExpanded target: anObject
 
 	"NCU x RCC - child's parent collapsed but not child expanded."
 	node := treeView findNodeForObject: 'CA'.
-	self assert: node parent = nodeC.
+	self assert: node parent equals: nodeC.
 	treeModel move: 'CA' asChildOf: anObject.
 	self assertPopulatedRoot: targetNode.
 	self assertUnexpandedChild: node.
@@ -707,23 +702,23 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: nodeF hasExpanded not.
 	self assert: (treeView hasChildren: nodeA) not.
 	"Because CB is unexpanded, nodeA will no longer be linked into the tree."
-	self assert: nodeA parent isNil.
+	self assertIsNil: nodeA parent.
 	self should: [treeView findNodeForObject: 'EA'] raise: NotFoundError.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"Now move it back"
 	treeModel move: 'EA' asChildOf: 'E'.
-	nodeE hasExpanded 
+	nodeE hasExpanded
 		ifTrue: 
 			[| node |
 			node := treeView findNodeForObject: 'EA'.
 			self assert: (treeView roots includes: node) not.
 			self assertUnexpandedChild: node.
-			self assert: node parent parent isNil.
-			self assert: node parent child = node.
-			self assert: node parent object = 'E'.
-			self assert: node sibling isNil.
-			self assert: node child isNil]
+			self assertIsNil: node parent parent.
+			self assert: node parent child equals: node.
+			self assert: node parent object equals: 'E'.
+			self assertIsNil: node sibling.
+			self assertIsNil: node child]
 		ifFalse: [self should: [treeView findNodeForObject: 'EA'] raise: NotFoundError].
 
 
@@ -736,10 +731,10 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: nodeF hasExpanded not.
 	self assert: (treeView hasChildren: nodeB).
 	"Because nodeF is unexpanded, nodeB will no longer be linked into the tree."
-	self assert: nodeB parent isNil.
+	self assertIsNil: nodeB parent.
 	self should: [treeView findNodeForObject: 'B'] raise: NotFoundError.
 	self should: [treeView findNodeForObject: 'BA'] raise: NotFoundError.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"Now move B back"
 	treeModel move: 'B' asChildOf: nil.
@@ -750,9 +745,9 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: nodeB hasExpanded not.
 	self assert: nodeF hasExpanded not.
 	self assert: (treeView hasChildren: nodeB).
-	self assert: nodeB parent isNil.
-	self assert: nodeB child isNil.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeB parent.
+	self assertIsNil: nodeB child.
+	self assertIsNil: nodeF child.
 
 	"RNU x NCU"
 	treeModel move: 'A' asChildOf: 'B'.
@@ -765,9 +760,9 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: (treeView hasChildren: nodeA) not.
 	self assert: (treeView hasChildren: nodeB).
 	"Because nodeB is unexpanded, nodeA will no longer be linked into the tree."
-	self assert: nodeA parent isNil.
+	self assertIsNil: nodeA parent.
 	self should: [treeView findNodeForObject: 'A'] raise: NotFoundError.
-	self assert: nodeB child isNil.
+	self assertIsNil: nodeB child.
 
 	"Now move it back"
 	treeModel move: 'A' asChildOf: nil.
@@ -780,8 +775,8 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: nodeB hasExpanded not.
 	self assert: (treeView hasChildren: nodeA) not.
 	self assert: (treeView hasChildren: nodeB).
-	self assert: nodeA parent isNil.
-	self assert: nodeB child isNil.
+	self assertIsNil: nodeA parent.
+	self assertIsNil: nodeB child.
 
 	"RCU x NCU"
 	treeModel move: 'B' asChildOf: 'CA'.
@@ -794,10 +789,10 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: (treeView hasChildren: nodeB).
 	self assert: (treeView hasChildren: nodeD).
 	"Because nodeF is unexpanded, nodeB will no longer be linked into the tree."
-	self assert: nodeB parent isNil.
+	self assertIsNil: nodeB parent.
 	self should: [treeView findNodeForObject: 'B'] raise: NotFoundError.
 	self should: [treeView findNodeForObject: 'BA'] raise: NotFoundError.
-	self assert: nodeD child isNil.
+	self assertIsNil: nodeD child.
 
 	"Now move B back"
 	treeModel move: 'B' asChildOf: nil.
@@ -810,9 +805,9 @@ moveUnexpandedChildToUnexpandedChild
 	self assert: nodeD hasExpanded not.
 	self assert: (treeView hasChildren: nodeB).
 	self assert: (treeView hasChildren: nodeD).
-	self assert: nodeB parent isNil.
-	self assert: nodeB child isNil.
-	self assert: nodeD child isNil!
+	self assertIsNil: nodeB parent.
+	self assertIsNil: nodeB child.
+	self assertIsNil: nodeD child!
 
 moveUnexpandedRoot: node toUnexpandedRoot: targetNode
 	"Private - Move an unexpanded root to be a child of another unexpanded root"
@@ -824,17 +819,17 @@ moveUnexpandedRoot: node toUnexpandedRoot: targetNode
 	dest := node object.
 	treeModel move: source asChildOf: dest.
 	self assertUnexpandedRoot: targetNode.
-	self assert: (treeView findNodeForObject: source) isNil.
+	self assertIsNil: (treeView findNodeForObject: source).
 
 	"Now 'move' it back (actually add it again)"
 	treeModel move: source asChildOf: nil.
 	new := treeView findNodeForObject: source.
-	self assert: new ~~ node.
+	self deny: new identicalTo: node.
 	self assertUnexpandedRoot: targetNode.
 	self assertUnexpandedRoot: new.
 	^new!
 
-moveUnexpandedRootsToRoots: isExpanded 
+moveUnexpandedRootsToRoots: isExpanded
 	"Private - Tests: RNU x RNC, RNU x RCC, RCU x RNC, RCU x RCC"
 
 	self createTree.
@@ -843,20 +838,19 @@ moveUnexpandedRootsToRoots: isExpanded
 	"F will be the collapsed root with no children"
 	treeView expand: 'F'.
 	self assert: nodeF hasExpanded.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"B & D will be the collapsed root with children"
 	treeView expand: 'D'.
 	self assert: nodeD hasExpanded.
-	self assert: nodeD child notNil.
-	isExpanded 
+	self denyIsNil: nodeD child.
+	isExpanded
 		ifFalse: 
 			[treeView
 				collapse: 'F';
 				collapse: 'D'].
-
 	self assertPopulatedRoot: nodeF.
-	self assert: nodeF isExpanded == isExpanded.
+	self assert: nodeF isExpanded identicalTo: isExpanded.
 
 	"RNU x RNC"
 	treeModel move: 'A' asChildOf: 'F'.
@@ -898,7 +892,6 @@ moveUnexpandedRootsToRoots: isExpanded
 	treeModel move: 'B' asChildOf: nil.
 	self assertPopulatedRoot: nodeD.
 	self assertUnexpandedRoot: nodeB.
-
 	self destroyTree!
 
 moveUnexpandedRootsToUnexpandedChildren
@@ -914,9 +907,9 @@ moveUnexpandedRootsToUnexpandedChildren
 	self assert: nodeF hasExpanded not.
 	self assert: (treeView hasChildren: nodeA) not.
 	"Because CB is unexpanded, nodeA will no longer be linked into the tree."
-	self assert: nodeA parent isNil.
-	self assert: (treeView findNodeForObject: 'A') isNil.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeA parent.
+	self assertIsNil: (treeView findNodeForObject: 'A').
+	self assertIsNil: nodeF child.
 
 	"Now move it back"
 	treeModel move: 'A' asChildOf: nil.
@@ -924,7 +917,7 @@ moveUnexpandedRootsToUnexpandedChildren
 	self assertUnexpandedRoot: nodeA.
 	self assert: nodeF isExpanded not.
 	self assert: nodeF hasExpanded not.
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"RCU x NNU"
 	treeModel move: 'B' asChildOf: 'CB'.
@@ -935,11 +928,10 @@ moveUnexpandedRootsToUnexpandedChildren
 	self assert: nodeF hasExpanded not.
 	self assert: (treeView hasChildren: nodeB).
 	"Because nodeF is unexpanded, nodeB will no longer be linked into the tree."
-	self assert: nodeB parent isNil.
-	self assert: (treeView findNodeForObject: 'B') isNil.
-	self assert: (treeView findNodeForObject: 'BA') isNil.
-
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeB parent.
+	self assertIsNil: (treeView findNodeForObject: 'B').
+	self assertIsNil: (treeView findNodeForObject: 'BA').
+	self assertIsNil: nodeF child.
 
 	"Now move B back"
 	treeModel move: 'B' asChildOf: nil.
@@ -948,7 +940,7 @@ moveUnexpandedRootsToUnexpandedChildren
 	self assert: nodeF isExpanded not.
 	self assert: nodeF hasExpanded not.
 	self assert: (treeView hasChildren: nodeB).
-	self assert: nodeF child isNil.
+	self assertIsNil: nodeF child.
 
 	"RNU x NCU"
 	treeModel move: 'A' asChildOf: 'B'.
@@ -977,7 +969,7 @@ moveUnexpandedRootsToUnexpandedChildren
 	self assert: nodeB hasExpanded not.
 	self assert: (treeView hasChildren: nodeB).
 	self assert: (treeView hasChildren: nodeD).
-	self assert: (treeView findNodeForObject: 'BA') isNil.
+	self assertIsNil: (treeView findNodeForObject: 'BA').
 
 	"Now move B back"
 	treeModel move: 'B' asChildOf: nil.
@@ -985,8 +977,7 @@ moveUnexpandedRootsToUnexpandedChildren
 	self assertUnexpandedRoot: nodeB.
 	self assertUnexpandedRoot: nodeD.
 	self assert: (treeView hasChildren: nodeB).
-	self assert: (treeView hasChildren: nodeD).
-!
+	self assert: (treeView hasChildren: nodeD)!
 
 runCase
 	useShell := true.
@@ -1060,50 +1051,49 @@ testMoveRootsToUnexpandedRoots
 	self moveRootsToUnexpandedRoots: false!
 
 testMoveSelectionDown
-	treeModel := TreeModel withRoots: #('A')
-				searchPolicy: SearchPolicy equality.
+	treeModel := TreeModel withRoots: #('A') searchPolicy: SearchPolicy equality.
 	self createView.
 	treeView selection: 'A'.
-	self assert: treeView selection = 'A'.
+	self assert: treeView selection equals: 'A'.
 	"Test with a singe selected root"
 	treeView moveSelectionDown.
 	"Selection should not move since there is no down sibling."
-	self assert: treeView selection = 'A'.
+	self assert: treeView selection equals: 'A'.
 	"Test move down to next root."
 	treeModel addRoot: 'B'.
 	treeView moveSelectionDown.
-	self assert: treeView selection = 'B'.
+	self assert: treeView selection equals: 'B'.
 	"Test attempted move off last root"
 	treeView moveSelectionDown.
 	"Selection should not move since there is no down sibling."
-	self assert: treeView selection = 'B'.
+	self assert: treeView selection equals: 'B'.
 	"Test with a single selected child of a last  root"
 	treeModel add: 'AA' asChildOf: 'A'.
 	treeView selection: 'AA'.
-	self assert: treeView selection = 'AA'.
+	self assert: treeView selection equals: 'AA'.
 	treeView moveSelectionDown.
 	"Selection should move to B."
-	self assert: treeView selection = 'B'.
+	self assert: treeView selection equals: 'B'.
 	"Now test move to immediate sibling"
 	treeModel add: 'AB' asChildOf: 'A'.
 	treeView selection: 'AA'.
 	treeView moveSelectionDown.
-	self assert: treeView selection = 'AB'.
+	self assert: treeView selection equals: 'AB'.
 
 	"Test move to immediate parent's sibling where parent is a root."
 	treeModel add: 'BA' asChildOf: 'B'.
 	treeView selection: 'BA'.
-	self assert: treeView selection = 'BA'.
+	self assert: treeView selection equals: 'BA'.
 	treeView moveSelectionDown.
 	"Selection should not move."
-	self assert: treeView selection = 'BA'.
+	self assert: treeView selection equals: 'BA'.
 
 	"Test move to sibling of non-immediate root parent."
 	treeModel add: 'ABA' asChildOf: 'AB'.
 	treeView selection: 'ABA'.
 	treeView moveSelectionDown.
 	"Selection should move to next root."
-	self assert: treeView selection = 'B'.
+	self assert: treeView selection equals: 'B'.
 
 	"Test move to sibling of immediate parent which is not a root"
 	treeModel add: 'BAA' asChildOf: 'BA'.
@@ -1111,7 +1101,7 @@ testMoveSelectionDown
 	treeView selection: 'BAA'.
 	treeView moveSelectionDown.
 	"Selection should move to non-immediate parent."
-	self assert: treeView selection = 'BB'.
+	self assert: treeView selection equals: 'BB'.
 
 	"Test move to sibling of non-immediate parent which is not a root"
 	treeModel add: 'ABAA' asChildOf: 'ABA'.
@@ -1119,7 +1109,7 @@ testMoveSelectionDown
 	treeView selection: 'ABAA'.
 	treeView moveSelectionDown.
 	"Selection should move to non-immediate parent."
-	self assert: treeView selection = 'AC'!
+	self assert: treeView selection equals: 'AC'!
 
 testMoveUnexpandedChildToRoot
 	"Tests: NNU x RCC, NCU x RCC, NNU x RCE, NCU x RCE,
@@ -1157,8 +1147,7 @@ testMoveUnexpandedRootsToUnexpandedChildren
 
 	self createTree.
 	self assertInitialState.
-
-	self assert: treeView anchorNode child == nodeA.
+	self assert: treeView anchorNode child identicalTo: nodeA.
 	self moveUnexpandedRootsToUnexpandedChildren.
 
 	"Now repeat with the 'CA' and 'CB' nodes actually in the tree"
@@ -1168,7 +1157,6 @@ testMoveUnexpandedRootsToUnexpandedChildren
 	"And again but with 'C' collapsed"
 	treeView collapse: 'C'.
 	self moveUnexpandedRootsToUnexpandedChildren.
-
 	self destroyTree!
 
 testMoveUnexpandedRootsToUnexpandedRoots
@@ -1196,44 +1184,50 @@ testMoveUnexpandedRootsToUnexpandedRoots
 	self destroyTree!
 
 testRemoveSelection
-	treeModel := TreeModel withRoots: #('A' 'B' 'C')
-				searchPolicy: SearchPolicy equality.
+	treeModel := TreeModel withRoots: #('A' 'B' 'C') searchPolicy: SearchPolicy equality.
 	self createView.
-	
 	treeView selection: 'B'.
 	"Remove selected middle root"
-	self should: [treeModel remove: 'B'] trigger: #selectionChanged against: treeView presenter.
+	self
+		should: [treeModel remove: 'B']
+		trigger: #selectionChanged
+		against: treeView presenter.
 	"Selection moves down to next sibling"
-	self assert: treeView selection = 'C'.
+	self assert: treeView selection equals: 'C'.
 	"Remove selected last root"
-	self should: [treeModel remove: 'C'] trigger: #selectionChanged against: treeView presenter.
+	self
+		should: [treeModel remove: 'C']
+		trigger: #selectionChanged
+		against: treeView presenter.
 	"Selection moves up to previous sibling"
-	self assert: treeView selection = 'A'.
+	self assert: treeView selection equals: 'A'.
 	"Remove first (and last) root"
-	self should: [treeModel remove: 'A'] trigger: #selectionChanged against: treeView presenter.
+	self
+		should: [treeModel remove: 'A']
+		trigger: #selectionChanged
+		against: treeView presenter.
 	"Selection lost (no other items to select)"
-	self assert: treeView selectionOrNil isNil.
-	self should: [treeView selection] raise: Error matching: [:ex | ex messageText = 'No object selected'].
-
-	treeModel := TreeModel withRoots: #('ROOT1' 'ROOT2' 'ROOT3')
-				searchPolicy: SearchPolicy equality.
+	self assertIsNil: treeView selectionOrNil.
+	self
+		should: [treeView selection]
+		raise: Error
+		matching: [:ex | ex messageText = 'No object selected'].
+	treeModel := TreeModel withRoots: #('ROOT1' 'ROOT2' 'ROOT3') searchPolicy: SearchPolicy equality.
 	#('A' 'B' 'C') do: [:each | treeModel add: each asChildOf: 'ROOT2'].
 	treeView model: treeModel.
-
 	treeView selection: 'B'.
 	"Remove selected middle child"
 	treeModel remove: 'B'.
 	"Selection moves down to next sibling"
-	self assert: treeView selection = 'C'.
+	self assert: treeView selection equals: 'C'.
 	"Remove selected last child"
 	treeModel remove: 'C'.
 	"Selection moves to prev sibling"
-	self assert: treeView selection = 'A'.
+	self assert: treeView selection equals: 'A'.
 	"Remove first child"
 	treeModel remove: 'A'.
 	"Selection moves to parent"
-	self assert: treeView selection = 'ROOT2'.
-! !
+	self assert: treeView selection equals: 'ROOT2'! !
 !MoenTreeViewTest categoriesFor: #assertChildNode:!helpers!private! !
 !MoenTreeViewTest categoriesFor: #assertCollapsedChild:!helpers!private! !
 !MoenTreeViewTest categoriesFor: #assertCollapsedRoot:!helpers!private! !

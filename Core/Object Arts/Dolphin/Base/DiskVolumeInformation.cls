@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #DiskVolumeInformation
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
@@ -159,20 +159,20 @@ getVolumeInformation
 	"Private - Call the Win32 GetVolumeInformation() API to retrieve the label, etc."
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
-	volumeNameBuffer := File pathBuffer.
+	volumeNameBuffer := Utf16String newFixed: File._MAX_PATH.
 	volumeSerialNumber := DWORDBytes new.
 	maximumComponentLengthBuffer := DWORDBytes new.
 	fileSystemFlagsBuffer := DWORDBytes new.
-	fileSystemNameBuffer := File pathBuffer.
+	fileSystemNameBuffer := volumeNameBuffer copy.
 	(KernelLibrary default
 		getVolumeInformation: self rootPath
 		lpVolumeNameBuffer: volumeNameBuffer
-		nVolumeNameSize: volumeNameBuffer byteSize
+		nVolumeNameSize: volumeNameBuffer size + 1
 		lpVolumeSerialNumber: volumeSerialNumber
 		lpMaximumComponentLength: maximumComponentLengthBuffer
 		lpFileSystemFlags: fileSystemFlagsBuffer
 		lpFileSystemNameBuffer: fileSystemNameBuffer
-		nFileSystemNameSize: fileSystemNameBuffer byteSize) ifFalse: [KernelLibrary default systemError].
+		nFileSystemNameSize: fileSystemNameBuffer size + 1) ifFalse: [KernelLibrary default systemError].
 	label := volumeNameBuffer trimNulls.
 	serialNumber := volumeSerialNumber value.
 	maxComponentLength := maximumComponentLengthBuffer value.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #TemporaryToInstanceVariableTest
 	instanceVariableNames: ''
@@ -38,15 +38,15 @@ testRedefinedTemporary
 
 testTemporaryToInstanceVariable
 	| refactoring class |
-	refactoring := TemporaryToInstanceVariableRefactoring 
+	refactoring := TemporaryToInstanceVariableRefactoring
 				class: LintRuleTest
 				selector: #displayName
 				variable: 'nameStream'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #LintRuleTest.
-	self 
-		assert: (class parseTreeFor: #displayName) = (RBParser 
-						parseMethod: 'displayName
+	self assert: (class parseTreeFor: #displayName)
+		equals: (RBParser
+				parseMethod: 'displayName
 								nameStream := WriteStream on: (String new: 64).
 								nameStream
 									nextPutAll: self name;

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #STBTest
 	instanceVariableNames: ''
@@ -14,10 +14,10 @@ testByteArray
 	"#1483"
 
 	#(#[] #[255] #[1 2] #[1 2 3 4 5]) do: 
-			[:each | 
+			[:each |
 			| a dessicated rehydrated s |
 			s := 'abc'.
-			a := Array 
+			a := Array
 						with: each
 						with: s
 						with: each
@@ -25,47 +25,72 @@ testByteArray
 						with: 'def'.
 			dessicated := a binaryStoreBytes.
 			rehydrated := Object fromBinaryStoreBytes: dessicated.
-			self assert: rehydrated = a.
-			self assert: (rehydrated at: 1) == (rehydrated at: 3).
-			self assert: (rehydrated at: 2) == (rehydrated at: 4).
-			self assert: (rehydrated at: 1) ~~ each]!
+			self assert: rehydrated equals: a.
+			self assert: (rehydrated at: 1) identicalTo: (rehydrated at: 3).
+			self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
+			self deny: (rehydrated at: 1) identicalTo: each]!
+
+testCharacters
+	{$a.
+		Character value: 128.
+		Character value: 163.
+		Character value: 255.
+		$\x20AC.
+		$\xCE0.
+		$\x16F0.
+		Character dolphin} do: 
+				[:each |
+				| dessicated rehydrated |
+				dessicated := each binaryStoreBytes.
+				rehydrated := Object fromBinaryStoreBytes: dessicated.
+				self assert: rehydrated equals: each]!
+
+testStrings
+	(#(#[97 98 99 32 194 163 49 50] #[111 195 177 97] #[195 161 114 118 195 173 122 116 117 114 111 32 116 195 188 107 195 182 114 102 195 186 114 195 179 103 195 169 112] #[97 0 98] #[208 186 209 128 208 176 208 186 208 190 208 183 209 143 208 177 209 128 209 139] #[230 150 135 229 173 151 229 140 150 227 129 145] #[208 188 208 176 208 185 208 188 209 131 208 189 208 184 209 134 208 176] #[239 189 129 239 189 130 239 189 131])
+		collect: [:each | Utf8String fromByteArray: each]) do: 
+				[:each |
+				| a dessicated rehydrated s |
+				s := each asUtf16String.
+				a := Array with: each with: s.
+				dessicated := a binaryStoreBytes.
+				rehydrated := Object fromBinaryStoreBytes: dessicated.
+				self assert: rehydrated equals: a.
+				self assert: rehydrated first equals: each.
+				self assert: rehydrated second equals: s]!
 
 testSymbols
 	"#1479"
 
 	| a dessicated rehydrated s sym |
 	sym := #testSymbols.
-	s := 'abc'.
-	a := Array 
-				with: sym
-				with: s
-				with: sym
-				with: s
-				with: sym asString asSymbol.
+	s := 'a' , Character dolphin asUtf8String , 'Symbol'.
+	a := {sym. s. sym. s. sym asString asSymbol. s asSymbol}.
 	dessicated := a binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
-	self assert: rehydrated = a.
-	self assert: (rehydrated at: 1) == (rehydrated at: 3).
-	self assert: (rehydrated at: 1) == (rehydrated at: 5).
-	self assert: (rehydrated at: 2) == (rehydrated at: 4).
-	self assert: (rehydrated at: 1) == sym.
+	self assert: rehydrated equals: a.
+	self assert: rehydrated first identicalTo: sym.
+	self assert: (rehydrated at: 5) identicalTo: sym.
+	self assert: (rehydrated at: 2) identicalTo: (rehydrated at: 4).
+	self assert: (rehydrated at: 6) identicalTo: s asSymbol.
 
 	"Try deserializing an old format stream"
 	"#(#testSymbols 'abc' #testSymbols) binaryStoreBytes"
 	dessicated := #[33 83 84 66 32 49 32 98 0 0 0 3 0 0 0 186 0 0 0 0 0 0 0 82 0 0 0 11 0 0 0 116 101 115 116 83 121 109 98 111 108 115 82 0 0 0 3 0 0 0 97 98 99 160 1 0 0].
 	rehydrated := Object fromBinaryStoreBytes: dessicated.
-	self assert: rehydrated = #(#testSymbols 'abc' #testSymbols).
-	self assert: rehydrated first == rehydrated last.
-	self assert: rehydrated first == #testSymbols!
+	self assert: rehydrated equals: #(#testSymbols 'abc' #testSymbols).
+	self assert: rehydrated first identicalTo: rehydrated last.
+	self assert: rehydrated first identicalTo: #testSymbols!
 
 testTranscript
 	| stb i t |
 	i := Transcript identityHash.
 	stb := Transcript binaryStoreBytes.
 	t := Object fromBinaryStoreBytes: stb.
-	self assert: t identityHash = i.
-	self assert: t == Transcript! !
+	self assert: t identityHash equals: i.
+	self assert: t identicalTo: Transcript! !
 !STBTest categoriesFor: #testByteArray!public!unit tests! !
+!STBTest categoriesFor: #testCharacters!public!unit tests! !
+!STBTest categoriesFor: #testStrings!public!unit tests! !
 !STBTest categoriesFor: #testSymbols!public!unit tests! !
 !STBTest categoriesFor: #testTranscript!public!unit tests! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Refactoring subclass: #ExpandReferencedPoolsRefactoring
 	instanceVariableNames: 'pools fromClass parseTree toClasses'

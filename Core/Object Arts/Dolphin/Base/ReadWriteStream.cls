@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 WriteStream subclass: #ReadWriteStream
 	instanceVariableNames: ''
@@ -10,6 +10,40 @@ ReadWriteStream comment: 'Class ReadWriteStream is a subclass of WriteStream tha
 '!
 !ReadWriteStream categoriesForClass!Collections-Streams! !
 !ReadWriteStream methodsFor!
+
+basicNext
+	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
+	same type of object that would be returned from the collection if sent #basicAt:. For bytes
+	and strings the basic elements are integers. For Arrays, the basic elements are whatever
+	objects are stored in the array."
+
+	"Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		1 -	The receiver's collection is not a byte object
+		2 -	The receiver is at its end (index >= readLimit).
+		3 -	The next index is beyond the end of the streamed over collection."
+
+	<primitive: 221>
+	^position >= readLimit
+		ifTrue: [self errorEndOfStream]
+		ifFalse: [collection basicAt: (position := position + 1)]!
+
+basicNext: count into: aSequenceableCollection startingAt: startAt
+	"Destructively replace the elements of the argument, aSequenceableCollection,
+	in the interval (startAt..startAt+count-1) with the next, count, elements of
+	the receiver. Answer aSequenceableCollection."
+
+	| stop |
+	stop := self positionAfterNext: count.
+	aSequenceableCollection
+		replaceFrom: startAt
+		to: startAt+count-1
+		with: collection
+		startingAt: position+1.
+	self position: stop.
+	^aSequenceableCollection!
 
 contents
 	"Answer a collection of the same type that the stream is accessing, 
@@ -38,37 +72,22 @@ next
 		3 -	The next index is beyond the end of the streamed over collection."
 
 	<primitive: 65>
-	^position >= readLimit
-		ifTrue: [self errorEndOfStream]
-		ifFalse: [collection at: (position := position + 1)]!
+	^position >= readLimit ifTrue: [self errorEndOfStream] ifFalse: [collection decodeNextFrom: self]!
 
-next: count into: aSequenceableCollection startingAt: startAt
-	"Destructively replace the elements of the argument, aSequenceableCollection,
-	in the interval (startAt..startAt+count-1) with the next, count, elements of
-	the receiver. Answer aSequenceableCollection."
-
-	| stop |
-	stop := self positionAfterNext: count.
-	aSequenceableCollection
-		replaceFrom: startAt
-		to: startAt+count-1
-		with: collection
-		startingAt: position+1.
-	self position: stop.
-	^aSequenceableCollection!
-
-nextOrNil
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
+nextAvailable
+	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
+	Note that if the stream can contain nils, then you will not be able to distinguish a nil element from the 
+	end of stream, so this method is only useful for text and byte streams, or where the collection
+	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit
-		ifFalse: [collection at: (position := position + 1)]! !
+	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
+!ReadWriteStream categoriesFor: #basicNext!accessing!public! !
+!ReadWriteStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !ReadWriteStream categoriesFor: #contents!accessing!public! !
 !ReadWriteStream categoriesFor: #isReadable!public!testing! !
 !ReadWriteStream categoriesFor: #next!accessing!public! !
-!ReadWriteStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!ReadWriteStream categoriesFor: #nextOrNil!accessing!public! !
+!ReadWriteStream categoriesFor: #nextAvailable!accessing!public! !
 
 ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!
 

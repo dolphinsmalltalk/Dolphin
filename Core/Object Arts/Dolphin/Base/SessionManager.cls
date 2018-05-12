@@ -1,7 +1,7 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -90,12 +90,15 @@ argv
 			argv := Array new: argc.
 			"Open code the access to the array of strings to reduce base system dependencies on external struct classes"
 			lppstr := lib argv.
-			1 to: argc
-				do: 
-					[:i |
-					| offset |
-					offset := (i - 1) * VMConstants.IntPtrSize.
-					argv at: i put: (String fromAddress: (lppstr dwordAtOffset: offset))]].
+			lppstr isNull
+				ifTrue: [argv at: 1 put: (ExternalLibrary moduleFileName: nil)]
+				ifFalse: 
+					[1 to: argc
+						do: 
+							[:i |
+							| offset |
+							offset := (i - 1) * VMConstants.IntPtrSize.
+							argv at: i put: (Utf16String fromAddress: (lppstr dwordAtOffset: offset))]]].
 	^argv!
 
 argvLegacyOptionsRemoved
@@ -124,6 +127,7 @@ basicPrimaryStartup
 	self openLibraries.	"Now we can open the permanent libraries"
 	self imagePath: imagePath.	"Split off the extension now can use lib functions."
 	ExternalCallback onStartup.	"Old callbacks will be invalid"
+	Character onStartup.
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
 	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"
@@ -173,11 +177,10 @@ closeConsole
 	"Disconnect from and close any open console, including the standard input and output
 	streams."
 
-	self 
+	self
 		closeConsoleStreams;
-		unregisterConsoleCtrlHandler;
-		freeConsole
-!
+		unregisterConsoleCtrlHandler.
+	hConsole isNull ifFalse: [self freeConsole]!
 
 closeConsoleStreams
 	"Private - Close the standard console I/O streams."
@@ -202,8 +205,8 @@ computerName
 	Signals an exception if the request fails."
 
 	| name nameSize |
-	name := String new: MAX_COMPUTERNAME_LENGTH.
-	nameSize := DWORD fromInteger: name size+1.
+	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
+	nameSize := DWORD fromInteger: name size + 1.
 	(KernelLibrary default getComputerName: name nSize: nameSize asParameter)
 		ifFalse: [KernelLibrary default systemError].
 	^name leftString: nameSize asInteger!
@@ -302,7 +305,8 @@ freeConsole
 		SessionManager current freeConsole
 	"
 
-	KernelLibrary default freeConsole!
+	KernelLibrary default freeConsole.
+	hConsole := nil!
 
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."
@@ -317,7 +321,7 @@ getenv: aString
 	"N.B. Size answered includes null terminator IF not enough space (or nil buffer)."
 	size := KernelLibrary default getEnvironmentVariable: aString lpBuffer: nil nSize: 0.
 	size == 0 ifTrue: [^nil].
-	buf := String new: size-1.	"Dolphin Strings alloc. extra space for null terminator"
+	buf := Utf16String newFixed: size-1.	"Dolphin Strings alloc. extra space for null terminator"
 	KernelLibrary default getEnvironmentVariable: aString lpBuffer: buf nSize: size.
 	^buf
 	!
@@ -502,17 +506,18 @@ logErrorEvent: message
 	self logEvent: message type: EVENTLOG_ERROR_TYPE!
 
 logEvent: message type: typeCode
-	"Write an entry to the system event log. Only available on NT/Win2K."
+	"Write an entry to the system event log."
 
-	| inserts app |
+	| inserts app msg |
 	eventLogHandle isNil ifTrue: [
 		self openEventLog.
 		eventLogHandle isNil ifTrue: ["Event log not available" ^self]].
 
 	inserts := DWORDArray new: 2.
-	app := self applicationName.
+	app := self applicationName asUtf16String.
+	msg := message asUtf16String.
 	inserts at: 1 put: app yourAddress.
-	inserts at: 2 put: message yourAddress.
+	inserts at: 2 put: msg yourAddress.
 
 	(AdvApiLibrary default reportEvent: eventLogHandle wType: typeCode wCategory: 0 dwEventId: 1
 			lpUserSid: nil wNumStrings: 2 dwDataSize: 0 lpStrings: inserts lpRawData: nil)
@@ -726,7 +731,8 @@ openConsoleStreams
 							StdioFileStream
 								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
 								toFd: fd
-								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])]
+								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])
+								type: #ansi]
 						ifFalse: 
 							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
 							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!
@@ -997,12 +1003,12 @@ systemDirectory
 	"Answer the path of the Windows system directory on the host computer for the current
 	session."
 
-	| path len |
-	path := File pathBuffer.
-	len := KernelLibrary default getSystemDirectory: path uSize: path size.
-	^len == 0
-		ifTrue: [KernelLibrary default systemError]
-		ifFalse: [path leftString: len]!
+	| path len kernel |
+	kernel := KernelLibrary default.
+	(len := kernel getSystemDirectory: nil uSize: 0) == 0 ifTrue: [kernel systemError].
+	path := Utf16String newFixed: len - 1.
+	(KernelLibrary default getSystemDirectory: path uSize: len) == 0 ifTrue: [kernel systemError].
+	^path!
 
 tertiaryStartup
 	"Perform last startup operations before the main process is started - this includes firing the onStartup
@@ -1080,15 +1086,9 @@ whatsThis: object
 	self subclassResponsibility!
 
 windowsDirectory
-	"Answer the path of the Windows directory on the host computer for the current session. Note
-	that under Terminal Server this will be the shared Windows directory, not the per-user
-	Windows directory. See MSDN KB281316  for further information."
+	"Answer the path of the Windows directory on the host computer for the current session."
 
-	| path len |
-	path := File pathBuffer.
-	len := KernelLibrary default getSystemWindowsDirectory: path uSize: path size.
-	len == 0 ifTrue: [^KernelLibrary default systemError].
-	^path leftString: len! !
+	^File windowsDirectory! !
 !SessionManager categoriesFor: #allocConsole!operations!private! !
 !SessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
 !SessionManager categoriesFor: #appIdString!constants!public! !

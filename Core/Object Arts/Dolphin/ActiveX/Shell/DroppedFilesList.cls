@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #DroppedFilesList
 	instanceVariableNames: 'handle size'
@@ -23,7 +23,7 @@ at: index
 				iFile: index - 1
 				lpszFile: nil
 				cch: 0.
-	answer := String newFixed: cch.
+	answer := Utf16String newFixed: cch.
 	"Note that although DragQueryFile returns the number of chars required excluding the null
 	terminator, one has to tell it the complete length of the buffer including the null
 	terminator."

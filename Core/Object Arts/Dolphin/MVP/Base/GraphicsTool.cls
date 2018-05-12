@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #GraphicsTool
 	instanceVariableNames: 'handle ownsHandle'
@@ -82,6 +82,16 @@ getData: aWinStruct
 
 	^GDILibrary default
 		getObject: self asParameter
+		cbBuffer: aWinStruct byteSize
+		lpvObject: aWinStruct
+		!
+
+getDataW: aWinStruct
+	"Private - Get the data bytes of the receiver's external resource object into	
+	the specified structure. N.B. This only works for GDI objects."
+
+	^GDILibrary default
+		getObjectW: self asParameter
 		cbBuffer: aWinStruct byteSize
 		lpvObject: aWinStruct
 		!
@@ -200,6 +210,7 @@ stbSaveOn: anSTBOutFiler
 !GraphicsTool categoriesFor: #equals:!comparing!public! !
 !GraphicsTool categoriesFor: #free!public!realizing/unrealizing! !
 !GraphicsTool categoriesFor: #getData:!accessing!private! !
+!GraphicsTool categoriesFor: #getDataW:!accessing!private! !
 !GraphicsTool categoriesFor: #getStockObject:!accessing!private! !
 !GraphicsTool categoriesFor: #handle!accessing!public! !
 !GraphicsTool categoriesFor: #handle:!accessing!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
@@ -35,9 +35,11 @@ id
 id: aString
 	"Set the <readableString> ID held in the receiver."
 
+	| text |
+	text := aString displayString asUtf16String.
 	self
 		maskIn: LIF_ITEMID;
-		szID: aString asString asUtf16String!
+		szID: text!
 
 iLink
 	"Answer the receiver's iLink field as a Smalltalk object."
@@ -150,9 +152,11 @@ url
 url: aString
 	"Set the <readableString> URL held in the receiver."
 
+	| text |
+	text := aString asUtf16String.
 	self
 		maskIn: LIF_URL;
-		szURL: aString asString asUtf16String! !
+		szURL: text! !
 !LITEM categoriesFor: #handle!accessing!public! !
 !LITEM categoriesFor: #id!accessing!public! !
 !LITEM categoriesFor: #id:!accessing!public! !

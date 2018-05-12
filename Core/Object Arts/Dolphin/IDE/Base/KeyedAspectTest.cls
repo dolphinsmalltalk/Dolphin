@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #KeyedAspectTest
 	instanceVariableNames: ''
@@ -10,33 +10,33 @@ KeyedAspectTest comment: ''!
 !KeyedAspectTest categoriesForClass!Unclassified! !
 !KeyedAspectTest methodsFor!
 
-collectionKeyedAspectsTest: subject 
+collectionKeyedAspectsTest: subject
 	| aspects batchSize |
 	batchSize := subject publishedKeyedAspectsBatchSize.
 	aspects := subject publishedKeyedAspects.
-	self assert: aspects size = (batchSize + 1).
+	self assert: aspects size equals: batchSize + 1.
 	0 to: 1
 		do: 
-			[:i | 
+			[:i |
 			| nextBatch |
 			1 to: batchSize
 				do: 
-					[:each | 
+					[:each |
 					| aspect |
 					aspect := aspects at: each.
-					self assert: aspect name = aspect key.
-					self assert: each + (i * batchSize) = aspect key.
-					self assert: (aspect accessorFor: subject) value = (subject at: each + (i * batchSize))].
+					self assert: aspect name equals: aspect key.
+					self assert: each + (i * batchSize) equals: aspect key.
+					self assert: (aspect accessorFor: subject) value equals: (subject at: each + (i * batchSize))].
 			nextBatch := aspects at: batchSize + 1.
-			self assert: (nextBatch isKindOf: KeyedAspectBatch).
-			self assert: nextBatch key = (batchSize * (i + 1) + 1).
-			self assert: nextBatch keys asArray = subject keys asArray.
-			self assert: nextBatch batchSize = batchSize.
+			self assert: nextBatch isKindOf: KeyedAspectBatch.
+			self assert: nextBatch key equals: batchSize * (i + 1) + 1.
+			self assert: nextBatch keys asArray equals: subject keys asArray.
+			self assert: nextBatch batchSize equals: batchSize.
 			"Expand out - should allow full expansion"
-			aspects := (nextBatch accessorFor: subject) getBatchAccessors 
+			aspects := (nextBatch accessorFor: subject) getBatchAccessors
 						collect: [:each | each aspectDescriptor]].
-	self assert: aspects size == 1.
-	self assert: (aspects first accessorFor: subject) value = (subject at: aspects first key)!
+	self assert: aspects size identicalTo: 1.
+	self assert: (aspects first accessorFor: subject) value equals: (subject at: aspects first key)!
 
 dictionaryKeyedAspectsTest: dictClass
 	"Expand out - should allow full expansion"

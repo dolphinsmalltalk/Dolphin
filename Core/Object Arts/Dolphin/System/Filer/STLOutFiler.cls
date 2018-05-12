@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBOutFiler subclass: #STLOutFiler
 	instanceVariableNames: ''
@@ -41,15 +41,16 @@ tryPutLiteral: anObject
 	"Certain other objects with literal representations can also be saved to the stream
 	directly, but need to be registered in case they are shared in the object graph being
 	serialized. Note that with the exception of LargeInteger, these are literal collections of
-	atomic objects (e.g. Strings are collections of Characters."
-	(anObject class == String or: 
+	atomic objects (e.g. Strings are collections of Characters)."
+	(anObject isString or: 
 			[anObject class == LargeInteger or: 
 					[anObject class == ByteArray
 						or: [anObject class == Array and: [anObject allSatisfy: [:each | each isAtomic]]]]])
 		ifTrue: 
 			[self putLiteral: anObject.
 			^true].
-	^false!
+	^false
+!
 
 writeClass: aClass withLocator: locatorString 
 	stream nextPut: aClass!

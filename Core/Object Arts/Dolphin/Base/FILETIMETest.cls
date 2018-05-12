@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #FILETIMETest
 	instanceVariableNames: ''
@@ -10,9 +10,8 @@ FILETIMETest comment: ''!
 !FILETIMETest categoriesForClass!Unclassified! !
 !FILETIMETest methodsFor!
 
-assertFromIntegerInvertible: anInteger 
-	self 
-		assert: (FILETIME fromInteger: anInteger) asInteger = (anInteger bitAnd: 2 ** 64 - 1)!
+assertFromIntegerInvertible: anInteger
+	self assert: (FILETIME fromInteger: anInteger) asInteger equals: (anInteger bitAnd: 2 ** 64 - 1)!
 
 testFromInteger
 	self assertFromIntegerInvertible: 126661379535479952.

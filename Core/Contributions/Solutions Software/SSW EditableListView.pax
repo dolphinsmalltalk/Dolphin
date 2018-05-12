@@ -1,7 +1,7 @@
-| package |
+﻿| package |
 package := Package name: 'SSW EditableListView'.
 package paxVersion: 1;
-	basicComment: '� Solutions Software/John Aspinall 2017
+	basicComment: '© Solutions Software/John Aspinall 2017
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
 package basicPackageVersion: '0.001'.

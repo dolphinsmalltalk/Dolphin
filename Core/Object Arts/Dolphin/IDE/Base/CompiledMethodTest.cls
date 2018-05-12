@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #CompiledMethodTest
 	instanceVariableNames: ''
@@ -22,19 +22,19 @@ returnTrue
 testIsQuick
 	| method |
 	method := self class compiledMethodAt: #returnTrue.
-	self assert: method extraIndex = 2.
+	self assert: method extraIndex equals: 2.
 	method := self class compiledMethodAt: #returnPlusOne:.
-	self deny: method extraIndex = 5!
+	self deny: method extraIndex equals: 5!
 
 testValueWithReceiverArguments
 	| method value |
 	method := self class compiledMethodAt: #returnTrue.
 	self should: [method value: nil withArguments: #()] raise: Error.
 	value := method value: self withArguments: #().
-	self assert: value = true.
+	self assert: value equals: true.
 	method := self class compiledMethodAt: #returnPlusOne:.
 	value := method value: self withArguments: #(1).
-	self assert: value = 2! !
+	self assert: value equals: 2! !
 !CompiledMethodTest categoriesFor: #returnPlusOne:!examples!public! !
 !CompiledMethodTest categoriesFor: #returnTrue!examples!public! !
 !CompiledMethodTest categoriesFor: #testIsQuick!public!testing / testing! !

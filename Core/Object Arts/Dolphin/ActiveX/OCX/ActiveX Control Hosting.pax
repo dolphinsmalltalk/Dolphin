@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Control Hosting'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk ActiveX Visual Control (OCX) Hosting. 

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Categories'.
 package paxVersion: 1;
 	basicComment: 'Active-X Categories Package. 

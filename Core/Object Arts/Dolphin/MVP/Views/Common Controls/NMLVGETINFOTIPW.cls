@@ -1,6 +1,6 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
-NMHDR subclass: #NMLVGETINFOTIPW
+NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -38,39 +38,18 @@ itemHandle
 pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress!
-
-text
-	^self textClass fromAddress: self pszText!
-
-text: text
-	"Private - Set the receiver's tip text to the string representation of the argument, text,
-	up to the maximum number of characters specified by the receiver's #cchTextMax field.
-	Answer the potentially truncated text."
-
-	| tipText max |
-	tipText := self textClass fromString: text displayString.
-	max := self cchTextMax.
-	tipText size >= max ifTrue: [tipText := (tipText copyFrom: 1 to: max - 4) , '...'].
-	tipText copyToBuffer: self pszText ofSize: max.
-	^tipText!
-
-textClass
-	^Utf16String! !
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #pszText)) asExternalAddress! !
 !NMLVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
 !NMLVGETINFOTIPW categoriesFor: #dwFlags!**compiled accessors**!public! !
 !NMLVGETINFOTIPW categoriesFor: #iItem!**compiled accessors**!public! !
 !NMLVGETINFOTIPW categoriesFor: #iSubItem!**compiled accessors**!public! !
 !NMLVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
 !NMLVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #text!accessing!public! !
-!NMLVGETINFOTIPW categoriesFor: #text:!accessing!private! !
-!NMLVGETINFOTIPW categoriesFor: #textClass!constants!private! !
 
 !NMLVGETINFOTIPW class methodsFor!
 
 defineFields
-	"Define the structure template for Win32 NMLVGETINFOTIPA structure.
+	"Define the structure template for Win32 NMLVGETINFOTIPW structure.
 	Implementation Note: We define the text field as an address because we
 	need to write back to the buffer pointed at by that field rather than overwrite
 	it.

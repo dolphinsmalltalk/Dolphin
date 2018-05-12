@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'XML DOM'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk XML DOM Package. 

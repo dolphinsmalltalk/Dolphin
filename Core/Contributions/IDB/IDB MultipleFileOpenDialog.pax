@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB MultipleFileOpenDialog'.
 package paxVersion: 1;
 	basicComment: 'Multipe File Open Dialog

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusImageTests
 	instanceVariableNames: ''
@@ -15,7 +15,7 @@ testAsByteArrayRoundTrip
 	| bytes bitmap |
 	bytes := model asByteArray: 'image/png'.
 	bitmap := GdiplusBitmap fromByteArray: bytes.
-	self assert: bytes = (bitmap asByteArray: 'image/png')!
+	self assert: bytes equals: (bitmap asByteArray: 'image/png')!
 
 testClone
 	"force realize"
@@ -23,16 +23,16 @@ testClone
 	| clone |
 	model handle.
 	clone := model clone.
-	self assert: model initializer == clone initializer.
-	self assert: clone basicHandle notNil.
-	self assert: (clone asByteArray: 'image/bmp') = (model asByteArray: 'image/bmp')!
+	self assert: model initializer identicalTo: clone initializer.
+	self denyIsNil: clone basicHandle.
+	self assert: (clone asByteArray: 'image/bmp') equals: (model asByteArray: 'image/bmp')!
 
 testExtent
-	self assert: model extent = (32 @ 32)!
+	self assert: model extent equals: 32 @ 32!
 
 testJpegContentType
-	self assert: (GdiplusImage encoderClsid: 'image/jpeg') 
-				= (GdiplusImage encoderClsidForExtension: 'jpg')!
+	self assert: (GdiplusImage encoderClsid: 'image/jpeg')
+		equals: (GdiplusImage encoderClsidForExtension: 'jpg')!
 
 testSaveToFileJpeg
 	"GdiplusImage>>#saveToFile: should be matching against GpImageCodecInfo's FilenameExtension ... not its MimeType"

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractStringTest subclass: #MultiByteStringTest
 	instanceVariableNames: ''
@@ -12,30 +12,102 @@ MultiByteStringTest comment: ''!
 !MultiByteStringTest methodsFor!
 
 caseConversionCases
-	"
-	Utf8StringTest new caseConversionCases collect: [:each | each collect: [:s | s asUtf8String ]]
-	"
-
 	^super caseConversionCases
-		, (#(#(#[208 186 209 128 208 176 208 186 208 190 208 183 209 143 208 177 209 128 209 139] #[208 154 208 160 208 144 208 154 208 158 208 151 208 175 208 145 208 160 208 171]) #(#[230 150 135 229 173 151 229 140 150 227 129 145] #[230 150 135 229 173 151 229 140 150 227 129 145]) #(#[208 188 208 176 208 185 208 188 209 131 208 189 208 184 209 134 208 176] #[208 156 208 144 208 153 208 156 208 163 208 157 208 152 208 166 208 144]) #(#[239 189 129 239 189 130 239 189 131] #[239 188 161 239 188 162 239 188 163]))
-				collect: [:pair | pair collect: [:each | Utf8String fromByteArray: each]])!
+		, {{'кракозябры' asUtf8String. 'КРАКОЗЯБРЫ' asUtf8String}.
+				{'文字化け' asUtf8String}.
+				{'маймуница' asUtf8String. 'МАЙМУНИЦА' asUtf8String}.
+				{'ａｂｃ' asUtf8String. 'ＡＢＣ' asUtf8String}}!
 
 reverseTestCases
-	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF8 and UTF16."
-	self skip.
+	"Private - #reverse doesn't work correctly for multi-byte encodings of UTF-8 and UTF-16."
+
 	^super reverseTestCases
-		, (#(#(#[16rF0 16r9F 16r8D 16rBA 16r20 16r61] #[16r61 16r20 16rF0 16r9F 16r8D 16rBA]) #(#[230 150 135 229 173 151 229 140 150 227 129 145] #[227 129 145 229 140 150 229 173 151 230 150 135]))
-				collect: [:pair | pair collect: [:b | Utf8String fromByteArray: b]])!
+		, #(#('🍺 a' 'a 🍺') #('文字化け' 'け化字文') #('Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'ẵṹɋîⱡą āᶇꞡáᵯ ȇꝛôꞎꝍđ ȶé ếꝛőḇẩḹ ŧṷ ťńṵᵭȋḑīḉñỉ ɍṓᶈᶆĕṫ ďꝋḿŝŭḭẽ ⱺᶁ ᶑếș ,ʈįłḝ ġɳįčṩĭƥḯɖấ ɾûțᶒťċḙṩɲṓĉ ,ẗệṁӓ ťǐʂ ᵳǭḽỡḍ ṁᶙšṕȋ ᶆëᶉơḼ'))!
 
 testAnsiStringRoundTrip
 	| ansiAll utf ansi |
 	ansiAll := Character byteCharacterSet.
 	utf := self assimilateString: ansiAll.
 	ansi := utf asAnsiString.
-	self assert: ansi class sameAs: String.
+	self assert: ansi class identicalTo: AnsiString.
 	self assert: ansi size equals: 256.
-	self assert: ansi equals: ansiAll! !
+	self assert: ansi equals: ansiAll!
+
+testBeginsWith
+	| subject comperand pound |
+	super testBeginsWith.
+	pound := '£'.
+	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
+	self assert: (subject beginsWith: Character dolphin).
+	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
+	self deny: (subject beginsWith: (Character value: 16rF0)).
+	self deny: (subject beginsWith: (String with: (Character value: 16r3D))).
+	self deny: (subject beginsWith: (Character value: 16r3D)).
+	comperand := Character dolphin asUtf8String , 'a' , pound.
+	self assert: (subject beginsWith: comperand).
+	comperand := Character dolphin asUtf16String , 'a' , pound.
+	self assert: (subject beginsWith: comperand)!
+
+testBeginsWithIgnoreCase
+	| subject comperand pound |
+	super testBeginsWith.
+	pound := String with: (Character value: 163).
+	subject := (self collectionClass with: Character dolphin) , 'a' , pound , 'bc'.
+	comperand := Character dolphin asUtf8String , 'A' , pound.
+	self assert: (subject beginsWith: comperand ignoreCase: true).
+	self deny: (subject beginsWith: comperand ignoreCase: false).
+	comperand := comperand asUtf16String.
+	self assert: (subject beginsWith: comperand ignoreCase: true).
+	self deny: (subject beginsWith: comperand ignoreCase: false)!
+
+testEncodeOnPut
+	{Character dolphin.
+		Character codePoint: 16r10FFFD.
+		$a.
+		$\0.
+		Character ansiValue: 128.
+		Character codePoint: 128.
+		Character codePoint: 163.
+		Character codePoint: 255.
+		Character codePoint: 256.
+		Character codePoint: 16rFFFD.
+		Character codePoint: 16r10000} do: 
+				[:each |
+				"Test different initial buffer sizes to check stream growth/non-growth scenarios"
+				#(0 1 2 3 4 8) do: 
+						[:i |
+						| actual utf stream actual2 |
+						stream := self collectionClass writeStream: i.
+						stream collection
+							encodeOn: stream put: each;
+							encodeOn: stream put: each.
+						utf := stream contents.
+						stream := utf readStream.
+						actual := stream next.
+						actual2 := stream next.
+						self assert: actual2 equals: actual.
+						self assert: stream atEnd.
+						self assert: actual equals: each]]!
+
+testIncludes
+	| subject pound dolphin foreign |
+	super testIncludes.
+	pound := Character value: 163.
+	dolphin := self collectionClass with: Character dolphin.
+	subject := 'a' , dolphin , 'b' , pound asString , 'c'.
+	self assert: (subject includes: $b).
+	self assert: (subject includes: pound).
+	self assert: (subject includes: Character dolphin).
+	dolphin do: [:each | self assert: (subject includes: each)].
+	foreign := self collectionClass == Utf8String
+				ifTrue: [dolphin asUtf16String]
+				ifFalse: [dolphin asUtf8String].
+	foreign do: [:each | self deny: (subject includes: each)]! !
 !MultiByteStringTest categoriesFor: #caseConversionCases!constants!private! !
 !MultiByteStringTest categoriesFor: #reverseTestCases!private! !
 !MultiByteStringTest categoriesFor: #testAnsiStringRoundTrip!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testBeginsWith!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testBeginsWithIgnoreCase!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testEncodeOnPut!public!unit tests! !
+!MultiByteStringTest categoriesFor: #testIncludes!public! !
 

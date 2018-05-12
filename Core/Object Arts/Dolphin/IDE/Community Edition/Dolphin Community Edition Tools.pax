@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Community Edition Tools'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Community Edition Additional Tools.

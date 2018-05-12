@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'
@@ -237,7 +237,7 @@ find: memberName count: numToFind
 	ppTInfo := DWORDArray new: numToFind.
 	pcFound := DWORDBytes fromInteger: numToFind.
 	self tlbInterface
-		FindName: memberName asUtf16String
+		FindName: memberName
 		lHashVal: 0
 		ppTInfo: ppTInfo
 		rgMemId: rgMemId

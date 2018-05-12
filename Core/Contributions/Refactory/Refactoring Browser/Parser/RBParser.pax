@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'RBParser'.
 package paxVersion: 1;
 	basicComment: 'Dolphin RBParser Package
@@ -925,7 +925,7 @@ references: aVariableName
 
 reformatSource
 	| newSource stream |
-	stream := WriteStream on: (String new: source size + 100).
+	stream := WriteStream on: (Utf8String new: source size + 100).
 	stream 
 		nextPutAll: (source copyFrom: (replacements inject: 1
 						into: 

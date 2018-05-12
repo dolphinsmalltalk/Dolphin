@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ExternalAddressTest
 	instanceVariableNames: ''
@@ -14,31 +14,29 @@ stringFromAddressTestClass: aStringClass
 	| abc abc2 |
 	abc := aStringClass fromString: 'abc'.
 	abc2 := aStringClass fromAddress: abc yourAddress.
-	self assert: abc ~~ abc2.
-	self assert: abc asString = abc2 asString.
+	self deny: abc identicalTo: abc2.
+	self assert: abc asString equals: abc2 asString.
 	abc := nil.
 	MemoryManager current collectGarbage.
-	self assert: abc2 asString = 'abc'.
-!
+	self assert: abc2 asString equals: 'abc'!
 
 testExternalAddressAtAddress
-	self assert: (ExternalAddress fromAddress: 1) asInteger = 1
-	!
+	self assert: (ExternalAddress fromAddress: 1) asInteger equals: 1!
 
 testExternalAddressFromAddress
-	self assert: (ExternalAddress fromAddress: 1) asInteger = 1
-	!
+	self assert: (ExternalAddress fromAddress: 1) asInteger equals: 1!
 
 testREFGUIDfromAddress
 	| g ref |
 	g := GUID newUnique.
 	ref := REFGUID fromAddress: g yourAddress.
-	self assert: (g = ref).
-	self assert: (g yourAddress = ref yourAddress).
-	self assert: (g asString = ref asString)!
+	self assert: g equals: ref.
+	self assert: g yourAddress equals: ref yourAddress.
+	self assert: g asString equals: ref asString!
 
 testStringsFromAddress
-	#(#BSTR #String #Utf16String) do: [:each | self stringFromAddressTestClass: (Smalltalk at: each)]! !
+	#(#BSTR #AnsiString #Utf8String #Utf16String)
+		do: [:each | self stringFromAddressTestClass: (Smalltalk at: each)]! !
 !ExternalAddressTest categoriesFor: #stringFromAddressTestClass:!helpers!public! !
 !ExternalAddressTest categoriesFor: #testExternalAddressAtAddress!public!unit tests! !
 !ExternalAddressTest categoriesFor: #testExternalAddressFromAddress!public!unit tests! !

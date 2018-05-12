@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 BasicLintRule subclass: #BlockLintRule
 	instanceVariableNames: 'classBlock methodBlock'
@@ -608,7 +608,7 @@ utilityMethods
 			(context selectedClass isMeta | (context selector numArgs == 0) or: 
 					[#rbFix.	"#protocols renamed to #lintProtocols"
 					context lintProtocols 
-						anySatisfy: [:each | self utilityProtocols anySatisfy: [:protocol | protocol match: each]]]) 
+						anySatisfy: [:each | self utilityProtocols anySatisfy: [:protocol | protocol match: each asString]]]) 
 				ifFalse: 
 					[(self subclassOf: context selectedClass overrides: context selector) 
 						ifFalse: 

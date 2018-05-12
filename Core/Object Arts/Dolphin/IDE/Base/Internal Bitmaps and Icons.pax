@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Internal Bitmaps and Icons'.
 package paxVersion: 1;
 	basicComment: 'One of the most common reasons why Dolphin applications need to use external files is to make use of icon and bitmap resources. These may be required solely to present your Dolphin classes with an icon inside the browsers or for more functional reasons such as toolbar buttons etc. 

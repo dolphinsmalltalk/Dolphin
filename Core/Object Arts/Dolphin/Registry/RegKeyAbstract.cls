@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
@@ -221,34 +221,22 @@ newSubKey: aString sam: anInteger
 		rootKey: self rootKey
 		sam: anInteger!
 
-objectFromValue: bytes type: type size: size 
+objectFromValue: bytes type: type size: size
 	"Private - Instantiate an appropriate object to represent the registry value with the
 	specified type, content, and size."
 
-	type == REG_SZ 
-		ifTrue: 
-			[^bytes 
-				copy: String
-				from: 1
-				to: (size - 1 max: 0)].
+	type == REG_SZ ifTrue: [^Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1].
 	type == REG_DWORD ifTrue: [^bytes sdwordAtOffset: 0].
 	type == REG_BINARY ifTrue: [^bytes copyFrom: 1 to: size].
-	type == REG_MULTI_SZ 
+	type == REG_MULTI_SZ
 		ifTrue: 
 			["Array of null-terminated strings that are terminated by two null characters."
-			| stream strings len |
-			stream := bytes readStream.
-			strings := OrderedCollection new.
-			len := size - 1.	"Allow for extra null"
-			[stream position >= len] whileFalse: [strings add: (stream upTo: 0) asString].
-			^strings asArray].
+			^(Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1) subStrings: $\0].
 	type == REG_NONE ifTrue: [^nil].
-	type == REG_EXPAND_SZ 
+	type == REG_EXPAND_SZ
 		ifTrue: 
-			[^KernelLibrary default expandEnvironmentStrings: (bytes 
-						copy: String
-						from: 1
-						to: (size - 1 max: 0))].
+			[^KernelLibrary default
+				expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: bytes size // 2 - 1)].
 	type == REG_QWORD ifTrue: [^bytes sqwordAtOffset: 0].
 	Notification signal: 'Unrecognised registry value type treated as binary: ' , type printString.
 	^bytes copyFrom: 1 to: size!
@@ -529,31 +517,32 @@ subKeyNamesDo: operation
 
 	| maxSize i lib keyName dwErr cbName hKey |
 	hKey := self asParameter.	"ensure realized at start so not closed by queryKeyInfo"
-	maxSize := self keyInfo maxSubKeyLen+1.
+	maxSize := self keyInfo maxSubKeyLen + 1.
 	i := 0.
-	keyName := String new: maxSize.
+	keyName := Utf16String newFixed: maxSize.
 	cbName := DWORDBytes new.
 	lib := self registryLibrary.
+	
 	[
-		[cbName value: maxSize+1.
-		(dwErr := lib
-	        		regEnumKeyEx: hKey
-			dwIndex: i
-			lpName: keyName
-			lpcbName: cbName
-			lpReserved: nil
-			lpClass: nil
-			lpcbClass: nil
-			lpftLastWriteTime: nil) = 16rEA] whileTrue: [
-				maxSize := maxSize bitShift: 1.
+	[cbName value: maxSize + 1.
+	(dwErr := lib
+				regEnumKeyEx: hKey
+				dwIndex: i
+				lpName: keyName
+				lpcbName: cbName
+				lpReserved: nil
+				lpClass: nil
+				lpcbClass: nil
+				lpftLastWriteTime: nil) = 16rEA]
+			whileTrue: 
+				[maxSize := maxSize bitShift: 1.
 				keyName resize: maxSize].
-		dwErr = ERROR_SUCCESS]
-        whileTrue: [
-		operation value: (keyName copyFrom: 1 to: cbName asInteger).
-		i := i + 1].
+	dwErr = ERROR_SUCCESS]
+			whileTrue: 
+				[operation value: (keyName copyFrom: 1 to: cbName asInteger).
+				i := i + 1].
 	self free.
-	dwErr = ERROR_NO_MORE_ITEMS 
-		ifFalse: [^self registryLibrary systemError: dwErr].!
+	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [^self registryLibrary systemError: dwErr]!
 
 subKeys
 	"Answer the collection of sub-keys under the receiver (a RegKey)."
@@ -571,70 +560,69 @@ subValueNamesAndValuesDo: operation
 	sub-values, passing its name and an object corresponding to the
 	registry entry as the first and second arguments respectively."
 
-	|  valueName i lib cbValueName dwErr maxNameSize maxDataSize info data cbData type hKey |
+	| valueName i lib cbValueName dwErr maxNameSize maxDataSize info data cbData type hKey |
 	i := 0.
 	hKey := self asParameter.
 	info := self keyInfo.
 	maxNameSize := info maxValueNameLen.
 	maxDataSize := info maxValueLen.
-	valueName := String new: maxNameSize.					"Strings automatically include space for null-term"
+	valueName := Utf16String newFixed: maxNameSize.	"Strings automatically include space for null-term"
 	data := ByteArray new: maxDataSize.
 	cbValueName := DWORDBytes new.
 	cbData := DWORDBytes new.
 	type := DWORDBytes new.
 	lib := self registryLibrary.
-	[
-		cbValueName value: maxNameSize +1.					"must include Null terminator"
-		cbData value: maxDataSize.
-		dwErr := (lib
+	
+	[cbValueName value: maxNameSize + 1.	"must include Null terminator"
+	cbData value: maxDataSize.
+	dwErr := lib
 				regEnumValue: hKey
 				dwIndex: i
 				lpValueName: valueName
 				lpcbValueName: cbValueName
-				lpReserved: nil 
-				lpType: type 
-				lpData: data 
-				lpcbData: cbData).
-		dwErr = ERROR_SUCCESS]
-        whileTrue: [
-		operation 
-			value: (valueName copyFrom: 1 to: cbValueName asInteger)
-			value: (self objectFromValue: data type: type asInteger size: cbData asInteger).
-		i := i + 1].
+				lpReserved: nil
+				lpType: type
+				lpData: data
+				lpcbData: cbData.
+	dwErr = ERROR_SUCCESS]
+			whileTrue: 
+				[operation value: (valueName copyFrom: 1 to: cbValueName asInteger)
+					value: (self
+							objectFromValue: data
+							type: type asInteger
+							size: cbData asInteger).
+				i := i + 1].
 	self free.
-	dwErr = ERROR_NO_MORE_ITEMS
-		ifFalse: [lib systemError: dwErr]!
+	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [lib systemError: dwErr]!
 
 subValueNamesDo: operation
 	"Evaluate the monadic valuable, operation, for each of the receiver's
 	value names."
 
-	|  valueName i lib cbValueName dwErr maxSize hKey |
+	| valueName i lib cbValueName dwErr maxSize hKey |
 	i := 0.
 	hKey := self asParameter.
 	maxSize := self keyInfo maxValueNameLen.
-	valueName := String new: maxSize.					"Strings automatically include space for null-term"
-	cbValueName := DWORDBytes new.	
+	valueName := Utf16String newFixed: maxSize.	"Strings automatically include space for null-term"
+	cbValueName := DWORDBytes new.
 	lib := self registryLibrary.
-	[
-		cbValueName value: maxSize +1.					"must include Null terminator"
-		dwErr := (lib
+	
+	[cbValueName value: maxSize + 1.	"must include Null terminator"
+	dwErr := lib
 				regEnumValue: hKey
 				dwIndex: i
 				lpValueName: valueName
 				lpcbValueName: cbValueName
-				lpReserved: nil 
-				lpType: nil 
-				lpData: nil 
-				lpcbData: nil).
-		dwErr = ERROR_SUCCESS]
-        whileTrue: [
-		operation value: (valueName copyFrom: 1 to: cbValueName asInteger).
-		i := i + 1].
+				lpReserved: nil
+				lpType: nil
+				lpData: nil
+				lpcbData: nil.
+	dwErr = ERROR_SUCCESS]
+			whileTrue: 
+				[operation value: (valueName copyFrom: 1 to: cbValueName asInteger).
+				i := i + 1].
 	self free.
-	dwErr = ERROR_NO_MORE_ITEMS
-		ifFalse: [lib systemError: dwErr].
-!
+	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [lib systemError: dwErr]!
 
 subValues
 	"Answer the collection of sub-values under the receiver (a RegKeyValues)."
@@ -703,19 +691,25 @@ valueAt: aString put: anObject
 		type: assoc key.
 	^anObject!
 
-valueAt: aString put: anObject type: aSymbol 
-	| size result info |
-	(aString isNil and: [aSymbol == #none]) 
+valueAt: aString put: anObject type: aSymbol
+	| size result info value |
+	(aString isNil and: [aSymbol == #none])
 		ifTrue: 
 			[self removeSubValue: aString ifAbsent: [].
 			^anObject].
-	size := anObject byteSize.
-	result := AdvApiLibrary default 
+	value := (#(#string #expandString #stringArray) identityIncludes: aSymbol)
+				ifTrue: 
+					["The string should include a terminating null after each element. The double terminating null is provided by the strings implicit null, which #byteSize accounts for."
+					anObject asUtf16String]
+				ifFalse: [anObject].
+	"The size is always specified in bytes"
+	size := value byteSize.
+	result := AdvApiLibrary default
 				regSetValueEx: self asParameter
 				lpValueName: aString
 				reserved: 0
 				dwType: (ValueTypes at: aSymbol)
-				lpData: anObject
+				lpData: value
 				cbData: size.
 	result == ERROR_SUCCESS ifFalse: [^Win32Error signalWith: result].
 	info := self keyInfo.
@@ -734,12 +728,11 @@ valueFromObject: value
 				ifFalse: 
 					[(value between: ##(-2 ** 63) and: ##(2 ** 63 - 1))
 						ifTrue: [^#qword -> (LARGE_INTEGER fromInteger: value)]]].
-	(value isKindOf: String) ifTrue: [^#string -> value].
-	(value isKindOf: Array)
+	(value isKindOf: String) ifTrue: [^#string -> value asUtf16String].
+	(value isKindOf: Collection)
 		ifTrue: 
-			["Assume its an array of strings"
-			| stream |
-			stream := String writeStream.
+			[| stream |
+			stream := Utf16String writeStream.
 			value do: 
 					[:each |
 					stream

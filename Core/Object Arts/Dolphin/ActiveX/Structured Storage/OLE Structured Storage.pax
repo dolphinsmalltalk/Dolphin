@@ -1,4 +1,4 @@
-| package |
+ï»¿| package |
 package := Package name: 'OLE Structured Storage'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk OLE Structured Storage Support. 
@@ -163,9 +163,9 @@ createStreamOnHGlobal: hGlobal fDeleteOnRelease: aBoolean ppstm: anIStream
 	global memory block.
 
 		HRESULT CreateStreamOnHGlobal(
-			HGLOBAL hGlobal,  	//Memory handle for the stream object 
+			HGLOBAL hGlobal,	 	//Memory handle for the stream object 
  			BOOL fDeleteOnRelease,	//Whether to free memory when the object is released 
- 			LPSTREAM * ppstm 		//Indirect pointer to the new stream object 
+ 			LPSTREAM *ppstm 		//Indirect pointer to the new stream object 
  		); "
   
 	<stdcall: hresult CreateStreamOnHGlobal handle bool lppvoid >
@@ -501,7 +501,7 @@ Read: pv cb: cb pcbRead: pcbRead
 	| count |
 	count := cb min: self size - self position.
 	self 
-		next: count
+		basicNext: count
 		into: pv
 		startingAt: 1.
 	pcbRead bytes notNull ifTrue: [pcbRead value: count].

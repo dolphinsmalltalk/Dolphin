@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'CSRefactorings'.
 package paxVersion: 1;
 	basicComment: 'Additional Refactorings developed by the Camp Smalltalk "Custom Refactorings and Rewrite Editor Usability" project: 

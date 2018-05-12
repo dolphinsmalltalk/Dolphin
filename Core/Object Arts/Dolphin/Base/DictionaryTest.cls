@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractDictionaryTest subclass: #DictionaryTest
 	instanceVariableNames: ''
@@ -29,10 +29,10 @@ testAtIfAbsentPutValue
 	f := 2.0.
 	self assert: f hash equals: 2 hash.
 	self assert: f equals: 2.
-	self assert: (dictionary at: 2 ifAbsentPutValue: f) == f.
-	self assert: dictionary size == (initialSize + 1).
-	self assert: (dictionary at: f ifAbsentPutValue: 2) == f.
-	self assert: dictionary size == (initialSize + 1)! !
+	self assert: (dictionary at: 2 ifAbsentPutValue: f) identicalTo: f.
+	self assert: dictionary size identicalTo: initialSize + 1.
+	self assert: (dictionary at: f ifAbsentPutValue: 2) identicalTo: f.
+	self assert: dictionary size identicalTo: initialSize + 1! !
 !DictionaryTest categoriesFor: #collectionClass!helpers!private! !
 !DictionaryTest categoriesFor: #testAllInstancesValid!public!unit tests! !
 !DictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !

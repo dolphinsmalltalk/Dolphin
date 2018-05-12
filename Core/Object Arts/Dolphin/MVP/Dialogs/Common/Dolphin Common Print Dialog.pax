@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Common Print Dialog'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Windows Common Print Dialog.
@@ -11,12 +11,13 @@ package basicPackageVersion: '6.1'.
 
 package classNames
 	add: #PrintDialog;
-	add: #PRINTDLG;
-	add: #PRINTDLGEX;
+	add: #PRINTDLGEXW;
+	add: #PRINTDLGW;
 	add: #PRINTPAGERANGE;
 	yourself.
 
 package methodNames
+	add: #ComDlgLibrary -> #printDlg:;
 	add: #ComDlgLibrary -> #printDlgEx:;
 	add: 'PrinterCanvas class' -> #choose;
 	yourself.
@@ -47,15 +48,15 @@ Win32Structure subclass: #PRINTPAGERANGE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #PRINTDLG
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'PrintDialogConstants'
-	classInstanceVariableNames: ''!
-CommonDialogStructure subclass: #PRINTDLGEX
+CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #PRINTDLGW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'PrintDialogConstants'
 	classInstanceVariableNames: ''!
 CommonDialog subclass: #PrintDialog
 	instanceVariableNames: ''
@@ -70,15 +71,28 @@ CommonDialog subclass: #PrintDialog
 
 !ComDlgLibrary methodsFor!
 
+printDlg: aWinPRINTDLG
+	"Displays a Print dialog box or a Print Setup dialog box. The Print dialog box enables the user to 
+	specify the properties of a particular print job.
+
+		BOOL PrintDlg(
+			LPPRINTDLG  lppd 	// address of structure with initialization data
+		);"
+
+	<stdcall: bool PrintDlgW PRINTDLGW*>
+	^self invalidCall
+!
+
 printDlgEx: lppd 
 	"Invoke the PRINTDLGEX() function of the module wrapped by the receiver.
 	Helpstring: Displays a Print property sheet for configuring a print job
 
 		HRESULT __stdcall PRINTDLGEX(
-			PRINTDLGEX* lppd);"
+			PRINTDLGEXW* lppd);"
 
-	<stdcall: hresult PrintDlgExA PRINTDLGEX*>
+	<stdcall: hresult PrintDlgExW PRINTDLGEXW*>
 	^self invalidCall! !
+!ComDlgLibrary categoriesFor: #printDlg:!primitives!private!win32 functions-common dialog box! !
 !ComDlgLibrary categoriesFor: #printDlgEx:!**auto generated**!public! !
 
 !PrinterCanvas class methodsFor!

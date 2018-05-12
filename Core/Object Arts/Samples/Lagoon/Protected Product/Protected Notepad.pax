@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Protected Notepad'.
 package paxVersion: 1;
 	basicComment: 'This is a version of the Notebook sample which uses non-default cryptography to encrypt the unlock key.  It uses the example class ElgamalSerialNumberProtector to use private/public encryption to protect the key.

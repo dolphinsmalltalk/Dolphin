@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #TextTileIcon
 	instanceVariableNames: 'text font tilecolor'
@@ -76,19 +76,27 @@ asParameter
 bitmap
 	^self bitmapWithExtent: self class defaultExtent!
 
-bitmapWithExtent: extent
+bitmapWithExtent: aPoint
 	| bitmap |
-	bitmap := GdiplusBitmap extent: extent.
+	bitmap := GdiplusBitmap extent: aPoint.
 	bitmap graphics doWithCanvas: 
-			[:canvas | 
-			| textExtent |
-			canvas font: (Font name: self font pixelSize: extent y).
+			[:canvas |
+			| max textExtent f tries |
+			max := aPoint - 1.
+			f := Font name: self font pixelSize: max y.
+			tries := 5.
+			
+			[canvas font: f.
 			textExtent := canvas textExtent: self text.
+			textExtent x > max x and: [tries > 0]]
+					whileTrue: 
+						[tries := tries - 1.
+						f := Font name: self font pixelSize: (max x * max y / textExtent x) truncated].
 			canvas
 				backcolor: self tilecolor;
 				erase;
 				forecolor: Color white;
-				text: self text at: (extent - textExtent) // 2].
+				text: self text at: (aPoint - textExtent) // 2].
 	^bitmap!
 
 drawOn: aCanvas 
@@ -103,7 +111,7 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	"Draw the receiver on aCanvas at Point dstOrigin, and with size dstExtent. 
 	The receiver is stretched to fit the destination rectangle."
 
-	self bitmap 
+	(self bitmapWithExtent: dstExtent)
 		drawOn: aCanvas
 		at: dstOrigin
 		extent: dstExtent!

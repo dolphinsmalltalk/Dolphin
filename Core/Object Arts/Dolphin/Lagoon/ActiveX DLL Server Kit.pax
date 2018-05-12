@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX DLL Server Kit'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Active-X In-Process Server Deployment Kit 

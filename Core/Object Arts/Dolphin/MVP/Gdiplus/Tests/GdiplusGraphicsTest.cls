@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusGraphicsTest
 	instanceVariableNames: 'bitmap graphics canvas'
@@ -38,31 +38,31 @@ tearDown
 
 testCompositingMode
 	graphics compositingMode: CompositingModeSourceOver.
-	self assert: graphics compositingMode = CompositingModeSourceOver.
+	self assert: graphics compositingMode equals: CompositingModeSourceOver.
 	graphics compositingMode: CompositingModeSourceCopy.
-	self assert: graphics compositingMode = CompositingModeSourceCopy!
+	self assert: graphics compositingMode equals: CompositingModeSourceCopy!
 
 testCompositingQuality
 	graphics compositingQuality: CompositingQualityHighQuality.
-	self assert: graphics compositingQuality = CompositingQualityHighQuality.
+	self assert: graphics compositingQuality equals: CompositingQualityHighQuality.
 	graphics compositingQuality: CompositingQualityGammaCorrected.
-	self assert: graphics compositingQuality = CompositingQualityGammaCorrected!
+	self assert: graphics compositingQuality equals: CompositingQualityGammaCorrected!
 
 testDrawImageRectRect
 	| image |
 	image := GdiplusImage fromFile: self fileResource pafRgb0000FF_100x100bmp.
-	graphics 
+	graphics
 		drawImage: image
 		at: 1 @ 1
 		extent: 200 @ 200
 		from: 0 @ 0
 		extent: 100 @ 100.
 	"what exactly am I testing?"
-	self assert: (canvas pixelAt: 0 @ 0) = RGB white.
-	self assert: (canvas pixelAt: 1 @ 1) = RGB blue.
+	self assert: (canvas pixelAt: 0 @ 0) equals: RGB white.
+	self assert: (canvas pixelAt: 1 @ 1) equals: RGB blue.
 	"mmm ... this edge has some kind of alaising?"
-	self assert: (canvas pixelAt: 199 @ 199) = RGB blue.
-	self assert: (canvas pixelAt: 202 @ 202) = RGB white!
+	self assert: (canvas pixelAt: 199 @ 199) equals: RGB blue.
+	self assert: (canvas pixelAt: 202 @ 202) equals: RGB white!
 
 testDrawLine1
 	"Kick the tyres test"
@@ -96,16 +96,16 @@ testFromCanvas
 	| bmp |
 	bmp := self getSampleGDIBitmap.
 	model := GdiplusGraphics fromCanvas: bmp canvas.
-	self assert: model handle class == ExternalHandle!
+	self assert: model handle class identicalTo: ExternalHandle!
 
 testFromImage
 	| image pixel pixelColor |
 	image := GdiplusBitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
 	model := GdiplusGraphics fromImage: image.
-	self assert: model handle class == ExternalHandle.
+	self assert: model handle class identicalTo: ExternalHandle.
 	"Can the next 2 lines replace those below them?"
 	pixelColor := image pixelAt: 50 @ 50.
-	self assert: pixelColor = ARGB blue
+	self assert: pixelColor equals: ARGB blue
 	"model doWithCanvas: [:aCanvas | pixel := aCanvas getPixel: 50 @ 50]."
 	"mmm ... format 'mismatch'?"
 	"pixelColor := RGB fromInteger: pixel.
@@ -114,26 +114,26 @@ testFromImage
 testInterpolationMode
 	"Default interpolation mode is bilinear"
 
-	self assert: graphics interpolationMode = InterpolationModeBilinear.
+	self assert: graphics interpolationMode equals: InterpolationModeBilinear.
 	self should: [graphics interpolationMode: InterpolationModeInvalid] raise: GdiplusError.
 	(Array with: InterpolationModeHighQuality with: InterpolationModeHighQualityBicubic) do: 
-			[:each | 
+			[:each |
 			graphics interpolationMode: each.
-			self assert: graphics interpolationMode = InterpolationModeHighQualityBicubic].
-	(Array 
+			self assert: graphics interpolationMode equals: InterpolationModeHighQualityBicubic].
+	(Array
 		with: InterpolationModeBicubic
 		with: InterpolationModeNearestNeighbor
 		with: InterpolationModeHighQualityBilinear) do: 
-				[:each | 
+				[:each |
 				graphics interpolationMode: each.
-				self assert: graphics interpolationMode = each].
-	(Array 
+				self assert: graphics interpolationMode equals: each].
+	(Array
 		with: InterpolationModeBilinear
 		with: InterpolationModeDefault
 		with: InterpolationModeLowQuality) do: 
-				[:each | 
+				[:each |
 				graphics interpolationMode: each.
-				self assert: graphics interpolationMode = InterpolationModeBilinear]! !
+				self assert: graphics interpolationMode equals: InterpolationModeBilinear]! !
 !GdiplusGraphicsTest categoriesFor: #setUp!public!setup! !
 !GdiplusGraphicsTest categoriesFor: #tearDown!public!setup! !
 !GdiplusGraphicsTest categoriesFor: #testCompositingMode!public!unit tests! !

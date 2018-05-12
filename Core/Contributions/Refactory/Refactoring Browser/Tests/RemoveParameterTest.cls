@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RemoveParameterTest
 	instanceVariableNames: ''
@@ -35,20 +35,19 @@ testPrimitiveMethods
 
 testRemoveParameter
 	| refactoring class |
-	refactoring := RemoveParameterRefactoring 
+	refactoring := RemoveParameterRefactoring
 				removeParameter: 'anArg'
 				in: RefactoryTestDataApp
 				selector: ('rename' , 'ThisMethod:') asSymbol.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self assert: (class parseTreeFor: #renameThisMethod) 
-				= (RBParser parseMethod: 'renameThisMethod
+	self assert: (class parseTreeFor: #renameThisMethod)
+		equals: (RBParser parseMethod: 'renameThisMethod
 								^self').
-	self assert: (class parseTreeFor: #callMethod) 
-				= (RBParser parseMethod: 'callMethod
+	self assert: (class parseTreeFor: #callMethod)
+		equals: (RBParser parseMethod: 'callMethod
 								^(self renameThisMethod)').
-	self 
-		deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
+	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
 !RemoveParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
 !RemoveParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
 !RemoveParameterTest categoriesFor: #testRemoveParameter!public!tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #AddClassTest
 	instanceVariableNames: ''
@@ -16,7 +16,7 @@ setUp
 
 testAddClass
 	| refactoring newClass superClass classTest |
-	refactoring := AddClassRefactoring 
+	refactoring := AddClassRefactoring
 				addClass: #FooTest
 				superclass: RefactoringTest
 				subclasses: (Array with: self class)
@@ -25,14 +25,13 @@ testAddClass
 	newClass := refactoring model classNamed: #FooTest.
 	superClass := refactoring model classNamed: #RefactoringTest.
 	classTest := refactoring model classNamed: self class name.
-	self assert: newClass superclass = superClass.
+	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass metaclass superclass = superClass metaclass.
-	self 
-		assert: (superClass metaclass subclasses includes: newClass metaclass).
-	self assert: classTest superclass = newClass.
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: classTest superclass equals: newClass.
 	self assert: (newClass subclasses includes: classTest).
-	self assert: classTest metaclass superclass = newClass metaclass.
+	self assert: classTest metaclass superclass equals: newClass metaclass.
 	self assert: (newClass metaclass subclasses includes: classTest metaclass)!
 
 testExistingName
@@ -60,7 +59,7 @@ testModelAddClass
 	| refactoring newClass superClass subclass |
 	subclass := model classNamed: #Bar.
 	superClass := model classNamed: #Foo.
-	refactoring := AddClassRefactoring 
+	refactoring := AddClassRefactoring
 				model: model
 				addClass: #FooTest
 				superclass: superClass
@@ -68,14 +67,13 @@ testModelAddClass
 				category: #'Refactory-Testing'.
 	self executeRefactoring: refactoring.
 	newClass := model classNamed: #FooTest.
-	self assert: newClass superclass = superClass.
+	self assert: newClass superclass equals: superClass.
 	self assert: (superClass subclasses includes: newClass).
-	self assert: newClass metaclass superclass = superClass metaclass.
-	self 
-		assert: (superClass metaclass subclasses includes: newClass metaclass).
-	self assert: subclass superclass = newClass.
+	self assert: newClass metaclass superclass equals: superClass metaclass.
+	self assert: (superClass metaclass subclasses includes: newClass metaclass).
+	self assert: subclass superclass equals: newClass.
 	self assert: (newClass subclasses includes: subclass).
-	self assert: subclass metaclass superclass = newClass metaclass.
+	self assert: subclass metaclass superclass equals: newClass metaclass.
 	self assert: (newClass metaclass subclasses includes: subclass metaclass)!
 
 testModelExistingName

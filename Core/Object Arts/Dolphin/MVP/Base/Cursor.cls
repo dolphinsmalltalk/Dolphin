@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Icon subclass: #Cursor
 	instanceVariableNames: ''
@@ -21,7 +21,7 @@ loadFromInstance: hModule
 	it does not appear to work for instance 0; the system. Hence this method 
 	which tries the old way. Answers the loaded handle or nil if the load failed"
 
-	^UserLibrary default loadCursor: hModule asParameter lpCursorName: identifier asParameter!
+	^UserLibrary default loadCursor: hModule asParameter lpCursorName: identifier asResourceId!
 
 makeCurrent
 	"Make the receiver become the current global cursor."

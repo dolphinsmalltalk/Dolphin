@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #PushDownMethodTest
 	instanceVariableNames: ''
@@ -12,15 +12,14 @@ PushDownMethodTest comment: ''!
 
 testPushDownMethod
 	| refactoring class |
-	refactoring := PushDownMethodRefactoring pushDown: #(#name:)
-				from: LintRuleTest.
+	refactoring := PushDownMethodRefactoring pushDown: #(#name:) from: LintRuleTest.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #LintRuleTest.
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
-			[:each | 
-			self assert: (each parseTreeFor: #name:) 
-						= (RBParser parseMethod: 'name: aString name := aString')]!
+			[:each |
+			self assert: (each parseTreeFor: #name:)
+				equals: (RBParser parseMethod: 'name: aString name := aString')]!
 
 testPushDownMethodOnNonAbstractClass
 	| refactoring |
@@ -36,8 +35,8 @@ testPushDownMethodThatReferencesPoolDictionary
 	class := refactoring model classNamed: #LintRuleTest.
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
-			[:each | 
-			self assert: (each parseTreeFor: #junk) = parseTree.
+			[:each |
+			self assert: (each parseTreeFor: #junk) equals: parseTree.
 			#rbFix.	"On Dolphin pools are inherited, so in fact the pool should NOT have been copied down."
 			self deny: (each directlyDefinesPoolDictionary: 'CRTConstants' asSymbol)]!
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object variableSubclass: #BlockClosure
 	instanceVariableNames: 'outer method initialIP info receiver'
@@ -409,64 +409,64 @@ on: selector do: action
 	^(ExceptionHandler on: selector do: action) try: self!
 
 on: selector1 do: action1 on: selector2 do: action2
-	"Try to evaluate the receiver, and should an exception occur which is matched
-	by any of the <exceptionSelector>s, selector1..selector2, then evaluate the 
-	corresponding <monadicBlock>, actionN, passing it the exception instance as 
-	its argument."
+	"Try to evaluate the receiver, and should an exception occur which is matched by any of the
+	<exceptionSelector>s, selector1..selector2, then evaluate the corresponding <monadicBlock>,
+	actionN, passing it the exception instance as its argument."
 
-	^self onDo: ((ExceptionHandlerSet new)
-				on: selector1 do: action1;
-				on: selector2 do: action2)!
+	^(ExceptionHandlerSet handlers: {selector1. action1. selector2. action2}) try: self!
 
 on: selector1 do: action1 on: selector2 do: action2 on: selector3 do: action3
-	"Try to evaluate the receiver, and should an exception occur which is matched
-	by any of the <exceptionSelector>s, selector1..selector3, then evaluate the 
-	corresponding <monadicBlock>, actionN, passing it the exception instance as 
-	its argument."
+	"Try to evaluate the receiver, and should an exception occur which is matched by any of the
+	<exceptionSelector>s, selector1..selector3, then evaluate the corresponding <monadicBlock>,
+	actionN, passing it the exception instance as its argument."
 
-	^self onDo: ((ExceptionHandlerSet new)
-				on: selector1 do: action1;
-				on: selector2 do: action2;
-				on: selector3 do: action3)!
+	^(ExceptionHandlerSet handlers: {selector1. action1. selector2. action2. selector3. action3})
+		try: self!
 
 on: selector1 do: action1 on: selector2 do: action2 on: selector3 do: action3 on: selector4 do: action4
-	"Try to evaluate the receiver, and should an exception occur which is matched
-	by any of the <exceptionSelector>s, selector1..selector4, then evaluate the 
-	corresponding <monadicBlock>, actionN, passing it the exception instance as 
-	its argument."
+	"Try to evaluate the receiver, and should an exception occur which is matched by any of the
+	<exceptionSelector>s, selector1..selector4, then evaluate the corresponding <monadicBlock>,
+	actionN, passing it the exception instance as its argument."
 
-	^self onDo: ((ExceptionHandlerSet new)
-				on: selector1 do: action1;
-				on: selector2 do: action2;
-				on: selector3 do: action3;
-				on: selector4 do: action4)!
+	^(ExceptionHandlerSet
+		handlers: {selector1. action1. selector2. action2. selector3. action3. selector4. action4})
+			try: self!
 
 on: selector1 do: action1 on: selector2 do: action2 on: selector3 do: action3 on: selector4 do: action4 on: selector5 do: action5
-	"Try to evaluate the receiver, and should an exception occur which is matched
-	by any of the <exceptionSelector>s, selector1..selector5, then evaluate the 
-	corresponding <monadicBlock>, actionN, passing it the exception instance as 
-	its argument."
+	"Try to evaluate the receiver, and should an exception occur which is matched by any of the
+	<exceptionSelector>s, selector1..selector5, then evaluate the corresponding <monadicBlock>,
+	actionN, passing it the exception instance as its argument."
 
-	^self onDo: ((ExceptionHandlerSet new)
-				on: selector1 do: action1;
-				on: selector2 do: action2;
-				on: selector3 do: action3;
-				on: selector4 do: action4;
-				on: selector5 do: action5)!
+	^(ExceptionHandlerSet handlers: {selector1.
+				action1.
+				selector2.
+				action2.
+				selector3.
+				action3.
+				selector4.
+				action4.
+				selector5.
+				action5})
+		try: self!
 
 on: selector1 do: action1 on: selector2 do: action2 on: selector3 do: action3 on: selector4 do: action4 on: selector5 do: action5 on: selector6 do: action6
-	"Try to evaluate the receiver, and should an exception occur which is matched
-	by any of the <exceptionSelector>s, selector1..selector6, then evaluate the 
-	corresponding <monadicBlock>, actionN, passing it the exception instance as 
-	its argument."
+	"Try to evaluate the receiver, and should an exception occur which is matched by any of the
+	<exceptionSelector>s, selector1..selector6, then evaluate the corresponding <monadicBlock>,
+	actionN, passing it the exception instance as its argument."
 
-	^self onDo: ((ExceptionHandlerSet new)
-				on: selector1 do: action1;
-				on: selector2 do: action2;
-				on: selector3 do: action3;
-				on: selector4 do: action4;
-				on: selector5 do: action5;
-				on: selector6 do: action6)!
+	^(ExceptionHandlerSet handlers: {selector1.
+				action1.
+				selector2.
+				action2.
+				selector3.
+				action3.
+				selector4.
+				action4.
+				selector5.
+				action5.
+				selector6.
+				action6})
+		try: self!
 
 onDo: exceptionHandler
 	"Try to evaluate the receiver under the protection of the <ExceptionHandler>
@@ -820,7 +820,7 @@ attemptToRecompile: aBlockClosure
 					[:ex | 
 					Notification signal: 'Error creating block: ', ex printString.
 					nil].
-	^newBlock ifNil: [aBlockClosure]!
+	^newBlock ?? aBlockClosure!
 
 attemptToUpgradeBlock: aBlockClosure data: data 
 	| recompiledBlock newMethod |

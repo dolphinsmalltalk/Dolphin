@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusCustomLineCapTest
 	instanceVariableNames: ''
@@ -16,20 +16,20 @@ setUp
 				strokePath: (GdiplusGraphicsPath new addEllipse: (Point zero extent: 200 @ 100))!
 
 testBaseCap
-	self assert: model baseCap = 0.
+	self assert: model baseCap equals: 0.
 	"Only the first 4 constants (0 through 3) work.  Don't know why only those."
 	model class enumsLineCap do: 
-			[:e | 
-			e value <= 3 
+			[:e |
+			e value <= 3
 				ifTrue: 
 					[model baseCap: e value.
-					self assert: model baseCap = e value]
+					self assert: model baseCap equals: e value]
 				ifFalse: [self should: [model baseCap: e value] raise: GdiplusError]]!
 
 testBaseInset
-	self assert: model baseInset = 0.
+	self assert: model baseInset equals: 0.
 	model baseInset: 4.5.
-	self assert: model baseInset = 4.5!
+	self assert: model baseInset equals: 4.5!
 
 testClone
 	"force realize"
@@ -37,33 +37,33 @@ testClone
 	| clone |
 	model handle.
 	clone := model clone.
-	self assert: model initializer == clone initializer.
-	self assert: clone basicHandle notNil!
+	self assert: model initializer identicalTo: clone initializer.
+	self denyIsNil: clone basicHandle!
 
 testStrokeCaps
-	self assert: model strokeCaps = #(0 0).
+	self assert: model strokeCaps equals: #(0 0).
 	"Only the first 4 constants (0 through 3) work.  Don't know why only those."
 	model class enumsLineCap do: 
-			[:e | 
-			e value <= 3 
+			[:e |
+			e value <= 3
 				ifTrue: 
 					[model startCap: e value endCap: e value.
-					self assert: model strokeCaps = (Array with: e value with: e value).
-					self assert: model startCap = e value.
-					self assert: model endCap = e value]
+					self assert: model strokeCaps equals: (Array with: e value with: e value).
+					self assert: model startCap equals: e value.
+					self assert: model endCap equals: e value]
 				ifFalse: [self should: [model startCap: e value endCap: e value] raise: GdiplusError]]!
 
 testStrokeJoin
-	self assert: model strokeJoin = 0.
+	self assert: model strokeJoin equals: 0.
 	model class enumsLineJoin do: 
-			[:e | 
+			[:e |
 			model strokeJoin: e value.
-			self assert: model strokeJoin = e value]!
+			self assert: model strokeJoin equals: e value]!
 
 testWidthScale
-	self assert: model widthScale = 1.
+	self assert: model widthScale equals: 1.
 	model widthScale: 2.5.
-	self assert: model widthScale = 2.5! !
+	self assert: model widthScale equals: 2.5! !
 !GdiplusCustomLineCapTest categoriesFor: #setUp!public!setup! !
 !GdiplusCustomLineCapTest categoriesFor: #testBaseCap!public!unit tests! !
 !GdiplusCustomLineCapTest categoriesFor: #testBaseInset!public!unit tests! !

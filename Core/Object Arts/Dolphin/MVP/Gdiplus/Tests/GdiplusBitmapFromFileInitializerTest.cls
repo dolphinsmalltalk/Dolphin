@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializerTests subclass: #GdiplusBitmapFromFileInitializerTest
 	instanceVariableNames: ''
@@ -20,18 +20,18 @@ setUp
 
 testAbsoluteFilename
 	model filename: 'c:\test' fileLocator: nil.
-	self assert: model absoluteFilename = 'c:\test'.
+	self assert: model absoluteFilename equals: 'c:\test'.
 	model filename: 'c:\test' fileLocator: ImageRelativeFileLocator current.
-	self assert: model absoluteFilename = 'c:\test'.
+	self assert: model absoluteFilename equals: 'c:\test'.
 	model filename: 'test' fileLocator: ImageRelativeFileLocator current.
-	self assert: model absoluteFilename 
-				= (ImageRelativeFileLocator current localFileSpecFor: 'test')!
+	self assert: model absoluteFilename
+		equals: (ImageRelativeFileLocator current localFileSpecFor: 'test')!
 
 testCreateHandle
 	model filename: self fileResource pafRgb0000FF_100x100bmp fileLocator: nil.
 	model createHandle.
-	self assert: constructorArgs size = 2.
-	self assert: constructorArgs first = self fileResource pafRgb0000FF_100x100bmp asUtf16String.
+	self assert: constructorArgs size equals: 2.
+	self assert: constructorArgs first equals: self fileResource pafRgb0000FF_100x100bmp.
 	self assertLastArgIsHandle! !
 !GdiplusBitmapFromFileInitializerTest categoriesFor: #gdipCreateBitmapFromFile:bitmap:!accessing!public! !
 !GdiplusBitmapFromFileInitializerTest categoriesFor: #setUp!public!setup! !

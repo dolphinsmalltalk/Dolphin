@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusFontCollection subclass: #GdiplusPrivateFontCollection
 	instanceVariableNames: ''
@@ -17,7 +17,7 @@ addFontFile: aFilename
 
 	| status |
 	(status := GdiplusLibrary default gdipPrivateAddFontFile: self asParameter
-				filename: aFilename asUtf16String) = Ok
+				filename: aFilename) = Ok
 		ifFalse: [GdiplusError signal: 'GdipPrivateAddFontFile failed' with: status]! !
 !GdiplusPrivateFontCollection categoriesFor: #addFontFile:!operations!public! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 COMInterfaceImp subclass: #AXPropertyBagErrorLog
 	instanceVariableNames: 'errors guid'
@@ -20,15 +20,15 @@ Instance Variables:
 AddError: pszPropName pExcepInfo: pExcepInfo 
 	"Implement the IErrorLog::Add() method."
 
-	| propLog propName |
-	propName := pszPropName asString.
-	propLog := errors at: propName ifAbsentPut: [OrderedCollection new].
+	| propLog |
+	propLog := errors at: pszPropName ifAbsentPut: [OrderedCollection new].
 	propLog addLast: pExcepInfo copy.
 	Notification signal: ('Error ''<1s>: <2s>'' for property <3p>' 
 				expandMacrosWith: pExcepInfo source
 				with: pExcepInfo description
-				with: propName).
-	^S_OK!
+				with: pszPropName).
+	^S_OK
+!
 
 guid
 	"Private - Answer the value of the receiver's ''guid'' instance variable."

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GUISessionManager subclass: #DevelopmentSessionManager
 	instanceVariableNames: 'imageStamp installationDirectory backupOnImageSave productDetails showSplashAtStartup'
@@ -274,7 +274,7 @@ logError: anException
 			^self].
 	
 	[| f |
-	f := FileStream write: self errorLogName mode: #append.
+	f := FileStream write: self errorLogName mode: #append type: #utf8.
 	f
 		print: TimeStamp current;
 		nextPutAll: ': Unhandled exception - '.
@@ -368,6 +368,7 @@ open: filename
 		at: 'PAX' put: #openPackage:;
 		at: 'CLS' put: #openWorkspace:;
 		at: 'ST' put: #openWorkspace:;
+		at: 'XML' put: #openXmlFile:;
 		yourself) at: ext ifAbsent: [
 			^MessageBox notify: 'Unable to open ', filename ].
 	self perform: openMsg with: filename 
@@ -395,6 +396,11 @@ openWorkspace: filename
 	"Private - Opens a file identified by the <readableString> filename as a workspace file"
 
 	Smalltalk developmentSystem workspaceShellClass filename: filename!
+
+openXmlFile: aString
+	"Private - Opens a file identified by the <readableString> argument an XML file"
+
+	Smalltalk developmentSystem dropXmlFile: aString!
 
 parseCmdLineFlags
 	super parseCmdLineFlags.
@@ -777,6 +783,7 @@ versionString
 !DevelopmentSessionManager categoriesFor: #openPackage:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #openSources!operations-source files!private! !
 !DevelopmentSessionManager categoriesFor: #openWorkspace:!operations-startup!private! !
+!DevelopmentSessionManager categoriesFor: #openXmlFile:!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
 !DevelopmentSessionManager categoriesFor: #patchLevel!patching!public! !
 !DevelopmentSessionManager categoriesFor: #patchLevel:!patching!private! !

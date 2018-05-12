@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SessionManager subclass: #ConsoleSessionManager
 	instanceVariableNames: ''
@@ -28,13 +28,6 @@ basicTertiaryStartup
 	"Perform fundamental tertiary system startup operations."
 
 	self embeddedStartup!
-
-freeConsole
-	"Private - Close (actually detach from) the console for this session.
-	In the case of a console app, we didn't allocate the console, so we don't
-	free it (even though to do so would be harmless)."
-
-	self assert: [consoleHandler isNil]!
 
 isEmbedded
 	"Answer whether the session is running, or should be started, in 'embedded' 
@@ -112,7 +105,6 @@ unhandledException: anException
 	^anException! !
 !ConsoleSessionManager categoriesFor: #allocConsole!operations!private! !
 !ConsoleSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!ConsoleSessionManager categoriesFor: #freeConsole!operations!private! !
 !ConsoleSessionManager categoriesFor: #isEmbedded!public!testing! !
 !ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
 !ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !

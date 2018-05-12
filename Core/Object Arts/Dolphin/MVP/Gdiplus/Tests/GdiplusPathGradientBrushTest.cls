@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusPathGradientBrushTest
 	instanceVariableNames: ''
@@ -44,17 +44,16 @@ setSamplePathEmpty
 testBlendColors
 	| colors positions |
 	self setSampleEllipsePath.
-	colors := Array 
+	colors := Array
 				with: ARGB red
 				with: ARGB green
 				with: ARGB blue
 				with: ARGB magenta.
 	positions := #(0 1.0e-001 0.5 1).
 	model blendColors: colors positions: positions.
-	self assert: model blendColorsCount = colors size.
-	self assert: (model blendColors at: 1) = colors.
-	(model blendColors at: 2) with: positions
-		do: [:a :b | self assert: (self compare: a to: b)]!
+	self assert: model blendColorsCount equals: colors size.
+	self assert: (model blendColors at: 1) equals: colors.
+	(model blendColors at: 2) with: positions do: [:a :b | self assert: (self compare: a to: b)]!
 
 testBlendFactors
 	| factors positions |
@@ -62,27 +61,25 @@ testBlendFactors
 	factors := #(0 0.3 0.9 1).
 	positions := #(0 1.0e-001 0.5 1).
 	model blendFactors: factors positions: positions.
-	self assert: model blendFactorsCount = factors size.
-	(model blendFactors at: 1) with: factors
-		do: [:a :b | self assert: (self compare: a to: b)].
-	(model blendFactors at: 2) with: positions
-		do: [:a :b | self assert: (self compare: a to: b)]!
+	self assert: model blendFactorsCount equals: factors size.
+	(model blendFactors at: 1) with: factors do: [:a :b | self assert: (self compare: a to: b)].
+	(model blendFactors at: 2) with: positions do: [:a :b | self assert: (self compare: a to: b)]!
 
 testBounds
 	self setSampleEllipsePath.
-	self assert: model bounds = (Point zero extent: 200 @ 100)!
+	self assert: model bounds equals: (Point zero extent: 200 @ 100)!
 
 testCenterColor
 	self setSampleEllipsePath.
 	model centerColor: ARGB red.
-	self assert: model centerColor = ARGB red!
+	self assert: model centerColor equals: ARGB red!
 
 testCenterPoint
 	| point |
 	point := 100 @ 50.
 	self setSampleEllipsePath.
 	model centerPoint: point.
-	self assert: model centerPoint = point!
+	self assert: model centerPoint equals: point!
 
 testClone
 	"force realize"
@@ -91,8 +88,8 @@ testClone
 	self setSampleEllipsePath.
 	model handle.
 	clone := model clone.
-	self assert: model initializer == clone initializer.
-	self assert: clone basicHandle notNil!
+	self assert: model initializer identicalTo: clone initializer.
+	self denyIsNil: clone basicHandle!
 
 testConstructors
 	self setSample2Points.
@@ -113,7 +110,7 @@ testConstructors
 testFocusScales
 	self setSampleEllipsePath.
 	model focusScales: 0.2 @ 0.6.
-	self assert: model focusScales = model focusScales!
+	self assert: model focusScales equals: model focusScales!
 
 testIsGammaCorrected
 	self setSampleEllipsePath.
@@ -132,13 +129,13 @@ testIsPersistent
 
 testPointCount
 	self setSample2Points.
-	self assert: model pointCount = 2.
+	self assert: model pointCount equals: 2.
 	self setSample3Points.
-	self assert: model pointCount = 3.
+	self assert: model pointCount equals: 3.
 	self setSample3PointsPath.
-	self assert: model pointCount = 3.
+	self assert: model pointCount equals: 3.
 	self setSampleEllipsePath.
-	self assert: model pointCount = 13!
+	self assert: model pointCount equals: 13!
 
 testScaleTransform
 	self setSampleEllipsePath.
@@ -152,28 +149,28 @@ testSurroundColors
 	self assert: (model surroundColors allSatisfy: [:e | e = ARGB green]).
 	self setSample3Points.
 	model surroundColors: self rgb.
-	self assert: model surroundColors = self rgb!
+	self assert: model surroundColors equals: self rgb!
 
 testTransform
 	self setSampleEllipsePath.
-	self assert: model transform asArray = #(1 0 0 1 0 0).
+	self assert: model transform asArray equals: #(1 0 0 1 0 0).
 	model transform: (GdiplusMatrix fromArray: #(0.5 2 1.2 7 1 0.2)).
 	model transform asArray with: #(0.5 2 1.2 7 1 0.2)
 		do: [:a :b | self assert: (self compare: a to: b)].
 	model resetTransform.
-	self assert: model transform asArray = #(1 0 0 1 0 0)!
+	self assert: model transform asArray equals: #(1 0 0 1 0 0)!
 
 testTranslateTransform
 	self setSampleEllipsePath.
 	model translateTransform: 100 @ 50.
-	self assert: model transform asArray = #(1 0 0 1 100 50)!
+	self assert: model transform asArray equals: #(1 0 0 1 100 50)!
 
 testWrapMode
 	self setSampleEllipsePath.
 	model class enumsWrapMode do: 
-			[:e | 
+			[:e |
 			model wrapMode: e value.
-			self assert: model wrapMode = e value]! !
+			self assert: model wrapMode equals: e value]! !
 !GdiplusPathGradientBrushTest categoriesFor: #rgb!accessing!public! !
 !GdiplusPathGradientBrushTest categoriesFor: #setSample2Points!accessing!public! !
 !GdiplusPathGradientBrushTest categoriesFor: #setSample3Points!accessing!public! !

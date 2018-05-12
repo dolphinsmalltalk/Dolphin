@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SequenceableCollection subclass: #ArrayedCollection
 	instanceVariableNames: ''
@@ -45,6 +45,14 @@ at: index
 	<primitive: 60>
 	^self errorAt: index!
 
+at: index ifAbsent: exceptionBlock
+	"Answer an <Object> which is the element of the receiver 
+	at the specified index. If the index is out of bounds answer
+	the result of evaluating the <niladicValuable> exceptionBlock."
+
+	<primitive: 60>
+	^exceptionBlock value!
+
 at: index put: newElement
 	"Replace the element of the receiver at the specified <integer> index with 
 	the <Object> argument, newElement. If the index is out of bounds, raise 
@@ -56,6 +64,11 @@ at: index put: newElement
 
 	<primitive: 61>
 	^self errorAt: index put: newElement!
+
+decodeNextFrom: aReadStream
+	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
+
+	^aReadStream basicNextAvailable!
 
 do: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the elements of the 
@@ -84,12 +97,15 @@ identityIncludes: anObject
 		from: 1
 		to: self size) ~~ 0!
 
-includes: target
-	"Answer whether the argument, target, is one of the elements of the receiver.
-	Implementation Note: Override superclass to provide a more efficient implementation."
+includes: anObject
+	"Answer whether the argument, anObject, is one of the elements of the receiver."
 
-	1 to: self size do: [:i | target = (self at: i) ifTrue: [^true]].
-	^false!
+	"Implementation Note: Override superclass only to provide a more efficient implementation."
+
+	^(self
+		nextIndexOf: anObject
+		from: 1
+		to: self size) ~~ 0!
 
 inject: anObject into: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each element in the
@@ -108,13 +124,23 @@ inject: anObject into: aDyadicValuable
 	1 to: self size do: [:i | nextValue := aDyadicValuable value: nextValue value: (self at: i)].
 	^nextValue!
 
+lookup: keyInteger
+	"Answer the value named by the <Integer> argument, keyInteger, or nil if there is no such key in the receiver.
+	Clearly if the receiver can contain nil values then it will not be possible to distinguish between the absence
+	of the key and the key being associated with a nil value. However, this method expresses the
+	very common pattern of passing an empty block as absent handler to #at:ifAbsent:"
+
+	<primitive: 60>
+	^nil!
+
 nextIdentityIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver's indexable
 	variables between startIndex and stopIndex inclusive. If there are no such occurrences, answer 0.
 	Override the inherited implementation to make use of the primitive"
 
 	<primitive: 59>
-	^super nextIdentityIndexOf: anElement from: start to: stop!
+	start to: stop do: [:i | (self at: i) == anElement ifTrue: [^i]].
+	^0!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 
@@ -167,12 +193,15 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
+!ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
+!ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !ArrayedCollection categoriesFor: #findFirst:!public!searching! !
 !ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
 !ArrayedCollection categoriesFor: #includes:!public!searching! !
 !ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
+!ArrayedCollection categoriesFor: #lookup:!accessing!public! !
 !ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !

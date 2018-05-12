@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RenameTemporaryTest
 	instanceVariableNames: ''
@@ -66,17 +66,15 @@ testModelBadName
 
 testRenameTemporary
 	| refactoring |
-	refactoring := RenameTemporaryRefactoring 
-				renameTemporaryFrom: (self convertInterval: (15 to: 19)
-						for: (LintRuleTest sourceCodeAt: #openEditor))
+	refactoring := RenameTemporaryRefactoring
+				renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
 				to: 'asdf'
 				in: LintRuleTest
 				selector: #openEditor.
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: #LintRuleTest) 
-				parseTreeFor: #openEditor) = (RBParser 
-							parseMethod: 'openEditor
+	self assert: ((refactoring model classNamed: #LintRuleTest) parseTreeFor: #openEditor)
+		equals: (RBParser
+				parseMethod: 'openEditor
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].

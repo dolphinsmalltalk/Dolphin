@@ -1,12 +1,12 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkScanner
-	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType classificationTable comments line errorHandler environment'
+	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'
 	classVariableNames: 'ClassificationTable EscapeChars PatternVariableCharacter'
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 SmalltalkScanner guid: (GUID fromString: '{f76f2335-9125-488e-a570-5a759a6e67b7}')!
-SmalltalkScanner addClassConstant: 'ClassificationTable' value: #(nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #binary nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil)!
+SmalltalkScanner addClassConstant: 'ClassificationTable' value: #(#separator nil nil nil nil nil nil nil nil #separator #separator #separator #separator #separator nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #separator #binary nil nil nil #binary #binary nil #special #special #binary #binary #binary #binary #special #binary #digit #digit #digit #digit #digit #digit #digit #digit #digit #digit #special #special #binary #binary #binary #binary #binary #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #special #alphabetic nil #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #alphabetic #special #binary #special #binary nil)!
 SmalltalkScanner comment: 'SmalltalkScanner is the Smalltalk lexical analyzer. It converts source text to a stream of <StToken>''s.
 
 Note that SmalltalkScanner is based on the RBScanner class written by John Brant and Don Roberts for their Refactoring Browser. It has been extended for Dolphin to incorporate additional error reporting capabilities (such as the line number on which the error occurred), and the ability to parse Dolphin''s FFI call syntax.
@@ -40,14 +40,10 @@ addComment: anInterval
 atEnd
 	^characterType == #eof!
 
-classify: aCharacter 
-	| index |
+classify: aCharacter
 	"May be asked to classify nil if peek at end of stream"
-	aCharacter isNil ifTrue: [^#separator].
-	(index := aCharacter asInteger) == 0 ifTrue: [^#separator].
-	"Currently Dolphin supports only single-byte characters, so this test is redundant"
-	"index > 255 ifTrue: [^nil]."
-	^classificationTable at: index!
+
+	^aCharacter ifNil: [#eof] ifNotNil: [ClassificationTable lookup: aCharacter codePoint + 1]!
 
 constantExpected
 	self lexicalError: LErrExpectConst.
@@ -98,9 +94,14 @@ identifierTokenClass
 
 illegalCharacter
 	| start badChar |
-	start := tokenStart.
-	self lexicalError: LErrBadChar range: (start to: start).
 	badChar := currentCharacter.
+	start := tokenStart - (buffer collection encodedSizeOf: badChar) + 1.
+	errorHandler
+		reportError: LErrBadChar
+		at: self errorPosition
+		line: self line
+		range: (start to: start)
+		extras: {badChar}.
 	"Skip over the bad character"
 	self step.
 	^StIllegalCharacterToken
@@ -222,9 +223,8 @@ numberTokenClass
 	^StNumberLiteralToken!
 
 on: aStream
-	buffer := WriteStream on: (String new: 60).
+	buffer := WriteStream on: (Utf8String new: 60).
 	stream := aStream.
-	classificationTable := ClassificationTable.
 	errorHandler := self.
 	line := 1.
 	environment := Smalltalk!
@@ -404,7 +404,7 @@ scanLiteralArrayToken
 	token := StLiteralArrayToken
 				start: tokenStart
 				comments: nil
-				value: (String with: $# with: currentCharacter).
+				value: (AnsiString with: $# with: currentCharacter).
 	self step.
 	^token!
 
@@ -437,13 +437,13 @@ scanLiteralCharacter
 												ifNotNil: 
 													[:codePoint |
 													stop := self previousStepPosition.
-													"Maximum Unicode code point is U+10FFFF"
-													codePoint > 16r10FFFF
-														ifTrue: 
+													"Maximum Unicode code point is U+10FFFF, but last valid char is U+10FFFD"
+													(Character isValidCodePoint: codePoint)
+														ifTrue: [Character value: codePoint]
+														ifFalse: 
 															["Code point out of range"
 															self lexicalError: LErrBadCodePoint range: (tokenStart to: stop).
-															$\0]
-														ifFalse: [Character value: codePoint]]]]
+															$\0]]]]
 						ifNotNil: 
 							[:char |
 							"One of the special chars such as $\t for tab"
@@ -476,7 +476,7 @@ scanName
 			self step]!
 
 scanNameSpaceName
-	(stream atEnd or: [(self classify: stream peek) ~~ #alphabetic]) ifTrue: [^nil].
+	(self classify: stream peek) ~~ #alphabetic ifTrue: [^nil].
 	buffer nextPut: $..
 	self step.
 	self scanName.
@@ -711,15 +711,12 @@ scanToken
 
 step
 	| index |
-	(currentCharacter := stream nextAvailable) isNil 
+	(currentCharacter := stream nextAvailable) isNil
 		ifTrue: 
 			[characterType := #eof.
 			^nil].
-	characterType := (index := currentCharacter asInteger) == 0 
-				ifTrue: [#separator]
-				ifFalse: 
-					[index == 10 ifTrue: [line := line + 1].
-					classificationTable at: index].
+	(index := currentCharacter code) == 10 ifTrue: [line := line + 1].
+	characterType := ClassificationTable lookup: index + 1.
 	^currentCharacter!
 
 stepBackTo: anInteger
@@ -839,15 +836,16 @@ initialize
 
 initializeClassificationTable
 	| classificationTable |
-	classificationTable := Array new: 255.
+	classificationTable := Array new: 128.
 	"#2130 ANSI Smalltalk allows only the English alphabet and underscore as letters in identifiers"
 	'_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-		do: [:alpha | classificationTable at: alpha asInteger put: #alphabetic].
-	'01234567890' do: [:digit | classificationTable at: digit asInteger put: #digit].
-	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary asInteger put: #binary].
-	'().:;[]{}^' do: [:special | classificationTable at: special asInteger put: #special].
+		do: [:alpha | classificationTable at: alpha codePoint + 1 put: #alphabetic].
+	'01234567890' do: [:digit | classificationTable at: digit codePoint + 1 put: #digit].
+	'!!%&*+,-/<=>?@\~|' do: [:binary | classificationTable at: binary codePoint + 1 put: #binary].
+	'().:;[]{}^' do: [:special | classificationTable at: special codePoint + 1 put: #special].
 	(Character byteCharacterSet select: [:each | each isSeparator])
-		do: [:separator | classificationTable at: separator asInteger put: #separator].
+		do: [:separator | classificationTable at: separator codePoint + 1 put: #separator].
+	classificationTable at: $\0 codePoint + 1 put: #separator.
 	classificationTable isImmutable: true.
 	self addClassConstant: 'ClassificationTable' value: classificationTable!
 
@@ -865,7 +863,7 @@ isVariable: aString
 	| scanner token |
 	aString isString ifFalse: [^false].
 	aString isEmpty ifTrue: [^false].
-	(ClassificationTable at: aString first asInteger) == #alphabetic ifFalse: [^false].
+	(ClassificationTable lookup: aString first codePoint + 1) == #alphabetic ifFalse: [^false].
 	scanner := self basicNew.
 	scanner on: (ReadStream on: aString asString).
 	scanner step.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #ScrollingDecoratorTest
 	instanceVariableNames: ''
@@ -35,7 +35,7 @@ testResizeLargeAndSmall
 	presenter layout.
 	presenter extent: origExtent + 20.
 	presenter layout.
-	self assert: presenter subViews first extent = origExtent!
+	self assert: presenter subViews first extent equals: origExtent!
 
 testResizeToNothing
 	"Will give an 'Index out of bounds' error in D5.1.3"
@@ -47,7 +47,7 @@ testSubViewResizeLargerThanParent
 
 	presenter subViews first extent: 500 @ 500.
 	presenter layout.
-	self assert: presenter subViews first extent = (500 @ 500)!
+	self assert: presenter subViews first extent equals: 500 @ 500!
 
 testSubViewResizeSmallerThanParent
 	"#1511"
@@ -56,7 +56,7 @@ testSubViewResizeSmallerThanParent
 
 	presenter subViews first extent: 50 @ 50.
 	presenter layout.
-	self assert: presenter subViews first extent = (50 @ 50)! !
+	self assert: presenter subViews first extent equals: 50 @ 50! !
 !ScrollingDecoratorTest categoriesFor: #classToTest!helpers!private! !
 !ScrollingDecoratorTest categoriesFor: #initializePresenter!public!Running! !
 !ScrollingDecoratorTest categoriesFor: #testMultipleSubViews!public!unit tests! !

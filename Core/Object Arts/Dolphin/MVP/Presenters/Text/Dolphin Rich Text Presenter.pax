@@ -1,8 +1,8 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Rich Text Presenter'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk RichTextEdit View.
-Copyright (c) Object Arts Ltd. 1997-2006. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 
 A RichTextPresenter is a <TextPresenter> specialised for the display of RTF. The default view is a wrapper around the satndard Windows RichEdit control (RichTextEdit).'.
 
@@ -10,10 +10,11 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
-	add: #CHARFORMAT;
+	add: #CHARFORMAT2W;
 	add: #EDITSTREAM;
 	add: #ENLINK;
 	add: #FORMATRANGE;
+	add: #GETTEXTEX;
 	add: #PARAFORMAT;
 	add: #RichText;
 	add: #RichTextEdit;
@@ -21,6 +22,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #Clipboard -> #getRichText;
 	add: #Clipboard -> #getRichTextIfNone:;
 	add: #String -> #asRichText;
 	add: #TextEdit -> #richText;
@@ -54,10 +56,10 @@ package!
 
 Object subclass: #RichText
 	instanceVariableNames: 'rtf'
-	classVariableNames: 'Converter'
+	classVariableNames: 'Converter ConverterMutex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #CHARFORMAT
+Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
@@ -68,6 +70,11 @@ Win32Structure subclass: #EDITSTREAM
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #FORMATRANGE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #GETTEXTEX
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -89,7 +96,7 @@ TextPresenter subclass: #RichTextPresenter
 	classInstanceVariableNames: ''!
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'AutoUrlDetectionMask ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
+	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
 
@@ -100,12 +107,20 @@ MultilineTextEdit subclass: #RichTextEdit
 
 !Clipboard methodsFor!
 
+getRichText
+        "Answer a <RichText> containing the the Rich Text contents 
+	of the clipboard. If no rich text is currently available, raise 
+	an exception."
+
+	^self getRichTextIfNone: [self errorFormatNotAvailable: #RichText]!
+
 getRichTextIfNone: exceptionHandler
-        "Answer a <readableString> containing the the Rich Text contents 
+	"Answer a <readableString> containing the the Rich Text contents 
 	of the clipboard. If no rich text is currently available, the answers the
 	result of evaluating the <niladicValuable> exceptionHandler."
 
-	^RichText fromRtf: (self getTextFormat: self rtfFormatId ifNone: exceptionHandler)! !
+	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !
+!Clipboard categoriesFor: #getRichText!accessing!public! !
 !Clipboard categoriesFor: #getRichTextIfNone:!accessing!public! !
 
 !String methodsFor!

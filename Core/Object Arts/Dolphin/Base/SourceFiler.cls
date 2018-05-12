@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SourceFiler
 	instanceVariableNames: 'stream evaluationContext flags'
@@ -19,7 +19,8 @@ atEnd
 close
 	"Close the source stream"
 
-	stream close!
+	stream close.
+	stream := nil!
 
 cr
 	"Emit a line-delimiter to the source stream"

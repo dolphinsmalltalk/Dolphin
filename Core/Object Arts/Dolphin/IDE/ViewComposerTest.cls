@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ViewComposerTest
 	instanceVariableNames: 'vc testClass'
@@ -69,7 +69,7 @@ testBasicEdit
 	self assert: vc caption equals: 'View Composer'.
 	"Test open something reasonably complex"
 	vc openOn: (ResourceIdentifier class: MethodBrowserShell).
-	self assert: vc composingView class sameAs: ShellView.
+	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
 	"Test saving"
 	sampleResourceIdentifier := ResourceIdentifier class: testClass.
@@ -84,7 +84,7 @@ testBasicEdit
 
 	"Test we can reload what we saved"
 	vc openOn: sampleResourceIdentifier.
-	self assert: vc composingView class sameAs: ShellView.
+	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
 	vc viewCloseNoPrompt!
 
@@ -109,30 +109,30 @@ testCutCopyPaste
 	vc selection: shell.
 	vc pasteClipboard.
 	"Check new button exists in shell"
-	self assert: vc primarySelection class sameAs: PushButton.
-	self assert: vc primarySelection parentView sameAs: shell.
-	self deny: vc primarySelection sameAs: button.
+	self assert: vc primarySelection class identicalTo: PushButton.
+	self assert: vc primarySelection parentView identicalTo: shell.
+	self deny: vc primarySelection identicalTo: button.
 	"Check old button still exists"
 	self assert: button isOpen.
-	self assert: button parentView sameAs: container.
+	self assert: button parentView identicalTo: container.
 	"Now try cut"
 	vc selection: button.
 	vc cutSelection.
 	vc selection: shell.
 	vc pasteClipboard.
 	"Check new button exists in shell"
-	self assert: vc primarySelection class sameAs: PushButton.
-	self assert: vc primarySelection parentView sameAs: shell.
-	self deny: vc primarySelection sameAs: button.
+	self assert: vc primarySelection class identicalTo: PushButton.
+	self assert: vc primarySelection parentView identicalTo: shell.
+	self deny: vc primarySelection identicalTo: button.
 	"Check old button has gone"
 	self assert: button isOpen not.
-	self deny: button parentView sameAs: container!
+	self deny: button parentView identicalTo: container!
 
 testDragResourceOverEmptyArena
 	| session |
 	vc onDragOverArena: (session := self dragResourceFor: Shell).
-	self assert: session operation sameAs: #copy.
-	self assert: session suggestedTarget sameAs: vc arena!
+	self assert: session operation identicalTo: #copy.
+	self assert: session suggestedTarget identicalTo: vc arena!
 
 testDropResourceLinkOverShell
 	"Drop a Checkbox link onto a shell"
@@ -215,8 +215,8 @@ testPasteToArena
 	"Paste to empty view composer"
 	vc pasteClipboard.
 	"Check new button exists"
-	self assert: vc primarySelection class sameAs: PushButton.
-	self assert: vc primarySelection parentView sameAs: View desktop.
+	self assert: vc primarySelection class identicalTo: PushButton.
+	self assert: vc primarySelection parentView identicalTo: View desktop.
 	vc viewCloseNoPrompt!
 
 testWidenSelection
@@ -225,15 +225,15 @@ testWidenSelection
 	chb := vc composingView.
 	classTree := chb viewNamed: 'classes'.
 	vc selection: classTree.
-	self assert: vc primarySelection sameAs: classTree.
+	self assert: vc primarySelection identicalTo: classTree.
 	vc widenSelection.
-	self assert: vc primarySelection sameAs: classTree parentView.
+	self assert: vc primarySelection identicalTo: classTree parentView.
 	vc widenSelection.
-	self assert: vc primarySelection sameAs: classTree parentView parentView.
+	self assert: vc primarySelection identicalTo: classTree parentView parentView.
 	vc widenSelection.
-	self assert: vc primarySelection sameAs: chb.
+	self assert: vc primarySelection identicalTo: chb.
 	vc widenSelection.
-	self assert: vc primarySelection sameAs: chb!
+	self assert: vc primarySelection identicalTo: chb!
 
 testZOrderPreservedByMutate
 	| shell |

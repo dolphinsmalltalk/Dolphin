@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MethodRefactoring subclass: #ChangeMethodNameRefactoring
 	instanceVariableNames: 'newSelector oldSelector permutation implementors'

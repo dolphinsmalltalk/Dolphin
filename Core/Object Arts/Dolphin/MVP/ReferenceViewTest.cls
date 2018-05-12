@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PresenterTest subclass: #ReferenceViewTest
 	instanceVariableNames: ''
@@ -23,11 +23,11 @@ testRecreate
 	"Test that recreate does not create an orphaned child (#1667), and that it preserves
 	settings that were not present originally."
 
-	self assert: presenter subViews size = 1.
+	self assert: presenter subViews size equals: 1.
 	self deny: presenter referee hasBorder.
 	presenter subViews first hasBorder: true.
 	presenter recreate.
-	self assert: presenter subViews size = 1.
+	self assert: presenter subViews size equals: 1.
 	self assert: presenter referee hasBorder! !
 !ReferenceViewTest categoriesFor: #classToTest!helpers!private! !
 !ReferenceViewTest categoriesFor: #initializePresenter!public!Running! !

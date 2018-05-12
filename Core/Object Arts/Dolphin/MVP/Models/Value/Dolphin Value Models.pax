@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Value Models'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk MVP framework Value Models.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #SemaphoreTest
 	instanceVariableNames: ''
@@ -13,7 +13,8 @@ SemaphoreTest comment: ''!
 testCriticalEarlyTermination
 	| s p |
 	s := Semaphore forMutualExclusion.
-	p := [s critical: [self assert: false	"should never be reached"]] forkAt: Processor userBackgroundPriority.
+	p := [s critical: [self assert: false	"should never be reached"]]
+				forkAt: Processor userBackgroundPriority.
 	"Take hold of the Semaphore, and then sleep so that the background proc can run and
 	immediately block on that Semaphore"
 	s critical: [(Delay forMilliseconds: 1) wait].
@@ -22,6 +23,6 @@ testCriticalEarlyTermination
 	"Allow the process to unwind itself and signal the Semaphore"
 	Processor sleep: 10.
 	"The Semaphore should have been released."
-	self assert: s excessSignals == 1! !
+	self assert: s excessSignals identicalTo: 1! !
 !SemaphoreTest categoriesFor: #testCriticalEarlyTermination!public!unit tests! !
 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusHatchBrushTest
 	instanceVariableNames: ''
@@ -25,8 +25,8 @@ testClone
 	| clone |
 	model handle.
 	clone := model clone.
-	self assert: model initializer == clone initializer.
-	self assert: clone basicHandle notNil!
+	self assert: model initializer identicalTo: clone initializer.
+	self denyIsNil: clone basicHandle!
 
 testConstructors
 	self setSampleDiagCross.
@@ -38,8 +38,8 @@ testFillingCrossDiagonal
 	self setSampleDiagCross.
 	bitmap := GdiplusBitmap extent: 200 @ 150.
 	bitmap graphics fillRectangle: (Point zero extent: bitmap extent) brush: model.
-	self assert: (bitmap pixelAt: 0 @ 0) = (bitmap pixelAt: 1 @ 1).
-	self assert: (bitmap pixelAt: 0 @ 0) ~= (bitmap pixelAt: 1 @ 0)! !
+	self assert: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 1).
+	self deny: (bitmap pixelAt: 0 @ 0) equals: (bitmap pixelAt: 1 @ 0)! !
 !GdiplusHatchBrushTest categoriesFor: #setSampleDiagCross!public! !
 !GdiplusHatchBrushTest categoriesFor: #setUp!public! !
 !GdiplusHatchBrushTest categoriesFor: #testClone!public!unit tests! !

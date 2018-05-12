@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #WSADATA
 	instanceVariableNames: ''
@@ -44,14 +44,14 @@ lpVendorInfo
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #lpVendorInfo)) asExternalAddress!
 
 szDescription
-	"Answer the <String> value of the receiver's 'szDescription' field."
+	"Answer the <AnsiString> value of the receiver's 'szDescription' field."
 
-	^String fromAddress: bytes yourAddress + ##(self offsetOf: #szDescription)!
+	^AnsiString fromAddress: bytes yourAddress + ##(self offsetOf: #szDescription)!
 
 szSystemStatus
-	"Answer the <String> value of the receiver's 'szSystemStatus' field."
+	"Answer the <AnsiString> value of the receiver's 'szSystemStatus' field."
 
-	^String fromAddress: bytes yourAddress + ##(self offsetOf: #szSystemStatus)!
+	^AnsiString fromAddress: bytes yourAddress + ##(self offsetOf: #szSystemStatus)!
 
 wHighVersion
 	"Answer the <Integer> value of the receiver's 'wHighVersion' field."
@@ -92,8 +92,8 @@ defineFields
 	self
 		defineField: #wVersion type: WORDField new beReadOnly offset: 0;
 		defineField: #wHighVersion type: WORDField new beReadOnly offset: 2;
-		defineField: #szDescription type: (StringField type: String length: 257) beReadOnly offset: 4;
-		defineField: #szSystemStatus type: (StringField type: String length: 129) beReadOnly offset: 261;
+		defineField: #szDescription type: (StringField type: AnsiString length: 257) beReadOnly offset: 4;
+		defineField: #szSystemStatus type: (StringField type: AnsiString length: 129) beReadOnly offset: 261;
 		defineField: #iMaxSockets type: WORDField new beReadOnly offset: 390;
 		defineField: #iMaxUdpDg type: WORDField new beReadOnly offset: 392;
 		defineField: #lpVendorInfo type: LPVOIDField new beReadOnly offset: 396.

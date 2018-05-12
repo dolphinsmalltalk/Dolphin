@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Base Tests'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -9,6 +9,7 @@ package classNames
 	add: #AbstractFileStreamTest;
 	add: #AbstractStringTest;
 	add: #AlwaysSearchPolicyTest;
+	add: #AnsiStringTest;
 	add: #ArrayedCollectionTest;
 	add: #ArrayTest;
 	add: #BagTest;
@@ -106,7 +107,6 @@ package classNames
 	add: #StdioFileStreamTest;
 	add: #STLFilerTest;
 	add: #StreamTest;
-	add: #StringTest;
 	add: #StructureArrayTest;
 	add: #SWORDArrayTest;
 	add: #SymbolTest;
@@ -513,12 +513,12 @@ ArrayedCollectionTest subclass: #RunArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #MultiByteStringTest
+AbstractStringTest subclass: #AnsiStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-AbstractStringTest subclass: #StringTest
+AbstractStringTest subclass: #MultiByteStringTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -689,7 +689,7 @@ PositionableStreamTest subclass: #WriteStreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReadWriteStreamTest subclass: #AbstractFileStreamTest
-	instanceVariableNames: 'tempFileName subject'
+	instanceVariableNames: 'tempFileName filestream'
 	classVariableNames: 'RandomData1 RandomData2'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

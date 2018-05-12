@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #File
 	instanceVariableNames: 'handle spec flags shareFlags intBuffer'
@@ -191,7 +191,6 @@ open
 	functionality."
 
 	| fh |
-	
 	[fh := KernelLibrary default 
 				createFile: spec
 				dwDesiredAccess: self accessFlags
@@ -344,17 +343,6 @@ readByte
 
 !
 
-readCharacter
-	"Answer the next Character from the file or nil if the receiver
-	is positioned past the current EOF.
-	Signal a FileException if an error occurs."
-
-	| string |
-	string := String new: 1.
-	^(self read: string count: 1) == 0
-		ifTrue: [nil]
-		ifFalse: [string at: 1]!
-
 readWriteStream
 	"Answer a FileStream on the receiver initially configured to read/write text."
 
@@ -436,6 +424,34 @@ size: anInteger
 	self position: anInteger.
 	(KernelLibrary default setEndOfFile: handle) ifFalse: [self signalOsError: false]!
 
+sniffEncoding
+	| ituResult buf count |
+	buf := ByteArray newFixed: 1024.
+	count := self
+				reset;
+				read: buf.
+	ituResult := DWORDBytes new.
+	^(AdvApiLibrary default
+		isTextUnicode: buf
+		iSize: count
+		lpiResult: ituResult)
+			ifTrue: [String.EncodingUtf16]
+			ifFalse: 
+				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
+				(buf beginsWith: Utf8String.Bom)
+					ifTrue: 
+						[self position: 3.
+						String.EncodingUtf8]
+					ifFalse: 
+						[(buf beginsWith: Utf16String.Bom)
+							ifTrue: 
+								[self position: 2.
+								String.EncodingUtf16]
+							ifFalse: 
+								[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
+								self reset.
+								String.EncodingAnsi]]]!
+
 spec: aString
 	"Private - Set the file path to the <readableString> argument."
 
@@ -515,7 +531,6 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #read:count:!operations!public! !
 !File categoriesFor: #read:startingAt:count:!operations!public! !
 !File categoriesFor: #readByte!operations!public! !
-!File categoriesFor: #readCharacter!operations!public! !
 !File categoriesFor: #readWriteStream!public!streaming! !
 !File categoriesFor: #reset!positioning!public! !
 !File categoriesFor: #securityAttributes!accessing!public! !
@@ -526,6 +541,7 @@ writeByte: anIntegerOrCharacter
 !File categoriesFor: #signalOsError:!exceptions!private! !
 !File categoriesFor: #size!accessing!public! !
 !File categoriesFor: #size:!operations!public! !
+!File categoriesFor: #sniffEncoding!helpers!private! !
 !File categoriesFor: #spec:!accessing!private! !
 !File categoriesFor: #write:!operations!public! !
 !File categoriesFor: #write:count:!operations!public! !
@@ -548,17 +564,23 @@ appendPathDelimiter: aString
 attributes: aFileNameString
 	^KernelLibrary default getFileAttributes: aFileNameString!
 
-commonPrefixOf: path1 and: path2
+commonPrefixOf: pathString1 and: pathString2
 	"Answer the <readableString> common prefix shared between the two paths.
 	This will be empty if the paths share no common prefix."
 
-	| prefix len |
-	prefix := File pathBuffer.
-	len := ShlwapiLibrary default 
-			pathCommonPrefix: path1 
-			pszFile2: path2
-			achPath: prefix.
-	^prefix first: len!
+	| prefix len path1 path2 |
+	path1 := pathString1 asUtf16String.
+	path2 := pathString2 asUtf16String.
+	len := ShlwapiLibrary default
+				pathCommonPrefix: path1
+				pszFile2: path2
+				achPath: nil.
+	prefix := Utf16String newFixed: len.
+	ShlwapiLibrary default
+		pathCommonPrefix: path1
+		pszFile2: path2
+		achPath: prefix.
+	^prefix!
 
 composePath: aPathString stem: aStemString extension: anExtensionString
 	"Composes a full pathname from its components. The path or extension components 
@@ -571,7 +593,10 @@ composePath: path subPath: subpath
 
 	| fullName |
 	fullName := self pathBuffer.
-	^ShlwapiLibrary default pathCombine: fullName lpszDir: path lpszFile: subpath!
+	^ShlwapiLibrary default
+		pathCombine: fullName
+		lpszDir: path
+		lpszFile: subpath!
 
 composeShortStem: aStemString extension: anExtensionString 
 	"Answer a String which is a file name abbreviated from aStemString and anExtensionString.
@@ -601,7 +626,8 @@ copy: oldFileNameString to: newFileNameString
 	"Copy the file specified by oldFileNameString to newFileNameString.
 	Signal a HostSystemError if the copy fails."
 
-	(KernelLibrary default copyFile: oldFileNameString lpNewFileName: newFileNameString bfailIfExists: false)
+	#todo. "Due to a VM bug, auto-conversion of Strings is not thread-safe in overlapped calls, so convert explicitly."
+	(KernelLibrary default copyFile: oldFileNameString asUtf16String lpNewFileName: newFileNameString asUtf16String bfailIfExists: false)
 		ifFalse: [KernelLibrary default systemError: Processor activeProcess lastError]!
 
 createDirectory: path
@@ -723,32 +749,31 @@ for: aString do: operation
 		in: (File splitPathFrom: aString)
 		do: operation!
 
-for: matchString in: dirString do: operation 
+for: matchString in: dirString do: operation
 	"For each file/directory matching the wildcarded string argument, matchString, 
 	in the directory named, dirString, evaluate the monadic valuable, operation, with 
 	a WIN32_FIND_DATA describing the file/directory as the argument."
 
 	| lib handle findStruct |
 	lib := KernelLibrary default.
-	findStruct := WIN32_FIND_DATA new.
+	findStruct := WIN32_FIND_DATAW new.
 	findStruct directory: dirString.
 	handle := lib findFirstFile: (File composePath: dirString subPath: matchString)
 				lpFindFileData: findStruct.
-	handle = INVALID_HANDLE_VALUE 
+	handle = INVALID_HANDLE_VALUE
 		ifTrue: 
 			[| err |
 			err := lib getLastError.
-			^(err == ERROR_FILE_NOT_FOUND or: [err == ERROR_ACCESS_DENIED]) 
+			^(err == ERROR_FILE_NOT_FOUND or: [err == ERROR_ACCESS_DENIED])
 				ifTrue: [self]
 				ifFalse: [lib systemError: err]].
 	
 	[| error |
 	
 	[operation value: findStruct.
-	lib findNextFile: handle lpFindFileData: findStruct] 
-			whileTrue.
+	lib findNextFile: handle lpFindFileData: findStruct] whileTrue.
 	error := lib getLastError.
-	error = ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]] 
+	error = ERROR_NO_MORE_FILES ifFalse: [^lib systemError: error]]
 			ensure: [lib findClose: handle]!
 
 forAll: matchString in: dirString do: operation
@@ -837,12 +862,24 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath |
-	fullpath := String new: self maxPath.
-	((KernelLibrary default getFullPathName: aPathnameString 
-		nBufferLength: fullpath size lpBuffer: fullpath lpFilePart: nil)==0) ifTrue: [
-			KernelLibrary default systemError].
-	^fullpath trimNulls!
+	| fullpath len path kernel |
+	path := aPathnameString asUtf16String.
+	kernel := KernelLibrary default.
+	(len := kernel
+				getFullPathName: path
+				nBufferLength: 0
+				lpBuffer: nil
+				lpFilePart: nil) == 0
+		ifTrue: [kernel systemError].
+	"Note: Returns the length including the terminating null"
+	fullpath := Utf16String newFixed: len - 1.
+	(kernel
+		getFullPathName: path
+		nBufferLength: len
+		lpBuffer: fullpath
+		lpFilePart: nil) == 0
+		ifTrue: [kernel systemError].
+	^fullpath!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -972,20 +1009,30 @@ makePath: anArray
 
 	| size drive dir fname ext path errno |
 	size := 0.
-	(drive := anArray at: 1)
+	(anArray at: 1)
 		ifNotNil: 
-			["Assume the drive doesn't have the colon and that _makepath_s will add it"
+			[:d |
+			"Assume the drive doesn't have the colon and that _makepath_s will add it"
+			drive := d asUtf8String.
 			size := drive size + 1].
-	(dir := anArray at: 2)
+	(anArray at: 2)
 		ifNotNil: 
-			["Assume the terminating path separator is missing"
+			[:d |
+			"Assume the terminating path separator is missing"
+			dir := d asUtf8String.
 			size := size + dir size + 1].
-	(fname := anArray at: 3) ifNotNil: [size := size + fname size].
-	(ext := anArray at: 4)
+	(anArray at: 3)
 		ifNotNil: 
-			["Assume the dot is missing"
+			[:f |
+			fname := f asUtf8String.
+			size := size + fname size].
+	(anArray at: 4)
+		ifNotNil: 
+			[:e |
+			"Assume the dot is missing"
+			ext := e asUtf8String.
 			size := size + ext size + 1].
-	path := String newFixed: size.
+	path := Utf8String newFixed: size.
 	^(errno := CRTLibrary default
 				_makepath_s: path
 				bufferSize: size + 1
@@ -1051,7 +1098,7 @@ path: aPathnameString extension: anExtensionString
 pathBuffer
 	"Answer a buffer of sufficient size to contain a full path."
 
-	^String new: self maxPath!
+	^Utf16String newFixed: self maxPath!
 
 pathDelimiter
 	"Answers the character that delimits a path (or parts thereof)"
@@ -1094,31 +1141,32 @@ readAllText: aString
 				check: true
 				share: #read.
 	^
-	[| size buffer |
-	size := file size.
-	buffer := String newFixed: size.
+	[| size buffer bufferClass |
+	bufferClass := {AnsiString. Utf8String. Utf16String} at: file sniffEncoding + 1.
+	size := file size - file position.
+	buffer := bufferClass newFixed: size / bufferClass elementSize.
 	file read: buffer count: size.
 	buffer]
 			ensure: [file close]!
 
-relativePathOf: aPathString to: aBasePathString 
+relativePathOf: aPathString to: aBasePathString
 	"Answers the relative path of aPathString relative to aBasePathString.
 	Note that if the last component of aBasePathString is to be considered a directory
 	then there must be a trailing slash, otherwise the last component is ignored (it is
 	treated as if it were a file name)."
 
-	| relPath |
+	| relPath toPath |
 	relPath := self pathBuffer.
-	relPath := (ShlwapiLibrary default 
-		pathRelativePathTo: relPath
-		pszFrom: aBasePathString
-		dwAttrFrom: 0
-		pszTo: aPathString
-		dwAttrTo: 0) 
-			ifTrue: 
-				[relPath trimNulls]
-			ifFalse: [aPathString].
-	^(relPath beginsWith: '.\') ifTrue: [relPath allButFirst: 2] ifFalse: [relPath]!
+	toPath := aPathString asUtf16String.
+	relPath := (ShlwapiLibrary default
+				pathRelativePathTo: relPath
+				pszFrom: aBasePathString
+				dwAttrFrom: 0
+				pszTo: toPath
+				dwAttrTo: 0) ifTrue: [relPath] ifFalse: [toPath].
+	^(relPath beginsWith: '.\')
+		ifTrue: [relPath copyFrom: 3 to: relPath strlen]
+		ifFalse: [relPath trimNulls]!
 
 removeDirectory: aString
 	(KernelLibrary default removeDirectory: aString) 
@@ -1127,28 +1175,30 @@ removeDirectory: aString
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| drive dir fname errno max |
-	max := aString size.
-	(errno := CRTLibrary default
-				_splitpath_s: aString
-				drive: (drive := String new: _MAX_DRIVE)
+	| drive dir fname errno max path crt |
+	path := aString asUtf8String.
+	max := path size.
+	crt := CRTLibrary default.
+	(errno := crt
+				_splitpath_s: path
+				drive: (drive := Utf8String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := String new: max)
+				dir: (dir := Utf8String new: max)
 				dirLen: max + 1
-				fname: (fname := String new: max)
+				fname: (fname := Utf8String new: max)
 				fnameLen: max + 1
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: 
-			[| path |
-			(errno := CRTLibrary default
-						_makepath_s: (path := String new: max)
+			[| unextended |
+			(errno := crt
+						_makepath_s: (unextended := Utf8String new: max)
 						bufferSize: max + 1
 						drive: drive
 						dir: dir
 						fname: fname
 						ext: nil) == 0
-				ifTrue: [^path trimNulls]].
+				ifTrue: [^unextended trimNulls]].
 	^CRTError signalWith: errno!
 
 removePathDelimiter: aString
@@ -1217,12 +1267,30 @@ shortenComponent: aString max: anInteger
 shortPathOf: aPathnameString
 	"Answers the short path version of aPathnameString"
 
-	| shortpath |
-	shortpath := String new: self maxPath.
-	((KernelLibrary default getShortPathName: aPathnameString 
-		lpszShortPath: shortpath cchBuffer: shortpath size)==0) ifTrue: [
-			KernelLibrary default systemError].
+	| shortpath path len |
+	path := aPathnameString asUtf16String.
+	len := path size.
+	shortpath := Utf16String newFixed: len.
+	(KernelLibrary default
+		getShortPathName: path
+		lpszShortPath: shortpath
+		cchBuffer: len + 1) == 0
+		ifTrue: [KernelLibrary default systemError].
 	^shortpath trimNulls!
+
+sniffEncoding: aString
+	"Answer a best guess at the encoding of the file with the specified path. If the file does
+	not exist, an exception is raised."
+
+	| file encoding |
+	file := self
+				open: aString
+				mode: #read
+				check: true
+				share: #read.
+	encoding := file sniffEncoding.
+	file close.
+	^String encodingName: encoding!
 
 splitDriveFrom: aString
 	"Splits the pathname, aString, and answers the drive portion.
@@ -1230,8 +1298,8 @@ splitDriveFrom: aString
 
 	| drive errno |
 	^(errno := CRTLibrary default
-				_splitpath_s: aString
-				drive: (drive := String new: _MAX_DRIVE)
+				_splitpath_s: aString asUtf8String
+				drive: (drive := Utf8String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
 				dir: nil
 				dirLen: 0
@@ -1246,38 +1314,40 @@ splitExtensionFrom: aString
 	"Splits aPathname string and answers the extension portion.
 	Answers the empty string if there is no extension."
 
-	| ext errno |
-	ext := String new: aString size.
-	(errno := CRTLibrary default
-				_splitpath_s: aString
+	| ext errno path len crt |
+	path := aString asUtf8String.
+	(len := path size) == 0 ifTrue: [^''].
+	crt := CRTLibrary default.
+	(errno := crt
+				_splitpath_s: path
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
 				fname: nil
 				fnameLen: 0
-				ext: ext
-				extLen: ext size + 1) == 0
+				ext: (ext := Utf8String new: len)
+				extLen: len + 1) == 0
 		ifFalse: [^CRTError signalWith: errno].
 	"CRT function includes leading period on extension, which we don't"
-	ext := ext trimNulls.
-	^(ext notEmpty and: [ext first == $.]) ifTrue: [ext copyFrom: 2] ifFalse: [ext]!
+	^ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: ext strlen!
 
 splitFilenameFrom: aString
 	"Splits the pathname, aString, and answers the file name portion (including extension).
 	Answers an empty string if there is no filename component in the path."
 
-	| fname ext errno max |
-	max := aString size.
+	| fname ext errno max path |
+	path := aString asUtf8String.
+	max := path size.
 	(errno := CRTLibrary default
-				_splitpath_s: aString
+				_splitpath_s: path
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
-				fname: (fname := String new: aString size)
+				fname: (fname := Utf8String new: max)
 				fnameLen: max + 1
-				ext: (ext := String new: max)
+				ext: (ext := Utf8String new: max)
 				extLen: max + 1) == 0
 		ifTrue: 
 			[(errno := CRTLibrary default
@@ -1293,22 +1363,30 @@ splitPath: aString
 	Note: We use the C-runtime library to implement this, hence either backward or forward
 	slashes (i.e. $\ or $/) are acceptable as pathname delimiters."
 
-	| drive dir fname ext errno |
-	^(errno := CRTLibrary default
-				_splitpath_s: aString
-				drive: (drive := String new: _MAX_DRIVE)
+	| max path drive dir fname ext errno crt |
+	"To avoid problems with long filenames, we use the length of the input string as the buffer
+	sizes - clearly the component parts can never be larger than this.  In order to support
+	Unicode paths, we work in UTF-8."
+	path := aString asUtf8String.
+	max := path size.
+	max = 0 ifTrue: [^#('' '' '' '')].
+	crt := CRTLibrary default.
+	^(errno := crt
+				_splitpath_s: path
+				drive: (drive := Utf8String new: _MAX_DRIVE)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := String new: _MAX_DIR)
-				dirLen: ##(_MAX_DIR + 1)
-				fname: (fname := String new: _MAX_FNAME)
-				fnameLen: ##(_MAX_FNAME + 1)
-				ext: (ext := String new: _MAX_EXT)
-				extLen: ##(_MAX_EXT + 1)) == 0
+				dir: (dir := Utf8String new: max)
+				dirLen: max + 1
+				fname: (fname := Utf8String new: max)
+				fnameLen: max + 1
+				ext: (ext := Utf8String new: max)
+				extLen: max + 1) == 0
 		ifTrue: 
 			["CRT function includes leading period on extension, which we don't"
-			ext := ext trimNulls.
-			(ext notEmpty and: [ext first == $.]) ifTrue: [ext := ext copyFrom: 2].
-			{drive trimNulls. dir trimNulls. fname trimNulls. ext}]
+			{drive trimNulls.
+				dir trimNulls.
+				fname trimNulls.
+				ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: ext strlen}]
 		ifFalse: [CRTError signalWith: errno]!
 
 splitPathFrom: aPathnameString
@@ -1319,13 +1397,15 @@ splitPathFrom: aPathnameString
 	API call, PathRemoveFileSpec() does not treat $/ as a path delimiter (only backslash).
 	Also this is carefully implemented to minimise allocations and maximise speed."
 
-	| drive dir errno |
+	| drive dir errno path len |
+	path := aPathnameString asUtf8String.
+	len := path size.
 	(errno := CRTLibrary default
-				_splitpath_s: aPathnameString
-				drive: (drive := String new: _MAX_PATH)
+				_splitpath_s: path
+				drive: (drive := Utf8String new: len)
 				driveLen: ##(_MAX_DRIVE + 1)
-				dir: (dir := String new: _MAX_DIR)
-				dirLen: ##(_MAX_DIR + 1)
+				dir: (dir := Utf8String new: len)
+				dirLen: len + 1
 				fname: nil
 				fnameLen: 0
 				ext: nil
@@ -1333,7 +1413,7 @@ splitPathFrom: aPathnameString
 		ifTrue: 
 			[(errno := CRTLibrary default
 						strcat_s: drive
-						bufferSize: ##(_MAX_PATH + 1)
+						bufferSize: len + 1
 						strSource: dir) == 0
 				ifTrue: [^drive trimNulls]].
 	^CRTError signalWith: errno!
@@ -1342,15 +1422,17 @@ splitStemFrom: aString
 	"Answers the file stem component of the path <String> argument, or an empty string if there
 	is none."
 
-	| fname errno |
+	| fname errno path len |
+	path := aString asUtf8String.
+	len := path size.
 	^(errno := CRTLibrary default
-				_splitpath_s: aString
+				_splitpath_s: path
 				drive: nil
 				driveLen: 0
 				dir: nil
 				dirLen: 0
-				fname: (fname := String new: _MAX_FNAME)
-				fnameLen: ##(_MAX_FNAME + 1)
+				fname: (fname := Utf8String new: len)
+				fnameLen: len + 1
 				ext: nil
 				extLen: 0) == 0
 		ifTrue: [fname trimNulls]
@@ -1370,7 +1452,7 @@ temporaryFilename
 	^self temporaryFilenameWithPrefix: ''
 	!
 
-temporaryFilenameWithPrefix: prefixString 
+temporaryFilenameWithPrefix: prefixString
 	"Answer a temporary filename built from prefixString in the user's temporary files
 	directory. Note that this will create the temp file in order to guarantee uniqueness. You
 	are responsible for deleting the file when it is no longer required. Signals a Win32Error if
@@ -1378,31 +1460,44 @@ temporaryFilenameWithPrefix: prefixString
 
 	| returnBuf |
 	returnBuf := self pathBuffer.
-	(KernelLibrary default 
+	(KernelLibrary default
 		getTempFileName: self tempPath
 		lpPrefixString: prefixString
 		uUnique: 0
-		lpTempFileName: returnBuf) == 0 
+		lpTempFileName: returnBuf) == 0
 		ifTrue: [^KernelLibrary default systemError].
 	^returnBuf trimNulls!
 
 tempPath
 	"Answer the path of the directory designated for temporary files on the host system."
 
-	| buf len |
-	buf := self pathBuffer.
-	len := KernelLibrary default getTempPath: buf size lpBuffer: buf.
-	^buf resize: len!
+	| buf len lib |
+	lib := KernelLibrary default.
+	(len := lib getTempPath: 0 lpBuffer: nil) == 0 ifTrue: [lib systemError].
+	buf := Utf16String newFixed: len - 1.
+	(lib getTempPath: len lpBuffer: buf) == 0 ifTrue: [lib systemError].
+	^buf!
+
+windowsDirectory
+	"Answer the path of the Windows directory on the host computer for the current session. Note
+	that under Terminal Server this will be the shared Windows directory, not the per-user
+	Windows directory. See MSDN KB281316  for further information."
+
+	| len path |
+	len := KernelLibrary default getSystemWindowsDirectory: nil uSize: 0.
+	len == 0 ifTrue: [^KernelLibrary default systemError].
+	path := Utf16String newFixed: len - 1.
+	len := KernelLibrary default getSystemWindowsDirectory: path uSize: len.
+	^path!
 
 workingDirectory
 	"Answer the current working directory."
 
-	| buffer dir |
-	buffer := self pathBuffer.
-	dir := CRTLibrary default _getcwd: buffer maxlen: buffer size.
-	^dir last = $\
-		ifTrue: [dir]
-		ifFalse: [dir copyWith: $\]!
+	| buf dir |
+	buf := CRTLibrary default _wgetcwd: nil maxlen: 0.
+	dir := Utf16String fromAddress: buf.
+	CRTLibrary default free: buf.
+	^dir last = $\ ifTrue: [dir] ifFalse: [dir copyWith: $\]!
 
 workingDirectory: aString
 	"Set the current working directory."
@@ -1463,6 +1558,7 @@ workingDirectory: aString
 !File class categoriesFor: #replacePath:with:!filename manipulation!public! !
 !File class categoriesFor: #shortenComponent:max:!helpers!private! !
 !File class categoriesFor: #shortPathOf:!filename manipulation!public! !
+!File class categoriesFor: #sniffEncoding:!public! !
 !File class categoriesFor: #splitDriveFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitExtensionFrom:!filename manipulation!public! !
 !File class categoriesFor: #splitFilenameFrom:!filename manipulation!public! !
@@ -1473,6 +1569,7 @@ workingDirectory: aString
 !File class categoriesFor: #temporaryFilename!filename manipulation!public! !
 !File class categoriesFor: #temporaryFilenameWithPrefix:!filename manipulation!public! !
 !File class categoriesFor: #tempPath!filename manipulation!public! !
+!File class categoriesFor: #windowsDirectory!accessing!public! !
 !File class categoriesFor: #workingDirectory!file operations!public! !
 !File class categoriesFor: #workingDirectory:!file operations!public! !
 

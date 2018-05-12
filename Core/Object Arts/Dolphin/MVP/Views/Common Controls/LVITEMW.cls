@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
@@ -182,19 +182,19 @@ puColumns: aDWORDArray
 	bytes uintPtrAtOffset: ##(self offsetOf: #puColumns) put: aDWORDArray yourAddress.
 	self cColumns: aDWORDArray size!
 
-row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger 
+row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger
 	| mask iImage |
 	self
 		iItem: rowInteger - 1;
-		pszText: (text := self textClass fromString: aString).
+		pszText: (text := aString asUtf16String).
 	mask := LVIF_TEXT.
 	imageInteger notNil ifTrue: [iImage := imageInteger - 1].
-	indentInteger notNil 
+	indentInteger notNil
 		ifTrue: 
 			[self iIndent: indentInteger.
 			mask := mask bitOr: LVIF_INDENT.
 			indentInteger < 0 ifTrue: [iImage := -1]].
-	iImage notNil 
+	iImage notNil
 		ifTrue: 
 			[self iImage: iImage.
 			mask := mask bitOr: LVIF_IMAGE].

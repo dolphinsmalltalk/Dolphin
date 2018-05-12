@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CompiledMethod variableSubclass: #ExternalMethod
 	instanceVariableNames: ''
@@ -85,7 +85,7 @@ functionName
 
 	| bytes |
 	bytes := self descriptorLiteral.
-	^String fromAddress: bytes yourAddress + ArgumentStartIndex + self argsLen - 1!
+	^AnsiString fromAddress: bytes yourAddress + ArgumentStartIndex + self argsLen - 1!
 
 isExternalCall
 	"Private - Answer whether the receiver is an external library call (foreign function invocation)."

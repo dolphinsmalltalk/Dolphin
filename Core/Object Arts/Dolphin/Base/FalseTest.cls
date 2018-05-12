@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #FalseTest
 	instanceVariableNames: ''
@@ -15,25 +15,25 @@ FalseTest comment: 'This is the unit test for the class False. Unit tests are a 
 !FalseTest methodsFor!
 
 testAnd
-	self assert: (false and: ['alternativeBlock']) = false!
+	self assert: (false and: ['alternativeBlock']) equals: false!
 
 testAND
-	self assert: (false & true) = false.
-	self assert: (false & false) = false!
+	self assert: false & true equals: false.
+	self assert: false & false equals: false!
 
 testIfFalse
 	self should: [(false ifFalse: ['alternativeBlock']) = 'alternativeBlock']!
 
 testIfFalseIfTrue
-	self assert: (false ifFalse: ['falseAlternativeBlock'] ifTrue: ['trueAlternativeBlock']) 
-				= 'falseAlternativeBlock'!
+	self assert: (false ifFalse: ['falseAlternativeBlock'] ifTrue: ['trueAlternativeBlock'])
+		equals: 'falseAlternativeBlock'!
 
 testIfTrue
-	self assert: (false ifTrue: ['alternativeBlock']) = nil!
+	self assert: (false ifTrue: ['alternativeBlock']) equals: nil!
 
 testIfTrueIfFalse
-	self assert: (false ifTrue: ['trueAlternativeBlock'] ifFalse: ['falseAlternativeBlock']) 
-				= 'falseAlternativeBlock'!
+	self assert: (false ifTrue: ['trueAlternativeBlock'] ifFalse: ['falseAlternativeBlock'])
+		equals: 'falseAlternativeBlock'!
 
 testNew
 	self should: [False new] raise: TestResult error!
@@ -42,17 +42,17 @@ testNot
 	self should: [false not = true]!
 
 testOr
- self assert: (false or: ['alternativeBlock']) = 'alternativeBlock'.!
+	self assert: (false or: ['alternativeBlock']) equals: 'alternativeBlock'!
 
 testOR
-	self assert: (false | true) = true.
-	self assert: (false | false) = false!
+	self assert: false | true equals: true.
+	self assert: false | false equals: false!
 
 testPrintOn
 	| stream |
 	stream := String writeStream.
 	false printOn: stream.
-	self assert: stream contents = 'false'! !
+	self assert: stream contents equals: 'false'! !
 !FalseTest categoriesFor: #testAnd!public!testing! !
 !FalseTest categoriesFor: #testAND!public!testing! !
 !FalseTest categoriesFor: #testIfFalse!public!testing! !

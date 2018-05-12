@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Sound
 	instanceVariableNames: 'name location type fileLocator'
@@ -32,18 +32,18 @@ location: anObject
 
 	location := anObject!
 
-name: aString
+name: id
 	"Private - Set the 'name' of the receiver's wave resource"
 
-	name := aString!
+	name := id!
 
-play: anInteger 
+play: anInteger
 	"Private - Play the receiver with the specified flags. Answer whether it succeeded."
 
 	| soundName |
 	soundName := fileLocator ifNotNil: [fileLocator localFileSpecFor: name] ifNil: [name].
-	^WinMMLibrary default 
-		playSound: soundName
+	^WinMMLibrary default
+		playSound: soundName asResourceId
 		hmod: location asParameter
 		fdwSound: anInteger!
 
@@ -131,7 +131,7 @@ fromAlias: aString
 	"Answer a new instance of the receiver from the alias aString (stored in the windows registry 
 	and configurable from the control panel)"
 
-	^(self new)
+	^self new
 		name: aString;
 		type: SND_ALIAS | SND_ASYNC;
 		yourself!
@@ -145,20 +145,20 @@ fromFile: aString usingLocator: aFileLocator
 	"Answer a new instance of the receiver from the wave file named aString
 	using aFileLocator."
 
-	^(self new)
+	^self new
 		name: (aFileLocator relativePathTo: aString);
 		fileLocator: aFileLocator;
 		type: SND_FILENAME | SND_ASYNC;
 		yourself!
 
-fromId: aResourceId in: anExternalHandle
+fromId: anIntegerOrStringId in: anExternalHandle
 	"Answer a new instance of the receiver from the resource identified by
 	aResourceId in the external module identified by anExternalHandle"
 
-	^(self new)
-		name: aResourceId;
+	^self new
+		name: anIntegerOrStringId;
 		location: anExternalHandle;
-		type: (SND_RESOURCE | SND_ASYNC);
+		type: SND_RESOURCE | SND_ASYNC;
 		yourself!
 
 icon

@@ -1,4 +1,4 @@
-"Class Definitions"!
+﻿"Class Definitions"!
 
 nil subclass: #Object
 	instanceVariableNames: ''
@@ -276,7 +276,7 @@ Object subclass: #SearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SessionManager
-	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId'
+	instanceVariableNames: 'inputState resourceLibrary imagePath servers argv cmdLineFlags state sentry startupArgs consoleHandler stdioStreams eventLogHandle flags sessionId hConsole'
 	classVariableNames: 'Current EmbeddingMask PreStartFile'
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
@@ -316,7 +316,7 @@ Object subclass: #StackFrame
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #STBClassConversion
-	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -435,6 +435,11 @@ ScalarField subclass: #BYTEField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ScalarField subclass: #CHARField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ScalarField subclass: #DOUBLEField
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -491,6 +496,11 @@ ScalarField subclass: #WORDField
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BOOLField subclass: #BOOLEANField
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CHARField subclass: #WCHARField
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -587,7 +597,7 @@ ArrayedCollection subclass: #RunArray
 	classInstanceVariableNames: ''!
 ArrayedCollection variableByteSubclass: #String
 	instanceVariableNames: ''
-	classVariableNames: 'LineDelimiter NullPrintCharacter'
+	classVariableNames: 'EncodingAnsi EncodingUtf16 EncodingUtf32 EncodingUtf8 LineDelimiter'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'empty'!
 ArrayedCollection variableSubclass: #WeakArray
@@ -630,19 +640,29 @@ ExternalAddress variableByteSubclass: #REFGUID
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #Symbol
-	instanceVariableNames: ''
-	classVariableNames: 'Table'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-String variableByteSubclass: #Utf16String
+String variableByteSubclass: #AnsiString
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-String variableByteSubclass: #Utf8String
+String variableByteSubclass: #UtfEncodedString
 	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+UtfEncodedString variableByteSubclass: #Utf16String
+	instanceVariableNames: ''
+	classVariableNames: 'Bom LeadOffset SurrogateOffset'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+UtfEncodedString variableByteSubclass: #Utf8String
+	instanceVariableNames: ''
+	classVariableNames: 'Bom LeadByteMask2 LeadByteMask3 LeadByteMask4 TrailByteMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Utf8String variableByteSubclass: #Symbol
+	instanceVariableNames: ''
+	classVariableNames: 'CharClassifications Table'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 WeakArray variableSubclass: #MourningWeakArray
@@ -1065,6 +1085,11 @@ ExternalStructure subclass: #_FPIEEE_VALUE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalStructure subclass: #CPINFOEXW
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalStructure subclass: #DOUBLE
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1270,12 +1295,12 @@ Win32Structure subclass: #MSG
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #MSGBOXPARAMS
-	instanceVariableNames: ''
+Win32Structure subclass: #MSGBOXPARAMSW
+	instanceVariableNames: 'text caption'
 	classVariableNames: ''
 	poolDictionaries: 'MessageBoxConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #OSVERSIONINFOEX
+Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1300,7 +1325,7 @@ Win32Structure subclass: #VS_FIXEDFILEINFO
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #WIN32_FIND_DATA
+Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
@@ -1356,7 +1381,7 @@ InstructionInterpreter subclass: #MessageSendCollector
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Link variableSubclass: #Process
-	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name reserved2'
+	instanceVariableNames: 'suspendedFrame priority myList callbackDepth primitiveFailureCode primitiveFailureData fpControl threadSync thread exceptionEnvironment _alreadyPrinted _reserved1 debugger name _reserved2'
 	classVariableNames: 'DefaultFpControl DefaultMaxStack DefaultStack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1371,8 +1396,8 @@ Magnitude subclass: #Association
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Character
-	instanceVariableNames: 'codePoint'
-	classVariableNames: 'CharacterSet EscapeChars'
+	instanceVariableNames: 'code'
+	classVariableNames: 'AnsiCharacters AnsiCodePage AnsiCodePoints CharacterSet EncodingMask EscapeChars Utf16Mask Utf32Mask Utf8Default Utf8Mask Utf8TrailMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Date
@@ -1637,7 +1662,7 @@ SequencedStream subclass: #PositionableStream
 	classInstanceVariableNames: ''!
 SequencedStream subclass: #StdioFileStream
 	instanceVariableNames: 'stream flags name oldFd fd crtlib'
-	classVariableNames: 'DeviceMask ReadOnlyMask TextMask'
+	classVariableNames: 'ClassForEncoding Codecs DeviceMask ReadOnlyMask'
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 PositionableStream subclass: #ReadStream
@@ -1656,8 +1681,38 @@ WriteStream subclass: #ReadWriteStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ReadWriteStream subclass: #FileStream
-	instanceVariableNames: 'file flags pageBase logicalFileSize'
-	classVariableNames: 'BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
+	instanceVariableNames: 'file flags pageBase logicalFileSize offset'
+	classVariableNames: 'BufferClasses BufferUpdatedMask DirtyBufferMask LimitsChangedMask OwnsFileMask PageSize'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioFileStream subclass: #StdioBinaryFileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioFileStream subclass: #StdioTextFileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioTextFileStream subclass: #StdioAnsiFileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioTextFileStream subclass: #StdioUnicodeFileStream
+	instanceVariableNames: 'offset'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioUnicodeFileStream subclass: #StdioUtf16FileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+StdioUnicodeFileStream subclass: #StdioUtf8FileStream
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

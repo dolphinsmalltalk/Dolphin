@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Transcript'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -20,8 +20,9 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
+	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	yourself).
 
 package!

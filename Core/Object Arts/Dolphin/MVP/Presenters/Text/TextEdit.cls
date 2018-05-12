@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #TextEdit
 	instanceVariableNames: 'teFlags'
@@ -205,6 +205,27 @@ copySelection
 
 	self sendMessage: WM_COPY
 !
+
+cueBanner
+	"Answer the textual cue to be displayed when this single-line text box is empty and does not
+	have focus, or nil if none is set."
+
+	| buf |
+	buf := Utf16String newFixed: 512.
+	^((self
+		sendMessage: EM_GETCUEBANNER
+		wParam: buf yourAddress
+		lParam: buf size + 1) ~~ 0
+		and: [buf first ~~ $\0]) ifTrue: [buf trimNulls]!
+
+cueBanner: aString
+	"Set a textual cue to be displayed when this single line text box is empty and does not have
+	focus."
+
+	self
+		sendMessage: EM_SETCUEBANNER
+		wParam: 0
+		szParam: aString ?? ''!
 
 cutSelection
 	"Cut the current selection and place on the clipboard."
@@ -710,10 +731,10 @@ onFind: aFindDetails
 			^self].
 	Sound warningBeep!
 
-onFind: registeredId wParam: wParam lParam: lParam 
+onFind: registeredId wParam: wParam lParam: lParam
 	| details struct |
-	struct := FINDREPLACE fromAddress: lParam.
-	struct isClosing 
+	struct := FINDREPLACEW fromAddress: lParam.
+	struct isClosing
 		ifTrue: 
 			["The FindDialog is closing."
 			^0].
@@ -999,8 +1020,10 @@ selectionPlainText: aString
 	"Private - Replace the receiver's current selection with aString.
 	EM_REPLACESEL does not return a value."
 
-	self sendMessage: EM_REPLACESEL wParam: 0 lpParam: aString.
-!
+	self
+		sendMessage: EM_REPLACESEL
+		wParam: 0
+		szParam: aString!
 
 selectionRange
 	"Answers an interval identifying the selected range of text.
@@ -1088,7 +1111,7 @@ state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
 	to its current state"
 
-	| state margins sel |
+	| state margins sel limit |
 	state := super state.
 	sel := self selectionRange.
 	sel = self defaultSelectionRange
@@ -1110,6 +1133,22 @@ state
 						receiver: self
 						selector: #setMarginWidths:
 						argument: margins)].
+	self cueBanner
+		ifNotNil: 
+			[:cue |
+			cue isEmpty
+				ifFalse: 
+					[state add: (MessageSend
+								receiver: self
+								selector: #cueBanner:
+								argument: cue)]].
+	limit := self textLimit.
+	limit = 30000
+		ifFalse: 
+			[state add: (MessageSend
+						receiver: self
+						selector: #textLimit:
+						argument: limit)].
 	^state!
 
 suggestedFindText
@@ -1134,7 +1173,7 @@ tabFocus
 textLimit
 	"Answer the current text limit for the control (i.e. the amount of text it can hold)."
 
-	^self sendMessage: EM_GETLIMITTEXT!
+	^(self sendMessage: EM_GETLIMITTEXT) asDword!
 
 textLimit: anInteger
 	"Set the maximum text limit for the receiver. The initial default limit is around 32kb.
@@ -1299,6 +1338,8 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #clearSelection!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #command:id:!commands!private! !
 !TextEdit categoriesFor: #copySelection!clipboard operations!commands!public! !
+!TextEdit categoriesFor: #cueBanner!accessing!public! !
+!TextEdit categoriesFor: #cueBanner:!accessing!public! !
 !TextEdit categoriesFor: #cutSelection!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #defaultSelectionRange!constants!private! !
 !TextEdit categoriesFor: #defaultWindowExStyle!constants!private! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Stream subclass: #SequencedStream
 	instanceVariableNames: ''
@@ -26,7 +26,7 @@ copyFrom: startInteger to: stopInteger
 	| answer mark |
 	mark := self position.
 	self position: startInteger - 1.
-	answer := self next: stopInteger - startInteger + 1.
+	answer := self basicNext: stopInteger - startInteger + 1.
 	self position: mark.
 	^answer!
 
@@ -51,7 +51,7 @@ nextLine
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
 	
-	[(nextObject := self nextOrNil) isNil
+	[(nextObject := self nextAvailable) isNil
 		or: [nextObject == $\n or: [nextObject == $\r and: 
 							[self peekFor: $\n.
 							true]]]]
@@ -82,12 +82,12 @@ peek
 	"Answer the next element in the collection, but do not change the current position. Answer
 	nil if the receiver is at its end."
 
-	^self atEnd 
+	^self atEnd
 		ifFalse: 
-			[| anObject |
+			[| anObject pos |
+			pos := self position.
 			anObject := self next.
-			"We don't use #skip:, since we know going back 1 is in bounds"
-			self position: self position - 1.
+			self position: pos.
 			anObject]!
 
 peekFor: anObject
@@ -95,11 +95,11 @@ peekFor: anObject
 	then advance the current position and answer true. Otherwise answer false and do not change
 	the current position."
 
-	| next |
-	^(next := self nextOrNil) notNil and: 
-			[next = anObject or: 
-					["We don't use #skip:, since we know going back 1 is in bounds"
-					self position: self position - 1.
+	| pos next |
+	pos := self position.
+	^(next := self nextAvailable) notNil
+		and: [next = anObject or: 
+					[self position: pos.
 					false]]!
 
 pop
@@ -123,18 +123,24 @@ reset
 
 	self position: 0!
 
+reverseContents
+	"Answer a copy of the receiver's contents in reverse order."
+
+	^self contents reverse!
+
 setToEnd
 	"Set the position of the receiver to be past the last value (i.e. the stream will have no
 	future sequence values), and will answer true in response to the #atEnd message."
 
 	^self subclassResponsibility!
 
-skip: anInteger 
+skip: anInteger
 	"Set the receiver's position to be the current position plus the argument, anInteger,
 	possibly adjusting the result so as to remain within the bounds of the collection."
 
-	self position: self position + anInteger.
-	#todo	"This may need to be modified to be compatible with ANSI definition"!
+	"Note this adjusts the raw position. It should not be used when streaming over UTF encoded strings."
+
+	self position: self position + anInteger!
 
 skipSeparators
 	"Advance the receiver's position over any leading whitespace. Answer whether their are more
@@ -144,7 +150,7 @@ skipSeparators
 	frequently that we open code to avoid instantiating a block."
 
 	| next |
-	[(next := self nextOrNil) isNil] whileFalse: 
+	[(next := self nextAvailable) isNil] whileFalse: 
 			[next isSeparator
 				ifFalse: 
 					[self position: self position - 1.
@@ -170,15 +176,17 @@ skipToAll: aCollection
 							partialStart := nil]]].
 	^true!
 
-skipWhile: aMonadicValuable 
+skipWhile: aMonadicValuable
 	"Advance the receiver's current position to be past the sequence of future values for which
 	the <monadicValuable> argument evaluates to true. Answer true if there are more elements on
 	the stream of false otherwise."
 
 	[self atEnd] whileFalse: 
-			[(aMonadicValuable value: self next) 
+			[| pos |
+			pos := self position.
+			(aMonadicValuable value: self next)
 				ifFalse: 
-					[self pop.
+					[self position: pos.
 					^true]].
 	^false!
 
@@ -206,7 +214,7 @@ upToAll: aCollection
 			[| end answer |
 			end := self position.
 			self position: start.
-			answer := self next: end - start - aCollection size.
+			answer := self basicNext: end - start - aCollection size.
 			self position: end.
 			answer]
 		ifFalse: 
@@ -225,6 +233,7 @@ upToAll: aCollection
 !SequencedStream categoriesFor: #position!positioning!public! !
 !SequencedStream categoriesFor: #position:!positioning!public! !
 !SequencedStream categoriesFor: #reset!positioning!public! !
+!SequencedStream categoriesFor: #reverseContents!accessing!public! !
 !SequencedStream categoriesFor: #setToEnd!positioning!public! !
 !SequencedStream categoriesFor: #skip:!positioning!public! !
 !SequencedStream categoriesFor: #skipSeparators!positioning!public! !

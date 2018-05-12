@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ViewTest
 	instanceVariableNames: ''
@@ -14,11 +14,11 @@ testRecreateMaintainsModelConnection
 	| t |
 	t := TextPresenter show.
 	t model value: 'aaa'.
-	self assert: t view value = 'aaa'.
+	self assert: t view value equals: 'aaa'.
 	t view hasBorder: true.
 	t model value: 'bbb'.
 	"If this fails, then the view did not receive a #valueChanged event from the model"
-	self assert: t view value = 'bbb'.
+	self assert: t view value equals: 'bbb'.
 	t topShell exit! !
 !ViewTest categoriesFor: #testRecreateMaintainsModelConnection!public!unit tests! !
 

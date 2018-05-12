@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayField subclass: #StringField
 	instanceVariableNames: ''
@@ -103,6 +103,6 @@ length: anInteger
 	"Answer a new instance of the receiver which is used for describing
 	embedded arrays of type aClass, and of byte size anInteger"
 
-	^self type: String length: anInteger! !
+	^self type: AnsiString length: anInteger! !
 !StringField class categoriesFor: #length:!instance creation!public! !
 

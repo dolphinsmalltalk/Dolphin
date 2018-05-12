@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RenameClassTest
 	instanceVariableNames: ''
@@ -25,46 +25,40 @@ testMetaClassFailure
 
 testModelRenameClass
 	| refactoring class |
-	model 
+	model
 		defineClass: 'Object subclass: #Foo instanceVariableNames: ''a'' classVariableNames: '''' poolDictionaries: '''''.
 	class := model classNamed: #Foo.
 	class
 		compile: 'foo	^Object' classified: #(#accessing);
 		compile: 'objectName ^#(Object)' classified: #(#accessing).
-	refactoring := RenameClassRefactoring 
+	refactoring := RenameClassRefactoring
 				model: model
 				rename: Object
 				to: #Thing.
 	self executeRefactoring: refactoring.
 	self assert: (model includesClassNamed: #Thing).
 	self deny: (model includesClassNamed: #Object).
-	self 
-		assert: (class parseTreeFor: #foo) = (RBParser parseMethod: 'foo ^Thing').
-	self assert: (class parseTreeFor: #objectName) 
-				= (RBParser parseMethod: 'objectName ^#(Thing)').
-	self assert: class superclass name = #Thing!
+	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^Thing').
+	self assert: (class parseTreeFor: #objectName)
+		equals: (RBParser parseMethod: 'objectName ^#(Thing)').
+	self assert: class superclass name equals: #Thing!
 
 testRenameClass
 	| refactoring class |
-	refactoring := RenameClassRefactoring 
-				rename: (Smalltalk at: ('Class' , 'ToRename') asSymbol)
+	refactoring := RenameClassRefactoring rename: (Smalltalk at: ('Class' , 'ToRename') asSymbol)
 				to: 'New' , 'ClassName' asSymbol.
 	self executeRefactoring: refactoring.
-	self 
-		assert: ((refactoring model classNamed: ('New' , 'ClassName') asSymbol) 
-				parseTreeFor: #method1) = (RBParser parseMethod: 'method1
+	self assert: ((refactoring model classNamed: ('New' , 'ClassName') asSymbol) parseTreeFor: #method1)
+		equals: (RBParser parseMethod: 'method1
 	^self method2').
-	self deny: (refactoring model 
-				includesClassNamed: ('Class' , 'ToRename') asSymbol).
-	class := refactoring model 
-				classNamed: ('Subclass' , 'OfClassToRename') asSymbol.
-	self assert: class superclass 
-				= (refactoring model classNamed: ('New' , 'ClassName') asSymbol).
-	self assert: (class parseTreeFor: #symbolReference) 
-				= (RBParser parseMethod: 'symbolReference
+	self deny: (refactoring model includesClassNamed: ('Class' , 'ToRename') asSymbol).
+	class := refactoring model classNamed: ('Subclass' , 'OfClassToRename') asSymbol.
+	self assert: class superclass equals: (refactoring model classNamed: ('New' , 'ClassName') asSymbol).
+	self assert: (class parseTreeFor: #symbolReference)
+		equals: (RBParser parseMethod: 'symbolReference
 								^#NewClassName').
-	self assert: (class parseTreeFor: #reference) 
-				= (RBParser parseMethod: 'reference
+	self assert: (class parseTreeFor: #reference)
+		equals: (RBParser parseMethod: 'reference
 								^NewClassName new')! !
 !RenameClassTest categoriesFor: #testBadName!failure tests!public! !
 !RenameClassTest categoriesFor: #testExistingName!failure tests!public! !

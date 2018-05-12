@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #AdvApiLibrary
 	instanceVariableNames: ''
@@ -28,6 +28,19 @@ getUserName: buffer nSize: pBufSize
 	<stdcall: bool GetUserNameA lpstr DWORD*>
 	^self invalidCall!
 
+isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
+	"
+	BOOL IsTextUnicode(
+		_In_        const VOID  *lpv,
+		_In_              int   iSize,
+	_Inout_opt_       LPINT lpiResult
+	);
+	"
+
+	<stdcall: bool IsTextUnicode lpvoid sdword sdword*>
+	^self invalidCall
+	!
+
 reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lpUserSid: lpUserSid wNumStrings: wNumStrings dwDataSize: dwDataSize lpStrings: lpStrings lpRawData: lpRawData 
 	"
 		BOOL ReportEvent(
@@ -38,14 +51,15 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 			PSID lpUserSid,		// user security identifier (optional) 
 			WORD wNumStrings,	// number of strings to merge with message  
 			DWORD dwDataSize,	// size of binary data, in bytes
-			LPCTSTR *lpStrings,	// array of strings to merge with message 
+			LPCWSTR *lpStrings,	// array of strings to merge with message 
 			LPVOID lpRawData 	// address of binary data 
 		);"
 
-	<stdcall: bool ReportEventA handle word word dword lpvoid word dword lpvoid lpvoid>
+	<stdcall: bool ReportEventW handle word word dword lpvoid word dword lpvoid lpvoid>
 	^self invalidCall! !
 !AdvApiLibrary categoriesFor: #deregisterEventSource:!public!win32 functions-events! !
 !AdvApiLibrary categoriesFor: #getUserName:nSize:!public!win32 functions-system information! !
+!AdvApiLibrary categoriesFor: #isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
 !AdvApiLibrary categoriesFor: #reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
 
 !AdvApiLibrary class methodsFor!

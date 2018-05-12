@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 MultiByteStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''
@@ -9,6 +9,9 @@ Utf16StringTest guid: (GUID fromString: '{e12792f7-8bb1-44b6-84ca-e8a620c9bc70}'
 Utf16StringTest comment: ''!
 !Utf16StringTest categoriesForClass!Unclassified! !
 !Utf16StringTest methodsFor!
+
+assimilate: each 
+	^Character utf16Value: each asInteger!
 
 assimilateString: aString
 	^aString asUtf16String!
@@ -23,12 +26,66 @@ byteArrayForSequence: aCollection
 collectionClass
 	^Utf16String!
 
+testDecodeFrom
+	| subject |
+	subject := self collectionClass new.
+	#($\0 $\x7F $\x80 $\x7FF $\x800 $\xFFFD $\x10000 $\x1F42C $\x1FFFD) do: 
+			[:each |
+			| stream actual |
+			stream := each asUtf16String readStream.
+			actual := subject decodeNextFrom: stream.
+			self assert: actual equals: each].
+
+	"Invalid continuations"
+	#(#(#(16rD800 16rD83D 16rDC2C) $\x1F42C) #(#(16rD800 16rA1) ##(Character value: 16rA1)) #(#(16rD800 16rD800) $\xFFFD))
+		do: 
+			[:each |
+			| stream actual |
+			stream := each first readStream.
+			actual := subject decodeNextFrom: stream.
+			self assert: actual equals: Character replacement.
+			actual := subject decodeNextFrom: stream.
+			self assert: actual equals: each last.
+			self assert: stream atEnd].
+	"Incomplete continuations"
+	#(#(16rD800)) do: 
+			[:each |
+			| stream actual |
+			stream := each readStream.
+			actual := subject decodeNextFrom: stream.
+			self assert: actual equals: Character replacement.
+			self assert: stream atEnd]!
+
+testMixedConcatenation
+	| subjects |
+	subjects := #('' 'd' 'ef') collect: [:each | self assimilateString: each].
+	{{String empty. Utf8String empty. Utf16String empty}.
+		{'c'. 'c' asUtf8String. 'c' asUtf16String}.
+		{'cd'.
+			'cd' asUtf8String.
+			'cd' asUtf16String.
+			'一點測試'.
+			#($a $b).
+			OrderedCollection with: $x.
+			($x codePoint to: $z codePoint) collect: [:each | Character codePoint: each]}}
+			do: 
+				[:args |
+				args do: 
+						[:eachCase |
+						subjects do: 
+								[:each |
+								| result |
+								result := self verifyConcatenation: eachCase with: each.
+								self deny: each identicalTo: result]]].
+	^self!
+
 testUtf8StringConversion
 	| utf8Bytes byteString wideString bstr |
 	utf8Bytes := #[228 184 128 233 187 158 230 184 172 232 169 166].
-	byteString := Utf8String fromAddress: utf8Bytes yourAddress length: utf8Bytes size.
+	byteString := Utf8String fromByteArray: utf8Bytes.
 	"Ansi strings don't correctly represent the multi-byte encoding of the test UTF8 string"
 	self assert: byteString size equals: 12.
+	self assert: byteString equals: '一點測試'.
 	wideString := byteString asUtf16String.
 	self assert: wideString size equals: 4.
 	"On VMs before 7.0.54, Utf16Strings may not be properly terminated (#155)"
@@ -36,7 +93,7 @@ testUtf8StringConversion
 		ifTrue: 
 			[| string2 |
 			"Compiler bug #154: Have to use brace array here because a literal array with wide chars does not compile correctly."
-			self assert: wideString asArray equals: {$\x4E00. $\x9EDE. $\x6E2C. $\x8A66}.
+			self assert: wideString asArray equals: #($\x4E00 $\x9EDE $\x6E2C $\x8A66).
 			self assert: wideString asUtf8String equals: byteString.
 			string2 := Utf8String fromUtf16String: wideString.
 			self assert: string2 equals: byteString].
@@ -44,8 +101,11 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
 	self assert: bstr asUtf8String equals: byteString! !
+!Utf16StringTest categoriesFor: #assimilate:!helpers!private! !
 !Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
 !Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
 !Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
+!Utf16StringTest categoriesFor: #testDecodeFrom!public! !
+!Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
 !Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
 

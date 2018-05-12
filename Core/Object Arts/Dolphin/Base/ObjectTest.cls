@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ObjectTest
 	instanceVariableNames: ''
@@ -25,7 +25,7 @@ testDeepCopy
 	| ast copy |
 	ast := Object parseTreeFor: #deepCopy.
 	copy := ast deepCopy.
-	self assert: copy = ast!
+	self assert: copy equals: ast!
 
 testEventCollectionWeakness
 	| source target |
@@ -44,34 +44,42 @@ testEventCollectionWeakness
 testIfNilAndIfNotNil
 	| obj evaluated |
 	obj := Object new.
-	
 	evaluated := false.
-	self assert: (obj ifNil: [evaluated := true]) == obj.
-	self assert: (evaluated not).
-	
+	self assert: (obj ifNil: [evaluated := true]) identicalTo: obj.
+	self assert: evaluated not.
 	evaluated := false.
-	self assert: (obj ifNotNil: [:a | evaluated := true. a class name]) == #Object.
-	self assert: (evaluated).
-
+	self assert: (obj
+				ifNotNil: 
+					[:a |
+					evaluated := true.
+					a class name])
+		identicalTo: #Object.
+	self assert: evaluated.
 	evaluated := false.
-	self assert: (nil ifNil: [evaluated := true. 1]) == 1.
-	self assert: (evaluated).
-	
+	self assert: (nil
+				ifNil: 
+					[evaluated := true.
+					1])
+		identicalTo: 1.
+	self assert: evaluated.
 	evaluated := false.
-	self assert: (nil ifNotNil: [:a | evaluated := true. a class name]) isNil.
-	self assert: (evaluated not).
-	!
+	self assertIsNil: (nil
+				ifNotNil: 
+					[:a |
+					evaluated := true.
+					a class name]).
+	self assert: evaluated not!
 
 testNilCoalesce
 	| obj1 obj2 |
 	obj1 := Object new.
 	obj2 := Object new.
-	self assert: (obj1 ?? obj2) == obj1.
+	self assert: obj1 ?? obj2 identicalTo: obj1.
 	obj1 := nil.
-	self assert: (obj1 ?? obj2) == obj2!
+	self assert: obj1 ?? obj2 identicalTo: obj2!
 
 testObjectEventRegistry
-	self assert: _EventsRegister countElements = _EventsRegister size!
+	self assert: _EventsRegister countElements equals: _EventsRegister size!
 
 testOneArgEvent
 	| source |
@@ -123,14 +131,12 @@ testRemoveEventsTriggeredFor
 	objectB := Object new.
 	objectC := Object new.
 	1 to: 50 do: [:each | objectA when: (#x , each displayString) asSymbol sendTo: objectB].
-	(1 to: 50 by: 2) 
-		do: [:each | objectA when: (#x , each displayString) asSymbol sendTo: objectC].
-	self assert: objectA events size = 50.
+	(1 to: 50 by: 2) do: [:each | objectA when: (#x , each displayString) asSymbol sendTo: objectC].
+	self assert: objectA events size equals: 50.
 	objectA removeEventsTriggeredFor: objectB.
-	self assert: objectA events size = 25.
+	self assert: objectA events size equals: 25.
 	objectA removeEventsTriggeredFor: objectC.
-	self assert: objectA events size = 0.
-!
+	self assert: objectA events size equals: 0!
 
 testThreeArgEvent
 	| source |

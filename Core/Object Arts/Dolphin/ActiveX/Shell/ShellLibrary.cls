@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ShellLibrary
 	instanceVariableNames: ''
@@ -46,10 +46,10 @@ dragQueryFile: hDrop iFile: iFile lpszFile: lpszFile cch: cch
 		UINT __stdcall DragQueryFile(
 			hDrop hDrop,
 			UINT iFile,
-			LPSTR lpszFile,
+			LPWSTR lpszFile,
 			UINT cch);"
 
-	<stdcall: dword DragQueryFileA handle dword lpstr dword>
+	<stdcall: dword DragQueryFileW handle dword lpwstr dword>
 	^self invalidCall!
 
 dragQueryPoint: hDrop lppt: lppt
@@ -69,10 +69,10 @@ extractAssociatedIcon: hInst lpIconPath: lpIconPath lpiIcon: lpiIcon
 
 		HICON __stdcall ExtractAssociatedIcon(
 			HINSTANCE hInst,
-			LPSTR lpIconPath,
+			LPWSTR lpIconPath,
 			WORD* lpiIcon);"
 
-	<stdcall: handle ExtractAssociatedIconA handle lpstr word*>
+	<stdcall: handle ExtractAssociatedIconW handle lpwstr word*>
 	^self invalidCall!
 
 findExecutable: pathName
@@ -85,24 +85,26 @@ findExecutable: lpFile directory: directoryString
 
 	| buf hInst |
 	buf := File pathBuffer.
-	hInst := self findExecutable: lpFile lpDirectory: directoryString lpResult: buf.
+	hInst := self
+				findExecutable: lpFile
+				lpDirectory: directoryString
+				lpResult: buf.
 	^hInst asInteger <= 32
-		ifTrue: [ "FindExecutable() error reporting not consistent with normal Win32 mechanism"
-			hInst asInteger == 31
-				ifTrue: [Win32Error signalWith: 16r483]
-				ifFalse: [self systemError]]
+		ifTrue: 
+			["FindExecutable() error reporting not consistent with normal Win32 mechanism"
+			hInst asInteger == 31 ifTrue: [Win32Error signalWith: 16r483] ifFalse: [self systemError]]
 		ifFalse: [buf trimNulls]!
 
 findExecutable: lpFile lpDirectory: directoryStringIn lpResult: buf
 	"Retrieves the name and handle of the executable associated with the specified filename.
 
 		HINSTANCE FindExecutable(
-			LPCTSTR lpFile,		// filename string [in]
-			LPCTSTR lpDirectory,	// default directory string [in]
-			LPTSTR lpResult 		// buffer for executable file name [out]
+			LPCWSTR lpFile,		// filename string [in]
+			LPCWSTR lpDirectory,	// default directory string [in]
+			LPWSTR lpResult 		// buffer for executable file name [out]
 		);"
 
-	<stdcall: handle FindExecutableA lpstr lpstr lpstr>
+	<stdcall: handle FindExecutableW lpwstr lpwstr lpwstr>
 	^self invalidCall
 !
 
@@ -118,14 +120,14 @@ getDesktopFolder
 	^answer
 !
 
-getSpecialFolderLocation: anInteger 
+getSpecialFolderLocation: anInteger
 	"
 	self default getSpecialFolderLocation: CSIDL_PERSONAL
 	"
 
 	| pszPath |
 	pszPath := File pathBuffer.
-	self 
+	self
 		shGetFolderPath: nil
 		nFolder: anInteger
 		hToken: nil
@@ -142,14 +144,14 @@ isUserAnAdmin
 	<stdcall: bool IsUserAnAdmin>
 	^self invalidCall!
 
-pathFromIDList: idList 
+pathFromIDList: idList
 	| pathname |
 	pathname := File pathBuffer.
 	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
 
 SHBrowseForFolder: aWin32BROWSEINFO
 
-	<stdcall: handle SHBrowseForFolderA lpvoid>
+	<stdcall: handle SHBrowseForFolderW lpvoid>
 	^self invalidCall!
 
 SHChangeNotify: wEventId uFlags: unit dwItem1: aLPCVOID1 dwItem2: aLPCVOID2
@@ -165,14 +167,14 @@ shellExecute: hwnd lpOperation: opString lpFile: fileString lpParameters: parmSt
 	"Opens or prints the specified file, which can be an executable or document file.
 		HINSTANCE ShellExecute(
 	  		HWND hwnd,			// handle to parent window
-			LPCTSTR lpOperation,	// pointer to string that specifies operation to perform
-			LPCTSTR lpFile,		// pointer to filename or folder name string
-			LPCTSTR lpParameters,	// pointer to string that specifies executable-file parameters 
-			LPCTSTR lpDirectory,	// pointer to string that specifies default directory
+			LPCWSTR lpOperation,	// pointer to string that specifies operation to perform
+			LPCWSTR lpFile,		// pointer to filename or folder name string
+			LPCWSTR lpParameters,	// pointer to string that specifies executable-file parameters 
+			LPCWSTR lpDirectory,	// pointer to string that specifies default directory
 			INT nShowCmd 			// whether file is shown when opened
 		);"
 
-	<stdcall: handle ShellExecuteA handle lpstr lpstr lpstr lpstr sdword>
+	<stdcall: handle ShellExecuteW handle lpwstr lpwstr lpwstr lpwstr sdword>
 	^self invalidCall!
 
 shellOpen: fileString
@@ -219,9 +221,9 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 			int nFolder,
 			HANDLE hToken,
 			DWORD dwFlags,
-			LPSTR pszPath);"
+			LPWSTR pszPath);"
 
-	<stdcall: hresult SHGetFolderPathA handle sdword handle dword lpstr>
+	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
 	^self invalidCall!
 
 SHGetMalloc: ppMalloc
@@ -232,7 +234,7 @@ SHGetMalloc: ppMalloc
 
 SHGetPathFromIDList: pidl pszPath: pszPath
 
-	<stdcall: bool SHGetPathFromIDListA handle lpstr>
+	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
 	^self invalidCall! !
 !ShellLibrary categoriesFor: #allocator!accessing!public! !
 !ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !

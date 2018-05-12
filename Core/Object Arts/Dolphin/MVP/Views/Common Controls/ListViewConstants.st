@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #ListViewConstants put: (PoolConstantsDictionary named: #ListViewConstants)!
 ListViewConstants at: 'LV_MAX_WORKAREAS' put: 16r10!
@@ -76,9 +76,8 @@ ListViewConstants at: 'LVM_EDITLABEL' put: 16r1017!
 ListViewConstants at: 'LVM_ENSUREVISIBLE' put: 16r1013!
 ListViewConstants at: 'LVM_FINDITEM' put: 16r100D!
 ListViewConstants at: 'LVM_FIRST' put: 16r1000!
-ListViewConstants at: 'LVM_GETBKIMAGE' put: 16r1045!
+ListViewConstants at: 'LVM_GETBKIMAGEW' put: 16r108B!
 ListViewConstants at: 'LVM_GETCALLBACKMASK' put: 16r100A!
-ListViewConstants at: 'LVM_GETCOLUMNA' put: 16r1019!
 ListViewConstants at: 'LVM_GETCOLUMNORDERARRAY' put: 16r103B!
 ListViewConstants at: 'LVM_GETCOLUMNW' put: 16r105F!
 ListViewConstants at: 'LVM_GETCOLUMNWIDTH' put: 16r101D!
@@ -89,7 +88,6 @@ ListViewConstants at: 'LVM_GETHOTCURSOR' put: 16r103F!
 ListViewConstants at: 'LVM_GETHOTITEM' put: 16r103D!
 ListViewConstants at: 'LVM_GETHOVERTIME' put: 16r1048!
 ListViewConstants at: 'LVM_GETIMAGELIST' put: 16r1002!
-ListViewConstants at: 'LVM_GETITEMA' put: 16r1005!
 ListViewConstants at: 'LVM_GETITEMCOUNT' put: 16r1004!
 ListViewConstants at: 'LVM_GETITEMPOSITION' put: 16r1010!
 ListViewConstants at: 'LVM_GETITEMRECT' put: 16r100E!
@@ -109,16 +107,13 @@ ListViewConstants at: 'LVM_GETVIEW' put: 16r108F!
 ListViewConstants at: 'LVM_GETVIEWRECT' put: 16r1022!
 ListViewConstants at: 'LVM_GETWORKAREAS' put: 16r1046!
 ListViewConstants at: 'LVM_HITTEST' put: 16r1012!
-ListViewConstants at: 'LVM_INSERTCOLUMNA' put: 16r101B!
 ListViewConstants at: 'LVM_INSERTCOLUMNW' put: 16r1061!
-ListViewConstants at: 'LVM_INSERTITEMA' put: 16r1007!
 ListViewConstants at: 'LVM_INSERTITEMW' put: 16r104D!
 ListViewConstants at: 'LVM_REDRAWITEMS' put: 16r1015!
 ListViewConstants at: 'LVM_SCROLL' put: 16r1014!
 ListViewConstants at: 'LVM_SETBKCOLOR' put: 16r1001!
-ListViewConstants at: 'LVM_SETBKIMAGE' put: 16r1044!
+ListViewConstants at: 'LVM_SETBKIMAGEW' put: 16r108A!
 ListViewConstants at: 'LVM_SETCALLBACKMASK' put: 16r100B!
-ListViewConstants at: 'LVM_SETCOLUMNA' put: 16r101A!
 ListViewConstants at: 'LVM_SETCOLUMNORDERARRAY' put: 16r103A!
 ListViewConstants at: 'LVM_SETCOLUMNW' put: 16r1060!
 ListViewConstants at: 'LVM_SETCOLUMNWIDTH' put: 16r101E!
@@ -128,11 +123,9 @@ ListViewConstants at: 'LVM_SETHOTITEM' put: 16r103C!
 ListViewConstants at: 'LVM_SETHOVERTIME' put: 16r1047!
 ListViewConstants at: 'LVM_SETICONSPACING' put: 16r1035!
 ListViewConstants at: 'LVM_SETIMAGELIST' put: 16r1003!
-ListViewConstants at: 'LVM_SETITEMA' put: 16r1006!
 ListViewConstants at: 'LVM_SETITEMCOUNT' put: 16r102F!
 ListViewConstants at: 'LVM_SETITEMPOSITION' put: 16r1031!
 ListViewConstants at: 'LVM_SETITEMSTATE' put: 16r102B!
-ListViewConstants at: 'LVM_SETITEMTEXTA' put: 16r102E!
 ListViewConstants at: 'LVM_SETITEMTEXTW' put: 16r1074!
 ListViewConstants at: 'LVM_SETITEMW' put: 16r104C!
 ListViewConstants at: 'LVM_SETSELECTIONMARK' put: 16r1043!
@@ -145,7 +138,6 @@ ListViewConstants at: 'LVM_SORTITEMS' put: 16r1030!
 ListViewConstants at: 'LVM_SUBITEMHITTEST' put: 16r1039!
 ListViewConstants at: 'LVM_UPDATE' put: 16r102A!
 ListViewConstants at: 'LVN_BEGINDRAG' put: -16r6D!
-ListViewConstants at: 'LVN_BEGINLABELEDITA' put: -16r69!
 ListViewConstants at: 'LVN_BEGINLABELEDITW' put: -16rAF!
 ListViewConstants at: 'LVN_BEGINRDRAG' put: -16r6F!
 ListViewConstants at: 'LVN_BEGINSCROLL' put: -16rB4!
@@ -154,17 +146,13 @@ ListViewConstants at: 'LVN_COLUMNDROPDOWN' put: -16rA4!
 ListViewConstants at: 'LVN_COLUMNOVERFLOWCLICK' put: -16rA6!
 ListViewConstants at: 'LVN_DELETEALLITEMS' put: -16r68!
 ListViewConstants at: 'LVN_DELETEITEM' put: -16r67!
-ListViewConstants at: 'LVN_ENDLABELEDITA' put: -16r6A!
 ListViewConstants at: 'LVN_ENDLABELEDITW' put: -16rB0!
 ListViewConstants at: 'LVN_ENDSCROLL' put: -16rB5!
 ListViewConstants at: 'LVN_FIRST' put: -16r64!
-ListViewConstants at: 'LVN_GETDISPINFOA' put: -16r96!
 ListViewConstants at: 'LVN_GETDISPINFOW' put: -16rB1!
 ListViewConstants at: 'LVN_GETEMPTYMARKUP' put: -16rBB!
-ListViewConstants at: 'LVN_GETINFOTIPA' put: -16r9D!
 ListViewConstants at: 'LVN_GETINFOTIPW' put: -16r9E!
 ListViewConstants at: 'LVN_HOTTRACK' put: -16r79!
-ListViewConstants at: 'LVN_INCREMENTALSEARCHA' put: -16rA2!
 ListViewConstants at: 'LVN_INCREMENTALSEARCHW' put: -16rA3!
 ListViewConstants at: 'LVN_INSERTITEM' put: -16r66!
 ListViewConstants at: 'LVN_ITEMACTIVATE' put: -16r72!
@@ -175,10 +163,8 @@ ListViewConstants at: 'LVN_LAST' put: -16rC7!
 ListViewConstants at: 'LVN_LINKCLICK' put: -16rB8!
 ListViewConstants at: 'LVN_MARQUEEBEGIN' put: -16r9C!
 ListViewConstants at: 'LVN_ODCACHEHINT' put: -16r71!
-ListViewConstants at: 'LVN_ODFINDITEMA' put: -16r98!
 ListViewConstants at: 'LVN_ODFINDITEMW' put: -16rB3!
 ListViewConstants at: 'LVN_ODSTATECHANGED' put: -16r73!
-ListViewConstants at: 'LVN_SETDISPINFOA' put: -16r97!
 ListViewConstants at: 'LVN_SETDISPINFOW' put: -16rB2!
 ListViewConstants at: 'LVNI_ABOVE' put: 16r100!
 ListViewConstants at: 'LVNI_ALL' put: 16r0!

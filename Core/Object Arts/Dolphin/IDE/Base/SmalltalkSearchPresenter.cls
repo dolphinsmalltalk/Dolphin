@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #SmalltalkSearchPresenter
 	instanceVariableNames: 'environment'
@@ -173,7 +173,7 @@ searchItemsStartingWith: aString maxItems: anInteger
 					"Force string equality--class names are Symbols, but metaclass names are Strings"
 					[:each | each name equals: classNamePrefix]]
 				ifFalse: 
-					[(aString includes: Character space)
+					[(aString includes: $\x20)
 						ifTrue: [[:each | each name beginsWith: aString]]
 						ifFalse: [[:each | each isMetaclass not and: [each name beginsWith: aString]]]].
 	classes := environment classes select: classFilter.

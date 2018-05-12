@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ValuePresenter subclass: #ScintillaTextStylePresenter
 	instanceVariableNames: 'facePresenter pointSizePresenter forecolorPresenter backcolorPresenter isItalicPresenter isBoldPresenter isUnderlinedPresenter casePresenter characterSetPresenter previewPresenter fillToEndOfLinePresenter normalStyle defaultStyle isInvisiblePresenter isHotspotPresenter isReadOnlyPresenter namePresenter idPresenter'
@@ -63,11 +63,13 @@ chooseForecolor
 createComponents
 	"Create the presenters contained by the receiver"
 
+	| nonVerticalFonts |
 	super createComponents.
 	namePresenter := self add: TextPresenter new name: 'name'.
 	idPresenter := self add: TextPresenter new name: 'id'.
-	facePresenter := self add: ((ChoicePresenter new)
-						choices: ((Canvas forDesktop fontNames asSortedCollection asOrderedCollection)
+	nonVerticalFonts := Canvas forDesktop fontNames reject: [:each | each first = $@].
+	facePresenter := self add: (ChoicePresenter new
+						choices: (nonVerticalFonts asSortedCollection asOrderedCollection
 									addFirst: nil;
 									yourself);
 						yourself)

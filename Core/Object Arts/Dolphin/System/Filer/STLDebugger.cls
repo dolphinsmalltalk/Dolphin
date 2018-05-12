@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STLInFiler subclass: #STLDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets slotName'

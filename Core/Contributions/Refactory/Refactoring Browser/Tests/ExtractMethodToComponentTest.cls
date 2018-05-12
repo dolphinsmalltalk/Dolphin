@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #ExtractMethodToComponentTest
 	instanceVariableNames: ''
@@ -44,9 +44,8 @@ testExtractFailure
 
 testExtractMethodAtEndOfMethodThatNeedsReturn
 	| refactoring class selectorsSize |
-	refactoring := ExtractMethodToComponentRefactoring 
-				extract: (self convertInterval: (52 to: 182)
-						for: (LintRuleTest sourceCodeAt: #openEditor))
+	refactoring := ExtractMethodToComponentRefactoring
+				extract: (self convertInterval: (52 to: 182) for: (LintRuleTest sourceCodeAt: #openEditor))
 				from: #openEditor
 				in: LintRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
@@ -57,25 +56,24 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	class := refactoring model classNamed: #LintRuleTest.
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [self executeRefactoring: refactoring].
-	self 
-		assert: (class parseTreeFor: #openEditor) = (RBParser 
-						parseMethod: 'openEditor
+	self assert: (class parseTreeFor: #openEditor)
+		equals: (RBParser
+				parseMethod: 'openEditor
 								| rules |
 								rules := self failedRules.
 								^rules foo: self').
-	self 
-		assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:) 
-				= (RBParser 
-						parseMethod: 'foo: asdf
+	self assert: ((refactoring model classNamed: #Collection) parseTreeFor: #foo:)
+		equals: (RBParser
+				parseMethod: 'foo: asdf
 								self isEmpty ifTrue: [^asdf].
 								self size == 1 ifTrue: [^self first viewResults].
 								SmalllintResultEditor openOn: asdf label: asdf name.
 								^asdf').
-	self assert: class selectors size = selectorsSize!
+	self assert: class selectors size equals: selectorsSize!
 
 testMoveWithoutSelfReference
 	| refactoring class selectorsSize |
-	refactoring := ExtractMethodToComponentRefactoring 
+	refactoring := ExtractMethodToComponentRefactoring
 				extract: (self convertInterval: (118 to: 285)
 						for: (RBReadBeforeWrittenTester sourceCodeAt: #copyDictionary:))
 				from: #copyDictionary:
@@ -87,19 +85,17 @@ testMoveWithoutSelfReference
 	class := refactoring model classNamed: #RBReadBeforeWrittenTester.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
-	self 
-		assert: (class parseTreeFor: #copyDictionary:) = (RBParser 
-						parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
-	self 
-		assert: ((refactoring model classNamed: #Dictionary) 
-				parseTreeFor: #copyWithAssociations) = (RBParser 
-							parseMethod: 'copyWithAssociations 
+	self assert: (class parseTreeFor: #copyDictionary:)
+		equals: (RBParser parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
+	self assert: ((refactoring model classNamed: #Dictionary) parseTreeFor: #copyWithAssociations)
+		equals: (RBParser
+				parseMethod: 'copyWithAssociations 
 							| newDictionary |
 							newDictionary := Dictionary new: self size.
 							self
 								keysAndValuesDo: [:key :value | newDictionary at: key put: value].
 							^newDictionary').
-	self assert: class selectors size = selectorsSize!
+	self assert: class selectors size equals: selectorsSize!
 
 testNonExistantSelector
 	self shouldFail: (ExtractMethodToComponentRefactoring 

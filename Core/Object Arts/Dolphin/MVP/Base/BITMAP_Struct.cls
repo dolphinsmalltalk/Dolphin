@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #BITMAP
 	instanceVariableNames: ''
@@ -73,13 +73,13 @@ defineFields
 		BITMAP compileDefinition
 
 		typedef struct tagBITMAP {  // bm 
-			   LONG   bmType; 
-			   LONG   bmWidth; 
-			   LONG   bmHeight; 
-			   LONG   bmWidthBytes; 
-			   WORD   bmPlanes; 
-			   WORD   bmBitsPixel; 
-			   LPVOID bmBits; 
+			Â  Â LONG   bmType; 
+			Â  Â LONG   bmWidth; 
+			Â  Â LONG   bmHeight; 
+			Â  Â LONG   bmWidthBytes; 
+			Â  Â WORD   bmPlanes; 
+			Â  Â WORD   bmBitsPixel; 
+			Â  Â LPVOID bmBits; 
 		} BITMAP;"
 
 	self

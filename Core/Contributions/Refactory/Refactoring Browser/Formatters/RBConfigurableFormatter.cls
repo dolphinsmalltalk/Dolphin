@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RBSourceFormatter subclass: #RBConfigurableFormatter
 	instanceVariableNames: 'lookaheadCode originalSource'
@@ -242,7 +242,7 @@ isMultiLineMessage: aMessageNode
 			self indent: IndentsForKeywords + 1 around: [self willBeMultiline: each]]) 
 		ifTrue: [^true].
 	aMessageNode isUnary ifTrue: [^self isLineTooLong: aMessageNode selector].
-	messageStream := WriteStream on: (String new: 100).
+	messageStream := WriteStream on: (Utf8String new: 100).
 	self 
 		with: aMessageNode selectorParts
 		and: aMessageNode arguments

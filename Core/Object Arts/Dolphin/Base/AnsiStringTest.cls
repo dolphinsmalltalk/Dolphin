@@ -1,0 +1,104 @@
+﻿"Filed out from Dolphin Smalltalk 7"!
+
+AbstractStringTest subclass: #AnsiStringTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+AnsiStringTest guid: (GUID fromString: '{c1474b06-e77d-41d7-ad4d-10d5114f8471}')!
+AnsiStringTest comment: 'Tests AnsiString.'!
+!AnsiStringTest categoriesForClass!Unclassified! !
+!AnsiStringTest methodsFor!
+
+assimilate: each 
+	^Character ansiValue: each asInteger!
+
+assimilateString: aString
+	^aString!
+
+collectionClass
+	^AnsiString!
+
+testAsPhrase
+	self assert: #'' asPhrase equals: ''.
+	self assert: #= asPhrase equals: '='.
+	self assert: ':=' asSymbol asPhrase equals: '='.
+	self assert: ':=:=' asSymbol asPhrase equals: '= ='.
+	self assert: #x asPhrase equals: 'X'.
+	self assert: #nl asPhrase equals: 'Nl'.
+	self assert: #x: asPhrase equals: 'X'.
+	self assert: ':' asSymbol asPhrase equals: ''.
+	self assert: '::' asSymbol asPhrase equals: ''.
+	self assert: ':a' asSymbol asPhrase equals: 'A'.
+	self assert: ':A' asSymbol asPhrase equals: 'A'.
+	self assert: ':a:' asSymbol asPhrase equals: 'A'.
+	self assert: ':A:' asSymbol asPhrase equals: 'A'.
+	self assert: '::a:' asSymbol asPhrase equals: 'A'.
+	self assert: '::A:' asSymbol asPhrase equals: 'A'.
+	self assert: '::a:b::c:D::E:f::G::h:' asSymbol asPhrase equals: 'A B C D E F G H'.
+	self assert: #assert: asPhrase equals: 'Assert'.
+	self assert: #testAsPhrase asPhrase equals: 'Test As Phrase'.
+	self assert: #newCopy: asPhrase equals: 'New Copy'.
+	self assert: #replaceFrom:to:with:startingAt: asPhrase equals: 'Replace From To With Starting At'.
+	self assert: #AXMethodName asPhrase equals: 'AXMethod Name'.
+	self assert: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: asPhrase
+		equals: 'Get IDs Of Names Rgsz Names C Names Lcid Rgdispid'!
+
+testClassWith
+	self assert: (AnsiString with: $a) equals: 'a' asAnsiString.
+	self assert: (AnsiString with: Character replacement)
+		equals: (AnsiString with: (Character value: 63))!
+
+testIndexOfSubCollectionStartingAtGPF
+	| strings search current |
+	#'1553'.
+	search := String new: 26.
+	strings := OrderedCollection new.
+	1 to: 1000
+		do: 
+			[:i |
+			current := String new: 970.
+			self assert: (current indexOfSubCollection: search startingAt: 965) identicalTo: 0.
+			strings add: current]!
+
+testMatch
+	"Match anything"
+
+	self assert: ('*' match: 'zort').
+	self assert: ('*' match: '').
+	"Leading wilcard, matches at end"
+	self assert: ('*baz' match: 'mobaz').
+	"Must match whole sequence"
+	self deny: ('*baz' match: 'mobazo').
+	"Leading and trailing wildcard"
+	self assert: ('*baz*' match: 'mobazo').
+	"No match"
+	self deny: ('*baz*' match: 'mozo').
+	"Trailing wildcard"
+	self assert: ('foo*' match: 'foozo').
+	self deny: ('foo*' match: 'bozo').
+	"* can match any length sequence"
+	self assert: ('foo*baz' match: 'foo23baz').
+	"* matches empty sequence"
+	self assert: ('foo*baz' match: 'foobaz').
+	"Has to match whole sequence"
+	self deny: ('foo*baz' match: 'foo23bazo').
+	"Case insensitive"
+	self assert: ('foo' match: 'Foo').
+	self deny: ('foo*baz*zort' match: 'foobazort').
+	"* should match empty sequence"
+	self assert: ('foo*baz*zort' match: 'foobazzort').
+	"# matches any single char"
+	self assert: ('*foo#zort' match: 'afoo3zortthenfoo3zort').
+	self assert: ('*foo*zort' match: 'afoodezortorfoo3zort').
+	#('**' 'f**' 'f**o' 'f*' '*f*' 'f#*' 'f##' '*oo' '#oo' '*o*' '#o#' '#o*' '*o#' 'fo*' 'fo#' '*foo*' '###' '*#' 'f*#' 'f*#o')
+		do: [:each | self assert: (each match: 'foo')].
+	#('bar' 'foo#' '#foo' '*foo#' '#foo*' '*bar*') do: [:each | self deny: (each match: 'foo')]! !
+!AnsiStringTest categoriesFor: #assimilate:!helpers!private! !
+!AnsiStringTest categoriesFor: #assimilateString:!helpers!private! !
+!AnsiStringTest categoriesFor: #collectionClass!helpers!private! !
+!AnsiStringTest categoriesFor: #testAsPhrase!public!unit tests! !
+!AnsiStringTest categoriesFor: #testClassWith!public! !
+!AnsiStringTest categoriesFor: #testIndexOfSubCollectionStartingAtGPF!public!unit tests! !
+!AnsiStringTest categoriesFor: #testMatch!public!unit tests! !
+

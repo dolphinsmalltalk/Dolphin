@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Clipboard
 	instanceVariableNames: 'isOpen registeredFormats'
@@ -9,6 +9,10 @@ Clipboard guid: (GUID fromString: '{87b4c463-026e-11d3-9fd7-00a0cc3e4a32}')!
 Clipboard comment: ''!
 !Clipboard categoriesForClass!System-Support! !
 !Clipboard methodsFor!
+
+addRegisteredFormat: formatName id: id converter: aTypeConverter
+	registeredFormats at: formatName put: {id. aTypeConverter}.
+	^id!
 
 apply: operation
         "Private - Evaluate the <niladicBlock> argument, operation, against
@@ -92,44 +96,34 @@ getBitmap
 
 	^self getBitmapIfNone: [self errorFormatNotAvailable: #Bitmap]!
 
-getBitmapIfNone: exceptionHandler 
+getBitmapIfNone: exceptionHandler
 	"Answer a Bitmap copied from the clipboard, or if none the result
-	of evaluating the <niladicValuable> exceptionHandler.
-	Note that because the clipboard retains ownership of the bitmap,
-	we must immediately copy it."
+	of evaluating the <niladicValuable> exceptionHandler."
 
-	^self apply: 
-			[| hBitmap |
-			hBitmap := UserLibrary default getClipboardData: CF_BITMAP.
-			hBitmap isNull 
-				ifTrue: [exceptionHandler value]
-				ifFalse: [(Bitmap fromHandle: hBitmap) copy]]!
+	^self getRegisteredFormat: #Bitmap ifNone: exceptionHandler!
 
-getBytesFormatId: format ifNone: exceptionHandler 
-	"Private - Answer a ByteArray of data for <integer> format stored 
-	on the clipboard. If no such format is currently available, the answers the
-	result of evaluating the <niladicValuable> exceptionHandler."
+getDIBSection
+        "Answer a Bitmap copied from the clipboard, or raise an 
+	exception if no Bitmap is available."
 
-	^self apply: 
-			[| hBytes bytes len |
-			hBytes := UserLibrary default getClipboardData: format.
-			hBytes isNull ifTrue: [^exceptionHandler value].
-			bytes := KernelLibrary default globalLock: hBytes.
-			len := ExternalMemory GetSize: bytes.
-			bytes := ByteArray fromAddress: bytes length: len.
-			KernelLibrary default globalUnlock: hBytes.
-			bytes]!
+	^self getDIBSectionIfNone: [self errorFormatNotAvailable: #DIBSection]!
+
+getDIBSectionIfNone: exceptionHandler
+	"Answer a <DIBSection> copied from the clipboard, or if none the result
+	of evaluating the <niladicValuable> exceptionHandler."
+
+	^self getRegisteredFormat: #DIBSection ifNone: exceptionHandler!
 
 getFormatName: format
-        "Answer the <readableString> name of the registered clipboard format 
+	"Answer the <readableString> name of the registered clipboard format 
 	identified by the <integer> format, or nil the format is not registered. "
-	
+
 	| name len |
-	name := Utf16String new: 256.
+	name := Utf16String newFixed: 256.
 	len := UserLibrary default
-			getClipboardFormatName: format
-			lpszFormatName: name
-			cchMaxCount: name size.
+				getClipboardFormatName: format
+				lpszFormatName: name
+				cchMaxCount: name size.
 	^len == 0 ifFalse: [(name resize: len) asUtf8String]!
 
 getObject
@@ -137,114 +131,111 @@ getObject
 
 	^self getObjectIfNone: [self errorFormatNotAvailable: #Object]!
 
-getObjectBinaryStoreBytes
-        "Answer the STB binary store bytes for the <object> stored on the the clipboard, 
-	or raise an exception if none is available."
-
-	^self getObjectBinaryStoreBytesIfNone: [self errorFormatNotAvailable: #Object]!
-
-getObjectBinaryStoreBytesIfNone: exceptionHandler
-        "Answer the STB binary store bytes for an <object> stored 
-	on the clipboard. If no object is currently available, the answers the
-	result of evaluating the <niladicValuable> exceptionHandler."
-
-	^self getBytesFormatId: self objectFormatId ifNone: exceptionHandler.!
-
 getObjectClass
-        "Answer the <Class> for the <Object> stored on the clipboard or 
-	raise an error if there is none."
+        "Answer the <Class> for the <Object> stored on the clipboard or raise an error if there is
+	none."
 
 	^self getObjectClassIfNone: [self errorFormatNotAvailable: #ObjectClass]!
 
 getObjectClassIfNone: exceptionHandler
-	"Answer the <Class> of the <Object> stored on the clipboard. 
-	If no object is currently available, the answers the result of 
-	evaluating the <niladicValuable> exceptionHandler."
+	"Answer the <Class> of the <Object> stored on the clipboard. If no object is currently
+	available, the answers the result of evaluating the <niladicValuable> exceptionHandler."
 
-	^Object fromBinaryStoreBytes: (self getBytesFormatId: self objectClassFormatId
-				ifNone: [^exceptionHandler value])!
+	^self getRegisteredFormat: #ObjectClass ifNone: exceptionHandler!
 
 getObjectIfNone: exceptionHandler
-        "Answer the <object> stored on the clipboard. 
-	If no object is currently available, the answers the result of 
-	evaluating the <niladicValuable> exceptionHandler."
+        "Answer the <object> stored on the clipboard. If no object is currently available, the
+	answers the result of evaluating the <niladicValuable> exceptionHandler."
 
-	^Object fromBinaryStoreBytes: (self getObjectBinaryStoreBytesIfNone: [^exceptionHandler value]).!
+	^self getRegisteredFormat: #Object ifNone: exceptionHandler!
 
-getRegisteredFormat: name ifNone: exceptionHandler 
-	^self getTextFormat: (registeredFormats at: name) ifNone: exceptionHandler!
+getRegisteredFormat: name ifNone: exceptionHandler
+	"Answer an <Object> representing the contents of the clipboard of the named pre-registered
+	format translated to an appropriate Smalltalk object using the right-to-left conversion of
+	the type converter registered for that format. If the format is not currently available, the
+	answers the result of evaluating the <niladicValuable> exceptionHandler."
 
-getRichText
-        "Answer a <RichText> containing the the Rich Text contents 
-	of the clipboard. If no rich text is currently available, raise 
-	an exception."
-
-	^self getRichTextIfNone: [self errorFormatNotAvailable: #RichText]!
+	| formatId |
+	formatId := registeredFormats at: name.
+	^self apply: 
+			[| handle |
+			handle := UserLibrary default getClipboardData: formatId first.
+			handle isNull ifTrue: [^exceptionHandler value].
+			formatId last rightToLeft: handle]!
 
 getText
-        "Answer a <readableString> containing the the CF_TEXT contents 
+        "Answer a <readableString> containing the the CF_UNICODETEXT contents 
 	of the clipboard. If no text is currently available, raise an exception."
 
 	^self getTextIfNone: [self errorFormatNotAvailable: #String]!
 
-getTextFormat: formatId ifNone: exceptionHandler 
-	"Private - Answer a <readableString> containing the text contents
-	of the clipboard of the specified format. If the format is not currently 
-	available, the answers the result of evaluating the <niladicValuable> 
-	exceptionHandler.
-	N.B. It is not checked that formatId is actually a text format."
-
-	^self apply: 
-			[| hText pText text |
-			hText := UserLibrary default getClipboardData: formatId.
-			hText isNull ifTrue: [^exceptionHandler value].
-			pText := KernelLibrary default globalLock: hText.
-			text := String fromAddress: pText.
-			KernelLibrary default globalUnlock: hText.
-			text]!
-
 getTextIfNone: exceptionHandler
-        "Answer a <readableString> containing the the CF_TEXT contents 
+	"Answer a <readableString> containing the the CF_TEXT contents 
 	of the clipboard. If no text is currently available, the answers the
 	result of evaluating the <niladicValuable> exceptionHandler."
 
-	^self getTextFormat: CF_TEXT ifNone: exceptionHandler!
+	^self getRegisteredFormat: #String ifNone: exceptionHandler!
 
 getTextOrEmpty
 	^self getTextIfNone: ['']!
 
 initialize
 	"Private - Initialize the receiver's instance variables.
-	Answer the receiver."
+	Answer the receiver.
+		Clipboard current initialize
+	"
 
-	| rtfFormat objectFormat objectClassFormat |
+	| objectFormat objectClassFormat nullConversion objectConverter |
 	isOpen := false.
-
-	registeredFormats := LookupTable new.
-	rtfFormat := UserLibrary default registerClipboardFormat: 'Rich Text Format'.
+	registeredFormats := IdentityDictionary new.
 	objectFormat := UserLibrary default registerClipboardFormat: 'Smalltalk Object Format'.
 	objectClassFormat := UserLibrary default registerClipboardFormat: 'Smalltalk Object Class Format'.
+	nullConversion := NullConverter new.
+	objectConverter := PluggableTypeConverter
+				leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj binaryStoreBytes]
+				rightToLeft: [:handle | Object fromBinaryStoreBytes: (ByteArray fromGlobalHandle: handle)].
 	registeredFormats
-		at: #RichText put: rtfFormat;
-		at: #String put: CF_TEXT;
-		at: #Utf16String put: CF_UNICODETEXT;
-		at: #Bitmap put: CF_BITMAP;
-		"at: #DIBSection put: CF_DIB;"	"Don't know how to do these at present"
-		at: #Palette put: CF_PALETTE;
-		at: #Object put: objectFormat;
-		at: #ObjectClass put: objectClassFormat
-!
+		at: #String
+			put: {CF_UNICODETEXT.
+					PluggableTypeConverter
+						leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asUtf16String]
+						rightToLeft: [:handle | Utf16String fromGlobalHandle: handle]};
+		at: #AnsiString
+			put: {CF_TEXT.
+					PluggableTypeConverter
+						leftToRight: [:obj | ExternalMemory copyBytesToGlobalHeap: obj asString asAnsiString]
+						rightToLeft: [:handle | AnsiString fromGlobalHandle: handle]};
+		at: #Bitmap
+			put: {CF_BITMAP.
+					PluggableTypeConverter leftToRight: [:bmp | bmp copy detachHandle]
+						rightToLeft: 
+							[:hBitmap |
+							"Note that because the clipboard retains ownership of the bitmap, we must immediately copy it."
+							(Bitmap fromHandle: hBitmap) copy]};
+		at: #Palette put: {CF_PALETTE. nullConversion};
+		at: #Object put: {objectFormat. objectConverter};
+		at: #ObjectClass put: {objectClassFormat. objectConverter};
+		at: #DIBSection
+			put: {CF_DIB.
+					PluggableTypeConverter leftToRight: [:ds | ds copyToGlobalHeap]
+						rightToLeft: [:handle | DIBSection fromGlobalHandle: handle]}!
 
 isBitmapAvailable
 	"Answer whether the clipboard contains a bitmap."
 
 	^self isFormatIdAvailable: CF_BITMAP!
 
-isFormatAvailable: format
-        "Answer whether the clipboard contains data in the specified
-	<integer> format (e.g. CF_TEXT)."
+isDIBAvailable
+	"Answer whether the clipboard contains a DIBSection."
 
-	^self isFormatIdAvailable: (registeredFormats at: format ifAbsent: [^false])!
+	^self isFormatIdAvailable: CF_DIB!
+
+isFormatAvailable: aString
+	"Answer whether the clipboard contains data in the named format (e.g. #String)."
+
+	| formatInfo |
+	^(formatInfo := registeredFormats at: aString ifAbsent: []) notNil
+		and: [self isFormatIdAvailable: formatInfo first]!
 
 isFormatIdAvailable: dwFormat
 	"Private - Answer whether the clipboard contains the specified
@@ -252,25 +243,20 @@ isFormatIdAvailable: dwFormat
 
 	^UserLibrary default isClipboardFormatAvailable: dwFormat!
 
+isFormatRegistered: aString
+	^registeredFormats includesKey: aString!
+
 isObjectAvailable
 	"Answer whether the clipboard contains an object."
 
 	^self isFormatAvailable: #Object!
 
 isTextAvailable
-        "Answer whether the clipboard contains text data (i.e. CF_TEXT)."
+	"Answer whether the clipboard contains text data (i.e. CF_TEXT). Note that because of the
+	Clipboards auto-format conversion, this will always be true if CF_UNICODETEXT is available
+	too, and vice versa."
 
 	^self isFormatIdAvailable: CF_TEXT!
-
-objectClassFormatId
-	"Private - Answer the registered id for Smalltalk <Class> objects."
-
-	^registeredFormats at: #ObjectClass!
-
-objectFormatId
-	"Private - Answer the registered id for Smalltalk objects."
-
-	^registeredFormats at: #Object!
 
 open
         "Open the clipboard."
@@ -280,19 +266,23 @@ open
 	^wasOpen!
 
 registerFormat: formatName
-        "Register the <readableString> formatName as a user-defined 
+	"Register the <readableString> formatName as a user-defined 
 	clipboard format. Answer the format identifier."
 
+	^self registerFormat: formatName converter: NullConverter new!
+
+registerFormat: formatName converter: aTypeConverter
+	"Register the <readableString> formatName as a user-defined clipboard format. Answer the
+	format identifier. The type converter needs to convert objects to sutiable handles as its left-to-righ
+	conversion, and from global memory handles to objects for its right-to-left."
+
 	| id |
-	id := UserLibrary default registerClipboardFormat: formatName asParameter.
+	id := UserLibrary default registerClipboardFormat: formatName.
 	id == 0 ifTrue: [^Win32Error signal].
-	registeredFormats at: formatName put: id.
-	^id!
-
-rtfFormatId
-	"Private - Answer the registered id for rich text."
-
-	^registeredFormats at: #RichText!
+	^self
+		addRegisteredFormat: formatName
+		id: id
+		converter: aTypeConverter!
 
 setBitmap: aBitmap
         "Transfer the specified bitmap to the clipboard."
@@ -301,44 +291,19 @@ setBitmap: aBitmap
 !
 
 setBitmap: bmp format: formatName
-        "Copy the specified bitmap to the clipboard as an entry
+	"Copy the specified bitmap to the clipboard as an entry
 	of the specified format name."
 
-	self setBitmap: bmp formatId: (registeredFormats at: formatName)!
-
-setBitmap: aBitmap formatId: formatId
-        "Private - Transfer the specified bitmap to the clipboard - note that
-	this is destructive with respect to the bitmap, since it loses ownership
-	of its external resource."
-	
 	| hBitmap |
-	hBitmap := self setData: aBitmap detachHandle formatId: formatId.
-	hBitmap  isNull ifTrue: [^Win32Error signal]!
-
-setBytes: aByteArray formatId: format 
-	"Private - Transfers aByteArray to the clipboard as data the <integer> format"
-
-	| hMem pMem len kernel |
-	kernel := KernelLibrary default.
-	len := aByteArray basicSize.	"want size in bytes"
-	hMem := kernel globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len + 1.
-	pMem := kernel globalLock: hMem.
-	pMem 
-		replaceFrom: 1
-		to: len
-		with: aByteArray
-		startingAt: 1.
-	kernel globalUnlock: hMem.
-	self setData: hMem formatId: format!
+	hBitmap := self setRegisteredFormat: formatName data: bmp.
+	hBitmap isNull ifTrue: [Win32Error signal]!
 
 setData: handle formatId: formatId
-	"Private - Copy the data with the specified handle to the clipboard
-	with the specified <integer> format. If the clipboard is not currently
-	open, then it is opened and emptied, and then closed after setting
-	the data. If the clipboard is already open, then the data is simply
-	copied to the clipboard without emptying or closing it. This is to
-	allow the copying of multiple-formats for the same object, and also
-	to prevent lots of opening and closing."
+	"Private - Copy the data with the specified handle to the clipboard with the specified
+	<integer> format. If the clipboard is not currently open, then it is opened and emptied, and
+	then closed after setting the data. If the clipboard is already open, then the data is
+	simply copied to the clipboard without emptying or closing it. This is to allow the copying
+	of multiple-formats for the same object, and also to prevent lots of opening and closing."
 
 	| wasOpen |
 	wasOpen := self open.
@@ -348,52 +313,31 @@ setData: handle formatId: formatId
 			ensure: [wasOpen ifFalse: [self close]]!
 
 setDIB: aDIBSection
-        "Transfer the specified DIBSection bitmap to the clipboard."
-
-	self setBitmap: aDIBSection format: CF_DIB!
+	Notification deprecated.	"Use setBitmap, or setRegisteredFormat: #DIBSection data: <blah>"
+	self setBitmap: aDIBSection!
 
 setObject: anObject
-        "Transfers anObject to the clipboard."
+	"Transfers anObject to the clipboard."
 
-	self setObjectBinaryStoreBytes: anObject binaryStoreBytes class: anObject class!
+	self apply: 
+			[self setRegisteredFormat: #Object data: anObject.
+			self setRegisteredFormat: #ObjectClass data: anObject class]!
 
-setObjectBinaryStoreBytes: aByteArray class: aClass
-        "Private - Transfers aByteArray to the clipboard as the
-	binary store bytes of an object of aClass"
+setRegisteredFormat: aString data: anObject
+	"Copy the specified object to the clipboard after translation to the named clipboard format
+	using the left-to-right conversion of the type converter registered for the format.."
 
-	self apply: [
-		self setBytes: aByteArray formatId: self objectFormatId.
-		self setBytes: aClass binaryStoreBytes formatId: self objectClassFormatId ]!
+	| format |
+	format := registeredFormats at: aString.
+	^self setData: (format last leftToRight: anObject) formatId: format first!
 
 setText: text
-        "Private - Copy the <String> text to the clipboard as an entry
-	in CF_TEXT format."
+	"Copy the <String> text to the clipboard as an entry in CF_UNICODETEXT format. Note that
+	although Dolphin's Strings can contain embedded null characters, if such a string is copied
+	to the clipboard the text is considered to terminate at the first null character."
 
-	self setText: text format: text class name!
-
-setText: text format: formatName
-        "Copy the <readableString> text to the clipboard as an entry
-	of the specified format name."
-
-	self setText: text formatId: (registeredFormats at: formatName)!
-
-setText: textObject formatId: formatId 
-	"Private - Copy the <readableString> text to the clipboard as an entry
-	of the specified <integer> format."
-
-	| hMem pMem len kernel text |
-	kernel := KernelLibrary default.
-	text := textObject asParameter.
-	len := text basicSize.	"want size in bytes"
-	hMem := kernel globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: len + 1.
-	pMem := kernel globalLock: hMem.
-	pMem 
-		replaceFrom: 1
-		to: len
-		with: text
-		startingAt: 1.
-	kernel globalUnlock: hMem.
-	self setData: hMem formatId: formatId! !
+	self setRegisteredFormat: #String data: text! !
+!Clipboard categoriesFor: #addRegisteredFormat:id:converter:!operations!public! !
 !Clipboard categoriesFor: #apply:!operations!private! !
 !Clipboard categoriesFor: #availableFormatIds!enquiries!public! !
 !Clipboard categoriesFor: #availableFormats!enquiries!public! !
@@ -406,42 +350,35 @@ setText: textObject formatId: formatId
 !Clipboard categoriesFor: #free!public!realizing/unrealizing! !
 !Clipboard categoriesFor: #getBitmap!accessing!public! !
 !Clipboard categoriesFor: #getBitmapIfNone:!accessing!public! !
-!Clipboard categoriesFor: #getBytesFormatId:ifNone:!accessing!private! !
+!Clipboard categoriesFor: #getDIBSection!accessing!public! !
+!Clipboard categoriesFor: #getDIBSectionIfNone:!accessing!public! !
 !Clipboard categoriesFor: #getFormatName:!accessing!public! !
 !Clipboard categoriesFor: #getObject!accessing!public! !
-!Clipboard categoriesFor: #getObjectBinaryStoreBytes!accessing!public! !
-!Clipboard categoriesFor: #getObjectBinaryStoreBytesIfNone:!accessing!public! !
 !Clipboard categoriesFor: #getObjectClass!accessing!public! !
 !Clipboard categoriesFor: #getObjectClassIfNone:!accessing!public! !
 !Clipboard categoriesFor: #getObjectIfNone:!accessing!public! !
 !Clipboard categoriesFor: #getRegisteredFormat:ifNone:!accessing!public! !
-!Clipboard categoriesFor: #getRichText!accessing!public! !
 !Clipboard categoriesFor: #getText!accessing!public! !
-!Clipboard categoriesFor: #getTextFormat:ifNone:!accessing!private! !
 !Clipboard categoriesFor: #getTextIfNone:!accessing!public! !
 !Clipboard categoriesFor: #getTextOrEmpty!accessing!public! !
 !Clipboard categoriesFor: #initialize!initializing!private! !
 !Clipboard categoriesFor: #isBitmapAvailable!public!testing! !
+!Clipboard categoriesFor: #isDIBAvailable!public!testing! !
 !Clipboard categoriesFor: #isFormatAvailable:!public!testing! !
 !Clipboard categoriesFor: #isFormatIdAvailable:!private!testing! !
+!Clipboard categoriesFor: #isFormatRegistered:!public!testing! !
 !Clipboard categoriesFor: #isObjectAvailable!public!testing! !
 !Clipboard categoriesFor: #isTextAvailable!public!testing! !
-!Clipboard categoriesFor: #objectClassFormatId!constants!private! !
-!Clipboard categoriesFor: #objectFormatId!constants!private! !
 !Clipboard categoriesFor: #open!public!realizing/unrealizing! !
 !Clipboard categoriesFor: #registerFormat:!operations!public! !
-!Clipboard categoriesFor: #rtfFormatId!constants!private! !
+!Clipboard categoriesFor: #registerFormat:converter:!operations!public! !
 !Clipboard categoriesFor: #setBitmap:!accessing!public! !
 !Clipboard categoriesFor: #setBitmap:format:!accessing!public! !
-!Clipboard categoriesFor: #setBitmap:formatId:!accessing!private! !
-!Clipboard categoriesFor: #setBytes:formatId:!accessing!private! !
 !Clipboard categoriesFor: #setData:formatId:!accessing!private! !
 !Clipboard categoriesFor: #setDIB:!accessing!public! !
 !Clipboard categoriesFor: #setObject:!accessing!public! !
-!Clipboard categoriesFor: #setObjectBinaryStoreBytes:class:!accessing!public! !
-!Clipboard categoriesFor: #setText:!accessing!private! !
-!Clipboard categoriesFor: #setText:format:!accessing!public! !
-!Clipboard categoriesFor: #setText:formatId:!accessing!private! !
+!Clipboard categoriesFor: #setRegisteredFormat:data:!accessing!public! !
+!Clipboard categoriesFor: #setText:!accessing!public! !
 
 !Clipboard class methodsFor!
 

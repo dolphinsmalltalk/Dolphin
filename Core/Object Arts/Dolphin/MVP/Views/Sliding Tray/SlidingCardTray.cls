@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: 'theme slider pinSize pinInteractor _sctReserved1 _sctReserved2'
@@ -164,7 +164,7 @@ onViewDestroyed
 
 openTheme
 	theme := super isThemed
-				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'EXPLORERBAR' asUtf16String].
+				ifTrue: [ThemeLibrary default openThemeData: handle pszClassList: 'EXPLORERBAR'].
 	pinSize := SystemMetrics current smallIconExtent asParameter.
 	theme isNull
 		ifFalse: 

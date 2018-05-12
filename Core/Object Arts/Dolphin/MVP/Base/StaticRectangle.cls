@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #StaticRectangle
 	instanceVariableNames: ''
@@ -46,7 +46,7 @@ initialize
 			self initialize
 	"
 
-	StyleMap := LookupTable new
+	StyleMap := IdentityDictionary new
 				at: #blackFrame put: SS_BLACKFRAME;
 				at: #blackRectangle put: SS_BLACKRECT;
 				at: #grayFrame put: SS_GRAYFRAME;

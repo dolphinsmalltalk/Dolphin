@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #View
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -324,15 +324,15 @@ basicAddSubView: aView
 		show.	"Forces creation"
 	^aView!
 
-basicCreateAt: position extent: extentPoint 
+basicCreateAt: position extent: extentPoint
 	"Private - Create the Win32 window for the receiver, and answer its handle.
 	N.B. The window may not be properly subclassed - use #createAt:extent: instead."
 
 	| dwStyle |
 	dwStyle := self baseCreationStyle.
-	^UserLibrary default 
+	^UserLibrary default
 		createWindowEx: self extendedStyle
-		lpClassName: self class winClassName
+		lpClassName: self class winClassName asUtf16String
 		lpWindowName: self windowName
 		dwStyle: dwStyle
 		x: position x
@@ -420,7 +420,7 @@ beDefaultThemed
 		ifTrue: 
 			[ThemeLibrary default
 				setWindowTheme: self handle
-				pszSubAppName: (self themeSubAppName ifNotNil: [:name | name asUtf16String])
+				pszSubAppName: self themeSubAppName
 				pszSubIdList: nil.
 			self openTheme]!
 
@@ -1458,12 +1458,13 @@ getWindowText
 
 	| textLen text |
 	textLen := self textLength.
-	text := String new: textLen.
+	text := Utf16String newFixed: textLen.
 	UserLibrary default
 		getWindowText: handle
 		lpString: text
 		nMaxCount: textLen + 1.
-	^text!
+	"To avoid propagating Utf16Strings everywhere, convert to UTF-8"
+	^text asUtf8String!
 
 getWndProc
 	"Private - Answer the window procedure of the receiver."
@@ -1977,6 +1978,11 @@ isView
 	"Answer whether the receiver is a View."
 
 	^true!
+
+isWindowUnicode
+	"This should always be true in Dolphin now."
+
+	^UserLibrary default isWindowUnicode: handle!
 
 isWindowVisible
 	"Answer whether both the receiver and its parent have the WS_VISIBLE style,  it is therefore possible
@@ -3094,6 +3100,16 @@ sendMessage: anIntegerMessageID wParam: wParam lpParam: lParam
 		wParam: wParam
 		lpParam: lParam!
 
+sendMessage: anIntegerMessageID wParam: wParam szParam: lParam
+	"Private - Send the Win32 message anIntegerMessageID with parameters wParam and lpParam (pointer) to the receiver's
+	Window."
+
+	^UserLibrary default
+		sendMessage: handle
+		msg: anIntegerMessageID
+		wParam: wParam
+		lpParam: lParam asUtf16String!
+
 setCapture
 	"Sets mouse capture to the receiver."
 
@@ -3182,7 +3198,7 @@ setWindowLong: anIntegerOffset to: anIntegerValue
 	"Private - Set the receiver's Window DWORD at the specified offset to the specified integer value."
 
 	^UserLibrary default
-		setWindowLongA: handle
+		setWindowLong: handle
 		nIndex: anIntegerOffset
 		dwNewLong: anIntegerValue!
 
@@ -3216,10 +3232,21 @@ setWndProc: anAddress
 	"Private - Set the window procedure of the receiver to the argument, anAddress.
 	Answer the old window procedure address."
 
-	^UserLibrary default
-		setWindowDWORD: handle
-		nIndex: GWL_WNDPROC
-		dwNewDWORD: anAddress!
+	"Here we are overridding to subclass as Unicode, which enables the full Unicode character set to be used in static views."
+
+	"Note that the compiler should optimise away the condition as VMConstants.IsWin64 is a constant value"
+
+	^VMConstants.IsWin64
+		ifTrue: 
+			[UserLibrary default
+				setWindowULongPtr: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]
+		ifFalse: 
+			[UserLibrary default
+				setWindowULong: handle
+				nIndex: GWL_WNDPROC
+				dwNewLong: anAddress]!
 
 show
 	"Makes the receiver visible."
@@ -4629,6 +4656,7 @@ zOrderTop
 !View categoriesFor: #isTransparent!accessing-styles!public! !
 !View categoriesFor: #isTransparent:!accessing-styles!public! !
 !View categoriesFor: #isView!accessing!public!testing! !
+!View categoriesFor: #isWindowUnicode!public!testing! !
 !View categoriesFor: #isWindowVisible!public!testing! !
 !View categoriesFor: #isWindowVisible:!accessing!public!testing! !
 !View categoriesFor: #keyboardCommands!accessing!public! !
@@ -4767,6 +4795,7 @@ zOrderTop
 !View categoriesFor: #sendMessage:wParam:!operations!private! !
 !View categoriesFor: #sendMessage:wParam:lParam:!operations!private! !
 !View categoriesFor: #sendMessage:wParam:lpParam:!operations!private! !
+!View categoriesFor: #sendMessage:wParam:szParam:!operations!private! !
 !View categoriesFor: #setCapture!operations!public! !
 !View categoriesFor: #setEvents:!events!private! !
 !View categoriesFor: #setExtent:!geometry!public! !
@@ -5457,7 +5486,7 @@ unregisterClass
 	"Private - Unregister the receivers corresponding Win32 class - answer whether it succeeds."
 
 	^UserLibrary default 
-		unregisterClass: self wndClassName 
+		unregisterClass: WndClassAtom
 		hInstance: VMLibrary default applicationHandle!
 
 unregisterMessages: aCollectionOfIntegers 
@@ -5492,7 +5521,8 @@ winClassName
 	to instances of the receiver."
 
 	WndClassAtom isNil ifTrue: [WndClassAtom := self reregisterClass].
-	^self wndClassName!
+	^self wndClassName
+!
 
 winClassStyle
 	"Private - Answer the default class style to be used for instances of the receiver."

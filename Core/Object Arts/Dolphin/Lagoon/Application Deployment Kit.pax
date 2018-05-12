@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Application Deployment Kit'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Application Deployment Kit. 

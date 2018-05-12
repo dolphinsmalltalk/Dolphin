@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #StatusBarConstants put: (PoolConstantsDictionary named: #StatusBarConstants)!
 StatusBarConstants at: 'SB_GETBORDERS' put: 16r407!

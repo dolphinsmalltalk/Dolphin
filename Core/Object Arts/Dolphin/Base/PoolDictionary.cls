@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Dictionary variableSubclass: #PoolDictionary
 	instanceVariableNames: ''
@@ -16,7 +16,7 @@ add: anAssociation
 	as an argument here in order to maintain its references.
 	The keys of associations stored in pool dictionaries must be strings."
 
-	anAssociation key class == String
+	(anAssociation key isString and: [anAssociation key isSymbol not])
 		ifFalse: [self error: 'Pools are keyed with Strings'].
 	^super add: anAssociation!
 

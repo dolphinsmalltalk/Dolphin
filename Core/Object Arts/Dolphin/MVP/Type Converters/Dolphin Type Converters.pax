@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Type Converters'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk MVP framework Type Converters.

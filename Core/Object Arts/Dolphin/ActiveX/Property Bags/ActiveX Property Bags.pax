@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Property Bags'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Active-X Property Bags package.

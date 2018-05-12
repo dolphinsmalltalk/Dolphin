@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #ExternalArray
 	instanceVariableNames: 'length'
@@ -18,6 +18,18 @@ Instance Variables:
 '!
 !ExternalArray categoriesForClass!External-Data-Structured! !
 !ExternalArray methodsFor!
+
+= comparand
+	| size |
+	self == comparand ifTrue: [^true].
+	#todo "ANSI draft says must be same class, not just same species".
+	(self species == comparand species) ifFalse: [^false].
+	size := self size.
+	size = comparand size ifFalse: [^false].
+	1 to: size do: [ :i |
+		(self at: i) = (comparand at: i)
+			ifFalse: [^false]].
+	^true!
 
 appendToStream: puttableStream
 	"Private - Append the receiver's elements to the argument, puttableStream.
@@ -241,6 +253,9 @@ includes: target
 includesKey: anInteger
 	^anInteger between: 1 and: self size!
 
+initializePointer
+	length := 0!
+
 inject: initialValue into: operation
 	"Evaluate the <dyadicValuable> argument, operation, once for each element in the receiver, with
 	that element as the second argument; and with the first argument as the value of the previous 
@@ -396,7 +411,8 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 	(#do:, #keysAndValuesDo:, #from:to:do:, and,	of course, #from:to:keysAndValuesDo:)."
 
 	startInteger to: stopInteger do: [:i | operation value: i value: (self uncheckedAt: i)]! !
-!ExternalArray categoriesFor: #appendToStream:!double dispatch!public! !
+!ExternalArray categoriesFor: #=!public! !
+!ExternalArray categoriesFor: #appendToStream:!double dispatch!private! !
 !ExternalArray categoriesFor: #asArray!converting!public! !
 !ExternalArray categoriesFor: #asOrderedCollection!converting!public! !
 !ExternalArray categoriesFor: #at:!accessing!public! !
@@ -421,6 +437,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: operation
 !ExternalArray categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
 !ExternalArray categoriesFor: #includes:!public!searching! !
 !ExternalArray categoriesFor: #includesKey:!public!testing! !
+!ExternalArray categoriesFor: #initializePointer!public! !
 !ExternalArray categoriesFor: #inject:into:!enumerating!public! !
 !ExternalArray categoriesFor: #isEmpty!public!testing! !
 !ExternalArray categoriesFor: #keys!accessing!public! !

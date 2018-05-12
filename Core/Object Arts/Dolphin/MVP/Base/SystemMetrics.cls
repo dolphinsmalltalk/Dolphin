@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists'
@@ -52,7 +52,7 @@ dragHysteresis
 	^dragHysteresis!
 
 dragImageColorDepth
-	^VMLibrary default isWindowsXPOrGreater ifTrue: [32] ifFalse: [8]!
+	^32!
 
 edgeExtent
 	"Answer the dimensions of 3d window borders."
@@ -61,12 +61,16 @@ edgeExtent
 	^edgeExtent!
 
 getIconTitleFont
-	"Private - Answer a <Font> which is that used for icon titles on the desktop."
+	"Private - Answer a <Font> which is that used for icon titles on the desktop.
+
+		SystemMetrics current getIconTitleFont
+	"
 
 	^Font fromLogFont: (self 
-				getSysParam: SPI_GETICONTITLELOGFONT
-				type: LOGFONT
-				ifError: [^Font system])!
+				getSysParamW: SPI_GETICONTITLELOGFONT
+				type: LOGFONTW
+				ifError: [^Font system])
+!
 
 getMetric: anInteger 
 	^UserLibrary default getSystemMetrics: anInteger!
@@ -74,10 +78,10 @@ getMetric: anInteger
 getMetric: anInteger1 pair: anInteger2 
 	^(self getMetric: anInteger1) @ (self getMetric: anInteger2)!
 
-getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable 
+getSysParam: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 	| struct |
 	struct := anExternalStructureClass new.
-	(UserLibrary default 
+	(UserLibrary default
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: struct
@@ -102,6 +106,16 @@ getSysParamStruct: anInteger type: anExternalStructureClass
 		type: anExternalStructureClass
 		ifError: [UserLibrary default systemError]!
 
+getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
+	| struct |
+	struct := anExternalStructureClass new.
+	(UserLibrary default
+		systemParametersInfo: anInteger
+		uiParam: 0
+		pvParam: struct
+		fWinIni: 0) ifFalse: [^aNiladicValuable value].
+	^struct!
+
 hasButtonNotes
 	"Answer whether the host supports 'notes' for link buttons."
 
@@ -116,11 +130,6 @@ hasEnhancedThemes
 	"Answer whether the host supports enhanced desktop themes (Vista and later)."
 
 	^VMLibrary default isWindowsVistaOrGreater!
-
-hasFlashWindow
-	"Answer whether the host supports the FlashWindowEx API."
-
-	^VMLibrary default isWindowsXPOrGreater!
 
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
@@ -179,19 +188,14 @@ hasMenuBitmaps
 
 	^VMLibrary default isWindowsVistaOrGreater!
 
-hasMenuImages
-	"Answer whether the host support images on menus,"
-
-	^VMLibrary default isWindowsXPOrGreater!
-
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
 
-	hasSmoothScrollingLists isNil 
+	hasSmoothScrollingLists isNil
 		ifTrue: 
 			[| bool |
 			bool := DWORD new.
-			hasSmoothScrollingLists := (UserLibrary default 
+			hasSmoothScrollingLists := (UserLibrary default
 						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
 						uiParam: 0
 						pvParam: bool
@@ -209,10 +213,10 @@ hasTextBoxMargins
 hasThemes
 	"Answer whether the host support desktop themes (XP and later)."
 
-	^VMLibrary default isWindowsXPOrGreater and: 
-			["Wine currently errors on theme APIs, so bypass"
-			#wineFix.
-			NTLibrary isWine not]!
+	"Wine currently errors on theme APIs, so bypass"
+
+	#wineFix.
+	^NTLibrary isWine not!
 
 hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
@@ -294,7 +298,7 @@ menuWidth
 	^self nonClientMetrics iMenuWidth!
 
 minimumTreeViewIndent
-	^VMLibrary default isWindowsXPOrGreater ifTrue: [16] ifFalse: [8]!
+	^16!
 
 mouseHoverTime
 	^(self 
@@ -303,14 +307,19 @@ mouseHoverTime
 		ifError: [^400]) value!
 
 nonClientMetrics
-	nonClientMetrics isNil 
+	"
+		SystemMetrics current nonClientMetrics
+	"
+	nonClientMetrics isNil
 		ifTrue: 
 			["N.B. SPI_GETNONCLIENTMETRICS does not work in NT 3.51, but we no longer support it."
-			nonClientMetrics := self 
-						getSysParam: SPI_GETNONCLIENTMETRICS
-						type: NONCLIENTMETRICS
+			nonClientMetrics := self
+						getSysParamW: SPI_GETNONCLIENTMETRICS
+						type: NONCLIENTMETRICSW
 						ifError: [UserLibrary default systemError]].
-	^nonClientMetrics!
+	^nonClientMetrics
+
+!
 
 onSettingChanged: aWindowsEvent
 	| code |
@@ -343,8 +352,8 @@ scrollThumbExtent
 		ifTrue: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB].
 	^scrollThumbExtent!
 
-setSysParamBool: anInteger value: aBoolean 
-	^UserLibrary default 
+setSysParamBool: anInteger value: aBoolean
+	^UserLibrary default
 		systemParametersInfo: anInteger
 		uiParam: 0
 		pvParam: aBoolean asInteger
@@ -364,7 +373,7 @@ smallIconExtent
 supportsAlphaBlending
 	"Answer whether the host supports alpha blending."
 
-	^VMLibrary default isWindowsXPOrGreater!
+	^true!
 
 virtualScreenExtent
 	"Answer the extent of the virtual screen, i.e. including desktops on all monitors"
@@ -394,10 +403,10 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #getSysParamDword:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamSdword:!helpers!private! !
 !SystemMetrics categoriesFor: #getSysParamStruct:type:!helpers!private! !
+!SystemMetrics categoriesFor: #getSysParamW:type:ifError:!helpers!private! !
 !SystemMetrics categoriesFor: #hasButtonNotes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasDesktopComposition!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasEnhancedThemes!capability enquiries!public! !
-!SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasFlatMenus!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasGdiPalettes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasIconScaleDown!capability enquiries!public! !
@@ -406,7 +415,6 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #hasLinkButtons!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasListViewGridLineScrollScarringBug!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasMenuBitmaps!capability enquiries!public! !
-!SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasSmoothScrollingLists!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasTextBoxMargins!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasThemes!capability enquiries!public! !

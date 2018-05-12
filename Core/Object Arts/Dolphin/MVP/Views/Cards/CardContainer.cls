@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractCardContainer subclass: #CardContainer
 	instanceVariableNames: 'tabs'
@@ -138,11 +138,12 @@ isDropTarget: aBoolean
 	^super isDropTarget: aBoolean!
 
 isInverted
-	#deprecated. "D6: Use #tabOrientation"
+	"Answer whether the receiver is in one of the 'inverted' orientations (that is with tabs to bottom or the right)."
+
 	^tabs isInverted!
 
 isInverted: aBoolean 
-	#deprecated. "D6: Use #tabOrientation:"
+	Notification deprecated. "D6: Use #tabOrientation:"
 	^tabs isInverted: aBoolean!
 
 isMultiline
@@ -166,11 +167,12 @@ isTabStop: aBoolean
 	^tabs isTabStop: aBoolean!
 
 isVertical
-	#deprecated. "D6: Use #tabOrientation"
+	"Answer whether the receiver has a vertical orientation (i.e. with tabs to right or left, rather than top or bottom)."
+
 	^tabs isVertical!
 
-isVertical: aBoolean 
-	#deprecated.	"D6: Use #tabOrientation:"
+isVertical: aBoolean
+	Notification deprecated.	"D6: Use #tabOrientation:"
 	^tabs isVertical: aBoolean!
 
 layout: aLayoutContext 

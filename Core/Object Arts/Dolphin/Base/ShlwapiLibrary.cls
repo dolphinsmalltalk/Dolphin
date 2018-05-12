@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #ShlwapiLibrary
 	instanceVariableNames: ''
@@ -14,12 +14,12 @@ pathCombine: szDest lpszDir: lpszDir lpszFile: lpszFile
 	"Invoke the PathCombine() function of the module wrapped by the receiver.
 	Helpstring: Concatenates two strings that represent properly formed paths into one path, as well as any relative path pieces
 
-		LPCSTR __stdcall PathCombine(
-			LPSTR szDest,
-			LPCSTR lpszDir,
-			LPCSTR lpszFile);"
+		LPCWSTR __stdcall PathCombine(
+			LPWSTR szDest,
+			LPCWSTR lpszDir,
+			LPCWSTR lpszFile);"
 
-	<stdcall: lpstr PathCombineA lpstr lpstr lpstr>
+	<stdcall: lpwstr PathCombineW lpwstr lpwstr lpwstr>
 	^self invalidCall!
 
 pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
@@ -27,11 +27,11 @@ pathCommonPrefix: pszFile1 pszFile2: pszFile2 achPath: achPath
 	Helpstring: Compares two paths to determine if they share a common prefix. A prefix is one of these types: 'C:', '.', '..', '..'. 
 
 		int __stdcall PathCommonPrefix(
-			LPCSTR pszFile1,
-			LPCSTR pszFile2,
-			LPSTR achPath);"
+			LPCWSTR pszFile1,
+			LPCWSTR pszFile2,
+			LPCWSTR achPath);"
 
-	<stdcall: sdword PathCommonPrefixA lpstr lpstr lpstr>
+	<stdcall: sdword PathCommonPrefixW lpwstr lpwstr lpwstr>
 	^self invalidCall!
 
 pathCompactPath: hdc pszPath: pszPath dx: dx
@@ -40,10 +40,10 @@ pathCompactPath: hdc pszPath: pszPath dx: dx
 
 		BOOL __stdcall PathCompactPath(
 			HDC HDC,
-			LPSTR pszPath,
+			LPWSTR pszPath,
 			UINT dx);"
 
-	<stdcall: bool PathCompactPathA handle lpstr dword>
+	<stdcall: bool PathCompactPathW handle lpwstr dword>
 	^self invalidCall!
 
 pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
@@ -51,22 +51,22 @@ pathCompactPathEx: pszOut pszSrc: pszSrc cchMax: cchMax dwFlags: dwFlags
 	Helpstring: Truncates a path to fit within a certain number of characters by replacing path components with ellipses
 
 		BOOL __stdcall PathCompactPathEx(
-			LPSTR pszOut,
-			LPCSTR pszSrc,
+			LPWSTR pszOut,
+			LPCWSTR pszSrc,
 			UINT cchMax,
 			DWORD dwFlags);"
 
-	<stdcall: bool PathCompactPathExA lpstr lpstr dword dword>
+	<stdcall: bool PathCompactPathExW lpwstr lpwstr dword dword>
 	^self invalidCall!
 
 pathFindNextComponent: pszPath
 	"Invoke the PathFindNextComponent() function of the module wrapped by the receiver.
 	Helpstring: Parses a path for the next path component. Paths are delimited by backslashes or by the NULL at the end of the path
 
-		LPCSTR __stdcall PathFindNextComponent(
-			LPCSTR pszPath);"
+		LPCWSTR __stdcall PathFindNextComponent(
+			LPCWSTR pszPath);"
 
-	<stdcall: lpstr PathFindNextComponentA lpstr>
+	<stdcall: lpwstr PathFindNextComponentW lpwstr>
 	^self invalidCall!
 
 pathIsRelative: pszPath
@@ -74,9 +74,9 @@ pathIsRelative: pszPath
 	Helpstring: Searches a path and determines if it is relative
 
 		BOOL __stdcall PathIsRelative(
-			LPCSTR pszPath);"
+			LPCWSTR pszPath);"
 
-	<stdcall: bool PathIsRelativeA lpstr>
+	<stdcall: bool PathIsRelativeW lpwstr>
 	^self invalidCall!
 
 pathIsRoot: pszPath
@@ -84,9 +84,9 @@ pathIsRoot: pszPath
 	Helpstring: Parses a path to determine if a root directory path part exists
 
 		BOOL __stdcall PathIsRoot(
-			LPCSTR pszPath);"
+			LPCWSTR pszPath);"
 
-	<stdcall: bool PathIsRootA lpstr>
+	<stdcall: bool PathIsRootW lpwstr>
 	^self invalidCall!
 
 pathIsURL: pszPath
@@ -94,9 +94,9 @@ pathIsURL: pszPath
 	Helpstring: Tests a given string to determine if it conforms to the URL format. This function does not verify that the path points to an existing site only that it is a legal URL format
 
 		BOOL __stdcall PathIsURL(
-			LPCSTR pszPath);"
+			LPCWSTR pszPath);"
 
-	<stdcall: bool PathIsURLA lpstr>
+	<stdcall: bool PathIsURLW lpwstr>
 	^self invalidCall!
 
 pathParseIconLocation: pszIconFile
@@ -104,9 +104,9 @@ pathParseIconLocation: pszIconFile
 	Helpstring: Parses a file location string for its file component and icon index
 
 		int __stdcall PathParseIconLocation(
-			LPSTR pszIconFile);"
+			LPWSTR pszIconFile);"
 
-	<stdcall: sdword PathParseIconLocationA lpstr>
+	<stdcall: sdword PathParseIconLocationW lpwstr>
 	^self invalidCall!
 
 pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo dwAttrTo: dwAttrTo
@@ -114,13 +114,13 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 	Helpstring: Creates a relative path from two paths
 
 		BOOL __stdcall PathRelativePathTo(
-			LPSTR pszPath,
-			LPCSTR pszFrom,
+			LPWSTR pszPath,
+			LPCWSTR pszFrom,
 			DWORD dwAttrFrom,
-			LPCSTR pszTo,
+			LPCWSTR pszTo,
 			DWORD dwAttrTo);"
 
-	<stdcall: bool PathRelativePathToA lpstr lpstr dword lpstr dword>
+	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
 	^self invalidCall!
 
 pathSetDlgItemPath: hDlg id: id pszPath: pszPath
@@ -141,13 +141,13 @@ shMessageBoxCheck: hwnd pszText: pszText pszTitle: pszTitle uType: uType iDefaul
 
 		int __stdcall SHMessageBoxCheck(
 			[in]HWND HWND,
-			[in]LPCSTR pszText,
-			[in]LPCSTR pszTitle,
+			[in]LPCWSTR pszText,
+			[in]LPCWSTR pszTitle,
 			[in]UINT uType,
 			[in]int iDefault,
-			[in]LPCSTR pszRegVal);"
+			[in]LPCWSTR pszRegVal);"
 
-	<stdcall: sdword 185 handle lpstr lpstr dword sdword lpstr>
+	<stdcall: sdword SHMessageBoxCheckW handle lpwstr lpwstr dword sdword lpwstr>
 	^self invalidCall! !
 !ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
 !ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !

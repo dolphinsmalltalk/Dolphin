@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin SysLink Control'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk SysLink Common Control.

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusFromFileInitializer subclass: #GdiplusImageFromFileInitializer
 	instanceVariableNames: ''
@@ -21,7 +21,7 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library gdipLoadImageFromFile: self absoluteFilename asUtf16String image: gpHandle.
+	status := self library gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
 	self assertStatusOk: status.
 	^gpHandle!
 

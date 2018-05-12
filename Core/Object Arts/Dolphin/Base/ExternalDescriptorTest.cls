@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ExternalDescriptorTest
 	instanceVariableNames: ''
@@ -18,88 +18,88 @@ externalTypes
 newDescriptor: source 
 	^ExternalDescriptor newFromString: source!
 
-parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName 
+parseStructArg: structClass valueType: typeCodeOrName refType: ptrCodeOrName
 	"First pass-by-value"
 
 	| source desc argTypes |
 	source := 'cdecl: void ' , structClass name.
 	desc := self newDescriptor: source.
 	argTypes := desc argumentTypes.
-	self assert: argTypes size = 1.
+	self assert: argTypes size equals: 1.
 	desc argumentsDo: 
-			[:eachType :eachClass | 
+			[:eachType :eachClass |
 			| type |
-			type := typeCodeOrName isInteger 
+			type := typeCodeOrName isInteger
 						ifTrue: [typeCodeOrName]
 						ifFalse: [ExternalDescriptor typeFromName: typeCodeOrName].
-			self assert: eachType == type.
-			self assert: eachClass == structClass].
+			self assert: eachType identicalTo: type.
+			self assert: eachClass identicalTo: structClass].
 	"Now pass-by-ref"
 	source := source , '*'.
 	desc := self newDescriptor: source.
 	argTypes := desc argumentTypes.
-	self assert: argTypes size = 1.
+	self assert: argTypes size equals: 1.
 	desc argumentsDo: 
-			[:eachType :eachClass | 
+			[:eachType :eachClass |
 			| type |
-			type := ptrCodeOrName isInteger 
+			type := ptrCodeOrName isInteger
 						ifTrue: [ptrCodeOrName]
 						ifFalse: [ExternalDescriptor typeFromName: ptrCodeOrName].
-			self assert: eachType == type.
-			self assert: eachClass == structClass]!
+			self assert: eachType identicalTo: type.
+			self assert: eachClass identicalTo: structClass]!
 
 testBuiltins
 	| typeTable typeNames |
 	typeTable := self externalTypes.
 	typeNames := ExternalDescriptor classPool at: 'TypeNames'.
 	(typeTable reject: [:each | ExternalDescriptor typeHasArgument: each]) keysAndValuesDo: 
-			[:eachKey :eachValue | 
+			[:eachKey :eachValue |
 			| argTypes source desc |
 			source := 'cdecl: void ' , eachKey.
 			desc := self newDescriptor: source.
 			argTypes := desc argumentTypes.
-			self assert: argTypes size = 1.
+			self assert: argTypes size equals: 1.
 			self assert: eachValue isInteger.
-			self assert: argTypes first = (typeNames at: eachValue + 1).
+			self assert: argTypes first equals: (typeNames at: eachValue + 1).
 			source := source , '*'.
-			eachKey = 'lppvoid' 
+			eachKey = 'lppvoid'
 				ifTrue: [self should: [self newDescriptor: source] raise: Error]
 				ifFalse: 
-					["Single indirection"
-					| refType |
+					[| refType |
+					"Single indirection"
 					desc := self newDescriptor: source.
 					argTypes := desc argumentTypes.
-					self assert: argTypes size = 1.
+					self assert: argTypes size equals: 1.
 					refType := ExternalDescriptor referenceTypeFor: eachValue.
-					refType isInteger 
-						ifTrue: [self assert: argTypes first = (typeNames at: refType + 1)]
+					refType isInteger
+						ifTrue: [self assert: argTypes first equals: (typeNames at: refType + 1)]
 						ifFalse: [argTypes first beginsWith: refType].
 					"Double indirection"
 					source := source , '*'.
-					refType == ExtCallArgLPPVOID 
+					refType == ExtCallArgLPPVOID
 						ifTrue: [self should: [self newDescriptor: source] raise: Error]
 						ifFalse: 
 							[desc := self newDescriptor: source.
 							argTypes := desc argumentTypes.
-							self assert: argTypes size = 1.
-							self assert: argTypes first = 'lppvoid']]]!
+							self assert: argTypes size equals: 1.
+							self assert: argTypes first equals: 'lppvoid']]]!
 
 testIndirections
 	"Some double indirections"
 
 	| source desc |
 	#('lppvoid' 'lpvoid*' 'void**' 'LPVOID*' 'DWORD**' 'POINTL**' 'IUnknown**' 'BSTR*') do: 
-			[:each | 
+			[:each |
 			| argTypes |
 			source := 'cdecl: void ' , each.
 			desc := self newDescriptor: source.
 			argTypes := desc argumentTypes.
-			self assert: argTypes size = 1.
-			self assert: argTypes first = 'lppvoid'].
+			self assert: argTypes size equals: 1.
+			self assert: argTypes first equals: 'lppvoid'].
 
 	"but some cannot be indirected more than once"
 	#('lpvoid' 'LPVOID' 'BSTR') do: 
-			[:each | 
+			[:each |
 			source := 'cdecl: void ' , each , '**'.
 			self should: [self newDescriptor: source] raise: Error].
 
@@ -109,12 +109,12 @@ testIndirections
 
 	"Test all classes with an implied level of indirection correctly parsed as lppvoid for <class>*"
 	(Smalltalk allClasses select: [:each | each isIndirection]) do: 
-			[:each | 
+			[:each |
 			| argTypes |
 			source := 'cdecl: void ' , each name , '*'.
 			argTypes := desc argumentTypes.
-			self assert: argTypes size = 1.
-			self assert: argTypes first = 'lppvoid'.
+			self assert: argTypes size equals: 1.
+			self assert: argTypes first equals: 'lppvoid'.
 			source := source , '*'.
 			self should: [self newDescriptor: source] raise: Error]!
 
@@ -123,33 +123,33 @@ testSmokeTest
 	checking the descriptor of every ExternalMethod."
 
 	(ExternalMethod allSubinstances reject: [:each | each isUnbound]) do: 
-			[:each | 
+			[:each |
 			| desc text |
 			text := each descriptor description.
 			desc := self newDescriptor: (text copyWithout: $,).
-			self assert: text = desc description]!
+			self assert: text equals: desc description]!
 
 testStructs
-	self assert: RGBQUAD byteSize = 4.
-	self 
+	self assert: RGBQUAD byteSize equals: 4.
+	self
 		parseStructArg: RGBQUAD
 		valueType: ExtCallArgSTRUCT4
 		refType: ExtCallArgLP.
-	self assert: POINTL byteSize = 8.
-	self 
+	self assert: POINTL byteSize equals: 8.
+	self
 		parseStructArg: POINTL
 		valueType: ExtCallArgSTRUCT8
 		refType: ExtCallArgLP.
 	self assert: _FPIEEE_VALUE byteSize > 8.
-	self 
+	self
 		parseStructArg: _FPIEEE_VALUE
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgLP.
-	self 
+	self
 		parseStructArg: IUnknown
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR.
-	self 
+	self
 		parseStructArg: IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !

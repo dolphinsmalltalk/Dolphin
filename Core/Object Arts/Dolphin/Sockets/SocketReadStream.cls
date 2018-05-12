@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'
@@ -24,6 +24,15 @@ atEnd
 			[self readPage.
 			readLimit = 0]!
 
+basicNext: countInteger into: aSequenceableCollection startingAt: startInteger 
+	"Destructively replace the elements of the argument, aSequenceableCollection,
+	in the interval (startAt..startAt+count-1) with the next, count, elements of
+	the receiver. Answer aSequenceableCollection."
+
+	startInteger to: startInteger + countInteger - 1
+		do: [:i | aSequenceableCollection at: i put: self next].
+	^aSequenceableCollection!
+
 contents
 	"We don't maintain past history, so we cannot implement this correctly."
 
@@ -33,12 +42,6 @@ hasInput
 	"Answer true if there is data available on the receiver without blocking"
 
 	^super atEnd not or: [self socket hasInput]!
-
-initialize
-	"Private - Initialise the new instance."
-
-	super initialize.
-	readLimit := 0!
 
 isBinary
 	"Answer whether the receiver's data is binary (i.e. consisting of Integers in the range 0..255)."
@@ -74,13 +77,14 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 	^aSequenceableCollection!
 
 nextAvailable
-	^self atEnd ifFalse: [self next]!
-
-nextOrNil
 	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
 	receiver's future sequence values. Answer nil if at EOF."
 
 	^self atEnd ifFalse: [self next]!
+
+on: aCollection
+	super on: aCollection.
+	readLimit := 0!
 
 readPage
 	"Private - Read ahead, a whole page or as much input as is available, into the buffer."
@@ -123,7 +127,7 @@ upTo: anObject
 
 	| newStream nextObject |
 	newStream := self contentsSpecies writeStream: 128.
-	[(nextObject := self nextOrNil) isNil or: [nextObject = anObject]] 
+	[(nextObject := self nextAvailable) isNil or: [nextObject = anObject]] 
 		whileFalse: [newStream nextPut: nextObject].
 	^newStream contents!
 
@@ -136,16 +140,16 @@ upToEnd
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
 !SocketReadStream categoriesFor: #atEnd!public!testing! !
+!SocketReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #contents!accessing!public! !
 !SocketReadStream categoriesFor: #hasInput!public!testing! !
-!SocketReadStream categoriesFor: #initialize!initializing!private! !
 !SocketReadStream categoriesFor: #isBinary!public!testing! !
 !SocketReadStream categoriesFor: #isText!public!testing! !
 !SocketReadStream categoriesFor: #isText:!modes!public! !
 !SocketReadStream categoriesFor: #next!accessing!public! !
 !SocketReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !SocketReadStream categoriesFor: #nextAvailable!public! !
-!SocketReadStream categoriesFor: #nextOrNil!accessing!public! !
+!SocketReadStream categoriesFor: #on:!accessing!initializing!private! !
 !SocketReadStream categoriesFor: #readPage!operations!private! !
 !SocketReadStream categoriesFor: #setToEnd!positioning!public! !
 !SocketReadStream categoriesFor: #size!accessing!public! !
@@ -166,14 +170,13 @@ on: aSocket
 
 	^self on: aSocket text: false!
 
-on: aSocket text: aBoolean 
+on: aSocket text: aBoolean
 	"Answer a new instance of the receiver on the specified <Socket>, to be used for buffered reading
 	string or binary data from that socket depending on the value of <boolean> argument."
 
-	^(self basicNew)
+	^self basicNew
 		socket: aSocket;
-		collection: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
-		initialize;
+		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
 !SocketReadStream class categoriesFor: #bufferSize!constants!private! !
 !SocketReadStream class categoriesFor: #on:!instance creation!public! !

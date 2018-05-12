@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Protected Scribble'.
 package paxVersion: 1;
 	basicComment: 'This is a version of the standard Scribble application that is protected by serial number. Try deploying this application and then entering the following serial number on startup:

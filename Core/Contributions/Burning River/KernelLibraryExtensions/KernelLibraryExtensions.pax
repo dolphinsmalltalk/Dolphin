@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'KernelLibraryExtensions'.
 package paxVersion: 1;
 	basicComment: 'Copyright (c) 2003-2004 Robert Jarvis
@@ -79,18 +79,18 @@ getLogicalDriveStrings: bufferSize buffer: aBuffer
 	"Fills a buffer with strings which specify valid drives in the system.
 	 DWORD GetLogicalDriveStrings( 
 		DWORD nBufferLength, 	// size of buffer 
-		LPTSTR lpBuffer 		// address of buffer for drive strings 
+		LPWSTR lpBuffer 		// address of buffer for drive strings 
 		);"
-	<stdcall: dword GetLogicalDriveStringsA dword lpstr> 
+	<stdcall: dword GetLogicalDriveStringsW dword lpwstr> 
 	^self invalidCall!
 
 setFileAttributes: aFileName value: attributes
 	"Set the attributes for the specified file or directory. 
 		BOOL SetFileAttributes(
-			LPCTSTR lpFileName,		// file name
+			LPCWSTR lpFileName,		// file name
 			DWORD dwFileAttributes		// attributes );"
 
-	<stdcall: bool SetFileAttributesA lpstr dword>
+	<stdcall: bool SetFileAttributesW lpwstr dword>
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #getExitCodeProcess:lpExitCode:!public! !
 !KernelLibrary categoriesFor: #getExitCodeThread:lpExitCode:!public! !

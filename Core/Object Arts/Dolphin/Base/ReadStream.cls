@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStream subclass: #ReadStream
 	instanceVariableNames: ''
@@ -10,6 +10,57 @@ ReadStream comment: 'Class ReadStream is a concrete subclass of PositionableStre
 an accessor that can only read elements from a collection.'!
 !ReadStream categoriesForClass!Collections-Streams! !
 !ReadStream methodsFor!
+
+basicNext
+	"Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
+	same type of object that would be returned from the collection if sent #basicAt:. For bytes
+	and strings the basic elements are integers. For Arrays, the basic elements are whatever
+	objects are stored in the array."
+
+	"Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		1 -	The receiver's collection is not a byte object
+		2 -	The receiver is at its end (index >= readLimit).
+		3 -	The next index is beyond the end of the streamed over collection."
+
+	<primitive: 221>
+	^position >= readLimit
+		ifTrue: [self errorEndOfStream]
+		ifFalse: [collection basicAt: (position := position + 1)]!
+
+basicNext: count into: aSequenceableCollection startingAt: startAt
+	"Destructively replace the elements of the argument, aSequenceableCollection,
+	in the interval (startAt..startAt+count-1) with the next, count, elements of
+	the receiver. Answer aSequenceableCollection."
+
+	| stop |
+	stop := self positionAfterNext: count.
+	aSequenceableCollection
+		replaceFrom: startAt
+		to: startAt+count-1
+		with: collection
+		startingAt: position+1.
+	self position: stop.
+	^aSequenceableCollection!
+
+basicNextAvailable
+	"Private - Answer the next basic element accessible by the receiver. 'Basic' in this sense means the
+	same type of object that would be returned from the collection if sent #basicAt:. For bytes
+	and strings the basic elements are integers. For Arrays, the basic elements are whatever
+	objects are stored in the array."
+
+	"Fail if the receiver is at its end, or the index is outside the bounds of the collection.
+
+	Primitive failure reasons:
+		0 -	The receivers index or readLimit are not SmallInteger values
+		1 -	The receiver's collection is not a byte object
+		2 -	The receiver is at its end (index >= readLimit).
+		3 -	The next index is beyond the end of the streamed over collection."
+
+	<primitive: 221>
+	^position >= readLimit ifFalse: [collection basicAt: (position := position + 1)]!
 
 isReadable
 	"Answer whether the receiver can be read from (i.e. it implements the 
@@ -31,22 +82,7 @@ next
 	<primitive: 65>
 	^position >= readLimit
 		ifTrue: [self errorEndOfStream]
-		ifFalse: [collection at: (position := position + 1)]!
-
-next: count into: aSequenceableCollection startingAt: startAt
-	"Destructively replace the elements of the argument, aSequenceableCollection,
-	in the interval (startAt..startAt+count-1) with the next, count, elements of
-	the receiver. Answer aSequenceableCollection."
-
-	| stop |
-	stop := self positionAfterNext: count.
-	aSequenceableCollection
-		replaceFrom: startAt
-		to: startAt+count-1
-		with: collection
-		startingAt: position+1.
-	self position: stop.
-	^aSequenceableCollection!
+		ifFalse: [collection decodeNextFrom: self]!
 
 nextAvailable
 	"Answer the next object accessible by the receiver, or nil if at the end of the stream.
@@ -55,20 +91,13 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit ifFalse: [collection at: (position := position + 1)]!
-
-nextOrNil
-	"Answer a <Character>, or <integer> in the range 0..255, being the next of the 
-	receiver's future sequence values. Answer nil if at EOF."
-
-	<primitive: 65>
-	^position >= readLimit
-		ifFalse: [collection at: (position := position + 1)]! !
+	^collection decodeNextFrom: self! !
+!ReadStream categoriesFor: #basicNext!accessing!public! !
+!ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
 !ReadStream categoriesFor: #isReadable!public!testing! !
 !ReadStream categoriesFor: #next!accessing!public! !
-!ReadStream categoriesFor: #next:into:startingAt:!accessing!public! !
 !ReadStream categoriesFor: #nextAvailable!accessing!public! !
-!ReadStream categoriesFor: #nextOrNil!accessing!public! !
 
 ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
 

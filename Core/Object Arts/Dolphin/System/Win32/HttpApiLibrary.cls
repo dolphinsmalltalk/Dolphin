@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalLibrary subclass: #HttpApiLibrary
 	instanceVariableNames: ''
@@ -251,11 +251,9 @@ module HttpApi
 !HttpApiLibrary methodsFor!
 
 addUrl: aString toUrlGroup: anIntegerUrlGroupId
-	| url |
-	url := aString asUtf16String.
 	self checkReturnCode: (self
 				httpAddUrlToUrlGroup: anIntegerUrlGroupId
-				pFullyQualifiedUrl: url
+				pFullyQualifiedUrl: aString
 				urlContext: 0
 				reserved: 0)!
 

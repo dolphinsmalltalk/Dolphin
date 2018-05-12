@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'OLE Font'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk OLE Font component. 
@@ -72,7 +72,7 @@ fromOleFont: pFont
 		lfClipPrecision:
 		lfQuality:
 		lfPitchAndFamily:
-"		lfFaceName: pFont name;
+"		faceName: pFont name;
 		yourself! !
 !AbstractLOGFONT class categoriesFor: #fromOleFont:!instance creation!public! !
 
@@ -82,7 +82,7 @@ fromOleFont: pFont
 	"Answer a new instance of the receiver which is equivalent to the OLE font on which the
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
-	^self fromLogFont: (LOGFONT fromOleFont: pFont)! !
+	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
 !Font class categoriesFor: #fromOleFont:!instance creation!public! !
 
 "End of package definition"!

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Autoplay'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Autoplay Sample. 

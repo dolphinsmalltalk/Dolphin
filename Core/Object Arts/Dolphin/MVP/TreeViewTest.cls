@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableTreeItemsTest subclass: #TreeViewTest
 	instanceVariableNames: ''
@@ -37,19 +37,18 @@ refreshTree: aSymbol
 	self paintTree.
 	tvItem := self getItemText: root.
 	text := root displayString.
-	self assert: (self getItemText: root) = text.
+	self assert: (self getItemText: root) equals: text.
 	root value: 3.
-	presenter view updateMode == #dynamic 
+	presenter view updateMode == #dynamic
 		ifFalse: 
-			[self assert: (self getItemText: root) = text.
+			[self assert: (self getItemText: root) equals: text.
 			self paintTree.
-			self assert: (self getItemText: root) = text]
+			self assert: (self getItemText: root) equals: text]
 		ifTrue: 
 			["Just re-requesting the text is sufficient to get it to redisplay"
-
-			self assert: (self getItemText: root) = root displayString].
+			self assert: (self getItemText: root) equals: root displayString].
 	presenter model refreshTree: root.
-	self assert: (self getItemText: root) = root displayString.
+	self assert: (self getItemText: root) equals: root displayString.
 	self paintTree!
 
 testCollapseOneLevel
@@ -97,11 +96,10 @@ testRefreshTreeStatic
 	self refreshTree: #static!
 
 testSelectionSetter
-
 	| object1 object2 |
 	object1 := '1'.
 	presenter model: (TreeModel withRoots: (Array with: object1) searchPolicy: SearchPolicy equality).
-	self assert: (object2 := presenter selection: object1) == object1.!
+	self assert: (object2 := presenter selection: object1) identicalTo: object1!
 
 testSetImageBlockDoesNotAffectSelection
 	presenter view class updateModes do: 

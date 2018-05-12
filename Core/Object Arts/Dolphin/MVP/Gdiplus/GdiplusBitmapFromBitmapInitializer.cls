@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
 	instanceVariableNames: 'bitmap'
@@ -48,7 +48,7 @@ gdiplusConstructorErrorDescription
 !GdiplusBitmapFromBitmapInitializer class methodsFor!
 
 bitmap: aBitmap
-	"Creates a Bitmap object based on a handle to a Windows Microsoft® Windows® 
+	"Creates a Bitmap object based on a handle to a Windows MicrosoftÂ® WindowsÂ® 
 	Graphics Device Interface (GDI) bitmap and a handle to a GDI palette."
 
 	"SW: Would there be any need to allow the user to supply the HPALETTE ?"

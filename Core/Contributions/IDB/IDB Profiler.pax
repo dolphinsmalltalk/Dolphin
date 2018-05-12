@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB Profiler'.
 package paxVersion: 1;
 	basicComment: 'Sampling Stack Profiler

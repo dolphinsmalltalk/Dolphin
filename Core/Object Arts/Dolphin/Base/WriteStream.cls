@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PositionableStream subclass: #WriteStream
 	instanceVariableNames: 'writeLimit'
@@ -12,6 +12,53 @@ Instance Variables:
 	writeLimit		<Integer>. Current maximum position up to which the stream may be positioned for writing.'!
 !WriteStream categoriesForClass!Collections-Streams! !
 !WriteStream methodsFor!
+
+basicNext: sizeInteger putAll: aSequenceableCollection startingAt: startInteger 
+	"Private - Append countInteger elements of aSequenceableCollection from startInteger
+	to the receiver. Answer aSequenceableCollection."
+
+	| stop |
+	stop := position + sizeInteger.
+	stop <= writeLimit 
+		ifTrue: 
+			["The block fits into the current collection and can be
+			written directly"
+
+			collection 
+				replaceFrom: position + 1
+				to: stop
+				with: aSequenceableCollection
+				startingAt: startInteger.
+			position := stop]
+		ifFalse: 
+			["The block will not fit within the current collection, so
+			fall back on the slow way"
+
+			startInteger to: startInteger + sizeInteger - 1
+				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
+	^aSequenceableCollection!
+
+basicNextPut: anObject
+	"Private - Store anObject as the next element of the receiver.  If the receiver is not stream 
+	over an Array or a String, or if the Array or String becomes full, then the primitive 
+	will fail, and the backup Smalltalk code will be activated, grow the collection, and
+	attempt to insert the object directly."
+
+	<primitive: 222>
+	position < writeLimit
+		ifTrue: [collection at: (position := position + 1) put: anObject]
+		ifFalse: 
+			[self
+				growCollection;
+				primitiveBasicNextPut: anObject].
+	^anObject!
+
+basicNextPutAll: aCollection
+	"Private - Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
+	Answer aCollection"
+
+	<primitive: 173>
+	aCollection do: [:each | self nextPut: each]!
 
 basicPrint: printee
 	"Private - Ask the <Object>, printee, to append its basic textual description
@@ -91,30 +138,19 @@ next: anInteger put: anObject
 	anInteger timesRepeat: [self nextPut: anObject].
 	^anObject!
 
-next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger 
-	"Append countInteger elements of aSequenceableCollection from startInteger
-	to the receiver. Answer aSequenceableCollection."
+next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
+	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver.
+	Answer aSequenceableCollection.
 
-	| stop |
-	stop := position + sizeInteger.
-	stop <= writeLimit 
-		ifTrue: 
-			["The block fits into the current collection and can be
-			written directly"
+	Note that the element count is in terms of the <sequencedReadableCollection argument.
+	Depending on the receiver's encoding, this may not necessarily result in the receiver's
+	position advancing by the same count. "
 
-			collection 
-				replaceFrom: position + 1
-				to: stop
-				with: aSequenceableCollection
-				startingAt: startInteger.
-			position := stop]
-		ifFalse: 
-			["The block will not fit within the current collection, so
-			fall back on the slow way"
-
-			startInteger to: startInteger + sizeInteger - 1
-				do: [:i | self nextPut: (aSequenceableCollection at: i)]].
-	^aSequenceableCollection!
+	^collection
+		encodeOn: self
+		next: sizeInteger
+		putAll: aSequenceableCollection
+		startingAt: startInteger!
 
 nextDWORDPut: anInteger 
 	"Append a 32-bit unsigned integer representation as the next 4 bytes on the receiver."
@@ -130,8 +166,12 @@ nextPut: anObject
 	will fail, and the backup Smalltalk code will be activated."
 
 	<primitive: 66>
-	position < writeLimit ifFalse: [self growCollection].
-	^collection at: (position := position + 1) put: anObject!
+	^position + collection maxEncoding <= writeLimit
+		ifFalse: 
+			[self
+				growCollection;
+				primitiveNextPut: anObject]
+		ifTrue: [position := collection encodedAt: position + 1 put: anObject]!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 
@@ -150,6 +190,12 @@ nextSDWORDPut: anInteger
 			yourself).
 	^anInteger!
 
+on: aCollection
+	collection := aCollection.
+	writeLimit := collection size.
+	position := readLimit := 0.
+!
+
 padTo: anInteger put: anObject
 	"Align the receiver's position to the next multiple of anInteger, padding with the 
 	argument, anObject.  Answer the number of elements written."
@@ -166,6 +212,14 @@ position: anInteger
 
 	readLimit := readLimit max: position.
 	super position: anInteger!
+
+primitiveBasicNextPut: anObject
+	<primitive: 222>
+	^collection at: (position := position + 1) put: anObject!
+
+primitiveNextPut: anObject
+	<primitive: 66>
+	position := collection encodedAt: position + 1 put: anObject!
 
 reset
 	readLimit := readLimit max: position.
@@ -191,6 +245,9 @@ tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	tabCount timesRepeat: [self tab]! !
+!WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
+!WriteStream categoriesFor: #basicNextPut:!accessing!private! !
+!WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
 !WriteStream categoriesFor: #basicPrint:!printing!private! !
 !WriteStream categoriesFor: #binaryStore:!binary filing!public!storing! !
 !WriteStream categoriesFor: #contents!accessing!public! !
@@ -208,8 +265,11 @@ tab: tabCount
 !WriteStream categoriesFor: #nextPut:!accessing!public! !
 !WriteStream categoriesFor: #nextPutAll:!accessing!public! !
 !WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
+!WriteStream categoriesFor: #on:!initializing!private! !
 !WriteStream categoriesFor: #padTo:put:!positioning!public! !
 !WriteStream categoriesFor: #position:!positioning!public! !
+!WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
+!WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
 !WriteStream categoriesFor: #reset!positioning!public! !
 !WriteStream categoriesFor: #setToEnd!positioning!public! !
 !WriteStream categoriesFor: #space!constants!public! !

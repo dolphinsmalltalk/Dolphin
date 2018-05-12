@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IUnknown subclass: #IErrorInfo
 	instanceVariableNames: ''
@@ -184,16 +184,20 @@ fromEXCEPINFO: excepInfo guid: id
 	^(ICreateErrorInfo fromEXCEPINFO: excepInfo guid: id) errorInfo!
 
 source: sourceString description: descriptionString helpContext: anInteger helpFile: helpFilePath guid: aGUID
-	"Answer a new instance of the receiver encapsulating all of the specified details."
+	"Answer a new instance of the receiver encapsulating all of the specified details.
+		ice := self source: 'Dolphin' description: 'It is all going horribly wrong' helpContext: 1 helpFile: nil guid: GUID newUnique.
+	"
 
 	| ice |
 	ice := ICreateErrorInfo new.
-	ice SetSource: sourceString asUtf16String.
-	ice SetDescription: descriptionString asUtf16String.
+	ice SetSource: sourceString.
+	ice SetDescription: descriptionString.
 	ice SetHelpContext: anInteger.
-	ice SetHelpFile: helpFilePath asUtf16String.
+	ice SetHelpFile: helpFilePath.
 	ice SetGuid: aGUID.
-	^ice errorInfo! !
+	^ice errorInfo
+
+! !
 !IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
 !IErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
 !IErrorInfo class categoriesFor: #source:description:helpContext:helpFile:guid:!instance creation!public! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 IdbToolShell subclass: #FileBrowser
 	instanceVariableNames: 'folders files text hex image html hexEnabled removeCr currentRootFolder showImageAs'
@@ -24,7 +24,7 @@ for
 Dolphin Smalltalk 6.x
 
 Version 6a
-� 2005 Ian Bartholomew
+© 2005 Ian Bartholomew
 http://www.idb.me.uk'!
 
 askAboutHex: anInteger 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
@@ -162,8 +162,7 @@ identifier
 identifier: id
 	"Set the identifier of the receiver. This can be a string or an integer."
 
-	identifier := id.
-		!
+	identifier := id asResourceId!
 
 imageType
 	"Private - Answer the Win32 image type for the receiver."
@@ -195,7 +194,7 @@ loadFromFile: pathString extent: aPoint
 
 	^UserLibrary default 
 		loadImage: 0
-		lpszName: pathString asParameter
+		lpszName: pathString asResourceId
 		uType: self imageType
 		cxDesired: aPoint x
 		cyDesired: aPoint y
@@ -288,9 +287,8 @@ fromFile: aFilename
 
 		ImagePresenter show: 'Basic image' on: 
 			(Bitmap
-				fromFile: (File composePath: SessionManager current windowsDirectory 
-							subPath: 'Soap Bubbles.bmp')
-				usingLocator: FileLocator absolute)
+				fromFile: 'Resources\Beach ball.bmp'
+				usingLocator: FileLocator installRelative)
 	"
 
 	^self  fromFile: aFilename usingLocator: FileLocator default

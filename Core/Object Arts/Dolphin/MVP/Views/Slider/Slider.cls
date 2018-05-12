@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'
@@ -119,22 +119,6 @@ hasTicks: aBoolean
 		set: aBoolean not
 		recreateIfChanged: false!
 
-hasTicksBoth
-	#deprecated.
-	^self tickStyle == #bothSides!
-
-hasTicksBoth: aBoolean 
-	#deprecated.
-	self tickStyle: (aBoolean ifTrue: [#bothSides] ifFalse: [#bottom])!
-
-hasTicksTopOrLeft
-	#deprecated.
-	^#(#top #left) includes: self tickStyle!
-
-hasTicksTopOrLeft: aBoolean 
-	#deprecated.
-	self tickStyle: (aBoolean ifTrue: [#top] ifFalse: [#bottom])!
-
 hasToolTips
 	"Answer whether the receiver displays tool tips."
 
@@ -233,14 +217,6 @@ range: anIntegerInterval
 		wParam: true asParameter
 		lParam: anIntegerInterval stop!
 
-selection
-	#deprecated.
-	^self selectionRange!
-
-selection: anIntervalOrNil 
-	#deprecated.
-	self selectionRange: anIntervalOrNil!
-
 selectionRange
 	"Answer the current selection range of the receiver, or nil if their is none."
 
@@ -279,7 +255,7 @@ state
 								receiver: self
 								selector: #ticks:
 								argument: ticks)]].
-	#(#(#pageSize: #pageSize 20) #(#lineSize: #lineSize 1) #(#range: #range nil) #(#selection: #selection nil) #(#thumbLength: #thumbLength nil)) 
+	#(#(#pageSize: #pageSize 20) #(#lineSize: #lineSize 1) #(#range: #range nil) #(#selectionRange: #selectionRange nil) #(#thumbLength: #thumbLength nil)) 
 		do: 
 			[:each | 
 			| value |
@@ -335,11 +311,6 @@ tbmSetToolTips: aHandle
 	"Private - Set the handle to be used for the tool tip window"
 
 	^self sendMessage: TBM_SETTOOLTIPS wParam: aHandle!
-
-tbmSetUnicodeFormat: aBoolean 
-	"Private - Set the UNICODE character format for the control"
-
-	^self sendMessage: TBM_SETUNICODEFORMAT wParam: aBoolean asParameter!
 
 thumbLength
 	"Answer the length, in pixels, of the thumb, or nil if the thumb metrics are left up to the control."
@@ -436,10 +407,6 @@ tickStyle: aSymbol
 !Slider categoriesFor: #hasThumb:!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasTicks!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasTicks:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksBoth!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksBoth:!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksTopOrLeft!accessing-styles!public!updating! !
-!Slider categoriesFor: #hasTicksTopOrLeft:!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasToolTips!accessing-styles!public!updating! !
 !Slider categoriesFor: #hasToolTips:!accessing-styles!public!updating! !
 !Slider categoriesFor: #initialize!initializing!public! !
@@ -455,8 +422,6 @@ tickStyle: aSymbol
 !Slider categoriesFor: #pageSize:!accessing!public! !
 !Slider categoriesFor: #range!accessing!public! !
 !Slider categoriesFor: #range:!accessing!public! !
-!Slider categoriesFor: #selection!accessing!public! !
-!Slider categoriesFor: #selection:!accessing!public! !
 !Slider categoriesFor: #selectionRange!accessing!public! !
 !Slider categoriesFor: #selectionRange:!accessing!public! !
 !Slider categoriesFor: #state!accessing!private! !
@@ -468,7 +433,6 @@ tickStyle: aSymbol
 !Slider categoriesFor: #tbmSetBuddy:handle:!helpers!private! !
 !Slider categoriesFor: #tbmSetTipSide:!helpers!private! !
 !Slider categoriesFor: #tbmSetToolTips:!helpers!private! !
-!Slider categoriesFor: #tbmSetUnicodeFormat:!helpers!private! !
 !Slider categoriesFor: #thumbLength!accessing!public! !
 !Slider categoriesFor: #thumbLength:!accessing!public! !
 !Slider categoriesFor: #thumbRectangle!accessing!public! !

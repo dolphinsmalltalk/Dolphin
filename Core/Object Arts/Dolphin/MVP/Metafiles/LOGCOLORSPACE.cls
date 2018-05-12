@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ExternalStructure subclass: #LOGCOLORSPACE
 	instanceVariableNames: ''
@@ -6,7 +6,7 @@ ExternalStructure subclass: #LOGCOLORSPACE
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGCOLORSPACE guid: (GUID fromString: '{2b6b91b8-caef-4fdf-ac3d-f032417ca840}')!
-LOGCOLORSPACE comment: '<LOGCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney�s Hardcore Visual Basic Type Library'' library.
+LOGCOLORSPACE comment: '<LOGCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
 

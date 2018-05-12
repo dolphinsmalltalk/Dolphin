@@ -69,24 +69,6 @@ caption: aString
 
 	!
 
-checkDolphinObjectTableSize
-	"Private - Use this method to check the size of Dolphin's object table to prevent image from crashing."
-
-	| fs max val |
-	self logLineWithTS: 'Current number of objects is ' , MemoryManager current objectCount printString.
-	fs := FileStream readWrite: SessionManager current imageFileName.
-	fs beBinary.
-	fs position: 16r20.
-	max := fs nextSDWORD.
-	val := (100 * MemoryManager current objectCount / max) asDecimalOrFloat roundTo: 0.01s.
-	val := (val respondsTo: #asWebStringWithMinimumDecimals) 
-				ifTrue: [val printString]
-				ifFalse: [val asWebStringWithMinimumDecimals].
-	self
-		logLineWithTS: 'Current object table size is ' , max printString;
-		logLineWithTS: 'Currently running at ' , val , '%'.
-	fs close!
-
 checkEmail: aString 
 	"Perform basic validity check of an eMail address and answer <true> if OK, else answer <false>."
 
@@ -676,26 +658,6 @@ imageTimestamp
 	(imgFile := Filename named: SessionManager current imageFileName) exists ifFalse: [^nil].
 	^imgFile lastModificationTime!
 
-increaseDolphinObjectTableSize
-	"Private - Use this method to increase the size of Dolphin's object table by half a million to prevent image from crashing."
-
-	| fs max val |
-	self logLineWithTS: 'Current number of objects is ' , MemoryManager current objectCount printString.
-	fs := FileStream readWrite: SessionManager current imageFileName.
-	fs beBinary.
-	fs position: 16r20.
-	max := fs nextSDWORD.
-	val := (100 * MemoryManager current objectCount / max) asDecimalOrFloat roundTo: 0.01s.
-	val := (val respondsTo: #asWebStringWithMinimumDecimals) 
-				ifTrue: [val printString]
-				ifFalse: [val asWebStringWithMinimumDecimals].
-	self
-		logLineWithTS: 'Current object table size is ' , max printString;
-		logLineWithTS: 'Currently running at ' , val , '%'.
-	fs position: 16r20.
-	fs nextSDWORDPut: max + 500000.
-	fs close!
-
 isHeadless
 	^isHeadless = true "or: [SessionManager current isHeadless]"!
 
@@ -1122,7 +1084,6 @@ zip' , junkPathsParam , archive , ' *.*
 !ItcSystemManager class categoriesFor: #basicShowProgressDialogWhile:caption:allowCancel:!private!progress dialog! !
 !ItcSystemManager class categoriesFor: #batchJobPriority!public!scheduling priority! !
 !ItcSystemManager class categoriesFor: #caption:!private!progress dialog! !
-!ItcSystemManager class categoriesFor: #checkDolphinObjectTableSize!private!VM and session managerment! !
 !ItcSystemManager class categoriesFor: #checkEmail:!public!sockets! !
 !ItcSystemManager class categoriesFor: #checkImageConsistency!public! !
 !ItcSystemManager class categoriesFor: #compileRuntimePatchForClass:methodSource:!public!runtime image live update! !
@@ -1174,7 +1135,6 @@ zip' , junkPathsParam , archive , ' *.*
 !ItcSystemManager class categoriesFor: #imageCommandLineArguments!public! !
 !ItcSystemManager class categoriesFor: #imageFilename!public! !
 !ItcSystemManager class categoriesFor: #imageTimestamp!public! !
-!ItcSystemManager class categoriesFor: #increaseDolphinObjectTableSize!private!VM and session managerment! !
 !ItcSystemManager class categoriesFor: #isHeadless!public!VM and session managerment! !
 !ItcSystemManager class categoriesFor: #isHeadless:!private!VM and session managerment! !
 !ItcSystemManager class categoriesFor: #isIgnoredSocketError:socket:!public!sockets! !

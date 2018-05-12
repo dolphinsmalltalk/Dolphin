@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+ï»¿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #VMTest
 	instanceVariableNames: 'expiryHandler'
@@ -13,7 +13,7 @@ SUnitBrowser openOnTestCase: self'!
 !VMTest methodsFor!
 
 assertImmutableAtPut: anObject
-	self assert: anObject isImmutable.
+	anObject isImmutable: true.
 	self should: [anObject at: 0 put: $x] raise: BoundsError.
 	self should: [anObject at: anObject size + 1 put: $x] raise: BoundsError.
 	1 to: anObject size
@@ -26,12 +26,12 @@ assertImmutableBasicAtPut: anObject
 	1 to: anObject size
 		do: [:each | self should: [anObject basicAt: each put: $x] raise: Processor constWriteSignal]!
 
-assertImmutableInstVarAtPut: anObject 
+assertImmutableInstVarAtPut: anObject
 	| size |
 	self assert: anObject isImmutable.
-	self should: [anObject instVarAt: 0 put: $x] raise: BoundsError.
+	self should: [anObject instVarAt: 0 put: $x] raise: Processor constWriteSignal.
 	size := anObject class instSize + anObject basicSize.
-	self should: [anObject instVarAt: size + 1 put: $x] raise: BoundsError.
+	self should: [anObject instVarAt: size + 1 put: $x] raise: Processor constWriteSignal.
 	1 to: size
 		do: [:each | self should: [anObject instVarAt: each put: $x] raise: Processor constWriteSignal]!
 
@@ -60,7 +60,7 @@ createPrimitiveMethod: anInteger in: aBehavior argCount: argc setsFailCode: aBoo
 		nextPutAll: '> ^''failed'''.
 	aBoolean ifTrue: [text nextPutAll: ', Processor activeProcess primitiveFailureCode printString'].
 	method := Compiler compile: text contents in: aBehavior.
-	self assert: method ~~ nil.
+	self deny: method identicalTo: nil.
 	^method!
 
 createPrimitiveMethodLike: aCompiledMethod setsFailCode: aBoolean
@@ -70,7 +70,7 @@ createPrimitiveMethodLike: aCompiledMethod setsFailCode: aBoolean
 		argCount: aCompiledMethod argumentCount
 		setsFailCode: aBoolean!
 
-earlyTermination: aBoolean 
+earlyTermination: aBoolean
 	"N.B. Timing is critical to much of this, so its not going to be possible to debug through it. Its really only to show up
 	problems in the VM, so debugging at the Smalltalk level is not terribly useful anyway."
 
@@ -84,7 +84,7 @@ earlyTermination: aBoolean
 			
 			[a := 2.
 			KernelLibrary default sleep: 30] ifCurtailed: [a := 0].
-			a := 3] 
+			a := 3]
 					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
 	self assert: proc isWaiting description: 'Proc should be blocked on the overlapped call semaphore'.
 	self assert: a == 2 description: 'Not at stage 2'.
@@ -93,18 +93,17 @@ earlyTermination: aBoolean
 	aCopy := a.
 	list := proc suspendingList.
 	state := proc state.
-	state == #dead 
+	state == #dead
 		ifTrue: [self assert: aCopy == 0 | (aCopy == 3)]
 		ifFalse: 
-			["On occasion NT will put Dolphin to sleep for 50mS+ and consequentlty the Process will have finished up anyway"
+			[| count |
+			"On occasion NT will put Dolphin to sleep for 50mS+ and consequentlty the Process will have finished up anyway"
 
 			"The Process will not be able to terminate until the overlapped call completes"
-			| count |
-			self 
-				assert: (list == Processor pendingTerminations or: [list == (proc instVarNamed: 'threadSync')]).
+			self assert: (list == Processor pendingTerminations or: [list == (proc instVarNamed: 'threadSync')]).
 			"a will still be run, because the VM will not reschedule the process to run the curtailment block until the overlapped
 		call can be terminated."
-			self assert: aCopy == 2.
+			self assert: aCopy identicalTo: 2.
 
 			"Let the sleep: complete (allow a reasonable period so we can be fairly sure  it does)"
 			count := 0.
@@ -112,7 +111,7 @@ earlyTermination: aBoolean
 					[Processor sleep: 1.
 					count := count + 1].
 			"The curtailment block should now have run"
-			self assert: a == 0.
+			self assert: a identicalTo: 0.
 			"and the process should have died"
 			self assert: proc isTerminated.
 			self assert: Processor pendingTerminations isEmpty]!
@@ -132,14 +131,15 @@ exerciseReplaceElementsOf: targetCollection from: startInteger to: stopInteger w
 		startingAt: startAtInteger.
 	"The fixed fields should not have been touched"
 	fieldsAfter := captureFields value: target.
-	self assert: fieldsAfter = fieldsBefore.
+	self assert: fieldsAfter equals: fieldsBefore.
 	"Build the expected result using low-level operations to avoid inadvertently using the primitive under test"
 	expected := targetCollection class ofSize: targetCollection size.
 	1 to: startInteger - 1 do: [:i | expected at: i put: (targetCollection at: i)].
-	startInteger to: stopInteger do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
+	startInteger to: stopInteger
+		do: [:i | expected at: i put: (sourceCollection at: i - startInteger + startAtInteger)].
 	stopInteger + 1 to: targetCollection size do: [:i | expected at: i put: (targetCollection at: i)].
 	"Did it work?"
-	self assert: target = expected!
+	self assert: target equals: expected!
 
 exerciseReplaceElementsOf: targetCollection with: sourceCollection
 	| target |
@@ -294,14 +294,8 @@ firstVmVersionRespectingNonInstantiable
 
 	^#(2016 7 0 51)!
 
-has7052OrLater
-	^self isAtLeastVmVersion: #(2016 7 0 52)!
-
-has7053OrLater
-	^self isAtLeastVmVersion: #(2016 7 0 53)!
-
-has7054OrLater
-	^self isAtLeastVmVersion: #(2016 7 0 54)!
+has7XOrLater: anInteger
+	^self isAtLeastVmVersion: (#(2016 7 0) copyWith: anInteger)!
 
 hashBytes: aByteArray
 	"Private - PJW hash (Aho, Sethi, and Ullman pp. 434-438).
@@ -318,6 +312,13 @@ hashBytes: aByteArray
 			g := h & 16rF0000000.
 			g ~~ 0 ifTrue: [h := (h bitXor: g >> 24) bitXor: g]].
 	^h!
+
+immutableTestSubjects
+	^#(#(1 2 3) #[1 2 3] 'abc' 1.0e38 ##('abc' asUtf8String
+		isImmutable: true;
+		yourself) ##('abc' asUtf16String
+		isImmutable: true;
+		yourself))!
 
 isFault: anException raisedIn: aCompiledMethod receiver: anObject
 	| frame |
@@ -342,35 +343,39 @@ suspendAndTerminate
 	| proc a i |
 	"1) Call requests completion, but is suspended before Interpreter allows it to complete, then terminated"
 	self assert: Processor pendingTerminations isEmpty.
-
-	proc := [a := 1. KernelLibrary default sleep: 10. a := 2] forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
-	self assert: (proc isWaiting).		"proc should be blocked on the overlapped call semaphore"
-	self assert: a == 1.
-	proc suspend.				"suspend it before it gets a chance to queue its termination request"
-	self assert: (proc isSuspended).
-	Processor sleep: 20.			"wait for the overlapped call to complete"
-	self assert: (proc isSuspended).
-	self assert: a ==1.
+	proc := 
+			[a := 1.
+			KernelLibrary default sleep: 10.
+			a := 2] forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
+	self assert: proc isWaiting.	"proc should be blocked on the overlapped call semaphore"
+	self assert: a identicalTo: 1.
+	proc suspend.	"suspend it before it gets a chance to queue its termination request"
+	self assert: proc isSuspended.
+	Processor sleep: 20.	"wait for the overlapped call to complete"
+	self assert: proc isSuspended.
+	self assert: a identicalTo: 1.
 	proc terminate.
 	i := 1.
-	[Processor sleep: 10. proc isTerminated or: [i > 100]] whileFalse: [i := i + 1].
+	
+	[Processor sleep: 10.
+	proc isTerminated or: [i > 100]] whileFalse: [i := i + 1].
 	self assert: proc isTerminated.
-	self assert: a == 1.
-
-	self assert: Processor pendingTerminations isEmpty.
+	self assert: a identicalTo: 1.
+	self assert: Processor pendingTerminations isEmpty
 
 	"2) Ditto, but resumed and so allowed to complete"!
 
 testBSTRArg
 	"#1377 - Make sure there is no problem in the VM's automatic conversion of a string to a BSTR.
 	In an unpatched VM this typically crashes the whole system."
+
 	| dom |
 	dom := IXMLDOMDocument new.
 	1000 timesRepeat: 
 			[| instr |
 			instr := dom createProcessingInstruction: 'ATarget' data: 'Some data'.
-			self assert: instr data = 'Some data'.
-			self assert: instr target = 'ATarget'.
+			self assert: instr data equals: 'Some data'.
+			self assert: instr target equals: 'ATarget'.
 			instr free]!
 
 testCRTFault
@@ -399,7 +404,7 @@ testDwordAtOffsetPut
 	4 to: max
 		by: 4
 		do: 
-			[:each | 
+			[:each |
 			bytes := ByteArray new: each - 1.
 			self should: [bytes dwordAtOffset: each - 4 put: 1] raise: BoundsError.
 			bytes := ByteArray new: each.
@@ -407,25 +412,25 @@ testDwordAtOffsetPut
 			dword := (2 raisedToInteger: 31) - 1.
 			self assert: dword isImmutable.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = dword.
+			self assert: (bytes dwordAtOffset: each - 4) equals: dword.
 			"This large integer will be 8-bytes long"
 			dword := dword + 1.
 			self assert: dword isImmutable.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = dword.
+			self assert: (bytes dwordAtOffset: each - 4) equals: dword.
 			dword := 16rFFFFFFFF.
 			self assert: dword isImmutable.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: bytes = ((ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF]).
+			self assert: bytes equals: (ByteArray new: each - 4) , #[16rFF 16rFF 16rFF 16rFF].
 			bytes dwordAtOffset: each - 4 put: #[16rAA 16rBB 16rCC 16rDD].
-			self assert: (bytes dwordAtOffset: each - 4) = 16rDDCCBBAA.
+			self assert: (bytes dwordAtOffset: each - 4) equals: 16rDDCCBBAA.
 			dword := DWORD fromInteger: 16r11223344.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = 16r11223344.
+			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
 			dword isImmutable: true.
 			bytes := ByteArray new: each.
 			bytes dwordAtOffset: each - 4 put: dword.
-			self assert: (bytes dwordAtOffset: each - 4) = 16r11223344.
+			self assert: (bytes dwordAtOffset: each - 4) equals: 16r11223344.
 			bytes := ByteArray new: each.
 			bytes isImmutable: true.
 			self should: [bytes dwordAtOffset: each - 4 put: 1] raise: Processor constWriteSignal]!
@@ -437,11 +442,11 @@ testEvaluationOrder
 
 testExtCallArgBstr
 	| beers |
-	self skipUnless: [self has7054OrLater].
-	{''. 'a'. '£2'. 'a' , (String with: Character null) , 'b'} do: 
+	self skipUnless: [self has7XOrLater: 54].
+	{''. 'a'. 'Â£2'. 'a' , (String with: Character null) , 'b'} do: 
 			[:each |
 			| subject expected actual |
-			expected := each size.
+			expected := each asUtf16String size.
 			actual := OLEAutLibrary default sysStringLen: each.
 			self assert: actual equals: expected.
 			subject := each asUtf8String.
@@ -457,7 +462,7 @@ testExtCallArgBstr
 
 testExtCallArgLpwstr
 	| expected actual method |
-	self skipUnless: [self has7054OrLater].
+	self skipUnless: [self has7XOrLater: 54].
 	method := Compiler
 				compile: 'x: aString
 	| proc |
@@ -468,10 +473,10 @@ testExtCallArgLpwstr
 	self assert: method argumentTypes asArray equals: #('lpwstr').
 	self assert: method returnType equals: 'lpwstr'.
 	expected := Utf16String fromByteArray: #[97 0 32 0 163 0 32 0 111 0 114 0 32 0 116 0 119 0 111 0].
-	actual := method value: VMLibrary default withArguments: #('a £ or two').
+	actual := method value: VMLibrary default withArguments: #('a Â£ or two').
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
-	actual := method value: VMLibrary default withArguments: {'a £ or two' asUtf8String}.
+	actual := method value: VMLibrary default withArguments: {'a Â£ or two' asUtf8String}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String.
 	{String empty. Utf8String empty} do: 
@@ -497,7 +502,7 @@ testExtCallRetHRESULT
 			| result |
 			result := method value: VMLibrary default withArguments: {each}.
 			self assert: result equals: each.
-			self assert: each class == result class].
+			self assert: each class identicalTo: result class].
 	"Negative HRESULTs should cause the primitive to fail with the failure data set to the HR code."
 	#(-1 -16r40000000 -16r40000001 -16r80000000) do: 
 			[:each |
@@ -505,11 +510,11 @@ testExtCallRetHRESULT
 			result := method value: VMLibrary default withArguments: {each}.
 			self assert: result key equals: -1.
 			self assert: result value equals: each.
-			self assert: each class == result value class]!
+			self assert: each class identicalTo: result value class]!
 
 testExtCallRetLpwstr
 	| expected actual method |
-	self skipUnless: [self has7054OrLater].
+	self skipUnless: [self has7XOrLater: 54].
 	method := Compiler
 				compile: 'w: anInteger
 	| proc |
@@ -517,7 +522,7 @@ testExtCallRetLpwstr
 	proc := Processor activeProcess.
 	^proc primitiveFailureCode -> proc primitiveFailureData'
 				in: VMLibrary.
-	expected := 'oña' asUtf16String.
+	expected := 'oÃ±a' asUtf16String.
 	actual := method value: VMLibrary default withArguments: {expected yourAddress}.
 	self assert: actual equals: expected.
 	self assert: actual isKindOf: Utf16String!
@@ -616,20 +621,22 @@ testGPFTrap
 							receiver: nullPointer]]!
 
 testImmutableAtPut
-	#(#(1 2 3) #[1 2 3] 'abc') do: 
-			[:each | 
+	self immutableTestSubjects do: 
+			[:each |
 			| a |
 			self assertImmutableAtPut: each.
 			a := each copy.
-			self assert: a isImmutable not.
-			1 to: 3 do: [:i | a at: i put: (a at: 3 - i + 1)].
-			a isImmutable: true.
+			a isNumber
+				ifFalse: 
+					[self assert: a isImmutable not.
+					1 to: 3 do: [:i | a at: i put: (a at: 3 - i + 1)].
+					a isImmutable: true].
 			self assertImmutableAtPut: a].
 	self assertImmutableAtPut: #abc!
 
 testImmutableBasicAtPut
-	#(#(1 2 3) #[1 2 3] 'abc' 1.0e38) do: 
-			[:each | 
+	self immutableTestSubjects do: 
+			[:each |
 			| a |
 			self assertImmutableBasicAtPut: each.
 			a := each shallowCopy.
@@ -655,38 +662,40 @@ testImmutableBufferAtPuts
 
 testImmutableInstVarAtPut
 	| instances |
-	instances := OrderedCollection withAll: #(#(1 2 3) #[1 2 3] 'abc').
+	instances := OrderedCollection withAll: self immutableTestSubjects.
 	"The compiler test class has a lot of named iv's"
-	instances add: ((CompilerTestClasses current testClass new)
+	instances add: (CompilerTestClasses current testClass new
 				isImmutable: true;
 				yourself).
 	"Sets have named and indexable variables"
-	instances add: ((self class methodDictionary values asSet)
+	instances add: (self class methodDictionary values asSet
 				isImmutable: true;
 				yourself).
 	instances do: 
-			[:each | 
+			[:each |
 			| a size |
 			self assertImmutableInstVarAtPut: each.
 			a := each copy.
-			self assert: a isImmutable not.
-			size := a class instSize + a basicSize.
-			1 to: size do: [:i | a instVarAt: i put: (a instVarAt: size - i + 1)].
-			a isImmutable: true.
+			a isNumber
+				ifFalse: 
+					[self assert: a isImmutable not.
+					size := a class instSize + a basicSize.
+					1 to: size do: [:i | a instVarAt: i put: (a instVarAt: size - i + 1)].
+					a isImmutable: true].
 			self assertImmutableInstVarAtPut: a].
 	self assertImmutableInstVarAtPut: #abc!
 
 testImmutableNextPut
-	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
+	(self immutableTestSubjects reject: [:each | each isNumber]) do: 
+			[:s |
 			| strm |
 			self assertImmutableAtPut: s.
 			strm := WriteStream on: s.
 			self should: [strm nextPut: s last] raise: Processor constWriteSignal]!
 
 testImmutableNextPutAll
-	#(#[1 2 3] 'abc' #(1 2 3)) do: 
-			[:s | 
+	#(#[1 2 3] 'abc' #(1 2 3) ##('abc' asUtf8String) ##('abc' asUtf16String) #abc) do: 
+			[:s |
 			| strm |
 			self assertImmutableAtPut: s.
 			strm := WriteStream on: s.
@@ -709,11 +718,11 @@ testImmutableResize
 testImmutableStringCompare
 	| s1 s2 |
 	s1 := 'abc'.
-	s2 := String 
+	s2 := String
 				with: $a
 				with: $b
 				with: $c.
-	self assert: s1 = s2!
+	self assert: s1 equals: s2!
 
 testImmutableWriteAccessors
 	| class inst |
@@ -995,26 +1004,26 @@ testIntDivideByZero
 testMakeLargeUnsigned
 	| bytes |
 	bytes := ByteArray new: 8.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) == 0.
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: 0.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: 1.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) == 1.
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: 1.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: SmallInteger maximum.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) == SmallInteger maximum.
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) identicalTo: SmallInteger maximum.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: SmallInteger minimum.
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) 
-				= ((2 raisedToInteger: 64) + SmallInteger minimum).
+	self assert: (VMLibrary default makeLargeUnsigned: bytes)
+		equals: (2 raisedToInteger: 64) + SmallInteger minimum.
 	bytes := ByteArray new: 8.
 	bytes qwordAtOffset: 0 put: (2 raisedToInteger: 31).
-	self assert: (VMLibrary default makeLargeUnsigned: bytes) = (2 raisedToInteger: 31).
-	self assert: (VMLibrary default makeLargeUnsigned: Float fmax) 
-				= (#[255 255 255 255 255 255 239 127] qwordAtOffset: 0).
-	self assert: (VMLibrary default makeLargeUnsigned: Float fminNormalized) 
-				= (Float fminNormalized shallowCopy becomeA: LargeInteger).
+	self assert: (VMLibrary default makeLargeUnsigned: bytes) equals: (2 raisedToInteger: 31).
+	self assert: (VMLibrary default makeLargeUnsigned: Float fmax)
+		equals: (#[255 255 255 255 255 255 239 127] qwordAtOffset: 0).
+	self assert: (VMLibrary default makeLargeUnsigned: Float fminNormalized)
+		equals: (Float fminNormalized shallowCopy becomeA: LargeInteger).
 	"#1130"
-	#(16r7FFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFF) 
+	#(16r7FFFFFFFFFFFFFFF 16rFFFFFFFFFFFFFFFF)
 		do: [:each | (VMLibrary default makeLargeUnsigned: each) = each]!
 
 testMustBeBoolean
@@ -1042,11 +1051,11 @@ testMustBeBoolean
 	self assert: (pseudoTrue and: [true]).
 	self deny: (pseudoFalse and: [true]).
 	"short jump if false"
-	self assert: (pseudoTrue ifTrue: [1] ifFalse: [2]) = 1.
-	self assert: (pseudoFalse ifTrue: [1] ifFalse: [2]) = 2.
+	self assert: (pseudoTrue ifTrue: [1] ifFalse: [2]) equals: 1.
+	self assert: (pseudoFalse ifTrue: [1] ifFalse: [2]) equals: 2.
 	"Near jump if false"
-	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) = (1 + 2 + 3 + 4).
-	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) = 2!
+	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 1 + 2 + 3 + 4.
+	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 2!
 
 testOverlappedCallsSuspendAndTerminate
 	5 timesRepeat: [self suspendAndTerminate]!
@@ -1104,7 +1113,7 @@ testPrimitiveBasicAtPut
 testPrimitiveBytesEqual
 	| method string1 string2 string3 string4 bytes1 bytes2 string5 string6 string7 mismatchedClassFailure |
 	method := self
-				createPrimitiveMethod: (String >> #=) primitiveIndex
+				createPrimitiveMethod: (ByteArray >> #=) primitiveIndex
 				in: Object
 				argCount: 1
 				setsFailCode: true.
@@ -1119,7 +1128,7 @@ testPrimitiveBytesEqual
 	"More than one word, odd length"
 	string6 := 'abcdefghi'.
 	string7 := 'abcdefghj'.
-	mismatchedClassFailure := self has7052OrLater ifTrue: ['failed1'] ifFalse: ['failed0'].
+	mismatchedClassFailure := (self has7XOrLater: 52) ifTrue: ['failed1'] ifFalse: ['failed0'].
 	{{string1. string1. true}.
 		{bytes1. bytes1. true}.
 		{bytes1. bytes1 copy. true}.
@@ -1182,6 +1191,26 @@ testPrimitiveEnableInterrupts
 	enabled := method value: Processor withArguments: #(true).
 	self assert: enabled description: 'Interrupts should have remained enabled'!
 
+testPrimitiveEqual
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #= setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 false).
+		#(1 0 false).
+		#(1 1 true).
+		#(-1 0 false).
+		#(-1 1 false).
+		#(-1 -1 true).
+		#(-1 -2 false).
+		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum. true}.
+		{SmallInteger minimum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger minimum. false}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
 testPrimitiveExtraInstanceSpec
 	| method |
 	method := self createPrimitiveMethodLike: Behavior >> #extraInstanceSpec setsFailCode: false.
@@ -1199,8 +1228,8 @@ testPrimitiveFindString
 	foundCases := #(#('abc' 'a' 1 1) #('abc' 'b' 1 2) #('abc' 'c' 1 3) #('abc' 'ab' 1 1) #('abc' 'b' 2 2) #('abc' 'bc' 2 2) #('abc' 'c' 3 3))
 				asOrderedCollection.
 	unlikely := '!!@#^%'.
-	comment := Object comment.
-	large := Object comment , unlikely.
+	comment := Object comment asAnsiString.
+	large := comment , unlikely.
 	foundCases addLast: {large. unlikely. 1. comment size + 1}.
 	foundCases addLast: {large , comment. unlikely. large size // 2. comment size + 1}.
 	foundCases
@@ -1224,10 +1253,50 @@ testPrimitiveFindString
 			actual := method value: subject withArguments: {match. startingAt}.
 			self assert: actual equals: expected]!
 
+testPrimitiveGreaterOrEqual
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #>= setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 false).
+		#(1 0 true).
+		#(1 1 true).
+		#(-1 0 false).
+		#(-1 1 false).
+		#(-1 -1 true).
+		#(-1 -2 true).
+		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum. true}.
+		{SmallInteger minimum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger minimum. true}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
+testPrimitiveGreaterThan
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #> setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 false).
+		#(1 0 true).
+		#(1 1 false).
+		#(-1 0 false).
+		#(-1 1 false).
+		#(-1 -1 false).
+		#(-1 -2 true).
+		{SmallInteger minimum. SmallInteger minimum + 1. false}.
+		{SmallInteger minimum. SmallInteger minimum. false}.
+		{SmallInteger minimum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger minimum. true}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
 testPrimitiveHashBytes
 	| method |
 	method := self
-				createPrimitiveMethod: (String >> #hash) primitiveIndex
+				createPrimitiveMethod: (Utf8String >> #hash) primitiveIndex
 				in: Object
 				argCount: 0
 				setsFailCode: false.
@@ -1253,12 +1322,12 @@ testPrimitiveInstanceCounts
 	| stats counts |
 	stats := MemoryManager current primInstanceStats: nil.
 	"Kick a couple of tyres"
-	self assert: stats size \\ 3 == 0.
+	self assert: stats size \\ 3 identicalTo: 0.
 	counts := IdentityDictionary new.
 	1 to: stats size
 		by: 3
 		do: [:i | counts at: (stats at: i) put: (stats at: i + 1)].
-	self assert: (counts at: Symbol) > 30000.
+	self assert: (counts at: Symbol) > 25000.
 	self assert: (counts at: VMLibrary) equals: 1.
 	counts keysAndValuesDo: 
 			[:class :count |
@@ -1288,7 +1357,7 @@ testPrimitiveInstanceCounts2
 	| stats baseClasses counts |
 	self skipUnless: 
 			["Crashing bug in older VMs"
-			self has7052OrLater].
+			self has7XOrLater: 52].
 	baseClasses := Object owningPackage classes.
 	stats := MemoryManager current primInstanceStats: baseClasses asArray.
 	self assert: stats size equals: baseClasses size * 3.
@@ -1299,8 +1368,10 @@ testPrimitiveInstanceCounts2
 		do: [:i | counts at: (stats at: i) put: (stats at: i + 1)].
 	self assert: (counts keys noDifference: baseClasses).
 	"Some sanity checks that the stats look reasonable."
-	self assert: (counts at: Symbol) = Symbol primAllInstances size.
-	self assert: (counts at: String) > 30000.
+	counts
+		keysAndValuesDo: [:eachClass :eachCount | eachClass isNonInstantiable ifTrue: [self assert: eachCount equals: 0]].
+	self assert: (counts at: Symbol) equals: Symbol primAllInstances size.
+	self assert: (counts at: AnsiString) > 30000.
 	self assert: (counts at: Object) < 100.
 	self assert: (counts at: VMLibrary) equals: 1.
 	self assert: (counts at: Processor class) equals: 1.
@@ -1351,7 +1422,7 @@ testPrimitiveInstVarAt
 			self assert: (method value: immutableBytes withArguments: {each}) equals: 'failed0']!
 
 testPrimitiveInstVarAtPut
-	| mutableOc method immutableBytes mutableBytes immutableOc immutableString mutableString |
+	| mutableOc method immutableBytes mutableBytes immutableOc immutableStrings mutableStrings |
 	method := self createPrimitiveMethodLike: Object >> #instVarAt:put: setsFailCode: true.
 	mutableOc := OrderedCollection new: 2.
 	self deny: mutableOc isImmutable.
@@ -1367,8 +1438,12 @@ testPrimitiveInstVarAtPut
 	self assert: mutableOc asArray equals: #('3' '4').
 	self assert: (method value: immutableOc withArguments: #(1 1)) equals: 'failed1'.
 	immutableBytes := #[10 20 30 40].
-	mutableString := String new: 4.
-	immutableString := 'abcd'.
+	mutableStrings := {String new: 4. Utf8String new: 4. Utf16String new: 4}.
+	immutableStrings := {AnsiString. Utf8String. Utf16String} collect: 
+					[:each |
+					(each fromString: 'abcd')
+						isImmutable: true;
+						yourself].
 	self assert: immutableBytes isImmutable.
 	mutableBytes := immutableBytes copy.
 	self deny: mutableBytes isImmutable.
@@ -1376,33 +1451,38 @@ testPrimitiveInstVarAtPut
 		do: 
 			[:i |
 			self assert: (method value: immutableBytes withArguments: {i. i * 10}) equals: 'failed1'.
-			self assert: (method value: immutableString withArguments: {i. 96 + i}) equals: 'failed1'.
-			self assert: (method value: mutableString withArguments: {i. 96 + i}) equals: 96 + i.
+			immutableStrings
+				do: [:s | self assert: (method value: s withArguments: {i. 96 + i}) equals: 'failed1'].
+			mutableStrings do: [:s | self assert: (method value: s withArguments: {i. 96 + i}) equals: 96 + i].
 			self assert: (method value: mutableBytes withArguments: {i. i * 10}) equals: i * 10.
 			self assert: (mutableBytes basicAt: i) equals: i * 10].
-	self assert: mutableString equals: immutableString.
+	mutableStrings with: immutableStrings do: [:a :b | self assert: a equals: b].
 	"Out of bounds"
 	{-1. 0. 5. SmallInteger minimum. SmallInteger maximum} do: 
 			[:each |
 			self assert: (method value: mutableOc withArguments: {each. each}) equals: 'failed1'.
 			self assert: (method value: immutableOc withArguments: {each. each}) equals: 'failed1'.
-			self assert: (method value: mutableString withArguments: {each. each}) equals: 'failed1'.
-			self assert: (method value: immutableString withArguments: {each. each}) equals: 'failed1'.
-			self assert: (method value: mutableBytes withArguments: {each. each}) equals: 'failed1'.
-			self assert: (method value: immutableBytes withArguments: {each. each}) equals: 'failed1'].
+			mutableStrings
+				do: [:s | self assert: (method value: s withArguments: {each. $a codePoint}) equals: 'failed1'].
+			immutableStrings
+				do: [:s | self assert: (method value: s withArguments: {each. $a codePoint}) equals: 'failed1'].
+			self assert: (method value: mutableBytes withArguments: {each. 255}) equals: 'failed1'.
+			self assert: (method value: immutableBytes withArguments: {each. 255}) equals: 'failed1'].
 	"Invalid index"
 	{SmallInteger minimum - 1. SmallInteger maximum + 1. nil} do: 
 			[:each |
 			self assert: (method value: mutableOc withArguments: {each. each}) equals: 'failed0'.
 			self assert: (method value: immutableOc withArguments: {each. each}) equals: 'failed0'.
-			self assert: (method value: mutableString withArguments: {each. each}) equals: 'failed0'.
-			self assert: (method value: immutableString withArguments: {each. each}) equals: 'failed0'.
+			mutableStrings
+				do: [:s | self assert: (method value: s withArguments: {each. each}) equals: 'failed0'].
+			immutableStrings
+				do: [:s | self assert: (method value: s withArguments: {each. each}) equals: 'failed0'].
 			self assert: (method value: mutableBytes withArguments: {each. each}) equals: 'failed0'.
 			self assert: (method value: immutableBytes withArguments: {each. each}) equals: 'failed0'].
 	"Invalid byte content"
 	#($a -1 256 nil) do: 
 			[:each |
-			self assert: (method value: mutableString withArguments: #(1 #each)) equals: 'failed2'.
+			mutableStrings do: [:s | self assert: (method value: s withArguments: #(1 #each)) equals: 'failed2'].
 			self assert: (method value: mutableBytes withArguments: #(1 #each)) equals: 'failed2']!
 
 testPrimitiveIsKindOf
@@ -1429,12 +1509,11 @@ testPrimitiveIsKindOf
 					[self deny: (method value: subject withArguments: {Behavior}).
 					self deny: (method value: subject withArguments: {Object class})]].
 	proto := ProtoObject new.
-	self assert: (proto isKindOf: ProtoObject).
-	self assert: (proto isKindOf: nil).
+	self assert: proto isKindOf: ProtoObject.
+	self assert: proto isKindOf: nil.
 	self deny: (proto isKindOf: ProtoObject class).
 	self deny: (proto isKindOf: 1).
-	self deny: (proto isKindOf: Object).
-!
+	self deny: (proto isKindOf: Object)!
 
 testPrimitiveIsNullBytes
 	| addr handle |
@@ -1466,6 +1545,46 @@ testPrimitiveIsNullBytes
 			| bytes |
 			bytes := DWORDBytes newFixed: each.
 			self assert: bytes isNull]!
+
+testPrimitiveLessOrEqualThan
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #<= setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 true).
+		#(1 0 false).
+		#(1 1 true).
+		#(-1 0 true).
+		#(-1 1 true).
+		#(-1 -1 true).
+		#(-1 -2 false).
+		{SmallInteger minimum. SmallInteger minimum + 1. true}.
+		{SmallInteger minimum. SmallInteger minimum. true}.
+		{SmallInteger minimum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger minimum. false}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
+
+testPrimitiveLessThan
+	| method |
+	method := self createPrimitiveMethodLike: SmallInteger >> #< setsFailCode: false.
+	self assert: (method value: 1 withArguments: #('s')) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger maximum + 1}) equals: 'failed'.
+	self assert: (method value: 1 withArguments: {SmallInteger minimum - 1}) equals: 'failed'.
+	{#(0 1 true).
+		#(1 0 false).
+		#(1 1 false).
+		#(-1 0 true).
+		#(-1 1 true).
+		#(-1 -1 false).
+		#(-1 -2 false).
+		{SmallInteger minimum. SmallInteger minimum + 1. true}.
+		{SmallInteger minimum. SmallInteger minimum. false}.
+		{SmallInteger minimum. SmallInteger maximum. true}.
+		{SmallInteger maximum. SmallInteger maximum. false}.
+		{SmallInteger maximum. SmallInteger minimum. false}}
+			do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each last]!
 
 testPrimitiveLookupMethod
 	| method |
@@ -1599,9 +1718,10 @@ testPrimitiveNewVirtualFailure
 	self assert: (method value: Object withArguments: #(1 2)) equals: 'failed2'!
 
 testPrimitiveNextPut
-	| method subject |
+	| method subject pound euro |
 	method := self createPrimitiveMethodLike: WriteStream >> #nextPut: setsFailCode: true.
-	subject := String writeStream.
+	subject := AnsiString writeStream.
+	self assert: subject collection isKindOf: AnsiString.
 	"Past limit"
 	self assert: (method value: subject withArguments: #($a)) equals: 'failed2'.
 	"Smalltalk backup code will extend the collection"
@@ -1611,13 +1731,88 @@ testPrimitiveNextPut
 	self assert: subject contents equals: 'ab'.
 	subject position: 0.0.
 	self assert: (method value: subject withArguments: #($a)) equals: 'failed0'.
-	subject := String writeStream: 2.
+	subject := AnsiString writeStream: 2.
 	"Not a character"
 	self assert: (method value: subject withArguments: #(1)) equals: 'failed4'.
-	self has7053OrLater
+	(self has7XOrLater: 53)
 		ifTrue: 
 			["Earlier VM assumed chars were always for byte code points"
-			self assert: (method value: subject withArguments: {Character codePoint: 16r394}) equals: 'failed4']!
+			self assert: (method value: subject withArguments: {Character codePoint: 16r394}) equals: 'failed4'].
+	(self has7XOrLater: 55) ifFalse: [^self].
+	"Tests of string encodings"
+	{AnsiString. Utf8String. Utf16String} do: 
+			[:each |
+			| stm |
+			self assert: (method value: each writeStream withArguments: #($a)) equals: 'failed2'.
+			stm := each writeStream: 1.
+			self assert: (method value: stm withArguments: #($a)) equals: $a.
+			self assert: stm position equals: 1.
+			self assert: (method value: stm withArguments: #($b)) equals: 'failed2'].
+	"Unicode symbol requiring one ansi byte"
+	pound := (Character value: 163).
+	subject := AnsiString writeStream: 1.
+	self assert: (method value: subject withArguments: {pound}) equals: pound.
+	self assert: subject position equals: 1.
+	self assert: (subject contents at: 1) equals: pound.
+	"UTF-8, requires 2 bytes"
+	0 to: 1
+		do: [:i | self assert: (method value: (Utf8String writeStream: i) withArguments: {pound}) equals: 'failed2'].
+	subject := Utf8String writeStream: 2.
+	self assert: (method value: subject withArguments: {pound}) equals: pound.
+	self assert: subject position equals: 2.
+	self assert: subject contents equals: pound asUtf8String.
+	"UTF-16 requires 1 code unit"
+	0 to: 0
+		do: 
+			[:i |
+			self assert: (method value: (Utf16String writeStream: i) withArguments: {pound}) equals: 'failed2'].
+	subject := Utf16String writeStream: 1.
+	self assert: (method value: subject withArguments: {pound}) equals: pound.
+	self assert: subject position equals: 1.
+	self assert: subject contents equals: pound asUtf16String.
+	"Another unicode symbol requiring one ansi byte"
+	euro := $\x20AC.
+	subject := AnsiString writeStream: 1.
+	self assert: (method value: subject withArguments: {euro}) equals: euro.
+	self assert: subject position equals: 1.
+	self assert: (subject contents at: 1) equals: euro.
+	"UTF-8, requires 3 bytes"
+	0 to: 2
+		do: [:i | self assert: (method value: (Utf8String writeStream: i) withArguments: {euro}) equals: 'failed2'].
+	subject := Utf8String writeStream: 3.
+	self assert: (method value: subject withArguments: {euro}) equals: euro.
+	self assert: subject position equals: 3.
+	self assert: subject contents equals: euro asUtf8String.
+	"UTF-16 requires 1 code unit"
+	0 to: 0
+		do: [:i | self assert: (method value: (Utf16String writeStream: i) withArguments: {euro}) equals: 'failed2'].
+	subject := Utf16String writeStream: 1.
+	self assert: (method value: subject withArguments: {euro}) equals: euro.
+	self assert: subject position equals: 1.
+	self assert: subject contents equals: euro asUtf16String.
+	"Unicode symbol outside BMP- Not puttable into an AnsiString, should fail"
+	self assert: (method value: (AnsiString writeStream: 1) withArguments: {Character dolphin})
+		equals: 'failed4'.
+	"UTF-8, requires 4 bytes"
+	0 to: 3
+		do: 
+			[:i |
+			self assert: (method value: (Utf8String writeStream: i) withArguments: {Character dolphin})
+				equals: 'failed2'].
+	subject := Utf8String writeStream: 4.
+	self assert: (method value: subject withArguments: {Character dolphin}) equals: Character dolphin.
+	self assert: subject position equals: 4.
+	self assert: subject contents equals: Character dolphin asUtf8String.
+	"UTF-16 requires 2 code units"
+	0 to: 1
+		do: 
+			[:i |
+			self assert: (method value: (Utf16String writeStream: i) withArguments: {Character dolphin})
+				equals: 'failed2'].
+	subject := Utf16String writeStream: 2.
+	self assert: (method value: subject withArguments: {Character dolphin}) equals: Character dolphin.
+	self assert: subject position equals: 2.
+	self assert: subject contents equals: Character dolphin asUtf16String!
 
 testPrimitiveObjectCount
 	"Test primitive that returns object instance count."
@@ -1732,15 +1927,16 @@ testPrimitiveSetSpecialBehavior
 	self assert: (method value: subject withArguments: #(16rFF00)) equals: before.
 	self assert: (method value: subject withArguments: #(16rFFFF)) equals: before.
 	nullTermMask := _WeakMask bitXor: _PointersMask.
-	after := before | nullTermMask | _FinalizeMask.
+	after := before | _FinalizeMask.
 	self assert: subject getSpecialBehavior equals: after.
 	self deny: subject isWeak.
 	self assert: subject isFinalizable.
+	"The VM does not allow the null termination bit to be changed"
 	self assert: (method value: subject withArguments: {nullTermMask}) equals: after.
-	self assert: subject getSpecialBehavior equals: before | nullTermMask.
+	self assert: subject getSpecialBehavior equals: before.
 	self deny: subject isWeak.
 	self deny: subject isFinalizable.
-	self assert: (method value: subject withArguments: #(0)) equals: before | nullTermMask.
+	self assert: (method value: subject withArguments: #(0)) equals: before.
 	self assert: subject getSpecialBehavior equals: before.
 	self deny: subject isWeak.
 	self deny: subject isFinalizable!
@@ -1753,9 +1949,9 @@ testPrimitiveShallowCopy
 			[:each |
 			subject := #(#()).
 			result := method value: subject withArguments: #().
-			self deny: result sameAs: subject.
+			self deny: result identicalTo: subject.
 			self assert: result equals: subject.
-			result with: subject do: [:a :b | self assert: a sameAs: b]]!
+			result with: subject do: [:a :b | self assert: a identicalTo: b]]!
 
 testPrimitiveSize
 	| method subject |
@@ -1763,57 +1959,74 @@ testPrimitiveSize
 	self assert: (method value: '' withArguments: #()) equals: 0.
 	self assert: (method value: #[1 2] withArguments: #()) equals: 2.
 	self assert: (method value: #(#a #b #c) withArguments: #()) equals: 3.
-	self assert: (method value: 1->2 withArguments: #()) equals: 0.
+	self assert: (method value: 1 -> 2 withArguments: #()) equals: 0.
 	subject := OrderedCollection basicNew: 5.
 	self assert: (method value: subject withArguments: #()) equals: 5.
-	!
+	self assert: (method value: 'abc' withArguments: #()) equals: 3.
+	self assert: (method value: 'abc' asUtf8String withArguments: #()) equals: 3.
+	self assert: (method value: Character dolphin asUtf8String withArguments: #()) equals: 4.
+	self assert: (method value: Character dolphin asUtf16String withArguments: #()) equals: 2!
 
 testPrimitiveStringAt
-	| array |
-	
+	| method array |
+	method := self createPrimitiveMethodLike: String >> #at: setsFailCode: true.
 	array := String with: $1.
-	self should: [(array at: 1) == $1].
+	self should: [(method value: array withArguments: {1}) == $1].
 	"Some tests are repeated with a new array in case of different behaviour resulting from caching"
-	self should: [(array at: 1) == $1].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 2] raise: BoundsError.
+	self should: [(method value: array withArguments: {1}) == $1].
+	self assert: (method value: array withArguments: {0}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {2}) equals: 'failed1'.
 	array := String with: $1.
-	self should: [array at: 0] raise: BoundsError.
+	self assert: (method value: array withArguments: {0}) equals: 'failed1'.
 	array := String with: $1.
-	self should: [array at: 2] raise: BoundsError.
-
-	self should: [array at: SmallInteger maximum] raise: BoundsError.
-	self should: [array at: SmallInteger minimum] raise: BoundsError.
+	self assert: (method value: array withArguments: {2}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {SmallInteger maximum}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {SmallInteger minimum}) equals: 'failed1'.
 
 	"LargeIntegers"
-	self should: [array at: SmallInteger maximum+1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 31)] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)-1] raise: BoundsError.
-	self should: [array at: (2 raisedToInteger: 32)] raise: BoundsError.
-	self should: [array at: SmallInteger minimum-1] raise: BoundsError.
-	self should: [array at: (-2 raisedToInteger: 31)] raise: BoundsError.
-
-
+	self assert: (method value: array withArguments: {SmallInteger maximum + 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {(2 raisedToInteger: 31) - 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {2 raisedToInteger: 31}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {(2 raisedToInteger: 32) - 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {2 raisedToInteger: 32}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {SmallInteger minimum - 1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {-2 raisedToInteger: 31}) equals: 'failed0'.
+	"Two elements"
 	array := 'ab' copy.
-	self should: [(array at: 1) == $a].
-	self should: [(array at: 1) == $a].
-	self should: [(array at: 2) == $b].
-	self should: [array at: 0] raise: BoundsError.
-	self should: [array at: 3] raise: BoundsError.
+	self should: [(method value: array withArguments: {1}) == $a].
+	self should: [(method value: array withArguments: {1}) == $a].
+	self should: [(method value: array withArguments: {2}) == $b].
+	self assert: (method value: array withArguments: {0}) equals: 'failed1'.
+	self assert: (method value: array withArguments: {3}) equals: 'failed1'.
 
 	"Try accessing with non-integer indices"
-	self should: [array at: $1] raise: Error matching: [:ex | ex messageText = 'Index: $1 is not an integer'].
-	self should: [array at: '1'] raise: Error matching: [:ex | ex messageText = 'Index: ''1'' is not an integer'].
-	self should: [array at: nil] raise: Error matching: [:ex | ex messageText = 'Index: nil is not an integer'].
-	self should: [array at: #[1]] raise: Error matching: [:ex | ex messageText = 'Index: #[1] is not an integer'].
-	self should: [array at: #'1'] raise: Error matching: [:ex | ex messageText = 'Index: #''1'' is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-	self should: [array at: #(1)] raise: Error matching: [:ex | ex messageText = 'Index: #(1) is not an integer'].
-
-	array := (0 to: 255) collect: [:i | Character value: i].
-	0 to: 255 do: [:i | self should: [(array at: i+1) == (Character value: i)]].
-!
+	self assert: (method value: array withArguments: {$1}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {'1'}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {nil}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#[1]}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#'1'}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#(1)}) equals: 'failed0'.
+	self assert: (method value: array withArguments: {#(1)}) equals: 'failed0'.
+	{AnsiString. Utf8String. Utf16String} do: 
+			[:eachClass |
+			| subject |
+			subject := eachClass withAll: ((0 to: 127) collect: [:i | Character value: i]).
+			0 to: subject size - 1
+				do: [:i | self assert: (method value: subject withArguments: {i + 1}) identicalTo: (Character value: i)]].
+	"Remaining ANSI characters are unique"
+	array := AnsiString withAll: ((128 to: 255) collect: [:i | Character ansiValue: i]).
+	128 to: 255
+		do: [:i | self assert: (method value: array withArguments: {i - 127}) identicalTo: (Character ansiValue: i)].
+	"UTF-8 surrogates"
+	array := Utf8String withAll: ((128 to: 255) collect: [:i | Character utf8Value: i]).
+	128 to: 255
+		do: 
+			[:i |
+			| utf8 |
+			utf8 := method value: array withArguments: {i - 127}.
+			self assert: utf8 isUtf8Surrogate.
+			self deny: utf8 equals: (Character value: i).
+			self assert: utf8 equals: (Character utf8Value: i)]!
 
 testPrimitiveStringAtPut
 	| subject method cantHold |
@@ -1837,7 +2050,7 @@ testPrimitiveStringAtPut
 			self assert: (method value: subject withArguments: {each. $a}) equals: 'failed1'].
 	"Objects that strings can't hold, including some special cases that have no object body (issue #234)"
 	cantHold := #(0 ##(Object new) nil '' #'' true false #() #[]) asOrderedCollection.
-	self has7053OrLater ifTrue: [cantHold add: (Character value: 256)].
+	(self has7XOrLater: 53) ifTrue: [cantHold add: (Character value: 256)].
 	cantHold do: 
 			[:each |
 			self assert: (subject at: 1) equals: $\0.
@@ -1854,14 +2067,13 @@ testPrimitiveStringCmp
 		do: 
 			[:each |
 			| subject result operand expected |
-			subject := each first.
-			self assert: subject class == String.
+			subject := each first asAnsiString.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
-			self assert: result class == expected class.
+			self assert: result class identicalTo: expected class.
 			self assert: result equals: expected].
-	self has7052OrLater
+	(self has7XOrLater: 52)
 		ifTrue: 
 			[self assert: (method value: 'a' withArguments: {Array new}) equals: 'failed1'.
 			self assert: (method value: 'a' withArguments: {WeakArray new}) equals: 'failed1']!
@@ -1876,14 +2088,13 @@ testPrimitiveStringCollate
 		do: 
 			[:each |
 			| subject result operand expected |
-			subject := each first.
-			self assert: subject class == String.
+			subject := each first asAnsiString.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
-			self assert: result class == expected class.
+			self assert: result class identicalTo: expected class.
 			self assert: result equals: expected].
-	self has7052OrLater
+	(self has7XOrLater: 52)
 		ifTrue: 
 			[self assert: (method value: 'a' withArguments: {Array new}) equals: 'failed1'.
 			"Weak pointer objects use the same OTE flag as zero-terminated byte objects"
@@ -1896,7 +2107,7 @@ testPrimitiveStringCollate
 
 testPrimitiveStringNextIndexOfFromTo
 	| method foundCases nonIntegerToFrom fromOutOfBounds toOutOfBounds emptyIntervalBounds notFoundCases |
-	method := self createPrimitiveMethodLike: String >> #nextIndexOf:from:to: setsFailCode: true.
+	method := self createPrimitiveMethodLike: AnsiString >> #nextIndexOf:from:to: setsFailCode: true.
 	foundCases := #(#('aabc' $a 1 1 1) #('aabc' $a 1 2 1) #('a' $a 1 1 1) #('aabc' $a 2 3 2) #('abc' $c 1 3 3) #('abac' $a 2 4 3)).
 	nonIntegerToFrom := #(#('aabc' $a $b 4 'failed1') #('aabc' $a nil 4 'failed1') #('aabc' $a 1 nil 'failed0')).
 	fromOutOfBounds := #(#('aabc' $a 0 4 'failed2') #('aabc' $a -1 4 'failed2')).
@@ -1904,7 +2115,7 @@ testPrimitiveStringNextIndexOfFromTo
 	toOutOfBounds := #(#('aabc' $a 1 5 'failed2') #('' $a 1 2 'failed2')).
 	notFoundCases := #(#('aabc' $d 1 1 0) #('aabc' $d 1 2 0) #('abc' $d 1 3 0) #('abac' nil 1 4 0))
 				asOrderedCollection.
-	self has7053OrLater
+	(self has7XOrLater: 53)
 		ifTrue: 
 			["Fails on earlier VM, as it truncates the codepoint to the first byte, which means $\x161 gets treated as $a"
 			notFoundCases add: {'abc'. Character value: 16r161. 1. 3. 0}].
@@ -1931,29 +2142,30 @@ testPrimitiveSubtract
 			[:each |
 			| subject result operand expected |
 			subject := each first.
-			self assert: subject class == SmallInteger.
+			self assert: subject class identicalTo: SmallInteger.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.
-			self assert: result class == expected class.
+			self assert: result class identicalTo: expected class.
 			self assert: result equals: expected]!
 
 testPrimitiveYourAddress
 	| method |
 	method := self createPrimitiveMethodLike: Object >> #yourAddress setsFailCode: false.
 	#('' 'abc') do: 
-			[:each || addr |
+			[:each |
+			| addr |
 			addr := method value: each withArguments: #().
-			self deny: addr == 0.
-			self assert: (String fromAddress: each) equals: each].
+			self deny: addr identicalTo: 0.
+			self assert: (each class fromAddress: each yourAddress) equals: each].
 	"Bug: #yourAddress returns 0 for an empty byte array?"
-	#(#[]#[1 2 3]) do: 
-			[:each || addr |
+	#(#[] #[1 2 3]) do: 
+			[:each |
+			| addr |
 			addr := method value: each withArguments: #().
-			self deny: addr == 0.
+			self deny: addr identicalTo: 0.
 			self assert: (ByteArray fromAddress: addr length: each size) equals: each].
-	self assert: (method value: nil withArguments: #()) equals: 0.
-!
+	self assert: (method value: nil withArguments: #()) equals: 0!
 
 testQwordAtOffset
 	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
@@ -1976,7 +2188,7 @@ testQwordAtOffset
 	self assert: (bytes qwordAtOffset: 4) equals: 0.
 	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
 	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
-	self assert: (bytes qwordAtOffset: 0) sameAs: 16r3FFFFFFF.
+	self assert: (bytes qwordAtOffset: 0) identicalTo: 16r3FFFFFFF.
 	"Overflows SmallInteger"
 	bytes := ByteArray fromHexString: '0000004000000000'.
 	actual := bytes qwordAtOffset: 0.
@@ -2017,18 +2229,18 @@ testSignedFromUnsigned
 	"Test SmallIntegers and 4 & 8 byte LargeIntegers"
 
 	#(0 1 16r3FFFFFFF 16r40000000 16r7FFFFFFF 16r80000000 16rFFFFFFFF) do: 
-			[:each | 
+			[:each |
 			| signed expected dword |
 			self assert: each isImmutable.
 			expected := each > 16r7FFFFFFF ifTrue: [each - 16rFFFFFFFF - 1] ifFalse: [each].
 			signed := VMLibrary default signedFromUnsigned: each.
-			self assert: signed = expected.
-			each class == SmallInteger 
+			self assert: signed equals: expected.
+			each class == SmallInteger
 				ifFalse: 
 					[dword := each + 1 - 1.
 					self assert: dword isImmutable.
 					signed := VMLibrary default signedFromUnsigned: dword.
-					self assert: signed = expected.
+					self assert: signed equals: expected.
 					self assert: signed isImmutable]].
 	self should: [VMLibrary default signedFromUnsigned: 16r100000000] raise: Error.
 	self should: [VMLibrary default signedFromUnsigned: (2 raisedToInteger: 32) + 1] raise: Error!
@@ -2054,9 +2266,9 @@ testSqwordAtOffset
 	self assert: (bytes sqwordAtOffset: 4) equals: 0.
 	self assert: SmallInteger maximum byteSize equals: 4.	"Inconclusive if this is not so"
 	bytes := ByteArray fromHexString: 'FFFFFF3F00000000'.
-	self assert: (bytes sqwordAtOffset: 0) sameAs: 16r3FFFFFFF.
+	self assert: (bytes sqwordAtOffset: 0) identicalTo: 16r3FFFFFFF.
 	bytes := ByteArray fromHexString: '000000C0FFFFFFFF'.
-	self assert: (bytes sqwordAtOffset: 0) sameAs: -16r40000000.
+	self assert: (bytes sqwordAtOffset: 0) identicalTo: -16r40000000.
 	"Overflows SmallInteger (any value in lower 32-bits is treated as positive)"
 	bytes := ByteArray fromHexString: '0000004000000000'.
 	actual := bytes sqwordAtOffset: 0.
@@ -2089,7 +2301,7 @@ testSqwordAtOffset
 	"Largest value, smallest negative (-1)"
 	bytes := ByteArray fromHexString: 'FFFFFFFFFFFFFFFF'.
 	actual := bytes sqwordAtOffset: 0.
-	self assert: actual sameAs: -1!
+	self assert: actual identicalTo: -1!
 
 testVMPointersImmutable
 	| vmPointers |
@@ -2134,13 +2346,13 @@ testWeakMournerNotifications
 	MemoryManager current collectGarbage.
 	"Weak array should have been notified of loss of obj1 and obj3"
 	self assert: (losses at: id1) equals: 2.
-	self assert: subject1 first == DeadObject current.
-	self assert: subject1 second == obj2.
-	self assert: subject1 third == DeadObject current.
+	self assert: subject1 first identicalTo: DeadObject current.
+	self assert: subject1 second identicalTo: obj2.
+	self assert: subject1 third identicalTo: DeadObject current.
 	self assert: (losses at: id2) equals: 2.
-	self assert: subject2 first == DeadObject current.
-	self assert: subject2 second == obj2.
-	self assert: subject2 third == DeadObject current.
+	self assert: subject2 first identicalTo: DeadObject current.
+	self assert: subject2 second identicalTo: obj2.
+	self assert: subject2 third identicalTo: DeadObject current.
 	obj2 := subject1 := subject2 := nil.
 	MemoryManager current collectGarbage.
 	"Garbage weak array should not have been notified of loss of obj2 as it was collected in same GC cycle"
@@ -2154,8 +2366,8 @@ verifyPrimitiveAt: opAt performBlock: performAt
 	-100 to: 100
 		do: 
 			[:i |
-			self assert: (opAt value: array value: i + 100 + 1) sameAs: i.
-			self assert: (performAt value: array value: i + 100 + 1) sameAs: i].
+			self assert: (opAt value: array value: i + 100 + 1) identicalTo: i.
+			self assert: (performAt value: array value: i + 100 + 1) identicalTo: i].
 	"Valid case, first and last, with and without named fields"
 	array := {'a'. 'b'}.
 	self assert: (opAt value: array value: 1) equals: 'a'.
@@ -2165,8 +2377,8 @@ verifyPrimitiveAt: opAt performBlock: performAt
 	self assert: (opAt value: array value: 2) equals: 'b'.
 	#(#(2) #[2]) do: 
 			[:a |
-			self assert: (opAt value: a value: 1) sameAs: 2.
-			self assert: (performAt value: a value: 1) sameAs: 2].
+			self assert: (opAt value: a value: 1) identicalTo: 2.
+			self assert: (performAt value: a value: 1) identicalTo: 2].
 	"Non-indexable object"
 	#(1 0 nil) do: 
 			[:each |
@@ -2186,8 +2398,8 @@ verifyPrimitiveAt: opAt performBlock: performAt
 					self should: [performAt value: subject value: each] raise: BoundsError]].
 	"Repeat for an object with one named instance variable and no #at:/#basicAt: override"
 	array := MourningWeakArray with: 2.
-	self assert: (opAt value: array value: 1) sameAs: 2.
-	self assert: (performAt value: array value: 1) sameAs: 2.
+	self assert: (opAt value: array value: 1) identicalTo: 2.
+	self assert: (performAt value: array value: 1) identicalTo: 2.
 	outOfBounds do: 
 			[:each |
 			self should: [opAt value: array value: each] raise: BoundsError.
@@ -2195,13 +2407,13 @@ verifyPrimitiveAt: opAt performBlock: performAt
 
 	"And again for one with a number of named instance variables (a method)"
 	array := Object compiledMethodAt: #addDependent:.
-	self assert: (opAt value: array value: 1) sameAs: #getDependents.
+	self assert: (opAt value: array value: 1) identicalTo: #getDependents.
 	self should: 
 			[| lit |
 			lit := opAt value: array value: 2.
 			lit == WeakArray or: [(lit isKindOf: VariableBinding) and: [lit value == WeakArray]]].
-	self assert: (opAt value: array value: 3) sameAs: #setDependents:.
-	self assert: (opAt value: array value: array size) sameAs: #add:.
+	self assert: (opAt value: array value: 3) identicalTo: #setDependents:.
+	self assert: (opAt value: array value: array size) identicalTo: #add:.
 	{-1. 0. array size + 1. SmallInteger maximum. SmallInteger minimum} do: 
 			[:each |
 			self should: [opAt value: array value: each] raise: BoundsError.
@@ -2310,10 +2522,9 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #findCaller:in:!helpers!private! !
 !VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
 !VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
-!VMTest categoriesFor: #has7052OrLater!private!testing! !
-!VMTest categoriesFor: #has7053OrLater!private!testing! !
-!VMTest categoriesFor: #has7054OrLater!private!testing! !
+!VMTest categoriesFor: #has7XOrLater:!private!testing! !
 !VMTest categoriesFor: #hashBytes:!helpers!private! !
+!VMTest categoriesFor: #immutableTestSubjects!constants!private!unit tests! !
 !VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
 !VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
 !VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
@@ -2356,8 +2567,11 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !
 !VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveGreaterOrEqual!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
@@ -2366,6 +2580,8 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIsNullBytes!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveLessOrEqualThan!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !

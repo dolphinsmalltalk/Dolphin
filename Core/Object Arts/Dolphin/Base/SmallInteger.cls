@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Integer subclass: #SmallInteger
 	instanceVariableNames: ''
@@ -393,7 +393,7 @@ printString
 	<primitive: 44>
 	(value := self) < 0 ifTrue: [^'-' , self negated printString].
 	i := ##(VMConstants.SmallIntegerMax log truncated + 1).
-	aString := String new: i.
+	aString := Utf8String new: i.
 	[value < 10] whileFalse: 
 			[aString at: i put: (Character digitValue: value \\ 10).
 			i := i - 1.

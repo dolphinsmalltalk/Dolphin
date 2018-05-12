@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Database Connection Base'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk ODBC Database Connection Base (run time).

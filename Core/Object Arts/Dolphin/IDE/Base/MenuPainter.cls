@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #MenuPainter
 	instanceVariableNames: 'menu conflictingMnemonics conflictingAccelerators'
@@ -315,21 +315,22 @@ paintSmudge: aRectangle on: aCanvas
 		lineFrom: smudge to: smudge + (aRectangle width @ 0);
 		pen: oldPen!
 
-paintSmudgeFor: string on: aCanvas in: aRectangle 
-	| smudgeOrigin rect underlineIndex smudgeExtent origin dtFlags |
-	underlineIndex := string indexOf: $&.
+paintSmudgeFor: aString on: aCanvas in: aRectangle
+	| smudgeOrigin rect smudgeExtent origin dtFlags text |
 	rect := aRectangle asParameter.
-	underlineIndex = 0 ifTrue: [^rect].
+	(aString includes: $&) ifFalse: [^rect].
 	dtFlags := self drawTextFlags.
-	aCanvas 
-		formatText: string
+	text := aString asUtf16String.
+	aCanvas
+		formatText: text
 		in: rect
 		flags: dtFlags | DT_CALCRECT.
-	origin := (dtFlags allMask: DT_CENTER) 
+	origin := (dtFlags allMask: DT_CENTER)
 				ifTrue: [rect center - (rect extent / 2) rounded]
 				ifFalse: [aRectangle origin + (0 @ ((aRectangle height - rect height) / 2) rounded)].
-	smudgeOrigin := origin + ((aCanvas textExtent: (string copyFrom: 1 to: underlineIndex - 1)) x @ 0).
-	smudgeExtent := aCanvas textExtent: (String with: (string at: underlineIndex + 1)).
+	text := text readStream.
+	smudgeOrigin := origin + ((aCanvas textExtent: (text upTo: $&)) x @ 0).
+	smudgeExtent := aCanvas textExtent: (Utf16String with: text next).
 	self paintSmudge: (smudgeOrigin extent: smudgeExtent) on: aCanvas.
 	^rect!
 

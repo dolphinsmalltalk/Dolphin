@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SmalltalkToolShell subclass: #SUnitAbsBrowser
 	instanceVariableNames: 'listModel labelTextPresenter listPresenter statusTextPresenter'
@@ -91,7 +91,7 @@ helpAbout
 
 helpString
 
-	^(WriteStream on: (String new: 50))
+	^(WriteStream on: (Utf8String new: 50))
 		nextPutAll: self browserName;
 		nextPutAll: ' for Dolphin Smalltalk 4.0/5.0';
 		cr;

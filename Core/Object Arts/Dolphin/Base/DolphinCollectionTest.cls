@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #DolphinCollectionTest
 	instanceVariableNames: ''
@@ -124,13 +124,13 @@ testDistinct
 			| testSubject |
 			testSubject := self newCollection: array.
 			result := testSubject distinct.
-			self assert: testSubject species = result species.
-			self assert: testSubject asSet size = result size.
+			self assert: testSubject species equals: result species.
+			self assert: testSubject asSet size equals: result size.
 			self assert: (result noDifference: testSubject asSet).
 			(result class conformsToProtocol: #sequencedReadableCollection)
 				ifTrue: 
 					["Order should be preserved"
-					self assert: testSubject asSet asSortedCollection asArray = result asArray]]!
+					self assert: testSubject asSet asSortedCollection asArray equals: result asArray]]!
 
 testFold
 	| result |
@@ -140,13 +140,13 @@ testFold
 			testSubject := self newCollection: array.
 			result := testSubject fold: [:max :each | each max: max].
 			expected := testSubject asArray asSortedCollection last.
-			self assert: result = expected].
+			self assert: result equals: expected].
 	self should: [(self newCollection: #()) fold: [:a :b | a max b]] raise: Error.
 	1 to: 100
 		do: 
 			[:i |
 			result := (1 to: i) fold: [:product :each | product * each].
-			self assert: result = i factorial]! !
+			self assert: result equals: i factorial]! !
 !DolphinCollectionTest categoriesFor: #assimilate:!private!unit tests! !
 !DolphinCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
 !DolphinCollectionTest categoriesFor: #collectionClass!constants!private! !

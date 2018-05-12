@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 SelectableItemsTest subclass: #PackageSelectorTest
 	instanceVariableNames: 'packageA'
@@ -26,14 +26,14 @@ tearDown
 testFilter
 	"Check that with no filter selected, there are no selected packages"
 
-	self assert: presenter filter isNil.
+	self assertIsNil: presenter filter.
 	self assert: presenter packages isEmpty.
 	self assert: presenter selections isEmpty.
 
 	"Now select the root folder, check that we are filled with all packages"
 	presenter autoSelect: false.
 	presenter selectRootFolder.
-	self assert: presenter packagesPresenter list asSet = Package manager packages asSet.
+	self assert: presenter packagesPresenter list asSet equals: Package manager packages asSet.
 
 	"With auto select off, the selections should be made automatically"
 	self deny: presenter autoSelect.
@@ -46,7 +46,7 @@ testFilter
 		selectNoFolder;
 		selectRootFolder.
 	self assert: presenter autoSelect.
-	self assert: presenter selections asSet = Package manager packages asSet! !
+	self assert: presenter selections asSet equals: Package manager packages asSet! !
 !PackageSelectorTest categoriesFor: #classToTest!helpers!private! !
 !PackageSelectorTest categoriesFor: #createPackage:!helpers!private! !
 !PackageSelectorTest categoriesFor: #removePackage:!helpers!private! !

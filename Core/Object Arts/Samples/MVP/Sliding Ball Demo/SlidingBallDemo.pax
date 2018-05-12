@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'SlidingBallDemo'.
 package paxVersion: 1;
 	basicComment: 'I would like the example to have two rectangles connected by a line.

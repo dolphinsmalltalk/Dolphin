@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Development System'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Development System.
@@ -204,7 +204,6 @@ package methodNames
 	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
 	add: #ExternalStructure -> #alternateInspectorClass;
 	add: #ExternalStructure -> #publishedAspects;
-	add: #Float -> #aspectDisplayOn:;
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
 	add: #InputState -> #destroyAllWindows;
@@ -257,7 +256,6 @@ package methodNames
 	add: #Process -> #step;
 	add: #Process -> #step:;
 	add: #Process -> #walkback:topFrame:resumable:;
-	add: #ProcessorScheduler -> #debugBreak:;
 	add: #ProcessorScheduler -> #singleStep:;
 	add: #ProtoObject -> #basicInspect;
 	add: #ProtoObject -> #debugPrintString;
@@ -332,7 +330,6 @@ package methodNames
 	add: #TranscriptShell -> #help;
 	add: #UndefinedObject -> #aspectDisplayOn:;
 	add: #UndefinedObject -> #literalTextStyle;
-	add: #Utf16String -> #aspectDisplayOn:;
 	add: #ValueModel -> #debugPrintString;
 	add: #VariableEnvironment -> #includesMethodUncached:;
 	add: #VariableEnvironment -> #updateCachesForMethod:;
@@ -2325,18 +2322,6 @@ publishedAspects
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!development!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!development!public! !
 
-!Float methodsFor!
-
-aspectDisplayOn: aStream
-  	"Private - Append a single-line textual representatin of the receiver to the <puttableStream>
-  	argument in a form that a user viewing the receiver as the value of a published aspect would 
-  	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats.
-  	N.B. This is a development time only method that supports the PublishedAspectInspector."
-  
-  	[self displayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]! !
-!Float categoriesFor: #aspectDisplayOn:!development!private! !
-
 !Float class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -3092,7 +3077,7 @@ aspectDisplayOn: aStream
   	formats.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
   
-  	[self displayOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
+  	self displayOn: aStream!
 
 basicInspect
     	"Open and answer an inspector window on the receiver.
@@ -3278,7 +3263,7 @@ defaultAboutBitmap
 		ifFalse: [DIBSection width: 480 height: 360]!
 
 icon
-	self isBaseImagePackage ifTrue: [^self class dolphinPackageIcon].
+	self isBasePackage ifTrue: [^self class dolphinPackageIcon].
 	^super icon!
 
 publishedAspects
@@ -3678,16 +3663,6 @@ walkback: aString topFrame: aStackFrame resumable: aBoolean
 
 !ProcessorScheduler methodsFor!
 
-debugBreak: interruptArg
-	"Private - A halt instruction was encountered.
-	Note that async events are not re-enabled if the event is forwarded to a debugger."
-
-	| debugger |
-	debugger := activeProcess debugger.
-	debugger isNil
-		ifTrue: [self enableInterrupts]
-		ifFalse: [debugger onBreak: interruptArg]!
-
 singleStep: interruptArg
 	"Private - A single step has occurred.
 	Note that interrupts are NOT re-enabled here if the event if forwarded to the debugger."
@@ -3698,7 +3673,6 @@ singleStep: interruptArg
 		ifTrue: [self enableInterrupts]
 		ifFalse: [debugger onStep: interruptArg]
 ! !
-!ProcessorScheduler categoriesFor: #debugBreak:!development!interrupts-handling!private! !
 !ProcessorScheduler categoriesFor: #singleStep:!development!interrupts-handling!private! !
 
 !ProgressBar class methodsFor!
@@ -4229,9 +4203,7 @@ publishedAspectsOfInstances
 					addEvaluationFrom: (Array with: ScintillaIndicatorStyle name , ' new')) beImmutable;
 		add: (Aspect sequenceableCollection: #markerDefinitions
 					addEvaluationFrom: (Array with: ScintillaMarkerDefinition name , ' new')) beImmutable;
-		add: ((Aspect choice: #codePage from: CodePages values)
-					isNullable: true;
-					yourself);
+		add: (Aspect choice: #codePage from: CodePages values);
 		add: (Aspect choice: #whitespaceVisibility from: self whitespaceVisibilityLevels);
 		add: (Aspect dictionary: #braceChars) beImmutable;
 		add: (Aspect choice: #lexer from: (self lexerLanguages copyWithout: nil) asSortedCollection);
@@ -4246,6 +4218,7 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #multiPasteMode from: self multiPasteModes);
 		add: (Aspect integer: #whitespaceMarkerSize);
 		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
+		add: (Aspect choice: #endOfLineMode from: self lineEndings);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
 	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
@@ -4257,7 +4230,7 @@ publishedAspectsOfInstances
 		do: [:each | answer add: (Aspect integer: each)].
 	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled)
+	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings)
 		do: [:each | answer add: (Aspect boolean: each)].
 	^answer!
 
@@ -4889,21 +4862,24 @@ aspectDisplayOn: aStream
 	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
   	argument in a form that a user viewing the receiver as the value of a published aspect would 
   	like to see it. Typically we use #displayOn: but some classes of object can use alternate display 
-  	formats. In this case we want to keep to a reasonable length and remove line delimiters.
+  	formats. In this case we want to keep to a reasonable length and stop at the first line delimiter.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
 
-	| i max size |
+	| count max charStream |
 	aStream nextPut: $'.
-	size := self size.
-	max := size min: Aspect maxDisplayCharacters - 2.
-	i := 0.
-	[i < max] whileTrue: 
-			[| each |
-			each := self at: (i := i + 1).
-			(each == $\r or: [each == $\n])
-				ifTrue: [max := 0]
-				ifFalse: [aStream nextPut: each]].
-	i < size ifTrue: [aStream nextPutAll: ' ...'].
+	max := self size min: Aspect maxDisplayCharacters - 2.
+	charStream := self readStream.
+	count := 0.
+	[charStream atEnd or: [count >= max]] whileFalse: 
+			[| ch |
+			ch := charStream next.
+			(ch == $\r or: [ch == $\n])
+				ifTrue: 
+					["Stop at line delimiter"
+					count := max]
+				ifFalse: [aStream nextPut: ch].
+			count := count + 1].
+	charStream atEnd ifFalse: [aStream nextPutAll: ' ...'].
 	aStream nextPut: $'!
 
 debugPrintString
@@ -5157,17 +5133,18 @@ applicableTypeConverterCategories
     		yourself!
 
 publishedAspectsOfInstances
-    	"Answer a Set of the aspects published by  instances of the receiver"
-    
+	"Answer a Set of the aspects published by  instances of the receiver"
+
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
 	aspects removeKey: #value.
-	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #updatePerChar #isFindEnabled) 
+	#(#canHScroll #isReadOnly #isStatic #isSelectionKept #updatePerChar #isFindEnabled)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
-    		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
-    		add: (Aspect choice: #format from: FormatMap keys asSortedCollection);
-    		yourself!
+		add: (Aspect choice: #alignment from: AlignmentMap keys asSortedCollection);
+		add: (Aspect choice: #format from: FormatMap keys asSortedCollection);
+		add: (Aspect string: #cueBanner);
+		yourself!
 
 publishedEventsOfInstances
     	"Answer a Set of Symbols that describe the published events triggered
@@ -5582,12 +5559,6 @@ literalTextStyle
 !UndefinedObject categoriesFor: #aspectDisplayOn:!development!private! !
 !UndefinedObject categoriesFor: #literalTextStyle!constants!private! !
 
-!Utf16String methodsFor!
-
-aspectDisplayOn: aStream
-	self asString aspectDisplayOn: aStream! !
-!Utf16String categoriesFor: #aspectDisplayOn:!development!private! !
-
 !ValueConverter class methodsFor!
 
 publishedEventsOfInstances
@@ -5720,7 +5691,7 @@ aspectDisplayOn: aStream
   	formats.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
   
-  	[self printOn: aStream] on: Error do: [:ex | ex displayOn: aStream]!
+  	self printOn: aStream!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."

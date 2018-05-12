@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #RichEditConstants put: (PoolConstantsDictionary named: #RichEditConstants)!
 RichEditConstants at: 'cchTextLimitDefault' put: 16r7FFF!
@@ -70,8 +70,8 @@ RichEditConstants at: 'EM_EXGETSEL' put: 16r434!
 RichEditConstants at: 'EM_EXLIMITTEXT' put: 16r435!
 RichEditConstants at: 'EM_EXLINEFROMCHAR' put: 16r436!
 RichEditConstants at: 'EM_EXSETSEL' put: 16r437!
-RichEditConstants at: 'EM_FINDTEXT' put: 16r438!
-RichEditConstants at: 'EM_FINDTEXTEX' put: 16r44F!
+RichEditConstants at: 'EM_FINDTEXTEXW' put: 16r47C!
+RichEditConstants at: 'EM_FINDTEXTW' put: 16r47B!
 RichEditConstants at: 'EM_FINDWORDBREAK' put: 16r44C!
 RichEditConstants at: 'EM_FORMATRANGE' put: 16r439!
 RichEditConstants at: 'EM_GETAUTOURLDETECT' put: 16r45C!
@@ -112,6 +112,7 @@ RichEditConstants at: 'EM_SETPALETTE' put: 16r45D!
 RichEditConstants at: 'EM_SETPARAFORMAT' put: 16r447!
 RichEditConstants at: 'EM_SETPUNCTUATION' put: 16r464!
 RichEditConstants at: 'EM_SETTARGETDEVICE' put: 16r448!
+RichEditConstants at: 'EM_SETTEXTEX' put: 16r461!
 RichEditConstants at: 'EM_SETTEXTMODE' put: 16r459!
 RichEditConstants at: 'EM_SETUNDOLIMIT' put: 16r452!
 RichEditConstants at: 'EM_SETWORDBREAKPROCEX' put: 16r451!
@@ -158,6 +159,9 @@ RichEditConstants at: 'ES_SUNKEN' put: 16r4000!
 RichEditConstants at: 'ES_VERTICAL' put: 16r400000!
 RichEditConstants at: 'GCM_RIGHTMOUSEDROP' put: 16r8000!
 RichEditConstants at: 'GT_DEFAULT' put: 16r0!
+RichEditConstants at: 'GT_NOHIDDENTEXT' put: 16r8!
+RichEditConstants at: 'GT_RAWTEXT' put: 16r4!
+RichEditConstants at: 'GT_SELECTION' put: 16r2!
 RichEditConstants at: 'GT_USECRLF' put: 16r1!
 RichEditConstants at: 'GTL_CLOSE' put: 16r4!
 RichEditConstants at: 'GTL_DEFAULT' put: 16r0!
@@ -238,8 +242,14 @@ RichEditConstants at: 'SF_RTFNOOBJS' put: 16r3!
 RichEditConstants at: 'SF_TEXT' put: 16r1!
 RichEditConstants at: 'SF_TEXTIZED' put: 16r4!
 RichEditConstants at: 'SF_UNICODE' put: 16r10!
+RichEditConstants at: 'SF_USECODEPAGE' put: 16r20!
 RichEditConstants at: 'SFF_PLAINRTF' put: 16r4000!
 RichEditConstants at: 'SFF_SELECTION' put: 16r8000!
+RichEditConstants at: 'ST_DEFAULT' put: 16r0!
+RichEditConstants at: 'ST_KEEPUNDO' put: 16r1!
+RichEditConstants at: 'ST_NEWCHARS' put: 16r4!
+RichEditConstants at: 'ST_SELECTION' put: 16r2!
+RichEditConstants at: 'ST_UNICODE' put: 16r8!
 RichEditConstants at: 'WB_CLASSIFY' put: 16r3!
 RichEditConstants at: 'WB_LEFTBREAK' put: 16r6!
 RichEditConstants at: 'WB_MOVEWORDLEFT' put: 16r4!

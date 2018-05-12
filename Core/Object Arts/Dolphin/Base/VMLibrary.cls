@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'
@@ -59,7 +59,7 @@ argc
 	^self invalidCall!
 
 argv
-	"Private - Answer a pointer to the array of strings which constitute the command line arguments, 
+	"Private - Answer a pointer to the array of UTF-16 strings which constitute the command line arguments, 
 	starting with the host executable's full path."
 
 	<cdecl: lpvoid argv>
@@ -83,7 +83,7 @@ compilerFileName
 
 	^self fileName!
 
-crashDump: message 
+crashDump: message
 	"Private - Write a full VM state log to the crash dump file with the <readableString>,
 	message, as an exception argument which will appear in the dump.
 	This can be handy for debugging in run-time systems when you detect an
@@ -94,10 +94,11 @@ crashDump: message
 	N.B. In order for a crash dump to be produced the registry on the machine
 	must be appropriately configured."
 
-	| parms |
+	| parms str |
 	parms := ByteArray new: VMConstants.IntPtrSize.
-	parms intPtrAtOffset: 0 put: message yourAddress.
-	KernelLibrary default 
+	str := message asUtf16String.
+	parms intPtrAtOffset: 0 put: str yourAddress.
+	KernelLibrary default
 		raiseException: 16r20000002
 		dwExceptionFlags: 0
 		nNumberOfArguments: 1
@@ -114,7 +115,7 @@ debugDump: msgString
 	the OS debug trace device with <readableString> message, 
 	msgString, as the header description"
 
-	<stdcall: void DebugDump lpstr>
+	<stdcall: void DebugDump lpwstr>
 	^self invalidCall
 !
 
@@ -159,7 +160,7 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	non-continuable exception, and you want want to output a crash dump using
 	parameters (such as the log file) other than those in the registry."
 
-	<stdcall: void Dump lpstr lpstr sdword sdword>
+	<stdcall: void Dump lpwstr lpwstr sdword sdword>
 	^self invalidCall
 !
 
@@ -332,7 +333,7 @@ isWindowsServer
 	function, which is provided as an inline function in VersionHelpers.h in the Windows SDK."
 
 	| osvi |
-	osvi := (OSVERSIONINFOEX new)
+	osvi := OSVERSIONINFOEXW new
 				wProductType: VER_NT_WORKSTATION;
 				yourself.
 	^(KernelLibrary default
@@ -352,7 +353,7 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 	SDK."
 
 	| osvi |
-	osvi := (OSVERSIONINFOEX new)
+	osvi := (OSVERSIONINFOEXW new)
 				dwMajorVersion: wMajorVersion;
 				dwMinorVersion: wMinorVersion;
 				wServicePackMajor: wServicePackMajor;
@@ -481,7 +482,7 @@ productName
 !
 
 registerEventSource: aString
-	<stdcall: handle RegisterAsEventSource lpstr>
+	<stdcall: handle RegisterAsEventSource lpwstr>
 	^self invalidCall
 !
 
@@ -670,7 +671,7 @@ hasBytecodeRepresentation: anObject
 	^anObject isImmediate or: 
 			[anObject isNil or: 
 					[anObject == true
-						or: [anObject == false or: [anObject class == Character and: [anObject codePoint <= 255]]]]]!
+						or: [anObject == false or: [anObject class == Character and: [anObject codePoint <= 127]]]]]!
 
 initialize
 	"Private - Initialize the receiver's class variables - see class comment for further details.
@@ -688,7 +689,7 @@ initialize
 				at: #Metaclass put: 81;
 				at: #Character put: 82;
 				at: #Array put: 83;
-				at: #String put: 84;
+				at: #AnsiString put: 84;
 				at: #Symbol put: 85;
 				at: #SmallInteger put: 86;
 				at: #Process put: 87;
@@ -709,7 +710,6 @@ initialize
 				at: #Dispatcher put: 102;
 				at: #LPVOID put: 103;
 				at: #Utf8String put: 104;
-				at: #PoolConstantsDictionary put: 105;
 				at: #LargeInteger put: 107;
 				at: #VARIANT put: 108;
 				at: #BSTR put: 109;
@@ -732,7 +732,7 @@ initialize
 				at: #ImageVersionMinor put: 130;
 				at: #interruptHotKey put: 131;
 				at: #CRTHandle put: 132;
-				at: #MemoryManager put: 133;
+				at: #memoryManager put: 133;
 				at: #BYTE put: 134;
 				at: #SBYTE put: 135;
 				at: #WORD put: 136;

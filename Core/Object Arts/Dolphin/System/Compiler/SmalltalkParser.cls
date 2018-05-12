@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
@@ -73,7 +73,7 @@ errorPosition
 	^currentToken start!
 
 externalReferenceTypeFor: anInteger 
-	^(ExternalDescriptor referenceTypeFor: anInteger) ifNil: [ExtCallArgLPPVOID]!
+	^(ExternalDescriptor referenceTypeFor: anInteger) ?? ExtCallArgLPPVOID!
 
 initialize
 	"If true then certain St80 syntax which is not valid ANSI are permitted, e.g. [:a ] is a valid block"
@@ -190,7 +190,7 @@ parseBlock
 		ifFalse: 
 			[| blockEnd |
 			blockEnd := node body sourceInterval stop.
-			blockEnd = 0 ifTrue: [blockEnd := node bar ifNil: [position]].
+			blockEnd = 0 ifTrue: [blockEnd := node bar ?? position].
 			self parserError: CErrBlockNotClosed range: (position to: blockEnd).
 			"Error ignored, attempt to recover..."
 			node right: blockEnd.

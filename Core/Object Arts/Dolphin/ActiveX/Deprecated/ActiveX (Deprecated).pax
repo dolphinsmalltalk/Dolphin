@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX (Deprecated)'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Active-X Support (Deprecated Classes and Methods)
@@ -23,6 +23,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\Automation\ActiveX Automation';
+	add: '..\..\Base\Dolphin';
 	add: '..\COM\OLE COM';
 	yourself).
 
@@ -39,7 +40,7 @@ package!
 !BSTR methodsFor!
 
 asUnicodeString
-	#deprecated.
+	Notification deprecated.
 	^self asUtf16String! !
 !BSTR categoriesFor: #asUnicodeString!converting!public! !
 
@@ -58,7 +59,7 @@ min
 !LPBSTR methodsFor!
 
 asUnicodeString
-	#deprecated.
+	Notification deprecated.
 	^self asUtf16String! !
 !LPBSTR categoriesFor: #asUnicodeString!converting!public! !
 

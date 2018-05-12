@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ILLibrary
 	instanceVariableNames: 'images selectedImages modified dum4 dum5'
@@ -243,7 +243,7 @@ importIco: icoFilename exportExe: exeFilename
 	| library icoStream exeStream |
 	library := self new.
 	icoStream := FileStream read: icoFilename text: false.
-	exeStream := (FileStream readWrite: exeFilename) beBinary.
+	exeStream := (FileStream readWrite: exeFilename text: false).
 	
 	[library
 		import: icoStream;

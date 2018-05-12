@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #PackageBrowserTest
 	instanceVariableNames: 'packageA packageB packageC dolphinTestA dolphinTestB dolphinTestC shell cardsPresenter classesPresenter methodsPresenter globalsPresenter resourcesPresenter dependencyPresenters methodAA methodAB methodAC methodBA methodBB methodCA'
@@ -45,13 +45,13 @@ assertCurrentCardInSync
 	card == #resources ifTrue: [^self assertResourcesInSync].
 	self assert: false description: 'Unknown card: ' , card!
 
-assertDependencyCard: aSymbol inSync: aBoolean 
+assertDependencyCard: aSymbol inSync: aBoolean
 	| dependencyPresenter tree |
 	dependencyPresenter := dependencyPresenters at: aSymbol.
 	tree := dependencyPresenter instVarNamed: 'treePresenter'.
 	"If this fails, then the test is bogus and needs attention"
-	self assert: (tree isKindOf: TreePresenter).
-	aBoolean | (shell isCardUpToDate: aSymbol) 
+	self assert: tree isKindOf: TreePresenter.
+	aBoolean | (shell isCardUpToDate: aSymbol)
 		ifTrue: 
 			[| packages |
 			packages := shell packages.
@@ -93,7 +93,7 @@ create: aClassSymbol subclassOf: aClass inPackage: aPackage
 	| newClass |
 	newClass := self create: aClassSymbol subclassOf: aClass.
 	(Smalltalk at: aClassSymbol) owningPackage: aPackage.
-	self assert: (newClass owningPackage == aPackage).
+	self assert: newClass owningPackage identicalTo: aPackage.
 	^newClass!
 
 createClassesABC
@@ -178,28 +178,27 @@ renameClass
 	testA := 'DolphinTestA' asSymbol.
 	testA2 := 'DolphinTestA2' asSymbol.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass == (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass == (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
 	self assert: methodCA isLoose.
-	self assert: methodCA methodClass == dolphinTestC.
+	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	ClassBuilder renameClass: (Smalltalk at: testA) to: testA2.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass == (Smalltalk at: testA2).
+	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA2).
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass == (Smalltalk at: testA2).
+	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA2).
 	self assert: methodCA isLoose.
-	self assert: methodCA methodClass == dolphinTestC.
+	self assert: methodCA methodClass identicalTo: dolphinTestC.
 	self assertCurrentCardInSync.
 	ClassBuilder renameClass: (Smalltalk at: testA2) to: testA.
 	self assert: methodAB isLoose.
-	self assert: methodAB methodClass == (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
 	self assert: methodAA isLoose not.
-	self assert: methodAB methodClass == (Smalltalk at: testA).
+	self assert: methodAB methodClass identicalTo: (Smalltalk at: testA).
 	self assert: methodCA isLoose.
-	self assert: methodCA methodClass == dolphinTestC.
-	self assertCurrentCardInSync
-!
+	self assert: methodCA methodClass identicalTo: dolphinTestC.
+	self assertCurrentCardInSync!
 
 repackageClasses
 	"Remove classes"
@@ -227,7 +226,7 @@ resourceManager
 
 setUp
 	super setUp.
-	self assert: Package manager defaultPackage isNil.
+	self assertIsNil: Package manager defaultPackage.
 	packageA := DolphinTestPackages current a.
 	packageB := DolphinTestPackages current b.
 	packageC := DolphinTestPackages current c.
@@ -250,7 +249,7 @@ setUp
 
 showClassesPane
 	classesPresenter ensureVisible.
-	self assert: self currentCard == #classes!
+	self assert: self currentCard identicalTo: #classes!
 
 tearDown
 	super tearDown.
@@ -266,16 +265,16 @@ testAddRemoveClasses
 
 	shell packages: (Array with: packageA with: packageC).
 	classesPresenter ensureVisible.
-	self assert: self currentCard == #classes.
+	self assert: self currentCard identicalTo: #classes.
 	self addRemoveRenameClasses.
 	methodsPresenter ensureVisible.
-	self assert: self currentCard == #methods.
+	self assert: self currentCard identicalTo: #methods.
 	self addRemoveRenameClasses.
 	globalsPresenter ensureVisible.
-	self assert: self currentCard == #globals.
+	self assert: self currentCard identicalTo: #globals.
 	self addRemoveRenameClasses.
 	resourcesPresenter ensureVisible.
-	self assert: self currentCard == #resources.
+	self assert: self currentCard identicalTo: #resources.
 	self addRemoveRenameClasses!
 
 testAddRemoveMethods
@@ -283,25 +282,25 @@ testAddRemoveMethods
 	self createClassesABC.
 	shell packages: (Array with: packageA with: packageC).
 	methodsPresenter ensureVisible.
-	dolphinTestA 
+	dolphinTestA
 		compile: 'testNotLoose ^1'
 		categories: #()
 		package: packageA.
 	self assert: methodsPresenter model isEmpty.
 	"Add a method which is loose but not in one of the selected pacakges"
-	methodB := dolphinTestA 
+	methodB := dolphinTestA
 				compile: 'testLooseInB ^1'
 				categories: #()
 				package: packageB.
 	self assert: methodsPresenter model isEmpty.
-	methodC := dolphinTestA 
+	methodC := dolphinTestA
 				compile: 'testLooseInC ^1'
 				categories: #()
 				package: packageC.
-	self assert: methodsPresenter model list asArray = (Array with: methodC).
+	self assert: methodsPresenter model list asArray equals: (Array with: methodC).
 	"Now switch away from methods pane and check that it is (or will be) updated"
 	classesPresenter ensureVisible.
-	methodA := dolphinTestB 
+	methodA := dolphinTestB
 				compile: 'testLooseInA ^1'
 				categories: #()
 				package: packageA.
@@ -335,7 +334,7 @@ testGlobals
 
 	"Add to displayed package"
 	packageA addGlobalNamed: #TestGlobalA.
-	self assert: globalsPresenter model asArray = #(#TestGlobalA).
+	self assert: globalsPresenter model asArray equals: #(#TestGlobalA).
 
 	"Add to displayed package"
 	packageC addGlobalNamed: #TestGlobalC.
@@ -380,16 +379,16 @@ testGlobals
 testRepackageClasses
 	shell packages: (Array with: packageA with: packageC).
 	classesPresenter ensureVisible.
-	self assert: self currentCard == #classes.
+	self assert: self currentCard identicalTo: #classes.
 	self repackageClasses.
 	methodsPresenter ensureVisible.
-	self assert: self currentCard == #methods.
+	self assert: self currentCard identicalTo: #methods.
 	self repackageClasses.
 	globalsPresenter ensureVisible.
-	self assert: self currentCard == #globals.
+	self assert: self currentCard identicalTo: #globals.
 	self repackageClasses.
 	resourcesPresenter ensureVisible.
-	self assert: self currentCard == #resources.
+	self assert: self currentCard identicalTo: #resources.
 	self repackageClasses!
 
 testRepackageMethods

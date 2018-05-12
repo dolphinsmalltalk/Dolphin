@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Folder Presenter'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Folder Presenter.

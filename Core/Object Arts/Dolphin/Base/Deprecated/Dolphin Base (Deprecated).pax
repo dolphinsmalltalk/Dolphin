@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Base (Deprecated)'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
@@ -15,7 +15,6 @@ package classNames
 	add: #ConformantArrayPointerField;
 	add: #ConformantStructureArrayField;
 	add: #ConformantStructureArrayPointerField;
-	add: #CPINFO;
 	add: #MEMORY_BASIC_INFORMATION;
 	add: #MethodContext;
 	add: #OSVERSIONINFO;
@@ -28,7 +27,6 @@ package methodNames
 	add: #_FPIEEE_VALUE -> #valueType;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
-	add: #Character -> #asciiValue;
 	add: #Class -> #addClassVarName:;
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
@@ -54,6 +52,7 @@ package methodNames
 	add: #CRTLibrary -> #fabs:;
 	add: #CRTLibrary -> #floor:;
 	add: #CRTLibrary -> #fopen:mode:;
+	add: #CRTLibrary -> #fopen_s:filename:mode:;
 	add: #CRTLibrary -> #fread:size:count:stream:;
 	add: #CRTLibrary -> #freopen:mode:stream:;
 	add: #CRTLibrary -> #frexp:expptr:;
@@ -78,20 +77,32 @@ package methodNames
 	add: #CRTLibrary -> #thread_errno;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
+	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
 	add: #Integer -> #highSWord;
 	add: #Integer -> #lowSWord;
-	add: #KernelLibrary -> #getCPInfo:lpCPInfo:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
 	add: #KernelLibrary -> #getVersionEx:;
+	add: #KernelLibrary -> #lstrcmp:lpString2:;
+	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
-	add: #KernelLibrary -> #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:;
-	add: #Object -> #asDword;
-	add: #Package -> #script:;
-	add: #Package -> #script:put:;
+	add: #MessageBox -> #abortRetryIgnore;
+	add: #MessageBox -> #error;
+	add: #MessageBox -> #fatalError;
+	add: #MessageBox -> #ok;
+	add: #MessageBox -> #okCancel;
+	add: #MessageBox -> #prompt;
+	add: #MessageBox -> #retryCancel;
+	add: #MessageBox -> #systemModal;
+	add: #MessageBox -> #taskModal;
+	add: #MessageBox -> #yesNo;
+	add: #MessageBox -> #yesNoCancel;
+	add: #MessageBoxAbstract -> #notify;
+	add: #MessageBoxAbstract -> #warning;
 	add: #Process -> #fpeMask;
+	add: #Process -> #fpeMask:;
 	add: #ShlwapiLibrary -> #pathStripPath:;
-	add: #String -> #asDword;
+	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
@@ -101,6 +112,11 @@ package methodNames
 	add: 'ExternalDescriptor class' -> #oneStringArg;
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
+	add: 'SortAlgorithm class' -> #sortBlock:;
+	add: 'STBClassProxy class' -> #for:;
+	add: 'STBCollectionProxy class' -> #for:;
+	add: 'STBSingletonProxy class' -> #for:;
+	add: 'STBSingletonProxy class' -> #for:using:;
 	add: 'String class' -> #fromUnicodeString:;
 	add: 'String class' -> #unicodeClass;
 	yourself.
@@ -149,17 +165,12 @@ StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #CPINFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-OSVERSIONINFOEX subclass: #OSVERSIONINFO
+OSVERSIONINFOEXW subclass: #OSVERSIONINFO
 	instanceVariableNames: 'osName'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
@@ -204,25 +215,14 @@ valueType
 !Behavior methodsFor!
 
 makeIndirect
-	#deprecated.
+	Notification deprecated.
 	self isIndirection: true!
 
 makeNullTerminated
-	#deprecated.
+	Notification deprecated.
 	self isNullTerminated: true! !
 !Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
 !Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
-
-!Character methodsFor!
-
-asciiValue
-	"Answers the ascii character value of the receiver."
-
-	"Retained for ST-80 compatibility only, as specific to ASCII char set. Use #codePoint instead."
-
-	#deprecated.
-	^codePoint! !
-!Character categoriesFor: #asciiValue!accessing!public! !
 
 !Class methodsFor!
 
@@ -352,7 +352,12 @@ floor: aFloat
 
 fopen: nameString mode: modeString
 	<cdecl: handle fopen lpstr lpstr>
-	#deprecated.	"Insecure - use fopen_s"
+	#deprecated.	"Insecure"
+	^self invalidCall!
+
+fopen_s: pFile filename: nameString mode: modeString
+	<cdecl: sdword fopen_s handle* lpstr lpstr>
+	#deprecated.	"No longer used"
 	^self invalidCall!
 
 fread: buffer size: size count: count stream: aFILE
@@ -487,6 +492,7 @@ thread_errno
 !CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
+!CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
@@ -561,6 +567,19 @@ do: operation separatedBy: separator
 !ExternalStructure categoriesFor: #do:!enumerating!public! !
 !ExternalStructure categoriesFor: #do:separatedBy:!enumerating!public! !
 
+!File methodsFor!
+
+readCharacter
+	"Answer the next Character from the file or nil if the receiver
+	is positioned past the current EOF.
+	Signal a FileException if an error occurs."
+
+	| string |
+	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
+	string := String new: 1.
+	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
+!File categoriesFor: #readCharacter!operations!public! !
+
 !File class methodsFor!
 
 change: aPathnameString extension: anExtensionString
@@ -601,17 +620,6 @@ lowSWord
 
 !KernelLibrary methodsFor!
 
-getCPInfo: codepage lpCPInfo: lpCPInfo
-	"Invoke the GetCPInfo() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the current original equipment manufacturer (OEM) code-page identifier for the system
-
-		BOOL __stdcall GetCPInfo(
-			UINT codepage,
-			CPINFO* lpCPInfo);"
-
-	<stdcall: bool GetCPInfo dword CPINFO*>
-	^self invalidCall!
-
 getFileSize: hfile lpFileSizeHigh: lpFileSizeHigh
 	<stdcall: dword GetFileSize handle dword*>
 	#deprecated. "Use #getFileSizeEx:lpFileSize:"
@@ -623,55 +631,110 @@ getVersionEx: anOSVERSIONINFO
 			LPOSVERSIONINFO lpVersionInformation 
 		);"
 
-	<stdcall: bool GetVersionExA OSVERSIONINFO*>
+	<stdcall: bool GetVersionExW OSVERSIONINFO*>
 	#deprecated.	"Deprecated by Microsoft, see https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.140).aspx"
+	^self invalidCall!
+
+lstrcmp: aString1 lpString2: aString2
+	<stdcall: sdword lstrcmpW lpwstr lpwstr>
+	#deprecated.
+	^self invalidCall!
+
+lstrcmpi: aString1 lpString2: aString2
+	<stdcall: sdword lstrcmpiW lpwstr lpwstr>
+	#deprecated.
 	^self invalidCall!
 
 setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
-	^self invalidCall!
-
-writePrivateProfileString: lpszSection lpszEntry: lpszEntry lpszString: lpszString lpszFileName: lpszFileName
-	<stdcall: bool WritePrivateProfileStringA lpstr lpstr lpstr lpstr>
-	#deprecated.	"As explained on msdn, 'This function is provided only for compatibility with 16-bit versions of Windows. Applications should store initialization information in the registry.'"
 	^self invalidCall! !
-!KernelLibrary categoriesFor: #getCPInfo:lpCPInfo:!**auto generated**!public!win32 functions-natural language support! !
 !KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
+!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
+!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #writePrivateProfileString:lpszEntry:lpszString:lpszFileName:!**auto generated**!public! !
 
-!Object methodsFor!
+!MessageBox methodsFor!
 
-asDword
-	"Private - Answer the receiver in a form suitable for passing/returning
-	as the 32-bit parameter/return value. The default is self (which
-	will cause the default window proc. of the window to be called
-	for most objects other than Integers when used as a return value)."
-
+abortRetryIgnore
 	#deprecated.
-	^self! !
-!Object categoriesFor: #asDword!converting!private! !
+	self buttonStyle: #abortRetryIgnore!
 
-!Package methodsFor!
+error
+	#deprecated.
+	self iconStyle: #error!
 
-script: scriptSymbol
-	#deprecated.	"In 4.0, but needed to load some old format packages"
-	self scriptAt: scriptSymbol!
+fatalError
+	#deprecated.
+	self beFatalError!
 
-script: scriptSymbol put: aString 
-	#deprecated.	"In 4.0, but needed to load some old format packages"
-	self scriptAt: scriptSymbol put: aString! !
-!Package categoriesFor: #script:!operations!public! !
-!Package categoriesFor: #script:put:!operations!public! !
+ok
+	#deprecated.
+	self buttonStyle: #ok!
+
+okCancel
+	#deprecated.
+	self buttonStyle: #okCancel!
+
+prompt
+	#deprecated.
+	self iconStyle: #prompt!
+
+retryCancel
+	#deprecated.
+	self buttonStyle: #retryCancel!
+
+systemModal
+	#deprecated.
+	self beSystemModal!
+
+taskModal
+	#deprecated.
+	self beTaskModal!
+
+yesNo
+	#deprecated.
+	self buttonStyle: #yesNo!
+
+yesNoCancel
+	#deprecated.
+	self buttonStyle: #yesNoCancel! !
+!MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
+!MessageBox categoriesFor: #error!modes!public! !
+!MessageBox categoriesFor: #fatalError!accessing-styles!public! !
+!MessageBox categoriesFor: #ok!accessing-styles!public! !
+!MessageBox categoriesFor: #okCancel!accessing-styles!public! !
+!MessageBox categoriesFor: #prompt!accessing-styles!public! !
+!MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
+!MessageBox categoriesFor: #systemModal!accessing-styles!public! !
+!MessageBox categoriesFor: #taskModal!accessing-styles!public! !
+!MessageBox categoriesFor: #yesNo!accessing-styles!public! !
+!MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
+
+!MessageBoxAbstract methodsFor!
+
+notify
+	#deprecated.
+	self iconStyle: #notify!
+
+warning
+	#deprecated.
+	self iconStyle: #warning! !
+!MessageBoxAbstract categoriesFor: #notify!modes!public! !
+!MessageBoxAbstract categoriesFor: #warning!modes!public! !
 
 !Process methodsFor!
 
 fpeMask
 	#deprecated.	"Use Float class>>exceptionMask, or #fpControl"
-	^fpControl bitAnd: CRTConstants._MCW_EM! !
+	^fpControl bitAnd: CRTConstants._MCW_EM!
+
+fpeMask: anInteger
+	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
+	^self setFpControl: anInteger mask: CRTConstants._MCW_EM! !
 !Process categoriesFor: #fpeMask!accessing!public! !
+!Process categoriesFor: #fpeMask:!accessing!private! !
 
 !ShlwapiLibrary methodsFor!
 
@@ -681,21 +744,51 @@ pathStripPath: pszPath
 	^self invalidCall! !
 !ShlwapiLibrary categoriesFor: #pathStripPath:!**auto generated**!public! !
 
+!SortAlgorithm class methodsFor!
+
+sortBlock: aDyadicValuable
+	Notification deprecated.
+	^self newSortBlock: aDyadicValuable! !
+!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
+
+!STBClassProxy class methodsFor!
+
+for: aClass 
+	#deprecated.
+	^self forClass: aClass! !
+!STBClassProxy class categoriesFor: #for:!instance creation!public! !
+
+!STBCollectionProxy class methodsFor!
+
+for: aCollection 
+	#deprecated.
+	^self forCollection: aCollection! !
+!STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
+
+!STBSingletonProxy class methodsFor!
+
+for: aClass 
+	#deprecated.
+	^self forClass: aClass!
+
+for: aClass using: aSelectorSymbol 
+	#deprecated.
+	^self forClass: aClass using: aSelectorSymbol! !
+!STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
+!STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
+
+!Stream methodsFor!
+
+nextOrNil
+	#deprecated.
+	^self nextAvailable! !
+!Stream categoriesFor: #nextOrNil!accessing!public! !
+
 !String methodsFor!
 
-asDword
-	"Answer the receiver in a form suitable for passing and returning as a
-	32-bit integer value.
-	N.B. Be careful that the receiver is not GC'd until the result is no
-	longer required, or it will be a dangling pointer."
-
-	#deprecated.
-	^self yourAddress!
-
 asUnicodeString
-	#deprecated.
+	Notification deprecated.
 	^self asUtf16String! !
-!String categoriesFor: #asDword!converting!public! !
 !String categoriesFor: #asUnicodeString!converting!public! !
 
 !String class methodsFor!

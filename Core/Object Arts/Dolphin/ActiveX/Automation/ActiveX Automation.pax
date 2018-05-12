@@ -1,4 +1,4 @@
-| package |
+ï»¿| package |
 package := Package name: 'ActiveX Automation'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk ActiveX Automation Support.
@@ -683,10 +683,10 @@ typeName
 !Character methodsFor!
 
 asVariant
-	"Answer the VARIANT representation of the receiver (a VT_I2)."
+	"Answer the VARIANT representation of the receiver (a VT_I2). This will fail for code points not in the BMP."
 
 	^VARIANT new
-		sword: codePoint;
+		sword: self codePoint;
 		yourself! !
 !Character categoriesFor: #asVariant!converting!public! !
 
@@ -1655,7 +1655,7 @@ loadRegTypeLib: rguid wVerMajor: wVerMajor wVerMinor: wVerMinor lcid: lcid pptli
 	"Load a type library from the registry entries corresponding to the specified LIBID,
 	version information, and LCID.
 
-		HRESULT LoadRegTypeLib(      REFGUID rguid, 
+		HRESULT LoadRegTypeLib(Â  Â  Â  REFGUID rguid, 
 			unsigned short wVerMajor, 
 			unsigned short wVerMinor, 
 			LCID lcid, 

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #AspectBuffer
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
@@ -157,7 +157,7 @@ subject: aSubjectModel
 
 	^super new subject: aSubjectModel
 ! !
-!AspectBuffer class categoriesFor: #icon!constants!public! !
+!AspectBuffer class categoriesFor: #icon!constants!development!public! !
 !AspectBuffer class categoriesFor: #new!instance creation!private! !
 !AspectBuffer class categoriesFor: #subject:!instance creation!public! !
 

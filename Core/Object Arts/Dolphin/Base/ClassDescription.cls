@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Behavior subclass: #ClassDescription
 	instanceVariableNames: 'instanceVariables methodsCatalogue protocols'
@@ -98,6 +98,18 @@ allSharedPoolNames
 	referenced (i.e. no duplicates)."
 
 	^self allSharedPools collect: [:each | each name]!
+
+allSharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are specified in
+	the receiver and each of its superclasses."
+
+	| pools seen |
+	pools := Array writeStream: 5.
+	seen := IdentitySet new.
+	self withAllSuperclassesDo: 
+			[:c |
+			c sharedPoolsDo: [:each | (seen addNewElement: each) ifTrue: [pools nextPut: each]]].
+	^pools contents!
 
 canUnderstandProtocol: protName
 	"Answer whether the receiver can understand the named <MethodProtocol>,
@@ -514,7 +526,7 @@ instVarNames
 	^instanceVariables isString
 		ifTrue: 
 			["N.B. This assumes that the names in the instance variable string are separated by exactly one space"
-			instanceVariables subStrings: Character space]
+			instanceVariables subStrings: $\x20]
 		ifFalse: [instanceVariables]!
 
 isChanged: aBoolean
@@ -852,6 +864,24 @@ sharedPoolNames
 
 	^self instanceClass sharedPoolNames!
 
+sharedPools
+	"Answer a <sequencedReadableCollection> of the pools (dictionaries) that are referenced
+	locally in the receiver."
+
+	| pools |
+	pools := OrderedCollection new.
+	self sharedPoolsDo: [:each | pools addLast: each].
+	^pools!
+
+sharedPoolsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the shared pools referenced locally for
+	the receiver in order of precedence."
+
+	| environment |
+	environment := self environment.
+	self sharedPoolNames
+		do: [:symbol | (environment lookup: symbol) ifNotNil: [:p | aMonadicValuable value: p]]!
+
 sharedVariableString
 	"Answer a String containing the names of the Pools accessable
 	from the receiver and its instances. The names are separated
@@ -925,6 +955,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #allGetters!accessing!private! !
 !ClassDescription categoriesFor: #allProtocols!protocols!public! !
 !ClassDescription categoriesFor: #allSharedPoolNames!pool variables!public! !
+!ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
 !ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
 !ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
 !ClassDescription categoriesFor: #categoriesFor:are:!development!public!source filing-methods! !
@@ -1006,6 +1037,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
 !ClassDescription categoriesFor: #setSharedPoolNames:!pool variables!private! !
 !ClassDescription categoriesFor: #sharedPoolNames!pool variables!public! !
+!ClassDescription categoriesFor: #sharedPools!pool variables!public! !
+!ClassDescription categoriesFor: #sharedPoolsDo:!pool variables!public! !
 !ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !

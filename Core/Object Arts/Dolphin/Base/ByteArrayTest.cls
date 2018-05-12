@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ArrayedCollectionTest subclass: #ByteArrayTest
 	instanceVariableNames: ''
@@ -24,13 +24,13 @@ testBasicDwordAtOffsetPut
 
 	| array |
 	array := ByteArray new: 4.
-	self assert: (array dwordAtOffset: 0) = 0.
+	self assert: (array dwordAtOffset: 0) equals: 0.
 	self dwordValues do: 
-			[:each | 
+			[:each |
 			array basicDwordAtOffset: 0 put: each.
-			self assert: (array dwordAtOffset: 0) = each.
+			self assert: (array dwordAtOffset: 0) equals: each.
 			array basicDwordAtOffset: 0 put: (DWORD fromInteger: each).
-			self assert: (array dwordAtOffset: 0) = each].
+			self assert: (array dwordAtOffset: 0) equals: each].
 	self should: [array basicDwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array basicDwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
 
@@ -39,13 +39,13 @@ testDwordAtOffsetPut
 
 	| array |
 	array := ByteArray new: 4.
-	self assert: (array dwordAtOffset: 0) = 0.
+	self assert: (array dwordAtOffset: 0) equals: 0.
 	self dwordValues do: 
-			[:each | 
+			[:each |
 			array dwordAtOffset: 0 put: each.
-			self assert: (array dwordAtOffset: 0) = each.
+			self assert: (array dwordAtOffset: 0) equals: each.
 			array dwordAtOffset: 0 put: (DWORD fromInteger: each).
-			self assert: (array dwordAtOffset: 0) = each].
+			self assert: (array dwordAtOffset: 0) equals: each].
 	self should: [array dwordAtOffset: 0 put: -16r80000001] raise: Error.
 	self should: [array dwordAtOffset: 0 put: 16rFFFFFFFF + 1] raise: Error!
 
@@ -73,79 +73,64 @@ testMixedConcatenation
 
 	| subjects |
 	subjects := #(#[] #[1] #[1 2]).
-	(Array
-		with: String empty
-		with: Utf16String empty
-		with: Array new
-		with: OrderedCollection new
-		with: (1 to: 0)) do: 
-				[:eachEmpty |
+	{String empty. Utf16String empty. Array new. OrderedCollection new. 1 to: 0} do: 
+			[:eachEmpty |
+			subjects do: 
+					[:eachArray |
+					| result |
+					result := eachArray , eachEmpty.
+					self deny: eachArray identicalTo: result.
+					self assert: result equals: eachArray]].
+	{'a'.
+		'a' asUtf16String.
+		#(255).
+		OrderedCollection with: 123.
+		100 to: 100.
+		'ab'.
+		'ab' asUtf16String.
+		#(1 255).
+		OrderedCollection with: 123 with: 255.
+		100 to: 101} do: 
+				[:each |
 				subjects do: 
 						[:eachArray |
 						| result |
-						result := eachArray , eachEmpty.
-						self deny: eachArray == result.
-						self assert: result equals: eachArray]].
-	(Array
-		with: 'a'
-		with: 'a' asUtf16String
-		with: #(255)
-		with: (OrderedCollection with: 123)
-		with: (100 to: 100)) do: 
-				[:eachOne |
-				subjects do: 
-						[:eachArray |
-						| result |
-						result := self verifyConcatenation: eachOne with: eachArray.
-						self deny: eachArray == result.
-						self assert: result class == self collectionClass]].
-	(Array
-		with: 'ab'
-		with: 'a' asUtf16String
-		with: #(1 255)
-		with: (OrderedCollection with: 123 with: 255)
-		with: (100 to: 101)) do: 
-				[:eachTwo |
-				subjects do: 
-						[:eachArray |
-						| result |
-						result := self verifyConcatenation: eachTwo with: eachArray.
-						self deny: eachArray == result.
-						self assert: result class == self collectionClass]]!
+						result := self verifyConcatenation: each with: eachArray.
+						self deny: eachArray identicalTo: result.
+						self assert: result class identicalTo: self collectionClass]]!
 
 testSbyteAtOffset
-	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) = each].
-	128 to: 255
-		do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) = (each - 256)]!
+	0 to: 127 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) equals: each].
+	128 to: 255 do: [:each | self assert: ((ByteArray with: each) sbyteAtOffset: 0) equals: each - 256]!
 
 testSbyteAtOffsetPut
 	| array |
 	array := ByteArray new: 1.
-	self assert: (array at: 1) = 0.
+	self assert: (array at: 1) equals: 0.
 	127 to: 0
 		by: -1
 		do: 
-			[:each | 
+			[:each |
 			array sbyteAtOffset: 0 put: each.
-			self assert: (array at: 1) = each].
+			self assert: (array at: 1) equals: each].
 	-128 to: -1
 		do: 
-			[:each | 
+			[:each |
 			array sbyteAtOffset: 0 put: each.
-			self assert: (array at: 1) = (each bitAnd: 255)]!
+			self assert: (array at: 1) equals: (each bitAnd: 255)]!
 
 testWordAtOffsetPut
 	"#1457"
 
 	| array |
 	array := ByteArray new: 4.
-	self assert: (array wordAtOffset: 0) = 0.
+	self assert: (array wordAtOffset: 0) equals: 0.
 	self wordValues do: 
-			[:each | 
+			[:each |
 			array wordAtOffset: 0 put: each.
-			self assert: (array wordAtOffset: 0) = each.
+			self assert: (array wordAtOffset: 0) equals: each.
 			array wordAtOffset: 0 put: (WORD fromInteger: each).
-			self assert: (array wordAtOffset: 0) = each].
+			self assert: (array wordAtOffset: 0) equals: each].
 	self should: [array wordAtOffset: 0 put: -16r8001] raise: Error.
 	self should: [array wordAtOffset: 0 put: 16rFFFF + 1] raise: Error!
 

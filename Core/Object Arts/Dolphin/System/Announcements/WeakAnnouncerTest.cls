@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AnnouncerTest subclass: #WeakAnnouncerTest
 	instanceVariableNames: ''
@@ -13,46 +13,46 @@ WeakAnnouncerTest comment: 'SUnit tests for weak announcements'!
 testNoWeakBlock
 	"Blocks are never weak"
 
-	| counter subscription|
+	| counter subscription |
 	counter := 0.
 	subscription := announcer subscribe: AnnouncementMockA do: [:ann | counter := counter + 1].
-
 	MemoryManager current collectGarbage.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 1.
-
-	subscription  makeWeak.
-
+	self assert: counter equals: 1.
+	subscription makeWeak.
 	MemoryManager current collectGarbage.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 2!
+	self assert: counter equals: 2!
 
 testWeakObject
 	| counter collector forwarder |
 	counter := 0.
-	collector := [ counter := counter + 1 ].
+	collector := [counter := counter + 1].
 	forwarder := MessageSend receiver: collector selector: #value.
-	(announcer subscribe: AnnouncementMockA send: #value to: forwarder) makeWeak.
-	
+	(announcer
+		subscribe: AnnouncementMockA
+		send: #value
+		to: forwarder) makeWeak.
+
 	" shouldn't go away, we are still holding a reference to 'forwarder': "
 	MemoryManager current collectGarbage.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 1.
-	
+	self assert: counter equals: 1.
+
 	" should go away as we let the only reference to 'forwarder' go: "
 	forwarder := nil.
 	MemoryManager current collectGarbage.
 	announcer announce: AnnouncementMockA.
-	self assert: counter = 1!
+	self assert: counter equals: 1!
 
 testWeakSubscription
 	| obj subscription |
 	obj := Object new.
-	subscription := (announcer 
+	subscription := (announcer
 				when: AnnouncementMockA
 				send: #value
 				to: obj) makeWeak.
-	self assert: obj == subscription subscriber! !
+	self assert: obj identicalTo: subscription subscriber! !
 !WeakAnnouncerTest categoriesFor: #testNoWeakBlock!public!testing! !
 !WeakAnnouncerTest categoriesFor: #testWeakObject!public!testing! !
 !WeakAnnouncerTest categoriesFor: #testWeakSubscription!public!testing! !

@@ -1,16 +1,20 @@
-version: 7.0.56.{build}
+version: 7.1.0.{build}
 pull_requests:
   do_not_increment_build_number: true
 skip_tags: true
 skip_branch_with_pr: true
 image: Visual Studio 2017
-build_script:
+configuration: Release
+install:
 - cmd: >-
-    FetchVM
-
-    BootDPro
+    git submodule update --init --recursive
+    
+    git lfs pull
+build:
+  project: Core\DolphinVM\DolphinVM.sln
+  verbosity: minimal
 test_script:
-- cmd: TestDPRO
+- cmd: BootAndTestDPRO
 artifacts:
 - path: dpro.*
   name: DPro

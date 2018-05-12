@@ -174,22 +174,20 @@ emitScintillaCallOn: aPuttableStream wParam: wParam lParam: lParam
 		space;
 		display: lParamType toScintilla!
 
-emitStringResultFunctionOn: aPuttableStream 
-	| emptyResult |
+emitStringResultFunctionOn: aPuttableStream
 	selector := self renamedFunctions at: constName ifAbsent: [('sci' , name capitalized) asSymbol].
 	aPuttableStream
 		nextPutAll: selector;
 		crtab.
 	self emitMethodPreambleOn: aPuttableStream.
-	emptyResult := (self byteArrayStringResults includes: constName) ifTrue: [#[]] ifFalse: [''].
 	aPuttableStream
 		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [ScintillaLibrary default directFunction: this msg: ';
 		nextPutAll: self constName;
-		nextPutAll: ' wParam: 0 lpParam: nil]. ^len = 0 ifTrue: [';
-		print: emptyResult;
-		nextPutAll: '] ifFalse: [| result | result := ';
-		display: emptyResult class;
-		nextPutAll: ' newFixed: len'.
+		nextPutAll: ' wParam: 0 lpParam: nil]. ^len = 0 ifTrue: ['.
+	(self byteArrayStringResults includes: constName)
+		ifTrue: [aPuttableStream print: #[]]
+		ifFalse: [aPuttableStream nextPutAll: 'self stringClass empty'].
+	aPuttableStream nextPutAll: '] ifFalse: [| result | result := self stringClass newFixed: len'.
 	(self stringResultsCountNull includes: self constName) ifTrue: [aPuttableStream nextPutAll: '-1'].
 	aPuttableStream
 		nextPutAll: '. ScintillaLibrary default directFunction: this msg: ';

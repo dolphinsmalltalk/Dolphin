@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestCase subclass: #ResumableTestFailureTestCase
 	instanceVariableNames: ''
@@ -38,14 +38,14 @@ resumableTestFailureTest
 
 testResumable
 	| result suite |
-	suite := (TestSuite new)
-		addTest: (self class selector: #errorTest);
-		addTest: (self class selector: #regularTestFailureTest);
-		addTest: (self class selector: #resumableTestFailureTest);
-		addTest: (self class selector: #okTest);
-	yourself.
+	suite := TestSuite new
+				addTest: (self class selector: #errorTest);
+				addTest: (self class selector: #regularTestFailureTest);
+				addTest: (self class selector: #resumableTestFailureTest);
+				addTest: (self class selector: #okTest);
+				yourself.
 	result := suite run.
-	self assert: result failures size = 2! !
+	self assert: result failures size equals: 2! !
 !ResumableTestFailureTestCase categoriesFor: #errorTest!public!Running! !
 !ResumableTestFailureTestCase categoriesFor: #failureLog!public!Running! !
 !ResumableTestFailureTestCase categoriesFor: #isLogging!public!Running! !

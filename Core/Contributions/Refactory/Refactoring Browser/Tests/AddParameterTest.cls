@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #AddParameterTest
 	instanceVariableNames: ''
@@ -16,23 +16,23 @@ setUp
 
 testAddParameterForTwoArgumentMessage
 	| refactoring class |
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				addParameterToMethod: ('called:' , 'on:') asSymbol
 				in: RefactoryTestDataApp
 				newSelector: #called:bar:on:
 				initializer: '#(1.0)'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #called:bar:on:) = (RBParser 
-						parseMethod: 'called: anObject bar: aBlock on: anArrayOfFloat
+	self assert: (class parseTreeFor: #called:bar:on:)
+		equals: (RBParser
+				parseMethod: 'called: anObject bar: aBlock on: anArrayOfFloat
 							Transcript
 								show: anObject printString;
 								cr.
 								aBlock value').
-	self 
-		assert: (class parseTreeFor: #caller) = (RBParser 
-						parseMethod: 'caller
+	self assert: (class parseTreeFor: #caller)
+		equals: (RBParser
+				parseMethod: 'caller
 							| anObject |
 							anObject := 5.
 							self 
@@ -42,44 +42,43 @@ testAddParameterForTwoArgumentMessage
 
 testAddParameterThatReferencesGlobalAndLiteral
 	| refactoring class |
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				addParameterToMethod: ('test' , 'Foo:') asSymbol
 				in: RefactoryTestDataApp
 				newSelector: #testFoo:bar:
 				initializer: 'OrderedCollection new: 5'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #testFoo:bar:) = (RBParser 
-						parseMethod: 'testFoo: anObject bar: anOrderedCollection
+	self assert: (class parseTreeFor: #testFoo:bar:)
+		equals: (RBParser
+				parseMethod: 'testFoo: anObject bar: anOrderedCollection
 								^self class + anObject').
-	self 
-		assert: (class parseTreeFor: #callFoo) = (RBParser 
-						parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
+	self assert: (class parseTreeFor: #callFoo)
+		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testAddParameterThatReferencesInstanceVariable
 	| refactoring class |
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				addParameterToMethod: ('test' , 'Foo:') asSymbol
 				in: RefactoryTestDataApp
 				newSelector: #testFoo:bar:
 				initializer: 'temporaryVariable'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classFor: RefactoryTestDataApp.
-	self assert: (class parseTreeFor: #testFoo:bar:) 
-				= (RBParser parseMethod: 'testFoo:
+	self assert: (class parseTreeFor: #testFoo:bar:)
+		equals: (RBParser parseMethod: 'testFoo:
 anObject bar: anObject1
 ^self class
 + anObject').
-	self assert: (class parseTreeFor: #callFoo) 
-				= (RBParser parseMethod: 'callFoo ^self
+	self assert: (class parseTreeFor: #callFoo)
+		equals: (RBParser parseMethod: 'callFoo ^self
 testFoo: 5 bar: temporaryVariable').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testAddParameterThatReferencesModelGlobal
 	| refactoring class |
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: ('test' , 'Foo:') asSymbol
 				in: RefactoryTestDataApp
@@ -87,29 +86,29 @@ testAddParameterThatReferencesModelGlobal
 				initializer: 'Bar new'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #testFoo:bar:) = (RBParser 
-						parseMethod: 'testFoo: anObject bar: anObject1
+	self assert: (class parseTreeFor: #testFoo:bar:)
+		equals: (RBParser parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) 
-				= (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
+	self assert: (class parseTreeFor: #callFoo)
+		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testAddParameterThatReferencesSelf
 	| refactoring class |
-	refactoring := AddParameterRefactoring 
+	refactoring := AddParameterRefactoring
 				addParameterToMethod: ('test' , 'Foo:') asSymbol
 				in: RefactoryTestDataApp
 				newSelector: #testFoo:bar:
 				initializer: 'self printString'.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RefactoryTestDataApp.
-	self 
-		assert: (class parseTreeFor: #testFoo:bar:) = (RBParser 
-						parseMethod: 'testFoo: anObject bar: aString
+	self assert: (class parseTreeFor: #testFoo:bar:)
+		equals: (RBParser
+				parseMethod: 'testFoo: anObject bar: ' , (AnsiString new basicPrintString copyWithout: $\x20)
+						, '
 								^self class + anObject').
-	self assert: (class parseTreeFor: #callFoo) 
-				= (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
+	self assert: (class parseTreeFor: #callFoo)
+		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testBadInitializationCode

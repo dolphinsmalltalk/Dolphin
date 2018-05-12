@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ObjectInside
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'
@@ -60,7 +60,7 @@ drawOn: aGdiplusGraphics
 			table := StructureArray length: 1 elementClass: GpColorMap.
 			(table at: 1)
 				oldColor: self baseColor asARGB asParameter;
-				newColor: self color asARGB asParameter.
+				newColor: col asARGB asParameter.
 			attributes remapTable: table].
 	self alpha 
 		ifNotNil: 
@@ -79,7 +79,8 @@ drawOn: aGdiplusGraphics
 			extent: extent
 			unit: UnitPixel
 			attributes: attributes;
-		resetTransform!
+		resetTransform.
+	attributes free!
 
 edgePointResolution
 	^10!
@@ -152,6 +153,7 @@ position: aPoint
 	self resetMatrix!
 
 resetMatrix
+	matrix ifNotNil: [matrix free].
 	matrix := nil!
 
 rotation

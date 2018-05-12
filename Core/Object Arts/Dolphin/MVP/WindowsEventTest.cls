@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #WindowsEventTest
 	instanceVariableNames: ''
@@ -22,10 +22,10 @@ testInstanceCreation
 
 	| instance |
 	instance := self newEvent: 2.
-	self assert: instance window == Transcript view.
-	self assert: instance message = 2.
-	self assert: instance wParam = 3.
-	self assert: instance lParam = 4!
+	self assert: instance window identicalTo: Transcript view.
+	self assert: instance message equals: 2.
+	self assert: instance wParam equals: 3.
+	self assert: instance lParam equals: 4!
 
 testPrintString
 	"#1492"
@@ -33,10 +33,10 @@ testPrintString
 	| instance |
 	instance := self newEvent: 2.
 	self assert: instance printString
-				= ('a WindowsEvent(<1p> wmDestroy:wParam:lParam: 3 4)' expandMacrosWith: instance window).
+		equals: ('a WindowsEvent(<1p> wmDestroy:wParam:lParam: 3 4)' expandMacrosWith: instance window).
 	instance := self newEvent: 999.
-	self
-		assert: instance printString = ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
+	self assert: instance printString
+		equals: ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
 !WindowsEventTest categoriesFor: #newEvent:!private!unit tests! !
 !WindowsEventTest categoriesFor: #testInstanceCreation!public!unit tests! !
 !WindowsEventTest categoriesFor: #testPrintString!public!unit tests! !

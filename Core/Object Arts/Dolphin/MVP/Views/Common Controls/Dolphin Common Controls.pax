@@ -1,8 +1,8 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Common Controls'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Common Controls.
-Copyright (c) Object Arts Ltd, 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
+Copyright (c) Object Arts Ltd, 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd, 1996.
 
 This package contains MVP View wrappers for the standard Windows common controls (e.g. the Enhanced List View, Tab View, and Tree View). The other less commonly used common controls are separately packaged.'.
 
@@ -15,27 +15,22 @@ package classNames
 	add: #IconicListAbstract;
 	add: #ListView;
 	add: #ListViewColumn;
-	add: #LVBKIMAGE;
+	add: #LVBKIMAGEW;
 	add: #LVCOLUMNW;
-	add: #LVFINDINFOA;
 	add: #LVFINDINFOW;
 	add: #LVHITTESTINFO;
-	add: #LVITEMA;
 	add: #LVITEMW;
 	add: #NMCUSTOMDRAW;
+	add: #NMGETINFOTIP;
 	add: #NMITEMACTIVATE;
 	add: #NMKEYDOWN;
 	add: #NMLISTVIEW;
 	add: #NMLVCUSTOMDRAW;
-	add: #NMLVFINDITEMA;
 	add: #NMLVFINDITEMW;
-	add: #NMLVGETINFOTIPA;
 	add: #NMLVGETINFOTIPW;
 	add: #NMLVODSTATECHANGE;
-	add: #NMTREEVIEWA;
 	add: #NMTREEVIEWW;
 	add: #NMTVCUSTOMDRAW;
-	add: #NMTVGETINFOTIPA;
 	add: #NMTVGETINFOTIPW;
 	add: #TabView;
 	add: #TabViewXP;
@@ -44,7 +39,6 @@ package classNames
 	add: #TreeView;
 	add: #TVHITTESTINFO;
 	add: #TVINSERTSTRUCTW;
-	add: #TVITEMA;
 	add: #TVITEMEXW;
 	add: #TVITEMW;
 	yourself.
@@ -95,7 +89,7 @@ Win32Structure subclass: #CCITEM
 	classVariableNames: ''
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #LVBKIMAGE
+Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
 	classVariableNames: ''
 	poolDictionaries: 'ListViewConstants'
@@ -145,28 +139,18 @@ CCITEM subclass: #TVITEMW
 	classVariableNames: ''
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
-LVITEMW subclass: #LVITEMA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-TVITEMW subclass: #TVITEMA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 TVITEMW subclass: #TVITEMEXW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-LVFINDINFOW subclass: #LVFINDINFOA
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+NMHDR subclass: #NMGETINFOTIP
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -190,22 +174,12 @@ NMHDR subclass: #NMLVFINDITEMW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMHDR subclass: #NMLVGETINFOTIPW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMTREEVIEWW
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMHDR subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -220,22 +194,12 @@ NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMLVFINDITEMW subclass: #NMLVFINDITEMA
+NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-NMLVGETINFOTIPW subclass: #NMLVGETINFOTIPA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMTREEVIEWW subclass: #NMTREEVIEWA
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-NMTVGETINFOTIPW subclass: #NMTVGETINFOTIPA
+NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

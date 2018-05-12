@@ -1,4 +1,4 @@
-| package |
+Ôªø| package |
 package := Package name: 'Dialect Abstraction Layer'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -129,35 +129,19 @@ package methodNames
 	add: #SocketWriteStream -> #isBytes:;
 	add: #SocketWriteStream -> #itcFlush;
 	add: #SocketWriteStream -> #sendLine:;
-	add: #Stream -> #itcCrLf;
 	add: #String -> #add:withDelimiter:;
 	add: #String -> #asDateFromDDMMYYYYString;
 	add: #String -> #asDecimalOrFloat;
 	add: #String -> #asFilenameString;
 	add: #String -> #asPlainAsciiString;
-	add: #String -> #asUTF8;
-	add: #String -> #asUTF8String;
 	add: #String -> #beginsWithUppercase:;
-	add: #String -> #breakIntoLinesOfLength:;
-	add: #String -> #breakIntoStringsOfLength:;
-	add: #String -> #breakIntoStringsOfLength:skipLeadingWhitespace:;
-	add: #String -> #endsWithUppercase:;
 	add: #String -> #isAllDigits;
 	add: #String -> #isAlphabeticalyBefore:;
 	add: #String -> #itcAsInteger;
-	add: #String -> #itcAsMoneyDecimal;
-	add: #String -> #itcAsMoneyDecimalWithPrecision:;
-	add: #String -> #itcReplaceAllSubstrings:with:;
 	add: #String -> #itcSubStrings:;
 	add: #String -> #splitString:;
-	add: #String -> #trimByReducingVowelsToSize:;
-	add: #String -> #trimOrPadLeftToSize:;
-	add: #String -> #trimOrPadToSize:;
-	add: #String -> #trimOrPadToSize:using:;
-	add: #String -> #trimOrZeroPadToSize:;
 	add: #String -> #trimSeparators;
 	add: #String -> #trimToSize:;
-	add: #String -> #trimToSizeWithDots:;
 	add: #Symbol -> #itcAsClass;
 	add: #Symbol -> #itcAsClassOrNil;
 	add: #Time -> #asOdbcString;
@@ -174,10 +158,6 @@ package methodNames
 	add: 'Exception class' -> #signalWithMessage:;
 	add: 'FileStream class' -> #delete:;
 	add: 'ScaledDecimal class' -> #numerator:denominator:scale:;
-	add: 'String class' -> #utf8DecodeFrom:on:;
-	add: 'String class' -> #utf8DecodeNextUnicodeFromUtf8Stream:;
-	add: 'String class' -> #utf8EncodeFrom:on:addMarker:;
-	add: 'String class' -> #utf8EncodeUnicode:;
 	add: 'Time class' -> #hours:minutes:seconds:milliseconds:;
 	yourself.
 
@@ -194,6 +174,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\System\Random\Dolphin Random Stream';
 	add: '..\..\Object Arts\Dolphin\Sockets\Dolphin Sockets';
 	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
 	add: 'OmniBase';
@@ -1167,13 +1148,6 @@ sendLine: aCollection
 !SocketWriteStream categoriesFor: #itcFlush!constants!public! !
 !SocketWriteStream categoriesFor: #sendLine:!constants!public! !
 
-!Stream methodsFor!
-
-itcCrLf
-	self nextPutAll: '
-'! !
-!Stream categoriesFor: #itcCrLf!accessing!public! !
-
 !String methodsFor!
 
 add: aString withDelimiter: delimiter 
@@ -1264,74 +1238,50 @@ asPlainAsciiString
 		do: 
 			[:i | 
 			ch := temp at: i.
-			"CP 1251 - there are problems starting with · character that is used in windows encoding also"
-			"ch = $‡ ifTrue: [temp at: i put: $a].
-			ch = $· ifTrue: [temp at: i put: $b].
-			ch = $‚ ifTrue: [temp at: i put: $v].
-			ch = $„ ifTrue: [temp at: i put: $g]."
+			"CP 1251 - there are problems starting with √° character that is used in windows encoding also"
+			"ch = $√† ifTrue: [temp at: i put: $a].
+			ch = $√° ifTrue: [temp at: i put: $b].
+			ch = $√¢ ifTrue: [temp at: i put: $v].
+			ch = $√£ ifTrue: [temp at: i put: $g]."
 
 			"Windows encoding"
-			ch = $ö ifTrue: [temp at: i put: $s].
-			ch = $ä ifTrue: [temp at: i put: $S].
-			ch = $Ë ifTrue: [temp at: i put: $c].
-			ch = $» ifTrue: [temp at: i put: $C].
-			ch = $û ifTrue: [temp at: i put: $z].
-			ch = $é ifTrue: [temp at: i put: $Z].
-			ch = $Ê ifTrue: [temp at: i put: $c].
-			ch = $∆ ifTrue: [temp at: i put: $C].
-			ch = $– ifTrue: [temp at: i put: $D].
-			ch = $ ifTrue: [temp at: i put: $d].
-			ch = $È ifTrue: [temp at: i put: $e].
-			ch = $‘ ifTrue: [temp at: i put: $O].
-			ch = $¡ ifTrue: [temp at: i put: $A].
-			ch = $Ù ifTrue: [temp at: i put: $o].
-			ch = $· ifTrue: [temp at: i put: $a].
-			ch = $… ifTrue: [temp at: i put: $E].
+			ch = $≈° ifTrue: [temp at: i put: $s].
+			ch = $≈† ifTrue: [temp at: i put: $S].
+			ch = $√® ifTrue: [temp at: i put: $c].
+			ch = $√à ifTrue: [temp at: i put: $C].
+			ch = $≈æ ifTrue: [temp at: i put: $z].
+			ch = $≈Ω ifTrue: [temp at: i put: $Z].
+			ch = $√¶ ifTrue: [temp at: i put: $c].
+			ch = $√Ü ifTrue: [temp at: i put: $C].
+			ch = $√ê ifTrue: [temp at: i put: $D].
+			ch = $√∞ ifTrue: [temp at: i put: $d].
+			ch = $√© ifTrue: [temp at: i put: $e].
+			ch = $√î ifTrue: [temp at: i put: $O].
+			ch = $√Å ifTrue: [temp at: i put: $A].
+			ch = $√¥ ifTrue: [temp at: i put: $o].
+			ch = $√° ifTrue: [temp at: i put: $a].
+			ch = $√â ifTrue: [temp at: i put: $E].
 
 			"ISO encoding"
-			ch = $π ifTrue: [temp at: i put: $s].
-			ch = $© ifTrue: [temp at: i put: $S].
-			ch = $æ ifTrue: [temp at: i put: $z].
-			ch = $Æ ifTrue: [temp at: i put: $Z].
+			ch = $¬π ifTrue: [temp at: i put: $s].
+			ch = $¬© ifTrue: [temp at: i put: $S].
+			ch = $¬æ ifTrue: [temp at: i put: $z].
+			ch = $¬Æ ifTrue: [temp at: i put: $Z].
 
 			"German keyboard"
-			ch = $‰ ifTrue: [temp at: i put: $a].
-			ch = $ˆ ifTrue: [temp at: i put: $o].
-			ch = $¸ ifTrue: [temp at: i put: $u].
-			ch = $Î ifTrue: [temp at: i put: $e].
-			ch = $ƒ ifTrue: [temp at: i put: $A].
-			ch = $À ifTrue: [temp at: i put: $E].
-			ch = $÷ ifTrue: [temp at: i put: $O].
-			ch = $‹ ifTrue: [temp at: i put: $U].
+			ch = $√§ ifTrue: [temp at: i put: $a].
+			ch = $√∂ ifTrue: [temp at: i put: $o].
+			ch = $√º ifTrue: [temp at: i put: $u].
+			ch = $√´ ifTrue: [temp at: i put: $e].
+			ch = $√Ñ ifTrue: [temp at: i put: $A].
+			ch = $√ã ifTrue: [temp at: i put: $E].
+			ch = $√ñ ifTrue: [temp at: i put: $O].
+			ch = $√ú ifTrue: [temp at: i put: $U].
 
 			"Replace forbiden characters with blank space"
 			(#(0 1 2 3 4 5 6 7 8 11 12 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 127 129 132 133 134 135 139 144 160 164) 
 				includes: ch asInteger) ifTrue: [temp at: i put: $ ]].
 	^temp!
-
-asUTF8
-	"Answer receiver encoded into UTF-8 byte string. The encoding will be done based on the current process code page.
-	Warning, the result will include 4 byte UTF8 marker !!!!!!
-	"
-
-	| ws |
-	ws := WriteStream on: (String new: self size + 100).
-	self class 
-		utf8EncodeFrom: (ReadStream on: self)
-		on: ws
-		addMarker: true.
-	^ws contents!
-
-asUTF8String
-	"Answer receiver encoded into UTF-8 byte string. The encoding will be done based on the current process code page."
-
-	| ws |
-	ws := WriteStream on: (String new: self size + 20).
-	self class 
-		utf8EncodeFrom: (ReadStream on: self)
-		on: ws
-		addMarker: false.
-	^ws contents!
 
 beginsWithUppercase: aString
 
@@ -1340,50 +1290,6 @@ beginsWithUppercase: aString
 	1 to: stringSize do: [:i |
 		(self at: i) asUppercase = (aString at: i) ifFalse: [^false]
 	].
-	^true!
-
-breakIntoLinesOfLength: maxLineSize 
-	| result coll |
-	self size <= maxLineSize ifTrue: [^self].
-	coll := self breakIntoStringsOfLength: maxLineSize skipLeadingWhitespace: true.
-	result := WriteStream on: String new.
-	coll do: 
-			[:eachLine | 
-			result
-				nextPutAll: eachLine;
-				nextPutAll: '
-'].
-	^result contents!
-
-breakIntoStringsOfLength: maxLineSize 
-	^self breakIntoStringsOfLength: maxLineSize skipLeadingWhitespace: true!
-
-breakIntoStringsOfLength: maxLineSize skipLeadingWhitespace: skipLeadingWhitespace 
-	| result beginPos pos wholeSize |
-	(wholeSize := self size) <= maxLineSize ifTrue: [^Array with: self].
-	result := OrderedCollection new.
-	beginPos := 1.
-	[beginPos <= wholeSize] whileTrue: 
-			[skipLeadingWhitespace == true 
-				ifTrue: 
-					[[beginPos <= wholeSize and: [(self at: beginPos) isSeparator]] 
-						whileTrue: [beginPos := beginPos + 1]].
-			beginPos > wholeSize 
-				ifFalse: 
-					[(pos := beginPos + maxLineSize - 1 min: wholeSize) = wholeSize 
-						ifFalse: 
-							[[(self at: pos) isSeparator not and: [pos > beginPos]] whileTrue: [pos := pos - 1].
-							pos <= beginPos ifTrue: [pos := beginPos + maxLineSize - 1 min: wholeSize]].
-					result add: (self copyFrom: beginPos to: pos) trimBlanks.
-					beginPos := pos + 1]].
-	^result!
-
-endsWithUppercase: aString 
-	| stringSize j |
-	(stringSize := aString size) > self size ifTrue: [^false].
-	j := self size - stringSize.
-	1 to: stringSize
-		do: [:i | (self at: (j := j + 1)) asUppercase = (aString at: i) ifFalse: [^false]].
 	^true!
 
 isAllDigits
@@ -1420,33 +1326,6 @@ itcAsInteger
 			i := i + 1].
 	^negative ifTrue: [0 - value] ifFalse: [value]!
 
-itcAsMoneyDecimal
-	^self itcAsMoneyDecimalWithPrecision: 2!
-
-itcAsMoneyDecimalWithPrecision: precision 
-	| decimalPoint commaIndex pointIndex str |
-	str := self trimBlanks select: [:eachCh | '0123456789,.-+ ' includes: eachCh].
-	str size = 0 ifTrue: [^nil].
-	decimalPoint := $..
-	commaIndex := self indexOf: $,.
-	pointIndex := self indexOf: $..
-	decimalPoint := commaIndex > pointIndex ifTrue: [$,] ifFalse: [$.].
-	^ItcConverter 
-		getNumberFromString: str
-		scale: 20
-		precision: precision
-		thousandsSeparator: nil
-		decimalPoint: decimalPoint!
-
-itcReplaceAllSubstrings: aString1 with: aString2 
-	| i pos result |
-	pos := 1.
-	result := self.
-	[(i := result indexOfSubCollection: aString1 startingAt: pos) > 0] whileTrue: 
-			[result := (result copyFrom: 1 to: i - 1) , aString2 , (result copyFrom: i + aString1 size).
-			pos := i + aString2 size].
-	^result!
-
 itcSubStrings: separator 
 	separator class == Character 
 		ifFalse: 
@@ -1466,67 +1345,6 @@ splitString: delimiterString
 	coll add: str.
 	^coll!
 
-trimByReducingVowelsToSize: maxSize 
-	"Answers string trimmed to size maxSize by reducing words like:
-
-		Business -> Busins
-		Software -> Sftwr
-		Application -> App
-	"
-
-	| str pos |
-	str := self.
-	str size > maxSize 
-		ifTrue: 
-			["fist try taking all small case vowels away"
-			pos := str size.
-			[pos > 2 and: [str size > maxSize]] whileTrue: 
-					[((str at: pos) isVowel and: [(str at: pos) isLowercase]) 
-						ifTrue: 
-							[str := (str copyFrom: 1 to: pos - 1) 
-										, (pos = str size ifTrue: [''] ifFalse: [str copyFrom: pos + 1 to: str size])].
-					pos := pos - 1].
-
-			"then all the vowels except the first letter"
-			pos := str size.
-			[pos > 2 and: [str size > maxSize]] whileTrue: 
-					[(str at: pos) isVowel 
-						ifTrue: 
-							[str := (str copyFrom: 1 to: pos - 1) 
-										, (pos = str size ifTrue: [''] ifFalse: [str copyFrom: pos + 1 to: str size])].
-					pos := pos - 1].
-			"then if nothing else helps just trim it"
-			str := str trimToSize: maxSize].
-	^str!
-
-trimOrPadLeftToSize: desiredSize 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := ' ' , str].
-	^str!
-
-trimOrPadToSize: desiredSize 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := str , ' '].
-	^str!
-
-trimOrPadToSize: desiredSize using: aCharacter 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := str , (String with: aCharacter)].
-	^str!
-
-trimOrZeroPadToSize: desiredSize 
-	| str |
-	self size = desiredSize ifTrue: [^self].
-	str := self copyFrom: 1 to: (self size min: desiredSize).
-	[str size < desiredSize] whileTrue: [str := '0' , str].
-	^str!
-
 trimSeparators
 	"Answer a String containing the receiver string with leading and
 	 trailing separators removed."
@@ -1541,129 +1359,20 @@ trimSeparators
 	^done ifTrue: [''] ifFalse: [self copyFrom: start to: end]!
 
 trimToSize: maxSize 
-	^self copyFrom: 1 to: (self size min: maxSize)!
-
-trimToSizeWithDots: maxSize 
-	^self size > maxSize ifFalse: [self] ifTrue: [(self copyFrom: 1 to: maxSize - 3) , '...']! !
+	^self copyFrom: 1 to: (self size min: maxSize)! !
 !String categoriesFor: #add:withDelimiter:!converting!public! !
 !String categoriesFor: #asDateFromDDMMYYYYString!public! !
 !String categoriesFor: #asDecimalOrFloat!converting!public! !
 !String categoriesFor: #asFilenameString!public! !
 !String categoriesFor: #asPlainAsciiString!public! !
-!String categoriesFor: #asUTF8!converting!public! !
-!String categoriesFor: #asUTF8String!converting!public! !
 !String categoriesFor: #beginsWithUppercase:!converting!public! !
-!String categoriesFor: #breakIntoLinesOfLength:!comparing!public! !
-!String categoriesFor: #breakIntoStringsOfLength:!comparing!public! !
-!String categoriesFor: #breakIntoStringsOfLength:skipLeadingWhitespace:!comparing!public! !
-!String categoriesFor: #endsWithUppercase:!converting!public! !
 !String categoriesFor: #isAllDigits!converting!public! !
 !String categoriesFor: #isAlphabeticalyBefore:!converting!public! !
 !String categoriesFor: #itcAsInteger!converting!public! !
-!String categoriesFor: #itcAsMoneyDecimal!converting!public! !
-!String categoriesFor: #itcAsMoneyDecimalWithPrecision:!converting!public! !
-!String categoriesFor: #itcReplaceAllSubstrings:with:!converting!public! !
 !String categoriesFor: #itcSubStrings:!copying!public! !
 !String categoriesFor: #splitString:!converting!public! !
-!String categoriesFor: #trimByReducingVowelsToSize:!converting!public! !
-!String categoriesFor: #trimOrPadLeftToSize:!converting!public! !
-!String categoriesFor: #trimOrPadToSize:!converting!public! !
-!String categoriesFor: #trimOrPadToSize:using:!converting!public! !
-!String categoriesFor: #trimOrZeroPadToSize:!converting!public! !
 !String categoriesFor: #trimSeparators!converting!public! !
 !String categoriesFor: #trimToSize:!converting!public! !
-!String categoriesFor: #trimToSizeWithDots:!converting!public! !
-
-!String class methodsFor!
-
-utf8DecodeFrom: readStream on: writeStream 
-	"Izvede UTF-8 dekodiranje iz readStream-a na writeStream. UTF-8 se dekodira v trenutni 8-bitni code page, ki se pobere iz aktivnega procesa."
-
-	| unicode charMap translationService isRuntime |
-	isRuntime := ItcSystemManager isRuntime.
-	charMap := (translationService := #WebTranslationService itcAsClassOrNil) isNil 
-				ifFalse: 
-					[translationService 
-						getUnicodeIntegerTo8bitCodePageMapForCodePage: Processor activeProcess webRequestCodePage].
-	(readStream peek: 3) = #[16rEF 16rBB 16rBF] asString 
-		ifTrue: 
-			["ignore Unicode String header"
-			readStream next: 3].
-	[(unicode := self utf8DecodeNextUnicodeFromUtf8Stream: readStream) isNil] whileFalse: 
-			[unicode < 128 
-				ifTrue: [writeStream nextPut: unicode asCharacter]
-				ifFalse: 
-					[| ch |
-					(charMap isNil or: [(ch := charMap at: unicode ifAbsent: []) isNil]) 
-						ifTrue: 
-							[(unicode >= 256 and: [isRuntime not]) ifTrue: [self halt].
-							writeStream nextPut: (unicode < 256 ifTrue: [unicode asCharacter] ifFalse: [$?])]
-						ifFalse: [ch isString ifTrue: [writeStream nextPutAll: ch] ifFalse: [writeStream nextPut: ch]]]]!
-
-utf8DecodeNextUnicodeFromUtf8Stream: aStream 
-	"Answer next Unicode characted code from UTF-8 encoded character stream."
-
-	| octet1 octet2 octet3 octet4 |
-	aStream atEnd ifTrue: [^nil].
-	octet1 := aStream next asInteger.
-	octet1 > 127 
-		ifFalse: 
-			["0zzzzzzz"
-			^octet1].
-	aStream atEnd ifTrue: [^nil].
-	octet2 := aStream next asInteger.
-	(octet1 bitAnd: 224) == 192 
-		ifTrue: 
-			["110yyyyy 10zzzzzz"
-			^((octet1 bitAnd: 63) bitShift: 6) bitOr: (octet2 bitAnd: 63)].
-	aStream atEnd ifTrue: [^nil].
-	octet3 := aStream next asInteger.
-	(octet1 bitAnd: 240) == 224 
-		ifTrue: 
-			["1110xxxx 10yyyyyy 10zzzzzz"
-			^(((octet1 bitAnd: 15) bitShift: 12) bitOr: ((octet2 bitAnd: 63) bitShift: 6)) 
-				bitOr: (octet3 bitAnd: 63)].
-	octet4 := aStream next asInteger.
-	"11110www 10xxxxxx 10yyyyyy 10zzzzzz"
-	^((octet1 bitAnd: 7) bitShift: 18) bitOr: (((octet2 bitAnd: 63) bitShift: 12) 
-				bitOr: (((octet3 bitAnd: 63) bitShift: 6) bitOr: (octet4 bitAnd: 63)))!
-
-utf8EncodeFrom: readStream on: writeStream addMarker: aBoolean 
-	"Izvede UTF-8 kodiranje iz readStream-a na writeStream. Trenutni 8-bitni code page pobere iz aktivnega procesa."
-
-	| ch utf charMap translationService |
-	charMap := (translationService := #WebTranslationService itcAsClassOrNil) isNil 
-				ifFalse: 
-					[translationService get8bitToUTF8CodePageMapsForCodePage: Processor activeProcess webRequestCodePage].
-	aBoolean ifTrue: [writeStream nextPutAll: #[16rEF 16rBB 16rBF] asString].
-	[readStream atEnd] whileFalse: 
-			[ch := readStream next.
-			ch asInteger > 127 
-				ifFalse: [writeStream nextPut: ch]
-				ifTrue: 
-					[(charMap isNil or: [(utf := charMap at: ch) isNil]) 
-						ifTrue: [writeStream nextPut: $ ]
-						ifFalse: [writeStream nextPutAll: (self utf8EncodeUnicode: utf)]]]!
-
-utf8EncodeUnicode: unicodeNumber 
-	^unicodeNumber > 127 
-		ifFalse: [String with: unicodeNumber asCharacter]
-		ifTrue: 
-			[unicodeNumber > 2047 
-				ifFalse: 
-					[String with: (192 bitOr: (unicodeNumber bitShift: -6)) asCharacter
-						with: (128 bitOr: (unicodeNumber bitAnd: 63)) asCharacter]
-				ifTrue: 
-					[unicodeNumber > 65535 
-						ifFalse: 
-							[String 
-								with: (224 bitOr: (unicodeNumber bitShift: -12)) asCharacter
-								with: (128 bitOr: ((unicodeNumber bitShift: -6) bitAnd: 63)) asCharacter
-								with: (128 bitOr: (unicodeNumber bitAnd: 63)) asCharacter]]]! !
-!String class categoriesFor: #utf8DecodeFrom:on:!OmniBase!public! !
-!String class categoriesFor: #utf8DecodeNextUnicodeFromUtf8Stream:!OmniBase!public! !
-!String class categoriesFor: #utf8EncodeFrom:on:addMarker:!OmniBase!public! !
-!String class categoriesFor: #utf8EncodeUnicode:!OmniBase!public! !
 
 !Symbol methodsFor!
 
@@ -1708,7 +1417,7 @@ hours: hours minutes: minutes seconds: seconds milliseconds: msecs
 asFilenameString
 
 	| stream |
-	stream := WriteStream on: (String new: 20).
+	stream := String writeStream: 20.
 	stream
 		nextPutAll: (self date year asLeadingZerosStringOfSize: 4);
 		nextPutAll: (self date monthIndex asLeadingZerosStringOfSize: 2);

@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'RegEdit'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk RegEdit Sample.

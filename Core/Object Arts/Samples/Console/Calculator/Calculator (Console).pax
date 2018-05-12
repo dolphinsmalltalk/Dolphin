@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Calculator (Console)'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Console Calculator Sample. 

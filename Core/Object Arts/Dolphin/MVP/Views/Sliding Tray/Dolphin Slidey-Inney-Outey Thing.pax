@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Slidey-Inney-Outey Thing'.
 package paxVersion: 1;
 	basicComment: ''.

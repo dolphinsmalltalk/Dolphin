@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Presenter subclass: #PlimbolePresenter
 	instanceVariableNames: 'palette'
@@ -51,7 +51,7 @@ copyToClipboard
 
 	| signature |
 	signature := self plimbole signature.
-	Clipboard current setText: signature format: #String.
+	Clipboard current setText: signature.
 	self showHintBubble: 'Copied this piece ' , signature , ' to the Clipboard'!
 
 fasterTempo

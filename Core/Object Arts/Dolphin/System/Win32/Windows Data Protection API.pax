@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Windows Data Protection API'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Win32 Data Protection API

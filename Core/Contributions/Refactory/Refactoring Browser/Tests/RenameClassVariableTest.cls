@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 RefactoringTest subclass: #RenameClassVariableTest
 	instanceVariableNames: ''
@@ -30,7 +30,7 @@ testNonExistantName
 
 testRenameClassVar
 	| refactoring class |
-	refactoring := RenameClassVariableRefactoring 
+	refactoring := RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: #RSR
 				in: TransformationRuleTest.
@@ -38,19 +38,19 @@ testRenameClassVar
 	class := refactoring model classNamed: #TransformationRuleTest.
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
-	self 
-		assert: (class metaclass parseTreeFor: #initializeAfterLoad1) = (RBParser 
-						parseMethod: 'initializeAfterLoad1
+	self assert: (class metaclass parseTreeFor: #initializeAfterLoad1)
+		equals: (RBParser
+				parseMethod: 'initializeAfterLoad1
 								RSR := ParseTreeSearcher new.
 								RSR
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 											-> [:aNode :answer | true]').
-	self assert: (class metaclass parseTreeFor: #nuke) 
-				= (RBParser parseMethod: 'nuke
+	self assert: (class metaclass parseTreeFor: #nuke)
+		equals: (RBParser parseMethod: 'nuke
 								RSR := nil').
-	self 
-		assert: (class parseTreeFor: #checkMethod:) = (RBParser 
-						parseMethod: 'checkMethod: aSmalllintContext 
+	self assert: (class parseTreeFor: #checkMethod:)
+		equals: (RBParser
+				parseMethod: 'checkMethod: aSmalllintContext 
 								class := aSmalllintContext selectedClass.
 								(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 										[(RSR executeTree: rewriteRule tree initialAnswer: false)

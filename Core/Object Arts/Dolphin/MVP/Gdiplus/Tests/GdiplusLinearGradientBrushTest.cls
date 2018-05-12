@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusTests subclass: #GdiplusLinearGradientBrushTest
 	instanceVariableNames: ''
@@ -24,8 +24,8 @@ testClone
 	self setSample1.
 	model handle.
 	clone := model clone.
-	self assert: model initializer == clone initializer.
-	self assert: clone basicHandle notNil!
+	self assert: model initializer identicalTo: clone initializer.
+	self denyIsNil: clone basicHandle!
 
 testConstructor1
 	self setSample1.
@@ -49,9 +49,9 @@ testFillingHorizontal
 	self setSample1.
 	graphics fillRectangle: (0 @ 0 extent: 256 @ 256) brush: model.
 	graphics free.
-	self assert: (canvas pixelAt: 0 @ 0) = RGB red.
-	self assert: (canvas pixelAt: 128 @ 0) = RGB darkMagenta.
-	self assert: (canvas pixelAt: 255 @ 0) = RGB blue!
+	self assert: (canvas pixelAt: 0 @ 0) equals: RGB red.
+	self assert: (canvas pixelAt: 128 @ 0) equals: RGB darkMagenta.
+	self assert: (canvas pixelAt: 255 @ 0) equals: RGB blue!
 
 testGetBlend
 	| args answer |
@@ -70,9 +70,9 @@ testGetBlend
 testGetBlendCount
 	self setSample1.
 	"MSDN: If no custom blend has been set by using LinearGradientBrush::SetBlend, or if invalid positions were passed to LinearGradientBrush::SetBlend, then LinearGradientBrush::GetBlend returns 1."
-	self assert: model blendCount = 1.
+	self assert: model blendCount equals: 1.
 	model blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.8 1.0).
-	self assert: model blendCount = 3!
+	self assert: model blendCount equals: 3!
 
 testIsGammaCorrected
 	self setSample1.
@@ -85,7 +85,7 @@ testPersistentArgument
 	"Create an object that has a constructor argument that itself needs to be realised"
 
 	| brush pen |
-	brush := GdiplusLinearGradientBrush 
+	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
 				point2: 255 @ 0
 				color1: ARGB red
@@ -102,7 +102,7 @@ testPersistentArgument
 	brush free.
 	pen asParameter.
 	self assert: brush isRealized.
-	self assert: pen initializer brush == brush
+	self assert: pen initializer brush identicalTo: brush
 	"for gc reasons .. the pen must always hold a reference to the brush"! !
 !GdiplusLinearGradientBrushTest categoriesFor: #setSample1!accessing!public! !
 !GdiplusLinearGradientBrushTest categoriesFor: #testClone!public!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
@@ -11,10 +11,21 @@ AbstractLOGFONT comment: ''!
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
 !AbstractLOGFONT methodsFor!
 
+createFont
+	^self subclassResponsibility!
+
 faceName
 	"Answer the receiver's lfFaceName field as a String, having trimmed any extra nulls."
 	
-	^self lfFaceName trimNulls!
+	^self subclassResponsibility!
+
+faceName: aString
+	"Set the receiver's lfFaceName field."
+	
+	self subclassResponsibility!
+
+getData: hFont
+	self subclassResponsibility!
 
 lfCharSet
 	"Answer the receiver's lfCharSet field as a Smalltalk object."
@@ -125,7 +136,10 @@ lfWidth: anObject
 	"Set the receiver's lfWidth field to the value of anObject."
 
 	bytes sdwordAtOffset: ##(self offsetOf: #lfWidth) put: anObject! !
+!AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
 !AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
+!AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
+!AbstractLOGFONT categoriesFor: #getData:!accessing!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !

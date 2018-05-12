@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 PermanentLibrary subclass: #GDILibrary
 	instanceVariableNames: ''
@@ -19,10 +19,10 @@ addFontResource: fontFile
 	The font can subsequently be used for text output by any application. 
 
 	int AddFontResource(
-		LPCTSTR lpszFilename   // font file name
+		LPCWSTR lpszFilename   // font file name
 	);"
 
-	<stdcall: sdword AddFontResourceA lpstr>
+	<stdcall: sdword AddFontResourceW lpwstr>
 	^self invalidCall!
 
 beginPath: hdc
@@ -128,12 +128,12 @@ createDC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpInitData: l
 	Helpstring: Creates a device context (DC) for a device by using the specified name
 
 		HDC __stdcall CreateDC(
-			LPCSTR lpszDriver,
-			LPCSTR lpszDevice,
-			LPCSTR lpszOutput,
+			LPCWSTR lpszDriver,
+			LPCWSTR lpszDevice,
+			LPCWSTR lpszOutput,
 			DEVMODE* lpInitData);"
 
-	<stdcall: handle CreateDCA lpstr lpstr lpstr void*>
+	<stdcall: handle CreateDCW lpwstr lpwstr lpwstr void*>
 	^self invalidCall!
 
 createDIBSection: hdc pbmi: pbmi iUsage: iUsage ppvBits: ppvBits hSection: hSection dwOffset: dwOffset
@@ -161,7 +161,7 @@ createEllipticRgnIndirect: lprc
 	<stdcall: handle CreateEllipticRgnIndirect RECT*>
 	^self invalidCall!
 
-createFontIndirect: lplf
+createFontIndirectA: lplf
 	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
 	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
 
@@ -171,17 +171,27 @@ createFontIndirect: lplf
 	<stdcall: handle CreateFontIndirectA LOGFONT*>
 	^self invalidCall!
 
+createFontIndirectW: lplf
+	"Invoke the CreateFontIndirect() function of the module wrapped by the receiver.
+	Helpstring: Creates a logical font that has the characteristics specified in the specified structure
+
+		HFONT __stdcall CreateFontIndirect(
+			LOGFONTW* lplf);"
+
+	<stdcall: handle CreateFontIndirectW LOGFONTW*>
+	^self invalidCall!
+
 createIC: lpszDriver lpszDevice: lpszDevice lpszOutput: lpszOutput lpdvminit: lpdvminit
 	"Invoke the CreateIC() function of the module wrapped by the receiver.
 	Helpstring: Creates an information context for the specified device
 
 		HDC __stdcall CreateIC(
-			LPCSTR lpszDriver,
-			LPCSTR lpszDevice,
-			LPCSTR lpszOutput,
+			LPCWSTR lpszDriver,
+			LPCWSTR lpszDevice,
+			LPCWSTR lpszOutput,
 			DEVMODE* lpdvminit);"
 
-	<stdcall: handle CreateICA lpstr lpstr lpstr DEVMODE*>
+	<stdcall: handle CreateICW lpwstr lpwstr lpwstr DEVMODE*>
 	^self invalidCall!
 
 createPalette: lplgpl
@@ -296,12 +306,12 @@ enumFontFamilies: aHandle lpszFamily: aString lpEnumFontFamProc: anExternalCallb
 	device through the specified callback.
 		int EnumFontFamilies(
 			HDC hdc,	// handle to device control 
-			LPCTSTR lpszFamily,	// pointer to family-name string 
+			LPCWSTR lpszFamily,	// pointer to family-name string 
 			FONTENUMPROC lpEnumFontFamProc,	// pointer to callback function 
 			LPARAM lParam 	// address of application-supplied data  
 		);"
 
-	<stdcall: sdword EnumFontFamilies handle lpstr lpvoid uintptr>
+	<stdcall: sdword EnumFontFamiliesW handle lpwstr lpvoid uintptr>
 	^self invalidCall
 
 !
@@ -317,7 +327,7 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 			LPARAM lParam 				// application-supplied data
 		);"
 
-	<stdcall: sdword EnumFontsA handle lpstr lpvoid uintptr>
+	<stdcall: sdword EnumFontsW handle lpwstr lpvoid uintptr>
 	^self invalidCall!
 
 excludeClipRect: hdc nLeftRect: nLeftRect nTopRect: nTopRect nRightRect: nRightRect nBottomRect: nBottomRect
@@ -344,11 +354,11 @@ extTextOut: hdc x: x y: y fuOptions: fuOptions lprc: lprc lpString: lpString cbC
 			int y,
 			UINT fuOptions,
 			RECT* lprc,
-			LPCSTR lpString,
+			LPCWSTR lpString,
 			UINT cbCount,
 			int* lpDx);"
 
-	<stdcall: bool ExtTextOutA handle sdword sdword dword RECT* lpstr dword sdword*>
+	<stdcall: bool ExtTextOutW handle sdword sdword dword RECT* lpwstr dword sdword*>
 	^self invalidCall!
 
 fillRgn: hdc hRgn: hRgn hBr: hBr
@@ -500,8 +510,22 @@ getObject: objectHandle cbBuffer: count lpvObject: buffer
 	<stdcall: sdword GetObjectA handle sdword lpvoid>
 	^self invalidCall!
 
+getObjectW: objectHandle cbBuffer: count lpvObject: buffer
+	"Obtains information about a specified graphics object. Depending on 
+	the graphics object, the function places a filled-in BITMAP, DIBSECTION, 
+	EXTLOGPEN, LOGBRUSH, LOGFONT, or LOGPEN structure, or a count of table 
+	entries (for a logical palette), into a specified buffer. 
+		int GetObject(
+  			HGDIOBJ hgdiobj,	// handle to graphics object of interest
+			int cbBuffer,	// size of buffer for object information 
+			LPVOID lpvObject 	// pointer to buffer for object information  
+		);"
+
+	<stdcall: sdword GetObjectW handle sdword lpvoid>
+	^self invalidCall!
+
 getOutlineTextMetrics: anExternalHandle cbData: anInteger lpotm: anOUTLINETEXTMETRIC 
-	<stdcall: dword GetOutlineTextMetricsA handle dword OUTLINETEXTMETRIC*>
+	<stdcall: dword GetOutlineTextMetricsW handle dword OUTLINETEXTMETRICW*>
 	^self invalidCall!
 
 getPaletteEntries: hpal iStartIndex: iStartIndex nEntries: nEntries lppe: lppe
@@ -559,24 +583,24 @@ getTextColor: hdc
 	<stdcall: dword GetTextColor handle>
 	^self invalidCall!
 
-getTextExtentPoint32: hdc lpString: lpString cbString: cbString lpSize: lpSize
+getTextExtentPoint32: hdc lpString: lpString c: cbString lpSize: lpSize
 	"Invoke the GetTextExtentPoint32() function of the module wrapped by the receiver.
 	Helpstring: Computes the width and height of the specified string of text
 
 		BOOL __stdcall GetTextExtentPoint32(
 			HDC HDC,
-			LPCSTR lpString,
-			int cbString,
+			LPWSTR lpString,
+			int c,
 			SIZEL* lpSize);"
 
-	<stdcall: bool GetTextExtentPoint32A handle lpstr sdword SIZE*>
+	<stdcall: bool GetTextExtentPoint32W handle lpwstr sdword SIZE*>
 	^self invalidCall!
 
 getTextMetrics: hdc lptm: lptm
-	"Invoke the GetTextMetrics() GDI call to populate a TEXTMETRIC structure, lptm, with
+	"Invoke the GetTextMetrics() GDI call to populate a TEXTMETRICW structure, lptm, with
 	metrics for the font currently selected into the device context with handle, hdc."
 
-	<stdcall: bool GetTextMetricsA handle TEXTMETRIC*>
+	<stdcall: bool GetTextMetricsW handle TEXTMETRICW*>
 	^self invalidCall!
 
 getViewportExtEx: hdc lpSize: lpSize 
@@ -789,11 +813,11 @@ removeFontResource: fontFile
 	If the font was added using the AddFontResourceEx function, you must use the RemoveFontResourceEx function. 
 
 	BOOL RemoveFontResource(
-		LPCTSTR lpFileName   // name of font file
+		LPCWSTR lpFileName   // name of font file
 		);
 	"
 
-	<stdcall: bool RemoveFontResourceA lpstr>
+	<stdcall: bool RemoveFontResourceW lpwstr>
 	^self invalidCall!
 
 restoreDC: hDC nSavedDC: nSavedDC
@@ -1069,10 +1093,10 @@ startDoc: hdc lpdi: info
 	"Start a print job.
 		int StartDoc(
   			HDC hdc,				// handle of device context 
-			CONST DOCINFO *lpdi 	// address of structure with file names  
+			CONST DOCINFOW *lpdi 	// address of structure with file names  
 		);"
 
-	<stdcall: sdword StartDocA handle DOCINFO* >
+	<stdcall: sdword StartDocW handle DOCINFOW* >
 	^self invalidCall
 
 !
@@ -1140,10 +1164,10 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 			HDC HDC,
 			int nXStart,
 			int nYStart,
-			LPCSTR lpString,
+			LPCWSTR lpString,
 			int cbString);"
 
-	<stdcall: bool TextOutA handle sdword sdword lpstr sdword>
+	<stdcall: bool TextOutW handle sdword sdword lpwstr sdword>
 	^self invalidCall! !
 !GDILibrary categoriesFor: #addFontResource:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #beginPath:!**auto generated**!public!win32 functions-path! !
@@ -1157,7 +1181,8 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #createDC:lpszDevice:lpszOutput:lpInitData:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #createDIBSection:pbmi:iUsage:ppvBits:hSection:dwOffset:!**auto generated**!public!win32 functions-bitmap! !
 !GDILibrary categoriesFor: #createEllipticRgnIndirect:!**auto generated**!public!win32 functions-region! !
-!GDILibrary categoriesFor: #createFontIndirect:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #createFontIndirectA:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #createFontIndirectW:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #createIC:lpszDevice:lpszOutput:lpdvminit:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #createPalette:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #createPen:nWidth:crColor:!**auto generated**!public!win32 functions-pen! !
@@ -1187,13 +1212,14 @@ textOut: hdc nXStart: nXStart nYStart: nYStart lpString: lpString cbString: cbSt
 !GDILibrary categoriesFor: #getMapMode:!**auto generated**!public!win32 functions-transformations! !
 !GDILibrary categoriesFor: #getNearestPaletteIndex:crColor:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #getObject:cbBuffer:lpvObject:!public!win32 functions-device context! !
+!GDILibrary categoriesFor: #getObjectW:cbBuffer:lpvObject:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getOutlineTextMetrics:cbData:lpotm:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getPaletteEntries:iStartIndex:nEntries:lppe:!**auto generated**!public!win32 functions-color! !
 !GDILibrary categoriesFor: #getPixel:xPos:yPos:!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getROP2:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getStockObject:!**auto generated**!public!win32 functions-device context! !
 !GDILibrary categoriesFor: #getTextColor:!public!win32 functions-font and text! !
-!GDILibrary categoriesFor: #getTextExtentPoint32:lpString:cbString:lpSize:!**auto generated**!public!win32 functions-font and text! !
+!GDILibrary categoriesFor: #getTextExtentPoint32:lpString:c:lpSize:!**auto generated**!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getTextMetrics:lptm:!public!win32 functions-font and text! !
 !GDILibrary categoriesFor: #getViewportExtEx:lpSize:!public!win32 functions-transformations! !
 !GDILibrary categoriesFor: #getViewportOrgEx:lppt:!public!win32 functions-transformations! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ExternalProcess
 	instanceVariableNames: 'commandLine directory millisecondsToWait stdinFilename stdoutFilename stderrFilename si pi stdin stdout stderr processExitCode threadExitCode'
@@ -164,15 +164,12 @@ getExitCodes
 
 initialize
 	super initialize.
-
 	self millisecondsToWait: self class infiniteTimeoutDelay.
-
-	si := STARTUPINFO new.
+	si := STARTUPINFOW new.
 	si
 		dwFlags: STARTF_USESHOWWINDOW + STARTF_USESTDHANDLES;
 		wShowWindow: SW_HIDE.
-
-	pi := PROCESS_INFORMATION new.!
+	pi := PROCESS_INFORMATION new!
 
 initializeFileHandles
 	self stdinFilename notNil ifTrue:

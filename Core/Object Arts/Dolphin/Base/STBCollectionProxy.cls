@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBProxy subclass: #STBCollectionProxy
 	instanceVariableNames: 'class array'
@@ -46,15 +46,10 @@ class: aClass array: anArray
 		yourself
 	!
 
-for: aCollection 
-	#deprecated.
-	^self forCollection: aCollection!
-
 forCollection: aCollection 
 	"Answer a new instance representing aCollection."
 
 	^self class: aCollection class array: aCollection asArray! !
 !STBCollectionProxy class categoriesFor: #class:array:!instance creation!public! !
-!STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
 !STBCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
 

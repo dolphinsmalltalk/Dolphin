@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Smalltalk at: #WinSocketErrors put: (PoolConstantsDictionary named: #WinSocketErrors)!
 WinSocketErrors at: 'WSA_E_CANCELLED' put: 16r277F!

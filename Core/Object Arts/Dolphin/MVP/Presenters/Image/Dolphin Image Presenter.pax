@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'Dolphin Image Presenter'.
 package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Image Presenter and Views.

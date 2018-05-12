@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #StyledPen
 	instanceVariableNames: 'color width dashPattern'
@@ -100,7 +100,7 @@ solid
 	^self color: Color black width: 1 style: #solid!
 
 styles
-	^##((LookupTable new)
+	^##(IdentityDictionary new
 		at: #solid put: #(1);
 		at: #dashed put: #(4 4);
 		at: #dotted put: #(2 2);
