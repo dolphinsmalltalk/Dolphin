@@ -272,6 +272,28 @@ void Interpreter::queueInterrupt(Oop nInterrupt, Oop argPointer)
 	queueInterrupt(actualActiveProcessPointer(), nInterrupt, argPointer);
 }
 
+Oop* Interpreter::primitiveQueueInterrupt(Oop* const sp, unsigned)
+{
+	// Queue an aysnchronous interrupt to the receiving process
+	ProcessOTE* oteReceiver = reinterpret_cast<ProcessOTE*>(*(sp - 2));
+	Oop interrupt = *(sp - 1); // ecx
+
+	if (ObjectMemoryIsIntegerObject(interrupt))
+	{
+		Process* targetProcess = oteReceiver->m_location;
+
+		if (targetProcess->m_suspendedFrame != reinterpret_cast<Oop>(Pointers.Nil))
+		{
+			queueInterrupt(oteReceiver, interrupt, *sp);
+			return sp - 2;
+		}
+		else
+			return primitiveFailure(1);
+	}
+	else
+		return primitiveFailure(0);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Helpers for manipulating linked lists of processes
 ///////////////////////////////////////////////////////////////////////////////

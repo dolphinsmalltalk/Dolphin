@@ -78,9 +78,6 @@ ENDIF
 
 ; Other C++ method imports
 
-QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@ST@@@@II@Z
-extern QUEUEINTERRUPT:near32
-
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
 extern DISABLEINTERRUPTS:near32
@@ -357,35 +354,6 @@ BEGINPRIMITIVE primitiveBecome
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveBecome
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Queue an aysnchronous interrupt to the receiving process
-BEGINPRIMITIVE primitiveQueueInterrupt
-	mov		ecx, [_SP-OOPSIZE*2]				; Load Oop of receiver
-	mov		edx, [_SP-OOPSIZE]					; Load interrupt number
-
-	test	dl, 1								; 
-	jz		localPrimitiveFailure0				; Not a SmallInteger
-
-	mov		eax, (OTE PTR[ecx]).m_location
-	mov		eax, (Process PTR[eax]).m_suspendedFrame
-	cmp		eax, [oteNil]						; suspended context is nil if terminated
-	mov		eax, [_SP]							; Load TOS (extra arg). Doesn't affect flags
-	je		localPrimitiveFailure1
-
-	push	eax									; ARG 3: opaque argument passed on the stack
-	push	edx									; ARG 2: Interrupt number
-	push	ecx									; ARG 1: Process Oop
-
-	call	QUEUEINTERRUPT
-
-	lea		eax, [_SP-OOPSIZE*2]				; primitiveSuccess(2)
-	ret
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-
-ENDPRIMITIVE primitiveQueueInterrupt
 
 BEGINPRIMITIVE primitiveEnableInterrupts
 	mov		eax, [_SP]							; Access argument
