@@ -165,7 +165,7 @@ void Interpreter::freePools()
 	#endif
 }
 
-Oop* __fastcall Interpreter::primitiveOopsLeft(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveOopsLeft(Oop* const sp, unsigned)
 {
 	// Ensure active process has the correct size and that the Zct is empty
 	// and all ref counts are correct

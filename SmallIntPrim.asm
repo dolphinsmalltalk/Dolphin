@@ -26,28 +26,6 @@ ASSUME	_SP:PTR Oop				; Interpreters SP (stack pointer)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Exports
-
-public primitiveAdd
-public primitiveSubtract
-public primitiveMultiply
-public primitiveDivide
-public primitiveMod
-public primitiveDiv
-public primitiveQuoAndRem
-public primitiveQuo
-public primitiveBitAnd
-public primitiveAnyMask
-public primitiveAllMask
-public primitiveBitOr
-public primitiveBitXor
-public primitiveBitShift
-public primitiveSmallIntegerAt
-public primitiveHighBit
-public primitiveLowBit
-public arithmeticBitShift
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Imports
 
 LINEWARRAY2 EQU ?liNewArray2@@YIPAV?$TOTE@VArray@ST@@@@II@Z
@@ -537,8 +515,11 @@ ENDPRIMITIVE primitiveBitXor
 ;;
 ;; Can only succeed if argument is a SmallInteger
 ;;
+public ?primitiveBitShift@Interpreter@@CIPAIQAII@Z
+public arithmeticBitShift
+
 ALIGNPRIMITIVE
-primitiveBitShift:
+?primitiveBitShift@Interpreter@@CIPAIQAII@Z:
 	mov		eax, [_SP-OOPSIZE]				; Access receiver at stack top
 
 arithmeticBitShift:

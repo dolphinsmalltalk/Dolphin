@@ -56,6 +56,8 @@ IFDEF _DEBUG
 	;;PROFILING	EQU		1
 ENDIF
 
+public ?primitiveActivateMethod@Interpreter@@CIPAIQAII@Z
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Exports
 
@@ -66,21 +68,10 @@ public EXECUTENEWMETHOD
 ACTIVATENEWMETHOD EQU ?activateNewMethod@Interpreter@@SIXPAVCompiledMethod@ST@@@Z
 public ACTIVATENEWMETHOD
 
-public primitiveReturnSelf
-public primitiveReturnTrue
-public primitiveReturnFalse
-public primitiveReturnNil
-public primitiveReturnLiteralZero
-public primitiveActivateMethod
-public primitiveReturnInstVar
-public primitiveSetInstVar
-
 public byteCodeTable
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
-
-extern _primitivesTable:DWORD								; See primasm.asm
 
 IFDEF _DEBUG
 	extern _primitiveCounters:DWORD
@@ -3940,7 +3931,7 @@ MExecNewMethod MACRO
 
 @@:
 	;; Activate method as primitive failed - note we don't bother to pass the correct argument count
-	call	primitiveActivateMethod
+	call	?primitiveActivateMethod@Interpreter@@CIPAIQAII@Z
 	MPrefetch
 	mov		_SP, eax
 	DispatchNext
@@ -4618,7 +4609,7 @@ BEGINPROC EXECUTENEWMETHOD
 
 @@:
 	; Failed, so must activate the new method
-	call	primitiveActivateMethod
+	call	?primitiveActivateMethod@Interpreter@@CIPAIQAII@Z
 
 	mov		[STACKPOINTER], eax	
 	mov		[INSTRUCTIONPOINTER], _IP

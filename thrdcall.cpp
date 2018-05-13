@@ -1061,7 +1061,7 @@ void OverlappedCall::ReincrementProcessReferences()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive 
 
-Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(void*, unsigned argCount)
+Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(Oop* const, unsigned argCount)
 {
 	CompiledMethod* method = m_registers.m_oopNewMethod->m_location;
 

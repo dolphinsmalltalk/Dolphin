@@ -23,7 +23,7 @@
 #include "STBlockClosure.h"
 
 // Value with args takes an array of arguments
-Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp)
+Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, unsigned)
 {
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(bp));
 	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(bp-1));
@@ -184,7 +184,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, unsigned argCount)
 	}
 }
 
-Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp)
+Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, unsigned)
 {
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
@@ -263,7 +263,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp)
 }
 
 
-Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp)
+Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, unsigned)
 {
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
 	if (ObjectMemory::fetchClassOf(Oop(oteArg)) != Pointers.ClassArray)

@@ -137,11 +137,16 @@
       <Filter>FFI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp">
       <Filter>App Support</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\PrimitivesTable.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />

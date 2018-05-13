@@ -104,7 +104,7 @@ void Interpreter::memmove(BYTE* dst, const BYTE* src, size_t count)
 //
 //		aByteObject replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -193,7 +193,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp)
 //
 //		anExternalAddress replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -268,7 +268,7 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp)
 }
 
 // Locate the next occurrence of the given character in the receiver between the specified indices.
-Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(integerPointer))
@@ -469,7 +469,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const unsigned arg
 	return primitiveFailure(0);
 }
 
-Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, unsigned)
 {
 	Oop* const newSp = sp - 2;
 	OTE* __restrict oteReceiver = reinterpret_cast<OTE*>(*newSp);
@@ -707,7 +707,7 @@ void Interpreter::PushCharacter(Oop* const sp, MWORD codePoint)
 }
 
 
-Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp, unsigned)
 {
 	Oop* newSp = sp - 1;
 	Oop oopArg = *newSp;
@@ -850,7 +850,7 @@ template <class OpA, class OpW> static Oop* primitiveStringComparisonOp(Oop* con
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
+Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp, unsigned)
 {
 	struct CmpIA 
 	{
@@ -870,7 +870,7 @@ Oop* __fastcall Interpreter::primitiveStringCollate(Oop* sp)
 	return primitiveStringComparisonOp<CmpIA,CmpIW>(sp);
 }
 
-Oop* __fastcall Interpreter::primitiveStringCmp(Oop* sp)
+Oop* __fastcall Interpreter::primitiveStringCmp(Oop* sp, unsigned)
 {
 	struct CmpA 
 	{ 
@@ -894,7 +894,7 @@ Oop* __fastcall Interpreter::primitiveStringCmp(Oop* sp)
 	return primitiveStringComparisonOp<CmpA,CmpW>(sp);
 }
 
-Oop* __fastcall Interpreter::primitiveStringCmpOrdinal(Oop* sp)
+Oop* __fastcall Interpreter::primitiveStringCmpOrdinal(Oop* sp, unsigned)
 {
 	struct CmpOrdinalA
 	{
@@ -917,7 +917,7 @@ Oop* __fastcall Interpreter::primitiveStringCmpOrdinal(Oop* sp)
 	return primitiveStringComparisonOp<CmpOrdinalA, CmpOrdinalW>(sp);
 }
 
-Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp)
+Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, unsigned)
 {
 	struct EqualA
 	{
@@ -974,7 +974,7 @@ Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp)
 	}
 }
 
-Oop* Interpreter::primitiveBytesEqual(Oop* const sp)
+Oop* Interpreter::primitiveBytesEqual(Oop* const sp, unsigned)
 {
 	Oop oopArg = *sp;
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 1));
@@ -1041,7 +1041,7 @@ extern "C" MWORD __cdecl HashBytes(const BYTE* bytes, MWORD size)
 	return bytes != nullptr ? hashBytes(bytes, size) : 0;
 }
 
-Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, unsigned)
 {
 	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
 	MWORD hash = hashBytes(receiver->m_location->m_fields, receiver->bytesSize());
@@ -1049,7 +1049,7 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp, unsigned)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	switch (ST::String::GetEncoding(receiver))
@@ -1107,7 +1107,7 @@ Utf16StringOTE * ST::Utf16String::New(size_t cwch)
 	return ObjectMemory::newUninitializedNullTermObject<Utf16String>(cwch * sizeof(WCHAR));
 }
 
-Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp)
+Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp, unsigned)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	BehaviorOTE* oteClass = receiver->m_oteClass;
@@ -1142,7 +1142,7 @@ Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp, unsigned)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	BehaviorOTE* oteClass = receiver->m_oteClass;
@@ -1234,7 +1234,7 @@ AnsiStringOTE* ST::AnsiString::NewFromUtf8(const Utf8String::CU* pChars, size_t 
 	return AnsiString::New(utf16, utf16.Count);
 }
 
-Oop* Interpreter::primitiveStringConcatenate(Oop* const sp)
+Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, unsigned)
 {
 	Oop oopArg = *sp;
 	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));

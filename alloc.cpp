@@ -138,7 +138,7 @@ PointersOTE* __fastcall ObjectMemory::shallowCopy(PointersOTE* ote)
 	return copyPointer;
 }
 
-Oop* __fastcall Interpreter::primitiveShallowCopy(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveShallowCopy(Oop* const sp, unsigned)
 {
 	OTE* receiver = reinterpret_cast<OTE*>(*sp);
 	ASSERT(!isIntegerObject(receiver));
@@ -158,11 +158,11 @@ Oop* __fastcall Interpreter::primitiveShallowCopy(Oop* const sp)
 // opaque to external users, and to be interchangeable with MWORDs.
 //
 
-Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* sp)
+Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* const stackPointer, unsigned)
 {
-	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
+	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(stackPointer - 1));
 
-	Oop oopArg = (*sp);
+	Oop oopArg = (*stackPointer);
 	SMALLINTEGER count;
 	if (isIntegerObject(oopArg) && (count = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
 	{
@@ -170,6 +170,7 @@ Oop* __fastcall Interpreter::primitiveNewFromStack(Oop* sp)
 		PointersOTE* oteObj = ObjectMemory::newUninitializedPointerObject(oteClass, count);
 		VariantObject* obj = oteObj->m_location;
 
+		Oop* sp = stackPointer;
 		sp = sp - count - 1;
 		while (--count >= 0)
 		{
@@ -245,7 +246,7 @@ Oop* __fastcall Interpreter::primitiveNewInitializedObject(Oop* sp, unsigned arg
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveNew(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveNew(Oop* const sp, unsigned)
 {
 	// This form of C code results in something very close to the hand-coded assembler original for primitiveNew
 
@@ -264,7 +265,7 @@ Oop* __fastcall Interpreter::primitiveNew(Oop* const sp)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp, unsigned)
 {
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
 	Oop oopArg = (*sp);
@@ -430,7 +431,7 @@ template BytesOTE* ObjectMemory::newByteObject<false, true>(BehaviorOTE*, MWORD)
 template BytesOTE* ObjectMemory::newByteObject<true, false>(BehaviorOTE*, MWORD);
 template BytesOTE* ObjectMemory::newByteObject<true, true>(BehaviorOTE*, MWORD);
 
-Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp, unsigned)
 {
 	BehaviorOTE* oteClass = reinterpret_cast<BehaviorOTE*>(*(sp - 1));
 	Oop oopArg = (*sp);
@@ -493,7 +494,7 @@ BytesOTE* __fastcall ObjectMemory::shallowCopy(BytesOTE* ote)
 
 // Answer a new process with an initial stack size specified by the first argument, and a maximum
 // stack size specified by the second argument.
-Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveNewVirtual(Oop* const sp, unsigned)
 {
 	Oop maxArg = *sp;
 	SMALLINTEGER maxSize;

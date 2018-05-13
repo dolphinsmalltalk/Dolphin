@@ -25,42 +25,42 @@ template <class P> __forceinline static Oop* primitiveIntegerCompare(Oop* const 
 	return sp - 1;
 }
 
-Oop* __fastcall Interpreter::primitiveLessThan(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveLessThan(Oop* const sp, unsigned)
 {
 	struct op { bool operator()(SMALLINTEGER x, SMALLINTEGER y) const { return x < y; } };
 	
 	return primitiveIntegerCompare(sp, op());
 }
 
-Oop* __fastcall Interpreter::primitiveGreaterThan(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveGreaterThan(Oop* const sp, unsigned)
 {
 	struct op { bool operator()(SMALLINTEGER x, SMALLINTEGER y) const { return x > y; } };
 
 	return primitiveIntegerCompare(sp, op());
 }
 
-Oop* __fastcall Interpreter::primitiveLessOrEqual(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveLessOrEqual(Oop* const sp, unsigned)
 {
 	struct op { bool operator()(SMALLINTEGER x, SMALLINTEGER y) const { return x <= y; } };
 
 	return primitiveIntegerCompare(sp, op());
 }
 
-Oop* __fastcall Interpreter::primitiveGreaterOrEqual(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveGreaterOrEqual(Oop* const sp, unsigned)
 {
 	struct op { bool operator()(SMALLINTEGER x, SMALLINTEGER y) const { return x >= y; } };
 
 	return primitiveIntegerCompare(sp, op());
 }
 
-Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, unsigned)
 {
 	struct op { bool operator()(SMALLINTEGER x, SMALLINTEGER y) const { return x == y; } };
 
 	return primitiveIntegerCompare(sp, op());
 }
 
-Oop* __fastcall Interpreter::primitiveNotEqual(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveNotEqual(Oop* const sp, unsigned)
 {
 	struct op { bool operator()(SMALLINTEGER x, SMALLINTEGER y) const { return x != y; } };
 

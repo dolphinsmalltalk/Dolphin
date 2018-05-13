@@ -57,8 +57,6 @@ GetProcAddress  PROTO STDCALL :HINSTANCE, :LPCSTR
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Exports
 
-public primitiveDLL32Call
-public primitiveVirtualCall
 public callExternalFunction
 public @asyncDLL32Call@16
 
@@ -128,7 +126,7 @@ ASSERTEQU	%RESULT, <eax>				; We rely on this convention when answering the resu
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-primitiveVirtualCall PROC
+BEGINPRIMITIVE primitiveVirtualCall
 	ASSUME	edx:DWORD
 
 	mov		ecx, [NEWMETHOD]
@@ -211,7 +209,7 @@ primitiveVirtualCall PROC
 	LocalPrimitiveFailure 0
 	LocalPrimitiveFailure 1
 
-primitiveVirtualCall ENDP
+ENDPRIMITIVE primitiveVirtualCall
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; A fastcall function (ecx is pMethod, edx is argCount)
@@ -311,7 +309,7 @@ getProcAddress ENDP
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; A fastcall function (ecx is pMethod, edx is argCount)
-primitiveDLL32Call PROC
+BEGINPRIMITIVE primitiveDLL32Call
 	ASSUME	edx:DWORD
 
 	mov		ecx, [NEWMETHOD]
@@ -350,7 +348,7 @@ procAddressNotCached:
 	add		esp, 20											; Remove args pushed for aborted call
 	PrimitiveFailureCode 1
 
-primitiveDLL32Call ENDP
+ENDPRIMITIVE primitiveDLL32Call
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Process the next argument

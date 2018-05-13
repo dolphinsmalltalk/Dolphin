@@ -13,28 +13,6 @@ INCLUDE IstAsm.Inc
 .CODE FFIPRIM_SEG
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Exports
-public primitiveAddressOf
-public primitiveDWORDAt
-public primitiveDWORDAtPut
-public primitiveSDWORDAt
-public primitiveSDWORDAtPut
-public primitiveWORDAt
-public primitiveWORDAtPut
-public primitiveSWORDAt
-public primitiveSWORDAtPut
-public primitiveIndirectDWORDAt
-public primitiveIndirectDWORDAtPut
-public primitiveIndirectSDWORDAt
-public primitiveIndirectSDWORDAtPut
-public primitiveIndirectWORDAt
-public primitiveIndirectWORDAtPut
-public primitiveIndirectSWORDAt
-public primitiveIndirectSWORDAtPut
-public primitiveByteAtAddress
-public primitiveByteAtAddressPut
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Imports
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

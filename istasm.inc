@@ -763,13 +763,17 @@ BEGINPRIMITIVE MACRO name
 	; P6 likes branch targets to be aligned, it especially doesn't like them to be split over
 	; more than one cache line
 	ALIGNPRIMITIVE
-	name PRIMPROC
+	?&name&@Interpreter@@CIPAIQAII@Z PRIMPROC
 	IFDEF PENTER
 		call __penter
 	ENDIF
 ENDM
 
 ENDPRIMITIVE MACRO name
-	name ENDP
+	?&name&@Interpreter@@CIPAIQAII@Z ENDP
 ENDM
+
+; Entry points for byte code dispatcher (see primasm.asm)
+_primitivesTable EQU ?primitivesTable@Interpreter@@0PAP6IPAIQAII@ZA
+extern _primitivesTable:near32
 

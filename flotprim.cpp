@@ -64,7 +64,7 @@ inline FloatOTE* __stdcall Float::New(double fValue)
 ///////////////////////////////////////////////////////////////////////////////
 //	Float conversion primitives
 
-Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveAsFloat(Oop* const sp, unsigned)
 {
 	FloatOTE* oteResult = Float::New(ObjectMemoryIntegerValueOf(*sp));
 	*sp = reinterpret_cast<Oop>(oteResult);
@@ -108,7 +108,7 @@ template <class Op> __forceinline static Oop* primitiveTruncationOp(Oop* const s
 }
 
 
-Oop* __fastcall Interpreter::primitiveTruncated(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveTruncated(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return x; }
@@ -118,7 +118,7 @@ Oop* __fastcall Interpreter::primitiveTruncated(Oop* const sp)
 }
 
 
-Oop* __fastcall Interpreter::primitiveFloatFloor(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveFloatFloor(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return floor(x); }
@@ -127,7 +127,7 @@ Oop* __fastcall Interpreter::primitiveFloatFloor(Oop* const sp)
 	return primitiveTruncationOp(sp, op());
 }
 
-Oop* __fastcall Interpreter::primitiveFloatCeiling(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveFloatCeiling(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return ceil(x); }
@@ -175,7 +175,7 @@ template <class T1, class T2> struct op_less {
 	bool operator() (const T1& x, const T2& y) const { return x<y; }
 };
 
-Oop* Interpreter::primitiveFloatLessThan(Oop* const sp)
+Oop* Interpreter::primitiveFloatLessThan(Oop* const sp, unsigned)
 {
 	return primitiveFloatCompare(sp, op_less<double, double>(), op_less<double, SMALLINTEGER>());
 }
@@ -184,7 +184,7 @@ template <class T1, class T2> struct op_greater {
 	bool operator() (const T1& x, const T2& y) const { return x>y; }
 };
 
-Oop* Interpreter::primitiveFloatGreaterThan(Oop* const sp)
+Oop* Interpreter::primitiveFloatGreaterThan(Oop* const sp, unsigned)
 {
 	return primitiveFloatCompare(sp, op_greater<double, double>(), op_greater<double, SMALLINTEGER>());
 }
@@ -194,7 +194,7 @@ template <class T1, class T2> struct op_lessOrEqual {
 	bool operator() (const T1& x, const T2& y) const { return x<=y; }
 };
 
-Oop* Interpreter::primitiveFloatLessOrEqual(Oop* const sp)
+Oop* Interpreter::primitiveFloatLessOrEqual(Oop* const sp, unsigned)
 {
 	return primitiveFloatCompare(sp, op_lessOrEqual<double, double>(), op_lessOrEqual<double, SMALLINTEGER>());
 }
@@ -203,7 +203,7 @@ template <class T1, class T2> struct op_greaterOrEqual {
 	bool operator() (const T1& x, const T2& y) const { return x>=y; }
 };
 
-Oop* Interpreter::primitiveFloatGreaterOrEqual(Oop* const sp)
+Oop* Interpreter::primitiveFloatGreaterOrEqual(Oop* const sp, unsigned)
 {
 	return primitiveFloatCompare(sp, op_greaterOrEqual<double, double>(), op_greaterOrEqual<double, SMALLINTEGER>());
 }
@@ -212,7 +212,7 @@ template <class T1, class T2> struct op_equal {
 	bool operator() (const T1& x, const T2& y) const { return x==y; }
 };
 
-Oop* Interpreter::primitiveFloatEqual(Oop* const sp)
+Oop* Interpreter::primitiveFloatEqual(Oop* const sp, unsigned)
 {
 	// Note that we can't optimise this for identical without allowing for the NaN case. Not really worth it.
 	return primitiveFloatCompare(sp, op_equal<double, double>(), op_equal<double, SMALLINTEGER>());
@@ -270,7 +270,7 @@ template <class T1, class T2> struct op_add {
 	double operator() (const T1& x, const T2& y) const { return x+y; }
 };
 
-Oop* Interpreter::primitiveFloatAdd(Oop* const sp)
+Oop* Interpreter::primitiveFloatAdd(Oop* const sp, unsigned)
 {
 	return primitiveFloatBinaryOp(sp, op_add<double, double>(), op_add<double, SMALLINTEGER>());
 }
@@ -279,7 +279,7 @@ template <class T1, class T2> struct op_sub {
 	double operator() (const T1& x, const T2& y) const { return x - y; }
 };
 
-Oop* Interpreter::primitiveFloatSubtract(Oop* const sp)
+Oop* Interpreter::primitiveFloatSubtract(Oop* const sp, unsigned)
 {
 	return primitiveFloatBinaryOp(sp, op_sub<double, double>(), op_sub<double, SMALLINTEGER>());
 }
@@ -288,7 +288,7 @@ template <class T1, class T2> struct op_mul {
 	double operator() (const T1& x, const T2& y) const { return x * y; }
 };
 
-Oop* Interpreter::primitiveFloatMultiply(Oop* const sp)
+Oop* Interpreter::primitiveFloatMultiply(Oop* const sp, unsigned)
 {
 	return primitiveFloatBinaryOp(sp, op_mul<double, double>(), op_mul<double, SMALLINTEGER>());
 }
@@ -297,7 +297,7 @@ template <class T1, class T2> struct op_div {
 	double operator() (const T1& x, const T2& y) const { return x / y; }
 };
 
-Oop* Interpreter::primitiveFloatDivide(Oop* const sp)
+Oop* Interpreter::primitiveFloatDivide(Oop* const sp, unsigned)
 {
 	return primitiveFloatBinaryOp(sp, op_div<double, double>(), op_div<double, SMALLINTEGER>());
 }
@@ -315,7 +315,7 @@ template <class O1> __forceinline static Oop* primitiveFloatUnaryOp(Oop* const s
 	return sp;
 }
 
-Oop* Interpreter::primitiveFloatSin(Oop* const sp)
+Oop* Interpreter::primitiveFloatSin(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return sin(x); }
@@ -324,7 +324,7 @@ Oop* Interpreter::primitiveFloatSin(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatCos(Oop* const sp)
+Oop* Interpreter::primitiveFloatCos(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return cos(x); }
@@ -333,7 +333,7 @@ Oop* Interpreter::primitiveFloatCos(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatTan(Oop* const sp)
+Oop* Interpreter::primitiveFloatTan(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return tan(x); }
@@ -342,7 +342,7 @@ Oop* Interpreter::primitiveFloatTan(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatArcSin(Oop* const sp)
+Oop* Interpreter::primitiveFloatArcSin(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return asin(x); }
@@ -351,7 +351,7 @@ Oop* Interpreter::primitiveFloatArcSin(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatArcCos(Oop* const sp)
+Oop* Interpreter::primitiveFloatArcCos(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return acos(x); }
@@ -360,7 +360,7 @@ Oop* Interpreter::primitiveFloatArcCos(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatArcTan(Oop* const sp)
+Oop* Interpreter::primitiveFloatArcTan(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return atan(x); }
@@ -373,12 +373,12 @@ template <class T1, class T2> struct op_atan2 {
 	double operator() (const T1& y, const T2& x) const { return atan2(y, x); }
 };
 
-Oop* Interpreter::primitiveFloatArcTan2(Oop* const sp)
+Oop* Interpreter::primitiveFloatArcTan2(Oop* const sp, unsigned)
 {
 	return primitiveFloatBinaryOp(sp, op_atan2<double, double>(), op_atan2<double, SMALLINTEGER>());
 }
 
-Oop* Interpreter::primitiveFloatExp(Oop* const sp)
+Oop* Interpreter::primitiveFloatExp(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return exp(x); }
@@ -387,7 +387,7 @@ Oop* Interpreter::primitiveFloatExp(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatLog(Oop* const sp)
+Oop* Interpreter::primitiveFloatLog(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return log(x); }
@@ -396,7 +396,7 @@ Oop* Interpreter::primitiveFloatLog(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatLog10(Oop* const sp)
+Oop* Interpreter::primitiveFloatLog10(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return log10(x); }
@@ -405,7 +405,7 @@ Oop* Interpreter::primitiveFloatLog10(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatSqrt(Oop* const sp)
+Oop* Interpreter::primitiveFloatSqrt(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return sqrt(x); }
@@ -414,7 +414,7 @@ Oop* Interpreter::primitiveFloatSqrt(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp)
+Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp, unsigned)
 {
 	Oop oopArg = *sp;
 
@@ -437,7 +437,7 @@ Oop* Interpreter::primitiveFloatTimesTwoPower(Oop* const sp)
 		return NULL;
 }
 
-Oop* Interpreter::primitiveFloatAbs(Oop* const sp)
+Oop* Interpreter::primitiveFloatAbs(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return fabs(x); }
@@ -450,12 +450,12 @@ template <class T1, class T2> struct op_pow {
 	double operator() (const T1& x, const T2& y) const { return pow(x, y); }
 };
 
-Oop* Interpreter::primitiveFloatRaisedTo(Oop* const sp)
+Oop* Interpreter::primitiveFloatRaisedTo(Oop* const sp, unsigned)
 {
 	return primitiveFloatBinaryOp(sp, op_pow<double, double>(), op_pow<double, SMALLINTEGER>());
 }
 
-Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp, unsigned)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = oteReceiver->m_location->m_fValue;
@@ -464,7 +464,7 @@ Oop* __fastcall Interpreter::primitiveFloatExponent(Oop* const sp)
 	return sp;
 }
 
-Oop* Interpreter::primitiveFloatNegated(Oop* const sp)
+Oop* Interpreter::primitiveFloatNegated(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { return _chgsign(x); }
@@ -473,7 +473,7 @@ Oop* Interpreter::primitiveFloatNegated(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatFractionPart(Oop* const sp)
+Oop* Interpreter::primitiveFloatFractionPart(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { double integerPart;  return modf(x, &integerPart); }
@@ -482,7 +482,7 @@ Oop* Interpreter::primitiveFloatFractionPart(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatIntegerPart(Oop* const sp)
+Oop* Interpreter::primitiveFloatIntegerPart(Oop* const sp, unsigned)
 {
 	struct op {
 		double operator() (const double& x) const { double integerPart;  modf(x, &integerPart); return integerPart; }
@@ -491,7 +491,7 @@ Oop* Interpreter::primitiveFloatIntegerPart(Oop* const sp)
 	return primitiveFloatUnaryOp(sp, op());
 }
 
-Oop* Interpreter::primitiveFloatClassify(Oop* const sp)
+Oop* Interpreter::primitiveFloatClassify(Oop* const sp, unsigned)
 {
 	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*sp);
 	double fValue = oteReceiver->m_location->m_fValue;
@@ -515,7 +515,7 @@ Oop* Interpreter::primitiveFloatClassify(Oop* const sp)
 // (e.g. ExternalAddress).
 //
 
-Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -556,7 +556,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAt(Oop* const sp)
 }
 
 
-Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -597,7 +597,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAt(Oop* const sp)
 }
 
 
-Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -654,7 +654,7 @@ Oop* __fastcall Interpreter::primitiveDoublePrecisionFloatAtPut(Oop* const sp)
 }
 
 
-Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *(sp-1);
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -710,7 +710,7 @@ Oop* __fastcall Interpreter::primitiveSinglePrecisionFloatAtPut(Oop* const sp)
 	return sp-2;
 }
 
-Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveLongDoubleAt(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))

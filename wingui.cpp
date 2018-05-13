@@ -58,7 +58,7 @@ void Interpreter::GuiShutdown()
 
 static HHOOK hHookOldCbtFilter;
 
-Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
 {
 	Oop argPointer = *sp;
 	OTE* underConstruction = m_oteUnderConstruction;

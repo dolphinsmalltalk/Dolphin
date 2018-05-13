@@ -286,7 +286,7 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 					pEntry->selector = targetSelector;
 					pEntry->classPointer = classPointer;
 					pEntry->method = methodPointer;
-					pEntry->primAddress = primitivesTable[methodPointer->m_location->m_header.primitiveIndex];
+					pEntry->primAddress = (intptr_t)primitivesTable[methodPointer->m_location->m_header.primitiveIndex];
 
 #ifdef _DEBUG
 					{
@@ -778,7 +778,7 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 
 //	Primitive to duplicate the VM's method lookup. Useful for fast #respondsTo:/
 //	#canUnderstand:.Uses, but does not update, the method cache.
-Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, unsigned)
 {
 	Oop arg = *sp;
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*(sp - 1));

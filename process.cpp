@@ -380,9 +380,7 @@ void Interpreter::signalSemaphore(SemaphoreOTE* aSemaphore)
 	}
 }
 
-// Yield to the Processes of the same or higher priority than the current active process
-// Answers whether a process switch occurred
-Oop* __fastcall Interpreter::primitiveYield()
+void Interpreter::Yield()
 {
 	HARDASSERT(!m_bInterruptsDisabled);
 
@@ -393,6 +391,13 @@ Oop* __fastcall Interpreter::primitiveYield()
 	if (schedule() == active)
 		active->countDown();
 	CheckProcessSwitch();
+}
+
+// Yield to the Processes of the same or higher priority than the current active process
+// Answers whether a process switch occurred
+Oop* __fastcall Interpreter::primitiveYield(Oop* const, unsigned)
+{
+	Yield();
 	return m_registers.m_stackPointer;
 }
 
@@ -1156,7 +1161,7 @@ inline bool LinkedList::isEmpty()
 // Process related primitives (Semaphore etc)
 #include "InterprtPrim.inl"
 
-Oop* __fastcall Interpreter::primitiveSignal(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveSignal(Oop* const sp, unsigned)
 {
 	SemaphoreOTE* receiver = reinterpret_cast<SemaphoreOTE*>(*sp);
 	HARDASSERT(ObjectMemory::fetchClassOf((Oop)receiver) == Pointers.ClassSemaphore);
@@ -1168,7 +1173,7 @@ Oop* __fastcall Interpreter::primitiveSignal(Oop* const sp)
 }
 
 
-Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp, unsigned)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -1208,7 +1213,7 @@ Oop* __fastcall Interpreter::primitiveSetSignals(Oop* const sp)
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveWait(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveWait(Oop* const sp, unsigned)
 {
 	//CHECKREFERENCES
 
@@ -1538,7 +1543,7 @@ int Interpreter::SuspendProcess(ProcessOTE* processPointer)
 
 // Suspend the caller if it is the receiver if it is the active process
 // if it is not the active process, then the primitive fails
-Oop* __fastcall Interpreter::primitiveSuspend(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveSuspend(Oop* const sp, unsigned)
 {
 	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(*sp);
 
@@ -1561,7 +1566,7 @@ Oop* __fastcall Interpreter::primitiveSuspend(Oop* const sp)
 // then it won't get as far as nilling out the suspended context. The alternative is to
 // use another process to do the nilling, but that seems more error prone and consumes
 // more resources than this very simple primitive.
-Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp, unsigned)
 {
 	ProcessOTE* processPointer = reinterpret_cast<ProcessOTE*>(*sp);
 
@@ -1590,7 +1595,7 @@ Oop* __fastcall Interpreter::primitiveTerminateProcess(Oop* const sp)
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const)
+Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, unsigned)
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
@@ -1607,7 +1612,7 @@ Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const)
 // Change the priority of the receiver to the argument.
 // Fail if the argument is not a SmallInteger in the range 1..max priority
 // Answers the processes old priority
-Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp, unsigned)
 {
 	//	CHECKREFERENCES
 	Oop argPointer = *sp;
@@ -1649,7 +1654,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp)
 		if (newPriority < oldPriority)
 		{
 			// Priority reduced, may need to run another process
-			primitiveYield();
+			Yield();
 		}
 		// else priority same or increased, leave it running
 	}
@@ -1677,7 +1682,7 @@ Oop* __fastcall Interpreter::primitiveProcessPriority(Oop* const sp)
 
 // Register a new Object with the VM. This primitive is now used to register
 // more than just the input semaphore, and is independent of receiver.
-Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp, unsigned)
 {
 	Oop oopIndex = *(sp-1);
 	SMALLUNSIGNED which = ObjectMemoryIntegerValueOf(oopIndex);
@@ -1705,7 +1710,7 @@ Oop* __fastcall Interpreter::primitiveInputSemaphore(Oop* const sp)
 // Answers the old sample interval.
 // If the new interval is 0, simply resets the counter.
 // If the new interval is < 0, turns off the input polling
-Oop* __fastcall Interpreter::primitiveSampleInterval(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveSampleInterval(Oop* const sp, unsigned)
 {
 	Oop argPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(argPointer))

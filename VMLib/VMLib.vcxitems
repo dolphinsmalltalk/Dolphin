@@ -48,6 +48,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\oleprim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\PerformPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\primitiv.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\PrimitivesTable.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\process.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

@@ -160,7 +160,7 @@ ArrayOTE* __fastcall ObjectMemory::instancesOf(BehaviorOTE* classPointer)
 	return arrayPointer;
 }
 
-Oop* __fastcall Interpreter::primitiveAllInstances(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveAllInstances(Oop* const sp, unsigned)
 {
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
 	ArrayOTE* instances = ObjectMemory::instancesOf(receiver);
@@ -249,7 +249,7 @@ ArrayOTE* __fastcall ObjectMemory::subinstancesOf(BehaviorOTE* classPointer)
 	return arrayPointer;
 }
 
-Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp, unsigned)
 {
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
 	ArrayOTE* instances = ObjectMemory::subinstancesOf(receiver);
@@ -395,7 +395,7 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 	return oteClassStats;
 }
 
-Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp, unsigned)
 {
 	Oop arg = *sp;
 	if (!ObjectMemoryIsIntegerObject(arg))
@@ -415,7 +415,7 @@ Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp)
 
 #pragma code_seg(GC_SEG)
 
-Oop* __fastcall Interpreter::primitiveAllReferences(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveAllReferences(Oop* const sp, unsigned)
 {
 	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
 	bool includeWeakRefs = *sp == reinterpret_cast<Oop>(Pointers.True);
@@ -725,7 +725,7 @@ int ObjectMemory::OopsUsed()
 	return m_nOTSize - nFreeOTEs;
 }
 
-Oop* __fastcall Interpreter::primitiveObjectCount(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveObjectCount(Oop* const sp, unsigned)
 {
 	*sp = ObjectMemoryIntegerObjectOf(ObjectMemory::OopsUsed());
 	return sp;

@@ -414,7 +414,7 @@ unsigned Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, BYTE* lpP
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, unsigned)
 {
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
@@ -461,7 +461,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp)
 
 ///////////////////////////////////////////////////////////////////////////////
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
-Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, unsigned)
 {
 	Oop argPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(argPointer))
