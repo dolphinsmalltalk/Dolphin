@@ -906,3 +906,12 @@ Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp, unsigned)
 	// Index not a smallinteger
 	return primitiveFailure(0);
 }
+
+Oop* __fastcall Interpreter::primitiveGetImmutable(Oop* const sp, unsigned)
+{
+	Oop receiver = *sp;
+	*sp = reinterpret_cast<Oop>(ObjectMemoryIsIntegerObject(receiver) || reinterpret_cast<OTE*>(receiver)->isImmutable() ? Pointers.True : Pointers.False);
+	return sp;
+}
+
+

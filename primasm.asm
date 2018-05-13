@@ -844,25 +844,6 @@ DEFINECONTEXTPRIM <primitiveCoreLeft>
 ;; because is synchronously signals a Semaphore (sometimes)
 DEFINECONTEXTPRIM <primitiveOopsLeft>
 
-BEGINPRIMITIVE primitiveGetImmutable
-	mov		eax, [_SP]								; Load receiver into eax
-	mov		ecx, [oteTrue]
-	test	al, 1
-	jnz		@F
-	
-	ASSUME	ecx:PTR OTE								; ecx points at receiver OTE
-	cmp		[eax].m_size, 0							; size < 0 ?
-	jl		@F
-	add		ecx, OTENTRYSIZE
-@@:
-	mov		[_SP], ecx								; Replace stack top with true/false
-
-	mov		eax, _SP								; primitiveSuccess(0)
-	ret
-
-	ASSUME	ecx:NOTHING
-ENDPRIMITIVE primitiveGetImmutable
-
 BEGINPRIMITIVE primitiveSetImmutable
 	mov		eax, [_SP-OOPSIZE]				; Receiver
 	mov		ecx, [_SP]						; Boolean arg
