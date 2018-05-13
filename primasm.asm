@@ -844,37 +844,4 @@ DEFINECONTEXTPRIM <primitiveCoreLeft>
 ;; because is synchronously signals a Semaphore (sometimes)
 DEFINECONTEXTPRIM <primitiveOopsLeft>
 
-BEGINPRIMITIVE primitiveSetImmutable
-	mov		eax, [_SP-OOPSIZE]				; Receiver
-	mov		ecx, [_SP]						; Boolean arg
-	
-	cmp	ecx, [oteTrue]
-	jne	@F
-
-	.IF (!(al & 1))
-		ASSUME	eax:PTR OTE						; ecx points at receiver OTE
-
-		or		[eax].m_size, 80000000h
-	.ENDIF
-
-	lea		eax, [_SP - OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-@@:
-	; Marking object as mutable - cannot do this for SmallIntegers as these are always immutable
-	test	al, 1
-	jnz		localPrimitiveFailure0
-	
-	ASSUME	eax:PTR OTE							; ecx points at receiver OTE
-	and		[eax].m_size, 7FFFFFFFh		
-	
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	ret											; eax is non-zero so will succeed
-	
-	ASSUME	eax:NOTHING
-	
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveSetImmutable
-
 END
