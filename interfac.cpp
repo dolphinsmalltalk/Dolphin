@@ -761,6 +761,38 @@ Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned
 	}
 }
 
+Oop* __fastcall Interpreter::primitiveUnwindCallback(Oop* const sp, unsigned)
+{
+	// Don't want to do anything if callbackDepth = 0
+	if (m_registers.m_pActiveProcess->m_callbackDepth != ZeroPointer)
+	{
+		Oop callbackCookie = *sp;
+
+		// IP already saved down - if we succeed in unwindind, we want to pop the arg
+		m_registers.m_stackPointer = sp - 1;
+
+		// Is it current callback ?
+		if (callbackCookie == currentCallbackContext || callbackCookie == ZeroPointer)
+		{
+			::RaiseException(SE_VMCALLBACKUNWIND, 0, 1, reinterpret_cast<const ULONG_PTR*>(&callbackCookie));
+
+			// Note that the exception handler never executes handler, but may return here(if not continues search)
+
+			// Push the cookie argument back on the stack
+			*(sp + 1) = callbackCookie;
+
+			// The exception filter will specify continued execution if the current active process is not the
+			// process active when the last callback was entered, so we fail the primitive.The backup Smalltalk
+			// will yield and recursively try again
+		}
+
+		// Fail and try again as this was not current callback - record that callbacks are waiting to exit
+		m_nCallbacksPending++;
+	}
+
+	return nullptr;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual function call-ins
 

@@ -65,11 +65,6 @@ normalizeIntermediateResult EQU ?normalizeIntermediateResult@@YGII@Z
 extern normalizeIntermediateResult:near32
 
 ; C++ Variable imports
-CALLBACKSPENDING EQU ?m_nCallbacksPending@Interpreter@@0IA
-extern CALLBACKSPENDING:DWORD
-
-CURRENTCALLBACK EQU ?currentCallbackContext@@3IA
-extern CURRENTCALLBACK:DWORD
 
 RESUSPENDACTIVEON EQU ?ResuspendActiveOn@Interpreter@@SIPAV?$TOTE@VLinkedList@ST@@@@PAV2@@Z
 extern RESUSPENDACTIVEON:near32
@@ -148,49 +143,6 @@ ENDIF
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; System Primitives
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Raise a special exception caught by the callback entry point routine and propagate
-BEGINPRIMITIVE primitiveUnwindCallback
-	mov		eax, [_SP]								; Pop off the VM's callback cookie
-	mov		ecx, [ACTIVEPROCESS]
-	ASSUME	ecx:PTR Process
-	
-	mov		ecx, [ecx].m_callbackDepth
-	cmp		ecx, 1									; Zero callbacks?
-	je		fail									; Yes, then just fail the prim (no retry)
-
-	cmp		eax, [CURRENTCALLBACK]					; Otherwise only if current callback
-	je		@F										; 
-	cmp		eax, SMALLINTZERO
-	jne		failRetry								; Not zero or current callback, so retry later
-
-@@:
-	sub		_SP, OOPSIZE										; Cookie is an Oop (actually SmallInteger _address_), but must NOT be ref. counted
-	pushd	eax										; Build "Array" of args on stack
-	pushd	esp										; Push address of arg array
-	pushd	1										; One argument (the VM's cookie)
-	mov		[STACKPOINTER], _SP						;  We must save down _SP as used by exception handler, 
-	mov		[INSTRUCTIONPOINTER], _IP				; _IP needed if unwinding callbacks on termination
-	pushd	0										; No flags
-	pushd	20000001h								; User defined exception code for unwind
-	call 	RaiseException
-	
-	; Note that the exception handler never executes handler, but may return here (if not continues search)
-
-	; Push the cookie argument back on the stack
-	pop		[_SP+OOPSIZE]
-	add		_SP, OOPSIZE
-
-	; The exception filter will specify continued execution if the current active process is not the
-	; process active when the last callback was entered, so we fail the primitive. The backup Smalltalk
-	; will yield and recursively try again
-failRetry:
-	inc		[CALLBACKSPENDING]						; VM needs to know callbacks waiting to exit
-fail:
-	xor		eax, eax
-	ret
-ENDPRIMITIVE primitiveUnwindCallback
 
 BEGINPRIMITIVE primitiveReturnFromInterrupt
 	mov		edx, [_SP-OOPSIZE]					; Get return frame offset
