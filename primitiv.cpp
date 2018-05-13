@@ -951,3 +951,13 @@ Oop* __fastcall Interpreter::primitiveSetImmutable(Oop* const sp, unsigned)
 			return nullptr;
 	}
 }
+
+Oop* __fastcall Interpreter::primitiveDeQForFinalize(Oop* const sp, unsigned)
+{
+	// Dequeue an entry from the finalization queue, and answer it.Answers nil if the queue is empty
+	OTE* ote = dequeueForFinalization();
+	*sp = reinterpret_cast<Oop>(ote);
+	ote->countDown();
+	return sp;
+}
+

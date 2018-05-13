@@ -77,13 +77,9 @@ IFDEF _DEBUG
 ENDIF
 
 ; Other C++ method imports
-DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@VObject@ST@@@@XZ
-extern DQFORFINALIZATION:near32
 
 QUEUEINTERRUPT EQU ?queueInterrupt@Interpreter@@SGXPAV?$TOTE@VProcess@ST@@@@II@Z
 extern QUEUEINTERRUPT:near32
-ONEWAYBECOME EQU ?oneWayBecome@ObjectMemory@@SIXPAV?$TOTE@VObject@ST@@@@0@Z
-extern ONEWAYBECOME:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -361,16 +357,6 @@ BEGINPRIMITIVE primitiveBecome
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveBecome
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Dequeue an entry from the finalization queue, and answer it. Answers nil if the queue is empty
-BEGINPRIMITIVE primitiveDeQForFinalize
-	call	DQFORFINALIZATION							; Answers nil, or an Oop with raised ref.count
-	mov		[_SP], eax									; Overwrite TOS with answer, and count it down
-	CountDownObjectIn <a>								; Remove the ref from the queue - will probably place object in the Zct
-	mov		eax, _SP									; primitiveSuccess(0)
-	ret
-ENDPRIMITIVE primitiveDeQForFinalize
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Queue an aysnchronous interrupt to the receiving process
