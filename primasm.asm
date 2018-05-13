@@ -96,7 +96,7 @@ extern DISABLEINTERRUPTS:near32
 
 ; We still need to import the C++ primitives that require a thunk to be called from assembler (the ones that change interpreter context)
 IMPORTPRIMITIVE MACRO name
-	extern @CatStr(?, name, @Interpreter@@CIPAIQAII@Z):near32
+	extern ?&name&@Interpreter@@CIPAIQAII@Z:near32
 ENDM
 
 IMPORTPRIMITIVE primitiveAsyncDLL32Call
@@ -133,7 +133,9 @@ ENDPRIMITIVE name&Thunk
 ENDM
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Constants
+; Data
+
+.DATA
 
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)
@@ -779,12 +781,6 @@ LIARITHMPRIMR BitXor
 
 .CODE PRIM_SEG
 
-; Note that the failure code is not set.
-BEGINPRIMITIVE unusedPrimitive
-	xor		eax, eax
-	ret
-ENDPRIMITIVE unusedPrimitive
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; C++ Primitive Thunks
 ;; Thunks for control (context switching) primitives
@@ -799,9 +795,9 @@ DEFINECONTEXTPRIM <primitivePerformWithArgsAt>
 DEFINECONTEXTPRIM <primitivePerformMethod>
 DEFINECONTEXTPRIM <primitiveValueWithArgsAt>
 DEFINECONTEXTPRIM <primitiveSignal>
-DEFINECONTEXTPRIM	<primitiveSingleStep>
-DEFINECONTEXTPRIM	<primitiveYield>
-DEFINECONTEXTPRIM	<primitiveResume>
+DEFINECONTEXTPRIM <primitiveSingleStep>
+DEFINECONTEXTPRIM <primitiveYield>
+DEFINECONTEXTPRIM <primitiveResume>
 DEFINECONTEXTPRIM <primitiveWait>
 DEFINECONTEXTPRIM <primitiveSuspend>
 DEFINECONTEXTPRIM <primitiveTerminateProcess>

@@ -33,6 +33,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Primitive Helper routines
 
+Oop* __fastcall Interpreter::unusedPrimitive(Oop* const, unsigned)
+{
+	// Note that the failure code is not set.
+#ifdef _DEBUG
+	int primitiveIndex = m_registers.m_oopNewMethod->m_location->m_header.primitiveIndex;
+	TRACESTREAM << L"Unused primitive " << primitiveIndex << " in " << m_registers.m_oopNewMethod << endl;
+#endif
+
+	return 0;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 //	SmallInteger Primitives - See IntPrim.cpp (OR primasm.asm for IX86)
 ///////////////////////////////////////////////////////////////////////////////
