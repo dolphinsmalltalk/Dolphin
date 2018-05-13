@@ -948,6 +948,6 @@ Oop* __fastcall Interpreter::primitiveSetImmutable(Oop* const sp, unsigned)
 			return sp - 1;
 		}
 		else
-			return primitiveFailure(0);
+			return nullptr;
 	}
 }

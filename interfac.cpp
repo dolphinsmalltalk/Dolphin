@@ -22,7 +22,7 @@ Interpreter interface functions that can be thrown away eventually (or perhaps n
 #include "VMExcept.h"
 #include "thrdcall.h"
 #include "STArray.h"
-#include <setjmpex.h>
+#include <setjmp.h>
 
 const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 6.0";
 
@@ -709,6 +709,56 @@ DWORD Interpreter::callbackResultFromOop(Oop objectPointer)
 	ote->countDown();
 
 	return 0;	// The best we can do is to answer 0
+}
+
+Oop* __fastcall Interpreter::primitiveReturnFromCallback(Oop* const sp, unsigned)
+{
+	// Raise a special exception caught by the callback entry point routine - the result will still be on top
+	// of the stack
+
+	// Don't want to do anything if callbackDepth = 0
+	if (m_registers.m_pActiveProcess->m_callbackDepth != ZeroPointer)
+	{
+		Oop callbackCookie = *sp;
+
+		// IP already saved down - if we succeed in returning, we want to pop the arg
+		m_registers.m_stackPointer = sp - 1;
+
+		// Is it current callback ?
+		if (callbackCookie == currentCallbackContext)
+		{
+			int* pJumpBuf = reinterpret_cast<int*>(callbackCookie ^ 1);
+			longjmp(pJumpBuf, SE_VMCALLBACKEXIT);
+
+			// Can't get here
+			__assume(false);
+		}
+		else
+		{
+			// Passed zero?
+			if (callbackCookie == ZeroPointer)
+			{
+				// I don't think this is used any more. The cookie will always be non-zero
+
+				::RaiseException(SE_VMCALLBACKEXIT, 0, 1, reinterpret_cast<const ULONG_PTR*>(&callbackCookie));
+
+				// Push the cookie argument back on the stack
+				*(sp + 1) = callbackCookie;
+
+				// The exception filter will specify continued execution if the current active process is not the
+				// process active when the last callback was entered, so we fail the primitive.The backup Smalltalk
+				// will yield and recursively try again
+			}
+
+			m_nCallbacksPending++;	 // record that callbacks are waiting to exit
+			return nullptr;
+		}
+
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

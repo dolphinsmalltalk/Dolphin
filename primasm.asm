@@ -150,60 +150,6 @@ ENDIF
 ;; System Primitives
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Raise a special exception caught by the callback entry point routine - the result will still be on top
-; of the stack
-BEGINPRIMITIVE primitiveReturnFromCallback
-	mov		eax, [_SP]								; Pop off the VM's callback cookie
-	mov		ecx, [ACTIVEPROCESS]
-	ASSUME	ecx:PTR Process
-
-	mov		ecx, [ecx].m_callbackDepth				; Don't want to do anything if callbackDepth = 0
-	cmp		ecx, 1									; Zero callbacks?
-	je		fail									; Yes, then just fail the prim (no retry)
-
-	cmp		eax, [CURRENTCALLBACK]					; Is it current callback?
-	jne		@F										; No, skip longjmp
-
-	sub		_SP, OOPSIZE							; Pop off the jmp_buf pointer
-	xor		eax, 1									; Convert from a SmallInteger
-	pushd	SE_VMCALLBACKEXIT						; Return SE_VMCALLBACKEXIT code as the setjmp retval
-	mov		[STACKPOINTER], _SP						; Store down IP/SP for C++ we're about to jump back to
-	mov		[INSTRUCTIONPOINTER], _IP
-	
-	pushd	eax										; &jmp_buf
-	call	longjmp									; jump out back to C++ - cannot return here
-
-@@:
-	cmp		eax, SMALLINTZERO						; Passed zero?
-	jne		failRetry								; No, then not current callback so need to retry it
-
-	; Raise SE_VMCALLBACKEXIT exception
-	sub		_SP, OOPSIZE
-	pushd	eax										; Build "Array" of args on stack
-	pushd	esp										; Push address of arg array
-	pushd	1										; One argument (the VM's cookie)
-	mov		[STACKPOINTER], _SP
-	mov		[INSTRUCTIONPOINTER], _IP
-	pushd	0										; No flags
-	pushd	SE_VMCALLBACKEXIT						; User defined exception code
-	call 	RaiseException
-
-	; Push the cookie argument back on the stack
-	pop		[_SP+OOPSIZE]
-	add		_SP, OOPSIZE
-
-	; The exception filter will specify continued execution if the current active process is not the
-	; process active when the last callback was entered, so we fail the primitive. The backup Smalltalk
-	; will yield and recursively try again
-failRetry:
-	inc		[CALLBACKSPENDING]						; VM needs to know callbacks waiting to exit
-fail:
-	xor		eax, eax
-	ret
-ENDPRIMITIVE primitiveReturnFromCallback
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Raise a special exception caught by the callback entry point routine and propagate
 BEGINPRIMITIVE primitiveUnwindCallback
 	mov		eax, [_SP]								; Pop off the VM's callback cookie
