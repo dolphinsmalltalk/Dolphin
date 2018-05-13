@@ -152,10 +152,10 @@ enum {
 	PushActiveFrame,
 	SpecialSendNotIdentical,
 	SpecialSendNot,
-	UnusedShortSend201,
-	UnusedShortSend202
+	UnusedShortSend202,
+	UnusedShortSend203
 };
-enum { FirstExSpecialSend = SpecialSendNotIdentical, LastExSpecialSend = UnusedShortSend202 };
+enum { FirstExSpecialSend = SpecialSendNotIdentical, LastExSpecialSend = UnusedShortSend203 };
 enum { NumExSpecialSends = LastExSpecialSend - FirstExSpecialSend + 1 };
 
 
@@ -198,8 +198,8 @@ enum {
 	NearJumpIfFalse,
 	NearJumpIfNil,
 	NearJumpIfNotNil,
-	ReservedJump1,
-	ReservedJump2,
+	ReservedJump224,
+	ReservedJump225,
 	SendTempWithNoArgs,
 	PushSelfAndTemp,
 	PushOuterTemp,
@@ -283,8 +283,6 @@ struct BlockCopyExtension
 };
 
 enum { ExLongPushImmediateInstructionSize = 5, BlockCopyInstructionSize = 7 };
-
-enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
 
 inline int lengthOfByteCode(BYTE opCode)
 {

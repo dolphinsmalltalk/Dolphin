@@ -38,9 +38,7 @@ namespace ST
 	// Really a subclass of Link, but VM doesn't care about that
 	class Process : public Object
 	{
-	private:
-		friend class Interpreter;
-
+	public:
 		// Really a member of Link superclass
 		ProcessOTE*		m_nextLink;
 		Oop				m_suspendedFrame;
@@ -229,7 +227,7 @@ namespace ST
 	};
 
 #ifdef _DEBUG
-	ostream& operator<<(ostream& st, const Semaphore& sem);
+	wostream& operator<<(wostream& st, const Semaphore& sem);
 #endif
 
 	// ProcessorScheduler has a single instance "Processor" (a global variable)
@@ -276,9 +274,9 @@ namespace ST
 #endif
 }
 
-ostream& operator<<(ostream& st, const ProcessOTE*);
+wostream& operator<<(wostream& st, const ProcessOTE*);
 
 #ifdef _DEBUG
-	ostream& operator<<(ostream& st, const ST::ProcessorScheduler& proc);
+	wostream& operator<<(wostream& st, const ST::ProcessorScheduler& proc);
 #endif
 

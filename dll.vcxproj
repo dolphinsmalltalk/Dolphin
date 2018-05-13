@@ -14,7 +14,7 @@
     <ProjectName>VM</ProjectName>
     <ProjectGuid>{382ABBF3-B32D-4D77-B303-346AA146921C}</ProjectGuid>
     <RootNamespace>VM</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -22,12 +22,14 @@
     <PlatformToolset>v141</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -108,7 +110,7 @@
       <Inputs>$(TargetPath)</Inputs>
     </CustomBuildStep>
     <Midl>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TargetEnvironment>Win32</TargetEnvironment>
       <GenerateStublessProxies>true</GenerateStublessProxies>
       <MinimumTargetSystem />
@@ -181,28 +183,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="wingui.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Use</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="ActiveXHost.idl">
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">/no_robust %(AdditionalOptions)</AdditionalOptions>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3</WarningLevel>
-      <WarningLevel Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">3</WarningLevel>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
-      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">Win32</TargetEnvironment>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ActiveXHost.tlb</TypeLibraryName>
-      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ActiveXHost.tlb</TypeLibraryName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ActiveXHost.h</HeaderFileName>
-      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ActiveXHost.h</HeaderFileName>
-      <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">axdlldata.c</DllDataFileName>
-      <DllDataFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">axdlldata.c</DllDataFileName>
-      <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ActiveXHost_p.c</ProxyFileName>
-      <ProxyFileName Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">ActiveXHost_p.c</ProxyFileName>
-    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="DolphinSmalltalk.tlb" />

@@ -35,8 +35,12 @@ using namespace ST;
 //#pragma inline_depth(32)
 //#pragma inline_recursion(off)
 
+#ifndef MinSmallInteger
 #define MinSmallInteger -0x40000000
+#endif
+#ifndef MaxSmallInteger
 #define MaxSmallInteger 0x3FFFFFFF
+#endif
 
 #define PoolGranularity 8
 
@@ -64,8 +68,8 @@ public:
 	static Oop storePointerWithValue(Oop& oopSlot, Oop oopValue);
 	static OTE* storePointerWithValue(OTE*& oteSlot, OTE* oteValue);
 	static Oop storePointerWithValue(Oop& oopSlot, OTE* oteValue);
-	static Oop nilOutPointer(Oop& objectPointer);
-	static OTE* nilOutPointer(OTE*& ote);
+	static void nilOutPointer(Oop& objectPointer);
+	static void nilOutPointer(OTE*& ote);
 
 	// Use these versions to store values which are not themselves ref. counted
 	static Oop storePointerWithUnrefCntdValue(Oop&, Oop);
@@ -87,6 +91,8 @@ public:
 	// Class pointer access
 	static BehaviorOTE* fetchClassOf(Oop objectPointer);
 
+	static size_t GetBytesElementSize(BytesOTE* ote);
+
 	// Use CRT Small block heap OR pool if size <= this threshold
 	enum { MaxSmallObjectSize = 0x3f8 };
 	enum { PoolObjectSizeLimit = 144 };
@@ -97,9 +103,8 @@ public:
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer);
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, MWORD instanceSize);
-	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
-	static BytesOTE* __fastcall newUninitializedByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
-	static BytesOTE* __fastcall newUninitializedNullTermObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
+	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
+	template <class T> static TOTE<T>* newUninitializedNullTermObject(MWORD instanceByteSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)
@@ -188,6 +193,7 @@ public:
 
 #ifdef _DEBUG
 	// Recalc and consistency check
+	static void checkReferences(Oop* const sp);
 	static void checkReferences();
 	static void addRefsFrom(OTE* ote);
 	static void checkPools();
@@ -206,8 +212,8 @@ public:
 	static void CheckPoint();
 #endif
 
-	static int __stdcall SaveImageFile(const char* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
-	static HRESULT __stdcall LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
+	static int __stdcall SaveImageFile(const wchar_t* fileName, bool bBackup, int nCompressionLevel, unsigned nMaxObjects);
+	static HRESULT __stdcall LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool bIsDevSys);
 
 	static int gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo);
 
@@ -282,6 +288,7 @@ public:
 	};
 
 	friend class OTEPool;
+	friend class BootLoader;
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -549,6 +556,7 @@ inline unsigned ObjectMemory::GetOTSize()
 
 inline MemoryManager* ObjectMemory::memoryManager()
 {
+	ASSERT(!Pointers.MemoryManager->m_oteClass->isMetaclass());
 	return Pointers.MemoryManager->m_location;
 }
 
@@ -681,30 +689,30 @@ inline Oop ObjectMemory::storePointerOfObjectWithValue(MWORD fieldIndex, Pointer
 // Useful for overwriting structure members
 inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, Oop oopValue)
 {
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
 	countUp(oopValue);	// Increase the reference count on stored object
-	countDown(oopSlot);
-	return oopSlot = oopValue;
+	Oop oldValue = oopSlot;
+	oopSlot = oopValue;
+	countDown(oldValue);
+	return oopValue;
 }
 
 // Useful for overwriting structure members
 inline Oop ObjectMemory::storePointerWithUnrefCntdValue(Oop& oopSlot, Oop oopValue)
 {
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
-	countDown(oopSlot);
-	return oopSlot = oopValue;
+	Oop oldValue = oopSlot;
+	oopSlot = oopValue;
+	countDown(oldValue);
+	return oopValue;
 }
 
 // Useful for overwriting structure members
 inline OTE* ObjectMemory::storePointerWithValue(OTE*& oteSlot, OTE* oteValue)
 {
-	// Sadly compiler refuses to inline the count up code, and macro seems to generate
-	// bad code(!) so inline by hand
 	oteValue->countUp();			// Increase the reference count on stored object
-	oteSlot->countDown();
-	return (oteSlot = oteValue);
+	OTE* oteOldValue = oteSlot;
+	oteSlot = oteValue;
+	oteOldValue->countDown();
+	return oteValue;
 }
 
 // Useful for overwriting structure members
@@ -713,20 +721,24 @@ inline Oop ObjectMemory::storePointerWithValue(Oop& oopSlot, OTE* oteValue)
 	// Sadly compiler refuses to inline the count up code, and macro seems to generate
 	// bad code(!) so inline by hand
 	oteValue->countUp();			// Increase the reference count on stored object
-	countDown(oopSlot);
-	return oopSlot = Oop(oteValue);
+	Oop oldValue = oopSlot;
+	oopSlot = reinterpret_cast<Oop>(oteValue);
+	countDown(oldValue);
+	return oopSlot;
 }
 
-inline Oop ObjectMemory::nilOutPointer(Oop& objectPointer)
+inline void ObjectMemory::nilOutPointer(Oop& objectPointer)
 {
+	Oop oldValue = objectPointer;
+	objectPointer = reinterpret_cast<Oop>(Pointers.Nil);
 	countDown(objectPointer);
-	return objectPointer = Oop(Pointers.Nil);
 }
 
-inline OTE* ObjectMemory::nilOutPointer(OTE*& ote)
+inline void ObjectMemory::nilOutPointer(OTE*& ote)
 {
+	OTE* oldValue = ote;
+	ote = reinterpret_cast<OTE*>(Pointers.Nil);
 	ote->countDown();
-	return ote = const_cast<OTE*>(Pointers.Nil);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -856,6 +868,7 @@ inline POBJECT ObjectMemory::FixedSizePool::allocate()
 	#if defined(_DEBUG) //	&& defined(		// JGFoster
 		if (_crtDbgFlag & _CRTDBG_CHECK_ALWAYS_DF)
 			HARDASSERT(isValid());
+		memset(&pChunk->next, 0xCD, sizeof(pChunk->next));
 	#endif
 
 	return reinterpret_cast<POBJECT>(pChunk);
@@ -979,7 +992,7 @@ inline BytesOTE* ObjectMemory::OTEPool::newByteObject(BehaviorOTE* classPointer,
 	else
 	{
 		// We don't need to ref. count the class, so use the basic instantiation method for byte objects
-		ote = ObjectMemory::newUninitializedByteObject(classPointer, bytes);
+		ote = ObjectMemory::newByteObject<false, false>(classPointer, bytes);
 		#ifdef MEMSTATS
 			registerNew(reinterpret_cast<OTE*>(ote), classPointer);
 		#endif
@@ -1039,9 +1052,21 @@ inline PointersOTE* ObjectMemory::OTEPool::newPointerObject(BehaviorOTE* classPo
 	return ote;
 }
 
+template <class T> TOTE<T>* __fastcall ObjectMemory::newUninitializedNullTermObject(MWORD byteSize)
+{
+	OTE* ote;
+	allocObject(byteSize + NULLTERMSIZE + SizeOfPointers(0), ote);
+	ote->m_oteClass = reinterpret_cast<BehaviorOTE*>(Pointers.pointers[T::PointersIndex - 1]);
+	ASSERT((OTE*)(ote->m_oteClass) != Pointers.Nil);
+	ote->beNullTerminated();
+	return reinterpret_cast<TOTE<T>*>(ote);
+}
+
 inline BytesOTE* __fastcall ObjectMemory::newByteObject(BehaviorOTE* classPointer, MWORD cBytes, const void* pBytes)
 {
-	BytesOTE* oteBytes = newUninitializedByteObject(classPointer, cBytes);
+	ASSERT((OTE*)classPointer != Pointers.Nil);
+	ASSERT(!classPointer->m_location->m_instanceSpec.m_nullTerminated);
+	BytesOTE* oteBytes = newByteObject<false, false>(classPointer, cBytes);
 	memcpy(oteBytes->m_location->m_fields, pBytes, cBytes);
 	return oteBytes;
 }

@@ -19,10 +19,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sbheap.h>
+#include "sbheap.h"
 
 #define _CRTBLD
-#include <winheap.h>
+#include "winheap.h"
 #include <windows.h>
 /*
 #include <internal.h>

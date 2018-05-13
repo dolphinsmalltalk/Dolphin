@@ -74,9 +74,9 @@ public:
 
 	__forceinline MWORD getWordSize() const					{ return getSize()/sizeof(MWORD); }
 	__forceinline MWORD pointersSize() const				{ ASSERT(isPointers());	return getSize()/sizeof(MWORD); }
-	__forceinline int pointersSizeForUpdate() const			{ ASSERT(isPointers());	return bytesSizeForUpdate()/static_cast<int>(sizeof(MWORD)); }
+	__forceinline int pointersSizeForUpdate() const			{ ASSERT(isPointers());	return static_cast<int>(m_size)/static_cast<int>(sizeof(MWORD)); }
 	__forceinline MWORD bytesSize()	const					{ ASSERT(isBytes()); return getSize(); }
-	__forceinline int bytesSizeForUpdate() const			{ return m_size; } 
+	__forceinline int bytesSizeForUpdate() const			{ ASSERT(isBytes());  return m_size; }
 
 	// The size of a byte object can be one more than it pretends because of the hidden null terminator!
 	// Answers actual byte (heap) size of the object pointed at by this OTE
@@ -204,7 +204,7 @@ typedef OTE* POTE;
 #define POTE_DEFINED
 #endif
 
-std::ostream& operator<<(std::ostream& stream, const OTE*);
+std::wostream& operator<<(std::wostream& stream, const OTE*);
 
 template <class T> inline void NilOutPointer(TOTE<T>*& ote)
 {

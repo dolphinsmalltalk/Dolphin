@@ -59,18 +59,18 @@ POTE Compiler::FindDictVariable(POTE dict, const Str& name)// throws SE_VMCALLBA
 	// some Smalltalk (dict lookupKey: aString)
 	//
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
-	Oop stringPointer = Oop(NewString(name));
+	Oop stringPointer = Oop(NewUtf8String(name));
 	return (POTE)m_piVM->PerformWith(Oop(dict), GetVMPointers().lookupKeySymbol, stringPointer);
 }
 
 // Ditto on the ref. count front **?**
 POTE Compiler::DictAtPut(POTE dict, const Str& name, Oop value)// throws SE_VMCALLBACKUNWIND
 {
-	POTE atPutSelector = InternSymbol("at:put:");
+	POTE atPutSelector = InternSymbol((LPUTF8)"at:put:");
 
 	// SystemDictionary will convert String to Symbol in #at:put:
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
-	POTE symbolPointer = NewString(name);
+	POTE symbolPointer = NewUtf8String(name);
 	return (POTE)m_piVM->PerformWithWith(Oop(dict), atPutSelector, Oop(symbolPointer), value);
 }
 
@@ -83,7 +83,7 @@ bool Compiler::CanUnderstand(POTE oteBehavior, POTE oteSelector)
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-Oop Compiler::EvaluateExpression(const char* text, POTE oteMethod, Oop contextOop, POTE pools)
+Oop Compiler::EvaluateExpression(LPUTF8 text, POTE oteMethod, Oop contextOop, POTE pools)
 {
 	STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 	BYTE primitive = exprMethod.header.primitiveIndex;
@@ -107,7 +107,7 @@ Oop Compiler::EvaluateExpression(const char* text, POTE oteMethod, Oop contextOo
 		result = reinterpret_cast<STVariableBinding*>(GetObj(reinterpret_cast<POTE>(exprMethod.aLiterals[0])))->value;
 		break;
 	default:
-		return m_piVM->PerformWithWithWith(Oop(oteMethod), GetVMPointers().evaluateExpressionSelector, Oop(NewString(text)), contextOop, Oop(pools));
+		return m_piVM->PerformWithWithWith(Oop(oteMethod), GetVMPointers().evaluateExpressionSelector, Oop(NewUtf8String(text)), contextOop, Oop(pools));
 	}
 
 	m_piVM->AddReference(result);
@@ -133,12 +133,12 @@ POTE Compiler::FindGlobal(const Str& name)
 	return ote;
 }
 
-POTE Compiler::FindClass(const Str& name)
-{
-	POTE ote = FindGlobal(name);
-	// If not actually a class, then return nil
-	return ote != m_piVM->NilPointer() && m_piVM->IsAClass(ote) ? ote : m_piVM->NilPointer();
-}
+//POTE Compiler::FindClass(const Str& name)
+//{
+//	POTE ote = FindGlobal(name);
+//	// If not actually a class, then return nil
+//	return ote != m_piVM->NilPointer() && m_piVM->IsAClass(ote) ? ote : m_piVM->NilPointer();
+//}
 
 
 ///////////////////////////////////////////////////////////////////////

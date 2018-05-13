@@ -254,15 +254,19 @@ primitiveInstanceCounts EQU ?primitiveInstanceCounts@Interpreter@@CIPAIQAI@Z
 extern primitiveInstanceCounts:near32
 primitiveNext EQU ?primitiveNext@Interpreter@@CIPAIQAI@Z
 extern primitiveNext:near32
+primitiveBasicNext EQU ?primitiveBasicNext@Interpreter@@CIPAIQAI@Z
+extern primitiveBasicNext:near32
 primitiveNextSDWORD EQU ?primitiveNextSDWORD@Interpreter@@CIPAIQAI@Z
 extern primitiveNextSDWORD:near32
 primitiveNextPut EQU ?primitiveNextPut@Interpreter@@CIPAIQAI@Z
 extern primitiveNextPut:near32
+primitiveBasicNextPut EQU ?primitiveBasicNextPut@Interpreter@@CIPAIQAI@Z
+extern primitiveBasicNextPut:near32
 primitiveNextPutAll EQU ?primitiveNextPutAll@Interpreter@@CIPAIQAI@Z	
 extern primitiveNextPutAll:near32
 primitiveAtEnd EQU ?primitiveAtEnd@Interpreter@@CIPAIQAI@Z
 extern primitiveAtEnd:near32
-primitiveBasicAt EQU ?primitiveBasicAt@Interpreter@@CIPAIQAI@Z
+primitiveBasicAt EQU ?primitiveBasicAt@Interpreter@@CIPAIQAII@Z
 extern primitiveBasicAt:near32
 primitiveBasicAtPut EQU ?primitiveBasicAtPut@Interpreter@@CIPAIQAI@Z
 extern primitiveBasicAtPut:near32
@@ -341,6 +345,8 @@ primitiveOopsLeft EQU ?primitiveOopsLeft@Interpreter@@CIPAIQAI@Z
 extern primitiveOopsLeft:near32
 primitiveResize EQU ?primitiveResize@Interpreter@@CIPAIQAI@Z
 extern primitiveResize:near32
+primitiveChangeBehavior EQU ?primitiveChangeBehavior@Interpreter@@CIPAIQAI@Z
+extern primitiveChangeBehavior:near32
 primitiveNextIndexOfFromTo EQU ?primitiveNextIndexOfFromTo@Interpreter@@CIPAIQAI@Z
 extern primitiveNextIndexOfFromTo:near32
 primitiveDeQBereavement EQU ?primitiveDeQBereavement@Interpreter@@CIPAIQAI@Z
@@ -407,13 +413,6 @@ IFDEF _DEBUG
 ENDIF
 
 ; Other C++ method imports
-NEWPOINTEROBJECT		EQU	?newPointerObject@ObjectMemory@@SIPAV?$TOTE@VVariantObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
-extern NEWPOINTEROBJECT:near32
-NEWBYTEOBJECT			EQU	?newByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
-extern NEWBYTEOBJECT:near32
-ALLOCATEBYTESNOZERO		EQU	?newUninitializedByteObject@ObjectMemory@@SIPAV?$TOTE@VVariantByteObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@I@Z
-extern ALLOCATEBYTESNOZERO:near32
-
 DQFORFINALIZATION EQU ?dequeueForFinalization@Interpreter@@CIPAV?$TOTE@VObject@ST@@@@XZ
 extern DQFORFINALIZATION:near32
 
@@ -430,7 +429,7 @@ extern primitiveStringSearch:near32
 
 primitiveStringNextIndexOfFromTo EQU ?primitiveStringNextIndexOfFromTo@Interpreter@@CIPAIQAI@Z
 extern primitiveStringNextIndexOfFromTo:near32
-primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIPAI@Z
+primitiveStringAt EQU ?primitiveStringAt@Interpreter@@CIPAIQAII@Z
 extern primitiveStringAt:near32
 primitiveStringAtPut EQU ?primitiveStringAtPut@Interpreter@@CIPAIPAI@Z
 extern primitiveStringAtPut:near32
@@ -438,14 +437,21 @@ primitiveStringCollate EQU ?primitiveStringCollate@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCollate:near32
 primitiveStringCmp EQU ?primitiveStringCmp@Interpreter@@CIPAIQAI@Z
 extern primitiveStringCmp:near32
-primitiveBytesEqual EQU ?primitiveBytesEqual@Interpreter@@CIPAIQAI@Z
-extern primitiveBytesEqual:near32
+primitiveStringCmpOrdinal EQU ?primitiveStringCmpOrdinal@Interpreter@@CIPAIQAI@Z
+extern primitiveStringCmpOrdinal:near32
+primitiveStringEqual EQU ?primitiveStringEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveStringEqual:near32
 primitiveStringAsUtf16String EQU ?primitiveStringAsUtf16String@Interpreter@@CIPAIQAI@Z
 extern primitiveStringAsUtf16String:near32
 primitiveStringAsUtf8String EQU ?primitiveStringAsUtf8String@Interpreter@@CIPAIQAI@Z
 extern primitiveStringAsUtf8String:near32
-primitiveStringAsAnsiString EQU ?primitiveStringAsAnsiString@Interpreter@@CIPAIQAI@Z
-extern primitiveStringAsAnsiString:near32
+primitiveStringAsByteString EQU ?primitiveStringAsByteString@Interpreter@@CIPAIQAI@Z
+extern primitiveStringAsByteString:near32
+primitiveStringConcatenate EQU ?primitiveStringConcatenate@Interpreter@@CIPAIQAI@Z
+extern primitiveStringConcatenate :near32
+
+primitiveBytesEqual EQU ?primitiveBytesEqual@Interpreter@@CIPAIQAI@Z
+extern primitiveBytesEqual:near32
 
 ; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
 DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
@@ -531,8 +537,8 @@ DWORD		primitiveFloatGT								; case 45	Float>>#<= in Smalltalk-80
 DWORD		primitiveFloatGE								; case 46	Float>>#>= in Smalltalk-80
 DWORD		primitiveFloatEQ								; case 47	Float>>#= in Smalltalk-80
 DWORD		primitiveAsyncDLL32CallThunk					; case 48	Float>>#~= in Smalltalk-80
-DWORD		primitiveBasicAt								; case 49	Float>>#* in Smalltalk-80
-DWORD		primitiveBasicAtPut								; case 50	Float>>#/ in Smalltalk-80
+DWORD		unusedPrimitive									; case 49	Float>>#* in Smalltalk-80
+DWORD		unusedPrimitive									; case 50	Float>>#/ in Smalltalk-80
 DWORD		primitiveStringCmp								; case 51	Float>>#truncated
 DWORD		primitiveStringNextIndexOfFromTo				; case 52	Float>>#fractionPart in Smalltalk-80
 DWORD		primitiveQuo									; case 53	Float>>#exponent in Smalltalk-80
@@ -702,12 +708,12 @@ DWORD		primitiveFloatIntegerPart						; case 213
 DWORD		primitiveFloatLE								; case 214
 DWORD		primitiveStringAsUtf16String					; case 215
 DWORD		primitiveStringAsUtf8String						; case 216
-DWORD		primitiveStringAsAnsiString						; case 217
-DWORD		unusedPrimitive									; case 218
-DWORD		unusedPrimitive									; case 219
-DWORD		unusedPrimitive									; case 220
-DWORD		unusedPrimitive									; case 221
-DWORD		unusedPrimitive									; case 222
+DWORD		primitiveStringAsByteString						; case 217
+DWORD		primitiveStringConcatenate						; case 218
+DWORD		primitiveStringEqual							; case 219
+DWORD		primitiveStringCmpOrdinal						; case 220
+DWORD		primitiveBasicNext								; case 221
+DWORD		primitiveBasicNextPut							; case 222
 DWORD		unusedPrimitive									; case 223
 DWORD		unusedPrimitive									; case 224
 DWORD		unusedPrimitive									; case 225
@@ -741,6 +747,8 @@ DWORD		unusedPrimitive									; case 252
 DWORD		unusedPrimitive									; case 253
 DWORD		unusedPrimitive									; case 254
 DWORD		unusedPrimitive									; case 255
+
+public _primitivesTable
 
 IFDEF _DEBUG
 	_primitiveCounters DD	256 DUP (0)
@@ -1005,115 +1013,6 @@ BEGINPRIMITIVE primitiveValueOnUnwind
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveValueOnUnwind
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;  BOOL __fastcall Interpreter::primitiveChangeBehavior()
-;
-; Receiver becomes an instance of the class specified as the argument - neither
-; receiver or arg may be SmallIntegers, and the shape of the receivers current class
-; must be identical to its new class.
-;
-BEGINPRIMITIVE primitiveChangeBehavior
-	mov		edx, [_SP]								; Load arg Oop into edx
-	test	dl, 1									; Is it a SmallInteger
-	jnz		localPrimitiveFailure0					; Yes, fail it (must be a Class object)
-	
-	ASSUME	edx:PTR OTE								; Its an object
-
-	; We must determine if the argument is a Class - get the head strap out and
-	; then remember:
-	;	A class' class is an instance of Metaclass (e.g. if we send #class to
-	;	to Object, then we get the Metaclass instance 'Object class') THEREFORE
-	; The class of the class of a Class is Metaclass!
-	; Because of our use of an Object table, we've got 5 indirections here!
-	
-	mov		ecx, [edx].m_oteClass					; Load class Oop of new class into ecx
-	ASSUME	ecx:PTR OTE
-
-	mov		edx, (OTE PTR[edx]).m_location
-	ASSUME	edx:PTR Behavior						; EDX is now pointer to new class object
-
-	mov		ecx, [ecx].m_oteClass					; Load new Oop of class' class' class
-	cmp		ecx, [Pointers.ClassMetaclass]			; Is the new class argument a class? (i.e. it's an instance of Metaclass)
-	jne		localPrimitiveFailure1					; No not a class, fail the primitive
-
-	; We have established that the argument is indeed a Class object, now
-	; lets examine the receiver
-	mov		eax, [_SP-OOPSIZE]						; Access receiver under class arg
-	test	al, 1									; Receiver is a SmallInteger?
-	jz		@F										; No, skip to normal object mutation
-
-	; The receiver is a SmallInteger, and can be mutated to a variable byte object
-	; which we have to allocate
-	
-	; Do instances of the new class contain pointers
-	test    [edx].m_instanceSpec, MASK m_pointers
-	jnz		localPrimitiveFailure2					; Yes, fail the primitive
-
-	ASSUME	edx:NOTHING
-
-	mov		ecx, [_SP]								; Reload Oop of new class
-	sub		_SP, OOPSIZE
-	ASSUME	ecx:PTR OTE
-	
-	mov		edx, SIZEOF DWORD				; 4-byte integer (32 bits)
-	ASSUME	edx:DWORD
-
-	call	ALLOCATEBYTESNOZERO
-	ASSUME	eax:PTR OTE
-	mov		edx, [_SP]						; Reload SmallInteger receiver before overwritten
-	mov		[_SP], eax						; Replace SmallInteger at ToS receiver with new object
-	mov		ecx, [eax].m_location			; Load address of new object
-	ASSUME	ecx:PTR DWORDBytes
-	sar		edx, 1							; Convert receiver to real integer value
-	mov		[ecx].m_value, edx				; Save receivers integer value into new object
-	AddToZct <a>
-	mov		eax, _SP						; primitiveSuccess(0)
-	ret
-	ASSUME	eax:NOTHING
-
-LocalPrimitiveFailure 0
-LocalPrimitiveFailure 1
-
-@@:
-	;; The receiver is a non-immediate object
-
-	ASSUME	edx:PTR Behavior					; EDX is still pointer to new class object
-	ASSUME	eax:PTR OTE							; EAX is OTE of receiver
-
-	;; The receiver is not a SmallInteger, check class shapes the same
-	
-	mov		ecx, [eax].m_oteClass				; Load class Oop of receiver into ecx
-	ASSUME	ecx:PTR OTE
-
-	mov		ecx, [ecx].m_location				; Load address of receiver's class into ecx
-	ASSUME	ecx:PTR Behavior					; ECX is now pointer to the receiver's class
-
-	; Compare instance _SPec. of receivers class with that of new class
-	mov		ecx, [ecx].m_instanceSpec
-	ASSUME	ecx:DWORD
-	xor		ecx, [edx].m_instanceSpec			; Get shape differences into ecx
-
-	test	ecx, SHAPEMASK						; Test to see if any significant bits differ
-	jnz		localPrimitiveFailure2				; Some significant bits differenct, fail the primitive
-
-	mov		edx, [_SP]							; Reload the new class Oop
-	sub		_SP, OOPSIZE
-
-	mov		ecx, [eax].m_oteClass				; Save current class Oop of receiver in ecx (ready for count down)
-	mov		[eax].m_oteClass, edx				; Set new class of receiver (which is left on top of stack)
-	
-	; We must reduce the count on the class, since it has been overwritten in the object, and count up the new class
-	CountUpObjectIn <d>
-	CountDownObjectIn <c>
-	
-	mov		eax, _SP							; primitiveSuccess(0)
-
-	ret
-
-LocalPrimitiveFailure 2
-
-ENDPRIMITIVE primitiveChangeBehavior
 
 ASSUME	eax:NOTHING
 ASSUME	edx:NOTHING

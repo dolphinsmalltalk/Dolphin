@@ -11,8 +11,11 @@
 #endif
 
 #ifndef _WIN32_WINNT
-#define _WIN32_WINNT 0x400
+#define _WIN32_WINNT 0x0A000004
 #endif
+
+// Turn off iterator debugging as it makes the compiler very slow on large methods in debug builds
+#define _HAS_ITERATOR_DEBUGGING 0
 
 // Enable templated overloads for secure version of old-style CRT functions that manipulate buffers but take no size arguments
 #define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES 1
@@ -25,6 +28,14 @@
 #include <atlcom.h>
 
 #include "..\DolphinSmalltalk_i.h"
+
+#include <limits.h>
+#include <malloc.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <locale.h>
+#include <Strsafe.h>
+#include <icu.h>
 
 #define TODO(s)
 
@@ -43,6 +54,4 @@
 	#define INLINE				__forceinline
 #endif
 
-// Turn off iterator debugging as it makes the compiler very slow on large methods in debug builds
-#define _HAS_ITERATOR_DEBUGGING 0
 #include <vector>

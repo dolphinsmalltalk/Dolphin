@@ -39,7 +39,8 @@ namespace ST
 	class Class : public ClassDescription
 	{
 	public:
-		StringOTE*	m_name;
+		// TODO: Use Utf8String
+		AnsiStringOTE*	m_name;
 		POTE		m_classPool;	/* dictionary of varName, storage */
 		POTE		m_sharedPools;
 		POTE		m_comment;
@@ -52,7 +53,8 @@ namespace ST
 		};
 
 #if defined(_DEBUG)
-		const char* getName()
+		__declspec(property(get = getName)) LPCSTR Name;
+		LPCSTR getName() const
 		{
 			return m_name->m_location->m_characters;
 		}
@@ -66,6 +68,13 @@ namespace ST
 
 		enum { InstanceClassIndex = ClassDescription::FixedSize, FixedSize };
 	};
+
+	class StringClass : Class
+	{
+	public:
+		__declspec(property(get = getEncoding)) StringEncoding Encoding;
+		StringEncoding getEncoding() const { return static_cast<StringEncoding>(m_instanceSpec.m_extraSpec); }
+	};
 }
 
-extern ostream& operator<<(ostream& stream, const ST::Class& cl);
+extern wostream& operator<<(wostream& stream, const ST::Class& cl);

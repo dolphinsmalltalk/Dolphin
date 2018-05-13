@@ -91,7 +91,7 @@ LargeIntegerOTE* __fastcall LargeInteger::liNewSigned(SDWORD value)
 
 inline LargeIntegerOTE* LargeInteger::NewWithLimbs(MWORD limbs)
 {
-	return reinterpret_cast<LargeIntegerOTE*>(ObjectMemory::newByteObject(Pointers.ClassLargeInteger, limbs*sizeof(DWORD)));
+	return reinterpret_cast<LargeIntegerOTE*>(ObjectMemory::newByteObject<false, true>(Pointers.ClassLargeInteger, limbs*sizeof(DWORD)));
 }
 
 // Answer a new Integer instantiated from the 32-bit positive integer argument.
@@ -1158,8 +1158,8 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	LargeInteger* liVee = oteVee->m_location;
 
 #ifdef _DEBUG
-	TRACESTREAM << "liDivUnsigned:\n	" << oteEwe << 
-					"\nby	" << oteVee << "\n\n";
+	TRACESTREAM<< L"liDivUnsigned:\n	" << oteEwe << 
+					"\nby	" << oteVee<< L"\n\n";
 #endif
 
 	int eweSize = oteEwe->getWordSize();
@@ -1177,7 +1177,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	const int n = veeSize;
 	const int m = eweSize - n + 1;
 
-	TRACE("n=%d, eweSize= %d, m=%d\n", n, eweSize, m);
+	TRACE(L"n=%d, eweSize= %d, m=%d\n", n, eweSize, m);
 
 	if (m <= 0)
 	{
@@ -1212,8 +1212,8 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	ASSERT(oteV->getWordSize() == oteVee->getWordSize()+1);
 
 #if 0 //def _DEBUG
-	TRACESTREAM << "Shifted:\n	U=" << oteU << 
-			"\n	V=" << oteV << "\n";
+	TRACESTREAM<< L"Shifted:\n	U=" << oteU << 
+			"\n	V=" << oteV<< L"\n";
 #endif
 
 	// Allow one extra digit for sign as otherwise might get negative result
@@ -1234,7 +1234,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	DWORD v2 = liV->m_digits[n-2];
 #endif
 
-	TRACE("d=%d, v1=%X, v2=%X, entering loop 1...\n", d, v1, v2);
+	TRACE(L"d=%d, v1=%X, v2=%X, entering loop 1...\n", d, v1, v2);
 
 	for (int k=1;k<=m;k++)
 	{
@@ -1279,22 +1279,22 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 
 			// r^ = ujb + uj1 - v1.q^
 			rHatb.HighPart = static_cast<DWORD>(rHat);
-			TRACE("	%d: j=%d, uj=%X, uj1=%X, ujb=%I64X, uj2=%X, trial q^=%X, r^=%X\n", k, j, uj, uj1, ujb, uj2, qHat, rHatb.HighPart);
+			TRACE(L"	%d: j=%d, uj=%X, uj1=%X, ujb=%I64X, uj2=%X, trial q^=%X, r^=%X\n", k, j, uj, uj1, ujb, uj2, qHat, rHatb.HighPart);
 
 			while ((DWORDLONG(v2)*qHat > (rHatb.QuadPart + uj2)))
 			{
 				qHat--;
-				TRACE("	Adjusting trial q^ to %X, ",qHat);
+				TRACE(L"	Adjusting trial q^ to %X, ",qHat);
 				if (rHatb.HighPart + v1 < rHatb.HighPart)
 				{
 					// overflowed - If rHat is >= b, then v2.q^ will be < b.r^
-					TRACE("\nWARNING: rHat overflow (%I64X)\n", DWORDLONG(rHatb.HighPart)+v1);
+					TRACE(L"\nWARNING: rHat overflow (%I64X)\n", DWORDLONG(rHatb.HighPart)+v1);
 					break;
 				}
 				else
 					rHatb.HighPart += v1;
 
-				TRACE("rHat=%X\n",rHatb.HighPart);
+				TRACE(L"rHat=%X\n",rHatb.HighPart);
 			}
 		}
 
@@ -1306,7 +1306,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 
 		// Our digits are in reverse order to Knuth
 		int l = j - n;
-		TRACE("	Final qHat %X\n	Entering inner loop with l=%d\n", qHat, l);
+		TRACE(L"	Final qHat %X\n	Entering inner loop with l=%d\n", qHat, l);
 
 		LARGE_INTEGER carry;
 		carry.QuadPart = 0;
@@ -1373,7 +1373,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			// i.e. -16rFFFFFFFF..16r1, which is not trivially representable 
 			// as 32-bit 2's complement!
 			ASSERT(carry.QuadPart >= LONGLONG(1-b) && carry.QuadPart <= 1);
-			TRACE("		i=%d,l=%d: uij=%X, vi=%X, result=%08X %08X %08X (carry %I64d), liU->m_digits[%d]=%X\n",
+			TRACE(L"		i=%d,l=%d: uij=%X, vi=%X, result=%08X %08X %08X (carry %I64d), liU->m_digits[%d]=%X\n",
 						i, l, uij, vi, carry.HighPart, carry.LowPart, accum, carry.QuadPart, l, liU->m_digits[l]);
 			l++;
 		}
@@ -1383,7 +1383,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			/*
 				Step D6: Add back
 			*/
-			TRACE("	Add back (carry %I64d)!\n", carry);
+			TRACE(L"	Add back (carry %I64d)!\n", carry);
 			
 			qHat--;
 			l = j - n;
@@ -1407,9 +1407,9 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 		ASSERT(qi >= 0 && qi < m);
 		liQuo->m_digits[qi] = qHat;
 #ifdef _DEBUG
-		TRACESTREAM << "\tliQuo->m_digits[" << dec << qi << "] = " 
+		TRACESTREAM<< L"\tliQuo->m_digits[" << dec << qi<< L"] = " 
 			<< hex << qHat << endl;
-		TRACESTREAM << "Remainder: " << oteU << endl << endl;
+		TRACESTREAM<< L"Remainder: " << oteU << endl << endl;
 #endif
 	}
 

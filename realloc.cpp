@@ -60,9 +60,9 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 	POBJECT pObject;
 
 /*	#ifdef _DEBUG
-		TRACESTREAM << "Resizing ";
+		TRACESTREAM<< L"Resizing ";
 		Interpreter::printObject(Oop(ote), TRACESTREAM);
-		TRACESTREAM << " (" << ote->m_location << ") from size " << ObjectMemory::sizeOf(ote) << " to size " << byteSize << "\n";
+		TRACESTREAM<< L" (" << ote->m_location<< L") from size " << ObjectMemory::sizeOf(ote)<< L" to size " << byteSize<< L"\n";
 	#endif
 */
 	switch(ote->heapSpace())
@@ -119,9 +119,9 @@ template <size_t Extra> POBJECT ObjectMemory::basicResize(POTE ote, size_t byteS
 	#if defined(_DEBUG)
 		if (abs(Interpreter::executionTrace) > 0)
 			checkPools();
-//		TRACESTREAM << "After Resize: ";
+//		TRACESTREAM<< L"After Resize: ";
 //		Interpreter::printObject(Oop(ote), TRACESTREAM);
-//		TRACESTREAM << "\n";
+//		TRACESTREAM<< L"\n";
 	#endif
 
 	return pObject;

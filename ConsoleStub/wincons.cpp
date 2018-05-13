@@ -1,12 +1,10 @@
 #include "ist.h"
 
+#ifdef _CONSOLE
+
 #ifndef _DEBUG
 	#pragma optimize("s", on)
 	#pragma auto_inline(off)
-#endif
-
-#ifndef _CONSOLE
-	#error Intended for use only in console VMs
 #endif
 
 #include <process.h>
@@ -15,15 +13,15 @@
 #include "ObjMem.h"
 #include "Interprt.h"
 
-void __stdcall DolphinFatalExit(int exitCode, const char* msg)
+void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg)
 {
-	int result = fprintf(stderr, "%s\n", msg);
+	int result = fwprintf(stderr, L"%s\n", msg);
 	FatalExit(exitCode);
 }
 
-int __stdcall DolphinMessage(UINT flags, const char* msg)
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 {
-	fprintf(stderr, "%s\n", msg);
+	fwprintf(stderr, L"%s\n", msg);
 	return 0;
 }
 
@@ -44,3 +42,4 @@ void Interpreter::GuiShutdown()
 {
 }
 
+#endif

@@ -54,12 +54,12 @@ HRESULT ObjectMemory::InitializeZct()
 	CRegKey rkDump;
 	ZctReserve = ZCTRESERVE;
 	ZctMinSize = ZCTINITIALSIZE;
-	if (OpenDolphinKey(rkDump, "ObjMem", KEY_READ) == ERROR_SUCCESS)
+	if (OpenDolphinKey(rkDump, L"ObjMem", KEY_READ) == ERROR_SUCCESS)
 	{
 		DWORD dwValue;
-		if (rkDump.QueryDWORDValue("ZMax", dwValue) == ERROR_SUCCESS && dwValue > ZCTMINRESERVE)
+		if (rkDump.QueryDWORDValue(L"ZMax", dwValue) == ERROR_SUCCESS && dwValue > ZCTMINRESERVE)
 			ZctReserve = dwValue;
-		if (rkDump.QueryDWORDValue("ZMin", ZctMinSize) == ERROR_SUCCESS && dwValue > ZCTMINSIZE &&
+		if (rkDump.QueryDWORDValue(L"ZMin", ZctMinSize) == ERROR_SUCCESS && dwValue > ZCTMINSIZE &&
 			dwValue < ZctReserve)
 			ZctMinSize = dwValue;
 	}
@@ -83,7 +83,7 @@ HRESULT ObjectMemory::InitializeZct()
 
 void ObjectMemory::GrowZct()
 {
-	TRACE("ZCT overflow at %d entries (%d in use), growing to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater * 2);
+	TRACE(L"ZCT overflow at %d entries (%d in use), growing to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater * 2);
 	m_nZctHighWater <<= 1;
 	// Reserve and high water must be powers of 2, so this should be unless about to overflow reserve
 	HARDASSERT((DWORD)m_nZctHighWater <= ZctReserve);
@@ -94,7 +94,7 @@ void ObjectMemory::GrowZct()
 
 void ObjectMemory::ShrinkZct()
 {
-	TRACE("Shrink ZCT from %d entries (%d in use) to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater / 2);
+	TRACE(L"Shrink ZCT from %d entries (%d in use) to %d\n", m_nZctHighWater, m_nZctEntries, m_nZctHighWater / 2);
 	m_nZctHighWater >>= 1;
 
 	// Can't shrink below one page
@@ -112,9 +112,9 @@ Oop* ObjectMemory::ReconcileZct()
 	if (!alwaysReconcileOnAdd)
 	{
 		TRACELOCK();
-		TRACESTREAM << "Reconciling Zct after " << dec << dwTicksNow - dwLastReconcileTicks << " mS: ";
+		TRACESTREAM << L"Reconciling Zct after " << dec << dwTicksNow - dwLastReconcileTicks<< L" mS: ";
 		//Interpreter::DumpOTEPoolStats();
-		TRACESTREAM << "..." << endl;
+		TRACESTREAM << L"..." << endl;
 	}
 	dwLastReconcileTicks = dwTicksNow;
 	const int nOldZctEntries = m_nZctEntries;
@@ -129,7 +129,7 @@ Oop* ObjectMemory::ReconcileZct()
 	if (!alwaysReconcileOnAdd)
 	{
 		DWORD dwTicksAfter = timeGetTime();
-		trace("Zct reconciled in %dmS: %d objects were deleted, %d slots free'd, %d still in use\n", dwTicksAfter - dwTicksNow, nDeleted, nOldZctEntries - m_nZctEntries, m_nZctEntries);
+		trace(L"Zct reconciled in %dmS: %d objects were deleted, %d slots free'd, %d still in use\n", dwTicksAfter - dwTicksNow, nDeleted, nOldZctEntries - m_nZctEntries, m_nZctEntries);
 		//Interpreter::DumpOTEPoolStats();
 		if (m_nZctEntries > 0 && Interpreter::executionTrace != 0)
 			DumpZct();
@@ -297,13 +297,13 @@ void ObjectMemory::PopulateZct(Oop* const sp)
 #ifdef _DEBUG
 void ObjectMemory::DumpZct()
 {
-	TRACESTREAM << "===========================================================" << endl;
-	TRACESTREAM << "ZCT @ " << hex << m_pZct << ", size: " << dec << m_nZctEntries << endl;
-	TRACESTREAM << "===========================================================" << endl;
+	TRACESTREAM<< L"===========================================================" << endl;
+	TRACESTREAM<< L"ZCT @ " << hex << m_pZct<< L", size: " << dec << m_nZctEntries << endl;
+	TRACESTREAM<< L"===========================================================" << endl;
 
 	for (int i = 0; i < m_nZctEntries; i++)
-		TRACESTREAM << dec << i << ": " << hex << (DWORD)m_pZct[i] << ": " << m_pZct[i] << endl;
+		TRACESTREAM << dec << i<< L": " << hex << (DWORD)m_pZct[i]<< L": " << m_pZct[i] << endl;
 
-	TRACESTREAM << "===========================================================" << endl;
+	TRACESTREAM<< L"===========================================================" << endl;
 }
 #endif

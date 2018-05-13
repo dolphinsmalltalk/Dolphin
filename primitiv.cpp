@@ -50,7 +50,7 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp)
 #endif
 	if (err == 0)
 	{
-		auto oteResult = String::New(buffer);
+		auto oteResult = AnsiString::New(buffer);
 		*sp = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct((OTE*)oteResult);
 		return sp;
@@ -103,6 +103,25 @@ Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp)
 	return sp - 1;
 }
 
+
+size_t ObjectMemory::GetBytesElementSize(BytesOTE* ote)
+{
+	ASSERT(ote->isBytes());
+
+	// TODO: Should be using revised InstanceSpec here, not string encoding
+	if (ote->m_flags.m_weakOrZ)
+	{
+		switch (reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding)
+		{
+		case StringEncoding::Utf16:
+			return sizeof(uint16_t);
+		case StringEncoding::Utf32:
+			return sizeof(uint32_t);
+		}
+	}
+	return sizeof(uint8_t);
+}
+
 // This primitive is unusual(like primitiveClass) in that it cannot fail
 // Essentially same code as shortSpecialSendBasicSize
 Oop* __fastcall Interpreter::primitiveSize(Oop* const sp)
@@ -123,7 +142,21 @@ Oop* __fastcall Interpreter::primitiveSize(Oop* const sp)
 	}
 	else
 	{
-		*sp = integerObjectOf(bytesSize);
+		switch(ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
+		{
+		case 1:
+			*sp = integerObjectOf(bytesSize);
+			break;
+		case 2:
+			*sp = integerObjectOf(bytesSize >> 1);
+			break;
+		case 4:
+			*sp = integerObjectOf(bytesSize >> 2);
+			break;
+		default:
+			_assume(false);
+		}
+
 		return sp;
 	}
 }
@@ -227,7 +260,84 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp)
 	return sp - 1;
 }
 
+Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp)
+{
+	// Receiver becomes an instance of the class specified as the argument - neither
+	// receiver or arg may be SmallIntegers, and the shape of the receivers current class
+	// must be identical to its new class.
 
+	Oop arg = *sp;
+	if (!ObjectMemoryIsIntegerObject(arg))
+	{
+		BehaviorOTE* oteClassArg = reinterpret_cast<BehaviorOTE*>(arg);
+
+		// We must determine if the argument is a Class - get the head strap out and
+		// then remember :
+		//	A class' class is an instance of Metaclass (e.g. if we send #class to
+		//	to Object, then we get the Metaclass instance 'Object class') THEREFORE
+		// The class of the class of a Class is Metaclass!
+		// Because of our use of an Object table, we've got 5 indirections here!
+
+		BehaviorOTE* oteClassOfClassArg = oteClassArg->m_oteClass;
+		Behavior* argClass = oteClassArg->m_location;
+
+		BehaviorOTE* oteMeta = oteClassOfClassArg->m_oteClass;
+		if (oteMeta == Pointers.ClassMetaclass)
+		{
+			// We have established that the argument is indeed a Class object, now lets examine the receiver
+
+			Oop receiver = *(sp - 1);
+			if (!ObjectMemoryIsIntegerObject(receiver))
+			{
+				// The receiver is a non - immediate object
+				OTE* oteReceiver = reinterpret_cast<OTE*>(receiver);
+
+				BehaviorOTE* oteReceiverClass = oteReceiver->m_oteClass;
+				Behavior* receiverClass = oteReceiverClass->m_location;
+
+				// We must check class shapes the same, so compare instance spec. of receivers class with that of new class by xor'ing together
+				// and then checking if any of the important shape bits are different
+				DWORD diff = receiverClass->m_instanceSpec.m_value ^ argClass->m_instanceSpec.m_value;
+				if ((diff & ~InstanceSpecification::IndirectMask) == 0)
+				{
+
+					oteReceiver->m_oteClass = oteClassArg;
+					// We must reduce the count on the class, since it has been overwritten in the object, and count up the new class
+					oteClassArg->countUp();
+					oteReceiverClass->countDown();
+
+					return sp - 1;
+				}
+				// Shapes differ in significant ways
+				return primitiveFailure(2);
+			}
+			else
+			{
+				// The receiver is a SmallInteger, and can be mutated to a variable byte object
+				// which we have to allocate
+
+				// Do instances of the new class contain pointers, if so fail
+				if (!argClass->m_instanceSpec.m_pointers)
+				{
+					BytesOTE* oteBytes = ObjectMemory::newByteObject<false, false>(oteClassArg, sizeof(MWORD));
+					oteClassArg->countUp();
+					*reinterpret_cast<MWORD*>(oteBytes->m_location->m_fields) = ObjectMemoryIntegerValueOf(receiver);
+
+					// We've created a new object, so must replace the receiver at stack top
+					*(sp - 1) = reinterpret_cast<Oop>(oteBytes);
+					ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteBytes));
+					return sp - 1;
+				}
+				// Can't change class of SmallInteger to a pointer object class
+				return primitiveFailure(2);
+			}
+		}
+		// Arg is not a class
+		return primitiveFailure(1);
+	}
+	// Arg is a SmallInteger (not a class)
+	return primitiveFailure(0);
+}
 
 Oop* __fastcall Interpreter::primitiveExtraInstanceSpec(Oop* const sp)
 {
@@ -253,15 +363,23 @@ Oop* __fastcall Interpreter::primitiveSetSpecialBehavior(Oop* const sp)
 		Oop oopReceiver = *(sp - 1);
 		if (!ObjectMemoryIsIntegerObject(oopReceiver))
 		{
+			static const BYTE criticalPointerObjectFlags = static_cast<BYTE>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
+			static const BYTE criticalByteObjectFlags = static_cast<BYTE>(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask | OTEFlags::WeakOrZMask);
+
+			OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
+
 			// Ensure the masks cannot affect the critical bits of the flags
 			// the AND mask, must have the pointer, mark, and free bits set, to keep these bits
 			// the OR mask, must have those bits reset so as not to add them
-			BYTE andMask = (mask >> 8) | (OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask);
-			BYTE orMask = mask & static_cast<BYTE>(~(OTEFlags::PointerMask | OTEFlags::MarkMask | OTEFlags::FreeMask | OTEFlags::SpaceMask));
+			BYTE criticalFlags = oteReceiver->m_flags.m_pointer ? criticalPointerObjectFlags : criticalByteObjectFlags;
+			BYTE andMask = (mask >> 8) | criticalFlags;
+			BYTE orMask = mask & static_cast<BYTE>(~criticalFlags);
 
-			OTE* oteReceiver = reinterpret_cast<OTE*>(oopReceiver);
 			BYTE oldFlags = oteReceiver->m_ubFlags;
 			oteReceiver->m_ubFlags = (oldFlags & andMask) | orMask;
+
+			ASSERT(oteReceiver->isNullTerminated() == oteReceiver->m_oteClass->m_location->m_instanceSpec.m_nullTerminated);
+
 			*(sp - 1) = ObjectMemoryIntegerObjectOf(oldFlags);
 			return sp - 1;
 		}
@@ -458,10 +576,11 @@ Oop* __fastcall Interpreter::primitiveReplacePointers(Oop* const sp)
 	return sp-4;
 }
 
-Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
+Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const unsigned argCount)
 {
-	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 1));
-	Oop oopIndex = *sp;
+	Oop* newSp = sp - argCount;
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
+	Oop oopIndex = *(newSp + 1);
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
@@ -475,8 +594,8 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
 			if (index >= 0 && (index + fixedFields) < size)
 			{
 				Oop field = pointerObj->m_fields[index + fixedFields];
-				*(sp - 1) = field;
-				return sp - 1;
+				*newSp = field;
+				return newSp;
 			}
 			else
 			{
@@ -486,18 +605,42 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
 		}
 		else
 		{
-			MWORD size = oteReceiver->bytesSize();
-			if (static_cast<MWORD>(index) < size)
+			switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
 			{
-				BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
-				*(sp - 1) = ObjectMemoryIntegerObjectOf(value);
-				return sp - 1;
+			case 1:
+				if (static_cast<MWORD>(index) < oteReceiver->bytesSize())
+				{
+					BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
+					*newSp = ObjectMemoryIntegerObjectOf(value);
+					return newSp;
+				}
+				break;
+				
+			case 2:
+				if (static_cast<MWORD>(index) < (oteReceiver->bytesSize() / 2))
+				{
+					uint16_t value = reinterpret_cast<WordsOTE*>(oteReceiver)->m_location->m_fields[index];
+					*newSp = ObjectMemoryIntegerObjectOf(value);
+					return newSp;
+				}
+				break;
+
+			case 4:
+				if (static_cast<MWORD>(index) < (oteReceiver->bytesSize() / 4))
+				{
+					uint32_t value = reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index];
+					*newSp = ObjectMemoryIntegerObjectOf(value);
+					return newSp;
+				}
+				break;
+
+			default:
+				__assume(false);
+					break;
 			}
-			else
-			{
-				// Out of bounds
-				return primitiveFailure(1);
-			}
+
+			// Out of bounds
+			return primitiveFailure(1);
 		}
 	}
 	else
@@ -509,73 +652,105 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp)
 
 Oop* __fastcall Interpreter::primitiveBasicAtPut(Oop* const sp)
 {
-	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 2));
+	Oop* const newSp = sp - 2;
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
 	Oop oopIndex = *(sp - 1);
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
 		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
-		if (oteReceiver->m_flags.m_pointer)
+		if (index >= 0)
 		{
-			int size = oteReceiver->pointersSizeForUpdate();
-			int fixedFields = static_cast<int>(oteReceiver->m_oteClass->m_location->fixedFields());
-			VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
+			if (oteReceiver->m_flags.m_pointer)
+			{
+				// Store into pointer object
 
-			if (index >= 0 && (index + fixedFields) < size)
-			{
-				Oop newValue = *sp;
-				ObjectMemory::countUp(newValue);
-				Oop oldValue = pointerObj->m_fields[index + fixedFields];
-				pointerObj->m_fields[index + fixedFields] = newValue;
-				ObjectMemory::countDown(oldValue);
-				*(sp - 2) = newValue;
-				return sp - 2;
-			}
-			else
-			{
+				int size = oteReceiver->pointersSizeForUpdate();
+				int fixedFields = static_cast<int>(oteReceiver->m_oteClass->m_location->fixedFields());
+				VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
+
+				if (index >= 0 && (index + fixedFields) < size)
+				{
+					Oop newValue = *sp;
+					ObjectMemory::countUp(newValue);
+					Oop oldValue = pointerObj->m_fields[index + fixedFields];
+					pointerObj->m_fields[index + fixedFields] = newValue;
+					ObjectMemory::countDown(oldValue);
+					*newSp = newValue;
+					return newSp;
+				}
 				// Out of bounds
 				return primitiveFailure(1);
 			}
-		}
-		else
-		{
-			int size = oteReceiver->bytesSizeForUpdate();
-			if (index >= 0 && index < size)
+			else
 			{
+				// Store into byte object
+
 				Oop oopValue = *sp;
-				MWORD newValue;
-				if (ObjectMemoryIsIntegerObject(oopValue) && (newValue = static_cast<MWORD>(ObjectMemoryIntegerValueOf(oopValue))) <= 255)
+				if (ObjectMemoryIsIntegerObject(oopValue))
 				{
-					reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
-					*(sp - 2) = oopValue;
-					return sp - 2;
+					const MWORD newValue = ObjectMemoryIntegerValueOf(oopValue);
+					const int size = oteReceiver->bytesSizeForUpdate();
+
+					switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
+					{
+					case 1:
+						if (newValue <= 0xFF)
+						{
+							if (index < size)
+							{
+								reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
+								*newSp = oopValue;
+								return newSp;
+							}
+							return primitiveFailure(1);
+						}
+						return primitiveFailure(2);
+
+					case 2:
+						if (newValue <= 0xFFFF)
+						{
+							if (index < (size / 2))
+							{
+								reinterpret_cast<WordsOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint16_t>(newValue);
+								*newSp = oopValue;
+								return newSp;
+							}
+							return primitiveFailure(1);
+						}
+						return primitiveFailure(2);
+
+					case 4:
+						if (index < (size / 4))
+						{
+							reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint32_t>(newValue);
+							*newSp = oopValue;
+							return newSp;
+						}
+						return primitiveFailure(1);
+
+					default:
+						__assume(false);
+					}
 				}
-				else
-				{
-					// Not a SmallInteger in range 0..255
-					return primitiveFailure(2);
-				}
-			}
-			else
-			{
-				// Out of bounds
-				return primitiveFailure(1);
+				// Not a SmallInteger
+				return primitiveFailure(2);
 			}
 		}
+		// Index is not a positive SmallInteger
+		return primitiveFailure(1);
 	}
-	else
-	{
-		// Index not a smallinteger
-		return primitiveFailure(0);
-	}
+	// Index not a smallinteger
+	return primitiveFailure(0);
 }
 
 
 Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp)
 {
-	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 1));
+	Oop* const newSp = sp - 1;
 	Oop oopIndex = *sp;
-
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
+	
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
 		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
@@ -587,96 +762,147 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp)
 			if (static_cast<MWORD>(index) < size)
 			{
 				Oop field = pointerObj->m_fields[index];
-				*(sp - 1) = field;
-				return sp - 1;
+				*newSp = field;
+				return newSp;
 			}
-			else
-			{
-				// Out of bounds
-				return primitiveFailure(1);
-			}
+			// Out of bounds
+			return primitiveFailure(1);
 		}
 		else
 		{
-			MWORD size = oteReceiver->bytesSize();
-			if (static_cast<MWORD>(index) < size)
+			switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
 			{
-				BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
-				*(sp - 1) = ObjectMemoryIntegerObjectOf(value);
-				return sp - 1;
+			case 1:
+				if (static_cast<MWORD>(index) < oteReceiver->bytesSize())
+				{
+					BYTE value = reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index];
+					*newSp = ObjectMemoryIntegerObjectOf(value);
+					return newSp;
+				}
+				break;
+
+			case 2:
+				if (static_cast<MWORD>(index) < (oteReceiver->bytesSize() / 2))
+				{
+					uint16_t value = reinterpret_cast<WordsOTE*>(oteReceiver)->m_location->m_fields[index];
+					*newSp = ObjectMemoryIntegerObjectOf(value);
+					return newSp;
+				}
+				break;
+
+			case 4:
+				if (static_cast<MWORD>(index) < (oteReceiver->bytesSize() / 4))
+				{
+					uint32_t value = reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index];
+					*newSp = ObjectMemoryIntegerObjectOf(value);
+					return newSp;
+				}
+				break;
+
+			default:
+				__assume(false);
+				break;
 			}
-			else
-			{
-				// Out of bounds
-				return primitiveFailure(1);
-			}
+
+			// Out of bounds
+			return primitiveFailure(1);
 		}
 	}
-	else
-	{
-		// Index not a smallinteger
-		return primitiveFailure(0);
-	}
+	// Index not a smallinteger
+	return primitiveFailure(0);
 }
 
 Oop* __fastcall Interpreter::primitiveInstVarAtPut(Oop* const sp)
 {
-	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 2));
+	Oop* const newSp = sp - 2;
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*newSp);
 	Oop oopIndex = *(sp - 1);
 
 	if (ObjectMemoryIsIntegerObject(oopIndex))
 	{
 		SMALLINTEGER index = ObjectMemoryIntegerValueOf(oopIndex) - 1;
-		if (oteReceiver->m_flags.m_pointer)
+		if (index >= 0)
 		{
-			int size = oteReceiver->pointersSizeForUpdate();
-			VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
+			if (oteReceiver->m_flags.m_pointer)
+			{
+				// Store into pointer object
 
-			if (index >= 0 && index < size)
-			{
-				Oop newValue = *sp;
-				ObjectMemory::countUp(newValue);
-				Oop oldValue = pointerObj->m_fields[index];
-				pointerObj->m_fields[index] = newValue;
-				ObjectMemory::countDown(oldValue);
-				*(sp - 2) = newValue;
-				return sp - 2;
-			}
-			else
-			{
+				int size = oteReceiver->pointersSizeForUpdate();
+				VariantObject* pointerObj = reinterpret_cast<PointersOTE*>(oteReceiver)->m_location;
+
+				if (index < size)
+				{
+					Oop newValue = *sp;
+					ObjectMemory::countUp(newValue);
+					Oop oldValue = pointerObj->m_fields[index];
+					pointerObj->m_fields[index] = newValue;
+					ObjectMemory::countDown(oldValue);
+					*newSp = newValue;
+					return newSp;
+				}
+
 				// Out of bounds
 				return primitiveFailure(1);
 			}
-		}
-		else
-		{
-			int size = oteReceiver->bytesSizeForUpdate();
-			if (index >= 0 && index < size)
+			else
 			{
+				// Store into byte object
+
 				Oop oopValue = *sp;
-				MWORD newValue;
-				if (ObjectMemoryIsIntegerObject(oopValue) && (newValue = static_cast<MWORD>(ObjectMemoryIntegerValueOf(oopValue))) <= 255)
+				if (ObjectMemoryIsIntegerObject(oopValue))
 				{
-					reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
-					*(sp - 2) = oopValue;
-					return sp - 2;
+					const MWORD newValue = ObjectMemoryIntegerValueOf(oopValue);
+					const int size = oteReceiver->bytesSizeForUpdate();
+
+					switch (ObjectMemory::GetBytesElementSize(reinterpret_cast<BytesOTE*>(oteReceiver)))
+					{
+					case 1:
+						if (newValue <= 0xFF)
+						{
+							if (index < size)
+							{
+								reinterpret_cast<BytesOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<BYTE>(newValue);
+								*newSp = oopValue;
+								return newSp;
+							}
+							return primitiveFailure(1);
+						}
+						return primitiveFailure(2);
+
+					case 2:
+						if (newValue <= 0xFFFF)
+						{
+							if (index < (size / 2))
+							{
+								reinterpret_cast<WordsOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint16_t>(newValue);
+								*newSp = oopValue;
+								return newSp;
+							}
+							return primitiveFailure(1);
+						}
+						return primitiveFailure(2);
+
+					case 4:
+						if (index < (size / 4))
+						{
+							reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index] = static_cast<uint32_t>(newValue);
+							*newSp = oopValue;
+							return newSp;
+						}
+						return primitiveFailure(1);
+
+					default:
+						__assume(false);
+					}
 				}
-				else
-				{
-					// Not a SmallInteger in range 0..255
-					return primitiveFailure(2);
-				}
-			}
-			else
-			{
-				// Out of bounds
-				return primitiveFailure(1);
+				// Not a SmallInteger
+				return primitiveFailure(2);
 			}
 		}
+		// Negative index
+		return primitiveFailure(1);
 	}
-	else
-	{
-		// Index not a smallinteger
-		return primitiveFailure(0);
-	}
+
+	// Index not a smallinteger
+	return primitiveFailure(0);
 }

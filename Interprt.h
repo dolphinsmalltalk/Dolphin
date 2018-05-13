@@ -12,7 +12,6 @@
 ///////////////////////////////////
 #include "ObjMem.h"
 #include "OopQ.h"
-#include <vector>
 #include <fpieee.h>
 #include "STExternal.h"
 #include "STBehavior.h"
@@ -30,7 +29,9 @@ using namespace ST;
 	#define TRACEARG(x)	,(x)
 	#define	TRACEPARM	,TRACEFLAG traceFlag
 	#define TRACEDEFAULT	TRACEPARM=TraceOff
+	#define CHECKREFERENCESSP(sp)	Interpreter::checkReferences(sp)
 	#define CHECKREFERENCES	Interpreter::checkReferences(Interpreter::GetRegisters());
+	#define CHECKREFERENCESIF(x) { if (x) CHECKREFERENCES }
 	#define CHECKREFSNOFIX \
 	{\
 		bool bAsyncGCDisabled = Interpreter::m_bAsyncGCDisabled;\
@@ -43,6 +44,8 @@ using namespace ST;
 	#define TRACEARG(x)
 	#define TRACEDEFAULT
 	#define CHECKREFERENCES
+	#define CHECKREFERENCESSP(sp)
+	#define CHECKREFERENCESIF(x)
 	#define CHECKREFSNOFIX
 #endif
 
@@ -59,16 +62,17 @@ typedef volatile LONG SHAREDLONG;
 class Interpreter
 {
 	friend class ObjectMemory; 
+	friend class BootLoader;
 
 public:
 	#ifdef _DEBUG
 		enum TRACEFLAG { TraceInherit, TraceOff, TraceForce };
 	#endif
 
-	static HRESULT initialize(const char* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys);
+	static HRESULT initialize(const wchar_t* szFileName, LPVOID imageData, UINT imageSize, bool isDevSys);
 
 	// Fire off the startup message
-	static void sendStartup(LPCSTR szImagePath, DWORD dwArg);
+	static void sendStartup(const wchar_t* szImagePath, DWORD dwArg);
 
 	// Clear down current image, etc
 	static void ShutDown();
@@ -91,19 +95,20 @@ public:
 		static void RemoveVMReference(Oop);
 		static void RemoveVMReference(OTE*);
 
+		static void checkReferences(Oop* const sp);
 		static void checkReferences(InterpreterRegisters&);
 
 		// Only needed for non-Debug because of C++ walkback code
-		static void WarningWithStackTrace(const char* warningCaption, StackFrame* pFrame=NULL);
-		static void WarningWithStackTraceBody(const char* warningCaption, StackFrame* pFrame);
+		static void WarningWithStackTrace(const wchar_t* warningCaption, StackFrame* pFrame=NULL);
+		static void WarningWithStackTraceBody(const wchar_t* warningCaption, StackFrame* pFrame);
 		static BOOL isCallbackFrame(Oop framePointer);
 	#endif
 
-	static void StackTraceOn(ostream& dc, StackFrame* pFrame=NULL, unsigned depth=10);
-	static void DumpStack(ostream&, unsigned);
-	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, ostream& logStream);
-	static void DumpContext(ostream& logStream);
-	static std::string PrintString(Oop);
+	static void StackTraceOn(wostream& dc, StackFrame* pFrame=NULL, unsigned depth=10);
+	static void DumpStack(wostream&, unsigned);
+	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, wostream& logStream);
+	static void DumpContext(wostream& logStream);
+	static std::wstring PrintString(Oop);
 	
 	#ifdef _DEBUG
 		static void DumpOTEPoolStats();
@@ -159,10 +164,9 @@ public:
 
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)
-		static const char* activeMethod();
-		static void decodeMethod(CompiledMethod*, ostream* pstream=NULL);
-		static void decodeMethodAt(CompiledMethod*, unsigned ip, ostream&);
-		static void AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<std::string>& instVarNames);
+		static const wchar_t* activeMethod();
+		static void decodeMethod(CompiledMethod*, wostream* pstream=NULL);
+		static void decodeMethodAt(CompiledMethod*, unsigned ip, wostream&);
 #endif
 
 	// Contexts
@@ -309,6 +313,8 @@ private:
 	// Timer init and shutdown
 	static HRESULT initializeTimer();
 	static void terminateTimer();
+
+	static HRESULT initializeCharMaps();
 
 private:
 	///////////////////////////////////////////////////////////////////////////
@@ -566,7 +572,7 @@ private:
 	static Oop* __fastcall primitiveSize(Oop* const sp);
    	
 	// Object Indexing Primitives
-	static Oop* __fastcall primitiveBasicAt(Oop* const sp);
+	static Oop* __fastcall primitiveBasicAt(Oop* const sp, const unsigned argCount);
 	static Oop* __fastcall primitiveBasicAtPut(Oop* const sp);
 	static Oop* __fastcall primitiveAt(Oop* const sp);
 	static Oop* __fastcall primitiveAtPut(Oop* const sp);
@@ -614,36 +620,42 @@ private:
 	// Get address of contents of a byte object
 	static Oop* __fastcall primitiveAddressOf(Oop* const sp);
 
+	static void PushCharacter(Oop* const sp, MWORD codePoint);
+
+	static Oop* primitiveNewCharacter(Oop * const sp);
+
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives
-	static Oop* __fastcall primitiveStringAt(Oop* sp);
+	static Oop* __fastcall primitiveStringAt(Oop* const sp, const unsigned argCount);
 	static Oop* __fastcall primitiveStringAtPut(Oop* sp);
 
 	// Helper for memory moves
 	static void memmove(BYTE* dst, const BYTE* src, size_t count);
-	static Oop* __fastcall primitiveStringReplace(Oop* const sp);
 	static Oop* __fastcall primitiveReplaceBytes(Oop* const sp);
 	static Oop* __fastcall primitiveIndirectReplaceBytes(Oop* const sp);
 	static Oop* __fastcall primitiveReplacePointers(Oop* const sp);
+	static Oop* __fastcall primitiveStringConcatenate(Oop* const sp);
 
 	static Oop* __fastcall primitiveHashBytes(Oop* const sp);
-	static Oop* __fastcall primitiveStringCompare(Oop* const sp);
-	static Oop* __fastcall primitiveStringLessOrEqual(Oop* const sp);
 	static Oop* __fastcall primitiveStringSearch(Oop* const sp);
 	static Oop* __fastcall primitiveStringNextIndexOfFromTo(Oop* const sp);
 
 	static Oop* __fastcall primitiveStringCollate(Oop* const sp);
 	static Oop* __fastcall primitiveStringCmp(Oop* const sp);
+	static Oop* __fastcall primitiveStringCmpOrdinal(Oop* const sp);
+	static Oop* __fastcall primitiveStringEqual(Oop* const sp);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp);
 
 	static Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp);
 	static Oop* __fastcall Interpreter::primitiveStringAsUtf8String(Oop* const sp);
-	static Oop* __fastcall Interpreter::primitiveStringAsAnsiString(Oop* const sp);
+	static Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp);
 
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp);
+	static Oop* __fastcall primitiveBasicNext(Oop* const sp);
 	static Oop* __fastcall primitiveNextSDWORD(Oop* const sp);
 	static Oop* __fastcall primitiveNextPut(Oop* const sp);
+	static Oop* __fastcall primitiveBasicNextPut(Oop* const sp);
 	static Oop* __fastcall primitiveNextPutAll(Oop* const sp);
 	static Oop* __fastcall primitiveAtEnd(Oop* const sp);
 
@@ -839,6 +851,15 @@ private:
 	static LONG			m_nInputPollInterval;			// Poll counter reset to this after each message queue poll
 	static DWORD		m_dwQueueStatusMask;			// Input flags passed to GetQueueStatus to poll for arriving input events
 
+public:
+	static UINT			m_ansiCodePage;
+	static WCHAR		m_unicodeReplacementChar;
+	static char			m_ansiReplacementChar;
+	static WCHAR		m_ansiToUnicodeCharMap[256];
+	static CHAR			m_unicodeToAnsiCharMap[65536];
+
+
+public:
 	#if defined(_DEBUG)
 		// List of VM referenced objects (generic mechanism for avoiding GC problems with
 		// objects ref'd only from the VM)
@@ -847,11 +868,11 @@ private:
 		static int	m_nMaxVMRefs;				// Current size of VM References array
 
 		enum { VMREFSINITIAL = 16 };
-		enum { VMREFSGROWTH = 16 };
+		enum { VMREFSGROWTH = 64 };
 	#endif
 };
 
-ostream& operator<<(ostream& stream, const CONTEXT* pCtx);
+wostream& operator<<(wostream& stream, const CONTEXT* pCtx);
 
 ///////////////////////////////////
 

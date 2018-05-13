@@ -25,7 +25,7 @@ namespace ST
 	class ByteArray : public ArrayedCollection
 	{
 	public:
-		BYTE m_elements[];
+		uint8_t m_elements[];
 
 		static ByteArrayOTE* New(MWORD size);
 		static ByteArrayOTE* New(MWORD size, const void* pBytes);
@@ -34,7 +34,7 @@ namespace ST
 
 	inline ByteArrayOTE* ByteArray::New(MWORD size)
 	{
-		return reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newByteObject(Pointers.ClassByteArray, size));
+		return reinterpret_cast<ByteArrayOTE*>(ObjectMemory::newByteObject<false, true>(Pointers.ClassByteArray, size));
 	}
 
 	inline ByteArrayOTE* ByteArray::New(MWORD size, const void* pBytes)

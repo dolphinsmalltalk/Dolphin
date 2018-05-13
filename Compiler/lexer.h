@@ -11,6 +11,8 @@ The Smalltalk lexical analyser
 
 ///////////////////////
 
+typedef const uint8_t* LPUTF8;
+
 class Lexer
 {
 	
@@ -37,7 +39,7 @@ protected:
 		None, NameConst, NameColon, 
 			SmallIntegerConst, LargeIntegerConst, FloatingConst, ScaledDecimalConst, CharConst, 
 			SymbolConst, TrueConst, FalseConst, NilConst,
-			ArrayBegin, ByteArrayBegin, StringConst, ExprConstBegin, Special,
+			ArrayBegin, ByteArrayBegin, AnsiStringConst, Utf8StringConst, ExprConstBegin, Special,
 			Binary, Return, Assignment, CloseParen, CloseStatement, CloseSquare, CloseBrace, Cascade, Eof 
 	};
 	
@@ -45,13 +47,13 @@ public:
 	Lexer();
 	virtual ~Lexer();
 	
-	char Step();
-	void PushBack(char ch);
+	uint8_t Step();
+	void PushBack(uint8_t ch);
 	VOID StepBack(int n);
 	TokenType NextToken();
-	void ScanString(int);
+	TokenType ScanString(int);
 	void ScanNumber();
-	int DigitValue(char ch) const;
+	int DigitValue(uint8_t ch) const;
 	void ScanInteger(int radix);
 	void ScanFloat();
 	void ScanExponentInteger();
@@ -62,12 +64,11 @@ public:
 	void ScanLiteralCharacter();
 	void ScanSymbol();
 	void ScanBinary();
-	int ReadHexCodePoint();
 	
 	TokenType ThisToken() const;
 	void SetTokenType(TokenType tok);
 	bool AtEnd() const;
-	const char* ThisTokenText() const;
+	LPUTF8 ThisTokenText() const;
 	long ThisTokenInteger() const;
 	double ThisTokenFloat() const;
 	bool ThisTokenIsBinary(const char) const;
@@ -87,9 +88,9 @@ protected:
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
 
 	
-	char PeekAtChar(int lookAhead=0) const;
+	uint8_t PeekAtChar(int lookAhead=0) const;
 	//bool CanBeSmallInteger(long valueLong) const;
-	bool IsASingleBinaryChar(char ch) const;
+	bool IsASingleBinaryChar(uint8_t ch) const;
 	//bool IsDigitInRadix(char ch, int radix) const;
 	
 	TEXTRANGE CompileTextRange() const
@@ -100,25 +101,30 @@ protected:
 	//******************************************************************************
 	// ANSI X3J20 Compliant Lexicon (added by BSM)
 	//******************************************************************************
-	static bool isNonCaseLetter(char ch);
-	static bool isLetter(char ch);
-	static bool isIdentifierFirst(char ch);
-	static bool isIdentifierSubsequent(char ch);
-	static bool isAnsiBinaryChar(char ch);
+	static bool isNonCaseLetter(uint8_t ch);
+	static bool isLetter(uint8_t ch);
+	static bool isIdentifierFirst(uint8_t ch);
+	static bool isIdentifierSubsequent(uint8_t ch);
+	static bool isAnsiBinaryChar(uint8_t ch);
 	
-	static bool isupper(char ch);
-	static bool islower(char ch);
-	static bool isdigit(char ch);
-	static bool isspace(char ch);
+	static bool isupper(uint8_t ch);
+	static bool islower(uint8_t ch);
+	static bool isdigit(uint8_t ch);
+	static bool isspace(uint8_t ch);
 	
 	void SkipBlanks();
 	void SkipComments();
 
-	void SetText(const char* compiletext, int offset);
+	void SetText(const uint8_t* compiletext, int offset);
 
-	const char* GetText() const
+	LPUTF8 GetText() const
 	{
 		return m_buffer.c_str();
+	}
+
+	Str GetTextRange(const TEXTRANGE& r)
+	{
+		return m_buffer.substr(r.m_start, r.m_stop - r.m_start + 1);
 	}
 
 	int GetTextOffset() const
@@ -151,7 +157,7 @@ protected:
 		return m_buffer.size();
 	}
 
-	const char* GetCharPtr() const
+	const uint8_t* GetCharPtr() const
 	{
 		return m_cp;
 	}
@@ -173,20 +179,25 @@ protected:
 
 	int CharPosition() const;
 
+	IDolphin* m_piVM;
+
 private:
-	char NextChar();
+	int ReadUtf8();
+	int ReadUtf8(uint8_t ch);
+	int ReadHexCodePoint();
+	uint8_t NextChar();
 
 private:
 	// The current token
 	TokenType m_tokenType;
 	long m_integer;
-	char* m_token;
-	char* tp;
+	uint8_t* m_token;
+	uint8_t* tp;
 	
 	// Buffer state
 	Str m_buffer;
-	const char* m_cp;
-	char m_cc;
+	const uint8_t* m_cp;
+	uint8_t m_cc;
 	int m_lineno;
 	int m_base;
 	
@@ -209,7 +220,7 @@ inline bool Lexer::AtEnd() const
 	return m_tokenType == Eof;
 }
 
-inline const char* Lexer::ThisTokenText() const
+inline LPUTF8 Lexer::ThisTokenText() const
 {
 	return m_token;
 }
@@ -254,17 +265,17 @@ inline void Lexer::SetTokenType(TokenType tok)
 	m_tokenType = tok;
 }
 
-inline char Lexer::NextChar()
+inline uint8_t Lexer::NextChar()
 {
 	m_cc=*m_cp ? *m_cp++ : '\0';
-	if (m_cc=='\n')
+	if (m_cc == '\n')
 		m_lineno++;
 	return m_cc;
 }
 
-inline char Lexer::Step()
+inline uint8_t Lexer::Step()
 {
-	char ch = NextChar();
+	uint8_t ch = NextChar();
 	if (ch)
 	{
 		*tp++ = ch;
@@ -274,7 +285,7 @@ inline char Lexer::Step()
 	return ch;
 }
 
-inline char Lexer::PeekAtChar(int lookAhead) const
+inline uint8_t Lexer::PeekAtChar(int lookAhead) const
 {
 	return m_cp[lookAhead];
 }
@@ -284,7 +295,7 @@ inline int Lexer::CharPosition() const
 	return (m_cp - m_buffer.c_str()) - 1;
 }
 
-inline void Lexer::PushBack(char ch)
+inline void Lexer::PushBack(uint8_t ch)
 {
 	_ASSERTE(m_cp>m_buffer.c_str());
 	if (ch)
@@ -315,42 +326,42 @@ inline void Lexer::StepBack(int n)
 // N.B. These must not be internationalized (currently)
 //******************************************************************************
 
-inline bool Lexer::isNonCaseLetter(char c) 
+inline bool Lexer::isNonCaseLetter(uint8_t c)
 {
 	return c == '_';
 }
 
-inline bool Lexer::isupper(char c) 
+inline bool Lexer::isupper(uint8_t c)
 {
 	return c >= 'A' && c <= 'Z';
 }
 
-inline bool Lexer::islower(char c) 
+inline bool Lexer::islower(uint8_t c)
 {
 	return c >= 'a' && c <= 'z';
 }
 
-inline bool Lexer::isLetter(char c) 
+inline bool Lexer::isLetter(uint8_t c) 
 {
 	return islower(c) || isupper(c) || isNonCaseLetter(c); 
 }
 
-inline bool Lexer::isdigit(char c) 
+inline bool Lexer::isdigit(uint8_t c)
 {
 	return c >= '0' && c <= '9';
 }
 
-inline bool Lexer::isIdentifierFirst(char c)
+inline bool Lexer::isIdentifierFirst(uint8_t c)
 {
 	return isLetter(c);
 }
 
-inline bool Lexer::isIdentifierSubsequent(char c)
+inline bool Lexer::isIdentifierSubsequent(uint8_t c)
 {
 	return isLetter(c) || isdigit(c);
 }
 
-inline bool Lexer::isspace(char c) 
+inline bool Lexer::isspace(uint8_t c)
 {
 	return c == 0x20 || (c >= 0x09 && c <= 0x0D);
 }

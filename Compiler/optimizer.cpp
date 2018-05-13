@@ -16,7 +16,7 @@ Smalltalk compiler bytecode optimizer.
 #define CHECKREFERENCES
 
 #ifdef _DEBUG
-static int compilationTrace = 1;
+static int compilationTrace = 0;
 
 #elif !defined(USE_VM_DLL)
 #undef NDEBUG
@@ -1510,7 +1510,7 @@ inline static bool isInNearJumpRange(int distance, unsigned extensionBytes)
 {
 #if defined(_DEBUG) && !defined(USE_VM_DLL)
 	if (distance == 0)
-		TRACESTREAM << "WARNING: Near Jump to itself detected" << std::endl;
+		TRACESTREAM<< L"WARNING: Near Jump to itself detected" << std::endl;
 #endif
 	_ASSERTE(extensionBytes >= 1);
 	
@@ -2103,7 +2103,7 @@ POTE Compiler::NewMethod()
 		m_piVM->StorePointerWithValue(&cmpldMethod.aLiterals[i], oopLiteral);
 	}
 	
-	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, Oop(m_piVM->NewString(GetSelector().c_str())));
+	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.selector, Oop(NewUtf8String(GetSelector())));
 	m_piVM->StorePointerWithValue((Oop*)&cmpldMethod.methodClass, Oop(m_class));
 
 #if defined(_DEBUG)

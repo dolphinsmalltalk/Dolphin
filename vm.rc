@@ -173,6 +173,7 @@ STRINGTABLE
 BEGIN
     IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
     IDP_NOHIRESCLOCK        "Unable to establish high-resolution clock frequency (%!1d!: %2)"
+    IDP_UNSUPPORTED_ACP     "Unsupported code page %1!d!"
 END
 
 STRINGTABLE

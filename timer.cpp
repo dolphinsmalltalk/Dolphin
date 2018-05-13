@@ -98,7 +98,7 @@ void CALLBACK Interpreter::TimeProc(UINT uID, UINT /*uMsg*/, DWORD /*dwUser*/, D
 	}
 	else
 		// An old timer (which should have been cancelled) has fired
-		trace("Old timer %d fired, current %d\n", uID, timerID);
+		trace(L"Old timer %d fired, current %d\n", uID, timerID);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -131,11 +131,11 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 	if (outstandingID)
 	{
 #ifdef OAD
-		TRACESTREAM << "Killing existing timer with id " << outstandingID << endl;
+		TRACESTREAM<< L"Killing existing timer with id " << outstandingID << endl;
 #endif
 		UINT kill = ::timeKillEvent(outstandingID);
 		if (kill != TIMERR_NOERROR)
-			trace("Failed to kill timer %u (%d,%d)!\n\r", outstandingID, kill, GetLastError());
+			trace(L"Failed to kill timer %u (%d,%d)!\n\r", outstandingID, kill, GetLastError());
 	}
 
 	if (nDelay > 0)
@@ -164,14 +164,14 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 		{
 			// System refused to set timer for some reason
 			DWORD error = GetLastError();
-			trace("Oh no, failed to set a timer for %d mS (%d)!\n\r", nDelay, error);
+			trace(L"Oh no, failed to set a timer for %d mS (%d)!\n\r", nDelay, error);
 			return primitiveFailureWithInt(PrimitiveFailureSystemError, error);
 		}
 	}
 	else if (nDelay == 0)
 	{
 #ifdef _DEBUG
-		TRACESTREAM << "Requested delay " << dec << nDelay << " passed, signalling immediately" << endl;
+		TRACESTREAM<< L"Requested delay " << dec << nDelay<< L" passed, signalling immediately" << endl;
 #endif
 		// The request time has already passed, or does not fall within the
 		// available timer resolution (i.e. it will happen too soon), so signal
@@ -190,9 +190,9 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp)
 		ASSERT(m_oteNewProcess->m_oteClass == Pointers.ClassProcess);
 		ProcessOTE* activeProcess = scheduler()->m_activeProcess;
 
-		TRACESTREAM << "signalAtTick: Caused process switch to " << m_oteNewProcess
-			<< endl << "\t\tfrom " << activeProcess << endl
-			<< "\tasync signals " << m_qAsyncSignals.isEmpty() << ')' << endl;
+		TRACESTREAM<< L"signalAtTick: Caused process switch to " << m_oteNewProcess
+			<< endl<< L"\t\tfrom " << activeProcess << endl
+			<< L"\tasync signals " << m_qAsyncSignals.isEmpty() << L')' << endl;
 	}
 #endif
 
@@ -263,13 +263,12 @@ HRESULT Interpreter::initializeTimer()
 #pragma code_seg(TERM_SEG)
 void Interpreter::terminateTimer()
 {
-	static const char* szFmt = "Shutdown Error %u calling %s(%u)\n";
 	MMRESULT err;
 	if (timerID != 0)
 	{
 		err = ::timeKillEvent(timerID);
 		if (err != TIMERR_NOERROR)
-			trace(szFmt, err, "timeKillEvent", timerID);
+			trace(L"Shutdown Error %u calling %s(%u)\n", err, L"timeKillEvent", timerID);
 	}
 }
 

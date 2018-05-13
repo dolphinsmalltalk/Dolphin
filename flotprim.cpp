@@ -35,15 +35,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Primitive Helper routines
 
-#if 1//def _DEBUG
-	int __cdecl _matherr( struct _exception *except )
-	{
-		UNREFERENCED_PARAMETER(except);
-		_asm int 3;
-		return 0;
-	}
-#endif
-
 inline FloatOTE* __stdcall Float::New()
 {
 	ASSERT(sizeof(Float) == sizeof(double) + ObjectHeaderSize);

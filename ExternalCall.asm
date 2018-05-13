@@ -22,13 +22,13 @@ NewExternalStructurePointer EQU ?NewPointer@ExternalStructure@ST@@SIPAV?$TOTE@VO
 extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
-NewStringWithLen EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIPAV?$TOTE@VString@ST@@@@PIBDI@Z
-extern NewStringWithLen:near32
-NewStringFromUtf16 EQU ?New@?$ByteString@$0A@$0FE@V?$TOTE@VString@ST@@@@@ST@@SIPAV?$TOTE@VString@ST@@@@PB_W@Z
-extern NewStringFromUtf16:near32
+NewAnsiStringWithLen EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VAnsiString@ST@@@@D@ST@@SIPAV?$TOTE@VAnsiString@ST@@@@PBDI@Z
+extern NewAnsiStringWithLen:near32
+NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@V?$TOTE@VAnsiString@ST@@@@D@ST@@SIPAV?$TOTE@VAnsiString@ST@@@@PB_W@Z
+extern NewAnsiStringFromUtf16:near32
 NewUtf16String EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PB_W@Z
 extern NewUtf16String:near32
-NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VString@ST@@@@@Z
+NewUtf16StringFromString EQU ?New@Utf16String@ST@@SIPAV?$TOTE@VUtf16String@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
 extern NewUtf16StringFromString:near32
 
 NewBSTR EQU ?NewBSTR@@YIPAV?$TOTE@VExternalAddress@ST@@@@PAV?$TOTE@VObject@ST@@@@@Z
@@ -44,6 +44,9 @@ extern NewUnsigned64:near32
 
 REQUESTCOMPLETION EQU ?OnCallReturned@OverlappedCall@@AAEXXZ
 extern REQUESTCOMPLETION:near32
+
+CharacterGetCodePoint EQU ?getCodePoint@Character@ST@@QBEIXZ
+extern CharacterGetCodePoint:near32
 
 ; We need to test the structure type specially
 ArgSTRUCT	EQU		50
@@ -257,9 +260,13 @@ procAddressNotCached:
 	test	eax, eax										; Returns null if not a valid proc name
 	jnz		performCall
 
+	mov		edx, callContext
+	ASSUME	edx:PTR InterpRegisters
 	add		esp, 16											; Remove args pushed for aborted call
-	PrimitiveFailureCode 1
-
+	mov		edx, [edx].m_pActiveProcess
+	xor		eax, eax
+	mov		(Process PTR[edx]).m_primitiveFailureCode, SMALLINTONE
+	ret
 asyncDLL32Call ENDP
 
 getProcAddress PROC
@@ -458,7 +465,7 @@ callExternalFunction PROC NEAR STDCALL,
 
 	
 	; We need EBP based address for these as we'll be modifying ESP
-	LOCAL activeFrame:PStackFrame, returnStructure:PTR DWORD	;, savedSP:PTR DWORD
+	LOCAL activeFrame:PStackFrame, returnStructure:PTR DWORD
 
 	; Save off active frame, etc
 	mov		eax, callContext
@@ -657,18 +664,18 @@ extCallArgCHAR:
 	jnz		preCallFail									; Yes, not valid (only Characters)
 	ASSUME	ARG:PTR OTE									; No, its an object of unknown type
 
-	mov		TEMP, [ARG].m_oteClass
+	mov		TEMP2, [ARG].m_oteClass
 	ASSUME	TEMP:PTR OTE
 	
-	mov		ARG, [ARG].m_location
-	cmp		TEMP, [Pointers.ClassCharacter]				; Is it a Character?
+	mov		TEMP, [ARG].m_location
+	cmp		TEMP2, [Pointers.ClassCharacter]				; Is it a Character?
 
 	jne		preCallFail									; No? Fail it
 	ASSUME	ARG:PTR Character							; Yes
 
-	mov		ARG, [ARG].m_codePoint						; Load ascii value from Char
+	call	CharacterGetCodePoint
+
 	ASSUME	ARG:DWORD
-	sar		ARG, 1										; Convert to 32-bit int
 	PushLoopNext <ARG>
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1030,6 +1037,8 @@ extCallArgBSTR:
 		mov			ecx, ARG
 		call		NewBSTR
 		ASSUME	eax:PTR OTE
+		test		eax, eax
+		jz			preCallFail
 
 		;; Now we need some way to ensure this is destroyed, and the easiest way is to stuff
 		;; it on the ST stack in the slot occuppied by the UnicodeString argument
@@ -1118,7 +1127,7 @@ ExtCallArgLPSTR:
 
 @@:
 	mov		ecx, ARG
-	call	NewStringFromUtf16							; Assume its an ANSI API and will not understand Utf8 (which is generally true of byte string APIs on Windows, unfortunately)
+	call	NewAnsiStringFromUtf16						; Assume its an ANSI API and will not understand Utf8 (which is generally true of byte string APIs on Windows, unfortunately)
 	ASSUME	ARG:PTR OTE
 
 	mov		[_SP+OOPSIZE], eax
@@ -1919,7 +1928,7 @@ extCallRetLPSTR:
 	not		ecx
 	lea		edx, [ecx-1]						; Get length into edx
 	pop		ecx									; pop RESULT into ECX
-	call	NewStringWithLen
+	call	NewAnsiStringWithLen
 	AnswerObjectResult
 
 extCallRetLPPVOID:

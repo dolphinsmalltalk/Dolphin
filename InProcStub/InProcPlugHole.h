@@ -40,7 +40,7 @@ class ATL_NO_VTABLE CInProcPlugHole :
 	// Win32 event signalled when the peer has been registered by the image
 	HANDLE	m_hPeerAvailable;
 
-	char	achImagePath[_MAX_PATH+1];
+	wchar_t	achImagePath[_MAX_PATH+1];
 	LPVOID	m_pImageData;
 	DWORD	m_cImageSize;
 
@@ -65,7 +65,7 @@ public:
 	CInProcPlugHole();
 	~CInProcPlugHole();
 
-	LPCSTR GetImagePath() const
+	LPCWSTR GetImagePath() const
 	{
 		return achImagePath;
 	}
@@ -80,7 +80,7 @@ BEGIN_COM_MAP(CInProcPlugHole)
 END_COM_MAP()
 
 public:
-	void SetImageInfo(LPCSTR szImagePath, LPVOID imageData, DWORD imageSize);
+	void SetImageInfo(LPCWSTR szImagePath, LPVOID imageData, DWORD imageSize);
 
 	// Handle incoming from Windows/COM - mostly these just forward to the peer object
 	HRESULT Initialize(REFCLSID rclsid, CLSCTX ctx);

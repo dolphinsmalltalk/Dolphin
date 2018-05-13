@@ -60,7 +60,7 @@ typedef struct STInstSpec
 	WORD pointers 		: 1;	// Pointers or bytes?
 	WORD nullTerminated : 1;	// Null terminated byte object?
 
-	WORD extraSpec;				// High word for class specific purposes (e.g. structure byte size)
+	WORD extraSpec;				// High word for class specific purposes (e.g. structure byte size, string encoding)
 } STInstSpec;
 
 typedef struct STBehavior
@@ -205,9 +205,19 @@ library DolphinVM
 		uuid(57528932-AA27-46C2-B172-B2AFD6FED643),
 		pointer_default(unique)
 	]
-	interface IDolphin : IDolphin6
+	interface IDolphin7 : IDolphin6
 	{
 		BSTR DebugPrintString([in]Oop);
+	};
+
+	[
+		object,
+		uuid(FBBF2E4A-0452-4669-812B-1BE19860A567),
+		pointer_default(unique)
+	]
+	interface IDolphin : IDolphin7
+	{
+		POTE NewUtf8String([in]LPCSTR szValue, [in, defaultvalue(-1)]int len);
 	};
 
 	// Please do not rely on any of the internal representation exposed by these inline
@@ -254,6 +264,11 @@ library DolphinVM
 	cpp_quote("	return FetchByteLengthOf(ote)/sizeof(MWORD);")
 	cpp_quote("}")
 
+	cpp_quote("__inline BOOL IsAString(const POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return (((MWORD*)ote)[3] & 0x12) == 0x10;")
+	cpp_quote("}")
+
 	[
 		object,
 		uuid(B7EEF77A-71B9-11D3-97BC-0080C8D59432),
@@ -277,7 +292,7 @@ library DolphinVM
 		uuid(9318888B-C167-4A56-8DBA-B6B978E5BB3A),
 		pointer_default(unique)
 	]
-	interface IDolphinStart: IUnknown
+	interface IDolphinStart4: IUnknown
 	{
 		HRESULT Initialise(
 					[in]HINSTANCE hInstance, 
@@ -285,6 +300,25 @@ library DolphinVM
 					[in]LPVOID imageData, 
 					[in]UINT imageSize,
 					[in]DWORD dwFlags);
+
+		HRESULT GetVersionInfo([out]/*VS_FIXEDFILEINFO*/void* pFixedInfo);
+		HRESULT Run([in]IUnknown* punkOuter);
+	};
+
+	[
+		// D7.1 and later
+		object,
+		uuid(fdf31048-c85b-4dae-9058-e56fbe0b8e20),
+		pointer_default(unique)
+	]
+	interface IDolphinStart : IUnknown
+	{
+		HRESULT Initialise(
+			[in]HINSTANCE hInstance,
+			[in]LPCWSTR szFileName,
+			[in]LPVOID imageData,
+			[in]UINT imageSize,
+			[in]DWORD dwFlags);
 
 		HRESULT GetVersionInfo([out]/*VS_FIXEDFILEINFO*/void* pFixedInfo);
 		HRESULT Run([in]IUnknown* punkOuter);
@@ -322,7 +356,7 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk51
 	{
-		[default] interface IDolphin;
+		[default] interface IDolphin6;
 		interface IDolphinStart3;
 	};
 
@@ -331,8 +365,8 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk60
 	{
-		[default] interface IDolphin;
-		interface IDolphinStart;
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
 	};
 
 	[
@@ -340,8 +374,8 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk61
 	{
-		[default] interface IDolphin;
-		interface IDolphinStart;
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
 	};
 
 	[
@@ -349,12 +383,21 @@ library DolphinVM
 	]
 	coclass DolphinSmalltalk62
 	{
-		[default] interface IDolphin;
-		interface IDolphinStart;
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
 	};
 
 	[
 		uuid(EBB3C3FF-6AA8-4B9D-BC0D-92D5695B8C76)		// 7
+	]
+	coclass DolphinSmalltalk70
+	{
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
+	};
+
+	[
+		uuid(C579F2C3-AA3C-421A-9A80-8A6B83912E5C)		// 7.1
 	]
 	coclass DolphinSmalltalk
 	{

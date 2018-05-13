@@ -31,20 +31,8 @@ __declspec(naked) DWORD __stdcall AnswerDWORD(DWORD /*arg*/)
 // Keep this as simple as possible, or the MS compiler gets horribly confused and either
 // does too much work, or returns the structure in the WRONG way (which it does if we
 // add a constructor by attempting to return as a >8 byte structure rather than in EAX/EDX)
-struct QWORD
-{
-	DWORD m_dw1;
-	DWORD m_dw2;
-};
 
-/*struct QWORD2 : public QWORD
-{
-	QWORD2(DWORD dw1, DWORD dw2) { m_dw1 = dw1; m_dw2 = dw2; }
-};
-*/
-
-
-__declspec(naked) QWORD __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
+__declspec(naked) __int64 __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
 {
 	// In fact the compiler generates such crap code, we'll just do the job oursel
 	_asm 
@@ -53,13 +41,6 @@ __declspec(naked) QWORD __stdcall AnswerQWORD(DWORD /*dw1*/, DWORD /*dw2*/)
 		mov		edx, [esp+8]
 		ret		8
 	}
-
-/*	QWORD answer;
-	answer.m_dw1 = dw1;
-	answer.m_dw2 = dw2;
-	return answer;
-*/
-//	return QWORD2(dw1, dw2);
 }
 
 // In this case we get better code generation if we do use a constructor, and
@@ -94,9 +75,9 @@ extern "C" int __cdecl argc()
 	return __argc;
 }
 
-extern "C" char** __cdecl argv()
+extern "C" wchar_t** __cdecl argv()
 {
-	return __argv;
+	return __wargv;
 }
 
 // _snprintf_s is inlined. We force a non-inline copy to export from the .def file
@@ -126,15 +107,15 @@ extern "C" FILE* __cdecl StdErr()
 
 #include <atlbase.h>
 
-extern "C" HANDLE __stdcall RegisterAsEventSource(const char* szSource)
+extern "C" HANDLE __stdcall RegisterAsEventSource(const wchar_t* szSource)
 {
-	const char* szSrc = szSource;
-	static const char* szEventLogKeyBase = "SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\";
+	const wchar_t* szSrc = szSource;
+	static const wchar_t* szEventLogKeyBase = L"SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\";
 	
-	char szEventLogKey[256+1];
+	wchar_t szEventLogKey[256+1];
 	szEventLogKey[256] = 0;
-	strcpy(szEventLogKey, szEventLogKeyBase);
-	strncat_s(szEventLogKey, szSource, 256-strlen(szEventLogKeyBase));
+	wcscpy(szEventLogKey, szEventLogKeyBase);
+	wcsncat_s(szEventLogKey, szSource, 256-wcslen(szEventLogKeyBase));
 
 	CRegKey rkeyRegistered;
 	if (rkeyRegistered.Open(HKEY_LOCAL_MACHINE, szEventLogKey, KEY_READ) != ERROR_SUCCESS)
@@ -142,14 +123,14 @@ extern "C" HANDLE __stdcall RegisterAsEventSource(const char* szSource)
 		if (rkeyRegistered.Create(HKEY_LOCAL_MACHINE, szEventLogKey, REG_NONE, REG_OPTION_NON_VOLATILE,
 									(KEY_READ|KEY_WRITE)) == ERROR_SUCCESS)
 		{
-			char vmFileName[MAX_PATH+1];
-			::GetModuleFileName(_AtlBaseModule.GetModuleInstance(), vmFileName, sizeof(vmFileName) - 1);
-			rkeyRegistered.SetStringValue("EventMessageFile", vmFileName);
-			rkeyRegistered.SetDWORDValue("TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
+			wchar_t vmFileName[MAX_PATH+1];
+			::GetModuleFileNameW(_AtlBaseModule.GetModuleInstance(), vmFileName, sizeof(vmFileName) - 1);
+			rkeyRegistered.SetStringValue(L"EventMessageFile", vmFileName);
+			rkeyRegistered.SetDWORDValue(L"TypesSupported", (EVENTLOG_SUCCESS|EVENTLOG_ERROR_TYPE|
 												EVENTLOG_WARNING_TYPE|EVENTLOG_INFORMATION_TYPE));
 		}
 		else
-			szSrc = "Dolphin";
+			szSrc = L"Dolphin";
 	}
 
 

@@ -26,7 +26,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\decode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\dolphin.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\fatalerror.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\finalize.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\flotprim.cpp" />
@@ -38,6 +40,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\interprt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\InterprtInit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\largeintprim.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\LoadImage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\objmem.cpp" />
@@ -69,8 +72,16 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)IntPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c">
+      <CompileAs>CompileAsCpp</CompileAs>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
@@ -92,6 +103,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STClassDesc.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\StdAfx.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STExternal.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\STFloat.h" />
@@ -139,6 +153,17 @@
     <None Include="$(MSBuildThisFileDirectory)..\istasm.inc" />
     <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm" />
     <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl">
+      <AdditionalOptions>/no_robust %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>3</WarningLevel>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>ActiveXHost.tlb</TypeLibraryName>
+      <HeaderFileName>ActiveXHost.h</HeaderFileName>
+      <DllDataFileName>axdlldata.c</DllDataFileName>
+      <ProxyFileName>ActiveXHost_p.c</ProxyFileName>
+    </Midl>
   </ItemGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

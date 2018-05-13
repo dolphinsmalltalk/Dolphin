@@ -88,9 +88,9 @@ void Interpreter::initializeVMReferences()
 
 	m_pProcessor = _Pointers.Scheduler->m_location;
 
-	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassString)
+	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassAnsiString)
 	{
-		_Pointers.EmptyString = String::New("");
+		_Pointers.EmptyString = AnsiString::New("");
 		_Pointers.EmptyString->beImmutable();
 	}
 
@@ -99,7 +99,7 @@ void Interpreter::initializeVMReferences()
 	ObjectMemory::addVMRefs();
 }
 
-void Interpreter::sendStartup(LPCSTR szImagePath, DWORD dwArg)
+void Interpreter::sendStartup(const wchar_t* szImagePath, DWORD dwArg)
 {
 	// Boost the priority so runs to exclusion of other processes (except timing and weak
 	// collection repair)
@@ -108,7 +108,7 @@ void Interpreter::sendStartup(LPCSTR szImagePath, DWORD dwArg)
 	// Construct argument array
 	ArrayOTE* oteArgs = Array::NewUninitialized(2);
 	Array* args = oteArgs->m_location;
-	StringOTE* string = String::New(szImagePath);
+	Utf16StringOTE* string = Utf16String::New(szImagePath);
 	args->m_elements[0] = reinterpret_cast<Oop>(string);
 	string->m_count = 1;
 	args->m_elements[1] = Integer::NewUnsigned32(dwArg);

@@ -25,7 +25,7 @@ public:
 	~CDolphinSmalltalk();
 
 #ifdef VMDLL
-DECLARE_REGISTRY(CDolphinSmalltalk, "DolphinSmalltalk.6", "DolphinSmalltalk", IDS_APP_TITLE, THREADFLAGS_APARTMENT)
+DECLARE_REGISTRY(CDolphinSmalltalk, L"DolphinSmalltalk.7", L"DolphinSmalltalk", IDS_APP_TITLE, THREADFLAGS_APARTMENT)
 #endif
 
 DECLARE_NOT_AGGREGATABLE(CDolphinSmalltalk)
@@ -47,6 +47,10 @@ public:
 		/*[in]*/LPCSTR szImageName, /*[in]*/LPVOID pImageData, /*[in]*/UINT cImageSize, DWORD dwFlags);
 	STDMETHOD(Run)(/*[in]*/IUnknown* punkOuter);
 	STDMETHOD(GetVersionInfo)(/*[out]*/LPVOID);
+
+// IDolphinStart4
+	STDMETHOD(Initialise)(/*[in]*/HINSTANCE hInstance,
+		/*[in]*/LPCWSTR szImageName, /*[in]*/LPVOID pImageData, /*[in]*/UINT cImageSize, DWORD dwFlags);
 
 // IDolphin
 public:
@@ -110,7 +114,7 @@ public:
 	STDMETHOD_(POTE, NewString)( 
             /* [in] */ LPCSTR szValue,
             /* [in] */ int len);
-        
+ 
 	STDMETHOD_(Oop, NewSignedInteger)( 
             /* [in] */ SDWORD value);
         
@@ -159,6 +163,10 @@ public:
 
 	STDMETHOD_(BSTR, DebugPrintString)(
 			/* [in] */ Oop oop);
+
+	STDMETHOD_(POTE, NewUtf8String)(
+		/* [in] */ LPCSTR szValue,
+		/* [in] */ int len);
 };
 
 #ifdef VMDLL

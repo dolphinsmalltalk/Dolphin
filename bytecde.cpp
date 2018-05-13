@@ -111,7 +111,7 @@ inline BOOL Interpreter::sampleInput()
 			if (IsUserBreakRequested())
 			{
 				#ifdef _DEBUG
-					WarningWithStackTrace("User Interrupt:");
+					WarningWithStackTrace(L"User Interrupt:");
 				#endif
 				queueInterrupt(VMI_USERINTERRUPT, Oop(Pointers.Nil));
 			}
@@ -222,8 +222,8 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::findNewMethodInClass(Beha
 			{
 				MethodOTE* oteMethod = pEntry->method;
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << "Found method " << classPointer << ">>" << oteSelector << 
-						" (" << oteMethod << ") in cache\n";
+				TRACESTREAM<< L"Found method " << classPointer<< L">>" << oteSelector << 
+						" (" << oteMethod<< L") in cache\n";
 			}
 		}
 		#endif
@@ -293,7 +293,7 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 						if (abs(executionTrace) > 1)
 						{
 							tracelock lock(TRACESTREAM);
-							TRACESTREAM << "Found method " << classPointer << ">>" << targetSelector << " (" << methodPointer << ")" << endl;
+							TRACESTREAM<< L"Found method " << classPointer<< L">>" << targetSelector<< L" (" << methodPointer<< L")" << endl;
 						}
 					}
 #endif
@@ -356,13 +356,13 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::messageNotUnderstood(Beha
 {
 	#if defined(_DEBUG)
 	{
-		ostringstream dc;
-		dc << classPointer << " does not understand " << m_oopMessageSelector << endl << ends;
-		string msg = dc.str();
+		wostringstream dc;
+		dc << classPointer<< L" does not understand " << m_oopMessageSelector << endl << ends;
+		wstring msg = dc.str();
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM << msg;
 		if (classPointer->isMetaclass() || 
-				strcmp(static_cast<Class*>(classPointer->m_location)->getName(), "DeafObject"))
+				strcmp(static_cast<Class*>(classPointer->m_location)->Name, "DeafObject"))
 			WarningWithStackTrace(msg.c_str());
 	}
 	#endif
@@ -809,13 +809,13 @@ Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp)
 
 		if (cacheHits != 0 || cacheMisses != 0)
 		{
-			char buf[256];
-			_snprintf_s(buf, sizeof(buf)-1, "%u method cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
+			wchar_t buf[256];
+			_snwprintf_s(buf, sizeof(buf)-1, L"%u method cache hits, %u misses %.2lf hit ratio, in use %d, empty %d\n",
 							cacheHits, cacheMisses, 
 							(double)cacheHits / 
 								(cacheHits + cacheMisses?cacheHits+cacheMisses:1),
 							used, MethodCacheSize - used);
-			OutputDebugString(buf);
+			OutputDebugStringW(buf);
 		}
 
 		cacheHits = cacheMisses = 0;

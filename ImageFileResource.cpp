@@ -5,7 +5,7 @@
 
 int ImageFileResource::Open(HMODULE hModule, int resId)
 {
-	m_hFind = ::FindResource(hModule, LPCSTR(resId), RT_RCDATA);
+	m_hFind = ::FindResource(hModule, LPCWSTR(resId), RT_RCDATA);
 	if (m_hFind == NULL)
 		return -1;
 	m_hResource = ::LoadResource(hModule, m_hFind);

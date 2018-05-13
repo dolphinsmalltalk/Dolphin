@@ -20,8 +20,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // When inlining code the compiler sometimes has to generate temporaries. It prefixes
 // these with a space so that the names cannot possibly clash with user defined temps
-static const char eachTempName[] = GENERATEDTEMPSTART "each";
-static const char valueTempName[] = GENERATEDTEMPSTART "value";
+static const uint8_t eachTempName[] = GENERATEDTEMPSTART "each";
+static const uint8_t valueTempName[] = GENERATEDTEMPSTART "value";
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +42,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol("ifTrue:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifTrue:"));
 		return false;
 	}
 
@@ -55,7 +55,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	int jumpOutMark = GenJumpInstruction(LongJump);
 	int elseMark = m_codePointer;
 
-	if (strcmp(ThisTokenText(), "ifFalse:") == 0)
+	if (strcmp((LPCSTR)ThisTokenText(), "ifFalse:") == 0)
 	{
 		// An else block exists
 		POTE oteSelector = AddSymbolToFrame("ifTrue:ifFalse:", messageRange);
@@ -85,7 +85,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol("ifFalse:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifFalse:"));
 		return false;
 	}
 
@@ -98,7 +98,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	int jumpOutMark = GenJumpInstruction(LongJump);
 	int elseMark = m_codePointer;
 
-	if (strcmp(ThisTokenText(), "ifTrue:") == 0)
+	if (strcmp((LPCSTR)ThisTokenText(), "ifTrue:") == 0)
 	{
 		// An else block exists
 
@@ -337,7 +337,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, int exprStartPos)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol("ifNil:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifNil:"));
 		return false;
 	}
 
@@ -355,7 +355,7 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, int exprStartPos)
 	
 	int ifNotNilMark;
 
-	if (strcmp(ThisTokenText(), "ifNotNil:") == 0)
+	if (strcmp((LPCSTR)ThisTokenText(), "ifNotNil:") == 0)
 	{
 		POTE oteSelector = AddSymbolToFrame("ifNil:ifNotNil:", messageRange);
 
@@ -412,7 +412,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectMonadicOrNiladicBlockArg, (Oop)InternSymbol("ifNotNil:"));
+		Warning(CWarnExpectMonadicOrNiladicBlockArg, (Oop)InternSymbol((LPUTF8)"ifNotNil:"));
 		return false;
 	}
 
@@ -437,7 +437,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 	int ifNilMark;
 
 	// Has an #ifNil: branch?
-	if (strcmp(ThisTokenText(), "ifNil:") == 0)
+	if (strcmp((LPCSTR)ThisTokenText(), "ifNil:") == 0)
 	{
 		POTE oteSelector = AddSymbolToFrame("ifNotNil:ifNil:", messageRange);
 
@@ -578,7 +578,8 @@ bool Compiler::ParseRepeatLoop(const int loopmark)
 	return true;
 }
 
-POTE Compiler::AddSymbolToFrame(const char* s, const TEXTRANGE& tokenRange)
+
+POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange)
 {
 	POTE oteSelector = InternSymbol(s);
 	AddToFrame(reinterpret_cast<Oop>(oteSelector), tokenRange);

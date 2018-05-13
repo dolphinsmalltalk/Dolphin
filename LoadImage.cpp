@@ -1,5 +1,3 @@
-#include "objmem.h"
-#include "objmem.h"
 /******************************************************************************
 
 	File: LoadImage.cpp
@@ -10,6 +8,7 @@
 
 ******************************************************************************/
 #include "ist.h"
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -62,10 +61,10 @@ static HRESULT ImageReadError(ibinstream& imageFile)
 		: ReportError(IDP_UNKNOWNIMAGEERROR);
 }
 
-HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
+HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 #ifdef PROFILE_IMAGELOADSAVE
-	TRACESTREAM << "Loading image '" << szImageName << endl;
+	TRACESTREAM<< L"Loading image '" << szImageName << endl;
 	DWORD dwStartTicks = GetTickCount();
 #endif
 
@@ -100,7 +99,7 @@ HRESULT ObjectMemory::LoadImage(const char* szImageName, LPVOID imageData, UINT 
 
 #ifdef PROFILE_IMAGELOADSAVE
 	DWORD msToRun = GetTickCount() - dwStartTicks;
-	TRACESTREAM << " done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed") << "), binstreams time=" << long(msToRun) << "mS" << endl;
+	TRACESTREAM<< L" done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed")<< L"), binstreams time=" << long(msToRun)<< L"mS" << endl;
 #endif
 
 	return hr;
@@ -155,7 +154,7 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 
 #ifdef _DEBUG
 	// tellg() invalidates a gzstream
-	//TRACESTREAM << nDataRead << " data bytes read, loading checksum at offset " << imageFile.tellg() << endl;
+	//TRACESTREAM << nDataRead<< L" data bytes read, loading checksum at offset " << imageFile.tellg() << endl;
 #endif
 
 	// Read the checksum...
@@ -230,7 +229,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& i
 	}
 
 #ifdef _DEBUG
-	TRACESTREAM << i << " permanent objects loaded totalling " << cbPerm << " bytes" << endl;
+	TRACESTREAM << i<< L" permanent objects loaded totalling " << cbPerm<< L" bytes" << endl;
 #endif
 
 	memcpy(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
@@ -286,11 +285,6 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 
 				pBody = reinterpret_cast<Object*>(AllocateVirtualSpace(dwMaxAlloc, byteSize));
 				ote->m_location = pBody;
-#ifdef OAD
-				TRACESTREAM << "Allocated virtual space at " << ote->m_location
-					<< ", max " << dec << vObjHeader.getMaxAllocation() <<
-					", size " << byteSize << endl;
-#endif
 			}
 			else
 			{
@@ -341,7 +335,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 #ifdef _DEBUG
 	ASSERT(numObjects + m_nFreeOTEs == m_nOTSize);
 	ASSERT(m_nFreeOTEs = CountFreeOTEs());
-	TRACESTREAM << dec << numObjects << ", " << m_nFreeOTEs << " free" << endl;
+	TRACESTREAM << dec << numObjects<< L", " << m_nFreeOTEs<< L" free" << endl;
 #endif
 
 	cbRead += nDataSize;
@@ -377,10 +371,11 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 		PointersOTE* oteObj = reinterpret_cast<PointersOTE*>(ote);
 		if (ote->isPointers() && (oteObj->getSize() % 2 == 1 ||
 			classPointer == _Pointers.ClassByteArray ||
-			classPointer == _Pointers.ClassString ||
+			classPointer == _Pointers.ClassAnsiString ||
+			classPointer == _Pointers.ClassUtf8String ||
 			classPointer == _Pointers.ClassSymbol))
 		{
-			TRACESTREAM << "Bad OTE for byte array " << LPVOID(&ote) << " marked as pointer" << endl;
+			TRACESTREAM<< L"Bad OTE for byte array " << LPVOID(&ote)<< L" marked as pointer" << endl;
 			ote->beBytes();
 		}
 	}
@@ -467,7 +462,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		framePointer += delta;
 		if (framePointer < Oop(stackBase) || framePointer > Oop(stackEnd))
 		{
-			trace("Warning: Process at %#x has corrupt frame pointer at %#x which will be nilled\n", this, pFramePointer);
+			trace(L"Warning: Process at %#x has corrupt frame pointer at %#x which will be nilled\n", this, pFramePointer);
 			*pFramePointer = Oop(Pointers.Nil);
 			break;
 		}
@@ -520,7 +515,7 @@ void Process::PostLoadFix(ProcessOTE* oteThis)
 		int size = (pFrame->m_sp - 1) - reinterpret_cast<DWORD>(this) + sizeof(Oop);
 		if (size > 0 && unsigned(size) < oteThis->getSize())
 		{
-			TRACE("WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
+			TRACE(L"WARNING: Resizing process %p from %u to %u\n", oteThis, oteThis->getSize(), size);
 			oteThis->setSize(size);
 		}
 	}
@@ -570,12 +565,12 @@ void ObjectMemory::PostLoadFix()
 #if defined(_DEBUG) && 0
 	{
 		// Dump out the pointers
-		TRACESTREAM << NumPointers << " VM Pointers..." << endl;
+		TRACESTREAM << NumPointers<< L" VM Pointers..." << endl;
 		for (int i = 0; i < NumPointers; i++)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(m_pConstObjs);
 			POTE pote = POTE(obj->m_fields[i]);
-			TRACESTREAM << i << ": " << pote << endl;
+			TRACESTREAM << i<< L": " << pote << endl;
 		}
 	}
 #endif

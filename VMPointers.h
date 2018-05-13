@@ -21,12 +21,12 @@
 ******************************************************************************/
 #pragma once
 
-#include <bytecdes.h>
+#include "bytecdes.h"
 
 #if defined(VM)
 namespace ST
 {
-	class String;
+	class AnsiString;
 	class Symbol;
 	class Semaphore;
 	class ProcessorScheduler;
@@ -37,7 +37,7 @@ namespace ST
 	class MemoryManager;
 	class VariableBinding;
 }
-typedef TOTE<ST::String> StringOTE;
+typedef TOTE<ST::AnsiString> AnsiStringOTE;
 typedef TOTE<ST::Symbol> SymbolOTE;
 typedef TOTE<ST::Semaphore> SemaphoreOTE;
 typedef TOTE<ST::ProcessorScheduler> SchedulerOTE;
@@ -49,7 +49,7 @@ typedef TOTE<ST::MemoryManager> MemManOTE;
 typedef TOTE<ST::VariableBinding> VariableBindingOTE;
 #else
 typedef void OTE;
-typedef OTE StringOTE;
+typedef OTE AnsiStringOTE;
 typedef OTE SymbolOTE;
 typedef OTE SemaphoreOTE;
 typedef OTE SchedulerOTE;
@@ -72,8 +72,8 @@ struct VMPointers //: public Object
 			POTE Nil;											// 1
 			POTE True;											// 2
 			POTE False;											// 3
-			StringOTE* EmptyString;								// 4
-			StringOTE* LineDelimString;							// 5
+			AnsiStringOTE* EmptyString;							// 4
+			AnsiStringOTE* LineDelimString;						// 5
 			ArrayOTE* EmptyArray;								// 6
 			BlockOTE* EmptyBlock;								// 7
 			BlockOTE* EmptyDebugBlock;							// 8
@@ -99,9 +99,9 @@ struct VMPointers //: public Object
 			SymbolOTE* callbackPerformWithWithSymbol;			// 50
 			SymbolOTE* callbackPerformWithWithWithSymbol;		// 51
 			SymbolOTE* callbackPerformWithArgumentsSymbol;		// 52
-			/**/Oop _unusedSelector4;								// 53
+			/**/Oop _unusedSelector53;							// 53
 			SymbolOTE* subclassWindowSymbol;					// 54
-			SymbolOTE* errorInstVarAtPutSymbol;				// 55
+			SymbolOTE* instVarAtPutSymbol;						// 55
 
 			// 56..65
 			SymbolOTE* lookupKeySymbol;							// 56
@@ -115,14 +115,14 @@ struct VMPointers //: public Object
 			SymbolOTE* canUnderstandSymbol;						// 62
 			SymbolOTE* negativeSymbol;							// 63
 			SymbolOTE* evaluateExpressionSelector;				// 64
-			/**/POTE _unusedSelector6;								// 65
+			/**/POTE _unusedSelector65;								// 65
 
 				// 66..85
 			SymbolOTE* compilerNotificationCallback;			// 66
-			POTE _unusedSelector7;								// 67
+			POTE _unusedSelector67;								// 67
 
 			SymbolOTE* genericCallbackSelector;					// 68
-			/**/Oop _unusedSelector3;								// 69
+			/**/Oop _unusedSelector69;								// 69
 			SymbolOTE* virtualCallbackSelector;					// 70
 			SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73,74
 			Oop _reservedSymbols[6];							// 75, 76,77,78,79,80
@@ -132,7 +132,7 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassMetaclass;						// 81
 			BehaviorOTE* ClassCharacter;						// 82
 			BehaviorOTE* ClassArray;							// 83
-			BehaviorOTE* ClassString;							// 84
+			BehaviorOTE* ClassAnsiString;						// 84
 			BehaviorOTE* ClassSymbol;							// 85
 			BehaviorOTE* ClassSmallInteger;						// 86
 			BehaviorOTE* ClassProcess;							// 87
@@ -154,7 +154,7 @@ struct VMPointers //: public Object
 			BehaviorOTE* ClassExternalAddress;						// 100
 
 			// 101..110
-			BehaviorOTE* ClassExternalHandle;
+			BehaviorOTE* ClassExternalHandle;					// 101
 			POTE Dispatcher;									// 102 - Actually this doesn't need to be a class at all
 			BehaviorOTE* ClassLPVOID;							// 103
 			BehaviorOTE* ClassUtf8String;						// 104

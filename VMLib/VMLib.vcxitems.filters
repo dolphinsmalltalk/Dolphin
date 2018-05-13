@@ -25,9 +25,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
-      <Filter>FFI</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\fatalerror.cpp">
       <Filter>Diagnostics</Filter>
     </ClCompile>
@@ -139,9 +136,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp">
       <Filter>FFI</Filter>
     </ClCompile>
-    <ClCompile Include="D:\dev\blairmcg\Dolphin\Core\DolphinVM\VMLib\IntPrim.cpp">
-      <Filter>Primitives</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp">
+      <Filter>App Support</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
@@ -263,6 +263,15 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h">
       <Filter>ObjectMemory</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STClassDesc.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h">
+      <Filter>Smalltalk Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">
@@ -323,5 +332,8 @@
     <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm">
       <Filter>Primitives</Filter>
     </MASM>
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl" />
   </ItemGroup>
 </Project>

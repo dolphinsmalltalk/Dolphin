@@ -23,20 +23,20 @@ HMODULE __stdcall GetResLibHandle()
 }
 
 
-static LPSTR GetErrorText(HRESULT hr)
+static LPCWSTR GetErrorText(HRESULT hr)
 {
 	// Answer some suitable text for the last system error
-	LPSTR buf;
+	LPWSTR buf;
 	::FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-		0, hr, 0, LPSTR(&buf), 0, 0);
+		0, hr, 0, LPWSTR(&buf), 0, 0);
 	return buf;
 }
 
 void __stdcall FatalError(HRESULT hr)
 {
-	LPSTR errorMessage = GetErrorText(hr);
-	fputs(errorMessage, stderr);
-	LocalFree(errorMessage);
+	LPCWSTR errorMessage = GetErrorText(hr);
+	fputws(errorMessage, stderr);
+	LocalFree((HLOCAL)errorMessage);
 }
 
 HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
@@ -45,7 +45,7 @@ HRESULT __stdcall ErrorUnableToCreateVM(HRESULT hr)
 	return hr;
 }
 
-int __cdecl main(int argc, char* argv[])
+int __cdecl wmain(int argc, wchar_t* argv[])
 {
 	// The VM is created through COM, or if TO GO may still be needed to load compiler
 	::CoInitialize(NULL);
