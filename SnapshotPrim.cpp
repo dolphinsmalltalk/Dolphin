@@ -111,7 +111,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
 
 #elif defined(TO_GO)
 
-Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const)
+Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const, unsigned)
 {
 	return NULL;
 }
