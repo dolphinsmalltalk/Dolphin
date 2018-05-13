@@ -2,7 +2,7 @@
 ============
 Interfac.cpp
 ============
-Interpreter interface functions that can be thrown away eventually (or perhaps not in some cases)
+Interpreter interface functions
 */
 							
 #include "Ist.h"
@@ -24,7 +24,7 @@ Interpreter interface functions that can be thrown away eventually (or perhaps n
 #include "STArray.h"
 #include <setjmp.h>
 
-const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 6.0";
+const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 7.1";
 
 #include <winreg.h>
 
@@ -34,11 +34,8 @@ const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 6.0";
 #include "STInteger.h"		// NewDWORD uses to create new integer, also for winproc return
 #include "STExternal.h"		// Primary purpos of this module is external i/f'ing
 
-extern LPCWSTR GetVMFileName();
-
 #define USESETJMP
-// This is referenced from primasm.asm too
-Oop currentCallbackContext = ZeroPointer;
+static Oop currentCallbackContext = ZeroPointer;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual function call-in tables

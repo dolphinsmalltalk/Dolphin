@@ -117,6 +117,31 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 	CHECKREFERENCES
 }
 
+Oop* __fastcall Interpreter::primitiveOneWayBecome(Oop* const sp, unsigned)
+{
+	Oop receiver = *(sp - 1);
+	Oop arg = *sp;
+
+	if (!ObjectMemoryIsIntegerObject(receiver) && !ObjectMemoryIsIntegerObject(arg))
+	{
+		if (receiver != arg)
+		{
+			OTE* oteReceiver = reinterpret_cast<OTE*>(receiver);
+			if (oteReceiver > ObjectMemory::PointerFromIndex(ObjectMemory::FirstCharacterIdx + 255))
+			{
+				OTE* oteArg = reinterpret_cast<OTE*>(arg);
+				ObjectMemory::oneWayBecome(oteReceiver, oteArg);
+				return sp - 1;
+			}
+			else
+				return nullptr;
+		}
+		else
+			return sp - 1;
+	}
+	return nullptr;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Instance Enumeration
 

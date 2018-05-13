@@ -363,28 +363,6 @@ LocalPrimitiveFailure 0
 ENDPRIMITIVE primitiveBecome
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-BEGINPRIMITIVE primitiveOneWayBecome
-	mov		ecx, [_SP-OOPSIZE]
-	mov		edx, [_SP]
-	mov		eax, [OBJECTTABLE]
-	test	cl, 1
-	lea		eax, [eax+FIRSTCHAROFFSET+256*OTENTRYSIZE]
-	jnz		localPrimitiveFailure0
-	cmp		ecx, eax
-	jl		localPrimitiveFailure0
-
-	; oneWayBecome deallocates the become'd object, which flushes it from the at(put) caches
-	call	ONEWAYBECOME
-
-	lea		eax, [_SP-OOPSIZE]				; primitiveSuccess(1)
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveOneWayBecome
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Dequeue an entry from the finalization queue, and answer it. Answers nil if the queue is empty
 BEGINPRIMITIVE primitiveDeQForFinalize
 	call	DQFORFINALIZATION							; Answers nil, or an Oop with raised ref.count
