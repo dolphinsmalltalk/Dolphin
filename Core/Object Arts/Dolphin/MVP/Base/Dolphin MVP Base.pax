@@ -1343,7 +1343,7 @@ getConsoleWindow
 
 	<stdcall: handle GetConsoleWindow>
 	^self invalidCall! !
-!KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getConsoleWindow!**auto generated**!public!win32 functions-console! !
 
 !MessageSend methodsFor!
 

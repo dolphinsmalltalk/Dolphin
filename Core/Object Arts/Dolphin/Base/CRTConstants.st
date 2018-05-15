@@ -34,7 +34,12 @@ CRTConstants at: '_MCW_IC' put: 16r40000!
 CRTConstants at: '_MCW_PC' put: 16r30000!
 CRTConstants at: '_MCW_RC' put: 16r300!
 CRTConstants at: '_O_BINARY' put: 16r8000!
+CRTConstants at: '_O_RANDOM' put: 16r10!
+CRTConstants at: '_O_SEQUENTIAL' put: 16r20!
 CRTConstants at: '_O_TEXT' put: 16r4000!
+CRTConstants at: '_O_U16TEXT' put: 16r20000!
+CRTConstants at: '_O_U8TEXT' put: 16r40000!
+CRTConstants at: '_O_WTEXT' put: 16r10000!
 CRTConstants at: '_PC_24' put: 16r20000!
 CRTConstants at: '_PC_53' put: 16r10000!
 CRTConstants at: '_PC_64' put: 16r0!

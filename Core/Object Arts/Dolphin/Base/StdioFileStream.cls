@@ -38,7 +38,7 @@ atEnd
 			attempt to read another character."
 			self isDevice not and: [self basicPeek isNil]]!
 
-attach: anExternalHandle toFd: fdInteger mode: aString type: aSymbol
+attach: anExternalHandle toFd: fdInteger mode: aString
 	"Private - Attach the stdio descriptor identified by fdInteger (usually one of 0=stdin,
 	1=stdout, or 2-stderr) to the specified OS file, and open a stdio stream onto it in the
 	specified stdio mode."
@@ -415,7 +415,7 @@ upTo: anObject
 	^self bufferPrototype decodeFrom: self upTo: anObject! !
 !StdioFileStream categoriesFor: #asParameter!converting!public! !
 !StdioFileStream categoriesFor: #atEnd!public!testing! !
-!StdioFileStream categoriesFor: #attach:toFd:mode:type:!initializing!private! !
+!StdioFileStream categoriesFor: #attach:toFd:mode:!initializing!private! !
 !StdioFileStream categoriesFor: #basicNext!accessing!private! !
 !StdioFileStream categoriesFor: #basicNext:!accessing!private! !
 !StdioFileStream categoriesFor: #basicNext:into:startingAt:!accessing!private! !
@@ -480,8 +480,7 @@ attach: anExternalHandle toFd: fdInteger mode: modeSymbol type: aSymbol
 	^(self classForEncoding: aSymbol) basicNew
 		attach: anExternalHandle
 		toFd: fdInteger
-		mode: (self attachMode: modeSymbol)
-		type: #text!
+		mode: (self attachMode: modeSymbol)!
 
 attachMode: modeSymbol
 	^String with: (modeSymbol == #read ifTrue: [$r] ifFalse: [$w]) with: self encodingMode!

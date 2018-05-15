@@ -1088,27 +1088,6 @@ heapValidate: aHandle dwFlags: anInteger lpMem: anAddress
 	<stdcall: bool HeapValidate handle dword lpvoid>
 	^self invalidCall!
 
-isDBCSLeadByte: testChar
-	"Invoke the IsDBCSLeadByte() function of the module wrapped by the receiver.
-	Helpstring: uses the ANSI code page to determine whether a specified byte is potentially a lead byte that is, the first byte of a two-byte character in a double-byte character set (DBCS)
-
-		BOOL __stdcall IsDBCSLeadByte(
-			BYTE TestChar);"
-
-	<stdcall: bool IsDBCSLeadByte byte>
-	^self invalidCall!
-
-isDBCSLeadByteEx: codepage testChar: testChar
-	"Invoke the IsDBCSLeadByteEx() function of the module wrapped by the receiver.
-	Helpstring: determines whether a specified byte is a lead byte, that is, the first byte of a two-byte character in a double-byte character set (DBCS) for the specified code page
-
-		BOOL __stdcall IsDBCSLeadByteEx(
-			UINT codepage,
-			BYTE TestChar);"
-
-	<stdcall: bool IsDBCSLeadByte dword byte>
-	^self invalidCall!
-
 lcMapString: locale dwMapFlags: dwMapFlags lpScrStr: lpSrcStr cchSrc: cchSrc lpDestStr: lpDestStr cchDest: cchDest
 	<stdcall: sdword LCMapStringW sdword dword lpwstr sdword lpwstr sdword>
 	^self invalidCall
@@ -1335,10 +1314,30 @@ resetEvent: hEvent
 	<stdcall: bool ResetEvent handle>
 	^self invalidCall!
 
+setConsoleCP: wCodePageID
+	"Invoke the SetConsoleCP() function of the module wrapped by the receiver.
+	Helpstring: Sets the input code page used by the console associated with the calling process. A console uses its input code page to translate keyboard input into the corresponding character value.
+
+		BOOL __stdcall SetConsoleCP(
+			[in]unsigned int wCodePageID);"
+
+	<stdcall: bool SetConsoleCP dword>
+	^self invalidCall!
+
 setConsoleCtrlHandler: pHandlerRoutine add: aBoolean
 	"Set the handler function which receives console control events."
 
 	<stdcall: bool SetConsoleCtrlHandler void* bool>
+	^self invalidCall!
+
+setConsoleOutputCP: wCodePageID
+	"Invoke the SetConsoleOutputCP() function of the module wrapped by the receiver.
+	Helpstring: Sets the output code page used by the console associated with the calling process. A console uses its output code page to translate the character values written by the various output functions into the images displayed in the console window.
+
+		BOOL __stdcall SetConsoleOutputCP(
+			[in]unsigned int wCodePageID);"
+
+	<stdcall: bool SetConsoleOutputCP dword>
 	^self invalidCall!
 
 setConsoleTitle: lpConsoleTitle
@@ -1667,7 +1666,7 @@ zeroMemory: pvDest length: cBytes
 	^self invalidCall! !
 !KernelLibrary categoriesFor: #addAtom:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #allocConsole!**auto generated**!public!win32 functions-console! !
-!KernelLibrary categoriesFor: #attachConsole:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #attachConsole:!**auto generated**!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #beep:dwDuration:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #close!public!realizing/unrealizing! !
@@ -1679,7 +1678,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #createDirectory:lpSecurityAttributes:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #createEvent:bManualReset:bInitialState:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #createFile:dwDesiredAccess:dwSharedMode:lpSecurityAttributes:dwCreationDistribution:dwFlagsAndAttributes:hTemplateFile:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #createMutex:bInitialOwner:lpName:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #debugBreak!**auto generated**!public!win32 functions-debugging! !
 !KernelLibrary categoriesFor: #deleteFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #deviceIoControl:dwIoControlCode:lpInBuffer:nInBufferSize:lpOutBuffer:nOutBufferSize:lpBytesReturned:lpoverlapped:!public! !
@@ -1700,14 +1699,14 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #flushFileBuffers:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #formatMessage:lpSource:dwMessageId:dwLanguageId:lpBuffer:nSize:arguments:!public!win32 functions-error! !
 !KernelLibrary categoriesFor: #formatMessage:source:flags:withArguments:!helpers!public! !
-!KernelLibrary categoriesFor: #freeConsole!**auto generated**!public! !
+!KernelLibrary categoriesFor: #freeConsole!**auto generated**!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #freeLibrary:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #getACP!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getAtomName:lpBuffer:nSize:!public!win32 functions-atom! !
 !KernelLibrary categoriesFor: #getCommandLine!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getComputerName:nSize:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getConsoleTitle:nSize:!**auto generated**!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #getCPInfoExW:dwFlags:lpCPInfoEx:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getCurrentProcess!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThread!public!win32 functions-process and thread! !
 !KernelLibrary categoriesFor: #getCurrentThreadId!public!win32 functions-process and thread! !
@@ -1741,7 +1740,7 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #getTimeZoneInformation:!public!win32 functions-date and time! !
 !KernelLibrary categoriesFor: #getUserDefaultLCID!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #getVolumeInformation:lpVolumeNameBuffer:nVolumeNameSize:lpVolumeSerialNumber:lpMaximumComponentLength:lpFileSystemFlags:lpFileSystemNameBuffer:nFileSystemNameSize:!**auto generated**!public!win32 functions-file system! !
 !KernelLibrary categoriesFor: #getWindowsDirectory:uSize:!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #globalAlloc:dwBytes:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #globalFree:!public!win32 functions-memory management! !
@@ -1753,13 +1752,11 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #heapReAlloc:dwFlags:lpMem:dwBytes:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapSize:dwFlags:lpMem:!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #heapValidate:dwFlags:lpMem:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #isDBCSLeadByte:!**auto generated**!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #isDBCSLeadByteEx:testChar:!**auto generated**!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #lcMapString:dwMapFlags:lpScrStr:cchSrc:lpDestStr:cchDest:!public!win32 functions-national language support! !
 !KernelLibrary categoriesFor: #loadLibraryEx:hFile:dwFlags:!public!win32 functions-dynamic link library! !
 !KernelLibrary categoriesFor: #loadResource:hResInfo:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
-!KernelLibrary categoriesFor: #localFree:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #localFree:!**auto generated**!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #lockResource:!public!win32 functions-resource! !
 !KernelLibrary categoriesFor: #lstrlenW:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #moveFile:lpNewFileName:!public!win32 functions-file! !
@@ -1772,10 +1769,12 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #queryPerformanceFrequency:!public!win32 functions-performance monitoring! !
 !KernelLibrary categoriesFor: #raiseException:dwExceptionFlags:nNumberOfArguments:lpArguments:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #readFile:lpBuffer:nNumberOfBytesToRead:lpNumberOfBytesRead:lpOverlapped:!public!win32 functions-file! !
-!KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #releaseMutex:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #removeDirectory:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #resetEvent:!**auto generated**!public!win32 functions-synchronization! !
+!KernelLibrary categoriesFor: #setConsoleCP:!**auto generated**!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setConsoleCtrlHandler:add:!public!win32 functions-console! !
+!KernelLibrary categoriesFor: #setConsoleOutputCP:!**auto generated**!public!win32 functions-console! !
 !KernelLibrary categoriesFor: #setConsoleTitle:!**auto generated**!public! !
 !KernelLibrary categoriesFor: #setEndOfFile:!public!win32 functions-file! !
 !KernelLibrary categoriesFor: #setEnvironmentVariable:lpValue:!public!win32 functions-process and thread! !
@@ -1796,10 +1795,10 @@ zeroMemory: pvDest length: cBytes
 !KernelLibrary categoriesFor: #updateResourcesOf:do:!operations!public! !
 !KernelLibrary categoriesFor: #verifyVersionInfo:dwTypeMask:dwlConditionMask:!**auto generated**!public!win32 functions-system information! !
 !KernelLibrary categoriesFor: #verSetConditionMask:typeMask:condition:!**auto generated**!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #virtualAlloc:dwSize:flAllocationType:flProtect:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public! !
-!KernelLibrary categoriesFor: #virtualQuery:lpBuffer:dwLength:!**auto generated**!public! !
+!KernelLibrary categoriesFor: #virtualAlloc:dwSize:flAllocationType:flProtect:!**auto generated**!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #virtualFree:dwSize:dwFreeType:!**auto generated**!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #virtualProtect:dwSize:flNewProtect:lpflOldProtect:!**auto generated**!public!win32 functions-memory management! !
+!KernelLibrary categoriesFor: #virtualQuery:lpBuffer:dwLength:!**auto generated**!public!win32 functions-memory management! !
 !KernelLibrary categoriesFor: #waitForSingleObject:dwMilliseconds:!**auto generated**!public!win32 functions-synchronization! !
 !KernelLibrary categoriesFor: #wideCharToMultiByte:dwFlags:lpWideCharStr:cchWideChar:lpMultiByteStr:cchMultiByte:lpDefaultChar:lpUsedDefaultChar:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #winExec:uCmdShow:!public!win32 functions-process and thread! !

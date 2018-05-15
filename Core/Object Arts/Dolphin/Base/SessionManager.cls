@@ -41,8 +41,11 @@ Class Variables:
 allocConsole
 	"Private - Open a console window for this session."
 
-	KernelLibrary default allocConsole
-!
+	KernelLibrary default
+		allocConsole;
+		setConsoleTitle: self applicationName;
+		setConsoleOutputCP: CP_UTF8;
+		setConsoleCP: CP_UTF8!
 
 allowDuplicate
 	"It would appear that the image associated with this session is already open. Take action
@@ -711,7 +714,6 @@ openConsole
 		allocConsole;
 		registerConsoleCtrlHandler;
 		openConsoleStreams.
-	KernelLibrary default setConsoleTitle: self applicationName.
 	^wasOpen!
 
 openConsoleStreams
@@ -732,7 +734,7 @@ openConsoleStreams
 								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
 								toFd: fd
 								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])
-								type: #ansi]
+								type: #utf16le]
 						ifFalse: 
 							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
 							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!
