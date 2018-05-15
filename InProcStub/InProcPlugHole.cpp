@@ -36,7 +36,7 @@ void CInProcPlugHole::WaitForPeerToStart() const
 
 	#ifdef _DEBUG
 		DWORD dwTicks = GetTickCount();
-		TRACE("%#x: Waiting for peer to start...\n", GetCurrentThreadId());
+		TRACE(L"%#x: Waiting for peer to start...\n", GetCurrentThreadId());
 	#endif
 
 	// Wait until either the peer is available or the Dolphin thread terminates
@@ -51,9 +51,9 @@ void CInProcPlugHole::WaitForPeerToStart() const
 	#ifdef _DEBUG
 	{
 		if (m_piMarshalledPeer == NULL)
-			TRACE("L%#x: WaitForPeerToStart: Peer failed to connect %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
+			TRACE(L"%#x: WaitForPeerToStart: Peer failed to connect %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
 		else
-			TRACE("L%#x: WaitForPeerToStart: Peer connected after %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
+			TRACE(L"%#x: WaitForPeerToStart: Peer connected after %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
 	}
 	#endif
 
@@ -153,10 +153,10 @@ void CInProcPlugHole::ThreadDetach()
 
 #ifdef _DEBUG
 	if (cRemoved > 0)
-		TRACE("%#x: ThreadDetach: %#x was removed from the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
+		TRACE(L"%#x: ThreadDetach: %#x was removed from the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
 	else
-		TRACE("%#x: ThreadDetach: %#x was not in the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
-	TRACE("%#x: peer map now contains %d entries\n", GetCurrentThreadId(), m_mapPeers.size());
+		TRACE(L"%#x: ThreadDetach: %#x was not in the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
+	TRACE(L"%#x: peer map now contains %d entries\n", GetCurrentThreadId(), m_mapPeers.size());
 #endif
 }
 

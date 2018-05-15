@@ -36,7 +36,7 @@ void CInProcPlugHole::WaitForPeerToStart() const
 
 	#ifdef _DEBUG
 		DWORD dwTicks = GetTickCount();
-		TRACE("%#x: Waiting for peer to start...\n", GetCurrentThreadId());
+		TRACE(L"%#x: Waiting for peer to start...\n", GetCurrentThreadId());
 	#endif
 
 	// Wait until either the peer is available or the Dolphin thread terminates
@@ -51,9 +51,9 @@ void CInProcPlugHole::WaitForPeerToStart() const
 	#ifdef _DEBUG
 	{
 		if (m_piMarshalledPeer == NULL)
-			TRACE("%#x: WaitForPeerToStart: Peer failed to connect %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
+			TRACE(L"%#x: WaitForPeerToStart: Peer failed to connect %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
 		else
-			TRACE("%#x: WaitForPeerToStart: Peer connected after %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
+			TRACE(L"%#x: WaitForPeerToStart: Peer connected after %d mS (%#x, %d)\n", GetCurrentThreadId(), GetTickCount()-dwTicks, hr, dwIndex);
 	}
 	#endif
 
@@ -153,10 +153,10 @@ void CInProcPlugHole::ThreadDetach()
 
 #ifdef _DEBUG
 	if (cRemoved > 0)
-		TRACE("%#x: ThreadDetach: %#x was removed from the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
+		TRACE(L"%#x: ThreadDetach: %#x was removed from the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
 	else
-		TRACE("%#x: ThreadDetach: %#x was not in the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
-	TRACE("%#x: peer map now contains %d entries\n", GetCurrentThreadId(), m_mapPeers.size());
+		TRACE(L"%#x: ThreadDetach: %#x was not in the thread map\n", GetCurrentThreadId(), CoGetCurrentProcess());
+	TRACE(L"%#x: peer map now contains %d entries\n", GetCurrentThreadId(), m_mapPeers.size());
 #endif
 }
 
@@ -213,7 +213,7 @@ void CInProcPlugHole::UpdateImagePathForCLSID(REFCLSID rclsid)
 			wchar_t szKey[5+1+38+1+5+1] = L"CLSID\\";
 			wcscat(szKey, wszCLSID);
 			wcscat(szKey, L"\\Image");
-			_ASSERTE(strlen(szKey) < sizeof(szKey));
+			_ASSERTE(wcslen(szKey) < sizeof(szKey));
 			CRegKey rKey;
 			if (ERROR_SUCCESS == rKey.Open(HKEY_CLASSES_ROOT, szKey))
 			{

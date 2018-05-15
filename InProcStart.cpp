@@ -94,7 +94,7 @@ static HRESULT VMStart(VMEntryArgs* pArgs)
 static UINT __stdcall DolphinMain(void* pArgs)
 {
 #ifdef _DEBUG
-	trace("%#x: DolphinMain\n", GetCurrentThreadId());
+	trace(L"%#x: DolphinMain\n", GetCurrentThreadId());
 #endif
 
 	::CoInitialize(NULL);
