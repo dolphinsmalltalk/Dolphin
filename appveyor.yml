@@ -4,12 +4,19 @@ pull_requests:
 skip_tags: true
 skip_branch_with_pr: true
 image: Visual Studio 2017
-configuration: Release
+configuration:
+- Release
+- Debug
 build:
   project: DolphinVM.sln
   verbosity: minimal
-test_script:
-- cmd: AppVeyorTestDolphinVM
+for:
+-
+  matrix:
+    only:
+      - configuration: Release
+  test_script:
+  - cmd: AppVeyorTestDolphinVM
 artifacts:
 - path: Dolphin\dpro.*
   name: DPro

@@ -48,7 +48,7 @@
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <!-- Debug specific -->
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32' Or '$(Configuration)|$(Platform)'=='Debug|Win32'">
     <MASM>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </MASM>
@@ -65,7 +65,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='VM Debug|Win32' Or '$(Configuration)|$(Platform)'=='Debug|Win32'">
     <WholeProgramOptimization>false</WholeProgramOptimization>
   </PropertyGroup>
   <!-- Release specific -->
