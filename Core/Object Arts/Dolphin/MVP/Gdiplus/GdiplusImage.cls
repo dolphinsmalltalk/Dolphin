@@ -172,7 +172,15 @@ encoderParameterListSize: aCLSID
 extent
 	"Answer a <Point> specifying the dimensions of the receiver in pixels."
 
-	^self width @ self height!
+	| buf status lib width |
+	buf := DWORDBytes new.
+	lib := GdiplusLibrary default.
+	(status := lib gdipGetImageWidth: self asParameter width: buf) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
+	width := buf asInteger.
+	(status := lib gdipGetImageHeight: self asParameter height: buf) == Ok
+		ifFalse: [GdiplusError signal: 'GdipGetImageHeight failed' with: status].
+	^width @ buf asInteger!
 
 filename
 	"Answer the <readableString> filename associated with the receiver.
@@ -299,11 +307,7 @@ hasThumbnailData
 height
 	"Answer an <Integer> specifying the height of the receiver in pixels."
 
-	| height status |
-	height := DWORD new.
-	(status := GdiplusLibrary default gdipGetImageHeight: self asParameter height: height) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetImageHeight failed' with: status].
-	^height asInteger!
+	^self extent y!
 
 isLandscape
 	"Answer whether the receiver is wider than its height."
@@ -456,9 +460,10 @@ rectScaledToFit: aRectangle
 	"Answer a rectangle within which the receiver will be sized proportionally."
 
 	| scale extent origin |
-	scale := aRectangle width / self width.
-	scale * self height > aRectangle height ifTrue: [scale := aRectangle height / self height].
-	extent := scale * self extent.
+	extent := self extent.
+	scale := aRectangle width / extent x.
+	scale * extent y > aRectangle height ifTrue: [scale := aRectangle height / extent y].
+	extent := scale * extent.
 	origin := aRectangle origin + ((aRectangle extent - extent) / 2).
 	"NB: might need to use truncate instead of rounded below"
 	^origin rounded extent: extent rounded!
@@ -467,10 +472,10 @@ rectScaledToFit: aRectangle centered: aBoolean
 	"Answer a rectangle within which the receiver will be sized proportionally."
 
 	| scale extent origin |
-	scale := aRectangle width / self width.
-	scale * self height > aRectangle height 
-		ifTrue: [scale := aRectangle height / self height].
-	extent := scale * self extent.
+	extent := self extent.
+	scale := aRectangle width / extent x.
+	scale * extent y > aRectangle height ifTrue: [scale := aRectangle height / extent y].
+	extent := scale * extent.
 	origin := aRectangle origin.
 	aBoolean ifTrue: [origin := origin + ((aRectangle extent - extent) / 2)].
 	"NB: might need to use truncate instead of rounded below"
@@ -692,16 +697,14 @@ thumbnailWithExtent2: aPoint
 thumbnailWithHeight: anInteger
 	"Answer an Image based on the receiver that is sized proportionally, with height equal to anInteger."
 
-	^self thumbnailWithExtent: (self width / self height * anInteger) rounded @ anInteger!
+	| extent |
+	extent := self extent.
+	^self thumbnailWithExtent: (extent x / extent y * anInteger) rounded @ anInteger!
 
 width
 	"Answer an <Integer> specifying the width of the receiver in pixels."
 
-	| width status |
-	width := DWORD new.
-	(status := GdiplusLibrary default gdipGetImageWidth: self asParameter width: width) = Ok 
-		ifFalse: [^GdiplusError signal: 'GdipGetImageWidth failed' with: status].
-	^width asInteger! !
+	^self extent x! !
 !GdiplusImage categoriesFor: #asByteArray:!converting!public! !
 !GdiplusImage categoriesFor: #asByteArray:compression:!converting!public! !
 !GdiplusImage categoriesFor: #basicFree!private!realizing/unrealizing! !
