@@ -68,9 +68,9 @@ printBase64On: aStream
 
 !ByteArray class methodsFor!
 
-fromBase64String: aString 
+fromBase64String: aString
 	| stream |
-	stream := self writeStream: (aString size * 0.75) truncated.
+	stream := self writeStream: (aString size * 3 bitShift: -2).
 	Base64Codec decodeFrom: aString readStream onto: stream.
 	^stream contents! !
 !ByteArray class categoriesFor: #fromBase64String:!instance creation!public! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #GdiplusFileResource
 	instanceVariableNames: ''
@@ -3282,7 +3282,7 @@ pafWinXP32x32ico
 
 rgb0000FF_100x100bmpBytes
 	| hexStream |
-	hexStream := String writeStream.
+	hexStream := AnsiString writeStream.
 	hexStream 
 		nextPutAll: '424D667500000000000036000000280000006400000064000000010018000000000030750000130B0000130B00000000000000000000'.
 	10000 timesRepeat: [hexStream nextPutAll: 'FF0000'].

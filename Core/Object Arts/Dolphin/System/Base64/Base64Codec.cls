@@ -70,19 +70,19 @@ initialize
 	self lineLength: 76.
 	isPadded := true!
 
-lineLength: anInteger 
+lineLength: anInteger
 	"Private - Set the maximum length of lines emitted by the receiver to be the <integer>
 	argument, which must be a multiple of four."
 
-	anInteger \\ 4 = 0 ifFalse: [^self error: 'line length must be a multiple of four'].
-	quadsPerLine := anInteger / 4!
+	(anInteger bitAnd: 2r11) == 0 ifFalse: [^self error: 'line length must be a multiple of four'].
+	quadsPerLine := anInteger bitShift: -2!
 
 nextBase64From: aGettableStream 
 	[aGettableStream atEnd] whileFalse: 
 			[| value |
 			#todo.	"Invalid characters are currently ignored, but should (optionally)
 				be treated as an error - see RFC 3548. This is right for MIME though."
-			(value := DecodingTable at: aGettableStream next asInteger + 1) < 64 
+			(value := DecodingTable at: aGettableStream next code + 1) < 64 
 				ifTrue: [^value]
 				ifFalse: [value == 64 ifTrue: [^nil]]].
 	^nil! !

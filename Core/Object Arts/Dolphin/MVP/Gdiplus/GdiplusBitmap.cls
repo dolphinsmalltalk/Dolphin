@@ -253,9 +253,10 @@ fromImage: aGdiplusImage centeredIn: aPoint
 
 	| bitmap scale extent |
 	bitmap := self extent: aPoint.
-	(scale := aPoint x / aGdiplusImage width) * aGdiplusImage height > aPoint y
+	extent := aGdiplusImage extent.
+	(scale := aPoint x / extent x) * extent y > aPoint y
 		ifTrue: [scale := aPoint y / aGdiplusImage height].
-	extent := scale * aGdiplusImage extent.
+	extent := scale * extent.
 	bitmap graphics
 		drawImage: aGdiplusImage
 			at: ((aPoint - extent) / 2) rounded
