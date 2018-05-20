@@ -13,6 +13,9 @@ PoolConstantsDictionaryTest comment: ''!
 collectionClass
 	^PoolConstantsDictionary!
 
+key3Value
+	^$k!
+
 makeKey: anObject
 	^'_' , anObject displayString!
 
@@ -36,6 +39,7 @@ testRemoveKeyString
 	self assert: (dictionary removeKey: 'key') identicalTo: 1.
 	self should: [dictionary removeKey: 'key'] raise: NotFoundError! !
 !PoolConstantsDictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!PoolConstantsDictionaryTest categoriesFor: #key3Value!private! !
 !PoolConstantsDictionaryTest categoriesFor: #makeKey:!helpers!private! !
 !PoolConstantsDictionaryTest categoriesFor: #testAtIfAbsentString!public!unit tests! !
 !PoolConstantsDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !

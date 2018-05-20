@@ -32,9 +32,10 @@ defaultModel
 
 icon
 	^TextTileIcon
-		text: (Utf8String with: $\x4F60 with: $\x597D)
-		font: 'Arial'
-		color: Color red!
+		text: '你好'
+		color: Color red
+
+!
 
 initialize
 	"

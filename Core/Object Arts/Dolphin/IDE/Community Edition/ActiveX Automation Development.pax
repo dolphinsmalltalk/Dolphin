@@ -2758,7 +2758,7 @@ Press OK to suggest an alternative name for the <3s>, or Cancel to abort.'
 	resp == #cancel ifTrue: [self abortGeneration].
 	^false	"Binding not acceptable - please try a new one"!
 
-packageCheck: anAssociation 
+packageCheck: anAssociation
 	"Private - The receiver's global is already present, check to make sure it it in the same package,
 	and if not ask the user whether or not to relocate it. Note that this method never answers false,
 	so the user never gets a chance to try a different name."
@@ -2766,22 +2766,22 @@ packageCheck: anAssociation
 	| global myPackageName hisPackage |
 	global := anAssociation value.
 	myPackageName := self typeLib packageName.
-	hisPackage := global owningPackage.
-	(myPackageName = hisPackage name or: [hisPackage isSystemPackage]) 
+	hisPackage := global owningPackage ?? Package uncommitted.
+	(myPackageName = hisPackage name or: [hisPackage isSystemPackage])
 		ifFalse: 
 			[| resp type mb |
 			type := self idlKeyword.
 			mb := MessageBox new.
 			mb iconStyle: #warning.
-			mb 
+			mb
 				text: ('The <1s> <2s> already exists in the <3p> package.<n>
 Would you like to move it to the <4p> package?<n>
-Press Yes to move the class, No to leave it where it is, or Cancel to abort' 
+Press Yes to move the class, No to leave it where it is, or Cancel to abort'
 						expandMacrosWith: type
 						with: anAssociation key
 						with: hisPackage name
 						with: myPackageName).
-			mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3d>' 
+			mb caption: ('Dolphin Type Library Analyzer: Generating <1s> <2s>.<3d>'
 						expandMacrosWith: type
 						with: self typeLib name
 						with: self).

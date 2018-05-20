@@ -424,7 +424,7 @@ defaultIconFrom: anExternalResourceLibrary
 defaultIconName
 	"Answer a filename to use for an icon of this class."
 
-	^File composeStem: self name extension: 'ico'.!
+	^File composeStem: self name extension: '.ico'.!
 
 defaultResourceIcon
 	"Answer a suitable default icon resource to use for this class. Note that this method differs

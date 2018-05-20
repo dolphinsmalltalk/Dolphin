@@ -89,8 +89,14 @@ hash
 	"Hash the bytes of the object using the standard byte hashing
 	primitive (which should not fail)."
 
+	| hash |
 	<primitive: 106>
-	^VMLibrary default hashBytes: self count: self basicSize!
+	hash := 2166136261.
+	"FNV1a"
+	1 to: self basicSize
+		do: [:i | hash := (hash bitXor: (self basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
+	"Fold to 30 bits so is always positive SmallInteger"
+	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
 
 idlString
 	"Answer the IDL string representation of the receiver.

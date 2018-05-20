@@ -227,21 +227,14 @@ handleFromInteger: anInteger
 	<stdcall: handle AnswerDWORD dword>
 	^ExternalHandle new value: anInteger asInteger!
 
-hashBytes: bytes count: count
-	"Private - Hash the specified number of bytes at the specified address using the
-	function which implements the standard byte hashing primitive (106).
-	Implementation Notes: The algorithm is from Aho, Sethi, and Ullman. 
-	The Smalltalk code is included for documentary purposes only."
+hashBytes: aByteObject count: anInteger
+	"Private - Hash the specified number of bytes at the specified address using the function
+	which implements the standard byte hashing primitive (106). "
 
-	| hash |
-	<cdecl: sdword HashBytes lpvoid dword>
+	"Implementation Notes: The algorithm is FNV1a."
 
-	hash := 0.
-	1 to: count do: [:i |
-		hash := (hash bitShift: 4) + (bytes basicAt: i).
-		hash > 16rFFFFFFF ifTrue: [
-			hash := (hash bitAnd: 16rFFFFFFF) bitXor: ((hash bitShift: -24) bitAnd: 16rF0)]].
-	^hash!
+	<cdecl: dword HashBytes lpvoid dword>
+	^self invalidCall!
 
 highBit: anInteger
 	"Answer the index of the high bit of the argument."
