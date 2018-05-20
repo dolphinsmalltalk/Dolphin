@@ -302,16 +302,13 @@ hashBytes: aByteArray
 	Note that this algorithm is optimised for ASCII characters, making it a good choice for symbols, but probably not as a general byte hash algorithm."
 
 	| h |
-	h := 0.
+	h := 2166136261.
 	1 to: aByteArray size
 		do: 
 			[:i |
-			| g ki |
-			ki := aByteArray basicAt: i.
-			h := (h << 4) + ki.
-			g := h & 16rF0000000.
-			g ~~ 0 ifTrue: [h := (h bitXor: g >> 24) bitXor: g]].
-	^h!
+			h := h bitXor: (aByteArray basicAt: i).
+			h := (h * 16777619) bitAnd: 16rFFFFFFFF].
+	^(h >> 30) bitXor: (h & 16r3FFFFFFF)!
 
 immutableTestSubjects
 	^#(#(1 2 3) #[1 2 3] 'abc' 1.0e38 ##('abc' asUtf8String
@@ -1296,7 +1293,7 @@ testPrimitiveGreaterThan
 testPrimitiveHashBytes
 	| method |
 	method := self
-				createPrimitiveMethod: (Utf8String >> #hash) primitiveIndex
+				createPrimitiveMethod: (String >> #hash) primitiveIndex
 				in: Object
 				argCount: 0
 				setsFailCode: false.

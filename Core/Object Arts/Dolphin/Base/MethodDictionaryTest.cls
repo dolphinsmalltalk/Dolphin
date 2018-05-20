@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 AbstractDictionaryTest subclass: #MethodDictionaryTest
 	instanceVariableNames: ''
@@ -12,6 +12,9 @@ MethodDictionaryTest comment: ''!
 
 collectionClass
 	^MethodDictionary!
+
+key3Value
+	^$c!
 
 loadFactor
 	^0.75!
@@ -53,6 +56,7 @@ testMaintainsLoadFactor
 			self assert: actualSlots / 2 <= minimumSlots.
 			self assert: actualSlots equals: expectedSlots]! !
 !MethodDictionaryTest categoriesFor: #collectionClass!helpers!private! !
+!MethodDictionaryTest categoriesFor: #key3Value!private! !
 !MethodDictionaryTest categoriesFor: #loadFactor!constants!private! !
 !MethodDictionaryTest categoriesFor: #testClassSizeFor!public!unit tests! !
 !MethodDictionaryTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !

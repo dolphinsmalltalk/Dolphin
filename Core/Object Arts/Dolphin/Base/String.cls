@@ -486,7 +486,7 @@ expandMacrosWith: anObject with: anotherObject with: thirdObject with: fourthObj
 
 	^self expandMacrosWithArguments: {anObject. anotherObject. thirdObject. fourthObject}!
 
-expandMacrosWithArguments: anArray 
+expandMacrosWithArguments: anArray
 	"Expand the receiver with replacable arguments.
 	e.g.
 		'Hello <D><N><1P> <D>' expandMacrosWithArguments: #('World' 1).
@@ -502,25 +502,23 @@ expandMacrosWithArguments: anArray
 	If n is omitted the default of 1 is used.	
 	"
 
-	| newStream readStream index |
+	| newStream readStream index char |
 	newStream := String writeStream: self size.
 	readStream := ReadStream on: self.
 	index := 1.
-	[readStream atEnd] whileFalse: 
-			[| char |
-			char := readStream next.
-			char == $< 
+	[(char := readStream nextAvailable) isNil] whileFalse: 
+			[char == $<
 				ifTrue: 
 					[| nextChar |
 					nextChar := readStream next asUppercase.
 					nextChar == $N ifTrue: [newStream cr].
 					nextChar == $T ifTrue: [newStream tab].
-					nextChar isDigit 
+					nextChar isDigit
 						ifTrue: 
 							[index := nextChar digitValue.
-							[readStream atEnd or: [(nextChar := readStream next asUppercase) isDigit not]] 
+							[readStream atEnd or: [(nextChar := readStream next asUppercase) isDigit not]]
 								whileFalse: [index := index * 10 + nextChar digitValue]].
-					nextChar == $? 
+					nextChar == $?
 						ifTrue: 
 							[| trueString falseString |
 							trueString := readStream upTo: $:.
@@ -528,15 +526,15 @@ expandMacrosWithArguments: anArray
 							readStream position: readStream position - 1.
 							newStream nextPutAll: ((anArray at: index) ifTrue: [trueString] ifFalse: [falseString]).
 							index := index + 1].
-					nextChar == $P 
+					nextChar == $P
 						ifTrue: 
 							[(anArray at: index) printOn: newStream.
 							index := index + 1].
-					nextChar == $D 
+					nextChar == $D
 						ifTrue: 
 							[(anArray at: index) displayOn: newStream.
 							index := index + 1].
-					nextChar == $S 
+					nextChar == $S
 						ifTrue: 
 							[newStream nextPutAll: (anArray at: index).
 							index := index + 1].
@@ -632,15 +630,27 @@ hash
 	objects, and therefore it should be the same for the same sequence of characters, regardless
 	of encoding."
 
-	^self asUtf8String hash!
+	| utf8 hash |
+	<primitive: 106>
+	utf8 := self asUtf8String.
+	hash := 2166136261.
+	"FNV1a"
+	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
+	"Fold to 30 bits so is always positive SmallInteger"
+	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
 
 hashCharacters
 	"Private - Use the standard byte hashing algorithm to hash the characters of 
 	the receiver. Used for doing lookup by value, e.g. in the Symbol table."
 
+	| utf8 hash |
 	<primitive: 106>
-	^VMLibrary default hashBytes: self count: self size
-!
+	utf8 := self asUtf8String.
+	hash := 2166136261.
+	"FNV1a"
+	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
+	"Fold to 30 bits so is always positive SmallInteger"
+	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
 
 indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
 	"Answer the one-based integer index of the first encountered element of the receiver which

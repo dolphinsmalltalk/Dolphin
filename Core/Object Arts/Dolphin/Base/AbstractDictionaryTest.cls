@@ -26,6 +26,9 @@ denyCommutativelyEqual: aDictionary other: anotherDictionary
 	self deny: aDictionary equals: anotherDictionary.
 	self deny: anotherDictionary equals: aDictionary!
 
+key3Value
+	^$f!
+
 makeKey: anObject
 	^anObject asInteger!
 
@@ -64,14 +67,15 @@ testAtIfAbsentPut
 testAtIfAbsentPutModifyingCollection
 	"Test at:ifAbsentPut: when modifying the collection in the block"
 
-	| keys key3 key1 key2 dictionary |
+	| keys key3 key1 key2 dictionary i |
 	dictionary := self newEmpty.
 	key1 := self makeKey: $a.
-	key3 := self makeKey: (Character codePoint: $a codePoint + dictionary basicSize).
+
+	"For this test to work the first and third keys must collide, so ensure that"
+	key3 := self makeKey: self key3Value.
+	self assert: (dictionary findKeyOrNil: key3) equals: (dictionary findKeyOrNil: key1).
 	key2 := self makeKey: $b.
 	self deny: key3 equals: key2.
-	"For this test to work the first and third keys must collide, so verify that"
-	self assert: (dictionary findKeyOrNil: key3) equals: (dictionary findKeyOrNil: key1).
 	dictionary at: key1
 		ifAbsentPut: 
 			[dictionary at: key3 put: 4.
@@ -229,6 +233,7 @@ testStrongTalkTests
 !AbstractDictionaryTest categoriesFor: #checkValidity:!benchmarking!private! !
 !AbstractDictionaryTest categoriesFor: #collectionClass!helpers!private! !
 !AbstractDictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
+!AbstractDictionaryTest categoriesFor: #key3Value!private! !
 !AbstractDictionaryTest categoriesFor: #makeKey:!helpers!private! !
 !AbstractDictionaryTest categoriesFor: #newCollection:!helpers!private! !
 !AbstractDictionaryTest categoriesFor: #newDictionary!private!unit tests! !

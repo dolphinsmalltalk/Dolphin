@@ -209,15 +209,6 @@ encodeOn: aPuttableStream put: aCharacter
 										basicNextPut: (16r80 bitOr: (codePoint bitAnd: 16r3F))]
 								ifFalse: [self class errorInvalidCodePoint: codePoint]]]]!
 
-hash
-	"Hash the characters of the string using a built-in algorithm.
-	Do NOT change this as the VM relies on this implementation.
-	The primitive should not fail."
-
-	<primitive: 106>
-	#todo. "The hash algorithm needs revising as although it is reasonably good for Ascii text, it is poor for UTF-8  in general."
-	^VMLibrary default hashBytes: self count: self size!
-
 maxEncoding
 	^4!
 
@@ -307,7 +298,6 @@ strlen
 !Utf8String categoriesFor: #encodedAt:put:!accessing!encode/decode!private! !
 !Utf8String categoriesFor: #encodedSizeOf:!encode/decode!private! !
 !Utf8String categoriesFor: #encodeOn:put:!encode/decode!private! !
-!Utf8String categoriesFor: #hash!comparing!public! !
 !Utf8String categoriesFor: #maxEncoding!constants!private! !
 !Utf8String categoriesFor: #nextIndexOf:from:to:!public!searching! !
 !Utf8String categoriesFor: #reverse!copying!public! !
