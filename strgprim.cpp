@@ -1019,34 +1019,72 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, unsigned)
 	}
 }
 
-inline MWORD __fastcall hashBytes(const BYTE* bytes, MWORD size)
+uint32_t __fastcall hashBytes(const uint8_t* bytes, size_t len)
 {
-	MWORD hash = 0;
-	while(size > 0)
-	{
-		hash = (hash << 4) + *bytes;
-		MWORD topNibble = hash & 0xf0000000;
-		if (topNibble)
-		{
-			hash = (hash & 0x0fffffff) ^ (topNibble >> 24);
-		}
-		bytes++;
-		size--;
-	}
-	return hash;
-}
+	const uint8_t* stop = bytes + len;
+	uint32_t hash = 2166136261U;
 
-extern "C" MWORD __cdecl HashBytes(const BYTE* bytes, MWORD size)
-{
-	return bytes != nullptr ? hashBytes(bytes, size) : 0;
+	while (bytes < stop) 
+	{
+		hash = (hash ^ static_cast<uint32_t>(*bytes++)) * 16777619;
+	}
+
+	// Xor-fold down to 30 bits so it will always fit in a SmallInteger. 
+	// Folding gives slightly better results than just truncating
+	return (hash >> 30) ^ (hash & 0x3FFFFFFF);
 }
 
 Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, unsigned)
 {
 	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
-	MWORD hash = hashBytes(receiver->m_location->m_fields, receiver->bytesSize());
-	*sp = ObjectMemoryIntegerObjectOf(hash);
-	return sp;
+
+	if (receiver->isNullTerminated())
+	{
+		switch (ST::String::GetEncoding(receiver))
+		{
+		case StringEncoding::Ansi:
+		{
+			// Assume some kind of Ansi string
+			Utf8StringOTE * utf8 = Utf8String::NewFromAnsi(
+				reinterpret_cast<const AnsiStringOTE*>(receiver)->m_location->m_characters, receiver->bytesSize());
+			MWORD hash = hashBytes(utf8->m_location->m_characters, utf8->bytesSize());
+			*sp = ObjectMemoryIntegerObjectOf(hash);
+			ObjectMemory::deallocateByteObject(reinterpret_cast<OTE*>(utf8));
+			return sp;
+		}
+
+		case StringEncoding::Utf8:
+		{
+			MWORD hash = hashBytes(reinterpret_cast<Utf8StringOTE*>(receiver)->m_location->m_characters, receiver->bytesSize());
+			*sp = ObjectMemoryIntegerObjectOf(hash);
+			return sp;
+		}
+
+		case StringEncoding::Utf16:
+		{
+			Utf8StringOTE* utf8 = Utf8String::New(
+				reinterpret_cast<const Utf16StringOTE*>(receiver)->m_location->m_characters, receiver->getSize() / sizeof(Utf16String::CU));
+			MWORD hash = hashBytes(utf8->m_location->m_characters, utf8->bytesSize());
+			*sp = ObjectMemoryIntegerObjectOf(hash);
+			ObjectMemory::deallocateByteObject(reinterpret_cast<OTE*>(utf8));
+			return sp;
+		}
+		case StringEncoding::Utf32:
+		default:
+			return primitiveFailure(0);
+		}
+	}
+	else
+	{
+		MWORD hash = hashBytes(receiver->m_location->m_fields, receiver->bytesSize());
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+}
+
+extern "C" MWORD __cdecl HashBytes(const BYTE* bytes, MWORD size)
+{
+	return bytes != nullptr ? hashBytes(bytes, size) : 0;
 }
 
 Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp, unsigned)
