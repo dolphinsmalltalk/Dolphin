@@ -77,26 +77,30 @@ bitmap
 	^self bitmapWithExtent: self class defaultExtent!
 
 bitmapWithExtent: aPoint
-	| bitmap |
+	| bitmap graphics |
 	bitmap := GdiplusBitmap extent: aPoint.
-	bitmap graphics doWithCanvas: 
+	graphics := bitmap graphics.
+	graphics doWithCanvas: 
 			[:canvas |
-			| max textExtent f tries |
-			max := aPoint - 1.
-			f := Font name: self font pixelSize: max y.
-			tries := 5.
+			| textExtent i pixelSize |
+			pixelSize := aPoint y.
+			i := 0.
 			
-			[canvas font: f.
-			textExtent := canvas textExtent: self text.
-			textExtent x > max x and: [tries > 0]]
+			[(canvas font: (Font name: self font pixelSize: pixelSize)) free.
+			textExtent := canvas textExtent: text.
+			i < 1]
 					whileTrue: 
-						[tries := tries - 1.
-						f := Font name: self font pixelSize: (max x * max y / textExtent x) truncated].
+						[| scale |
+						i := i + 1.
+						scale := aPoint x / textExtent x.
+						scale * textExtent y > aPoint y ifTrue: [scale := aPoint y / textExtent y].
+						pixelSize := (pixelSize * scale) truncated].
 			canvas
 				backcolor: self tilecolor;
 				erase;
 				forecolor: Color white;
-				text: self text at: (aPoint - textExtent) // 2].
+				text: text at: (aPoint - textExtent) // 2].
+	graphics free.
 	^bitmap!
 
 drawOn: aCanvas 
@@ -196,8 +200,8 @@ defaultExtent
 icon
 	^self 
 		text: 'Tt'
-		font: 'Arial'
-		color: Color blue!
+		color: Color blue
+!
 
 imageManager
 	"Private - Answer an image manager to use for storing icons"
@@ -209,6 +213,9 @@ new
 
 	^self shouldNotImplement!
 
+text: aString color: aColor 
+	^self text: aString font: DesktopView current iconTitleFont name color: aColor!
+
 text: aStringLabel font: fontName color: aColor 
 	^super new
 		setText: aStringLabel
@@ -219,5 +226,6 @@ text: aStringLabel font: fontName color: aColor
 !TextTileIcon class categoriesFor: #icon!public! !
 !TextTileIcon class categoriesFor: #imageManager!accessing!private! !
 !TextTileIcon class categoriesFor: #new!instance creation!private! !
+!TextTileIcon class categoriesFor: #text:color:!instance creation!public! !
 !TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
 
