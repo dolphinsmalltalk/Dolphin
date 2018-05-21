@@ -21,11 +21,12 @@ finalHash
 	"Private - Answers the final hash from the context and closes it"
 
 	| totals hash |
-	totals := DWORDArray new: 5.
+	totals := ByteArray new: 20.
 	self shaLibrary shaGetHash: self context lpHashBytes: totals.
 	self resetContext.
+
 	hash := 0.
-	1 to: 5 do: [:i | hash := hash bitOr: ((totals at: i) bitShift: 32 * (5 - i))].
+	1 to: totals size do: [ :i | hash := ( hash bitShift: 8 ) bitOr: ( totals at: i ) ].
 	^hash!
 
 hashIn: aByteArray 
