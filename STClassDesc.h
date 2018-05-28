@@ -77,4 +77,4 @@ namespace ST
 	};
 }
 
-extern wostream& operator<<(wostream& stream, const ST::Class& cl);
+std::wostream& operator<<(std::wostream& stream, const ST::Class& cl);

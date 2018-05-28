@@ -12,8 +12,6 @@
 
 ******************************************************************************/
 #pragma once
-#include <stddef.h>
-#include <float.h>
 
 #include "STVirtualObject.h"
 #include "STStackFrame.h"
@@ -227,7 +225,7 @@ namespace ST
 	};
 
 #ifdef _DEBUG
-	wostream& operator<<(wostream& st, const Semaphore& sem);
+	std::wostream& operator<<(std::wostream& st, const Semaphore& sem);
 #endif
 
 	// ProcessorScheduler has a single instance "Processor" (a global variable)
@@ -274,9 +272,9 @@ namespace ST
 #endif
 }
 
-wostream& operator<<(wostream& st, const ProcessOTE*);
+std::wostream& operator<<(std::wostream& st, const ProcessOTE*);
 
 #ifdef _DEBUG
-	wostream& operator<<(wostream& st, const ST::ProcessorScheduler& proc);
+	std::wostream& operator<<(std::wostream& st, const ST::ProcessorScheduler& proc);
 #endif
 

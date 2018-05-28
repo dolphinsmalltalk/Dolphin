@@ -11,7 +11,6 @@
 #include "Ist.h"
 #pragma code_seg(MEM_SEG)
 
-#include <wtypes.h>
 #include "ObjMem.h"
 #include "ObjMemPriv.inl"
 #include "Interprt.h"
@@ -283,9 +282,6 @@ Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp, unsigned)
 	return sp;
 }
 
-// Disable warning about exception handling (we compile with exception handling disabled)
-#pragma warning (disable:4530)
-#include <unordered_map>
 
 template <class T> inline size_t hash_value(TOTE<T>* ote)
 {
@@ -334,7 +330,7 @@ public:
 protected:
 	_Pr comp;	// the comparator object
 	};
-typedef unordered_map<BehaviorOTE*,InstStats, hash_compare2<BehaviorOTE*> > ClassCountMap;
+typedef std::unordered_map<BehaviorOTE*,InstStats, hash_compare2<BehaviorOTE*> > ClassCountMap;
 
 static int storageSize(OTE* ote)
 {
@@ -768,7 +764,7 @@ Oop* __fastcall Interpreter::primitiveObjectCount(Oop* const sp, unsigned)
 			Behavior* cl = classPointer->m_location;
 			TRACESTREAM<< L"OTEPool(" << this<< L"): Allocated new " 
 				<< cl<< L", " << LPVOID(ote)<< L", total "
-				<< m_nAllocated<< L", free " << m_nFree << endl;
+				<< m_nAllocated<< L", free " << m_nFree << std::endl;
 		#endif
 	}
 #endif

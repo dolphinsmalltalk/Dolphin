@@ -73,4 +73,5 @@ namespace ST
 		}
 	};
 }
-ostream& operator<<(ostream& st, const BlockOTE*);
+
+std::wostream& operator<<(std::wostream& st, const BlockOTE*);

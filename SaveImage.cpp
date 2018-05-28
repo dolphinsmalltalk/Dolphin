@@ -94,7 +94,7 @@ int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBacku
 	}
 
 #ifdef PROFILE_IMAGELOADSAVE
-	TRACESTREAM<< L"Saving image to '" << saveName<< L"' ..." << endl;
+	TRACESTREAM<< L"Saving image to '" << saveName<< L"' ..." << std::endl;
 	DWORD dwStartTicks = GetTickCount();
 #endif
 
@@ -159,7 +159,7 @@ int __stdcall ObjectMemory::SaveImageFile(const wchar_t* szFileName, bool bBacku
 
 	#ifdef PROFILE_IMAGELOADSAVE
 		DWORD msToRun = GetTickCount() - dwStartTicks;
-		TRACESTREAM << L" done (" << (bSaved ? "Succeeded" : "Failed")<< L"), binstreams time " << long(msToRun)<< L"mS" << endl;
+		TRACESTREAM << L" done (" << (bSaved ? "Succeeded" : "Failed")<< L"), binstreams time " << long(msToRun)<< L"mS" << std::endl;
 	#endif
 	}
 
@@ -255,11 +255,11 @@ template <MWORD ImageNullTerms> bool __stdcall ObjectMemory::SaveObjects(obinstr
 	}
 
 	#ifdef _DEBUG
-		TRACESTREAM << numObjects<< L" objects saved totalling " << dec << dwDataSize 
+		TRACESTREAM << numObjects<< L" objects saved totalling " << std::dec << dwDataSize 
 				<< L" bytes, " << nFree<< L" free OTEs"
 				// Compressed stream does not support seeking and sets to bad state
 				//<< L", writing checksum at offset " << imageFile.tellp() 
-				<< endl;
+				<< std::endl;
 	#endif
 
 	// Append the amount of data written as a checksum.

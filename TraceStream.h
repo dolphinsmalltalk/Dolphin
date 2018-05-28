@@ -1,10 +1,6 @@
 #pragma once
 #include <windows.h>
 #pragma warning(push,3)
-#pragma warning(disable:4530)
-#include <ostream>
-#include <streambuf>
-#pragma warning(pop)
 #include "CritSect.h"
 
 template<class charT, class traits = std::char_traits<charT> >

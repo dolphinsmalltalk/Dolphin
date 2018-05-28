@@ -14,8 +14,6 @@ Interpreter/Windows GUI interface functions
 
 #include "Interprt.h"
 #include "ObjMem.h"
-#include <stdarg.h>
-#include <wtypes.h>
 #include "rc_vm.h"
 
 #pragma code_seg()
@@ -90,7 +88,7 @@ Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
 			if (underConstruction == receiverPointer)
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM << L"WARNING: Unhooking create for " << hex << underConstruction << L" before HCBT_CREATEWND" << endl;
+				TRACESTREAM << L"WARNING: Unhooking create for " << std::hex << underConstruction << L" before HCBT_CREATEWND" << std::endl;
 				ObjectMemory::nilOutPointer(m_oteUnderConstruction);
 			}
 			else

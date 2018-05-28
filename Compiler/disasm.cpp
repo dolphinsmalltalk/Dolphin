@@ -33,7 +33,7 @@ void Compiler::disassemble(wostream& stream)
 
 	LexicalScope* currentScope = m_allScopes[0];
 	int currentDepth = 0;
-	stream << endl;
+	stream << std::endl;
 	size_t i=0;
 	const size_t size = GetCodeSize();
 	BytecodeDisassembler<Compiler> disassembler(*this);
@@ -88,7 +88,7 @@ void Compiler::disassemble(wostream& stream)
 		disassembler.EmitDecodedInstructionAt(i, stream);
 		i += len;
 	}
-	stream << endl;
+	stream << std::endl;
 }
 
 Str Compiler::GetSpecialSelector(size_t index)

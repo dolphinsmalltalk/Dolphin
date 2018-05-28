@@ -14,19 +14,14 @@ Interpreter interface functions
 
 #include "Interprt.h"
 #include "ObjMem.h"
-#include <stdarg.h>
-#include <wtypes.h>
 #include "rc_vm.h"
 #include "InterprtPrim.inl"
 #include "InterprtProc.inl"
 #include "VMExcept.h"
 #include "thrdcall.h"
 #include "STArray.h"
-#include <setjmp.h>
 
 const wchar_t* SZREGKEYBASE = L"Software\\Object Arts\\Dolphin Smalltalk 7.1";
-
-#include <winreg.h>
 
 // Smalltalk classes
 #include "STByteArray.h"
@@ -138,7 +133,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 				else
 				{
 					#ifdef OAD
-						TRACESTREAM<< L"WARNING: Context switch occurred during callback message send" << endl;
+						TRACESTREAM<< L"WARNING: Context switch occurred during callback message send" << std::endl;
 					#endif
 					callbackFrameOop = callbackProcess->SuspendedFrame();
 				}
@@ -148,7 +143,7 @@ Oop __stdcall Interpreter::callback(SymbolOTE* selector, unsigned argCount TRACE
 				if (executionTrace)
 				{
 					TRACESTREAM.Lock();
-					TRACESTREAM<< L"C entrypoint at context " << returnFrame<< L"/" << StackFrame::FromFrameOop(returnFrame)<< L", frame " << callbackFrameOop<< L"/" << pCallbackFrame << endl;
+					TRACESTREAM<< L"C entrypoint at context " << returnFrame<< L"/" << StackFrame::FromFrameOop(returnFrame)<< L", frame " << callbackFrameOop<< L"/" << pCallbackFrame << std::endl;
 					TRACESTREAM.Unlock();
 				}
 
@@ -696,7 +691,7 @@ DWORD Interpreter::callbackResultFromOop(Oop objectPointer)
 			return 0;
 
 #ifdef _DEBUG
-	TRACESTREAM<< L"WARNING: Returned non-Integer object from callback: " << ote << endl;
+	TRACESTREAM<< L"WARNING: Returned non-Integer object from callback: " << ote << std::endl;
 	WarningWithStackTrace(L"");
 #else
 	tracelock lock(TRACESTREAM);
@@ -827,7 +822,7 @@ DWORD __fastcall Interpreter::VirtualCallbackMain(SMALLINTEGER offset, COMThunk*
 	}
 	__except (callbackExceptionFilter(GetExceptionInformation()))
 	{
-		TRACESTREAM<< L"WARNING: Unwinding VirtualCallback(" << dec << offset << L',' << args << L')' << endl; 
+		TRACESTREAM<< L"WARNING: Unwinding VirtualCallback(" << std::dec << offset << L',' << args << L')' << std::endl; 
 		result = static_cast<DWORD>(E_UNEXPECTED);
 	}
 

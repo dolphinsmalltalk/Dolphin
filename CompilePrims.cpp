@@ -1,5 +1,4 @@
 #include "ist.h"
-#include <comdef.h>
 
 #ifndef _DEBUG
 	#pragma optimize("s", on)

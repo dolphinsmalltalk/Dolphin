@@ -176,7 +176,7 @@ public:
 	bool QueueSuspend();
 	DWORD Resume();
 
-	friend wostream& operator<<(wostream& stream, const OverlappedCall& oc);
+	friend std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc);
 
 	DWORD AddRef();
 	DWORD Release();
@@ -317,7 +317,7 @@ private:
 };
 
 
-wostream& operator<<(wostream& stream, const OverlappedCall& oc);
+std::wostream& operator<<(std::wostream& stream, const OverlappedCall& oc);
 
 inline DWORD OverlappedCall::AddRef()
 {

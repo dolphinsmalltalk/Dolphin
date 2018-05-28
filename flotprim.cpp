@@ -17,11 +17,6 @@
 // Since we are generally flushing back to Smalltalk objects in memory between FP operations, we don't need /Fp:precise
 #pragma float_control(precise, off)
 
-#include <intrin.h>
-#include <string.h>
-#include <math.h>
-#include <float.h>
-#include <limits.h>
 #include "ObjMem.h"
 #include "Interprt.h"
 #include "InterprtPrim.inl"
@@ -171,51 +166,51 @@ template <class P1, class P2> __forceinline static Oop* primitiveFloatCompare(Oo
 	return sp - 1;
 }
 
-template <class T1, class T2> struct op_less {
+template <class T1, class T2> struct less {
 	bool operator() (const T1& x, const T2& y) const { return x<y; }
 };
 
 Oop* Interpreter::primitiveFloatLessThan(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, op_less<double, double>(), op_less<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, ::less<double, double>(), ::less<double, SMALLINTEGER>());
 }
 
-template <class T1, class T2> struct op_greater {
+template <class T1, class T2> struct greater {
 	bool operator() (const T1& x, const T2& y) const { return x>y; }
 };
 
 Oop* Interpreter::primitiveFloatGreaterThan(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, op_greater<double, double>(), op_greater<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, ::greater<double, double>(), ::greater<double, SMALLINTEGER>());
 }
 
 
-template <class T1, class T2> struct op_lessOrEqual {
+template <class T1, class T2> struct less_equal {
 	bool operator() (const T1& x, const T2& y) const { return x<=y; }
 };
 
 Oop* Interpreter::primitiveFloatLessOrEqual(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, op_lessOrEqual<double, double>(), op_lessOrEqual<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, ::less_equal<double, double>(), ::less_equal<double, SMALLINTEGER>());
 }
 
-template <class T1, class T2> struct op_greaterOrEqual {
+template <class T1, class T2> struct greater_equal {
 	bool operator() (const T1& x, const T2& y) const { return x>=y; }
 };
 
 Oop* Interpreter::primitiveFloatGreaterOrEqual(Oop* const sp, unsigned)
 {
-	return primitiveFloatCompare(sp, op_greaterOrEqual<double, double>(), op_greaterOrEqual<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, ::greater_equal<double, double>(), ::greater_equal<double, SMALLINTEGER>());
 }
 
-template <class T1, class T2> struct op_equal {
+template <class T1, class T2> struct equal_to {
 	bool operator() (const T1& x, const T2& y) const { return x==y; }
 };
 
 Oop* Interpreter::primitiveFloatEqual(Oop* const sp, unsigned)
 {
 	// Note that we can't optimise this for identical without allowing for the NaN case. Not really worth it.
-	return primitiveFloatCompare(sp, op_equal<double, double>(), op_equal<double, SMALLINTEGER>());
+	return primitiveFloatCompare(sp, ::equal_to<double, double>(), ::equal_to<double, SMALLINTEGER>());
 }
 
 #pragma float_control(pop)
@@ -266,40 +261,42 @@ template <class O1, class O2> __forceinline static Oop* primitiveFloatBinaryOp(O
 	return sp-1;
 }
 
-template <class T1, class T2> struct op_add {
+// std::plus requires that T1 = T2
+template <class T1, class T2> struct plus {
 	double operator() (const T1& x, const T2& y) const { return x+y; }
 };
 
 Oop* Interpreter::primitiveFloatAdd(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, op_add<double, double>(), op_add<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp,	::plus<double, double>(), plus<double, SMALLINTEGER>());
 }
 
-template <class T1, class T2> struct op_sub {
+template <class T1, class T2> struct minus {
 	double operator() (const T1& x, const T2& y) const { return x - y; }
 };
 
 Oop* Interpreter::primitiveFloatSubtract(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, op_sub<double, double>(), op_sub<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, minus<double, double>(), minus<double, SMALLINTEGER>());
 }
 
-template <class T1, class T2> struct op_mul {
+template <class T1, class T2> struct multiplies {
 	double operator() (const T1& x, const T2& y) const { return x * y; }
 };
 
 Oop* Interpreter::primitiveFloatMultiply(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, op_mul<double, double>(), op_mul<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, multiplies<double, double>(), multiplies<double, SMALLINTEGER>());
 }
 
-template <class T1, class T2> struct op_div {
+// std::divides requires that T1 = T2
+template <class T1, class T2> struct divides {
 	double operator() (const T1& x, const T2& y) const { return x / y; }
 };
 
 Oop* Interpreter::primitiveFloatDivide(Oop* const sp, unsigned)
 {
-	return primitiveFloatBinaryOp(sp, op_div<double, double>(), op_div<double, SMALLINTEGER>());
+	return primitiveFloatBinaryOp(sp, divides<double, double>(), divides<double, SMALLINTEGER>());
 }
 
 template <class O1> __forceinline static Oop* primitiveFloatUnaryOp(Oop* const sp, const O1 &op)

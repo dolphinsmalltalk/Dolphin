@@ -35,13 +35,11 @@ Decodes byte codes to stdout
 #include "disassembler.h"
 #include "Utf16StringBuf.h"
 
-#ifdef _DEBUG
-#include <vector>
-#endif
-
 tracestream thinDump;
 
 class UnknownOTE : public OTE {};
+
+using namespace std;
 
 static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 {
@@ -51,7 +49,7 @@ static void printChars(wostream& stream, const char16_t* pwsz, size_t len)
 		WCHAR ch = pwsz[i];
 		if (!iswprint(ch))
 		{
-			stream << L"\\x" << hex << (unsigned)ch;
+			stream << L"\\x" << std::hex << (unsigned)ch;
 		}
 		else
 		{
@@ -245,7 +243,7 @@ wostream& operator<<(wostream& st, const LargeIntegerOTE* ote)
 	if (ote->isNil()) return st << L"nil";
 
 	LargeInteger* li = ote->m_location;
-	st << L"a LargeInteger(" << hex << setfill(L'0');
+	st << L"a LargeInteger(" << std::hex << setfill(L'0');
 	const int size = ote->getWordSize();
 	for (int i = size - 1; i >= 0; i--)
 		st << setw(8) << li->m_digits[i] << L' ';
@@ -256,7 +254,7 @@ wostream& operator<<(wostream& st, const BlockOTE* ote)
 {
 	if (ote->isNil()) return st << L"nil";
 	BlockClosure* block = ote->m_location;
-	return st << L"[] @ " << dec << block->initialIP() << L" in " << block->m_method;
+	return st << L"[] @ " << std::dec << block->initialIP() << L" in " << block->m_method;
 }
 
 
@@ -265,7 +263,7 @@ wostream& operator<<(wostream& st, const ContextOTE* ote)
 	if (ote->isNil()) return st << L"nil";
 	Context* ctx = ote->m_location;
 	return st << L"a Context for: " << ctx->m_block
-		<< L" frame: " << hex << ctx->m_frame;
+		<< L" frame: " << std::hex << ctx->m_frame;
 }
 
 wostream& operator<<(wostream& st, const VariableBindingOTE* ote)
@@ -357,7 +355,7 @@ wostream& operator<<(wostream& st, const CharOTE* ote)
 		}
 	}
 
-	return st << L"\\x" << hex << codeUnit;
+	return st << L"\\x" << std::hex << codeUnit;
 }
 
 wostream& operator<<(wostream& st, const FloatOTE* ote)
@@ -388,7 +386,7 @@ wostream& operator<<(wostream& st, const HandleOTE* ote)
 	if (IsBadReadPtr(h, sizeof(ExternalHandle)))
 		st << L"***Bad Handle: " << (void*)h;
 	else
-		st << hex << h->m_handle;
+		st << std::hex << h->m_handle;
 	return st << L')';
 }
 
@@ -418,7 +416,7 @@ wostream& operator<<(wostream& st, const ArrayOTE* ote)
 wostream& operator<<(wostream& stream, const OTE* ote)
 {
 	if (ObjectMemoryIsIntegerObject(ote))
-		return stream << dec << ObjectMemoryIntegerValueOf(ote);
+		return stream << std::dec << ObjectMemoryIntegerValueOf(ote);
 
 	if (ote == NULL)
 		return stream << L"NULL Oop";
@@ -519,19 +517,19 @@ void DumpStackEntry(Oop* sp, Process* pProc, wostream& stream)
 {
 	__try
 	{
-		stream << L"[" << sp << L": " << dec << pProc->indexOfSP(sp) << L"]-->";
+		stream << L"[" << sp << L": " << std::dec << pProc->indexOfSP(sp) << L"]-->";
 		Oop objectPointer = *sp;
 		OTE* ote = reinterpret_cast<OTE*>(objectPointer);
 		stream << ote;
 #ifdef _DEBUG
 		if (!ObjectMemoryIsIntegerObject(objectPointer))
-			stream << L", refs " << dec << int(ote->m_count);
+			stream << L", refs " << std::dec << int(ote->m_count);
 #endif
-		stream << endl;
+		stream << std::endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		stream << endl << L'\t' << L"***CORRUPT STACK ENTRY" << endl;
+		stream << std::endl << L'\t' << L"***CORRUPT STACK ENTRY" << std::endl;
 	}
 }
 
@@ -555,7 +553,7 @@ void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
 	int nRow = 0;
 
 	tracestream::char_type oldFill = out.fill('0');
-	out << hex;
+	out << std::hex;
 	out.setf(ios::uppercase);
 	while (nBytes--)
 	{
@@ -570,12 +568,12 @@ void HexDump(tracestream out, LPCTSTR lpszLine, BYTE* pby,
 
 		if (++nRow >= nWidth)
 		{
-			out << endl;
+			out << std::endl;
 			nRow = 0;
 		}
 	}
 	if (nRow != 0)
-		out << endl;
+		out << std::endl;
 
 	out.unsetf(ios::uppercase);
 	out.fill(oldFill);
@@ -594,16 +592,16 @@ static void DumpProcess(ProcessOTE* oteProc, wostream& logStream)
 	else
 	{
 		logStream << L'{' << pProc << L':'
-			<< L"size " << dec << oteProc->getWordSize()
+			<< L"size " << std::dec << oteProc->getWordSize()
 			<< L" words, suspended frame " << reinterpret_cast<LPVOID>(pProc->SuspendedFrame())
-			<< dec << L", priority " << pProc->Priority()
-			<< L", callbacks " << pProc->CallbackDepth() << endl;
+			<< std::dec << L", priority " << pProc->Priority()
+			<< L", callbacks " << pProc->CallbackDepth() << std::endl;
 		logStream << L"last failure " << pProc->PrimitiveFailureCode()
 			<< L":" << reinterpret_cast<OTE*>(pProc->PrimitiveFailureData())
-			<< L", FP control " << hex << pProc->FpControl()
+			<< L", FP control " << std::hex << pProc->FpControl()
 			<< L", thread " << pProc->Thread();
 	}
-	logStream << L'}' << endl;
+	logStream << L'}' << std::endl;
 }
 
 //////////////////////////////////////////////////////////
@@ -623,22 +621,22 @@ static void DumpIP(BYTE* ip, CompiledMethod* pMethod, wostream& logStream)
 		else
 		{
 			int offsetFromBeginningOfByteCodesObject = ip - ObjectMemory::ByteAddressOfObject(pMethod->m_byteCodes);
-			logStream << LPVOID(ip) << L" (" << dec << offsetFromBeginningOfByteCodesObject << L')';
+			logStream << LPVOID(ip) << L" (" << std::dec << offsetFromBeginningOfByteCodesObject << L')';
 		}
 	}
-	logStream << endl;
+	logStream << std::endl;
 }
 
 static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned nDepth)
 {
 	if (IsBadReadPtr(sp, sizeof(Oop)))
-		logStream << L"***Bad stack pointer: " << PVOID(sp) << endl;
+		logStream << L"***Bad stack pointer: " << PVOID(sp) << std::endl;
 	else
 	{
 		// Show the SP index
 		if (IsBadReadPtr(pProcess, sizeof(Process)))
 		{
-			logStream << L"***Invalid process pointer: " << PVOID(pProcess) << endl;
+			logStream << L"***Invalid process pointer: " << PVOID(pProcess) << std::endl;
 		}
 		else
 		{
@@ -654,9 +652,9 @@ static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned 
 					sp--;
 					i++;
 				}
-				logStream << L"..." << endl
-					<< L"<" << dec << nSlots - nDepth << L" slots omitted>" << endl
-					<< L"..." << endl;
+				logStream << L"..." << std::endl
+					<< L"<" << std::dec << nSlots - nDepth << L" slots omitted>" << std::endl
+					<< L"..." << std::endl;
 
 				sp = pProcess->m_stack + nHalfDepth;
 				while (sp >= pProcess->m_stack)
@@ -673,7 +671,7 @@ static void DumpStack(Oop* sp, Process* pProcess, wostream& logStream, unsigned 
 					sp--;
 				}
 
-			logStream << L"<Bottom of stack>" << endl;
+			logStream << L"<Bottom of stack>" << std::endl;
 		}
 	}
 }
@@ -692,10 +690,10 @@ static void DumpBP(Oop* bp, Process* pProcess, wostream& logStream)
 		else
 		{
 			int index = pProcess->indexOfSP(bp);
-			logStream << bp << L" (" << dec << index << L')';
+			logStream << bp << L" (" << std::dec << index << L')';
 		}
 	}
-	logStream << endl;
+	logStream << std::endl;
 }
 
 wostream& operator<<(wostream& stream, StackFrame *pFrame)
@@ -715,7 +713,7 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 			<< L": cf " << LPVOID(pFrame->m_caller)
 			<< L", sp " << pFrame->stackPointer()
 			<< L", bp " << bp
-			<< L", ip " << dec << ip
+			<< L", ip " << std::dec << ip
 			<< L", ";
 
 		ContextOTE* oteContext;
@@ -769,23 +767,23 @@ wostream& operator<<(wostream& stream, StackFrame *pFrame)
 				stream << L'(' << method->m_methodClass << L')';
 		}
 		stream << L">>" << method->m_selector
-			<< '}' << endl;
+			<< '}' << std::endl;
 
-		stream << L"	receiver: " << reinterpret_cast<OTE*>(receiver) << endl;
+		stream << L"	receiver: " << reinterpret_cast<OTE*>(receiver) << std::endl;
 		unsigned i = 0;
 		for (i = 0; i < argc; i++)
-			stream << L"	arg[" << dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i)) << endl;
+			stream << L"	arg[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i)) << std::endl;
 		for (i = 0; i < stackTempCount; i++)
-			stream << L"	stack temp[" << dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i + argc)) << endl;
+			stream << L"	stack temp[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(*(bp + i + argc)) << std::endl;
 
 		if (ctx != NULL)
 		{
 			const unsigned envTempCount = oteContext->pointersSize() - Context::FixedSize;
 			for (i = 0; i < envTempCount; i++)
-				stream << L"	env temp[" << dec << i << L"]: " << reinterpret_cast<OTE*>(ctx->m_tempFrame[i]) << endl;
+				stream << L"	env temp[" << std::dec << i << L"]: " << reinterpret_cast<OTE*>(ctx->m_tempFrame[i]) << std::endl;
 		}
 
-		stream << endl;
+		stream << std::endl;
 
 	}
 	return stream;
@@ -801,7 +799,7 @@ void Interpreter::DumpContext(EXCEPTION_POINTERS *pExceptionInfo, wostream& logS
 
 void Interpreter::DumpContext(wostream& logStream)
 {
-	logStream << L"*----> VM Context <----*" << endl;
+	logStream << L"*----> VM Context <----*" << std::endl;
 
 	__try
 	{
@@ -810,7 +808,7 @@ void Interpreter::DumpContext(wostream& logStream)
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT ACTIVE PROCESS OR CONTEXT";
+		logStream << std::endl << L'\t' << L"***CORRUPT ACTIVE PROCESS OR CONTEXT";
 	}
 
 	__try
@@ -819,20 +817,20 @@ void Interpreter::DumpContext(wostream& logStream)
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT CURRENT METHOD OR CONTEXT";
+		logStream << std::endl << L'\t' << L"***CORRUPT CURRENT METHOD OR CONTEXT";
 	}
 
 	__try
 	{
-		logStream << endl << L"IP: ";
+		logStream << std::endl << L"IP: ";
 		DumpIP(m_registers.m_instructionPointer, m_registers.m_pMethod, logStream);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT IP, METHOD, OR CONTEXT";
+		logStream << std::endl << L'\t' << L"***CORRUPT IP, METHOD, OR CONTEXT";
 	}
 
-	logStream << L"SP: " << m_registers.m_stackPointer << endl;
+	logStream << L"SP: " << m_registers.m_stackPointer << std::endl;
 
 	__try
 	{
@@ -841,34 +839,34 @@ void Interpreter::DumpContext(wostream& logStream)
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT SP, PROCESS, OR CONTEXT" << endl;
+		logStream << std::endl << L'\t' << L"***CORRUPT SP, PROCESS, OR CONTEXT" << std::endl;
 	}
 
 	__try
 	{
-		logStream << L"ActiveFrame: " << m_registers.m_pActiveFrame << endl;
+		logStream << L"ActiveFrame: " << m_registers.m_pActiveFrame << std::endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT ACTIVE FRAME OR CONTEXT" << endl;
+		logStream << std::endl << L'\t' << L"***CORRUPT ACTIVE FRAME OR CONTEXT" << std::endl;
 	}
 
 	__try
 	{
-		logStream << L"New Method: " << Interpreter::m_registers.m_oopNewMethod << endl;
+		logStream << L"New Method: " << Interpreter::m_registers.m_oopNewMethod << std::endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT NEW METHOD OR CONTEXT" << endl;
+		logStream << std::endl << L'\t' << L"***CORRUPT NEW METHOD OR CONTEXT" << std::endl;
 	}
 
 	__try
 	{
-		logStream << L"Message Selector: " << Interpreter::m_oopMessageSelector << endl;
+		logStream << L"Message Selector: " << Interpreter::m_oopMessageSelector << std::endl;
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT SELECTOR OR CONTEXT" << endl;
+		logStream << std::endl << L'\t' << L"***CORRUPT SELECTOR OR CONTEXT" << std::endl;
 	}
 }
 
@@ -879,14 +877,14 @@ void Interpreter::DumpStack(wostream& logStream, unsigned nStackDepth)
 	if (nStackDepth == 0)
 		return;
 
-	logStream << endl << L"*----> Stack <----*" << endl;
+	logStream << std::endl << L"*----> Stack <----*" << std::endl;
 	__try
 	{
 		::DumpStack(m_registers.m_stackPointer, actualActiveProcess(), logStream, nStackDepth);
 	}
 	__except (EXCEPTION_EXECUTE_HANDLER)
 	{
-		logStream << endl << L'\t' << L"***CORRUPT STACK" << endl;
+		logStream << std::endl << L'\t' << L"***CORRUPT STACK" << std::endl;
 	}
 }
 
@@ -899,7 +897,7 @@ void Interpreter::StackTraceOn(wostream& dc, StackFrame* pFrame, unsigned depth)
 	{
 		if (::IsBadReadPtr(pFrame, sizeof(StackFrame)))
 		{
-			dc << L"***Invalid frame pointer: " << LPVOID(pFrame) << endl;
+			dc << L"***Invalid frame pointer: " << LPVOID(pFrame) << std::endl;
 			// Can't continue
 			break;
 		}
@@ -916,18 +914,18 @@ void Interpreter::StackTraceOn(wostream& dc, StackFrame* pFrame, unsigned depth)
 		);
 #endif
 
-	dc << (depth == 0 ? "<...more...>" : "<Bottom of stack>") << endl;
+	dc << (depth == 0 ? "<...more...>" : "<Bottom of stack>") << std::endl;
 }
 
 #if defined(_DEBUG)
 
 void Interpreter::WarningWithStackTraceBody(const wchar_t* warningCaption, StackFrame* pFrame)
 {
-	TRACESTREAM << endl << warningCaption << endl;
+	TRACESTREAM << std::endl << warningCaption << std::endl;
 	StackTraceOn(TRACESTREAM, pFrame);
-	TRACESTREAM << endl;
+	TRACESTREAM << std::endl;
 	//		decodeMethod((pFrame?pFrame:m_registers.m_pActiveFrame)->m_method, dc);
-	TRACESTREAM << endl << flush;
+	TRACESTREAM << std::endl << flush;
 }
 
 void Interpreter::WarningWithStackTrace(const wchar_t* warningCaption, StackFrame* pFrame)
@@ -1073,19 +1071,19 @@ void Interpreter::decodeMethod(CompiledMethod* method, wostream* pstream)
 	STMethodHeader hdr = method->m_header;
 	stream << L"Method " << method;
 	if (hdr.primitiveIndex > 7)
-		stream << L", primitive=" << dec << int(hdr.primitiveIndex);
+		stream << L", primitive=" << std::dec << int(hdr.primitiveIndex);
 	if (hdr.argumentCount > 0)
-		stream << L"; args=" << dec << int(hdr.argumentCount);
+		stream << L"; args=" << std::dec << int(hdr.argumentCount);
 	if (hdr.stackTempCount > 0)
-		stream << L"; stack temps=" << dec << int(hdr.stackTempCount);
+		stream << L"; stack temps=" << std::dec << int(hdr.stackTempCount);
 	int envTemps = hdr.envTempCount;
 	if (envTemps > 0)
 	{
 		if (envTemps > 1)
-			stream << L"; env temps=" << dec << envTemps - 1;
+			stream << L"; env temps=" << std::dec << envTemps - 1;
 		stream << L"; needs context";
 	}
-	stream << endl;
+	stream << std::endl;
 
 	DisassemblyContext info(method);
 	BytecodeDisassembler<DisassemblyContext> disassembler(info);
@@ -1111,9 +1109,6 @@ void Interpreter::decodeMethodAt(CompiledMethod* method, unsigned ip, wostream& 
 
 #endif
 
-#include <sstream>
-
-
 std::wstring Interpreter::PrintString(Oop oop)
 {
 	std::wstringstream st;
@@ -1123,7 +1118,7 @@ std::wstring Interpreter::PrintString(Oop oop)
 
 void DumpObject(const POTE pote)
 {
-	TRACESTREAM << pote << endl;
+	TRACESTREAM << pote << std::endl;
 }
 
 #ifdef _DEBUG
@@ -1139,7 +1134,7 @@ void Interpreter::checkStack(Oop* sp)
 	if (!ObjectMemoryIsIntegerObject(objectPointer) &&
 	((reinterpret_cast<OTE*>(objectPointer)->getCount() < MAXCOUNT)
 	{
-	TRACESTREAM << L"WARNING: sp+" << i << L" contains " << objectPointer << endl;
+	TRACESTREAM << L"WARNING: sp+" << i << L" contains " << objectPointer << std::endl;
 	}
 	}
 		*/		if (abs(executionTrace) > 3)
@@ -1155,17 +1150,17 @@ void Interpreter::checkStack(Oop* sp)
 void __fastcall Interpreter::debugReturnToMethod(Oop* sp)
 {
 	tracelock lock(TRACESTREAM);
-	TRACESTREAM << endl << L"** Returned to Method: " << *m_registers.m_pMethod << endl;
+	TRACESTREAM << std::endl << L"** Returned to Method: " << *m_registers.m_pMethod << std::endl;
 }
 
 void __fastcall Interpreter::debugMethodActivated(Oop* sp)
 {
 	tracelock lock(TRACESTREAM);
-	TRACESTREAM << endl << L"** Method activated: " << m_registers.m_pActiveFrame->m_method << endl;
+	TRACESTREAM << std::endl << L"** Method activated: " << m_registers.m_pActiveFrame->m_method << std::endl;
 	if (executionTrace > 1)
 	{
 		decodeMethod(m_registers.m_pMethod, NULL);
-		TRACESTREAM << endl;
+		TRACESTREAM << std::endl;
 	}
 
 }
@@ -1243,15 +1238,15 @@ extern "C" unsigned byteCodePairs[];
 void DumpBytecodeCounts(bool bClear)
 {
 
-	TRACESTREAM << endl << L"Bytecode invocation counts" << endl << L"-----------------------------" << endl;
+	TRACESTREAM << std::endl << L"Bytecode invocation counts" << std::endl << L"-----------------------------" << std::endl;
 	for (int i = 0; i < 256; i++)
 	{
-		TRACESTREAM << dec << i << L": " << byteCodeCounters[i] << endl;
+		TRACESTREAM << std::dec << i << L": " << byteCodeCounters[i] << std::endl;
 		if (bClear) byteCodeCounters[i] = 0;
 	}
-	TRACESTREAM << L"-----------------------------" << endl << endl;
+	TRACESTREAM << L"-----------------------------" << std::endl << std::endl;
 
-	TRACESTREAM << endl << L"Bytecode pair counts" << endl << L"-----------------------------" << endl;
+	TRACESTREAM << std::endl << L"Bytecode pair counts" << std::endl << L"-----------------------------" << std::endl;
 	for (int i = 0; i < 256; i++)
 	{
 		for (int j = 0; j < 256; j++)
@@ -1259,9 +1254,9 @@ void DumpBytecodeCounts(bool bClear)
 			TRACESTREAM << byteCodePairs[i * 256 + j] << L' ';
 			if (bClear) byteCodePairs[i * 256 + j] = 0;
 		}
-		TRACESTREAM << endl;
+		TRACESTREAM << std::endl;
 	}
-	TRACESTREAM << L"-----------------------------" << endl << endl;
+	TRACESTREAM << L"-----------------------------" << std::endl << std::endl;
 
 }
 
@@ -1269,13 +1264,13 @@ extern "C" unsigned primitiveCounters[];
 
 void DumpPrimitiveCounts(bool bClear)
 {
-	TRACESTREAM << endl << L"Primitive invocation counts" << endl << L"-----------------------------" << endl;
+	TRACESTREAM << std::endl << L"Primitive invocation counts" << std::endl << L"-----------------------------" << std::endl;
 	for (int i = 0; i <= PRIMITIVE_MAX; i++)
 	{
-		TRACESTREAM << dec << i << L": " << primitiveCounters[i] << endl;
+		TRACESTREAM << std::dec << i << L": " << primitiveCounters[i] << std::endl;
 		if (bClear) primitiveCounters[i] = 0;
 	}
 
-	TRACESTREAM << L"-----------------------------" << endl << endl;
+	TRACESTREAM << L"-----------------------------" << std::endl << std::endl;
 }
 #endif	// defined(_DEBUG)

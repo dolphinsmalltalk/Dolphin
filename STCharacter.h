@@ -41,4 +41,4 @@ namespace ST
 	};
 }
 
-wostream& operator<<(wostream& st, const CharOTE* oteCh);
+std::wostream& operator<<(std::wostream& st, const CharOTE* oteCh);

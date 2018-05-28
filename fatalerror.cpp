@@ -7,8 +7,6 @@
 #endif
 
 #include "rc_vm.h"
-#include <process.h>
-#include <stdlib.h>
 
 extern int __stdcall DolphinMessage(UINT flags, const wchar_t* msg);
 extern void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg);

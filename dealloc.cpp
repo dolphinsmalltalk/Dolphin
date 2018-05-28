@@ -74,7 +74,7 @@ void ObjectMemory::deallocate(OTE* ote)
 		if (Interpreter::executionTrace)
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM << ote<< L" (" << hex << (UINT)ote<< L"), refs " << dec << (int)ote->m_count<< L", is being deallocated" << endl;
+			TRACESTREAM << ote<< L" (" << std::hex << (UINT)ote<< L"), refs " << std::dec << (int)ote->m_count<< L", is being deallocated" << std::endl;
 		}
 	#endif
 
@@ -140,8 +140,8 @@ void ObjectMemory::OTEPool::clear()
 	#ifdef MEMSTATS
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"OTEPool(" << this<< L") before clear, " << dec << m_nAllocated<< L" allocated, " 
-			<< m_nFree<< L" free" << endl;
+		TRACESTREAM<< L"OTEPool(" << this<< L") before clear, " << std::dec << m_nAllocated<< L" allocated, " 
+			<< m_nFree<< L" free" << std::endl;
 	}
 	#endif
 
@@ -165,7 +165,7 @@ void ObjectMemory::OTEPool::clear()
 		m_nAllocated -= m_nFree;
 		m_nFree = 0;
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"OTEPool(" << this<< L") after clear, " << dec << m_nAllocated<< L" allocated" << endl;
+		TRACESTREAM<< L"OTEPool(" << this<< L") after clear, " << std::dec << m_nAllocated<< L" allocated" << std::endl;
 	}
 	#endif
 }

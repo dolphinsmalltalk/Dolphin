@@ -195,6 +195,6 @@ namespace ST
 }
 
 
-wostream& operator<<(wostream& st, const AnsiStringOTE*);
-wostream& operator<<(wostream& st, const SymbolOTE*);
+std::wostream& operator<<(std::wostream& st, const AnsiStringOTE*);
+std::wostream& operator<<(std::wostream& st, const SymbolOTE*);
 

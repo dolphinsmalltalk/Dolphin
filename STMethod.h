@@ -40,5 +40,5 @@ namespace ST
 typedef TOTE<ST::CompiledMethod> MethodOTE;
 
 // Debug dumpers
-wostream& operator<<(wostream& st, const MethodOTE*);
-wostream& operator<<(wostream& st, const ST::CompiledMethod&);
+std::wostream& operator<<(std::wostream& st, const MethodOTE*);
+std::wostream& operator<<(std::wostream& st, const ST::CompiledMethod&);

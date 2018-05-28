@@ -242,7 +242,7 @@ STDMETHODIMP_(void) CDolphinSmalltalk::DecodeMethod(
 {
 #ifdef _DEBUG
 	Interpreter::decodeMethod(reinterpret_cast<MethodOTE*>(methodPointer)->m_location, 
-			reinterpret_cast<wostream*>(pstream));
+			reinterpret_cast<std::wostream*>(pstream));
 #else
 	UNREFERENCED_PARAMETER(methodPointer);
 	UNREFERENCED_PARAMETER(pstream);

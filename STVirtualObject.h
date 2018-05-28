@@ -15,7 +15,6 @@
 #pragma once
 
 #include "STObject.h"
-#include <intrin.h>
 
 namespace ST
 {

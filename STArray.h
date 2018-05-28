@@ -31,4 +31,4 @@ namespace ST
 	};
 }
 
-ostream& operator<<(ostream& st, const ArrayOTE* oteArray);
+std::ostream& operator<<(std::ostream& st, const ArrayOTE* oteArray);

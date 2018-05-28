@@ -11,7 +11,6 @@
 #pragma once
 
 #include "Ist.h"
-#include <stdio.h>
 #include "STObject.h"
 #include "STVirtualObject.h"
 #include "STString.h"

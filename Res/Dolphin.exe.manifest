@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v3" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1">
   <description>Dolphin Smalltalk Development System.</description>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
     <application>
@@ -15,4 +15,9 @@
       <supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}"/>
     </application>
   </compatibility>
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <longPathAware xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">true</longPathAware>
+    </windowsSettings>
+  </application>
 </assembly>

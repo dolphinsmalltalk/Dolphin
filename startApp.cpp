@@ -2,8 +2,6 @@
 
 #ifndef VMDLL
 
-#include <process.h>
-#include <io.h>
 #include "startVM.h"
 
 HRESULT __stdcall RunEmbeddedImage(HMODULE hModule, int resId)

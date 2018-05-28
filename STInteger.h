@@ -138,5 +138,5 @@ namespace ST
 	}
 }
 
-wostream& operator<<(wostream& stream, const LargeIntegerOTE*);
+std::wostream& operator<<(std::wostream& stream, const LargeIntegerOTE*);
 

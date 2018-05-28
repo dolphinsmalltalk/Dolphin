@@ -11,11 +11,6 @@
 #include "Ist.h"
 #pragma code_seg(FFI_SEG)
 
-#include <string.h>
-#include <sys/timeb.h>
-#include <wtypes.h>			// for HRESULT
-#include <fpieee.h>			// for exception handling
-#include <oaidl.h>
 // Prevent warning of redefinition of WIN32_LEAN_AND_MEAN in atldef.h
 #define ATL_NO_LEAN_AND_MEAN
 #include <atlconv.h>

@@ -2,7 +2,6 @@
 // Structure exception codes
 
 #pragma once
-#include <winerror.h>
 #include "rc_vm.h"
 
 // Similar to MAKE_SCODE, but makes a customer (non-MS) exception code

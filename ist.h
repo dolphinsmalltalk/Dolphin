@@ -48,24 +48,33 @@
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/timeb.h>
 #include <float.h>
 #include <io.h>
 #include <fcntl.h>
+#include <string.h>
+#include <stddef.h>
+#include <malloc.h>
+#include <stdlib.h>
 
 #pragma warning(disable:4711)	// Function selected for automatic inline expansion
 #pragma warning(disable:4786)	// Browser identifier truncated to 255 characters
 
 #pragma warning(push,3)
-#pragma warning(disable:4530)
+// Disable warning about exception handling (we compile with exception handling disabled)
+#pragma warning (disable:4530)
 #include <iostream>
 #include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <streambuf>
+#include <unordered_map>
+#include <vector>
 #pragma warning(pop)
-using namespace std;
+#include <functional>
+
 
 #include "Environ.h"
-//#include "version.h"
 
 typedef signed char		SBYTE;
 typedef short			SWORD;
@@ -136,4 +145,30 @@ HMODULE GetModuleContaining(LPCVOID pFunc);
 #define _ATL_NO_COM_SUPPORT
 #endif
 
+#pragma warning(push,3)
 #include <icu.h>
+#include <intrin.h>
+#include <string.h>
+#include <math.h>
+#include <float.h>
+#include <limits.h>
+#include <fpieee.h>
+#include <stdarg.h>
+#include <setjmp.h>
+#include <float.h>
+#include <process.h>
+#include <wtypes.h>
+#include <winbase.h>
+#include <winreg.h>
+#include <winerror.h>
+#include <CommCtrl.h>
+#include <Strsafe.h>
+#include <VersionHelpers.h>
+#include <comdef.h>
+#include <oaidl.h>
+#pragma warning(pop)
+
+#if defined(_DEBUG)
+#include <crtdbg.h>
+#endif
+

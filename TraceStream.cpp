@@ -1,3 +1,5 @@
+#include "ist.h"
+
 #ifndef _DEBUG
 	#pragma optimize("s", on)
 	#pragma auto_inline(off)
@@ -6,13 +8,6 @@
 
 #pragma code_seg(DEBUG_SEG)
 #include "TraceStream.h"
-#pragma warning(push,3)
-#include <wtypes.h>
-#include <winbase.h>
-#pragma warning(disable:4530)
-#include <iostream>
-#include <iomanip>
-#pragma warning(pop)
 
 std::wostream& operator<<(std::wostream& stream, const SYSTEMTIME& st)
 {

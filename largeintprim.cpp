@@ -527,8 +527,8 @@ Oop __stdcall liAdd(LargeIntegerOTE* oteOp1, LargeIntegerOTE* oteOp2)
 	{
 		// operand 2 is larger than operand 1, add op1 to op2
 
-		swap(oteOp1, oteOp2);
-		swap(size1, size2);
+		std::swap(oteOp1, oteOp2);
+		std::swap(size1, size2);
 	}
 
 	LargeInteger *liOp1 = oteOp1->m_location;
@@ -1407,9 +1407,9 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 		ASSERT(qi >= 0 && qi < m);
 		liQuo->m_digits[qi] = qHat;
 #ifdef _DEBUG
-		TRACESTREAM<< L"\tliQuo->m_digits[" << dec << qi<< L"] = " 
-			<< hex << qHat << endl;
-		TRACESTREAM<< L"Remainder: " << oteU << endl << endl;
+		TRACESTREAM<< L"\tliQuo->m_digits[" << std::dec << qi<< L"] = " 
+			<< std::hex << qHat << std::endl;
+		TRACESTREAM<< L"Remainder: " << oteU << std::endl << std::endl;
 #endif
 	}
 

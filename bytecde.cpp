@@ -13,9 +13,6 @@
 
 #include "ObjMem.h"
 #include "Interprt.h"
-#include <winerror.h>
-#include <wtypes.h>
-#include <CommCtrl.h>
 
 #include "rc_vm.h"
 #include "InterprtProc.inl"
@@ -293,7 +290,7 @@ Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCach
 						if (abs(executionTrace) > 1)
 						{
 							tracelock lock(TRACESTREAM);
-							TRACESTREAM<< L"Found method " << classPointer<< L">>" << targetSelector<< L" (" << methodPointer<< L")" << endl;
+							TRACESTREAM<< L"Found method " << classPointer<< L">>" << targetSelector<< L" (" << methodPointer<< L")" << std::endl;
 						}
 					}
 #endif
@@ -356,9 +353,9 @@ Interpreter::MethodCacheEntry* __fastcall Interpreter::messageNotUnderstood(Beha
 {
 	#if defined(_DEBUG)
 	{
-		wostringstream dc;
-		dc << classPointer<< L" does not understand " << m_oopMessageSelector << endl << ends;
-		wstring msg = dc.str();
+		std::wostringstream dc;
+		dc << classPointer<< L" does not understand " << m_oopMessageSelector << std::endl << std::ends;
+		std::wstring msg = dc.str();
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM << msg;
 		if (classPointer->isMetaclass() || 

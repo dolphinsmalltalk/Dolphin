@@ -82,4 +82,5 @@ namespace ST
 		};
 	};
 }
-extern wostream& operator<<(wostream& stream, const BehaviorOTE*);
+
+std::wostream& operator<<(std::wostream& stream, const BehaviorOTE*);

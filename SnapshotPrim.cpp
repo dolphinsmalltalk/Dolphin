@@ -94,7 +94,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, unsigned)
 
 #ifdef OAD
 	DWORD timeEnd = timeGetTime();
-	TRACESTREAM<< L"Time to save image: " << (timeEnd - timeStart)<< L" mS" << endl;
+	TRACESTREAM<< L"Time to save image: " << (timeEnd - timeStart)<< L" mS" << std::endl;
 #endif
 
 	if (!saveResult)

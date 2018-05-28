@@ -4,8 +4,6 @@
 
 #ifdef TO_GO
 
-#include <process.h>
-#include <io.h>
 #include "startVM.h"
 #include "DolphinSmalltalk.h"
 #include "VMExcept.h"

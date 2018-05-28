@@ -58,7 +58,7 @@ void Interpreter::scheduleFinalization()
 			#ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM<< L"Signalling undertaker process" << endl;
+				TRACESTREAM<< L"Signalling undertaker process" << std::endl;
 			}
 			#endif
 			asynchronousSignal(bereavementsSemaphore );
@@ -72,7 +72,7 @@ void Interpreter::scheduleFinalization()
 			#ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM<< L"Signalling finalizer process" << endl;
+				TRACESTREAM<< L"Signalling finalizer process" << std::endl;
 			}
 			#endif
 			asynchronousSignal(finalizationSemaphore);

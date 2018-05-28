@@ -9,12 +9,6 @@
 ******************************************************************************/
 #include "ist.h"
 
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <float.h>
-#include <io.h>
-#include <fcntl.h>
 #include "binstream.h"
 #include "zbinstream.h"
 #include "objmem.h"
@@ -64,7 +58,7 @@ static HRESULT ImageReadError(ibinstream& imageFile)
 HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, UINT imageSize, bool isDevSys)
 {
 #ifdef PROFILE_IMAGELOADSAVE
-	TRACESTREAM<< L"Loading image '" << szImageName << endl;
+	TRACESTREAM<< L"Loading image '" << szImageName << std::endl;
 	DWORD dwStartTicks = GetTickCount();
 #endif
 
@@ -99,7 +93,7 @@ HRESULT ObjectMemory::LoadImage(const wchar_t* szImageName, LPVOID imageData, UI
 
 #ifdef PROFILE_IMAGELOADSAVE
 	DWORD msToRun = GetTickCount() - dwStartTicks;
-	TRACESTREAM<< L" done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed")<< L"), binstreams time=" << long(msToRun)<< L"mS" << endl;
+	TRACESTREAM<< L" done (" << (SUCCEEDED(hr) ? "Succeeded" : "Failed")<< L"), binstreams time=" << long(msToRun)<< L"mS" << std::endl;
 #endif
 
 	return hr;
@@ -154,7 +148,7 @@ HRESULT ObjectMemory::LoadImage(ibinstream& imageFile, ImageHeader* pHeader)
 
 #ifdef _DEBUG
 	// tellg() invalidates a gzstream
-	//TRACESTREAM << nDataRead<< L" data bytes read, loading checksum at offset " << imageFile.tellg() << endl;
+	//TRACESTREAM << nDataRead<< L" data bytes read, loading checksum at offset " << imageFile.tellg() << std::endl;
 #endif
 
 	// Read the checksum...
@@ -229,7 +223,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadPointers(ibinstream& i
 	}
 
 #ifdef _DEBUG
-	TRACESTREAM << i<< L" permanent objects loaded totalling " << cbPerm<< L" bytes" << endl;
+	TRACESTREAM << i<< L" permanent objects loaded totalling " << cbPerm<< L" bytes" << std::endl;
 #endif
 
 	memcpy(const_cast<VMPointers*>(&Pointers), &_Pointers, sizeof(Pointers));
@@ -335,7 +329,7 @@ template <MWORD ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream & i
 #ifdef _DEBUG
 	ASSERT(numObjects + m_nFreeOTEs == m_nOTSize);
 	ASSERT(m_nFreeOTEs = CountFreeOTEs());
-	TRACESTREAM << dec << numObjects<< L", " << m_nFreeOTEs<< L" free" << endl;
+	TRACESTREAM << std::dec << numObjects<< L", " << m_nFreeOTEs<< L" free" << std::endl;
 #endif
 
 	cbRead += nDataSize;
@@ -375,7 +369,7 @@ void ObjectMemory::FixupObject(OTE* ote, MWORD* oldLocation, const ImageHeader* 
 			classPointer == _Pointers.ClassUtf8String ||
 			classPointer == _Pointers.ClassSymbol))
 		{
-			TRACESTREAM<< L"Bad OTE for byte array " << LPVOID(&ote)<< L" marked as pointer" << endl;
+			TRACESTREAM<< L"Bad OTE for byte array " << LPVOID(&ote)<< L" marked as pointer" << std::endl;
 			ote->beBytes();
 		}
 	}
@@ -565,12 +559,12 @@ void ObjectMemory::PostLoadFix()
 #if defined(_DEBUG) && 0
 	{
 		// Dump out the pointers
-		TRACESTREAM << NumPointers<< L" VM Pointers..." << endl;
+		TRACESTREAM << NumPointers<< L" VM Pointers..." << std::endl;
 		for (int i = 0; i < NumPointers; i++)
 		{
 			VariantObject* obj = static_cast<VariantObject*>(m_pConstObjs);
 			POTE pote = POTE(obj->m_fields[i]);
-			TRACESTREAM << i<< L": " << pote << endl;
+			TRACESTREAM << i<< L": " << pote << std::endl;
 		}
 	}
 #endif

@@ -665,7 +665,7 @@ void ObjectMemory::FixedSizePool::morePages()
 	#ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"FixedSizePool: new pages @ " << LPVOID(pStart) << endl;
+		TRACESTREAM<< L"FixedSizePool: new pages @ " << LPVOID(pStart) << std::endl;
 	}
 	#endif
 
@@ -731,7 +731,7 @@ void ObjectMemory::FixedSizePool::moreChunks()
 				<< L" (" << m_nPages<< L" pages of " 
 				<< nChunks <<" chunks of "
 				<< m_nChunkSize <<" bytes, total waste "
-				<< m_nPages*(nBlockSize-(nChunks*m_nChunkSize)) << L')' << endl;
+				<< m_nPages*(nBlockSize-(nChunks*m_nChunkSize)) << L')' << std::endl;
 		}
 		memset(pStart, 0xCD, nBlockSize);
 	#else
@@ -799,7 +799,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 	void ObjectMemory::OTEPool::DumpStats()
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"OTEPool(" << this<< L"): total " << dec << m_nAllocated <<", free " << m_nFree << endl;
+		TRACESTREAM<< L"OTEPool(" << this<< L"): total " << std::dec << m_nAllocated <<", free " << m_nFree << std::endl;
 	}
 
 	static _CrtMemState CRTMemState;
@@ -807,8 +807,8 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 	{
 		tracelock lock(TRACESTREAM);
 
-		TRACESTREAM << endl<< L"Object Memory Statistics:" << endl
-			<< L"------------------------------" << endl;
+		TRACESTREAM << std::endl<< L"Object Memory Statistics:" << std::endl
+			<< L"------------------------------" << std::endl;
 
 		CheckPoint();
 		_CrtMemDumpStatistics(&CRTMemState);
@@ -817,12 +817,12 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 		checkPools();
 #endif
 
-		TRACESTREAM << endl<< L"Pool Statistics:" << endl
-			 << L"------------------" << endl << dec
+		TRACESTREAM << std::endl<< L"Pool Statistics:" << std::endl
+			 << L"------------------" << std::endl << std::dec
 			  << NumPools<< L" pools in the interval ("
 			  << m_pools[0].getSize()<< L" to: "
 			  << m_pools[NumPools-1].getSize()<< L" by: "
-			  << PoolGranularity << L')' << endl << endl;
+			  << PoolGranularity << L')' << std::endl << std::endl;
 
 		int pageWaste=0;
 		int totalPages=0;
@@ -869,7 +869,7 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 								: int(double(objectWaste)/
 										double(totalChunks-totalFreeChunks)*100.0);
 
-		TRACESTREAM<< L"===============================================" << endl;
+		TRACESTREAM<< L"===============================================" << std::endl;
 		TRACE(L"Total objects	= %d\n"
 			  "Total pool objs	= %d\n"
 			  "Total chunks		= %d\n"
@@ -913,7 +913,6 @@ inline POBJECT ObjectMemory::reallocChunk(POBJECT pChunk, MWORD newChunkSize)
 #endif
 
 #if defined(_DEBUG)
-	#include <crtdbg.h>
 
 	bool ObjectMemory::FixedSizePool::isMyChunk(void* pChunk)
 	{

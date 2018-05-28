@@ -19,7 +19,6 @@
 #endif
 
 
-#include <wtypes.h>
 #include "ObjMem.h"
 #include "ObjMemPriv.inl"
 #include "Interprt.h"

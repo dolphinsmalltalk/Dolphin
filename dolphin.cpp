@@ -10,8 +10,6 @@
 #pragma comment(lib, "version.lib")
 
 #include "environ.h"
-#include <wtypes.h>
-#include <commctrl.h>
 #include "rc_vm.h"
 #include "interprt.h"
 #include "VMExcept.h"
@@ -70,10 +68,10 @@ BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut)
 			bRet = TRUE;
 		}
 		else
-			TRACESTREAM << L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
+			TRACESTREAM << L"Fail to get ver info for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << std::endl;
 	}
 	else
-		TRACESTREAM << L"Fail to get ver info size for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << endl;
+		TRACESTREAM << L"Fail to get ver info size for '" << vmFileName<< L"' (" << ::GetLastError() << L')' << std::endl;
 	return bRet;
 }
 
@@ -93,7 +91,7 @@ static long __stdcall ignoreUnwindsFilter(EXCEPTION_POINTERS *pExceptionInfo)
 	case SE_VMCALLBACKEXIT:
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM<< L"Warning: Ignoring extraneous unwind " << hex << PVOID(exceptionCode) << endl;
+			TRACESTREAM<< L"Warning: Ignoring extraneous unwind " << std::hex << PVOID(exceptionCode) << std::endl;
 		}
 		return EXCEPTION_CONTINUE_EXECUTION;
 	
@@ -116,7 +114,7 @@ static long __stdcall unhandledExceptionFilter(EXCEPTION_POINTERS *pExceptionInf
 	{
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM<< L"ERROR: An unhandled exception occurred in thread " << GetCurrentThreadId() 
-					<< L", see Dolphin Crash Dump (if configured)" << endl;
+					<< L", see Dolphin Crash Dump (if configured)" << std::endl;
 		//_asm int 3;
 	}
 	CrashDump(pExceptionInfo, achImagePath);

@@ -12,7 +12,6 @@
 ///////////////////////////////////
 #include "ObjMem.h"
 #include "OopQ.h"
-#include <fpieee.h>
 #include "STExternal.h"
 #include "STBehavior.h"
 #include "STClassDesc.h"
@@ -104,10 +103,10 @@ public:
 		static BOOL isCallbackFrame(Oop framePointer);
 	#endif
 
-	static void StackTraceOn(wostream& dc, StackFrame* pFrame=NULL, unsigned depth=10);
-	static void DumpStack(wostream&, unsigned);
-	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, wostream& logStream);
-	static void DumpContext(wostream& logStream);
+	static void StackTraceOn(std::wostream& dc, StackFrame* pFrame=NULL, unsigned depth=10);
+	static void DumpStack(std::wostream&, unsigned);
+	static void DumpContext(EXCEPTION_POINTERS *pExceptionInfo, std::wostream& logStream);
+	static void DumpContext(std::wostream& logStream);
 	static std::wstring PrintString(Oop);
 	
 	#ifdef _DEBUG
@@ -165,8 +164,8 @@ public:
 	// CompiledMethod bytecode decoding (in decode.cpp)
 	#if defined(_DEBUG)
 		static const wchar_t* activeMethod();
-		static void decodeMethod(CompiledMethod*, wostream* pstream=NULL);
-		static void decodeMethodAt(CompiledMethod*, unsigned ip, wostream&);
+		static void decodeMethod(CompiledMethod*, std::wostream* pstream=NULL);
+		static void decodeMethodAt(CompiledMethod*, unsigned ip, std::wostream&);
 #endif
 
 	// Contexts
@@ -932,7 +931,7 @@ public:
 	#endif
 };
 
-wostream& operator<<(wostream& stream, const CONTEXT* pCtx);
+std::wostream& operator<<(std::wostream& stream, const CONTEXT* pCtx);
 
 ///////////////////////////////////
 

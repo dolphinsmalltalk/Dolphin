@@ -7,8 +7,6 @@ Implementation of Smalltalk interpreter
 */
 
 #include "Ist.h"
-#include <float.h>
-#include <VersionHelpers.h>
 #include "rc_vm.h"
 
 #ifndef _DEBUG
@@ -20,8 +18,6 @@ Implementation of Smalltalk interpreter
 
 #include "Interprt.h"
 #include "InterprtProc.inl"
-#include <stdarg.h>
-#include <process.h>
 #include "thrdcall.h"
 #include "VMExcept.h"
 #include "regkey.h"
@@ -124,7 +120,7 @@ HRESULT Interpreter::initialize(const wchar_t* szFileName, LPVOID imageData, UIN
 		return hr;
 #ifdef OAD
 	DWORD timeEnd = timeGetTime();
-	TRACESTREAM<< L"Time to load image: " << (timeEnd - timeStart)<< L" mS" << endl;
+	TRACESTREAM<< L"Time to load image: " << (timeEnd - timeStart)<< L" mS" << std::endl;
 #endif
 
 	ObjectMemory::HeapCompact();
@@ -208,7 +204,7 @@ HRESULT Interpreter::initializeAfterLoad()
 	m_registers.FetchContextRegisters();
 
 #ifdef _DEBUG
-	TRACESTREAM<< L"Startup process: " << actualActiveProcessPointer() << endl;
+	TRACESTREAM<< L"Startup process: " << actualActiveProcessPointer() << std::endl;
 #endif
 
 	// Populate the ZCT with zero count objects in the startup process' stack
@@ -339,7 +335,7 @@ static MWORD ResizeProcInContext(InterpreterRegisters& reg)
 	{
 		tracelock lock(TRACESTREAM);
 		TRACESTREAM<< L"Check Refs: Resized proc " << oteProc<< L" from "
-			<< dec << size<< L" to " << oteProc->getSize() << endl;
+			<< std::dec << size<< L" to " << oteProc->getSize() << std::endl;
 	}
 	return size;
 }
@@ -513,7 +509,7 @@ void Interpreter::sendExceptionInterrupt(Oop oopInterrupt, LPEXCEPTION_POINTERS 
 #ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM << hex << pExInfo->ExceptionRecord->ExceptionCode<< L" exception trapped in " << *m_registers.m_pMethod << endl;
+		TRACESTREAM << std::hex << pExInfo->ExceptionRecord->ExceptionCode<< L" exception trapped in " << *m_registers.m_pMethod << std::endl;
 	}
 #endif
 	sendVMInterrupt(oopInterrupt, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(EXCEPTION_RECORD), pExInfo->ExceptionRecord)));
@@ -599,7 +595,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef _DEBUG
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM<< L"Divide by zero in " << *m_registers.m_pMethod << endl;
+			TRACESTREAM<< L"Divide by zero in " << *m_registers.m_pMethod << std::endl;
 		}
 #endif
 		sendVMInterrupt(VMI_ZERODIVIDE, Integer::NewSigned32WithRef(pExInfo->ContextRecord->Eax));
@@ -625,7 +621,7 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef _DEBUG
 			{
 				tracelock lock(TRACESTREAM);
-				TRACESTREAM<< L"Unhandled exception " << exceptionCode<< L" in " << *m_registers.m_pMethod << endl;
+				TRACESTREAM<< L"Unhandled exception " << exceptionCode<< L" in " << *m_registers.m_pMethod << std::endl;
 			}
 #endif
 			action = EXCEPTION_EXECUTE_HANDLER;
@@ -663,7 +659,7 @@ int __cdecl Interpreter::IEEEFPHandler(_FPIEEE_RECORD *pIEEEFPException)
 #ifdef _DEBUG
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"FP Fault in " << *m_registers.m_pMethod << endl;
+		TRACESTREAM<< L"FP Fault in " << *m_registers.m_pMethod << std::endl;
 	}
 #endif
 	sendVMInterrupt(VMI_FPFAULT, reinterpret_cast<Oop>(ByteArray::NewWithRef(sizeof(_FPIEEE_RECORD), pIEEEFPException)));
@@ -696,7 +692,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef OAD
 	{
 		tracelock lock(TRACESTREAM);
-		TRACESTREAM<< L"Access violation: " << LPVOID(dwAddress)<< L", stack top " << LPVOID(dwNext) << endl;
+		TRACESTREAM<< L"Access violation: " << LPVOID(dwAddress)<< L", stack top " << LPVOID(dwNext) << std::endl;
 	}
 #endif
 
@@ -705,7 +701,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 #ifdef OAD
 		{
 			tracelock lock(TRACESTREAM);
-			TRACESTREAM<< L"Stack overflow detected" << endl;
+			TRACESTREAM<< L"Stack overflow detected" << std::endl;
 		}
 #endif
 
@@ -715,7 +711,7 @@ int Interpreter::memoryExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 			// the reserved space to accomodate an overrun page for detection
 			if (activeProcAlloc >= pBase->getMaxAllocation())
 			{
-				TRACESTREAM<< L"Stack max'd out at " << hex << activeProcAlloc << endl;
+				TRACESTREAM<< L"Stack max'd out at " << std::hex << activeProcAlloc << std::endl;
 				// Even though stack has hit max. we can still continue (to handle the error)
 				// We'll just add an interrupt to the queue, which'll be detected later.
 				// In order for this to continue to work, the stack must be shrunk at some

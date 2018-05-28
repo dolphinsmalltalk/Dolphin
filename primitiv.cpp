@@ -10,9 +10,6 @@
 #include "Ist.h"
 #pragma code_seg(PRIM_SEG)
 
-#include <process.h>		// for exit() prototype
-#include <string.h>
-#include <sys/timeb.h>
 #include "ObjMem.h"
 #include "Interprt.h"
 #include "rc_vm.h"
@@ -38,7 +35,7 @@ Oop* __fastcall Interpreter::unusedPrimitive(Oop* const, unsigned)
 	// Note that the failure code is not set.
 #ifdef _DEBUG
 	int primitiveIndex = m_registers.m_oopNewMethod->m_location->m_header.primitiveIndex;
-	TRACESTREAM << L"Unused primitive " << primitiveIndex << " in " << m_registers.m_oopNewMethod << endl;
+	TRACESTREAM << L"Unused primitive " << primitiveIndex << " in " << m_registers.m_oopNewMethod << std::endl;
 #endif
 
 	return 0;

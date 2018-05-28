@@ -11,7 +11,6 @@
 #include "Ist.h"
 #pragma code_seg(PRIM_SEG)
 
-#include <string.h>
 #include "ObjMem.h"
 #include "Interprt.h"
 #include "InterprtPrim.inl"

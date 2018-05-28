@@ -10,8 +10,6 @@
 #pragma once
 
 #define TODO(s)
-#include <malloc.h>
-#include <stdlib.h>
 
 // TODO: This actuall seems to have no effect in VS2017, and maybe earlier. The result is slow indirect calls when using /MD as we do for the VM.
 #pragma intrinsic(memcpy,memset,strlen)

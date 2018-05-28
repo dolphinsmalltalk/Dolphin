@@ -11,9 +11,6 @@
 
 #pragma code_seg(PROCESS_SEG)
 
-//#include <string.h>
-#include <wtypes.h>
-#include <float.h>
 #include "rc_vm.h"
 
 #include "ObjMem.h"
@@ -327,14 +324,14 @@ ProcessOTE* Interpreter::resumeFirst(Semaphore* sem)
 		Oop suspFrame = proc->SuspendedFrame();
 		if (!ObjectMemoryIsIntegerObject(suspFrame))
 		{
-			TRACESTREAM<< L"WARNING: Corrupt process resumed "<< L"(non-integer suspended frame)" << endl;
+			TRACESTREAM<< L"WARNING: Corrupt process resumed "<< L"(non-integer suspended frame)" << std::endl;
 			return NULL;
 		}
 
 		StackFrame* pTopFrame = StackFrame::FromFrameOop(suspFrame);
 		if (pTopFrame->m_sp == ZeroPointer)
 		{
-			TRACESTREAM<< L"WARNING: Corrupt process resumed "<< L"(null stack pointer)" << endl;
+			TRACESTREAM<< L"WARNING: Corrupt process resumed "<< L"(null stack pointer)" << std::endl;
 			return NULL;
 		}
 
@@ -353,7 +350,7 @@ ProcessOTE* Interpreter::resumeFirst(Semaphore* sem)
 			if (ObjectMemoryIsIntegerObject(oteRetValHolder) || oteRetValHolder->isBytes() ||
 				oteRetValHolder->getWordSize() == ObjectHeaderSize)
 			{
-				TRACESTREAM<< L"WARNING: Corrupt process resumed "<< L"(invalid Semaphore>>wait return value holder)" << endl;
+				TRACESTREAM<< L"WARNING: Corrupt process resumed "<< L"(invalid Semaphore>>wait return value holder)" << std::endl;
 				return NULL;
 			}
 
@@ -544,7 +541,7 @@ void Interpreter::sendVMInterrupt(ProcessOTE* interruptedProcess, Oop nInterrupt
 		if (interruptedProc->SuspendedFrame() == Oop(Pointers.Nil) ||
 			interruptedProc->IsWaitingOn(reinterpret_cast<LinkedListOTE*>(scheduler()->m_pendingTerms)))
 		{
-			TRACESTREAM<< L"Ignored interrupt " << ObjectMemoryIntegerValueOf(nInterrupt)<< L" to terminated process " << interruptedProcess << endl;
+			TRACESTREAM<< L"Ignored interrupt " << ObjectMemoryIntegerValueOf(nInterrupt)<< L" to terminated process " << interruptedProcess << std::endl;
 			return;
 		}
 
@@ -698,10 +695,10 @@ void Interpreter::switchTo(ProcessOTE* oteProcess)
 				static int processSwitches = 0;
 
 				Process* active = actualActiveProcess();
-				TRACESTREAM << endl << ++processSwitches<< L": Switching from " << oteOldActive <<
+				TRACESTREAM << std::endl << ++processSwitches<< L": Switching from " << oteOldActive <<
 					" to " << oteProcess;
 				TRACESTREAM<< L"\t(from " << LPVOID(oteOldActive) << L'/' << &active
-					<< L" to " << LPVOID(oteProcess) << L'/' << &newActive << L')' << endl << endl;
+					<< L" to " << LPVOID(oteProcess) << L'/' << &newActive << L')' << std::endl << std::endl;
 			}
 		}
 #endif
@@ -719,7 +716,7 @@ void Interpreter::switchTo(ProcessOTE* oteProcess)
 	}
 	else
 	{
-		TRACESTREAM<< L"Attempted switch to active process" << endl;
+		TRACESTREAM<< L"Attempted switch to active process" << std::endl;
 		//DebugCrashDump("Attempted switch to active process");
 	}
 
@@ -794,9 +791,9 @@ BOOL __fastcall Interpreter::FireAsyncEvents()
 			// Note that the arg has a ref. count from the queue after popped, removed by sendVMInterrupt
 			Oop oopArg = m_qInterrupts.Pop();
 #ifdef _DEBUG
-			TRACESTREAM<< L"Interrupting " << oteProcess << endl<< L"	with "
+			TRACESTREAM<< L"Interrupting " << oteProcess << std::endl<< L"	with "
 				<< InterruptNames[ObjectMemoryIntegerValueOf(nInterrupt)]<< L"(" << reinterpret_cast<OTE*>(oopArg)<< L")"
-				<< endl;
+				<< std::endl;
 #endif
 			// 1) We know the process won't actually get deleted because of the ZCT
 			// In any case it is very unlikely its count will actually drop to zero, because
@@ -846,7 +843,7 @@ BOOL Interpreter::CheckProcessSwitch()
 	{
 #ifdef _DEBUG
 		if (m_bInterruptsDisabled)
-			TRACESTREAM<< L"WARNING: Switching processes with interrupts disabled" << endl;
+			TRACESTREAM<< L"WARNING: Switching processes with interrupts disabled" << std::endl;
 #endif
 
 		// Shouldn't happen that attempt to switch to same process
@@ -1326,8 +1323,8 @@ BOOL Interpreter::FastYield()
 		//CHECKREFERENCES
 		// Process switch will occur below
 #ifdef _DEBUG
-		TRACESTREAM<< L"Interpreter: Yield from " << oteActive << endl<< L"  to "
-			<< m_oteNewProcess << endl;
+		TRACESTREAM<< L"Interpreter: Yield from " << oteActive << std::endl<< L"  to "
+			<< m_oteNewProcess << std::endl;
 		TRACESTREAM.flush();
 #endif
 		return TRUE;	// Yielded
@@ -1373,7 +1370,7 @@ DWORD Semaphore::Wait(SemaphoreOTE* oteThis, ProcessOTE* oteProcess, int timeout
 		{
 			Interpreter::QueueProcessOn(oteProcess, reinterpret_cast<LinkedListOTE*>(oteThis));
 			if (Interpreter::schedule() == oteProcess)
-				TRACESTREAM<< L"WARNING: Interrupted wait of " << oteProcess<< L" on " << oteThis << endl;
+				TRACESTREAM<< L"WARNING: Interrupted wait of " << oteProcess<< L" on " << oteThis << std::endl;
 			// Semaphore not available yet, so if interrupted in the meantime the
 			// return value holder will contain the "interrupted" value
 			dwAnswer = WAIT_IO_COMPLETION;
@@ -1786,7 +1783,7 @@ bool Interpreter::TerminateOverlapped(ProcessOTE* oteProc)
 			QueueProcessOn(oteProc, otePending);
 
 #ifdef _DEBUG
-			TRACESTREAM << hex << GetCurrentThreadId()<< L": Terminating " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(proc->Name()) << endl;
+			TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Terminating " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(proc->Name()) << std::endl;
 #endif
 			// Queue an APC to raise a terminate exception in the overlapped call thread.
 			// The overlapped thread will queue an APC back to this thread from its termination
@@ -1822,7 +1819,7 @@ inline bool Process::SuspendOverlappedCall()
 		return false;
 
 #if 1 //def _DEBUG
-	TRACESTREAM << hex << GetCurrentThreadId()<< L": Suspending " << *pOverlapped<< L" in process " << (OTE*)m_name << endl;
+	TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Suspending " << *pOverlapped<< L" in process " << (OTE*)m_name << std::endl;
 #endif
 	return pOverlapped->QueueSuspend();
 }
@@ -1834,7 +1831,7 @@ inline bool Process::ResumeOverlappedCall()
 		return false;
 
 #if 1//def _DEBUG
-	TRACESTREAM << hex << GetCurrentThreadId()<< L": Resuming " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(m_name) << endl;
+	TRACESTREAM << std::hex << GetCurrentThreadId()<< L": Resuming " << *pOverlapped<< L" in process " << reinterpret_cast<OTE*>(m_name) << std::endl;
 #endif
 	pOverlapped->Resume();
 	return true;

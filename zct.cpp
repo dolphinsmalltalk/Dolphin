@@ -112,9 +112,9 @@ Oop* ObjectMemory::ReconcileZct()
 	if (!alwaysReconcileOnAdd)
 	{
 		TRACELOCK();
-		TRACESTREAM << L"Reconciling Zct after " << dec << dwTicksNow - dwLastReconcileTicks<< L" mS: ";
+		TRACESTREAM << L"Reconciling Zct after " << std::dec << dwTicksNow - dwLastReconcileTicks<< L" mS: ";
 		//Interpreter::DumpOTEPoolStats();
-		TRACESTREAM << L"..." << endl;
+		TRACESTREAM << L"..." << std::endl;
 	}
 	dwLastReconcileTicks = dwTicksNow;
 	const int nOldZctEntries = m_nZctEntries;
@@ -297,13 +297,13 @@ void ObjectMemory::PopulateZct(Oop* const sp)
 #ifdef _DEBUG
 void ObjectMemory::DumpZct()
 {
-	TRACESTREAM<< L"===========================================================" << endl;
-	TRACESTREAM<< L"ZCT @ " << hex << m_pZct<< L", size: " << dec << m_nZctEntries << endl;
-	TRACESTREAM<< L"===========================================================" << endl;
+	TRACESTREAM<< L"===========================================================" << std::endl;
+	TRACESTREAM<< L"ZCT @ " << std::hex << m_pZct<< L", size: " << std::dec << m_nZctEntries << std::endl;
+	TRACESTREAM<< L"===========================================================" << std::endl;
 
 	for (int i = 0; i < m_nZctEntries; i++)
-		TRACESTREAM << dec << i<< L": " << hex << (DWORD)m_pZct[i]<< L": " << m_pZct[i] << endl;
+		TRACESTREAM << std::dec << i<< L": " << std::hex << (DWORD)m_pZct[i]<< L": " << m_pZct[i] << std::endl;
 
-	TRACESTREAM<< L"===========================================================" << endl;
+	TRACESTREAM<< L"===========================================================" << std::endl;
 }
 #endif

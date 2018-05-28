@@ -1,12 +1,5 @@
 #pragma once
 
-#pragma warning(push,3)
-#pragma warning(disable:4530)
-#include <iostream>
-#include <iomanip>
-#include <sstream>
-#pragma warning(pop)
-
 #include "bytecdes.h"
 
 enum JumpType { Jump, JumpIfTrue, JumpIfFalse, JumpIfNil, JumpIfNotNil };
@@ -46,13 +39,13 @@ public:
 	void EmitIp(size_t ip, std::wostream& stream)
 	{
 		// Print one-based ip as this is how they are disassembled in the image
-		stream << dec << setw(5) << (ip + 1) << L":";
+		stream << std::dec << setw(5) << (ip + 1) << L":";
 	}
 
 	size_t EmitRawBytes(size_t ip, std::wostream& stream)
 	{
 		int len = lengthOfByteCode(GetBytecode(ip));
-		stream << hex << uppercase << setfill(L'0');
+		stream << std::hex << uppercase << setfill(L'0');
 		int j;
 		for (j = 0; j < min(len, 3); j++)
 		{
@@ -67,7 +60,7 @@ public:
 		{
 			stream << L"   ";
 		}
-		stream << setfill(L' ') << nouppercase << dec;
+		stream << setfill(L' ') << nouppercase << std::dec;
 		return len;
 	}
 
@@ -447,7 +440,7 @@ public:
 		case PushOuterTemp:
 		{
 			BYTE operand = GetBytecode(ip + 1);
-			stream << L"Push Outer[" << dec << static_cast<int>(operand >> 5);
+			stream << L"Push Outer[" << std::dec << static_cast<int>(operand >> 5);
 			PrintTempInstruction(ip, stream, "]", (operand & 0x1F));
 		}
 		break;
@@ -471,7 +464,7 @@ public:
 		case StoreOuterTemp:
 		{
 			BYTE operand = GetBytecode(ip + 1);
-			stream << L"Store Outer[" << dec << static_cast<int>(operand >> 5);
+			stream << L"Store Outer[" << std::dec << static_cast<int>(operand >> 5);
 			PrintTempInstruction(ip, stream, "]", (operand & 0x1F));
 		}
 		break;
@@ -491,7 +484,7 @@ public:
 		case PopStoreOuterTemp:
 		{
 			BYTE operand = GetBytecode(ip + 1);
-			stream << L"Pop Outer[" << dec << static_cast<int>(operand >> 5);
+			stream << L"Pop Outer[" << std::dec << static_cast<int>(operand >> 5);
 			PrintTempInstruction(ip, stream, "]", operand & 0x1F);
 		}
 		break;
@@ -598,12 +591,12 @@ public:
 		break;
 
 		case LongPushOuterTemp:
-			stream << L"Push Outer[" << dec << static_cast<int>(GetBytecode(ip + 1));
+			stream << L"Push Outer[" << std::dec << static_cast<int>(GetBytecode(ip + 1));
 			PrintTempInstruction(ip, stream, "]", GetBytecode(ip + 2));
 			break;
 
 		case LongStoreOuterTemp:
-			stream << L"Store Outer[" << dec << static_cast<int>(GetBytecode(ip + 1));
+			stream << L"Store Outer[" << std::dec << static_cast<int>(GetBytecode(ip + 1));
 			PrintTempInstruction(ip, stream, "]", GetBytecode(ip + 2));
 			break;
 
@@ -630,7 +623,7 @@ public:
 		case BlockCopy:
 		{
 			int nArgs = GetBytecode(ip + 1);
-			stream << L"Block Copy, " << dec;
+			stream << L"Block Copy, " << std::dec;
 			if (nArgs > 0)
 				stream << nArgs << L" args, ";
 			int nStackTemps = GetBytecode(ip + 2);
@@ -669,7 +662,7 @@ public:
 			stream << L"UNHANDLED BYTE CODE " << opcode << L"!!!";
 			break;
 		}
-		stream << endl;
+		stream << std::endl;
 		stream.flush();
 	}
 
@@ -681,36 +674,36 @@ public:
 		{
 			stream << L'+';
 		}
-		stream << dec << static_cast<int>(offset) << L" to " << (target + 1);
+		stream << std::dec << static_cast<int>(offset) << L" to " << (target + 1);
 	}
 
 	void BytecodeDisassembler::PrintStaticInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
 	{
-		stream << type << L" [" << dec << index << L"]: " << context.GetLiteralAsString(index);
+		stream << type << L" [" << std::dec << index << L"]: " << context.GetLiteralAsString(index);
 	}
 
 	void BytecodeDisassembler::PrintInstVarInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
 	{
-		stream << type << L" InstVar[" << dec << index << L"]: " << context.GetInstVar(index).c_str();
+		stream << type << L" InstVar[" << std::dec << index << L"]: " << context.GetInstVar(index).c_str();
 	}
 
 	void BytecodeDisassembler::PrintSendInstruction(size_t ip, std::wostream& stream, int index, int argumentCount)
 	{
 		wstring selector = context.GetLiteralAsString(index);
-		stream << L"Send[" << dec << index << L"]: #" << selector << L" with " << argumentCount << (argumentCount == 1 ? L" arg" : L" args");
+		stream << L"Send[" << std::dec << index << L"]: #" << selector << L" with " << argumentCount << (argumentCount == 1 ? L" arg" : L" args");
 	}
 
 	void BytecodeDisassembler::PrintTempInstruction(size_t ip, std::wostream& stream, const char* type, size_t index)
 	{
-		stream << type << L" Temp[" << dec << index << L"]";
+		stream << type << L" Temp[" << std::dec << index << L"]";
 	}
 
 	void BytecodeDisassembler::PrintPushImmediate(size_t ip, std::wostream& stream, int value, int byteSize)
 	{
-		stream << L"Push " << dec << value;
+		stream << L"Push " << std::dec << value;
 		if (byteSize > 0)
 		{
-			stream << L" (" << hex << L"0x" << setfill(L'0') << setw(byteSize * 2) << value << L')' << setfill(L' ');
+			stream << L" (" << std::hex << L"0x" << setfill(L'0') << setw(byteSize * 2) << value << L')' << setfill(L' ');
 		}
 	}
 };
