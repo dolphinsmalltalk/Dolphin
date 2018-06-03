@@ -27,7 +27,7 @@ animateTransitionTo: aSymbol
 	transition := self transitionTo: aSymbol.
 
 	params := BP_ANIMATIONPARAMS new.
-	params cbSize: params size; style: 1 "BPAS_LINEAR"; dwDuration: (self durationOfTransition: transition).
+	params style: 1 "BPAS_LINEAR"; dwDuration: (self durationOfTransition: transition).
 	sourceDC := ExternalHandle new.
 	destDC := ExternalHandle new.
 
