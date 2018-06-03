@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #BP_ANIMATIONPARAMS
+Win32Structure subclass: #BP_ANIMATIONPARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -25,51 +25,45 @@ struct tagBP_ANIMATIONPARAMS {
 !BP_ANIMATIONPARAMS categoriesForClass!Win32-Structs! !
 !BP_ANIMATIONPARAMS methodsFor!
 
-cbSize
-	"Answer the receiver's cbSize field as a Smalltalk object."
-
-	^bytes dwordAtOffset: 0!
-
-cbSize: anObject 
-	"Set the receiver's cbSize field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
-
 dwDuration
-	"Answer the receiver's dwDuration field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwDuration' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwDuration)!
 
-dwDuration: anObject 
-	"Set the receiver's dwDuration field to the value of anObject."
+dwDuration: anInteger
+	"Set the receiver's 'dwDuration' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwDuration) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwDuration) put: anInteger!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
+
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: 0 put: anInteger!
 
 style
-	"Answer the receiver's style field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'style' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #style)!
 
-style: anObject 
-	"Set the receiver's style field to the value of anObject."
+style: anInteger
+	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #style) put: anObject! !
-!BP_ANIMATIONPARAMS categoriesFor: #cbSize!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #cbSize:!**compiled accessors**!public! !
+	bytes sdwordAtOffset: ##(self offsetOf: #style) put: anInteger! !
 !BP_ANIMATIONPARAMS categoriesFor: #dwDuration!**compiled accessors**!public! !
 !BP_ANIMATIONPARAMS categoriesFor: #dwDuration:!**compiled accessors**!public! !
 !BP_ANIMATIONPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
 !BP_ANIMATIONPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!BP_ANIMATIONPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
 !BP_ANIMATIONPARAMS categoriesFor: #style!**compiled accessors**!public! !
 !BP_ANIMATIONPARAMS categoriesFor: #style:!**compiled accessors**!public! !
 
@@ -90,7 +84,7 @@ defineFields
 "
 
 	self
-		defineField: #cbSize type: DWORDField new;
+		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #dwFlags type: DWORDField new;
 		defineField: #style type: SDWORDField new;
 		defineField: #dwDuration type: DWORDField new! !
