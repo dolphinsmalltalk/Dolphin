@@ -415,7 +415,7 @@ Commit: grfCommitFlags
 	than to flush the stream. The flags are ignored."
 
 	self flush.
-	^0	"S_OK"!
+	^Win32Errors.S_OK!
 
 CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten 
 	"Implement the IStream::CopyTo() method.
@@ -441,7 +441,7 @@ CopyTo: pstm cb: cb pcbRead: pcbRead pcbWritten: pcbWritten
 			countWritten ifTrue: [written := written + pcbWritten value]].
 	pcbRead bytes notNull ifTrue: [pcbRead value: read].
 	countWritten ifTrue: [pcbWritten value: written].
-	^0	"S_OK"!
+	^Win32Errors.S_OK!
 
 finalRelease
 	"The last reference to the receiver (as a COM object) has been released.
@@ -469,7 +469,7 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	optional. The STG_E_INVALIDFUNCTION error is returned if the requested type of locking is
 	not supported."
 
-	^##(OLEStructuredStorageConstants at: 'STG_E_INVALIDFUNCTION')!
+	^OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
 
 queryInterface: anInterfaceClass 
 	"Answer a new interface which supports the specified interface protocol
@@ -505,7 +505,7 @@ Read: pv cb: cb pcbRead: pcbRead
 		into: pv
 		startingAt: 1.
 	pcbRead bytes notNull ifTrue: [pcbRead value: count].
-	^0	"S_OK"!
+	^Win32Errors.S_OK!
 
 Revert
 	"Implement the IStream::Revert() method
@@ -517,7 +517,7 @@ Revert
 
 	^Win32Errors.S_FALSE!
 
-Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition 
+Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 	"Implement the IStream::Seek() method..
 	
 		HRESULT __stdcall Seek(
@@ -528,19 +528,19 @@ Seek: dlibMove dwOrigin: dwOrigin plibNewPosition: plibNewPosition
 
 	| hr |
 	hr := 
-			[dwOrigin == ##(OLEStructuredStorageConstants at: 'STREAM_SEEK_SET') 
+			[dwOrigin == OLEStructuredStorageConstants.STREAM_SEEK_SET
 				ifTrue: [self position: dlibMove]
 				ifFalse: 
-					[dwOrigin == ##(OLEStructuredStorageConstants at: 'STREAM_SEEK_CUR') 
+					[dwOrigin == OLEStructuredStorageConstants.STREAM_SEEK_CUR
 						ifTrue: [self skip: dlibMove]
 						ifFalse: 
-							[dwOrigin == ##(OLEStructuredStorageConstants at: 'STREAM_SEEK_END') 
+							[dwOrigin == OLEStructuredStorageConstants.STREAM_SEEK_END
 								ifTrue: [self position: self size - dlibMove]
 								ifFalse: [self errorSubscriptBounds: -1]]].
-			0	"S_OK"] 
+			Win32Errors.S_OK]
 					on: BoundsError
-					do: [:ex | ##(OLEStructuredStorageConstants at: 'STG_E_INVALIDFUNCTION')].
-	plibNewPosition bytes notNull 
+					do: [:ex | OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION].
+	plibNewPosition bytes notNull
 		ifTrue: [plibNewPosition value: (hr < 0 ifTrue: [0] ifFalse: [self position])].
 	^hr!
 
@@ -567,7 +567,7 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 	pstatstg
 		type: ##(OLEStructuredStorageConstants at: 'STGTY_STREAM');
 		cbSize: self size.
-	^0	"S_OK"!
+	^Win32Errors.S_OK!
 
 UnlockRegion: libOffset cb: cb dwLockType: dwLockType 
 	"Implement the IStream::UnlockRegion() method.
@@ -580,7 +580,7 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 
 	"Implementation Note: Locking is not supported."
 
-	^##(OLEStructuredStorageConstants at: 'STG_E_INVALIDFUNCTION')!
+	^OLEStructuredStorageConstants.STG_E_INVALIDFUNCTION!
 
 Write: pv cb: cb pcbWritten: pcbWritten 
 	"Implement the IStream::Write() method.
@@ -596,7 +596,7 @@ Write: pv cb: cb pcbWritten: pcbWritten
 		putAll: pv
 		startingAt: 1.
 	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
-	^0	"S_OK"! !
+	^Win32Errors.S_OK! !
 !SequencedStream categoriesFor: #Commit:!public! !
 !SequencedStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!public! !
 !SequencedStream categoriesFor: #finalRelease!public! !
