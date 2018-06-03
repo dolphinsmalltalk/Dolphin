@@ -388,6 +388,10 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 
 		switch (reinterpret_cast<const StringClass&>(byteClass).Encoding)
 		{
+		case StringEncoding::Ansi:
+		case StringEncoding::Utf8:
+			objectSize = elementCount * sizeof(AnsiString::CU);
+			break;
 		case StringEncoding::Utf16:
 			objectSize = elementCount * sizeof(Utf16String::CU);
 			break;
@@ -395,7 +399,7 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 			objectSize = elementCount * sizeof(Utf32String::CU);
 			break;
 		default:
-			objectSize = elementCount * sizeof(AnsiString::CU);
+			__assume(false);
 			break;
 		}
 
@@ -415,6 +419,11 @@ template <bool MaybeZ, bool Initialized> BytesOTE* ObjectMemory::newByteObject(B
 			// This can be useful when working on a 32-bit word machine
 			ZeroMemory(newBytes->m_fields, _ROUND2(objectSize, sizeof(DWORD)));
 			classPointer->countUp();
+		}
+		else
+		{
+			// We still want to ensure the null terminator is set, even if not initializing the rest of the object
+			*reinterpret_cast<NULLTERMTYPE*>(&newBytes->m_fields[objectSize - NULLTERMSIZE]) = 0;
 		}
 
 		ote->m_oteClass = classPointer;
@@ -455,6 +464,103 @@ Oop* __fastcall Interpreter::primitiveNewPinned(Oop* const sp, unsigned)
 	else
 	{
 		return primitiveFailure(0);	// Size must be positive SmallInteger
+	}
+}
+
+OTE* ObjectMemory::CopyElements(OTE* oteObj, MWORD startingAt, MWORD count)
+{
+	// Note that startingAt is expected to be a zero-based index
+	ASSERT(startingAt >= 0);
+	OTE* oteSlice;
+
+	if (oteObj->isBytes())
+	{
+		BytesOTE* oteBytes = reinterpret_cast<BytesOTE*>(oteObj);
+		size_t elementSize = ObjectMemory::GetBytesElementSize(oteBytes);
+
+		if (count == 0 || ((startingAt + count) * elementSize <= oteBytes->bytesSize()))
+		{
+			MWORD objectSize = elementSize * count;
+
+			if (oteBytes->m_flags.m_weakOrZ)
+			{
+				// TODO: Allocate the correct number of null term bytes based on the encoding
+				auto newBytes = static_cast<VariantByteObject*>(allocObject(objectSize + NULLTERMSIZE, oteSlice));
+				// When copying strings, the slices has the same string class
+				(oteSlice->m_oteClass = oteBytes->m_oteClass)->countUp();
+				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt * elementSize), objectSize);
+				*reinterpret_cast<NULLTERMTYPE*>(&newBytes->m_fields[objectSize]) = 0;
+				oteSlice->beNullTerminated();
+				return oteSlice;
+			}
+			else
+			{
+				VariantByteObject* newBytes = static_cast<VariantByteObject*>(allocObject(objectSize, oteSlice));
+				// When copying bytes, the slice is always a ByteArray
+				oteSlice->m_oteClass = Pointers.ClassByteArray;
+				oteSlice->beBytes();
+				memcpy(newBytes->m_fields, oteBytes->m_location->m_fields + (startingAt * elementSize), objectSize);
+				return oteSlice;
+			}
+		}
+	}
+	else
+	{
+		// Pointers
+		PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(oteObj);
+		BehaviorOTE* oteClass = otePointers->m_oteClass;
+		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
+		startingAt += instSpec.m_fixedFields;
+
+		if (count == 0 || (startingAt + count) <= otePointers->pointersSize())
+		{
+			MWORD objectSize = SizeOfPointers(count);
+			auto pSlice = static_cast<VariantObject*>(allocObject(objectSize, oteSlice));
+			// When copying pointers, the slice is always an Array
+			oteSlice->m_oteClass = Pointers.ClassArray;
+			VariantObject* pSrc = otePointers->m_location;
+			for (MWORD i = 0; i < count; i++)
+			{
+				countUp(pSlice->m_fields[i] = pSrc->m_fields[startingAt + i]);
+			}
+			return oteSlice;
+		}
+	}
+
+	return nullptr;
+}
+
+Oop* Interpreter::primitiveCopyFromTo(Oop* const sp, unsigned)
+{
+	Oop oopToArg = *sp;
+	Oop oopFromArg = *(sp - 1);
+	OTE* oteReceiver = reinterpret_cast<OTE*>(*(sp - 2));
+	if (ObjectMemoryIsIntegerObject(oopToArg) && ObjectMemoryIsIntegerObject(oopFromArg))
+	{
+		SMALLINTEGER from = ObjectMemoryIntegerValueOf(oopFromArg);
+		SMALLINTEGER to = ObjectMemoryIntegerValueOf(oopToArg);
+
+		if (from > 0)
+		{
+			SMALLINTEGER count = to - from + 1;
+			if (count >= 0)
+			{
+				OTE* oteAnswer = ObjectMemory::CopyElements(oteReceiver, from - 1, count);
+				if (oteAnswer != nullptr)
+				{
+					*(sp - 2) = (Oop)oteAnswer;
+					ObjectMemory::AddToZct(oteAnswer);
+					return sp - 2;
+				}
+			}
+		}
+		// Bounds error
+		return primitiveFailure(1);
+	}
+	else
+	{
+		// Non-SmallInteger from and/or to
+		return primitiveFailure(0);
 	}
 }
 

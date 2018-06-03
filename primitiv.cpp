@@ -111,25 +111,6 @@ Oop* __fastcall Interpreter::primitiveIdentical(Oop* const sp, unsigned)
 	return sp - 1;
 }
 
-
-size_t ObjectMemory::GetBytesElementSize(BytesOTE* ote)
-{
-	ASSERT(ote->isBytes());
-
-	// TODO: Should be using revised InstanceSpec here, not string encoding
-	if (ote->m_flags.m_weakOrZ)
-	{
-		switch (reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding)
-		{
-		case StringEncoding::Utf16:
-			return sizeof(uint16_t);
-		case StringEncoding::Utf32:
-			return sizeof(uint32_t);
-		}
-	}
-	return sizeof(uint8_t);
-}
-
 // This primitive is unusual(like primitiveClass) in that it cannot fail
 // Essentially same code as shortSpecialSendBasicSize
 Oop* __fastcall Interpreter::primitiveSize(Oop* const sp, unsigned)

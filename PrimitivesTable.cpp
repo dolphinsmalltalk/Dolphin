@@ -53,7 +53,7 @@ Interpreter::PrimitiveFp Interpreter::primitivesTable[256] = {
 	Interpreter::primitiveFloatEqual							, // case 47	Float>>#= in Smalltalk-80
 	Interpreter::primitiveAsyncDLL32CallThunk					, // case 48	Float>>#~= in Smalltalk-80
 	Interpreter::unusedPrimitive								, // case 49	Float>>#* in Smalltalk-80
-	Interpreter::unusedPrimitive								, // case 50	Float>>#/ in Smalltalk-80
+	Interpreter::primitiveCopyFromTo							, // case 50	Float>>#/ in Smalltalk-80
 	Interpreter::primitiveStringCmp								, // case 51	Float>>#truncated
 	Interpreter::primitiveStringNextIndexOfFromTo				, // case 52	Float>>#fractionPart in Smalltalk-80
 	Interpreter::primitiveQuo									, // case 53	Float>>#exponent in Smalltalk-80

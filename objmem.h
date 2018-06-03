@@ -84,7 +84,7 @@ public:
 	static ArrayOTE* __stdcall referencesTo(Oop referencedObjectPointer, bool includeWeakRefs);
 	static ArrayOTE* __fastcall instancesOf(BehaviorOTE* classPointer);
 	static ArrayOTE* __fastcall subinstancesOf(BehaviorOTE* classPointer);
-	static ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses);
+	static ArrayOTE* __fastcall instanceCounts(ArrayOTE* oteClasses);
 	static void deallocateByteObject(OTE*);
 
 	// Class pointer access
@@ -105,6 +105,7 @@ public:
 	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize);
 	template <class T> static TOTE<T>* newUninitializedNullTermObject(MWORD instanceByteSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, MWORD instanceByteSize, const void* pBytes);
+	static OTE* CopyElements(OTE* oteObj, MWORD startingAt, MWORD countfrom);
 
 	// Resizing objects (RAW - assumes no. ref counting to be done)
 	template <size_t extra> static POBJECT basicResize(OTE* ote, size_t byteSize /*should include header*/);
@@ -1097,3 +1098,24 @@ inline ArrayOTE* ST::Array::NewUninitialized(unsigned size)
 	return reinterpret_cast<ArrayOTE*>(ObjectMemory::newUninitializedPointerObject(Pointers.ClassArray, size));
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
+#include "STClassDesc.h"
+
+inline size_t ObjectMemory::GetBytesElementSize(BytesOTE* ote)
+{
+	ASSERT(ote->isBytes());
+
+	// TODO: Should be using revised InstanceSpec here, not string encoding
+	if (ote->m_flags.m_weakOrZ)
+	{
+		switch (reinterpret_cast<const StringClass*>(ote->m_oteClass->m_location)->Encoding)
+		{
+		case StringEncoding::Utf16:
+			return sizeof(uint16_t);
+		case StringEncoding::Utf32:
+			return sizeof(uint32_t);
+		}
+	}
+	return sizeof(uint8_t);
+}

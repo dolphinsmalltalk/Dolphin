@@ -659,6 +659,7 @@ private:
 	static Oop* __fastcall primitiveIndirectReplaceBytes(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveReplacePointers(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringConcatenate(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveCopyFromTo(Oop* const sp, unsigned argCount);
 
 	static Oop* __fastcall primitiveHashBytes(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveStringSearch(Oop* const sp, unsigned argCount);
@@ -670,9 +671,9 @@ private:
 	static Oop* __fastcall primitiveStringEqual(Oop* const sp, unsigned argCount);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp, unsigned argCount);
 
-	static Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall Interpreter::primitiveStringAsUtf8String(Oop* const sp, unsigned argCount);
-	static Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveStringAsUtf16String(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveStringAsUtf8String(Oop* const sp, unsigned argCount);
+	static Oop* __fastcall primitiveStringAsByteString(Oop* const sp, unsigned argCount);
 
 	// Stream Primitives
 	static Oop* __fastcall primitiveNext(Oop* const sp, unsigned argCount);
