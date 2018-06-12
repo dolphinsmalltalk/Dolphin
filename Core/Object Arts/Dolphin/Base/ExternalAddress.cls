@@ -75,6 +75,19 @@ byteAtOffset: anInteger put: anIntegerByteValue
 	<primitive: 133>
 	^self primitiveFailed!
 
+copyFrom: startInteger to: stopInteger
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
+	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
+	the same order."
+
+	| len |
+	len := stopInteger - startInteger + 1.
+	^(self species new: len)
+		replaceFrom: 1
+		to: len
+		with: self
+		startingAt: startInteger!
+
 deepCopy
 	"ExternalAddresses do not know how to deep copy themselves in general, as they
 	do not know the size of the object they point at. In order to deep copy objects
@@ -203,13 +216,6 @@ sdwordAtOffset: anInteger put: anObject
 	1 to: 4 do: [:index | self at: anInteger + index put: (value digitAt: index)].
 	^anObject!
 
-species
-	"Answer the class of object to be used when copying the contents of the receiver. 
-	As we are an untyped pointer, and we want to create a copy of the value pointed at,
-	the best we can do is to create a ByteArray."
-
-	^ByteArray!
-
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler.
 	Output nil in place of the receiver as the future validity of an external address is uncertain."
@@ -320,6 +326,7 @@ yourAddress
 !ExternalAddress categoriesFor: #at:put:!accessing!public! !
 !ExternalAddress categoriesFor: #byteAtOffset:!accessing!primitives!public! !
 !ExternalAddress categoriesFor: #byteAtOffset:put:!accessing!primitives!public! !
+!ExternalAddress categoriesFor: #copyFrom:to:!copying!public! !
 !ExternalAddress categoriesFor: #deepCopy!copying!public! !
 !ExternalAddress categoriesFor: #detach!public!realizing/unrealizing! !
 !ExternalAddress categoriesFor: #displayOn:!displaying!public! !
@@ -331,7 +338,6 @@ yourAddress
 !ExternalAddress categoriesFor: #resize:!mutating!public! !
 !ExternalAddress categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
 !ExternalAddress categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #species!constants!public! !
 !ExternalAddress categoriesFor: #stbSaveOn:!binary filing!public! !
 !ExternalAddress categoriesFor: #swordAtOffset:!accessing!primitives!public! !
 !ExternalAddress categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !

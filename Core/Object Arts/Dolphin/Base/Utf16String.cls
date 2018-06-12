@@ -46,7 +46,7 @@ asLowercase
 	to lowercase."
 
 	| copy |
-	copy := self copy.
+	copy := self shallowCopy.
 	UserLibrary default charLowerBuffW: copy cchLength: copy size.
 	^copy!
 
@@ -58,7 +58,7 @@ asUppercase
 	to uppercase."
 
 	| copy |
-	copy := self copy.
+	copy := self shallowCopy.
 	UserLibrary default charUpperBuffW: copy cchLength: copy size.
 	^copy!
 
@@ -290,11 +290,6 @@ reverse
 					j := j - 1]].
 	^reversed!
 
-shallowCopy
-	"Implemented here to ensure that copied Utf16Strings are correctly terminated with a double null"
-
-	^self class fromAddress: self yourAddress length: self size!
-
 skipEncodingMarkerFrom: aGettableStream
 	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
 	is assumed to be at the start of its sequence."
@@ -371,7 +366,6 @@ wordAtOffset: anInteger put: anObject
 !Utf16String categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !Utf16String categoriesFor: #resize:!mutating!public! !
 !Utf16String categoriesFor: #reverse!copying!public! !
-!Utf16String categoriesFor: #shallowCopy!copying!public! !
 !Utf16String categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !Utf16String categoriesFor: #stbSaveOn:!binary filing!public! !
 !Utf16String categoriesFor: #strcspn:start:!private!searching! !

@@ -681,14 +681,38 @@ createDirectoryPath: path
 			pos := end + 1].
 	^created!
 
-default: aPathnameString extension: anExtensionString
- 	"Defaults the extension of aPathnameString to anExtensionString if there is no current extension.
-	Answers the new filename"
+default: pathString extension: extString
+	"Defaults the extension of pathString to extString if there is no current extension.
+	Answers the filename with new or existing extension."
 
-	| components |
-	components := self splitPath: aPathnameString.
-	components last isEmpty ifTrue: [components at: 4 put: anExtensionString].
-	^self makePath: components!
+	| i size |
+	i := size := pathString size.
+	
+	[i == 0 or: 
+			[| ch |
+			ch := pathString at: i.
+			ch == $.
+				ifTrue: 
+					["Extension delimiter located"
+					^i = size
+						ifTrue: 
+							["Existing extension is empty"
+							extString size == 0
+								ifTrue: [pathString copyFrom: 1 to: i - 1]
+								ifFalse: 
+									[(extString at: 1) == $.
+										ifTrue: [(pathString copyFrom: 1 to: i - 1) , extString]
+										ifFalse: [(pathString copyFrom: 1 to: i) , extString]]]
+						ifFalse: 
+							["Existing non-empty extension, leave unchanged"
+							^pathString]].
+			"If we find another path separator while searching backward, then there is no existing extension"
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+			whileFalse: [i := i - 1].
+	^extString size == 0
+		ifTrue: [pathString]
+		ifFalse: 
+			[(extString at: 1) == $. ifTrue: [pathString , extString] ifFalse: [pathString , '.' , extString]]!
 
 delete: aFileNameString
 	"Deletes the file whose name is specified by aFileNameString.
@@ -1086,14 +1110,34 @@ open: aString mode: modeSymbol check: aBoolean share: shareSymbol
 
 	^self new open: aString mode: modeSymbol check: aBoolean share: shareSymbol!
 
-path: aPathnameString extension: anExtensionString
- 	"Answer a full pathname with the specified extension, whether or not aPathnameString already
-	has an extension."
+path: pathString extension: extString
+	"Answer a full pathname with the specified extension, whether or not pathString already has
+	an extension."
 
-	| components |
-	components := self splitPath: aPathnameString.
-	components at: 4 put: anExtensionString.
-	^self makePath: components!
+	| i |
+	i := pathString size.
+	
+	[i == 0 or: 
+			[| ch |
+			ch := pathString at: i.
+			ch == $.
+				ifTrue: 
+					["We've found the start of the existing extension"
+					^extString size == 0
+						ifTrue: 
+							["New extension is empty, so just remove the existing one"
+							pathString copyFrom: 1 to: i - 1]
+						ifFalse: 
+							[(extString at: 1) == $.
+								ifTrue: [(pathString copyFrom: 1 to: i - 1) , extString]
+								ifFalse: [(pathString copyFrom: 1 to: i) , extString]]].
+			"If we find another path separator while searching backward, then there is no existing extension"
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+			whileFalse: [i := i - 1].
+	^extString size == 0
+		ifTrue: [pathString]
+		ifFalse: 
+			[(extString at: 1) == $. ifTrue: [pathString , extString] ifFalse: [pathString , '.' , extString]]!
 
 pathBuffer
 	"Answer a buffer of sufficient size to contain a full path."
@@ -1369,7 +1413,7 @@ splitPath: aString
 	Unicode paths, we work in UTF-8."
 	path := aString asUtf8String.
 	max := path size.
-	max = 0 ifTrue: [^#('' '' '' '')].
+	max = 0 ifTrue: [^{''. ''. ''. ''}].
 	crt := CRTLibrary default.
 	^(errno := crt
 				_splitpath_s: path

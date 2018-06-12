@@ -35,8 +35,17 @@ basicNext
 
 	^self next!
 
+basicNext: anInteger
+	"Private - Answer a <sequencedReadableCollection> containing the next anInteger number of objects
+	accessible by the receiver."
+
+	| newStream |
+	newStream := self contentsSpecies writeStream: anInteger.
+	anInteger timesRepeat: [newStream basicNextPut: self basicNext].
+	^newStream contents!
+
 basicNext: countInteger into: aSequenceableCollection startingAt: startInteger 
-	"Destructively replace the elements of the <sequenceableCollection> argument in the
+	"Private - Destructively replace the elements of the <sequenceableCollection> argument in the
 	<integer> interval (startAt..startAt+count-1) with the next countInteger undecoded elements
 	of the receiver. Answer aSequenceableCollection."
 
@@ -199,7 +208,8 @@ upToEnd
 !Stream categoriesFor: #atEnd!public!testing! !
 !Stream categoriesFor: #basicContentsSpecies!accessing!private! !
 !Stream categoriesFor: #basicNext!accessing!public! !
-!Stream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
+!Stream categoriesFor: #basicNext:!accessing!private! !
+!Stream categoriesFor: #basicNext:into:startingAt:!accessing!private! !
 !Stream categoriesFor: #basicNextAvailable:!accessing!private! !
 !Stream categoriesFor: #close!operations!public! !
 !Stream categoriesFor: #contentsSpecies!constants!private! !

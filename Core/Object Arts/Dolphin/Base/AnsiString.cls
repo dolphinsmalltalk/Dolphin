@@ -33,7 +33,7 @@ asLowercase
 	"Implementation Note: The Win32 function converts in place, so we must first create a copy."
 
 	| copy |
-	copy := self copy.
+	copy := self shallowCopy.
 	UserLibrary default charLowerBuffA: copy cchLength: copy size.
 	^copy!
 
@@ -45,7 +45,7 @@ asUppercase
 	first."
 
 	| copy |
-	copy := self copy.
+	copy := self shallowCopy.
 	UserLibrary default charUpperBuffA: copy cchLength: copy size.
 	^copy!
 

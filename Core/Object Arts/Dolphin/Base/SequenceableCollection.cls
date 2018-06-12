@@ -285,18 +285,18 @@ copyFrom: start
 
 	^self copyFrom: start to: self size!
 
-copyFrom: start to: stop
-	"Answer a new <sequencedReadableCollection> like the receiver
-	containing those elements of the receiver between the <integer> indices start
-	and stop, inclusive, and in the same order."
+copyFrom: startInteger to: stopInteger
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
+	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
+	the same order."
 
 	| len |
-	len := stop - start + 1.
-	^(self copyLikeOfSize: len) 
+	len := stopInteger - startInteger + 1.
+	^(self copyLikeOfSize: len)
 		replaceFrom: 1
 		to: len
 		with: self
-		startingAt: start!
+		startingAt: startInteger!
 
 copyLikeOfSize: anInteger
 	"Private - Answer a new collection of the same species as the receiver but with

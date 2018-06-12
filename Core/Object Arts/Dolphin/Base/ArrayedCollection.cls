@@ -65,6 +65,20 @@ at: index put: newElement
 	<primitive: 61>
 	^self errorAt: index put: newElement!
 
+copyFrom: startInteger to: stopInteger
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
+	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
+	the same order."
+
+	| len |
+	<primitive: 50>
+	len := stopInteger - startInteger + 1.
+	^(self species new: len)
+		replaceFrom: 1
+		to: len
+		with: self
+		startingAt: startInteger!
+
 decodeNextFrom: aReadStream
 	"Private - Answer the next <Object> in the receiver's encoding from the <ReadStream> argument ."
 
@@ -195,6 +209,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #at:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
 !ArrayedCollection categoriesFor: #at:put:!accessing!public! !
+!ArrayedCollection categoriesFor: #copyFrom:to:!public! !
 !ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
 !ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
 !ArrayedCollection categoriesFor: #findFirst:!public!searching! !

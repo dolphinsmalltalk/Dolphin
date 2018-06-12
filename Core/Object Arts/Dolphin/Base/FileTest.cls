@@ -171,6 +171,52 @@ testClassAppendPathSeparator
 	self assert: (File appendPathDelimiter: '/') equals: '/'.
 	self assert: (File appendPathDelimiter: 'a/') equals: 'a/'!
 
+testClassDefaultExtension
+	| s s2 |
+	#(#('' '' '') #('a.' '' 'a') #('a.' '.' 'a.') #('a' '' 'a') #('a' '.b' 'a.b') #('a.' 'b' 'a.b') #('a.' '.b' 'a.b') #('a.b' '.c' 'a.b') #('abc' 'txt' 'abc.txt') #('abc.def\xyz' '.txt' 'abc.def\xyz.txt') #('abc.d\xy' 'txt' 'abc.d\xy.txt') #('x\' '🐬' 'x\.🐬') #('文字化け\你🐬好' 'dll' '文字化け\你🐬好.dll') #('x\abc.a🐬' 'txt' 'x\abc.a🐬'))
+		do: 
+			[:each |
+			| actual |
+			actual := File default: each first extension: each second.
+			self assert: actual equals: each last.
+			actual := File default: each first asUtf16String extension: each second asUtf16String.
+			self assert: actual equals: each last].
+	"Long paths"
+	s := String writeStream.
+	s nextPutAll: 'c:'.
+	10 timesRepeat: 
+			[s
+				nextPut: $\;
+				nextPutAll: GUID newUnique idlString].
+	s := s contents.
+	self assert: s size > File maxPath.
+	s2 := File default: s extension: 'txt'.
+	self assert: s2 equals: s , '.txt'.
+	s2 := File default: s extension: '.blah'.
+	self assert: s2 equals: s , '.blah'!
+
+testClassPathExtension
+	| s s2 |
+	#(#('' '' '') #('' 'a' '.a') #('' '.a' '.a') #('a' '' 'a') #('a.' '' 'a') #('a' 'b' 'a.b') #('a' '.b' 'a.b') #('a.b' 'c' 'a.c') #('a.exe' '.dll' 'a.dll') #('c:' 'bat' 'c:.bat') #('\' '.cmd' '\.cmd') #('ab\cd.exe' 'dll' 'ab\cd.dll') #('a\' 'b' 'a\.b') #('a.b' '' 'a') #('\a\b\.c' '' '\a\b\') #('a.longlonglonglongextension' '.evenlongerlonglonglonglongextension' 'a.evenlongerlonglonglonglongextension') #('c:\wibble\wobble' '.blah' 'c:\wibble\wobble.blah') #('文字化け.txt' '你🐬好' '文字化け.你🐬好') #('文字化け.你🐬好' '.txt' '文字化け.txt') )
+		do: 
+			[:each |
+			| actual |
+			actual := File path: each first extension: each second.
+			self assert: actual equals: each last].
+	"Long paths"
+	s := String writeStream.
+	s nextPutAll: 'c:'.
+	10 timesRepeat: 
+			[s
+				nextPut: $\;
+				nextPutAll: GUID newUnique idlString].
+	s := s contents.
+	self assert: s size > File maxPath.
+	s2 := File path: s extension: 'txt'.
+	self assert: s2 equals: s , '.txt'.
+	s2 := File path: s extension: '.blah'.
+	self assert: s2 equals: s , '.blah'!
+
 testClassRelativePathOfTo
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
 
@@ -466,6 +512,8 @@ testSplitStemFrom
 !FileTest categoriesFor: #tearDown!private!Running! !
 !FileTest categoriesFor: #test64BitSeek!public!unit tests! !
 !FileTest categoriesFor: #testClassAppendPathSeparator!public!unit tests! !
+!FileTest categoriesFor: #testClassDefaultExtension!public!unit tests! !
+!FileTest categoriesFor: #testClassPathExtension!public!unit tests! !
 !FileTest categoriesFor: #testClassRelativePathOfTo!public!unit tests! !
 !FileTest categoriesFor: #testCommonPrefixOfAnd!public!unit tests! !
 !FileTest categoriesFor: #testDeleteDirectory!public!unit tests! !

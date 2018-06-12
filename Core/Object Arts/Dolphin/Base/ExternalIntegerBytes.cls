@@ -71,6 +71,11 @@ printOn: aStream
 		nextPut: $(; display: self; nextPut: $)
 !
 
+species
+	"Answer the class of object to be used when copying the contents of the receiver."
+
+	^ByteArray!
+
 value
 	"Answer the 32-bit unsigned <integer> value stored in the receiver."
 
@@ -89,6 +94,7 @@ value: anObject
 !ExternalIntegerBytes categoriesFor: #hash!comparing!public! !
 !ExternalIntegerBytes categoriesFor: #isNull!public!testing! !
 !ExternalIntegerBytes categoriesFor: #printOn:!printing!public! !
+!ExternalIntegerBytes categoriesFor: #species!constants!public! !
 !ExternalIntegerBytes categoriesFor: #value!accessing!public! !
 !ExternalIntegerBytes categoriesFor: #value:!accessing!public! !
 
