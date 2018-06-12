@@ -54,6 +54,19 @@ asSymbol
 
 	^self!
 
+copyFrom: startInteger to: stopInteger
+	"Answer a new <sequencedReadableCollection> like the receiver containing those elements of
+	the receiver between the <integer> indices startInteger and stopInteger, inclusive, and in
+	the same order."
+
+	| len |
+	len := stopInteger - startInteger + 1.
+	^(self species new: len)
+		replaceFrom: 1
+		to: len
+		with: self
+		startingAt: startInteger!
+
 deepCopy
 	"Answer the receiver - Symbols are unique, so a copy with the same characters
 	must not exist.
@@ -175,6 +188,7 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #argumentCount!accessing!public! !
 !Symbol categoriesFor: #asString!converting!public! !
 !Symbol categoriesFor: #asSymbol!converting!public! !
+!Symbol categoriesFor: #copyFrom:to:!copying!public! !
 !Symbol categoriesFor: #deepCopy!copying!public! !
 !Symbol categoriesFor: #displayString!printing!public! !
 !Symbol categoriesFor: #forwardTo:!operations!public! !

@@ -155,6 +155,9 @@ size
 	
 	^OLEAutLibrary default sysStringLen: self!
 
+species
+	^Utf16String!
+
 value
 	"Answer the receiver's value as a Smalltalk <String>."
 
@@ -190,6 +193,7 @@ value: newValue
 !BSTR categoriesFor: #onStartup!event handling!private! !
 !BSTR categoriesFor: #printOn:!development!printing!public! !
 !BSTR categoriesFor: #size!accessing!public! !
+!BSTR categoriesFor: #species!constants!public! !
 !BSTR categoriesFor: #value!accessing!public! !
 !BSTR categoriesFor: #value:!accessing!public! !
 

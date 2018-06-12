@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestResource subclass: #DolphinTestResource
 	instanceVariableNames: ''
@@ -15,6 +15,11 @@ createPackage: name
 	| package |
 	package := Package name: name.
 	Package manager addPackage: package.
-	^package! !
+	^package!
+
+setUp
+	super setUp.
+	Package manager defaultPackage isNil ifFalse: [self error: 'Creating test classes with the default package set is a bad idea']! !
 !DolphinTestResource categoriesFor: #createPackage:!helpers!private! !
+!DolphinTestResource categoriesFor: #setUp!Init / Release!public! !
 
