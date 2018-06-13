@@ -510,20 +510,23 @@ OTE* ObjectMemory::CopyElements(OTE* oteObj, MWORD startingAt, MWORD count)
 		PointersOTE* otePointers = reinterpret_cast<PointersOTE*>(oteObj);
 		BehaviorOTE* oteClass = otePointers->m_oteClass;
 		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
-		startingAt += instSpec.m_fixedFields;
-
-		if (count == 0 || (startingAt + count) <= otePointers->pointersSize())
+		if (instSpec.m_indexable)
 		{
-			MWORD objectSize = SizeOfPointers(count);
-			auto pSlice = static_cast<VariantObject*>(allocObject(objectSize, oteSlice));
-			// When copying pointers, the slice is always an Array
-			oteSlice->m_oteClass = Pointers.ClassArray;
-			VariantObject* pSrc = otePointers->m_location;
-			for (MWORD i = 0; i < count; i++)
+			startingAt += instSpec.m_fixedFields;
+
+			if (count == 0 || (startingAt + count) <= otePointers->pointersSize())
 			{
-				countUp(pSlice->m_fields[i] = pSrc->m_fields[startingAt + i]);
+				MWORD objectSize = SizeOfPointers(count);
+				auto pSlice = static_cast<VariantObject*>(allocObject(objectSize, oteSlice));
+				// When copying pointers, the slice is always an Array
+				oteSlice->m_oteClass = Pointers.ClassArray;
+				VariantObject* pSrc = otePointers->m_location;
+				for (MWORD i = 0; i < count; i++)
+				{
+					countUp(pSlice->m_fields[i] = pSrc->m_fields[startingAt + i]);
+				}
+				return oteSlice;
 			}
-			return oteSlice;
 		}
 	}
 
