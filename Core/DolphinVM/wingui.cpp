@@ -1,0 +1,200 @@
+/*
+============
+wingui.cpp
+============
+Interpreter/Windows GUI interface functions
+*/
+							
+#include "Ist.h"
+
+#ifndef _DEBUG
+	//#pragma optimize("s", on)
+	#pragma auto_inline(off)
+#endif
+
+#include "Interprt.h"
+#include "ObjMem.h"
+#include "rc_vm.h"
+
+#pragma code_seg()
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+
+#ifdef _CONSOLE
+
+void __stdcall DolphinFatalExit(int exitCode, const wchar_t* msg)
+{
+	int result = fwprintf(stderr, L"%s\n", msg);
+	FatalExit(exitCode);
+}
+
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
+{
+	fwprintf(stderr, L"%s\n", msg);
+	return 0;
+}
+
+Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
+{
+	return NULL;
+}
+
+#pragma code_seg(INIT_SEG)
+HRESULT Interpreter::initializeImage()
+{
+	// Nothing to do
+	return S_OK;
+}
+
+#pragma code_seg(TERM_SEG)
+void Interpreter::GuiShutdown()
+{
+}
+
+#else
+
+static HHOOK hHookOldCbtFilter;
+
+Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, unsigned)
+{
+	Oop argPointer = *sp;
+	OTE* underConstruction = m_oteUnderConstruction;
+	OTE* receiverPointer = reinterpret_cast<OTE*>(*(sp - 1));
+
+	if (!underConstruction->isNil() && underConstruction != receiverPointer)
+	{
+		// Hooked by another window - fail the primitive
+		return primitiveFailureWith(1, underConstruction);
+	}
+
+
+	if (argPointer == Oop(Pointers.True))
+	{
+		// Hooking
+
+		if (underConstruction != receiverPointer)
+		{
+			ASSERT(underConstruction->isNil());
+			m_oteUnderConstruction = receiverPointer;
+			receiverPointer->countUp();
+		}
+	}
+	else
+	{
+		if (argPointer == Oop(Pointers.False))
+		{
+			// Unhooking
+			if (underConstruction == receiverPointer)
+			{
+				tracelock lock(TRACESTREAM);
+				TRACESTREAM << L"WARNING: Unhooking create for " << std::hex << underConstruction << L" before HCBT_CREATEWND" << std::endl;
+				ObjectMemory::nilOutPointer(m_oteUnderConstruction);
+			}
+			else
+				ASSERT(underConstruction->isNil());
+		}
+		else
+			return primitiveFailureWith(0, argPointer);	// Invalid argument
+	}
+
+	return sp - 1;
+}
+
+inline void Interpreter::subclassWindow(OTE* window, HWND hWnd)
+{
+	ASSERT(!ObjectMemoryIsIntegerObject(window));
+	// As this is called from an external entry point, we must ensure that OT/stack overflows
+	// are handled, and also that we catch the SE_VMCALLBACKUNWIND exceptions
+	__try
+	{
+		bool bDisabled = disableInterrupts(true);
+		Oop retVal = performWith(Oop(window), Pointers.subclassWindowSymbol, Oop(ExternalHandle::New(hWnd)));
+		ObjectMemory::countDown(retVal);
+		ASSERT(m_bInterruptsDisabled);
+		disableInterrupts(bDisabled);
+	}
+	__except (callbackExceptionFilter(GetExceptionInformation()))
+	{
+		trace(L"WARNING: Unwinding Interpreter::subclassWindow(%#x, %#x)\n", window, hWnd);
+	}
+}
+
+
+LRESULT CALLBACK Interpreter::CbtFilterHook(int code, WPARAM wParam, LPARAM lParam)
+{
+	// Looking for HCBT_CREATEWND, just pass others on...
+	if (code == HCBT_CREATEWND)
+	{
+		//ASSERT(lParam != NULL);
+		//LPCREATESTRUCT lpcs = ((LPCBT_CREATEWND)lParam)->lpcs;
+		//ASSERT(lpcs != NULL);
+
+		OTE* underConstruction = m_oteUnderConstruction;
+
+		if (!underConstruction->isNil())
+		{
+			// Nil this out as soon as possible
+			m_oteUnderConstruction = Pointers.Nil;
+			underConstruction->countDown();
+
+			ASSERT(wParam != NULL); // should be non-NULL HWND
+
+									// set m_bDlgCreate to TRUE if it is a dialog box
+									//  (this controls what kind of subclassing is done later)
+									//pThreadState->m_bDlgCreate = (lpcs->lpszClass == WC_DIALOG);
+
+									// Pass to Smalltalk for subclassing (catch unwind failures so not thrown out)
+			subclassWindow(underConstruction, HWND(wParam));
+		}
+	}
+
+	return ::CallNextHookEx(hHookOldCbtFilter, code, wParam, lParam);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+
+// All messages are dispatched through DolphinWndProc. The purpose of this procedure is to act as a
+// target for calls to default window processing
+LRESULT CALLBACK Interpreter::DolphinDlgProc(HWND /*hWnd*/, UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/)
+{
+	return FALSE;
+}
+
+int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
+{
+	wchar_t szCaption[512];
+	HMODULE hExe = GetModuleHandle(NULL);
+	if (!::LoadStringW(hExe, IDS_APP_TITLE, szCaption, sizeof(szCaption)-1))
+		::GetModuleFileNameW(hExe, szCaption, sizeof(szCaption));
+	return  ::MessageBoxW(NULL, msg, szCaption, flags|MB_TASKMODAL);
+}
+
+#pragma code_seg(INIT_SEG)
+HRESULT Interpreter::initializeImage()
+{
+	// Before starting the Smalltalk, install the Windows CBT hook for catching window creates
+	// Note that we don't bother installing and deinstalling this as we forward most messages
+	// in double quick time (see CbtFilterHook), and also the MFC doesn't!
+	hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT, CbtFilterHook, NULL, ::GetCurrentThreadId());
+	if (hHookOldCbtFilter == NULL)
+		return ReportError(IDP_FAILTOHOOK, ::GetLastError());
+
+	return S_OK;
+}
+
+#pragma code_seg(TERM_SEG)
+void Interpreter::GuiShutdown()
+{
+	if (hHookOldCbtFilter != NULL)
+		VERIFY(::UnhookWindowsHookEx(hHookOldCbtFilter));
+	hHookOldCbtFilter = NULL;
+}
+
+void __stdcall DolphinFatalExit(int /*exitCode*/, const wchar_t* msg)
+{
+	FatalAppExitW(0, msg);
+}
+
+#endif

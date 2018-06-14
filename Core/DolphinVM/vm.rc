@@ -1,0 +1,204 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "rc_vm.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+#include "Version.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BLANK DIALOGEX 0, 0, 145, 159
+STYLE DS_SETFONT | DS_NOIDLEMSG | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "Arial", 0, 0, 0x1
+BEGIN
+END
+
+#endif    // Neutral resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Neutral (Default) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEUD)
+LANGUAGE LANG_NEUTRAL, SUBLANG_DEFAULT
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+HSPLIT                  CURSOR                  "res\\hsplit.cur"
+
+VSPLIT                  CURSOR                  "res\\vsplit.cur"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+FINDBAR.BMP             BITMAP                  "Res\\findbar.bmp"
+
+LISTBAR.BMP             BITMAP                  "res\\ListBar.bmp"
+
+#endif    // Neutral (Default) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_BACKTRACE DIALOGEX 0, 0, 252, 126
+STYLE DS_SETFONT | DS_NOIDLEMSG | DS_SETFOREGROUND | DS_3DLOOK | DS_FIXEDSYS | DS_NOFAILCREATE | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+EXSTYLE WS_EX_CONTROLPARENT
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "&Debug",IDOK,13,104,48,14,WS_GROUP
+    PUSHBUTTON      "&Resume",ID_RESUME,72,104,48,14,WS_DISABLED
+    PUSHBUTTON      "&Terminate",IDCANCEL,131,104,48,14
+    PUSHBUTTON      "&Copy",ID_COPY,190,104,48,14
+    EDITTEXT        IDC_STACKTRACE,38,8,199,84,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER | NOT WS_TABSTOP,WS_EX_STATICEDGE
+    ICON            128,IDC_ICO,10,9,21,20
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "rc_vm.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "#include ""Version.h""\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""ActiveXHost.tlb""\r\n"
+    "#include ""res\\ist.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""messages.rc""\r\n"
+    "\0"
+END
+
+4 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""ActiveXHost.tlb""\r\n"
+    "\0"
+END
+
+1 TEXTINCLUDE 
+BEGIN
+    "rc_vm.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_APP_SHORT_NAME      "Dolphin"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_RECURSIVEDNU        "Recursive message not understood (#%2). See crash dump."
+    IDP_STACKOVERFLOW       "Unrecoverable stack overflow (%1!u!, %2!x!, %3!x!, %4!u!). See crash dump."
+    IDP_OTFULL              "Object Table full at %1!u! objects. An additional allocation of %2!u! will exceed the maximum of %3!u!. You may need to increase the maximum OT size."
+    IDP_OTCOMMITFAIL        "Out of memory attempting to commit %2!u! further Object Pointers. %n%1!u! Object Pointers are currently allocated out of a maximum of %3!u!. There is insufficient memory to allocate any more objects."
+    IDP_EXIT                "Application exit"
+    IDP_OTRESERVEFAIL       "Unable to reserve memory for %1!u! objects. %nPlease reduce maximum OT size and restart."
+    IDP_ZCTRESERVEFAIL      "Unable to reserve memory for %1!u! ZT entries. There is insufficient virtual memory remaining, or it is too fragmented."
+    IDP_ZCTCOMMITFAIL       "Out of memory attempting to commit %1!u! ZT entries."
+    IDP_BADSYSINFO          "Unexpected page size %1!d! or allocation granularity %2!d!. This application is limited to running on Intel machines with a page size of %3!d! and an allocation granularity of %4!d!."
+    IDP_FAILTOCREATEVMWND   "Failed to create VM message window: %2 (%1!d!)"
+    IDP_CORRUPTIMAGE        "Image is corrupt. %nMismatch between object data size (%1!u!) and checksum (%2!u!)"
+    IDP_IMAGEREADERROR      "Error %1!d! reading image"
+    IDP_IMAGEFILETRUNCATED  "Premature end of image"
+    IDP_UNKNOWNIMAGEERROR   "An unknown error occurred while reading the image"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_APP_TITLE           "Dolphin Smalltalk"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
+    IDP_NOHIRESCLOCK        "Unable to establish high-resolution clock frequency (%!1d!: %2)"
+    IDP_UNSUPPORTED_ACP     "Unsupported code page %1!d!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_INVALIDPROGID       "Invalid or unregistered prog id"
+    IDS_CANTCREATECONTROL   "Unable to create instance of control"
+    IDS_CANTCREATEIE        "Unable to create web browser control"
+    IDS_CANTGETCLASSOBJECT  "Unable to access control's class factory"
+    IDS_AXSITEERRORFMT      "<h2>Dolphin Smalltalk ActiveX Host</h2>\n<h3>Error creating control: '%1'</h3>\n<p>%3</p>\n<p>The error was: %2!x! - '%4'</p>"
+END
+
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "ActiveXHost.tlb"
+#include "res\ist.rc2"  // non-Microsoft Visual C++ edited resources
+#include "messages.rc"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,112 @@
+; InProcStub.def : Declares the module parameters.
+
+EXPORTS
+	DllCanUnloadNow     PRIVATE
+	DllGetClassObject   PRIVATE
+	DllRegisterServer   PRIVATE
+	DllUnregisterServer	PRIVATE
+
+HashBytes
+WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+GenericCallback
+VTable
+AnswerDWORD
+AnswerQWORD
+AnswerDQWORD
+Dump
+argc
+argv
+StdIn
+StdOut
+StdErr
+IsUserBreakRequested
+
+CompileForClass=_PrimCompileForClass@20
+CompileForEval=_PrimCompileForEval@24
+
+; Stuff for ActiveXHost
+AtlAxWinInit=AxWinInit
+AxWinTerm
+
+compress2
+uncompress
+
+; CRT functions imported by the image
+
+	__iscsym
+	__iscsymf
+	_chdir
+	_chmod
+	_clearfp
+	_close
+	_control87
+	_dup
+	_dup2
+	_eof
+	_errno
+	_fdopen
+	_filelengthi64
+	_fileno
+	_fseeki64
+	_ftelli64
+	_get_osfhandle
+	_isatty
+	_makepath_s
+	_open_osfhandle
+	_rotl
+	_rotr
+	_setmode
+	_spawnvp
+	_splitpath_s
+	_statusfp
+	strcat_s
+	_stricmp
+	_stricoll
+	_strnicmp
+	_strrev
+	_wfopen_s
+	_wgetcwd
+	atoi
+	chmod
+	fclose
+	feof
+	fflush
+	fgetc
+	fgets
+	fgetwc
+	fgetws
+	fputc
+	fputs
+	fputwc
+	fputws
+	fread_s
+	free
+	fwrite
+	iswcntrl
+	iswgraph
+	iswprint
+	iswpunct
+	iswspace
+	memcmp
+	memset
+	rand
+	rewind
+	setlocale
+	srand
+	strcmp
+	strcspn
+	strerror_s
+	strlen
+	strncmp
+	strncpy_s
+	strpbrk
+	ungetc
+	ungetwc
+	wcscspn
+	wcsncmp
+	wcsncpy_s
+
+; VMLibrary
+
+	_snprintf_s

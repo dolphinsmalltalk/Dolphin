@@ -1,0 +1,29 @@
+NAME      DOLPHIN
+
+EXPORTS
+;    ===List your explicitly exported functions here===
+
+HashBytes
+WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+GenericCallback=?GenericCallback@Interpreter@@SGKJPAE@Z
+;VTable
+AnswerDWORD=?AnswerDWORD@@YGKK@Z
+AnswerQWORD=?AnswerQWORD@@YG?AUQWORD@@KK@Z
+AnswerDQWORD=?AnswerDQWORD@@YG?AUDQWORD@@KKKK@Z
+NewSigned32=?NewSigned32@@YGKJ@Z
+NewUnsigned32=?NewUnsigned32@@YGKK@Z
+NewSigned64=?NewSigned@Integer@@SGKT_LARGE_INTEGER@@@Z
+NewUnsigned64=?NewUnsigned@Integer@@SGKT_ULARGE_INTEGER@@@Z
+
+CompileForClass=?PrimCompileForClass@Compiler@@SGPAXKPBDPAXW4FLAGS@1@K@Z
+CompileForEval=?PrimCompileForEval@Compiler@@SGPAXKPBDPAX1W4FLAGS@1@K@Z
+
+; Image expiry mechanism
+IsFirstLoad=?IsFirstLoad@@YG_NXZ
+BeFirstLoad=?BeFirstLoad@@YGXXZ
+LicencedUserName=?LicencedUserName@@YGXPAD@Z
+ImageCode=?ImageCode@@YGKXZ
+Unlock=?Unlock@@YG_NK@Z
+ExpiryDate=?ExpiryDate@@YGGXZ
+IsExpired=?IsExpired@@YG_NXZ
