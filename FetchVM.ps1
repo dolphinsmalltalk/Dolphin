@@ -14,7 +14,7 @@ Try
 {
 	$scriptDir = Split-Path $script:MyInvocation.MyCommand.Path;
 	Write-Host "Fetching DolphinVM.zip" $VMversion
-	$source = "https://github.com/dolphinsmalltalk/DolphinVM/releases/download/$VMversion/DolphinVM.zip";
+	$source = "https://github.com/dolphinsmalltalk/Dolphin/releases/download/$VMversion/DolphinVM.zip";
 	$zipFile = $scriptDir+"\DolphinVM.zip";
 	Invoke-WebRequest $source -OutFile $zipFile;
 }
