@@ -1,0 +1,159 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+#include "..\rc_vm.h"
+#include "..\rc_stub.h"
+#include "Version.h"
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Powered by Dolphin Smalltalk"
+            VALUE "FileDescription", "Dolphin ToGo Console Application"
+            VALUE "FileVersion", "1, 0, 0, 1"
+            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016."
+            VALUE "OriginalFilename", "ConsoleToGo.exe"
+            VALUE "ProductName", "A Dolphin ToGo Console Application"
+            VALUE "ProductVersion", "1, 0, 0, 1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "#include ""..\\rc_vm.h""\r\n"
+    "#include ""..\\rc_stub.h""\r\n"
+    "#include ""Version.h""\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_APPNAME             "A Dolphin Smalltalk Console Application"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_INVALIDIMAGETYPE    "Executable file '%1' is corrupt"
+    IDP_OPENIMAGEFAILURE    "Fail to load executable '%1'"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_RECURSIVEDNU        "Recursive message not understood (#%2). See crash dump."
+    IDP_STACKOVERFLOW       "Unrecoverable stack overflow (%1!u!, %2!x!, %3!x!, %4!u!). See crash dump."
+    IDP_OTFULL              "Object Table full at %1!u! objects."
+    IDP_OTCOMMITFAIL        "Out of memory attempting to commit further Object Pointers (currently %1!u!). %nPlease close some appliations and try again."
+    IDP_EXIT                "Application exit"
+    IDP_OTRESERVEFAIL       "Unable to reserve memory for %1!u! objects. %nPlease close some appliations and try again."
+    IDP_ZCTRESERVEFAIL      "Unable to reserve memory for %1!u! ZT entries. %nPlease close some appliations and try again."
+    IDP_ZCTCOMMITFAIL       "Out of memory attempting to commit %1!u! ZT entries. %nPlease close some appliations and try again."
+    IDP_BADSYSINFO          "Unexpected page size %1!d! or allocation granularity %2!d!. This application is limited to running on Intel machines with a page size of %3!d! and an allocation granularity of %4!d!."
+    IDP_FAILTOCREATEVMWND   "Failed to create VM message window: %2 (%1!d!)"
+    IDP_CORRUPTIMAGE        "Executable is corrupt.%nMismatched checksums %1!u! and %2!u!"
+    IDP_IMAGEREADERROR      "Error %1!d! loading executable"
+    IDP_IMAGEFILETRUNCATED  "Premature end of file loading executable"
+    IDP_UNKNOWNIMAGEERROR   "An unknown error occurred while loading the executable"
+END
+
+STRINGTABLE
+BEGIN
+    IDP_FAILTOHOOK          "Unable to hook window creation events (%1!d!).%nPlease wait a few moments and try again."
+    IDP_NOHIRESCLOCK        "Unable to establish high-resolution clock frequency (%!1d!: %2)"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_APP_SHORT_NAME      "Dolphin"
+END
+
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

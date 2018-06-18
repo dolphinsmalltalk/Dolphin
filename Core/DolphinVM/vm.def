@@ -1,0 +1,37 @@
+EXPORTS
+	DllCanUnloadNow		PRIVATE
+	DllGetClassObject	PRIVATE
+	DllRegisterServer	PRIVATE
+	DllUnregisterServer	PRIVATE
+
+; These are all the common exports
+HashBytes
+WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+GenericCallback
+VTable DATA
+AnswerDWORD
+AnswerQWORD
+AnswerDQWORD
+Dump
+DebugDump
+RegisterAsEventSource
+argc
+argv
+StdIn
+StdOut
+StdErr
+_snprintf_s
+IsUserBreakRequested
+AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
+
+CompileForClass=_PrimCompileForClass@20
+CompileForEval=_PrimCompileForEval@24
+
+; Stuff for ActiveXHost
+AxWinTerm
+AtlAxWinInit=AxWinInit
+
+; ZLib
+compress2
+uncompress

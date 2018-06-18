@@ -1,0 +1,29 @@
+EXPORTS
+
+; These are all the common exports
+HashBytes
+WndProc=?DolphinWndProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
+GenericCallback=?GenericCallback@Interpreter@@SGKJPAE@Z
+VTable
+AnswerDWORD=?AnswerDWORD@@YGKK@Z
+AnswerQWORD=?AnswerQWORD@@YG?AUQWORD@@KK@Z
+AnswerDQWORD=?AnswerDQWORD@@YG?AUDQWORD@@KKKK@Z
+Dump
+
+; Image expiry mechanism
+;IsFirstLoad=?IsFirstLoad@@YG_NXZ
+;?BeFirstLoad@@YGXXZ @5 NONAME
+;LicencedUserName=?LicencedUserName@@YGXPAD@Z
+;ImageCode=?ImageCode@@YGKXZ
+;Unlock=?Unlock@@YG_NK@Z
+;ExpiryDate=?ExpiryDate@@YGGXZ
+;IsExpired=?IsExpired@@YG_NXZ
+;DaysGrace=?DaysGrace@@YGHXZ
+
+CompileForClass=_PrimCompileForClass@20
+CompileForEval=_PrimCompileForEval@24
+
+; Stuff for ActiveXHost
+AtlAxWinInit=AxWinInit
+AxWinTerm

@@ -1,0 +1,39 @@
+// InProcStub.idl : IDL source for InProcStub.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (InProcStub.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#ifdef TO_GO
+#include "..\IPDolphin.idl"
+#endif
+
+[
+	uuid(C3CCA482-3C79-4230-9B38-818464ACB491),
+	version(1.0),
+	helpstring("Dolphin Smalltalk InProcStub Library 1.0")
+]
+library DolphinIP
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+#ifndef TO_GO
+	importlib("..\DolphinSmalltalk.tlb");
+#endif
+
+	interface IIPDolphin;
+	interface IIPPlugHole;
+
+	[
+		uuid(43A5B594-469D-45A5-BAB5-66110B8D9504),
+		helpstring("Dolphin in-proc image docking bay"),
+		noncreatable, restricted, hidden
+	]
+	coclass DolphinIPPlugHole
+	{
+		[default] interface IIPDolphin;
+	};
+};

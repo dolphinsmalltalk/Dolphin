@@ -1,0 +1,407 @@
+// DolphinObj.idl : IDL source for DolphinObj.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DolphinObj.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+#include "IPDolphin.idl"
+//#define WINAPI      __stdcall
+//#define APIENTRY    WINAPI
+//typedef unsigned int        *PUINT;
+//#include "winver.h"
+
+typedef signed char		SBYTE;
+typedef unsigned char	BYTE;
+typedef short			SWORD;
+typedef long			SDWORD;
+
+typedef UINT_PTR	MWORD;
+
+cpp_quote("#if !defined(POTE_DEFINED)")
+typedef MWORD Oop;
+typedef void* POTE;
+cpp_quote("#define POTE_DEFINED")
+cpp_quote("#endif")
+
+typedef struct STVarByteObject
+{
+	BYTE		fields[];
+} STVariantByteObject;
+
+typedef struct STVarCharObject
+{
+	char		characters[];
+} STVarCharObject;
+
+// Useful for accessing an object by index
+typedef struct STVarObject
+{
+	Oop			fields[];
+} STVarObject;
+
+
+typedef struct STVariableBinding
+{
+	Oop			key;
+	Oop			value;
+} STVariableBinding;
+
+typedef struct STInstSpec
+{
+	WORD isInt 			: 1;	// MUST be 1 (to avoid treatment as object)
+	WORD fixedFields 	: 8;	// Number of instance variables (must be zero for byte objects)
+	WORD unusedSpecBits	: 2;	// 2 free bits for other nice things
+	WORD mourner		: 1;	// Notify weak instances of the receiver when they suffer bereavements
+	WORD indirect		: 1;	// Byte object containing address of another object/external structure?
+	WORD indexable 		: 1;	// variable or variableByte subclass?
+	WORD pointers 		: 1;	// Pointers or bytes?
+	WORD nullTerminated : 1;	// Null terminated byte object?
+
+	WORD extraSpec;				// High word for class specific purposes (e.g. structure byte size, string encoding)
+} STInstSpec;
+
+typedef struct STBehavior
+{
+	POTE		superclass;
+	POTE		methodDictionary;
+	STInstSpec	instSpec;
+	POTE		subclasses;
+} STBehavior;
+
+typedef struct STClassDescription
+{
+	STBehavior		behavior;
+	POTE			instanceVariables;
+	POTE			methodsCatalogue;
+	POTE			protocols;
+} STClassDescription;
+
+typedef struct STClass
+{
+	STClassDescription	classdesc;
+	POTE				name;
+	POTE				classPool;
+	POTE				sharedPools;
+	POTE				comment;
+	POTE				classCategories;
+	POTE				guid;
+} STClass;
+
+typedef struct STMetaclass
+{
+	STClassDescription	classdesc;
+	POTE				instanceClass;
+} STMetaclass;
+
+#include "STMethodHeader.h"
+
+typedef struct STCompiledMethod
+{
+	STMethodHeader	header;		// Must look like a small integer
+	POTE			methodClass;
+	POTE			selector;
+	Oop				srcRef;
+	Oop				byteCodes;	// ByteArray of byte codes
+	Oop				aLiterals[];
+} STCompiledMethod;
+
+#include "STBlockInfo.h"
+
+typedef struct STBlockClosure
+{
+	POTE		m_outer;
+	POTE		m_method;
+	Oop			m_initialIP;
+	BlockInfo	m_infoFlags;
+	Oop			m_receiver;
+	Oop			m_copiedValues[];
+} STBlockClosure;
+
+[
+	// N.B. No need to allocate new uuid when changing LIBRARY version
+	// just change the version number, but must allocate new coclass uuid
+
+	// uuid(AB93FFD0-2625-11D3-8362-FC91FD000000), // 3.03
+	uuid(744F0DCB-35F6-41B4-96BE-D7F17E1D1455),
+	version(7.0),
+	helpstring("Dolphin Smalltalk VM 7.0")
+]
+library DolphinVM
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	interface IIPDolphin;
+	interface IIPPlugHole;
+
+	const int MinSmallInteger = -0x40000000;
+	const int MaxSmallInteger = 0x3FFFFFFF;
+
+	[
+		object,
+		uuid(2C0F5BFA-719E-440A-B115-3CE751B4553C),
+		pointer_default(unique)
+	]
+	interface IDolphin5: IUnknown
+	{
+		STVarObject* GetVMPointers();
+		POTE NilPointer();
+
+		void AddReference([in]Oop objectPointer);
+		void RemoveReference([in]Oop objectPointer);
+
+		POTE FetchClassOf([in]Oop objectPointer);
+		bool InheritsFrom(const POTE behaviorPointer, const POTE classPointer);
+		bool IsKindOf(Oop objectPointer, const POTE classPointer);
+
+		bool IsBehavior([in]Oop objectPointer);
+		bool IsAMetaclass([in]const POTE);
+		bool IsAClass([in]const POTE);
+
+		Oop Perform([in]Oop receiver, [in]POTE selector);
+		Oop PerformWith([in]Oop receiver, [in]POTE selector, [in]Oop arg);
+		Oop PerformWithWith([in]Oop receiver, [in]POTE selector, [in]Oop arg1, [in]Oop arg2);
+		Oop PerformWithWithWith([in]Oop receiver, [in]POTE selector, [in]Oop arg1, [in]Oop arg2, [in]Oop arg3);
+		Oop PerformWithArguments([in]Oop receiver, [in]POTE selector, [in]Oop argArray);
+
+		POTE NewObject([in]POTE classPointer);
+		POTE NewObjectWithPointers([in]POTE classPointer, [in]unsigned size);
+		POTE NewByteArray([in]unsigned len);
+		POTE NewString([in]LPCSTR szValue, [in,defaultvalue(-1)]int len);
+		Oop NewSignedInteger([in]SDWORD value);
+		Oop NewUnsignedInteger([in]DWORD value);
+
+		POTE NewCharacter([in]DWORD codePoint);
+		POTE NewArray([in]unsigned size);
+
+		POTE NewFloat([in]double fValue);
+		POTE InternSymbol([in]LPCSTR szName);
+
+		void StorePointerWithValue([in,out]Oop* poopSlot, [in]Oop oopValue);
+
+		BOOL DisableInterrupts([in]BOOL bDisable);
+		int CallbackExceptionFilter([in]void* info);
+
+		void DecodeMethod([in]POTE methodPointer, [in]void* pstream);
+	};
+
+	[
+		object,
+		uuid(8C881CBA-5050-4F72-BCB4-C46F67593DC9),
+		pointer_default(unique)
+	]
+	interface IDolphin6: IDolphin5
+	{
+		BOOL DisableAsyncGC([in]BOOL bDisable);
+		void MakeImmutable([in]Oop, [in]BOOL bImmutable);
+		BOOL IsImmutable([in]Oop);
+	};
+
+	[
+		object,
+		uuid(57528932-AA27-46C2-B172-B2AFD6FED643),
+		pointer_default(unique)
+	]
+	interface IDolphin7 : IDolphin6
+	{
+		BSTR DebugPrintString([in]Oop);
+	};
+
+	[
+		object,
+		uuid(FBBF2E4A-0452-4669-812B-1BE19860A567),
+		pointer_default(unique)
+	]
+	interface IDolphin : IDolphin7
+	{
+		POTE NewUtf8String([in]LPCSTR szValue, [in, defaultvalue(-1)]int len);
+	};
+
+	// Please do not rely on any of the internal representation exposed by these inline
+	// functions, as it may change in future.
+	cpp_quote("__inline STVarObject* GetObj(POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return *(STVarObject**)ote;")
+	cpp_quote("}")
+
+	cpp_quote("__inline BOOL IsIntegerObject(Oop objectPointer)")
+	cpp_quote("{")
+	cpp_quote("	return objectPointer & 1;")
+	cpp_quote("}")
+
+	cpp_quote("__inline SDWORD IntegerValueOf(Oop objectPointer)")
+	cpp_quote("{")
+	cpp_quote("	// Use cast to ensure shift is signed arithmetic")
+	cpp_quote("	return ((SDWORD)(objectPointer)) >> 1;")
+	cpp_quote("}")
+
+	cpp_quote("__inline Oop IntegerObjectOf(SDWORD value) 			")
+	cpp_quote("{")
+	cpp_quote("	return (Oop)(((value) << 1) | 1);")
+	cpp_quote("}")
+
+	cpp_quote("__inline BOOL IsIntegerValue(SDWORD valueWord)")
+	cpp_quote("{")
+	cpp_quote("	return (valueWord >= MinSmallInteger && valueWord <= MaxSmallInteger);")
+	cpp_quote("}")
+
+	cpp_quote("__inline BYTE* FetchBytesOf(POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	STVariantByteObject* pObj = (STVariantByteObject*)(GetObj(ote));")
+	cpp_quote("	return pObj->fields;")
+	cpp_quote("}")
+
+	cpp_quote("__inline MWORD FetchByteLengthOf(POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return (((MWORD*)ote)[2]) & 0x7FFFFFFF;")
+	cpp_quote("}")
+
+	cpp_quote("__inline MWORD FetchWordLengthOf(POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return FetchByteLengthOf(ote)/sizeof(MWORD);")
+	cpp_quote("}")
+
+	cpp_quote("__inline BOOL IsAString(const POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return (((MWORD*)ote)[3] & 0x12) == 0x10;")
+	cpp_quote("}")
+
+	[
+		object,
+		uuid(B7EEF77A-71B9-11D3-97BC-0080C8D59432),
+		pointer_default(unique)
+	]
+	interface IDolphinStart3: IUnknown
+	{
+		HRESULT Start(
+					[in]HINSTANCE hInstance, 
+					[in]HINSTANCE hPrevInstance, 
+					[in]LPCSTR lpCmdLine, 
+					[in]int nCmdShow, 
+					[in]int offset, 
+					[in]LPCSTR szFileName,
+					[in]IUnknown* punkOuter);
+	};
+
+	[
+		// D6 and later
+		object,
+		uuid(9318888B-C167-4A56-8DBA-B6B978E5BB3A),
+		pointer_default(unique)
+	]
+	interface IDolphinStart4: IUnknown
+	{
+		HRESULT Initialise(
+					[in]HINSTANCE hInstance, 
+					[in]LPCSTR szFileName,
+					[in]LPVOID imageData, 
+					[in]UINT imageSize,
+					[in]DWORD dwFlags);
+
+		HRESULT GetVersionInfo([out]/*VS_FIXEDFILEINFO*/void* pFixedInfo);
+		HRESULT Run([in]IUnknown* punkOuter);
+	};
+
+	[
+		// D7.1 and later
+		object,
+		uuid(fdf31048-c85b-4dae-9058-e56fbe0b8e20),
+		pointer_default(unique)
+	]
+	interface IDolphinStart : IUnknown
+	{
+		HRESULT Initialise(
+			[in]HINSTANCE hInstance,
+			[in]LPCWSTR szFileName,
+			[in]LPVOID imageData,
+			[in]UINT imageSize,
+			[in]DWORD dwFlags);
+
+		HRESULT GetVersionInfo([out]/*VS_FIXEDFILEINFO*/void* pFixedInfo);
+		HRESULT Run([in]IUnknown* punkOuter);
+	};
+
+	[
+		uuid(C49E63DF-C32E-4D41-9596-2780FB939F17)	// 3.06
+	]
+	coclass DolphinSmalltalk3
+	{
+		[default] interface IDolphin5;
+		interface IDolphinStart3;
+	};
+
+	[
+		uuid(FF9C073D-40DE-457B-AA90-64A7AC3BC6C1)	// 4.x
+	]
+	coclass DolphinSmalltalk4
+	{
+		[default] interface IDolphin5;
+		interface IDolphinStart3;
+	};
+
+	[
+		uuid(83FFA224-ADAE-41F7-8B2B-8DB0C767C20E)		// 5.0 & 5.01
+	]
+	coclass DolphinSmalltalk50
+	{
+		[default] interface IDolphin5;
+		interface IDolphinStart3;
+	};
+
+	[
+		uuid(AB5C9C6F-12D5-4DD1-B13C-C4245ACA23E6)		// 5.1
+	]
+	coclass DolphinSmalltalk51
+	{
+		[default] interface IDolphin6;
+		interface IDolphinStart3;
+	};
+
+	[
+		uuid(68115DA8-B309-44A2-B7D0-6B35B0E1E34C)		// 6.0
+	]
+	coclass DolphinSmalltalk60
+	{
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
+	};
+
+	[
+		uuid(9E0B0377-0818-49B2-B4EC-D6AC39E18027)		// 6.1
+	]
+	coclass DolphinSmalltalk61
+	{
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
+	};
+
+	[
+		uuid(CCAC12FD-1F0D-4E2F-A15A-D82CDA5D1ECA)		// 6.2
+	]
+	coclass DolphinSmalltalk62
+	{
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
+	};
+
+	[
+		uuid(EBB3C3FF-6AA8-4B9D-BC0D-92D5695B8C76)		// 7
+	]
+	coclass DolphinSmalltalk70
+	{
+		[default] interface IDolphin6;
+		interface IDolphinStart4;
+	};
+
+	[
+		uuid(C579F2C3-AA3C-421A-9A80-8A6B83912E5C)		// 7.1
+	]
+	coclass DolphinSmalltalk
+	{
+		[default] interface IDolphin;
+		interface IDolphinStart;
+	};
+};

@@ -1,0 +1,7 @@
+EXPORTS
+
+; Compiler exports
+DllCanUnloadNow     PRIVATE
+DllGetClassObject   PRIVATE
+DllRegisterServer   PRIVATE
+DllUnregisterServer	PRIVATE

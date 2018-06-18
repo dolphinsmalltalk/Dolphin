@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{BC5D162D-46BC-42CF-85DB-CB715EE8517E}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\alloc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\axhost.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\bytecde.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\compact.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CompilePrims.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\CrashDump.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\dealloc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\decode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\dolphin.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\exports.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\extcall.cpp">
+      <FileType>Document</FileType>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\fatalerror.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\finalize.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\flotprim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\GC.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\GCPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphin.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IDolphinStart.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ImageFileResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\interfac.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\interprt.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\InterprtInit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\IntPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\largeintprim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\LoadImage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\objmem.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\ObjMemInit.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\oleprim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\PerformPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\primitiv.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\PrimitivesTable.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\process.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\realloc.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\sampler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SaveImage.cpp">
+      <AdditionalIncludeDirectories>$(SolutionDir)zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SBHEAP.C">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SearchPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\SnapshotPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\startApp.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\startToGoVm.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\StreamPrim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\strgprim.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\thrdcall.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\timer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\TraceStream.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\vmref.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\wingui.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\zct.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)utf_impl.c">
+      <CompileAs>CompileAsCpp</CompileAs>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>
+      </PrecompiledHeaderOutputFile>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\axhost.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\binstream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\bytecdes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\disassembler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\dlldatax.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinSmalltalk.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\DolphinX.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\environ.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ImageFileResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\InterpRegisters.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Interprt.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ist.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\objmem.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\oopq.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\ote.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\RaiseThreadException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\rc_vm.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\sbheap.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\segdefs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STBehavior.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STCharacter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STClassDesc.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\StdAfx.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STExternal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STFloat.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STHashedCollection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STInteger.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STLinkedList.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMagnitude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMemoryManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMessage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethod.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethodContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STMethodHeader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STProcess.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STStackFrame.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\STVirtualObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\thrdcall.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\TraceStream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMExcept.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\VMPointers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zbinstream.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\zfbinstream.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\Interprt.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\InterprtPrim.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\InterprtProc.inl">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)..\ObjMemPriv.inl">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="$(MSBuildThisFileDirectory)..\byteasm.asm" />
+    <MASM Include="$(MSBuildThisFileDirectory)..\constobj.asm" />
+    <MASM Include="$(MSBuildThisFileDirectory)..\ExternalBytes.asm" />
+    <MASM Include="$(MSBuildThisFileDirectory)..\ExternalCall.asm" />
+    <None Include="$(MSBuildThisFileDirectory)..\istasm.inc" />
+    <MASM Include="$(MSBuildThisFileDirectory)..\primasm.asm" />
+    <MASM Include="$(MSBuildThisFileDirectory)..\SmallIntPrim.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\ActiveXHost.idl">
+      <AdditionalOptions>/no_robust %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>3</WarningLevel>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>ActiveXHost.tlb</TypeLibraryName>
+      <HeaderFileName>ActiveXHost.h</HeaderFileName>
+      <DllDataFileName>axdlldata.c</DllDataFileName>
+      <ProxyFileName>ActiveXHost_p.c</ProxyFileName>
+    </Midl>
+  </ItemGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
