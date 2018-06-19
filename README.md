@@ -39,7 +39,7 @@ Follow these instructions to create the product images and launch Dolphin Smallt
 
 * Double-click `BootDPRO.cmd` or run it from a console window. When the boot process has completed, you should see a `DPRO.img7` file in your directory. IMG7 is the new image extension for Dolphin 7.
 
-* Should you wish to test your booted image before proceeding with your own changes or work, you may want to run the standard regression test suite. This is recommended, and easy to do. Just run the `TestDPRO.cmd` script in the root folder. This will launch Dolphin, load the tests, and then execute them. As it runs you will see results being reported as console output. When complete a summary will state whether there were any failures. You should expect there to be none, but check the [AppVeyor build]((https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master) to see the current build status.
+* Should you wish to test your booted image before proceeding with your own changes or work, you may want to run the standard regression test suite. This is recommended, and easy to do. Just run the `TestDPRO.cmd` script in the root folder. This will launch Dolphin, load the tests, and then execute them. As it runs you will see results being reported as console output. When complete a summary will state whether there were any failures. You should expect there to be none, but check the [AppVeyor build](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master) to see the current build status.
 
 * To launch the image you can right click on `DPRO.img7` and choose _Open With_, selecting `Dolphin7.exe` as the executable to be permanently associated with this file type.
 
