@@ -61,6 +61,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)trees.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SmallerTypeCheck>false</SmallerTypeCheck>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)uncompr.c">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
