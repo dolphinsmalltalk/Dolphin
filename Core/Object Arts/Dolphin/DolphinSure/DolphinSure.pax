@@ -15,6 +15,7 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
+	add: #BCryptLibrary;
 	add: #DigitalSignatureAlgorithm;
 	add: #DolphinSureCertificate;
 	add: #DolphinSureCertificateInfo;
@@ -38,6 +39,10 @@ package methodNames
 	add: #SourceManager -> #secureFileIn:;
 	add: #SourceManager -> #secureFileInFrom:;
 	add: #SourceManager -> #secureFileItIn:;
+	yourself.
+
+package globalNames
+	add: #BCryptConstants;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -125,6 +130,11 @@ Error subclass: #TrustedDataError
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #BCryptLibrary
+	instanceVariableNames: 'shaAlgorithmHandle'
+	classVariableNames: ''
+	poolDictionaries: 'BCryptConstants'
 	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #DolphinSureCryptoLibrary
 	instanceVariableNames: ''

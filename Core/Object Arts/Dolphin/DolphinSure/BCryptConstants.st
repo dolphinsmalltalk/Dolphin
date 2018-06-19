@@ -1,0 +1,52 @@
+﻿"Filed out from Dolphin Smalltalk 7"!
+
+Smalltalk at: #BCryptConstants put: (PoolConstantsDictionary named: #BCryptConstants)!
+BCryptConstants at: 'BCRYPT_3DES_112_ALGORITHM' put: '3DES_112'!
+BCryptConstants at: 'BCRYPT_3DES_ALGORITHM' put: '3DES'!
+BCryptConstants at: 'BCRYPT_AES_ALGORITHM' put: 'AES'!
+BCryptConstants at: 'BCRYPT_AES_CMAC_ALGORITHM' put: 'AES-CMAC'!
+BCryptConstants at: 'BCRYPT_AES_GMAC_ALGORITHM' put: 'AES-GMAC'!
+BCryptConstants at: 'BCRYPT_ALGORITHM_NAME' put: 'AlgorithmName'!
+BCryptConstants at: 'BCRYPT_AUTH_TAG_LENGTH' put: 'AuthTagLength'!
+BCryptConstants at: 'BCRYPT_BLOCK_LENGTH' put: 'BlockLength'!
+BCryptConstants at: 'BCRYPT_BLOCK_SIZE_LIST' put: 'BlockSizeList'!
+BCryptConstants at: 'BCRYPT_CHAINING_MODE' put: 'ChainingMode'!
+BCryptConstants at: 'BCRYPT_DES_ALGORITHM' put: 'DES'!
+BCryptConstants at: 'BCRYPT_DESX_ALGORITHM' put: 'DESX'!
+BCryptConstants at: 'BCRYPT_DH_ALGORITHM' put: 'DH'!
+BCryptConstants at: 'BCRYPT_DSA_ALGORITHM' put: 'DSA'!
+BCryptConstants at: 'BCRYPT_ECDH_P256_ALGORITHM' put: 'ECDH_P256'!
+BCryptConstants at: 'BCRYPT_ECDH_P384_ALGORITHM' put: 'ECDH_P384'!
+BCryptConstants at: 'BCRYPT_ECDH_P521_ALGORITHM' put: 'ECDH_P521'!
+BCryptConstants at: 'BCRYPT_ECDSA_P256_ALGORITHM' put: 'ECDSA_P256'!
+BCryptConstants at: 'BCRYPT_ECDSA_P384_ALGORITHM' put: 'ECDSA_P384'!
+BCryptConstants at: 'BCRYPT_ECDSA_P521_ALGORITHM' put: 'ECDSA_P521'!
+BCryptConstants at: 'BCRYPT_EFFECTIVE_KEY_LENGTH' put: 'EffectiveKeyLength'!
+BCryptConstants at: 'BCRYPT_HASH_BLOCK_LENGTH' put: 'HashBlockLength'!
+BCryptConstants at: 'BCRYPT_HASH_LENGTH' put: 'HashDigestLength'!
+BCryptConstants at: 'BCRYPT_HASH_OID_LIST' put: 'HashOIDList'!
+BCryptConstants at: 'BCRYPT_KEY_LENGTH' put: 'KeyLength'!
+BCryptConstants at: 'BCRYPT_KEY_LENGTHS' put: 'KeyLengths'!
+BCryptConstants at: 'BCRYPT_KEY_OBJECT_LENGTH' put: 'KeyObjectLength'!
+BCryptConstants at: 'BCRYPT_KEY_STRENGTH' put: 'KeyStrength'!
+BCryptConstants at: 'BCRYPT_MD2_ALGORITHM' put: 'MD2'!
+BCryptConstants at: 'BCRYPT_MD4_ALGORITHM' put: 'MD4'!
+BCryptConstants at: 'BCRYPT_MD5_ALGORITHM' put: 'MD5'!
+BCryptConstants at: 'BCRYPT_OBJECT_LENGTH' put: 'ObjectLength'!
+BCryptConstants at: 'BCRYPT_PADDING_SCHEMES' put: 'PaddingSchemes'!
+BCryptConstants at: 'BCRYPT_PROVIDER_HANDLE' put: 'ProviderHandle'!
+BCryptConstants at: 'BCRYPT_RC2_ALGORITHM' put: 'RC2'!
+BCryptConstants at: 'BCRYPT_RC4_ALGORITHM' put: 'RC4'!
+BCryptConstants at: 'BCRYPT_RNG_ALGORITHM' put: 'RNG'!
+BCryptConstants at: 'BCRYPT_RNG_DUAL_EC_ALGORITHM' put: 'DUALECRNG'!
+BCryptConstants at: 'BCRYPT_RNG_FIPS186_DSA_ALGORITHM' put: 'FIPS186DSARNG'!
+BCryptConstants at: 'BCRYPT_RSA_ALGORITHM' put: 'RSA'!
+BCryptConstants at: 'BCRYPT_RSA_SIGN_ALGORITHM' put: 'RSA_SIGN'!
+BCryptConstants at: 'BCRYPT_SHA1_ALGORITHM' put: 'SHA1'!
+BCryptConstants at: 'BCRYPT_SHA1_HASH_SIZE' put: 16r14!
+BCryptConstants at: 'BCRYPT_SHA256_ALGORITHM' put: 'SHA256'!
+BCryptConstants at: 'BCRYPT_SHA384_ALGORITHM' put: 'SHA384'!
+BCryptConstants at: 'BCRYPT_SHA512_ALGORITHM' put: 'SHA512'!
+BCryptConstants at: 'BCRYPT_SIGNATURE_LENGTH' put: 'SignatureLength'!
+BCryptConstants at: 'BCRYPT_STATUS_UNSUCCESSFUL' put: 16rC0000001!
+BCryptConstants shrink!
