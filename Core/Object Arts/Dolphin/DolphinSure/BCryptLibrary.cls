@@ -18,7 +18,7 @@ closeAlgorithmProvider: aAlgorithmHandle flags: aFlags
 		_Inout_	BCRYPT_ALG_HANDLE	hAlgorithm,
 		_In_		ULONG				dwFlags );"
 
-	<cdecl: dword BCryptCloseAlgorithmProvider handle dword>
+	<stdcall: dword BCryptCloseAlgorithmProvider handle dword>
 	^ self invalidCall.!
 
 createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject hashObjectSize: aHashObjectSize secret: aSecret secretSize: aSecretSize flags: aFlags
@@ -31,9 +31,9 @@ createHash: aAlgorithmHandle hashHandle: aHashHandle hashObject: aHashObject has
 		_In_opt_	ULONG				cbHashObject,
 		_In_opt_	PUCHAR				pbSecret,
 		_In_		ULONG				cbSecret,
-		_In_		ULONG				dwFlags
-);"
-	<cdecl: dword BCryptCreateHash handle handle* byte* dword byte* dword dword>
+		_In_		ULONG				dwFlags );"
+
+	<stdcall: dword BCryptCreateHash handle handle* byte* dword byte* dword dword>
 	^ self invalidCall.!
 
 destroyHash: aHashHandle
@@ -42,7 +42,7 @@ destroyHash: aHashHandle
 	NTSTATUS WINAPI BCryptDestroyHash(
 		_Inout_	BCRYPT_HASH_HANDLE	hHash );"
 
-	<cdecl: dword BCryptDestroyHash handle>
+	<stdcall: dword BCryptDestroyHash handle>
 	^ self invalidCall.!
 
 finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
@@ -54,7 +54,7 @@ finishHash: aHashHandle output: aOutput outputSize: aOutputSize flags: aFlags
 		_In_		ULONG				cbOutput,
 		_In_		ULONG				dwFlags );"
 
-	<cdecl: dword BCryptFinishHash handle byte* dword dword>
+	<stdcall: dword BCryptFinishHash handle byte* dword dword>
 	^ self invalidCall.!
 
 getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize resultSize: aResultSize flags: aFlags
@@ -68,7 +68,7 @@ getProperty: aHandle property: aProperty output: aOutput outputSize: aOutputSize
 		_Out_	ULONG			*pcbResult,
 		_In_		ULONG			dwFlags ); "
 
-	<cdecl: dword BCryptOpenAlgorithmProvider handle bstr byte* dword dword* dword>
+	<stdcall: dword BCryptGetProperty handle lpwstr byte* dword dword* dword>
 	^ self invalidCall.!
 
 hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
@@ -80,7 +80,7 @@ hashData: aHashHandle input: aInput inputSize: aInputSize flags: aFlags
 		_In_		ULONG				cbInput,
 		_In_		ULONG				dwFlags );"
 
-	<cdecl: dword BCryptHashData handle byte* dword dword>
+	<stdcall: dword BCryptHashData handle byte* dword dword>
 	^ self invalidCall.!
 
 openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: aFlags
@@ -92,7 +92,7 @@ openAlgorithmProvider: aHandle id: anId implementation: anImplementation flags: 
 		_In_		LPCWSTR				pszImplementation,
 		_In_		DWORD				dwFlags );"
 
-	<cdecl: dword BCryptOpenAlgorithmProvider handle* bstr bstr dword>
+	<stdcall: dword BCryptOpenAlgorithmProvider handle* lpwstr lpwstr dword>
 	^ self invalidCall.!
 
 shaAlgorithmHandle
@@ -104,6 +104,7 @@ shaAlgorithmHandle
 
 	( shaAlgorithmHandle isNil or: [ shaAlgorithmHandle value = 0 ] ) ifTrue: [
 		shaAlgorithmHandle := ExternalHandle new.
+
 		status := self openAlgorithmProvider: shaAlgorithmHandle id: BCRYPT_SHA1_ALGORITHM implementation: nil flags: 0.
 		( self statusFailed: status ) ifTrue: [ 
 			self error: 'BCrypt>>openAlgorithmProvider failed: ', ( status printStringRadix: 16 showRadix: false ) ] ].
@@ -158,7 +159,7 @@ shaHashBuffer: aHashHandle buffer: buffer
 statusFailed: aStatus
 	"Answer true if the argument NTSTATUS indicates a fail value."
 
-	^ aStatus >= BCRYPT_STATUS_UNSUCCESSFUL.! !
+	^ aStatus >= 16r80000000.! !
 !BCryptLibrary categoriesFor: #closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
 !BCryptLibrary categoriesFor: #createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
 !BCryptLibrary categoriesFor: #destroyHash:!public!win32 functions-bcrypt library! !
