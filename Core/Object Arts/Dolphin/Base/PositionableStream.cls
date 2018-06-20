@@ -64,7 +64,7 @@ basicUpTo: anObject
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
 	| startIndex endIndex |
-	self isReadable ifFalse: [^self shouldNotImplement].
+	self isReadable ifFalse: [^self errorNotReadable].
 	startIndex := position + 1.
 	"We can perform a fast scan for anObject in the collection. Most streamed over
 	SequenceableCollections have a primitive implementation of #nextIdentityIndexOf:from:to:"
