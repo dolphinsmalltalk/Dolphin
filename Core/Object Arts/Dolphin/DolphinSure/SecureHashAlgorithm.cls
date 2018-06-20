@@ -14,27 +14,28 @@ This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 
 context
 	"Private - Gets an SHA context"
 	
-	context isNil ifTrue: [ context := self shaLibrary shaCreate].
-	^context!
+	context isNil ifTrue: [ context := self shaLibrary shaCreate ].
+	^context
+!
 
 finalHash
 	"Private - Answers the final hash from the context and closes it"
 
-	| totals hash |
-	totals := DWORDArray new: 5.
-	self shaLibrary shaGetHash: self context lpHashBytes: totals.
+	| hashBytes hashValue |
+
+	hashBytes := self shaLibrary shaGetHash: self context.
 	self resetContext.
-	hash := 0.
-	1 to: 5 do: [:i | hash := hash bitOr: ((totals at: i) bitShift: 32 * (5 - i))].
-	^hash!
+
+	hashValue := 0.
+	1 to: hashBytes size do: [ :i | hashValue := ( hashValue bitShift: 8 ) bitOr: ( hashBytes at: i ) ].
+	^ hashValue.!
 
 hashIn: aByteArray 
 	"Private - Hashes the data in aByteArray using the current SHA context"
 
 	self shaLibrary 
-		shaHashBuffer: self context
-		lpBuffer: aByteArray
-		dwLen: aByteArray size!
+		shaHashBuffer: self context buffer: aByteArray.
+!
 
 hashInInteger: aPositiveInteger 
 	"Hash in the given positive integer. The integer to be hashed should have 512 or fewer bits."
@@ -103,7 +104,7 @@ resetContext
 shaLibrary
 	"Private - Answers the <ExternalLibrary> containing the SHA functions"
 
-	^DolphinSureCryptoLibrary default! !
+	^ BCryptLibrary default! !
 !SecureHashAlgorithm categoriesFor: #context!helpers!private! !
 !SecureHashAlgorithm categoriesFor: #finalHash!helpers!private! !
 !SecureHashAlgorithm categoriesFor: #hashIn:!helpers!private! !
