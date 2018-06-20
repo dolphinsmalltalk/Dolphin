@@ -235,7 +235,7 @@ resize: anInteger
 	"Implementation Note: SortedCollections can be reduced in size, but not grown - in general we don't know if nils are a valid element that have a sort order
 	relationship recognised by the receiver's sort block."
 
-	anInteger > self size ifTrue: [^self error: 'SortedCollections are not resizable'].
+	anInteger > self size ifTrue: [^self error: 'SortedCollections cannot be grown to include nils'].
 	super resize: anInteger!
 
 reSort
