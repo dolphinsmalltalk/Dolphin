@@ -100,6 +100,14 @@ errorEndOfStream
 
 	^self class endOfStreamSignal signalWith: self!
 
+errorNotPositionable
+	^self error: 'The stream is not positionable'!
+
+errorNotReadable
+	"Private - An attempt was made to read from a write-only stream. Raise an appropriate exception."
+
+	^self error: 'The stream is not readable'!
+
 isReadable
 	"Answer whether the receiver can be read from (i.e. it implements the gettableStream
 	protocol)."
@@ -118,7 +126,7 @@ next
 	"Implementation Note: Must be defined by subclasses which wish to implement the 
 	<gettableStream> protocol."
 
-	^self subclassResponsibility!
+	^self errorNotReadable!
 
 next: anInteger
 	"Answer a <sequencedReadableCollection> containing the next anInteger number of objects
@@ -216,6 +224,8 @@ upToEnd
 !Stream categoriesFor: #display:!printing!public! !
 !Stream categoriesFor: #do:!enumerating!public! !
 !Stream categoriesFor: #errorEndOfStream!exceptions!public! !
+!Stream categoriesFor: #errorNotPositionable!exceptions!private! !
+!Stream categoriesFor: #errorNotReadable!exceptions!private! !
 !Stream categoriesFor: #isReadable!public!testing! !
 !Stream categoriesFor: #isWriteable!public!testing! !
 !Stream categoriesFor: #next!accessing!public! !

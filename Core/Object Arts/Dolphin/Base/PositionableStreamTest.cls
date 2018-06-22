@@ -41,7 +41,7 @@ readOperationNotImplemented: aBlock
 	self 
 		should: aBlock
 		raise: Error
-		matching: [:ex | ex description beginsWith: self streamClass name , ' should not implement']!
+		matching: [:ex | ex description = 'The stream is not readable']!
 
 runArrays
 	^{{RunArray new. #()}.

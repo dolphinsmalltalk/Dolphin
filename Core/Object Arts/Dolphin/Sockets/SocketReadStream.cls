@@ -36,7 +36,7 @@ basicNext: countInteger into: aSequenceableCollection startingAt: startInteger
 contents
 	"We don't maintain past history, so we cannot implement this correctly."
 
-	^self shouldNotImplement!
+	^self errorNotPositionable!
 
 hasInput
 	"Answer true if there is data available on the receiver without blocking"
@@ -101,13 +101,13 @@ readPage
 setToEnd
 	"The receiver is not positionable."
 
-	^self shouldNotImplement!
+	^self errorNotPositionable!
 
 size
 	"We don't know the number of elements in the past sequence values, only the number
 	currently in the buffer, so cannot provide a sensible implementation of this message."
 
-	^self shouldNotImplement!
+	^self errorNotPositionable!
 
 socket
 	"Private - Answers the socket instance variable."

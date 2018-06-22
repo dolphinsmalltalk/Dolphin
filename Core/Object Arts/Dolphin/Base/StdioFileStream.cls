@@ -209,9 +209,6 @@ contentsSpecies
 
 	^self subclassResponsibility!
 
-errorNotPositionable
-	^self error: 'The stdio stream is not positionable'!
-
 externalType
 	"Answer a <symbol> which names the external stream type of the receiver."
 
@@ -430,7 +427,6 @@ upTo: anObject
 !StdioFileStream categoriesFor: #close!operations!public! !
 !StdioFileStream categoriesFor: #contents!accessing!public! !
 !StdioFileStream categoriesFor: #contentsSpecies!constants!private! !
-!StdioFileStream categoriesFor: #errorNotPositionable!exceptions!private! !
 !StdioFileStream categoriesFor: #externalType!accessing!public! !
 !StdioFileStream categoriesFor: #fileno!accessing!private! !
 !StdioFileStream categoriesFor: #fileSize!accessing!public! !
