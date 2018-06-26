@@ -106,7 +106,7 @@ SetNameOf: setNameOf pidl: pidl lpszName: lpszName uFlags: uFlags ppidlOut: ppid
 	N.B. This method has been automatically generated from 
 	the vtable defined in IShellFolder>>defineFunctions. DO NOT MODIFY!!"
 
-	<virtual stdcall: HRESULT 13 handle lpvoid lpstr DWORD lppvoid>
+	<virtual stdcall: HRESULT 13 handle lpvoid lpwstr DWORD lppvoid>
 	^self invalidCall! !
 !IShellFolder categoriesFor: #BindToObject:pbc:riid:ppvOut:!COM Interfaces-IShellFolder!public! !
 !IShellFolder categoriesFor: #BindToStorage:pbc:riid:ppv:!COM Interfaces-IShellFolder!public! !
@@ -148,7 +148,7 @@ defineFunctions
 		defineFunction: #GetDisplayNameOf:uFlags:lpName:
 			argumentTypes: 'lpvoid dword lpvoid';
 		defineFunction: #SetNameOf:pidl:lpszName:uFlags:ppidlOut:
-			argumentTypes: 'handle lpvoid lpstr dword lppvoid'
+			argumentTypes: 'handle lpvoid lpwstr dword lppvoid'
 ! !
 !IShellFolder class categoriesFor: #defineFunctions!initializing!public! !
 

@@ -35,7 +35,7 @@ overlappedURLDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReser
 			LPBINDSTATUSCALLBACK lpfnCB
 	);"
 
-	<overlap stdcall: hresult URLDownloadToFileA IUnknown* lpstr lpstr dword lpvoid>
+	<overlap stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr dword lpvoid>
 	^self invalidCall!
 
 urlDownload: url toFile: aStringFilename 
@@ -87,7 +87,7 @@ urlDownloadToCacheFile: pCaller szURL: szURL szFilename: szFilename dwBufLength:
 		IBindStatusCallback *pBSC
 		);"
 
-	<stdcall: hresult URLDownloadToCacheFileA IUnknown* lpstr lpstr dword dword lpvoid>
+	<stdcall: hresult URLDownloadToCacheFileW IUnknown* lpwstr lpwstr dword dword lpvoid>
 	^self invalidCall!
 
 urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwReserved pBSC: pBsc 
@@ -100,7 +100,7 @@ urlDownloadToFile: pCaller szURL: szURL szFilename: szFilename dwReserved: dwRes
 			LPBINDSTATUSCALLBACK lpfnCB
 		);"
 
-	<stdcall: hresult URLDownloadToFileA IUnknown* lpstr lpstr dword lpvoid>
+	<stdcall: hresult URLDownloadToFileW IUnknown* lpwstr lpwstr dword lpvoid>
 	^self invalidCall!
 
 urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB 
@@ -121,7 +121,7 @@ urlOpenBlockingStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwRes
 			LPBINDSTATUSCALLBACK lpfnCB 
 		);"
 
-	<stdcall: hresult URLOpenBlockingStreamA IUnknown* lpstr IStream** dword lpvoid>
+	<stdcall: hresult URLOpenBlockingStreamW IUnknown* lpwstr IStream** dword lpvoid>
 	^self invalidCall!
 
 urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserved lpfnCB: lpfnCB 
@@ -134,7 +134,7 @@ urlOpenPullStream: pCaller szURL: szURL ppStream: ppStream dwReserved: dwReserve
 			DWORD dwReserved, 
 			LPBINDSTATUSCALLBACK lpfnCB );"
 
-	<stdcall: hresult URLOpenPullStreamA IUnknown* lpstr IStream** dword lpvoid>
+	<stdcall: hresult URLOpenPullStreamW IUnknown* lpwstr IStream** dword lpvoid>
 	^self invalidCall! !
 !URLMonLibrary categoriesFor: #overlappedURLDownloadToCacheFile:szURL:szFilename:dwBufLength:dwReserved:pBSC:!public!win32 functions-internet! !
 !URLMonLibrary categoriesFor: #overlappedURLDownloadToFile:szURL:szFilename:dwReserved:pBSC:!public!win32 functions-internet! !
