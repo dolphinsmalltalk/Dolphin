@@ -20,35 +20,6 @@ Please Note: The contents of this package must not be redistributed in any form.
 
 package basicPackageVersion: '6.1'.
 
-package basicScriptAt: #postinstall put: '"Download the correct version of wscite zip from Scintilla.org and extract the built binary
-of SciLexer.dll from it into the Dolphin directory."
-
-
-	| scilexer locator currentVer version filename zip dest temp shell scintilla url exists |
-	locator := FileLocator installRelative.
-	version := ScintillaLibrary versionString.
-	scilexer := locator localFileSpecFor: (File path: ScintillaLibrary fileName extension: ''dll'').
-	exists := File exists: scilexer.
-	currentVer := exists ifTrue: [(VersionInfo forPath: scilexer) productVersionString].
-	version = currentVer ifTrue: [^self].
-	filename := ''wscite<1s>.zip'' expandMacrosWith: (version copyWithout: $.).
-	url := ''http://www.scintilla.org/'' , filename.
-	temp := URLMonLibrary default urlDownloadToCacheFile: url.
-	"Extract SciLexer.dll from the wscite zip"
-	shell := IDispatch createObject: ''Shell.Application''.
-	zip := shell invoke: ''NameSpace'' with: temp.
-	scintilla := zip invoke: ''ParseName'' with: ''wscite\SciLexer.dll''.
-	dest := shell invoke: ''Namespace'' with: locator basePath.
-	exists
-		ifTrue: [File rename: scilexer to: (File path: scilexer extension: (currentVer copyWithout: $.))].
-	dest
-		invoke: ''CopyHere''
-		with: scintilla
-		with: 16r14.
-	dest free.
-	scintilla free.
-	zip free.
-	shell free'.
 
 package classNames
 	add: #ClassHierarchyDiagram;

@@ -6,7 +6,7 @@
 *.sml
 *.exe
 *.dll
-SciLexer.*
+!SciLexer.dll
 !DBOOT.img7
 !DBOOT.sml
 Repository/
