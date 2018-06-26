@@ -25,7 +25,7 @@ getUserName: buffer nSize: pBufSize
 			LPDWORD nSize 		// address of size of name buffer 
 		);"
 
-	<stdcall: bool GetUserNameA lpstr DWORD*>
+	<stdcall: bool GetUserNameW lpwstr DWORD*>
 	^self invalidCall!
 
 isTextUnicode: lpv iSize: iSize lpiResult: lpiResult

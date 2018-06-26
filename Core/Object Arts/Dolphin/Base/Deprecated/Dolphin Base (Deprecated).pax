@@ -101,7 +101,6 @@ package methodNames
 	add: #MessageBoxAbstract -> #warning;
 	add: #Process -> #fpeMask;
 	add: #Process -> #fpeMask:;
-	add: #ShlwapiLibrary -> #pathStripPath:;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
@@ -735,14 +734,6 @@ fpeMask: anInteger
 	^self setFpControl: anInteger mask: CRTConstants._MCW_EM! !
 !Process categoriesFor: #fpeMask!accessing!public! !
 !Process categoriesFor: #fpeMask:!accessing!private! !
-
-!ShlwapiLibrary methodsFor!
-
-pathStripPath: pszPath
-	<stdcall: void PathStripPathA lpstr>
-	#deprecated.	"Modifies pszPath in place. Use File class>>splitFilenameFrom: instead."
-	^self invalidCall! !
-!ShlwapiLibrary categoriesFor: #pathStripPath:!**auto generated**!public! !
 
 !SortAlgorithm class methodsFor!
 

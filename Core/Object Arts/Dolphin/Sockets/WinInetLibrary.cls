@@ -31,7 +31,7 @@ internetGoOnline: url hwndParent: parent dwReserved: reserved
 		IN DWORD dwReserved
 		);"
 
-	<stdcall: bool InternetGoOnline lpstr handle dword>
+	<stdcall: bool InternetGoOnlineW lpwstr handle dword>
 	^self invalidCall!
 
 internetOpen: agent dwAccessType: access lpszProxyName: proxyName lpszProxyBypass: proxyBypass dwFlags: flags
