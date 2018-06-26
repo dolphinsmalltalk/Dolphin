@@ -143,6 +143,38 @@ testNextColon
 			self should: [subject next: 1] raise: Stream endOfStreamSignal.
 			self closeTempStream: subject]!
 
+testNextInto
+
+	| stream result endOfStream |
+
+	"Previously-failing tests"
+	stream := #(1 2 3) readStream.
+	result := Array new: 2.
+	endOfStream := stream class endOfStreamSignal.
+	self shouldnt: [stream nextInto: result] raise: endOfStream.
+
+	self assert: result equals: #(1 2).
+	stream := #(1 2 3) readStream.
+	result := Array new: 3.
+	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self assert: result equals: #(1 2 3).
+
+	stream := #(1 2 3 4 5 6 7 8 9) readStream.
+	result := Array new: 4.
+	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self assert: result equals: #(1 2 3 4).
+
+	stream := #(1 2 3 4 5 6 7 8 9) readStream.
+	result := Array new: 5.
+	stream next: 2.
+	self shouldnt: [stream nextInto: result] raise: endOfStream.
+	self assert: result equals: #(3 4 5 6 7).
+
+	"Expected failure"
+	stream := #(1 2 3) readStream.
+	result := Array new: 5.
+	self should: [stream nextInto: result] raise: endOfStream!
+
 testNextLine
 	"No line delimiters"
 
@@ -621,6 +653,7 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLine!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
