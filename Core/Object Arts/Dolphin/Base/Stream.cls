@@ -143,9 +143,9 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 	receiver. Answer aSequenceableCollection."
 
 	| last pos |
-	last := startInteger + countInteger - 1.
+	last := startInteger + countInteger.
 	pos := startInteger.
-	[pos >= last] whileFalse: [pos := aSequenceableCollection encodedAt: pos put: self next].
+	[pos >= last] whileFalse: [pos := (aSequenceableCollection encodedAt: pos put: self next) + 1].
 	^aSequenceableCollection!
 
 nextAvailable
