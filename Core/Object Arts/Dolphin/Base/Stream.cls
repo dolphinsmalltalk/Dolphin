@@ -166,6 +166,12 @@ nextAvailable: anInteger
 			count := count - 1].
 	^newStream contents!
 
+nextInto: aSequenceableCollection
+	"Destructively replace all elements of the argument, aSequenceableCollection,
+	with the next elements of the receiver. Answer aSequenceableCollection."
+
+	^self next: aSequenceableCollection size into: aSequenceableCollection startingAt: 1!
+
 nextMatchFor: anObject 
 	"Access the next object and answer whether it is equal to the argument, anObject. Raise an
 	end of stream exception (via #next) if there are no more elements in the receiver."
@@ -233,6 +239,7 @@ upToEnd
 !Stream categoriesFor: #next:into:startingAt:!accessing!public! !
 !Stream categoriesFor: #nextAvailable!accessing!public! !
 !Stream categoriesFor: #nextAvailable:!accessing!public! !
+!Stream categoriesFor: #nextInto:!accessing!public! !
 !Stream categoriesFor: #nextMatchFor:!accessing!public! !
 !Stream categoriesFor: #print:!printing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !
