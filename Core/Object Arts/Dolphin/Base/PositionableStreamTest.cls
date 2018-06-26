@@ -104,6 +104,24 @@ testContents
 testNew
 	self should: [self streamClass new] raise: Error!
 
+testNext
+	self arrayedCollections do: 
+			[:pair |
+			| each subject collection |
+			each := pair first.
+			subject := self streamOn: each.
+			collection := pair last.
+			1 to: collection size
+				do: 
+					[:i |
+					| expected actual |
+					expected := collection at: i.
+					actual := subject next.
+					self assert: actual equals: expected].
+			self assert: subject atEnd.
+			self should: [subject next] raise: subject class endOfStreamSignal.
+			self closeTempStream: subject]!
+
 testNextAvailableColon
 	self collections do: 
 			[:pair |
@@ -144,36 +162,40 @@ testNextColon
 			self closeTempStream: subject]!
 
 testNextInto
-
 	| stream result endOfStream |
-
 	"Previously-failing tests"
-	stream := #(1 2 3) readStream.
+	stream := self streamOn: #[1 2 3].
 	result := Array new: 2.
 	endOfStream := stream class endOfStreamSignal.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
-
 	self assert: result equals: #(1 2).
-	stream := #(1 2 3) readStream.
+	self closeTempStream: stream.
+
+	stream := self streamOn: #[1 2 3].
 	result := Array new: 3.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2 3).
+	self closeTempStream: stream.
 
-	stream := #(1 2 3 4 5 6 7 8 9) readStream.
+	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 4.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(1 2 3 4).
+	self closeTempStream: stream.
 
-	stream := #(1 2 3 4 5 6 7 8 9) readStream.
+	stream := self streamOn: #[1 2 3 4 5 6 7 8 9].
 	result := Array new: 5.
 	stream next: 2.
 	self shouldnt: [stream nextInto: result] raise: endOfStream.
 	self assert: result equals: #(3 4 5 6 7).
+	self closeTempStream: stream.
 
 	"Expected failure"
-	stream := #(1 2 3) readStream.
+	stream := self streamOn: #[1 2 3].
 	result := Array new: 5.
-	self should: [stream nextInto: result] raise: endOfStream!
+	self should: [stream nextInto: result] raise: endOfStream.
+	self closeTempStream: stream.
+!
 
 testNextLine
 	"No line delimiters"
@@ -651,6 +673,7 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
+!PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !

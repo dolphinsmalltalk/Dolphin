@@ -138,12 +138,6 @@ nextFLOAT
 
 	^(self basicNext: VMConstants.FloatSize) floatAtOffset: 0!
 
-nextInto: aSequenceableCollection
-	"Destructively replace all elements of the argument, aSequenceableCollection,
-	with the next elements of the receiver. Answer aSequenceableCollection."
-
-	^self next: aSequenceableCollection size into: aSequenceableCollection startingAt: 1!
-
 nextSDWORD
 	"Answer a 32-bit signed integer constructed from the host system representation contained in
 	the next 4 bytes on the receiver."
@@ -252,7 +246,6 @@ upToEnd
 !PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
 !PositionableStream categoriesFor: #nextDWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextFLOAT!binary filing!public! !
-!PositionableStream categoriesFor: #nextInto:!accessing!public! !
 !PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextWORD!binary filing!public! !
