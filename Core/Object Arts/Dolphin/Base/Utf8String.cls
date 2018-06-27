@@ -115,7 +115,7 @@ decodeNextFrom: aReadStream
 																			["Invalid 3rd continuation"
 																			aReadStream pop.
 																			^Character replacement]]]]].
-									Character codePoint: codePoint]]
+									Character safeCodePoint: codePoint]]
 						ifFalse: 
 							["On a continution byte so in the middle of a character, which is invalid"
 							Character replacement]]]!

@@ -80,7 +80,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, unsigned)
 						// The macro (from icucommon.h) advances the index as well as calculating the code point
 						U8_NEXT(psz, index, static_cast<SMALLINTEGER>(size), codePoint);
 
-						if (codePoint >= 0)
+						if (U_IS_UNICODE_CHAR(codePoint))
 						{
 							PushCharacter(sp, codePoint);
 							readStream->m_index = Integer::NewSigned32WithRef(index);

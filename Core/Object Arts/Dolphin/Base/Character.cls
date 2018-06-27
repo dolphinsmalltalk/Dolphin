@@ -504,7 +504,8 @@ byteCharacterSet
 	^CharacterSet!
 
 codePoint: integer
-	"Answer an instance of the receiver with the <integer> encoding, integer."
+	"Answer a <Character> representing the specified <integer> Unicode code point.
+	Raise an error if the argument is not a valid Unicode character code point."
 
 	^integer < 16r80
 		ifTrue: [CharacterSet at: integer + 1]
@@ -629,7 +630,23 @@ onStartup
 	Utf8Default := (CPINFOEXW codePage: Win32Constants.CP_UTF8) unicodeDefaultChar!
 
 replacement
+	"Answer the Unicode replacement <Character>, used to substitute for invalid code points and
+	encodings."
+
 	^Utf8Default!
+
+safeCodePoint: anInteger
+	"Answer a <Character> representing the specified <integer> Unicode code point, or the
+	replacement Character if the code point is not the code point of a valid Unicode character."
+
+	^anInteger < 16r80
+		ifTrue: [CharacterSet at: anInteger + 1]
+		ifFalse: 
+			[(AnsiCharacters lookup: anInteger)
+				ifNil: 
+					[(self isValidCodePoint: anInteger)
+						ifTrue: [(self newCode: (Utf32Mask bitOr: anInteger)) isImmutable: true]
+						ifFalse: [self replacement]]]!
 
 space
 	"Answer the space <Character>."
@@ -642,8 +659,8 @@ tab
 	^$\t!
 
 utf16Value: anInteger
-	"Answer a Character representing the <integer> UTF-16 code unit, anInteger.
-	Note that the character may not represent a valid Unicode code point."
+	"Answer a <Character> representing the <integer> UTF-16 code unit, anInteger.
+	Note that the resulting Character may not represent a valid Unicode code point."
 
 	^anInteger < 16r80
 		ifTrue: 
@@ -665,7 +682,7 @@ utf16Value: anInteger
 
 utf8Value: anInteger
 	"Answer a <Character> representing the <integer> UTF-8 code unit, anInteger.
-	Note that the character may not represent a valid Unicode code point."
+	Note that the resulting Character may not represent a valid Unicode code point."
 
 	^anInteger < 16r80
 		ifTrue: 
@@ -679,7 +696,8 @@ utf8Value: anInteger
 				ifFalse: [self error: 'Invalid UTF-8 code unit: ' , anInteger printString]]!
 
 value: anInteger
-	"Answer a <Character> representing the specified <integer> Unicode code point."
+	"Answer a <Character> representing the specified <integer> Unicode code point.
+	Raise an error if the argument is not a valid Unicode character code point."
 
 	^self codePoint: anInteger! !
 !Character class categoriesFor: #ansiValue:!instance creation!public! !
@@ -695,7 +713,7 @@ value: anInteger
 !Character class categoriesFor: #esc!constants!public! !
 !Character class categoriesFor: #icon!constants!public! !
 !Character class categoriesFor: #initialize!development!initializing!public! !
-!Character class categoriesFor: #isValidCodePoint:!instance creation!public! !
+!Character class categoriesFor: #isValidCodePoint:!enquiries!public! !
 !Character class categoriesFor: #lf!constants!public! !
 !Character class categoriesFor: #new!instance creation!public! !
 !Character class categoriesFor: #newCode:!instance creation!private! !
@@ -703,7 +721,8 @@ value: anInteger
 !Character class categoriesFor: #nl!constants!public! !
 !Character class categoriesFor: #null!constants!public! !
 !Character class categoriesFor: #onStartup!event handling!public! !
-!Character class categoriesFor: #replacement!accessing!public! !
+!Character class categoriesFor: #replacement!constants!public! !
+!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
 !Character class categoriesFor: #space!constants!public! !
 !Character class categoriesFor: #tab!constants!public! !
 !Character class categoriesFor: #utf16Value:!instance creation!public! !

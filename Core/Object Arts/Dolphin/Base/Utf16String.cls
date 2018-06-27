@@ -95,7 +95,7 @@ decodeNextFrom: aReadStream
 	^aReadStream basicNextAvailable
 		ifNotNil: 
 			[:c |
-			^(c bitAnd: 16rFFFFC00) == 16rD800
+			(c bitAnd: 16rFFFFC00) == 16rD800
 				ifTrue: 
 					["Lead surrogate encountered"
 					aReadStream basicNextAvailable
