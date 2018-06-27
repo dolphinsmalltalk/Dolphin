@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB DateAndTime'.
 package paxVersion: 1;
 	basicComment: 'Implementation of the ANSI <DateAndTime> protocol
@@ -33,7 +33,7 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
 	add: 'IDB Duration';
 	yourself).
 

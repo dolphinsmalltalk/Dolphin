@@ -215,7 +215,7 @@ regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserv
 			PFILETIME lpftLastWriteTime			// address of buffer for last write time 
 	 ); "
 
-	<stdcall: sdword RegQueryInfoKeyW handle lpstr DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* FILETIME*>
+	<stdcall: sdword RegQueryInfoKeyW handle lpwstr DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* DWORD* FILETIME*>
 	^self invalidCall!
 
 regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData 

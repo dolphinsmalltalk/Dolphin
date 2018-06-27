@@ -129,7 +129,7 @@ next
 	"Answer the next object accessible by the receiver. WriteStreams do not support reading.
 	This effectively stubs out all the read methods inherited from superclasses."
 
-	^self shouldNotImplement!
+	^self errorNotReadable!
 
 next: anInteger put: anObject
 	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 

@@ -100,6 +100,14 @@ errorEndOfStream
 
 	^self class endOfStreamSignal signalWith: self!
 
+errorNotPositionable
+	^self error: 'The stream is not positionable'!
+
+errorNotReadable
+	"Private - An attempt was made to read from a write-only stream. Raise an appropriate exception."
+
+	^self error: 'The stream is not readable'!
+
 isReadable
 	"Answer whether the receiver can be read from (i.e. it implements the gettableStream
 	protocol)."
@@ -118,7 +126,7 @@ next
 	"Implementation Note: Must be defined by subclasses which wish to implement the 
 	<gettableStream> protocol."
 
-	^self subclassResponsibility!
+	^self errorNotReadable!
 
 next: anInteger
 	"Answer a <sequencedReadableCollection> containing the next anInteger number of objects
@@ -135,9 +143,9 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 	receiver. Answer aSequenceableCollection."
 
 	| last pos |
-	last := startInteger + countInteger - 1.
+	last := startInteger + countInteger.
 	pos := startInteger.
-	[pos >= last] whileFalse: [pos := aSequenceableCollection encodedAt: pos put: self next].
+	[pos >= last] whileFalse: [pos := (aSequenceableCollection encodedAt: pos put: self next) + 1].
 	^aSequenceableCollection!
 
 nextAvailable
@@ -157,6 +165,12 @@ nextAvailable: anInteger
 			[newStream nextPut: self next.
 			count := count - 1].
 	^newStream contents!
+
+nextInto: aSequenceableCollection
+	"Destructively replace all elements of the argument, aSequenceableCollection,
+	with the next elements of the receiver. Answer aSequenceableCollection."
+
+	^self next: aSequenceableCollection size into: aSequenceableCollection startingAt: 1!
 
 nextMatchFor: anObject 
 	"Access the next object and answer whether it is equal to the argument, anObject. Raise an
@@ -216,6 +230,8 @@ upToEnd
 !Stream categoriesFor: #display:!printing!public! !
 !Stream categoriesFor: #do:!enumerating!public! !
 !Stream categoriesFor: #errorEndOfStream!exceptions!public! !
+!Stream categoriesFor: #errorNotPositionable!exceptions!private! !
+!Stream categoriesFor: #errorNotReadable!exceptions!private! !
 !Stream categoriesFor: #isReadable!public!testing! !
 !Stream categoriesFor: #isWriteable!public!testing! !
 !Stream categoriesFor: #next!accessing!public! !
@@ -223,6 +239,7 @@ upToEnd
 !Stream categoriesFor: #next:into:startingAt:!accessing!public! !
 !Stream categoriesFor: #nextAvailable!accessing!public! !
 !Stream categoriesFor: #nextAvailable:!accessing!public! !
+!Stream categoriesFor: #nextInto:!accessing!public! !
 !Stream categoriesFor: #nextMatchFor:!accessing!public! !
 !Stream categoriesFor: #print:!printing!public! !
 !Stream categoriesFor: #skipThrough:!positioning!public! !

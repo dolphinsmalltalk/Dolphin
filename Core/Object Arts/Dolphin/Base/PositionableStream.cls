@@ -64,7 +64,7 @@ basicUpTo: anObject
 	of the collection. If the receiver is at its end, answer an empty Collection."
 
 	| startIndex endIndex |
-	self isReadable ifFalse: [^self shouldNotImplement].
+	self isReadable ifFalse: [^self errorNotReadable].
 	startIndex := position + 1.
 	"We can perform a fast scan for anObject in the collection. Most streamed over
 	SequenceableCollections have a primitive implementation of #nextIdentityIndexOf:from:to:"
@@ -137,12 +137,6 @@ nextFLOAT
 	"N.B. This will fail if the receiver is not a byte stream."
 
 	^(self basicNext: VMConstants.FloatSize) floatAtOffset: 0!
-
-nextInto: aSequenceableCollection
-	"Destructively replace all elements of the argument, aSequenceableCollection,
-	with the next elements of the receiver. Answer aSequenceableCollection."
-
-	^self next: aSequenceableCollection size into: aSequenceableCollection startingAt: 1!
 
 nextSDWORD
 	"Answer a 32-bit signed integer constructed from the host system representation contained in
@@ -252,7 +246,6 @@ upToEnd
 !PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
 !PositionableStream categoriesFor: #nextDWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextFLOAT!binary filing!public! !
-!PositionableStream categoriesFor: #nextInto:!accessing!public! !
 !PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
 !PositionableStream categoriesFor: #nextWORD!binary filing!public! !

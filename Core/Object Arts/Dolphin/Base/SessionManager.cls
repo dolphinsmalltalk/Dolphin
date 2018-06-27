@@ -1072,7 +1072,7 @@ userName
 	the request fails"
 
 	| name nameSize |
-	name := String new: 256.
+	name := Utf16String new: 256.
 	nameSize := DWORD fromInteger: name size.
 	(AdvApiLibrary default getUserName: name nSize: nameSize asParameter)
 		ifFalse: [AdvApiLibrary default systemError].

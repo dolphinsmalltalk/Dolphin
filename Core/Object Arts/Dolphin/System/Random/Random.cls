@@ -48,6 +48,11 @@ isReadable
 
 	^true!
 
+next
+	"Answer the next object accessible by the receiver."
+
+	^self subclassResponsibility!
+
 peek
 	"Answer a pseudo-Random floating point number between 0 and 1 generated
 	from the next seed, but do not advance down the stream (i.e. self peek = self peek)."
@@ -74,6 +79,7 @@ skip: anInteger
 !Random categoriesFor: #atEnd!public!testing! !
 !Random categoriesFor: #chiSquareTest:max:!examples!private! !
 !Random categoriesFor: #isReadable!public!testing! !
+!Random categoriesFor: #next!accessing!public! !
 !Random categoriesFor: #peek!accessing!public! !
 !Random categoriesFor: #seed!accessing!public! !
 !Random categoriesFor: #seed:!accessing!public! !

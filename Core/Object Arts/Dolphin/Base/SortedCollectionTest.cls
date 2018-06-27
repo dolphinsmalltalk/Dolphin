@@ -51,7 +51,7 @@ testResize
 	actual := subject resize: 2.
 	self assert: actual identicalTo: subject.
 	self assert: actual equals: (self newCollection: #($a $b)).
-	self shouldnt: [subject resize: 3] implement: #resize:!
+	self should: [subject resize: 3] raise: Error!
 
 testStrongTalkTests
 !

@@ -78,11 +78,6 @@ isWriteable
 
 	^true!
 
-next
-	"Answer the next object accessible by the receiver."
-
-	^self shouldNotImplement!
-
 next: anInteger put: anObject
 	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
 	Answer anObject."
@@ -140,7 +135,6 @@ tab: tabCount
 !DebugTraceStream categoriesFor: #initialize!initializing!private! !
 !DebugTraceStream categoriesFor: #isEmpty!public! !
 !DebugTraceStream categoriesFor: #isWriteable!public!testing! !
-!DebugTraceStream categoriesFor: #next!accessing!public! !
 !DebugTraceStream categoriesFor: #next:put:!operations!public! !
 !DebugTraceStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
 !DebugTraceStream categoriesFor: #nextPut:!adding!public! !
