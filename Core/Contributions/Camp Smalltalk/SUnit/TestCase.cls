@@ -255,8 +255,8 @@ tearDown! !
 !TestCase class methodsFor!
 
 allTestSelectors
-	^self allSelectors asSortedCollection asOrderedCollection
-		select: [:each | (each beginsWith: 'test') and: [each numArgs isZero]]!
+	^self allSelectors
+		select: [:each | (each beginsWith: 'test') and: [(each identityIncludes: $:) not]]!
 
 buildSuite
 
@@ -276,7 +276,7 @@ buildSuiteFromLocalSelectors
 	^self buildSuiteFromMethods: self testSelectors!
 
 buildSuiteFromMethods: testMethods 
-	^testMethods 
+	^testMethods asSortedCollection
 		inject: ((TestSuite new)
 				name: self name asString;
 				yourself)

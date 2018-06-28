@@ -292,13 +292,18 @@ shouldnt: aZeroArgBlock triggerAnyOf: aCollectionOfSymbols against: anObject
 
 !TestCase class methodsFor!
 
-buildSuiteFromConcreteMethods: testMethodSelectors 
-	^self isAbstract 
+buildSuiteFromConcreteMethods: testMethodSelectors
+	^self isAbstract
 		ifTrue: 
 			[| suite |
 			suite := TestSuite new.
 			suite name: self displayString.
-			self allSubclassesDo: [:each | each isAbstract ifFalse: [suite addTest: (each buildSuiteFromMethods: testMethodSelectors)]].
+			self allSubclassesDo: 
+					[:each |
+					each isAbstract
+						ifFalse: 
+							[suite
+								addTest: (each buildSuiteFromMethods: (testMethodSelectors intersection: each allTestSelectors))]].
 			suite]
 		ifFalse: [self buildSuiteFromMethods: testMethodSelectors]!
 
