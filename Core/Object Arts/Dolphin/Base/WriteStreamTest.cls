@@ -73,18 +73,6 @@ testNextInto
 	stream reset.
 	self readOperationNotImplemented: [stream nextInto: (Array new: 3)]!
 
-testNextLine
-	| stream |
-	stream := self streamWith: 'abc'.
-	stream reset.
-	self readOperationNotImplemented: [stream nextLine]!
-
-testNextLineCrOnly
-	| stream |
-	stream := self streamWith: (String with: $\r) , 'abc'.
-	stream reset.
-	self readOperationNotImplemented: [stream nextLine]!
-
 testNextWord
 	| stream |
 	stream := self streamWith: 'abc'.
@@ -107,13 +95,6 @@ testSetToEnd
 	stream setToEnd.
 	self assert: stream position equals: string size.
 	self assert: stream contents equals: string!
-
-testSkipToAllColon
-	| chars stream |
-	chars := 'aababcabcdabcde'.
-	stream := self streamOn: chars.
-
-	self readOperationNotImplemented: [stream skipToAll: 'a']!
 
 testUpTo
 	| stream |
@@ -146,14 +127,20 @@ testUpToUtf
 !WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextInto!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextLine!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
 !WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !WriteStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !WriteStreamTest categoriesFor: #testSetToEnd!public!testing! !
-!WriteStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
 !WriteStreamTest categoriesFor: #testUpToUtf!public!unit tests! !
+
+!WriteStreamTest class methodsFor!
+
+allTestSelectors
+	| roCategory |
+	roCategory := MethodCategory name: 'gettableStream only'.
+	^super allTestSelectors reject: [:each |
+		roCategory includesMethod: (self lookupMethod: each)]! !
+!WriteStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
 
