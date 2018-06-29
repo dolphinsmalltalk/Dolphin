@@ -19,6 +19,9 @@ maxPosition
 streamClass
 	^StdioFileStream!
 
+streamOnFile: pathString type: aSymbol
+	^StdioFileStream read: pathString type: aSymbol!
+
 strings
 	| pred |
 	pred := [:ch | ch == $\0 or: [ch == $\x1A]].
@@ -97,6 +100,7 @@ testNextLineUpToEof
 !StdioFileStreamTest categoriesFor: #bufferSize!constants!private! !
 !StdioFileStreamTest categoriesFor: #maxPosition!constants!private! !
 !StdioFileStreamTest categoriesFor: #streamClass!helpers!private! !
+!StdioFileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
 !StdioFileStreamTest categoriesFor: #strings!constants!private! !
 !StdioFileStreamTest categoriesFor: #subjectCollection:!public! !
 !StdioFileStreamTest categoriesFor: #testCharacterTranslation!public!unit tests! !

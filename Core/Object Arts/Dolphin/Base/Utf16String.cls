@@ -95,7 +95,7 @@ decodeNextFrom: aReadStream
 	^aReadStream basicNextAvailable
 		ifNotNil: 
 			[:c |
-			^(c bitAnd: 16rFFFFC00) == 16rD800
+			(c bitAnd: 16rFFFFC00) == 16rD800
 				ifTrue: 
 					["Lead surrogate encountered"
 					aReadStream basicNextAvailable
@@ -107,7 +107,7 @@ decodeNextFrom: aReadStream
 							(c2 bitAnd: 16rFFFFFC00) == 16rDC00
 								ifTrue: 
 									["Valid surrogate pair"
-									Character codePoint: (c << 10) + c2 - SurrogateOffset]
+									Character safeCodePoint: (c << 10) + c2 - SurrogateOffset]
 								ifFalse: 
 									["No trailing surrogate, answer the replacement character"
 									aReadStream pop.

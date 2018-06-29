@@ -51,6 +51,9 @@ streamOn: aString
 	stream close.
 	^self streamClass read: name text: aString isString!
 
+streamOnFile: pathString type: aSymbol
+	^FileStream read: pathString type: aSymbol!
+
 tearDownTempStream
 	"Private - Clean up the test subject. Don't do this by closing the FileStream, but directly
 	close the File to which it is attached as this avoids the FileStream>>flush and so is more
@@ -156,6 +159,7 @@ testWritePastEnd
 !FileStreamTest categoriesFor: #maxSize!constants!private! !
 !FileStreamTest categoriesFor: #streamClass!helpers!private! !
 !FileStreamTest categoriesFor: #streamOn:!helpers!private! !
+!FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
 !FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
 !FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
 !FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !

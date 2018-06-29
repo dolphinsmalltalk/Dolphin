@@ -54,6 +54,16 @@ streamOn: aString
 
 	^self streamClass on: aString!
 
+streamOnFile: pathString type: aSymbol
+	| bytes |
+	bytes := File readAllBytes: pathString.
+	^aSymbol == #utf8
+		ifTrue: [self streamOn: (Utf8String fromByteArray: bytes)]
+		ifFalse: 
+			[aSymbol == #utf16le
+				ifTrue: [self streamOn: (Utf16String fromByteArray: bytes)]
+				ifFalse: [self streamOn: bytes]]!
+
 streamWith: aSequenceableCollection
 	"Private - Answer a <gettableStream> of the type the receiver is testing, on the <SequenceableCollection> argument."
 
@@ -100,6 +110,25 @@ testContents
 			stream := self streamWith: each.
 			self assert: stream contents equals: each.
 			self closeTempStream: stream]!
+
+testMarkusKuhnUtf8
+	"A kick-the-tyres test that various read operations will not fail on UTF-8 with many
+	encoding edge cases and errors. The nature of the data is such that there is not much we can
+	assert, although it contains many informally expressed test cases that can be mined to create
+	better unit tests."
+
+	| stream testFilePath bytes text |
+	testFilePath := FileLocator imageRelative
+				localFileSpecFor: 'Core\Object Arts\Dolphin\Tests\UTF8-test.txt'.
+	stream := self streamOnFile: testFilePath type: #utf8.
+	"Should be able to read every character, even if invalid"
+	[stream atEnd] whileFalse: [stream next].
+	bytes := File readAllBytes: testFilePath.
+	text := Utf16String fromBytes: bytes codePage: Win32Constants.CP_UTF8.
+	self assert: stream contents equals: text.
+	stream reset.
+	self assert: stream upToEnd equals: text.
+	self closeTempStream: stream!
 
 testNew
 	self should: [self streamClass new] raise: Error!
@@ -667,27 +696,29 @@ writeOperationNotImplemented: aBlock
 !PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
 !PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
 !PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
+!PositionableStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
 !PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
 !PositionableStreamTest categoriesFor: #strings!constants!private! !
 !PositionableStreamTest categoriesFor: #subjectCollection:!public! !
 !PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testMarkusKuhnUtf8!gettableStream only!public! !
 !PositionableStreamTest categoriesFor: #testNew!public!testing! !
 !PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLine!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLineCrOnly!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testSkipToAllColon!public!unit tests! !
+!PositionableStreamTest categoriesFor: #testSkipToAllColon!gettableStream only!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
 !PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToUtf!public! !
+!PositionableStreamTest categoriesFor: #testUpToUtf!gettableStream only!public! !
 !PositionableStreamTest categoriesFor: #writeableCollections!private!unit tests! !
 !PositionableStreamTest categoriesFor: #writeOperationNotImplemented:!private!unit tests! !
 
