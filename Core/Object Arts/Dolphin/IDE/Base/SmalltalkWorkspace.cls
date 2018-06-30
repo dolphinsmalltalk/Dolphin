@@ -66,7 +66,6 @@ applyOptions
 	view autoCompletionSeparator: $\x7F.
 	self areVariableTipsEnabled ifTrue: [view isBackgroundDwellEnabled: true].
 	"#2137"
-	view sciSetCodePage: KernelLibrary default getACP.
 	view annotationMode: self class annotationMode.
 	view wrapIndentMode: self class wrapIndentMode.!
 

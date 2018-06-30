@@ -140,7 +140,7 @@ onValueChanged
 	namePresenter view isReadOnly: style isPredefined.
 	preview := previewPresenter view.
 	previewStyle := #preview.
-	style name == #lineNumber 
+	style name == #lineNumber
 		ifTrue: 
 			[previewStyle := #normal.
 			preview hasLineNumbers: true]
@@ -150,7 +150,7 @@ onValueChanged
 	self applyDefaultStyle.
 	preview styler normalStyleName: previewStyle.
 	style id: style id.
-	preview textStyles: (Array with: self normalStyle with: style).
+	preview textStyles: {self normalStyle. style}.
 	super onValueChanged!
 
 onViewOpened

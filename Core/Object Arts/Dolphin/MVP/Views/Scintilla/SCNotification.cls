@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 NMHDR subclass: #SCNotification
-	instanceVariableNames: ''
+	instanceVariableNames: 'view textString'
 	classVariableNames: 'ModificationTypeOffset'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
@@ -215,6 +215,9 @@ text
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #text)!
 
+textString
+	^textString ifNil: [textString := view stringClass fromAddress: self text]!
+
 token
 	"Answer the <Integer> value of the receiver's 'token' field."
 
@@ -224,6 +227,9 @@ updated
 	"Answer the <Integer> value of the receiver's 'updated' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #updated)!
+
+view: aScintillaView
+	view := aScintillaView!
 
 wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
@@ -263,8 +269,10 @@ y
 !SCNotification categoriesFor: #scLine!**compiled accessors**!public! !
 !SCNotification categoriesFor: #scPosition!**compiled accessors**!public! !
 !SCNotification categoriesFor: #text!**compiled accessors**!public! !
+!SCNotification categoriesFor: #textString!accessing!public! !
 !SCNotification categoriesFor: #token!**compiled accessors**!public! !
 !SCNotification categoriesFor: #updated!**compiled accessors**!public! !
+!SCNotification categoriesFor: #view:!accessing!private! !
 !SCNotification categoriesFor: #wParam!**compiled accessors**!public! !
 !SCNotification categoriesFor: #x!**compiled accessors**!public! !
 !SCNotification categoriesFor: #y!**compiled accessors**!public! !

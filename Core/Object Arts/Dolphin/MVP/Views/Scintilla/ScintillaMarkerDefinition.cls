@@ -133,7 +133,7 @@ selectionBackcolor: aColor
 	self updateViewProperty: #selectionBackcolor!
 
 storeableProperties
-	^(Array with: #name) , super storeableProperties!
+	^{#name} , super storeableProperties!
 
 view
 	^view!

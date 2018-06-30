@@ -102,7 +102,7 @@ propertyMapDo: aMonadicValuable
 	^self propertyMap do: aMonadicValuable!
 
 storeableProperties
-	^(Array with: #basicId) , self propertyMap keys asArray!
+	^{#basicId} , self propertyMap keys asArray!
 
 storeOn: aStream
 	"Append to the <puttableStream> argument an expression which when evaluated will answer a

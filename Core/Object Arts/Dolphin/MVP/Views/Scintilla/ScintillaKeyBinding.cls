@@ -119,7 +119,7 @@ initialize
 	self initializeCommands!
 
 initializeCommands
-	Commands := (IdentityDictionary new)
+	Commands := IdentityDictionary new
 				at: SCI_BACKTAB put: #unindent;
 				at: SCI_CANCEL put: #cancelModes;
 				at: SCI_CHARLEFT put: #moveLeft;

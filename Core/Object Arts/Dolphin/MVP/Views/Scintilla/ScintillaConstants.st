@@ -25,6 +25,8 @@ ScintillaConstants at: 'INDIC_DIAGONAL' put: 16r3!
 ScintillaConstants at: 'INDIC_DOTBOX' put: 16rC!
 ScintillaConstants at: 'INDIC_DOTS' put: 16rA!
 ScintillaConstants at: 'INDIC_FULLBOX' put: 16r10!
+ScintillaConstants at: 'INDIC_GRADIENT' put: 16r14!
+ScintillaConstants at: 'INDIC_GRADIENTCENTRE' put: 16r15!
 ScintillaConstants at: 'INDIC_HIDDEN' put: 16r5!
 ScintillaConstants at: 'INDIC_IME' put: 16r20!
 ScintillaConstants at: 'INDIC_IME_MAX' put: 16r23!
@@ -60,6 +62,9 @@ ScintillaConstants at: 'SC_ALPHA_TRANSPARENT' put: 16r0!
 ScintillaConstants at: 'SC_AUTOMATICFOLD_CHANGE' put: 16r4!
 ScintillaConstants at: 'SC_AUTOMATICFOLD_CLICK' put: 16r2!
 ScintillaConstants at: 'SC_AUTOMATICFOLD_SHOW' put: 16r1!
+ScintillaConstants at: 'SC_BIDIRECTIONAL_DISABLED' put: 16r0!
+ScintillaConstants at: 'SC_BIDIRECTIONAL_L2R' put: 16r1!
+ScintillaConstants at: 'SC_BIDIRECTIONAL_R2L' put: 16r2!
 ScintillaConstants at: 'SC_CACHE_CARET' put: 16r1!
 ScintillaConstants at: 'SC_CACHE_DOCUMENT' put: 16r3!
 ScintillaConstants at: 'SC_CACHE_NONE' put: 16r0!
@@ -100,6 +105,9 @@ ScintillaConstants at: 'SC_CURSORARROW' put: 16r2!
 ScintillaConstants at: 'SC_CURSORNORMAL' put: -16r1!
 ScintillaConstants at: 'SC_CURSORREVERSEARROW' put: 16r7!
 ScintillaConstants at: 'SC_CURSORWAIT' put: 16r4!
+ScintillaConstants at: 'SC_DOCUMENTOPTION_DEFAULT' put: 16r0!
+ScintillaConstants at: 'SC_DOCUMENTOPTION_STYLES_NONE' put: 16r1!
+ScintillaConstants at: 'SC_DOCUMENTOPTION_TEXT_LARGE' put: 16r100!
 ScintillaConstants at: 'SC_EFF_QUALITY_ANTIALIASED' put: 16r2!
 ScintillaConstants at: 'SC_EFF_QUALITY_DEFAULT' put: 16r0!
 ScintillaConstants at: 'SC_EFF_QUALITY_LCD_OPTIMIZED' put: 16r3!
@@ -231,6 +239,7 @@ ScintillaConstants at: 'SC_PRINT_COLOURONWHITE' put: 16r3!
 ScintillaConstants at: 'SC_PRINT_COLOURONWHITEDEFAULTBG' put: 16r4!
 ScintillaConstants at: 'SC_PRINT_INVERTLIGHT' put: 16r1!
 ScintillaConstants at: 'SC_PRINT_NORMAL' put: 16r0!
+ScintillaConstants at: 'SC_PRINT_SCREENCOLOURS' put: 16r5!
 ScintillaConstants at: 'SC_SEL_LINES' put: 16r2!
 ScintillaConstants at: 'SC_SEL_RECTANGLE' put: 16r1!
 ScintillaConstants at: 'SC_SEL_STREAM' put: 16r0!
@@ -260,6 +269,7 @@ ScintillaConstants at: 'SC_WRAP_CHAR' put: 16r2!
 ScintillaConstants at: 'SC_WRAP_NONE' put: 16r0!
 ScintillaConstants at: 'SC_WRAP_WHITESPACE' put: 16r3!
 ScintillaConstants at: 'SC_WRAP_WORD' put: 16r1!
+ScintillaConstants at: 'SC_WRAPINDENT_DEEPINDENT' put: 16r3!
 ScintillaConstants at: 'SC_WRAPINDENT_FIXED' put: 16r0!
 ScintillaConstants at: 'SC_WRAPINDENT_INDENT' put: 16r2!
 ScintillaConstants at: 'SC_WRAPINDENT_SAME' put: 16r1!
@@ -399,6 +409,7 @@ ScintillaConstants at: 'SCI_DELWORDRIGHT' put: 16r920!
 ScintillaConstants at: 'SCI_DELWORDRIGHTEND' put: 16r9D6!
 ScintillaConstants at: 'SCI_DESCRIBEKEYWORDSETS' put: 16rFB1!
 ScintillaConstants at: 'SCI_DESCRIBEPROPERTY' put: 16rFB0!
+ScintillaConstants at: 'SCI_DESCRIPTIONOFSTYLE' put: 16rFC0!
 ScintillaConstants at: 'SCI_DISTANCETOSECONDARYSTYLES' put: 16rFB9!
 ScintillaConstants at: 'SCI_DOCLINEFROMVISIBLE' put: 16r8AD!
 ScintillaConstants at: 'SCI_DOCUMENTEND' put: 16r90E!
@@ -435,6 +446,7 @@ ScintillaConstants at: 'SCI_GETALLLINESVISIBLE' put: 16r8BC!
 ScintillaConstants at: 'SCI_GETANCHOR' put: 16r7D9!
 ScintillaConstants at: 'SCI_GETAUTOMATICFOLD' put: 16rA68!
 ScintillaConstants at: 'SCI_GETBACKSPACEUNINDENTS' put: 16r8D7!
+ScintillaConstants at: 'SCI_GETBIDIRECTIONAL' put: 16rA94!
 ScintillaConstants at: 'SCI_GETBUFFEREDDRAW' put: 16r7F2!
 ScintillaConstants at: 'SCI_GETCARETFORE' put: 16r85A!
 ScintillaConstants at: 'SCI_GETCARETLINEBACK' put: 16r831!
@@ -457,6 +469,7 @@ ScintillaConstants at: 'SCI_GETCURSOR' put: 16r953!
 ScintillaConstants at: 'SCI_GETDIRECTFUNCTION' put: 16r888!
 ScintillaConstants at: 'SCI_GETDIRECTPOINTER' put: 16r889!
 ScintillaConstants at: 'SCI_GETDOCPOINTER' put: 16r935!
+ScintillaConstants at: 'SCI_GETDOCUMENTOPTIONS' put: 16r94B!
 ScintillaConstants at: 'SCI_GETEDGECOLOUR' put: 16r93C!
 ScintillaConstants at: 'SCI_GETEDGECOLUMN' put: 16r938!
 ScintillaConstants at: 'SCI_GETEDGEMODE' put: 16r93A!
@@ -521,8 +534,10 @@ ScintillaConstants at: 'SCI_GETMOUSEDOWNCAPTURES' put: 16r951!
 ScintillaConstants at: 'SCI_GETMOUSEDWELLTIME' put: 16r8D9!
 ScintillaConstants at: 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' put: 16rA6D!
 ScintillaConstants at: 'SCI_GETMOUSEWHEELCAPTURES' put: 16rA89!
+ScintillaConstants at: 'SCI_GETMOVEEXTENDSSELECTION' put: 16rA92!
 ScintillaConstants at: 'SCI_GETMULTIPASTE' put: 16rA37!
 ScintillaConstants at: 'SCI_GETMULTIPLESELECTION' put: 16rA04!
+ScintillaConstants at: 'SCI_GETNAMEDSTYLES' put: 16rFBD!
 ScintillaConstants at: 'SCI_GETNEXTTABSTOP' put: 16rA75!
 ScintillaConstants at: 'SCI_GETOVERTYPE' put: 16r88B!
 ScintillaConstants at: 'SCI_GETPASTECONVERTENDINGS' put: 16r9A4!
@@ -698,6 +713,7 @@ ScintillaConstants at: 'SCI_MULTIEDGEADDLINE' put: 16rA86!
 ScintillaConstants at: 'SCI_MULTIEDGECLEARALL' put: 16rA87!
 ScintillaConstants at: 'SCI_MULTIPLESELECTADDEACH' put: 16rA81!
 ScintillaConstants at: 'SCI_MULTIPLESELECTADDNEXT' put: 16rA80!
+ScintillaConstants at: 'SCI_NAMEOFSTYLE' put: 16rFBE!
 ScintillaConstants at: 'SCI_NEWLINE' put: 16r919!
 ScintillaConstants at: 'SCI_NULL' put: 16r87C!
 ScintillaConstants at: 'SCI_OPTIONAL_START' put: 16rBB8!
@@ -757,6 +773,7 @@ ScintillaConstants at: 'SCI_SETADDITIONALSELFORE' put: 16rA28!
 ScintillaConstants at: 'SCI_SETANCHOR' put: 16r7EA!
 ScintillaConstants at: 'SCI_SETAUTOMATICFOLD' put: 16rA67!
 ScintillaConstants at: 'SCI_SETBACKSPACEUNINDENTS' put: 16r8D6!
+ScintillaConstants at: 'SCI_SETBIDIRECTIONAL' put: 16rA95!
 ScintillaConstants at: 'SCI_SETBUFFEREDDRAW' put: 16r7F3!
 ScintillaConstants at: 'SCI_SETCARETFORE' put: 16r815!
 ScintillaConstants at: 'SCI_SETCARETLINEBACK' put: 16r832!
@@ -943,6 +960,7 @@ ScintillaConstants at: 'SCI_STYLESETVISIBLE' put: 16r81A!
 ScintillaConstants at: 'SCI_STYLESETWEIGHT' put: 16r80F!
 ScintillaConstants at: 'SCI_SWAPMAINANCHORCARET' put: 16rA2F!
 ScintillaConstants at: 'SCI_TAB' put: 16r917!
+ScintillaConstants at: 'SCI_TAGSOFSTYLE' put: 16rFBF!
 ScintillaConstants at: 'SCI_TARGETASUTF8' put: 16r98F!
 ScintillaConstants at: 'SCI_TARGETFROMSELECTION' put: 16r8EF!
 ScintillaConstants at: 'SCI_TARGETWHOLEDOCUMENT' put: 16rA82!
@@ -1067,6 +1085,7 @@ ScintillaConstants at: 'SCLEX_MAGIK' put: 16r57!
 ScintillaConstants at: 'SCLEX_MAKEFILE' put: 16rB!
 ScintillaConstants at: 'SCLEX_MARKDOWN' put: 16r62!
 ScintillaConstants at: 'SCLEX_MATLAB' put: 16r20!
+ScintillaConstants at: 'SCLEX_MAXIMA' put: 16r7B!
 ScintillaConstants at: 'SCLEX_METAPOST' put: 16r32!
 ScintillaConstants at: 'SCLEX_MMIXAL' put: 16r2C!
 ScintillaConstants at: 'SCLEX_MODULA' put: 16r65!
@@ -1133,6 +1152,7 @@ ScintillaConstants at: 'SCN_AUTOCCANCELLED' put: 16r7E9!
 ScintillaConstants at: 'SCN_AUTOCCHARDELETED' put: 16r7EA!
 ScintillaConstants at: 'SCN_AUTOCCOMPLETED' put: 16r7EE!
 ScintillaConstants at: 'SCN_AUTOCSELECTION' put: 16r7E6!
+ScintillaConstants at: 'SCN_AUTOCSELECTIONCHANGE' put: 16r7F0!
 ScintillaConstants at: 'SCN_CALLTIPCLICK' put: 16r7E5!
 ScintillaConstants at: 'SCN_CHARADDED' put: 16r7D1!
 ScintillaConstants at: 'SCN_DOUBLECLICK' put: 16r7D6!

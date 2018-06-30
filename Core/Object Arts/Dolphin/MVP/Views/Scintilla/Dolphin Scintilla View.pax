@@ -45,6 +45,9 @@ package classNames
 	add: #ScintillaIndicator;
 	add: #ScintillaIndicatorStyle;
 	add: #ScintillaKeyBinding;
+	add: #ScintillaLexerMetadata;
+	add: #ScintillaLexerNamedStyle;
+	add: #ScintillaLexerProperty;
 	add: #ScintillaLibrary;
 	add: #ScintillaListItem;
 	add: #ScintillaMargin;
@@ -121,6 +124,11 @@ Object subclass: #ScintillaKeyBinding
 	classVariableNames: 'Commands VirtualKeyMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
+Object subclass: #ScintillaLexerMetadata
+	instanceVariableNames: 'view id'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #ScintillaListItem
 	instanceVariableNames: 'text icon'
 	classVariableNames: ''
@@ -147,7 +155,7 @@ ExternalLibrary subclass: #ScintillaLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #SCNotification
-	instanceVariableNames: ''
+	instanceVariableNames: 'view textString'
 	classVariableNames: 'ModificationTypeOffset'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
@@ -191,6 +199,16 @@ QueryableScintillaAttribute subclass: #ScintillaMargin
 	classVariableNames: 'CursorTypes MarginTypes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ScintillaLexerMetadata subclass: #ScintillaLexerProperty
+	instanceVariableNames: 'type'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ScintillaPropertyDescriptor subclass: #QueryableScintillaPropertyDescriptor
 	instanceVariableNames: 'setSelector getMessage'
 	classVariableNames: ''
@@ -202,7 +220,7 @@ ScintillaStyler subclass: #NullScintillaStyler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MultilineTextEdit subclass: #ScintillaView
-	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags _unused44 keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
+	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags codePage keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
 	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!

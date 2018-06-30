@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 ScintillaDef subclass: #ScintillaFunctionDef
 	instanceVariableNames: 'funcType returnType wParamType wParamName lParamType lParamName'
@@ -13,15 +13,6 @@ ScintillaFunctionDef comment: ''!
 buildParamName: nameString type: typeString 
 	^(String with: nameString first asLowercase) , (nameString copyFrom: 2) 
 		, typeString objectClass name!
-
-byteArrayStringResults
-	"Answer the set of Scintilla functions declared as returning strings, but which really should return ByteArrays."
-
-	^##((Set new)
-		add: 'SCI_MARGINGETSTYLES';
-		add: 'SCI_ANNOTATIONGETSTYLES';
-		add: 'SCI_GETSUBSTYLEBASES';
-		yourself)!
 
 constPrefix
 	^'SCI_'!
@@ -175,27 +166,29 @@ emitScintillaCallOn: aPuttableStream wParam: wParam lParam: lParam
 		display: lParamType toScintilla!
 
 emitStringResultFunctionOn: aPuttableStream
+	| resultClassExpression |
 	selector := self renamedFunctions at: constName ifAbsent: [('sci' , name capitalized) asSymbol].
 	aPuttableStream
 		nextPutAll: selector;
 		crtab.
 	self emitMethodPreambleOn: aPuttableStream.
+	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['self stringClass'].
 	aPuttableStream
 		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [ScintillaLibrary default directFunction: this msg: ';
 		nextPutAll: self constName;
-		nextPutAll: ' wParam: 0 lpParam: nil]. ^len = 0 ifTrue: ['.
-	(self byteArrayStringResults includes: constName)
-		ifTrue: [aPuttableStream print: #[]]
-		ifFalse: [aPuttableStream nextPutAll: 'self stringClass empty'].
-	aPuttableStream nextPutAll: '] ifFalse: [| result | result := self stringClass newFixed: len'.
+		nextPutAll: ' wParam: 0 lpParam: nil]. ^len = 0 ifTrue: [';
+		display: resultClassExpression;
+		nextPutAll: ' empty] ifFalse: [| result | result := ';
+		display: resultClassExpression;
+		nextPutAll: ' newFixed: len'.
 	(self stringResultsCountNull includes: self constName) ifTrue: [aPuttableStream nextPutAll: '-1'].
 	aPuttableStream
 		nextPutAll: '. ScintillaLibrary default directFunction: this msg: ';
 		nextPutAll: self constName;
 		nextPutAll: ' wParam: 0 lpParam: result. result]'!
 
-emitWParamLParamFunctionOn: aPuttableStream 
-	^self isStringResultWParamFunction 
+emitWParamLParamFunctionOn: aPuttableStream
+	^self hasStringResult
 		ifTrue: [self emitWParamStringResultFunctionOn: aPuttableStream]
 		ifFalse: [self emitBasicWParamLParamFunctionOn: aPuttableStream]!
 
@@ -214,36 +207,61 @@ emitWParamNullFunctionOn: aPuttableStream
 		wParam: wParam
 		lParam: 0!
 
-emitWParamStringResultFunctionOn: aWriteStream 
-	| ignoreWParam param emptyResult |
+emitWParamStringResultFunctionOn: aWriteStream
+	| ignoreWParam wParam resultClassExpression |
 	selector := self renamedFunctions at: constName
 				ifAbsent: [('sci' , name capitalized , ':') asSymbol].
 	ignoreWParam := selector argumentCount = 0.
-	param := self buildParamName: self wParamName type: self wParamType.
+	wParam := self buildParamName: self wParamName type: self wParamType.
 	aWriteStream
 		nextPutAll: self selector;
 		space.
-	ignoreWParam ifFalse: [aWriteStream nextPutAll: param].
+	ignoreWParam ifFalse: [aWriteStream nextPutAll: wParam].
 	aWriteStream crtab.
 	self emitMethodPreambleOn: aWriteStream.
-	emptyResult := (self byteArrayStringResults includes: constName) ifTrue: [#[]] ifFalse: [''].
+	resultClassExpression := self fixedClassStringResults at: constName ifAbsent: ['self stringClass'].
 	aWriteStream
 		nextPutAll: '| len | len := this ifNil: [0] ifNotNil: [ScintillaLibrary default directFunction: this msg: ';
-		nextPutAll: self constName;
-		nextPutAll: ' wParam: ';
-		display: (ignoreWParam ifTrue: [0] ifFalse: [param]);
+		nextPutAll: self constName.
+	ignoreWParam
+		ifTrue: [aWriteStream nextPutAll: ' wParam: 0']
+		ifFalse: 
+			[aWriteStream
+				nextPutAll: (wParamType byRef ifTrue: [' wpParam: '] ifFalse: [' wParam: ']);
+				display: wParam;
+				space;
+				display: wParamType toScintilla].
+	aWriteStream
 		nextPutAll: ' lpParam: nil]. ^len = 0 ifTrue: [';
-		print: emptyResult;
-		nextPutAll: '] ifFalse: [| result | result := ';
-		display: emptyResult class;
+		display: resultClassExpression;
+		nextPutAll: ' empty] ifFalse: [| result | result := ';
+		display: resultClassExpression;
 		nextPutAll: ' newFixed: len'.
 	(self stringResultsCountNull includes: constName) ifTrue: [aWriteStream display: -1].
 	aWriteStream
 		nextPutAll: '. ScintillaLibrary default directFunction: this msg: ';
-		nextPutAll: constName;
-		nextPutAll: ' wParam: ';
-		display: (ignoreWParam ifTrue: ['len'] ifFalse: [param]);
-		nextPutAll: ' lpParam: result. result]'!
+		nextPutAll: constName.
+	ignoreWParam
+		ifTrue: [aWriteStream nextPutAll: ' wParam: len']
+		ifFalse: 
+			[aWriteStream
+				nextPutAll: (wParamType byRef ifTrue: [' wpParam: '] ifFalse: [' wParam: ']);
+				display: wParam;
+				space;
+				display: wParamType toScintilla].
+	aWriteStream nextPutAll: ' lpParam: result. result]'!
+
+fixedClassStringResults
+	"Answer the set of Scintilla functions declared as returning strings, but which need to
+	return either a ByteArray or a specific class of String that doesn't depend on the view's
+	current encoding."
+
+	^##(LookupTable new
+		at: 'SCI_MARGINGETSTYLES' put: ByteArray;
+		at: 'SCI_ANNOTATIONGETSTYLES' put: ByteArray;
+		at: 'SCI_GETSUBSTYLEBASES' put: ByteArray;
+		at: 'SCI_TARGETASUTF8' put: Utf8String;
+		yourself)!
 
 funcType: aString 
 	funcType := aString!
@@ -252,7 +270,7 @@ hasReturnValue
 	^self returnType isVoid not!
 
 hasStringResult
-	^self lParamType name = 'stringresult'!
+	^lParamType name = 'stringresult'!
 
 isCommand
 	"void functions with no parameters are considered to be commands."
@@ -272,12 +290,6 @@ isPropGet
 
 isPropSet
 	^funcType = 'set'!
-
-isStringResultFunction
-	^lParamType name = 'stringresult'!
-
-isStringResultWParamFunction
-	^self isStringResultFunction and: [wParamType name = 'int']!
 
 isUnusedParameter: aString
 	^aString isNil or: [aString = 'unused']!
@@ -378,6 +390,7 @@ renamedFunctions
 		at: 'SCI_SETADDITIONALCARETSVISIBLE' put: #areAdditionalCaretsVisible:;
 		at: 'SCI_GETCARETLINEFRAME' put: #currentLineFrameWidth;
 		at: 'SCI_SETCARETLINEFRAME' put: #currentLineFrameWidth:;
+		at: 'SCI_GETMOVEEXTENDSSELECTION' put: #isInSelectionExtendMode;
 		yourself.
 	"Markers"
 	renamedMessages
@@ -694,7 +707,6 @@ renamedFunctions
 		at: 'SCI_GETALLLINESVISIBLE' put: #areAllLinesVisible;
 		at: 'SCI_DESCRIBEKEYWORDSETS' put: #describeKeywordSets;
 		at: 'SCI_GETLEXERLANGUAGE' put: #lexerLanguage;
-		at: 'SCI_PROPERTYNAMES' put: #lexerPropertyNames;
 		yourself.
 	"3.7.0"
 	renamedMessages
@@ -765,7 +777,8 @@ returnType
 stringResultsCountNull
 	"Answer the set of all Scintilla control stringresult messages that include the null
 	terminator in the count returned. Most do not (this inconsistency is a Scintilla bug
-	really)."
+	really as it defeats the ability to generate a correct wrapper from the interface 
+	metadata alone)."
 
 	^##((Set new)
 		add: 'SCI_GETSELTEXT';
@@ -784,7 +797,6 @@ wParamName
 wParamType
 	^wParamType! !
 !ScintillaFunctionDef categoriesFor: #buildParamName:type:!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #byteArrayStringResults!accessing!constants!private! !
 !ScintillaFunctionDef categoriesFor: #constPrefix!initializing!private! !
 !ScintillaFunctionDef categoriesFor: #defaultReturnValue!accessing!private! !
 !ScintillaFunctionDef categoriesFor: #emitBasicNullLParamFunctionOn:!generating!private! !
@@ -801,6 +813,7 @@ wParamType
 !ScintillaFunctionDef categoriesFor: #emitWParamLParamFunctionOn:!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #emitWParamNullFunctionOn:!generating!private! !
 !ScintillaFunctionDef categoriesFor: #emitWParamStringResultFunctionOn:!generating!private! !
+!ScintillaFunctionDef categoriesFor: #fixedClassStringResults!accessing!constants!private! !
 !ScintillaFunctionDef categoriesFor: #funcType:!accessing!private! !
 !ScintillaFunctionDef categoriesFor: #hasReturnValue!helpers!public! !
 !ScintillaFunctionDef categoriesFor: #hasStringResult!helpers!private! !
@@ -809,8 +822,6 @@ wParamType
 !ScintillaFunctionDef categoriesFor: #isPrivate!private!testing! !
 !ScintillaFunctionDef categoriesFor: #isPropGet!public!testing! !
 !ScintillaFunctionDef categoriesFor: #isPropSet!public!testing! !
-!ScintillaFunctionDef categoriesFor: #isStringResultFunction!helpers!private! !
-!ScintillaFunctionDef categoriesFor: #isStringResultWParamFunction!helpers!private! !
 !ScintillaFunctionDef categoriesFor: #isUnusedParameter:!generating!helpers!public! !
 !ScintillaFunctionDef categoriesFor: #lParam:!accessing!private! !
 !ScintillaFunctionDef categoriesFor: #lParamName!accessing!public! !

@@ -49,6 +49,10 @@ package methodNames
 	add: #ScintillaIndicatorStyle -> #alphaPercent:;
 	add: #ScintillaView -> #highlightRange:withIndicator:;
 	add: #ScintillaView -> #indicatorDefinitions:;
+	add: #ScintillaView -> #isDrawingTwoPhase;
+	add: #ScintillaView -> #isDrawingTwoPhase:;
+	add: #ScintillaView -> #isKeyboardInputUnicode;
+	add: #ScintillaView -> #isKeyboardInputUnicode:;
 	add: #ScintillaView -> #styleBits;
 	add: #ScrollingDecorator -> #continuousTracking;
 	add: #ScrollingDecorator -> #continuousTracking:;
@@ -472,6 +476,57 @@ indicatorDefinitions: aSequenceableCollection
 	#deprecated.
 	self indicatorStyles: aSequenceableCollection!
 
+isDrawingTwoPhase
+	"Is drawing done in two phases with backgrounds drawn before foregrounds?"
+
+	#deprecated.
+	^this isNil
+		ifTrue: [false]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETTWOPHASEDRAW
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+isDrawingTwoPhase: twoPhaseBoolean
+	"In twoPhaseDraw mode, drawing is performed in two phases, first the background and then the
+	foreground. This avoids chopping off characters that overlap the next run."
+
+	#deprecated.
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETTWOPHASEDRAW
+				wParam: twoPhaseBoolean asParameter
+				lParam: 0]!
+
+isKeyboardInputUnicode
+	"Are keys always interpreted as Unicode?"
+
+	#deprecated.
+	^this isNil
+		ifTrue: [false]
+		ifFalse: 
+			[(ScintillaLibrary default
+				directFunction: this
+				msg: SCI_GETKEYSUNICODE
+				wParam: 0
+				lParam: 0) asBoolean]!
+
+isKeyboardInputUnicode: keysUnicodeBoolean
+	"Deprecated in 3.5.5 Always interpret keyboard input as Unicode"
+
+	#deprecated.
+	this isNil
+		ifFalse: 
+			[ScintillaLibrary default
+				directFunction: this
+				msg: SCI_SETKEYSUNICODE
+				wParam: keysUnicodeBoolean asParameter
+				lParam: 0]!
+
 styleBits
 	"Answer the number of bits available for text styles. This is now always 8."
 
@@ -479,6 +534,10 @@ styleBits
 	^8! !
 !ScintillaView categoriesFor: #highlightRange:withIndicator:!indicators!public! !
 !ScintillaView categoriesFor: #indicatorDefinitions:!indicators!public! !
+!ScintillaView categoriesFor: #isDrawingTwoPhase!**auto generated**!other settings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isDrawingTwoPhase:!**auto generated**!other settings!public!scintilla interface! !
+!ScintillaView categoriesFor: #isKeyboardInputUnicode!**auto generated**!other settings!public!scintilla interface!testing! !
+!ScintillaView categoriesFor: #isKeyboardInputUnicode:!**auto generated**!other settings!public!scintilla interface! !
 !ScintillaView categoriesFor: #styleBits!constants!public!style definition! !
 
 !ScrollingDecorator methodsFor!
@@ -563,7 +622,7 @@ hasMenuImages
 	"Answer whether the host supports images on menus."
 
 	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
-	^VMLibrary default isWindowsXPOrGreater! !
+	^true! !
 !SystemMetrics categoriesFor: #hasFlashWindow!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasMenuImages!capability enquiries!public! !
 
