@@ -132,6 +132,8 @@ contents
 		add: #('Core\Contributions\IDB\IDB DeviceIndependentBitmap.pax' #plain #imageBased);
 		add: #('Core\Contributions\IDB\IDB Image Library.pax' #plain #imageBased);
 		add: #('Core\Contributions\IDB\IDB MultipleFileOpenDialog.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB Duration.pax' #plain #imageBased);
+		add: #('Core\Contributions\IDB\IDB DateAndTime.pax' #plain #imageBased);
 		yourself.
 
 	"Solutions Software components"
