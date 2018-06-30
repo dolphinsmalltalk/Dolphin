@@ -9712,20 +9712,24 @@ setTargetRangeFromSelection
 				wParam: 0
 				lParam: 0]!
 
-setText: aString 
+setText: aString
 	"Private - Set up the receiver to be displaying the new text in the <String> argument."
 
-	self cancelModes.
-	self sciSetText: aString.
+	| text |
+	text := self stringClass fromString: aString.
+	"We use SCI_APPENDTEXT because SCI_SETTEXT assumes the string is null terminated and will
+	therefore stop on the first of any embedded nulls."
 	self
+		cancelModes;
+		clearAll;
+		sciAppendText: text size text: text;
 		isTextModified: false;
 		emptyUndoBuffer.
 	"Setting the text removes all current markers - we still tell Scintilla to delete them
 	though, since it seems that setting empty text may not remove any markers on line 0."
 	self removeAllMarkers.
 	"Setting the text also removes the indicators"
-	indicators := nil
-!
+	indicators := nil!
 
 setWhitespaceBackcolor
 	whitespaceBackcolor 
