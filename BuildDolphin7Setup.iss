@@ -47,7 +47,6 @@ Source: "ConsoleStub.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "ConsoleToGo.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DolphinCR7.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DolphinDR7.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "DolphinSureCrypto.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DolphinVM7.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "DPRO.chg"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
 Source: "DPRO.img7"; DestDir: "{userdocs}\{#MyAppName} {#MyAppVersion}"; Flags: ignoreversion
