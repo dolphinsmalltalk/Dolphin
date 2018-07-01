@@ -21,7 +21,6 @@ package classNames
 	add: #DolphinSureCertificateInfo;
 	add: #DolphinSureCertificateStore;
 	add: #DolphinSureCertificationAuthorityCertificate;
-	add: #DolphinSureCryptoLibrary;
 	add: #DolphinSurePersonalCertificate;
 	add: #DolphinSureTrustedData;
 	add: #NotSignedCertificate;
@@ -135,11 +134,6 @@ ExternalLibrary subclass: #BCryptLibrary
 	instanceVariableNames: 'shaAlgorithmHandle'
 	classVariableNames: ''
 	poolDictionaries: 'BCryptConstants'
-	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #DolphinSureCryptoLibrary
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
