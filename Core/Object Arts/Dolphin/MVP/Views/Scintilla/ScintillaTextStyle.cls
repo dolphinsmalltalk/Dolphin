@@ -315,7 +315,7 @@ setThreeStateFlag: anInteger value: aBooleanOrNil
 storeableProperties
 	| attribs |
 	attribs := super storeableProperties.
-	name ifNotNil: [attribs := (Array with: #name) , attribs].
+	name ifNotNil: [attribs := {#name} , attribs].
 	^attribs!
 
 view

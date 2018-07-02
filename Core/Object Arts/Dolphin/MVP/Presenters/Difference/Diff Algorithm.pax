@@ -155,7 +155,7 @@ longestCommonSubsequenceInInterval: aInterval withCollection: anOrderedCollectio
 									[| link |
 									link := LinkElement new.
 									k > 1 ifTrue: [link nextLink: (links at: k - 1)].
-									link value: (Array with: i with: j).
+									link value: {i. j}.
 									links at: k put: link]]]].
 	thresh size > 0
 		ifTrue: 

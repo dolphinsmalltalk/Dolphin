@@ -33,13 +33,13 @@ autoGenEventCategories
 	"Private - Answer the special method categories for auto-generated
 	property accessors in the receivers wrapper class."
 
-	^Array with: self autoGenCategory with: (MethodCategory name: 'event handling-scintilla')!
+	^{self autoGenCategory. MethodCategory name: 'event handling-scintilla'}!
 
 autoGenMethodCategories
 	"Private - Answer the special method categories for auto-generated
 	property accessors in the receivers wrapper class."
 
-	^Array with: self autoGenCategory with: (MethodCategory name: 'scintilla interface')!
+	^{self autoGenCategory. MethodCategory name: 'scintilla interface'}!
 
 browseChanges
 	RewriteChangesBrowser showOn: namespace changes!
@@ -102,6 +102,8 @@ defineConstantsPool
 		at: 'INDIC_DOTBOX' put: 12;
 		at: 'INDIC_DOTS' put: 10;
 		at: 'INDIC_FULLBOX' put: 16;
+		at: 'INDIC_GRADIENT' put: 20;
+		at: 'INDIC_GRADIENTCENTRE' put: 21;
 		at: 'INDIC_HIDDEN' put: 5;
 		at: 'INDIC_IME' put: 32;
 		at: 'INDIC_IME_MAX' put: 35;
@@ -137,6 +139,9 @@ defineConstantsPool
 		at: 'SC_AUTOMATICFOLD_CHANGE' put: 4;
 		at: 'SC_AUTOMATICFOLD_CLICK' put: 2;
 		at: 'SC_AUTOMATICFOLD_SHOW' put: 1;
+		at: 'SC_BIDIRECTIONAL_DISABLED' put: 0;
+		at: 'SC_BIDIRECTIONAL_L2R' put: 1;
+		at: 'SC_BIDIRECTIONAL_R2L' put: 2;
 		at: 'SC_CACHE_CARET' put: 1;
 		at: 'SC_CACHE_DOCUMENT' put: 3;
 		at: 'SC_CACHE_NONE' put: 0;
@@ -177,6 +182,9 @@ defineConstantsPool
 		at: 'SC_CURSORNORMAL' put: -1;
 		at: 'SC_CURSORREVERSEARROW' put: 7;
 		at: 'SC_CURSORWAIT' put: 4;
+		at: 'SC_DOCUMENTOPTION_DEFAULT' put: 0;
+		at: 'SC_DOCUMENTOPTION_STYLES_NONE' put: 1;
+		at: 'SC_DOCUMENTOPTION_TEXT_LARGE' put: 256;
 		at: 'SC_EFF_QUALITY_ANTIALIASED' put: 2;
 		at: 'SC_EFF_QUALITY_DEFAULT' put: 0;
 		at: 'SC_EFF_QUALITY_LCD_OPTIMIZED' put: 3;
@@ -308,6 +316,7 @@ defineConstantsPool
 		at: 'SC_PRINT_COLOURONWHITEDEFAULTBG' put: 4;
 		at: 'SC_PRINT_INVERTLIGHT' put: 1;
 		at: 'SC_PRINT_NORMAL' put: 0;
+		at: 'SC_PRINT_SCREENCOLOURS' put: 5;
 		at: 'SC_SEL_LINES' put: 2;
 		at: 'SC_SEL_RECTANGLE' put: 1;
 		at: 'SC_SEL_STREAM' put: 0;
@@ -337,6 +346,7 @@ defineConstantsPool
 		at: 'SC_WRAP_NONE' put: 0;
 		at: 'SC_WRAP_WHITESPACE' put: 3;
 		at: 'SC_WRAP_WORD' put: 1;
+		at: 'SC_WRAPINDENT_DEEPINDENT' put: 3;
 		at: 'SC_WRAPINDENT_FIXED' put: 0;
 		at: 'SC_WRAPINDENT_INDENT' put: 2;
 		at: 'SC_WRAPINDENT_SAME' put: 1;
@@ -476,6 +486,7 @@ defineConstantsPool
 		at: 'SCI_DELWORDRIGHTEND' put: 2518;
 		at: 'SCI_DESCRIBEKEYWORDSETS' put: 4017;
 		at: 'SCI_DESCRIBEPROPERTY' put: 4016;
+		at: 'SCI_DESCRIPTIONOFSTYLE' put: 4032;
 		at: 'SCI_DISTANCETOSECONDARYSTYLES' put: 4025;
 		at: 'SCI_DOCLINEFROMVISIBLE' put: 2221;
 		at: 'SCI_DOCUMENTEND' put: 2318;
@@ -512,6 +523,7 @@ defineConstantsPool
 		at: 'SCI_GETANCHOR' put: 2009;
 		at: 'SCI_GETAUTOMATICFOLD' put: 2664;
 		at: 'SCI_GETBACKSPACEUNINDENTS' put: 2263;
+		at: 'SCI_GETBIDIRECTIONAL' put: 2708;
 		at: 'SCI_GETBUFFEREDDRAW' put: 2034;
 		at: 'SCI_GETCARETFORE' put: 2138;
 		at: 'SCI_GETCARETLINEBACK' put: 2097;
@@ -534,6 +546,7 @@ defineConstantsPool
 		at: 'SCI_GETDIRECTFUNCTION' put: 2184;
 		at: 'SCI_GETDIRECTPOINTER' put: 2185;
 		at: 'SCI_GETDOCPOINTER' put: 2357;
+		at: 'SCI_GETDOCUMENTOPTIONS' put: 2379;
 		at: 'SCI_GETEDGECOLOUR' put: 2364;
 		at: 'SCI_GETEDGECOLUMN' put: 2360;
 		at: 'SCI_GETEDGEMODE' put: 2362;
@@ -598,8 +611,10 @@ defineConstantsPool
 		at: 'SCI_GETMOUSEDWELLTIME' put: 2265;
 		at: 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH' put: 2669;
 		at: 'SCI_GETMOUSEWHEELCAPTURES' put: 2697;
+		at: 'SCI_GETMOVEEXTENDSSELECTION' put: 2706;
 		at: 'SCI_GETMULTIPASTE' put: 2615;
 		at: 'SCI_GETMULTIPLESELECTION' put: 2564;
+		at: 'SCI_GETNAMEDSTYLES' put: 4029;
 		at: 'SCI_GETNEXTTABSTOP' put: 2677;
 		at: 'SCI_GETOVERTYPE' put: 2187;
 		at: 'SCI_GETPASTECONVERTENDINGS' put: 2468;
@@ -775,6 +790,7 @@ defineConstantsPool
 		at: 'SCI_MULTIEDGECLEARALL' put: 2695;
 		at: 'SCI_MULTIPLESELECTADDEACH' put: 2689;
 		at: 'SCI_MULTIPLESELECTADDNEXT' put: 2688;
+		at: 'SCI_NAMEOFSTYLE' put: 4030;
 		at: 'SCI_NEWLINE' put: 2329;
 		at: 'SCI_NULL' put: 2172;
 		at: 'SCI_OPTIONAL_START' put: 3000;
@@ -834,6 +850,7 @@ defineConstantsPool
 		at: 'SCI_SETANCHOR' put: 2026;
 		at: 'SCI_SETAUTOMATICFOLD' put: 2663;
 		at: 'SCI_SETBACKSPACEUNINDENTS' put: 2262;
+		at: 'SCI_SETBIDIRECTIONAL' put: 2709;
 		at: 'SCI_SETBUFFEREDDRAW' put: 2035;
 		at: 'SCI_SETCARETFORE' put: 2069;
 		at: 'SCI_SETCARETLINEBACK' put: 2098;
@@ -1020,6 +1037,7 @@ defineConstantsPool
 		at: 'SCI_STYLESETWEIGHT' put: 2063;
 		at: 'SCI_SWAPMAINANCHORCARET' put: 2607;
 		at: 'SCI_TAB' put: 2327;
+		at: 'SCI_TAGSOFSTYLE' put: 4031;
 		at: 'SCI_TARGETASUTF8' put: 2447;
 		at: 'SCI_TARGETFROMSELECTION' put: 2287;
 		at: 'SCI_TARGETWHOLEDOCUMENT' put: 2690;
@@ -1144,6 +1162,7 @@ defineConstantsPool
 		at: 'SCLEX_MAKEFILE' put: 11;
 		at: 'SCLEX_MARKDOWN' put: 98;
 		at: 'SCLEX_MATLAB' put: 32;
+		at: 'SCLEX_MAXIMA' put: 123;
 		at: 'SCLEX_METAPOST' put: 50;
 		at: 'SCLEX_MMIXAL' put: 44;
 		at: 'SCLEX_MODULA' put: 101;
@@ -1210,6 +1229,7 @@ defineConstantsPool
 		at: 'SCN_AUTOCCHARDELETED' put: 2026;
 		at: 'SCN_AUTOCCOMPLETED' put: 2030;
 		at: 'SCN_AUTOCSELECTION' put: 2022;
+		at: 'SCN_AUTOCSELECTIONCHANGE' put: 2032;
 		at: 'SCN_CALLTIPCLICK' put: 2021;
 		at: 'SCN_CHARADDED' put: 2001;
 		at: 'SCN_DOUBLECLICK' put: 2006;
@@ -1275,7 +1295,7 @@ generateCommandMap
 		cr.
 	commands at: 'SCI_NULL' put: #yourself.
 	(self sciCommands asSortedCollection asArray copyWith: 'SCI_NULL') do: 
-			[:each | 
+			[:each |
 			stream
 				nextPutAll: 'at: ';
 				display: each;
@@ -1289,12 +1309,12 @@ generateCommandMap
 		display: true;
 		nextPut: $;;
 		nextPutAll: 'yourself'.
-	self 
+	self
 		compile: stream contents
 		selector: selector
 		in: ScintillaKeyBinding class
-		categories: self autoGenMethodCategories 
-				, (Array with: MethodCategory private with: (MethodCategory name: 'development'))!
+		categories: self autoGenMethodCategories
+				, {MethodCategory private. MethodCategory name: 'development'}!
 
 generateConstantsPool
 	| stream changes source |
@@ -1322,7 +1342,7 @@ generateConstantsPool
 				[changes addChangeFirst: (changes addMethodChangeClass
 							compile: source
 							in: self class
-							categories: (Array with: self autoGenCategory with: (MethodCategory name: 'development')))].
+							categories: {self autoGenCategory. MethodCategory name: 'development'})].
 	self defineConstantsPool!
 
 generateEventHandler: aScintillaEventDef 
@@ -1511,50 +1531,15 @@ ignoredMessages
 
 	"Some position functions that we want to keep zero-based"
 	ignoredMessages addAll: #('SCI_LINEFROMPOSITION' 'SCI_POSITIONFROMLINE').
+
+	"sciGetCodePage is customised"
+	ignoredMessages add: 'SCI_SETCODEPAGE'.
+
 	ignoredMessages
 		shrink;
 		isImmutable: true;
 		yourself)
-
-	"We use the direct function exported by the DLL, and don't need a wrapper method for SCI_GETDIRECTPOINTER as we need to send it directly."
-	"We don't use direct/unsafe access to the scintilla character buffer."
-	"We don't support background loading"
-
-	"The idFrom field of the notification header is not needed to identify the Scintilla
-	control, as we have an object instance associated with each control instance that receives
-	the notifications directly."
-
-	"Scintilla supports standard Windows focus messages, which are used in the MVP framework already"
-
-	"Margin attributes managed by ScintillaMargin"
-
-	"Indicator attributes managed by ScintillaIndicatorStyle"
-
-	"Indicator attributes managed by ScintillaMarkerDefinition"
-
-	"Annotation attributes are managed by ScintillaAnnotation"
-
-	"Style attributes managed by ScintillaTextStyle, but note that as Scintilla wrapping
-	predates when style definitions were queryable, so we don't use these at all"
-
-	"SCI_GETLENGTH is ignored because it duplicates SCI_GETTEXTLENGTH"
-
-	"Don't make use of document ref. stuff at present."
-	"ignoredMessages add: 'SCI_ADDREFDOCUMENT'."
-
-	"Scintilla's cursor management is not required in Dolphin which has its own mechanisms."
-
-	"We don't need SCI_GETMODEVENTMASK because we store the event mask in an instance variable (for some reason that I no longer know)"
-
-	"We don't need these as they are for the GTK+ platform only"
-
-	"We always get/set the selection range start and end as a pair."
-
-	"Likewise the old messages to set the target start and end separately are no longer needed, as we always set an interval and can use SCI_SETTARGETRANGE"
-
-	"Old style-bits indicators."
-
-	"Some position functions that we want to keep zero-based"!
+!
 
 initialize
 	events := OrderedCollection new: 256.
@@ -1834,7 +1819,7 @@ scintillaViewClass
 scnFirst
 	^2000!
 
-splitDefinition: aReadableStream 
+splitDefinition: aReadableStream
 	| tokens |
 	tokens := Array writeStream.
 	"return type"
@@ -1848,12 +1833,12 @@ splitDefinition: aReadableStream
 	[aReadableStream
 		skipSeparators;
 		atEnd] whileFalse: 
-				[(aReadableStream peekFor: $,) 
+				[(aReadableStream peekFor: $,)
 					ifTrue: 
 						["Empty param"
 						tokens nextPut: #('int' nil)]
 					ifFalse: 
-						[(aReadableStream peekFor: $)) 
+						[(aReadableStream peekFor: $))
 							ifTrue: 
 								["Final empty param"
 								tokens nextPut: #('int' nil).
@@ -1866,7 +1851,7 @@ splitDefinition: aReadableStream
 										[| ch |
 										ch := aReadableStream next.
 										ch == $) ifTrue: [aReadableStream setToEnd] ifFalse: [ch isSeparator ifFalse: [name nextPut: ch]]].
-								tokens nextPut: (Array with: type with: name contents)]]].
+								tokens nextPut: {type. name contents}]]].
 	^tokens contents!
 
 updateLibVersion

@@ -4219,6 +4219,7 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #whitespaceMarkerSize);
 		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		add: (Aspect choice: #endOfLineMode from: self lineEndings);
+		add: (Aspect choice: #tabDrawMode from: self tabDrawModes);
 		yourself.
 	choices := OrderedCollection with: 'nil'.
 	(ScintillaStyler allSubclasses reject: [:each | each isAbstract])
@@ -4226,11 +4227,11 @@ publishedAspectsOfInstances
 	answer add: (Aspect choice: #styler evaluationFrom: choices).
 	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
 		do: [:each | answer add: (Aspect string: each)].
-	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount)
+	#(#tabWidth #hoverTime #selectionAlpha #secondarySelectionAlpha #marginCount #currentLineFrameWidth)
 		do: [:each | answer add: (Aspect integer: each)].
-	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor)
+	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldMarginColor #foldMarginHiColor #currentLineBackcolor)
 		do: [:each | answer add: (Aspect color: each)].
-	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings)
+	#(#isDrawingBuffered #canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isCurrentLineHighlighted #isAccessibilityEnabled)
 		do: [:each | answer add: (Aspect boolean: each)].
 	^answer!
 

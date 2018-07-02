@@ -704,7 +704,7 @@ marginWidths
 
 	| dword |
 	dword := self sendMessage: EM_GETMARGINS.
-	^Array with: dword highWord with: dword lowWord!
+	^{dword highWord. dword lowWord}!
 
 maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
