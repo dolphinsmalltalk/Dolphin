@@ -28,7 +28,7 @@ loadFromInstance: hModule
 			uType: IMAGE_ICON
 			cxDesired: self extent x
 			cyDesired: self extent y
-			fuLoad: 16r0000 "LR_DEFAULT_COLOR"! !
+			fuLoad: LR_DEFAULTCOLOR! !
 !IconWithExtent categoriesFor: #extent!accessing!private! !
 !IconWithExtent categoriesFor: #extent:!accessing!private! !
 !IconWithExtent categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !

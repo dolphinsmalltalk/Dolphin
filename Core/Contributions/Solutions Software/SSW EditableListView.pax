@@ -1,10 +1,10 @@
 ﻿| package |
 package := Package name: 'SSW EditableListView'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2017
+	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
-package basicPackageVersion: '0.001'.
+package basicPackageVersion: '7.1.0'.
 
 
 package classNames
@@ -21,6 +21,8 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #HeaderView -> #clearSortIconForColumnAtIndex:;
+	add: #HeaderView -> #setSortIconForColumn:;
 	add: #TextEdit -> #currentLine;
 	add: #TextEdit -> #embeddedPreTranslateKeyboardInput:;
 	add: #View -> #embeddedValue;
@@ -77,7 +79,7 @@ ListView subclass: #EditableListView
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CheckButton subclass: #EmbeddedCheckButton
-	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled'
+	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled buttonExtent'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
@@ -111,6 +113,20 @@ MultilineTextEdit subclass: #EmbeddedMultilineTextEdit
 
 
 "Loose Methods"!
+
+!HeaderView methodsFor!
+
+clearSortIconForColumnAtIndex: anInteger
+
+	(self columnHeader: anInteger) sortIndicator: nil!
+
+setSortIconForColumn: aListViewColumn
+
+	aListViewColumn isSortOrderInverted
+		ifTrue: [(self columnHeader: aListViewColumn index) sortIndicator: #down]
+		ifFalse: [(self columnHeader: aListViewColumn index) sortIndicator: #up]! !
+!HeaderView categoriesFor: #clearSortIconForColumnAtIndex:!helpers!private! !
+!HeaderView categoriesFor: #setSortIconForColumn:!helpers!private! !
 
 !ListPresenter class methodsFor!
 

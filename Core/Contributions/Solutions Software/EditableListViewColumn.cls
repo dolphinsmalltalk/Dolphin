@@ -55,36 +55,29 @@ createEditorIn: aView
 
 customDrawIcon: aContext
 
-	| image imageRect canvas origin |
+	| image iSubItem imageRect canvas origin |
+
+	self hasColumnImage ifFalse: [^self].
 
 	image := self imageFromRow: aContext item.
-	image isNil ifTrue: [^self].
 
+	iSubItem := aContext iSubItem.
 	imageRect := aContext view 
-		lvmGetSubItemRect: (aContext dwItemSpec@aContext iSubItem) 
+		lvmGetSubItemRect: (aContext dwItemSpec@iSubItem) 
 		bounding: LVIR_ICON.
 
-	imageRect := imageRect expandedBy: (self parent columnImagePadding * 2)@0.
+	imageRect right: (imageRect right + self parent columnImagePadding).
 
 	canvas := aContext canvas.
 
-	self displayBackcolor ifNotNil: 
-		[ :col |
-		(self parent isDisplayContextSelectedOrHot: aContext) ifFalse: [canvas erase: imageRect color: col]].
+	"Need to draw custom background color for the primary column"
+	iSubItem = 0 ifTrue: 
+		[self displayBackcolor ifNotNil: [ :col | (self parent isDisplayContextSelectedOrHot: aContext) ifFalse: [canvas erase: imageRect color: col]]].
 
-	image isInteger
-	ifTrue:
-		["Regular ListView image index behavior"
-		origin := imageRect origin + ((imageRect extent - Icon smallExtent) // 2) + (self parent columnImagePadding@0).
-		(self parent imageManager imageListWithExtent: Icon smallExtent) 
-			draw: image
-			on: canvas
-			at: origin
-			flags: 0]
-	ifFalse:
-		["Actual Icon"
-		origin := imageRect origin + ((imageRect extent - image extent) // 2) + (self parent columnImagePadding@0).
-		image drawOn: canvas at: origin extent: image extent].
+	image isNil ifTrue: [^self].
+
+	origin := imageRect origin + ((imageRect extent - Icon smallExtent) // 2) + (self parent columnImagePadding@0).
+	(self parent imageManager imageListWithExtent: Icon smallExtent) draw: image on: canvas at: origin flags: 0.
 
 	canvas free!
 
@@ -111,6 +104,12 @@ displayOn: aStream
 
 	super displayOn: aStream.
 	self hasEditor ifTrue: [aStream space; nextPutAll: self editor class name]!
+
+dropDownMenu: aMenu
+
+	self columnHeader 
+		isDropDownStyle: aMenu notNil;
+		dropDownMenu: aMenu!
 
 editor
 	^editor!
@@ -155,6 +154,19 @@ hasImageBlock
 hasPreDrawBlock
 
 	^self preDrawBlock notNil!
+
+haveCheckAllHeader
+
+	"Configure the receiver to have a checkbox in its column header which automatically checkes/unchecks all checkboxes in this column.
+	ASSERT: the receiver has a checkbox editor"
+
+	self parent headerControl isCheckBoxesStyle: true.
+
+	self columnHeader 
+		isCheckStyle: true;
+		isChecked: false;
+		when: #isChecked: send: #onColumnHeaderChecked: to: self
+	!
 
 hide
 
@@ -254,9 +266,16 @@ isVisible
 
 	^self parent notNil!
 
+onColumnHeaderChecked: aBoolean
+
+	self parent list do: [ :row | (self isEditableWith: row) ifTrue: [self updateValue: aBoolean in: row]].
+	self parent activeColumn == self ifTrue: [self editor embeddedValue: aBoolean].
+	self parent invalidate
+!
+
 ownerDraw: aContext
 
-	| itemRect canvas brush bcolor fcolor hasColumnImage drawVal |
+	| itemRect canvas brush bcolor fcolor iSubItem isPrimaryColumn hasColumnImage drawVal |
 
 	"Active editor? It will handle all drawing itself"
 	(self hasEditor and: [self editor hasVisibleStyle and: [aContext item == self parent selectionOrNil]]) ifTrue: 
@@ -281,46 +300,45 @@ ownerDraw: aContext
 		self preDrawBlock value: aContext.
 		aContext applyFont].
 
+	iSubItem := aContext iSubItem. 
+	isPrimaryColumn := iSubItem = 0.
 	hasColumnImage := self hasColumnImage.
-
-	"No editor = no owner draw = per-column icon drawn in slightly different place - discuss"
-	(self hasEditor and: [self editor isDisplayOwnerDrawn or: [hasColumnImage]]) ifFalse: [^false].
 
 	"aContext boundingRectangle unreliable"
 	itemRect := aContext view 
-				lvmGetSubItemRect: (aContext dwItemSpec@aContext iSubItem) 
-				bounding: LVIR_LABEL.
-
-	hasColumnImage ifTrue: 
-		[itemRect left: ((itemRect left + self parent columnImageSpacing) min: itemRect right).
-		"Take off default icon spacing added to primary columnn (we're displaying this ourselves)"
-		self == self parent primaryColumn ifTrue: [itemRect left: (itemRect left - self parent smallImageExtent x)]].
+				lvmGetSubItemRect: (aContext dwItemSpec@iSubItem) 
+				bounding: (isPrimaryColumn ifTrue: [LVIR_LABEL] ifFalse: [LVIR_BOUNDS]).
 
 	"Handle custom colors vs. selection/hot highlighting"
-	(self parent isDisplayContextSelectedOrHot: aContext)
+	(self parent shouldOwnerDrawSelectionHighlight and: [self parent isDisplayContextSelectedOrHot: aContext])
 	ifTrue: 
-		[self parent shouldOwnerDrawSelectionHighlight ifTrue:
-			[self parent hasFocus
-			ifTrue: 
-				[fcolor := Color highlightText.
-				bcolor := Color highlight]
-			ifFalse:
-				[fcolor := Color windowText.
-				bcolor := Color face3d]]]
+		[self parent hasFocus
+		ifTrue: 
+			[fcolor := Color highlightText.
+			bcolor := Color highlight]
+		ifFalse:
+			[fcolor := Color windowText.
+			bcolor := Color face3d]]
 	ifFalse:
-		[fcolor := self displayForecolor.
-		bcolor := self displayBackcolor].
+		[(aContext forecolor = Color default or: [aContext forecolor = Color windowText]) ifFalse: [fcolor := aContext forecolor].
+		(aContext backcolor = Color default or: [aContext backcolor = Color window]) ifFalse: [bcolor := aContext backcolor]].
 
-	(aContext forecolor = Color default or: [aContext forecolor = Color windowText]) ifFalse: [fcolor := aContext forecolor].
-	(aContext backcolor = Color default or: [aContext backcolor = Color window]) ifFalse: [bcolor := aContext backcolor].
-
-	bcolor isNil ifFalse: 
+	"Suppress custom colors where the item is selected/hot and we do not handle displaying highlights ourself"
+	(bcolor notNil and: [(self parent isDisplayContextSelectedOrHot: aContext) not or: [self parent shouldOwnerDrawSelectionHighlight]]) ifTrue: 
 		[brush := Brush color: bcolor.
-		"Inset is to match what ListView does with its own drawn cells"
-		canvas fillRectangle: (itemRect insetCornerBy: 2@0) brush: brush.
+		canvas fillRectangle: itemRect brush: brush.
 		brush free].
 
 	(isValidContentsBlock isNil or: [isValidContentsBlock value: aContext item]) ifFalse: [^true].
+
+	"No editor / no owner draw - nothing more to do here"
+	(self hasEditor and: [self editor isDisplayOwnerDrawn or: [hasColumnImage]]) ifFalse: [^false].
+
+	hasColumnImage ifTrue: 
+		["Inset by the icon width"
+		itemRect left: ((itemRect left + self parent columnImageSpacing) min: itemRect right).
+		"Take off default icon spacing added to primary columnn (we're displaying this ourselves)"
+		isPrimaryColumn ifTrue: [itemRect left: (itemRect left - self parent smallImageExtent x)]].
 
 	"Bug in earlier versions - did not check getTextBlock, but using it in all cases screws up some widgets. Hence a test (unfortunately)"
 	self getContentsBlock
@@ -488,10 +506,14 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.!
 
+updateValue: aValue in: anObject
+
+	self setContentsBlock value: anObject value: aValue.
+	self trigger: #itemUpdated: with: anObject!
+
 updateValueIn: anObject
 
-	self setContentsBlock value: anObject value: self editor embeddedValue.
-	self trigger: #itemUpdated: with: anObject! !
+	self updateValue: self editor embeddedValue in: anObject! !
 !EditableListViewColumn categoriesFor: #_imageFromRow:!drawing!private! !
 !EditableListViewColumn categoriesFor: #activate!operations!public! !
 !EditableListViewColumn categoriesFor: #backcolor!accessing!public! !
@@ -504,6 +526,7 @@ updateValueIn: anObject
 !EditableListViewColumn categoriesFor: #displayBackcolor!drawing!private! !
 !EditableListViewColumn categoriesFor: #displayForecolor!drawing!private! !
 !EditableListViewColumn categoriesFor: #displayOn:!displaying!private! !
+!EditableListViewColumn categoriesFor: #dropDownMenu:!accessing!public! !
 !EditableListViewColumn categoriesFor: #editor!accessing!public! !
 !EditableListViewColumn categoriesFor: #editor:!accessing!public! !
 !EditableListViewColumn categoriesFor: #forecolor!accessing!public! !
@@ -516,6 +539,7 @@ updateValueIn: anObject
 !EditableListViewColumn categoriesFor: #hasHotTracking!public!testing! !
 !EditableListViewColumn categoriesFor: #hasImageBlock!public!testing! !
 !EditableListViewColumn categoriesFor: #hasPreDrawBlock!public!testing! !
+!EditableListViewColumn categoriesFor: #haveCheckAllHeader!initialize/release!public! !
 !EditableListViewColumn categoriesFor: #hide!operations!public! !
 !EditableListViewColumn categoriesFor: #imageFromRow:!public!testing! !
 !EditableListViewColumn categoriesFor: #infoTip!accessing!public! !
@@ -532,6 +556,7 @@ updateValueIn: anObject
 !EditableListViewColumn categoriesFor: #isValidContentsBlock!accessing!public! !
 !EditableListViewColumn categoriesFor: #isValidContentsBlock:!accessing!public! !
 !EditableListViewColumn categoriesFor: #isVisible!public!testing! !
+!EditableListViewColumn categoriesFor: #onColumnHeaderChecked:!event handling!private! !
 !EditableListViewColumn categoriesFor: #ownerDraw:!drawing!public! !
 !EditableListViewColumn categoriesFor: #postCopy!copying!public! !
 !EditableListViewColumn categoriesFor: #preDrawBlock!accessing!public! !
@@ -552,6 +577,7 @@ updateValueIn: anObject
 !EditableListViewColumn categoriesFor: #sortContentFromRow:!private!sorting! !
 !EditableListViewColumn categoriesFor: #sortDescending!public!sorting! !
 !EditableListViewColumn categoriesFor: #stbSaveOn:!binary filing!public! !
+!EditableListViewColumn categoriesFor: #updateValue:in:!operations!private! !
 !EditableListViewColumn categoriesFor: #updateValueIn:!operations!private! !
 
 !EditableListViewColumn class methodsFor!

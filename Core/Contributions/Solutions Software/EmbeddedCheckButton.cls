@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 CheckButton subclass: #EmbeddedCheckButton
-	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled'
+	instanceVariableNames: 'textExtent text isAlwaysDrawnEnabled buttonExtent'
 	classVariableNames: ''
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
@@ -10,7 +10,7 @@ EmbeddedCheckButton comment: ''!
 !EmbeddedCheckButton categoriesForClass!MVP-Views! !
 !EmbeddedCheckButton methodsFor!
 
-buttonExtent
+_buttonExtent
 
 	| size | 
 
@@ -19,6 +19,10 @@ buttonExtent
 	size := SIZE new.
 	ThemeLibrary default getThemePartSize: self theme hdc: self canvas asParameter iPartId: self iPartId iStateId: self defaultIStateId prc: nil eSize: TS_DRAW psz: size.
 	^size asObject!
+
+buttonExtent
+
+	^buttonExtent ifNil: [buttonExtent := self _buttonExtent]!
 
 createEmbeddedIn: aView
 
@@ -108,6 +112,12 @@ drawThemed: aValue in: aRectangle on: aCanvas buttonOffset: buttonOffset textRec
 expectsText
 
 	^false!
+
+freeTheme
+
+	buttonExtent := nil.
+
+	super freeTheme!
 
 hasEmbeddedHotTracking
 
@@ -262,6 +272,7 @@ totalExtent
 uStateFor: aValue enabled: aBoolean
 
 	^self subclassResponsibility! !
+!EmbeddedCheckButton categoriesFor: #_buttonExtent!accessing!private! !
 !EmbeddedCheckButton categoriesFor: #buttonExtent!accessing!public! !
 !EmbeddedCheckButton categoriesFor: #createEmbeddedIn:!initialize/release!public! !
 !EmbeddedCheckButton categoriesFor: #defaultIStateId!constants!public! !
@@ -270,6 +281,7 @@ uStateFor: aValue enabled: aBoolean
 !EmbeddedCheckButton categoriesFor: #drawNonThemed:in:on:buttonOffset:textRect:enabled:hot:!drawing!private! !
 !EmbeddedCheckButton categoriesFor: #drawThemed:in:on:buttonOffset:textRect:enabled:hot:!drawing!private! !
 !EmbeddedCheckButton categoriesFor: #expectsText!public!testing! !
+!EmbeddedCheckButton categoriesFor: #freeTheme!initialize/release!private! !
 !EmbeddedCheckButton categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedCheckButton categoriesFor: #hasText!public!testing! !
 !EmbeddedCheckButton categoriesFor: #horzMargin!accessing!public! !
@@ -300,7 +312,7 @@ uStateFor: aValue enabled: aBoolean
 
 stbConvertFrom: anSTBClassFormat
 
-	anSTBClassFormat version <= 20 ifTrue:
+	anSTBClassFormat version <= 21 ifTrue:
 		[^[:data || newInstance |
 		newInstance := self basicNew.
 		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
@@ -309,7 +321,7 @@ stbConvertFrom: anSTBClassFormat
 	^super stbConvertFrom: anSTBClassFormat!
 
 stbVersion
-	^21! !
+	^22! !
 !EmbeddedCheckButton class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !EmbeddedCheckButton class categoriesFor: #stbVersion!binary filing!public! !
 

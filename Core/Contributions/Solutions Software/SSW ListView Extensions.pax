@@ -1,13 +1,14 @@
 ﻿| package |
 package := Package name: 'SSW ListView Extensions'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2017
+	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
-package basicPackageVersion: '0.001'.
+package basicPackageVersion: '7.1.0'.
 
 
 package classNames
+	add: #ColumnHeader;
 	add: #HDITEMW;
 	add: #HeaderView;
 	yourself.
@@ -42,6 +43,11 @@ package methodNames
 	add: #ListView -> #vertScrollBy:;
 	add: #ListView -> #vertScrollPos;
 	add: #ListView -> #vertScrollPos:;
+	add: #ListViewColumn -> #columnHeader;
+	yourself.
+
+package globalNames
+	add: #HeaderViewConstants;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -60,15 +66,20 @@ package!
 
 "Class Definitions"!
 
+Object subclass: #ColumnHeader
+	instanceVariableNames: 'parent index dropDownMenu'
+	classVariableNames: ''
+	poolDictionaries: 'HeaderViewConstants'
+	classInstanceVariableNames: ''!
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ControlView subclass: #HeaderView
-	instanceVariableNames: ''
-	classVariableNames: 'HDF_CENTER HDF_JUSTIFYMASK HDF_LEFT HDF_RIGHT HDF_SORTDOWN HDF_SORTUP HDI_FORMAT HDM_FIRST HDM_GETITEMW HDM_SETITEMW HDN_BEGINDRAG HDN_BEGINTRACKW HDN_DIVIDERDBLCLICKW HDN_ENDDRAG HDN_ENDTRACKW HDN_FIRST'
-	poolDictionaries: ''
+	instanceVariableNames: 'columnHeaders'
+	classVariableNames: 'HdnMap'
+	poolDictionaries: 'HeaderViewConstants'
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
@@ -157,6 +168,7 @@ getHeaderControl
 
 	^(HeaderView fromHandle: hHandle)
 		subclassWindow: hHandle;
+		isManaged: false;
 		yourself
 !
 
@@ -223,7 +235,7 @@ lvmGetToolTips
 
 lvmGetTopIndex
 
-	^self sendMessage: ##(LVM_FIRST + 39) "LVM_GETTOPINDEX"!
+	^self sendMessage: LVM_GETTOPINDEX!
 
 maxTipWidth: anInteger
 	"Set the width of the receiver's tool tip window. Note it is necessary to set a width to enable multi-line tips"
@@ -250,15 +262,15 @@ nmCustomDraw: pNMHDR
 	drawStage := context dwDrawStage.
 
 	"Overall postpaint notification? Draw the gridlines"
-	((drawStage allMask: 2 "CDDS_POSTPAINT") and: [drawStage < 65536 "NOT CDDS_ITEM"]) ifTrue:
+	((drawStage allMask: CDDS_POSTPAINT) and: [drawStage < CDDS_ITEM]) ifTrue:
 		[self drawGridlinesOn: context canvas.
 		^CDRF_DODEFAULT].
 
 	res := super nmCustomDraw: pNMHDR.
 
 	"Request postdraw notification for the above"
-	^((drawStage allMask: CDDS_PREPAINT) and: [drawStage < 65536 "NOT CDDS_ITEM"]) 
-		ifTrue: [res | 16r10 "CDRF_NOTIFYPOSTPAINT"]
+	^((drawStage allMask: CDDS_PREPAINT) and: [drawStage < CDDS_ITEM]) 
+		ifTrue: [res | CDRF_NOTIFYPOSTPAINT]
 		ifFalse: [res]!
 
 onHScroll: aScrollEvent 
@@ -346,6 +358,13 @@ vertScrollPos: anInteger
 !ListView categoriesFor: #vertScrollBy:!enquiries!public! !
 !ListView categoriesFor: #vertScrollPos!enquiries!public! !
 !ListView categoriesFor: #vertScrollPos:!enquiries!public! !
+
+!ListViewColumn methodsFor!
+
+columnHeader
+
+	^self parent headerControl columnHeader: self index! !
+!ListViewColumn categoriesFor: #columnHeader!accessing!public! !
 
 "End of package definition"!
 
