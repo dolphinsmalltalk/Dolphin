@@ -59,7 +59,7 @@ drawImageOn: aCanvas
 		at: (self imagePosOn: aCanvas)
 		extent: self imageExtent 
 		backcolor: nil 
-		forecolor: Color buttonShadow 
+		forecolor: Color shadow3d
 		flags: (self isEnabled ifTrue: [ILD_NORMAL] ifFalse: [ILD_BLEND50])!
 
 drawOn: aCanvas

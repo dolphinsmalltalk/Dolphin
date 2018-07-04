@@ -160,7 +160,7 @@ onCustomDraw: anNMCUSTOMDRAW
 			ifFalse: [newDisplayState := #hot]].
 	anNMCUSTOMDRAW isSelected ifTrue: [newDisplayState := #pressed].
 	anNMCUSTOMDRAW isDisabled ifTrue: [newDisplayState := #disabled].
-	self shouldShowKeyboardCues: (anNMCUSTOMDRAW uItemState allMask: 16r200 "CDIS_SHOWKEYBOARDCUES").
+	self shouldShowKeyboardCues: (anNMCUSTOMDRAW uItemState allMask: CDIS_SHOWKEYBOARDCUES).
 
 	(self shouldAnimateTransitionTo: newDisplayState)
 		ifTrue: [[(self animateTransitionTo: newDisplayState) ifFalse: ["Failed" self isOpen ifTrue: [self drawOn: self canvas]]] postToInputQueue]

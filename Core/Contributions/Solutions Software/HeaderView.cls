@@ -1,27 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ControlView subclass: #HeaderView
-	instanceVariableNames: ''
-	classVariableNames: 'HDF_CENTER HDF_JUSTIFYMASK HDF_LEFT HDF_RIGHT HDF_SORTDOWN HDF_SORTUP HDI_FORMAT HDM_FIRST HDM_GETITEMW HDM_SETITEMW HDN_BEGINDRAG HDN_BEGINTRACKW HDN_DIVIDERDBLCLICKW HDN_ENDDRAG HDN_ENDTRACKW HDN_FIRST'
-	poolDictionaries: ''
+	instanceVariableNames: 'columnHeaders'
+	classVariableNames: 'HdnMap'
+	poolDictionaries: 'HeaderViewConstants'
 	classInstanceVariableNames: ''!
 HeaderView guid: (GUID fromString: '{7a6b97fa-0fd4-424d-99de-515000f88886}')!
-HeaderView addClassConstant: 'HDF_CENTER' value: 2!
-HeaderView addClassConstant: 'HDF_JUSTIFYMASK' value: 3!
-HeaderView addClassConstant: 'HDF_LEFT' value: 0!
-HeaderView addClassConstant: 'HDF_RIGHT' value: 1!
-HeaderView addClassConstant: 'HDF_SORTDOWN' value: 512!
-HeaderView addClassConstant: 'HDF_SORTUP' value: 1024!
-HeaderView addClassConstant: 'HDI_FORMAT' value: 4!
-HeaderView addClassConstant: 'HDM_FIRST' value: 4608!
-HeaderView addClassConstant: 'HDM_GETITEMW' value: 4619!
-HeaderView addClassConstant: 'HDM_SETITEMW' value: 4620!
-HeaderView addClassConstant: 'HDN_BEGINDRAG' value: -310!
-HeaderView addClassConstant: 'HDN_BEGINTRACKW' value: -326!
-HeaderView addClassConstant: 'HDN_DIVIDERDBLCLICKW' value: -325!
-HeaderView addClassConstant: 'HDN_ENDDRAG' value: -311!
-HeaderView addClassConstant: 'HDN_ENDTRACKW' value: -327!
-HeaderView addClassConstant: 'HDN_FIRST' value: -300!
 HeaderView comment: '#define HDI_WIDTH               0x0001
 #define HDI_HEIGHT              HDI_WIDTH
 #define HDI_TEXT                0x0002
@@ -58,15 +42,22 @@ HeaderView comment: '#define HDI_WIDTH               0x0001
 !HeaderView categoriesForClass!Unclassified! !
 !HeaderView methodsFor!
 
-clearSortIconForColumnAtIndex: anInteger
+columnHeader: anInteger
 
-	| header |
+	"Return the ColumnHeader at the 1-based index anInteger"
 
-	header := self headerForColumnIndex: anInteger mask: HDI_FORMAT.
+	anInteger > columnHeaders size ifTrue: [columnHeaders := columnHeaders, (Array new: anInteger - columnHeaders size)].
 
-	header fmt: ((header fmt maskClear: HDF_SORTUP) maskClear: HDF_SORTDOWN).
+	^(columnHeaders at: anInteger) ifNil: 
+		[columnHeaders at: anInteger put: 
+			(ColumnHeader new
+				parent: self;
+				index: anInteger;
+				yourself)]!
 
-	self setHeader: header!
+columnHeaderFrom: anNMHDR
+
+	^self columnHeader: (anNMHDR sdwordAtOffset: 12) + 1!
 
 hdmGetItem: aHdItem index: index
 	(self
@@ -75,6 +66,16 @@ hdmGetItem: aHdItem index: index
 		lpParam: aHdItem) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
+hdmGetItemRect: anInteger
+	"Private - Answer the bounding RECT for the receiver's column with the specified
+	<Integer> index"
+
+	| rect |
+	rect := RECT new.
+	(self sendMessage: HDM_GETITEMRECT wParam: anInteger lpParam: rect) == 0
+		ifTrue: [^self errorInCommonControlCall].
+	^rect!
+
 hdmSetItem: aHdItem index: index
 	(self
 		sendMessage: HDM_SETITEMW
@@ -82,86 +83,122 @@ hdmSetItem: aHdItem index: index
 		lpParam: aHdItem) == 0
 		ifTrue: [^self errorInCommonControlCall]!
 
-headerForColumn: aListViewColumn mask: anInteger
+hdnBeginDrag: anNMHDR
 
-	"Private - Stuff the header index into the lparam for easy resetting with setHeader:"
+	self trigger: #beginDrag!
 
-	^self headerForColumnIndex: aListViewColumn index mask: anInteger!
+hdnBeginTrack: anNMHDR
 
-headerForColumnIndex: aListViewColumnIndex mask: anInteger
-	"Private - Stuff the header index into the lparam for easy resetting with setHeader:
-	NB aListViewColumnIndex is 1-based; internal indexing is 0-based"
+	self trigger: #beginTrack!
 
-	| index item |
-	index := aListViewColumnIndex - 1.
-	item := HDITEMW new.
-	item
-		mask: anInteger;
-		lParam: index.
-	self hdmGetItem: item index: index.
-	^item!
+hdnDividerDblClick: anNMHDR
 
-nmNotify: anNMHDR
-	| msg |
-	msg := anNMHDR sdwordAtOffset: 8.
-	msg == HDN_BEGINDRAG ifTrue: [self trigger: #beginDrag].
-	msg == HDN_ENDDRAG ifTrue: [self trigger: #endDrag].
-	msg == HDN_DIVIDERDBLCLICKW ifTrue: [self trigger: #dividerDoubleClick].
-	msg == HDN_BEGINTRACKW ifTrue: [self trigger: #beginTrack].
-	msg == HDN_ENDTRACKW ifTrue: [self trigger: #endTrack].
-	^super nmNotify: anNMHDR!
+	self trigger: #dividerDoubleClick!
 
-setAlignment: aSymbol forColumn: aListViewColumn
+hdnDropDown: anNMHDR
 
-	"Set the alignment of the header item for the given column (distinct from the column's alignment"
+	^(self columnHeaderFrom: anNMHDR) onDropDownButtonClicked!
 
-	| header alignmentMask |
+hdnEndDrag: anNMHDR
 
-	alignmentMask := 
-		##(IdentityDictionary new
-			at: #left	put: HDF_LEFT;
-			at: #right	put: HDF_RIGHT;
-			at: #center	put: HDF_CENTER;
-			yourself) at: aSymbol.
+	self trigger: #endDrag!
 
-	header := self headerForColumn: aListViewColumn mask: HDI_FORMAT.
+hdnEndTrack: anNMHDR
 
-	header fmt: ((header fmt maskClear: HDF_JUSTIFYMASK) maskSet: alignmentMask).
+	self trigger: #endTrack!
 
-	self setHeader: header
-!
+hdnItemClick: anNMHDR
 
-setHeader: aHDITEM
+	"Placeholder"!
 
-	"Private - Assume the header item index is stuffed in lParam (see headerForColumn:mask:)"
+hdnItemDblClick: anNMHDR
 
-	self hdmSetItem: aHDITEM index: aHDITEM lParam!
+	"Placeholder"!
 
-setSortIconForColumn: aListViewColumn
+hdnItemStateIconClick: anNMHDR
 
-	| header |
+	"We handle column checking and unchecking ourselves to avoid the default 'select all' behavior"
 
-	header := self headerForColumn: aListViewColumn mask: HDI_FORMAT.
+	| column |
 
-	aListViewColumn isSortOrderInverted
-		ifTrue: [header fmt: ((header fmt maskClear: HDF_SORTUP) maskSet: HDF_SORTDOWN) ]
-		ifFalse: [header fmt: ((header fmt maskClear: HDF_SORTDOWN) maskSet: HDF_SORTUP)].
+	column := self columnHeaderFrom: anNMHDR.
+	column setIsChecked: column isChecked not.
 
-	self setHeader: header
-! !
-!HeaderView categoriesFor: #clearSortIconForColumnAtIndex:!helpers!public! !
-!HeaderView categoriesFor: #hdmGetItem:index:!accessing!public! !
-!HeaderView categoriesFor: #hdmSetItem:index:!accessing!public! !
-!HeaderView categoriesFor: #headerForColumn:mask:!helpers!private! !
-!HeaderView categoriesFor: #headerForColumnIndex:mask:!helpers!private! !
+	self invalidateUserInterface. 
+
+	"Suppress default behavior"
+	^0!
+
+initialize
+	"Private - Initialise the receiver."
+
+	super initialize.
+	columnHeaders := Array new!
+
+isCheckBoxesStyle
+
+	^self baseStyleAllMask: HDS_CHECKBOXES!
+
+isCheckBoxesStyle: aBoolean
+
+	self baseStyleMask: HDS_CHECKBOXES set: aBoolean recreateIfChanged: false!
+
+nmNotify: pNMHDR
+	"Private - Handler for a WM_NOTIFY message."
+
+	^(HdnMap lookup: (pNMHDR sdwordAtOffset: 8))
+		ifNil: [super nmNotify: pNMHDR]
+		ifNotNil: [:action | self perform: action with: pNMHDR]!
+
+rectangleForColumnIndex: anInteger
+
+	^(self hdmGetItemRect: anInteger - 1) asRectangle! !
+!HeaderView categoriesFor: #columnHeader:!accessing!public! !
+!HeaderView categoriesFor: #columnHeaderFrom:!helpers!private! !
+!HeaderView categoriesFor: #hdmGetItem:index:!helpers!private! !
+!HeaderView categoriesFor: #hdmGetItemRect:!helpers!private! !
+!HeaderView categoriesFor: #hdmSetItem:index:!helpers!private! !
+!HeaderView categoriesFor: #hdnBeginDrag:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnBeginTrack:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnDividerDblClick:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnDropDown:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnEndDrag:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnEndTrack:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnItemClick:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnItemDblClick:!event handling-win32!private! !
+!HeaderView categoriesFor: #hdnItemStateIconClick:!event handling-win32!private! !
+!HeaderView categoriesFor: #initialize!initializing!private! !
+!HeaderView categoriesFor: #isCheckBoxesStyle!public!style! !
+!HeaderView categoriesFor: #isCheckBoxesStyle:!public!style! !
 !HeaderView categoriesFor: #nmNotify:!event handling-win32!private! !
-!HeaderView categoriesFor: #setAlignment:forColumn:!helpers!public! !
-!HeaderView categoriesFor: #setHeader:!helpers!private! !
-!HeaderView categoriesFor: #setSortIconForColumn:!helpers!public! !
+!HeaderView categoriesFor: #rectangleForColumnIndex:!geometry!private! !
 
 !HeaderView class methodsFor!
 
+initialize
+
+	self initializeNotificationMap!
+
+initializeNotificationMap
+	"Private - Initialise the map of HeaderView notification codes to selector/parameter-class pairs.
+	N.B. Must not be stripped in order to preserve notification handlers."
+
+	HdnMap := (IdentityDictionary new: 14)
+			at: HDN_ITEMCLICKW put: #hdnItemClick:;
+			at: HDN_ITEMDBLCLICKW put: #hdnItemDblClick:;
+			at: HDN_DIVIDERDBLCLICKW put: #hdnDividerDblClick:;
+			at: HDN_BEGINTRACKW put: #hdnBeginTrack:;
+			at: HDN_ENDTRACKW put: #hdnEndTrack:;
+			at: HDN_BEGINDRAG put: #hdnBeginDrag:;
+			at: HDN_ENDDRAG put: #hdnEndDrag:;
+			at: HDN_ITEMSTATEICONCLICK put: #hdnItemStateIconClick:;
+			at: HDN_DROPDOWN put: #hdnDropDown:;
+			shrink;
+			yourself!
+
 winClassName
 	^'BUTTON'! !
+!HeaderView class categoriesFor: #initialize!initializing!must not strip!private! !
+!HeaderView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
 !HeaderView class categoriesFor: #winClassName!constants!public! !
 

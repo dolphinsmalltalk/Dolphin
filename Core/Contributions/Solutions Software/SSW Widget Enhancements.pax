@@ -1,10 +1,10 @@
 ﻿| package |
 package := Package name: 'SSW Widget Enhancements'.
 package paxVersion: 1;
-	basicComment: '© Solutions Software/John Aspinall 2017
+	basicComment: '© Solutions Software/John Aspinall 2018
 Provided under the same licence terms as Dolphin Smalltalk 7'.
 
-package basicPackageVersion: '0.001'.
+package basicPackageVersion: '7.1.0'.
 
 
 package classNames
@@ -20,6 +20,7 @@ package methodNames
 	add: #Canvas -> #erase:;
 	add: #Canvas -> #erase:color:;
 	add: #Canvas -> #prefixTextDisabled:at:;
+	add: #ComboBox -> #droppedWidth;
 	add: #ComboBox -> #droppedWidth:;
 	add: #ComboBox -> #hasCueBanner;
 	add: #ControlView -> #freeTheme;
@@ -33,6 +34,7 @@ package methodNames
 	add: #Icon -> #asSmallIcon;
 	add: #Icon -> #withExtent:;
 	add: #KeyEvent -> #resendTo:;
+	add: #Menu -> #showIn:position:rightAlign:;
 	add: #NullConverter -> #isNullConverter;
 	add: #PointEvent -> #resendTo:;
 	add: #PushButton -> #alignment;
@@ -47,6 +49,12 @@ package methodNames
 	add: #SystemMetrics -> #hasListViewAlphaBlendedHighlights;
 	add: #SystemMetrics -> #hasListViewHotTracking;
 	add: #TextEdit -> #hasCueBanner;
+	add: #Toolbar -> #addItem:after:;
+	add: #Toolbar -> #addItem:before:;
+	add: #Toolbar -> #itemWithCommand:;
+	add: #Toolbar -> #itemWithCommand:ifNone:;
+	add: #ToolbarButton -> #isAutoSize;
+	add: #ToolbarButton -> #isAutoSize:;
 	add: #TypeConverter -> #isNullConverter;
 	add: #View -> #addToolTipWithHandle:;
 	add: #View -> #getUICuesState;
@@ -72,6 +80,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
+	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
@@ -154,8 +163,8 @@ prefixTextDisabled: aString at: aPoint
 !Color class methodsFor!
 
 buttonShadow
-
-	^self systemColor: 16 "COLOR_BTNSHADOW"!
+	#deprecated.
+	^self shadow3d!
 
 grayText
 	"Answer the Gray Text system color."
@@ -172,6 +181,10 @@ highlightText
 
 !ComboBox methodsFor!
 
+droppedWidth
+
+	^self sendMessage: CB_GETDROPPEDWIDTH!
+
 droppedWidth: anInteger
 
 	self sendMessage: CB_SETDROPPEDWIDTH wParam: anInteger!
@@ -186,6 +199,7 @@ hasCueBanner
 		wParam: buf yourAddress
 		lParam: buf size + 1) ~~ 0
 		and: [buf first ~~ $\0]! !
+!ComboBox categoriesFor: #droppedWidth!hierarchy!public!sub views! !
 !ComboBox categoriesFor: #droppedWidth:!hierarchy!public!sub views! !
 !ComboBox categoriesFor: #hasCueBanner!public!testing! !
 
@@ -290,6 +304,21 @@ resendTo: aView
 		wParam: wParam 
 		lParam: lParam! !
 !KeyEvent categoriesFor: #resendTo:!public!testing! !
+
+!Menu methodsFor!
+
+showIn: aView position: aPos rightAlign: aBoolean
+	"Show top level of context menu on screen at position aPos."
+
+	^UserLibrary default
+		trackPopupMenu: self asParameter
+		uFlags: ((aBoolean ifTrue: [TPM_RIGHTALIGN] ifFalse: [TPM_LEFTALIGN]) | TPM_RIGHTBUTTON)
+		x: aPos x
+		y: aPos y
+		nReserved: 0
+		hWnd: aView asParameter
+		prcRect: nil! !
+!Menu categoriesFor: #showIn:position:rightAlign:!drawing!public! !
 
 !NullConverter methodsFor!
 
@@ -431,6 +460,63 @@ hasCueBanner
 		and: [buf first ~~ $\0]! !
 !TextEdit categoriesFor: #hasCueBanner!public!testing! !
 
+!Toolbar methodsFor!
+
+addItem: tool after: anotherTool
+	"Add the <ToolbarItem>, tool, to the receiver placing it after anotherTool. Answer the new tool."
+
+	(idMap includesKey: tool commandId) ifTrue: [^nil].
+
+	items := 
+		(OrderedCollection withAll: items) 
+			add: tool after: anotherTool;
+			yourself.
+	tool toolbar: self.
+
+	self basicAddItems: (Array with: tool).
+	self updateAllItems.
+	^tool!
+
+addItem: tool before: anotherTool
+	"Add the <ToolbarItem>, tool, to the receiver placing it before anotherTool. Answer the new tool."
+
+	(idMap includesKey: tool commandId) ifTrue: [^nil].
+
+	items := 
+		(OrderedCollection withAll: items) 
+			add: tool before: anotherTool;
+			yourself.
+	tool toolbar: self.
+
+	self basicAddItems: (Array with: tool).
+	self updateAllItems.
+	^tool!
+
+itemWithCommand: aSymbol
+
+	^self itemWithCommand: aSymbol ifNone: [self error: aSymbol, ' not found']!
+
+itemWithCommand: aSymbol ifNone: aBlock
+
+	^items detect: [ :each | each command ifNil: [false] ifNotNil: [ :cmd | cmd asSymbol = aSymbol]] ifNone: aBlock! !
+!Toolbar categoriesFor: #addItem:after:!adding!public! !
+!Toolbar categoriesFor: #addItem:before:!adding!public! !
+!Toolbar categoriesFor: #itemWithCommand:!accessing!public! !
+!Toolbar categoriesFor: #itemWithCommand:ifNone:!accessing!public! !
+
+!ToolbarButton methodsFor!
+
+isAutoSize
+
+	^self style allMask: BTNS_AUTOSIZE!
+
+isAutoSize: aBoolean
+	"Sets the receiver to automatically size itself to accomodate its contents according to aBoolean"
+
+	self style: (self style mask: BTNS_AUTOSIZE set: aBoolean)! !
+!ToolbarButton categoriesFor: #isAutoSize!public!style! !
+!ToolbarButton categoriesFor: #isAutoSize:!public!style! !
+
 !TypeConverter methodsFor!
 
 isNullConverter
@@ -479,15 +565,15 @@ setUICuesState: anInteger
 
 shouldShowFocusRect
 
-	^self getUICuesState noMask: 1 "UISF_HIDEFOCUS"!
+	^self getUICuesState noMask: UISF_HIDEFOCUS!
 
 shouldShowFocusRect: aBoolean
 
-	self setUICuesState: (##(1 "UISF_HIDEFOCUS" bitShift: 16) bitOr: (aBoolean ifTrue: [2 "UIS_CLEAR"] ifFalse: [1 "UIS_SET"]))!
+	self setUICuesState: (##(UISF_HIDEFOCUS bitShift: 16) bitOr: (aBoolean ifTrue: [UIS_CLEAR] ifFalse: [UIS_SET]))!
 
 shouldShowKeyboardAccelerators
 
-	^self getUICuesState noMask: 2 "UISF_HIDEACCEL"!
+	^self getUICuesState noMask: UISF_HIDEACCEL!
 
 tabPrevious
 	"Tab to the control before the receiver in the tab order of the parent."
