@@ -476,19 +476,19 @@ subclassOf: aClass overrides: aSelector
 			(each includesSelector: aSelector) or: [self subclassOf: each overrides: aSelector]]!
 
 subclassResponsibilityNotDefined
-	| detector subclassResponsibilitySymbol |
+	| detector |
 	detector := self new.
 	detector name: 'Subclass responsibility not defined'.
-	subclassResponsibilitySymbol := 'subclassResponsibility' asSymbol.
 	detector classBlock: 
-			[:context :result | 
-			(context selectedClass whichSelectorsReferTo: subclassResponsibilitySymbol) do: 
-					[:each | 
+			[:context :result |
+			#rbFix.	"Prevent false positive matches against any method that happens to include the symbol #subclassResponsibility"
+			(context selectedClass whichMethodsOnlySelfSend: #subclassResponsibility) do: 
+					[:method |
 					(context selectedClass withAllSubclasses anySatisfy: 
-							[:class | 
-							class subclasses isEmpty 
-								and: [(class whichClassIncludesSelector: each) == context selectedClass]]) 
-						ifTrue: [result addClass: context selectedClass selector: each]]].
+							[:class |
+							class subclasses isEmpty
+								and: [(class whichClassIncludesSelector: method selector) == context selectedClass]])
+						ifTrue: [result addClass: context selectedClass selector: method selector]]].
 	^detector!
 
 superMessages

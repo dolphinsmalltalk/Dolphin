@@ -34,14 +34,7 @@ literal: anObject
 
 !ReferencesCategory class methodsFor!
 
-initialize
-	"Private - Initialize the receiver.
-		ReferencesCategory initialize.
-	You can add your own reference categories for the selectors you are interested in.
-	Unless you want this method to appear in the category too, you should use #asSymbol to
-	construct the referenced symbol dynamically.
-	"
-
+createDefaultInstances
 	self referenceSymbols do: 
 			[:each |
 			| cat suffix |
@@ -54,9 +47,19 @@ initialize
 				addPseud: cat.
 			Table at: suffix put: cat]!
 
+initialize
+	"Private - Initialize the receiver.
+		ReferencesCategory initialize.
+	You can add your own reference categories for the selectors you are interested in.
+	Unless you want this method to appear in the category too, you should use #asSymbol to
+	construct the referenced symbol dynamically.
+	"
+
+	self createDefaultInstances!
+
 newNamed: aString literal: anObject 
 	^((VMLibrary default indexOfSpecialSelector: anObject ifAbsent: []) 
-		ifNil: [ReferencesCategory newNamed: aString]
+		ifNil: [self newNamed: aString]
 		ifNotNil: 
 			[:index | 
 			(SpecialReferencesCategory newNamed: aString)
@@ -66,12 +69,13 @@ newNamed: aString literal: anObject
 		yourself!
 
 referenceSymbols
-	^#('subclassResponsibility' 'notYetImplemented' 'shouldNotImplement' 'deprecated')!
+	^#('notYetImplemented' 'deprecated')!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self referenceSymbols do: [:each | self removePseud: self pseudPrefix , each asPhrase asLowercase]! !
+!ReferencesCategory class categoriesFor: #createDefaultInstances!initializing!private! !
 !ReferencesCategory class categoriesFor: #initialize!initializing!private! !
 !ReferencesCategory class categoriesFor: #newNamed:literal:!public! !
 !ReferencesCategory class categoriesFor: #referenceSymbols!constants!private! !

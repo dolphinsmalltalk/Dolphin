@@ -460,7 +460,7 @@ includesCategory: category
 
 	^self methodsCatalogue includesKey: (self methodCategoryClass name: category)!
 
-includeSelector: aSelector inCategory: category 
+includeSelector: aSelector inCategory: category
 	"Add aSelector to aCategoryString while leaving it in its existing set of categories."
 
 	| catalogue selectors |
@@ -468,10 +468,10 @@ includeSelector: aSelector inCategory: category
 
 	"Ensure a methods catalogue entry exists for the requested category"
 	catalogue := self methodsCatalogue.
-	(self includesCategory: category) ifFalse: [catalogue at: category put: Array new].
+	(self includesCategory: category) ifFalse: [catalogue at: category put: {}].
 
 	"Now add to the category if not already present therein"
-	((selectors := catalogue at: category) identityIncludes: aSelector) 
+	((selectors := catalogue at: category) identityIncludes: aSelector)
 		ifFalse: [catalogue at: category put: (selectors copyWith: aSelector)].
 	self methodsCatalogue: catalogue!
 

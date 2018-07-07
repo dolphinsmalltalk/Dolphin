@@ -113,6 +113,9 @@ argumentCount: anInteger
 	header := (header bitAnd: ##((255 << 15) bitInvert)) 
 				bitOr: ((anInteger bitAnd: 255) bitShift: 15)!
 
+basicByteCodes
+	^byteCodes!
+
 byteCodeDispatcher
 	"Private - Answer a <ByteCodeDispatcher> on the receiver."
 
@@ -151,18 +154,9 @@ byteCodes: anObject
 	format."
 
 	| codes |
-	(anObject isInteger or: [anObject size > 4 or: [anObject first even]])
-		ifTrue: [codes := anObject]
-		ifFalse: 
-			[codes := (anObject size == 4
-						ifTrue: [anObject sdwordAtOffset: 0]
-						ifFalse: 
-							[| packed |
-							packed := 0.
-							anObject reverseDo: [:each | packed := (packed bitShift: 8) + each].
-							packed])
-							bitShift: -1.
-			self assert: [codes class == SmallInteger]].
+	codes := (anObject isInteger or: [anObject size > 4 or: [anObject first even]])
+				ifTrue: [anObject]
+				ifFalse: [self class packByteCodes: anObject].
 	codes isImmutable: true.
 	byteCodes := codes!
 
@@ -307,6 +301,19 @@ isPublic
 	"Private - Answer whether the receiver is a public method."
 
 	^self isPrivate not!
+
+isSimpleSelfSend: aSymbol
+	"Private - Answer whether the receiver is a method that just sends the specified selector
+	(which must be zero-argument) to self. Note that this does not work for special selectors
+	such as #class, #new, etc, that have specific bytecode encodings."
+
+	^self size > 0 and: 
+			[(self at: 1) == aSymbol and: 
+					[| packed |
+					packed := self basicByteCodes.
+					(packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray)
+						or: [packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
+							and: [self extraIndex == 0]]]!
 
 isUnbound
 	"Answer whether the receiver is unbound (i.e. not linked into a class' method dictionary).
@@ -605,6 +612,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #allSymbolLiteralsDo:!enumerating!private! !
 !CompiledCode categoriesFor: #argumentCount!method header!public! !
 !CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !
+!CompiledCode categoriesFor: #basicByteCodes!accessing!private! !
 !CompiledCode categoriesFor: #byteCodeDispatcher!development!private!testing! !
 !CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!development!private! !
 !CompiledCode categoriesFor: #byteCodes!accessing!private! !
@@ -632,6 +640,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #isPrivate!private!testing! !
 !CompiledCode categoriesFor: #isPrivate:!accessing!private! !
 !CompiledCode categoriesFor: #isPublic!private!testing! !
+!CompiledCode categoriesFor: #isSimpleSelfSend:!private!testing! !
 !CompiledCode categoriesFor: #isUnbound!public!testing! !
 !CompiledCode categoriesFor: #literalArray:do:!enumerating!private! !
 !CompiledCode categoriesFor: #literalAt:!accessing!private! !
@@ -712,10 +721,25 @@ onPreStripImage
 	"Private - Clear away the cache of method information used for debugging."
 
 	InfoCacheKeys pathologist: nil.
-	InfoCacheKeys := InfoCacheValues := nil! !
+	InfoCacheKeys := InfoCacheValues := nil!
+
+packByteCodes: anArray
+	| bytes codes |
+	bytes := anArray asByteArray.
+	codes := (bytes size == 4
+				ifTrue: [bytes sdwordAtOffset: 0]
+				ifFalse: 
+					[| packed |
+					packed := 0.
+					bytes reverseDo: [:each | packed := (packed bitShift: 8) + each].
+					packed])
+					bitShift: -1.
+	self assert: [codes class == SmallInteger].
+	^codes! !
 !CompiledCode class categoriesFor: #elementsExpired:of:!finalizing!private! !
 !CompiledCode class categoriesFor: #initialize!development!initializing!private! !
 !CompiledCode class categoriesFor: #initializeInfoCache!development!initializing!private! !
 !CompiledCode class categoriesFor: #initializeInfoCache:!development!initializing!private! !
 !CompiledCode class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!CompiledCode class categoriesFor: #packByteCodes:!helpers!private! !
 
