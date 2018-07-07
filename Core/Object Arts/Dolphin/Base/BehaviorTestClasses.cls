@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTestClassResource subclass: #BehaviorTestClasses
 	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'
@@ -31,7 +31,11 @@ createClasses
 				pools: ''.
 	classWithAbstractMethod2 class compile: 'abstractMethod self subclassResponsibility'.
 	classWithAbstractMethod2 compile: 'nonAbstractMethod1 #(subclassResponsibility)'.
-	classWithAbstractMethod2 compile: 'nonAbstractMethod2  ^iv1 subclassResponsibility'!
+	classWithAbstractMethod2 compile: 'nonAbstractMethod2  ^iv1 subclassResponsibility'.
+
+	classWithAbstractMethod1 compile: 'returnSendSelfSpecial ^self class'.
+	classWithAbstractMethod1 compile: 'sendSelfSpecial ^self value'.
+!
 
 isAvailable
 	^classWithAbstractMethod1 notNil!

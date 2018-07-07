@@ -428,11 +428,7 @@ hasAbstractMethods
 	"Answer whether the receiver has any methods that are by convention considered to be
 	abstract (i.e. they consist solely of a send of #subclassResponsibility to self)."
 
-	^self methodDictionary anySatisfy: 
-			[:each |
-			each size > 0 and: 
-					[(each at: 1) == #subclassResponsibility
-						and: [each byteCodes first == OpcodePool.ShortSendSelfZeroArgs]]]!
+	^self methodDictionary anySatisfy: [:each | each isSimpleSelfSend: #subclassResponsibility]!
 
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
@@ -942,7 +938,7 @@ subclasses
 	sequenceability should not be relied upon in portable code because the draft ANSI
 	standard specifies only <collection>."
 
-	^subclasses ifNil: [Array new]!
+	^subclasses ifNil: [{}]!
 
 subclasses: aCollection
 	"Set the receivers subclasses to the specified collection.
@@ -1027,6 +1023,25 @@ whichMethodsContainSource: aString
 	the specified source string."
 
 	^self selectMethods: [:method | method containsSource: aString]!
+
+whichMethodsOnlySelfSend: aSymbol
+	"Answer a Set of methods which consist purely of a send-to-self of the specified zero-arg selector."
+
+	^self selectMethods: ((VMLibrary default indexOfSpecialSelector: aSymbol ifAbsent: [])
+				ifNil: [[:method | method isSimpleSelfSend: aSymbol]]
+				ifNotNil: 
+					[:index |
+					| specialSend send sendRet |
+					specialSend := index + OpcodePool.ShortSpecialSend - 1.
+					sendRet := CompiledCode
+								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnFromMessage} asByteArray.
+					send := CompiledCode
+								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnSelf} asByteArray.
+					
+					[:method |
+					| packed |
+					packed := method basicByteCodes.
+					packed == send or: [packed == sendRet]]])!
 
 whichMethodsRead: aString
 	"Answer a <collection> of <CompiledMethod>s that read the instance variable
@@ -1217,6 +1232,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #whichMethodsAssign:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsAssign:at:!development!methods-testing!private! !
 !Behavior categoriesFor: #whichMethodsContainSource:!development!methods-testing!public! !
+!Behavior categoriesFor: #whichMethodsOnlySelfSend:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsRead:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsRead:at:!development!methods-testing!private! !
 !Behavior categoriesFor: #whichMethodsReferTo:!methods-testing!public! !

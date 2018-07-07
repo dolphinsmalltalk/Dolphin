@@ -102,6 +102,7 @@ package classNames
 	add: #SequenceableCollectionInspector;
 	add: #SetBatchAspectAccessor;
 	add: #SingleChunkReader;
+	add: #SingleUnarySendMethodCategory;
 	add: #SmalltalkExpressionStyler;
 	add: #SmalltalkMethodStyler;
 	add: #SmalltalkSearchPresenter;
@@ -737,6 +738,11 @@ VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
 	classInstanceVariableNames: ''!
 ReferencesCategory subclass: #PackedReferencesCategory
 	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ReferencesCategory subclass: #SingleUnarySendMethodCategory
+	instanceVariableNames: 'selector'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
