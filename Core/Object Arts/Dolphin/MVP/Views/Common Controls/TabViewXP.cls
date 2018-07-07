@@ -166,7 +166,7 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 			labelRect := Rectangle center: rcItem center
 						extent: (textExtent isZero 
 								ifTrue: [imageExtent]
-								ifFalse: [(textOffset + textExtent x) @ (imageExtent y max: textExtent y)]).
+								ifFalse: [(textOffset + textExtent x) @ (imageExtent y max: textExtent y + 1)]).
 			space := labelRect height - imageExtent y.
 			(self imageManager imageListWithExtent: imageExtent) 
 				draw: imageIndex
@@ -178,7 +178,7 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 	aCanvas 
 		formatText: text
 		in: labelRect
-		flags: (DT_VCENTER | DT_SINGLELINE) | DT_END_ELLIPSIS!
+		flags: ##(DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS)!
 
 paintTabLabelsOn: aCanvas 
 	| selectedIndex nOldMode oldFont rect itemCount |

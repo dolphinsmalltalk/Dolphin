@@ -763,7 +763,7 @@ initialize
 	super initialize.
 	flags := 0.
 	"Set up the pools for evaluations in the receiver"
-	self evaluationPools: Array new.
+	self evaluationPools: {}.
 	self newVariablePool.
 	self clearStatus.
 	compilationErrors := OrderedCollection new.
@@ -2046,7 +2046,7 @@ initialize
 				red: 242
 				green: 242
 				blue: 236.
-	DefaultFont := Font name: 'Trebuchet MS' pointSize: 10.
+	DefaultFont := Font name: 'Segoe UI' pointSize: 10.
 	WordWrap := true.
 	DefaultTabWidth := 8.
 	AutoCompleteDwell := 30.

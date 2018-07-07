@@ -1942,8 +1942,10 @@ initialize
 	"Set the development system Help/About dialog"
 	Object owningPackage aboutBlock: [:package | self aboutBoxClass show].
 
-	"Font - pick up MS Trebuchet font as the default."
-	self defaultFont: (Font name: 'Trebuchet MS' pointSize: 10).
+	"Font for lists, trees, etc, in the dev tools - use the standard Windows font, Segoe UI, but
+	slightly larger than the normal icon title font. Note that there is a separate setting for
+	code panes."
+	self defaultFont: (Font name: 'Segoe UI' pointSize: 10).
 
 	"Default break key for interrupting non-responding operations during development."
 	self interruptHotKey: (AcceleratorTable keyCodeFromString: 'CTRL+F12').
