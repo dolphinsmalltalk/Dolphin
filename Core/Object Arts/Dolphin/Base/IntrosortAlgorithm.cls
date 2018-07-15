@@ -28,7 +28,7 @@ sort: anObject from: startInteger to: stopInteger
 		to: stopInteger
 		limit: (self quicksortRecursionLimit: n)!
 
-sort: anObject from: startInteger to: stopInteger limit: limitInteger 
+sort: anObject from: startInteger to: stopInteger limit: limitInteger
 	"Private - Sort elements in the range of indexable instance variables of the <Object> argument from
 	startInteger through stopInteger to be non-descending according to the receiver's sort
 	block."
@@ -36,17 +36,16 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 	"Implementation Note: This is a modified copy of QuicksortAlgorithm>>sort:from:to: The only
 	change is to add the recursion depth limit."
 
-	| i j up lo cmp limit |
+	| i j up lo limit |
 	up := stopInteger.
 	lo := startInteger.
-	cmp := self sortBlock.
 	limit := limitInteger.
 	[up - lo > 7] whileTrue: 
 			[| a b |
-			(limit := limit - 1) == 0 
+			(limit := limit - 1) == 0
 				ifTrue: 
 					["Appears to be degenerating, so heapsort this partition"
-					self 
+					self
 						heapsort: anObject
 						from: lo
 						to: up.
@@ -57,16 +56,16 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 			a := anObject basicAt: j.
 			anObject basicAt: j put: (anObject basicAt: i).
 			anObject basicAt: i put: a.
-			(cmp value: (anObject basicAt: up) value: a) 
+			(self compare: (anObject basicAt: up) with: a)
 				ifTrue: 
 					[anObject basicAt: i put: (anObject basicAt: up).
 					anObject basicAt: up put: a].
-			(cmp value: (anObject basicAt: up) value: (anObject basicAt: lo)) 
+			(self compare: (anObject basicAt: up) with: (anObject basicAt: lo))
 				ifTrue: 
 					[a := anObject basicAt: up.
 					anObject basicAt: up put: (anObject basicAt: lo).
 					anObject basicAt: lo put: a].
-			(cmp value: (anObject basicAt: lo) value: (anObject basicAt: i)) 
+			(self compare: (anObject basicAt: lo) with: (anObject basicAt: i))
 				ifTrue: 
 					[a := anObject basicAt: lo.
 					anObject basicAt: lo put: (anObject basicAt: i).
@@ -76,9 +75,9 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 			j := up.	"i.e. start from up-1"
 			b := anObject basicAt: lo.
 			
-			[[i < j and: [cmp value: (anObject basicAt: (i := i + 1)) value: b]] whileTrue.
-			[j >= i and: [cmp value: b value: (anObject basicAt: (j := j - 1))]] whileTrue.
-			j < i] 
+			[[i < j and: [self compare: (anObject basicAt: (i := i + 1)) with: b]] whileTrue.
+			[j >= i and: [self compare: b with: (anObject basicAt: (j := j - 1))]] whileTrue.
+			j < i]
 					whileFalse: 
 						[a := anObject basicAt: i.
 						anObject basicAt: i put: (anObject basicAt: j).
@@ -89,19 +88,19 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 			anObject basicAt: j put: b.
 
 			"Skip sort-equal elements to speed up worst cases - suggested by John Brant"
-			[(j := j - 1) > lo and: [cmp value: b value: (anObject basicAt: j)]] whileTrue.
+			[(j := j - 1) > lo and: [self compare: b with: (anObject basicAt: j)]] whileTrue.
 
 			"Recursively sort smaller sub-interval and process larger remainder on the next loop iteration"
-			up - i < (j - lo) 
+			up - i < (j - lo)
 				ifTrue: 
-					[self 
+					[self
 						sort: anObject
 						from: i
 						to: up
 						limit: limit.
 					up := j]
 				ifFalse: 
-					[self 
+					[self
 						sort: anObject
 						from: lo
 						to: j
@@ -110,7 +109,7 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 
 	"When interval size drops below threshold perform an insertion sort (quicker for small
 	numbers of elements)"
-	self 
+	self
 		insertionSort: anObject
 		from: lo
 		to: up! !

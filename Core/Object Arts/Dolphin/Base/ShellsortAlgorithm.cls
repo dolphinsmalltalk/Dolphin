@@ -16,13 +16,12 @@ Like Quicksort, Shellsort is not a stable sort, in that it does not preserve any
 !ShellsortAlgorithm categoriesForClass!Kernel-Objects! !
 !ShellsortAlgorithm methodsFor!
 
-sort: anObject from: startInteger to: stopInteger 
+sort: anObject from: startInteger to: stopInteger
 	"Sort elements in the range of indexable instance variables of the <Object> argument from
 	startInteger through stopInteger to be non-descending according to the receiver's sort block."
 
-	| d cmp |
+	| d |
 	d := stopInteger - startInteger + 1.
-	cmp := self sortBlock.
 	[d > 1] whileTrue: 
 			[| i |
 			d := d < 5 ifTrue: [1] ifFalse: [(5 * d - 1) // 11].
@@ -31,7 +30,7 @@ sort: anObject from: startInteger to: stopInteger
 					[| ei j ej |
 					ei := anObject basicAt: i.
 					j := i + d.
-					[j <= stopInteger and: [cmp value: (ej := anObject basicAt: j) value: ei]] whileTrue: 
+					[j <= stopInteger and: [self compare: (ej := anObject basicAt: j) with: ei]] whileTrue: 
 							[anObject basicAt: j - d put: ej.
 							j := j + d].
 					anObject basicAt: j - d put: ei.

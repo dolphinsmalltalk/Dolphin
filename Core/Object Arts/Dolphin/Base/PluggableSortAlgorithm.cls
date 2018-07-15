@@ -15,6 +15,12 @@ Instance Variables:
 !PluggableSortAlgorithm categoriesForClass!Kernel-Objects! !
 !PluggableSortAlgorithm methodsFor!
 
+compare: operand1 with: operand2 
+	"Answer whether the <Object>, operand1, should sort before the <Object> argument, operand2,
+	using the receiver's comparison method."
+
+	^sortBlock value: operand1 value: operand2!
+
 setSortBlock: aDyadicValuable 
 	sortBlock := aDyadicValuable!
 
@@ -22,6 +28,7 @@ sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
 
 	^sortBlock! !
+!PluggableSortAlgorithm categoriesFor: #compare:with:!comparing!public! !
 !PluggableSortAlgorithm categoriesFor: #setSortBlock:!initializing!private! !
 !PluggableSortAlgorithm categoriesFor: #sortBlock!accessing!public! !
 
