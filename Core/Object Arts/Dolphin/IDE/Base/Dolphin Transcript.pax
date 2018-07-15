@@ -22,7 +22,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	yourself).
 
 package!
