@@ -27,6 +27,9 @@ Class Variables:
 
 	^self class = comparand class!
 
+asParameter
+	^nil!
+
 doesNotUnderstand: aMessage
 	"The receiver is deaf to all requests. Answer self to ensure that
 	our answers are also deaf."
@@ -43,6 +46,7 @@ mustBeBoolean
 
 	^true! !
 !DeafObject categoriesFor: #=!comparing!public! !
+!DeafObject categoriesFor: #asParameter!converting!public! !
 !DeafObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
 !DeafObject categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
 
