@@ -47,16 +47,14 @@ heapsort: anObject from: startInteger to: stopInteger
 				between: startInteger
 				and: (i := i - 1)]!
 
-insertionSort: anObject from: startInteger to: stopInteger 
-	| compare |
-	compare := self sortBlock.
+insertionSort: anObject from: startInteger to: stopInteger
 	startInteger + 1 to: stopInteger
 		do: 
-			[:j | 
+			[:j |
 			| a t i |
 			a := anObject basicAt: j.
 			i := j.
-			[i <= startInteger or: [compare value: (t := anObject basicAt: i - 1) value: a]] whileFalse: 
+			[i <= startInteger or: [self compare: (t := anObject basicAt: i - 1) with: a]] whileFalse: 
 					[anObject basicAt: i put: t.
 					i := i - 1].
 			anObject basicAt: i put: a]!
@@ -64,9 +62,8 @@ insertionSort: anObject from: startInteger to: stopInteger
 quicksortRecursionLimit: anInteger 
 	^(2.0 * (anInteger log: 2)) floor!
 
-sift: anObject from: anInteger between: startInteger and: stopInteger 
-	| val i compare |
-	compare := self sortBlock.
+sift: anObject from: anInteger between: startInteger and: stopInteger
+	| val i |
 	val := anObject basicAt: anInteger.
 	i := anInteger.
 	
@@ -74,20 +71,20 @@ sift: anObject from: anInteger between: startInteger and: stopInteger
 	max := val.
 	j := i.
 	left := j + j + 1 - startInteger.
-	(left <= stopInteger and: [compare value: max value: (leftVal := anObject basicAt: left)]) 
+	(left <= stopInteger and: [self compare: max with: (leftVal := anObject basicAt: left)])
 		ifTrue: 
 			[i := left.
 			max := leftVal].
 	right := left + 1.
-	(right <= stopInteger and: [compare value: max value: (rightVal := anObject basicAt: right)]) 
+	(right <= stopInteger and: [self compare: max with: (rightVal := anObject basicAt: right)])
 		ifTrue: 
 			[i := right.
 			max := rightVal].
-	i == j 
+	i == j
 		ifTrue: 
 			[j > anInteger ifTrue: [anObject basicAt: j put: val].
 			^self].
-	anObject basicAt: j put: max] 
+	anObject basicAt: j put: max]
 			repeat!
 
 sort: aCollection from: startInteger to: stopInteger

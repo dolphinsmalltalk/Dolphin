@@ -204,7 +204,7 @@ copyLikeOfSize: anInteger
 
 	^(super copyLikeOfSize: anInteger) setSortAlgorithm: algorithm!
 
-indexForInserting: anObject 
+indexForInserting: anObject
 	"Private - Answer the index at which anObject would be added. This is located using a binary
 	chop."
 
@@ -212,9 +212,9 @@ indexForInserting: anObject
 	low := firstIndex.
 	high := lastIndex.
 	
-	[index := (high + low) // 2.
+	[index := high + low bitShift: -1.
 	low > high] whileFalse: 
-				[(algorithm compare:  (self basicAt: index) with: anObject) 
+				[(algorithm compare: (self basicAt: index) with: anObject)
 					ifTrue: [low := index + 1]
 					ifFalse: [high := index - 1]].
 	^low!
