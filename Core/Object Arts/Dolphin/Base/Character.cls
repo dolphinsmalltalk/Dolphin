@@ -43,7 +43,7 @@ _separateSubStringsIn: tokens
 
 	| start answer size end |
 	size := tokens size.
-	size == 0 ifTrue: [^Array new].
+	size == 0 ifTrue: [^{}].
 	end := tokens
 				nextIndexOf: self
 				from: 1
@@ -392,24 +392,32 @@ isWhitespace
 
 	^self isSeparator!
 
+printEscapedOn: aStream
+	"Append the escaped literal representation of the receiver to the <puttableStream> argument."
+
+	| codePoint |
+	aStream nextPutAll: '$\'.
+	(EscapeChars lookup: (codePoint := self codePoint) + 1)
+		ifNotNil: [:char | aStream nextPut: char]
+		ifNil: 
+			[aStream nextPut: $x.
+			codePoint
+				printOn: aStream
+				base: 16
+				showRadix: false]!
+
 printOn: aStream
 	"Append the literal representation of the receiver to the <puttableStream> argument."
 
-	| codePoint |
-	aStream nextPut: $$.
-	codePoint := self codePoint.
-	(codePoint > 32 and: [codePoint < 127 or: [codePoint <= 255 and: [self isGraph]]])
-		ifTrue: [aStream nextPut: self]
-		ifFalse: 
-			[aStream nextPut: $\.
-			(EscapeChars lookup: codePoint + 1)
-				ifNotNil: [:char | aStream nextPut: char]
-				ifNil: 
-					[aStream nextPut: $x.
-					codePoint
-						printOn: aStream
-						base: 16
-						showRadix: false]]!
+	(code > 32 and: [code < 127 or: [code <= 255 and: [self isGraph]]])
+		ifTrue: 
+			[aStream
+				nextPut: $$;
+				nextPut: self]
+		ifFalse: [self printEscapedOn: aStream]!
+
+setCode: anInteger
+	code := anInteger!
 
 shallowCopy
 	"Answer the receiver, as Characters are immutable."
@@ -470,7 +478,9 @@ shallowCopy
 !Character categoriesFor: #isUtf8Trail!public!testing! !
 !Character categoriesFor: #isVowel!public!testing! !
 !Character categoriesFor: #isWhitespace!public!testing! !
+!Character categoriesFor: #printEscapedOn:!printing!public! !
 !Character categoriesFor: #printOn:!printing!public! !
+!Character categoriesFor: #setCode:!accessing!initializing!private! !
 !Character categoriesFor: #shallowCopy!copying!public! !
 
 Character methodProtocol: #Character attributes: #(#ansi #readOnly) selectors: #(#asLowercase #asString #asUppercase #codePoint #isAlphaNumeric #isDigit #isLetter #isLowercase #isUppercase)!
@@ -598,7 +608,7 @@ newCode: anInteger
 	only be used for code points > 128."
 
 	<primitive: 157>
-	^self primitiveFailed!
+	^self basicNew setCode: anInteger!
 
 newPage
 	"Answer the new page control <Character>."
