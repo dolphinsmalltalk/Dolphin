@@ -496,7 +496,7 @@ calcExtentFromClientExtent: aPoint
 	view extent that would be required to achieve this taking into account the current window
 	styles etc."
 
-	^(self calcRectangleFromClientRectangle: (0 @ 0 extent: aPoint)) extent!
+	^(self calcRectangleFromClientRectangle: (0 @ 0 corner: aPoint)) extent!
 
 calcRectangleFromClientRectangle: aRectangle 
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
@@ -825,8 +825,7 @@ defaultStyle
 	The first element contains the standard Windows style bits, the second contains
 	the extended style bits."
 
-	^Array with: self defaultWindowStyle with: self defaultWindowExStyle
-!
+	^{self defaultWindowStyle. self defaultWindowExStyle}!
 
 defaultWindowExStyle
 	"Private - Answer the default extended window creation style"
@@ -1146,7 +1145,7 @@ exStyle: exStyleBitsToSet maskedBy: exStyleBitMask
 		maskedBy: exStyleBitMask
 		recreateIfChanged: true!
 
-exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean 
+exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 	"Private - Copies the bits in anInteger masked by exStyleBitMask to the extended style of
 	the receiver. If the style is changed then either SetWindowLong is called to set the
 	extended style, or the window is recreated, depending on the boolean argument. Answer
@@ -1157,8 +1156,8 @@ exStyle: styleBitsInteger maskedBy: styleMaskInteger recreateIfChanged: aBoolean
 	newExStyle := exStyle maskClear: styleMaskInteger.
 	newExStyle := newExStyle maskSet: (styleBitsInteger bitAnd: styleMaskInteger).
 	newExStyle = exStyle ifTrue: [^false].
-	Array with: self baseStyle with: newExStyle.
-	aBoolean 
+	{self baseStyle. newExStyle}.
+	aBoolean
 		ifTrue: [self recreateAround: [self extendedStyle: newExStyle]]
 		ifFalse: 
 			[self extendedStyle: newExStyle.
@@ -1293,7 +1292,7 @@ forecolor
 	"Answers the foreground colour of the receiver.
 	Overidden by subclasses that support foreground colours"
 
-	^Color systemColor: COLOR_WINDOWTEXT
+	^Color windowText
 !
 
 forecolor: aColorOrNil
@@ -2560,12 +2559,7 @@ onViewCreated
 	CreateWindow API call has returned (as opposed to in response to the parent notification
 	message sent by Windows just before the CreateWindow call returned), and so is reliably sent
 	to all views, regardless of their style, or whether they are a child window."
-
-	"Implementation Note 2: #onFullyCreated has been deprecated, but since it is widely used, we forward
-	to it for backwards compability in this release (D6). In a future release it will be removed, and the
-	forwarding will not take place."
-
-	^self onFullyCreated!
+!
 
 onViewDestroyed
 	"Handler for view final view destruction. This is sent on receipt of WM_NCDESTROY,
@@ -3281,32 +3275,30 @@ state
 
 	| answer |
 	answer := MessageSequence new.
-	handle notNull 
+	handle notNull
 		ifTrue: 
 			[| txt |
-			answer add: (MessageSend 
+			answer add: (MessageSend
 						receiver: self
 						selector: #createAt:extent:
-						arguments: (Array with: self position with: self extent)).
-			self isPersistentlyDisabled 
+						arguments: {self position. self extent}).
+			self isPersistentlyDisabled
 				ifTrue: 
-					[answer add: (MessageSend 
+					[answer add: (MessageSend
 								receiver: self
 								selector: #isEnabled:
 								argument: false)].
-			self contextMenu isNil 
+			self contextMenu isNil
 				ifFalse: 
 					["views do not have context menus by default"
-
-					answer add: (MessageSend 
+					answer add: (MessageSend
 								receiver: self
 								selector: #contextMenu:
 								argument: self contextMenu)].
-			(txt := self text) notEmpty 
+			(txt := self text) notEmpty
 				ifTrue: 
 					["views have no text by default"
-
-					answer add: (MessageSend 
+					answer add: (MessageSend
 								receiver: self
 								selector: #text:
 								argument: txt)]].
@@ -3718,9 +3710,17 @@ withAllParentsDo: aMonadicValuable
 withAllSubViews
 	"Answer an OrderedCollection of self and all its sub views."
 
-	^(OrderedCollection with: self)
-		addAll: self allSubViews;
-		yourself!
+	| answer |
+	answer := OrderedCollection with: self.
+	self allSubViewsDo: [:each | answer addLast: each].
+	^answer!
+
+withAllSubViewsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for the receiver and all of its sub views."
+
+	aMonadicValuable value: self.
+	self allSubViewsDo: aMonadicValuable.
+!
 
 wmActivate: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_ACTIVATE.
@@ -4864,6 +4864,7 @@ zOrderTop
 !View categoriesFor: #withAllParents!hierarchy!public! !
 !View categoriesFor: #withAllParentsDo:!hierarchy!public! !
 !View categoriesFor: #withAllSubViews!hierarchy!public! !
+!View categoriesFor: #withAllSubViewsDo:!hierarchy!public! !
 !View categoriesFor: #wmActivate:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmActivateApp:wParam:lParam:!event handling-win32!private! !
 !View categoriesFor: #wmCancelMode:wParam:lParam:!event handling-win32!private! !
@@ -4951,6 +4952,7 @@ View methodProtocol: #dragDropSessionSource attributes: #(#readOnly) selectors: 
 View methodProtocol: #dragDropSessionTarget attributes: #(#readOnly) selectors: #(#ddDrop: #ddEnter: #ddLeave: #ddOperations: #ddOver: #ddScroll:)!
 View methodProtocol: #dragSource attributes: #(#readOnly) selectors: #(#dragCut: #requestDragImages: #requestDragObjects:)!
 View methodProtocol: #dropTarget attributes: #(#readOnly) selectors: #(#dragEnter: #dragLeave: #dragOver: #drop: #requestDropOperations:)!
+View methodProtocol: #interactor attributes: #(#readOnly) selectors: #(#onGetCursor: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonDoubleClicked: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseLeave: #onMouseMoved: #onMouseWheeled: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSysKeyPressed: #onSysKeyReleased: #onSysKeyTyped: #onXButtonDoubleClicked: #onXButtonPressed: #onXButtonReleased:)!
 View methodProtocol: #presenter attributes: #(#readOnly) selectors: #(#addToCommandRoute: #commandPolicy #ensureVisible #isOpen #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewDestroyed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #view)!
 View methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 View methodProtocol: #window attributes: #(#readOnly) selectors: #(#asParameter #destroy #dispatchMessage:wParam:lParam: #enterIdle #isPersistentView #isWindowVisible #onStartup #preTranslateMessage: #subclassWindow:)!

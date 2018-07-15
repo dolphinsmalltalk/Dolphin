@@ -158,7 +158,7 @@ removeSubView: aView
 	self proportions removeKey: aView ifAbsent: [].
 	^super removeSubView: aView!
 
-reposition: aView to: aPoint 
+reposition: aView to: aPoint
 	"Private - This will expand/shrink the proportions of the two non fixed size views on either
 	side of aView."
 
@@ -166,16 +166,16 @@ reposition: aView to: aPoint
 	containerView := aView parentView.
 	subviews := containerView managedSubViews select: [:each | each isWindowVisible].
 	currentPoint := aView position.
-	prevView := self 
+	prevView := self
 				nearestResizableViewFrom: aView
 				inViews: subviews
 				by: -1.
-	nextView := self 
+	nextView := self
 				nearestResizableViewFrom: aView
 				inViews: subviews
 				by: 1.
 	(prevView isNil or: [nextView isNil]) ifTrue: [^self].
-	self isVertical 
+	self isVertical
 		ifTrue: 
 			[prevSize := prevView extent y.
 			nextSize := nextView extent y.
@@ -184,13 +184,13 @@ reposition: aView to: aPoint
 			[prevSize := prevView extent x.
 			nextSize := nextView extent x.
 			changeSize := aPoint x - currentPoint x].
-	changeSize := changeSize positive 
+	changeSize := changeSize positive
 				ifTrue: [changeSize min: nextSize - 2]
 				ifFalse: [changeSize max: prevSize negated + 2].
 	prevSize := prevSize + changeSize.
 	nextSize := nextSize - changeSize.
-	totalProportion := self totalProportionsOf: (Array with: prevView with: nextView).
-	prevSize + nextSize = 0 
+	totalProportion := self totalProportionsOf: {prevView. nextView}.
+	prevSize + nextSize = 0
 		ifFalse: 
 			[self arrangementOf: prevView put: prevSize / (prevSize + nextSize) * totalProportion.
 			self arrangementOf: nextView put: nextSize / (prevSize + nextSize) * totalProportion].

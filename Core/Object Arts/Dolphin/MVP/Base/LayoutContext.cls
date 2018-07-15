@@ -82,13 +82,8 @@ isViewVisible: aView
 	(positions lookup: aView) ifNotNil: [:pos | (pos at: 3) ifNotNil: [:show | ^show]].
 	^aView hasVisibleStyle!
 
-positionForView: aView 
-	^positions at: aView
-		ifAbsentPut: 
-			[Array 
-				with: aView
-				with: nil
-				with: nil]!
+positionForView: aView
+	^positions at: aView ifAbsentPut: [{aView. nil. nil}]!
 
 rectangleOf: aView
 	"Answer the window <Rectangle> of the specified <View>. This may be different to its current

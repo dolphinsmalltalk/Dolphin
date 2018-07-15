@@ -2,10 +2,11 @@
 
 View subclass: #Splitter
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'FlatMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Splitter guid: (GUID fromString: '{87b4c716-026e-11d3-9fd7-00a0cc3e4a32}')!
+Splitter addClassConstant: 'FlatMask' value: 1048576!
 Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" for resizing adjacent views within a <compositeView>. Normally, a Splitter requires that the parent view in which it is placed is under the control of a ProprtionalLayout manager.'!
 !Splitter categoriesForClass!MVP-Resources-Splitters!MVP-Views! !
 !Splitter methodsFor!
@@ -52,15 +53,17 @@ cursor
 !
 
 defaultBackcolor
-	"Private - Answers the default colour to be used for the receiver. 
-	This has to be fairly dark or the gradient is not visible."
+	"Private - Answers the default colour to be used for the receiver."
 
-	"This is the shadow colour in the XP luna theme."
-
-	^Color 
-		red: 172
-		green: 168
-		blue: 153!
+	^self hasFlatAppearance
+		ifTrue: [Color face3d]
+		ifFalse: 
+			["This is the shadow colour in the XP luna theme - this has to be fairly
+			 dark or the gradient is not visible.."
+			Color
+				red: 172
+				green: 168
+				blue: 153]!
 
 defaultExtent
 	"Private - Answer the default size of the receiver to be used when it is created."
@@ -106,14 +109,28 @@ eraseTrackingAt: aPoint
 !
 
 forecolor
-	"Answers the foreground colour of the receiver. This is the light colour in the gradient fill."
+	"Answers the foreground colour of the receiver."
 
-	"This is the light3d colour in the XP luna schema."
+	^self hasFlatAppearance
+		ifTrue: [self actualBackcolor intensity: 0.9]
+		ifFalse: 
+			["This is the light colour in the gradient fill, being the light3d colour in
+			 the XP luna schema."
+			Color
+				red: 241
+				green: 239
+				blue: 226]!
 
-	^Color 
-		red: 241
-		green: 239
-		blue: 226!
+hasFlatAppearance
+	"Answer whether the receiver should be draw with flat (i.e. ungraded) look. This is now the default."
+
+	^flags noMask: FlatMask!
+
+hasFlatAppearance: aBoolean
+	flags := flags mask: FlatMask set: aBoolean not!
+
+isHot
+	^false!
 
 isVertical
 	"Private - Answer whether the layoutManager which is controlling our
@@ -143,23 +160,33 @@ onInputMaskRequired: anEvent
 	
 	^0!
 
-onLeftButtonPressed: aMouseEvent 
-	"Start tracking the mouse with the ultimate aim of resizing the views
-	surrounding the receiver."
+onPaintRequired: aPaintEvent
+	| rect canvas back |
+	rect := self clientRectangle.
+	canvas := aPaintEvent canvas.
+	back := self actualBackcolor.
+	self hasFlatAppearance
+		ifTrue: 
+			[| brush |
+			brush := back brush.
+			self interactor isHot
+				ifTrue: 
+					["When hot draw with a subtle edge so the splitter can be seen. Normally it blends into the background."
+					canvas
+						brush: brush;
+						pen: self forecolor pen;
+						rectangle: rect]
+				ifFalse: [canvas fillRectangle: rect brush: brush].
+			brush free]
+		ifFalse: 
+			[canvas
+				fillRectangle: rect
+				startColor: self forecolor
+				endColor: back
+				verticalGradient: self isVertical]!
 
-	self setFocus.
-	(MouseTracker forPresenter: self presenter
-		startingAt: aMouseEvent screenPosition)
-		origin: aMouseEvent position + self position;
-		startTracking: self.
-	^false!
-
-onPaintRequired: aPaintEvent 
-	aPaintEvent canvas 
-		fillRectangle: self clientRectangle
-		startColor: self forecolor
-		endColor: self actualBackcolor
-		verticalGradient: self isVertical!
+onViewCreated
+	interactor := DraggableViewInteractor forPresenter: self!
 
 startTrackingAt: aPoint
 	"Private - Start position tracking for the associated view at aPoint. Part of the 
@@ -181,12 +208,15 @@ startTrackingAt: aPoint
 !Splitter categoriesFor: #endTrackingAt:!public!tracking! !
 !Splitter categoriesFor: #eraseTrackingAt:!private!tracking! !
 !Splitter categoriesFor: #forecolor!accessing!public! !
+!Splitter categoriesFor: #hasFlatAppearance!accessing-styles!public! !
+!Splitter categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
+!Splitter categoriesFor: #isHot!public!testing! !
 !Splitter categoriesFor: #isVertical!public!testing! !
 !Splitter categoriesFor: #onEraseRequired:!event handling!public! !
 !Splitter categoriesFor: #onGetCursor:!event handling!public! !
 !Splitter categoriesFor: #onInputMaskRequired:!event handling!public! !
-!Splitter categoriesFor: #onLeftButtonPressed:!event handling!public! !
 !Splitter categoriesFor: #onPaintRequired:!event handling!private! !
+!Splitter categoriesFor: #onViewCreated!event handling!public! !
 !Splitter categoriesFor: #startTrackingAt:!private!tracking! !
 
 Splitter methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
@@ -206,7 +236,7 @@ resource_Horizontalvertical_splitter
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Horizontalvertical_splitter)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(Splitter)  98 12 0 0 98 2 8 1140850688 1 416 0 524550 ##(ColorRef)  8 4278190080 0 519 0 0 0 416 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 674 361 11 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 185 0 0 0 10 0 0 0] 98 0 674 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Splitter) 34 12 nil nil 34 2 8 1140850688 1 416 nil 524550 ##(Smalltalk.ColorRef) 8 4278190080 nil 519 nil nil nil 416 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 642 951 11 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 90 9 0 0 15 0 0 0] 8 #() 642 193 193 nil 27 )!
 
 stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <View> to version 13. 13 adds
@@ -220,7 +250,7 @@ stbConvertFromVersion12: anArray
 				red: 225
 				green: 225
 				blue: 225) 
-		or: [backcolor = ##(Color face3d)]) ifTrue: [anArray at: 6 put: Color default].
+		or: [backcolor = Color face3d]) ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray! !
 !Splitter class categoriesFor: #icon!constants!public! !
 !Splitter class categoriesFor: #resource_Horizontalvertical_splitter!public!resources-views! !
