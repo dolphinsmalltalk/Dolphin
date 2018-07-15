@@ -32,8 +32,8 @@ package!
 "Class Definitions"!
 
 CapturingInteractor subclass: #ButtonInteractor
-	instanceVariableNames: 'buttonRect flags commandDescription'
-	classVariableNames: 'HotMask PressedMask'
+	instanceVariableNames: 'buttonRect _unused5 commandDescription'
+	classVariableNames: 'ButtonStateMask PressedMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ContainerView subclass: #SlideyInneyOuteyThing

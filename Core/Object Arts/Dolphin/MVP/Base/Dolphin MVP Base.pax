@@ -85,6 +85,7 @@ package classNames
 	add: #DoubleBufferedView;
 	add: #DragDropObject;
 	add: #DragDropSession;
+	add: #DraggableViewInteractor;
 	add: #DRAWITEMSTRUCT;
 	add: #DTBGOPTS;
 	add: #DwmApiLibrary;
@@ -529,8 +530,8 @@ Object subclass: #Presenter
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists'
-	classVariableNames: 'Current'
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater'
+	classVariableNames: 'Current FlatMenusMask IconScaleDownMask SmoothScrollingMask VistaMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #View
@@ -1064,17 +1065,22 @@ Pen subclass: #StockPen
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ImageManager subclass: #IconImageManager
-	instanceVariableNames: 'menuBitmaps'
+	instanceVariableNames: 'menuBitmaps toolbarBitmaps'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Interactor subclass: #CapturingInteractor
-	instanceVariableNames: 'oldInteractor'
-	classVariableNames: ''
+	instanceVariableNames: 'oldInteractor stateFlags'
+	classVariableNames: 'HotMask LeftDownMask MiddleDownMask RightDownMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CapturingInteractor subclass: #MouseTracker
-	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis isTracking trackPosition constrain'
+	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
+	classVariableNames: 'TrackingMask'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MouseTracker subclass: #DraggableViewInteractor
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1195,7 +1201,7 @@ View subclass: #DoubleBufferedView
 	classInstanceVariableNames: ''!
 View subclass: #Splitter
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'FlatMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView

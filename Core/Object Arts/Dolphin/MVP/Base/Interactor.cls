@@ -6,7 +6,12 @@ Object subclass: #Interactor
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Interactor guid: (GUID fromString: '{6281dd52-ad59-468b-b5b9-c5594195cef8}')!
-Interactor comment: ''!
+Interactor isAbstract: true!
+Interactor comment: '`Interactor` is an abstract class of `<interactor>`s that provide a plug-in capability to replace a `<presenter>`s normal response to user input events with something else, either temporarily (such as for the duration of a drag session) or for the life of the presenter.
+
+## Instance Variables:
+  `presenter`		`<presenter>` for which the `Interactor` is processing user input.
+'!
 !Interactor categoriesForClass!MVP-Interactors! !
 !Interactor methodsFor!
 
@@ -164,6 +169,8 @@ view
 !Interactor categoriesFor: #setPresenter:!accessing!private! !
 !Interactor categoriesFor: #view!public!testing! !
 
+Interactor methodProtocol: #interactor attributes: #(#readOnly) selectors: #(#onGetCursor: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonDoubleClicked: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseLeave: #onMouseMoved: #onMouseWheeled: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSysKeyPressed: #onSysKeyReleased: #onSysKeyTyped: #onXButtonDoubleClicked: #onXButtonPressed: #onXButtonReleased:)!
+
 !Interactor class methodsFor!
 
 forPresenter: aPresenter
@@ -171,9 +178,41 @@ forPresenter: aPresenter
 		setPresenter: aPresenter!
 
 new
-	"Use #view:target:"
+	"Use #forPresenter:"
 
-	^self shouldNotImplement! !
+	^self shouldNotImplement!
+
+stbConvert: anArray fromVersion: anInteger 
+	"Private - Convert from earlier version view by updating and answering the array of instance
+	variables, instVarArray. "
+
+	| instVars |
+	instVars := anArray.
+	anInteger < 1 ifTrue: [instVars := self stbConvertToVersion1: instVars].
+	^instVars!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from previous binary filer version. 
+	Version Changes:
+		1) Adds stateFlags variable to CapturingInteractor"
+
+	^
+	[:data |
+	| answer instVars |
+	instVars := self stbConvert: data fromVersion: anSTBClassFormat version.
+	answer := self basicNew.
+	1 to: instVars size do: [:i | answer instVarAt: i put: (instVars at: i)].
+	answer]!
+
+stbConvertToVersion1: anArray
+	^anArray!
+
+stbVersion
+	^1! !
 !Interactor class categoriesFor: #forPresenter:!instance creation!public! !
 !Interactor class categoriesFor: #new!instance creation!public! !
+!Interactor class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
+!Interactor class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!Interactor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!Interactor class categoriesFor: #stbVersion!binary filing!public! !
 

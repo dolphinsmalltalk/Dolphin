@@ -1,22 +1,28 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 CapturingInteractor subclass: #MouseTracker
-	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis isTracking trackPosition constrain'
-	classVariableNames: ''
+	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
+	classVariableNames: 'TrackingMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MouseTracker guid: (GUID fromString: '{87b4c711-026e-11d3-9fd7-00a0cc3e4a32}')!
-MouseTracker comment: '<MouseTracker> is an <Interactor> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using #startTracking: it captures the mouse and relays the drag messages that are part of the <mouseTrackerTarget> protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
+MouseTracker addClassConstant: 'TrackingMask' value: 1024!
+MouseTracker comment: '`MouseTracker` is an `<Interactor`> that is used to manage the visual dragging of objects using the mouse. An instance should be created as the result of a mouse down event and once started using `#startTracking:` it captures the mouse and relays the drag messages that are part of the `<mouseTrackerTarget>` protocol to the target that is assigned to it. Once the drag has completed, and the originating button has been released, the mouse capture is also dropped. Tracking will also be cancelled if the user Alt+Tab''s to another application, or presses the ESC (escape) key (assuming the originating view still has focus).
 
-Instance Variables:
-	dragButton	<Symbol> identifying the button (either #left or #right) that started the drag
-	target		<mouseTrackerTarget> that receives tracking messages.
-	startPoint		<Point> at which the drag started.
-	origin		<Point> which identifies the origin of an object being dragged.
-	hysteresis		<Point> extent of rectangle outside of which the mouse must move before a drag is started.
-	isTracking		<boolean> indicating whether a drag has actually started.
-	trackPosition	<Point> holding the last drag position.
-	constrain		<Symbol> or nil, identifying any drag constraint (either #horizontal or #vertical).
+## Instance Variables:
+  `dragButton`		`Symbol` identifying the button (either #left or #right) that started the drag
+  `target`			`<mouseTrackerTarget>` that receives tracking messages.
+  `startPoint`		`Point` at which the drag started.
+  `startPointLocal`	`Point` at which the drag started in local co-ordinates.
+  `origin`			`Point` that identifies the origin of an object being dragged.
+  `hysteresis`		`Point` extent of rectangle outside of which the mouse must move before a drag is started.
+  `trackPosition`		`Point` holding the last drag position.
+  `constrain`		`Symbol` or `nil`, identifying any drag constraint (either `#horizontal` or `#vertical`).
+
+## Class Variables:
+  `TrackingMask`	`<integer>` flags mask for flag indicating tracking is active.
+
+
 
 '!
 !MouseTracker categoriesForClass!MVP-Interactors! !
@@ -33,7 +39,7 @@ beVerticalOnly
 	constrain := #vertical.!
 
 cancelTracking
-	isTracking := false.
+	self isTracking: false.
 	self target cancelTrackingAt: self trackPosition!
 
 captureReleased
@@ -70,7 +76,7 @@ dragButtonUp: aMouseEvent
 	| delta wasTracking |
 	delta := aMouseEvent position - self startPointLocal.
 	wasTracking := self isTracking.
-	isTracking := false.
+	self isTracking: false.
 	"Release mouse capture before informing target in case target pops up a message box
 	 which confuses Windows such that the drag cursor is only partially turned off.
 	 Note that a WM_CAPTURECHANGED will be sent."
@@ -101,7 +107,10 @@ isTracking
 	that the mouse has moved outside the hysteresis radius, or that the tracker was set up to
 	start tracking immediately."
 
-	^isTracking!
+	^stateFlags allMask: TrackingMask!
+
+isTracking: aBoolean
+	stateFlags := stateFlags mask: TrackingMask set: aBoolean!
 
 isVerticalOnly
 	"Private - Answer true if the receiver is constrained for vertical dragging only"
@@ -125,6 +134,7 @@ onKeyTransition: aKeyEvent
 onLeftButtonReleased: aMouseEvent
 	"The left mouse button has been released so if this is the drag button then end the tracking operation."
 
+	super onLeftButtonReleased: aMouseEvent.
 	dragButton == #left
 		ifTrue: [^self dragButtonUp: aMouseEvent].
 	^nil
@@ -151,7 +161,7 @@ onMouseMoved: aMouseEvent
 			((Rectangle center: self startPoint extent: self hysteresis) 
 				containsPoint: aMouseEvent screenPosition) 
 					ifFalse: 
-						[isTracking := true.
+						[self isTracking: true.
 						self trackPosition: (self target startTrackingAt: constrainedPosition)]].
 	^false	"Don't perform default processing"!
 
@@ -173,7 +183,7 @@ onSysKeyReleased: aKeyEvent
 	self onSysKeyTransition: aKeyEvent.
 	^super onKeyReleased: aKeyEvent!
 
-onSysKeyTransition: aKeyEvent 
+onSysKeyTransition: aKeyEvent
 	| key |
 	key := aKeyEvent code.
 	key = VK_MENU ifTrue: [self simulateMouseMouse: aKeyEvent]!
@@ -194,13 +204,10 @@ origin: aPoint
 
 setPresenter: aPresenter
 	super setPresenter: aPresenter.
-
 	self origin: Point new.
 	hysteresis := self class defaultHysteresis.
-	isTracking := false.
-	dragButton := #left.
-
-!
+	stateFlags := 0.
+	dragButton := #left!
 
 simulateMouseMouse: aKeyEvent
 	| pos event wParam |
@@ -283,12 +290,13 @@ trackPositionDelta: aPointDelta
 !MouseTracker categoriesFor: #hysteresis:!accessing!public! !
 !MouseTracker categoriesFor: #isHorizontalOnly!private!testing! !
 !MouseTracker categoriesFor: #isTracking!private!testing! !
+!MouseTracker categoriesFor: #isTracking:!private!testing! !
 !MouseTracker categoriesFor: #isVerticalOnly!private!testing! !
 !MouseTracker categoriesFor: #onKeyPressed:!event handling!public! !
 !MouseTracker categoriesFor: #onKeyReleased:!event handling!public! !
 !MouseTracker categoriesFor: #onKeyTransition:!event handling!private! !
 !MouseTracker categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onMouseHovering:!public! !
+!MouseTracker categoriesFor: #onMouseHovering:!event handling!public! !
 !MouseTracker categoriesFor: #onMouseMoved:!event handling!public! !
 !MouseTracker categoriesFor: #onRightButtonReleased:!event handling!public! !
 !MouseTracker categoriesFor: #onSysKeyPressed:!event handling!public! !

@@ -910,6 +910,7 @@ Presenter methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#
 Presenter methodProtocol: #compositePresenter attributes: #(#readOnly) selectors: #(#add: #add:name: #createComponents #createSchematicWiring #name:as: #nameOf: #presenterNamed: #presenterNamed:ifNone: #remove: #subPresenters)!
 Presenter methodProtocol: #dragSource attributes: #(#readOnly) selectors: #(#dragCut: #requestDragImages: #requestDragObjects:)!
 Presenter methodProtocol: #dropTarget attributes: #(#readOnly) selectors: #(#dragEnter: #dragLeave: #dragOver: #drop: #requestDropOperations:)!
+Presenter methodProtocol: #interactor attributes: #(#readOnly) selectors: #(#onGetCursor: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonDoubleClicked: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseLeave: #onMouseMoved: #onMouseWheeled: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSysKeyPressed: #onSysKeyReleased: #onSysKeyTyped: #onXButtonDoubleClicked: #onXButtonPressed: #onXButtonReleased:)!
 Presenter methodProtocol: #presenter attributes: #(#readOnly) selectors: #(#addToCommandRoute: #commandPolicy #ensureVisible #isOpen #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMiddleButtonPressed: #onMiddleButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewDestroyed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #view)!
 Presenter methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 
@@ -924,13 +925,13 @@ acceleratorKeyBindings
 	self additionalAccelerators do: [:each | answer at: each last put: each first].
 	^answer!
 
-acceleratorKeyBindings: aDictionary 
+acceleratorKeyBindings: aDictionary
 	"Set a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s).
 	The argument should be an <abstractDictionary> mapping accelerator key strings, e.g. 'Ctrl+I' to command name
 	<Symbol>s."
 
-	self setAdditionalAccelerators: (aDictionary associations asArray 
-				collect: [:each | Array with: each value with: each key])!
+	self setAdditionalAccelerators: (aDictionary associations asArray
+				collect: [:each | {each value. each key}])!
 
 addCommandQueryHandler: aSymbol 
 	"Register an additional CommandQuery handler to be invoked by the #queryCommand: processing
@@ -1099,7 +1100,7 @@ resource_OK_Cancel_button_block
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_Cancel_button_block)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ContainerView)  98 15 0 0 98 2 8 1409286144 131073 416 0 0 0 5 0 0 0 416 852230 ##(Smalltalk.FramingLayout)  234 240 98 4 410 8 ##(Smalltalk.PushButton)  98 17 0 416 98 2 8 1141055488 1 560 0 0 0 5 0 0 0 560 0 8 4294903631 1180998 4 ##(Smalltalk.CommandDescription)  8 #ok 8 'OK' 1 1 0 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  51 15 850 151 47 560 786 8 #text: 98 1 8 'OK' 560 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 25 0 0 0 7 0 0 0 100 0 0 0 30 0 0 0] 98 0 850 193 193 0 27 1181766 2 ##(Smalltalk.FramingConstraints)  1180678 ##(Smalltalk.FramingCalculation)  8 #fixedViewRight -149 1074 8 #fixedParentRight -169 1074 8 #fixedViewBottom -45 1074 8 #fixedParentBottom 1 410 576 98 17 0 416 98 2 8 1140924416 1 1216 0 0 0 5 0 0 0 1216 0 8 4294903631 658 8 #cancel 8 'Cancel' 1 1 0 0 32 722 202 208 98 2 786 816 98 2 850 221 15 850 151 47 1216 786 912 98 1 8 'Cancel' 1216 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 110 0 0 0 7 0 0 0 185 0 0 0 30 0 0 0] 98 0 1024 0 27 1042 1074 8 #fixedPreviousRight 21 1074 8 #fixedViewLeft 151 1152 -45 1184 1 234 256 98 0 590342 ##(Smalltalk.Rectangle)  850 11 11 850 1 1 722 202 208 98 1 786 816 98 2 850 2799 21 850 371 61 416 962 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 48 6 0 0 40 0 0 0] 98 2 560 1216 1024 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 656198 1 ##(Smalltalk.FlowLayout) 17 17 21 170 192 8 #() 590342 ##(Smalltalk.Rectangle) 328198 ##(Smalltalk.Point) 11 17 578 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 578 3839 21 578 341 65 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 41 8 0 0 42 0 0 0] 34 2 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1141055488 1 832 nil nil nil 5 nil nil nil 832 nil 8 1912725136 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 'OK' 1 1 nil nil true nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 578 25 17 578 151 47 832 690 #text: 34 1 8 'OK' 832 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 8 0 0 0 87 0 0 0 31 0 0 0] 8 #() 578 193 193 nil 29 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 1184 nil nil nil 5 nil nil nil 1184 nil 8 1912725136 914 #cancel 8 'Cancel' 1 1 nil nil false nil nil nil 626 138 144 34 2 690 #createAt:extent: 34 2 578 191 17 578 151 47 1184 690 #text: 34 1 8 'Cancel' 1184 770 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 95 0 0 0 8 0 0 0 170 0 0 0 31 0 0 0] 8 #() 1168 nil 29 1168 nil 27 )!
 
 setAdditionalAccelerators: anArray 
 	self error: 'configuring accelerator keys is not supported'!
