@@ -280,23 +280,26 @@ autostring: aStringAspectSymbol
 				selectAllIfSingleLine.
 			presenter]!
 
-bitmap: aBitmapAspectSymbol 
+bitmap: aBitmapAspectSymbol
 	"Answer an instance of the receiver for aBitmapAspectSymbol.
 	The aspect is viewable using an ImagePresenter with a 'Basic image' view
 	and editable using a FileDialog"
 
-	^(self 
+	^(self
 		name: aBitmapAspectSymbol
 		presenterBlock: 
-			[:p :m | 
-			ImagePresenter 
-				create: 'Basic image'
-				in: p
-				on: m]
+			[:p :m |
+			| presenter |
+			presenter := ImagePresenter
+						create: 'Basic image'
+						in: p
+						on: m.
+			presenter view viewMode: #scaleBestFit.
+			presenter]
 		editBlock: 
-			[:p | 
+			[:p |
 			| filename |
-			filename := (FileOpenDialog new)
+			filename := FileOpenDialog new
 						fileTypes: (Array with: DIBSection filesType with: FileDialog allFilesType);
 						showModal.
 			filename notNil ifTrue: [p value: (DIBSection fromFile: filename)]])
