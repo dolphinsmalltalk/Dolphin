@@ -1,28 +1,74 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarButton subclass: #ToolbarSystemButton
-	instanceVariableNames: ''
+	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ToolbarSystemButton guid: (GUID fromString: '{87b4c702-026e-11d3-9fd7-00a0cc3e4a32}')!
-ToolbarSystemButton comment: 'ToolbarButton represents a system defined button for a <Toolbar>. The button image is identified by an index into one of a number of system supplied <Bitmap>s.'!
+ToolbarSystemButton comment: '`ToolbarSystemButton` represents a system defined button for a `Toolbar`. The button image is identified by an index into one of a number of system supplied bitmaps. Unfortunately these are not very useful any more, as Microsoft has not updated some of the bitmaps for decades.
+
+For example (evaluated one expression at a time):
+```
+tb := Toolbar new hasFlatAppearance: true; isTransparent: true; show; extent: 300@ 64; zOrderTop; yourself.
+"Add all the available system buttons to the toolbar; as you''ll see they are a mix of old a newer styles"
+((MethodCategory name: ''instance creation-system buttons'') methodsInBehavior: ToolbarButton class) do: [:each | 
+	each selector argumentCount = 0 ifTrue: [tb addItem: (ToolbarButton perform: each selector)]].
+tb destroy.
+```'!
 !ToolbarSystemButton categoriesForClass!MVP-Views-Support! !
 !ToolbarSystemButton methodsFor!
 
-bitmap: anInteger
-	bitmap := anInteger.
+bitmapId
+	"Answer the id of the system bitmap from which the receiver's bitmap is drawn."
+
+	^bitmapId!
+
+bitmapId: anInteger
+	bitmapId := anInteger.
 	self bitmapIndex: 0!
+
+bitmapId: idInteger index: indexInteger commandDescription: aCommandDescription
+	"Private - Initialize the instance variables of the receiver."
+
+	self initialize.
+	bitmapId := idInteger.
+	bitmapIndex := indexInteger.
+	commandDescription := aCommandDescription!
+
+bitmapIndex
+	"Answer the index of receivers sub-bitmap within its system bitmap."
+
+	^bitmapIndex!
+
+bitmapIndex: anInteger
+	"Set the index of receivers sub-bitmap within its bitmap to anInteger."
+
+	bitmapIndex := anInteger.
+	self update
+!
 
 imageIndexIn: aToolbar
 	"Private - Adds the receiver's bitmap to aToolbar.
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
-	^aToolbar addSystemBitmap: self bitmap index: self bitmapIndex! !
-!ToolbarSystemButton categoriesFor: #bitmap:!accessing!public! !
+	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
+!ToolbarSystemButton categoriesFor: #bitmapId!accessing!public! !
+!ToolbarSystemButton categoriesFor: #bitmapId:!accessing!public! !
+!ToolbarSystemButton categoriesFor: #bitmapId:index:commandDescription:!initializing!private! !
+!ToolbarSystemButton categoriesFor: #bitmapIndex!accessing!public! !
+!ToolbarSystemButton categoriesFor: #bitmapIndex:!accessing!public! !
 !ToolbarSystemButton categoriesFor: #imageIndexIn:!operations!private! !
 
 !ToolbarSystemButton class methodsFor!
+
+bitmapId: idInteger index: bitmapIndex commandDescription: aCommandDescription
+	"Answer a new instance of the receiver containing the bitmapIndex'd subimage of aBitmap."
+
+	^self basicNew
+		bitmapId: idInteger
+		index: bitmapIndex
+		commandDescription: aCommandDescription!
 
 initialize
 	"
@@ -87,7 +133,49 @@ initialize
 new
 	"Answer a new default ToolbarButton"
 
-	^self standardImage: STD_FILESAVE command: #noCommand description: 'No command'! !
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_FILESAVE
+		command: #noCommand
+		description: 'No command'!
+
+stbConvertFrom: anSTBClassFormat
+	"Version 1 is refactored so that bitmap and bitmapIndex instance variables are no longer inherited.
+
+	Version 0 inst var layout was:
+		ToolbarItem
+			1: commandId
+			2: unused
+			3: window (toolbar)
+			4: style
+			5: commandDescription
+		ToolbarButton
+			6: bitmap	(bitmapId)
+			7: bitmapIndex
+		ToolbarSystemButton
+
+	Version 1 inst var layout is:
+		ToolbarItem
+			1: toolbar
+		ToolbarButton (now abstract)
+			2: style
+			3: commandDescription
+			4: commandId
+		ToolbarSystemButton
+			5: bitmapId
+			6: bitmapIndex
+	"
+
+	^
+	[:data |
+	| newInstance |
+	newInstance := self basicNew.
+	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
+	newInstance instVarAt: 4 put: (data at: 1).
+	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
+	newInstance]! !
+!ToolbarSystemButton class categoriesFor: #bitmapId:index:commandDescription:!instance creation!public! !
 !ToolbarSystemButton class categoriesFor: #initialize!development!initializing!public! !
 !ToolbarSystemButton class categoriesFor: #new!instance creation!public! !
+!ToolbarSystemButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
 

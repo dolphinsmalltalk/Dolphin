@@ -763,7 +763,7 @@ save
 
 	| id |
 	id := GDILibrary default saveDC: self asParameter.
-	self saved at: id put: (Array with: pen with: brush with: font).
+	self saved at: id put: {pen. brush. font}.
 	^self saveIds addLast: id!
 
 saved

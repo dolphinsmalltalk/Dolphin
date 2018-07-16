@@ -260,11 +260,11 @@ setDragCursorImage: anInteger hotSpotX: x hotSpotY: y
 setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteger masked: aBoolean
 	"Private - Initialize the receiver's instance variables."
 
+	aPoint strictlyPositive ifFalse: [^self error: 'Image list extent must be at least 1@1'].
 	extent := aPoint.
 	initialSize := sizeInteger.
 	growBy := growByInteger.
-	createFlags := (aBoolean ifTrue: [ILC_MASK] ifFalse: [0]) 
-				bitOr: bppInteger! !
+	createFlags := (aBoolean ifTrue: [ILC_MASK] ifFalse: [0]) bitOr: bppInteger! !
 !WinImageList categoriesFor: #addBitmap:!adding!public! !
 !WinImageList categoriesFor: #addBitmap:mask:!adding!public! !
 !WinImageList categoriesFor: #addIcon:!adding!public! !

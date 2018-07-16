@@ -114,8 +114,12 @@ basicRealize
 clear
 	"Delete all the receiver's sub-items."
 
-	self isRealized ifTrue: [items size to: 1 by: -1 do: [:i | self deleteItemAt: i]].
-	items := Array new!
+	self isRealized
+		ifTrue: 
+			[items size to: 1
+				by: -1
+				do: [:i | self deleteItemAt: i]].
+	items := {}!
 
 clearCached
 	"Private - Clear down the receiver's cached information and handles."
@@ -323,7 +327,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	items := Array new.
+	items := {}.
 	text := String new.
 	flags := self defaultFlags!
 

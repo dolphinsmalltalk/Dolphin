@@ -155,7 +155,7 @@ initialize
 
 	super initialize.
 	(leftOverSeparator := StatusBarNullItem separator: 0) parentView: self.
-	parts := Array with: leftOverSeparator!
+	parts := {leftOverSeparator}!
 
 itemAtIndex: anIntegerIndex 
 	"Answers the status bar item at anIntegerIndex in the receiver"

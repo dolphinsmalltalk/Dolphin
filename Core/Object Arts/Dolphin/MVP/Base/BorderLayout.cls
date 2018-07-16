@@ -174,27 +174,24 @@ north: aView
 
 	north := aView!
 
-preferredLayoutExtentOf: aCompositeView context: aLayoutContext 
+preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 	"Answer a <Point> specifying the preferred extent for the <CompositeView> argument when
 	laying out in the context of the specified <LayoutContext>."
 
 	| extent insets ignoreVisibility |
 	extent := 0 @ 0.
 	ignoreVisibility := (aLayoutContext isViewVisible: aCompositeView) not.
-	((Array 
-		with: self east
-		with: self west
-		with: self center) 
-			select: [:each | each notNil and: [ignoreVisibility or: [aLayoutContext isViewVisible: each]]]) do: 
-				[:child | 
+	({self east. self west. self center}
+		select: [:each | each notNil and: [ignoreVisibility or: [aLayoutContext isViewVisible: each]]]) do: 
+				[:child |
 				| childExtent |
 				childExtent := child layoutExtent: aLayoutContext.
 				extent x: extent x + childExtent x.
 				extent y: (childExtent y max: extent y)]
 			separatedBy: [extent x: extent x + self horizontalGap].
-	((Array with: self north with: self south) 
+	({self north. self south}
 		select: [:each | each notNil and: [ignoreVisibility or: [aLayoutContext isViewVisible: each]]]) do: 
-				[:child | 
+				[:child |
 				| d |
 				d := child layoutExtent: aLayoutContext.
 				extent x: (d x max: extent x).

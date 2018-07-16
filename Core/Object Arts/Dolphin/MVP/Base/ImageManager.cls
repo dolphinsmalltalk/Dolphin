@@ -65,16 +65,14 @@ basicAddImage: anImage extent: extent maskcolor: aColor
 	imageLists do: [:each | index := (anImage addToImageList: each mask: aColor) + 1].
 	^images at: anImage put: index!
 
-buildImageListWithExtent: aPoint 
+buildImageListWithExtent: aPoint
 	"Private - Build a new image list with the extent specified by the <Point> argument,
 	populating it with all existing images."
 
-	| newList |
+	| newList defaultIcon |
 	newList := self newImageListWithExtent: aPoint.
-	self orderedImages do: 
-			[:image | 
-			(image isNil ifTrue: [Icon question] ifFalse: [image]) addToImageList: newList
-				mask: maskcolor].
+	defaultIcon := Icon question.
+	self orderedImages do: [:image | image ?? defaultIcon addToImageList: newList mask: maskcolor].
 
 	"Add the new rendering to our dictionary of those available"
 	imageLists at: aPoint put: newList.
@@ -138,18 +136,16 @@ maskcolor: aColorOrNil
 newImageLists
 	imageLists := LookupTable new!
 
-newImageListWithExtent: aPoint 
+newImageListWithExtent: aPoint
 	"Private - Answer a new <WinImageList> appropriately configured to hold images for the receiver
 	of the specified extent."
 
-	| answer |
-	(aPoint x <= 0 or: [aPoint y <= 0]) ifTrue: [^self error: 'Image list extent must be at least 1@1'].
-	answer := WinImageList 
-				newExtent: aPoint
-				initialSize: images size
-				masked: maskcolor notNil.
-	answer backcolor: backcolor.
-	^answer!
+	^(WinImageList
+		newExtent: aPoint
+		initialSize: images size
+		masked: maskcolor notNil)
+		backcolor: backcolor;
+		yourself!
 
 newImages
 	"Private - Initialize the receiver's image data structures."

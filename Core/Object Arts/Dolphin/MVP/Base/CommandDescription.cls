@@ -163,7 +163,7 @@ menuText
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
-	^self commandSymbol ifNil: [#()] ifNotNil: [:cmd | Array with: cmd]!
+	^self commandSymbol ifNil: [#()] ifNotNil: [:cmd | {cmd}]!
 
 performAgainst: anObject
 	"Private - Perform the command described by the receiver against the argument

@@ -1,11 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists'
-	classVariableNames: 'Current'
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater'
+	classVariableNames: 'Current FlatMenusMask IconScaleDownMask SmoothScrollingMask VistaMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 SystemMetrics guid: (GUID fromString: '{e56cc456-8490-47f1-bd85-71118b110166}')!
+SystemMetrics addClassConstant: 'FlatMenusMask' value: 12!
+SystemMetrics addClassConstant: 'IconScaleDownMask' value: 192!
+SystemMetrics addClassConstant: 'SmoothScrollingMask' value: 48!
+SystemMetrics addClassConstant: 'VistaMask' value: 3!
 SystemMetrics comment: 'SystemMetrics is a singleton class that provides a central service for accessing Windows configuration details such as the configurable aspects of the GUI''s appearance (height of title bars, fonts, etc). It has quite a large number of instance variables that cache information in order to avoid the expense of repeatedly querying it from the operating system.
 
 Instance Variables:
@@ -31,8 +35,7 @@ Class Variables:
 !SystemMetrics methodsFor!
 
 borderExtent
-	borderExtent isNil ifTrue: [borderExtent := self getMetric: SM_CXBORDER pair: SM_CYBORDER].
-	^borderExtent!
+	^borderExtent ifNil: [borderExtent := self getMetric: SM_CXBORDER pair: SM_CYBORDER]!
 
 cursorExtent
 	"Answer a <Point> that gives the dimensions of the system cursor."
@@ -40,16 +43,13 @@ cursorExtent
 	^self getMetric: SM_CXCURSOR pair: SM_CYCURSOR!
 
 dialogFrameExtent
-	dialogFrameExtent isNil 
-		ifTrue: [dialogFrameExtent := self getMetric: SM_CXDLGFRAME pair: SM_CYDLGFRAME].
-	^dialogFrameExtent!
+	^dialogFrameExtent ifNil: [dialogFrameExtent := self getMetric: SM_CXDLGFRAME pair: SM_CYDLGFRAME]!
 
 dragHysteresis
 	"Answer the default distance in pixels that the mouse must move before 
 	a tracking operation is actually started"
 
-	dragHysteresis isNil ifTrue: [dragHysteresis := self getMetric: SM_CXDRAG pair: SM_CYDRAG].
-	^dragHysteresis!
+	^dragHysteresis ifNil: [dragHysteresis := self getMetric: SM_CXDRAG pair: SM_CYDRAG]!
 
 dragImageColorDepth
 	^32!
@@ -57,8 +57,7 @@ dragImageColorDepth
 edgeExtent
 	"Answer the dimensions of 3d window borders."
 
-	edgeExtent isNil ifTrue: [edgeExtent := self getMetric: SM_CXEDGE pair: SM_CYEDGE].
-	^edgeExtent!
+	^edgeExtent ifNil: [edgeExtent := self getMetric: SM_CXEDGE pair: SM_CYEDGE]!
 
 getIconTitleFont
 	"Private - Answer a <Font> which is that used for icon titles on the desktop.
@@ -119,23 +118,22 @@ getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 hasButtonNotes
 	"Answer whether the host supports 'notes' for link buttons."
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^self isVistaOrLater!
 
 hasDesktopComposition
 	"Answer whether the host supports off-screen desktop composition,"
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^self isVistaOrLater!
 
 hasEnhancedThemes
 	"Answer whether the host supports enhanced desktop themes (Vista and later)."
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^self isVistaOrLater!
 
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
 
-	hasFlatMenus isNil ifTrue: [hasFlatMenus := self getSysParamBool: SPI_GETFLATMENU].
-	^hasFlatMenus!
+	^hasFlatMenus ifNil: [hasFlatMenus := self getSysParamBool: SPI_GETFLATMENU]!
 
 hasGdiPalettes
 	"Answer whether the host supports GDI palettes."
@@ -153,7 +151,7 @@ hasIconScaleDown
 	availble under Vista and later. Hence we don't allow this to be called even if the Windows
 	version indicates Vista is available."
 
-	^VMLibrary default isWindowsVistaOrGreater and: [NTLibrary isWine not]!
+	^self isVistaOrLater and: [NTLibrary isWine not]!
 
 hasImageListDragCursors
 	"Answer whether the host supports using image lists for drag cursors."
@@ -173,20 +171,20 @@ hasLinkButtons
 	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
 	style)."
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^self isVistaOrLater!
 
 hasListViewGridLineScrollScarringBug
 	"Answer whether the host has MS bug 813791: 'Gridlines for list-view control are not drawn
 	correctly using the LVS_EX_GRIDLINES style' "
 
-	^(VMLibrary default isWindowsXPOrGreater and: [VMLibrary default isWindowsVistaOrGreater not]) 
+	^(VMLibrary default isWindowsXPOrGreater and: [self isVistaOrLater not])
 		and: [self hasSmoothScrollingLists]!
 
 hasMenuBitmaps
 	"Answer whether the host support direct setting of menu bitmaps through the menu item info
 	structure. If false they have to be provided through a callback."
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^self isVistaOrLater!
 
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
@@ -221,28 +219,28 @@ hasThemes
 hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
 
-	^VMLibrary default isWindowsVistaOrGreater!
+	^self isVistaOrLater!
 
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
 
-	iconTitleFont isNil ifTrue: [iconTitleFont := self getIconTitleFont].
-	^iconTitleFont!
+	^iconTitleFont ifNil: [iconTitleFont := self getIconTitleFont]!
 
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
 	^(self getMetric: SM_SLOWMACHINE) ~~ 0!
 
+isVistaOrLater
+	^isVistaOrLater ifNil: [isVistaOrLater := VMLibrary default isWindowsVistaOrGreater]!
+
 largeIconExtent
 	"Answer a <Point> that gives the dimensions of a large size icon."
 
-	largeIconExtent isNil ifTrue: [largeIconExtent := self getMetric: SM_CXICON pair: SM_CYICON].
-	^largeIconExtent!
+	^largeIconExtent ifNil: [largeIconExtent := self getMetric: SM_CXICON pair: SM_CYICON]!
 
 menuBarColor
-	^Color 
-		systemColor: (ThemeLibrary default isAppThemed ifTrue: [COLOR_MENUBAR] ifFalse: [COLOR_MENU])!
+	^ThemeLibrary default isAppThemed ifTrue: [Color menuBar] ifFalse: [Color menu]!
 
 menuBarHeight
 	"Answer the height of a menu item as currently configured."
@@ -252,9 +250,7 @@ menuBarHeight
 menuCheckExtent
 	"Answer a <Point> that specifies the dimensions of the menu check mark bitmap."
 
-	menuCheckExtent isNil 
-		ifTrue: [menuCheckExtent := self getMetric: SM_CXMENUCHECK pair: SM_CYMENUCHECK].
-	^menuCheckExtent!
+	^menuCheckExtent ifNil: [menuCheckExtent := self getMetric: SM_CXMENUCHECK pair: SM_CYMENUCHECK]!
 
 menuDividerHeight
 	"It doesn't seem to be possible to determine this from system metrics."
@@ -266,9 +262,7 @@ menuDividerHeight
 menuFont
 	"Answer the currently configured menu font."
 
-	menuFont isNil ifTrue: [
-		menuFont := Font fromLogFont: self nonClientMetrics lfMenuFont].
-	^menuFont!
+	^menuFont ifNil: [menuFont := Font fromLogFont: self nonClientMetrics lfMenuFont]!
 
 menuHeight
 	"Answer the height of a menu item as currently configured."
@@ -348,9 +342,7 @@ scrollbarWidth
 	^self nonClientMetrics iScrollWidth!
 
 scrollThumbExtent
-	scrollThumbExtent isNil 
-		ifTrue: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB].
-	^scrollThumbExtent!
+	^scrollThumbExtent ifNil: [scrollThumbExtent := self getMetric: SM_CXHTHUMB pair: SM_CYVTHUMB]!
 
 setSysParamBool: anInteger value: aBoolean
 	^UserLibrary default
@@ -367,8 +359,7 @@ sizingFrameExtent
 smallIconExtent
 	"Answer a <Point> that gives the dimensions of a small size icon."
 
-	smallIconExtent isNil ifTrue: [smallIconExtent := self getMetric: SM_CXSMICON pair: SM_CYSMICON].
-	^smallIconExtent!
+	^smallIconExtent ifNil: [smallIconExtent := self getMetric: SM_CXSMICON pair: SM_CYSMICON]!
 
 supportsAlphaBlending
 	"Answer whether the host supports alpha blending."
@@ -421,6 +412,7 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #hasTreeViewHotTracking!capability enquiries!public! !
 !SystemMetrics categoriesFor: #iconTitleFont!geometry!public! !
 !SystemMetrics categoriesFor: #isSlowMachine!public!testing! !
+!SystemMetrics categoriesFor: #isVistaOrLater!capability enquiries!private! !
 !SystemMetrics categoriesFor: #largeIconExtent!constants!public! !
 !SystemMetrics categoriesFor: #menuBarColor!constants!public! !
 !SystemMetrics categoriesFor: #menuBarHeight!constants!public! !
@@ -456,11 +448,18 @@ current
 	Current isNil ifTrue: [Current := self basicNew].
 	^Current!
 
+initialize
+	self
+		addClassConstant: 'VistaMask' value: 2r11;
+		addClassConstant: 'FlatMenusMask' value: 2r1100;
+		addClassConstant: 'SmoothScrollingMask' value: 2r110000;
+		addClassConstant: 'IconScaleDownMask' value: 2r11000000!
+
 onPreStripImage
 	self reset!
 
 reset
-	"Reinitialize the receiver."
+	"Reinitialize the receiver. This is done on startup (see UserLibrary class>>clear) or when system settings are changed."
 
 	Current := nil!
 
@@ -469,6 +468,7 @@ uninitialize
 
 	self reset! !
 !SystemMetrics class categoriesFor: #current!instance creation!public! !
+!SystemMetrics class categoriesFor: #initialize!public! !
 !SystemMetrics class categoriesFor: #onPreStripImage!event handling!public! !
 !SystemMetrics class categoriesFor: #reset!initializing!public! !
 !SystemMetrics class categoriesFor: #uninitialize!class hierarchy-removing!private! !
