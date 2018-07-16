@@ -6,86 +6,43 @@ ToolbarButton subclass: #ToolbarIconButton
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ToolbarIconButton guid: (GUID fromString: '{eb590073-1214-495b-94ba-9bd4ca08bd32}')!
-ToolbarIconButton comment: 'ToolbarIconButton represents a user defined button for a <Toolbar>  the image is dynamically generated from the <Image> held by the associated <CommandDescription>. In general, ToolbarIconButtons are much easier to use than ToolbarButtons since they don''t require the creation of a separate image list bitmap for each of the sizes of toolbar button that may be required.  If you change the #bitmapSize aspect of the parent toolbar, the contained ToolbarIconButtons will automatically re-render themselves at the new size.
+ToolbarIconButton comment: '`ToolbarIconButton` represents a user defined button for a `Toolbar` where the button image is dynamically generated from the `Image` (typically an `Icon`) held by the associated `CommandDescription`. In general, `ToolbarIconButton`s are much easier to use than `ToolbarBitmapButton`s since they don''t require the creation of a separate image strip bitmap for each of the sizes of toolbar button that may be required.  If you change the `#bitmapSize` aspect of the parent toolbar, the contained `ToolbarIconButton`s will automatically re-render themselves at the new size, making use of the services of the `IconImageManager` to generate appropriate bitmap images for the revised extent.
 
 e.g. 
-
+```
 "Evaluate the following expressions one at a time"
-tb := Toolbar new show.
-tb extent: 300@ 64.
+tb := Toolbar new hasFlatAppearance: true; isTransparent: true; show; extent: 300@ 64; zOrderTop; yourself.
 ClassBrowserAbstract withAllSubclassesDo: [:each | 
 	tb addItem: (ToolbarIconButton command: #myCommand description: ''My Command'' image: each icon)].
 tb bitmapSize: 24@24.
 tb bitmapSize: 32@32.
-tb bitmapSize: 48@48
+tb bitmapSize: 48@48.
 tb destroy.
+```
 '!
 !ToolbarIconButton categoriesForClass!MVP-Views-Support! !
 !ToolbarIconButton methodsFor!
 
-bitmap
-	"Answer the bitmap for the receiver."
+imageIndexIn: aToolbar
+	"Private - Add a bitmap representation of the receiver's command's icon to the Toolbar.
+	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
-	bitmap isNil ifTrue: [self renderBitmap].
-	^bitmap!
+	"We don't need to retain the Bitmap, the Toolbar class will hold on to it (not the toolbar control itself, unfortunately)."
 
-bitmap: aBitmap 
-	self shouldNotImplement!
-
-bitmapIndex: anInteger 
-	self shouldNotImplement!
-
-initialize
-	"Private - Initialize the state of the receiver."
-
-	super initialize.
-	bitmapIndex := 0
-!
-
-onStartup
-	bitmap := nil!
+	^aToolbar addBitmap: self renderBitmap index: 0!
 
 renderBitmap
 	| image |
-	bitmap := Bitmap displayCompatibleWithExtent: self toolbar bitmapSize.
-	(bitmap canvas)
-		backcolor: Color face3d;
-		erase.
-	image := self commandDescription image.
-	image ifNil: [image := self class defaultImage].
-	(image class imageManager imageListWithExtent: bitmap extent) 
-		draw: image imageIndex
-		on: bitmap canvas
-		at: Point zero.
-	bitmapIndex := 0!
+	image := self commandDescription image ifNil: [self class defaultImage].
+	^image class imageManager bitmapForIcon: image extent: self toolbar bitmapSize!
 
-stbFixup: anSTBInFiler at: newObjectIndex
-	super stbFixup: anSTBInFiler at: newObjectIndex.
-	bitmap := nil.
-
-	!
-
-toolbar: aToolbar 
-	"Private - Set the toolbar in which the receiver exists to aToolbar."
-
-	super toolbar: aToolbar.
-	bitmap := nil.
-!
-
-update
-	"Private - Update the associated Toolbar if we have one"
-
-	super update.
-	bitmap := nil! !
-!ToolbarIconButton categoriesFor: #bitmap!accessing!public! !
-!ToolbarIconButton categoriesFor: #bitmap:!accessing!private! !
-!ToolbarIconButton categoriesFor: #bitmapIndex:!accessing!private! !
-!ToolbarIconButton categoriesFor: #initialize!initializing!private! !
-!ToolbarIconButton categoriesFor: #onStartup!private! !
+setCommandDescription: aCommandDescription
+	self initialize.
+	commandDescription := aCommandDescription.
+	^self! !
+!ToolbarIconButton categoriesFor: #imageIndexIn:!operations!private! !
 !ToolbarIconButton categoriesFor: #renderBitmap!private! !
-!ToolbarIconButton categoriesFor: #stbFixup:at:!binary filing!public! !
-!ToolbarIconButton categoriesFor: #toolbar:!accessing!private! !
-!ToolbarIconButton categoriesFor: #update!accessing!private! !
+!ToolbarIconButton categoriesFor: #setCommandDescription:!public! !
 
 !ToolbarIconButton class methodsFor!
 
@@ -103,8 +60,7 @@ commandDescription: aCommandDescription
 	"Answer a new instance of the receiver containing a bitmap for aCommandDescription"
 
 	^(self basicNew)
-		commandDescription: aCommandDescription;
-		initialize!
+		setCommandDescription: aCommandDescription!
 
 defaultImage
 	^Object icon!
@@ -118,15 +74,44 @@ new
 		image: Object icon!
 
 onStartup
-	"Private - Ensure all the receiver's subinstances are in their 'invalidated' state on startup
-	so that they rebuild their bitmap when required rather than attempting
-	to use an old handle hanging around from the sesssion when the image was saved."
+!
 
-	self primAllSubinstances do: [:i | i onStartup].
-! !
+stbConvertFrom: anSTBClassFormat
+	"Version 1 is refactored so that bitmap and bitmapIndex instance variables are no longer inherited.
+
+	Version 0 inst var layout was:
+		ToolbarItem
+			1: commandId
+			2: unused
+			3: window (toolbar)
+			4: style
+			5: commandDescription
+		ToolbarButton
+			6: bitmap
+			7: bitmapIndex
+		ToolbarIconButton
+
+	Version 1 inst var layout is:
+		ToolbarItem
+			1: toolbar
+		ToolbarButton (now abstract)
+			2: style
+			3: commandDescription
+			4: commandId
+		ToolbarIconButton
+	"
+
+	^
+	[:data |
+	| newInstance |
+	newInstance := self basicNew.
+	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
+	newInstance instVarAt: 4 put: (data at: 1).
+	newInstance]! !
 !ToolbarIconButton class categoriesFor: #command:description:image:!instance creation!public! !
 !ToolbarIconButton class categoriesFor: #commandDescription:!instance creation!public! !
 !ToolbarIconButton class categoriesFor: #defaultImage!public! !
 !ToolbarIconButton class categoriesFor: #new!instance creation!public! !
-!ToolbarIconButton class categoriesFor: #onStartup!event handling!private! !
+!ToolbarIconButton class categoriesFor: #onStartup!public! !
+!ToolbarIconButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
 

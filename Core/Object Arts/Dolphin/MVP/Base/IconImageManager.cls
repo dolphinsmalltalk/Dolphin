@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ImageManager subclass: #IconImageManager
-	instanceVariableNames: 'menuBitmaps'
+	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,26 +10,35 @@ IconImageManager comment: ''!
 !IconImageManager categoriesForClass!Graphics-Tools! !
 !IconImageManager methodsFor!
 
+bitmapForIcon: anIcon extent: aPoint
+	| forExtent |
+	forExtent := bitmaps at: aPoint ifAbsentPut: [LookupTable new].
+	^forExtent at: anIcon ifAbsentPut: [anIcon asAlphaBitmap: aPoint]!
+
 initialize
 	"Private - Initialize the receiver."
 
 	super initialize.
 	maskcolor := Color none.
-	menuBitmaps := LookupTable new!
+	bitmaps := LookupTable new!
 
-menuBitmapForIcon: anIcon 
-	^menuBitmaps at: anIcon ifAbsentPut: [anIcon asAlphaBitmap: SystemMetrics current menuImageExtent]!
+menuBitmapForIcon: anIcon
+	"Answer a 32-bit bitmap with alpha channel created from the <Icon> argument, with the
+	correct extent to display as a menu image."
+
+	^self bitmapForIcon: anIcon extent: SystemMetrics current menuImageExtent!
 
 newImages
-	menuBitmaps := LookupTable new.
+	bitmaps := LookupTable new.
 	^super newImages!
 
 stbSaveOn: anSTBOutFiler 
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
+!IconImageManager categoriesFor: #bitmapForIcon:extent:!public!searching! !
 !IconImageManager categoriesFor: #initialize!initializing!private! !
-!IconImageManager categoriesFor: #menuBitmapForIcon:!public! !
+!IconImageManager categoriesFor: #menuBitmapForIcon:!public!searching! !
 !IconImageManager categoriesFor: #newImages!private!removing! !
 !IconImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
 

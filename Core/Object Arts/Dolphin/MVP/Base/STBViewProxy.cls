@@ -20,7 +20,7 @@ beNotChild
 	style := styleArray at: 1.
 	(style allMask: WS_CHILD) ifFalse: [^self].
 	style := style maskClear: WS_CHILD.
-	instVars at: CreationStyleIndex put: (Array with: style with: (styleArray at: 2))!
+	instVars at: CreationStyleIndex put: {style. styleArray at: 2}!
 
 beTopView
 	"Make the receiver's represented object appear as a top view, ie. one with an unspecified parent.
@@ -197,7 +197,7 @@ stbFixup: inFiler at: anInteger
 	Note that individual View class STB conversions may need to be performed at this
 	point."
 
-	version = viewClass stbVersion ifFalse: [ "The View's individual class version has changed"
+	version == viewClass stbVersion ifFalse: [ "The View's individual class version has changed"
 		"Transcript print: self; nextPutAll: ': upgrading from version '; print: version; nextPutAll: ' to: '; print: viewClass stbVersion; cr."
 		viewClass stbVersion < 9 ifTrue: [self error: 'View STB versions must start at 9, not ', viewClass stbVersion printString].
 		"The #stbConvertProxy: method can replace inst. vars, and even the viewClass"

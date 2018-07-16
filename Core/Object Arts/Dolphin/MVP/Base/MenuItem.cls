@@ -34,7 +34,7 @@ acceleratorKey: anInteger
 	^self subclassResponsibility!
 
 allItems
-	^Array with: self!
+	^{self}!
 
 command
 	"Answer the command to action when this menu item is selected."
@@ -170,7 +170,7 @@ text
 	^self subclassResponsibility! !
 !MenuItem categoriesFor: #acceleratorKey!accessing!public! !
 !MenuItem categoriesFor: #acceleratorKey:!accessing!private! !
-!MenuItem categoriesFor: #allItems!public! !
+!MenuItem categoriesFor: #allItems!accessing!public! !
 !MenuItem categoriesFor: #command!commands!public! !
 !MenuItem categoriesFor: #commandDescription!accessing!private! !
 !MenuItem categoriesFor: #edit!accessing!operations!private! !

@@ -1,56 +1,29 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 ToolbarItem subclass: #ToolbarButton
-	instanceVariableNames: 'bitmap bitmapIndex'
+	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ToolbarButton guid: (GUID fromString: '{87b4c700-026e-11d3-9fd7-00a0cc3e4a32}')!
-ToolbarButton comment: 'ToolbarButton represents a user defined button for a <Toolbar>. The button is a <commandSource> capable of storing <CommandDescription>s to be fired when the button is pressed. Each button has an image which is identified by an index within a supplied <Bitmap>. The dimensions of the images within the bitmap are held by the parent <Toolbar> in its #bitmapExtent aspect.
+ToolbarButton guid: (GUID fromString: '{5a6ae0df-57b0-4ba0-be4a-c1cd1ccc6def}')!
+ToolbarButton isAbstract: true!
+ToolbarButton comment: '`ToolbarButton` is the abstract class of `Toolbar` buttons.  The button is a `<commandSource>` capable of storing `CommandDescription` to be fired when the button is pressed. Each button has an image, the provision of which is implemented by subclasses. The dimensions of the images within the bitmap are held by the containing `Toolbar` in its `#bitmapExtent` aspect.
 
-Instance Variables:
-	bitmap		<Bitmap> contain one or more button images.
-	bitmapIndex	<integer> index of this button''s image within the bitmap.
-
-Class Variables:
-	StandardTools	<DIBSection> of standard tool images.
-
-
+## Instance Variables:
+  `style`				`<integer>` representing the Window''s style of the item.
+  `commandDescription`	`CommandDescription` or `nil`; the item''s command.  
+  `commandId`			`<integer>`  ID of the item''s command (or zero if none).
 '!
 !ToolbarButton categoriesForClass!MVP-Views-Support! !
 !ToolbarButton methodsFor!
 
-bitmap
-	"Answer the bitmap for the receiver."
+checked
+	#deprecated.
+	^self isChecked!
 
-	^bitmap!
-
-bitmap: aBitmap
-	"Set aBitmap (or a shared copy of it) as the bitmap for the receiver."
-
-	bitmap := aBitmap asSharedCopy.
-	self update!
-
-bitmap: aBitmap index: anInteger commandDescription: aCommandDescription
-
-	"Private - Initialize the instance variables of the receiver."
-
-	bitmap := aBitmap.
-	bitmapIndex := anInteger.
-	commandDescription := aCommandDescription.
-	self isCheckStyle: false!
-
-bitmapIndex
-	"Answer the index of receivers sub-bitmap within its bitmap."
-
-	^bitmapIndex!
-
-bitmapIndex: anInteger
-	"Set the index of receivers sub-bitmap within its bitmap to anInteger."
-
-	bitmapIndex := anInteger.
-	self update
-!
+checked: aBoolean
+	#deprecated.
+	self isChecked: aBoolean!
 
 command
 	"Answer the <commandMessage> for the receiver or nil if one has not been set."
@@ -73,24 +46,32 @@ commandId
 
 	^commandId!
 
+enabled
+	#deprecated.
+	^self isEnabled!
+
+enabled: aBoolean
+	#deprecated.
+	self isEnabled: aBoolean!
+
 getCommandId
 	"Private - Determine and answer the Integer command identifier for the receiver"
 
 	commandId := self commandDescription id.
 	^commandId!
 
-imageIndexIn: aToolbar
-	"Private - Add the bitmap for the receiver to aToolbar.
-	Answer the index of the bitmap within aToolbar's registered bitmaps"
+hide: aBoolean
+	#deprecated.
+	self isHidden: aBoolean!
 
-	^aToolbar addBitmap: self bitmap index: self bitmapIndex
-!
+indeterminate: aBoolean
+	#deprecated.
+	self isIndeterminate: aBoolean!
 
 initialize
 	"Private - Initialize the state of the receiver."
 
-	super initialize.
-	self style: BTNS_BUTTON
+	style := BTNS_BUTTON
 !
 
 isChecked
@@ -186,6 +167,14 @@ onTipTextRequired
 		ifFalse: [self toolTipText]
 		!
 
+pressed
+	#deprecated.
+	^self isPressed!
+
+pressed: aBoolean
+	#deprecated.
+	self isPressed: aBoolean!
+
 printOn: aStream
 	"Append a representation of the receiver to aStream."
 
@@ -207,6 +196,17 @@ stateMask: stateMask
 	"Set the TBSTATE_XXX flags of the receiver to the <integer> stateMask."
 
 	self toolbar tbSetState: self commandId state: stateMask!
+
+style
+	"Private - Answer the style of the receiver."
+
+	^style!
+
+style: styleInteger
+	"Private - Set the style of the receiver. "
+
+	style := styleInteger.
+	self update!
 
 text
 	"Answers a short String description of the receiver's command. Uses the String
@@ -241,18 +241,18 @@ validateUserInterface: route
 	query isEnabled ifTrue: [mask := mask bitOr: TBSTATE_ENABLED].
 	query isChecked ifTrue: [mask := mask bitOr: ##(TBSTATE_CHECKED|TBSTATE_PRESSED)].
 	self stateMask: mask! !
-!ToolbarButton categoriesFor: #bitmap!accessing!public! !
-!ToolbarButton categoriesFor: #bitmap:!accessing!public! !
-!ToolbarButton categoriesFor: #bitmap:index:commandDescription:!initializing!private! !
-!ToolbarButton categoriesFor: #bitmapIndex!accessing!public! !
-!ToolbarButton categoriesFor: #bitmapIndex:!accessing!public! !
+!ToolbarButton categoriesFor: #checked!public!testing! !
+!ToolbarButton categoriesFor: #checked:!public!state! !
 !ToolbarButton categoriesFor: #command!commands!public! !
 !ToolbarButton categoriesFor: #command:!accessing!public! !
 !ToolbarButton categoriesFor: #commandDescription!accessing!public! !
 !ToolbarButton categoriesFor: #commandDescription:!accessing!public! !
 !ToolbarButton categoriesFor: #commandId!commands!private! !
+!ToolbarButton categoriesFor: #enabled!public!testing! !
+!ToolbarButton categoriesFor: #enabled:!public!state! !
 !ToolbarButton categoriesFor: #getCommandId!commands!private! !
-!ToolbarButton categoriesFor: #imageIndexIn:!operations!private! !
+!ToolbarButton categoriesFor: #hide:!public!state! !
+!ToolbarButton categoriesFor: #indeterminate:!public!state! !
 !ToolbarButton categoriesFor: #initialize!initializing!private! !
 !ToolbarButton categoriesFor: #isChecked!public!testing! !
 !ToolbarButton categoriesFor: #isChecked:!public!state! !
@@ -273,49 +273,61 @@ validateUserInterface: route
 !ToolbarButton categoriesFor: #isPressed!public!testing! !
 !ToolbarButton categoriesFor: #isPressed:!public!state! !
 !ToolbarButton categoriesFor: #onTipTextRequired!event handling!public! !
+!ToolbarButton categoriesFor: #pressed!public!testing! !
+!ToolbarButton categoriesFor: #pressed:!public!state! !
 !ToolbarButton categoriesFor: #printOn:!development!printing!public! !
 !ToolbarButton categoriesFor: #rectangle!accessing!public! !
 !ToolbarButton categoriesFor: #screenRectangle!accessing!public! !
 !ToolbarButton categoriesFor: #stateMask:!public!state! !
+!ToolbarButton categoriesFor: #style!private!style! !
+!ToolbarButton categoriesFor: #style:!private!style! !
 !ToolbarButton categoriesFor: #text!accessing!public! !
 !ToolbarButton categoriesFor: #text:!accessing!public! !
 !ToolbarButton categoriesFor: #textIndexIn:!operations!private! !
 !ToolbarButton categoriesFor: #toolTipText!operations!public! !
 !ToolbarButton categoriesFor: #validateUserInterface:!operations!public! !
 
-ToolbarButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
-
 !ToolbarButton class methodsFor!
 
-bitmap: aBitmap index: bitmapIndex commandDescription: aCommandDescription
-	"Answer a new instance of the receiver containing the bitmapIndex'd subimage of aBitmap."
+bitmapButtonClass
+	"Answer the subclass of the receiver which is used to represent buttons with images from arbitrary bitmaps."
 
-	^super new
-		bitmap: aBitmap
-		index: bitmapIndex
-		commandDescription: aCommandDescription!
+	^ToolbarBitmapButton!
 
 clearSelection
 	"Answer a sub-instance of the receiver for the #clearSelection command"
 
-	^self standardImage: STD_DELETE command: #clearSelection description: 'Delete'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_DELETE
+		command: #clearSelection
+		description: 'Delete'!
 
 copySelection
 	"Answer a sub-instance of the receiver for the #copySelection command"
 
-	^self standardImage: STD_COPY command: #copySelection description: 'Copy'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_COPY
+		command: #copySelection
+		description: 'Copy'!
 
 cutSelection
 	"Answer a sub-instance of the receiver for the #cutSelection command"
 
-	^self standardImage: STD_CUT command: #cutSelection description: 'Cut'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_CUT
+		command: #cutSelection
+		description: 'Cut'!
 
 dolphinImage: bitmapIndex command: aCommand description: aString
 	"Private - Answer a new instance of the receiver using a Dolphin system toolbar bitmap
 	identified by bitmapName and issuing aCommand"
 
-	^self 	bitmap: self dolphinToolsBitmap
-		index: bitmapIndex 
+	^self bitmapButtonClass
+		bitmap: self dolphinToolsBitmap
+		index: bitmapIndex
 		commandDescription: (CommandDescription command: aCommand description: aString)!
 
 dolphinToolsBitmap
@@ -326,17 +338,29 @@ dolphinToolsBitmap
 fileNew
 	"Answer a sub-instance of the receiver for the #fileNew command"
 
-	^self standardImage: STD_FILENEW command: #fileNew description: 'New'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_FILENEW
+		command: #fileNew
+		description: 'New'!
 
 fileOpen
 	"Answer a sub-instance of the receiver for the #fileOpen command"
 
-	^self standardImage: STD_FILEOPEN command: #fileOpen description: 'Open'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_FILEOPEN
+		command: #fileOpen
+		description: 'Open'!
 
 fileSave
 	"Answer a sub-instance of the receiver for the #fileSave command"
 
-	^self  standardImage: STD_FILESAVE command: #fileSave description: 'Save'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_FILESAVE
+		command: #fileSave
+		description: 'Save'!
 
 find
 	"Answer a sub-instance of the receiver for the #find command"
@@ -344,7 +368,7 @@ find
 	"The standard find tool  is rather poor, and nobody uses it, so rather than:
 	^self standardImage: STD_FIND command: #find description: 'Find'"
 
-	^self 
+	^self bitmapButtonClass
 		bitmap: self findToolsBitmap
 		index: 0
 		commandDescription: (CommandDescription command: #find description: 'Find')!
@@ -352,7 +376,7 @@ find
 findNext
 	"Answer a sub-instance of the receiver for the #findNext command"
 
-	^self 
+	^self bitmapButtonClass
 		bitmap: self findToolsBitmap
 		index: 1
 		commandDescription: (CommandDescription command: #findNext description: 'Find Next')!
@@ -373,7 +397,7 @@ histImage: bitmapIndex command: aCommand description: aString
 	toolbar bitmap identified by bitmapName and issuing aCommand"
 
 	^self systemButtonClass 
-		bitmap: IDB_HIST_SMALL_COLOR 
+		bitmapId: IDB_HIST_SMALL_COLOR 
 		index: bitmapIndex 
 		commandDescription: (CommandDescription command: aCommand description: aString)!
 
@@ -382,14 +406,14 @@ historyBack
 
 	^(self histImage: HIST_BACK command: #historyBack description: 'Back')
 		isDropdownStyle: true;
-	yourself!
+		yourself!
 
 historyForward
 	"Answer a sub-instance of the receiver for the #historyForward command"
 
 	^(self histImage: HIST_FORWARD command: #historyForward description: 'Forward')
 		isDropdownStyle: true;
-	yourself!
+		yourself!
 
 icon
 	^PushButton icon!
@@ -397,12 +421,20 @@ icon
 largeIconMode
 	"Answer a sub-instance of the receiver for the #largeIcons command"
 
-	^self viewImage: VIEW_LARGEICONS command: #largeIconMode description: 'Large Icons'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_LARGEICONS
+		command: #largeIconMode
+		description: 'Large Icons'!
 
 listMode
 	"Answer a sub-instance of the receiver for the #listStyle command"
 
-	^self viewImage: VIEW_LIST command: #listMode description: 'View List'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_LIST
+		command: #listMode
+		description: 'View List'!
 
 listToolsBitmap
 	"Note that the list tools (like the find tools) are pulled from resources located in the VM/executable,
@@ -415,83 +447,160 @@ listToolsBitmap
 		isShared: true;
 		yourself!
 
-new
-	"Answer a new default ToolbarButton"
-
-	^self dolphinImage: 35 command: #noCommand description: 'No command'!
-
 newFolder
 	"Answer a sub-instance of the receiver for the #newFolder command"
 
-	^self viewImage: VIEW_NEWFOLDER command: #newFolder description: 'Create New Folder'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_NEWFOLDER
+		command: #newFolder
+		description: 'Create New Folder'!
 
 parentFolder
 	"Answer a sub-instance of the receiver for the #parentFolder command"
 
-	^self viewImage: VIEW_PARENTFOLDER command: #parentFolder description: 'Up One Level'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_PARENTFOLDER
+		command: #parentFolder
+		description: 'Up One Level'!
 
 pasteClipboard
 	"Answer a sub-instance of the receiver for the #pasteClipboard command"
 
-	^self standardImage: STD_PASTE command: #pasteClipboard description: 'Paste'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_PASTE
+		command: #pasteClipboard
+		description: 'Paste'!
 
 print
 	"Answer a sub-instance of the receiver for the #print command"
 
-	^self standardImage: STD_PRINT command: #print description: 'Print'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_PRINT
+		command: #print
+		description: 'Print'!
 
 properties
 	"Answer a sub-instance of the receiver for the #properties command"
 
-	^self standardImage: STD_PROPERTIES command: #properties description: 'Properties'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_PROPERTIES
+		command: #properties
+		description: 'Properties'!
 
 redo
 	"Answer a sub-instance of the receiver for the #redo command"
 
-	^self standardImage: STD_REDOW command: #redo description: 'Redo'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_REDOW
+		command: #redo
+		description: 'Redo'!
 
 replace
 	"Answer a sub-instance of the receiver for the #replace command"
 
-	^self standardImage: STD_REPLACE command: #replace description: 'Replace'!
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_REPLACE
+		command: #replace
+		description: 'Replace'!
 
 reportMode
 	"Answer a sub-instance of the receiver for the #reportStyle command"
 
-	^self viewImage: VIEW_DETAILS command: #reportMode description: 'View Details'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_DETAILS
+		command: #reportMode
+		description: 'View Details'!
 
 smallIconMode
 	"Answer a sub-instance of the receiver for the #smallIcons command"
 
-	^self viewImage: VIEW_SMALLICONS command: #smallIconMode description: 'Small Icons'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_SMALLICONS
+		command: #smallIconMode
+		description: 'Small Icons'!
 
 sortDate
 	"Answer a sub-instance of the receiver for the #sortDate command"
 
-	^self viewImage: VIEW_SORTDATE command: #sortDate description: 'Sort by Date'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_SORTDATE
+		command: #sortDate
+		description: 'Sort by Date'!
 
 sortName
 	"Answer a sub-instance of the receiver for the #sortName command"
 
-	^self viewImage: VIEW_SORTNAME command: #sortName description: 'Sort by Name'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_SORTNAME
+		command: #sortName
+		description: 'Sort by Name'!
 
 sortSize
 	"Answer a sub-instance of the receiver for the #sortSize command"
 
-	^self viewImage: VIEW_SORTSIZE command: #sortSize description: 'Sort by Size'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_SORTSIZE
+		command: #sortSize
+		description: 'Sort by Size'!
 
 sortType
 	"Answer a sub-instance of the receiver for the #sortType command"
 
-	^self viewImage: VIEW_SORTTYPE command: #sortType description: 'Sort by Type'!
+	^self
+		systemBitmap: IDB_VIEW_SMALL_COLOR
+		image: VIEW_SORTTYPE
+		command: #sortType
+		description: 'Sort by Type'!
 
-standardImage: bitmapIndex command: aCommand description: aString
-	"Private - Answer a new instance of the receiver using a Standard system toolbar bitmap
-	identified by bitmapName and issuing aCommand"
+stbConvertFrom: anSTBClassFormat
+	"Version 0 inst var layout was:
+		ToolbarItem
+			1: commandId
+			2: unused
+			3: window (toolbar)
+			4: style
+			5: commandDescription
+		ToolbarButton (which was concrete, and equivalent to ToolbarBitmapButton)
+			6: bitmap
+			7: bitmapIndex
 
-	^self systemButtonClass 
-		bitmap: IDB_STD_SMALL_COLOR 
-		index: bitmapIndex 
+	Version 1 inst var layout for ToolbarBitmapButton is:
+		ToolbarItem
+			1: toolbar
+		ToolbarButton
+			2: style
+			3: commandDescription
+			4: commandId
+		ToolbarBitmapButton
+			5: bitmap
+			6: bitmapIndex
+	"
+
+	^
+	[:data |
+	| newInstance |
+	newInstance := self bitmapButtonClass basicNew.
+	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
+	newInstance instVarAt: 4 put: (data at: 1).
+	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
+	newInstance]!
+
+systemBitmap: anInteger image: bitmapIndex command: aCommand description: aString
+	^self systemButtonClass
+		bitmapId: anInteger
+		index: bitmapIndex
 		commandDescription: (CommandDescription command: aCommand description: aString)!
 
 systemButtonClass
@@ -502,51 +611,45 @@ systemButtonClass
 undo
 	"Answer a sub-instance of the receiver for the #undo command"
 
-	^self standardImage: STD_UNDO command: #undo description: 'Undo'!
-
-viewImage: bitmapIndex command: aCommand description: aString
-	"Private - Answer a new instance of the receiver using a system View toolbar bitmap
-	identified by bitmapName and issuing aCommand"
-
-	^self systemButtonClass 
-		bitmap: IDB_VIEW_SMALL_COLOR 
-		index: bitmapIndex
-		commandDescription: (CommandDescription command: aCommand description: aString)! !
-!ToolbarButton class categoriesFor: #bitmap:index:commandDescription:!instance creation!public! !
-!ToolbarButton class categoriesFor: #clearSelection!instance creation!public! !
-!ToolbarButton class categoriesFor: #copySelection!instance creation!public! !
-!ToolbarButton class categoriesFor: #cutSelection!instance creation!public! !
+	^self
+		systemBitmap: IDB_STD_SMALL_COLOR
+		image: STD_UNDO
+		command: #undo
+		description: 'Undo'! !
+!ToolbarButton class categoriesFor: #bitmapButtonClass!constants!instance creation!public! !
+!ToolbarButton class categoriesFor: #clearSelection!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #copySelection!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #cutSelection!instance creation-system buttons!public! !
 !ToolbarButton class categoriesFor: #dolphinImage:command:description:!instance creation!private! !
 !ToolbarButton class categoriesFor: #dolphinToolsBitmap!instance creation!private! !
-!ToolbarButton class categoriesFor: #fileNew!instance creation!public! !
-!ToolbarButton class categoriesFor: #fileOpen!instance creation!public! !
-!ToolbarButton class categoriesFor: #fileSave!instance creation!public! !
+!ToolbarButton class categoriesFor: #fileNew!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #fileOpen!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #fileSave!instance creation-system buttons!public! !
 !ToolbarButton class categoriesFor: #find!instance creation!public! !
 !ToolbarButton class categoriesFor: #findNext!instance creation!public! !
 !ToolbarButton class categoriesFor: #findToolsBitmap!constants!public! !
-!ToolbarButton class categoriesFor: #histImage:command:description:!instance creation!private! !
-!ToolbarButton class categoriesFor: #historyBack!instance creation!public! !
-!ToolbarButton class categoriesFor: #historyForward!instance creation!public! !
+!ToolbarButton class categoriesFor: #histImage:command:description:!instance creation-system buttons!private! !
+!ToolbarButton class categoriesFor: #historyBack!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #historyForward!instance creation-system buttons!public! !
 !ToolbarButton class categoriesFor: #icon!public! !
-!ToolbarButton class categoriesFor: #largeIconMode!instance creation!public! !
-!ToolbarButton class categoriesFor: #listMode!instance creation!public! !
+!ToolbarButton class categoriesFor: #largeIconMode!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #listMode!instance creation-system buttons!public! !
 !ToolbarButton class categoriesFor: #listToolsBitmap!constants!public! !
-!ToolbarButton class categoriesFor: #new!instance creation!public! !
-!ToolbarButton class categoriesFor: #newFolder!instance creation!public! !
-!ToolbarButton class categoriesFor: #parentFolder!instance creation!public! !
-!ToolbarButton class categoriesFor: #pasteClipboard!instance creation!public! !
-!ToolbarButton class categoriesFor: #print!instance creation!public! !
-!ToolbarButton class categoriesFor: #properties!instance creation!public! !
-!ToolbarButton class categoriesFor: #redo!instance creation!public! !
-!ToolbarButton class categoriesFor: #replace!instance creation!public! !
-!ToolbarButton class categoriesFor: #reportMode!instance creation!public! !
-!ToolbarButton class categoriesFor: #smallIconMode!instance creation!public! !
-!ToolbarButton class categoriesFor: #sortDate!instance creation!public! !
-!ToolbarButton class categoriesFor: #sortName!instance creation!public! !
-!ToolbarButton class categoriesFor: #sortSize!instance creation!public! !
-!ToolbarButton class categoriesFor: #sortType!instance creation!public! !
-!ToolbarButton class categoriesFor: #standardImage:command:description:!instance creation!private! !
+!ToolbarButton class categoriesFor: #newFolder!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #parentFolder!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #pasteClipboard!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #print!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #properties!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #redo!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #replace!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #reportMode!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #smallIconMode!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #sortDate!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #sortName!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #sortSize!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #sortType!instance creation-system buttons!public! !
+!ToolbarButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!ToolbarButton class categoriesFor: #systemBitmap:image:command:description:!instance creation-system buttons!private! !
 !ToolbarButton class categoriesFor: #systemButtonClass!constants!instance creation!public! !
 !ToolbarButton class categoriesFor: #undo!instance creation!public! !
-!ToolbarButton class categoriesFor: #viewImage:command:description:!instance creation!private! !
 

@@ -21,6 +21,7 @@ package classNames
 	add: #TBBUTTON;
 	add: #TBBUTTONINFOW;
 	add: #Toolbar;
+	add: #ToolbarBitmapButton;
 	add: #ToolbarButton;
 	add: #ToolbarIconButton;
 	add: #ToolbarItem;
@@ -55,7 +56,7 @@ Object subclass: #StatusBarItemAbstract
 	poolDictionaries: 'StatusBarConstants'
 	classInstanceVariableNames: ''!
 Object subclass: #ToolbarItem
-	instanceVariableNames: 'commandId unused window style commandDescription'
+	instanceVariableNames: 'toolbar'
 	classVariableNames: ''
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
@@ -95,12 +96,17 @@ StatusBarItemAbstract subclass: #StatusBarNullItem
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ToolbarItem subclass: #ToolbarButton
-	instanceVariableNames: 'bitmap bitmapIndex'
+	instanceVariableNames: 'style commandDescription commandId'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ToolbarItem subclass: #ToolbarSeparator
 	instanceVariableNames: 'width'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ToolbarButton subclass: #ToolbarBitmapButton
+	instanceVariableNames: 'bitmap bitmapIndex'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -110,7 +116,7 @@ ToolbarButton subclass: #ToolbarIconButton
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ToolbarButton subclass: #ToolbarSystemButton
-	instanceVariableNames: ''
+	instanceVariableNames: 'bitmapId bitmapIndex'
 	classVariableNames: 'BitmapButtons Bitmaps HistoryButtons StandardButtons ViewButtons'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

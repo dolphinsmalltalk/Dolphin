@@ -64,7 +64,7 @@ createInternalButton
 	"Add our internal button to the delegated toolbar"
 
 	referee
-		items: (Array with: ToolbarIconButton new);
+		items: {ToolbarIconButton new};
 		hasLabels: true.
 	self backcolor: nil!
 
@@ -255,7 +255,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ToolButton)  98 14 0 0 98 2 8 1140850688 131073 416 0 0 0 5 0 0 0 416 0 410 8 ##(Smalltalk.Toolbar)  98 25 0 416 98 2 8 1140853580 131137 496 0 0 0 1 0 0 0 496 0 8 4294906841 0 234 256 98 2 26647 1115910 ##(Smalltalk.ToolbarIconButton)  26647 0 496 1 1180998 4 ##(Smalltalk.CommandDescription)  8 #noCommand 8 'No command' 1 1 263494 3 ##(Smalltalk.Icon)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'Object.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 395334 3 ##(Smalltalk.Bitmap)  0 16 0 0 0 0 3 328198 ##(Smalltalk.Point)  49 49 1 98 1 640 234 240 98 6 864 5 850 0 16 0 0 0 0 3 882 49 49 1 850 0 16 0 0 0 0 3 882 49 49 3 0 3 0 882 49 49 882 183 87 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 882 1 1 882 93 1 496 1122 8 #updateSize 98 0 496 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 46 0 0 0 0 0 0 0] 98 0 882 193 193 0 27 1058 202 208 98 1 1122 1152 98 2 882 1 1 882 193 97 416 1266 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 98 1 496 1328 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ToolButton) 34 14 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 nil 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1140853580 131137 480 nil nil nil 3 nil nil nil 480 nil 8 1909124416 nil 170 192 34 2 58823 1115206 1 ##(Smalltalk.ToolbarIconButton) 480 1 1180998 4 ##(Smalltalk.CommandDescription) #noCommand 8 'No command' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Object.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 58823 34 1 608 170 176 34 2 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 328198 ##(Smalltalk.Point) 49 49 1 nil 3 nil 882 49 49 882 183 87 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 882 1 1 882 193 97 480 1010 #updateSizePosted 8 #() 480 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 8 #() 882 193 193 nil 27 946 138 144 34 1 1010 #createAt:extent: 34 2 882 3839 21 882 193 97 416 1122 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 223 7 0 0 58 0 0 0] 34 1 480 1184 nil 27 )! !
 !ToolButton class categoriesFor: #icon!public! !
 !ToolButton class categoriesFor: #resource_Default_view!public!resources-views! !
 

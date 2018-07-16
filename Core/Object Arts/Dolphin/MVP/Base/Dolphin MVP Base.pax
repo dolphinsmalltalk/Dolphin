@@ -1065,7 +1065,7 @@ Pen subclass: #StockPen
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ImageManager subclass: #IconImageManager
-	instanceVariableNames: 'menuBitmaps toolbarBitmaps'
+	instanceVariableNames: 'bitmaps'
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
