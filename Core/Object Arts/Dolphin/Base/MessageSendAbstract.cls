@@ -162,6 +162,8 @@ valueWithArguments: triggerArguments
 !MessageSendAbstract categoriesFor: #value:value:value:value:!evaluating!public! !
 !MessageSendAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
 
+MessageSendAbstract methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
+
 !MessageSendAbstract class methodsFor!
 
 icon

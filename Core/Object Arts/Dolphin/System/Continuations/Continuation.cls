@@ -66,7 +66,7 @@ valueWithArguments: anArray
 !Continuation categoriesFor: #value:!evaluating!public! !
 !Continuation categoriesFor: #valueWithArguments:!evaluating!public! !
 
-Continuation methodProtocol: #monadicValuable attributes: #(#ansi #readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
+Continuation methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 
 !Continuation class methodsFor!
 

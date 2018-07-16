@@ -793,6 +793,10 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #whileTrue!evaluating!public! !
 !BlockClosure categoriesFor: #whileTrue:!evaluating!public! !
 
+BlockClosure methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
+BlockClosure methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
+BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
+
 !BlockClosure class methodsFor!
 
 attemptToRecompile: aBlockClosure 
