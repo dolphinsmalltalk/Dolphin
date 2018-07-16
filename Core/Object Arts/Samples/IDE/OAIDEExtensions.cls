@@ -39,7 +39,7 @@ baseProtocolFor: anObject named: aStringName
 	protos := anObject class allProtocols collect: [:each | each displayString].
 	classProtocol := '%<<1p>>' expandMacrosWith: anObject class.
 	default := (protos detect: [:each | each = classProtocol] ifNone: [classProtocol]) asValue.
-	protos add: classProtocol.
+	protos add: anObject class name.
 	^(ChoicePrompter 
 		on: default
 		choices: protos asSortedCollection
@@ -128,72 +128,6 @@ initialize
 	flags := ClassCommentTemplateMask | KeyHelpMask.
 	self observeToolEvents.
 	Smalltalk developmentSystem registerTool: self!
-
-instVarDescriptionsFor: aClass
-	"Private - Answers a <readableString> that describes the instance variables and
-	class variables for aClass. This method is simplistic, in that it relies on the availability
-	of an instance of aClass to perform its work. First it tries to locate an existing instance 
-	but if this fails then #new is used to instantiate one afresh. This may not be a sensible thing
-	to do for all classes, and may cause an error."
-
-	| names stream instance instances |
-	instances := aClass allSubinstances.
-	instance := instances isEmpty ifTrue: [aClass new] ifFalse: [instances first].
-	stream := WriteStream on: String new.
-	names := aClass instVarNames.
-	names notEmpty 
-		ifTrue: 
-			[stream
-				nextPutAll: 'Instance Variables:';
-				cr.
-			names do: 
-					[:each | 
-					| index var |
-					index := aClass indexOfInstVar: each.
-					var := instance instVarAt: index.
-					stream
-						tab;
-						nextPutAll: each;
-						tab: 2;
-						nextPutAll: (self baseProtocolFor: var named: each);
-						cr].
-			stream cr].
-	names := aClass classVarNames.
-	names notEmpty 
-		ifTrue: 
-			[stream
-				nextPutAll: 'Class Variables:';
-				cr.
-			names do: 
-					[:each | 
-					| var |
-					var := aClass classPool at: each.
-					stream
-						tab;
-						nextPutAll: each;
-						tab: 2;
-						nextPutAll: (self baseProtocolFor: var named: each);
-						cr].
-			stream cr].
-	names := aClass class instVarNames.
-	names notEmpty 
-		ifTrue: 
-			[stream
-				nextPutAll: 'Class Instance Variables:';
-				cr.
-			names do: 
-					[:each | 
-					| index var |
-					index := aClass class indexOfInstVar: each.
-					var := instance class instVarAt: index.
-					stream
-						tab;
-						nextPutAll: each;
-						tab: 2;
-						nextPutAll: (self baseProtocolFor: var named: each);
-						cr].
-			stream cr].
-	^stream contents!
 
 nonClassBrowserTools
 	^self allToolClasses difference: self classBrowserClasses!
@@ -344,7 +278,88 @@ streamHtml: aStream intoBrowser: browser
 	doc := browser document.
 	docStream := doc queryInterface: IPersistStreamInit.
 	docStream initNew.
-	docStream readFrom: (aStream queryInterface: IStream)! !
+	docStream readFrom: (aStream queryInterface: IStream)!
+
+variableDescriptionsFor: aClass
+	"Private - Answers a <readableString> that describes the instance variables and
+	class variables for aClass. This method is simplistic, in that it relies on the availability
+	of an instance of aClass to perform its work. First it tries to locate an existing instance 
+	but if this fails then #new is used to instantiate one afresh. This may not be a sensible thing
+	to do for all classes, and may cause an error."
+
+	| names stream instance instances |
+	instances := aClass allSubinstances.
+	instance := instances isEmpty ifTrue: [aClass new] ifFalse: [instances first].
+	stream := WriteStream on: String new.
+	names := aClass instVarNames.
+	names notEmpty
+		ifTrue: 
+			[stream
+				nextPutAll: '## Instance Variables:';
+				cr.
+			names do: 
+					[:each |
+					| index var |
+					index := aClass indexOfInstVar: each.
+					var := instance instVarAt: index.
+					stream
+						space;
+						space;
+						nextPut: $`;
+						nextPutAll: each;
+						nextPut: $`;
+						tab: 2;
+						nextPut: $`;
+						nextPutAll: (self baseProtocolFor: var named: each);
+						nextPut: $`;
+						cr].
+			stream cr].
+	names := aClass classVarNames.
+	names notEmpty
+		ifTrue: 
+			[stream
+				nextPutAll: '## Class Variables:';
+				cr.
+			names do: 
+					[:each |
+					| var |
+					var := aClass classPool at: each.
+					stream
+						space;
+						space;
+						nextPut: $`;
+						nextPutAll: each;
+						nextPut: $`;
+						tab: 2;
+						nextPut: $`;
+						nextPutAll: (self baseProtocolFor: var named: each);
+						nextPut: $`;
+						cr].
+			stream cr].
+	names := aClass class instVarNames.
+	names notEmpty
+		ifTrue: 
+			[stream
+				nextPutAll: '## Class Instance Variables:';
+				cr.
+			names do: 
+					[:each |
+					| index var |
+					index := aClass class indexOfInstVar: each.
+					var := instance class instVarAt: index.
+					(stream
+						space;
+						space)
+						nextPut: $`;
+						nextPutAll: each;
+						nextPut: $`;
+						tab: 2;
+						nextPut: $`;
+						nextPutAll: (self baseProtocolFor: var named: each);
+						nextPut: $`;
+						cr].
+			stream cr].
+	^stream contents! !
 !OAIDEExtensions categoriesFor: #allToolClasses!constants!private! !
 !OAIDEExtensions categoriesFor: #allVisibleSubViewsOf:do:!helpers!private! !
 !OAIDEExtensions categoriesFor: #baseProtocolFor:named:!development!private! !
@@ -358,7 +373,6 @@ streamHtml: aStream intoBrowser: browser
 !OAIDEExtensions categoriesFor: #extendClassCommentMenu:!event handling!private! !
 !OAIDEExtensions categoriesFor: #extendHelpMenu:!helpers!private! !
 !OAIDEExtensions categoriesFor: #initialize!initializing!private! !
-!OAIDEExtensions categoriesFor: #instVarDescriptionsFor:!development!private! !
 !OAIDEExtensions categoriesFor: #nonClassBrowserTools!accessing!private! !
 !OAIDEExtensions categoriesFor: #observeBrowserClass:!initializing!private! !
 !OAIDEExtensions categoriesFor: #observeSystemEvents!initializing!private! !
@@ -372,6 +386,7 @@ streamHtml: aStream intoBrowser: browser
 !OAIDEExtensions categoriesFor: #printInlineStyleSheetOn:!private! !
 !OAIDEExtensions categoriesFor: #release!dependency!private! !
 !OAIDEExtensions categoriesFor: #streamHtml:intoBrowser:!operations!private! !
+!OAIDEExtensions categoriesFor: #variableDescriptionsFor:!development!private! !
 
 !OAIDEExtensions class methodsFor!
 

@@ -60,7 +60,7 @@ emitClassLayoutDescription
 	insertion point in the receiver."
 
 	| desc |
-	[desc := OAIDEExtensions current instVarDescriptionsFor: self browser selectedClass] 
+	[desc := OAIDEExtensions current variableDescriptionsFor: self browser selectedClass]
 		on: OperationAborted
 		do: [:ex | ]
 		on: Error
