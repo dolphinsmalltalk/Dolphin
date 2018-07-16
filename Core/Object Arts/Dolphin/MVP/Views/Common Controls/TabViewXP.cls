@@ -154,7 +154,7 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 	inverted := self isInverted.
 	rcItem := aRectangle copy.
 	inverted ifTrue: [rcItem bottom: rcItem bottom - 1] ifFalse: [rcItem top: rcItem top + 1].
-	textExtent := aCanvas textExtent: text.
+	textExtent := aCanvas textExtent: (text copyWithout: $&).
 	imageIndex <= 0 
 		ifTrue: 
 			[textOffset := 0.

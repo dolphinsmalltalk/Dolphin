@@ -410,13 +410,13 @@ selectIndex: anInteger set: aBoolean
 					self errorSubscriptBounds: anInteger]
 				ifFalse: [self errorNotMultiSelect]]!
 
-selectionFromPoint: pos 
+selectionFromPoint: pos
 	"Private - Answer the selection that would occur if a mouse click at the
 	<Point>, pos, was passed to the control."
 
 	| item |
 	item := self itemFromPoint: pos.
-	^self isMultiSelect ifTrue: [item isNil ifTrue: [#()] ifFalse: [Array with: item]] ifFalse: [item]!
+	^self isMultiSelect ifTrue: [item isNil ifTrue: [#()] ifFalse: [{item}]] ifFalse: [item]!
 
 selectionMode
 	^SelectionModes keyAtValue: (self baseStyle bitAnd: SelectionModeMask)!
@@ -543,8 +543,8 @@ initialize
 				at: 2 put: #lbnDblClk;
 				at: 3 put: #lbnSelCancel;
 				yourself.
-	self registerMessages: (Array with: WM_BEGINDRAG -> #wmBeginDrag:wParam:lParam:).
-	SelectionModes := (IdentityDictionary new)
+	self registerMessages: {WM_BEGINDRAG -> #wmBeginDrag:wParam:lParam:}.
+	SelectionModes := IdentityDictionary new
 				at: #single put: 0;
 				at: #multi put: LBS_EXTENDEDSEL;
 				at: #toggle put: LBS_MULTIPLESEL;
@@ -556,7 +556,7 @@ selectionModes
 	^SelectionModes!
 
 uninitialize
-	self unregisterMessages: (Array with: WM_BEGINDRAG)!
+	self unregisterMessages: {WM_BEGINDRAG}!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."

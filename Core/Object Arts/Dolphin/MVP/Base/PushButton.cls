@@ -287,8 +287,8 @@ initialize
 		PushButton initialize
 	"
 
-	self registerMessages: (Array with: BM_SETSTYLE -> #bmSetStyle:wParam:lParam:).
-	ButtonStyleMap := (IdentityDictionary new)
+	self registerMessages: {BM_SETSTYLE -> #bmSetStyle:wParam:lParam:}.
+	ButtonStyleMap := IdentityDictionary new
 				at: #push put: BS_PUSHBUTTON;
 				at: #toggle put: BS_CHECKBOX | BS_PUSHLIKE;
 				at: #check put: BS_CHECKBOX;
@@ -297,7 +297,7 @@ initialize
 				yourself.
 
 	"Implementation makes some assumptions about the nature of the default button encoding in the style flags"
-	self assert: [BS_DEFPUSHBUTTON == 1 and: [BS_DEFCOMMANDLINK  == (BS_COMMANDLINK | BS_DEFPUSHBUTTON)]]!
+	self assert: [BS_DEFPUSHBUTTON == 1 and: [BS_DEFCOMMANDLINK == (BS_COMMANDLINK | BS_DEFPUSHBUTTON)]]!
 
 resource_Cancel_button
 	"Answer the literal data from which the 'Cancel button' resource can be reconstituted.
@@ -380,7 +380,7 @@ stbVersion
 	^14!
 
 uninitialize
-	self unregisterMessages: (Array with: BM_SETSTYLE)!
+	self unregisterMessages: {BM_SETSTYLE}!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."

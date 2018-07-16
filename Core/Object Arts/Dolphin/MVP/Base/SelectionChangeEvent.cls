@@ -29,7 +29,7 @@ newSelection
 	^self newSelections notEmpty ifTrue: [self newSelections first]!
 
 newSelection: anObject
-	self newSelections: (Array with: anObject)!
+	self newSelections: {anObject}!
 
 newSelections
 	^newSelections ?? #()!
@@ -41,7 +41,7 @@ oldSelection
 	^self oldSelections notEmpty ifTrue: [self oldSelections first]!
 
 oldSelection: anObject
-	self oldSelections: (Array with: anObject)!
+	self oldSelections: {anObject}!
 
 oldSelections
 	^oldSelections ?? #()!

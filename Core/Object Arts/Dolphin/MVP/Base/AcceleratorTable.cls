@@ -115,27 +115,24 @@ icon
 
 	^Keyboard icon!
 
-initialize 
-        "Private - Initialize the receiver's class variables. 
+initialize
+	"Private - Initialize the receiver's class variables. 
 
         Evaluate me to initialize: 
                 AcceleratorTable initialize 
-        " 
+        "
 
-        KeyNamesToModifiers := LookupTable new. 
-        NamesOfModifiers := (Array 
-                                with: 'CTRL' -> FCONTROL 
-                                with: 'SHIFT' -> FSHIFT 
-                                with: 'ALT' ->FALT) collect: 
-                                                [:a | 
-                                                | keyName | 
-                                                keyName := a key. 
-                                                KeyNamesToModifiers at: keyName put: a value. 
-                                                a value -> (self accelPartFromString: keyName)]. 
-        NamesOfModifiers isImmutable: true. 
-        KeyNamesToModifiers 
-                shrink; 
-                isImmutable: true !
+	KeyNamesToModifiers := LookupTable new.
+	NamesOfModifiers := {'CTRL' -> FCONTROL. 'SHIFT' -> FSHIFT. 'ALT' -> FALT} collect: 
+					[:a |
+					| keyName |
+					keyName := a key.
+					KeyNamesToModifiers at: keyName put: a value.
+					a value -> (self accelPartFromString: keyName)].
+	NamesOfModifiers isImmutable: true.
+	KeyNamesToModifiers
+		shrink;
+		isImmutable: true!
 
 keyCode: virtualKey modifiers: modifierMask
 	"Answer an accelerator key code (an <integer> packed with a virtual key code
@@ -212,9 +209,7 @@ splitKeyCode: keyCode
 	and accelerator table modifier flags <integer> from the <integer> accelerator 
 	key code, keyCode."
 
-	^Array
-		with: (keyCode bitAnd: 16r1FF)
-		with: (keyCode bitShift: -9)!
+	^{keyCode bitAnd: 16r1FF. keyCode bitShift: -9}!
 
 splitKeyString: aString
 	"Answer an <Array> of <String>s containing the names of the keys specified 

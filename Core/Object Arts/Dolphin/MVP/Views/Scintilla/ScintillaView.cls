@@ -928,7 +928,7 @@ callTipHighlightColor
 	"Answer the foreground <Color> for the highlighted part of the call tip. By default this is
 	dark blue."
 
-	^callTipHighlightColor ifNil: [##(Color darkBlue)]!
+	^callTipHighlightColor ifNil: [Color darkBlue]!
 
 callTipHighlightColor: aColorOrNil 
 	"Set the foreground <Color> for the highlighted part of the call tip. If the argument is nil
@@ -11949,9 +11949,9 @@ defaultTextStyles
 	use the default background and foreground colour and font."
 
 	| answer |
-	answer := Set new.
+	answer := IdentityDictionary new.
 	"The #normal style must be present - it has id 0, and is the style from which the others
-	inherit there default settings. In turn it inherits its own default settings from the view."
+	inherit their default settings. In turn it inherits its own default settings from the view."
 	answer add: (ScintillaTextStyle name: #normal).
 	"Some 'predefined' styles"
 	answer
@@ -12026,6 +12026,7 @@ initialize
 				at: #xml put: (self immutableCopyOfCollection: self xmlTextStyles);
 				at: #text put: (self immutableCopyOfCollection: self txtTextStyles);
 				at: #smalltalk put: (self immutableCopyOfCollection: self smalltalkTextStyles);
+				at: #markdown put: (self immutableCopyOfCollection: self markdownTextStyles);
 				shrink;
 				isImmutable: true;
 				yourself).
@@ -12106,6 +12107,115 @@ lineEndings
 	to the character sequences, with #crlf being the default for Windows."
 
 	^#(#crlf #cr #lf)!
+
+markdownTextStyles
+	"Answer the default Markdown text style settings to be used for new instances of the receiver.
+	These are the styles used as the defaults for Markdown files in Scite."
+
+	| styles |
+	styles := self defaultTextStyles.
+	styles add: ((ScintillaTextStyle name: #lineBegin)
+				id: 1;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #strong1)
+				id: 2;
+				forecolor: (Color fromHTMLSpec: '#224466');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #strong2)
+				id: 3;
+				forecolor: (Color fromHTMLSpec: '#224466');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #em1)
+				id: 4;
+				forecolor: (Color fromHTMLSpec: '#663300');
+				isItalic: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #em2)
+				id: 5;
+				forecolor: (Color fromHTMLSpec: '#663300');
+				isItalic: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #header1)
+				id: 6;
+				forecolor: (Color fromHTMLSpec: '#518C34');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #header2)
+				id: 7;
+				forecolor: (Color fromHTMLSpec: '#518C34');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #header3)
+				id: 8;
+				forecolor: (Color fromHTMLSpec: '#518C34');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #header4)
+				id: 9;
+				forecolor: (Color fromHTMLSpec: '#518C34');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #header5)
+				id: 10;
+				forecolor: (Color fromHTMLSpec: '#518C34');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #header6)
+				id: 11;
+				forecolor: (Color fromHTMLSpec: '#518C34');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #preChar)
+				id: 12;
+				forecolor: Color black;
+				backcolor: (Color fromHTMLSpec: '#EEEEAA');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #ulistItem)
+				id: 13;
+				forecolor: (Color fromHTMLSpec: '#555555');
+				yourself).
+	styles add: ((ScintillaTextStyle name: #olistItem)
+				id: 14;
+				forecolor: (Color fromHTMLSpec: '#555555');
+				yourself).
+	styles add: ((ScintillaTextStyle name: #blockQuote)
+				id: 15;
+				forecolor: (Color fromHTMLSpec: '#000088');
+				yourself).
+	styles add: ((ScintillaTextStyle name: #strikeOut)
+				id: 16;
+				forecolor: (Color fromHTMLSpec: '#18453B');
+				backcolor: (Color fromHTMLSpec: '#A9BA9D');
+				yourself).
+	styles add: ((ScintillaTextStyle name: #horizontalRule)
+				id: 17;
+				forecolor: (Color fromHTMLSpec: '#555555');
+				isBold: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #link)
+				id: 18;
+				forecolor: (Color fromHTMLSpec: '#0000AA');
+				isUnderlined: true;
+				yourself).
+	styles add: ((ScintillaTextStyle name: #code)
+				id: 19;
+				forecolor: (Color fromHTMLSpec: '#000088');
+				backcolor: (Color fromHTMLSpec: '#EEEEEE');
+				yourself).
+	styles add: ((ScintillaTextStyle name: #code2)
+				id: 20;
+				forecolor: (Color fromHTMLSpec: '#000088');
+				backcolor: (Color fromHTMLSpec: '#EEEEEE');
+				yourself).
+	styles add: ((ScintillaTextStyle name: #codeBlock)
+				id: 21;
+				forecolor: (Color fromHTMLSpec: '#000088');
+				backcolor: (Color fromHTMLSpec: '#EEEEEE');
+				yourself).
+	^styles!
 
 multiPasteModes
 	^#(#once #each)!
@@ -12487,6 +12597,7 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #layoutCachingModes!constants!public! !
 !ScintillaView class categoriesFor: #lexerLanguages!constants!public! !
 !ScintillaView class categoriesFor: #lineEndings!constants!public! !
+!ScintillaView class categoriesFor: #markdownTextStyles!constants!public!style definition! !
 !ScintillaView class categoriesFor: #multiPasteModes!constants!public! !
 !ScintillaView class categoriesFor: #selectionModes!constants!public! !
 !ScintillaView class categoriesFor: #smalltalkTextStyles!constants!public!style definition! !

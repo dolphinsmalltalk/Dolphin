@@ -104,11 +104,7 @@ framings
 	"Answer a <sequencedReadableCollection> containing the names of the framing calculations
 	configured in the receiver in the order {top, left, bottom, right}."
 
-	^Array 
-		with: self topFraming
-		with: self leftFraming
-		with: self bottomFraming
-		with: self rightFraming!
+	^{self topFraming. self leftFraming. self bottomFraming. self rightFraming}!
 
 initialize
 	"Private - Initialize the state of the receiver."
@@ -142,11 +138,7 @@ leftOffset: aNumber
 
 messages
 	| messages |
-	messages := Array 
-				with: leftFraming name
-				with: rightFraming name
-				with: topFraming name
-				with: bottomFraming name.
+	messages := {leftFraming name. rightFraming name. topFraming name. bottomFraming name}.
 	^messages!
 
 offsets

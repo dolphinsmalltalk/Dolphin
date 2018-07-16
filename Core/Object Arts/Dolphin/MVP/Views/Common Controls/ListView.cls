@@ -267,7 +267,7 @@ basicAdd: anObject atIndex: anInteger
 		ifFalse: 
 			[self
 				addOrUpdate: false
-				nonVirtualItems: (Array with: anObject)
+				nonVirtualItems: {anObject}
 				afterIndex: anInteger - 1]!
 
 basicAddColumn: aListViewColumn atIndex: anInteger
@@ -1542,7 +1542,7 @@ newSelectionsFromEvent: event
 	| itemClicked anyKeysDown newSelections anchorIndex shiftRange anchorIsSelected |
 	itemClicked := self itemFromPoint: event position.
 	"In single-select mode, the new selection is always the item clicked, or nothing if the click is outside all items."
-	self isMultiSelect ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | Array with: item]].
+	self isMultiSelect ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
 	newSelections := self selectionsByIndex.
 	anyKeysDown := event isShiftDown or: [event isCtrlDown].
 	"If the click is outside all items, and ctrl or shift is down, nothing changes."
@@ -1553,9 +1553,10 @@ newSelectionsFromEvent: event
 	(event button ~= #left and: [anyKeysDown or: [newSelections includes: itemClicked]])
 		ifTrue: [^newSelections].
 	"Having taken care of the above edge cases, if no keys are down, the behavior is equivalent to the single-select case."
-	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | Array with: item]].
+	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
 	"Only Ctrl is down, so we flip the selection state of the clicked item."
-	event isShiftDown ifFalse: 
+	event isShiftDown
+		ifFalse: 
 			[newSelections := newSelections asSortedCollection.
 			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
 			^newSelections asArray].
@@ -1582,7 +1583,7 @@ newSelectionsFromEvent: event
 	"For some reason, the item clicked is always left selected, even if we are deselecting the rest
 	of the marked range. This is not true in e.g. Windows Explorer--why is it in Dolphin?"
 	newSelections add: itemClicked.
-	^newSelections asSortedCollection asArray.!
+	^newSelections asSortedCollection asArray!
 
 nmClick: pNMHDR 
 	"Private - Handler for a NM_CLICK notification message.
@@ -2204,18 +2205,18 @@ updateColumnAtIndex: anInteger
 	self basicUpdateColumnAtIndex: anInteger.
 	self updateAll!
 
-updateItem: anObject atIndex: anInteger 
+updateItem: anObject atIndex: anInteger
 	"Re-render the specified item, which is at the specified <integer> index in the list."
 
-	self isVirtual 
+	self isVirtual
 		ifTrue: 
 			["We always use callback mode, so we can simply request that the item be
 			redrawn, and let the ListView re-request the details."
 			self lvmRedrawItems: anInteger - 1 to: anInteger - 1]
 		ifFalse: 
-			[self 
+			[self
 				addOrUpdate: true
-				nonVirtualItems: (Array with: anObject)
+				nonVirtualItems: {anObject}
 				afterIndex: anInteger - 1]!
 
 updateSelectionCache

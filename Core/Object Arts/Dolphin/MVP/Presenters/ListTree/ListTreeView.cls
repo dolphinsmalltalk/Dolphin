@@ -322,26 +322,24 @@ collapse: anObject
 	'hidden-expanded' list"
 
 	| newSelection |
-
-	(self isItemExpanded: anObject) ifFalse: [^ self].
+	(self isItemExpanded: anObject) ifFalse: [^self].
 
 	"we have to change the selection first, or else it'll change implicitly as selected
 	children are closed.  That causes unwanted selectionChanged events to be
 	generated.
 	Note that we *don't* attempt to send a #selectionChanging: notification -- that is
 	only sent for user-initiated actions (e.g. see #collapse:because:)"
-	newSelection := self selectionAfterCollapseList: (Array with: anObject).
+	newSelection := self selectionAfterCollapseList: {anObject}.
 	newSelection isNil ifFalse: [self selections: newSelection].
 
 	"now that we've done that, on to part two!!"
-	self basicCollapse: anObject.
-!
+	self basicCollapse: anObject!
 
 collapse: anObject because: aSymbol
 	"private -- collapse the given Object's node.
 	This is (part of) the implementation of double-clicking on the item and of left clicking the open/close box"
 
-	self collapseList: (Array with: anObject) because: aSymbol.!
+	self collapseList: {anObject} because: aSymbol!
 
 collapseAll
 	"collapse the entire tree below the current selection, or the entire tree if there is
@@ -639,8 +637,7 @@ expand: anObject because: aSymbol
 	This (part of) is the implementation of double-clicking on the item and of left clicking the
 	open/close box"
 
-	self expandList: (Array with: anObject) because: aSymbol.
-!
+	self expandList: {anObject} because: aSymbol!
 
 expandAll
 	"expand the entire tree below the current selection, or the entire tree if there is
@@ -1573,11 +1570,10 @@ selectFirstChildOf: anObject because: aSymbol
 	This is part of the implementation of the right-arrow-key shortcut"
 
 	| children child all |
-
 	children := self childrenOf: anObject.
-	child := children at: 1 ifAbsent: [^ self].
-	all := Array with: child.
-	(self checkSelectAll: all because: aSymbol) ifTrue: [self selections: all].!
+	child := children at: 1 ifAbsent: [^self].
+	all := {child}.
+	(self checkSelectAll: all because: aSymbol) ifTrue: [self selections: all]!
 
 selection: anObject ifAbsent: a0Block
 	"set our selection to anObject answering anObject.  If it is not present in our tree, then answer the result
@@ -1708,10 +1704,9 @@ selectParentOf: anObject because: aSymbol
 	This is part of the implementation of the left-arrow-key shortcut"
 
 	| parent all |
-
-	parent := (self parentOf: anObject) ifNil: [^ self].
-	all := Array with: parent.
-	(self checkSelectAll: all because: aSymbol) ifTrue: [self selections: all].!
+	parent := (self parentOf: anObject) ifNil: [^self].
+	all := {parent}.
+	(self checkSelectAll: all because: aSymbol) ifTrue: [self selections: all]!
 
 setItem: anObject indentation: anInteger
 	"private -- update the indentation for anObject.

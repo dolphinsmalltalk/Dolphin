@@ -6,14 +6,14 @@ ControlView subclass: #StaticRectangle
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StaticRectangle guid: (GUID fromString: '{aad4f3a9-dc68-42b2-bedc-0a4fc49880f2}')!
-StaticRectangle comment: 'StaticRectangle is a simple <ControlView> class which wraps Windows STATIC control for simple rectangles and frames.
+StaticRectangle comment: '`StaticRectangle` is a simple `ControlView` class which wraps the Windows STATIC control for simple rectangles and frames.
 
-The rectangle styles () paint a solid block of colour filling the client area. The frame styles draw a border/frame around the edge of the client area of the control allowing the background colour to show through.
+The rectangle styles paint a solid block of colour filling the client area. The frame styles draw a border/frame around the edge of the client area of the control allowing the background colour to show through.
 
-Apart from its uses for background rectangles and frames, StaticRectangle can also be used for horizontal and vertical lines by setting the width or height appropriately.
+Apart from its uses for background rectangles and frames, StaticRectangle can also be used for horizontal and vertical lines by setting the width or height appropriately. When using in conjunction with a `ProportionalLayout` to add some kind of divider, set the arrangement to 0 to maintain the specified width/height.
 
-Class Variables:
-	StyleMap		<LookupTable> of <Symbol> rectangle/frame style names Windows styles.'!
+## Class Variables:
+  `StyleMap`		`LookupTable` of `Symbol` rectangle/frame style names Windows styles.'!
 !StaticRectangle categoriesForClass!MVP-Views! !
 !StaticRectangle methodsFor!
 

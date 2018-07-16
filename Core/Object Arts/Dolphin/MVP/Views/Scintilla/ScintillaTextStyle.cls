@@ -255,6 +255,9 @@ isVisible
 
 	^(self getThreeStateFlag: InvisibleMask) ifNotNil: [:invisible | invisible not]!
 
+key
+	^self name!
+
 mergeFont: aFont 
 	"Initialize any font settings that are currently unspecified from the <Font> argument."
 
@@ -318,6 +321,9 @@ storeableProperties
 	name ifNotNil: [attribs := {#name} , attribs].
 	^attribs!
 
+value
+	^self!
+
 view
 	^nil!
 
@@ -371,6 +377,7 @@ weight: anInteger
 !ScintillaTextStyle categoriesFor: #isUnderlined!public!testing! !
 !ScintillaTextStyle categoriesFor: #isUnderlined:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #isVisible!private!testing! !
+!ScintillaTextStyle categoriesFor: #key!accessing!public! !
 !ScintillaTextStyle categoriesFor: #mergeFont:!accessing!public! !
 !ScintillaTextStyle categoriesFor: #name!accessing!public! !
 !ScintillaTextStyle categoriesFor: #name:!accessing!public! !
@@ -380,6 +387,7 @@ weight: anInteger
 !ScintillaTextStyle categoriesFor: #setPredefinedId!accessing!private! !
 !ScintillaTextStyle categoriesFor: #setThreeStateFlag:value:!helpers!private! !
 !ScintillaTextStyle categoriesFor: #storeableProperties!development!printing!private! !
+!ScintillaTextStyle categoriesFor: #value!accessing!public! !
 !ScintillaTextStyle categoriesFor: #view!accessing!private! !
 !ScintillaTextStyle categoriesFor: #view:!accessing!private! !
 !ScintillaTextStyle categoriesFor: #weight!accessing!public! !
