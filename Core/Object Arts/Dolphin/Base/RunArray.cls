@@ -152,7 +152,7 @@ species
 new
 	"Answer a new, empty, instance of the receiver."
 
-	^self runs: Array new values: Array new!
+	^self runs: {} values: {}!
 
 new: anInteger
 	"Answer a new instance of the receiver with anInteger nil elements."

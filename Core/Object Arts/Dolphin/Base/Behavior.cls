@@ -17,45 +17,45 @@ Behavior addClassConstant: '_PointersMask' value: 8192!
 Behavior addClassConstant: '_ShapeMask' value: 28927!
 Behavior addClassConstant: '_SizeMask' value: 255!
 Behavior addClassConstant: '_VariableMask' value: 4096!
-Behavior comment: 'Class Behavior is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
+Behavior comment: 'Class `Behavior` is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 
 Instance Variables:
 
-	superclass	<Behavior> object of the instance''''s superclass
-	subclasses	<Array> of Behavior''s which are the subclasses of the instance
-	methodDictionary	<MethodDictionary> mapping selector Symbols to CompiledMethods
-	instanceSpec	<integer> containg flags which describe the "shape" of the instance (e.g. oops vs bytes)
+  `superclass`		`Behavior` object of the instance''''s superclass
+  `subclasses`		`Array` of `Behavior`''s which are the subclasses of the instance
+  `methodDictionary`	`MethodDictionary` mapping selector Symbols to CompiledMethods
+  `instanceSpec`		`<integer>` containg flags which describe the "shape" of the instance (e.g. oops vs bytes)
 
 Behavior defines a number of bit masks which are used to describe objects. These flags are stored as constants in the class pool:
-	_BasicSpecMask 		<integer> bit mask to extract the basic inst. spec (excludes extra spec word).
-	_BytesSubMask 		<integer> bit mask to extract inst. spec. bits relating exclusively to byte objects
-	_FundamentalShapeMask 	<integer> bit mask to extract the fundamental shape of instances from instance spec.
-	_IndirectMask 		<integer> bit mask to extract indirection (i.e. memory pointer) flag from inst. spec. flags
-				The indirection bit marks classes whose instances are indirect references to 
-				other objects/memory - e.g. ExternalAddresses. Such objects are automatically
-				dereferenced when passed to appropriate VM primitives.
-	_MournerMask 		<integer> bit mask to extract mourner flag from inst. spec. flags
-				The mourner bit marks classes who actively grieve for the loss of their constituents. 
-				Weak instances of such classes will be notified by the Undertaker process when 
-				they suffer bereavements during a GC. This notification is ''''off'''' by default because the
-				receipt of such a notifications will delay the death of its receiver, which may result in
-				significantly extended life for hierarchies of incestuously referencing weak objects.
-	_NonInstantiableMask	<integer> bit mask to extract the abstract class flag from inst. spec. flags.
-					This bit is used to mark classes considered to be abstract (non-instantiable).
-	_NullTermMask 		<integer> bit mask to extract null terminated flag from inst. spec. (byte objects only)
-				The null term. bit can be used to mark byte classes as having an implicit null terminator
-				(e.g. to represent C-style strings).
-	_PointersMask 		<integer> bit mask to extract the pointers/bytes flag from inst. spec.
-				The pointer bit marks classes whose instances contain pointers (as opposed to bytes).
-	_ShapeMask 		<integer> bit mask to extract the shape flags from inst. spec.
-	_SizeMask 			<Integer> bit mask to extract the number of named inst. vars. from inst. spec.
-				The size bits specify the number of named instance variables (0..255) in instances
-				of the receiver.
-	_VariableMask		<integer> bit mask to extract the fixed/variable size flag from inst. spec.
-				The variable bit marks classes whose instances include indexable (unnamed) 
-				instance variables.
+  `_BasicSpecMask` 			`<integer>` bit mask to extract the basic inst. spec (excludes extra spec word).
+  `_BytesSubMask` 			`<integer>` bit mask to extract inst. spec. bits relating exclusively to byte objects
+  `_FundamentalShapeMask` 	`<integer>` bit mask to extract the fundamental shape of instances from instance spec.
+  `_IndirectMask`				`<integer>` bit mask to extract indirection (i.e. memory pointer) flag from inst. spec. flags
+  						The indirection bit marks classes whose instances are indirect references to 
+  						other objects/memory - e.g. ExternalAddresses. Such objects are automatically
+  						dereferenced when passed to appropriate VM primitives.
+  `_MournerMask`			`<integer>` bit mask to extract mourner flag from inst. spec. flags
+						The mourner bit marks classes who actively grieve for the loss of their constituents. 
+						Weak instances of such classes will be notified by the Undertaker process when 
+						they suffer bereavements during a GC. This notification is ''''off'''' by default because the
+						receipt of such a notifications will delay the death of its receiver, which may result in
+						significantly extended life for hierarchies of incestuously referencing weak objects.
+  `_NonInstantiableMask`		`<integer>` bit mask to extract the abstract class flag from inst. spec. flags.
+						This bit is used to mark classes considered to be abstract (non-instantiable).
+  `_NullTermMask`			`<integer>` bit mask to extract null terminated flag from inst. spec. (byte objects only)
+						The null term. bit can be used to mark byte classes as having an implicit null terminator
+						(e.g. to represent C-style strings).
+  `_PointersMask`			`<integer>` bit mask to extract the pointers/bytes flag from inst. spec.
+						The pointer bit marks classes whose instances contain pointers (as opposed to bytes).
+  `_ShapeMask` 				`<integer>` bit mask to extract the shape flags from inst. spec.
+  `_SizeMask`	 			`<Integer>` bit mask to extract the number of named inst. vars. from inst. spec.
+						The size bits specify the number of named instance variables (0..255) in instances
+						of the receiver.
+  `_VariableMask`			`<integer>` bit mask to extract the fixed/variable size flag from inst. spec.
+						The variable bit marks classes whose instances include indexable (unnamed) 
+						instance variables.
 
-Behavior implements the ANSI protocols <Object>, <classDescription>, <instantiator>, and <Object class>.'!
+Behavior implements the ANSI protocols `<Object>`, `<classDescription>`, `<instantiator>`, and `<Object class>`.'!
 !Behavior categoriesForClass!Kernel-Classes! !
 !Behavior methodsFor!
 
@@ -889,6 +889,11 @@ selectors
 
 	^(methodDictionary ifNil: [^#()]) keys!
 
+setInstSize: anInteger
+	(anInteger between: 0 and: (self isBytes ifTrue: [0] ifFalse: [_SizeMask]))
+		ifFalse: [self error: 'Invalid number of fixed fields'].
+	instanceSpec := (instanceSpec maskClear: _SizeMask) maskSet: anInteger!
+
 setShapeFlags: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)
 	according to the argument aBoolean."
@@ -1213,6 +1218,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #scopeHas:ifTrue:!class hierarchy-testing!public! !
 !Behavior categoriesFor: #selectMethods:!methods-testing!private! !
 !Behavior categoriesFor: #selectors!methods-accessing!public! !
+!Behavior categoriesFor: #setInstSize:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSuperclass:!class hierarchy-accessing!private! !

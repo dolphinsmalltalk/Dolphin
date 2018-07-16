@@ -1001,7 +1001,10 @@ perform: selector
 		0 -	The number of arguments expected with the selector is not zero."
 
 	<primitive: 83>
-	^Error perform: selector failedFor: self withArgs: Array new!
+	^Error
+		perform: selector
+		failedFor: self
+		withArgs: {}!
 
 perform: selector with: argument1
 	"Send the receiver the keyword message indicated by the arguments, answering the result. 

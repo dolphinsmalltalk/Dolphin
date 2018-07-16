@@ -116,7 +116,7 @@ className: aString
 classVariables
 	"Private - Answer an Array of proposed class variable names."
 
-	^classVariables ifNil: [Array new]!
+	^classVariables ifNil: [{}]!
 
 classVariables: aClassVarNamesArray
 	"Set the receiver's classVariables inst var to aClassVarNamesArray."
@@ -313,10 +313,7 @@ instanceVariables
 
 	^instanceVariables notNil
 		ifTrue: [instanceVariables]
-		ifFalse: [
-			currentClass isNil
-				ifTrue: [Array new]
-				ifFalse: [currentClass instVarNames]]!
+		ifFalse: [currentClass isNil ifTrue: [{}] ifFalse: [currentClass instVarNames]]!
 
 instanceVariables: anInstVarNamesArray
 	"Set the receiver's instanceVariables inst var to anInstVarNamesArray."
@@ -645,7 +642,7 @@ setSharedPoolsOf: aClass
 sharedPools
 	"Private - Answer an Array of proposed pool dictionary names."
 
-	^sharedPools ifNil: [Array new]!
+	^sharedPools ifNil: [{}]!
 
 sharedPools: anArray
 	"Set the receiver's sharedPools inst var to anArray."
@@ -1034,17 +1031,13 @@ allClassVarNamesOf: aClass
 	"Private - Answer an array of the class var names of aClass.
 	The Array will be empty if aClass is nil."
 
-	^aClass isNil
-		ifTrue: [Array new]
-		ifFalse: [aClass allClassVarNames]!
+	^aClass isNil ifTrue: [{}] ifFalse: [aClass allClassVarNames]!
 
 allInstVarNamesOf: aClass
 	"Private - Answer an array of the inst var names of aClass.
 	The Array will be empty if aClass is nil."
 
-	^aClass isNil
-		ifTrue: [Array new]
-		ifFalse: [aClass allInstVarNames]!
+	^aClass isNil ifTrue: [{}] ifFalse: [aClass allInstVarNames]!
 
 classOf: aClass
 	"Private - Answer the class of aClass or Class if it is nil."

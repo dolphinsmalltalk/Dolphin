@@ -24,7 +24,7 @@ _separateSubStringsIn: aReadableString
 
 	| start answer size end |
 	size := aReadableString size.
-	size == 0 ifTrue: [^Array new].
+	size == 0 ifTrue: [^{}].
 	end := aReadableString indexOfAnyOf: self startingAt: 1.
 	end == 0 ifTrue: [^{aReadableString}].
 	answer := Array writeStream: 5.
