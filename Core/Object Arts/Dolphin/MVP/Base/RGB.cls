@@ -6,20 +6,13 @@ ColorRef subclass: #RGB
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RGB guid: (GUID fromString: '{87b4c53b-026e-11d3-9fd7-00a0cc3e4a32}')!
-RGB comment: 'RGB is the class of colour values specified as red, green and blue levels. The magnitude of each the primary colour components can be specified in the range from 0 to 255 inclusive, with 0 indicating minimum intensity.
+RGB comment: '`RGB` is the class of colour values specified as red, green and blue levels. The magnitude of each the primary colour components can be specified in the range from 0 to 255 inclusive, with 0 indicating minimum intensity.
 
-Some examples specified as the colour name and the corresponding RGB values:
-	Red 		255, 0, 0 
-	Green 		0, 255, 0 
-	Blue 		0, 0, 255 
-	Cyan 		0, 255, 255 
-	Magenta 	255, 0, 255 
-	Yellow 		255, 255, 0 
-	White 		255, 255, 255 
-	Black 		0, 0, 0 
+## Class Variables:
+  `StdColours`		`IdentityDictionary` of `Symbol` colour names to instances, e.g. `RGB red`
 
-Class Variables:
-	StdColours		<IdentityDictionary>
+
+
 
 '!
 !RGB categoriesForClass!Drawing! !
@@ -56,15 +49,12 @@ hls
 	hue := WORD new.
 	luminance := WORD new.
 	saturation := WORD new.
-	ShlwapiLibrary default 
+	ShlwapiLibrary default
 		colorRGBToHLS: self asParameter
 		pwHue: hue
 		pwLuminance: luminance
 		pwSaturation: saturation.
-	^Array 
-		with: hue asInteger
-		with: luminance asInteger
-		with: saturation asInteger!
+	^{hue asInteger. luminance asInteger. saturation asInteger}!
 
 printOn: aStream
 	"Put an ASCII representation of receiver onto aStream."
@@ -104,31 +94,108 @@ setCode: anInteger
 fromInteger: anInteger 
 	"Answer an instance whose three component colour values are embedded in anInteger."
 
+	<primitive: 157>
 	^(self basicNew)
 		setCode: anInteger;
-		yourself!
+		yourself
+!
 
 initialize
-	"Private - Initialise the map of standard colour names to #(R G B) values."
+	"Private - Initialise the map of standard colour names to constant instances.
+		self initialize
+	"
 
-	StdColours := ##((IdentityDictionary new: 16)
-				at: #red put: #(255 0 0);
-				at: #darkRed put: #(128 0 0);
-				at: #blue put: #(0 0 255);
-				at: #darkBlue put: #(0 0 128);
-				at: #green put: #(0 255 0);
-				at: #darkGreen put: #(0 128 0);
-				at: #yellow put: #(255 255 0);
-				at: #brown put: #(128 128 0);
-				at: #magenta put: #(255 0 255);
-				at: #darkMagenta put: #(128 0 128);
-				at: #cyan put: #(0 255 255);
-				at: #darkCyan put: #(0 128 128);
-				at: #white put: #(255 255 255);
-				at: #gray put: #(204 204 204);
-				at: #darkGray put: #(128 128 128);
-				at: #black put: #(0 0 0);
-				yourself)!
+	| namedColors |
+	namedColors := IdentityDictionary new.
+	namedColors
+		at: #red
+			put: (self
+					red: 255
+					green: 0
+					blue: 0);
+		at: #darkRed
+			put: (self
+					red: 128
+					green: 0
+					blue: 0);
+		at: #blue
+			put: (self
+					red: 0
+					green: 0
+					blue: 255);
+		at: #darkBlue
+			put: (self
+					red: 0
+					green: 0
+					blue: 128);
+		at: #green
+			put: (self
+					red: 0
+					green: 255
+					blue: 0);
+		at: #darkGreen
+			put: (self
+					red: 0
+					green: 128
+					blue: 0);
+		at: #yellow
+			put: (self
+					red: 255
+					green: 255
+					blue: 0);
+		at: #brown
+			put: (self
+					red: 128
+					green: 128
+					blue: 0);
+		at: #magenta
+			put: (self
+					red: 255
+					green: 0
+					blue: 255);
+		at: #darkMagenta
+			put: (self
+					red: 128
+					green: 0
+					blue: 128);
+		at: #cyan
+			put: (self
+					red: 0
+					green: 255
+					blue: 255);
+		at: #darkCyan
+			put: (self
+					red: 0
+					green: 128
+					blue: 128);
+		at: #white
+			put: (self
+					red: 255
+					green: 255
+					blue: 255);
+		at: #gray
+			put: (self
+					red: 204
+					green: 204
+					blue: 204);
+		at: #darkGray
+			put: (self
+					red: 128
+					green: 128
+					blue: 128);
+		at: #black
+			put: (self
+					red: 0
+					green: 0
+					blue: 0);
+		shrink.
+	namedColors do: [:each | each isImmutable: true].
+	self addClassConstant: 'StdColours' value: namedColors!
+
+named: aSymbol
+	"Answer an instance whose name is aSymbol."
+
+	^StdColours at: aSymbol!
 
 red: redValue green: greenValue blue: blueValue
 	"Answer an instance whose three component colour values are given."
@@ -156,22 +223,11 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
-	^1!
-
-stdColor: aSymbol
-	"Answer an instance whose name is aSymbol."
-
-	| rgbValue |
-	rgbValue := StdColours at: aSymbol.
-	^self
-		red: (rgbValue at: 1)
-		green: (rgbValue at: 2)
-		blue: (rgbValue at: 3)
-! !
+	^1! !
 !RGB class categoriesFor: #fromInteger:!instance creation!public! !
 !RGB class categoriesFor: #initialize!development!initializing!private! !
+!RGB class categoriesFor: #named:!instance creation!public! !
 !RGB class categoriesFor: #red:green:blue:!instance creation!public! !
 !RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !RGB class categoriesFor: #stbVersion!binary filing!public! !
-!RGB class categoriesFor: #stdColor:!instance creation!public! !
 

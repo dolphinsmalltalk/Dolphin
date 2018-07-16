@@ -1225,14 +1225,13 @@ onLabelOf: anObject editedTo: text
 
 	| accept accepted |
 	accept := false asValue.
-	self presenter 
-		trigger: #labelOf:editedTo:accept:
-		withArguments: (Array with: anObject with: text with: accept).
+	self presenter trigger: #labelOf:editedTo:accept: withArguments: {anObject. text. accept}.
 	accepted := accept value.
-	accepted ifTrue: [
-			self presenter 
+	accepted
+		ifTrue: 
+			[self presenter
 				trigger: #labelOf:changedTo:
-				with: anObject 
+				with: anObject
 				with: text].
 	^accepted!
 
@@ -1393,7 +1392,7 @@ paintClassicButton: aRectangle on: aCanvas isExpanded: aBoolean
 		ifFalse: [aCanvas lineFrom: aRectangle topCenter + (0 @ 2) to: aRectangle bottomCenter - (0 @ 2)].
 	aCanvas pen: pen!
 
-paintNode: aMoenTreeNode on: aCanvas 
+paintNode: aMoenTreeNode on: aCanvas
 	"Private - Paint the label (icon + text) of the <MoenTreeNode> argument on the specified
 	<Canvas> within its precalculate rectangle."
 
@@ -1401,31 +1400,31 @@ paintNode: aMoenTreeNode on: aCanvas
 	elem := aMoenTreeNode object.
 	text := (self getTextBlock value: elem) displayString.
 	rect := aMoenTreeNode rectangle.
-	self hasIcons 
+	self hasIcons
 		ifTrue: 
-			[(getImageBlock value: elem) 
+			[(getImageBlock value: elem)
 				ifNotNil: 
-					[:image | 
-					(self imageManager imageListWithExtent: iconExtent) 
+					[:image |
+					(self imageManager imageListWithExtent: iconExtent)
 						draw: image
 						on: aCanvas
 						at: (self imagePositionIn: rect)
 						flags: 0.
 					rect := rect insetOriginBy: textInset]].
 	drawFocus := false.
-	(isSel := self selectedNode == aMoenTreeNode) 
+	(isSel := self selectedNode == aMoenTreeNode)
 		ifTrue: 
 			[| bkColour |
 			aCanvas save.
-			(drawFocus := self hasFocus) 
+			(drawFocus := self hasFocus)
 				ifTrue: 
 					[bkColour := Color highlight.
-					aCanvas forecolor: (Color systemColor: COLOR_HIGHLIGHTTEXT)]
+					aCanvas forecolor: Color highlightText]
 				ifFalse: [bkColour := Color face3d].
 			aCanvas
 				backcolor: bkColour;
 				fillRectangle: rect color: bkColour].
-	aCanvas 
+	aCanvas
 		formatText: text
 		in: (rect insetBy: (self leadingForCanvas: aCanvas))
 		flags: dtFlags.

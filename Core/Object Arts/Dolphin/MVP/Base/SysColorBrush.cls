@@ -26,7 +26,7 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(;
-		display: self color idName;
+		display: self color name;
 		nextPut: $)! !
 !SysColorBrush categoriesFor: #color!accessing!public! !
 !SysColorBrush categoriesFor: #createHandle!private!realizing/unrealizing! !

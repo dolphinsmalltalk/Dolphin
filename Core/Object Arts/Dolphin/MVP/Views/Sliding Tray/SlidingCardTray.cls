@@ -178,8 +178,8 @@ openTheme
 				psz: pinSize].
 	pinSize := pinSize asObject!
 
-paintClassicBackgroundOn: aCanvas 
-	aCanvas fillRectangle: self headerRectangle color: (Color systemColor: COLOR_INACTIVECAPTION)!
+paintClassicBackgroundOn: aCanvas
+	aCanvas fillRectangle: self headerRectangle color: (Color named: #inactiveCaption)!
 
 paintClassicEdgesOn: aCanvas 
 	self isPinned ifTrue: [^nil].

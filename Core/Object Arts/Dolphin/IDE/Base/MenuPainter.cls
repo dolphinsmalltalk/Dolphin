@@ -176,7 +176,7 @@ menuFont
 	^SystemMetrics current menuFont!
 
 menuTextColor
-	^Color systemColor: COLOR_MENUTEXT!
+	^Color named: #menuText!
 
 offsetForSubmenu: anInteger canvas: aCanvas 
 	^self subclassResponsibility!
@@ -334,13 +334,13 @@ paintSmudgeFor: aString on: aCanvas in: aRectangle
 	self paintSmudge: (smudgeOrigin extent: smudgeExtent) on: aCanvas.
 	^rect!
 
-setHighlightColors: canvas 
+setHighlightColors: canvas
 	"Private - Set up the <Canvas> argument for drawing the highlighted item."
 
 	| txtHighlight |
-	txtHighlight := Color systemColor: COLOR_HIGHLIGHTTEXT.
+	txtHighlight := Color named: #highlightText.
 	canvas
-		backcolor: (Color systemColor: COLOR_MENUHILIGHT);
+		backcolor: (Color named: #menuHilight);
 		forecolor: txtHighlight;
 		pen: txtHighlight pen;
 		brush: txtHighlight brush!

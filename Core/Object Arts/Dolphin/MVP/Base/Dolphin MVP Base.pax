@@ -71,6 +71,7 @@ package classNames
 	add: #ContainerView;
 	add: #ControlView;
 	add: #Cursor;
+	add: #DefaultColor;
 	add: #DefaultShellSessionManager;
 	add: #DelegatingCommandPolicy;
 	add: #DesktopView;
@@ -125,6 +126,7 @@ package classNames
 	add: #LOGBRUSH;
 	add: #LOGFONT;
 	add: #LOGFONTW;
+	add: #LogicalColor;
 	add: #LOGPALETTE;
 	add: #LOGPEN;
 	add: #MARGINS;
@@ -201,6 +203,7 @@ package classNames
 	add: #ValuePresenter;
 	add: #View;
 	add: #ViewState;
+	add: #VirtualColor;
 	add: #VistaThemeLibrary;
 	add: #WINDOWPLACEMENT;
 	add: #WINDOWPOS;
@@ -228,6 +231,7 @@ package methodNames
 	add: #String -> #copyToClipboard;
 	add: #String -> #setTextInto:;
 	add: #Symbol -> #copyToClipboard;
+	add: #UndefinedObject -> #asResourceId;
 	add: #UserLibrary -> #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:;
 	add: #UserLibrary -> #animateWindow:dwTime:dwFlags:;
 	add: #UserLibrary -> #attachThreadInput:idAttachTo:fAttach:;
@@ -421,7 +425,7 @@ Object subclass: #Clipboard
 	classInstanceVariableNames: ''!
 Object subclass: #Color
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'NamedColors'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Command
@@ -549,24 +553,39 @@ Color subclass: #ColorRef
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Color subclass: #IndexedColor
+Color subclass: #LogicalColor
 	instanceVariableNames: 'index'
-	classVariableNames: 'ColorNames ColorsByIndex ColorsByName'
+	classVariableNames: 'ColorsByIndex NamesByIndex'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Color subclass: #PluggableColor
-	instanceVariableNames: 'valuable'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Color subclass: #SystemColor
-	instanceVariableNames: 'id'
+Color subclass: #VirtualColor
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
 	classVariableNames: 'StdColours'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LogicalColor subclass: #IndexedColor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+LogicalColor subclass: #SystemColor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+VirtualColor subclass: #DefaultColor
+	instanceVariableNames: 'name actualColor'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+VirtualColor subclass: #PluggableColor
+	instanceVariableNames: 'valuable'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommandDescription subclass: #ClosedCommandDescription
@@ -699,11 +718,6 @@ ThemeLibrary subclass: #VistaThemeLibrary
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #BP_ANIMATIONPARAMS
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExternalStructure subclass: #DEVMODE
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -740,6 +754,11 @@ Win32Structure subclass: #BITMAPINFOHEADER
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #BLENDFUNCTION
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #BP_ANIMATIONPARAMS
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1486,6 +1505,12 @@ copyToClipboard
 
 	Clipboard current setRegisteredFormat: #String data: self! !
 !Symbol categoriesFor: #copyToClipboard!copying!public! !
+
+!UndefinedObject methodsFor!
+
+asResourceId
+	^self! !
+!UndefinedObject categoriesFor: #asResourceId!converting!public! !
 
 !UserLibrary methodsFor!
 
