@@ -31,8 +31,18 @@ testIsZero
 	self assert: (0 @ 0) isZero.
 	self deny: (0 @ 1) isZero.
 	self deny: (1 @ 0) isZero.
-	self deny: (1 @ 1) isZero! !
+	self deny: (1 @ 1) isZero!
+
+testStrictlyPositive
+	self deny: (0 @ 0) strictlyPositive.
+	self deny: (0 @ 1) strictlyPositive.
+	self deny: (1 @ 0) strictlyPositive.
+	self assert: (1 @ 1) strictlyPositive.
+	self deny: (1 @ -1) strictlyPositive.
+	self deny: (-1 @ 1) strictlyPositive.
+! !
 !PointTest categoriesFor: #testAbs!public!unit tests! !
 !PointTest categoriesFor: #testEquals!public!unit tests! !
 !PointTest categoriesFor: #testIsZero!public!testing / testing! !
+!PointTest categoriesFor: #testStrictlyPositive!public!testing / testing! !
 
