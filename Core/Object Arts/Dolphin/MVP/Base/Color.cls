@@ -500,53 +500,53 @@ yellow
 	"Answer an instance respresenting yellow."
 
 	^self named: #yellow! !
-!Color class categoriesFor: #addNamed:color:!instance creation!named colors!public! !
-!Color class categoriesFor: #applicationWorkspace!instance creation!named colors!public! !
-!Color class categoriesFor: #black!instance creation!named colors!public! !
-!Color class categoriesFor: #blue!instance creation!named colors!public! !
-!Color class categoriesFor: #brown!instance creation!named colors!public! !
+!Color class categoriesFor: #addNamed:color:!class initialization!public! !
+!Color class categoriesFor: #applicationWorkspace!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #black!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #blue!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #brown!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #byteSize!constants!public! !
-!Color class categoriesFor: #cyan!instance creation!named colors!public! !
-!Color class categoriesFor: #darkBlue!instance creation!named colors!public! !
-!Color class categoriesFor: #darkCyan!instance creation!named colors!public! !
-!Color class categoriesFor: #darkGray!instance creation!named colors!public! !
-!Color class categoriesFor: #darkGreen!instance creation!named colors!public! !
-!Color class categoriesFor: #darkMagenta!instance creation!named colors!public! !
-!Color class categoriesFor: #darkRed!instance creation!named colors!public! !
-!Color class categoriesFor: #darkShadow3d!instance creation!named colors!public! !
-!Color class categoriesFor: #default!instance creation!named colors!public! !
-!Color class categoriesFor: #dialog!instance creation!named colors!public! !
+!Color class categoriesFor: #cyan!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkBlue!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkCyan!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkGray!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkGreen!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkMagenta!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkRed!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #darkShadow3d!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #default!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #dialog!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #face3d!constants!public! !
 !Color class categoriesFor: #fromAddress:!instance creation!public! !
 !Color class categoriesFor: #fromHTMLSpec:!instance creation!public! !
 !Color class categoriesFor: #fromInteger:!instance creation!public! !
-!Color class categoriesFor: #gray!instance creation!named colors!public! !
-!Color class categoriesFor: #green!instance creation!named colors!public! !
+!Color class categoriesFor: #gray!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #green!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #highlight!constants!public! !
-!Color class categoriesFor: #highlight3d!instance creation!named colors!public! !
+!Color class categoriesFor: #highlight3d!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #hls:!instance creation!public! !
 !Color class categoriesFor: #hue:luminance:saturation:!instance creation!public! !
 !Color class categoriesFor: #hue:saturation:value:!instance creation!public! !
 !Color class categoriesFor: #icon!constants!public! !
 !Color class categoriesFor: #initialize!class initialization!development!instance creation!public! !
-!Color class categoriesFor: #light3d!instance creation!named colors!public! !
-!Color class categoriesFor: #magenta!instance creation!named colors!public! !
-!Color class categoriesFor: #menu!instance creation!named colors!public! !
-!Color class categoriesFor: #menuBar!instance creation!named colors!public! !
-!Color class categoriesFor: #named:!instance creation!named colors!public! !
+!Color class categoriesFor: #light3d!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #magenta!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #menu!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #menuBar!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #named:!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #new!instance creation!public! !
-!Color class categoriesFor: #none!instance creation!named colors!public! !
-!Color class categoriesFor: #red!instance creation!named colors!public! !
+!Color class categoriesFor: #none!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #red!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #red:green:blue:!instance creation!public! !
-!Color class categoriesFor: #removeNamed:!instance creation!named colors!public! !
-!Color class categoriesFor: #shadow3d!instance creation!named colors!public! !
+!Color class categoriesFor: #removeNamed:!class initialization!public! !
+!Color class categoriesFor: #shadow3d!instance creation!instance creation-named colors!public! !
 !Color class categoriesFor: #systemColor:!instance creation!public! !
-!Color class categoriesFor: #tooltip!instance creation!named colors!public! !
-!Color class categoriesFor: #tooltipText!instance creation!named colors!public! !
-!Color class categoriesFor: #white!instance creation!named colors!public! !
-!Color class categoriesFor: #window!instance creation!named colors!public! !
-!Color class categoriesFor: #windowText!instance creation!named colors!public! !
-!Color class categoriesFor: #yellow!instance creation!named colors!public! !
+!Color class categoriesFor: #tooltip!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #tooltipText!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #white!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #window!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #windowText!instance creation!instance creation-named colors!public! !
+!Color class categoriesFor: #yellow!instance creation!instance creation-named colors!public! !
 
 Color class methodProtocol: #'color factory' attributes: #(#readOnly) selectors: #(#black #hue:saturation:value: #red:green:blue: #white)!
 
