@@ -37,17 +37,16 @@ brush
 
 	| status type gpHandle class |
 	gpHandle := ExternalHandle new.
-	(status := GdiplusLibrary default gdipGetPenBrushFill: self asParameter brush: gpHandle) = Ok 
+	(status := GdiplusLibrary default gdipGetPenBrushFill: self asParameter brush: gpHandle) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetPenBrushFill failed' with: status].
 	type := SDWORD new.
-	(status := GdiplusLibrary default gdipGetBrushType: gpHandle type: type) = Ok 
+	(status := GdiplusLibrary default gdipGetBrushType: gpHandle type: type) = Ok
 		ifFalse: [GdiplusError signal: 'GdipGetBrushType failed' with: status].
-	class := (Array 
-				with: GdiplusSolidBrush
-				with: GdiplusHatchBrush
-				with: GdiplusTextureBrush
-				with: GdiplusPathGradientBrush
-				with: GdiplusLinearGradientBrush) at: type value + 1.
+	class := ##({GdiplusSolidBrush.
+				GdiplusHatchBrush.
+				GdiplusTextureBrush.
+				GdiplusPathGradientBrush.
+				GdiplusLinearGradientBrush}) at: type value + 1.
 	^class fromOwnedHandle: gpHandle!
 
 brush: aGdiplusBrush 

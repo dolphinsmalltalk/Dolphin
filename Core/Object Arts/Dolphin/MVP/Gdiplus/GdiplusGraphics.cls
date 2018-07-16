@@ -920,11 +920,11 @@ exampleGdipGAlphaBlending
 	graphics2 compositingQuality: CompositingQualityGammaCorrected.
 	"Draw a multicolored background."
 	graphics2 fillRectangle: (200 @ 0 extent: 60 @ 100)
-		brush: (GdiplusSolidBrush color: (ARGB stdColor: #aqua)).
+		brush: (GdiplusSolidBrush color: (ARGB named: #aqua)).
 	graphics2 fillRectangle: (260 @ 0 extent: 60 @ 100)
-		brush: (GdiplusSolidBrush color: (ARGB stdColor: #yellow)).
+		brush: (GdiplusSolidBrush color: (ARGB named: #yellow)).
 	graphics2 fillRectangle: (320 @ 0 extent: 60 @ 100)
-		brush: (GdiplusSolidBrush color: (ARGB stdColor: #fuchsia)).
+		brush: (GdiplusSolidBrush color: (ARGB named: #fuchsia)).
 	"Display the bitmap on a white background."
 	graphics2 drawImage: bitmap at: 0 @ 0.
 	"Display the bitmap on a multicolored background."
@@ -1256,7 +1256,7 @@ exampleGdipNestedContainers
 	"Clipping in Nested Containers"
 	redPen := GdiplusPen red width: 2.
 	bluePen := GdiplusPen blue width: 2.
-	aquaBrush := GdiplusSolidBrush color: (ARGB stdColor: #aqua).
+	aquaBrush := GdiplusSolidBrush color: (ARGB named: #aqua).
 	greenBrush := GdiplusSolidBrush color: (ARGB fromArray: #(255 150 250 130)).
 	graphics clipRectangle: (50 @ 65 extent: 150 @ 120) combineMode: nil.
 	graphics fillRectangle: (50 @ 65 extent: 150 @ 120) brush: aquaBrush.

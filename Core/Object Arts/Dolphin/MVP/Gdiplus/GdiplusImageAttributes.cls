@@ -548,15 +548,12 @@ exampleGdipIATranslateColors
 exampleRemapInput
 	| bitmap |
 	bitmap := GdiplusBitmap extent: 160 @ 120.
-	(bitmap graphics)
+	bitmap graphics
 		clear: ARGB red;
-		fillRectangle: (50 @ 40 corner: 115 @ 80)
-			brush: (GdiplusSolidBrush color: (ARGB stdColor: #yellow));
-		fillEllipse: (30 @ 20 corner: 70 @ 100)
-			brush: (GdiplusSolidBrush color: (ARGB stdColor: #cyan));
+		fillRectangle: (50 @ 40 corner: 115 @ 80) brush: (GdiplusSolidBrush color: (ARGB named: #yellow));
+		fillEllipse: (30 @ 20 corner: 70 @ 100) brush: (GdiplusSolidBrush color: (ARGB named: #cyan));
 		fillRectangle: (80 @ 70 corner: 140 @ 100) brush: (GdiplusSolidBrush color: ARGB green);
-		fillEllipse: (80 @ 20 corner: 140 @ 50)
-			brush: (GdiplusSolidBrush color: (ARGB stdColor: #magenta)).
+		fillEllipse: (80 @ 20 corner: 140 @ 50) brush: (GdiplusSolidBrush color: (ARGB named: #magenta)).
 	^bitmap!
 
 new
