@@ -1038,7 +1038,7 @@ subStringsAnsi: separators
 
 	| start answer size end |
 	size := self size.
-	size == 0 ifTrue: [^Array new].
+	size == 0 ifTrue: [^{}].
 	end := self indexOfAnyOf: separators startingAt: 1.
 	end == 0 ifTrue: [^{self}].
 	answer := Array writeStream: 5.
