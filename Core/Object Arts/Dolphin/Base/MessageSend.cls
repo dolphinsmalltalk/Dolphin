@@ -48,7 +48,6 @@ receiver: anObject
 !MessageSend categoriesFor: #receiver:!accessing!public! !
 
 MessageSend methodProtocol: #messageSend attributes: #() selectors: #()!
-MessageSend methodProtocol: #monadicValuable attributes: #(#ansi #readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 MessageSend methodProtocol: #valuable attributes: #(#ansi #readOnly) selectors: #(#argumentCount #valueWithArguments:)!
 
 !MessageSend class methodsFor!

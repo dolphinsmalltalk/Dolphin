@@ -153,9 +153,11 @@ valueWithArguments: argArray
 !Message categoriesFor: #valueWithArguments:!evaluating!public! !
 
 Message methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
+Message methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
 Message methodProtocol: #failedMessage attributes: #(#ansi #readOnly) selectors: #(#arguments #selector)!
 Message methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
 Message methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
+Message methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
 
 !Message class methodsFor!
 
