@@ -42,10 +42,7 @@ createSchematicWiring
 		send: #onInspecteeChanged
 		to: self!
 
-menuBitmapFromIcon: icon 
-	^icon asMenuBitmap!
-
-model: aCommandMenuItem 
+model: aCommandMenuItem
 	"Set the model associated with the receiver."
 
 	| aspectBuffer |
@@ -55,7 +52,7 @@ model: aCommandMenuItem
 	commandPresenter model: (aspectBuffer aspectValue: #commandString).
 	imageModel := aspectBuffer aspectValue: #image.
 	iconPresenter model: (ValueConverter subject: imageModel
-				typeConverter: (PluggableTypeConverter leftToRight: [:icon | self menuBitmapFromIcon: icon]
+				typeConverter: (PluggableTypeConverter leftToRight: [:icon | icon asMenuBitmap]
 						rightToLeft: [:icon | icon])).
 	iconIdPresenter model: (ValueConverter subject: imageModel
 				typeConverter: (PluggableTypeConverter leftToRight: [:icon | icon printString]
@@ -91,7 +88,6 @@ queryCommand: aCommandQuery
 !MenuItemDialog categoriesFor: #clearIcon!commands!private! !
 !MenuItemDialog categoriesFor: #createComponents!public! !
 !MenuItemDialog categoriesFor: #createSchematicWiring!initializing!public! !
-!MenuItemDialog categoriesFor: #menuBitmapFromIcon:!private! !
 !MenuItemDialog categoriesFor: #model:!public! !
 !MenuItemDialog categoriesFor: #onCardChanged!event handling!private! !
 !MenuItemDialog categoriesFor: #onInspecteeChanged!event handling!private! !

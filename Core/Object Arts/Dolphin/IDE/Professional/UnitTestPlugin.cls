@@ -40,8 +40,8 @@ Class Variables:
 allContextMenus
 	| allMenus |
 	allMenus := OrderedCollection new.
-	self browser view withAllSubViews 
-		do: [:each | each contextMenu ifNotNil: [:menu | allMenus addAll: menu allMenus]].
+	self browser view
+		withAllSubViewsDo: [:each | each contextMenu ifNotNil: [:menu | allMenus addAll: menu allMenus]].
 	^allMenus!
 
 allMenuBarMenus
@@ -113,13 +113,12 @@ displayDefects: aCollection
 displayDetails: aString 
 	"Display aString to indicate additional details about the current mode of operation"
 
-	detailsPresenter value: aString.
-	SessionManager inputState pumpMessages!
+	detailsPresenter value: aString!
 
 displayFail
 	"Indicate that some tests have failed and we have defects"
 
-	self icon: (Icon fromFile: 'UnitTestPluginFail.ico').
+	self icon: (Icon fromId: 'UnitTestPluginFail.ico').
 	self displayColor: self class failColor.
 	self displayMode: 'Fail'.
 	self displayDetails: result displayString.
@@ -140,19 +139,19 @@ displayOn: aStream
 displayPass
 	"Indicate that all tests passed"
 
-	self icon: (Icon fromFile: 'UnitTestPluginPass.ico').
+	self icon: (Icon fromId: 'UnitTestPluginPass.ico').
 	self displayColor: self class passColor.
 	self displayMode: 'Pass'.
 	self displayDetails: result displayString!
 
 displayReset
 	self displayColor: self class noTestsColor.
-	self hasTestClass 
+	self hasTestClass
 		ifTrue: 
-			[self icon: (Icon fromFile: 'UnitTestPluginNotRun.ico').
+			[self icon: (Icon fromId: 'UnitTestPluginNotRun.ico').
 			self displayMode: 'Not Yet Run']
 		ifFalse: 
-			[self icon: (Icon fromFile: 'UnitTestPluginNoTest.ico').
+			[self icon: (Icon fromId: 'UnitTestPluginNoTest.ico').
 			self displayMode: 'No Tests'].
 	self displayDetails: ''.
 	self displayDefects: OrderedCollection new.
@@ -161,7 +160,7 @@ displayReset
 displayRunning
 	"Indicate that tests are being run"
 
-	self icon: (Icon fromFile: 'UnitTestPluginDefect.ico').
+	self icon: (Icon fromId: 'UnitTestPluginDefect.ico').
 	self displayColor: self class runningColor.
 	self displayMode: 'Running'.
 	self displayDetails: '...'!
@@ -185,27 +184,31 @@ icon
 	icon ifNil: [^super icon].
 	^icon!
 
-icon: anIconOrNil 
+icon: anIconOrNil
 	"Private - Set the icon displayed in the receivers tab. This is used to indicate whether tests have passed or failed etc."
 
-	icon := anIconOrNil.
-	self refreshIcon!
+	icon = anIconOrNil
+		ifFalse: 
+			[icon := anIconOrNil.
+			self refreshIcon]!
 
 installMenuCommands
 	"Private - Installs the menu commands required by the receiver into the associated browser menus"
 
-	| classContextMenus classMenuBarMenus methodContextMenus methodMenuBarMenus |
-	classContextMenus := self allContextMenus 
-				select: [:each1 | each1 items anySatisfy: [:item | item command = #newClass]].
+	| classContextMenus classMenuBarMenus methodContextMenus methodMenuBarMenus contextMenus menuBarMenus |
+	contextMenus := self allContextMenus.
+	classContextMenus := contextMenus
+				select: [:each | each items anySatisfy: [:item | item command = #newClass]].
 	classContextMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: false].
-	classMenuBarMenus := self allMenuBarMenus 
-				select: [:each1 | each1 items anySatisfy: [:item | item command = #newClass]].
+	menuBarMenus := self allMenuBarMenus.
+	classMenuBarMenus := menuBarMenus
+				select: [:each | each items anySatisfy: [:item | item command = #newClass]].
 	classMenuBarMenus do: [:each | self installTestCommandsInClassMenu: each withAccelerator: true].
-	methodContextMenus := self allContextMenus 
-				select: [:each1 | each1 items anySatisfy: [:item | item command = #newMethod]].
+	methodContextMenus := contextMenus
+				select: [:each | each items anySatisfy: [:item | item command = #newMethod]].
 	methodContextMenus do: [:each | self installTestCommandsInMethodMenu: each].
-	methodMenuBarMenus := self allMenuBarMenus 
-				select: [:each1 | each1 items anySatisfy: [:item | item command = #newMethod]].
+	methodMenuBarMenus := menuBarMenus
+				select: [:each | each items anySatisfy: [:item | item command = #newMethod]].
 	methodMenuBarMenus do: [:each | self installTestCommandsInMethodMenu: each]!
 
 installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel 
@@ -287,8 +290,7 @@ queryCommand: aCommandQuery
 	^super queryCommand: aCommandQuery!
 
 refreshIcon
-	self view arrangement: self.
-	SessionManager inputState pumpMessages!
+	self view arrangement: self!
 
 runIndividualTests
 	| suite |
@@ -353,9 +355,11 @@ toggleToTestsClassDescription
 	gotoClass isNil ifTrue: [^TestCase].
 	^gotoClass!
 
-update: anObject 
+update: anObject
 	(anObject isKindOf: TestCase)
-		ifTrue: [self displayDetails: anObject printString]
+		ifTrue: 
+			[self displayDetails: anObject printString.
+			SessionManager inputState pumpMessages]
 		ifFalse: [super update: anObject]!
 
 updateDefects
@@ -384,31 +388,31 @@ updateWindow
 !UnitTestPlugin categoriesFor: #displayPass!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayReset!private!Updating! !
 !UnitTestPlugin categoriesFor: #displayRunning!private!Updating! !
-!UnitTestPlugin categoriesFor: #hasDefects!public! !
+!UnitTestPlugin categoriesFor: #hasDefects!public!testing! !
 !UnitTestPlugin categoriesFor: #hasIndividualTests!public!Updating! !
 !UnitTestPlugin categoriesFor: #hasTestClass!public!Updating! !
-!UnitTestPlugin categoriesFor: #icon!public! !
-!UnitTestPlugin categoriesFor: #icon:!private! !
-!UnitTestPlugin categoriesFor: #installMenuCommands!private! !
+!UnitTestPlugin categoriesFor: #icon!accessing!public! !
+!UnitTestPlugin categoriesFor: #icon:!accessing!private! !
+!UnitTestPlugin categoriesFor: #installMenuCommands!helpers!private! !
 !UnitTestPlugin categoriesFor: #installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
-!UnitTestPlugin categoriesFor: #installTestCommandsInMethodMenu:!private! !
+!UnitTestPlugin categoriesFor: #installTestCommandsInMethodMenu:!helpers!private! !
 !UnitTestPlugin categoriesFor: #isBrowserLookingAtTestClass!private!testing! !
 !UnitTestPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
 !UnitTestPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!UnitTestPlugin categoriesFor: #onViewOpened!private! !
+!UnitTestPlugin categoriesFor: #onViewOpened!event handling!private! !
 !UnitTestPlugin categoriesFor: #queryCommand:!commands!private! !
 !UnitTestPlugin categoriesFor: #refreshIcon!operations!private! !
 !UnitTestPlugin categoriesFor: #runIndividualTests!commands!public! !
-!UnitTestPlugin categoriesFor: #runSuite:!private! !
+!UnitTestPlugin categoriesFor: #runSuite:!operations!private! !
 !UnitTestPlugin categoriesFor: #runTests!commands!public! !
-!UnitTestPlugin categoriesFor: #startAutoSwitchProcess!private! !
-!UnitTestPlugin categoriesFor: #stopAutoSwitchProcess!private! !
+!UnitTestPlugin categoriesFor: #startAutoSwitchProcess!helpers!private! !
+!UnitTestPlugin categoriesFor: #stopAutoSwitchProcess!helpers!private! !
 !UnitTestPlugin categoriesFor: #testClass!Accessing!private! !
-!UnitTestPlugin categoriesFor: #testSuite!public! !
+!UnitTestPlugin categoriesFor: #testSuite!accessing!public! !
 !UnitTestPlugin categoriesFor: #testSuiteName!event handling!private! !
 !UnitTestPlugin categoriesFor: #toggleToTests!commands!public! !
-!UnitTestPlugin categoriesFor: #toggleToTestsClass!private! !
-!UnitTestPlugin categoriesFor: #toggleToTestsClassDescription!private! !
+!UnitTestPlugin categoriesFor: #toggleToTestsClass!helpers!private! !
+!UnitTestPlugin categoriesFor: #toggleToTestsClassDescription!helpers!private! !
 !UnitTestPlugin categoriesFor: #update:!helpers!private! !
 !UnitTestPlugin categoriesFor: #updateDefects!private!Updating! !
 !UnitTestPlugin categoriesFor: #updateWindow!private!Updating! !
@@ -509,30 +513,30 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ContainerView)  98 15 0 0 98 2 8 1409482752 131073 416 0 196934 1 ##(Smalltalk.RGB)  25264513 0 5 0 0 0 416 788230 ##(Smalltalk.BorderLayout)  1 1 410 8 ##(Smalltalk.PushButton)  98 17 0 416 98 2 8 1140924416 1 560 0 498 25264513 328198 ##(Smalltalk.Point)  177 57 5 0 263174 ##(Smalltalk.Font)  0 16 459014 ##(Smalltalk.LOGFONT)  8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 658 193 193 0 560 0 8 4294902317 1180998 4 ##(Smalltalk.CommandDescription)  8 #runTests 8 'Run Tests' 9381 1 0 0 32 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 658 1 1 658 969 49 560 930 8 #isEnabled: 98 1 32 560 930 8 #text: 98 1 8 'Run Tests' 560 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 98 0 658 193 193 0 27 0 0 0 410 432 98 15 0 416 98 2 8 1140850688 131073 1216 0 498 66047 0 5 0 0 0 1216 530 1 1 0 410 432 98 15 0 1216 98 2 8 1140850688 131073 1312 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 1312 530 1 1 0 0 410 576 98 17 0 1312 98 2 8 1140924416 1 1440 0 1378 1408 0 5 0 690 0 16 722 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 658 193 193 0 1440 0 8 4294902317 802 8 #debugTest 8 'Debug' 1 1 0 0 32 866 202 208 98 3 930 960 98 2 658 815 1 658 155 49 1440 930 1040 98 1 32 1440 930 1088 98 1 8 'Debug' 1440 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 151 1 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 98 0 1200 0 27 0 410 8 ##(Smalltalk.ComboBox)  98 17 0 1312 98 2 8 1144063491 1 1888 590662 2 ##(Smalltalk.ListModel)  202 208 98 0 0 1310726 ##(Smalltalk.IdentitySearchPolicy)  1378 1408 0 5 0 690 0 16 722 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 658 193 193 0 1888 0 8 4294902425 8 ##(Smalltalk.BasicListAbstract)  2016 401 866 202 208 98 2 930 960 98 2 658 1 1 658 815 49 1888 930 1040 98 1 32 1888 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 151 1 0 0 24 0 0 0] 98 0 1200 0 27 234 256 98 4 1440 8 'debugButton' 1888 8 'defects' 0 866 202 208 98 1 930 960 98 2 658 1 285 658 969 49 1312 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 142 0 0 0 228 1 0 0 166 0 0 0] 98 2 1440 1888 1200 0 27 0 0 410 432 98 15 0 1216 98 2 8 1140850688 131073 2592 0 1378 1408 0 5 0 0 0 2592 530 1 1 410 8 ##(Smalltalk.StaticText)  98 16 0 2592 98 2 8 1140850945 1 2688 0 0 658 177 81 5 0 690 0 16 722 8 #[208 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 49 67 111 117 114 105 101 114 32 78 101 119 0 83 0 118 97 0 114 105 102 0 39 0 0 0 0 191 0 253 85 63 1] 658 193 193 0 2688 0 8 4294902439 852486 ##(Smalltalk.NullConverter)  0 0 16 866 202 208 98 2 930 960 98 2 658 1 1 658 969 121 2688 930 1088 98 1 8 'No Tests' 2688 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 60 0 0 0] 98 0 1200 0 27 0 0 0 410 2704 98 16 0 2592 98 2 8 1140850945 65 3104 0 0 0 5 0 690 0 16 722 8 #[240 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 658 193 193 0 3104 0 8 4294902439 2866 0 0 0 866 202 208 98 2 930 960 98 2 658 1 121 658 969 165 3104 930 1088 98 1 8 '...' 3104 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 60 0 0 0 228 1 0 0 142 0 0 0] 98 0 1200 0 27 234 256 98 4 2688 8 'mode' 3104 8 'details' 0 866 202 208 98 1 930 960 98 2 658 1 1 658 969 285 2592 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 142 0 0 0] 98 2 3104 2688 1200 0 27 234 256 2016 590342 ##(Smalltalk.Rectangle)  658 1 1 658 1 1 866 202 208 98 1 930 960 98 2 658 1 49 658 969 333 1216 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 24 0 0 0 228 1 0 0 190 0 0 0] 98 2 2592 1312 1200 0 27 234 256 98 4 560 8 'runOne' 1216 8 'colorField' 0 866 202 208 98 1 930 960 98 2 658 3839 21 658 969 381 416 1138 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 99 9 0 0 200 0 0 0] 98 2 560 1216 1200 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409482752 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.PushButton) 34 20 nil 416 34 2 8 1140924416 1 512 nil 786694 ##(Smalltalk.IndexedColor) 33554447 328198 ##(Smalltalk.Point) 177 57 5 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 512 nil 8 1912725136 1180998 4 ##(Smalltalk.CommandDescription) #runTests 8 'Run Tests' 9381 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 610 1 1 610 969 49 512 866 #isEnabled: 8 #(false) 512 866 #text: 34 1 8 'Run Tests' 512 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 8 #() 610 193 193 nil 29 nil nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 1104 nil 196934 1 ##(Smalltalk.RGB) 66047 nil 5 nil nil nil 1104 482 1 1 nil 410 ##(Smalltalk.ContainerView) 34 15 nil 1104 34 2 8 1140850688 131073 1216 nil 524550 ##(Smalltalk.ColorRef) 8 4278190080 nil 5 nil nil nil 1216 482 1 1 nil nil 410 ##(Smalltalk.PushButton) 34 20 nil 1216 34 2 8 1140924416 1 1344 nil nil nil 5 nil 642 nil true 674 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 610 193 193 nil 1344 nil 8 1912725136 754 #debugTest 8 'Debug' 1 1 nil nil false nil nil nil 802 138 144 34 3 866 #createAt:extent: 34 2 610 815 1 610 155 49 1344 866 #isEnabled: 8 #(false) 1344 866 #text: 34 1 8 'Debug' 1344 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 151 1 0 0 0 0 0 0 228 1 0 0 24 0 0 0] 8 #() 1088 nil 29 nil 410 ##(Smalltalk.ComboBox) 34 17 nil 1216 34 2 8 1144063491 1 1760 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) nil nil 5 nil 642 nil true 674 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 610 193 193 nil 1760 nil 8 1912552560 ##(Smalltalk.BasicListAbstract) 1872 401 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 1 610 815 49 1760 866 #isEnabled: 8 #(false) 1760 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 151 1 0 0 24 0 0 0] 8 #() 1088 nil 27 170 192 34 4 1760 8 'defects' 1344 8 'debugButton' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 285 610 969 49 1216 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 142 0 0 0 228 1 0 0 166 0 0 0] 34 2 1344 1760 1088 nil 27 nil nil 410 ##(Smalltalk.ContainerView) 34 15 nil 1104 34 2 8 1140850688 131073 2416 nil 1282 1312 nil 5 nil nil nil 2416 482 1 1 410 ##(Smalltalk.StaticText) 34 16 nil 2416 34 2 8 1140850945 1 2512 nil nil 610 177 81 5 nil 642 nil true 674 8 #[208 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 49 67 111 117 114 105 101 114 32 78 101 119 0 83 0 118 97 0 114 105 102 0 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 2512 nil 8 1912674480 852486 ##(Smalltalk.NullConverter) nil nil true 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 1 610 969 121 2512 866 #text: 34 1 8 'No Tests' 2512 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 60 0 0 0] 8 #() 1088 nil 27 nil nil nil 410 ##(Smalltalk.StaticText) 34 16 nil 2416 34 2 8 1140850945 65 2912 nil nil nil 5 nil 642 nil true 674 8 #[240 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 188 2 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 68 132 66 49 15 1 0 0 196 53 15 1 2 0 144 39 0 0 0 0 191 0 253 85 63 1] 610 193 193 nil 2912 nil 8 1912674480 2674 nil nil nil 802 138 144 34 2 866 #createAt:extent: 34 2 610 1 121 610 969 165 2912 866 #text: 34 1 8 '...' 2912 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 60 0 0 0 228 1 0 0 142 0 0 0] 8 #() 1088 nil 27 170 192 34 4 2912 8 'details' 2512 8 'mode' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 1 610 969 285 2416 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 228 1 0 0 142 0 0 0] 34 2 2912 2512 1088 nil 27 170 192 34 2 2416 8 'colorField' 590342 ##(Smalltalk.Rectangle) 610 1 1 610 1 1 802 138 144 34 1 866 #createAt:extent: 34 2 610 1 49 610 969 333 1104 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 24 0 0 0 228 1 0 0 190 0 0 0] 34 2 2416 1216 1088 nil 27 170 192 34 2 512 8 'runOne' nil 802 138 144 34 1 866 #createAt:extent: 34 2 610 3839 21 610 969 381 416 1026 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 99 9 0 0 200 0 0 0] 34 2 512 1104 1088 nil 27 )!
 
 runningColor
 	^RunningColor!
 
 runningColor: aColor 
 	RunningColor := aColor = Color default ifTrue: [self defaultRunningColor] ifFalse: [aColor]! !
-!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!public! !
-!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!public! !
+!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!accessing!public! !
+!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #defaultAutoSwitchDelay!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultFailColor!private! !
+!UnitTestPlugin class categoriesFor: #defaultFailColor!constants!private! !
 !UnitTestPlugin class categoriesFor: #defaultNoTestsColor!private!Updating! !
-!UnitTestPlugin class categoriesFor: #defaultPassColor!private! !
-!UnitTestPlugin class categoriesFor: #defaultRunningColor!private! !
+!UnitTestPlugin class categoriesFor: #defaultPassColor!constants!private! !
+!UnitTestPlugin class categoriesFor: #defaultRunningColor!constants!private! !
 !UnitTestPlugin class categoriesFor: #failColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #failColor:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #icon!constants!public! !
-!UnitTestPlugin class categoriesFor: #initialize!private! !
+!UnitTestPlugin class categoriesFor: #initialize!class initialization!private! !
 !UnitTestPlugin class categoriesFor: #noTestsColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #noTestsColor:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #passColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #passColor:!accessing!public! !
 !UnitTestPlugin class categoriesFor: #publishedAspects!development!private! !
 !UnitTestPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!UnitTestPlugin class categoriesFor: #runningColor!public! !
+!UnitTestPlugin class categoriesFor: #runningColor!accessing!public! !
 !UnitTestPlugin class categoriesFor: #runningColor:!accessing!public! !
 

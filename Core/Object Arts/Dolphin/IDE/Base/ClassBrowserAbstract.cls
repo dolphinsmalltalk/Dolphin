@@ -2348,19 +2348,17 @@ updateCategories
 
 	| class |
 	class := self actualClass.
-	class isNil 
+	class isNil
 		ifTrue: [categoriesPresenter model clear]
 		ifFalse: 
-			[| last |
+			[| last allCategory |
 			last := self category.
 			"Set up the category tree for the class"
 			categoriesPresenter model list: self actualClassChainCategories asOrderedCollection.
-			categoriesPresenter expand: self allCategory.
-			(last isNil or: [(categoriesPresenter selection: last ifAbsent: []) ~= last]) 
-				ifTrue: 
-					[| allCategory |
-					allCategory := self allCategory.
-					categoriesPresenter selection: allCategory]]!
+			allCategory := self allCategory.
+			categoriesPresenter expand: allCategory.
+			(last isNil or: [(categoriesPresenter selection: last ifAbsent: []) ~= last])
+				ifTrue: [categoriesPresenter selection: allCategory]]!
 
 updateClass: aspectString presenter: aSmalltalkWorkspace source: sourceString 
 	| class event |
