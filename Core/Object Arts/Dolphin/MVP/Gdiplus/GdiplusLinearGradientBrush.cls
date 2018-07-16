@@ -95,21 +95,21 @@ exampleGdipLGChangingColors
 	| bitmap graphics points colors brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array 
+	points := Array
 				with: 0 @ 0
 				with: 300 @ 0
 				with: 0 @ 200
 				with: 300 @ 200.
 	colors := #(#red #green #blue #magenta #cyan).
-	brush := GdiplusLinearGradientBrush 
+	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
 				point2: 0 @ 200
-				color1: (ARGB stdColor: #blue)
-				color2: (ARGB stdColor: #blue).
+				color1: (ARGB named: #blue)
+				color2: (ARGB named: #blue).
 	points keysAndValuesDo: 
-			[:i :point | 
-			brush startingColor: (ARGB stdColor: (colors at: i))
-				endingColor: (ARGB stdColor: (colors at: i + 1)).
+			[:i :point |
+			brush startingColor: (ARGB named: (colors at: i))
+				endingColor: (ARGB named: (colors at: i + 1)).
 			graphics fillRectangle: (point extent: 300 @ 200) brush: brush].
 	^bitmap!
 
@@ -122,13 +122,13 @@ exampleGdipLGCustom
 
 	| bitmap brush |
 	bitmap := GdiplusBitmap extent: 600 @ 400.
-	brush := GdiplusLinearGradientBrush 
+	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 10
 				point2: 200 @ 10
-				color1: (ARGB stdColor: #black)
-				color2: (ARGB stdColor: #red).
+				color1: (ARGB named: #black)
+				color2: (ARGB named: #red).
 	brush blendFactors: #(0.0 0.5 1.0) positions: #(0.0 0.2 1.0).
-	(bitmap graphics)
+	bitmap graphics
 		fillEllipse: (0 @ 30 extent: 200 @ 100) brush: brush;
 		fillRectangle: (0 @ 155 extent: 500 @ 30) brush: brush.
 	^bitmap!
@@ -142,13 +142,13 @@ exampleGdipLGDiagonal
 
 	| bitmap brush pen |
 	bitmap := GdiplusBitmap extent: 600 @ 400.
-	brush := GdiplusLinearGradientBrush 
+	brush := GdiplusLinearGradientBrush
 				point1: 0 @ 0
 				point2: 200 @ 100
-				color1: (ARGB stdColor: #blue)
-				color2: (ARGB stdColor: #green).
+				color1: (ARGB named: #blue)
+				color2: (ARGB named: #green).
 	pen := GdiplusPen brush: brush width: 10.
-	(bitmap graphics)
+	bitmap graphics
 		drawLine: (0 @ 0 extent: 600 @ 300) pen: pen;
 		fillEllipse: (10 @ 100 extent: 200 @ 100) brush: brush.
 	^bitmap!
@@ -183,18 +183,18 @@ exampleGdipLGModeConstants
 	| bitmap graphics points enum brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array 
+	points := Array
 				with: 0 @ 0
 				with: 300 @ 0
 				with: 0 @ 200
 				with: 300 @ 200.
 	points keysAndValuesDo: 
-			[:i :point | 
+			[:i :point |
 			enum := self enumsLinearGradientMode at: i.
-			brush := GdiplusLinearGradientBrush 
+			brush := GdiplusLinearGradientBrush
 						rect: (0 @ 0 corner: 300 @ 200)
-						color1: (ARGB stdColor: #red)
-						color2: (ARGB stdColor: #yellow)
+						color1: (ARGB named: #red)
+						color2: (ARGB named: #yellow)
 						mode: enum value.
 			graphics
 				fillRectangle: (point extent: 300 @ 200) brush: brush;
@@ -210,18 +210,18 @@ exampleGdipLGTiling
 	| bitmap graphics points enum brush |
 	bitmap := GdiplusBitmap new.
 	graphics := bitmap graphics.
-	points := Array 
+	points := Array
 				with: 0 @ 0
 				with: 300 @ 0
 				with: 0 @ 200
 				with: 300 @ 200.
 	points keysAndValuesDo: 
-			[:i :point | 
+			[:i :point |
 			enum := self enumsLinearGradientMode at: i.
-			brush := GdiplusLinearGradientBrush 
+			brush := GdiplusLinearGradientBrush
 						rect: (0 @ 0 corner: 75 @ 50)
-						color1: (ARGB stdColor: #blue)
-						color2: (ARGB stdColor: #cyan)
+						color1: (ARGB named: #blue)
+						color2: (ARGB named: #cyan)
 						mode: enum value.
 			graphics
 				fillRectangle: (point extent: 300 @ 200) brush: brush;
