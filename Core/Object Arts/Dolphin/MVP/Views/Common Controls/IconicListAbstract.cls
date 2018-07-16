@@ -547,7 +547,7 @@ onKeyTyped: aKeyEvent
 		self presenter performAction ].
 	^answer!
 
-onLabelOf: anObject editedTo: text 
+onLabelOf: anObject editedTo: text
 	"The receiver's element, anObject, has had its label edited in the receiver to the 
 	specified text. Answer whether to accept the edited text.
 	Implementation Note: We fire off an event to let the observers determine whether to
@@ -564,19 +564,15 @@ onLabelOf: anObject editedTo: text
 
 	| accept accepted |
 	accept := false asValue.
-	self presenter trigger: #labelOf:editedTo:accept:
-		withArguments: (Array 
-				with: anObject
-				with: text
-				with: accept).
+	self presenter trigger: #labelOf:editedTo:accept: withArguments: {anObject. text. accept}.
 	accepted := accept value.
-	accepted 
+	accepted
 		ifTrue: 
 			[
-			[self presenter 
+			[self presenter
 				trigger: #labelOf:changedTo:
 				with: anObject
-				with: text] 
+				with: text]
 					postToMessageQueue].
 	^accepted!
 
@@ -605,7 +601,7 @@ onViewCreated
 	"#222: Request version 5 control behaviour which supposedly fixes bug of control ignoring 
 	CDRF_NEWFONT bit returned from custom draw. This should be done first."
 
-	self ccmSetVersion: 5.
+	self ccmSetVersion: 6.
 	super onViewCreated.
 	self applyImageLists.
 	self beDefaultThemed!
@@ -682,6 +678,12 @@ stateImageManager: anImageManager
 
 	stateImageManager := anImageManager.
 	self applyImageLists!
+
+stbSaveOn: anSTBOutFiler
+	"Don't save out the temporary cache of thumbnails - this can be rebuilt."
+
+	anSTBOutFiler override: thumbnailsImageManager with: nil.
+	^super stbSaveOn: anSTBOutFiler!
 
 themeSubAppName
 	^SystemMetrics current hasEnhancedThemes ifTrue: ['explorer'] ifFalse: [super themeSubAppName]!
@@ -800,6 +802,7 @@ wmDestroy: message wParam: wParam lParam: lParam
 !IconicListAbstract categoriesFor: #showDropHighlight:!drag & drop!private! !
 !IconicListAbstract categoriesFor: #stateImageManager!image management!public! !
 !IconicListAbstract categoriesFor: #stateImageManager:!image management!public! !
+!IconicListAbstract categoriesFor: #stbSaveOn:!binary filing!public! !
 !IconicListAbstract categoriesFor: #themeSubAppName!constants!private! !
 !IconicListAbstract categoriesFor: #viewMode!accessing!public! !
 !IconicListAbstract categoriesFor: #viewMode:!accessing!public! !

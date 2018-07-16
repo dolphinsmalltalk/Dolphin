@@ -419,11 +419,11 @@ selectionByIndex: index
 	^self selectionByIndex: index ifAbsent: [self errorSubscriptBounds: index]
 !
 
-selectionByIndex: anInteger ifAbsent: exceptionHandler 
+selectionByIndex: anInteger ifAbsent: exceptionHandler
 	"Select the object identified by anIntegerIndex in the receiver. If anIntegerIndex is zero
 	then all selections are cleared. Answer the selection index that results."
 
-	^self selectionsByIndex: (anInteger == 0 ifTrue: [#()] ifFalse: [Array with: anInteger])
+	^self selectionsByIndex: (anInteger == 0 ifTrue: [#()] ifFalse: [{anInteger}])
 		ifAbsent: exceptionHandler!
 
 selectionByIndexIfNone: exceptionHandler 
@@ -489,12 +489,12 @@ selectionsByIndex
 	in the receiver in ascending order. The array will be empty if there is
 	no selection."
 
-	^self isMultiSelect 
+	^self isMultiSelect
 		ifTrue: [self getMultipleSelections]
 		ifFalse: 
 			[| index |
 			index := self getSingleSelection.
-			index == 0 ifTrue: [#()] ifFalse: [Array with: index]]!
+			index == 0 ifTrue: [#()] ifFalse: [{index}]]!
 
 selectionsByIndex: aCollectionOfIntegers
 	^self selectionsByIndex: aCollectionOfIntegers

@@ -1306,15 +1306,14 @@ asSessionManagerClass
 	^DefaultShellSessionManager!
 
 createHookBlock
-	CreateHookBlock isNil ifTrue: [^[:shellView :createBlock | createBlock value]].
-	^CreateHookBlock!
+	^CreateHookBlock ?? [:shellView :createBlock | createBlock value]!
 
 createHookBlock: aDyadicBlock 
 	"Private - Set aDyadicBlock to be used to hook and wrap the actual window creation process.
 	The first argument is the ShellView that is about to be realized whilst the second is a
 	monadic valuable that will actually perform the creation"
 
-	"NOTE: This hook mecahnism was introduced the allow the View Composer to tempiorarily change styles for
+	"NOTE: This hook mechanism was introduced the allow the View Composer to temporarily change styles for
 	the views that it loads. It maybe useful for other purposes too"
 
 	CreateHookBlock := aDyadicBlock!
@@ -1419,8 +1418,8 @@ stbConvertFromVersion9: anArray
 			startingAt: 25;
 		yourself! !
 !ShellView class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
-!ShellView class categoriesFor: #createHookBlock!accessing!public! !
-!ShellView class categoriesFor: #createHookBlock:!accessing!public! !
+!ShellView class categoriesFor: #createHookBlock!accessing!private! !
+!ShellView class categoriesFor: #createHookBlock:!accessing!private! !
 !ShellView class categoriesFor: #defaultExtentBlock!accessing!geometry!private! !
 !ShellView class categoriesFor: #defaultExtentBlock:!accessing!geometry!private! !
 !ShellView class categoriesFor: #icon!constants!public! !

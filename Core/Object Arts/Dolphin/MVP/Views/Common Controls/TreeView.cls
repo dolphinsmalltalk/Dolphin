@@ -60,9 +60,9 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 								lpParam: aTVINSERTSTRUCT.
 					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
 
-addRoot: anObject 
-	self 
-		basicAddAll: (Array with: anObject)
+addRoot: anObject
+	self
+		basicAddAll: {anObject}
 		inHandle: TVGN_ROOT
 		afterHandle: TVI_LAST.
 	self hasLinesAtRoot ifFalse: [self expand: anObject]!
@@ -716,9 +716,9 @@ onItem: anObject addedInParent: aParentObject
 		and: [(previousSiblingHandle := self handleFromObject: (siblings at: previousSiblingIndex)) isNil]]
 			whileTrue: [previousSiblingIndex := previousSiblingIndex - 1].
 	self
-		basicAddAll: (Array with: anObject)
+		basicAddAll: {anObject}
 		inHandle: parentHandle
-		afterHandle: (previousSiblingHandle ?? TVI_FIRST)!
+		afterHandle: previousSiblingHandle ?? TVI_FIRST!
 
 onItem: anObject movedToParent: aParentObject 
 	"Event received when anObject has been moved in the receiver's

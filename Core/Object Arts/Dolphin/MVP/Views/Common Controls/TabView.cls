@@ -417,10 +417,11 @@ state
 
 	| sequence |
 	sequence := super state.
-	sequence add: (MessageSend receiver: self selector: #tcmSetExtendedStyle:dwExStyle: 
-					arguments: (Array with: -1 with: self tcmGetExtendedStyle)).
-	^sequence
-!
+	sequence add: (MessageSend
+				receiver: self
+				selector: #tcmSetExtendedStyle:dwExStyle:
+				arguments: {-1. self tcmGetExtendedStyle}).
+	^sequence!
 
 supportsThemedVertical
 	^false!
