@@ -460,12 +460,14 @@ IdentityDictionary new
 	yourself
 "!
 
-stdColor: aSymbol
+named: aSymbol
 	"Answer an instance whose name is aSymbol."
 
-	"SW: should this be named #commonColor: ?"
-
 	^self fromInteger: (StdColours at: aSymbol)!
+
+stdColor: aSymbol
+	Notification deprecated.
+	^self named: aSymbol!
 
 stdColourTable
 	^StdColours collect: [:each | self fromInteger: each]! !
@@ -477,6 +479,7 @@ stdColourTable
 !ARGB class categoriesFor: #fromNormalizedArray:!instance creation!public! !
 !ARGB class categoriesFor: #green!instance creation!public! !
 !ARGB class categoriesFor: #initialize!initializing!public! !
+!ARGB class categoriesFor: #named:!instance creation!public! !
 !ARGB class categoriesFor: #stdColor:!instance creation!public! !
 !ARGB class categoriesFor: #stdColourTable!helpers!public! !
 

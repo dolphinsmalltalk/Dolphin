@@ -76,14 +76,6 @@ package methodNames
 	add: #TextEdit -> #isUpperCase;
 	add: #TextEdit -> #isUppercase:;
 	add: #TextEdit -> #lines;
-	add: #ToolbarButton -> #checked;
-	add: #ToolbarButton -> #checked:;
-	add: #ToolbarButton -> #enabled;
-	add: #ToolbarButton -> #enabled:;
-	add: #ToolbarButton -> #hide:;
-	add: #ToolbarButton -> #indeterminate:;
-	add: #ToolbarButton -> #pressed;
-	add: #ToolbarButton -> #pressed:;
 	add: #TreeView -> #disableExpandAll;
 	add: #TreeView -> #disableExpandAll:;
 	add: #TypeConverter -> #leftExceptionalValue;
@@ -98,11 +90,14 @@ package methodNames
 	add: #View -> #winHelpPopup:topic:at:;
 	add: 'ChoicePresenter class' -> #resource_Multiselection_list_box;
 	add: 'Color class' -> #buttonFace;
+	add: 'Color class' -> #withIndex:;
 	add: 'ListPresenter class' -> #resource_Multiselection_enhanced_list_view;
 	add: 'ListPresenter class' -> #resource_Multiselection_list_box;
 	add: 'PaintEvent class' -> #handle:wParam:hdc:paintStruct:;
 	add: 'PositionEvent class' -> #handle:message:wParam:lParam:;
+	add: 'RGB class' -> #stdColor:;
 	add: 'STBViewProxy class' -> #for:;
+	add: 'SystemColor class' -> #fromId:;
 	add: 'WindowsEvent class' -> #fromMSG:;
 	add: 'WindowsEvent class' -> #handle:message:wParam:lParam:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
@@ -130,7 +125,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: '..\Presenters\Choice\Dolphin Choice Presenter';
 	add: '..\Views\Common Controls\Dolphin Common Controls';
-	add: '..\Views\Control Bars\Dolphin Control Bars';
 	add: '..\Models\List\Dolphin List Models';
 	add: '..\Presenters\List\Dolphin List Presenter';
 	add: '..\Views\MoenTree\Dolphin MoenTree View';
@@ -297,8 +291,13 @@ setText: text format: formatName
 
 buttonFace
 	Notification deprecated.
-	^Color face3d! !
+	^Color face3d!
+
+withIndex: anInteger
+	Notification deprecated.
+	^IndexedColor withIndex: anInteger! !
 !Color class categoriesFor: #buttonFace!instance creation!public! !
+!Color class categoriesFor: #withIndex:!instance creation!public! !
 
 !GUISessionManager methodsFor!
 
@@ -433,6 +432,13 @@ handle: wndHandle message: msgInteger wParam: wInteger lParam: lInteger
 		makeStruct;
 		yourself! !
 !PositionEvent class categoriesFor: #handle:message:wParam:lParam:!instance creation!public! !
+
+!RGB class methodsFor!
+
+stdColor: aSymbol
+	Notification deprecated.
+	^self named: aSymbol! !
+!RGB class categoriesFor: #stdColor:!instance creation!public! !
 
 !ScintillaIndicator methodsFor!
 
@@ -610,6 +616,13 @@ for: aView
 	^self forView: aView! !
 !STBViewProxy class categoriesFor: #for:!instance creation!public! !
 
+!SystemColor class methodsFor!
+
+fromId: anInteger
+	Notification deprecated.
+	^self withIndex: anInteger! !
+!SystemColor class categoriesFor: #fromId:!instance creation!public! !
+
 !SystemMetrics methodsFor!
 
 hasFlashWindow
@@ -686,48 +699,6 @@ lines
 !TextEdit categoriesFor: #isUpperCase!public!testing! !
 !TextEdit categoriesFor: #isUppercase:!public!testing! !
 !TextEdit categoriesFor: #lines!accessing!public! !
-
-!ToolbarButton methodsFor!
-
-checked
-	#deprecated.
-	^self isChecked!
-
-checked: aBoolean
-	#deprecated.
-	self isChecked: aBoolean!
-
-enabled
-	#deprecated.
-	^self isEnabled!
-
-enabled: aBoolean
-	#deprecated.
-	self isEnabled: aBoolean!
-
-hide: aBoolean
-	#deprecated.
-	self isHidden: aBoolean!
-
-indeterminate: aBoolean
-	#deprecated.
-	self isIndeterminate: aBoolean!
-
-pressed
-	#deprecated.
-	^self isPressed!
-
-pressed: aBoolean
-	#deprecated.
-	self isPressed: aBoolean! !
-!ToolbarButton categoriesFor: #checked!public!testing! !
-!ToolbarButton categoriesFor: #checked:!public!state! !
-!ToolbarButton categoriesFor: #enabled!public!testing! !
-!ToolbarButton categoriesFor: #enabled:!public!state! !
-!ToolbarButton categoriesFor: #hide:!public!state! !
-!ToolbarButton categoriesFor: #indeterminate:!public!state! !
-!ToolbarButton categoriesFor: #pressed!public!testing! !
-!ToolbarButton categoriesFor: #pressed:!public!state! !
 
 !TreeView methodsFor!
 
