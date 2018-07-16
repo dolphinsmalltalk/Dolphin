@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #SmalltalkSystem
-	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass toolBackgroundColor testBrowserClass defaultPublishedAspectsLiteralsMap'
+	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -1608,12 +1608,6 @@ defaultPublishedAspectsLiteralsMapOf: aTool
 
 	^aTool propertyAt: #_defaultPublishedAspectsLiteralsMap
 		ifAbsent: [self saveDefaultPublishedAspectsOf: aTool]!
-
-defaultToolBackgroundColor
-	^RGB 
-		red: 198
-		green: 221
-		blue: 235!
 
 definitionsMatching: aMethodSearch in: aBrowserEnvironment 
 	^(self selectMethods: aMethodSearch methodDefinitionFilter in: aBrowserEnvironment)
@@ -3799,11 +3793,10 @@ testBrowserClass
 toolBackgroundColor
 	"Answer the background used in some of the system tools"
 
-	toolBackgroundColor isNil ifTrue: [self toolBackgroundColor: self defaultToolBackgroundColor].
-	^toolBackgroundColor!
+	^(Color named: #toolBackground) actualColor!
 
-toolBackgroundColor: aColor 
-	toolBackgroundColor := aColor!
+toolBackgroundColor: aColor
+	(Color named: #toolBackground) actualColor: aColor!
 
 typeForArgumentClass: anObject 
 	^self argumentClasses detect: [:each | anObject includesBehavior: each] ifNone: [anObject]!
@@ -4131,7 +4124,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #defaultPackage!accessing!public! !
 !SmalltalkSystem categoriesFor: #defaultPackage:!accessing!public! !
 !SmalltalkSystem categoriesFor: #defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
-!SmalltalkSystem categoriesFor: #defaultToolBackgroundColor!constants!public! !
 !SmalltalkSystem categoriesFor: #definitionsMatching:in:!browsing!private! !
 !SmalltalkSystem categoriesFor: #definitionsMatching:inHierarchyOf:within:!browsing!private! !
 !SmalltalkSystem categoriesFor: #definitionsOf:!browsing!private! !
@@ -4401,7 +4393,9 @@ icon
 !
 
 initialize
-	self initializeFileDrops!
+	self initializeFileDrops.
+	DefaultColor addNamed: #toolBackground Color face3d
+!
 
 initializeFileDrops
 	FileDrops := (LookupTable new)
@@ -4477,6 +4471,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current notNil ifTrue: [Current uninitialize].
+	Color removedNamed: #toolBackground.
 	Current := nil.
 	RegisteredTools := nil!
 

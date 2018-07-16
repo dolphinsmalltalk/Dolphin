@@ -65,6 +65,12 @@ createSchematicWiring
 		to: self.
 	textPresenter errorModel: self model statusModel!
 
+currentClassUpdated
+	| buffer |
+	buffer := textPresenter model.
+	buffer notifyChanged.
+	^buffer isModified ifFalse: [originalText := buffer value]!
+
 defaultHelpId
 	^self subclassResponsibility!
 
@@ -112,24 +118,16 @@ onBrowserMethodSelected
 	(self isCurrentCard and: [self browser hasMethodSelected]) 
 		ifTrue: [self browser ensureSourceVisible]!
 
-onClassUpdated: aClass 
+onClassUpdated: aClass
 	"Private - The Class, aClass, has been updated. If it is the currently displayed class, then update 
 	the receiver."
 
 	"Implementation Note: Because Classes do not trigger change events off themselves, but
 	rather indirection via the system dictionary, we bridge the gap by monitoring class change
-	events, and filtering to just those changes on the current class and then notifying the
-	text model of the change."
+	events, and filtering to just those changes on the current class."
 
-	currentClass 
-		ifNotNil: 
-			[:class | 
-			class instanceClass == aClass instanceClass 
-				ifTrue: 
-					[| buffer |
-					buffer := textPresenter model.
-					buffer notifyChanged.
-					buffer isModified ifFalse: [originalText := buffer value]]]!
+	currentClass
+		ifNotNil: [:class | class instanceClass == aClass instanceClass ifTrue: [self currentClassUpdated]]!
 
 onShownInBrowser
 	"Private - Event handler indicating that the receiver has been displayed within it's browser."
@@ -189,6 +187,7 @@ textPresenterClass
 !ClassAspectPlugin categoriesFor: #caption!constants!private! !
 !ClassAspectPlugin categoriesFor: #createComponents!initializing!private! !
 !ClassAspectPlugin categoriesFor: #createSchematicWiring!initializing!public! !
+!ClassAspectPlugin categoriesFor: #currentClassUpdated!event handling!private! !
 !ClassAspectPlugin categoriesFor: #defaultHelpId!constants!public! !
 !ClassAspectPlugin categoriesFor: #displayOn:!displaying!public! !
 !ClassAspectPlugin categoriesFor: #foregroundUpdate!private!updating! !

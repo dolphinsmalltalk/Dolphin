@@ -28,7 +28,6 @@ package classNames
 	add: #ClassDiagramPlugin;
 	add: #DebugInfoPlugin;
 	add: #Disassembler;
-	add: #DisassemblyPlugin;
 	add: #EnvironmentBrowserShell;
 	add: #IdeaSpaceShell;
 	add: #PackagedClassSelector;
@@ -125,11 +124,6 @@ ClassBrowserPlugin subclass: #ClassDiagramPlugin
 	classInstanceVariableNames: ''!
 ClassBrowserPlugin subclass: #DebugInfoPlugin
 	instanceVariableNames: 'disassemblyPresenter sourcePresenter textMapPresenter toggleDebugPresenter toggleOptimisedPresenter method'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ClassBrowserPlugin subclass: #DisassemblyPlugin
-	instanceVariableNames: 'disassemblyPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -304,7 +298,7 @@ publishedAspectsOfInstances
 	aspects := super publishedAspectsOfInstances.
 	#(#layoutManager #isTransparent #isTabStop #isGroupStop #isDragSource #isDropTarget) 
 		do: [:each | aspects removeKey: each].
-	#(#isUnpinAnimated #isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated) 
+	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated) 
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
 	^aspects! !
@@ -445,7 +439,7 @@ resource_Idea_space_card_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Idea_space_card_tools)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Toolbar)  98 25 0 0 98 2 8 1409289036 131137 416 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 517 0 0 0 416 498 528 8 4294902851 234 256 98 0 234 256 98 10 31879 1115910 ##(Smalltalk.ToolbarIconButton)  31879 0 416 1 1180998 4 ##(Smalltalk.CommandDescription)  8 #cardHistoryBack 8 'Back' 1 1 263494 3 ##(Smalltalk.Icon)  0 16 1572870 ##(Smalltalk.ImageRelativeFileLocator)  8 'HistoryBack.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy)  8 'dolphindr006.dll' 0 395334 3 ##(Smalltalk.Bitmap)  0 16 0 0 0 0 3 328198 ##(Smalltalk.Point)  33 33 1 31881 642 31881 0 416 1 674 8 #cardHistoryForward 8 'Forward' 1 1 738 0 16 784 8 'HistoryForward.ico' 832 866 0 16 0 0 0 0 3 898 33 33 1 31883 853766 ##(Smalltalk.ToolbarButton)  31883 0 416 1 674 8 #moveCardLeft 8 'Move Card Left' 1 1 0 657990 3 ##(Smalltalk.DIBSection)  0 16 784 8 'IdeaSpaceCardBar.bmp' 0 0 7 898 161 33 17 0 1 31885 1058 31885 0 416 1 674 8 #moveCardRight 8 'Move Card Right' 1 1 0 1152 3 31887 1058 31887 0 416 1 674 8 #closeCard 8 'Close This Card' 1 1 0 1152 5 98 7 1050118 ##(Smalltalk.ToolbarSeparator)  0 0 416 3 0 1 656 928 1346 0 0 416 3 0 1 1072 1200 1264 234 240 98 6 880 1 1024 3 1152 5 0 1 0 898 33 33 898 45 45 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 898 3359 21 898 271 51 416 1522 8 #updateSize 592 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 22 7 0 0 35 0 0 0] 98 0 898 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 10 25093 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #cardHistoryBack 8 'Back' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryBack.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 25093 25095 610 416 1 642 #cardHistoryForward 8 'Forward' 1 1 690 nil true 736 8 'HistoryForward.ico' 784 25095 25097 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 642 #moveCardLeft 8 'Move Card Left' 1 1 nil 25097 657990 3 ##(Smalltalk.DIBSection) nil true 736 8 'IdeaSpaceCardBar.bmp' nil nil 7 328198 ##(Smalltalk.Point) 161 33 17 nil 1 25099 898 416 1 642 #moveCardRight 8 'Move Card Right' 1 1 nil 25099 976 3 25101 898 416 1 642 #closeCard 8 'Close This Card' 1 1 nil 25101 976 5 34 7 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 624 816 1154 416 1 912 1040 1088 170 176 34 6 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 1010 33 33 3 976 5 1234 nil true nil nil nil nil 3 1010 33 33 1 nil 1 nil 1010 33 33 1010 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1010 3839 21 1010 271 51 416 1410 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 6 8 0 0 35 0 0 0] 8 #() 1010 193 193 nil 27 )! !
 !Toolbar class categoriesFor: #resource_Idea_space_card_tools!public!resources-views! !
 
 "End of package definition"!

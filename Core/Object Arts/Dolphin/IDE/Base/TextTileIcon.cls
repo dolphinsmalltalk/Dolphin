@@ -82,7 +82,7 @@ bitmapWithExtent: aPoint
 	graphics := bitmap graphics.
 	graphics doWithCanvas: 
 			[:canvas |
-			| textExtent i pixelSize |
+			| textExtent i pixelSize back |
 			pixelSize := aPoint y.
 			i := 0.
 			
@@ -95,10 +95,11 @@ bitmapWithExtent: aPoint
 						scale := aPoint x / textExtent x.
 						scale * textExtent y > aPoint y ifTrue: [scale := aPoint y / textExtent y].
 						pixelSize := (pixelSize * scale) truncated].
+			back := self tilecolor.
 			canvas
-				backcolor: self tilecolor;
+				backcolor: back;
 				erase;
-				forecolor: Color white;
+				forecolor: (back luminance > 128 ifTrue: [Color black] ifFalse: [Color white]);
 				text: text at: (aPoint - textExtent) // 2].
 	graphics free.
 	^bitmap!
