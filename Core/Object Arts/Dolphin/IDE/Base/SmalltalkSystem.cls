@@ -4394,7 +4394,7 @@ icon
 
 initialize
 	self initializeFileDrops.
-	DefaultColor addNamed: #toolBackground Color face3d
+	DefaultColor addNamed: #toolBackground color: Color face3d
 !
 
 initializeFileDrops

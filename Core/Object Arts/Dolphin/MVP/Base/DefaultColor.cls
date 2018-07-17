@@ -82,7 +82,7 @@ addNamed: aSymbol color: aColor
 	^super addNamed: aSymbol color: wrapper!
 
 initialize
-	self addNamed: #dialog color: Color dialog!
+	self addNamed: #dialog color: Color face3d!
 
 name: aSymbol actualColor: aColor
 	<primitive: 157>
