@@ -175,7 +175,7 @@ defaultExtentWithin: aParentView
 
 	^aParentView defaultExtentOf: self!
 
-defaultPositionWithin: aParentView forExtent: aPoint 
+defaultPositionWithin: aParentView forExtent: aPoint
 	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
 	This is used only on creation."
 
@@ -183,12 +183,12 @@ defaultPositionWithin: aParentView forExtent: aPoint
 	self assert: [aParentView notNil].
 	self isInitiallyCentered ifTrue: [^self centerExtent: aPoint within: aParentView].
 
-
 	"If not creating on the desktop, create at the origin of the parent's client area"
 	aParentView parentView notNil ifTrue: [^0 @ 0].
+	#todo.	"We need a less expensive way to determine a sensible default position than creating and destroying a test window."
 	(testWindow := ShellView new)
 		parentView: aParentView;
-		createAt: CW_USEDEFAULT @ CW_USEDEFAULT extent: aPoint.
+		createAt: ##(CW_USEDEFAULT @ CW_USEDEFAULT) extent: aPoint.
 	defaultPosition := testWindow position.
 	testWindow destroy.
 	^defaultPosition!
