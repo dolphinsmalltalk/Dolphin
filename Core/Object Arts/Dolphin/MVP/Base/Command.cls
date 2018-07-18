@@ -103,8 +103,10 @@ value
 	"Executes the receiver and answers the result. Maintain the currently executing
 	command in the class variable, Current."
 
+	| prior |
+	prior := Current.
 	Current := self.
-	^[self commandDescription performAgainst: self receiver] ensure: [Current := nil]! !
+	^[self commandDescription performAgainst: self receiver] ensure: [Current := prior]! !
 !Command categoriesFor: #beBenign!accessing!public! !
 !Command categoriesFor: #canRedo!accessing!public! !
 !Command categoriesFor: #canUndo!accessing!public! !
