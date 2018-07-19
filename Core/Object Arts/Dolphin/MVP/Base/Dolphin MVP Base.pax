@@ -265,6 +265,7 @@ package methodNames
 	add: #UserLibrary -> #endDialog:nResult:;
 	add: #UserLibrary -> #endPaint:lpPaint:;
 	add: #UserLibrary -> #enumClipboardFormats:;
+	add: #UserLibrary -> #enumThreadWindows:lpfn:lParam:;
 	add: #UserLibrary -> #enumWindows:lParam:;
 	add: #UserLibrary -> #fillRect:lprc:hbr:;
 	add: #UserLibrary -> #findWindow:lpWindowName:;
@@ -1895,6 +1896,10 @@ enumClipboardFormats: knownFormat
 	<stdcall: dword EnumClipboardFormats dword>
 	^self invalidCall!
 
+enumThreadWindows: dwThreadId lpfn: aCallbackThunk lParam: lParam
+	<stdcall: bool EnumThreadWindows dword lpvoid uintptr>
+	^self invalidCall!
+
 enumWindows: aCallbackThunk lParam: lParam
 	"Enumerate all top-level windows on the screen by passing the handle of each window, in turn, to 
 	the callback function thunk aCallbackThunk. EnumWindows continues until the last top-level window 
@@ -1905,7 +1910,7 @@ enumWindows: aCallbackThunk lParam: lParam
 			LPARAM lParam 	// application-defined value
 		);"
 
-	<stdcall: bool EnumWindows lpvoid dword>
+	<stdcall: bool EnumWindows lpvoid uintptr>
 	^self invalidCall!
 
 fillRect: hdc lprc: aRECT hbr: hBrush
@@ -3125,6 +3130,7 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #endDialog:nResult:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #endPaint:lpPaint:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #enumClipboardFormats:!public!win32 functions-clipboard! !
+!UserLibrary categoriesFor: #enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #enumWindows:lParam:!public!win32 functions-window! !
 !UserLibrary categoriesFor: #fillRect:lprc:hbr:!public!win32 functions-filled shape! !
 !UserLibrary categoriesFor: #findWindow:lpWindowName:!public!win32 functions-filled shape! !

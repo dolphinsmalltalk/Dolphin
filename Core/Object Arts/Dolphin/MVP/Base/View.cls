@@ -225,7 +225,7 @@ baseStyle
 	"Private - Answer the receiver's base creation style.
 	N.B. This may not be the receiver's current window style."
 
-	^creationStyle first!
+	^creationStyle at: 1!
 
 baseStyle: anInteger
 	"Private - Set the receiver's base creation style.
