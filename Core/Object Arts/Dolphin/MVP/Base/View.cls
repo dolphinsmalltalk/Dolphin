@@ -3759,7 +3759,7 @@ wmChar: message wParam: wParam lParam: lParam
 wmClose: message wParam: wParam lParam: lParam
 	"Private - This window has been asked to close, answer whether or not it accepts the request."
 
-	^self onCloseRequested!
+	^self presenter onCloseRequested!
 
 wmCommand: message wParam: wParam lParam: lParam 
 	"Private - Handles a WM_COMMAND message. These can originate in a variety of ways each with slightly different
