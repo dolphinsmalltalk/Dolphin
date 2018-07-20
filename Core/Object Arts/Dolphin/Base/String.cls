@@ -8,26 +8,26 @@ ArrayedCollection variableByteSubclass: #String
 String guid: (GUID fromString: '{87b4c514-026e-11d3-9fd7-00a0cc3e4a32}')!
 String isNullTerminated: true!
 String isAbstract: true!
-String addClassConstant: 'EncodingAnsi' value: 0!
-String addClassConstant: 'EncodingUtf16' value: 2!
-String addClassConstant: 'EncodingUtf32' value: 3!
-String addClassConstant: 'EncodingUtf8' value: 1!
+String addClassConstant: 'EncodingAnsi' value: 16r0!
+String addClassConstant: 'EncodingUtf16' value: 16r2!
+String addClassConstant: 'EncodingUtf32' value: 16r3!
+String addClassConstant: 'EncodingUtf8' value: 16r1!
 String addClassConstant: 'LineDelimiter' value: '
 '!
-String comment: 'String is the abstract class of <ArrayedCollection>s representing strings of <Character>s. It has subclasses for strings in the most common encodings, e.g. Latin1, UTF-8, and UTF-16. 
+String comment: '`String` is the abstract class of `ArrayedCollection`s representing strings of `Character`s. It has subclasses for strings in the most common encodings, e.g. Latin1, UTF-8, and UTF-16. 
 
-The default and preferred string type is Utf8String, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16 encoded strings. Utf16String is the concreted subclass to  represent UTF-16 encoded strings.
+The default and preferred string type is `Utf8String`, representing UTF-8 encoded strings, however many Windows APIs will expect to be passed (and will return) UTF-16 encoded strings. `Utf16String` is the concrete subclass to  represent UTF-16 encoded strings.
 
-N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null terminated. Space for the null terminator is implicity included when a String is allocated, but is not reported when the size of the String is requested.
+N.B. Dolphin Strings are, unlike Smalltalk-80 strings, null-terminated. Space for the null terminator is implicity included when a `String` is allocated, but is not reported when the size of the `String` is requested.
 
-String complies with the following ANSI protocols:
-	Object
-	magnitude
-	collection
-	sequencedReadableCollection
-	sequencedCollection
-	readableString
-	String'!
+`String` complies with the following ANSI Smalltalk protocols:
+ Object`
+ magnitude
+ collection
+ sequencedReadableCollection
+ sequencedCollection
+ readableString
+ String'!
 !String categoriesForClass!Collections-Text! !
 !String methodsFor!
 
@@ -1125,39 +1125,17 @@ truncateTo: anInteger
 	^self size <= anInteger ifTrue: [self] ifFalse: [self copyFrom: 1 to: anInteger]!
 
 unescapePercents
-	"Answer a copy of the receiver with each %XY substring replaced by 
-	the character with hex ASCII value XY and $+'s replaced by spaces."
+	"Asuming that receiver is a URI encoded representation from UTF-8 as specified in RFC3986,
+	answer a <Utf8String> representing the unescaped (original) UTF-8 encoded text. If it is
+	detected that the content is not URI-encoded (e.g. it contains %-prefixed character
+	sequences where the next two characters are not hex digits, or it contains non-ASCII
+	characters) then the original text is answered as UTF-8. The detection of non URI-encoded
+	input is not 100% reliable, so it is an application responsibility to avoid double-decoding
+	strings or decoding those that were never encoded in the first place."
 
-	| answer pos oldPos |
-	answer := self species writeStream: self size.
-	oldPos := 1.
-	
-	[pos := self indexOfAnyOf: '+%' startingAt: oldPos.
-	pos > 0] whileTrue: 
-				[| char |
-				answer 
-					next: pos - oldPos
-					putAll: self
-					startingAt: oldPos.
-				char := self at: pos.
-				char == $+ 
-					ifTrue: [answer nextPut: $\x20]
-					ifFalse: 
-						[(char == $% and: [pos + 2 <= self size]) 
-							ifTrue: 
-								[| digit1 digit2 |
-								digit1 := (self at: pos + 1) asUppercase.
-								digit2 := (self at: pos + 2) asUppercase.
-								(digit1 isHexDigit and: [digit2 isHexDigit]) ifFalse: [^self].	"not really an escaped string"
-								answer nextPut: (Character value: digit1 digitValue * 16 + digit2 digitValue).
-								pos := pos + 2]
-							ifFalse: [answer nextPut: char]].
-				oldPos := pos + 1].
-	answer 
-		next: self size - oldPos + 1
-		putAll: self
-		startingAt: oldPos.
-	^answer contents!
+	| ansi |
+	ansi := self asAnsiString.
+	^(ansi equals: self) ifTrue: [ansi unescapePercents] ifFalse: [self]!
 
 withNormalizedLineDelimiters
 	"Answer a copy of the receiver with any line terminator convention converted to the windows (CR/LF) convention."

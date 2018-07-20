@@ -7,11 +7,11 @@ String variableByteSubclass: #AnsiString
 	classInstanceVariableNames: ''!
 AnsiString guid: (GUID fromString: '{5b59aa2a-fc01-4424-95aa-9ffb62e6af03}')!
 AnsiString isNullTerminated: true!
-AnsiString comment: 'AnsiString is the class of <Strings>s that use a single-byte encoding based on the current ANSI code page (e.g. Windows 1252). "ANSI" is a bit of a misnomer, but is used because it is common parlance in the Windows API documentation for APIs that expect strings encoded with the "ANSI" code page. 
+AnsiString comment: '`AnsiString` is the class of `Strings`s that use a single-byte encoding based on the current ANSI code page (e.g. Windows 1252). "ANSI" is a bit of a misnomer, but is used because it is common parlance in the Windows API documentation for APIs that expect strings encoded with the "ANSI" code page. 
 
 Note that Ansi code pages that require multiple bytes to represent each character are not supported properly in Dolphin.
 
-At present AnsiString is still the default String type, but this will be changing to either Utf8String or Utf16String in future.'!
+The default string type in Dolphin as of 7.1 is `Utf8String` rather than `AnsiString`.'!
 !AnsiString categoriesForClass!Collections-Text! !
 !AnsiString methodsFor!
 
@@ -142,7 +142,38 @@ trimNulls
 	Take advantage of some private knowledge about the implementation of
 	#fromAddress:"
 
-	^self species fromAddress: self yourAddress! !
+	^self species fromAddress: self yourAddress!
+
+unescapePercents
+	"Asuming that receiver is a URI-encoded representation of a UTF-8 encoded original as
+	specified in RFC3986, answer a <Utf8String> which has been unescaped to reveal the original
+	text. If it is detected that the content is not URI-encoded (e.g. it contains %-prefixed
+	character sequences where the next two characters are not hex digits) then the original
+	string is answered."
+
+	| unescaped escaped ch |
+	unescaped := Utf8String writeStream: self size.
+	escaped := self readStream.
+	[(ch := escaped basicNextAvailable) isNil] whileFalse: 
+			[ch == ##($+ asciiValue)
+				ifTrue: [unescaped nextPut: $\x20]
+				ifFalse: 
+					[ch == ##($% asciiValue)
+						ifTrue: 
+							[| digit1 digit2 |
+							"If not followed by two hex digits, then assume it is not really an escaped string and exit"
+							digit1 := escaped nextAvailable ifNil: [-1] ifNotNil: [:ch1 | ch1 asUppercase digitValue].
+							digit1 < 0 | (digit1 > 15) ifTrue: [^self].
+							digit2 := escaped nextAvailable ifNil: [-1] ifNotNil: [:ch2 | ch2 asUppercase digitValue].
+							digit2 < 0 | (digit2 > 15) ifTrue: [^self].
+							unescaped basicNextPut: digit1 * 16 + digit2]
+						ifFalse: 
+							[ch > 16r7F
+								ifTrue: 
+									["Non-ascii character encountered "
+									^self].
+							unescaped basicNextPut: ch]]].
+	^unescaped contents! !
 !AnsiString categoriesFor: #_beginsString:!comparing!double dispatch!private! !
 !AnsiString categoriesFor: #asAnsiString!converting!public! !
 !AnsiString categoriesFor: #asLowercase!converting!public! !
@@ -158,6 +189,7 @@ trimNulls
 !AnsiString categoriesFor: #skipEncodingMarkerFrom:!encode/decode!private! !
 !AnsiString categoriesFor: #strlen!accessing!private! !
 !AnsiString categoriesFor: #trimNulls!copying!public! !
+!AnsiString categoriesFor: #unescapePercents!operations!public! !
 
 !AnsiString class methodsFor!
 
