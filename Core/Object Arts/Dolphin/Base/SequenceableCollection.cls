@@ -724,6 +724,13 @@ indexOf: target ifAbsent: exceptionHandler
 		ifTrue: [exceptionHandler value]
 		ifFalse: [index]!
 
+indexOf: target startingAt: start
+	"Answer the <integer> index of the first element of the receiver which is 
+	equal to the <Object> argument, target, within the receiver. If the receiver 
+	does not contain any elements equal to target, answer 0."
+
+	^self nextIndexOf: target from: start to: self size!
+
 indexOfAnyOf: aCollection startingAt: anInteger 
 	"Answer the one-based integer index of the first encountered element of the receiver which 
 	is equal to one of the elements of the <Collection> argument, starting from the specified
@@ -1265,6 +1272,7 @@ writeStream
 !SequenceableCollection categoriesFor: #includesKey:!public!testing! !
 !SequenceableCollection categoriesFor: #indexOf:!public!searching! !
 !SequenceableCollection categoriesFor: #indexOf:ifAbsent:!public!searching! !
+!SequenceableCollection categoriesFor: #indexOf:startingAt:!public!searching! !
 !SequenceableCollection categoriesFor: #indexOfAnyOf:startingAt:!public!searching! !
 !SequenceableCollection categoriesFor: #indexOfSubCollection:!public!searching! !
 !SequenceableCollection categoriesFor: #indexOfSubCollection:startingAt:!public!searching! !
