@@ -342,24 +342,22 @@ supportsThemedVertical
 themeHandle
 	^theme!
 
-wmPaint: message wParam: wParam lParam: lParam 
+wmPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting. By default we use the internal painting
 	 dispatch."
 
 	self ensureLayoutValid.
-	self isThemed 
+	self isThemed
 		ifFalse: 
-			[^super 
+			[^super
 				wmPaint: message
 				wParam: wParam
 				lParam: lParam].
-	"	Transcript
-		print: (Time microsecondsToRun: [
-			"self withOldWndProc: [self 
-							basicPaint: message
-							wParam: wParam
-							lParam: lParam]
-	"]); cr".
+	self withOldWndProc: 
+			[self
+				basicPaint: message
+				wParam: wParam
+				lParam: lParam].
 	^0!
 
 wmPrintClient: message wParam: wParam lParam: lParam
