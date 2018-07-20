@@ -366,14 +366,13 @@ testBSTRArg
 	"#1377 - Make sure there is no problem in the VM's automatic conversion of a string to a BSTR.
 	In an unpatched VM this typically crashes the whole system."
 
-	| dom |
-	dom := IXMLDOMDocument new.
+	| method |
+	method := Compiler compile: 'test: aString <stdcall: bstr AnswerDWORD bstr>' in: VMLibrary.
 	1000 timesRepeat: 
-			[| instr |
-			instr := dom createProcessingInstruction: 'ATarget' data: 'Some data'.
-			self assert: instr data equals: 'Some data'.
-			self assert: instr target equals: 'ATarget'.
-			instr free]!
+			[| bstr |
+			bstr := method value: VMLibrary default withArguments: #('Some 🐬 data').
+			self assert: bstr value equals: 'Some 🐬 data'.
+			bstr free]!
 
 testCRTFault
 	"Tests that the VM sends an interrupt when the CRT is passed an invalid parameter and calls
