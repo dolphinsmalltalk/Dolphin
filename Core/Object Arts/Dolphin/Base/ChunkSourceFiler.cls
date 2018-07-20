@@ -6,7 +6,7 @@ SourceFiler subclass: #ChunkSourceFiler
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ChunkSourceFiler guid: (GUID fromString: '{558b318a-9ff3-4346-a445-76ee18d5458b}')!
-ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 2!
+ChunkSourceFiler addClassConstant: 'NormalizeEolsMask' value: 16r2!
 ChunkSourceFiler comment: ''!
 !ChunkSourceFiler categoriesForClass!Development!System-Support! !
 !ChunkSourceFiler methodsFor!
@@ -84,6 +84,7 @@ emitCommentOfClass: aClass
 		cr!
 
 emitDeclarationForClass: aClass variable: anAssociation
+	| value |
 	stream
 		nextPutAll: aClass name;
 		nextPutAll: (anAssociation isImmutable
@@ -91,7 +92,9 @@ emitDeclarationForClass: aClass variable: anAssociation
 					ifFalse: [' addClassVariable: ']);
 		print: anAssociation key;
 		nextPutAll: ' value: '.
-	self nextChunkPut: anAssociation value storeString.
+	value := anAssociation value.
+	self
+		nextChunkPut: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value storeString]).
 	stream cr!
 
 emitFooterForMethodsOf: aClass 
