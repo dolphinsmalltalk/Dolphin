@@ -128,6 +128,10 @@ defineFields
 		defineField: #IdleConnection type: WORDField new offset: 10;
 		defineField: #HeaderWait type: WORDField new offset: 12;
 		defineField: #MinSendRate type: DWORDField new offset: 16.
-	self byteSize: 20! !
+	self byteSize: 20!
+
+propertyId
+	^HttpServerTimeoutsProperty! !
 !HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #propertyId!constants!public! !
 

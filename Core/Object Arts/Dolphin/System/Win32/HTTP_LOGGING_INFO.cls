@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
-	instanceVariableNames: ''
+	instanceVariableNames: 'directoryName softwareName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -44,7 +44,9 @@ DirectoryName
 DirectoryName: anUtf16String
 	"Set the receiver's 'DirectoryName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #DirectoryName) put: anUtf16String yourAddress!
+	directoryName := anUtf16String asUtf16String.
+	bytes uintPtrAtOffset: ##(self offsetOf: #DirectoryName) put: directoryName yourAddress.
+	self DirectoryNameLength: directoryName byteSize - 2!
 
 DirectoryNameLength
 	"Answer the <Integer> value of the receiver's 'DirectoryNameLength' field."
@@ -123,8 +125,10 @@ SoftwareName
 
 SoftwareName: anUtf16String
 	"Set the receiver's 'SoftwareName' field to the value of the argument, anUtf16String"
-
-	bytes uintPtrAtOffset: ##(self offsetOf: #SoftwareName) put: anUtf16String yourAddress!
+	
+	softwareName := anUtf16String asUtf16String.
+	bytes uintPtrAtOffset: ##(self offsetOf: #SoftwareName) put: softwareName yourAddress.
+	self SoftwareNameLength: softwareName byteSize - 2!
 
 SoftwareNameLength
 	"Answer the <Integer> value of the receiver's 'SoftwareNameLength' field."
@@ -197,6 +201,10 @@ defineFields
 		defineField: #RolloverType type: SDWORDField new offset: 36;
 		defineField: #RolloverSize type: DWORDField new offset: 40;
 		defineField: #pSecurityDescriptor type: LPVOIDField new offset: 44.
-	self byteSize: 48! !
+	self byteSize: 48!
+
+propertyId
+	^HttpServerLoggingProperty! !
 !HTTP_LOGGING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_LOGGING_INFO class categoriesFor: #propertyId!public! !
 

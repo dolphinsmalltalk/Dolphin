@@ -53,6 +53,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #Level type: SDWORDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+propertyId
+	^HttpServerProtectionLevelProperty! !
 !HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #propertyId!public! !
 
