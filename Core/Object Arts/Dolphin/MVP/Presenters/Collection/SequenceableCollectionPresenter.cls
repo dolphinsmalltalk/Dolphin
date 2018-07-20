@@ -24,7 +24,11 @@ moveDown
 	| index list |
 	index := listPresenter selectionByIndex.
 	list := self listModel.
-	list swap: index with: index + 1.
+	"Although we are only swapping two elements, the collection presenter responds to any event
+	from the list model by refreshing everything (see
+	CollectionPresenter>>createSchematicWiring). We don't want to refresh it twice."
+	list noEventsDo: [list swap: index with: index + 1].
+	list notifyListChanged.
 	listPresenter selectionByIndex: index + 1!
 
 moveFirst
@@ -66,7 +70,8 @@ moveUp
 	| index list |
 	index := listPresenter selectionByIndex.
 	list := self listModel.
-	list swap: index with: index - 1.
+	list noEventsDo: [list swap: index with: index - 1].
+	list notifyListChanged.
 	listPresenter selectionByIndex: index - 1!
 
 onValueChanged

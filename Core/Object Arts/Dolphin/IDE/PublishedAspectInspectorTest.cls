@@ -17,10 +17,13 @@ aspectPresenter
 	^inspector instVarNamed: 'aspectPresenter'!
 
 createInspectorOn: inspectee
-	inspector := PublishedAspectInspector shellOn: inspectee.
-	treePresenter := inspector instVarNamed: 'aspectTreePresenter'.
-	displayPresenter := inspector instVarNamed: 'displayPresenter'.
-	treePresenter selection: (treePresenter model roots first)!
+	inspector isNil
+		ifTrue: 
+			[inspector := PublishedAspectInspector shellOn: inspectee.
+			treePresenter := inspector instVarNamed: 'aspectTreePresenter'.
+			displayPresenter := inspector instVarNamed: 'displayPresenter'.
+			treePresenter selection: treePresenter model roots first]
+		ifFalse: [inspector value: inspectee]!
 
 getAccessorKeyText: anAspectAccessor 
 	^treePresenter view getItemText: (treePresenter view handleFromObject: anAspectAccessor)!
@@ -44,7 +47,7 @@ repaint
 seqCollMoveDownTest: testClass
 	| inspectee collection |
 	inspectee := testClass withAll: (1 to: 5).
-	inspector value: inspectee.
+	self createInspectorOn: inspectee.
 	collection := inspectee.
 	treePresenter selection: treePresenter model roots first.
 	self repaint.
@@ -53,7 +56,7 @@ seqCollMoveDownTest: testClass
 			[:j |
 			| listPresenter |
 			self assert: treePresenter view itemCount identicalTo: collection size + 1 + j.
-			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+			listPresenter := self aspectPresenter listPresenter.
 			listPresenter selectionByIndex: 1.
 			2 to: 5
 				do: 
@@ -61,74 +64,60 @@ seqCollMoveDownTest: testClass
 					self aspectPresenter moveDown.
 					self repaint.
 					self assert: treePresenter view itemCount identicalTo: collection size + 1 + j.
-					listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
 					self assert: listPresenter selectionByIndex equals: i.
-					self assert: collection asArray equals: (2 to: i) , (Array with: 1) , (i + 1 to: 5)].
-			collection := Array withAll: (1 to: 5).
-			inspectee := Array with: collection.
+					self assert: collection asArray equals: (2 to: i) , {1} , (i + 1 to: 5)].
+			"Repeat with a nested collection"
+			collection := testClass withAll: (1 to: 5).
+			inspectee := {collection}.
 			inspector value: inspectee.
 			treePresenter selection: (treePresenter model childrenOf: treePresenter model roots first) first.
 			treePresenter view expandAll]!
 
 seqCollMoveFirstTest: testClass
-	| inspectee last |
-	last := 5.
-	inspectee := testClass withAll: (1 to: last).
-	inspector value: inspectee.
-	self assert: treePresenter view itemCount identicalTo: last + 1.
+	| inspectee expected |
+	inspectee := testClass withAll: (1 to: 5).
+	self createInspectorOn: inspectee.
+	self assert: treePresenter view itemCount identicalTo: 5 + 1.
 	self repaint.
+	expected := #(#(1 2 3 4 5) #(2 1 3 4 5) #(3 2 1 4 5) #(4 3 2 1 5) #(5 4 3 2 1)).
 	1 to: inspectee size
 		do: 
 			[:i |
 			| listPresenter |
-			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+			listPresenter := self aspectPresenter listPresenter.
 			listPresenter selectionByIndex: i.
 			self aspectPresenter moveFirst.
 			self repaint.
-			self assert: treePresenter view itemCount identicalTo: last + 1.
-			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+			self assert: treePresenter view itemCount identicalTo: 5 + 1.
 			self assert: listPresenter selectionByIndex equals: 1.
-			self assert: inspectee asArray equals: (Array with: i) , (1 to: i - 1) , (i + 1 to: last).
-			inspectee
-				replaceFrom: 1
-				to: last
-				with: (1 to: last)
-				startingAt: 1.
-			inspector aspectChanged: #yourself]!
+			self assert: inspectee asArray equals: (expected at: i)]!
 
 seqCollMoveLastTest: testClass
-	| inspectee listPresenter last |
-	last := 5.
-	inspectee := testClass withAll: (1 to: last).
-	inspector value: inspectee.
-	self assert: treePresenter view itemCount identicalTo: last + 1.
+	| inspectee expected |
+	inspectee := testClass withAll: (1 to: 5).
+	self createInspectorOn: inspectee.
+	self assert: treePresenter view itemCount identicalTo: 5 + 1.
 	self repaint.
-	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+	expected := #(#(2 3 4 5 1) #(2 4 5 1 3) #(2 4 1 3 5) #(2 4 1 5 3) #(2 4 1 5 3)).
 	1 to: inspectee size
 		do: 
 			[:i |
-			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+			| listPresenter |
+			listPresenter := self aspectPresenter listPresenter.
 			listPresenter selectionByIndex: i.
 			self aspectPresenter moveLast.
 			self repaint.
-			self assert: treePresenter view itemCount identicalTo: last + 1.
-			listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
-			self assert: listPresenter selectionByIndex equals: last.
-			self assert: inspectee asArray equals: (1 to: i - 1) , (i + 1 to: last) , (Array with: i).
-			inspectee
-				replaceFrom: 1
-				to: last
-				with: (1 to: last)
-				startingAt: 1.
-			inspector aspectChanged: #yourself]!
+			self assert: treePresenter view itemCount identicalTo: 5 + 1.
+			self assert: listPresenter selectionByIndex equals: 5.
+			self assert: inspectee asArray equals: (expected at: i)]!
 
 seqCollMoveUpTest: testClass
 	| inspectee listPresenter |
 	inspectee := testClass withAll: (1 to: 5).
-	inspector value: inspectee.
+	self createInspectorOn: inspectee.
 	self assert: treePresenter view itemCount identicalTo: 6.
 	self repaint.
-	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+	listPresenter := self aspectPresenter listPresenter.
 	listPresenter selectionByIndex: 5.
 	4 to: 1
 		by: -1
@@ -136,9 +125,9 @@ seqCollMoveUpTest: testClass
 			[:i |
 			self aspectPresenter moveUp.
 			self repaint.
-			self assert: inspectee asArray equals: (1 to: i - 1) , (Array with: 5) , (i to: 4).
+			self assert: inspectee asArray equals: (1 to: i - 1) , {5} , (i to: 5 - 1).
 			self assert: listPresenter selectionByIndex equals: i.
-			self assert: treePresenter view itemCount identicalTo: 6]!
+			self assert: treePresenter view itemCount identicalTo: 5 + 1]!
 
 tearDown
 	inspector isNil
@@ -154,7 +143,7 @@ testAddRemoveCollectionElement
 	self createInspectorOn: inspectee.
 	self assert: treePresenter view itemCount identicalTo: 1.
 	self repaint.
-	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+	listPresenter := self aspectPresenter listPresenter.
 	self aspectPresenter addItem: 1.
 	"The item always remains expanded"
 	self assert: treePresenter view itemCount identicalTo: 2.
@@ -318,19 +307,15 @@ testCopyAndPasteMenu
 	inspectee2 create.
 	
 	[| menuBar1 accessor menuBar2 |
-	menuBar1 := inspectee1 menuBar.
-	self assertIsNil: menuBar1.
+	menuBar1 := (MenuBar fromStrings: #('&File' 'Open//fileOpen' '-' '&Save/Ctrl+S/fileSave')).
+	self assert: menuBar1 size equals: 3.
+	self assert: menuBar1 items first text equals: 'Open'.
+	inspectee1 menuBar: menuBar1.
 	self createInspectorOn: inspectee1.
 	accessor := self aspectAccessorNamed: #menuBar.
 	treePresenter selection: accessor.
-	self assertIsNil: accessor value.
-	self aspectPresenter
-		value: (MenuBar fromStrings: #('&File' 'Open//fileOpen' '-' '&Save/Ctrl+S/fileSave')).
+	self assert: accessor value identicalTo: menuBar1.
 	self repaint.
-	menuBar1 := inspectee1 menuBar.
-	self denyIsNil: menuBar1.
-	self assert: menuBar1 size equals: 3.
-	self assert: menuBar1 items first text equals: 'Open'.
 	inspector copyAspect.
 	inspector value: inspectee2.
 	self repaint.
@@ -524,7 +509,7 @@ testListViewColumnsEdit
 
 	"Delete the midle one"
 	columnsList := inspectee columnsList.
-	(self aspectPresenter instVarNamed: 'listPresenter') selectionByIndex: 2.
+	self aspectPresenter listPresenter selectionByIndex: 2.
 	"If not looking at a copy, this will fail anyway as the View will think it had two columns all along"
 	self aspectPresenter removeItem.
 	self repaint.
@@ -602,32 +587,16 @@ testListViewColumnsEdit
 			ensure: [inspectee topView destroy]!
 
 testMoveDown
-	self createInspectorOn: nil.
-	(Array 
-		with: Array
-		with: ByteArray
-		with: OrderedCollection) do: [:each | self seqCollMoveDownTest: each]!
+	{Array. ByteArray. OrderedCollection} do: [:each | self seqCollMoveDownTest: each]!
 
 testMoveFirst
-	self createInspectorOn: nil.
-	(Array 
-		with: Array
-		with: ByteArray
-		with: OrderedCollection) do: [:each | self seqCollMoveFirstTest: each]!
+	{Array. ByteArray. OrderedCollection} do: [:each | self seqCollMoveFirstTest: each]!
 
 testMoveLast
-	self createInspectorOn: nil.
-	(Array 
-		with: Array
-		with: ByteArray
-		with: OrderedCollection) do: [:each | self seqCollMoveLastTest: each]!
+	{Array. ByteArray. OrderedCollection} do: [:each | self seqCollMoveLastTest: each]!
 
 testMoveUp
-	self createInspectorOn: nil.
-	(Array 
-		with: Array
-		with: ByteArray
-		with: OrderedCollection) do: [:each | self seqCollMoveUpTest: each]!
+	{Array. ByteArray. OrderedCollection} do: [:each | self seqCollMoveUpTest: each]!
 
 testPublishedAspectsOfInstancesOnClassSide
 	"#2136"
@@ -657,7 +626,7 @@ testRemoveCollectionElements1
 	self assert: treePresenter view itemCount equals: 2.
 	treePresenter view expandAll.
 	self assert: treePresenter view itemCount equals: 5.
-	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+	listPresenter := self aspectPresenter listPresenter.
 	listPresenter selectionByIndex: 2.
 	self aspectPresenter removeItem.
 	self repaint.
@@ -688,7 +657,7 @@ testSetToNil
 	self createInspectorOn: inspectee.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	self repaint.
-	listPresenter := self aspectPresenter instVarNamed: 'listPresenter'.
+	listPresenter := self aspectPresenter listPresenter.
 	self assert: treePresenter view itemCount identicalTo: 2.
 	treePresenter view expandAll.
 	self repaint.
