@@ -509,7 +509,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, unsigned)
 					if (ObjectMemoryIsIntegerObject(value))
 					{
 						MWORD intValue = ObjectMemoryIntegerValueOf(value);
-						if (intValue > 255)
+						if (intValue <= 255)
 						{
 							ByteArrayOTE* oteByteArray = reinterpret_cast<ByteArrayOTE*>(oteBuf);
 
