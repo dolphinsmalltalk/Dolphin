@@ -8,13 +8,13 @@ UtfEncodedString variableByteSubclass: #Utf8String
 Utf8String guid: (GUID fromString: '{c5ab1b05-241f-4955-8b44-0c80b93bafbb}')!
 Utf8String isNullTerminated: true!
 Utf8String addClassConstant: 'Bom' value: #[239 187 191 ]!
-Utf8String addClassConstant: 'LeadByteMask2' value: 192!
-Utf8String addClassConstant: 'LeadByteMask3' value: 224!
-Utf8String addClassConstant: 'LeadByteMask4' value: 240!
-Utf8String addClassConstant: 'TrailByteMask' value: 128!
-Utf8String comment: 'Utf8String is the class of <Strings>s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin.
+Utf8String addClassConstant: 'LeadByteMask2' value: 16rC0!
+Utf8String addClassConstant: 'LeadByteMask3' value: 16rE0!
+Utf8String addClassConstant: 'LeadByteMask4' value: 16rF0!
+Utf8String addClassConstant: 'TrailByteMask' value: 16r80!
+Utf8String comment: '`Utf8String` is the class of `Strings`s that use a the multi-byte UTF-8 encoding. UTF-8 is the defacto standard for text interchange, and is now the default representation in Dolphin.
 
-The cautionary notes in the abstract superclass (UtfEncodedString) should be read carefully to understand the compromises made in introducing a variable width encoding into the SequenceableCollection hierarchy.'!
+The cautionary notes in the abstract superclass `UtfEncodedString` should be read carefully to understand the compromises made in introducing a variable width encoding into the `SequenceableCollection` hierarchy.'!
 !Utf8String categoriesForClass!Collections-Text! !
 !Utf8String methodsFor!
 

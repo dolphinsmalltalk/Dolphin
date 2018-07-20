@@ -477,37 +477,64 @@ testTrimNulls
 	self assert: (self newCollection: trimmed) equals: (self newCollection: 'a')!
 
 testUnescapePercents
-	self assert: (self newCollection: '') unescapePercents equals: (self newCopy: '').
-	self assert: (self newCollection: '+') unescapePercents equals: (self newCopy: ' ').
-	self assert: (self newCollection: 'A') unescapePercents equals: (self newCopy: 'A').
-	self assert: (self newCollection: '+A') unescapePercents equals: (self newCopy: ' A').
-	self assert: (self newCollection: '++A') unescapePercents equals: (self newCopy: '  A').
-	self assert: (self newCollection: 'A+') unescapePercents equals: (self newCopy: 'A ').
-	self assert: (self newCollection: 'A++') unescapePercents equals: (self newCopy: 'A  ').
-	self assert: (self newCollection: 'AB') unescapePercents equals: (self newCopy: 'AB').
-	self assert: (self newCollection: '+A+B+') unescapePercents equals: (self newCopy: ' A B ').
-	self assert: (self newCollection: '++A++B++') unescapePercents equals: (self newCopy: '  A  B  ').
-	self assert: (self newCollection: '%41') unescapePercents equals: (self newCopy: 'A').
-	self assert: (self newCollection: '+%41+') unescapePercents equals: (self newCopy: ' A ').
-	self assert: (self newCollection: '%41B') unescapePercents equals: (self newCopy: 'AB').
-	self assert: (self newCollection: '%41+B') unescapePercents equals: (self newCopy: 'A B').
-	self assert: (self newCollection: '%41++B') unescapePercents equals: (self newCopy: 'A  B').
-	self assert: (self newCollection: '%41BC') unescapePercents equals: (self newCopy: 'ABC').
-	self assert: (self newCollection: '%41%42') unescapePercents equals: (self newCopy: 'AB').
-	self assert: (self newCollection: '%41B%43') unescapePercents equals: (self newCopy: 'ABC').
-	self assert: (self newCollection: '%41BC%44') unescapePercents equals: (self newCopy: 'ABCD').
-	self assert: (self newCollection: 'A%42%43') unescapePercents equals: (self newCopy: 'ABC').
-	self assert: (self newCollection: 'AB%43%44') unescapePercents equals: (self newCopy: 'ABCD').
-	self assert: (self newCollection: 'AB%43D%45') unescapePercents equals: (self newCopy: 'ABCDE').
-	self assert: (self newCollection: 'AB%43DE%46') unescapePercents equals: (self newCopy: 'ABCDEF').
-	self assert: (self newCollection: 'AB%43DE%46G') unescapePercents equals: (self newCopy: 'ABCDEFG').
-	self assert: (self newCollection: 'AB%43DE%46GH') unescapePercents
-		equals: (self newCopy: 'ABCDEFGH').
-	"Invalid (non-ascii) character, therefore assume not an escaped string"
-	self assert: (self newCollection: '%GA') unescapePercents equals: (self newCollection: '%GA').
-	self assert: (self newCollection: '%AG') unescapePercents equals: (self newCollection: '%AG').
-	self assert: (self newCollection: '%[1') unescapePercents equals: (self newCollection: '%[1').
-	self assert: (self newCollection: '%1[') unescapePercents equals: (self newCollection: '%1[')!
+	"Test URI decoding per RFC3986"
+
+	| unreserved misencoded |
+	#(#('' '') #('+' ' ') #('A' 'A') #('+A' ' A') #('++A' '  A') #('A+' 'A ') #('A++' 'A  ') #('AB' 'AB') #('+A+B+' ' A B ') #('++A++B++' '  A  B  ') #('%41' 'A') #('+%41+' ' A ') #('%41B' 'AB') #('%41+B' 'A B') #('%41++B' 'A  B') #('%41BC' 'ABC') #('%41%42' 'AB') #('%41B%43' 'ABC') #('%41BC%44' 'ABCD') #('A%42%43' 'ABC') #('AB%43%44' 'ABCD') #('AB%43D%45' 'ABCDE') #('AB%43DE%46' 'ABCDEF') #('AB%43DE%46G' 'ABCDEFG') #('AB%43DE%46GH' 'ABCDEFGH') #('~25%25' '~25%'))
+		do: 
+			[:each |
+			| subject actual |
+			subject := self collectionClass fromString: each first.
+			actual := subject unescapePercents.
+			self assert: actual equals: each last].
+	"Test case from @fxgallego"
+	self assert: (self collectionClass fromString: 'Ca%C3%B1%C3%B3n') unescapePercents equals: 'Cañón'.
+	"Non-latin 3-byte encoding test case from RFC3986"
+	self assert: (self collectionClass fromString: '%E3%82%A2') unescapePercents
+		equals: $\x30A2 asUtf8String.
+	"And a 4-byte encoding for fun"
+	self assert: (self collectionClass fromString: '%F0%9F%90%AC') unescapePercents equals: '🐬'.
+
+	"All reserved characters in RFC3986, exception '+', should be unaffected by decoding"
+	self assert: (self collectionClass fromString: ':/?#[]@!!$&''()*+,;=') unescapePercents
+		equals: ':/?#[]@!!$&''()* ,;='.
+
+	"Unreserved characters, also untouched"
+	unreserved := (Character byteCharacterSet select: [:each | each isEnglishLetter or: [each isDigit]])
+				, '-._~'.
+	self assert: (self collectionClass fromString: unreserved) unescapePercents equals: unreserved.
+	"But should be coded if found encoded"
+	misencoded := String writeStream.
+	unreserved do: 
+			[:each |
+			misencoded nextPut: $%.
+			each asciiValue
+				printOn: misencoded
+				base: 16
+				showRadix: false].
+	misencoded := misencoded contents.
+	self assert: (self collectionClass fromString: misencoded) unescapePercents equals: unreserved.
+
+	"Invalid cases, therefore assume not an escaped string"
+	#('%GA' '%AG' '%[1' '%1[' '+%A' '%1' '100%' '%+') do: 
+			[:each |
+			| subject actual |
+			subject := self collectionClass fromString: each.
+			actual := subject unescapePercents.
+			self assert: actual equals: (self newCopy: subject)].
+
+	"Special cases of non-ASCII input - these should be detected and not decoded"
+	#('€5+&+change' '£5+') do: 
+			[:each |
+			| subject actual |
+			subject := self collectionClass fromString: each.
+			actual := subject unescapePercents.
+			self assert: actual equals: each].
+	self collectionClass == AnsiString
+		ifFalse: 
+			[| subject |
+			subject := self collectionClass fromString: '%97+🐬'.
+			self assert: subject unescapePercents equals: subject]!
 
 testWithNormalizedLineDelimiters
 	"Empty"
