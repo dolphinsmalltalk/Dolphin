@@ -23,6 +23,7 @@ package classNames
 	add: #CharacterTest;
 	add: #ClassBuilderTestClasses;
 	add: #ClassBuilderTests;
+	add: #ClassTest;
 	add: #CollectionCombinator;
 	add: #CommandLineTest;
 	add: #CommandLineTestRunner;
@@ -225,6 +226,11 @@ DolphinTest subclass: #CharacterTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: 'wasOAD'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #ClassTest
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
