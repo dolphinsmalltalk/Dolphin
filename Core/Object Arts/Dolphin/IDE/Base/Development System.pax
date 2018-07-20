@@ -642,8 +642,8 @@ Object subclass: #VisualShellFinder
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AttributeDescriptor subclass: #Aspect
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category isPresenterBlockReadOnly'
-	classVariableNames: ''
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
+	classVariableNames: 'MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Aspect subclass: #KeyedAspect
@@ -922,7 +922,7 @@ Shell subclass: #SmalltalkToolShell
 	poolDictionaries: ''
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalAccelerators commandQueryHandlers'!
 Dialog subclass: #AspectEditorDialog
-	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel isValueWorkspacePresenter aspectRectangle'
+	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

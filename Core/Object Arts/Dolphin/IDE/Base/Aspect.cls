@@ -1,11 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 AttributeDescriptor subclass: #Aspect
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category isPresenterBlockReadOnly'
-	classVariableNames: ''
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
+	classVariableNames: 'MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Aspect guid: (GUID fromString: '{87b4c4d7-026e-11d3-9fd7-00a0cc3e4a32}')!
+Aspect addClassConstant: 'MultilineValueMask' value: 262144!
+Aspect addClassConstant: 'ReadOnlyPresenterBlockMask' value: 65536!
+Aspect addClassConstant: 'ValueWorkspaceEditorMask' value: 131072!
 Aspect comment: 'Part of the PublishedAspectorInspector framework.
 
 <Aspect>s are used to describe the published aspects of various objects. An Aspect descriptor can be combined with a particular object to create an <AspectAccessor> that can be used to access the subject object with the value/value> protocol. The <AspectAccessor> uses the aspect name to construct accessor messages (e.g. #myAspect and #myAspect:) for getting and setting the value. An Aspect instance also holds a presenter block (a <dyadicValuable>) which, when evaluated, will create a presenter suitable for editing the aspect as its model.
@@ -47,12 +50,22 @@ beImmediateActionIsEdit
 
 	immediateActionBlock := editBlock!
 
+beMultilineValue
+	"Set that receiver's value may require multiple lines of text to display/edit."
+
+	flags := flags maskSet: MultilineValueMask!
+
 bePresenterBlockReadOnly
 	"Informs the receiver that the presenterBlock is only capable of reading aspect values and
-	not setting them. This is ised by the PropertyEditor in particular to swap out a
-	presenterBlock for the default block when the priovided block is read only."
+	not setting them. This is used by the PropertyEditor in particular to swap out a
+	presenterBlock for the default block when the provided block is read only."
 
-	isPresenterBlockReadOnly := true!
+	flags := flags maskSet: ##(ReadOnlyPresenterBlockMask | ValueWorkspaceEditorMask)!
+
+beValueWorkspacePresenter
+	"Set that the receiver's presenter block uses a ValueWorkspace presenter for displaying/editing the receiver."
+
+	flags := flags maskSet: ValueWorkspaceEditorMask!
 
 canEdit
 	"Answer true if the receiver can be edited; that is, it has an edit block
@@ -85,7 +98,7 @@ category: aSymbol
 	category := aSymbol!
 
 defaultFlags
-	^WriteableMask | ReadableMask | MutableMask | NullableMask!
+	^##(WriteableMask | ReadableMask | MutableMask | NullableMask)!
 
 displayAspectInfoOf: anObject on: aStream 
 	self displayAspectValueOf: anObject on: aStream!
@@ -145,17 +158,22 @@ immediateActionBlock
 
 	^immediateActionBlock!
 
-isDefaultPresenterBlock
-	"Answer true if we will use a default presenter block for displaying/editing the receiver"
+isEditedWithValueWorkspace
+	"Answer true if we will use a ValueWorkspace presenter for editing the receiver."
 
-	^self editablePresenterBlock == self class defaultPresenterBlock!
+	^flags anyMask: ValueWorkspaceEditorMask!
+
+isMultilineValue
+	"Answer whether the receiver's value may require multiple lines of text to display/edit."
+
+	^flags anyMask: MultilineValueMask!
 
 isPresenterBlockReadOnly
 	"Answers true if the presenterBlock is only capable of reading aspect values and
 	not setting them. This is used by the PropertyEditor in particular to swap out a
 	presenterBlock for the default block when the priovided block is read only."
 
-	^isPresenterBlockReadOnly!
+	^flags anyMask: ReadOnlyPresenterBlockMask!
 
 key
 	"Private - Answer the lookup key of the receiver when it is to appear as an
@@ -168,15 +186,17 @@ name
 
 	^name!
 
-name: aSymbol presenterBlock: aOneArgPresenterBlock editBlock: aOneArgEditBlock
+name: aSymbol presenterBlock: aDyadicValuableOrNil editBlock: aMonadicValuable
 	"Private - Initialize the receiver; set the name to aSymbol and the 
 	editor presenter creation block to aOneArgBlock"
 
 	name := aSymbol.
-	presenterBlock := aOneArgPresenterBlock.
-	editBlock := aOneArgEditBlock.
-	isPresenterBlockReadOnly := false.
-!
+	aDyadicValuableOrNil isNil
+		ifTrue: 
+			["If no presenter block is specified, then the default ValueWorkspace presentation should be used."
+			self beValueWorkspacePresenter]
+		ifFalse: [presenterBlock := aDyadicValuableOrNil].
+	editBlock := aMonadicValuable!
 
 nameIn: anObject
 	"Private - Answer the 'name' of the aspect of the <Object> argument described by the receiver."
@@ -190,7 +210,7 @@ presenterBlock
 	"Answer the <dyadicValuable> capable of creating a presenter for the receiver's
 	 aspect name"
 
-	^presenterBlock!
+	^presenterBlock ?? self class defaultPresenterBlock!
 
 presenterFor: aValueModel in: aCompositePresenter
 	"Answer a new <Presenter> to display (and possibly edit) the aspect
@@ -228,7 +248,9 @@ writeInto: subjectObject value: valueObject
 !Aspect categoriesFor: #accessorClass!constants!private! !
 !Aspect categoriesFor: #accessorFor:!accessing!public! !
 !Aspect categoriesFor: #beImmediateActionIsEdit!accessing!public! !
+!Aspect categoriesFor: #beMultilineValue!modes!public! !
 !Aspect categoriesFor: #bePresenterBlockReadOnly!accessing!public! !
+!Aspect categoriesFor: #beValueWorkspacePresenter!modes!public! !
 !Aspect categoriesFor: #canEdit!public!testing! !
 !Aspect categoriesFor: #canGenerateAccessors!private!testing! !
 !Aspect categoriesFor: #canImmediateAction!public!testing! !
@@ -248,7 +270,8 @@ writeInto: subjectObject value: valueObject
 !Aspect categoriesFor: #getSelector!accessing!private! !
 !Aspect categoriesFor: #hash!comparing!public! !
 !Aspect categoriesFor: #immediateActionBlock!accessing!private! !
-!Aspect categoriesFor: #isDefaultPresenterBlock!public!testing! !
+!Aspect categoriesFor: #isEditedWithValueWorkspace!public!testing! !
+!Aspect categoriesFor: #isMultilineValue!public!testing! !
 !Aspect categoriesFor: #isPresenterBlockReadOnly!accessing!public! !
 !Aspect categoriesFor: #key!accessing!private! !
 !Aspect categoriesFor: #name!accessing!public! !
@@ -306,12 +329,14 @@ bitmap: aBitmapAspectSymbol
 		bePresenterBlockReadOnly;
 		yourself!
 
-block: anAspectSymbol 
+block: anAspectSymbol
 	"Answer an instance of the receiver for anAspectSymbol, which is the accessor
 	for some kind of <valuable> (not necessarily a block).
 	The aspect is editable using a <ValueWorkspace> presenter."
 
-	^self name: anAspectSymbol presenterBlock: [:p :m | ValueWorkspace createIn: p on: m]!
+	^(self name: anAspectSymbol presenterBlock: nil)
+		beMultilineValue;
+		yourself!
 
 boolean: aBooleanAspectSymbol 
 	"Answer an instance of the receiver for aBooleanAspectSymbol. The aspect is viewable using a
@@ -483,8 +508,7 @@ date: aSymbol
 	^self name: aSymbol presenterBlock: [:p :m | DatePresenter createIn: p on: m]!
 
 defaultCollectionEditBlock
-	^nil.
-	^[:each | ]!
+	^nil!
 
 defaultPresenterBlock
 	"Private - Answers a valuable suitable for displaying an aspect in a
@@ -541,21 +565,23 @@ hotkey: aHotKeyAspectSymbol
 
 	^self name: aHotKeyAspectSymbol presenterBlock: [:p :m | AcceleratorPresenter createIn: p on: m]!
 
-icon: anIconAspectSymbol 
+icon: anIconAspectSymbol
 	"Answer an instance of the receiver for anIconAspectSymbol.
 	The aspect is viewable using an ImagePresenter with a 'Basic image' view
 	and editable using a FileDialog"
 
-	^(self 
+	^(self
 		name: anIconAspectSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| ip |
-			ip := ImagePresenter 
+			ip := ImagePresenter
 						create: 'Basic image'
 						in: p
 						on: m.
-			ip view isWholeBackgroundErased: true.
+			ip view
+				isWholeBackgroundErased: true;
+				viewMode: #scaleBestFit.
 			ip]
 		editBlock: [:p | InternalIcon choose ifNotNil: [:icon | p value: icon]])
 		bePresenterBlockReadOnly;
@@ -644,7 +670,7 @@ name: aSymbol
 	"Answer an instance of the receiver for anAspectSymbol.
 	The aspect is editable using the default ValueWorkspace presenter"
 
-	^self name: aSymbol presenterBlock: self defaultPresenterBlock!
+	^self name: aSymbol presenterBlock: nil!
 
 name: aSymbol chooseFrom: anArrayOEvaluableStrings 
 	"Answer an instance of the receiver for anAspectSymbol.
@@ -671,7 +697,7 @@ name: aSymbol editBlock: aOneArgEditBlock
 
 	^self 
 		name: aSymbol
-		presenterBlock: self defaultPresenterBlock
+		presenterBlock: nil
 		editBlock: aOneArgEditBlock!
 
 name: aSymbol presenterBlock: aTwoArgPresenterBlock
