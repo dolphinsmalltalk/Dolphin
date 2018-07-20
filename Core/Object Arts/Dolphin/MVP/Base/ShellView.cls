@@ -6,29 +6,29 @@ ContainerView subclass: #ShellView
 	poolDictionaries: 'ButtonConstants'
 	classInstanceVariableNames: ''!
 ShellView guid: (GUID fromString: '{87b4c71a-026e-11d3-9fd7-00a0cc3e4a32}')!
-ShellView addClassConstant: 'DefaultButtonIndex' value: 20!
-ShellView addClassConstant: 'TransientMask' value: 1!
-ShellView comment: 'ShellView implements the <topView> protocol for top-level windows whose parent is the desktop. ShellView is also a <topPresenter> so that it is able to stand in as a <Shell> when there is no associated presenter.
+ShellView addClassConstant: 'DefaultButtonIndex' value: 16r14!
+ShellView addClassConstant: 'TransientMask' value: 16r1!
+ShellView comment: '`ShellView` implements the `<topView>` protocol for top-level windows whose parent is the desktop. `ShellView` is also a `<topPresenter>` so that it is able to stand in as a `Shell` when there is no associated presenter.
 
 Instance Variables:
-	menuBar			<MenuBar> or nil, that is the menu bar for the window.
-	acceleratorTable	<AcceleratorTable> or nil, that is the local accelerator table.
-	combinedAcceleratorTable	<AcceleratorTable> that is the cached actual accelerator table.
-	lastFocus			<view> or nil, which is the last view within the local hierarchy to have focus.
-	defaultButton		<PushButton> or nil, which is the default button within the window
-	largeIcon			<Icon> or nil, which is a specific large icon to use.
-	smallIcon			<Icon> or nil, which is a specific small icon to use.
-	maxExtent		<Point> or nil, specifying the maximum extent when resizing.
-	minExtent			<Point> or nil, specifying the minimum extent when resizing.
-	flashes			<integer>. Temporary used to count down the number of flashes.
-	svFlags			<integer>. Various flags
+  menuBar					`MenuBar` or `nil`, that is the menu bar for the window.
+  acceleratorTable			`AcceleratorTable` or `nil` that is the local accelerator table.
+  combinedAcceleratorTable	`AcceleratorTable` that is the cached actual accelerator table.
+  lastFocus					`<view>` or `nil`, which is the last view within the local hierarchy to have focus.
+  defaultButton				`PushButton` or `nil`, which is the default button within the window
+  largeIcon				`Icon` or `nil`, which is a specific large icon to use.
+  smallIcon				`Icon` or `nil`, which is a specific small icon to use.
+  maxExtent				`Point` or `nil`, specifying the maximum extent when resizing.
+  minExtent				`Point or `nil`, specifying the minimum extent when resizing.
+  flashes					`<integer>`. Temporary used to count down the number of flashes.
+  svFlags					`<integer>`. Various flags
 
 Class Variables:
-	DialogMessageMap		<LookupTable> of Windows messages to <selector>s
-	TransientMask			<integer>
-	CreateHookBlock		<nil>/<dyadicValuable>
-	DefaultButtonIndex		<integer>
-	DefaultExtentBlock		<BlockClosure>
+	DialogMessageMap		`LookupTable` of Windows messages to `<selector>`s
+	TransientMask			`<integer>` 
+	CreateHookBlock		`nil` or `<dyadicValuable>`
+	DefaultButtonIndex		`<integer>`
+	DefaultExtentBlock		`<BlockClosure>`
 
 
 
@@ -604,11 +604,14 @@ onCloseRequested
 	the close is permisible. Those observers which wish to block the close must set the value of
 	the passed boolean <value> to false."
 
-	self queryClose 
+	self queryClose
 		ifTrue: 
-			[self
-				update;
-				destroy.
+			["Ensure the window is repainted in case we popped up a dialog in queryClose,
+			but don't bother with re-layout as this may be expensive and we are going
+			away anyway."
+			flags := flags bitOr: LayoutValidMask.
+			self update.
+			self destroy.
 			^true].
 	^false!
 
@@ -648,7 +651,7 @@ onIdleEntered
 		self presenter validateUserInterface ].
 	^true!
 
-onPositionChanged: aPositionEvent 
+onPositionChanged: aPositionEvent
 	"Default handler for window position change (move or resize).
 	Implementation Note: The superclass implementation considers that any
 	position change invalidates the layout, but moving a top-level window
@@ -656,8 +659,10 @@ onPositionChanged: aPositionEvent
 	time to revalidate too."
 
 	aPositionEvent isClientAreaChanged ifTrue: [self invalidateLayoutDeeply].
-	"We can't rely on revalidating in paint, as repainting may not be needed when the shell is shrunk"
-	self validateLayout.
+	(aPositionEvent isHideWindow not and: [self isWindowVisible])
+		ifTrue: 
+			["We can't rely on revalidating in paint, as repainting may not be needed when the shell is shrunk"
+			self validateLayout].
 	self presenter trigger: #positionChanged: with: aPositionEvent!
 
 onPostSaveImage
@@ -809,8 +814,10 @@ releaseAccelerators
 releaseMenu
 	"Private - Release the menu."
 
-	self basicMenu: nil.
-	menuBar ifNotNil: [menuBar free]!
+	menuBar
+		ifNotNil: 
+			[self basicMenu: nil.
+			menuBar free]!
 
 resetDefaultButton
 	"Private - No default button has been explicitly specified for the receiver, so attempt
@@ -832,31 +839,29 @@ resolutionScaledBy: scale
 
 !
 
-restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution 
-	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was
-	measured at a screen resolution of aPointResolution. If the current resolution is different
-	then the placement rectangle will have to be scaled appropriately. 
-	Subclasses can override this message to compensate for a resolution change
-	in any other ways required."
+restorePlacement: aWINDOWPLACEMENT resolution: aPointResolution
+	"Private - Restore the placement for the receiver to aWINDOWPLACEMENT which was measured at
+	a screen resolution of aPointResolution. If the current resolution is different then the
+	placement rectangle will have to be scaled appropriately. Subclasses can override this
+	message to compensate for a resolution change in any other ways required."
 
-	| rect |
+	| rect desktopResolution |
 	rect := aWINDOWPLACEMENT rcNormalPosition asRectangle.
-	aPointResolution = View desktop resolution 
+	desktopResolution := View desktop resolution.
+	aPointResolution = desktopResolution
 		ifFalse: 
-			["Resolution is now different so recompute the placement"
-			| scale |
-			scale := View desktop resolution / aPointResolution.
+			[| scale |
+			"Resolution is now different so recompute the placement"
+			scale := desktopResolution / aPointResolution.
 			rect := (rect scaleBy: scale) truncated.
 			self resolutionScaledBy: scale].
 
-	"If the receiver wants to use a preferred extent, then use that.
-	Otherwise, choose a default extent."
-	self usePreferredExtent 
+	"If the receiver wants to use a preferred extent, then use that. Otherwise, choose a default
+	extent."
+	self usePreferredExtent
 		ifTrue: 
 			[| extent |
-			extent := self preferredExtent notNil 
-						ifTrue: [self preferredExtent]
-						ifFalse: [self defaultExtentWithin: creationParent].
+			extent := self preferredExtent ifNil: [self defaultExtentWithin: creationParent].
 			rect extent: extent].
 	rect position: (self defaultPositionWithin: creationParent forExtent: rect extent).
 	aWINDOWPLACEMENT rcNormalPosition: rect asParameter.
