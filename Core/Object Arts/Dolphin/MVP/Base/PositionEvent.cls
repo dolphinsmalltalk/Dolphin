@@ -54,6 +54,11 @@ isClientAreaChanged
 
 	^(lpwp flags bitAnd: ##(SWP_NOSIZE | SWP_FRAMECHANGED)) ~= SWP_NOSIZE!
 
+isHideWindow
+	"Answer whether the receiver is describing a hide event."
+
+	^lpwp flags anyMask: SWP_HIDEWINDOW!
+
 isMove
 	"Answer whether the receiver is describing a move event."
 
@@ -135,6 +140,7 @@ y
 !PositionEvent categoriesFor: #height:!accessing!public! !
 !PositionEvent categoriesFor: #isActivate!public!testing! !
 !PositionEvent categoriesFor: #isClientAreaChanged!public!testing! !
+!PositionEvent categoriesFor: #isHideWindow!public!testing! !
 !PositionEvent categoriesFor: #isMove!public!testing! !
 !PositionEvent categoriesFor: #isRectangleChanged!public!testing! !
 !PositionEvent categoriesFor: #isResize!public!testing! !
