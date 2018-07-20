@@ -320,7 +320,7 @@ HTTP_PROPERTY_FLAGS subclass: #HTTP_LISTEN_ENDPOINT_INFO
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
-	instanceVariableNames: ''
+	instanceVariableNames: 'directoryName softwareName'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

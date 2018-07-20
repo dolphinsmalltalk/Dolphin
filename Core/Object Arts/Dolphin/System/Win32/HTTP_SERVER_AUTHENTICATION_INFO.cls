@@ -152,6 +152,10 @@ defineFields
 		defineField: #ExFlags type: BYTEField new offset: 11;
 		defineField: #DigestParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS) offset: 12;
 		defineField: #BasicParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS) offset: 28.
-	self byteSize: 36! !
+	self byteSize: 36!
+
+propertyId
+	^HttpServerAuthenticationProperty! !
 !HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #propertyId!public! !
 

@@ -53,6 +53,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #EnableSharing type: BOOLEANField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+propertyId
+	^HttpServerListenEndpointProperty! !
 !HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_LISTEN_ENDPOINT_INFO class categoriesFor: #propertyId!public! !
 

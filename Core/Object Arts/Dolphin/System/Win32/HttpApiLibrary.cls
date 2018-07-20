@@ -1312,6 +1312,28 @@ example7
 	lib querySession: sessionId property: HttpServerStateProperty]
 			ensure: [lib httpCloseServerSession: sessionId]!
 
+example8
+	"Example of setting/querying HTTP_LOGGING_INFO session properties.
+		self example8
+	"
+
+	| lib sessionId |
+	lib := self default.
+	
+	[sessionId := lib createServerSession.
+	lib setSession: sessionId
+		property: (HTTP_LOGGING_INFO new
+				Present: true;
+				DirectoryName: FileLocator imageRelative basePath;
+				SoftwareName: 'Dolphin';
+				Format: HttpLoggingTypeW3C;
+				RolloverType: HttpLoggingRolloverSize;
+				RolloverSize: 1024 * 1024;
+				Fields: (HTTP_LOG_FIELD_DATE | HTTP_LOG_FIELD_TIME | HTTP_LOG_FIELD_CLIENT_IP | HTTP_LOG_FIELD_METHOD | HTTP_LOG_FIELD_URI);
+				yourself).
+	^lib halt querySession: sessionId property: HttpServerLoggingProperty]
+			ensure: [lib httpCloseServerSession: sessionId]!
+
 fileName
 	"Answer the host system file name for the library."
 
@@ -1412,6 +1434,7 @@ queryUrlAclInfo
 !HttpApiLibrary class categoriesFor: #example4!examples!public! !
 !HttpApiLibrary class categoriesFor: #example6!examples!public! !
 !HttpApiLibrary class categoriesFor: #example7!examples!public! !
+!HttpApiLibrary class categoriesFor: #example8!examples!public! !
 !HttpApiLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
 !HttpApiLibrary class categoriesFor: #initFlags!constants!public! !
 !HttpApiLibrary class categoriesFor: #querySslCertInfo!examples!public! !

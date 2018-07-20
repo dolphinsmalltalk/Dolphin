@@ -72,7 +72,7 @@ defineFields
 	self byteSize: 8!
 
 propertyId
-	^WinHttpServerConsts.HttpServerBindingProperty! !
+	^HttpServerBindingProperty! !
 !HTTP_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !HTTP_BINDING_INFO class categoriesFor: #propertyId!public! !
 
