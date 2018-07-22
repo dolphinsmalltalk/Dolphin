@@ -186,15 +186,12 @@
   <ItemGroup>
     <Image Include="Res\AbstractCardContainer.ico" />
     <Image Include="Res\AcceleratorPresenter.ico" />
-    <Image Include="Res\Aibo.ico" />
     <Image Include="Res\ApplicationDeploymentWizard.ico" />
     <Image Include="Res\AspectBuffer.ico" />
-    <Image Include="Res\AspectInspector.ico" />
     <Image Include="Res\Bag.ico" />
     <Image Include="Res\BasicInspector.ico" />
     <Image Include="Res\BatchAspectAccessor.ico" />
     <Image Include="Res\Behavior.ico" />
-    <Image Include="Res\BinaryPackage.ico" />
     <Image Include="Res\blank.ico" />
     <Image Include="Res\BlockClosure.ico" />
     <Image Include="Res\Boolean.ico" />
@@ -206,7 +203,6 @@
     <Image Include="Res\Calculator.ico" />
     <Image Include="Res\Canvas.ico" />
     <Image Include="Res\Category.ico" />
-    <Image Include="Res\CD.ico" />
     <Image Include="Res\Changed.ico" />
     <Image Include="Res\Character.ico" />
     <Image Include="Res\Chat.ico" />
@@ -219,7 +215,7 @@
     <Image Include="Res\ClearDocument.ico" />
     <Image Include="Res\Clipboard.ico" />
     <Image Include="Res\CloseWindow.ico" />
-    <Image Include="Res\cmd.ico" />
+    <Image Include="Res\ConsoleSessionManager.ico" />
     <Image Include="Res\CodeMentorPlugin.ico" />
     <Image Include="Res\Collection.ico" />
     <Image Include="Res\CollectionPresenter.ico" />
@@ -276,7 +272,7 @@
     <Image Include="Res\FileOpen.ico" />
     <Image Include="Res\FileSave.ico" />
     <Image Include="Res\FileSystemMonitor.ico" />
-    <Image Include="Res\FilmStrip.ico" />
+    <Image Include="Res\WinImageList.ico" />
     <Image Include="Res\Find.ico" />
     <Image Include="Res\findbar.bmp" />
     <Image Include="Res\FindDialog.ico" />
@@ -292,7 +288,6 @@
     <Image Include="Res\FontView.ico" />
     <Image Include="Res\Forwards.ico" />
     <Image Include="Res\Fraction.ico" />
-    <Image Include="Res\GDILibrary.ico" />
     <Image Include="Res\GoSearch.ico" />
     <Image Include="Res\GraphicsTool.ico" />
     <Image Include="Res\GrayedClassComment.ico" />
@@ -333,10 +328,7 @@
     <Image Include="Res\ListPresenter.ico" />
     <Image Include="Res\ListValuePresenter.ico" />
     <Image Include="Res\ListViewColumn.ico" />
-    <Image Include="Res\LiveUpdate.ico" />
-    <Image Include="Res\LiveUpdateOff.ico" />
     <Image Include="Res\Locale.ico" />
-    <Image Include="Res\MarkovGame.ico" />
     <Image Include="Res\MemoryManager.ico" />
     <Image Include="Res\Menu.ico" />
     <Image Include="Res\Message.ico" />
@@ -352,8 +344,6 @@
     <Image Include="Res\MouseTracker.ico" />
     <Image Include="Res\MoveNext.ico" />
     <Image Include="Res\MovePrior.ico" />
-    <Image Include="Res\MultipleSelectionListBox.ico" />
-    <Image Include="Res\MultipleSelectionListView.ico" />
     <Image Include="Res\Mutex.ico" />
     <Image Include="Res\NewClass.ico" />
     <Image Include="Res\NewMethod.ico" />
@@ -401,7 +391,6 @@
     <Image Include="Res\searchtext.ico" />
     <Image Include="Res\Shell.ico" />
     <Image Include="Res\ShellView.ico" />
-    <Image Include="Res\Shield.ico" />
     <Image Include="Res\Sleep.ico" />
     <Image Include="Res\Slider.ico" />
     <Image Include="Res\SmalltalkSystemFolder.ico" />
@@ -412,9 +401,6 @@
     <Image Include="Res\Snapshot.ico" />
     <Image Include="Res\Sound.ico" />
     <Image Include="Res\SourceManager.ico" />
-    <Image Include="Res\SourceTrackingSystem.ico" />
-    <Image Include="Res\SourceTrackingToolsFolder.ico" />
-    <Image Include="Res\SourceTrackingToolShell.ico" />
     <Image Include="Res\SpinButton.ico" />
     <Image Include="Res\Splitter.ico" />
     <Image Include="Res\StaticImage.ico" />
@@ -423,16 +409,7 @@
     <Image Include="Res\StepInto.ico" />
     <Image Include="Res\StepOut.ico" />
     <Image Include="Res\StepOver.ico" />
-    <Image Include="Res\StrategyAnalyserPresenter.ico" />
-    <Image Include="Res\StrategyAnalyserShell.ico" />
     <Image Include="Res\String.ico" />
-    <Image Include="Res\StsAdminShell.ico" />
-    <Image Include="Res\StsClassEdition.ico" />
-    <Image Include="Res\StsMethodEdition.ico" />
-    <Image Include="Res\StsPackageEdition.ico" />
-    <Image Include="Res\StsProject.ico" />
-    <Image Include="Res\StsProjectEdition.ico" />
-    <Image Include="Res\StsResourceEdition.ico" />
     <Image Include="Res\SUnitAbsBrowser.ico" />
     <Image Include="Res\symbol.ico" />
     <Image Include="Res\SystemBrowserShell.ico" />
@@ -447,7 +424,6 @@
     <Image Include="Res\ToggleLocalHierarchy.ico" />
     <Image Include="Res\Tools.bmp" />
     <Image Include="Res\ToolTip.ico" />
-    <Image Include="Res\TradingMachineWorkbench.ico" />
     <Image Include="Res\TranscriptShell.ico" />
     <Image Include="Res\TreeModelAbstract.ico" />
     <Image Include="Res\TreePresenter.ico" />
@@ -483,7 +459,7 @@
     <Image Include="Res\VisualObjectFinder.ico" />
     <Image Include="Res\Wait.ico" />
     <Image Include="Res\Wizard.ico" />
-    <Image Include="Res\Writing.ico" />
+    <Image Include="Res\TransformationRule.ico" />
     <Image Include="Res\xhatch.bmp" />
     <Image Include="Res\XML.ico" />
   </ItemGroup>
