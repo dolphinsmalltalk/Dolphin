@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="rc_devrs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="devres.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Res\AbstractCardContainer.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\AcceleratorPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ApplicationDeploymentWizard.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\AspectBuffer.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Bag.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\BasicInspector.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\BatchAspectAccessor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Behavior.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\blank.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\BlockClosure.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Boolean.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\BooleanPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\BouncingBallView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\BrowseFolderDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Brush.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ByteArray.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Calculator.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Canvas.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Category.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Changed.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Character.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Chat.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CheckBox.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ChoicePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Class.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ClassBrowserShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ClassComment.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ClassHierarchyDiagram.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ClearDocument.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Clipboard.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CloseWindow.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CodeMentorPlugin.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Collection.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CollectionPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Color.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ColorDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ColorPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ColorView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Combobox.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\cominter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CompiledMethod.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CompiledMethod_Deprecated.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CompiledMethodPrivate.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CompiledMethodPublic.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CompileFailedMethod.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Compiler.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ContainerView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ControlBarAbstract.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Date.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DatePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DateTimePicker.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DeadObject.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DeafObject.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Debugger.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Delay.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DesktopView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Dialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DialogView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Dictionary.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DisassemblyPlugin.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DisplayIt.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DocumentShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinPackage.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinPackageFolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinSerialNumber.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinSureCertificate.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinSureTrustedData.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DownArrow.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditCopy.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditCut.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditDelete.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditPaste.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditRedo.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditUndo.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EnvironmentBrowserShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EtchASketch.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EvaluateIt.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Exception.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\extent.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\externalstructure.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\False.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileOpen.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileSave.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileSystemMonitor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Find.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FindDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FindNext.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\flipper.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FlipperInspector.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Float.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Folder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FolderPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Font.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FontDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FontPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FontView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Forwards.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Fraction.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\GoSearch.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\GraphicsTool.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\GrayedClassComment.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\HelloWorld.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\HistoryBack.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\HistoryForward.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\HotKey.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\IAgentCtlCharacter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Icon.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\IdeaSpaceBreakout.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\IdeaSpaceCardBar.bmp">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\IdeaSpaceShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\IdeaSpaceShellAdd.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\IdeaSpaceShellAddDisabled.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\idispatch.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\image.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Imagedoc.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ImagePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ImageView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\InputState.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\InspectIt.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Interval.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Keyboard.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\KeyedAspectBatchAccessor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LargeInteger.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LayoutManager.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintError.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintInfo.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintPass.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintRule.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintWarning.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ListControlView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ListModel.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ListPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ListValuePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ListViewColumn.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Locale.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MemoryManager.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Menu.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Message.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MessageSendAbstract.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MessageSequenceAbstract.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Metaclass.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MethodBrowser.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\methodprotocol.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\methodprotocolansi.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\methodprotocolro.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Model.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MoenTreeView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MouseTracker.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MoveNext.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MovePrior.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Mutex.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NewClass.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NewMethod.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NewThing.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Number.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NumberPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\object.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Overridden.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Package.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Panic.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Pen.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Playground.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Point.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\position.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PowerOff.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Presenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Process.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\RadioButton.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ProcessMonitor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ProgressBar.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ProtocolBrowserShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PublishedAspectInspector.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PushButton.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\GroupBox.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditBar.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\FileBar.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\findbar.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\HeaderPin.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\LagoonLogo.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\ListBar.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\Rectangle.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\RecycleBin.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Refactoring.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ReferenceView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Refresh.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\regkey.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\RegKeyAbstract.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\regkeyva.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\regvalue.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Rename.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Resource.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Restart.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Revert.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Run.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\RunToCursor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ScaledDecimal.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ScintillaView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Scribble.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ScribbleView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ScrollBar.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ScrollingDecorator.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\searchtext.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Shell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ShellView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Sleep.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Slider.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SmalltalkSystemFolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SmalltalkSystemOptionSet.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SmalltalkSystemToolsFolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SmalltalkToolShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SmalltalkWorkspace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Snapshot.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Sound.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SourceManager.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SpinButton.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Splitter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StaticImage.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StaticText.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Status.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StepInto.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StepOut.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StepOver.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\String.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SUnitAbsBrowser.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\symbol.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SystemBrowserShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SystemDictionary.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TabView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TestRunner.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TextEdit.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TextPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Time.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TimePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TimeStamp.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ToggleLocalHierarchy.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Tools.bmp">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ToolTip.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TranscriptShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TreeModelAbstract.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TreePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TreeView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\True.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TypeConverter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\typelib.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UndefinedObject.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnitTestPlugin.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnitTestPluginDefect.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnitTestPluginFail.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnitTestPluginNoTest.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnitTestPluginNotRun.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnitTestPluginPass.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UnlockDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Up.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UpArrow.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueAdaptor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueBuffer.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueConverter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueConvertingControlView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueDialog.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueHolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValueModel.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ValuePresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\VCBar.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\xhatch.bmp">
+      <Filter>Bitmaps</Filter>
+    </Image>
+    <Image Include="Res\XML.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\VideoLibrary.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\VideoRecording.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\VideoTape.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\View.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewBar.bmp">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewComposer.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\VisualObjectFinder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Wait.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Wizard.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ConsoleSessionManager.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TransformationRule.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\WinImageList.ico">
+      <Filter>Icons</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\ist.rc2" />
+    <None Include="Res\hsplit.cur">
+      <Filter>Cursors</Filter>
+    </None>
+    <None Include="Res\vsplit.cur">
+      <Filter>Cursors</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Icons">
+      <UniqueIdentifier>{3f5f5314-0463-47fc-bd13-89681c0609c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bitmaps">
+      <UniqueIdentifier>{902049ce-4897-4858-90fd-dd356d482e3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cursors">
+      <UniqueIdentifier>{58e534a7-29cb-498c-9bc5-6cfa30202eb4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
