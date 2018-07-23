@@ -35,8 +35,6 @@ ABSTRACTCARDCONTAINER.ICO ICON                    "Res\\AbstractCardContainer.ic
 
 ACCELERATORPRESENTER.ICO ICON                    "Res\\AcceleratorPresenter.ico"
 
-AIBO.ICO                ICON                    "Res\\Aibo.ico"
-
 APPLICATIONDEPLOYMENTWIZARD.ICO ICON                    "Res\\ApplicationDeploymentWizard.ico"
 
 ASPECTBUFFER.ICO        ICON                    "Res\\AspectBuffer.ico"
@@ -127,7 +125,7 @@ COMPILEFAILEDMETHOD.ICO ICON                    "res\\CompileFailedMethod.ico"
 
 COMPILER.ICO            ICON                    "Res\\Compiler.ico"
 
-CONSOLESESSIONMANAGER.ICO ICON                    "Res\\cmd.ico"
+CONSOLESESSIONMANAGER.ICO ICON                    "Res\\ConsoleSessionManager.ico"
 
 CONTAINERVIEW.ICO       ICON                    "Res\\ContainerView.ico"
 
@@ -225,8 +223,6 @@ FONTVIEW.ICO            ICON                    "Res\\FontView.ico"
 
 FRACTION.ICO            ICON                    "Res\\Fraction.ico"
 
-GDILIBRARY.ICO          ICON                    "Res\\GDILibrary.ico"
-
 GOSEARCH.ICO            ICON                    "Res\\GoSearch.ico"
 
 GRAPHICSTOOL.ICO        ICON                    "Res\\GraphicsTool.ico"
@@ -242,8 +238,6 @@ HISTORYBACK.ICO         ICON                    "Res\\HistoryBack.ico"
 HISTORYFORWARD.ICO      ICON                    "Res\\HistoryForward.ico"
 
 HOTKEY.ICO              ICON                    "Res\\HotKey.ico"
-
-IAGENTCTLCHARACTER.ICO  ICON                    "Res\\IAgentCtlCharacter.ico"
 
 FINDDIALOG.ICO          ICON                    "Res\\FindDialog.ico"
 
@@ -293,10 +287,6 @@ LISTVALUEPRESENTER.ICO  ICON                    "Res\\ListValuePresenter.ico"
 
 LISTVIEWCOLUMN.ICO      ICON                    "Res\\ListViewColumn.ico"
 
-LIVEUPDATE.ICO          ICON                    "Res\\LiveUpdate.ico"
-
-LIVEUPDATEOFF.ICO       ICON                    "Res\\LiveUpdateOff.ico"
-
 LOCALE.ICO              ICON                    "Res\\Locale.ico"
 
 MEMORYMANAGER.ICO       ICON                    "Res\\MemoryManager.ico"
@@ -328,10 +318,6 @@ MOUSETRACKER.ICO        ICON                    "Res\\MouseTracker.ico"
 MOVEPRIOR.ICO           ICON                    "Res\\MovePrior.ico"
 
 MOVENEXT.ICO            ICON                    "Res\\MoveNext.ico"
-
-MULTIPLESELECTIONLISTBOX.ICO ICON                    "Res\\MultipleSelectionListBox.ico"
-
-MULTIPLESELECTIONLISTVIEW.ICO ICON                    "Res\\MultipleSelectionListView.ico"
 
 MUTEX.ICO               ICON                    "Res\\Mutex.ico"
 
@@ -419,8 +405,6 @@ SHELL.ICO               ICON                    "Res\\Shell.ico"
 
 SHELLVIEW.ICO           ICON                    "Res\\ShellView.ico"
 
-SHIELD.ICO              ICON                    "Res\\Shield.ico"
-
 SHOWNEXTSTATEMENT.ICO   ICON                    "Res\\Forwards.ico"
 
 SLEEP.ICO               ICON                    "Res\\Sleep.ico"
@@ -443,12 +427,6 @@ SOUND.ICO               ICON                    "Res\\Sound.ico"
 
 SOURCEMANAGER.ICO       ICON                    "Res\\SourceManager.ico"
 
-SOURCETRACKINGSYSTEM.ICO ICON                    "Res\\SourceTrackingSystem.ico"
-
-SOURCETRACKINGTOOLSFOLDER.ICO ICON                    "Res\\SourceTrackingToolsFolder.ico"
-
-SOURCETRACKINGTOOLSHELL.ICO ICON                    "Res\\SourceTrackingToolShell.ico"
-
 SPINBUTTON.ICO          ICON                    "Res\\SpinButton.ico"
 
 SPLITTER.ICO            ICON                    "Res\\Splitter.ico"
@@ -466,18 +444,6 @@ STEPOVER.ICO            ICON                    "Res\\StepOver.ico"
 STEPOUT.ICO             ICON                    "Res\\StepOut.ico"
 
 STRING.ICO              ICON                    "res\\String.ico"
-
-STSADMINSHELL.ICO       ICON                    "Res\\StsAdminShell.ico"
-
-STSCLASSEDITION.ICO     ICON                    "Res\\StsClassEdition.ico"
-
-STSMETHODEDITION.ICO    ICON                    "Res\\StsMethodEdition.ico"
-
-STSPACKAGEEDITION.ICO   ICON                    "Res\\StsPackageEdition.ico"
-
-STSPROJECTEDITION.ICO   ICON                    "Res\\StsProjectEdition.ico"
-
-STSRESOURCEEDITION.ICO  ICON                    "Res\\StsResourceEdition.ico"
 
 SYMBOL.ICO              ICON                    "res\\symbol.ico"
 
@@ -503,7 +469,7 @@ TOOLTIP.ICO             ICON                    "Res\\ToolTip.ico"
 
 TRANSCRIPTSHELL.ICO     ICON                    "res\\TranscriptShell.ico"
 
-TRANSFORMATIONRULE.ICO  ICON                    "Res\\Writing.ico"
+TRANSFORMATIONRULE.ICO  ICON                    "Res\\TransformationRule.ico"
 
 TREEMODELABSTRACT.ICO   ICON                    "Res\\TreeModelAbstract.ico"
 
@@ -551,15 +517,13 @@ VISUALOBJECTFINDER.ICO  ICON                    "res\\VisualObjectFinder.ico"
 
 WAIT.ICO                ICON                    "Res\\Wait.ico"
 
-WINIMAGELIST.ICO        ICON                    "Res\\FilmStrip.ico"
+WINIMAGELIST.ICO        ICON                    "Res\\WinImageList.ico"
 
 WIZARD.ICO              ICON                    "res\\Wizard.ico"
 
 XML.ICO                 ICON                    "res\\Xml.ico"
 
 RESTART.ICO             ICON                    "Res\\Restart.ico"
-
-MARKOVGAME.ICO          ICON                    "res\\MarkovGame.ico"
 
 UNITTESTPLUGIN.ICO      ICON                    "Res\\UnitTestPlugin.ico"
 
@@ -721,12 +685,6 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 // remains consistent on all systems.
 IDEASPACESHELL.ICO      ICON                    "Res\\IdeaSpaceShell.ico"
 
-TRADINGMACHINEWORKBENCH.ICO ICON                    "Res\\TradingMachineWorkbench.ico"
-
-STRATEGYANALYSERSHELL.ICO ICON                    "Res\\StrategyAnalyserShell.ico"
-
-STRATEGYANALYSERPRESENTER.ICO ICON                    "Res\\StrategyAnalyserPresenter.ico"
-
 IDEASPACEBREAKOUT.ICO   ICON                    "Res\\IdeaSpaceBreakout.ico"
 
 IDEASPACESHELLADD.ICO   ICON                    "Res\\IdeaSpaceShellAdd.ico"
@@ -734,8 +692,6 @@ IDEASPACESHELLADD.ICO   ICON                    "Res\\IdeaSpaceShellAdd.ico"
 IDEASPACESHELLADDDISABLED.ICO ICON                    "res\\IdeaSpaceShellAddDisabled.ico"
 
 DOLPHINPACKAGE.ICO      ICON                    "Res\\DolphinPackage.ico"
-
-STSPROJECT.ICO          ICON                    "res\\StsProject.ico"
 
 
 /////////////////////////////////////////////////////////////////////////////
