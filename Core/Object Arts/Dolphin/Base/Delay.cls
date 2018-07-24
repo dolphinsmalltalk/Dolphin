@@ -6,7 +6,7 @@ Object subclass: #Delay
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Delay guid: (GUID fromString: '{87b4c47b-026e-11d3-9fd7-00a0cc3e4a32}')!
-Delay addClassConstant: 'DefaultResolution' value: 15625!
+Delay addClassConstant: 'DefaultResolution' value: 16r3D09!
 Delay comment: '<Delay>s are used to introduce timed pauses in the execution of a <Process>.  Delays can be constructed that specify a duration using the instance creation messages #forMicroseconds:, #forMilliseconds:, and #forSeconds:, or an absolute time based on the millisecond clock value (#untilMilliseconds:). Once constructed a Delay responds to the #wait message by suspending the active process for the desired duration, or until the desired absolute time is reached. 
 
 Delays are "one-shot" in that once they have expired further attempts to #wait on them will return immediately. This applies even if the Delay was originally constructed to wait for a time interval rather than an absolute time. Therefore if one wishes to delay a process in a loop, new Delay instances should be created as required inside the loop. It is often more convenient to use the ProcessorScheduler>>sleep: message, which wraps up the creation and wait operations inside a convenience message.
@@ -310,16 +310,6 @@ highestResolution
 
 	^HighestResolution!
 
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon!
-
 initialize
 	"Initialize the Class Variables of the receiver:
 		Delay initialize
@@ -442,10 +432,11 @@ resolution: anInteger set: aBoolean
 	| actualResolution |
 	actualResolution := DWORDBytes new.
 	NTLibrary default
-		setTimerResolution: (anInteger max: 1000) * 10
+		setTimerResolution: anInteger * 10
 		set: aBoolean
 		actualResolution: actualResolution.
-	^Resolution := self clampResolution: actualResolution value!
+	Resolution := actualResolution value // 10.
+	^Resolution!
 
 scheduleNext
 	"Private - Schedule the next Pending Delay (if any). MUST be called from within
@@ -486,7 +477,6 @@ untilMilliseconds: millisecondTime
 !Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
 !Delay class categoriesFor: #forSeconds:!instance creation!public! !
 !Delay class categoriesFor: #highestResolution!constants!public! !
-!Delay class categoriesFor: #icon!constants!development!public! !
 !Delay class categoriesFor: #initialize!development!initializing!public! !
 !Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
 !Delay class categoriesFor: #keepAlive!helpers!private! !
