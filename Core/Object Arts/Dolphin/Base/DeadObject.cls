@@ -23,11 +23,6 @@ current
 
 	^Current!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	"Private - Initialize the receiver's class variables."
 
@@ -39,7 +34,6 @@ removeFromSystem
 
 	^self shouldNotImplement! !
 !DeadObject class categoriesFor: #current!accessing!booting!public! !
-!DeadObject class categoriesFor: #icon!constants!development!public! !
 !DeadObject class categoriesFor: #initialize!booting!development!initializing!private! !
 !DeadObject class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 
