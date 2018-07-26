@@ -756,11 +756,6 @@ hasHandCodedMethodFor: selector
 	method := self compiledMethodAt: selector ifAbsent: [^false].
 	^(self autoGenCategory includesMethod: method) not!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 inheritTemplate
 	| ancestor |
 	ancestor := self superclass.
@@ -1113,7 +1108,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !
 !ExternalStructure class categoriesFor: #getFieldList!accessing!private! !
 !ExternalStructure class categoriesFor: #hasHandCodedMethodFor:!development!private!testing! !
-!ExternalStructure class categoriesFor: #icon!constants!public! !
 !ExternalStructure class categoriesFor: #inheritTemplate!initializing!private! !
 !ExternalStructure class categoriesFor: #init:!initializing!public! !
 !ExternalStructure class categoriesFor: #initialize!development!initializing!private! !
