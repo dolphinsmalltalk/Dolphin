@@ -7,7 +7,7 @@ Object variableSubclass: #CompiledCode
 	classInstanceVariableNames: ''!
 CompiledCode guid: (GUID fromString: '{87b4c46f-026e-11d3-9fd7-00a0cc3e4a32}')!
 CompiledCode isAbstract: true!
-CompiledCode addClassConstant: 'PrivateMask' value: 1!
+CompiledCode addClassConstant: 'PrivateMask' value: 16r1!
 CompiledCode comment: 'CompiledCode is the class of executable objects containing an array of instructions (bytecodes) and an array of literals (the literal frame).
 
 The method header of the receiver is a SmallInteger containing a set of flags containing information such as the number of arguments, the number of temporaries, etc, is layed out as follows (subject to change):
@@ -249,6 +249,11 @@ header
 
 header: aSmallInteger 
 	header := aSmallInteger!
+
+isAbstract
+	"Answer whether this is an abstract method."
+
+	^self isSimpleSelfSend: #subclassResponsibility!
 
 isCompilationFailure
 	^false!
@@ -631,6 +636,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #hash!comparing!public! !
 !CompiledCode categoriesFor: #header!accessing!private! !
 !CompiledCode categoriesFor: #header:!accessing!private! !
+!CompiledCode categoriesFor: #isAbstract!private!testing! !
 !CompiledCode categoriesFor: #isCompilationFailure!public!testing! !
 !CompiledCode categoriesFor: #isDebugMethod!development!private!testing! !
 !CompiledCode categoriesFor: #isExpression!private!testing! !
