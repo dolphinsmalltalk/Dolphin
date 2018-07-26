@@ -28,16 +28,9 @@ getDebugInfo
 				debug: self isDebugMethod.
 	^answer!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^self class icon
-!
-
 isCompilationFailure
 	^true! !
 !CompileFailedMethod categoriesFor: #getDebugInfo!development!private! !
-!CompileFailedMethod categoriesFor: #icon!constants!public! !
 !CompileFailedMethod categoriesFor: #isCompilationFailure!public!testing! !
 
 !CompileFailedMethod class methodsFor!
@@ -79,12 +72,6 @@ buildSourceForSelector: aSymbol class: aBehavior
 	stream
 		crtab;
 		nextPutAll: ' self error: ''This method did not compile'''.
-	^stream contents!
-
-icon
-	"Answer an Icon representing the receiver."
-
-	^##(self) defaultIcon! !
+	^stream contents! !
 !CompileFailedMethod class categoriesFor: #buildSourceForSelector:class:!helpers!private! !
-!CompileFailedMethod class categoriesFor: #icon!constants!public! !
 

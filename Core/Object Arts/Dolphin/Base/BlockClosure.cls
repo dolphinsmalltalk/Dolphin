@@ -841,11 +841,6 @@ attemptToUpgradeBlock: aBlockClosure data: data
 				do: [:i | (newMethod at: i) == recompiledBlock ifTrue: [newMethod at: i put: data]]].
 	^recompiledBlock!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier binary filed versions."
 
@@ -880,7 +875,6 @@ stbVersion
 	^3! !
 !BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
 !BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #icon!constants!public! !
 !BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
 

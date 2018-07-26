@@ -265,13 +265,7 @@ fromString: aString
 	theClass := self environment at: className ifAbsent: [^nil].
 	isMeta ifTrue: [theClass := theClass class].
 	selector := stream upToEnd asSymbol.
-	^theClass compiledMethodAt: selector ifAbsent: []!
-
-icon
-	"Answer an Icon representing the receiver."
-
-	^##(self) defaultIcon! !
+	^theClass compiledMethodAt: selector ifAbsent: []! !
 !CompiledMethod class categoriesFor: #defaultSortBlock!private!sorting! !
 !CompiledMethod class categoriesFor: #fromString:!converting!development!public! !
-!CompiledMethod class categoriesFor: #icon!constants!public! !
 
