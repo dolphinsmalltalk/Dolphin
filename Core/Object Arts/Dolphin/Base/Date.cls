@@ -482,11 +482,6 @@ fromSYSTEMTIME: aSYSTEMTIME
 	
 	^self newDay: aSYSTEMTIME wDay monthIndex: aSYSTEMTIME wMonth year: aSYSTEMTIME wYear!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 indexOfMonth: monthName
 	"Answer the index in a year (1 .. 12) of the month named by the argument, 
 	monthName, where monthName is the full locale specific name, or its abbreviated form,
@@ -722,7 +717,6 @@ yesterday
 !Date class categoriesFor: #fromString:!instance creation!public! !
 !Date class categoriesFor: #fromString:format:!instance creation!public! !
 !Date class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Date class categoriesFor: #icon!constants!public! !
 !Date class categoriesFor: #indexOfMonth:!mapping!public! !
 !Date class categoriesFor: #initialize!development!initializing!private! !
 !Date class categoriesFor: #leapYear:!operations!public! !
