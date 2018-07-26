@@ -216,11 +216,6 @@ fromSYSTEMTIME: aSYSTEMTIME
 		date: (Date fromSYSTEMTIME: aSYSTEMTIME) 
 		time: (Time fromSYSTEMTIME: aSYSTEMTIME)!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Answer a new instance of the receiver representing the current Time."
 
@@ -238,7 +233,6 @@ time: aTime
 !TimeStamp class categoriesFor: #fromSeconds:!instance creation!public! !
 !TimeStamp class categoriesFor: #fromString:!public! !
 !TimeStamp class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!TimeStamp class categoriesFor: #icon!constants!public! !
 !TimeStamp class categoriesFor: #new!instance creation!public! !
 !TimeStamp class categoriesFor: #time:!instance creation!public! !
 

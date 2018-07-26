@@ -215,11 +215,6 @@ hours: hoursInteger minutes: minutesInteger seconds: secondsInteger
 
 	^self fromSeconds: hoursInteger * 3600 + (minutesInteger * 60) + secondsInteger!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 microsecondClockValue
 	"Answer the current value of the microsecond clock."
 
@@ -362,7 +357,6 @@ totalSeconds
 !Time class categoriesFor: #fromString:!instance creation!public! !
 !Time class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
 !Time class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Time class categoriesFor: #icon!constants!public! !
 !Time class categoriesFor: #microsecondClockValue!enquiries!public! !
 !Time class categoriesFor: #microsecondsToRun:!operations!public! !
 !Time class categoriesFor: #millisecondClockValue!accessing!public! !
