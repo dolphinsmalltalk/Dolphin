@@ -670,11 +670,6 @@ defaultSortAlgorithmClass
 
 	^DefaultSortAlgorithm!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	"Private - Initialize the receiver's class variables."
 
@@ -738,7 +733,6 @@ withAll: newElements
 		addAll: newElements;
 		yourself! !
 !Collection class categoriesFor: #defaultSortAlgorithmClass!instance creation!public! !
-!Collection class categoriesFor: #icon!constants!public! !
 !Collection class categoriesFor: #initialize!development!initializing!private! !
 !Collection class categoriesFor: #with:!instance creation!public! !
 !Collection class categoriesFor: #with:with:!instance creation!public! !
