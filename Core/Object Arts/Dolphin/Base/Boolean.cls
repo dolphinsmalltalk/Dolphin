@@ -196,16 +196,10 @@ Boolean methodProtocol: #boolean attributes: #(#ansi #readOnly) selectors: #(#& 
 
 !Boolean class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"It is not necessary to instantiate Booleans - use the literals 'true' 
 	and 'false'."
 
 	^self shouldNotImplement! !
-!Boolean class categoriesFor: #icon!constants!public! !
 !Boolean class categoriesFor: #new!instance creation!public! !
 
