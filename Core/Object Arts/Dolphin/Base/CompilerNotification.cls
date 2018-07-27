@@ -215,11 +215,6 @@ code: codeInteger in: aString for: aClass selector: aSymbol position: posInteger
 errorFormats
 	^ErrorFormats ifNil: [LookupTable new]!
 
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^self severityClass icon!
-
 initialize
 	"
 	self initialize
@@ -295,7 +290,9 @@ initialize
 		at: CErrDuplicateArgName put: 'duplicate argument name <1p>';
 		at: CErrRedefiningArg put: 'redefining argument <1p>';
 		at: CErrStaticExprNotClosed put: 'static expression not closed';
+		at: CErrEmptyConditionBlock put: 'condition block of <2p> cannot be empty';
 		yourself.
+
 	formats
 		at: CWarnRedefiningArg put: 'redefining argument <1p>';
 		at: CWarnRedefiningTemp put: 'redefining temporary variable <1p>';
@@ -337,7 +334,6 @@ severity
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
 !CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
-!CompilerNotification class categoriesFor: #icon!constants!public! !
 !CompilerNotification class categoriesFor: #initialize!initializing!public! !
 !CompilerNotification class categoriesFor: #severity!constants!public! !
 
