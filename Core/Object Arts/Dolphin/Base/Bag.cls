@@ -163,11 +163,6 @@ Bag methodProtocol: #Bag attributes: #(#ansi #readOnly) selectors: #(#add: #add:
 
 !Bag class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 identityNew
 	"Answer a new instance of the receiver with default initial capacity, which uses identity 
 	as the comparison for identifying duplicate elements."
@@ -195,7 +190,6 @@ new: count
 
 	^super new 
 		contents: (LookupTable new: count)! !
-!Bag class categoriesFor: #icon!constants!public! !
 !Bag class categoriesFor: #identityNew!instance creation!public! !
 !Bag class categoriesFor: #identityNew:!instance creation!public! !
 !Bag class categoriesFor: #new!instance creation!public! !
