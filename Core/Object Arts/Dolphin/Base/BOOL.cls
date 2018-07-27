@@ -48,13 +48,7 @@ fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
-	^BOOLField!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Boolean icon! !
+	^BOOLField! !
 !BOOL class categoriesFor: #defineFields!initializing!public! !
 !BOOL class categoriesFor: #fieldType!constants!development!private! !
-!BOOL class categoriesFor: #icon!constants!public! !
 
