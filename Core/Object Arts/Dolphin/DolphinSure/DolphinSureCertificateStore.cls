@@ -155,6 +155,11 @@ clearTemporaryTrustStore
 
 	self temporaryTrust removeAllCertificates!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 initialize
 	"Private - Initialize the receiver
 
@@ -195,6 +200,7 @@ uninitialize
 !DolphinSureCertificateStore class categoriesFor: #allStores!enquiries!public! !
 !DolphinSureCertificateStore class categoriesFor: #certificateStoreRoot!accessing!private! !
 !DolphinSureCertificateStore class categoriesFor: #clearTemporaryTrustStore!operations!private! !
+!DolphinSureCertificateStore class categoriesFor: #icon!constants!development!public! !
 !DolphinSureCertificateStore class categoriesFor: #initialize!initializing!private! !
 !DolphinSureCertificateStore class categoriesFor: #myCertificates!instance creation!public! !
 !DolphinSureCertificateStore class categoriesFor: #name:!instance creation!public! !
