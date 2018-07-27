@@ -279,11 +279,6 @@ evaluate: aString logged: aBoolean
 
 	^self evaluate: aString for: nil logged: aBoolean!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 identifierFrom: aString
 	"Answer a String which is an initial suggestion for a Smalltalk identifier based on aString.
 	The answer is not guaranteed to be a valid identifier as it could be an empty String.
@@ -445,7 +440,6 @@ warningClass
 !Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !
 !Compiler class categoriesFor: #evaluate:logged:!evaluating!public! !
-!Compiler class categoriesFor: #icon!constants!development!public! !
 !Compiler class categoriesFor: #identifierFrom:!parsing!public! !
 !Compiler class categoriesFor: #initialize!development!initializing!private! !
 !Compiler class categoriesFor: #isAReservedWord:!parsing!private! !
