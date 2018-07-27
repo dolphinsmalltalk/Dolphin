@@ -765,16 +765,6 @@ default: aSourceManager
 	DefaultInstance := aSourceManager.
 	DefaultInstance notNil ifTrue: [ DefaultInstance openSources ].!
 
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon!
-
 initialize
 	"Initialize the class variables of the receiver"
 
@@ -805,7 +795,6 @@ uninitialize
 	self reset! !
 !SourceManager class categoriesFor: #default!accessing!public! !
 !SourceManager class categoriesFor: #default:!accessing!public! !
-!SourceManager class categoriesFor: #icon!constants!public! !
 !SourceManager class categoriesFor: #initialize!initializing!public! !
 !SourceManager class categoriesFor: #new!instance creation!public! !
 !SourceManager class categoriesFor: #newDefault!instance creation!public! !
