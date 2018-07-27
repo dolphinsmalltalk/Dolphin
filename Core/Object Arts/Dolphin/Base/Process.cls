@@ -6,9 +6,9 @@ Link variableSubclass: #Process
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Process guid: (GUID fromString: '{87b4c64e-026e-11d3-9fd7-00a0cc3e4a32}')!
-Process addClassConstant: 'DefaultFpControl' value: 524295!
-Process addClassConstant: 'DefaultMaxStack' value: 131072!
-Process addClassConstant: 'DefaultStack' value: 1!
+Process addClassConstant: 'DefaultFpControl' value: 16r80007!
+Process addClassConstant: 'DefaultMaxStack' value: 16r20000!
+Process addClassConstant: 'DefaultStack' value: 16r1!
 Process comment: 'A Process represents an individual thread of execution in the image.
 
 Note that the name "Process" is historic - a Smalltalk Process is much more similar to a "thread" than a true process, since all Processes share the same execution context (the image). Dolphin''s processes do not map directly onto native threads, but are "green" threads. The multi-threading system is implemented internally by the VM and image, with all "green" threads running within a single Win32 thread. This means that a call to a long running (or blocking) external API call will block the entire system, so a facility is provided to "overlap" such calls. This is done by marking the external method with the "overlap" annotation, in which case the VM will perform the call on a separate native thread. For the duration of the overlapped operation the calling Process is blocked, but other Processes in the image will continue to run. 
@@ -790,11 +790,6 @@ forContext: aBlockClosure priority: anInteger
 		priority: anInteger;
 		yourself.!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	"Initialize the class variables of the receiver:
 		DefaultStack		-	The initial stack size of new Processes. This should be relatively
@@ -866,7 +861,6 @@ new
 
 	^(self new: DefaultStack max: DefaultMaxStack) initialize! !
 !Process class categoriesFor: #forContext:priority:!instance creation!private! !
-!Process class categoriesFor: #icon!constants!public! !
 !Process class categoriesFor: #initialize!development!initializing!public! !
 !Process class categoriesFor: #new!instance creation!private! !
 

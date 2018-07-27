@@ -783,11 +783,6 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 
 !InputState class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	SamplingInterval := 16384.
 	EnumHandlesDescriptor := ExternalDescriptor fromString: 'stdcall: dword handle dword'.
@@ -803,7 +798,6 @@ newFromOld: anInputState
 	^(self new)
 		initializeFrom: anInputState;
 		yourself! !
-!InputState class categoriesFor: #icon!constants!public! !
 !InputState class categoriesFor: #initialize!development!initializing!public! !
 !InputState class categoriesFor: #maxIdleSleep!accessing!public! !
 !InputState class categoriesFor: #maxIdleSleep:!accessing!public! !
