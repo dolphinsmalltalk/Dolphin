@@ -161,16 +161,6 @@ fromId: anIntegerOrStringId in: anExternalHandle
 		type: SND_RESOURCE | SND_ASYNC;
 		yourself!
 
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon!
-
 informationBeep
 	"Generate the standard system information parp."
 
@@ -227,7 +217,6 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 !Sound class categoriesFor: #fromFile:!instance creation!public! !
 !Sound class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
 !Sound class categoriesFor: #fromId:in:!instance creation!public! !
-!Sound class categoriesFor: #icon!constants!public! !
 !Sound class categoriesFor: #informationBeep!parping!public! !
 !Sound class categoriesFor: #initialize!development!initializing!private! !
 !Sound class categoriesFor: #promptBeep!parping!public! !
