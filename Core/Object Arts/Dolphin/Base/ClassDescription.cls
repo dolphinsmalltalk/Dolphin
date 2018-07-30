@@ -402,15 +402,6 @@ copyCategory: category from: aClass classified: newCategory
 	^(cat methodsInBehavior: self) 
 			allSatisfy: [:m | (self copy: m selector from: aClass classified: newCategory) notNil]!
 
-defaultIcon
-	"Answer a suitable default icon to use for this class. Not all classes use their 
-	default icon; one must define an appropriate #icon method in each class where the 
-	icon required differs from that of the superclass."
-
-	^(self environment at: #Icon) fromId: self defaultIconName.
-
-	!
-
 defaultIconFrom: anExternalResourceLibrary
 	"Answer a suitable default icon to use for this class. If anExternalResourceLibrary
 	is, for some reason not open, then use the icon for the Object class."
@@ -979,7 +970,6 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #copyAllCategoriesFrom:!methods-copying!public! !
 !ClassDescription categoriesFor: #copyCategory:from:!development!methods-copying!public! !
 !ClassDescription categoriesFor: #copyCategory:from:classified:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #defaultIcon!constants!public! !
 !ClassDescription categoriesFor: #defaultIconFrom:!constants!public! !
 !ClassDescription categoriesFor: #defaultIconName!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !

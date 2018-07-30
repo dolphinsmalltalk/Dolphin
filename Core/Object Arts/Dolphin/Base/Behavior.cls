@@ -6,17 +6,17 @@ Object subclass: #Behavior
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Behavior guid: (GUID fromString: '{87b4c459-026e-11d3-9fd7-00a0cc3e4a32}')!
-Behavior addClassConstant: '_BasicSpecMask' value: 32767!
-Behavior addClassConstant: '_BytesSubMask' value: 18432!
-Behavior addClassConstant: '_FundamentalShapeMask' value: 12543!
-Behavior addClassConstant: '_IndirectMask' value: 2048!
-Behavior addClassConstant: '_MournerMask' value: 1024!
-Behavior addClassConstant: '_NonInstantiableMask' value: 512!
-Behavior addClassConstant: '_NullTermMask' value: 16384!
-Behavior addClassConstant: '_PointersMask' value: 8192!
-Behavior addClassConstant: '_ShapeMask' value: 28927!
-Behavior addClassConstant: '_SizeMask' value: 255!
-Behavior addClassConstant: '_VariableMask' value: 4096!
+Behavior addClassConstant: '_BasicSpecMask' value: 16r7FFF!
+Behavior addClassConstant: '_BytesSubMask' value: 16r4800!
+Behavior addClassConstant: '_FundamentalShapeMask' value: 16r30FF!
+Behavior addClassConstant: '_IndirectMask' value: 16r800!
+Behavior addClassConstant: '_MournerMask' value: 16r400!
+Behavior addClassConstant: '_NonInstantiableMask' value: 16r200!
+Behavior addClassConstant: '_NullTermMask' value: 16r4000!
+Behavior addClassConstant: '_PointersMask' value: 16r2000!
+Behavior addClassConstant: '_ShapeMask' value: 16r70FF!
+Behavior addClassConstant: '_SizeMask' value: 16rFF!
+Behavior addClassConstant: '_VariableMask' value: 16r1000!
 Behavior comment: 'Class `Behavior` is the abstract class which defines the minimum state necessary for objects that have instances, providing the basic information about those instances to the Compiler and the VM.
 
 Instance Variables:
@@ -428,7 +428,7 @@ hasAbstractMethods
 	"Answer whether the receiver has any methods that are by convention considered to be
 	abstract (i.e. they consist solely of a send of #subclassResponsibility to self)."
 
-	^self methodDictionary anySatisfy: [:each | each isSimpleSelfSend: #subclassResponsibility]!
+	^self methodDictionary anySatisfy: [:each | each isAbstract]!
 
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
@@ -1256,16 +1256,10 @@ Behavior methodProtocol: #instantiator attributes: #(#ansi #readOnly) selectors:
 
 !Behavior class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^Class icon!
-
 initialize
 	self addClassConstant: '_NullMethodDictionary'
 		value: ((MethodDictionary new)
 				isImmutable: true;
 				yourself)! !
-!Behavior class categoriesFor: #icon!constants!public! !
 !Behavior class categoriesFor: #initialize!development!initializing!public! !
 
