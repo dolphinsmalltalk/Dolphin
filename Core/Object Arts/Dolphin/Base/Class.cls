@@ -935,12 +935,7 @@ foldLiteralStrings
 									literalStrings add: literal.
 									each literalAt: i put: (literalStrings find: literal)]]]].
 	after := literalStrings size.
-	^{total. after}!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
+	^{total. after}! !
 !Class class categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
 !Class class categoriesFor: #allBehaviorsDo:!enumerating!private! !
 !Class class categoriesFor: #allClasses!class hierarchy-accessing!private! !
@@ -949,5 +944,4 @@ icon
 !Class class categoriesFor: #allRoots!class hierarchy-accessing!private! !
 !Class class categoriesFor: #basicAllRoots!class hierarchy-accessing!private! !
 !Class class categoriesFor: #foldLiteralStrings!operations!public! !
-!Class class categoriesFor: #icon!constants!public! !
 
