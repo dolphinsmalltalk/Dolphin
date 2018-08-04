@@ -57,16 +57,10 @@ current
 
 	^Current!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	"Private - Initialize the receiver's class variables."
 
 	Current isNil ifTrue: [Current := self new]! !
 !DeafObject class categoriesFor: #current!accessing!public! !
-!DeafObject class categoriesFor: #icon!constants!development!public! !
 !DeafObject class categoriesFor: #initialize!development!initializing!private! !
 
