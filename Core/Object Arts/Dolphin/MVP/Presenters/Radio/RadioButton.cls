@@ -17,11 +17,3 @@ basicWindowStyle
 	^BS_AUTORADIOBUTTON! !
 !RadioButton categoriesFor: #basicWindowStyle!constants!private! !
 
-!RadioButton class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!RadioButton class categoriesFor: #icon!constants!public! !
-

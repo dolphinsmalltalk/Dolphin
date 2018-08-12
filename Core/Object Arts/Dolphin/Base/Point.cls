@@ -2,7 +2,7 @@
 
 ArithmeticValue subclass: #Point
 	instanceVariableNames: 'x y'
-	classVariableNames: ''
+	classVariableNames: 'Zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Point guid: (GUID fromString: '{87b4c658-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -330,10 +330,8 @@ y: aNumber
 
 !Point class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
+initialize
+	self addClassConstant: 'Zero' value: 0@0!
 
 new
 	"Answer a new instance of the receiver equal to zero."
@@ -355,8 +353,8 @@ x: xCoord y: yCoord
 zero
 	"Answer the receiver's representation of zero."
 
-	^self x: 0 y: 0! !
-!Point class categoriesFor: #icon!constants!public! !
+	^Zero! !
+!Point class categoriesFor: #initialize!public! !
 !Point class categoriesFor: #new!instance creation!public! !
 !Point class categoriesFor: #one!instance creation!public! !
 !Point class categoriesFor: #x:y:!instance creation!public! !

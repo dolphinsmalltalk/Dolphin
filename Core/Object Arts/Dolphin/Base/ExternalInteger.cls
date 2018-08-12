@@ -138,16 +138,10 @@ defineTemplate
 fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
-	^self new value: anInteger!
-
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Integer icon! !
+	^self new value: anInteger! !
 !ExternalInteger class categoriesFor: #decompileDefinition!development!public! !
 !ExternalInteger class categoriesFor: #defineFields!initializing!public! !
 !ExternalInteger class categoriesFor: #definesNewFields!private!testing! !
 !ExternalInteger class categoriesFor: #defineTemplate!development!initializing!public! !
 !ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
-!ExternalInteger class categoriesFor: #icon!constants!public! !
 

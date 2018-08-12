@@ -1462,11 +1462,6 @@ fromUtf16String: anAddressOrUtf16String
 		lpUsedDefaultChar: nil.
 	^answer!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	empty := ''.
 	self
@@ -1659,7 +1654,6 @@ withAll: newElements
 !String class categoriesFor: #fromId:in:!instance creation!public! !
 !String class categoriesFor: #fromString:!instance creation!public! !
 !String class categoriesFor: #fromUtf16String:!instance creation!public! !
-!String class categoriesFor: #icon!constants!public! !
 !String class categoriesFor: #initialize!class initialization!development!public! !
 !String class categoriesFor: #installedCodePages!enquiries!public! !
 !String class categoriesFor: #lineDelimiter!instance creation!public! !

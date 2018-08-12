@@ -130,11 +130,3 @@ xor: operand
 !False categoriesFor: #printOn:!printing!public! !
 !False categoriesFor: #xor:!logical operations!public! !
 
-!False class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!False class categoriesFor: #icon!constants!public! !
-

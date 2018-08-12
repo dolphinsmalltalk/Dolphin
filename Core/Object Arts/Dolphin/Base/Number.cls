@@ -330,11 +330,6 @@ fromString: aString
 	stream atEnd ifFalse: [^self errorInvalidFormat].
 	^answer!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 maxLiteralIntegerExponent
 	"Private - The maximum allowed exponent (power of 10) in the literal integer form '<int>e<powerOf10>'.
 	This is an arbitrary limit imposed to prevent accidentally causing pathologically long
@@ -586,7 +581,6 @@ zero
 !Number class categoriesFor: #errorExponentTooLarge:!parsing!private! !
 !Number class categoriesFor: #errorInvalidFormat!exceptions!private! !
 !Number class categoriesFor: #fromString:!instance creation!public! !
-!Number class categoriesFor: #icon!constants!public! !
 !Number class categoriesFor: #maxLiteralIntegerExponent!constants!private! !
 !Number class categoriesFor: #new!instance creation!public! !
 !Number class categoriesFor: #one!instance creation!public! !

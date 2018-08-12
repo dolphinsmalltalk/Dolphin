@@ -260,18 +260,12 @@ from: fromNumber to: toNumber by: byNumber
 		to: toNumber
 		by: byNumber!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Use #from:to:[by:]"
 
 	^self shouldNotImplement! !
 !Interval class categoriesFor: #from:to:!instance creation!public! !
 !Interval class categoriesFor: #from:to:by:!instance creation!public! !
-!Interval class categoriesFor: #icon!constants!public! !
 !Interval class categoriesFor: #new!instance creation!private! !
 
 Interval class methodProtocol: #'Interval factory' attributes: #(#ansi #readOnly) selectors: #(#from:to: #from:to:by:)!

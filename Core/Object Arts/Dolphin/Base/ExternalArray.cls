@@ -484,11 +484,6 @@ fromAddress: anAddress length: anInteger
 				initializeAtAddress: anAddress;
 				basicLength: anInteger]!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Array icon!
-
 length: count elementSize: bytes
 	"Private - Answer a new instance of the receiver allocated 
 	with space for count elements of bytes size."
@@ -524,7 +519,6 @@ withAll: newElements
 !ExternalArray class categoriesFor: #elementSize!instance creation!private! !
 !ExternalArray class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalArray class categoriesFor: #fromAddress:length:!instance creation!public! !
-!ExternalArray class categoriesFor: #icon!constants!public! !
 !ExternalArray class categoriesFor: #length:elementSize:!instance creation!private! !
 !ExternalArray class categoriesFor: #new:!instance creation!public! !
 !ExternalArray class categoriesFor: #with:!instance creation!public! !

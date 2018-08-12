@@ -45,11 +45,6 @@ defineFields
 
 	self defineField: #value type: DOUBLEField new!
 
-icon
-	"Answer a suitable iconic representation for the receiver."
-
-	^Float icon!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -62,7 +57,6 @@ uninitialize
 
 	VMLibrary default registryAt: self name put: nil! !
 !DOUBLE class categoriesFor: #defineFields!initializing!public! !
-!DOUBLE class categoriesFor: #icon!constants!public! !
 !DOUBLE class categoriesFor: #initialize!development!initializing!private! !
 !DOUBLE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
