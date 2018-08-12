@@ -6,12 +6,12 @@ Magnitude subclass: #Character
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Character guid: (GUID fromString: '{87b4c651-026e-11d3-9fd7-00a0cc3e4a32}')!
-Character addClassConstant: 'EncodingMask' value: 1056964608!
+Character addClassConstant: 'EncodingMask' value: 16r3F000000!
 Character addClassConstant: 'EscapeChars' value: #($0 nil nil nil nil nil nil $a $b $t $n $v $f $r)!
-Character addClassConstant: 'Utf16Mask' value: 33554432!
-Character addClassConstant: 'Utf32Mask' value: 50331648!
-Character addClassConstant: 'Utf8Mask' value: 16777216!
-Character addClassConstant: 'Utf8TrailMask' value: 192!
+Character addClassConstant: 'Utf16Mask' value: 16r2000000!
+Character addClassConstant: 'Utf32Mask' value: 16r3000000!
+Character addClassConstant: 'Utf8Mask' value: 16r1000000!
+Character addClassConstant: 'Utf8TrailMask' value: 16rC0!
 Character comment: 'Character is the class of objects which serve as the elemental values of Smalltalk Strings. Each Character instance represents a specific Unicode code point. The instances for the first 256 code points are unique. Smalltalk characters have a literal syntax which is the $ symbol followed by the normal printed representation of the character. Dolphin also supports the following escaped literal formats to provide a literal representation of any character:
 	$\0	- Null
 	$\a	- Bell
@@ -558,11 +558,6 @@ esc
 
 	^$\x1B!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	self addClassConstant: 'CharacterSet'
 		value: ((AnsiString fromByteArray: (0 to: 255) asByteArray)
@@ -721,7 +716,6 @@ value: anInteger
 !Character class categoriesFor: #dolphin!constants!public! !
 !Character class categoriesFor: #eof!constants!public! !
 !Character class categoriesFor: #esc!constants!public! !
-!Character class categoriesFor: #icon!constants!public! !
 !Character class categoriesFor: #initialize!development!initializing!public! !
 !Character class categoriesFor: #isValidCodePoint:!enquiries!public! !
 !Character class categoriesFor: #lf!constants!public! !

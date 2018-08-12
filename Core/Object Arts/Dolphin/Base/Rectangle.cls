@@ -595,11 +595,6 @@ center: centrePoint extent: extentPoint
 
 	^self origin: centrePoint - (extentPoint // 2) extent: extentPoint!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber 
 	"Answer an instance of the receiver with the specified coodinates."
 
@@ -629,7 +624,6 @@ vertex: aPoint1 vertex: aPoint2
 
 	^self origin: (aPoint1 min: aPoint2) corner: (aPoint1 max: aPoint2)! !
 !Rectangle class categoriesFor: #center:extent:!instance creation!public! !
-!Rectangle class categoriesFor: #icon!constants!public! !
 !Rectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
 !Rectangle class categoriesFor: #new!instance creation!public! !
 !Rectangle class categoriesFor: #origin:corner:!instance creation!public! !

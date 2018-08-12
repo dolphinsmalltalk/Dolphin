@@ -225,16 +225,10 @@ yourAddress
 
 !UndefinedObject class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Answer a new instance of the receiver.
 	There can be only one!!"
 
 	^nil! !
-!UndefinedObject class categoriesFor: #icon!constants!public! !
 !UndefinedObject class categoriesFor: #new!instance creation!public! !
 

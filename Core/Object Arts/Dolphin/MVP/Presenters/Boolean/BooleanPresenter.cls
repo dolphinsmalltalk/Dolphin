@@ -21,11 +21,6 @@ defaultView
 
 	^'CheckBox view'!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 resource_CheckBox_view
 	"Answer the literal data from which the 'CheckBox view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -83,7 +78,6 @@ threeStateView
 	^'Three state view'! !
 !BooleanPresenter class categoriesFor: #defaultModel!models!public! !
 !BooleanPresenter class categoriesFor: #defaultView!constants!public! !
-!BooleanPresenter class categoriesFor: #icon!constants!public! !
 !BooleanPresenter class categoriesFor: #resource_CheckBox_view!public!resources-views! !
 !BooleanPresenter class categoriesFor: #resource_Push_to_toggle!public!resources-views! !
 !BooleanPresenter class categoriesFor: #resource_Three_state_view!public!resources-views! !

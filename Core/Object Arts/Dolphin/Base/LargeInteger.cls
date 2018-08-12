@@ -522,11 +522,6 @@ fromSmallInteger: anInteger
 		isImmutable: true;
 		yourself!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new: anInteger
 	"Private - Answer a new LargeInteger of the requested number of 32-bit digits."
 
@@ -539,7 +534,6 @@ new64
 	^self basicNew: 8! !
 !LargeInteger class categoriesFor: #fromBytes:!instance creation!public! !
 !LargeInteger class categoriesFor: #fromSmallInteger:!instance creation!private! !
-!LargeInteger class categoriesFor: #icon!constants!public! !
 !LargeInteger class categoriesFor: #new:!instance creation!private! !
 !LargeInteger class categoriesFor: #new64!instance creation!private! !
 

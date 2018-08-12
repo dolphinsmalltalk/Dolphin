@@ -34,12 +34,9 @@ argumentCount
 	"Answer the <integer> number of arguments required by a method with the
 	receiver as its selector."
 
-	| argCount ch |
+	| ch |
 	self basicSize == 0 ifTrue: [^0].
-	argCount := self occurrencesOf: $:.
-	((ch := self at: 1) isLetter or: [ch == $_]) ifFalse: [
-		argCount := argCount max: 1].
-	^argCount!
+	^((ch := self at: 1) isLetter or: [ch == $_]) not ifTrue: [1] ifFalse: [self occurrencesOf: $:]!
 
 asString
 	"Answer a new <readableString> containing the characters of 
@@ -108,13 +105,18 @@ isAtomic
 isInfix
 	"Answer whether the receiver is valid as an infix message selector."
 
-	^(Compiler isAValidInitialIdentifierChar: self first) not!
+	^self ~~ #'' and: [(Compiler isAValidInitialIdentifierChar: (self at: 1)) not]!
 
 isSymbol
 	"Dolphin doesn't usually include these type tests, but they are used by a number of add-on
 	libraries, so we have begrudgingly accepted them into the base."
 
 	^true!
+
+isUnary
+	"Answer whether the receiver is valid as an infix message selector."
+
+	^self argumentCount == 1!
 
 keywords
 	"Answer a <sequencedReadableCollection> of the receiver's keywords."
@@ -196,6 +198,7 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
+!Symbol categoriesFor: #isUnary!public!testing! !
 !Symbol categoriesFor: #keywords!accessing!public! !
 !Symbol categoriesFor: #mutableCopy!copying!public! !
 !Symbol categoriesFor: #numArgs!accessing!public! !
@@ -255,11 +258,6 @@ fromString: aString
 	"Answer a unique instance of the receiver whose contents are copied from aString."
 
 	^self intern: aString!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
 
 initialize
 	"Initialize class variables of the receiver.
@@ -444,7 +442,6 @@ withAll: anArrayOfCharacter
 !Symbol class categoriesFor: #findInterned:!accessing!public! !
 !Symbol class categoriesFor: #fromAddress:length:!public! !
 !Symbol class categoriesFor: #fromString:!instance creation!public! !
-!Symbol class categoriesFor: #icon!constants!public! !
 !Symbol class categoriesFor: #initialize!development!initializing!public! !
 !Symbol class categoriesFor: #intern:!instance creation!public! !
 !Symbol class categoriesFor: #intern:cookie:!not restartable!private!vm entry points! !

@@ -382,11 +382,6 @@ truncated
 
 !Fraction class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 numerator: top denominator: bottom
 	"Answer a <Fraction> with numerator and denominator,
 	initialised to the <integer> arguments, top, and, bottom.
@@ -416,7 +411,6 @@ readFrom: aStream
 	Does not handle NLS characters (e.g. thousand separators)"
 
 	^(super readFrom: aStream) asFraction! !
-!Fraction class categoriesFor: #icon!constants!public! !
 !Fraction class categoriesFor: #numerator:denominator:!instance creation!public! !
 !Fraction class categoriesFor: #rationalisedNumerator:denominator:!instance creation!public! !
 !Fraction class categoriesFor: #readFrom:!instance creation!public! !

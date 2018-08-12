@@ -287,11 +287,6 @@ ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly) sele
 
 !ScaledDecimal class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 maxPrecision
 	"Private - The maximum allowed precision for <ScaledDecimal>s parsed from literal string format. The
 	theoretical limit of the implementation is unbounded, but we impose an arbitrary limit to
@@ -322,7 +317,6 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
-!ScaledDecimal class categoriesFor: #icon!constants!public! !
 !ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
 !ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
 !ScaledDecimal class categoriesFor: #one!instance creation!public! !

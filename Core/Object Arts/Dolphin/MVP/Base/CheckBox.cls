@@ -39,11 +39,3 @@ paintTransparentBackgroundOn: aCanvas
 !CheckBox categoriesFor: #is3State:!accessing!public! !
 !CheckBox categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
 
-!CheckBox class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!CheckBox class categoriesFor: #icon!constants!public! !
-

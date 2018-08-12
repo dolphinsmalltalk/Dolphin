@@ -99,15 +99,9 @@ LayoutManager methodProtocol: #layoutManager attributes: #(#readOnly) selectors:
 
 !LayoutManager class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Answer an instance of the receiver. Instances require initialization"
 
 	^super new initialize! !
-!LayoutManager class categoriesFor: #icon!constants!public! !
 !LayoutManager class categoriesFor: #new!instance creation!public! !
 

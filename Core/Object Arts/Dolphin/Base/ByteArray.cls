@@ -817,11 +817,6 @@ fromHexString: aString
 						+ (digits at: (aString basicAt: j) - ##($0 codePoint - 1))].
 	^answer!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 stbReadFrom: anSTBInFiler format: anSTBClassConversion 
 	"Read an instance of the receiver from the binary filer, aSTBInFiler. Note that we can
 	ignore the format argument, since ByteArray is a pre-registered class that cannot be
@@ -840,6 +835,5 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 !ByteArray class categoriesFor: #fromAddress:length:!instance creation!public! !
 !ByteArray class categoriesFor: #fromGlobalHandle:!instance creation!public! !
 !ByteArray class categoriesFor: #fromHexString:!instance creation!public! !
-!ByteArray class categoriesFor: #icon!constants!public! !
 !ByteArray class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 

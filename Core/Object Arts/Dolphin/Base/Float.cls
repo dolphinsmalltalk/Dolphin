@@ -6,25 +6,25 @@ Number variableByteSubclass: #Float
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Float guid: (GUID fromString: '{87b4c65a-026e-11d3-9fd7-00a0cc3e4a32}')!
-Float addClassConstant: 'EMax' value: 1023!
-Float addClassConstant: 'EMin' value: -1022!
-Float addClassConstant: 'EMinDenormalized' value: -1074!
+Float addClassConstant: 'EMax' value: 16r3FF!
+Float addClassConstant: 'EMin' value: -16r3FE!
+Float addClassConstant: 'EMinDenormalized' value: -16r432!
 Float addClassConstant: 'FMax' value: 1.7976931348623157e308!
 Float addClassConstant: 'FMin' value: 2.2250738585072014e-308!
 Float addClassConstant: 'FMinDenormalized' value: 5.0e-324!
-Float addClassConstant: 'FpClassDenormal' value: 144!
-Float addClassConstant: 'FpClassFinite' value: 504!
-Float addClassConstant: 'FpClassInfinite' value: 516!
-Float addClassConstant: 'FpClassNaN' value: 3!
-Float addClassConstant: 'FpClassNegative' value: 60!
-Float addClassConstant: 'FpClassNormal' value: 264!
-Float addClassConstant: 'FpClassStrictlyPositive' value: 896!
-Float addClassConstant: 'FpClassZero' value: 96!
-Float addClassConstant: 'InvalidOperationFlag' value: 1!
+Float addClassConstant: 'FpClassDenormal' value: 16r90!
+Float addClassConstant: 'FpClassFinite' value: 16r1F8!
+Float addClassConstant: 'FpClassInfinite' value: 16r204!
+Float addClassConstant: 'FpClassNaN' value: 16r3!
+Float addClassConstant: 'FpClassNegative' value: 16r3C!
+Float addClassConstant: 'FpClassNormal' value: 16r108!
+Float addClassConstant: 'FpClassStrictlyPositive' value: 16r380!
+Float addClassConstant: 'FpClassZero' value: 16r60!
+Float addClassConstant: 'InvalidOperationFlag' value: 16r1!
 Float addClassConstant: 'Ln2' value: 0.6931471805599453!
-Float addClassConstant: 'MantissaHighBit' value: 4503599627370496!
-Float addClassConstant: 'MantissaMask' value: 4503599627370495!
-Float addClassConstant: 'Precision' value: 53!
+Float addClassConstant: 'MantissaHighBit' value: 16r10000000000000!
+Float addClassConstant: 'MantissaMask' value: 16rFFFFFFFFFFFFF!
+Float addClassConstant: 'Precision' value: 16r35!
 Float addClassConstant: 'SignificantDifference' value: 1.0e-9!
 Float comment: 'Float is the class of double precision floating point Numbers (64-bit) in IEEE-754 format.'!
 !Float categoriesForClass!Magnitude-Numbers! !
@@ -1120,11 +1120,6 @@ fminNormalized
 
 	^FMin!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 infinity
 	"Answer a <Float> representing positive infinity, which in practice is any value larger than FMax."
 
@@ -1278,7 +1273,6 @@ zero
 !Float class categoriesFor: #fmin!constants!public! !
 !Float class categoriesFor: #fminDenormalized!constants!public! !
 !Float class categoriesFor: #fminNormalized!constants!public! !
-!Float class categoriesFor: #icon!constants!public! !
 !Float class categoriesFor: #infinity!public! !
 !Float class categoriesFor: #initialize!development!initializing!private! !
 !Float class categoriesFor: #maxExponent!constants!private! !
