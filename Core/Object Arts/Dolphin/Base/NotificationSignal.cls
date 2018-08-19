@@ -31,11 +31,3 @@ exceptionClass
 !NotificationSignal categoriesFor: #defaultResumption!constants!private! !
 !NotificationSignal categoriesFor: #exceptionClass!constants!private! !
 
-!NotificationSignal class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Notification icon! !
-!NotificationSignal class categoriesFor: #icon!constants!public! !
-

@@ -289,7 +289,7 @@ useDisplayNames
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^TestRunner icon!
 
 initializeToolClass: aClass 
 	(Smalltalk developmentSystem)

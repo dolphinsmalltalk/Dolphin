@@ -389,6 +389,11 @@ updateItem: aStatusBarItem
 
 !StatusBar class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 resource_Status_bar
 	"Answer the literal data from which the 'Status bar' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -403,6 +408,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_statusbar32'! !
+!StatusBar class categoriesFor: #icon!constants!public! !
 !StatusBar class categoriesFor: #resource_Status_bar!public!resources-views! !
 !StatusBar class categoriesFor: #winClassName!constants!private! !
 

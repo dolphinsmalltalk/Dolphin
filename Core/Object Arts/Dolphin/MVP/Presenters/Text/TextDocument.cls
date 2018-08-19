@@ -141,6 +141,11 @@ fileTypes
 
 	^#(#('Text Files (*.txt)' '*.txt') #('All Files (*.*)' '*.*'))!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
@@ -148,5 +153,6 @@ shutdownOnExit
 !TextDocument class categoriesFor: #defaultFileExtension!constants!public! !
 !TextDocument class categoriesFor: #defaultModel!models!public! !
 !TextDocument class categoriesFor: #fileTypes!constants!public! !
+!TextDocument class categoriesFor: #icon!constants!public! !
 !TextDocument class categoriesFor: #shutdownOnExit!public!testing! !
 

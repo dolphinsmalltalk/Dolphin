@@ -16,11 +16,7 @@ displayOn: aStream
 	aStream display: key!
 
 displayString
-	^key!
-
-icon
-	^value icon! !
+	^key! !
 !VariableBinding categoriesFor: #displayOn:!printing!public! !
 !VariableBinding categoriesFor: #displayString!displaying!public! !
-!VariableBinding categoriesFor: #icon!constants!public! !
 

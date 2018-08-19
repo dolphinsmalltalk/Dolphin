@@ -298,7 +298,7 @@ subtractFromDateAndTime: aDateAndTime
 	that would be needed to comply with ANSI if performed in the order specified 
 	by the selector"
 
-	^Duration seconds: aDateAndTime asSecondsUTC - self asSecondsUTC!
+	^Duration seconds: self asSecondsUTC - aDateAndTime asSecondsUTC!
 
 timeZoneAbbreviation
 	"Answer a <readableString> which is the abbreviated  name of the month of 
@@ -481,6 +481,11 @@ fromTimeStamp: aTimeStamp
 	NB: The offset defaults to the machines current time zone"
 
 	^self fromDate: aTimeStamp date time: aTimeStamp time!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^TimeStamp icon!
 
 initialize
 	" Set up the offsets into the cache instVar fieldValues
@@ -670,6 +675,7 @@ year: year month: month day: dayOfMonth hour: hour minute: minute second: second
 !DateAndTime class categoriesFor: #fromString:!instance creation!public! !
 !DateAndTime class categoriesFor: #fromSYSTEMTIME:offset:!instance creation!public! !
 !DateAndTime class categoriesFor: #fromTimeStamp:!instance creation!public! !
+!DateAndTime class categoriesFor: #icon!constants!public! !
 !DateAndTime class categoriesFor: #initialize!initializing!public! !
 !DateAndTime class categoriesFor: #isLeapYear:!public!testing! !
 !DateAndTime class categoriesFor: #now!instance creation!public! !

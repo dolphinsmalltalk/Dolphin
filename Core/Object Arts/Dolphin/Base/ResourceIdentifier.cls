@@ -93,9 +93,6 @@ hiddenObjects
 		basicNext;
 		readMap!
 
-icon	
-	^self propertyAt: #_icon ifAbsent: [self fixupIcon]!
-
 icon: anIcon
 	anIcon isNil ifTrue: [self removePropertyAt: #icon ifAbsent: []] ifFalse: [self propertyAt: #_icon put: anIcon]!
 
@@ -207,7 +204,6 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #exportedFileName!accessing!development!private! !
 !ResourceIdentifier categoriesFor: #hash!comparing!public! !
 !ResourceIdentifier categoriesFor: #hiddenObjects!accessing!private! !
-!ResourceIdentifier categoriesFor: #icon!accessing!development!public! !
 !ResourceIdentifier categoriesFor: #icon:!accessing!public! !
 !ResourceIdentifier categoriesFor: #isChanged!development!public!source filing!testing! !
 !ResourceIdentifier categoriesFor: #isChanged:!development!public!source filing! !
@@ -264,11 +260,6 @@ forMethod: aCompiledMethod
 	thisName isNil ifTrue: [^nil].
 	^self class: aCompiledMethod methodClass instanceClass name: thisName!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^(self environment at: #Icon) fromId: 'Resource.ico'!
-
 nameFromSelector: aSymbol
 	| resname prefixSize nameSize |
 	(aSymbol beginsWith: self selectorPrefix) ifFalse: [^nil].
@@ -323,7 +314,6 @@ viewResourceCategoryName
 !ResourceIdentifier class categoriesFor: #class:selector:!instance creation!public! !
 !ResourceIdentifier class categoriesFor: #exportFileExtension!constants!public! !
 !ResourceIdentifier class categoriesFor: #forMethod:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #icon!constants!development!public! !
 !ResourceIdentifier class categoriesFor: #nameFromSelector:!helpers!public! !
 !ResourceIdentifier class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !

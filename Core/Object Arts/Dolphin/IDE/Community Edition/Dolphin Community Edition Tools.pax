@@ -62,10 +62,12 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Installation Manager\Dolphin Products';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
+	add: '..\..\MVP\Base\Dolphin Text Tile Icons';
 	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\DolphinSure\DolphinSure';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
 	add: '..\..\Lagoon\Product Protection Base';
 	add: '..\..\ActiveX\Shell\Windows Shell';
 	yourself).
@@ -172,7 +174,7 @@ resource_Protocol_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Protocol_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 4 36927 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #toggleReadOnly 8 'Lock/unlock protocol' 1 1 nil 36927 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 328198 ##(Smalltalk.Point) 1857 33 77 36929 610 416 1 642 #toggleANSI 8 'Toggle ANSI status' 1 1 nil 36929 704 79 138 144 34 3 624 848 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 170 176 34 2 704 1 nil 1 nil 818 33 33 818 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 818 3839 21 818 111 51 416 1090 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 35 0 0 0] 8 #() 818 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1892412784 170 192 8 #() 170 192 34 4 57161 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #toggleReadOnly 8 'Lock/unlock protocol' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Mutex.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 57161 57431 610 416 1 642 #toggleANSI 8 'Toggle ANSI status' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x1F5FD 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 57431 34 3 624 816 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1074 111 51 416 1026 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 35 0 0 0] 8 #() 1074 193 193 nil 27 )! !
 !Toolbar class categoriesFor: #resource_Protocol_tools!public!resources-views! !
 
 "End of package definition"!

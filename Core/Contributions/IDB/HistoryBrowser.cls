@@ -45,6 +45,9 @@ scanner
 
 !HistoryBrowser class methodsFor!
 
+icon
+	^Icon fromId: 'MethodHistory.ico'!
+
 initialize
 	#(#ClassBrowserAbstract #MethodBrowserShell #Debugger) 
 		do: [:each | (Smalltalk at: each) addCommandQueryHandler: #queryMethodHistoryCommand:]!
@@ -52,6 +55,7 @@ initialize
 uninitialize
 	#(#ClassBrowserAbstract #MethodBrowserShell #Debugger) 
 		do: [:each | (Smalltalk at: each) removeCommandQueryHandler: #queryMethodHistoryCommand:]! !
+!HistoryBrowser class categoriesFor: #icon!public! !
 !HistoryBrowser class categoriesFor: #initialize!initializing!private! !
 !HistoryBrowser class categoriesFor: #uninitialize!initializing!private! !
 

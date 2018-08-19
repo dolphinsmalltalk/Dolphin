@@ -74,7 +74,7 @@ shapes
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) instanceClass defaultIcon!
+	^##(TextTileIcon text: $\x1F388 fontName: 'Segoe UI Emoji' color: Color red)!
 
 new
 	"Create and show a new instance of the receiver. Answer the new instance"

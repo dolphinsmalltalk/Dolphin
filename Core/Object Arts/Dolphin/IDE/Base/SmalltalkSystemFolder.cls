@@ -35,7 +35,7 @@ description: aStringDescription helpId: helpId
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^Folder icon!
 
 icon: anIcon description: aStringDescription 
 	"Answers an instance of the receiver with anIcon and aStringDescription.

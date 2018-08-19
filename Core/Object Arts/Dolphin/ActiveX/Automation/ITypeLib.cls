@@ -291,11 +291,6 @@ fromAttributes: attr
 		minor: attr wMinorVerNum 
 		locale: attr lcid!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 load: libid major: verMajor minor: verMinor locale: locale
 	"Open the registered type library with the specified GUID, version, and locale.
 	Note that you may actually get back a library with a higher minor version number
@@ -373,7 +368,6 @@ queryPath: libid major: major minor: minor locale: locale ifNone: exceptionHandl
 ! !
 !ITypeLib class categoriesFor: #defineFunctions!initializing!public! !
 !ITypeLib class categoriesFor: #fromAttributes:!instance creation!public! !
-!ITypeLib class categoriesFor: #icon!constants!public! !
 !ITypeLib class categoriesFor: #load:major:minor:locale:!instance creation!public! !
 !ITypeLib class categoriesFor: #open:!instance creation!public! !
 !ITypeLib class categoriesFor: #open:register:!instance creation!public! !

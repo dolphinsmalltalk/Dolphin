@@ -6,6 +6,7 @@ Object subclass: #Resource
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Resource guid: (GUID fromString: '{87b4c4af-026e-11d3-9fd7-00a0cc3e4a32}')!
+Resource isAbstract: true!
 Resource comment: ''!
 !Resource categoriesForClass!MVP-Resources! !
 !Resource methodsFor!
@@ -233,7 +234,7 @@ generateFilenameFrom: aResourceIdentifier inPackage: package
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^ResourceIdentifier icon!
 
 inSTBByteArray
 	"Answer an instance of the receiver which will save/load its resource data to a

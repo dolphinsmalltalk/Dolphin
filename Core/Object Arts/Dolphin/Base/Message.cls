@@ -161,11 +161,6 @@ Message methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#
 
 !Message class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 selector: aSymbol 
 	"Answer a new instance of the receiver with the selector, aSymbol"
 
@@ -182,7 +177,6 @@ selector: aSymbol arguments: anArray
 
 	<primitive: 157>
 	^self new setSelector: aSymbol arguments: anArray! !
-!Message class categoriesFor: #icon!constants!public! !
 !Message class categoriesFor: #selector:!instance creation!public! !
 !Message class categoriesFor: #selector:argument:!instance creation!public! !
 !Message class categoriesFor: #selector:arguments:!instance creation!public! !

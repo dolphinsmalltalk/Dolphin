@@ -735,11 +735,6 @@ hash
 	<primitive: 147>
 	^self identityHash!
 
-icon
-	"Answer an Icon representing the receiver."
-
-	^self class icon!
-
 iconImageIndex
 	^self icon imageIndex!
 
@@ -1606,7 +1601,6 @@ yourself
 !Object categoriesFor: #getEvents!events!private! !
 !Object categoriesFor: #getSpecialBehavior!accessing!private! !
 !Object categoriesFor: #hash!comparing!public! !
-!Object categoriesFor: #icon!constants!public! !
 !Object categoriesFor: #iconImageIndex!accessing!public! !
 !Object categoriesFor: #identityHash!comparing!public! !
 !Object categoriesFor: #ifNil:!control flow!public! !
@@ -1732,16 +1726,6 @@ fromBinaryStoreBytes: aByteArray context: anObject
 
 !
 
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon!
-
 initialize
 	"Initialise the receiver's class variables
 
@@ -1790,7 +1774,6 @@ resourcesLocator
 !Object class categoriesFor: #binaryReadFrom:context:!binary filing!public! !
 !Object class categoriesFor: #fromBinaryStoreBytes:!binary filing!public! !
 !Object class categoriesFor: #fromBinaryStoreBytes:context:!binary filing!public! !
-!Object class categoriesFor: #icon!constants!public! !
 !Object class categoriesFor: #initialize!development!initializing!public! !
 !Object class categoriesFor: #initializeDependencyMechanism!initializing!private! !
 !Object class categoriesFor: #initializeEventsRegister!initializing!private! !

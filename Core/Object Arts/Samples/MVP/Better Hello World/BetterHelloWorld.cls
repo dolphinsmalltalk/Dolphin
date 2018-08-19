@@ -31,9 +31,14 @@ defaultModel
 	^'Hello World' asValue!
 
 icon
-	^TextTileIcon
-		text: '你好'
-		color: Color red
+	"Answers an Icon that can be used to represent this class."
+
+	^##((TextTileIcon
+		text: $\x1F389
+		color: (ARGB named: #crimson))
+		fontStyle: #bold;
+		yourself)
+
 
 !
 

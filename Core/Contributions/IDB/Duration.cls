@@ -1,11 +1,11 @@
-"Filed out from Dolphin Smalltalk X6"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Magnitude subclass: #Duration
 	instanceVariableNames: 'seconds'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Duration guid: (GUID fromString: '{87B4C654-026E-11D3-9FD7-00A0CC3E4A32}')!
+Duration guid: (GUID fromString: '{87b4c654-026e-11d3-9fd7-00a0cc3e4a32}')!
 Duration comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
@@ -233,6 +233,11 @@ hours: hours
 		minutes: 0
 		seconds: 0!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 minutes: minutes 
 	"Answer a <Duration> representing minutes. If minutes is negative then
 	answer a <Duration> less than <Duration factory>#zero"
@@ -323,6 +328,7 @@ zero
 !Duration class categoriesFor: #errorInvalidFormat!exceptions!public! !
 !Duration class categoriesFor: #fromString:!instance creation!public! !
 !Duration class categoriesFor: #hours:!instance creation!public! !
+!Duration class categoriesFor: #icon!constants!public! !
 !Duration class categoriesFor: #minutes:!instance creation!public! !
 !Duration class categoriesFor: #readFrom:!instance creation!public! !
 !Duration class categoriesFor: #readHMSFrom:secondsRequired:!helpers!public! !

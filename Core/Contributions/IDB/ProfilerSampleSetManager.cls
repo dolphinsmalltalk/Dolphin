@@ -89,6 +89,11 @@ defaultSetName
 
 	^'Default'!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Profiler icon!
+
 new
 	"Private - Use default to get the Singleton instance"
 
@@ -100,6 +105,7 @@ reset
 	Default := nil! !
 !ProfilerSampleSetManager class categoriesFor: #default!instance creation!public! !
 !ProfilerSampleSetManager class categoriesFor: #defaultSetName!constants!public! !
+!ProfilerSampleSetManager class categoriesFor: #icon!constants!public! !
 !ProfilerSampleSetManager class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
 !ProfilerSampleSetManager class categoriesFor: #reset!operations!public! !
 

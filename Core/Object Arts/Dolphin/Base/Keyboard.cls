@@ -240,11 +240,6 @@ default: aKeyboard
 
 	DefaultInstance := aKeyboard!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		Keyboard initialize
@@ -316,7 +311,6 @@ vKeyToScanCode: anInteger
 !Keyboard class categoriesFor: #buildVKeyMap!**auto generated**!development!private! !
 !Keyboard class categoriesFor: #default!accessing!public! !
 !Keyboard class categoriesFor: #default:!accessing!public! !
-!Keyboard class categoriesFor: #icon!constants!public! !
 !Keyboard class categoriesFor: #initialize!development!initializing!private! !
 !Keyboard class categoriesFor: #keyNameFromLParam:!constants!private! !
 !Keyboard class categoriesFor: #keyNameFromScanCode:!constants!private! !

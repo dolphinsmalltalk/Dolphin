@@ -42,6 +42,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin Text Tile Icons';
 	yourself).
 
 package!

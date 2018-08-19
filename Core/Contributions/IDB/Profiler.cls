@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Profiler
-	instanceVariableNames: 'samplingInterval isSampling mutex'
+	instanceVariableNames: 'samplingInterval isSampling'
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -19,42 +19,42 @@ initialize
 
 	samplingInterval := Delay highestResolution.
 	isSampling := true.
-	mutex := Mutex new.
 	^self!
 
 profile: aProcess forSet: aProfilerSampleSet ignoring: anInteger
-	"This is the main profiling method. While the sample set is active, i.e. the process
-	being profiled is still alive,  collect stack frames at appropriate intervals and save 
-	them in the sample set. The mutex allows multiple processes to be profiled
-	at the sume time, as long as they use different sample sets"
+	"This is the main profiling method. While the sample set is active, i.e. the process being
+	profiled is still alive, collect stack frames at appropriate intervals and save them in the
+	sample set. Multiple processes can be profiled at the same time, as long as they use
+	different sample sets"
 
 	Delay resolution: samplingInterval
 		do: 
-			[
-			[| started elapsed |
+			[| delay elapsed |
+			delay := Delay forMicroseconds: samplingInterval.
+			
+			[| started |
 			started := Time microsecondClockValue.
-			(Delay forMicroseconds: samplingInterval) wait.
+			delay wait.
 			elapsed := Time microsecondClockValue - started.
-			(isSampling and: [aProfilerSampleSet isActive])
-				ifTrue: 
-					[mutex critical: 
-							[self
-								sampleProcess: aProcess
-								forSet: aProfilerSampleSet
-								elapsedTime: elapsed
-								ignoring: anInteger]].
 			aProfilerSampleSet isActive]
-					whileTrue]!
+					whileTrue: 
+						[isSampling
+							ifTrue: 
+								[self
+									sampleProcess: aProcess
+									forSet: aProfilerSampleSet
+									elapsedTime: elapsed
+									ignoring: anInteger]]]!
 
-profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean 
-	"Profile aBlock storing the results in the sample set named aString which will be cleared 
-	first if collectBoolean is false.. If onBoolean is true we satrt taking samples straight away
-	(after the first timing interval) otherwise we wait until a startSampling instruction is executed.
-	The profiler is given its own process with a priority slightly higher than the process being
-	profiled. Profiling continues until the profiled block terminates. Multiple profiling
-	process can be started with the results of each being saved in a different sample set. If a
-	profile is already in progress for the requested sample set then no new profile is started..
-	Answers the result of evaluating the profiled block"
+profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean
+	"Profile aBlock storing the results in the sample set named aString which will be cleared
+	first if collectBoolean is false.. If onBoolean is true we satrt taking samples straight
+	away (after the first timing interval) otherwise we wait until a startSampling instruction
+	is executed. The profiler is given its own process with a priority slightly higher than the
+	process being profiled. Profiling continues until the profiled block terminates. Multiple
+	profiling process can be started with the results of each being saved in a different sample
+	set. If a profile is already in progress for the requested sample set then no new profile is
+	started.. Answers the result of evaluating the profiled block"
 
 	| sampleSet thisProcess ignoreFrames semaphore answer |
 	sampleSet := ProfilerSampleSetManager default sampleSetNamed: aString.
@@ -70,12 +70,12 @@ profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean
 	semaphore := Semaphore new.
 	
 	[semaphore wait.
-	self 
+	self
 		profile: thisProcess
 		forSet: sampleSet
 		ignoring: ignoreFrames.
-	semaphore signal] 
-			forkAt: thisProcess priority + 1.
+	semaphore signal]
+			forkAt: Processor timingPriority - 1.
 	
 	[semaphore signal.
 	answer := [[aBlock value] value] value] ensure: 
@@ -85,7 +85,7 @@ profile: aBlock inSetNamed: aString collect: collectBoolean on: onBoolean
 	^answer!
 
 sampleProcess: aProcess forSet: aProfilerSampleSet elapsedTime: anInteger ignoring: ignoreInteger
-	"Add the required stack frames to the sample set"
+	"Add the required stack frames to the sample set."
 
 	| topFrame size |
 	topFrame := aProcess topFrame.
@@ -123,6 +123,14 @@ default
 
 	Default isNil ifTrue: [Default := super new initialize].
 	^Default!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon
+		text: $\x1F4CA
+		fontName: 'Segoe UI Emoji'
+		color: (ARGB named: #forestGreen))!
 
 new
 	"Private - Use default to get the Singleton instance"
@@ -208,6 +216,7 @@ stopSampling
 
 	self default stopSampling! !
 !Profiler class categoriesFor: #default!instance creation!public! !
+!Profiler class categoriesFor: #icon!constants!public! !
 !Profiler class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
 !Profiler class categoriesFor: #openBrowser!operations!public! !
 !Profiler class categoriesFor: #profile:!operations!public! !

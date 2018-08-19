@@ -451,16 +451,6 @@ exists: protocolName
 
 	^Protocols includesKey: protocolName asSymbol!
 
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		MethodProtocol initialize
@@ -531,7 +521,6 @@ stubAddedSignal
 !MethodProtocol class categoriesFor: #allMethodProtocols!accessing!public! !
 !MethodProtocol class categoriesFor: #existing:!instance creation!public! !
 !MethodProtocol class categoriesFor: #exists:!public!testing! !
-!MethodProtocol class categoriesFor: #icon!constants!public! !
 !MethodProtocol class categoriesFor: #initialize!development!initializing!private! !
 !MethodProtocol class categoriesFor: #initializeProtocols!initializing!private! !
 !MethodProtocol class categoriesFor: #name:!instance creation!public! !

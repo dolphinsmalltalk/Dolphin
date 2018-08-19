@@ -583,7 +583,7 @@ wmPrint: message wParam: wParam lParam: lParam
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^AbstractCardContainer icon!
+	^##(self) defaultIcon!
 
 initialize
 	AnimationDuration := 200.

@@ -120,7 +120,7 @@ passedCount
 	^passed size!
 
 printDurationOn: aPuttableStream
-	self class printDuration: duration on: aPuttableStream!
+	Locale userDefault printDuration: duration on: aPuttableStream!
 
 printOn: aStream
 	aStream
@@ -224,19 +224,6 @@ failure
 new
 	^super new initialize!
 
-printDuration: microsecondsInteger on: aPuttableStream
-	| mS |
-	mS := microsecondsInteger / 1000.0.
-	mS < 1000.0
-		ifTrue: 
-			[mS printOn: aPuttableStream decimalPlaces: (mS < 1.0 ifTrue: [3] ifFalse: [0]).
-			aPuttableStream nextPutAll: ' mS']
-		ifFalse: 
-			[| secs |
-			secs := mS / 1000.0.
-			secs printOn: aPuttableStream decimalPlaces: (secs < 10.0 ifTrue: [1] ifFalse: [0]).
-			aPuttableStream nextPutAll: ' s']!
-
 resumableFailure
 	^ResumableTestFailure!
 
@@ -252,7 +239,6 @@ skip
 !TestResult class categoriesFor: #exError!Exceptions!public! !
 !TestResult class categoriesFor: #failure!Exceptions!public! !
 !TestResult class categoriesFor: #new!Init / Release!public! !
-!TestResult class categoriesFor: #printDuration:on:!helpers!public! !
 !TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
 !TestResult class categoriesFor: #signalErrorWith:!Exceptions!public! !
 !TestResult class categoriesFor: #signalFailureWith:!Exceptions!public! !

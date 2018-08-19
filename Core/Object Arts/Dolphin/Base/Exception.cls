@@ -610,16 +610,6 @@ handles: exception
 
 	^exception isKindOf: self!
 
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon!
-
 mbIconId
 	^0!
 
@@ -667,7 +657,6 @@ signalWith: signallerTag
 !Exception class categoriesFor: #,!filtering!public! !
 !Exception class categoriesFor: #beep!parping!public! !
 !Exception class categoriesFor: #handles:!filtering!public! !
-!Exception class categoriesFor: #icon!constants!public! !
 !Exception class categoriesFor: #mbIconId!constants!private! !
 !Exception class categoriesFor: #new!debugger-step through!instance creation!public! !
 !Exception class categoriesFor: #signal!instance creation!public! !

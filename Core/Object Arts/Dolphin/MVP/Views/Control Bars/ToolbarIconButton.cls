@@ -34,7 +34,7 @@ imageIndexIn: aToolbar
 renderBitmap
 	| image |
 	image := self commandDescription image ifNil: [self class defaultImage].
-	^image class imageManager bitmapForIcon: image extent: self toolbar bitmapSize!
+	^image imageManager bitmapForIcon: image extent: self toolbar actualBitmapSize!
 
 setCommandDescription: aCommandDescription
 	self initialize.

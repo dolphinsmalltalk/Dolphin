@@ -18,11 +18,3 @@ defaultAction: exception
 	^SessionManager current onUnhandledWarning: exception! !
 !WarningSignal categoriesFor: #defaultAction:!handling!private! !
 
-!WarningSignal class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Warning icon! !
-!WarningSignal class categoriesFor: #icon!constants!public! !
-

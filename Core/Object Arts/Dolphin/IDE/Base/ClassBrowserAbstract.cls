@@ -220,8 +220,9 @@ allCategory
 	^categoriesPresenter model title!
 
 applyOptions
-	"Apply the class options to the receiver"
+	"Private - Apply the class options to the receiver"
 
+	super applyOptions.
 	definitionPresenter view wordWrap: self class wordWrapDefinition.
 	self class defaultShowInheritedMethods 
 		ifTrue: [self toggleShowInheritedMethods].
@@ -671,6 +672,18 @@ customDrawProtocols: aNMLVCUSTOMDRAW
 	protocol := aNMLVCUSTOMDRAW item.
 	protocol isNil ifTrue: [^self].
 	self emphasiseProtocolItem: aNMLVCUSTOMDRAW isRelevant: (self methodProtocols includes: protocol)!
+
+customDrawSelector: anNMLVCUSTOMDRAW
+	"Private - Custom drawing to implement the emphasis in a class browser's method list's selector column."
+
+	| method |
+	method := anNMLVCUSTOMDRAW item.
+	method isLoose ifTrue: [anNMLVCUSTOMDRAW forecolor: self class looseMethodColor].
+	(self isEditableMethod: method)
+		ifFalse: 
+			[anNMLVCUSTOMDRAW forecolor: (anNMLVCUSTOMDRAW forecolor fadedBy: self class grayedMethodFadeFactor)].
+	method isDeprecated ifTrue: [anNMLVCUSTOMDRAW font isStruckThrough: true].
+	method isAbstract ifTrue: [anNMLVCUSTOMDRAW font isItalic: true]!
 
 definitionCardName
 	^'definition'!
@@ -1659,7 +1672,6 @@ onViewOpened
 				when: #currentCardChanging:
 					send: #onFilterSelectionChanging:
 					to: self].
-	self applyOptions.
 	definitionPresenter ensureVisible!
 
 packageForNewMethod
@@ -2556,7 +2568,7 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #addToCommandRoute:!commands!public! !
 !ClassBrowserAbstract categoriesFor: #allCategoriesOfMethod:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #allCategory!private!updating! !
-!ClassBrowserAbstract categoriesFor: #applyOptions!operations!options!public! !
+!ClassBrowserAbstract categoriesFor: #applyOptions!operations!options!private! !
 !ClassBrowserAbstract categoriesFor: #browseContainingText!commands!public! !
 !ClassBrowserAbstract categoriesFor: #browseDefinitionsMatching:in:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #browseHierarchy!commands!public! !
@@ -2596,6 +2608,7 @@ variablesMethodFilter
 !ClassBrowserAbstract categoriesFor: #currentCard!accessing!public! !
 !ClassBrowserAbstract categoriesFor: #customDrawCategoryTree:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #customDrawProtocols:!helpers!private! !
+!ClassBrowserAbstract categoriesFor: #customDrawSelector:!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #definitionCardName!constants!private! !
 !ClassBrowserAbstract categoriesFor: #deleteItCommand!helpers!private! !
 !ClassBrowserAbstract categoriesFor: #dropMethods:onto:!helpers!private! !
@@ -2780,7 +2793,7 @@ availablePluginClasses
 classCommentIcon
 	"Private - Answer the <Icon> to use for the class comment tab"
 
-	^Icon fromFile: 'ClassComment.ico'!
+	^Icon fromId: 'ClassComment.ico'!
 
 defaultAdditionalAccelerators
 	| accels |

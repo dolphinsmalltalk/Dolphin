@@ -62,6 +62,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Text Tile Icons';
 	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';

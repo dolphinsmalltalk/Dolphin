@@ -90,6 +90,9 @@ dashed
 dotted
 	^self color: Color black width: 1 style: #dotted!
 
+icon
+	^Pen icon!
+
 new
 	^self 
 		color: Color black
@@ -113,6 +116,7 @@ styles
 !StyledPen class categoriesFor: #dashDotDot!public! !
 !StyledPen class categoriesFor: #dashed!public! !
 !StyledPen class categoriesFor: #dotted!public! !
+!StyledPen class categoriesFor: #icon!constants!development!public! !
 !StyledPen class categoriesFor: #new!public! !
 !StyledPen class categoriesFor: #solid!public! !
 !StyledPen class categoriesFor: #styles!private! !

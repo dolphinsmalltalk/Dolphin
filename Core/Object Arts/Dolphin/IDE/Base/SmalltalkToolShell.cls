@@ -23,6 +23,9 @@ Class Instance Variables:
 !SmalltalkToolShell categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
 !SmalltalkToolShell methodsFor!
 
+applyOptions
+	self systemModel applyOptionsToTool: self!
+
 browseIt
 	"Open a new default browser at the same point as the receiver.
 	This is the workspace Browse-It command which is subtly different to the Browse Classes
@@ -188,18 +191,20 @@ onDropDown: aToolbarButton
 	^0!
 
 onViewOpened
-	| toolbar |
 	super onViewOpened.
 	self view acceptDroppedFiles: true.
 	fontSizePresenter model: (ValueAspectAdaptor subject: self aspect: #fontSize).
 	self class defaultSlideyPinsMap notNil ifTrue: [self slideyPinMap: self class defaultSlideyPinsMap].
 
 	"Enable toolbar pulldowns"
-	toolbar := self view viewNamed: 'smalltalkTools' ifNone: [^self].
-	toolbar presenterConnectionPoint 
-		when: #dropDown:
-		send: #onDropDown:
-		to: self!
+	(self view viewNamed: 'smalltalkTools' ifNone: [])
+		ifNotNil: 
+			[:toolbar |
+			toolbar presenterConnectionPoint
+				when: #dropDown:
+				send: #onDropDown:
+				to: self].
+	self applyOptions!
 
 packageManager
 	"Private - Answer the current PackageManager."
@@ -345,6 +350,7 @@ systemModel
 
 workspaceClass
 	^Smalltalk developmentSystem workspaceClass! !
+!SmalltalkToolShell categoriesFor: #applyOptions!private! !
 !SmalltalkToolShell categoriesFor: #browseIt!commands!public! !
 !SmalltalkToolShell categoriesFor: #buildPopupForCommand:!private! !
 !SmalltalkToolShell categoriesFor: #canRefactor!private!testing! !
@@ -519,7 +525,7 @@ historyDwellTime: anInteger
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^##(self) defaultIcon.!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -560,7 +566,6 @@ publishedAspects
 	^(super publishedAspects)
 		add: (Aspect choice: #defaultView from: self resourceNames);
 		add: (Aspect name: #defaultExtent);
-		add: (Aspect dictionary: #defaultSlideyPinsMap);
 		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
 		add: (Aspect integer: #historyDwellTime);
 		add: (Aspect integer: #searchFieldFlashes);

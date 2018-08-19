@@ -159,8 +159,10 @@ package methodNames
 	add: #BrowserEnvironmentWrapper -> #includesResource:;
 	add: #BrowserEnvironmentWrapper -> #openEditor;
 	add: #Character -> #literalTextStyle;
+	add: #Class -> #isDeprecated;
 	add: #ClassDescription -> #browse;
 	add: #ClassDescription -> #commentStamp:prior:;
+	add: #ClassDescription -> #isDeprecated;
 	add: #ClassDescription -> #methodsFor:;
 	add: #ClassDescription -> #methodsFor:stamp:;
 	add: #ClassDescription -> #newInstanceAspect:class:;
@@ -183,6 +185,7 @@ package methodNames
 	add: #CompiledCode -> #disassembly;
 	add: #CompiledCode -> #hasCompilationIssues;
 	add: #CompiledCode -> #indexOfIP:;
+	add: #CompiledCode -> #isDeprecated;
 	add: #CompiledCode -> #stylerClass;
 	add: #CompiledExpression -> #asDebugMethod;
 	add: #CompiledExpression -> #stylerClass;
@@ -216,6 +219,7 @@ package methodNames
 	add: #Menu -> #edit;
 	add: #Menu -> #painterClass;
 	add: #MenuBar -> #painterClass;
+	add: #Metaclass -> #isDeprecated;
 	add: #MethodProtocol -> #icon;
 	add: #MoenTreeView -> #visualObjectAtPoint:;
 	add: #MSG -> #printOn:;
@@ -346,11 +350,13 @@ package methodNames
 	add: 'BlockClosure class' -> #publishedAspectsOfInstances;
 	add: 'Boolean class' -> #newInstanceAspect:class:;
 	add: 'BooleanToText class' -> #publishedAspectsOfInstances;
+	add: 'BOOLField class' -> #icon;
 	add: 'BorderLayout class' -> #publishedAspectsOfInstances;
 	add: 'CardContainer class' -> #publishedAspectsOfInstances;
 	add: 'CardContainer class' -> #publishedEventsOfInstances;
 	add: 'CardLabel class' -> #publishedAspectsOfInstances;
 	add: 'CardLayout class' -> #publishedEventsOfInstances;
+	add: 'Category class' -> #icon;
 	add: 'CheckBox class' -> #publishedAspectsOfInstances;
 	add: 'CheckButton class' -> #publishedAspectsOfInstances;
 	add: 'ClassBuilder class' -> #publishedEventsOfInstances;
@@ -360,6 +366,7 @@ package methodNames
 	add: 'ComboBox class' -> #publishedAspectsOfInstances;
 	add: 'CommandDescription class' -> #publishedAspectsOfInstances;
 	add: 'CommandMenuItem class' -> #publishedAspectsOfInstances;
+	add: 'ComparisonPolicy class' -> #isDeprecated;
 	add: 'CompiledCode class' -> #publishedAspectsOfInstances;
 	add: 'CompiledMethod class' -> #overriddenIcon;
 	add: 'CompiledMethod class' -> #publishedAspectsOfInstances;
@@ -377,6 +384,7 @@ package methodNames
 	add: 'ExternalInteger class' -> #newInstanceAspect:class:;
 	add: 'ExternalIntegerBytes class' -> #newInstanceAspect:class:;
 	add: 'ExternalMethod class' -> #publishedAspectsOfInstances;
+	add: 'FileSystemChangeReader class' -> #icon;
 	add: 'Float class' -> #newInstanceAspect:class:;
 	add: 'FLOAT class' -> #newInstanceAspect:class:;
 	add: 'FlowLayout class' -> #publishedAspectsOfInstances;
@@ -409,6 +417,7 @@ package methodNames
 	add: 'Menu class' -> #publishedAspectsOfInstances;
 	add: 'MenuBar class' -> #newInstanceAspect:class:;
 	add: 'MenuBar class' -> #publishedAspectsOfInstances;
+	add: 'MenuItem class' -> #icon;
 	add: 'MethodCategory class' -> #all;
 	add: 'MethodProtocol class' -> #ansiIcon;
 	add: 'MethodProtocol class' -> #publishedEventsOfInstances;
@@ -435,6 +444,7 @@ package methodNames
 	add: 'Presenter class' -> #resource_Class_browser_filters;
 	add: 'ProgressBar class' -> #publishedAspectsOfInstances;
 	add: 'ProportionalLayout class' -> #publishedAspectsOfInstances;
+	add: 'ProtoObject class' -> #icon;
 	add: 'ProtoObject class' -> #publishedAspects;
 	add: 'ProtoObject class' -> #publishedAspectsOfInstances;
 	add: 'PushButton class' -> #publishedAspectsOfInstances;
@@ -448,6 +458,7 @@ package methodNames
 	add: 'RichTextEdit class' -> #publishedAspectsOfInstances;
 	add: 'RichTextPresenter class' -> #publishedEventsOfInstances;
 	add: 'RuntimeSessionManager class' -> #deploy:;
+	add: 'ScalarField class' -> #icon;
 	add: 'ScintillaAttribute class' -> #publishedAspectsOfInstances;
 	add: 'ScintillaIndicatorStyle class' -> #publishedAspectsOfInstances;
 	add: 'ScintillaKeyBinding class' -> #publishedAspectsOfInstances;
@@ -490,6 +501,7 @@ package methodNames
 	add: 'TextEdit class' -> #applicableTypeConverterCategories;
 	add: 'TextEdit class' -> #publishedAspectsOfInstances;
 	add: 'TextEdit class' -> #publishedEventsOfInstances;
+	add: 'TextTileIcon class' -> #newInstanceAspect:class:;
 	add: 'Time class' -> #cpuCyclesToRun:;
 	add: 'Time class' -> #newInstanceAspect:class:;
 	add: 'TimeToText class' -> #publishedAspectsOfInstances;
@@ -509,6 +521,7 @@ package methodNames
 	add: 'Toolbar class' -> #resource_Workspace_tools;
 	add: 'ToolbarBitmapButton class' -> #publishedAspectsOfInstances;
 	add: 'ToolbarButton class' -> #publishedAspectsOfInstances;
+	add: 'ToolbarSeparator class' -> #icon;
 	add: 'ToolbarSeparator class' -> #publishedAspectsOfInstances;
 	add: 'ToolbarSystemButton class' -> #publishedAspectsOfInstances;
 	add: 'ToolButton class' -> #publishedAspectsOfInstances;
@@ -564,6 +577,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\MVP\Views\Date Time\Dolphin Date Time Controls';
 	add: '..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\System\Win32\Dolphin File System Watcher';
 	add: '..\..\MVP\Dialogs\Find\Dolphin Find Dialog';
 	add: '..\..\MVP\Presenters\Folder\Dolphin Folder Presenter';
 	add: '..\..\MVP\Presenters\Font\Dolphin Font Presenter';
@@ -573,6 +587,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
 	add: '..\..\MVP\Views\MoenTree\Dolphin MoenTree View';
+	add: '..\..\MVP\Deprecated\Dolphin MVP (Deprecated)';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
@@ -587,6 +602,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Views\SpinButton\Dolphin SpinButton Control';
 	add: '..\..\MVP\Views\Styled Views\Dolphin Styled Views';
 	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\MVP\Views\Tooltips\Dolphin Tooltips';
 	add: 'Dolphin Transcript';
 	add: '..\..\MVP\Presenters\Tree\Dolphin Tree List Presenter';
@@ -596,7 +612,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess';
 	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: 'Internal Bitmaps and Icons';
+	add: '..\..\MVP\Icons\Internal Bitmaps and Icons';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters';
@@ -643,7 +659,7 @@ Object subclass: #VisualShellFinder
 	classInstanceVariableNames: ''!
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
-	classVariableNames: 'MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
+	classVariableNames: 'EditInPlaceMask MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Aspect subclass: #KeyedAspect
@@ -782,7 +798,7 @@ MethodSearch subclass: #MethodSourceSearch
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Model subclass: #SmalltalkSystem
-	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass'
+	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -1418,6 +1434,12 @@ newAspect: aSymbol class: aspectClass
 	^aspectClass boolean: aSymbol! !
 !BOOLField categoriesFor: #newAspect:class:!adapters!private! !
 
+!BOOLField class methodsFor!
+
+icon
+	^Boolean icon! !
+!BOOLField class categoriesFor: #icon!public! !
+
 !BorderLayout methodsFor!
 
 arrangementAspect
@@ -1580,6 +1602,14 @@ publishedEventsOfInstances
     ! !
 !CardLayout class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
+!Category class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!Category class categoriesFor: #icon!constants!public! !
+
 !Character methodsFor!
 
 literalTextStyle
@@ -1610,6 +1640,12 @@ publishedAspectsOfInstances
 		yourself! !
 !CheckButton class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!Class methodsFor!
+
+isDeprecated
+	^false! !
+!Class categoriesFor: #isDeprecated!development!public!source filing! !
+
 !ClassBuilder class methodsFor!
 
 publishedEventsOfInstances
@@ -1635,6 +1671,9 @@ commentStamp: stamp prior: prior
 	compatibility with the Squeak fileout format"
 
 	^SingleChunkReader do: [:chunk | self comment: chunk]!
+
+isDeprecated
+	^self subclassResponsibility!
 
 methodsFor: categoryName 
 	"Answer a chunk reader to read and compile method chunks for the receiver
@@ -1686,6 +1725,7 @@ publicMethods
 ! !
 !ClassDescription categoriesFor: #browse!development!public! !
 !ClassDescription categoriesFor: #commentStamp:prior:!public!source filing-methods!squeak! !
+!ClassDescription categoriesFor: #isDeprecated!development!public!source filing! !
 !ClassDescription categoriesFor: #methodsFor:!public!source filing-methods! !
 !ClassDescription categoriesFor: #methodsFor:stamp:!public!source filing-methods!squeak! !
 !ClassDescription categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
@@ -1861,6 +1901,12 @@ publishedAspectsOfInstances
 		yourself! !
 !CommandMenuItem class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!ComparisonPolicy class methodsFor!
+
+isDeprecated
+	^true! !
+!ComparisonPolicy class categoriesFor: #isDeprecated!development!public!source filing! !
+
 !CompiledCode methodsFor!
 
 alternateInspectorClass
@@ -1914,6 +1960,9 @@ hasCompilationIssues
 indexOfIP: ip 
 	^self byteCodeDispatcherClass indexOfIP: ip in: self!
 
+isDeprecated
+	^self methodClass isDeprecated or: [MethodCategory deprecatedMethods includesMethod: self]!
+
 stylerClass
 	^self subclassResponsibility! !
 !CompiledCode categoriesFor: #alternateInspectorClass!constants!development!private! !
@@ -1922,6 +1971,7 @@ stylerClass
 !CompiledCode categoriesFor: #disassembly!development!private! !
 !CompiledCode categoriesFor: #hasCompilationIssues!public!searching! !
 !CompiledCode categoriesFor: #indexOfIP:!enquiries!private! !
+!CompiledCode categoriesFor: #isDeprecated!enquiries!private! !
 !CompiledCode categoriesFor: #stylerClass!constants!public! !
 
 !CompiledCode class methodsFor!
@@ -2004,7 +2054,9 @@ stylerClass
 overriddenIcon
 	"Private - Answers an Icon that can be used to represent an overridden instance of this class"
 
-	^Icon fromId: 'OVERRIDDEN.ICO'!
+	^##((TextTileIcon text: $\x25B4 fontName: 'Segoe UI')
+		textcolor: (ARGB named: #dodgerBlue);
+		yourself)!
 
 publishedAspectsOfInstances
     	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -2043,7 +2095,7 @@ publishedAspectsOfInstances
 	choices := OrderedCollection with: 'nil'.
 	applicableLayoutManagers asSortedCollection do: [:each | choices addLast: each name , ' new'].
 	^(super publishedAspectsOfInstances)
-		add: (Aspect name: #insets) beImmutable;
+		add: (Aspect rectangle: #insets) beImmutable;
 		add: (Aspect choice: #layoutManager evaluationFrom: choices) beImmutable;
 		add: (Aspect boolean: #clipChildren);
 		yourself! !
@@ -2328,6 +2380,12 @@ publishedAspects
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!development!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!development!public! !
 
+!FileSystemChangeReader class methodsFor!
+
+icon
+	^Icon fromId: 'FileSystemMonitor.ico'! !
+!FileSystemChangeReader class categoriesFor: #icon!initializing!public! !
+
 !Float class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -2603,12 +2661,12 @@ resource_ImageList_view
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
+	^super publishedAspectsOfInstances
 		add: (Aspect bitmap: #value);
 		add: (Aspect choice: #viewMode from: self viewModes);
 		add: (Aspect boolean: #isWholeBackgroundErased);
 		add: (Aspect boolean: #isDoubleBuffered);
-		add: (Aspect name: #insets) beImmutable;
+		add: (Aspect rectangle: #insets);
 		add: (Aspect choice: #imageBorder from: self edgeStyles);
 		yourself! !
 !ImageViewAbstract class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
@@ -2682,7 +2740,7 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #canHScroll);
 		add: (Aspect boolean: #hasPermanentScrollbars);
-		add: (Aspect name: #horizontalExtent);
+		add: (Aspect extent: #horizontalExtent);
 		add: (Aspect choice: #selectionMode from: self selectionModes keys asSortedCollection);
 		yourself! !
 !ListBox class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
@@ -2794,7 +2852,7 @@ publishedAspectsOfInstances
 		add: (Aspect autostring: #text);
 		add: (Aspect bitmap: #backImage) beImmutable;
 		add: (Aspect boolean: #backImageIsTiled);
-		add: (Aspect name: #backImageOffset) beImmutable;
+		add: (Aspect position: #backImageOffset);
 		add: (Aspect integer: #backImageAlphaPercent) beImmutable;
 		add: (Aspect name: #iconSpacing chooseFrom: #('32@32'));
 		add: (Aspect name: #thumbnailExtent chooseFrom: #('32@32' '48@48' '64@64' '96@96' '128@128'));
@@ -2907,6 +2965,20 @@ publishedAspectsOfInstances
 		yourself! !
 !MenuBar class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 !MenuBar class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+!MenuItem class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Menu icon! !
+!MenuItem class categoriesFor: #icon!constants!public! !
+
+!Metaclass methodsFor!
+
+isDeprecated
+	^self instanceClass isDeprecated! !
+!Metaclass categoriesFor: #isDeprecated!development!public!source filing! !
 
 !MethodCategory class methodsFor!
 
@@ -3734,6 +3806,9 @@ inspect
 
 !ProtoObject class methodsFor!
 
+icon
+	^##(self) defaultIcon!
+
 publishedAspects
     	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
     	Overridden by subclasses to add the aspects 	published locally"
@@ -3750,6 +3825,7 @@ publishedAspectsOfInstances
     	^(LookupTable new)
     		add: (Aspect name: #yourself);
     		yourself! !
+!ProtoObject class categoriesFor: #icon!public! !
 !ProtoObject class categoriesFor: #publishedAspects!constants!development!public! !
 !ProtoObject class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
@@ -4055,6 +4131,12 @@ newAspect: aSymbol class: aspectClass
 
 	^aspectClass integer: aSymbol! !
 !ScalarField categoriesFor: #newAspect:class:!adapters!private! !
+
+!ScalarField class methodsFor!
+
+icon
+	^Integer icon! !
+!ScalarField class categoriesFor: #icon!public! !
 
 !ScintillaAttribute class methodsFor!
 
@@ -4394,8 +4476,10 @@ publishedAspectsOfInstances
     	selected ShellView."
 
 	| maxMinExtentEditBlock |
-	maxMinExtentEditBlock := [:p | p model value: (p model value isNil ifTrue: [p model subject extent])].
-	^(super publishedAspectsOfInstances)
+	maxMinExtentEditBlock := 
+			[:p |
+			p model value: (p model value isNil ifTrue: [p parentPresenter model value extent])].
+	^super publishedAspectsOfInstances
 		add: (Aspect autostring: #caption);
 		add: (Aspect boolean: #isResizable);
 		add: (Aspect boolean: #hasSysMenu);
@@ -4408,8 +4492,14 @@ publishedAspectsOfInstances
 		add: (Aspect menuBar: #menuBar) beImmutable;
 		add: (Aspect icon: #largeIcon);
 		add: (Aspect icon: #smallIcon);
-		add: (Aspect name: #maxExtent editBlock: maxMinExtentEditBlock) beImmutable;
-		add: (Aspect name: #minExtent editBlock: maxMinExtentEditBlock) beImmutable;
+		add: ((Aspect name: #maxExtent editBlock: maxMinExtentEditBlock)
+					beImmutable;
+					beEditedInPlace;
+					yourself);
+		add: ((Aspect name: #minExtent editBlock: maxMinExtentEditBlock)
+					beImmutable;
+					beEditedInPlace;
+					yourself);
 		yourself!
 
 publishedEventsOfInstances
@@ -5166,6 +5256,15 @@ publishedEventsOfInstances
 !TextEdit class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !TextEdit class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 
+!TextTileIcon class methodsFor!
+
+newInstanceAspect: aSymbol class: aspectClass 
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass icon: aSymbol! !
+!TextTileIcon class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
+
 !Time class methodsFor!
 
 cpuCyclesToRun: timedBlock
@@ -5212,16 +5311,23 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
-	^(super publishedAspectsOfInstances)
-		add: (Aspect name: #insets) beImmutable ;
-		add: (Aspect name: #buttonSize) beImmutable ;
-		add: (Aspect name: #bitmapSize) beImmutable ;
+	^super publishedAspectsOfInstances
+		add: (Aspect rectangle: #insets);
+		add: (Aspect extent: #buttonSize);
+		add: (Aspect
+					choice: #bitmapSize
+					from: ##({16@16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
+					andNil: nil);
 		add: (Aspect boolean: #hasFlatAppearance);
 		add: (Aspect boolean: #hasListAppearance);
 		add: (Aspect boolean: #hasLabels);
+		add: (Aspect integer: #indent);
 		add: (Aspect boolean: #canCustomize);
 		add: (Aspect sequenceableCollection: #items
-					addEvaluationFrom: #('ToolbarIconButton new' 'ToolbarButton new' 'ToolbarSystemButton new' 'ToolbarSeparator new')) 
+					addEvaluationFrom: ##({ToolbarIconButton.
+							ToolbarBitmapButton.
+							ToolbarSystemButton.
+							ToolbarSeparator} collect: [:each | each name , ' new']))
 						beImmutable;
 		yourself!
 
@@ -5242,7 +5348,7 @@ resource_Class_browser_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Class_browser_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1909124416 170 192 8 #() 170 192 34 10 56035 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #newClass 8 'New Class' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewClass.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 56035 56037 610 416 1 642 #toggleShowInheritedMethods 8 'Show Inherited Methods' 1 1 690 nil true 736 8 'ToggleLocalHierarchy.ico' 784 56037 56029 610 416 17 642 #historyBack 8 'Back' 1 1 690 nil true 736 8 'HistoryBack.ico' 784 56029 56031 610 416 17 642 #historyForward 8 'Forward' 1 1 690 nil true 736 8 'HistoryForward.ico' 784 56031 56033 610 416 1 642 #newMethod 8 'New Method' 1 1 690 nil true 736 8 'NewMethod.ico' 784 56033 34 6 896 976 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 1056 624 816 170 176 34 10 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 328198 ##(Smalltalk.Point) 33 33 3 1218 nil true nil nil nil nil 3 1250 33 33 5 1218 nil true nil nil nil nil 3 1250 33 33 7 1218 nil true nil nil nil nil 3 1250 33 33 1 1218 nil true nil nil nil nil 3 1250 33 33 9 nil 1 nil 1250 33 33 1250 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1250 3839 21 1250 311 51 416 1506 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 26 8 0 0 35 0 0 0] 8 #() 1250 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1889398128 170 192 8 #() 170 192 34 8 58059 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #toggleShowInheritedMethods 8 'Show Inherited Methods' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ToggleLocalHierarchy.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 58059 58053 610 416 17 642 #historyBack 8 'Back' 1 1 690 nil true 736 8 'HistoryBack.ico' 784 58053 58055 610 416 17 642 #historyForward 8 'Forward' 1 1 690 nil true 736 8 'HistoryForward.ico' 784 58055 58057 610 416 1 642 #newClass 8 'New Class' 1 1 690 nil true 736 8 'NewClass.ico' 784 58057 34 5 816 896 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 976 624 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1218 261 51 416 1170 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 1 8 0 0 35 0 0 0] 8 #() 1218 193 193 nil 27 )!
 
 resource_Debugger_tools
 	"Answer the literal data from which the 'Debugger tools' resource can be reconstituted.
@@ -5252,7 +5358,7 @@ resource_Debugger_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Debugger_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 12 14103 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #showNextStatement 8 'Show Next Statement' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ShowNextStatement.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 14103 14105 610 416 1 642 #stepInto 8 'Step Into' 1 1 690 nil true 736 8 'StepInto.ico' 784 14105 14107 610 416 1 642 #stepOver 8 'Step Over' 1 1 690 nil true 736 8 'StepOver.ico' 784 14107 14109 610 416 1 642 #stepOut 8 'Step Out' 1 1 690 nil true 736 8 'StepOut.ico' 784 14109 14111 610 416 1 642 #runToCursor 8 'Run to Cursor' 1 1 690 nil true 736 8 'RunToCursor.ico' 784 14111 14113 610 416 1 642 #resumeProcess 8 'Go' 1 1 690 nil true 736 8 'Run.ico' 784 14113 34 7 624 816 896 976 1056 1136 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 170 176 34 12 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 328198 ##(Smalltalk.Point) 33 33 3 1298 nil true nil nil nil nil 3 1330 33 33 5 1298 nil true nil nil nil nil 3 1330 33 33 7 1298 nil true nil nil nil nil 3 1330 33 33 1 1298 nil true nil nil nil nil 3 1330 33 33 9 1298 nil true nil nil nil nil 3 1330 33 33 11 nil 1 nil 1330 33 33 1330 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1330 3839 21 1330 291 51 416 1618 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 16 8 0 0 35 0 0 0] 8 #() 1330 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1889398128 170 192 8 #() 170 192 34 12 58741 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #resumeProcess 8 'Go' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Run.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 58741 58731 610 416 1 642 #showNextStatement 8 'Show Next Statement' 1 1 690 nil true 736 8 'ShowNextStatement.ico' 784 58731 58733 610 416 1 642 #stepInto 8 'Step Into' 1 1 690 nil true 736 8 'StepInto.ico' 784 58733 58735 610 416 1 642 #stepOver 8 'Step Over' 1 1 690 nil true 736 8 'StepOver.ico' 784 58735 58737 610 416 1 642 #stepOut 8 'Step Out' 1 1 690 nil true 736 8 'StepOut.ico' 784 58737 58739 610 416 1 642 #runToCursor 8 'Run to Cursor' 1 1 690 nil true 736 8 'RunToCursor.ico' 784 58739 34 7 816 896 976 1056 1136 624 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1378 293 51 416 1330 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 17 8 0 0 35 0 0 0] 8 #() 1378 193 193 nil 27 )!
 
 resource_Image_tools
 	"Answer the literal data from which the 'Image tools' resource can be reconstituted.
@@ -5262,7 +5368,7 @@ resource_Image_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Image_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 2 49307 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #saveImage 8 'Save Image' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Snapshot.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 49307 34 2 624 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 170 176 34 2 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 328198 ##(Smalltalk.Point) 33 33 1 nil 1 nil 930 33 33 930 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 930 3839 21 930 61 51 416 1058 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 157 7 0 0 35 0 0 0] 8 #() 930 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1889398128 170 192 8 #() 170 192 34 2 42021 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #saveImage 8 'Save Image' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Snapshot.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 42021 34 2 624 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 978 63 51 416 930 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 158 7 0 0 35 0 0 0] 8 #() 978 193 193 nil 27 )!
 
 resource_Resource_tools
 	"Answer the literal data from which the 'Resource tools' resource can be reconstituted.
@@ -5272,7 +5378,7 @@ resource_Resource_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Resource_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 4 44971 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #newView 8 'New View Resource' 1 1 nil 44971 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'FileBar.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 328198 ##(Smalltalk.Point) 161 33 1 44973 610 416 1 642 #clearSelection 8 'Delete Resource' 1 1 nil 44973 690 nil true 736 8 'EditBar.bmp' 784 nil 7 818 193 33 11 34 3 624 848 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 170 176 34 4 896 11 704 1 nil 1 nil 818 33 33 818 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 818 3839 21 818 111 51 416 1122 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 35 0 0 0] 8 #() 818 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1889398128 170 192 8 #() 170 192 34 4 44057 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #newView 8 'New View Resource' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'NewThing.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 44057 44059 610 416 1 642 #clearSelection 8 'Delete Resource' 1 1 690 nil true 736 8 'EditClear.ico' 784 44059 34 3 624 816 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1058 111 51 416 1010 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 35 0 0 0] 8 #() 1058 193 193 nil 27 )!
 
 resource_Search_tools
 	"Answer the literal data from which the 'Search tools' resource can be reconstituted.
@@ -5282,7 +5388,7 @@ resource_Search_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Search_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 nil 8 1912794480 170 192 34 2 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140916224 131073 528 nil 524550 ##(Smalltalk.ColorRef) 8 4278190080 nil 5 nil nil nil 528 1180166 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.SmalltalkSearchPresenter) #resource_Default_view nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 5 786 371 39 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 2 0 0 0 185 0 0 0 21 0 0 0] 8 #() 786 193 193 nil 27 8 'search' 170 192 34 2 59311 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #goSearch 8 'Go Search' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'GoSearch.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 59311 34 3 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 371 976 1186 416 1 170 176 34 2 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 786 33 33 1 nil 1 nil 786 33 33 786 45 45 nil nil 674 138 144 34 2 738 #createAt:extent: 34 2 786 3839 21 786 441 51 416 738 #updateSizePosted 880 416 834 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 91 8 0 0 35 0 0 0] 34 1 528 896 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil 263174 ##(Smalltalk.Font) nil true 524550 ##(Smalltalk.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 0 0 0 0 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 328198 ##(Smalltalk.Point) 193 193 nil 416 nil 8 1892412784 170 192 34 2 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140916224 131073 640 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 640 1180166 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.SmalltalkSearchPresenter) #resource_Default_view nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 562 1 5 562 371 37 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 2 0 0 0 185 0 0 0 20 0 0 0] 8 #() 562 193 193 nil 27 8 'search' 170 192 34 2 49421 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #goSearch 8 'Go Search' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'GoSearch.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 49421 34 2 1072 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 375 nil nil nil nil 786 138 144 34 2 850 #createAt:extent: 34 2 562 3839 21 562 437 51 416 850 #updateSizePosted 976 416 930 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 89 8 0 0 35 0 0 0] 34 1 640 992 nil 27 )!
 
 resource_Smalltalk_tools
 	"Answer the literal data from which the 'Smalltalk tools' resource can be reconstituted.
@@ -5292,7 +5398,7 @@ resource_Smalltalk_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Smalltalk_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 24 51797 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #browseResources 8 'Open View Browser' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Resource.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51797 51799 610 416 1 642 #openViewComposer 8 'Open View Composer' 1 1 690 nil true 736 8 'ViewComposer.ico' 784 51799 51801 610 416 1 642 #showTranscript 8 'Show Transcript' 1 1 690 nil true 736 8 'TranscriptShell.ico' 784 51801 51803 610 416 1 642 #inspectVisualObject 8 'Visual Object Finder' 1 1 690 nil true 736 8 'BasicInspector.ico' 784 51803 51805 610 416 17 642 #newIdeaSpace 8 'New Idea Space' 1 1 690 nil true 736 8 'IdeaSpaceShell.ico' 784 51805 51783 610 416 1 642 #newWorkspace 8 'New Workspace' 1 1 690 nil true 736 8 'SmalltalkWorkspace.ico' 784 51783 51785 610 416 1 642 #openWorkspace 8 'Open Workspace' 1 1 690 nil true 736 8 'FileOpen.ico' 784 51785 51787 610 416 1 642 #browseSystem 8 'Open System Browser' 1 1 690 nil true 736 8 'SystemBrowserShell.ico' 784 51787 51789 610 416 1 642 #browseHierarchy 8 'Open Class Hierarchy Browser' 1 1 690 nil true 736 8 'ClassBrowserShell.ico' 784 51789 51791 610 416 1 642 #browseProtocols 8 'Open Protocol Browser' 1 1 690 nil true 736 8 'ProtocolBrowserShell.ico' 784 51791 51793 610 416 1 642 #browsePackages 8 'Open Package Browser' 1 1 690 nil true 736 8 'Package.ico' 784 51793 51795 610 416 1 642 #browseTests 8 'Open Test Browser' 1 1 690 nil true 736 8 'UnitTestPlugin.ico' 784 51795 34 13 1136 1216 1296 1376 1456 1536 1616 624 816 896 976 1056 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 170 176 34 24 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 328198 ##(Smalltalk.Point) 33 33 13 1778 nil true nil nil nil nil 3 1810 33 33 15 1778 nil true nil nil nil nil 3 1810 33 33 3 1778 nil true nil nil nil nil 3 1810 33 33 5 1778 nil true nil nil nil nil 3 1810 33 33 7 1778 nil true nil nil nil nil 3 1810 33 33 1 1778 nil true nil nil nil nil 3 1810 33 33 9 1778 nil true nil nil nil nil 3 1810 33 33 11 1778 nil true nil nil nil nil 3 1810 33 33 17 1778 nil true nil nil nil nil 3 1810 33 33 19 1778 nil true nil nil nil nil 3 1810 33 33 21 1778 nil true nil nil nil nil 3 1810 33 33 23 590342 ##(Smalltalk.Rectangle) 1810 585 1 1810 1 1 1 nil 1810 33 33 1810 45 45 nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1810 3839 21 1810 591 51 416 2386 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 166 8 0 0 35 0 0 0] 8 #() 1810 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1889398128 170 192 8 #() 170 192 34 22 44759 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #inspectVisualObject 8 'Visual Object Finder' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'VisualObjectFinder.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 44759 44761 610 416 17 642 #newIdeaSpace 8 'New Idea Space' 1 1 690 nil true 736 8 'IdeaSpaceShell.ico' 784 44761 44741 610 416 1 642 #newWorkspace 8 'New Workspace' 1 1 690 nil true 736 8 'NewWorkspace.ico' 784 44741 44743 610 416 1 642 #openWorkspace 8 'Open Workspace' 1 1 690 nil true 736 8 'OpenWorkspace.ico' 784 44743 44745 610 416 1 642 #browseSystem 8 'Open System Browser' 1 1 690 nil true 736 8 'SystemBrowserShell.ico' 784 44745 44747 610 416 1 642 #browseHierarchy 8 'Open Class Hierarchy Browser' 1 1 690 nil true 736 8 'ClassBrowserShell.ico' 784 44747 44749 610 416 1 642 #browsePackages 8 'Open Package Browser' 1 1 690 nil true 736 8 'PackageBrowserShell.ico' 784 44749 44751 610 416 1 642 #browseTests 8 'Open Test Browser' 1 1 690 nil true 736 8 'UnitTestPlugin.ico' 784 44751 44753 610 416 1 642 #browseResources 8 'Open View Browser' 1 1 690 nil true 736 8 'ResourceBrowser.ico' 784 44753 44755 610 416 1 642 #openViewComposer 8 'Open View Composer' 1 1 690 nil true 736 8 'ViewComposer.ico' 784 44755 44757 610 416 1 642 #showTranscript 8 'Show Transcript' 1 1 690 nil true 736 8 'TranscriptShell.ico' 784 44757 34 12 896 976 1056 1136 1216 1296 1376 1456 1536 624 816 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil 656198 1 ##(Smalltalk.FlowLayout) 1 1 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1810 553 51 416 1762 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 147 8 0 0 35 0 0 0] 8 #() 1810 193 193 nil 27 )!
 
 resource_View_composer_alignment_tools
 	"Answer the literal data from which the 'View composer alignment tools' resource can be reconstituted.
@@ -5352,7 +5458,7 @@ resource_Workspace_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Workspace_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289164 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1912794480 170 192 8 #() 170 192 34 8 14701 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #displayIt 8 'Display It' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'DisplayIt.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 14701 14703 610 416 1 642 #evaluateIt 8 'Evaluate It' 1 1 690 nil true 736 8 'EvaluateIt.ico' 784 14703 14705 610 416 1 642 #inspectIt 8 'Inspect It' 1 1 690 nil true 736 8 'InspectIt.ico' 784 14705 14707 610 416 1 642 #debugIt 8 'Deb&ug It' 1 1 690 nil true 736 8 'Debugger.ico' 784 14707 34 5 624 816 896 976 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 170 176 34 8 395334 3 ##(Smalltalk.Bitmap) nil true nil nil nil nil 3 328198 ##(Smalltalk.Point) 33 33 3 1138 nil true nil nil nil nil 3 1170 33 33 5 1138 nil true nil nil nil nil 3 1170 33 33 7 1138 nil true nil nil nil nil 3 1170 33 33 1 nil 1 nil 1170 33 33 1170 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1170 3839 21 1170 61 191 416 1394 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 157 7 0 0 105 0 0 0] 8 #() 1170 193 193 nil 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289164 131137 416 nil nil nil 517 nil nil nil 416 524550 ##(Smalltalk.ColorRef) 8 4278190080 8 1889398128 170 192 8 #() 170 192 34 8 43715 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #displayIt 8 'Display It' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'DisplayIt.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 43715 43717 610 416 1 642 #evaluateIt 8 'Evaluate It' 1 1 690 nil true 736 8 'EvaluateIt.ico' 784 43717 43719 610 416 1 642 #inspectIt 8 'Inspect It' 1 1 690 nil true 736 8 'InspectIt.ico' 784 43719 43721 610 416 1 642 #debugIt 8 'Deb&ug It' 1 1 690 nil true 736 8 'Debugger.ico' 784 43721 34 5 624 816 896 976 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1218 47 197 416 1170 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 150 7 0 0 108 0 0 0] 8 #() 1218 193 193 nil 27 )! !
 !Toolbar class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 !Toolbar class categoriesFor: #publishedEventsOfInstances!development!events!public! !
 !Toolbar class categoriesFor: #resource_Class_browser_tools!public!resources-views! !
@@ -5377,7 +5483,7 @@ publishedAspects
 		ifNotNil: 
 			[:bmp |
 			aspects add: (Aspect choice: #bitmapIndex
-						from: (0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb buttonSize x])))].
+						from: (0 to: bmp extent x // (self toolbar ifNil: [16] ifNotNil: [:tb | tb actualBitmapSize x])))].
 	^aspects! !
 !ToolbarBitmapButton categoriesFor: #publishedAspects!constants!development!public! !
 
@@ -5407,12 +5513,18 @@ publishedAspectsOfInstances
 
 !ToolbarSeparator class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##(TextTileIcon text: '|' color: Color face3d)!
+
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^(super publishedAspectsOfInstances)
 		add: (Aspect integer: #width);
 		yourself! !
+!ToolbarSeparator class categoriesFor: #icon!constants!public! !
 !ToolbarSeparator class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
 !ToolbarSystemButton methodsFor!
@@ -5450,8 +5562,8 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^(super publishedAspectsOfInstances)
-		add: (Aspect name: #buttonSize) beImmutable;
-		add: (Aspect name: #bitmapSize) beImmutable;
+		add: (Aspect extent: #buttonSize);
+		add: (Aspect extent: #bitmapSize);
 		add: (Aspect boolean: #hasListAppearance);
 		add: (Aspect boolean: #hasLabels);
 		add: (Aspect name: #commandDescription) beImmutable;
@@ -5528,7 +5640,6 @@ publishedAspectsOfInstances
 	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled) 
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
-		add: (Aspect name: #indentSeparation);
 		add: (Aspect integer: #indentSeparation);
 		add: (Aspect choice: #updateMode from: UpdateModes);
 		yourself.
@@ -5762,9 +5873,9 @@ publishedAspectsOfInstances
 	aspects
 		add: (Aspect color: #backcolor);
 		add: (Aspect menu: #contextMenu) beImmutable;
-		add: (Aspect name: #position) beImmutable;
-		add: (Aspect name: #extent) beImmutable;
-		add: (Aspect name: #preferredExtent);
+		add: (Aspect position: #position);
+		add: (Aspect extent: #extent);
+		add: (Aspect extent: #preferredExtent);
 		add: (Aspect font: #font);
 		add: ((Aspect autostring: #text)
 					isNullable: false;

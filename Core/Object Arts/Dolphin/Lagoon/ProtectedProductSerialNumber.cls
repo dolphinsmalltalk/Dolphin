@@ -181,6 +181,11 @@ fromString: aString
 		stringValue: aString;
 		yourself!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -368,6 +373,7 @@ unlockClasses: aCollectionOfClasses using: aSerialNumber
 	(self productProtectorWithKey: aSerialNumber lockedMethodDecodingKey) 
 		unlockClasses: aCollectionOfClasses! !
 !ProtectedProductSerialNumber class categoriesFor: #fromString:!instance creation!public! !
+!ProtectedProductSerialNumber class categoriesFor: #icon!constants!development!public! !
 !ProtectedProductSerialNumber class categoriesFor: #initialize!initializing!private! !
 !ProtectedProductSerialNumber class categoriesFor: #instanceDecoder!helpers!public! !
 !ProtectedProductSerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !

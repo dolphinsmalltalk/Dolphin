@@ -152,7 +152,7 @@ title: titleString
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^##(TextTileIcon text: $\x1F39E fontName: 'Segoe UI Emoji')!
 
 new
 	"Answer a new, initialised, instance of the receiver.

@@ -1304,11 +1304,6 @@ current
 	Current isNil ifTrue: [self buildSingletonInstance].
 	^Current!
 
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^Package icon!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize.
@@ -1374,7 +1369,6 @@ uninitialize
 	self reset.! !
 !PackageManager class categoriesFor: #buildSingletonInstance!instance creation!private! !
 !PackageManager class categoriesFor: #current!instance creation!public! !
-!PackageManager class categoriesFor: #icon!constants!public! !
 !PackageManager class categoriesFor: #initialize!initializing!private! !
 !PackageManager class categoriesFor: #new!instance creation!public! !
 !PackageManager class categoriesFor: #newSystemPackage!operations!private! !

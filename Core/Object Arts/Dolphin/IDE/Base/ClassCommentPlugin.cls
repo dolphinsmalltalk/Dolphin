@@ -80,12 +80,12 @@ defaultTextStyles
 grayedIcon
 	"Answer the <Icon> to be used on the class comment tab when there is no class comment."
 
-	^Icon fromFile: 'GrayedClassComment.ico'!
+	^Icon fromId: 'GrayedClassComment.ico'!
 
 icon
 	"Answer an <Icon> that can be used to represent this class."
 
-	^Icon fromFile: 'ClassComment.ico'!
+	^Icon fromId: 'ClassComment.ico'!
 
 initialize
 	WordWrap := true.

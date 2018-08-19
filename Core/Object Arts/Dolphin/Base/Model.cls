@@ -57,11 +57,6 @@ Model methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
 !Model class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Answer a new initialize instance of the receiver."
 
@@ -118,7 +113,6 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!Model class categoriesFor: #icon!constants!public! !
 !Model class categoriesFor: #new!instance creation!public! !
 !Model class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
 !Model class categoriesFor: #stbConvertFrom:!binary filing!private! !

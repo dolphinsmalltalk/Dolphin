@@ -133,6 +133,9 @@ from: aColor1 at: aPoint1 to: aColor2 at: aPoint2
 		endPoint: aPoint2;
 		yourself!
 
+icon
+	^Brush icon!
+
 new
 	^self color: Color black!
 
@@ -144,6 +147,7 @@ white
 !StyledGradientBrush class categoriesFor: #face3dTopLeftToBottomRightFade!instance creation!public! !
 !StyledGradientBrush class categoriesFor: #face3dTopToBottomFade!instance creation!public! !
 !StyledGradientBrush class categoriesFor: #from:at:to:at:!instance creation!public! !
+!StyledGradientBrush class categoriesFor: #icon!constants!development!public! !
 !StyledGradientBrush class categoriesFor: #new!instance creation!public! !
 !StyledGradientBrush class categoriesFor: #white!instance creation!public! !
 

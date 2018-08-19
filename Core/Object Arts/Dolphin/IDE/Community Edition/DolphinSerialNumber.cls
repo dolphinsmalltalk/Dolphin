@@ -181,11 +181,6 @@ expiryBase
 
 	^Date newDay: 1 monthIndex: 10 year: 2000!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 instanceDecodingKey
 	"See the superclass comment.
 
@@ -238,7 +233,6 @@ wdkHash
 !DolphinSerialNumber class categoriesFor: #compromisedSerialNumbersTrusted!constants!private! !
 !DolphinSerialNumber class categoriesFor: #decodingKeyHash!constants!private! !
 !DolphinSerialNumber class categoriesFor: #expiryBase!constants!public! !
-!DolphinSerialNumber class categoriesFor: #icon!constants!development!public! !
 !DolphinSerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
 !DolphinSerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
 !DolphinSerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !

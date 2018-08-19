@@ -162,11 +162,3 @@ validateSubViewLayouts: aLayoutContext
 
 AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #onCurrentCardChanged #previousCard)!
 
-!AbstractCardContainer class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!AbstractCardContainer class categoriesFor: #icon!constants!public! !
-
