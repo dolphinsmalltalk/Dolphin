@@ -34,7 +34,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\List\Dolphin List Presenter';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\Prompters\Dolphin Prompter';
-	add: '..\..\Base\Dolphin Text Tile Icons';
+	add: '..\..\Icons\Dolphin Text Tile Icons';
 	add: '..\..\Gdiplus\Gdiplus';
 	yourself).
 
