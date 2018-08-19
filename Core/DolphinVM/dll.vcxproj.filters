@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Natvis Include="VMLib\Dolphin.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dlldatax.c" />
+    <ClCompile Include="DolphinSmalltalk_p.c" />
+    <ClCompile Include="VMDLL.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="vm.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DolphinSmalltalk.tlb" />
+    <None Include="Res\ist.rc2" />
+    <None Include="VM.def" />
+    <None Include="Res\hsplit.cur">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Res\vsplit.cur">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{2def1405-80f5-49fd-af81-e3bc915c023a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

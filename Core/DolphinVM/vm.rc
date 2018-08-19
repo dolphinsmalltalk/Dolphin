@@ -57,10 +57,6 @@ VSPLIT                  CURSOR                  "res\\vsplit.cur"
 // Bitmap
 //
 
-FINDBAR.BMP             BITMAP                  "Res\\findbar.bmp"
-
-LISTBAR.BMP             BITMAP                  "res\\ListBar.bmp"
-
 #endif    // Neutral (Default) resources
 /////////////////////////////////////////////////////////////////////////////
 

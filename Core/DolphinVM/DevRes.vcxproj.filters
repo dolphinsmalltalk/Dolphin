@@ -4,12 +4,6 @@
     <ClInclude Include="rc_devrs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="devres.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Res\AbstractCardContainer.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\AcceleratorPresenter.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -25,9 +19,6 @@
     <Image Include="Res\BasicInspector.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\BatchAspectAccessor.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Behavior.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -40,12 +31,6 @@
     <Image Include="Res\Boolean.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\BooleanPresenter.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\BouncingBallView.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\BrowseFolderDialog.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -53,9 +38,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\ByteArray.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Calculator.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Canvas.ico">
@@ -68,12 +50,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Character.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Chat.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\CheckBox.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\ChoicePresenter.ico">
@@ -95,9 +71,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Clipboard.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\CloseWindow.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\CodeMentorPlugin.ico">
@@ -125,18 +98,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\cominter.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\CompiledMethod.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\CompiledMethod_Deprecated.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\CompiledMethodPrivate.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\CompiledMethodPublic.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\CompileFailedMethod.ico">
@@ -184,9 +145,6 @@
     <Image Include="Res\Dictionary.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\DisassemblyPlugin.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\DisplayIt.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -220,9 +178,6 @@
     <Image Include="Res\EditDelete.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\EditPaste.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\EditRedo.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -230,9 +185,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\EnvironmentBrowserShell.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\EtchASketch.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\EvaluateIt.ico">
@@ -245,9 +197,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\externalstructure.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\False.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\FileDialog.ico">
@@ -364,22 +313,10 @@
     <Image Include="Res\InputState.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\InspectIt.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Interval.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Keyboard.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\KeyedAspectBatchAccessor.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\LargeInteger.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\LayoutManager.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\LintError.ico">
@@ -481,9 +418,6 @@
     <Image Include="Res\object.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\Overridden.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Package.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -511,9 +445,6 @@
     <Image Include="Res\Process.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\RadioButton.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\ProcessMonitor.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -532,22 +463,10 @@
     <Image Include="Res\GroupBox.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\EditBar.bmp">
-      <Filter>Bitmaps</Filter>
-    </Image>
-    <Image Include="Res\FileBar.bmp">
-      <Filter>Bitmaps</Filter>
-    </Image>
-    <Image Include="Res\findbar.bmp">
-      <Filter>Bitmaps</Filter>
-    </Image>
     <Image Include="Res\HeaderPin.bmp">
       <Filter>Bitmaps</Filter>
     </Image>
     <Image Include="Res\LagoonLogo.bmp">
-      <Filter>Bitmaps</Filter>
-    </Image>
-    <Image Include="Res\ListBar.bmp">
       <Filter>Bitmaps</Filter>
     </Image>
     <Image Include="Res\Rectangle.ico">
@@ -581,12 +500,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Resource.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Restart.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Revert.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Run.ico">
@@ -626,9 +539,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Slider.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\SmalltalkSystemFolder.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\SmalltalkSystemOptionSet.ico">
@@ -733,16 +643,7 @@
     <Image Include="Res\TreeView.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\True.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\TypeConverter.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\typelib.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\UndefinedObject.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\UnitTestPlugin.ico">
@@ -767,9 +668,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Up.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\UpArrow.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\ValueAdaptor.ico">
@@ -805,28 +703,13 @@
     <Image Include="Res\XML.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\VideoLibrary.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\VideoRecording.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\VideoTape.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\View.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\ViewBar.bmp">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\ViewComposer.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\VisualObjectFinder.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Wait.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\Wizard.ico">
@@ -841,9 +724,311 @@
     <Image Include="Res\WinImageList.ico">
       <Filter>Icons</Filter>
     </Image>
+    <Image Include="Res\Application.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Interactor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CategoryDelete.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CompiledCode.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DebugInfoPlugin.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinSureCertificateStore.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DropDownList.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Duration.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EllipsisButton.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Error.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Event.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EventMessageSend.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ExternalLibrary.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\File.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileNew.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileSaveAll.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FindClass.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FindInFolders.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FolderOpen.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FolderUp.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Help.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Information.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintSleep.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LintWait.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ListView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MoveUp.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PoolDictionariesShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PowerSwitch.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ProcessorScheduler.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Properties.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ProtoObject.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Question.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ResourceBrowser.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SelectAll.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SelectHide.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SelectInvert.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SelectNone.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SelectOpen.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SelectPlay.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Share.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ShowNextStatement.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SlideyInneyOuteyThing.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StaticPath.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TestView.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\TextDocument.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewLargeIcons.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewReportMode.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewThumbnails.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewTileIcons.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Warning.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Box.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ClassDefinition.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DiskVolumeInformation.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DolphinNoXP.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\EditPasteLink.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ExeStub.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ExternalCallback.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileBrowser.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\FileIn.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Game controller.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Globe.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\GotoFolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\HistoryErase.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\HistoryList.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\LinedNotes.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MethodHistory.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MethodHistoryErase.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MethodSource.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NewIdeaSpaceShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NewPackage.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\NewWorkspace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Notification.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\OpenWorkspace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Options.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PackageBrowserShell.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PasteShortcut.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Pencil.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\preferences.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\PrinterCanvas.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Profiler.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ProtectedProductSerialNumber.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\RegKeyDocument.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\RegKeySearch.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ResourceIdentifier.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SampleApplicationsFolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SequenceableCollectionPresenter.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SmalltalkOptionsFolder.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SortAlgorithm.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SourceBrowser.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\StatusBar.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Toolbar.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\Toolbox.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\UpArrow.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewContent.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewDetails.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewExtraLargeIcons.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewList.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewMediumSizedIcons.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewMode.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewSmallIcons.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ViewTiles.ico">
+      <Filter>Icons</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Res\ist.rc2" />
     <None Include="Res\hsplit.cur">
       <Filter>Cursors</Filter>
     </None>
@@ -861,5 +1046,8 @@
     <Filter Include="Cursors">
       <UniqueIdentifier>{58e534a7-29cb-498c-9bc5-6cfa30202eb4}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="devres.rc" />
   </ItemGroup>
 </Project>

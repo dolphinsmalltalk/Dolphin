@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\GUIStub\stub.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="togostub.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Res\DownArrow.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Res\ExeStub.ico">
+      <Filter>Resources</Filter>
+    </Image>
+    <Image Include="..\Res\UpArrow.ico">
+      <Filter>Resources</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Res\Ist.rc2" />
+    <None Include="togo.def" />
+    <None Include="..\Res\hsplit.cur">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="..\Res\vsplit.cur">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{676d4835-d0e2-4116-9e02-797b520aba26}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

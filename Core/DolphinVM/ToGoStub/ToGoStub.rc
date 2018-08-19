@@ -166,16 +166,6 @@ END
 // Bitmap
 //
 
-FINDBAR.BMP             BITMAP                  "..\\Res\\findbar.bmp"
-
-LISTBAR.BMP             BITMAP                  "..\\res\\ListBar.bmp"
-
-EDITBAR.BMP             BITMAP                  "..\\Res\\EditBar.bmp"
-
-FILEBAR.BMP             BITMAP                  "..\\res\\FileBar.bmp"
-
-VIEWBAR.BMP             BITMAP                  "..\\Res\\ViewBar.bmp"
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
