@@ -4553,9 +4553,9 @@ help: educationPage
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: Character dolphin color: SmalltalkSystemShell backcolor)
+	^(TextTileIcon text: Character dolphin color: SmalltalkSystemShell backcolor)
 		textcolor: SmalltalkSystemShell textcolor;
-		yourself)!
+		yourself!
 
 initialize
 	self initializeFileDrops.
