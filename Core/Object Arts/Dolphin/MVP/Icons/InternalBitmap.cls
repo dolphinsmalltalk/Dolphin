@@ -205,6 +205,9 @@ fromGdiplusBitmap: gdipBitmap
 		setBitmap: gdipBitmap;
 		yourself!
 
+icon
+	^GdiplusBitmap icon!
+
 imageManager
 	"Private - Answer an image manager to use for storing images"
 
@@ -221,6 +224,7 @@ withExtent: aPointExtent
 !InternalBitmap class categoriesFor: #fromBytes:!instance creation!public! !
 !InternalBitmap class categoriesFor: #fromFile:!instance creation!public! !
 !InternalBitmap class categoriesFor: #fromGdiplusBitmap:!instance creation!public! !
+!InternalBitmap class categoriesFor: #icon!public! !
 !InternalBitmap class categoriesFor: #imageManager!accessing!private! !
 !InternalBitmap class categoriesFor: #new!private! !
 !InternalBitmap class categoriesFor: #withExtent:!instance creation!public! !

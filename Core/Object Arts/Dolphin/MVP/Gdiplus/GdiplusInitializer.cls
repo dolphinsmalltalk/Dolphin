@@ -11,14 +11,11 @@ GdiplusInitializer comment: 'An instance of GdiplusInitializer serves as a proxy
 !GdiplusInitializer categoriesForClass!Unclassified! !
 !GdiplusInitializer methodsFor!
 
-assertStatusOk: status
-	status = Ok ifFalse: [self gdiplusErrorWith: status]!
-
 createHandle
 	^self subclassResponsibility!
 
 gdiplusConstructorErrorDescription
-	^'Error in Gdiplus Constructor'!
+	^self subclassResponsibility!
 
 gdiplusErrorWith: status
 	^GdiplusError signal: self gdiplusConstructorErrorDescription with: status!
@@ -37,22 +34,14 @@ library
 		Making this a parameter allows a MockLibrary to be used for UnitTesting.
 		(Not sure how important the tests will be, so may remove this at a later date"
 
-	library ifNil: [^GdiplusLibrary default].
-	^library!
+	^library ifNil: [GdiplusLibrary default]!
 
 library: anObject
 	library := anObject! !
-!GdiplusInitializer categoriesFor: #assertStatusOk:!asserting!public! !
-!GdiplusInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !GdiplusInitializer categoriesFor: #gdiplusErrorWith:!exceptions!private! !
 !GdiplusInitializer categoriesFor: #isPersistent!public!testing! !
 !GdiplusInitializer categoriesFor: #library!accessing!private! !
 !GdiplusInitializer categoriesFor: #library:!private!test accessing! !
-
-!GdiplusInitializer class methodsFor!
-
-new
-	^super new initialize! !
-!GdiplusInitializer class categoriesFor: #new!instance creation!public! !
 

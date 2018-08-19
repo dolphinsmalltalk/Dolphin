@@ -14,7 +14,7 @@ canvas: aCanvas
 	canvas := aCanvas!
 
 createHandle
-	" Graphics(IN HDC hdc)
+	"Private -  Graphics(IN HDC hdc)
     	{
 	        GpGraphics *graphics = NULL;
 
@@ -26,13 +26,13 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreateFromHDC: canvas asParameter graphics: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating Graphics'! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #canvas:!accessing!public! !
-!GdiplusGraphicsFromHDCInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusGraphicsFromHDCInitializer categoriesFor: #canvas:!initializing!private! !
+!GdiplusGraphicsFromHDCInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusGraphicsFromHDCInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !GdiplusGraphicsFromHDCInitializer class methodsFor!

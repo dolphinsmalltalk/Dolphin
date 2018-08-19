@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusInitializer subclass: #GdiplusTestInitializer
 	instanceVariableNames: 'mockHandle arg1'
@@ -36,7 +36,7 @@ initialize
 !GdiplusTestInitializer categoriesFor: #=!accessing!comparison!public! !
 !GdiplusTestInitializer categoriesFor: #arg1!accessing!public! !
 !GdiplusTestInitializer categoriesFor: #arg1:!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusTestInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusTestInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public! !
 !GdiplusTestInitializer categoriesFor: #hash!accessing!public! !
 !GdiplusTestInitializer categoriesFor: #initialize!initializing!public! !

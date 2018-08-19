@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime'
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!
@@ -45,9 +45,8 @@ background
 baseScale
 	"Answer a scale that fits the receiver to the desktop"
 
-	| scale |
-	scale := View desktop extent * 0.75 / self originalBitmapExtent.
-	^(scale x min: scale y) min: 1!
+	^baseScale
+!
 
 defaultExtent
 	^self background extent!
@@ -57,15 +56,15 @@ dismiss
 
 dolphinInsideBaseColor
 	^ARGB 
-		red: 1
-		green: 1
-		blue: 1!
+		r: 1
+		g: 1
+		b: 1!
 
 dolphinInsideIntensityColor
 	^ARGB 
-		red: 215
-		green: 109
-		blue: 10!
+		r: 215
+		g: 109
+		b: 10!
 
 dolphinInsideIntensityPeriod
 	^1500!
@@ -88,43 +87,21 @@ dolphinOutline
 				ifFalse: [dolphinOutline := GdiplusBitmap fromImage: dolphinOutline scaledBy: self baseScale]]!
 
 drawInfoTextOn: graphics
-	| version copyright fontCopyright brush infoString stringFormat |
-	version := VMLibrary default versionInfo.
-	copyright := version legalCopyright subStrings: $..
+	| fontCopyright brush stringFormat |
 	brush := GdiplusSolidBrush color: ARGB white.
-	fontCopyright := GdiplusFont
-				name: 'Arial'
-				emSize: 9
-				style: nil
-				unit: UnitPoint.
-	infoString := Utf16String writeStream.
-	infoString
-		nextPutAll: copyright first;
-		nextPutAll: ', ';
-		nextPutAll: copyright second;
-		nextPut: $.;
-		cr;
-		nextPutAll: 'Dolphin ';
-		nextPutAll: SessionManager current versionString;
-		nextPutAll: ' is Open Source under the MIT License.'.
-	SessionManager current bootInfo
-		ifNotNil: 
-			[:bootInfo |
-			infoString
-				cr;
-				nextPutAll: 'Image boot info: ';
-				nextPutAll: bootInfo].
-	stringFormat := GdiplusStringFormat near.
+	fontCopyright := GdiplusFont name: 'Arial' pointSize: 9.
+	stringFormat := GdiplusStringFormat genericDefault.
 	graphics
 		textRenderingHint: TextRenderingHintAntiAlias;
-		drawString: infoString contents
+		drawString: info
 			font: fontCopyright
 			at: (48 @ 630 * self baseScale) rounded
 			format: stringFormat
 			brush: brush.
+	stringFormat free.
 	fontCopyright free.
 	brush free.
-	stringFormat free!
+!
 
 elapsedTime
 	"Answer the elapsed time in ms since the start of the animation"
@@ -182,12 +159,34 @@ hasHintBubble
 	^hintBubble notNil and: [hintBubble tooltip notNil]!
 
 initialize
+	| copyright scale |
 	super initialize.
-	self backcolor: RGB white.
+	self backcolor: Color white.
 	insideObjectsScale := 0.1.
 	dolphinIntensity := 0.
 	self loadTextureMap: 'ObjectsInside'.
 	random := Random new.
+	copyright := VMLibrary default versionInfo legalCopyright subStrings: $..
+	info := Utf16String writeStream.
+	info
+		nextPutAll: copyright first;
+		nextPutAll: ', ';
+		nextPutAll: copyright second;
+		nextPut: $.;
+		cr;
+		nextPutAll: 'Dolphin ';
+		nextPutAll: SessionManager current versionString;
+		nextPutAll: ' is Open Source under the MIT License.'.
+	SessionManager current bootInfo
+		ifNotNil: 
+			[:bootInfo |
+			info
+				cr;
+				nextPutAll: 'Image boot info: ';
+				nextPutAll: bootInfo].
+	info := info contents.
+	scale := View desktop extent * 0.75 / self originalBitmapExtent.
+	baseScale := (scale x min: scale y) min: 1.
 	self startStepProcess!
 
 insideObjectMaxScale
@@ -218,14 +217,15 @@ loadTextureMap: mapName
 	mapFileName := 'Resources\' , (File default: mapName extension: 'txt').
 	map := FileStream read: (FileLocator installRelative localFileSpecFor: mapFileName) text: true.
 	textureMap := LookupTable new.
-	scale := self baseScale.
+	scale := View desktop extent * 0.75 / self originalBitmapExtent.
+	baseScale := (scale x min: scale y) min: 1.
 	[map atEnd] whileFalse: 
 			[| elements pos ext bm |
 			elements := map nextLine subStrings: $,.
 			pos := elements second trimBlanks asNumber @ elements third trimBlanks asNumber.
 			ext := elements fourth trimBlanks asNumber @ elements fifth trimBlanks asNumber.
 			bm := GdiplusBitmap fromImage: texture crop: (pos extent: ext).
-			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: scale)].
+			textureMap at: elements first put: (ObjectInside fromImage: bm scaledBy: baseScale )].
 	sun := textureMap removeKey: 'SeeingTheObjects.png'.
 	dolphins := {textureMap removeKey: 'Dolphin1.png'. textureMap removeKey: 'Dolphin2.png'}.
 	objects := textureMap values.

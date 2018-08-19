@@ -13,13 +13,13 @@ GdiplusPathGradientFromPointsInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library 
+	status := self library
 				gdipCreatePathGradientI: (StructureArray withAll: (pathPoints collect: [:e | POINTL fromPoint: e])
 						elementClass: POINTL)
 				count: pathPoints size
 				wrapMode: wrapMode
 				polyGradient: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -28,9 +28,9 @@ gdiplusConstructorErrorDescription
 points: points wrapMode: aWrapModeConstant
 	pathPoints := points.
 	wrapMode := aWrapModeConstant! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusPathGradientFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusPathGradientFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusPathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!instance creation!public! !
+!GdiplusPathGradientFromPointsInitializer categoriesFor: #points:wrapMode:!initializing!private! !
 
 !GdiplusPathGradientFromPointsInitializer class methodsFor!
 

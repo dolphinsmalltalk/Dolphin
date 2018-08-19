@@ -52,6 +52,13 @@ between: min and: max
 
 	^self >= min and: [self <= max]!
 
+clampBetween: minimum and: maximum
+	"Clamp the receiver's value to the specified range."
+
+	self < minimum ifTrue: [^minimum].
+	self < maximum ifTrue: [^self].
+	^maximum!
+
 hash
 	"Answer a SmallInteger hash value for the receiver which obeys the invariant that any two 
 	objects which compare equal (using #=) must have the same hash value (but not 
@@ -85,6 +92,7 @@ min: operand
 !Magnitude categoriesFor: #>!comparing!public! !
 !Magnitude categoriesFor: #>=!comparing!public! !
 !Magnitude categoriesFor: #between:and:!comparing!public! !
+!Magnitude categoriesFor: #clampBetween:and:!comparing!public! !
 !Magnitude categoriesFor: #hash!comparing!public! !
 !Magnitude categoriesFor: #isNaN!public!testing! !
 !Magnitude categoriesFor: #max:!comparing!public! !

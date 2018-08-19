@@ -176,6 +176,9 @@ fromFile: aFilename extent: aPoint
 	bitmap := (bitmap thumbnailWithExtent: aPoint asPoint) internalize.
 	^self fromGdiplusBitmap: bitmap!
 
+icon
+	^Icon icon!
+
 imageManager
 	"Private - Answer an image manager to use for storing icons"
 
@@ -216,6 +219,7 @@ stbVersion
 !InternalIcon class categoriesFor: #filesType!constants!private! !
 !InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
 !InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
+!InternalIcon class categoriesFor: #icon!public! !
 !InternalIcon class categoriesFor: #imageManager!accessing!private! !
 !InternalIcon class categoriesFor: #new!instance creation!public! !
 !InternalIcon class categoriesFor: #newTile!instance creation!public! !

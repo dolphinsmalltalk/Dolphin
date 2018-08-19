@@ -11,10 +11,10 @@ GdiplusSolidBrushFromColorInitializer comment: ''!
 !GdiplusSolidBrushFromColorInitializer methodsFor!
 
 color: anARGB
-	color := anARGB!
+	color := anARGB asARGB!
 
 createHandle
-	" SolidBrush(IN const Color& color)
+	"Private -  SolidBrush(IN const Color& color)
     	{
        	 GpSolidFill *brush = NULL;
 
@@ -23,14 +23,14 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateSolidFill: color asParameter brush: gpHandle.
-	self assertStatusOk: status.
+	(status := self library gdipCreateSolidFill: color asParameter brush: gpHandle) == Ok
+		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating SolidBrush'! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #color:!accessing!public! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusSolidBrushFromColorInitializer categoriesFor: #color:!initializing!private! !
+!GdiplusSolidBrushFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusSolidBrushFromColorInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !GdiplusSolidBrushFromColorInitializer class methodsFor!

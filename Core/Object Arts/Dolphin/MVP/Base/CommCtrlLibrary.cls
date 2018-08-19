@@ -284,6 +284,19 @@ initialize
 		dwordAtOffset: 4 put: self class initFlags.
 	self initCommonControlsEx: struct!
 
+loadIconMetric: hInst pszName: pszName lims: lims phico: phico
+	"Invoke the LoadIconMetric() function of the module wrapped by the receiver.
+	Helpstring: Loads a specified icon resource with a client-specified system metric
+
+		HRESULT_NOTHROW __stdcall LoadIconMetric(
+			HINSTANCE hInst,
+			RESOURCEID pszName,
+			int lims,
+			[out, retval]HICON* phico);"
+
+	<stdcall: sdword LoadIconMetric handle void* sdword handle*>
+	^self invalidCall!
+
 loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 	"Invoke the LoadIconWithScaleDown() function of the module wrapped by the receiver.
 	Helpstring: Loads an icon. If the icon is not a standard size, this function scales down a larger image instead of scaling up a smaller image.
@@ -320,7 +333,8 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 !CommCtrlLibrary categoriesFor: #imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
 !CommCtrlLibrary categoriesFor: #initCommonControlsEx:!initializing!primitives!public! !
 !CommCtrlLibrary categoriesFor: #initialize!initializing!private! !
-!CommCtrlLibrary categoriesFor: #loadIconWithScaleDown:pszName:cx:cy:phico:!public!win32 functions-icon! !
+!CommCtrlLibrary categoriesFor: #loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
+!CommCtrlLibrary categoriesFor: #loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
 
 !CommCtrlLibrary class methodsFor!
 

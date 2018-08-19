@@ -6,6 +6,7 @@ Collection subclass: #IniFileAbstract
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IniFileAbstract guid: (GUID fromString: '{581771ef-b10d-40c8-a590-a926f4a57f5c}')!
+IniFileAbstract isAbstract: true!
 IniFileAbstract comment: ''!
 !IniFileAbstract categoriesForClass!Unclassified! !
 !IniFileAbstract methodsFor!

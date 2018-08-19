@@ -11,7 +11,7 @@ GdiplusImageFromBytesInitializer comment: ''!
 !GdiplusImageFromBytesInitializer methodsFor!
 
 createHandle
-	" Bitmap::Bitmap(
+	"Private -  Bitmap::Bitmap(
 	    IN IStream *stream, 
 	    IN BOOL useEmbeddedColorManagement
 	    )
@@ -25,11 +25,11 @@ createHandle
 	stm := self iStream.
 	status := self library gdipLoadImageFromStream: stm image: gpHandle.
 	stm free.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating Image'! !
-!GdiplusImageFromBytesInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusImageFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusImageFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

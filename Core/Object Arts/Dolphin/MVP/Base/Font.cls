@@ -201,8 +201,11 @@ printOn: aStream
 	would want to see it."
 
 	aStream
-		basicPrint: self;
-		nextPut: $(; display: self; nextPut: $)!
+		nextPut: $(;
+		display: self class;
+		nextPutAll: ' name: '; print: self name;
+		nextPutAll: ' pointSize: '; print: self pointSize;
+		nextPut: $)!
 
 resolution
 	"Answer the logical pixels per inch of the receiver"

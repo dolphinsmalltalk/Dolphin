@@ -11,7 +11,7 @@ GdiplusImageFromIStreamInitializer comment: ''!
 !GdiplusImageFromIStreamInitializer methodsFor!
 
 createHandle
-	" Image::Image(
+	"Private -  Image::Image(
     IN IStream* stream,
     IN BOOL useEmbeddedColorManagement
     )
@@ -32,21 +32,23 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipLoadImageFromStream: iStream asParameter image: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error loading image'!
 
 isPersistent
+	"The IStream will no longer be valid when restoring from a saved image or binary filed content."
+
 	^false!
 
 iStream: pStream
 	iStream := pStream! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusImageFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusImageFromIStreamInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public!realizing/unrealizing! !
 !GdiplusImageFromIStreamInitializer categoriesFor: #isPersistent!constants!public!realizing/unrealizing!testing! !
-!GdiplusImageFromIStreamInitializer categoriesFor: #iStream:!accessing!constants!public!realizing/unrealizing!testing! !
+!GdiplusImageFromIStreamInitializer categoriesFor: #iStream:!constants!initializing!private!realizing/unrealizing!testing! !
 
 !GdiplusImageFromIStreamInitializer class methodsFor!
 

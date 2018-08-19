@@ -17,29 +17,29 @@ testConversions
 	"Try a few standard colours"
 	(OrderedCollection new
 		add: Color white -> (RGB
-							red: 255
-							green: 255
-							blue: 255);
+							r: 255
+							g: 255
+							b: 255);
 		add: Color black -> (RGB
-							red: 0
-							green: 0
-							blue: 0);
+							r: 0
+							g: 0
+							b: 0);
 		add: Color red -> (RGB
-							red: 255
-							green: 0
-							blue: 0);
+							r: 255
+							g: 0
+							b: 0);
 		add: Color green -> (RGB
-							red: 0
-							green: 255
-							blue: 0);
+							r: 0
+							g: 255
+							b: 0);
 		add: Color blue -> (RGB
-							red: 0
-							green: 0
-							blue: 255);
+							r: 0
+							g: 0
+							b: 255);
 		add: Color brown -> (RGB
-							red: 128
-							green: 128
-							blue: 0);
+							r: 128
+							g: 128
+							b: 0);
 		yourself) do: 
 				[:each |
 				| rgb |
@@ -70,7 +70,7 @@ testHls
 			self assert: (rgb blue - expected blue) abs < 3]!
 
 testRGBNamedColors
-	self assert: RGB brown equals: (RGB red: 128 green: 128 blue: 0).
+	self assert: RGB brown equals: (RGB r: 128 g: 128 b: 0).
 	self assert: RGB red isImmutable!
 
 testSingletons

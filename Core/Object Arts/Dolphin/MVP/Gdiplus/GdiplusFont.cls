@@ -91,11 +91,10 @@ exampleGdipFontHeight
 		self exampleGdipFontHeight showExample
 	"
 
-	| bitmap graphics font brush height |
+	| bitmap graphics font height |
 	bitmap := GdiplusBitmap extent: 450 @ 150.
 	graphics := bitmap graphics.
-	font := GdiplusFont name: 'Arial' emSize: 18.
-	brush := GdiplusSolidBrush black.
+	font := GdiplusFont name: 'Arial' pointSize: 18.
 	height := font heightFromGraphics: graphics.
 	graphics
 		drawString: 'The first line of text at the very top'
@@ -116,11 +115,9 @@ exampleGdipFontHeight
 	^bitmap!
 
 fontFamily: fontFamily emSize: emSize
-	^self 
-		fontFamily: fontFamily
-		emSize: emSize
-		style: FontStyleRegular
-		unit: UnitPoint!
+	Notification deprecated.
+	^self fontFamily: fontFamily pointSize: emSize
+!
 
 fontFamily: fontFamily emSize: emSize style: style unit: unit
 	^self fromInitializer: (GdiplusFontFromFontFamilyInitializer 
@@ -129,15 +126,21 @@ fontFamily: fontFamily emSize: emSize style: style unit: unit
 				style: style
 				unit: unit)!
 
+fontFamily: aGdiplusFontFamily pointSize: anInteger
+	^self 
+		fontFamily: aGdiplusFontFamily
+		emSize: anInteger
+		style: FontStyleRegular
+		unit: UnitPoint!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Font icon!
 
 name: aFontFamilyString emSize: emSize
-	"Answer an instance of the receiver from aFontFamilyString (e.g., 'Arial') and specified emSize."
-
-	^self fontFamily: (GdiplusFontFamily fromName: aFontFamilyString) emSize: emSize!
+	Notification deprecated.
+	^self name: aFontFamilyString pointSize: emSize!
 
 name: aFontFamilyString emSize: emSize style: style unit: unit
 	^self 
@@ -146,15 +149,47 @@ name: aFontFamilyString emSize: emSize style: style unit: unit
 		style: style
 		unit: unit!
 
-new
-	"Answer a new initialized instance of the receiver."
+name: aFontFamilyString pixelSize: pels
+	"Answer an instance of the receiver from aFontFamilyString (e.g., 'Arial') and specified pixel height."
 
-	^self name: 'Arial' emSize: Font default pointSize! !
+	^self name: aFontFamilyString pixelSize: pels style: FontStyleRegular!
+
+name: aFontFamilyString pixelSize: pels style: styleInteger
+	"Answer an instance of the receiver from aFontFamilyString (e.g., 'Arial') and specified pixel height and style."
+
+	^self name: aFontFamilyString emSize: pels style: styleInteger unit: UnitPixel!
+
+name: aFontFamilyString pointSize: emSize
+	"Answer an instance of the receiver from aFontFamilyString (e.g., 'Arial') and specified point size."
+
+	^self
+		name: aFontFamilyString
+		pointSize: emSize
+		style: FontStyleRegular!
+
+name: aFontFamilyString pointSize: emSize style: styleInteger
+	"Answer an instance of the receiver from aFontFamilyString (e.g., 'Arial') and specified point size and style."
+
+	^self
+		name: aFontFamilyString
+		emSize: emSize
+		style: styleInteger
+		unit: UnitPoint!
+
+new
+	"Answer a new initialized instance of the receiver for the default font."
+
+	^self fontFamily: GdiplusFontFamily genericSansSerif pointSize: Font default pointSize! !
 !GdiplusFont class categoriesFor: #exampleGdipFontHeight!examples!public!sunit! !
 !GdiplusFont class categoriesFor: #fontFamily:emSize:!instance creation!public! !
 !GdiplusFont class categoriesFor: #fontFamily:emSize:style:unit:!instance creation!public! !
+!GdiplusFont class categoriesFor: #fontFamily:pointSize:!instance creation!public! !
 !GdiplusFont class categoriesFor: #icon!constants!development!public! !
 !GdiplusFont class categoriesFor: #name:emSize:!instance creation!public! !
 !GdiplusFont class categoriesFor: #name:emSize:style:unit:!instance creation!public! !
+!GdiplusFont class categoriesFor: #name:pixelSize:!instance creation!public! !
+!GdiplusFont class categoriesFor: #name:pixelSize:style:!instance creation!public! !
+!GdiplusFont class categoriesFor: #name:pointSize:!instance creation!public! !
+!GdiplusFont class categoriesFor: #name:pointSize:style:!instance creation!public! !
 !GdiplusFont class categoriesFor: #new!instance creation!public! !
 

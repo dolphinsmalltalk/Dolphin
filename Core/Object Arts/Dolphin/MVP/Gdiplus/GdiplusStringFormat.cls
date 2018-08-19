@@ -2,7 +2,7 @@
 
 GdiplusBase subclass: #GdiplusStringFormat
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusStringFormat guid: (GUID fromString: '{f4b7aa81-5fd1-11d7-b609-00e0987e8081}')!
@@ -18,7 +18,7 @@ alignment
 
 	| status answer |
 	answer := SDWORD new.
-	(status := GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer) = Ok 
+	(status := GdiplusLibrary default gdipGetStringFormatAlign: self asParameter align: answer) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipGetStringFormatAlign failed' with: status].
 	^answer asInteger!
 
@@ -27,7 +27,7 @@ alignment: aStringAlignmentConstant
 
 	| status |
 	(status := GdiplusLibrary default gdipSetStringFormatAlign: self asParameter
-				align: aStringAlignmentConstant) = Ok 
+				align: aStringAlignmentConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatAlign failed' with: status]!
 
 basicFree
@@ -46,8 +46,8 @@ clone
 	"Answer a copy of the receiver."
 
 	| status gpHandle |
-	gpHandle := ExternalStructure new.
-	(status := GdiplusLibrary default gdipCloneStringFormat: self asParameter newFormat: gpHandle) = Ok 
+	gpHandle := ExternalHandle new.
+	(status := GdiplusLibrary default gdipCloneStringFormat: self asParameter newFormat: gpHandle) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipCloneStringFormat failed' with: status].
 	^(self class fromOwnedHandle: gpHandle)
 		initializer: initializer;
@@ -58,6 +58,15 @@ far
 
 	self alignment: StringAlignmentFar!
 
+flags
+	"Get the receiver's flags, which are from StringFormatFlags enumeration."
+
+	| buf status |
+	buf := DWORDBytes new.
+	(status := GdiplusLibrary default gdipGetStringFormatFlags: self asParameter flags: buf) == Ok 
+		ifFalse: [GdiplusError signal: 'GdipSetStringFormatFlags failed' with: status].
+	^buf asSignedInteger!
+
 flags: anInteger 
 	"Set the receiver's flags to specify one or more of text layout information (such as orientation 
 	and clipping) and display manipulations (such as ellipsis insertion, digit substitution, and 
@@ -65,7 +74,7 @@ flags: anInteger
 	more StringFormatFlags constants."
 
 	| status |
-	(status := GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger) = Ok 
+	(status := GdiplusLibrary default gdipSetStringFormatFlags: self asParameter flags: anInteger) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatFlags failed' with: status]!
 
 getTabOffsets
@@ -80,22 +89,48 @@ getTabOffsets
 				gdipGetStringFormatTabStops: self asParameter
 				count: count
 				firstTabOffset: first
-				tabStops: array) = Ok 
+				tabStops: array) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStops failed' with: status].
 	^Array with: first value with: array asArray!
+
+lineAlignment
+	| buf status |
+	buf := DWORDBytes new.
+	(status := GdiplusLibrary default gdipGetStringFormatLineAlign: self asParameter align: buf) == Ok
+		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status].
+	^buf asSignedInteger!
 
 lineAlignment: aStringAlignmentConstant 
 	"Set how the receiver will align a string vertically in a layout rectangle."
 
 	| status |
 	(status := GdiplusLibrary default gdipSetStringFormatLineAlign: self asParameter
-				align: aStringAlignmentConstant) = Ok 
+				align: aStringAlignmentConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatLineAlign failed' with: status]!
 
 near
 	"Set the receiver so that text will be horizontally near aligned in a layout rectangle."
 
 	self alignment: StringAlignmentNear!
+
+printOn: aStream
+	| alignments trimmings |
+	alignments := #(#near #centered #far).
+	trimmings := #(#none #character #word #ellipsisCharacter #ellipsisWord #ellipsisPath).
+	self basicPrintOn: aStream.
+	aStream nextPut: $(.
+	handle isNull
+		ifFalse: 
+			[aStream nextPutAll: 'Flags: '.
+			self flags printOn: aStream base: 16.
+			aStream
+				nextPutAll: ', Alignment: ';
+				print: (alignments at: self alignment + 1);
+				nextPutAll: ', LineAlignment: ';
+				print: (alignments at: self lineAlignment + 1);
+				nextPutAll: ', Trimming: ';
+				print: (trimmings at: self trimming + 1)].
+	aStream nextPut: $)!
 
 setTabStops: aRealArray first: aReal 
 	"Private - Set the receiver's tab-stops."
@@ -105,7 +140,7 @@ setTabStops: aRealArray first: aReal
 				gdipSetStringFormatTabStops: self asParameter
 				firstTabOffset: aReal asParameter
 				count: aRealArray size
-				tabStops: (FLOATArray withAll: aRealArray)) = Ok 
+				tabStops: (FLOATArray withAll: aRealArray)) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTabStops failed' with: status]!
 
 tabOffsets
@@ -129,7 +164,7 @@ tabStopCount
 	| status count |
 	count := SDWORD new.
 	(status := GdiplusLibrary default gdipGetStringFormatTabStopCount: self asParameter count: count) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStopCount failed' with: status].
+		== Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTabStopCount failed' with: status].
 	^count asInteger!
 
 trimming
@@ -139,7 +174,7 @@ trimming
 	| status answer |
 	answer := SDWORD new.
 	(status := GdiplusLibrary default gdipGetStringFormatTrimming: self asParameter trimming: answer) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTrimming failed' with: status].
+		== Ok ifFalse: [GdiplusError signal: 'GdipGetStringFormatTrimming failed' with: status].
 	^answer asInteger!
 
 trimming: aStringTrimmingConstant 
@@ -148,7 +183,7 @@ trimming: aStringTrimmingConstant
 
 	| status |
 	(status := GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
-				trimming: aStringTrimmingConstant) = Ok 
+				trimming: aStringTrimmingConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTrimming failed' with: status]! !
 !GdiplusStringFormat categoriesFor: #alignment!accessing!public! !
 !GdiplusStringFormat categoriesFor: #alignment:!accessing!public! !
@@ -156,10 +191,13 @@ trimming: aStringTrimmingConstant
 !GdiplusStringFormat categoriesFor: #centered!accessing!public! !
 !GdiplusStringFormat categoriesFor: #clone!copying!public! !
 !GdiplusStringFormat categoriesFor: #far!accessing!public! !
+!GdiplusStringFormat categoriesFor: #flags!accessing!public! !
 !GdiplusStringFormat categoriesFor: #flags:!accessing!public! !
 !GdiplusStringFormat categoriesFor: #getTabOffsets!accessing!private! !
+!GdiplusStringFormat categoriesFor: #lineAlignment!accessing!public! !
 !GdiplusStringFormat categoriesFor: #lineAlignment:!accessing!public! !
 !GdiplusStringFormat categoriesFor: #near!accessing!public! !
+!GdiplusStringFormat categoriesFor: #printOn:!public! !
 !GdiplusStringFormat categoriesFor: #setTabStops:first:!accessing!private! !
 !GdiplusStringFormat categoriesFor: #tabOffsets!accessing!public! !
 !GdiplusStringFormat categoriesFor: #tabOffsets:!accessing!public! !
@@ -209,11 +247,11 @@ exampleGdipSFGenerics
 	bitmap := GdiplusBitmap extent: 300 @ 350.
 	graphics := bitmap graphics.
 	brush := GdiplusSolidBrush blue.
-	font := GdiplusFont name: 'Times New Roman' emSize: 12.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 12.
 	rect := 30 @ 30 extent: 160 @ 50.
 	pen := GdiplusPen blue.
 	stringFormat := GdiplusStringFormat genericDefault.
-	graphics 
+	graphics
 		drawString: 'This text was formatted by a generic StringFormat object.'
 		font: font
 		rect: rect
@@ -224,7 +262,7 @@ exampleGdipSFGenerics
 	pen color: ARGB red.
 	brush color: ARGB red.
 	stringFormat := GdiplusStringFormat genericTypographic.
-	graphics 
+	graphics
 		drawString: 'This text was formatted by a typographic StringFormat object.'
 		font: font
 		rect: rect
@@ -235,7 +273,7 @@ exampleGdipSFGenerics
 	pen color: ARGB black.
 	brush color: ARGB black.
 	stringFormat := GdiplusStringFormat new.
-	graphics 
+	graphics
 		drawString: 'This text was formatted by a new StringFormat object.'
 		font: font
 		rect: rect
@@ -254,7 +292,7 @@ exampleGdipSFTabs
 	| bitmap graphics font rect stringFormat |
 	bitmap := GdiplusBitmap extent: 550 @ 200.
 	graphics := bitmap graphics.
-	font := GdiplusFont name: 'Courier New' emSize: 12.
+	font := GdiplusFont name: 'Courier New' pointSize: 12.
 	stringFormat := GdiplusStringFormat new tabOffsets: #(0 150 100 100).
 	rect := 20 @ 20 extent: 500 @ 100.
 	graphics
@@ -263,8 +301,7 @@ exampleGdipSFTabs
 			rect: rect
 			format: stringFormat
 			brush: GdiplusSolidBrush blue;
-		drawString: 'Tabs set at: ' 
-					, (stringFormat tabOffsets collect: [:e | e asInteger]) displayString
+		drawString: 'Tabs set at: ' , (stringFormat tabOffsets collect: [:e | e asInteger]) displayString
 			font: font
 			at: 20 @ 50
 			format: stringFormat
@@ -283,9 +320,9 @@ exampleGdipSFTrimming
 	graphics := bitmap graphics.
 	string := 'One two three four five six seven eight nine'.
 	self enumsStringTrimming keysAndValuesDo: 
-			[:i :e | 
+			[:i :e |
 			stringFormat := GdiplusStringFormat new trimming: e value.
-			font := GdiplusFont name: 'Times New Roman' emSize: 24.
+			font := GdiplusFont name: 'Times New Roman' pointSize: 24.
 			row := (i - 1) // 2.
 			rect := ((i - 1 - (row * 2)) * 250 + 30) @ (row * 130 + 30) extent: 200 @ 80.
 			graphics
@@ -312,14 +349,15 @@ flags: formatFlags language: language
 	"Answer an instance of the receiver whose characteristics are set by formatFlags (zero or more
 	StringFormatFlags constants) and the specified <Integer> language."
 
-	^self fromInitializer: (GdiplusStringFormatInitializer formatFlags: formatFlags
-				language: language)!
+	^self fromInitializer: (GdiplusStringFormatInitializer formatFlags: formatFlags language: language)!
 
 genericDefault
-	^self fromInitializer: GdiplusStringFormatGenericInitializer new!
+	^GenericDefault
+		ifNil: [GenericDefault := self fromInitializer: GdiplusStringFormatInitializer genericDefault]!
 
 genericTypographic
-	^self fromInitializer: GdiplusStringFormatGenericInitializer typographic!
+	^GenericTypographic
+		ifNil: [GenericTypographic := self fromInitializer: GdiplusStringFormatInitializer genericTypographic]!
 
 near
 	"Answer an instance of the receiver with horizontal near alignment."

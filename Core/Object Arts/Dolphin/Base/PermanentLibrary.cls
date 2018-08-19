@@ -6,6 +6,7 @@ ExternalLibrary subclass: #PermanentLibrary
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PermanentLibrary guid: (GUID fromString: '{87b4c583-026e-11d3-9fd7-00a0cc3e4a32}')!
+PermanentLibrary isAbstract: true!
 PermanentLibrary comment: 'PermanentLibrary is the class of <ExternalLibrary>s which are expected to remain permanently open in order for the system to continue functioning. The set of permanent libraries includes all of the basic Win32 system DLLs, the C runtime library, and the Virtual Machine itself. In addition these are not opened lazily to avoid the overhead when accessing the default instance.'!
 !PermanentLibrary categoriesForClass!External-Libraries! !
 !PermanentLibrary methodsFor!

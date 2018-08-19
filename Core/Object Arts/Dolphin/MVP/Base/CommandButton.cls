@@ -32,6 +32,9 @@ command: aCommandMessage
 commandDescription
 	^commandDescription!
 
+commandDescription: anObject
+	commandDescription := anObject!
+
 commandSource
 	"Answer the <View> which is considered the source (and therefore typically the <commandTarget>
 	at the head of the command route) of the receiver's action command. PushButtons themselves do
@@ -91,6 +94,7 @@ validateUserInterface
 !CommandButton categoriesFor: #command!accessing!public! !
 !CommandButton categoriesFor: #command:!accessing!public! !
 !CommandButton categoriesFor: #commandDescription!accessing!public! !
+!CommandButton categoriesFor: #commandDescription:!accessing!public! !
 !CommandButton categoriesFor: #commandSource!accessing!public! !
 !CommandButton categoriesFor: #defaultExtent!constants!private! !
 !CommandButton categoriesFor: #defaultId!accessing!private! !

@@ -349,13 +349,15 @@ buildViewsPopup
 	| popup |
 	popup := Menu new.
 	popup
+		addCommand: (Message selector: #extraLargeIconMode) description: 'Extra large icons';
 		addCommand: (Message selector: #thumbnailsMode) description: 'Thumbnails';
 		addCommand: (Message selector: #tileIconMode) description: 'Tiles';
 		addCommand: (Message selector: #largeIconMode) description: 'Icons';
 		addCommand: (Message selector: #listMode) description: 'List';
 		addCommand: (Message selector: #reportMode) description: 'Details'.
 	popup items do: [:each | each isRadioButtonStyle: true].
-	^popup!
+	^popup
+!
 
 cancelLabelEdit
 	"Private - Cancel current inline editing."
@@ -547,6 +549,11 @@ errorInCommonControlCall: index
 			size := self itemCount.
 			(index between: 0 and: size - 1) ifFalse: [^self errorSubscriptBounds: index]].
 	^self errorInCommonControlCall!
+
+extraLargeIconMode
+	"Place the receiver in extra large icons mode"
+
+	self viewMode: #extraLargeIcons!
 
 findItem: aString startingAt: anInteger wrap: aBoolean
 	"Private - Perform a search for the first item starting with the <readableString>,
@@ -830,8 +837,7 @@ imageFromRow: item
 	self viewMode == #thumbnails ifTrue: [^self getThumbnailOf: item].
 	NTLibrary isWine
 		ifTrue: 
-			[#wineFix.
-			"Wine ListViews seem to expect image indices to always be set in
+			["Wine ListViews seem to expect image indices to always be set in
 			ListView>>onDisplayDetailsRequired:, even if we don't want images to appear.
 			Normally, we answer nil here if no image is required. In Wine we must answer
 			an image index of 0"
@@ -1188,39 +1194,19 @@ lvmGetStringWidth: aString
 		ifTrue: [self errorInCommonControlCall]
 		ifFalse: [width]!
 
-lvmGetSubItemRect: pointIndex bounding: boundingValue 
-	"Private - Answer a bounding Rectangle for all or part of a subitem. pointIndex is
-	itemIndex@subitemIndex."
+lvmGetSubItemRect: rowInteger subitem: colInteger bounding: flagInteger
+	"Private - Answer a bounding Rectangle for all or part of a subitem."
 
 	| rect |
 	rect := RECT new.
 	rect
-		top: pointIndex y;
-		left: boundingValue.
-	(self 
+		top: colInteger;
+		left: flagInteger.
+	(self
 		sendMessage: LVM_GETSUBITEMRECT
-		wParam: pointIndex x
-		lpParam: rect) == 0 
-		ifTrue: [^self errorInCommonControlCall: pointIndex x].
-	^rect asRectangle!
-
-lvmGetSubItemRectX: pointIndex bounding: boundingValue 
-	"Private - Answer a bounding Rectangle for all or part of a subitem. pointIndex is
-	itemIndex@subitemIndex.
-
-	The X suffix signifies that this is an identical replacement for a loose method that already
-	appears in a third party package"
-
-	| rect |
-	rect := RECT new.
-	rect
-		top: pointIndex y;
-		left: boundingValue.
-	(self 
-		sendMessage: LVM_GETSUBITEMRECT
-		wParam: pointIndex x
-		lpParam: rect) == 0 
-		ifTrue: [^self errorInCommonControlCall: pointIndex x].
+		wParam: rowInteger
+		lpParam: rect) == 0
+		ifTrue: [^self errorInCommonControlCall: rowInteger].
 	^rect asRectangle!
 
 lvmGetView
@@ -1872,6 +1858,8 @@ queryCommand: aCommandQuery
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
 	
+	#extraLargeIconMode == cmd ifTrue: [
+		aCommandQuery isChecked: (self viewMode==#extraLargeIcons)].
 	#tileIconMode == cmd ifTrue: [
 		aCommandQuery isChecked: (self viewMode==#tileIcons)].
 	#largeIconMode == cmd ifTrue: [
@@ -1965,15 +1953,16 @@ selectIndex: anInteger set: aBoolean
 
 	| anLvItem mask |
 	anLvItem := LVITEMW new.
-	mask := ##(LVIS_SELECTED | LVIS_FOCUSED).
-	NTLibrary isWine
-		ifTrue: 
-			["Having autoSelectPackages option turned on in System Browser gives
-			unpleasant scrolling effect when many multiple packages are selected. This
-			also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED
-			option in ListView>>selectIndex:. Not sure what overall effect it will have
-			turning this off."
-			mask := mask maskClear: LVIS_FOCUSED].
+	mask := NTLibrary isWine
+				ifTrue: 
+					["Having autoSelectPackages option turned on in System
+					 Browser gives unpleasant scrolling effect when many
+					 multiple packages are selected. This also happens in
+					 Package Browser. Problem under Wine traced to LVIS_FOCUSED
+					 option in ListView>>selectIndex:. Not sure what overall
+					 effect it will have turning this off."
+					LVIS_SELECTED]
+				ifFalse: [##(LVIS_SELECTED | LVIS_FOCUSED)].
 	anLvItem stateMask: mask.
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
@@ -2124,12 +2113,27 @@ stateImageList: aWinImageList
 
 	^self lvmSetImageList: aWinImageList type: LVSIL_STATE!
 
-subItemRectRow: row column: col 
-	| fullRect iconRect |
-	fullRect := self lvmGetSubItemRectX: (row - 1) @ (col - 1) bounding: LVIR_LABEL.
-	iconRect := self lvmGetSubItemRectX: (row - 1) @ (col - 1) bounding: LVIR_ICON.
-	^fullRect subtract: iconRect
-	!
+subItemRectRow: rowInteger column: colInteger
+	"Answer a <Rectangle> representing the bounds of the sub-item at the specified row and column."
+
+	| fullRect item subitem |
+	item := rowInteger - 1.
+	subitem := colInteger - 1.
+	fullRect := self
+				lvmGetSubItemRect: item
+				subitem: subitem
+				bounding: LVIR_LABEL.
+	^(columns at: colInteger) getImageBlock
+		ifNil: [fullRect]
+		ifNotNil: 
+			[| iconRect |
+			"We need to subtract the icon rect and adjust for the gap too"
+			iconRect := self
+						lvmGetSubItemRect: item
+						subitem: subitem
+						bounding: LVIR_ICON.
+			iconRect right: iconRect right + 4.
+			fullRect subtract: iconRect]!
 
 text: aString
 	"Sets the title text for the receiver. We also set the primary
@@ -2314,6 +2318,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #ensureSelectionVisible!public!selection! !
 !ListView categoriesFor: #ensureVisible:!operations!public! !
 !ListView categoriesFor: #errorInCommonControlCall:!exceptions!private! !
+!ListView categoriesFor: #extraLargeIconMode!commands!public! !
 !ListView categoriesFor: #findItem:startingAt:wrap:!private!searching! !
 !ListView categoriesFor: #forecolor:!accessing!public! !
 !ListView categoriesFor: #forgetLastClickedColumn!helpers!private! !
@@ -2397,8 +2402,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #lvmGetNextItem:flags:!accessing!private! !
 !ListView categoriesFor: #lvmGetOrigin!accessing!private! !
 !ListView categoriesFor: #lvmGetStringWidth:!accessing!private! !
-!ListView categoriesFor: #lvmGetSubItemRect:bounding:!geometry!private! !
-!ListView categoriesFor: #lvmGetSubItemRectX:bounding:!geometry!private! !
+!ListView categoriesFor: #lvmGetSubItemRect:subitem:bounding:!private! !
 !ListView categoriesFor: #lvmGetView!accessing-styles!private! !
 !ListView categoriesFor: #lvmGetViewRect!geometry!private! !
 !ListView categoriesFor: #lvmInsertAt:column:!adding!private! !
@@ -2521,6 +2525,11 @@ columnClass
 
 	^ListViewColumn!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 initialize
 	"Private - Initialise the receiver's class variables.
 		self initialize
@@ -2635,6 +2644,7 @@ winClassName
 
 	^'SysListView32'! !
 !ListView class categoriesFor: #columnClass!constants!private! !
+!ListView class categoriesFor: #icon!constants!public! !
 !ListView class categoriesFor: #initialize!initializing!private! !
 !ListView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
 !ListView class categoriesFor: #onStartup!events-session!public! !

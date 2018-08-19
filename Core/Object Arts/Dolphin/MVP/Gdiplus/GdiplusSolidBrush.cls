@@ -20,7 +20,7 @@ color
 color: anARGB 
 	| status |
 	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: anARGB asParameter) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
+		== Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
 !GdiplusSolidBrush categoriesFor: #color!accessing!public! !
 !GdiplusSolidBrush categoriesFor: #color:!accessing!public! !
 
@@ -48,7 +48,7 @@ exampleGdipDropShadow
 	shadowRect := rect topLeft // offset corner: rect extent // offset.
 	shadow := GdiplusBitmap extent: shadowRect extent.
 	shadow graphics fillRectangle: shadowRect
-		brush: (GdiplusSolidBrush color: (ARGB 
+		brush: (GdiplusSolidBrush color: (Color 
 						a: 128
 						r: 0
 						g: 0
@@ -62,7 +62,7 @@ exampleGdipDropShadow
 			from: 0 @ 0
 			extent: shadowRect extent.
 	(bitmap graphics)
-		fillRectangle: rect brush: (GdiplusSolidBrush color: Color white asARGB);
+		fillRectangle: rect brush: (GdiplusSolidBrush color: Color white);
 		drawRectangle: rect.
 	^bitmap!
 

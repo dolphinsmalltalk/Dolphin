@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ScintillaDef
 	instanceVariableNames: 'id name isDeprecated comment selector constName'
@@ -6,6 +6,7 @@ Object subclass: #ScintillaDef
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaDef guid: (GUID fromString: '{5d1763e5-2a8b-42e5-9a1c-c1973b7e2d8b}')!
+ScintillaDef isAbstract: true!
 ScintillaDef comment: ''!
 !ScintillaDef categoriesForClass!Development! !
 !ScintillaDef methodsFor!

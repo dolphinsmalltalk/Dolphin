@@ -2,13 +2,14 @@
 
 AttributeDescriptor subclass: #Aspect
 	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category'
-	classVariableNames: 'MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
+	classVariableNames: 'EditInPlaceMask MultilineValueMask ReadOnlyPresenterBlockMask ValueWorkspaceEditorMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Aspect guid: (GUID fromString: '{87b4c4d7-026e-11d3-9fd7-00a0cc3e4a32}')!
-Aspect addClassConstant: 'MultilineValueMask' value: 262144!
-Aspect addClassConstant: 'ReadOnlyPresenterBlockMask' value: 65536!
-Aspect addClassConstant: 'ValueWorkspaceEditorMask' value: 131072!
+Aspect addClassConstant: 'EditInPlaceMask' value: 16r80000!
+Aspect addClassConstant: 'MultilineValueMask' value: 16r40000!
+Aspect addClassConstant: 'ReadOnlyPresenterBlockMask' value: 16r10000!
+Aspect addClassConstant: 'ValueWorkspaceEditorMask' value: 16r20000!
 Aspect comment: 'Part of the PublishedAspectorInspector framework.
 
 <Aspect>s are used to describe the published aspects of various objects. An Aspect descriptor can be combined with a particular object to create an <AspectAccessor> that can be used to access the subject object with the value/value> protocol. The <AspectAccessor> uses the aspect name to construct accessor messages (e.g. #myAspect and #myAspect:) for getting and setting the value. An Aspect instance also holds a presenter block (a <dyadicValuable>) which, when evaluated, will create a presenter suitable for editing the aspect as its model.
@@ -44,6 +45,11 @@ accessorFor: anObject
 	"Answers an AspectAccessor value adaptor for the receiver on anObject"
 
 	^self accessorClass subject: anObject aspect: self!
+
+beEditedInPlace
+	"Set that aspect editor should be displayed in-place."
+
+	flags := flags maskSet: EditInPlaceMask!
 
 beImmediateActionIsEdit
 	"Some aspects can use their edit block to perform an immediate action. Set this here"
@@ -158,8 +164,13 @@ immediateActionBlock
 
 	^immediateActionBlock!
 
+isEditedInPlace
+	"Answer whether the aspect should be edited in-place if possible."
+
+	^flags anyMask: EditInPlaceMask!
+
 isEditedWithValueWorkspace
-	"Answer true if we will use a ValueWorkspace presenter for editing the receiver."
+	"Answer true if we will use a ValueWorkspace presenter for editing the receiver"
 
 	^flags anyMask: ValueWorkspaceEditorMask!
 
@@ -191,7 +202,7 @@ name: aSymbol presenterBlock: aDyadicValuableOrNil editBlock: aMonadicValuable
 	editor presenter creation block to aOneArgBlock"
 
 	name := aSymbol.
-	aDyadicValuableOrNil isNil
+	aDyadicValuableOrNil == self class defaultPresenterBlock
 		ifTrue: 
 			["If no presenter block is specified, then the default ValueWorkspace presentation should be used."
 			self beValueWorkspacePresenter]
@@ -247,10 +258,11 @@ writeInto: subjectObject value: valueObject
 !Aspect categoriesFor: #=!comparing!public! !
 !Aspect categoriesFor: #accessorClass!constants!private! !
 !Aspect categoriesFor: #accessorFor:!accessing!public! !
+!Aspect categoriesFor: #beEditedInPlace!public! !
 !Aspect categoriesFor: #beImmediateActionIsEdit!accessing!public! !
-!Aspect categoriesFor: #beMultilineValue!modes!public! !
+!Aspect categoriesFor: #beMultilineValue!public!testing! !
 !Aspect categoriesFor: #bePresenterBlockReadOnly!accessing!public! !
-!Aspect categoriesFor: #beValueWorkspacePresenter!modes!public! !
+!Aspect categoriesFor: #beValueWorkspacePresenter!public!testing! !
 !Aspect categoriesFor: #canEdit!public!testing! !
 !Aspect categoriesFor: #canGenerateAccessors!private!testing! !
 !Aspect categoriesFor: #canImmediateAction!public!testing! !
@@ -270,6 +282,7 @@ writeInto: subjectObject value: valueObject
 !Aspect categoriesFor: #getSelector!accessing!private! !
 !Aspect categoriesFor: #hash!comparing!public! !
 !Aspect categoriesFor: #immediateActionBlock!accessing!private! !
+!Aspect categoriesFor: #isEditedInPlace!public!testing! !
 !Aspect categoriesFor: #isEditedWithValueWorkspace!public!testing! !
 !Aspect categoriesFor: #isMultilineValue!public!testing! !
 !Aspect categoriesFor: #isPresenterBlockReadOnly!accessing!public! !
@@ -293,7 +306,7 @@ autostring: aStringAspectSymbol
 	The aspect is editable using a TextPresenter with a single line editor view
 	that updates on each character"
 
-	^self name: aStringAspectSymbol
+	^(self name: aStringAspectSymbol
 		presenterBlock: 
 			[:p :m | 
 			| presenter |
@@ -301,7 +314,9 @@ autostring: aStringAspectSymbol
 			(presenter view)
 				updatePerChar: true;
 				selectAllIfSingleLine.
-			presenter]!
+			presenter])
+		beEditedInPlace;
+		yourself!
 
 bitmap: aBitmapAspectSymbol
 	"Answer an instance of the receiver for aBitmapAspectSymbol.
@@ -368,6 +383,19 @@ boolean: aBooleanAspectSymbol
 		isNullable: false;
 		beImmediateActionIsEdit.
 	^answer!
+
+choice: aChoiceAspectSymbol choiceBlock: aMonadicValuable
+	"Answer an instance of the receiver for aChoiceAspectSymbol.
+	The possible choices can be taken from from anArray"
+
+	^(self name: aChoiceAspectSymbol
+		presenterBlock: 
+			[:p :m |
+			(ChoicePresenter createIn: p on: m)
+				choices: (aMonadicValuable value: m);
+				yourself])
+		isNullable: false;
+		yourself!
 
 choice: aChoiceAspectSymbol evaluationFrom: anArrayOfEvaluableStrings 
 	"Answer an instance of the receiver for aChoiceAspectSymbol.
@@ -489,8 +517,9 @@ collection: aCollectionAspectSymbol presenterClass: collectionPresenterClass add
 		editBlock: self defaultCollectionEditBlock!
 
 color: aColorAspectSymbol 
-	"Answer an instance of the receiver for aColorAspectSymbol.
-	The aspect is viewable  using a ColorPresenter and editable using a ColorDialog"
+	"Answer an instance of the receiver for aColorAspectSymbol. The aspect is viewable using a
+	ColorPresenter and editable using a ColorDialog, or editable in-place with a single-line
+	ValueWorkspace."
 
 	^(self 
 		name: aColorAspectSymbol
@@ -498,6 +527,7 @@ color: aColorAspectSymbol
 		editBlock: [:p | ColorDialog showModalOn: p model])
 		beImmutable;
 		bePresenterBlockReadOnly;
+		beEditedInPlace;
 		yourself!
 
 date: aSymbol 
@@ -521,6 +551,12 @@ dictionary: aSymbol
 	argument . The aspect is displayed using a DictionaryPresenter"
 
 	^self collection: aSymbol presenterClass: DictionaryPresenter!
+
+extent: aSymbol
+	"Answer an instance of the receiver for editing a <Point> extent aspect of an 
+	object. See #point:"
+
+	^self point: aSymbol!
 
 fileOpen: aFilenameAspectSymbol 
 	"Answer an instance of the receiver for aFilenameAspectSymbol.
@@ -549,14 +585,16 @@ folder: aFolderAspectSymbol
 				ifPresent: [:dialog | [:p | dialog showModalOn: p model]])!
 
 font: aFontAspectSymbol 
-	"Answer an instance of the receiver for aFontAspectSymbol.
-	The aspect is viewable using a FontPresenter and editable using a FontDialog"
+	"Answer an instance of the receiver for aFontAspectSymbol. The aspect is viewable using a
+	FontPresenter and editable using a FontDialog, or in-place with a single line value
+	workspace."
 
 	^(self 
 		name: aFontAspectSymbol
 		presenterBlock: [:p :m | FontPresenter createIn: p on: m]
 		editBlock: [:p | FontDialog showModalOn: p model])
 		bePresenterBlockReadOnly;
+		beEditedInPlace;
 		yourself!
 
 hotkey: aHotKeyAspectSymbol 
@@ -568,7 +606,7 @@ hotkey: aHotKeyAspectSymbol
 icon: anIconAspectSymbol
 	"Answer an instance of the receiver for anIconAspectSymbol.
 	The aspect is viewable using an ImagePresenter with a 'Basic image' view
-	and editable using a FileDialog"
+	and editable using a FileDialog, or edited in-place with a single line ValueWorkspace."
 
 	^(self
 		name: anIconAspectSymbol
@@ -638,11 +676,14 @@ list: aListAspectSymbol addFrom: anArray
 maxDisplayCharacters
 	^40!
 
-menu: aMenuAspectSymbol 
+menu: aMenuAspectSymbol
 	"Answer an instance of the receiver for aMenuAspectSymbol.
 	The aspect is editable using a MenuComposer"
 
-	^self name: aMenuAspectSymbol editBlock: [:p | MenuComposer showModalOn: p model]!
+	^self
+		name: aMenuAspectSymbol
+		presenterBlock: nil
+		editBlock: [:p | MenuComposer showModalOn: p model]!
 
 menuBar: aMenuAspectSymbol 
 	"Answer an instance of the receiver for aMenuAspectSymbol.
@@ -670,7 +711,7 @@ name: aSymbol
 	"Answer an instance of the receiver for anAspectSymbol.
 	The aspect is editable using the default ValueWorkspace presenter"
 
-	^self name: aSymbol presenterBlock: nil!
+	^self name: aSymbol presenterBlock: self defaultPresenterBlock!
 
 name: aSymbol chooseFrom: anArrayOEvaluableStrings 
 	"Answer an instance of the receiver for anAspectSymbol.
@@ -697,7 +738,7 @@ name: aSymbol editBlock: aOneArgEditBlock
 
 	^self 
 		name: aSymbol
-		presenterBlock: nil
+		presenterBlock: self defaultPresenterBlock
 		editBlock: aOneArgEditBlock!
 
 name: aSymbol presenterBlock: aTwoArgPresenterBlock
@@ -728,18 +769,47 @@ new
 
 	^self shouldNotImplement!
 
-number: aSymbol 
+number: aSymbol
 	"Answer an instance of the receiver for the <Number> aspect, aSymbol.
 	The aspect is editable using a NumberPresenter."
 
-	^self name: aSymbol
+	^(self name: aSymbol
 		presenterBlock: 
-			[:p :m | 
+			[:p :m |
 			| presenter |
 			presenter := NumberPresenter createIn: p on: m.
 			presenter view typeconverter leftNullValue: 0.
 			presenter view selectAllIfSingleLine.
-			presenter]!
+			presenter])
+		beEditedInPlace;
+		yourself!
+
+point: aSymbol
+	"Answer an instance of the receiver for editing a <Point> aspect of an object. The aspect is
+	editable and viewable using a single-line ValueWorkspace as we don't have any other more
+	specialised editor at present. Point aspects are immutable, so if their x or y values are
+	changed the whole Point is replaced."
+
+	^(self name: aSymbol)
+		beImmutable;
+		beEditedInPlace;
+		yourself!
+
+position: aSymbol
+	"Answer an instance of the receiver for editing a <Point> position aspect of an 
+	object. See #point:"
+
+	^self point: aSymbol!
+
+rectangle: aSymbol
+	"Answer an instance of the receiver for editing a <Rectangle> aspect of an 
+	object. The aspect is editable and viewable using a single-line ValueWorkspace as we
+	don't have any other more specialised editor at present."
+
+	^(self name: aSymbol)
+		beImmutable;
+		beEditedInPlace;
+		yourself!
 
 richText: aRichTextAspectSymbol
 	"Answer an instance of the receiver for aTextAspectSymbol.
@@ -809,6 +879,7 @@ time: aSymbol
 !Aspect class categoriesFor: #bitmap:!instance creation!public! !
 !Aspect class categoriesFor: #block:!development!instance creation!public! !
 !Aspect class categoriesFor: #boolean:!instance creation!public! !
+!Aspect class categoriesFor: #choice:choiceBlock:!instance creation!public! !
 !Aspect class categoriesFor: #choice:evaluationFrom:!instance creation!public! !
 !Aspect class categoriesFor: #choice:from:!instance creation!public! !
 !Aspect class categoriesFor: #choice:from:andNil:!instance creation!public! !
@@ -824,6 +895,7 @@ time: aSymbol
 !Aspect class categoriesFor: #defaultCollectionEditBlock!constants!private! !
 !Aspect class categoriesFor: #defaultPresenterBlock!constants!development!private! !
 !Aspect class categoriesFor: #dictionary:!instance creation!public! !
+!Aspect class categoriesFor: #extent:!instance creation!public! !
 !Aspect class categoriesFor: #fileOpen:!instance creation!public! !
 !Aspect class categoriesFor: #fileSave:!instance creation!public! !
 !Aspect class categoriesFor: #float:!instance creation!public! !
@@ -849,6 +921,9 @@ time: aSymbol
 !Aspect class categoriesFor: #name:presenterBlock:editBlock:!instance creation!public! !
 !Aspect class categoriesFor: #new!instance creation!private! !
 !Aspect class categoriesFor: #number:!instance creation!public! !
+!Aspect class categoriesFor: #point:!instance creation!public! !
+!Aspect class categoriesFor: #position:!instance creation!public! !
+!Aspect class categoriesFor: #rectangle:!instance creation!public! !
 !Aspect class categoriesFor: #richText:!instance creation!public! !
 !Aspect class categoriesFor: #sequenceableCollection:!instance creation!public! !
 !Aspect class categoriesFor: #sequenceableCollection:addEvaluationFrom:!instance creation!public! !

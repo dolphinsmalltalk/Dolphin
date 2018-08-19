@@ -181,6 +181,14 @@ defineFields
 		defineField: #right type: SDWORDField new;
 		defineField: #bottom type: SDWORDField new!
 
+extent: newExtent
+	"Answer a new instance of the receiver with zero origin and the specified extent."
+
+	^self basicNew bytes: ((ByteArray newFixed: 16)
+				sdwordAtOffset: 8 put: newExtent x;
+				sdwordAtOffset: 12 put: newExtent y;
+				yourself)!
+
 fromRectangle: aRectangle
 	"Answer a new instance of the receiver instantiated from the Smalltalk
 	Rectangle, aRectangle."
@@ -245,6 +253,7 @@ uninitialize
 
 	self environment removeKey: #RECTL ifAbsent: []! !
 !RECT class categoriesFor: #defineFields!initializing!public! !
+!RECT class categoriesFor: #extent:!instance creation!public! !
 !RECT class categoriesFor: #fromRectangle:!instance creation!public! !
 !RECT class categoriesFor: #icon!constants!public! !
 !RECT class categoriesFor: #initialize!development!initializing!private! !

@@ -198,21 +198,17 @@ headerIcon: aBoolean
 				ifFalse: [Icon fromId: 'UpArrow.ico']]!
 
 imageFromRow: item
-	"Private - Answer the image for this column extracted from the <Object>, item,
-	which is an element of the receiver's parent <ListView>.
-	As of Dolphin 3.0 the image block is permitted to be nil for the common case
-	where the columns does not have images."
+	"Private - Answer the image for this column extracted from the <Object>, item, which is an element of the receiver's parent <ListView>. 
+	As of Dolphin 3.0 the image block is permitted to be nil for the common case where the columns does not have images."
 
-	NTLibrary isWine ifTrue: [
-		#wineFix.
-		"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, 
-		even if we don't want images to appear. Normally, we answer nil here if no image is required. 
-		In Wine we must answer an image index of 0"
-		getImageBlock ifNil: [^0]].
-
-	^getImageBlock isNil ifFalse: [
-		getImageBlock value: (self contentFromRow: item)].
-!
+	^getImageBlock isNil
+		ifTrue: 
+			[NTLibrary isWine
+				ifTrue: 
+					[#wineFix. 
+					"Wine ListViews seem to expect image indices to always be set in ListView>>onDisplayDetailsRequired:, even if we don't want images to appear. Normally, we answer nil here if no image is required. In Wine we must answer an image index of 0"
+					0]]
+		ifFalse: [getImageBlock value: (self contentFromRow: item)]!
 
 index
 	"Answer the one based index of the receiver in its parent"

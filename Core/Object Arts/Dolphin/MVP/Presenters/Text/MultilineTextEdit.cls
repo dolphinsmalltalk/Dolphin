@@ -172,6 +172,17 @@ lineCount
 	^self sendMessage: EM_GETLINECOUNT
 !
 
+lineHeight: anInteger
+	"Answer the height of the specified line of text in the receiver, expressed in pixels and
+	not including any leading."
+
+	| canvas height |
+	canvas := self canvas.
+	canvas font: self actualFont.
+	height := canvas textMetrics tmHeight.
+	canvas free.
+	^height!
+
 lineLength: anIntegerLineNumber
 	"Answers the length of the line at anIntegerLineNumber."
 
@@ -359,6 +370,7 @@ wordWrap: aBoolean
 !MultilineTextEdit categoriesFor: #initialize!initializing!private! !
 !MultilineTextEdit categoriesFor: #insertText:at:!public!text retrieval & modification! !
 !MultilineTextEdit categoriesFor: #lineCount!accessing!public! !
+!MultilineTextEdit categoriesFor: #lineHeight:!public! !
 !MultilineTextEdit categoriesFor: #lineLength:!accessing!public! !
 !MultilineTextEdit categoriesFor: #queryCommand:!commands!private! !
 !MultilineTextEdit categoriesFor: #resetCharFormat!operations!public! !

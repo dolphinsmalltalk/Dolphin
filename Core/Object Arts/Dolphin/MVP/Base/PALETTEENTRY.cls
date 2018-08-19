@@ -30,9 +30,9 @@ asColor
 	"Answer a new Colour based on the receiver's data"
 
 	^Color
-		red: self peRed
-		green: self peGreen
-		blue: self peBlue!
+		r: self peRed
+		g: self peGreen
+		b: self peBlue!
 
 peBlue
 	"Answer the <Integer> value of the receiver's 'peBlue' field."

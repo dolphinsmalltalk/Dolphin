@@ -24,6 +24,6 @@ addFontFile: aFilename
 !GdiplusPrivateFontCollection class methodsFor!
 
 new
-	^self fromInitializer: GdiplusPrivateFontCollectionInitializer new! !
+	^self fromInitializer: GdiplusPrivateFontCollectionInitializer default! !
 !GdiplusPrivateFontCollection class categoriesFor: #new!instance creation!public! !
 

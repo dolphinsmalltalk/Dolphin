@@ -1,12 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-VirtualColor subclass: #DefaultColor
+VirtualColor subclass: #ThemeColor
 	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DefaultColor guid: (GUID fromString: '{5016060e-ec13-4e73-be45-ed636d352614}')!
-DefaultColor comment: '`DefaultColor` is a class of `VirtualColor`s that provide a named indirection to a real `Color`. They are useful for simple theming purposes, allowing view resources to be created that refer to named `DefaultColor`s which can then be changed to configure the desired actual colour later.
+ThemeColor guid: (GUID fromString: '{5016060e-ec13-4e73-be45-ed636d352614}')!
+ThemeColor comment: '`ThemeColor` is a class of `VirtualColor`s that provide a named indirection to a real `Color`. They are useful for simple theming purposes, allowing view resources to be created that refer to named `ThemeColor`s which can then be changed to configure the desired actual colour later.
 
 ## Instance Variables:
   `name`		`Symbol`; the name of the color.
@@ -16,8 +16,8 @@ DefaultColor comment: '`DefaultColor` is a class of `VirtualColor`s that provide
 
 
 '!
-!DefaultColor categoriesForClass!Drawing! !
-!DefaultColor methodsFor!
+!ThemeColor categoriesForClass!Drawing! !
+!ThemeColor methodsFor!
 
 actualColor
 	^actualColor ?? Color window!
@@ -66,15 +66,15 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler writePreambleFor: self.
 	anSTBOutFiler nextPut: self name! !
-!DefaultColor categoriesFor: #actualColor!accessing!public! !
-!DefaultColor categoriesFor: #actualColor:!accessing!public! !
-!DefaultColor categoriesFor: #name!printing!public! !
-!DefaultColor categoriesFor: #printOn:!printing!public! !
-!DefaultColor categoriesFor: #setName:actualColor:!initializing!private! !
-!DefaultColor categoriesFor: #shallowCopy!copying!public! !
-!DefaultColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!ThemeColor categoriesFor: #actualColor!accessing!public! !
+!ThemeColor categoriesFor: #actualColor:!accessing!public! !
+!ThemeColor categoriesFor: #name!printing!public! !
+!ThemeColor categoriesFor: #printOn:!printing!public! !
+!ThemeColor categoriesFor: #setName:actualColor:!initializing!private! !
+!ThemeColor categoriesFor: #shallowCopy!copying!public! !
+!ThemeColor categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!DefaultColor class methodsFor!
+!ThemeColor class methodsFor!
 
 addNamed: aSymbol color: aColor
 	| wrapper |
@@ -103,9 +103,9 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 uninitialize
 	NamedColors
 		removeAllKeys: ((NamedColors select: [:each | each isKindOf: self]) collect: [:each | each name])! !
-!DefaultColor class categoriesFor: #addNamed:color:!instance creation!named colors!public! !
-!DefaultColor class categoriesFor: #initialize!class initialization!development!public! !
-!DefaultColor class categoriesFor: #name:actualColor:!instance creation!public! !
-!DefaultColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!DefaultColor class categoriesFor: #uninitialize!class hierarchy-removing!development!public! !
+!ThemeColor class categoriesFor: #addNamed:color:!instance creation!named colors!public! !
+!ThemeColor class categoriesFor: #initialize!class initialization!development!public! !
+!ThemeColor class categoriesFor: #name:actualColor:!instance creation!public! !
+!ThemeColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!ThemeColor class categoriesFor: #uninitialize!class hierarchy-removing!development!public! !
 

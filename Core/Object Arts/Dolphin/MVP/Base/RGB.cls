@@ -32,6 +32,17 @@ asRGB
 
 	^self!
 
+basicHls
+	| hls base |
+	hls := ByteArray newFixed: 6.
+	base := hls yourAddress.
+	ShlwapiLibrary default
+		colorRGBToHLS: code
+		pwHue: base
+		pwLuminance: base + 2
+		pwSaturation: base + 4.
+	^hls!
+
 blue
 	"Answer the receiver's blue component (a SmallInteger in the range 0..255)."
 
@@ -45,16 +56,19 @@ green
 hls
 	"Answer the hue, luminance, and saturation values that correspond to the receiver."
 
-	| hue luminance saturation |
-	hue := WORD new.
-	luminance := WORD new.
-	saturation := WORD new.
-	ShlwapiLibrary default
-		colorRGBToHLS: self asParameter
-		pwHue: hue
-		pwLuminance: luminance
-		pwSaturation: saturation.
-	^{hue asInteger. luminance asInteger. saturation asInteger}!
+	| hls |
+	hls := self basicHls.
+	^{hls wordAtOffset: 0. hls wordAtOffset: 2. hls wordAtOffset: 4}!
+
+hue
+	"Answer the hue of the receiver."
+
+	^self basicHls wordAtOffset: 0!
+
+luminance
+	"Answer the luminance of the receiver."
+
+	^self basicHls wordAtOffset: 2!
 
 printOn: aStream
 	"Put an ASCII representation of receiver onto aStream."
@@ -62,11 +76,11 @@ printOn: aStream
 	aStream
 		nextPut: $(;
 		display: self class;
-		display: ' red: ';
+		display: ' r: ';
 		print: self red;
-		display: ' green: ';
+		display: ' g: ';
 		print: self green;
-		display: ' blue: ';
+		display: ' b: ';
 		print: self blue;
 		nextPut: $)!
 
@@ -75,6 +89,11 @@ red
 
 	^code bitAnd: 16rFF!
 
+saturation
+	"Answer the saturation of the receiver."
+
+	^self basicHls wordAtOffset: 4!
+
 setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls
 	to represent the color)."
@@ -82,11 +101,15 @@ setCode: anInteger
 	code := anInteger bitAnd: 16rFFFFFF! !
 !RGB categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
 !RGB categoriesFor: #asRGB!converting!public! !
+!RGB categoriesFor: #basicHls!converting!private! !
 !RGB categoriesFor: #blue!accessing!public! !
 !RGB categoriesFor: #green!accessing!public! !
 !RGB categoriesFor: #hls!converting!public! !
+!RGB categoriesFor: #hue!accessing!public! !
+!RGB categoriesFor: #luminance!accessing!public! !
 !RGB categoriesFor: #printOn:!printing!public! !
 !RGB categoriesFor: #red!accessing!public! !
+!RGB categoriesFor: #saturation!accessing!public! !
 !RGB categoriesFor: #setCode:!accessing!private! !
 
 !RGB class methodsFor!
@@ -94,7 +117,6 @@ setCode: anInteger
 fromInteger: anInteger 
 	"Answer an instance whose three component colour values are embedded in anInteger."
 
-	<primitive: 157>
 	^(self basicNew)
 		setCode: anInteger;
 		yourself
@@ -110,84 +132,84 @@ initialize
 	namedColors
 		at: #red
 			put: (self
-					red: 255
-					green: 0
-					blue: 0);
+					r: 255
+					g: 0
+					b: 0);
 		at: #darkRed
 			put: (self
-					red: 128
-					green: 0
-					blue: 0);
+					r: 128
+					g: 0
+					b: 0);
 		at: #blue
 			put: (self
-					red: 0
-					green: 0
-					blue: 255);
+					r: 0
+					g: 0
+					b: 255);
 		at: #darkBlue
 			put: (self
-					red: 0
-					green: 0
-					blue: 128);
+					r: 0
+					g: 0
+					b: 128);
 		at: #green
 			put: (self
-					red: 0
-					green: 255
-					blue: 0);
+					r: 0
+					g: 255
+					b: 0);
 		at: #darkGreen
 			put: (self
-					red: 0
-					green: 128
-					blue: 0);
+					r: 0
+					g: 128
+					b: 0);
 		at: #yellow
 			put: (self
-					red: 255
-					green: 255
-					blue: 0);
+					r: 255
+					g: 255
+					b: 0);
 		at: #brown
 			put: (self
-					red: 128
-					green: 128
-					blue: 0);
+					r: 128
+					g: 128
+					b: 0);
 		at: #magenta
 			put: (self
-					red: 255
-					green: 0
-					blue: 255);
+					r: 255
+					g: 0
+					b: 255);
 		at: #darkMagenta
 			put: (self
-					red: 128
-					green: 0
-					blue: 128);
+					r: 128
+					g: 0
+					b: 128);
 		at: #cyan
 			put: (self
-					red: 0
-					green: 255
-					blue: 255);
+					r: 0
+					g: 255
+					b: 255);
 		at: #darkCyan
 			put: (self
-					red: 0
-					green: 128
-					blue: 128);
+					r: 0
+					g: 128
+					b: 128);
 		at: #white
 			put: (self
-					red: 255
-					green: 255
-					blue: 255);
+					r: 255
+					g: 255
+					b: 255);
 		at: #gray
 			put: (self
-					red: 204
-					green: 204
-					blue: 204);
+					r: 204
+					g: 204
+					b: 204);
 		at: #darkGray
 			put: (self
-					red: 128
-					green: 128
-					blue: 128);
+					r: 128
+					g: 128
+					b: 128);
 		at: #black
 			put: (self
-					red: 0
-					green: 0
-					blue: 0);
+					r: 0
+					g: 0
+					b: 0);
 		shrink.
 	namedColors do: [:each | each isImmutable: true].
 	self addClassConstant: 'StdColours' value: namedColors!
@@ -197,14 +219,18 @@ named: aSymbol
 
 	^StdColours at: aSymbol!
 
+r: redValue g: greenValue b: blueValue
+	"Answer a new instance whose red, green and blue components are specified as the
+	arguments, which are expected to be in the range 0..255. See also #red:green:blue:"
+
+	^self fromInteger: (redValue bitOr: ((greenValue bitShift: 8) bitOr: (blueValue bitShift: 16)))!
+
 red: redValue green: greenValue blue: blueValue
 	"Answer an instance whose three component colour values are given."
 
-	^self fromInteger: 
-		((((redValue max: 0) min: 16rFF) asInteger) 
-			bitOr: (((((greenValue max: 0) min: 16rFF) asInteger) bitShift: 8) 
-				bitOr: ((((blueValue max: 0) min: 16rFF) asInteger) bitShift: 16)))
-!
+	^self fromInteger: ((redValue asInteger clampBetween: 0 and: 255)
+				bitOr: (((greenValue asInteger clampBetween: 0 and: 255) bitShift: 8)
+						bitOr: ((blueValue asInteger clampBetween: 0 and: 255) bitShift: 16)))!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier version models.
@@ -227,6 +253,7 @@ stbVersion
 !RGB class categoriesFor: #fromInteger:!instance creation!public! !
 !RGB class categoriesFor: #initialize!development!initializing!private! !
 !RGB class categoriesFor: #named:!instance creation!public! !
+!RGB class categoriesFor: #r:g:b:!instance creation!public! !
 !RGB class categoriesFor: #red:green:blue:!instance creation!public! !
 !RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !RGB class categoriesFor: #stbVersion!binary filing!public! !

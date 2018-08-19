@@ -6,13 +6,13 @@ Object subclass: #StackFrame
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StackFrame guid: (GUID fromString: '{87b4c4be-026e-11d3-9fd7-00a0cc3e4a32}')!
-StackFrame addClassConstant: 'BPOffset' value: 5!
-StackFrame addClassConstant: 'EnvOffset' value: 1!
-StackFrame addClassConstant: 'FrameSize' value: 6!
-StackFrame addClassConstant: 'IPOffset' value: 3!
-StackFrame addClassConstant: 'MethodOffset' value: 0!
-StackFrame addClassConstant: 'ReturnOffset' value: 2!
-StackFrame addClassConstant: 'SPOffset' value: 4!
+StackFrame addClassConstant: 'BPOffset' value: 16r5!
+StackFrame addClassConstant: 'EnvOffset' value: 16r1!
+StackFrame addClassConstant: 'FrameSize' value: 16r6!
+StackFrame addClassConstant: 'IPOffset' value: 16r3!
+StackFrame addClassConstant: 'MethodOffset' value: 16r0!
+StackFrame addClassConstant: 'ReturnOffset' value: 16r2!
+StackFrame addClassConstant: 'SPOffset' value: 16r4!
 StackFrame comment: 'StackFrame encapsulates behaviour of an activation record for use by the development tools (especially the debugger) and other reflective activities. A StackFrame is only valid as a snapshot of <Process> state (e.g. when the process is suspended, as it is when being debugged).
 
 Dolphin''s activation records are not objects, in fact they are just range of slots in the Process stack, so this class is employed to stand in and wrap those records.

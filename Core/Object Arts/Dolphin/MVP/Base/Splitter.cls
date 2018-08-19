@@ -6,7 +6,7 @@ View subclass: #Splitter
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Splitter guid: (GUID fromString: '{87b4c716-026e-11d3-9fd7-00a0cc3e4a32}')!
-Splitter addClassConstant: 'FlatMask' value: 1048576!
+Splitter addClassConstant: 'FlatMask' value: 16r100000!
 Splitter comment: 'Splitter is a <view> used for implementing "splitter bars" for resizing adjacent views within a <compositeView>. Normally, a Splitter requires that the parent view in which it is placed is under the control of a ProprtionalLayout manager.'!
 !Splitter categoriesForClass!MVP-Resources-Splitters!MVP-Views! !
 !Splitter methodsFor!
@@ -61,9 +61,9 @@ defaultBackcolor
 			["This is the shadow colour in the XP luna theme - this has to be fairly
 			 dark or the gradient is not visible.."
 			Color
-				red: 172
-				green: 168
-				blue: 153]!
+				r: 172
+				g: 168
+				b: 153]!
 
 defaultExtent
 	"Private - Answer the default size of the receiver to be used when it is created."
@@ -117,9 +117,9 @@ forecolor
 			["This is the light colour in the gradient fill, being the light3d colour in
 			 the XP luna schema."
 			Color
-				red: 241
-				green: 239
-				blue: 226]!
+				r: 241
+				g: 239
+				b: 226]!
 
 hasFlatAppearance
 	"Answer whether the receiver should be draw with flat (i.e. ungraded) look. This is now the default."
@@ -247,9 +247,9 @@ stbConvertFromVersion12: anArray
 	| backcolor |
 	backcolor := anArray at: 6.
 	(backcolor = ##(RGB 
-				red: 225
-				green: 225
-				blue: 225) 
+				r: 225
+				g: 225
+				b: 225) 
 		or: [backcolor = Color face3d]) ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray! !
 !Splitter class categoriesFor: #icon!constants!public! !

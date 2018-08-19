@@ -373,7 +373,7 @@ formatText: aString in: aRectangle flags: anInteger
 	specified <Integer> mode flags. Answers the height of the formatted text in pixels."
 
 	| text |
-	"We need to do an explicit conversion to UTF16 here, because we want to pass the correct number of code units."
+	"We need to do an explicit conversion to UTF-16 here, because we want to pass the correct number of code units."
 	text := aString asUtf16String.
 	^UserLibrary default
 		drawTextEx: self asParameter
@@ -873,17 +873,17 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 	#left, #center, #right. Uses the receiver's currently selected font."
 
 	| rect height align |
-
 	align := ##(IdentityDictionary new
-		at: #left put: DT_LEFT;
-		at: #center put: DT_CENTER;
-		at: #right put: DT_RIGHT;
-		shrink;
-		yourself) at: anAlignSymbol ifAbsent: [DT_LEFT].
-
-	rect := 0@0 extent: anIntegerWidth @ 0.
-	height := self formatText: aString in: rect flags: ##(DT_CALCRECT | DT_WORDBREAK) | align.
-
+				at: #left put: DT_LEFT;
+				at: #center put: DT_CENTER;
+				at: #right put: DT_RIGHT;
+				shrink;
+				yourself) at: anAlignSymbol ifAbsent: [DT_LEFT].
+	rect := RECT extent: anIntegerWidth @ 0.
+	height := self
+				formatText: aString
+				in: rect
+				flags: ##(DT_CALCRECT | DT_WORDBREAK) | align.
 	^anIntegerWidth @ height!
 
 textMetrics

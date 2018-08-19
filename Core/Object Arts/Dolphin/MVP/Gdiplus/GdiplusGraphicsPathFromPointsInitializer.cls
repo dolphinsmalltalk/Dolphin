@@ -13,14 +13,14 @@ GdiplusGraphicsPathFromPointsInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library 
+	status := self library
 				gdipCreatePath2I: (StructureArray withAll: (pathPoints collect: [:e | POINTL fromPoint: e])
 						elementClass: POINTL)
 				types: (ByteArray withAll: pathTypes)
 				count: pathPoints size
 				fillMode: fillMode
 				path: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -30,7 +30,7 @@ points: points types: types fillMode: aFillModeConstant
 	pathPoints := points.
 	pathTypes := types.
 	fillMode := aFillModeConstant! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #createHandle!public! !
+!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #createHandle!private! !
 !GdiplusGraphicsPathFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!public! !
 !GdiplusGraphicsPathFromPointsInitializer categoriesFor: #points:types:fillMode:!public! !
 

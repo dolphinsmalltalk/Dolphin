@@ -6,16 +6,16 @@ Object subclass: #View
 	poolDictionaries: 'Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 View guid: (GUID fromString: '{87b4c4cc-026e-11d3-9fd7-00a0cc3e4a32}')!
-View addClassConstant: 'CreateCenteredMask' value: 64!
-View addClassConstant: 'DragSourceMask' value: 4!
-View addClassConstant: 'DropTargetMask' value: 8!
-View addClassConstant: 'LayoutValidMask' value: 1!
-View addClassConstant: 'ManagedMask' value: 2!
-View addClassConstant: 'MinimizedMask' value: 128!
-View addClassConstant: 'NoInheritMenuMask' value: 512!
-View addClassConstant: 'StateRestoringMask' value: 32!
-View addClassConstant: 'UIValidMask' value: 16!
-View addClassConstant: 'UsePreferredExtentMask' value: 256!
+View addClassConstant: 'CreateCenteredMask' value: 16r40!
+View addClassConstant: 'DragSourceMask' value: 16r4!
+View addClassConstant: 'DropTargetMask' value: 16r8!
+View addClassConstant: 'LayoutValidMask' value: 16r1!
+View addClassConstant: 'ManagedMask' value: 16r2!
+View addClassConstant: 'MinimizedMask' value: 16r80!
+View addClassConstant: 'NoInheritMenuMask' value: 16r200!
+View addClassConstant: 'StateRestoringMask' value: 16r20!
+View addClassConstant: 'UIValidMask' value: 16r10!
+View addClassConstant: 'UsePreferredExtentMask' value: 16r100!
 View comment: 'View is an abstract class which is the root of the view hierarchy of classes. Instances of view or its subclasses are used to display Model data in windows. View is part of the Model-View-Presenter or MVP framework:
 
 SmalltalkSystem help: ''Overviews/ModelViewPresenter''.
@@ -2169,6 +2169,11 @@ nonClientCanvas
 	"Answer a canvas for drawing on the non-client areas of this View"
 
 	^Canvas forNonClientView: self!
+
+nonReferenceAncestor
+	"Answer the view that is the first non-reference view in the parent chain of this view, inclusive."
+
+	^self!
 
 noRedrawDo: aNiladicValuable 
 	"Perform the <niladicValuable>, operation, with redraw disabled, answering its result."
@@ -4682,6 +4687,7 @@ zOrderTop
 !View categoriesFor: #nextSiblingView!hierarchy!public!sub views! !
 !View categoriesFor: #nmNotify:!event handling-win32!private! !
 !View categoriesFor: #nonClientCanvas!drawing!public! !
+!View categoriesFor: #nonReferenceAncestor!accessing!public! !
 !View categoriesFor: #noRedrawDo:!operations!public! !
 !View categoriesFor: #oldWndProc:!accessing!private! !
 !View categoriesFor: #onAboutToCreate!event handling!public! !

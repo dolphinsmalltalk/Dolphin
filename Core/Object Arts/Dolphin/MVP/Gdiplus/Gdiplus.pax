@@ -146,6 +146,9 @@ package classNames
 	add: #GdiplusFont;
 	add: #GdiplusFontCollection;
 	add: #GdiplusFontFamily;
+	add: #GdiplusFontFamilyFromNameInitializer;
+	add: #GdiplusFontFamilyGenericSansSerifInitializer;
+	add: #GdiplusFontFamilyGenericSerifInitializer;
 	add: #GdiplusFontFamilyInitializer;
 	add: #GdiplusFontFromFontFamilyInitializer;
 	add: #GdiplusFromFileInitializer;
@@ -190,7 +193,9 @@ package classNames
 	add: #GdiplusStartupInput;
 	add: #GdiplusStartupOutput;
 	add: #GdiplusStringFormat;
-	add: #GdiplusStringFormatGenericInitializer;
+	add: #GdiplusStringFormatFromFlagsInitializer;
+	add: #GdiplusStringFormatGenericDefaultInitializer;
+	add: #GdiplusStringFormatGenericTypographicInitializer;
 	add: #GdiplusStringFormatInitializer;
 	add: #GdiplusTextureBrush;
 	add: #GdiplusTextureBrushInitializer;
@@ -217,11 +222,12 @@ package methodNames
 	add: #Bitmap -> #asColorKeyedBitmap:;
 	add: #Color -> #alpha:;
 	add: #Color -> #asARGB;
-	add: #ColorRef -> #asARGB;
+	add: #ColorNone -> #asARGB;
 	add: #Point -> #scaledOver:;
 	add: #Point -> #scaledTo:;
 	add: #Rectangle -> #asGdiplusRectangle;
 	add: #View -> #createThumbnailExtent:mask:;
+	add: 'Color class' -> #a:r:g:b:;
 	yourself.
 
 package globalNames
@@ -256,7 +262,7 @@ Object subclass: #GdiplusInitializer
 	classInstanceVariableNames: ''!
 Color subclass: #ARGB
 	instanceVariableNames: 'code'
-	classVariableNames: 'Default StdColours'
+	classVariableNames: 'DefaultA StdColours'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Error subclass: #GdiplusError
@@ -400,8 +406,8 @@ GdiplusInitializer subclass: #GdiplusCustomLineCapInitializer
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusFontFamilyInitializer
-	instanceVariableNames: 'name fontCollection'
-	classVariableNames: ''
+	instanceVariableNames: ''
+	classVariableNames: 'GenericSansSerif GenericSerif'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
@@ -441,7 +447,7 @@ GdiplusInitializer subclass: #GdiplusHatchBrushInitializer
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
@@ -451,7 +457,7 @@ GdiplusInitializer subclass: #GdiplusImageFromIStreamInitializer
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusInstalledFontCollectionInitializer
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusLinearGradientBrushInitializer
@@ -481,7 +487,7 @@ GdiplusInitializer subclass: #GdiplusPenInitializer
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusPrivateFontCollectionInitializer
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusRegionFromPathInitializer
@@ -496,7 +502,7 @@ GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusRegionInitializer
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
@@ -504,19 +510,29 @@ GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusInitializer subclass: #GdiplusStringFormatGenericInitializer
-	instanceVariableNames: 'genericType'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'
-	classVariableNames: ''
+	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
 	instanceVariableNames: 'image wrapMode rectangle'
 	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyFromNameInitializer
+	instanceVariableNames: 'name fontCollection'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSansSerifInitializer
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSerifInitializer
+	instanceVariableNames: ''
+	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer
@@ -546,6 +562,21 @@ GdiplusPenInitializer subclass: #GdiplusPenFromBrushInitializer
 	classInstanceVariableNames: ''!
 GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
 	instanceVariableNames: 'color width'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusStringFormatInitializer subclass: #GdiplusStringFormatFromFlagsInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericDefaultInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericTypographicInitializer
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -621,7 +652,7 @@ GdiplusBase subclass: #GdiplusRegion
 	classInstanceVariableNames: ''!
 GdiplusBase subclass: #GdiplusStringFormat
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusBrush subclass: #GdiplusHatchBrush
@@ -692,7 +723,7 @@ asColorKeyedBitmap: aKeyColor
 	image := GdiplusBitmap fromBitmap: self.
 	(table at: 1)
 		oldColor: aKeyColor asARGB asParameter;
-		newColor: (ARGB fromArray: #(0 255 255 255)) asParameter.
+		newColor: ARGB none asParameter.
 	imageAttributes := GdiplusImageAttributes new remapTable: table.
 	bitmap := GdiplusBitmap extent: self extent.
 	bitmap graphics 
@@ -711,33 +742,44 @@ asColorKeyedBitmap: aKeyColor
 
 !Color methodsFor!
 
-alpha: anAlphaInteger 
+alpha: anAlphaInteger
 	"Answer an instance of ARGB which is the equivalent of the receiver with anAlphaInteger applied."
 
-	| rgb |
-	rgb := self asRGB.
-	^ARGB 
-		alpha: anAlphaInteger
-		red: rgb red
-		green: rgb green
-		blue: rgb blue!
+	| bgr |
+	bgr := self asRGB code.
+	^ARGB
+		fromInteger: ((((bgr bitShift: -16) bitAnd: 16rFF)
+				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))
+					bitOr: ((anAlphaInteger asInteger clampBetween: 0 and: 255) bitShift: 24))!
 
 asARGB
-	| rgb |
-	rgb := self asRGB.
-	^ARGB 
-		a: self alpha
-		r: rgb red
-		g: rgb green
-		b: rgb blue! !
+	"Answer an <ARGB> equivalent of the receiver."
+
+	| bgr |
+	bgr := self asRGB code.
+	"Note that the encoding is truly ARGB, as opposed to the BGR encoding used in a ColorRef."
+	^ARGB
+		fromInteger: ((((bgr bitShift: -16) bitAnd: 16rFF)
+				bitOr: ((bgr bitAnd: 16r00FF00) bitOr: ((bgr bitAnd: 16rFF) bitShift: 16)))
+					bitOr: (self alpha bitShift: 24))! !
 !Color categoriesFor: #alpha:!accessing!public! !
 !Color categoriesFor: #asARGB!converting!public! !
 
-!ColorRef methodsFor!
+!Color class methodsFor!
+
+a: alphaValue r: redValue g: greenValue b: blueValue
+	"Answer an instance whose four components are given.
+	 - Alternate constructor with no bounds checking"
+
+	^ARGB
+		a: alphaValue r: redValue g: greenValue b: blueValue! !
+!Color class categoriesFor: #a:r:g:b:!instance creation!public! !
+
+!ColorNone methodsFor!
 
 asARGB
-	^self isNone ifTrue: [ARGB fromInteger: CLR_NONE] ifFalse: [super asARGB]! !
-!ColorRef categoriesFor: #asARGB!converting!public! !
+	^ARGB none! !
+!ColorNone categoriesFor: #asARGB!public! !
 
 !Point methodsFor!
 

@@ -13,14 +13,14 @@ GdiplusTextureBrushInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := rectangle isNil 
+	status := rectangle isNil
 				ifTrue: 
-					[self library 
+					[self library
 						gdipCreateTexture: image asParameter
 						wrapMode: wrapMode
 						texture: gpHandle]
 				ifFalse: 
-					[self library 
+					[self library
 						gdipCreateTexture2I: image asParameter
 						wrapMode: wrapMode
 						x: rectangle left
@@ -28,7 +28,7 @@ createHandle
 						width: rectangle width
 						height: rectangle height
 						texture: gpHandle].
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -37,10 +37,14 @@ gdiplusConstructorErrorDescription
 image: anImage wrapMode: aNumber rectangle: aRectangle
 	image := anImage.
 	wrapMode := aNumber.
-	rectangle := aRectangle! !
-!GdiplusTextureBrushInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+	rectangle := aRectangle!
+
+isPersistent
+	^image isPersistent! !
+!GdiplusTextureBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusTextureBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusTextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!accessing!public! !
+!GdiplusTextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!initializing!private! !
+!GdiplusTextureBrushInitializer categoriesFor: #isPersistent!public! !
 
 !GdiplusTextureBrushInitializer class methodsFor!
 

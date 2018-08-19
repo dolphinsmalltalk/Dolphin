@@ -11,7 +11,7 @@ GdiplusBitmapFromIStreamInitializer comment: ''!
 !GdiplusBitmapFromIStreamInitializer methodsFor!
 
 createHandle
-	" Bitmap::Bitmap(
+	"Private -  Bitmap::Bitmap(
 	    IN IStream *stream, 
 	    IN BOOL useEmbeddedColorManagement
 	    )
@@ -23,21 +23,21 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreateBitmapFromStream: iStream asParameter bitmap: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
-	^'Error creating Bitmap'!
+	^'Error loading Bitmap'!
 
 isPersistent
 	^false!
 
 iStream: pStream
 	iStream := pStream! !
-!GdiplusBitmapFromIStreamInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusBitmapFromIStreamInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusBitmapFromIStreamInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !GdiplusBitmapFromIStreamInitializer categoriesFor: #isPersistent!public!testing! !
-!GdiplusBitmapFromIStreamInitializer categoriesFor: #iStream:!accessing!public! !
+!GdiplusBitmapFromIStreamInitializer categoriesFor: #iStream:!initializing!private! !
 
 !GdiplusBitmapFromIStreamInitializer class methodsFor!
 

@@ -31,12 +31,13 @@ clear
 
 	self clear: nil!
 
-clear: anARGB 
+clear: aColor
 	"Clear the receiver and (flood) fill it with the specified color."
 
-	| status |
-	(status := GdiplusLibrary default gdipGraphicsClear: self asParameter color: anARGB asParameter) 
-		= Ok ifFalse: [GdiplusError signal: 'GdipGraphicsClear failed' with: status]!
+	| status argb |
+	argb := aColor asARGB.
+	(status := GdiplusLibrary default gdipGraphicsClear: self asParameter color: argb asParameter) 
+		== Ok ifFalse: [GdiplusError signal: 'GdipGraphicsClear failed' with: status]!
 
 clipRectangle: aRectangle combineMode: aCombineModeConstant 
 	"Set the clipping region of the receiver to a region that is the combination of itself and 
@@ -101,13 +102,11 @@ compositingQuality: aCompositingQualityConstant
 				compositingQuality: aCompositingQualityConstant) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetCompositingQuality failed' with: status]!
 
-doWithCanvas: anOperation 
-	self doWithDC: 
-			[:dc | 
-			| canvas |
-			canvas := Canvas withNonOwnedDC: dc.
-			anOperation value: canvas.
-			canvas free]!
+doWithCanvas: anOperation
+	| hdc |
+	hdc := self getHDC.
+	[anOperation value: (Canvas withNonOwnedDC: hdc)]
+		ensure: [hdc notNil ifTrue: [self releaseHDC: hdc]]!
 
 doWithDC: anOperation
 	"MSDN: 
@@ -206,7 +205,7 @@ drawDropShadowRectangle: rect offset: offset alpha: alpha
 	shadowRect := rect topLeft // offset extent: rect extent // offset.
 	shadow := GdiplusBitmap extent: shadowRect extent.
 	shadow graphics fillRectangle: shadowRect
-		brush: (GdiplusSolidBrush color: (ARGB 
+		brush: (GdiplusSolidBrush color: (Color 
 						a: alpha
 						r: 0
 						g: 0
@@ -385,10 +384,10 @@ drawRectangle: aRectangle pen: aPen
 	(status := GdiplusLibrary default 
 				gdipDrawRectangleI: self asParameter
 				pen: aPen asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height) = Ok 
+				x: aRectangle left asInteger
+				y: aRectangle top asInteger
+				width: aRectangle width asInteger
+				height: aRectangle height asInteger) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipDrawRectangleI failed' with: status]!
 
 drawString: aString at: aPoint
@@ -407,7 +406,7 @@ drawString: aString font: aFont at: aPoint format: aStringFormat brush: aBrush
 	self 
 		drawString: aString
 		font: aFont
-		rect: (aPoint extent: 0 @ 0)
+		rect: (aPoint extent: Point.Zero)
 		format: aStringFormat
 		brush: aBrush!
 
@@ -418,9 +417,9 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 
 	| status font format brush text |
 	font := aFont ifNil: [GdiplusFont new].
-	format := aStringFormat ifNil: [GdiplusStringFormat new].
+	format := aStringFormat ifNil: [GdiplusStringFormat genericDefault].
 	brush := aBrush ifNil: [GdiplusSolidBrush new].
-	"Note that we must conver to UTF-16 explicitly to ensure we pass the correct string length."
+	"Note that we must convert to UTF-16 explicitly to ensure we pass the correct string length."
 	text := aString asUtf16String.
 	(status := GdiplusLibrary default
 				gdipDrawString: self asParameter
@@ -429,7 +428,7 @@ drawString: aString font: aFont rect: aRectangle format: aStringFormat brush: aB
 				font: font asParameter
 				layoutRect: (RECTF fromRectangle: aRectangle)
 				stringFormat: format asParameter
-				brush: brush asParameter) = Ok
+				brush: brush asParameter) == Ok
 		ifFalse: [GdiplusError signal: 'GdipDrawString failed' with: status]!
 
 drawString: aString layoutRect: aRectangle
@@ -527,10 +526,10 @@ fillRectangle: aRectangle brush: aGdiplusBrush
 	(status := GdiplusLibrary default 
 				gdipFillRectangleI: self asParameter
 				brush: aGdiplusBrush asParameter
-				x: aRectangle left
-				y: aRectangle top
-				width: aRectangle width
-				height: aRectangle height) = Ok 
+				x: aRectangle left asInteger
+				y: aRectangle top asInteger
+				width: aRectangle width asInteger
+				height: aRectangle height asInteger) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipFillRectangleI failed' with: status]!
 
 fillRegion: aRegion brush: aBrush 
@@ -585,7 +584,7 @@ measureString: aString font: aFont
 	^(self 
 		measureString: aString
 		font: aFont
-		rect: (Point zero extent: Point zero)
+		rect: RECTF new
 		format: nil) extent!
 
 measureString: aString font: aFont rect: aRectangle format: aStringFormat
@@ -604,9 +603,9 @@ measureString: aString font: aFont rect: aRectangle format: aStringFormat
 				stringFormat: aStringFormat asParameter
 				boundingBox: boundRect
 				codepointsFitted: nil
-				linesFilled: nil) = Ok
+				linesFilled: nil) == Ok
 		ifFalse: [GdiplusError signal: 'GdipMeasureString failed' with: status].
-	^boundRect asRectangle truncated!
+	^boundRect!
 
 pageScale
 	"Answer the scaling factor currently set for the page transformation of the receiver."
@@ -759,7 +758,7 @@ textRenderingHint: aTextRenderingHintConstant
 
 	| status |
 	(status := GdiplusLibrary default gdipSetTextRenderingHint: self asParameter
-				mode: aTextRenderingHintConstant) = Ok 
+				mode: aTextRenderingHintConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetTextRenderingHint filed' with: status]!
 
 transform
@@ -777,7 +776,7 @@ transform: aGdiplusMatrix
 
 	| status |
 	(status := GdiplusLibrary default gdipSetWorldTransform: self asParameter
-				matrix: aGdiplusMatrix asParameter) = Ok 
+				matrix: aGdiplusMatrix asParameter) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetWorldTransform failed' with: status]!
 
 transformPoints: aPointsCollection destSpace: destSpace srcSpace: srcSpace 
@@ -977,8 +976,8 @@ exampleGdipGDrawingAString
 
 	| bitmap font |
 	bitmap := GdiplusBitmap extent: 250 @ 100.
-	font := GdiplusFont name: 'Times New Roman' emSize: 24.
-	(bitmap graphics)
+	font := GdiplusFont name: 'Times New Roman' pointSize: 24.
+	bitmap graphics
 		drawString: 'Hello Dolphin!!'
 			font: font
 			at: 10 @ 20
@@ -1114,10 +1113,10 @@ exampleGdipGMeasureString
 	bitmap := GdiplusBitmap extent: 300 @ 200.
 	graphics := bitmap graphics.
 	string := 'Measure the size of text to be placed in a rectangle.'.
-	font := GdiplusFont name: 'Arial' emSize: 16.
+	font := GdiplusFont name: 'Arial' pointSize: 16.
 	layoutRect := 30 @ 20 extent: 200 @ 125.
 	format := GdiplusStringFormat centered.
-	boundRect := graphics 
+	boundRect := graphics
 				measureString: string
 				font: font
 				rect: layoutRect
@@ -1273,7 +1272,7 @@ exampleGdipNestedContainers
 	"Several Layers of Nested Containers"
 	graphics resetClip translateTransform: 175 @ 175.
 	brush := GdiplusSolidBrush blue.
-	font := GdiplusFont name: 'Times New Roman' emSize: 36.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 36.
 	graphics textRenderingHint: TextRenderingHintAntiAlias.
 	outerContainer := graphics beginContainer.
 	graphics textRenderingHint: TextRenderingHintSingleBitPerPixel.

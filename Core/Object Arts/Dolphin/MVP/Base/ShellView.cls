@@ -264,14 +264,13 @@ exit
 !
 
 filerProxy
-	| savedFocus savedAccels proxy |
+	| savedFocus savedAccels |
 	savedFocus := lastFocus.
 	savedAccels := combinedAcceleratorTable.
 	lastFocus := combinedAcceleratorTable := nil.
-	proxy := super filerProxy.
-	lastFocus := savedFocus.
-	combinedAcceleratorTable := savedAccels.
-	^proxy!
+	^[super filerProxy] ensure: 
+			[lastFocus := savedFocus.
+			combinedAcceleratorTable := savedAccels]!
 
 flash: anInteger
 	"Flash the receiver in a manner so as to attract the user's attention, anInteger times."

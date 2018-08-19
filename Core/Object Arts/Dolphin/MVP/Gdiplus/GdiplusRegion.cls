@@ -247,7 +247,7 @@ fromRectangle: aRectangle
 new
 	"Answer an instance of the receiver that is infinite."
 
-	^self fromInitializer: GdiplusRegionInitializer new! !
+	^self fromInitializer: GdiplusRegionInitializer default! !
 !GdiplusRegion class categoriesFor: #exampleClippingSimple!examples!private! !
 !GdiplusRegion class categoriesFor: #exampleClippingSimple2!examples!private! !
 !GdiplusRegion class categoriesFor: #exampleGdipRClipWithRegion!examples!public!sunit! !

@@ -64,7 +64,7 @@ selectionOrNil
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Smalltalk developmentSystem deprecatedMethodIcon!
+	^Smalltalk developmentSystem deprecatedIcon!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."

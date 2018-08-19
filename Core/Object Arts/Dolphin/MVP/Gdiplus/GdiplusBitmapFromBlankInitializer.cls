@@ -11,7 +11,7 @@ GdiplusBitmapFromBlankInitializer comment: ''!
 !GdiplusBitmapFromBlankInitializer methodsFor!
 
 createHandle
-	" Bitmap::Bitmap(
+	"Private -  Bitmap::Bitmap(
 	    IN INT width,
 	    IN INT height,
 	    IN PixelFormat format
@@ -28,14 +28,14 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library 
+	status := self library
 				gdipCreateBitmapFromScan0: width
 				height: height
 				stride: 0
 				format: format
 				scan0: 0
 				bitmap: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -44,10 +44,11 @@ gdiplusConstructorErrorDescription
 width: widthInteger height: heightInteger format: aPixelFormat
 	width := widthInteger.
 	height := heightInteger.
-	format := aPixelFormat! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+	format := aPixelFormat.
+	^self! !
+!GdiplusBitmapFromBlankInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusBitmapFromBlankInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #width:height:format:!accessing!public! !
+!GdiplusBitmapFromBlankInitializer categoriesFor: #width:height:format:!initializing!private! !
 
 !GdiplusBitmapFromBlankInitializer class methodsFor!
 

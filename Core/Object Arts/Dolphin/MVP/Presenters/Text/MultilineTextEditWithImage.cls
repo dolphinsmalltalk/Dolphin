@@ -78,7 +78,7 @@ createBackBrush
 	pos := (rect perform: symbol) - (bmpRect perform: symbol).
 	bmp := Bitmap displayCompatibleWithExtent: rect extent.
 	(bmp canvas)
-		backcolor: (self backcolor ifNil: [Color window]);
+		backcolor: self actualBackcolor;
 		erase.
 	self backBitmap 
 		drawOn: bmp canvas
@@ -94,7 +94,7 @@ defaultBackgroundImage
 	| blend percent icon extent bmp color |
 	extent := 48 @ 48.
 	percent := 25.
-	color := self backcolor ifNil: [Color window].
+	color := self actualBackcolor.
 	"First we need an image to use, in this case we choose the default application icon. N.B. If we
 	draw the icon from an image list, then the correct sized icon is used automatically and we
 	get the best results"
@@ -107,15 +107,14 @@ defaultBackgroundImage
 				yourself)
 		at: 0 @ 0
 		flags: 0.
+
 	"Now we're going to layer the image onto a white Bitmap to create a watermark image"
 	bmp := Bitmap displayCompatibleWithExtent: extent.
 	(bmp canvas)
 		backcolor: color;
 		erase.
-	"N.B. We assume that the icon has an alpha channel"
 	blend := BLENDFUNCTION new.
-	blend blendPercentage: percent.
-	"beNotAlpha;"
+	blend blendPercentage: percent; usePerPixelAlpha: false.
 	icon 
 		alphaBlendOn: bmp canvas
 		at: 0 @ 0

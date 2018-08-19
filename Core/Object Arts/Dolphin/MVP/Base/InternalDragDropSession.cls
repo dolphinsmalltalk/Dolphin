@@ -33,7 +33,7 @@ buildDragImageList
 	maxImageExtent := Point new.
 	dragImages do: [:image | maxImageExtent := maxImageExtent max: image extent].
 	imageList := WinImageList 
-				newExtent: maxImageExtent
+				newExtent: (maxImageExtent min: SystemMetrics current largeIconExtent)
 				depth: self defaultDragColorDepth
 				initialSize: dragImages size
 				growBy: 1
@@ -74,7 +74,9 @@ continueTrackingAt: aPoint from: lastPoint
 defaultDragColorDepth
 	"Private - Answer the color depth to use for drag icon images. Only XP can handle >24 bit depths"
 
-	^WinImageList defaultColorDepth min: SystemMetrics current dragImageColorDepth!
+	| metrics |
+	metrics := SystemMetrics current.
+	^metrics defaultColorDepth min: metrics dragImageColorDepth!
 
 doDragDropAt: aPoint button: buttonSymbol 
 	"Initiate a drag and drop operation at the screen coordinates, aPoint, active while the mouse button

@@ -6,6 +6,7 @@ NMHDR subclass: #NMGETINFOTIP
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMGETINFOTIP guid: (GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
+NMGETINFOTIP isAbstract: true!
 NMGETINFOTIP comment: ''!
 !NMGETINFOTIP categoriesForClass!External-Data-Structured-Win32! !
 !NMGETINFOTIP methodsFor!

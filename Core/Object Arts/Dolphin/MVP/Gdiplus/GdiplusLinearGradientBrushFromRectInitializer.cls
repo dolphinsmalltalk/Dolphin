@@ -11,7 +11,7 @@ GdiplusLinearGradientBrushFromRectInitializer comment: ''!
 !GdiplusLinearGradientBrushFromRectInitializer methodsFor!
 
 createHandle
-	" LinearGradientBrush(IN const Rect& rect,
+	"Private -  LinearGradientBrush(IN const Rect& rect,
                         IN const Color& color1,
                         IN const Color& color2,
                         IN LinearGradientMode mode)
@@ -27,21 +27,21 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library 
+	status := self library
 				gdipCreateLineBrushFromRectI: rect asParameter
 				color1: color1 asParameter
 				color2: color2 asParameter
 				mode: mode
 				wrapMode: WrapModeTile
 				lineGradient: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
-rect: aRectangle color1: anARGB1 color2: anARGB2 mode: aLinearGradientMode
+rect: aRectangle color1: startColor color2: endColor mode: aLinearGradientMode
 	rect := aRectangle.
-	color1 := anARGB1.
-	color2 := anARGB2.
+	color1 := startColor asARGB.
+	color2 := endColor asARGB.
 	mode := aLinearGradientMode! !
-!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
-!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!accessing!public! !
+!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusLinearGradientBrushFromRectInitializer categoriesFor: #rect:color1:color2:mode:!initializing!private! !
 

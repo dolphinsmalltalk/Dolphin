@@ -13,24 +13,24 @@ GdiplusHatchBrushInitializer comment: ''!
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library 
+	status := self library
 				gdipCreateHatchBrush: style
 				forecol: forecolor asParameter
 				backcol: backcolor asParameter
 				brush: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating HatchBrush'!
 
-style: aNumber forecolor: foreARGB backcolor: backARGB
+style: aNumber forecolor: foreColor backcolor: backColor
 	style := aNumber.
-	forecolor := foreARGB.
-	backcolor := backARGB! !
-!GdiplusHatchBrushInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+	forecolor := foreColor asARGB.
+	backcolor := backColor asARGB! !
+!GdiplusHatchBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusHatchBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusHatchBrushInitializer categoriesFor: #style:forecolor:backcolor:!accessing!public! !
+!GdiplusHatchBrushInitializer categoriesFor: #style:forecolor:backcolor:!initializing!private! !
 
 !GdiplusHatchBrushInitializer class methodsFor!
 

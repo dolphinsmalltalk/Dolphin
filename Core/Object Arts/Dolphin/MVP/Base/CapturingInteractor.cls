@@ -7,10 +7,10 @@ Interactor subclass: #CapturingInteractor
 	classInstanceVariableNames: ''!
 CapturingInteractor guid: (GUID fromString: '{d6b9eec9-b8fc-41a9-abc6-1df89013c95e}')!
 CapturingInteractor isAbstract: true!
-CapturingInteractor addClassConstant: 'HotMask' value: 1!
-CapturingInteractor addClassConstant: 'LeftDownMask' value: 4!
-CapturingInteractor addClassConstant: 'MiddleDownMask' value: 8!
-CapturingInteractor addClassConstant: 'RightDownMask' value: 16!
+CapturingInteractor addClassConstant: 'HotMask' value: 16r1!
+CapturingInteractor addClassConstant: 'LeftDownMask' value: 16r4!
+CapturingInteractor addClassConstant: 'MiddleDownMask' value: 16r8!
+CapturingInteractor addClassConstant: 'RightDownMask' value: 16r10!
 CapturingInteractor comment: '`CapturingInteractor` is an abstract class of `<interactor>`s that intercept user input events and potentially absorbs them so that they do not reach the presenter. i.e. if a <CapturingInteractor> is installed into a view then it may appear to ignore all user input. Subclasses may use the input for other purposes, or selectively forward it on to the `<presenter>`.
 
 ## Instance Variables:

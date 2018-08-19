@@ -2,37 +2,42 @@
 
 GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'
-	classVariableNames: ''
+	classVariableNames: 'GenericDefault GenericTypographic'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GdiplusStringFormatInitializer guid: (GUID fromString: '{f4b7aa82-5fd1-11d7-b609-00e0987e8081}')!
+GdiplusStringFormatInitializer guid: (GUID fromString: '{14ad5dde-0284-402d-bbce-89611bcd32c4}')!
+GdiplusStringFormatInitializer isAbstract: true!
 GdiplusStringFormatInitializer comment: ''!
 !GdiplusStringFormatInitializer categoriesForClass!Unclassified! !
 !GdiplusStringFormatInitializer methodsFor!
 
-createHandle
-	| gpHandle status |
-	gpHandle := ExternalHandle new.
-	status := self library 
-				gdipCreateStringFormat: formatFlags
-				language: language
-				format: gpHandle.
-	self assertStatusOk: status.
-	^gpHandle!
-
-formatFlags: flagsNumber language: languageNumber
-	formatFlags := flagsNumber.
-	language := languageNumber!
-
 gdiplusConstructorErrorDescription
 	^'Error creating StringFormat'! !
-!GdiplusStringFormatInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
-!GdiplusStringFormatInitializer categoriesFor: #formatFlags:language:!accessing!public! !
 !GdiplusStringFormatInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !GdiplusStringFormatInitializer class methodsFor!
 
 formatFlags: flagsNumber language: languageNumber
-	^self new formatFlags: flagsNumber language: languageNumber! !
+	^GdiplusStringFormatFromFlagsInitializer basicNew formatFlags: flagsNumber language: languageNumber!
+
+genericDefault
+	^GenericDefault ifNil: [GenericDefault := GdiplusStringFormatGenericDefaultInitializer basicNew]!
+
+genericTypographic
+	^GenericTypographic
+		ifNil: [GenericTypographic := GdiplusStringFormatGenericTypographicInitializer basicNew]!
+
+new
+	^self shouldNotImplement!
+
+onPreStripImage
+	"Private -  Allow the receiver and subclasses to be stripped by clearing lazy initialized class variables
+	which hold sub-instance of the receiver."
+
+	GenericDefault := GenericTypographic := nil! !
 !GdiplusStringFormatInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
+!GdiplusStringFormatInitializer class categoriesFor: #genericDefault!instance creation!public! !
+!GdiplusStringFormatInitializer class categoriesFor: #genericTypographic!instance creation!public! !
+!GdiplusStringFormatInitializer class categoriesFor: #new!development!instance creation!public! !
+!GdiplusStringFormatInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 

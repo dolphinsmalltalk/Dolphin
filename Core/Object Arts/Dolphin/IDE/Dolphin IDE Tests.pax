@@ -124,7 +124,7 @@ DolphinTest subclass: #SmalltalkSystemShellTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #ViewComposerTest
-	instanceVariableNames: 'vc testClass'
+	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

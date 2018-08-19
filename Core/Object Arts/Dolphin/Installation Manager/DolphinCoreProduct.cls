@@ -54,9 +54,11 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus ImageView.pax' #plain #imageBased);
 		yourself.
 
-	"Goodies"
+	"Base System Icons"
 	contents
-		add: #('Core\Object Arts\Goodies\Internal Bitmaps and Icons\Internal Bitmaps and Icons.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Icons\Dolphin Base Icons.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons\Internal Bitmaps and Icons.pax' #plain #imageBased);
 		yourself.
 
 	"Additional development tools"
@@ -94,7 +96,6 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\XML DOM.pax' #plain #diskBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\Scripting\ActiveX Scripting.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\AgentObjects\AgentObjects.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions.pax' #plain #imageBased).
 
 	^contents!
@@ -104,9 +105,9 @@ defaultSystemFolderColor
 	This method will only be called if SmalltalkSystemShell is loaded, in which case RGB will be as well."
 
 	^(Smalltalk at: #RGB)
-		red: 41
-		green: 124
-		blue: 182.!
+		r: 41
+		g: 124
+		b: 182.!
 
 fullName
 	"Answer the full product name associated with the receiver"

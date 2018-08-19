@@ -6,7 +6,7 @@ IconicListAbstract subclass: #TabView
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 TabView guid: (GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
-TabView addClassConstant: 'OrientationMask' value: 130!
+TabView addClassConstant: 'OrientationMask' value: 16r82!
 TabView addClassConstant: 'TcnMap' value: #(#nmKeyDown: #nmSelChanged: #tcnSelChanging: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
@@ -567,7 +567,9 @@ viewMode
 		#smallIcons	(16x16)
 		#mediumIcons	(24x24)
 		#largeIcons	(32x32)
-		#tileIcons		(48x48)"
+		#tileIcons		(48x48)
+		#thumbnails	(64@64)
+		#extraLargeIcons (256@256)"
 
 	^viewMode
 		!
@@ -671,9 +673,12 @@ initialize
 	ViewModes := (IdentityDictionary new)
 				at: #noIcons put: 0 @ 0;
 				at: #smallIcons put: 16 @ 16;
+				at: #mediumSmallIcons put: 20@20;
 				at: #mediumIcons put: 24 @ 24;
 				at: #largeIcons put: 32 @ 32;
 				at: #tileIcons put: 48 @ 48;
+				at: #thumbnails put: 64@64;
+				at: #extraLargeIcons put: 256@256;
 				shrink;
 				yourself!
 

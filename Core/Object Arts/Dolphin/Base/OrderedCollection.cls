@@ -165,6 +165,19 @@ copyWithout: oldElement
 	self do: [:element | element = oldElement ifFalse: [answer add: element]].
 	^answer!
 
+detect: discriminator ifNone: exceptionHandler
+	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
+	elements.  Answer the first element (in the #do: order) for which discriminator evaluates 
+	to true. If none evaluates to true answer the result of evaluating the <niladicValuable> 
+	argument, exceptionHandler."
+
+	"Implementation Note: Override to provide a more efficient implementation that avoids the
+	full block."
+
+	firstIndex to: lastIndex
+		do: [:i | (discriminator value: (self basicAt: i)) ifTrue: [^self basicAt: i]].
+	^exceptionHandler value!
+
 do: operation 
 	"Evaluate monadic value argument, operation, for each of the element of the 
 	receiver. Answers the receiver."
@@ -480,6 +493,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 !OrderedCollection categoriesFor: #basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 !OrderedCollection categoriesFor: #copyWith:!copying!public! !
 !OrderedCollection categoriesFor: #copyWithout:!copying!public! !
+!OrderedCollection categoriesFor: #detect:ifNone:!public!searching! !
 !OrderedCollection categoriesFor: #do:!enumerating!public! !
 !OrderedCollection categoriesFor: #findFirst:!public!searching! !
 !OrderedCollection categoriesFor: #first!accessing!public! !

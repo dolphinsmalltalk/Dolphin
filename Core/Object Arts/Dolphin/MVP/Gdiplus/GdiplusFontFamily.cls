@@ -85,6 +85,12 @@ fromName: aString fontCollection: aFontCollection
 	^self fromInitializer: (GdiplusFontFamilyInitializer name: aString
 				fontCollection: aFontCollection)!
 
+genericSansSerif
+	^self fromInitializer: GdiplusFontFamilyInitializer genericSansSerif!
+
+genericSerif
+	^self fromInitializer: GdiplusFontFamilyInitializer genericSerif!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -92,5 +98,7 @@ icon
 !GdiplusFontFamily class categoriesFor: #exampleGdipFFClone!examples!public!sunit! !
 !GdiplusFontFamily class categoriesFor: #fromName:!instance creation!public! !
 !GdiplusFontFamily class categoriesFor: #fromName:fontCollection:!instance creation!public! !
+!GdiplusFontFamily class categoriesFor: #genericSansSerif!instance creation!public! !
+!GdiplusFontFamily class categoriesFor: #genericSerif!instance creation!public! !
 !GdiplusFontFamily class categoriesFor: #icon!constants!development!public! !
 

@@ -34,7 +34,7 @@ exampleGdipIFCEnumerating
 	^bitmap!
 
 new
-	^self fromInitializer: GdiplusInstalledFontCollectionInitializer new! !
+	^self fromInitializer: GdiplusInstalledFontCollectionInitializer default! !
 !GdiplusInstalledFontCollection class categoriesFor: #exampleGdipIFCEnumerating!examples!public!sunit! !
 !GdiplusInstalledFontCollection class categoriesFor: #new!instance creation!public! !
 

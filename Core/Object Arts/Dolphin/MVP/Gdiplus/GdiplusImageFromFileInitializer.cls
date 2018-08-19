@@ -11,7 +11,7 @@ GdiplusImageFromFileInitializer comment: ''!
 !GdiplusImageFromFileInitializer methodsFor!
 
 createHandle
-	"GdiplusBitmap.h
+	"Private - GdiplusBitmap.h
 		  Image(
         IN const WCHAR* filename,
         IN BOOL useEmbeddedColorManagement = FALSE
@@ -22,11 +22,11 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipLoadImageFromFile: self absoluteFilename image: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
-	^'Error creating Image'! !
-!GdiplusImageFromFileInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+	^'Error loading Image'! !
+!GdiplusImageFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusImageFromFileInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

@@ -28,6 +28,9 @@ struct tagRECTF {
 asRectangle
 	^self x @ self y extent: self width @ self height!
 
+extent
+	^self width @ self height!
+
 height
 	"Answer the receiver's height field as a Smalltalk object."
 
@@ -37,6 +40,12 @@ height: anObject
 	"Set the receiver's height field to the value of anObject."
 
 	bytes floatAtOffset: 12 put: anObject!
+
+left
+	^self x!
+
+top
+	^self y!
 
 width
 	"Answer the receiver's width field as a Smalltalk object."
@@ -68,8 +77,11 @@ y: anObject
 
 	bytes floatAtOffset: 4 put: anObject! !
 !RECTF categoriesFor: #asRectangle!converting!public! !
+!RECTF categoriesFor: #extent!public! !
 !RECTF categoriesFor: #height!**compiled accessors**!public! !
 !RECTF categoriesFor: #height:!**compiled accessors**!public! !
+!RECTF categoriesFor: #left!public! !
+!RECTF categoriesFor: #top!public! !
 !RECTF categoriesFor: #width!**compiled accessors**!public! !
 !RECTF categoriesFor: #width:!**compiled accessors**!public! !
 !RECTF categoriesFor: #x!**compiled accessors**!public! !
@@ -99,13 +111,48 @@ defineFields
 		defineField: #height type: FLOATField new!
 
 fromRectangle: aRect
-	self = aRect class ifTrue: [^aRect].
+	self == aRect class ifTrue: [^aRect].
 	^(self new)
 		x: aRect left;
 		y: aRect top;
 		width: aRect width;
 		height: aRect height;
-		yourself! !
+		yourself!
+
+left: left top: top right: right bottom: bottom
+	"Answer a new instance of the receiver with the specified position corner positions."
+
+	^self
+		left: left
+		top: top
+		width: right - left
+		height: bottom - top!
+
+left: left top: top width: width height: height
+	"Answer a new instance of the receiver with the specified origin and extent."
+
+	^self basicNew bytes: ((ByteArray newFixed: 16)
+				floatAtOffset: 0 put: left;
+				floatAtOffset: 4 put: top;
+				floatAtOffset: 8 put: width;
+				floatAtOffset: 12 put: height;
+				yourself)!
+
+newBuffer
+	^self basicNew bytes: (ByteArray newFixed: 16)!
+
+origin: newOrigin extent: newExtent
+	"Answer a new instance of the receiver with the specified origin and extent"
+
+	^self
+		left: newOrigin x
+		top: newOrigin y
+		width: newExtent x
+		height: newExtent y! !
 !RECTF class categoriesFor: #defineFields!initializing!public! !
 !RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
+!RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !
+!RECTF class categoriesFor: #left:top:width:height:!instance creation!public! !
+!RECTF class categoriesFor: #newBuffer!instance creation!public! !
+!RECTF class categoriesFor: #origin:extent:!instance creation!public! !
 

@@ -15,9 +15,8 @@ assertLastArgIsHandle
 	self assert: constructorArgs last class identicalTo: ExternalHandle!
 
 testErrorWith
-	self should: [model gdiplusErrorWith: 0] raise: GdiplusError.
-	self should: [model assertStatusOk: 1] raise: GdiplusError.
-	self shouldnt: [model assertStatusOk: 0] raise: Error!
+	self should: [model gdiplusErrorWith: 123] raise: GdiplusError matching: [:ex | ex tag = 123]
+!
 
 testIsPersistent
 	"By default initializers can be persisted"
