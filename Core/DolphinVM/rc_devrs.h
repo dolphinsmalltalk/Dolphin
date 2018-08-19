@@ -4,7 +4,6 @@
 //
 #define IDD_BLANK                       139
 #define IDD_STRIPPERPROGRESS            140
-#define IDI_UNLOCK                      428
 #define IDS_APP_SHORT_NAME              516
 #define IDP_INVALIDIMAGETYPE            527
 #define IDP_OPENIMAGEFAILURE            528

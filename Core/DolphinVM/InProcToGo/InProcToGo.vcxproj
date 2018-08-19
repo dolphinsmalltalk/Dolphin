@@ -297,10 +297,6 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Res\findbar.bmp" />
-    <Image Include="..\Res\ListBar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\DolphinLib.vcxproj">
       <Project>{241d4e3e-44c0-40b7-be1b-5249916fe631}</Project>
     </ProjectReference>

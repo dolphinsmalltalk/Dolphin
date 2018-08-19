@@ -257,11 +257,6 @@
     <None Include="VM.def" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Res\findbar.bmp" />
-    <Image Include="Res\flipper.ico" />
-    <Image Include="Res\ListBar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="vm.rc" />
   </ItemGroup>
   <ItemGroup>

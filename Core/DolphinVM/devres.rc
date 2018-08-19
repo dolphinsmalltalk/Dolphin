@@ -31,21 +31,15 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 
 !APPLICATION            ICON                    "Res\\flipper.ico"
 
-ABSTRACTCARDCONTAINER.ICO ICON                    "Res\\AbstractCardContainer.ico"
+ACCELERATORPRESENTER.ICO ICON                   "Res\\AcceleratorPresenter.ico"
 
-ACCELERATORPRESENTER.ICO ICON                    "Res\\AcceleratorPresenter.ico"
-
-APPLICATIONDEPLOYMENTWIZARD.ICO ICON                    "Res\\ApplicationDeploymentWizard.ico"
+APPLICATIONDEPLOYMENTWIZARD.ICO ICON            "Res\\ApplicationDeploymentWizard.ico"
 
 ASPECTBUFFER.ICO        ICON                    "Res\\AspectBuffer.ico"
-
-BAG.ICO                 ICON                    "Res\\Bag.ico"
 
 BASICINSPECTOR.ICO      ICON                    "Res\\BasicInspector.ico"
 
 LISTCONTROLVIEW.ICO     ICON                    "Res\\ListControlView.ico"
-
-BATCHASPECTACCESSOR.ICO ICON                    "Res\\BatchAspectAccessor.ico"
 
 BEHAVIOR.ICO            ICON                    "Res\\Behavior.ico"
 
@@ -55,17 +49,9 @@ BLOCKCLOSURE.ICO        ICON                    "res\\BlockClosure.ico"
 
 BOOLEAN.ICO             ICON                    "Res\\Boolean.ico"
 
-BOOLEANPRESENTER.ICO    ICON                    "Res\\BooleanPresenter.ico"
-
-BOUNCINGBALLVIEW.ICO    ICON                    "Res\\BouncingBallView.ico"
-
 BROWSEFOLDERDIALOG.ICO  ICON                    "Res\\BrowseFolderDialog.ico"
 
 BRUSH.ICO               ICON                    "Res\\Brush.ico"
-
-BYTEARRAY.ICO           ICON                    "Res\\ByteArray.ico"
-
-CALCULATOR.ICO          ICON                    "Res\\Calculator.ico"
 
 CANVAS.ICO              ICON                    "Res\\Canvas.ico"
 
@@ -73,27 +59,19 @@ CATEGORY.ICO            ICON                    "Res\\Category.ico"
 
 CHANGED.ICO             ICON                    "res\\Changed.ico"
 
-CHARACTER.ICO           ICON                    "Res\\Character.ico"
-
-CHAT.ICO                ICON                    "res\\Chat.ico"
-
-CHECKBOX.ICO            ICON                    "Res\\CheckBox.ico"
-
 CHOICEPRESENTER.ICO     ICON                    "Res\\ChoicePresenter.ico"
-
-CLASS.ICO               ICON                    "res\\Class.ico"
 
 CLASSBROWSERSHELL.ICO   ICON                    "res\\ClassBrowserShell.ico"
 
 CLASSCOMMENT.ICO        ICON                    "Res\\ClassComment.ico"
 
-CLASSHIERARCHYDIAGRAM.ICO ICON                    "res\\ClassHierarchyDiagram.ico"
+CLASSDEFINITION.ICO     ICON                    "Res\\ClassDefinition.ico"
+
+CLASSHIERARCHYDIAGRAM.ICO ICON                  "Res\\ClassHierarchyDiagram.ico"
 
 CLEARDOCUMENT.ICO       ICON                    "Res\\ClearDocument.ico"
 
 CLIPBOARD.ICO           ICON                    "Res\\Clipboard.ico"
-
-CLOSEWINDOW.ICO         ICON                    "Res\\CloseWindow.ico"
 
 CODEMENTORPLUGIN.ICO    ICON                    "Res\\CodeMentorPlugin.ico"
 
@@ -111,37 +89,33 @@ COLORVIEW.ICO           ICON                    "Res\\ColorView.ico"
 
 COMBOBOX.ICO            ICON                    "Res\\Combobox.ico"
 
-COMINTERFACE.ICO        ICON                    "res\\cominter.ico"
+COMINTERFACE.ICO        ICON                    "Res\\cominter.ico"
 
-COMPILEDMETHOD.ICO      ICON                    "res\\CompiledMethod.ico"
+COMPILEDCODE.ICO      ICON                      "Res\\CompiledCode.ico"
 
-COMPILEDMETHOD_DEPRECATED.ICO ICON                    "res\\CompiledMethod_Deprecated.ico"
-
-COMPILEDMETHOD_PRIVATE.ICO ICON                    "res\\CompiledMethodPrivate.ico"
-
-COMPILEDMETHOD_PUBLIC.ICO ICON                    "res\\CompiledMethodPublic.ico"
-
-COMPILEFAILEDMETHOD.ICO ICON                    "res\\CompileFailedMethod.ico"
+COMPILEFAILEDMETHOD.ICO ICON                    "Res\\CompileFailedMethod.ico"
 
 COMPILER.ICO            ICON                    "Res\\Compiler.ico"
 
-CONSOLESESSIONMANAGER.ICO ICON                    "Res\\ConsoleSessionManager.ico"
+CONSOLESESSIONMANAGER.ICO ICON                  "Res\\ConsoleSessionManager.ico"
 
 CONTAINERVIEW.ICO       ICON                    "Res\\ContainerView.ico"
-
-CONTROLBARABSTRACT.ICO  ICON                    "Res\\ControlBarAbstract.ico"
 
 DATE.ICO                ICON                    "Res\\Date.ico"
 
 DATEPRESENTER.ICO       ICON                    "Res\\DatePresenter.ico"
 
-DATETIMECOMMONCONTROL.ICO ICON                    "Res\\DateTimePicker.ico"
+DATETIMECOMMONCONTROL.ICO ICON                  "Res\\DateTimePicker.ico"
 
 DEADOBJECT.ICO          ICON                    "Res\\DeadObject.ico"
 
 DEAFOBJECT.ICO          ICON                    "Res\\DeafObject.ico"
 
-DEBUGGER.ICO            ICON                    "res\\Debugger.ico"
+DEBUGGER.ICO            ICON                    "Res\\Debugger.ico"
+
+DEBUGIT.ICO             ICON                    "Res\\Debugger.ico"
+
+DEBUGINFOPLUGIN.ICO     ICON                    "Res\\DebugInfoPlugin.ico"
 
 DELAY.ICO               ICON                    "Res\\delay.ico"
 
@@ -153,21 +127,27 @@ DIALOGVIEW.ICO          ICON                    "Res\\DialogView.ico"
 
 DICTIONARY.ICO          ICON                    "Res\\Dictionary.ico"
 
-DISASSEMBLYPLUGIN.ICO   ICON                    "Res\\DisassemblyPlugin.ico"
+DISKVOLUMEINFORMATION.ICO ICON                  "Res\\DiskVolumeInformation.ico"
 
 DISPLAYIT.ICO           ICON                    "Res\\DisplayIt.ico"
 
 DOCUMENTSHELL.ICO       ICON                    "Res\\DocumentShell.ico"
 
-DOLPHINPACKAGEFOLDER.ICO ICON                    "Res\\DolphinPackageFolder.ico"
+DOLPHINPACKAGE.ICO      ICON                    "Res\\DolphinPackage.ico"
 
-DOLPHINSERIALNUMBER.ICO ICON                    "res\\DolphinSerialNumber.ico"
+DOLPHINPACKAGEFOLDER.ICO ICON                   "Res\\DolphinPackageFolder.ico"
 
-DOLPHINSURECERTIFICATE.ICO ICON                    "Res\\DolphinSureCertificate.ico"
+PROTECTEDPRODUCTSERIALNUMBER.ICO ICON           "Res\\ProtectedProductSerialNumber.ico"
 
-DOLPHINSURETRUSTEDDATA.ICO ICON                    "Res\\DolphinSureTrustedData.ico"
+DOLPHINSURECERTIFICATE.ICO ICON                 "Res\\DolphinSureCertificate.ico"
+
+DOLPHINSURECERTIFICATESTORE.ICO ICON            "Res\\DolphinSureCertificateStore.ico"
+
+DOLPHINSURETRUSTEDDATA.ICO ICON                 "Res\\DolphinSureTrustedData.ico"
 
 DOWNARROW.ICO           ICON                    "Res\\DownArrow.ico"
+
+DURATION.ICO            ICON                    "Res\\Duration.ico"
 
 EDITCLEAR.ICO           ICON                    "Res\\EditDelete.ico"
 
@@ -175,45 +155,61 @@ EDITCOPY.ICO            ICON                    "Res\\EditCopy.ico"
 
 EDITCUT.ICO             ICON                    "Res\\EditCut.ico"
 
-EDITPASTE.ICO           ICON                    "Res\\EditPaste.ico"
+EDITPASTE.ICO           ICON                    "Res\\Clipboard.ico"
+
+EDITPASTELINK.ICO       ICON                    "Res\\EditPasteLink.ico"
 
 EDITREDO.ICO            ICON                    "Res\\EditRedo.ico"
 
 EDITUNDO.ICO            ICON                    "Res\\EditUndo.ico"
 
-ENVIRONMENTBROWSERSHELL.ICO ICON                    "res\\EnvironmentBrowserShell.ico"
+ELLIPSISBUTTON.ICO      ICON                    "Res\\EllipsisButton.ico"
 
-ETCHASKETCH.ICO         ICON                    "res\\EtchASketch.ico"
+ENVIRONMENTBROWSERSHELL.ICO ICON                "Res\\EnvironmentBrowserShell.ico"
+
+ERROR.ICO				ICON					"Res\Error.ico"
 
 EVALUATEIT.ICO          ICON                    "Res\\EvaluateIt.ico"
+
+EVENT.ICO               ICON                    "Res\\Event.ico"
 
 EXCEPTION.ICO           ICON                    "Res\\Exception.ico"
 
 EXTENT.ICO              ICON                    "res\\EXTENT.ICO"
 
+EXTERNALCALLBACK.ICO    ICON                    "Res\\ExternalCallback.ico"
+
+EXTERNALLIBRARY.ICO     ICON                    "Res\\externallibrary.ico"
+
 EXTERNALSTRUCTURE.ICO   ICON                    "Res\\externalstructure.ico"
 
-FALSE.ICO               ICON                    "Res\\False.ico"
+FILE.ICO				ICON					"Res\File.ico"
 
 FILEDIALOG.ICO          ICON                    "Res\\FileDialog.ico"
 
-FILENEW.ICO             ICON                    "Res\\DocumentShell.ico"
+FILEIN.ICO              ICON                    "Res\\FileIn.ico"
+
+FILENEW.ICO             ICON                    "Res\\FileNew.ico"
 
 FILEOPEN.ICO            ICON                    "Res\\FileOpen.ico"
 
 FILESAVE.ICO            ICON                    "Res\\FileSave.ico"
 
+FILESAVEALL.ICO         ICON                    "Res\\FileSaveAll.ico"
+
 FILESYSTEMMONITOR.ICO   ICON                    "Res\\FileSystemMonitor.ico"
 
-FINDCLASS.ICO           ICON                    "Res\\Find.ico"
+FIND.ICO				ICON                    "Res\\Find.ico"
+
+FINDCLASS.ICO           ICON                    "Res\\FindClass.ico"
 
 FINDNEXT.ICO            ICON                    "Res\\FindNext.ico"
-
-FLOAT.ICO               ICON                    "Res\\Float.ico"
 
 FOLDER.ICO              ICON                    "Res\\Folder.ico"
 
 FOLDERPRESENTER.ICO     ICON                    "Res\\FolderPresenter.ico"
+
+FOLDERUP.ICO            ICON                    "Res\\FolderUp.ico"
 
 FONT.ICO                ICON                    "res\\font.ico"
 
@@ -221,9 +217,9 @@ FONTPRESENTER.ICO       ICON                    "Res\\FontPresenter.ico"
 
 FONTVIEW.ICO            ICON                    "Res\\FontView.ico"
 
-FRACTION.ICO            ICON                    "Res\\Fraction.ico"
-
 GOSEARCH.ICO            ICON                    "Res\\GoSearch.ico"
+
+GOTOFOLDER.ICO          ICON                    "Res\GotoFolder.ico"
 
 GRAPHICSTOOL.ICO        ICON                    "Res\\GraphicsTool.ico"
 
@@ -231,9 +227,17 @@ GRAYEDCLASSCOMMENT.ICO  ICON                    "res\\GrayedClassComment.ico"
 
 GROUPBOX.ICO            ICON                    "Res\\GroupBox.ico"
 
-HELLOWORLD.ICO          ICON                    "res\\HelloWorld.ico"
+HELP.ICO                ICON                    "Res\\Help.ico"
+
+HISTORYLIST.ICO         ICON                    "Res\\HistoryList.ico"
+
+METHODHISTORY.ICO       ICON				    "Res\\MethodHistory.ico"
+
+METHODHISTORYERASE.ICO  ICON				    "Res\\MethodHistoryErase.ico"
 
 HISTORYBACK.ICO         ICON                    "Res\\HistoryBack.ico"
+
+HISTORYERASE.ICO        ICON                    "Res\\HistoryErase.ico"
 
 HISTORYFORWARD.ICO      ICON                    "Res\\HistoryForward.ico"
 
@@ -241,7 +245,13 @@ HOTKEY.ICO              ICON                    "Res\\HotKey.ico"
 
 FINDDIALOG.ICO          ICON                    "Res\\FindDialog.ico"
 
-IDI_UNLOCK              ICON                    "Res\\UnlockDialog.ico"
+IDEASPACESHELL.ICO      ICON                    "Res\\IdeaSpaceShell.ico"
+
+IDEASPACEBREAKOUT.ICO   ICON                    "Res\\IdeaSpaceBreakout.ico"
+
+IDEASPACESHELLADD.ICO   ICON                    "Res\\IdeaSpaceShellAdd.ico"
+
+IDEASPACESHELLADDDISABLED.ICO ICON              "res\\IdeaSpaceShellAddDisabled.ico"
 
 IDISPATCH.ICO           ICON                    "Res\\idispatch.ico"
 
@@ -251,23 +261,17 @@ IMAGEPRESENTER.ICO      ICON                    "Res\\ImagePresenter.ico"
 
 IMAGEVIEW.ICO           ICON                    "Res\\ImageView.ico"
 
+INTERACTOR.ICO          ICON                    "Res\\Interactor.ico"
+
 ICON.ICO                ICON                    "Res\\Icon.ico"
 
 INPLACERENAME.ICO       ICON                    "Res\\Rename.ico"
 
 INPUTSTATE.ICO          ICON                    "Res\\InputState.ico"
 
-INSPECTIT.ICO           ICON                    "Res\\InspectIt.ico"
-
-INTERVAL.ICO            ICON                    "Res\\Interval.ico"
-
-ITYPELIB.ICO            ICON                    "Res\\typelib.ico"
+INSPECTIT.ICO           ICON                    "Res\\BasicInspector.ico"
 
 KEYBOARD.ICO            ICON                    "Res\\Keyboard.ico"
-
-LARGEINTEGER.ICO        ICON                    "Res\\LargeInteger.ico"
-
-LAYOUTMANAGER.ICO       ICON                    "res\\LayoutManager.ico"
 
 LINTERROR.ICO           ICON                    "Res\\LintError.ico"
 
@@ -277,6 +281,10 @@ LINTPASS.ICO            ICON                    "Res\\LintPass.ico"
 
 LINTRULE.ICO            ICON                    "Res\\LintRule.ico"
 
+LINTSLEEP.ICO           ICON                    "Res\\LintSleep.ico"
+
+LINTWAIT.ICO            ICON                    "Res\\LintWait.ico"
+
 LINTWARNING.ICO         ICON                    "Res\\LintWarning.ico"
 
 LISTMODEL.ICO           ICON                    "Res\\ListModel.ico"
@@ -284,6 +292,8 @@ LISTMODEL.ICO           ICON                    "Res\\ListModel.ico"
 LISTPRESENTER.ICO       ICON                    "Res\\ListPresenter.ico"
 
 LISTVALUEPRESENTER.ICO  ICON                    "Res\\ListValuePresenter.ico"
+
+LISTVIEW.ICO            ICON					"Res\\ListView.ico"
 
 LISTVIEWCOLUMN.ICO      ICON                    "Res\\ListViewColumn.ico"
 
@@ -297,7 +307,7 @@ MESSAGE.ICO             ICON                    "Res\\Message.ico"
 
 MESSAGESENDABSTRACT.ICO ICON                    "Res\\MessageSendAbstract.ico"
 
-MESSAGESEQUENCEABSTRACT.ICO ICON                    "Res\\MessageSequenceAbstract.ico"
+MESSAGESEQUENCEABSTRACT.ICO ICON                "Res\\MessageSequenceAbstract.ico"
 
 METACLASS.ICO           ICON                    "Res\\Metaclass.ico"
 
@@ -305,9 +315,11 @@ METHODBROWSER.ICO       ICON                    "res\\MethodBrowser.ico"
 
 METHODPROTOCOL.ICO      ICON                    "Res\\methodprotocol.ico"
 
-METHODPROTOCOL_ANSI.ICO ICON                    "res\\methodprotocolansi.ico"
+METHODPROTOCOL_ANSI.ICO ICON                    "Res\\methodprotocolansi.ico"
 
-METHODPROTOCOL_READONLY.ICO ICON                    "res\\methodprotocolro.ico"
+METHODPROTOCOL_READONLY.ICO ICON                "Res\\methodprotocolro.ico"
+
+METHODSOURCE.ICO        ICON                    "Res\\MethodSource.ico"
 
 MODEL.ICO               ICON                    "Res\\Model.ico"
 
@@ -315,55 +327,59 @@ MOENTREEVIEW.ICO        ICON                    "Res\\MoenTreeView.ico"
 
 MOUSETRACKER.ICO        ICON                    "Res\\MouseTracker.ico"
 
-MOVEPRIOR.ICO           ICON                    "Res\\MovePrior.ico"
-
-MOVENEXT.ICO            ICON                    "Res\\MoveNext.ico"
-
 MUTEX.ICO               ICON                    "Res\\Mutex.ico"
 
 NEWCLASS.ICO            ICON                    "Res\\NewClass.ico"
 
 NEWMETHOD.ICO           ICON                    "Res\\NewMethod.ico"
 
-NUMBER.ICO              ICON                    "Res\\Number.ico"
+NEWPACKAGE.ICO          ICON                    "Res\\NewPackage.ico"
+
+NEWWORKSPACE.ICO        ICON                    "Res\\NewWorkspace.ico"
+
+NEWTHING.ICO            ICON                    "Res\\NewThing.ico"
+
+NOTIFICATION.ICO        ICON                    "Res\\Notification.ico"
 
 NUMBERPRESENTER.ICO     ICON                    "Res\\NumberPresenter.ico"
 
 OBJECT.ICO              ICON                    "Res\\object.ico"
 
-OVERRIDDEN.ICO          ICON                    "res\\Overridden.ico"
+OPENWORKSPACE.ICO       ICON                    "res\\OpenWorkspace.ico"
 
 PACKAGE.ICO             ICON                    "Res\\Package.ico"
+
+PACKAGEBROWSERSHELL.ICO ICON                    "Res\\PackageBrowserShell.ico"
 
 PANIC.ICO               ICON                    "Res\\Panic.ico"
 
 PEN.ICO                 ICON                    "Res\\Pen.ico"
 
-PLAYGROUND.ICO          ICON                    "res\\Playground.ico"
-
-POINT.ICO               ICON                    "Res\\Point.ico"
+POOLDICTIONARIESSHELL.ICO ICON                  "Res\\PoolDictionariesShell.ico"
 
 POSITION.ICO            ICON                    "res\\POSITION.ICO"
 
-POWERSWITCH.ICO         ICON                    "Res\\PowerOff.ico"
+POWERSWITCH.ICO         ICON                    "Res\\PowerSwitch.ico"
+
+PREFERENCES.ICO         ICON                    "Res\\Preferences.ico"
 
 PRESENTER.ICO           ICON                    "Res\\Presenter.ico"
+
+PRINTERCANVAS.ICO       ICON                    "Res\\PrinterCanvas.ico"
 
 PROCESS.ICO             ICON                    "Res\\PROCESS.ICO"
 
 PROCESSMONITOR.ICO      ICON                    "res\\ProcessMonitor.ico"
 
+PROCESSORSCHEDULER.ICO  ICON                    "res\\ProcessorScheduler.ico"
+
 PROGRESSBAR.ICO         ICON                    "Res\\ProgressBar.ico"
 
-PROTOCOLBROWSERSHELL.ICO ICON                    "res\\ProtocolBrowserShell.ico"
+PROTOOBJECT.ICO         ICON                    "Res\\ProtoObject.ico"
 
 PUSHBUTTON.ICO          ICON                    "Res\\PushButton.ico"
 
-RADIOBUTTON.ICO         ICON                    "Res\\RadioButton.ico"
-
-RECTANGLE.ICO           ICON                    "Res\\Rectangle.ico"
-
-RECYCLEBIN.ICO          ICON                    "Res\\RecycleBin.ico"
+QUESTION.ICO            ICON                    "Res\\Question.ico"
 
 REFACTORING.ICO         ICON                    "Res\\Refactoring.ico"
 
@@ -371,33 +387,47 @@ REFERENCEVIEW.ICO       ICON                    "Res\\ReferenceView.ico"
 
 REFRESH.ICO             ICON                    "Res\\Refresh.ico"
 
-REGKEY.ICO              ICON                    "res\\regkey.ico"
+REGKEY.ICO              ICON                    "Res\\regkey.ico"
 
-REGKEYABSTRACT.ICO      ICON                    "res\\REGKEYABSTRACT.ico"
+REGKEYABSTRACT.ICO      ICON                    "Res\\REGKEYABSTRACT.ico"
 
-REGKEYVALUES.ICO        ICON                    "res\\regkeyva.ico"
+REGKEYVALUES.ICO        ICON                    "Res\\regkeyva.ico"
 
-REGVALUEBIN.ICO         ICON                    "res\\regvalue.ico"
+REGVALUEBIN.ICO         ICON                    "Res\\regvalue.ico"
 
-RESOURCE.ICO            ICON                    "res\\Resource.ico"
+RENAME.ICO              ICON                    "Res\\Rename.ico"
 
-REVERT.ICO              ICON                    "Res\\Revert.ico"
+RESOURCEIDENTIFIER.ICO  ICON                    "Res\\ResourceIdentifier.ico"
+
+RESOURCEBROWSER.ICO     ICON                    "Res\\ResourceBrowser.ico"
 
 RUNTOCURSOR.ICO         ICON                    "Res\\RunToCursor.ico"
 
 RUN.ICO                 ICON                    "Res\\Run.ico"
 
-SCALEDDECIMAL.ICO       ICON                    "res\\ScaledDecimal.ico"
+SAMPLEAPPLICATIONSFOLDER.ICO ICON               "Res\\SampleApplicationsFolder.ico"
 
 SCINTILLAVIEW.ICO       ICON                    "Res\\ScintillaView.ico"
 
-SCRIBBLE.ICO            ICON                    "res\\Scribble.ico"
+SCRIBBLE.ICO            ICON                    "Res\\Scribble.ico"
 
-SCRIBBLEVIEW.ICO        ICON                    "res\\ScribbleView.ico"
+SCRIBBLEVIEW.ICO        ICON                    "Res\\ScribbleView.ico"
 
 SCROLLBAR.ICO           ICON                    "Res\\ScrollBar.ico"
 
 SCROLLINGDECORATOR.ICO  ICON                    "Res\\ScrollingDecorator.ico"
+
+SELECTALL.ICO			ICON                    "Res\\SelectAll.ico"
+
+SELECTHIDE.ICO			ICON                    "Res\\SelectHide.ico"
+
+SELECTINVERT.ICO		ICON                    "Res\\SelectInvert.ico"
+
+SELECTNONE.ICO			ICON                    "Res\\SelectNone.ico"
+
+SELECTOPEN.ICO			ICON                    "Res\\SelectOpen.ico"
+
+SELECTPLAY.ICO			ICON                    "Res\\SelectPlay.ico"
 
 SEARCHTEXT.ICO          ICON                    "Res\\SearchText.ico"
 
@@ -405,19 +435,17 @@ SHELL.ICO               ICON                    "Res\\Shell.ico"
 
 SHELLVIEW.ICO           ICON                    "Res\\ShellView.ico"
 
-SHOWNEXTSTATEMENT.ICO   ICON                    "Res\\Forwards.ico"
-
-SLEEP.ICO               ICON                    "Res\\Sleep.ico"
+SHOWNEXTSTATEMENT.ICO   ICON                    "Res\\ShowNextStatement.ico"
 
 SLIDER.ICO              ICON                    "Res\\Slider.ico"
 
-SMALLTALKOPTIONSFOLDER.ICO ICON                    "res\\SmalltalkSystemOptionSet.ico"
+SLIDEYINNEYOUTEYTHING.ICO ICON                  "Res\\SlideyInneyOuteyThing.ico"
 
-SMALLTALKSYSTEMFOLDER.ICO ICON                    "res\\SmalltalkSystemFolder.ico"
+SMALLTALKOPTIONSFOLDER.ICO ICON                 "Res\\SmalltalkOptionsFolder.ico"
 
-SMALLTALKTOOLSFOLDER.ICO ICON                    "res\\SmalltalkSystemToolsFolder.ico"
+SMALLTALKTOOLSFOLDER.ICO ICON                   "Res\\SmalltalkSystemToolsFolder.ico"
 
-SMALLTALKTOOLSHELL.ICO  ICON                    "res\\SmalltalkToolShell.ico"
+SMALLTALKTOOLSHELL.ICO  ICON                   "Res\\SmalltalkToolShell.ico"
 
 SMALLTALKWORKSPACE.ICO  ICON                    "res\\SmalltalkWorkspace.ico"
 
@@ -425,7 +453,11 @@ SNAPSHOT.ICO            ICON                    "Res\\Snapshot.ico"
 
 SOUND.ICO               ICON                    "Res\\Sound.ico"
 
+SOURCEBROWSER.ICO       ICON                    "Res\\SourceBrowser.ico"
+
 SOURCEMANAGER.ICO       ICON                    "Res\\SourceManager.ico"
+
+SORTALGORITHM.ICO       ICON                    "Res\\SortAlgorithm.ico"
 
 SPINBUTTON.ICO          ICON                    "Res\\SpinButton.ico"
 
@@ -433,9 +465,11 @@ SPLITTER.ICO            ICON                    "Res\\Splitter.ico"
 
 STATICIMAGE.ICO         ICON                    "Res\\StaticImage.ico"
 
+STATICPATH.ICO          ICON                    "Res\\StaticPath.ico"
+
 STATICTEXT.ICO          ICON                    "Res\\StaticText.ico"
 
-STATUS.ICO              ICON                    "Res\\Status.ico"
+STATUSBAR.ICO           ICON                    "Res\\StatusBar.ico"
 
 STEPINTO.ICO            ICON                    "Res\\StepInto.ico"
 
@@ -443,15 +477,17 @@ STEPOVER.ICO            ICON                    "Res\\StepOver.ico"
 
 STEPOUT.ICO             ICON                    "Res\\StepOut.ico"
 
-STRING.ICO              ICON                    "res\\String.ico"
-
-SYMBOL.ICO              ICON                    "res\\symbol.ico"
-
 SYSTEMBROWSERSHELL.ICO  ICON                    "Res\\SystemBrowserShell.ico"
 
 SYSTEMDICTIONARY.ICO    ICON                    "Res\\SystemDictionary.ico"
 
 TABVIEW.ICO             ICON                    "Res\\TabView.ico"
+
+TESTRUNNER.ICO          ICON                    "res\\TestRunner.ico"
+
+TESTVIEW.ICO            ICON                    "Res\\TestView.ico"
+
+TEXTDOCUMENT.ICO        ICON                    "Res\\TextDocument.ico"
 
 TEXTEDIT.ICO            ICON                    "Res\\TextEdit.ico"
 
@@ -463,7 +499,9 @@ TIMEPRESENTER.ICO       ICON                    "Res\\TimePresenter.ico"
 
 TIMESTAMP.ICO           ICON                    "Res\\TimeStamp.ico"
 
-TOGGLELOCALHIERARCHY.ICO ICON                    "Res\\ToggleLocalHierarchy.ico"
+TOGGLELOCALHIERARCHY.ICO ICON                   "Res\\ToggleLocalHierarchy.ico"
+
+TOOLBAR.ICO             ICON                    "Res\\Toolbar.ico"
 
 TOOLTIP.ICO             ICON                    "Res\\ToolTip.ico"
 
@@ -477,13 +515,7 @@ TREEPRESENTER.ICO       ICON                    "Res\\TreePresenter.ico"
 
 TREEVIEW.ICO            ICON                    "Res\\TreeView.ico"
 
-TRUE.ICO                ICON                    "Res\\True.ico"
-
 TYPECONVERTER.ICO       ICON                    "res\\TypeConverter.ico"
-
-UNDEFINEDOBJECT.ICO     ICON                    "Res\\UndefinedObject.ico"
-
-UP.ICO                  ICON                    "Res\\Up.ico"
 
 UPARROW.ICO             ICON                    "Res\\UpArrow.ico"
 
@@ -493,7 +525,7 @@ VALUEBUFFER.ICO         ICON                    "Res\\ValueBuffer.ico"
 
 VALUECONVERTER.ICO      ICON                    "Res\\ValueConverter.ico"
 
-VALUECONVERTINGCONTROLVIEW.ICO ICON                    "Res\\ValueConvertingControlView.ico"
+VALUECONVERTINGCONTROLVIEW.ICO ICON             "Res\\ValueConvertingControlView.ico"
 
 VALUEDIALOG.ICO         ICON                    "Res\\ValueDialog.ico"
 
@@ -503,44 +535,49 @@ VALUEMODEL.ICO          ICON                    "Res\\ValueModel.ico"
 
 VALUEPRESENTER.ICO      ICON                    "Res\\ValuePresenter.ico"
 
-VIDEOLIBRARY.ICO        ICON                    "Res\\VideoLibrary.ico"
-
-VIDEORECORDING.ICO      ICON                    "Res\\VideoRecording.ico"
-
-VIDEOTAPE.ICO           ICON                    "Res\\VideoTape.ico"
-
 VIEW.ICO                ICON                    "Res\\View.ico"
 
 VIEWCOMPOSER.ICO        ICON                    "Res\\ViewComposer.ico"
 
+VIEWCONTENT.ICO         ICON                    "Res\\ViewContent.ico"
+
+VIEWDETAILS.ICO	        ICON                    "Res\\ViewDetails.ico"
+
+VIEWEXTRALARGEICONS.ICO ICON                    "Res\\ViewExtraLargeIcons.ico"
+
+VIEWLARGEICONS.ICO      ICON                    "Res\\ViewLargeIcons.ico"
+
+VIEWLIST.ICO            ICON                    "Res\\ViewList.ico"
+
+VIEWMEDIUMSIZEDICONS.ICO ICON                    "Res\\ViewMediumSizedIcons.ico"
+
+VIEWMODE.ICO            ICON                    "Res\\ViewMode.ico"
+
+VIEWSMALLICONS.ICO      ICON                    "Res\\ViewSmallIcons.ico"
+
+VIEWTILES.ICO           ICON                    "Res\\ViewTiles.ico"
+
 VISUALOBJECTFINDER.ICO  ICON                    "res\\VisualObjectFinder.ico"
 
-WAIT.ICO                ICON                    "Res\\Wait.ico"
+WARNING.ICO             ICON                    "Res\\Warning.ico"
 
 WINIMAGELIST.ICO        ICON                    "Res\\WinImageList.ico"
 
-WIZARD.ICO              ICON                    "res\\Wizard.ico"
+WIZARD.ICO              ICON                    "Res\\Wizard.ico"
 
-XML.ICO                 ICON                    "res\\Xml.ico"
-
-RESTART.ICO             ICON                    "Res\\Restart.ico"
+XML.ICO                 ICON                    "Res\\Xml.ico"
 
 UNITTESTPLUGIN.ICO      ICON                    "Res\\UnitTestPlugin.ico"
 
-UNITTESTPLUGINDEFECT.ICO ICON                    "res\\UnitTestPluginDefect.ico"
+UNITTESTPLUGINDEFECT.ICO ICON                   "Res\\UnitTestPluginDefect.ico"
 
-UNITTESTPLUGINFAIL.ICO  ICON                    "res\\UnitTestPluginFail.ico"
+UNITTESTPLUGINFAIL.ICO  ICON                    "Res\\UnitTestPluginFail.ico"
 
-UNITTESTPLUGINNOTEST.ICO ICON                    "res\\UnitTestPluginNoTest.ico"
+UNITTESTPLUGINNOTEST.ICO ICON                   "Res\\UnitTestPluginNoTest.ico"
 
-UNITTESTPLUGINNOTRUN.ICO ICON                    "res\\UnitTestPluginNotRun.ico"
+UNITTESTPLUGINNOTRUN.ICO ICON                   "Res\\UnitTestPluginNotRun.ico"
 
-UNITTESTPLUGINPASS.ICO  ICON                    "res\\UnitTestPluginPass.ico"
-
-TESTRUNNER.ICO          ICON                    "res\\TestRunner.ico"
-
-SUNITABSBROWSER.ICO     ICON                    "res\\SUnitAbsBrowser.ico"
-
+UNITTESTPLUGINPASS.ICO  ICON                    "Res\\UnitTestPluginPass.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -632,8 +669,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 20016,7,0,0
- PRODUCTVERSION 2016,7,0,0
+FILEVERSION DOLPHIN_VERINFO_VERSION
+PRODUCTVERSION DOLPHIN_VERINFO_VERSION
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -649,12 +686,12 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName", "Object Arts Ltd."
-            VALUE "FileDescription", "Dolphin 7 IDE Resources"
-            VALUE "FileVersion", "20016.7.0.0"
+            VALUE "FileDescription", "Dolphin 7.1 IDE Resources"
+			VALUE "FileVersion", DOLPHIN_ASSEMBLY_VERSION
             VALUE "InternalName", "DolphinDevRes"
-            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2016"
+            VALUE "LegalCopyright", "Copyright © Object Arts 1997-2018"
             VALUE "OriginalFilename", "DolphinDR7.dll"
-            VALUE "ProductName", "Dolphin Smalltalk 7"
+            VALUE "ProductName", "Dolphin Smalltalk 7.1"
             VALUE "ProductVersion", GIT_TAG
             VALUE "WARNING", "Please edit this as a text file rather than with the resource editor to preserve GIT_TAG"
         END
@@ -678,40 +715,10 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Icon
-//
-
-// Icon with lowest ID value placed first to ensure application icon
-// remains consistent on all systems.
-IDEASPACESHELL.ICO      ICON                    "Res\\IdeaSpaceShell.ico"
-
-IDEASPACEBREAKOUT.ICO   ICON                    "Res\\IdeaSpaceBreakout.ico"
-
-IDEASPACESHELLADD.ICO   ICON                    "Res\\IdeaSpaceShellAdd.ico"
-
-IDEASPACESHELLADDDISABLED.ICO ICON                    "res\\IdeaSpaceShellAddDisabled.ico"
-
-DOLPHINPACKAGE.ICO      ICON                    "Res\\DolphinPackage.ico"
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // Bitmap
 //
 
-FINDBAR.BMP             BITMAP                  "Res\\findbar.bmp"
-
-LISTBAR.BMP             BITMAP                  "Res\\ListBar.bmp"
-
-EDITBAR.BMP             BITMAP                  "res\\EditBar.bmp"
-
-FILEBAR.BMP             BITMAP                  "Res\\FileBar.bmp"
-
-VIEWBAR.BMP             BITMAP                  "res\\ViewBar.bmp"
-
 VCBAR.BMP               BITMAP                  "Res\\VCBar.bmp"
-
-IDEASPACECARDBAR.BMP    BITMAP                  "Res\\IdeaSpaceCardBar.bmp"
 
 #endif    // English (United Kingdom) resources
 /////////////////////////////////////////////////////////////////////////////

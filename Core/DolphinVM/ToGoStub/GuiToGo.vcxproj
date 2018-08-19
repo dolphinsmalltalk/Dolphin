@@ -262,15 +262,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Res\DownArrow.ico" />
-    <Image Include="..\Res\EditBar.bmp" />
     <Image Include="..\Res\ExeStub.ico" />
-    <Image Include="..\Res\FileBar.bmp" />
-    <Image Include="..\Res\findbar.bmp" />
-    <Image Include="..\Res\Flipper.ico" />
-    <Image Include="..\Res\ListBar.bmp" />
-    <Image Include="..\Res\Toolbar.bmp" />
     <Image Include="..\Res\UpArrow.ico" />
-    <Image Include="..\Res\ViewBar.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DolphinLib.vcxproj">
