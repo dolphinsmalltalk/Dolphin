@@ -1,4 +1,4 @@
-!CompiledCode class methodsFor!
+﻿!CompiledCode class methodsFor!
 
 packByteCodes: anArray
 	| bytes codes |
@@ -13,4 +13,5 @@ packByteCodes: anArray
 					bitShift: -1.
 	^codes! !
 
+Point addClassConstant: 'Zero' value: 0@0!
 
