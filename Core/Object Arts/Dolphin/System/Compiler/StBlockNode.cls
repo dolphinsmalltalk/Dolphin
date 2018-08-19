@@ -103,6 +103,9 @@ hash
 isBlock
 	^true!
 
+isEmptyBlock
+	^body statements isEmpty!
+
 isImmediateNode
 	^true!
 
@@ -174,6 +177,7 @@ uses: aNode
 !StBlockNode categoriesFor: #directlyUses:!public!testing! !
 !StBlockNode categoriesFor: #hash!comparing!public! !
 !StBlockNode categoriesFor: #isBlock!public!testing! !
+!StBlockNode categoriesFor: #isEmptyBlock!public!testing! !
 !StBlockNode categoriesFor: #isImmediateNode!public!testing! !
 !StBlockNode categoriesFor: #isInlined!public! !
 !StBlockNode categoriesFor: #isLast:!public!testing! !

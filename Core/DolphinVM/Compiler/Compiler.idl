@@ -103,6 +103,7 @@ library CompilerLib
 		CErrDuplicateTempName=85,
 		CErrDuplicateArgName,
 		CErrRedefiningArg,
+		CErrEmptyConditionBlock,
 	} ParseErrors;
 
 	typedef enum ParseWarnings {

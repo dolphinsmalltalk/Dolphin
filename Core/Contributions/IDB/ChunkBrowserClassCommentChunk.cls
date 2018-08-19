@@ -44,7 +44,7 @@ isChunkClassFor: aString
 
 	| firstSpaceIndex |
 	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and: [(aString indexOfSubCollection: ' comment:') = firstSpaceIndex]! !
+		and: [(aString indexOfSubCollection: ' comment: ''') = firstSpaceIndex]! !
 !ChunkBrowserClassCommentChunk class categoriesFor: #chunkType!constants!public! !
 !ChunkBrowserClassCommentChunk class categoriesFor: #isChunkClassFor:!public!testing! !
 

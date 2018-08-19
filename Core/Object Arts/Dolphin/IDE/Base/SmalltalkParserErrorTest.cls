@@ -362,9 +362,10 @@ testWarnNonNiladicGuardedBlock
 				parseMethodWarning: each
 				rangeBlock: 
 					[:source |
-					| start |
-					start := source findString: 'on:' startingAt: (source lastIndexOf: $.).
-					start to: start + 2]
+					| start stop |
+					start := (source findString: '">"' startingAt: (source lastIndexOf: $.))+3.
+					stop := (source findString: '"<"' startingAt: start) - 1.
+					start to: stop]
 				code: CWarnExpectNiladicBlockReceiver]!
 
 testWarnRestrictedSelector

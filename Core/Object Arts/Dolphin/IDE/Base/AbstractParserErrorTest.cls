@@ -1386,14 +1386,12 @@ testErrorsZeroArgOptimisedBlock
 	"Test expects zero args."
 
 	#('1 ifNil: [:x |]' 'true ifTrue: [:x |]' 'false ifFalse: [:x |]') do: 
-			[:source | 
-			self 
+			[:source |
+			self
 				parseExprError: source
 				range: ((source indexOf: $[) to: (source indexOf: $|))
 				line: 1
-				code: CErrIncorrectBlockArgCount].
-	#('1 whileTrue' '2 whileFalse' '3 repeat''[:a | ] whileTrue' '[:b | ] whileFalse' '[:c | ] repeat') 
-		do: [:each | ]!
+				code: CErrIncorrectBlockArgCount]!
 
 testOverriddenBlockArgumentError
 	| source |
@@ -1645,6 +1643,20 @@ testWarningSupersendNotImplemented
 			result := self parseMethod: 'class ^super class' in: self class class]
 		raise: self compilationWarningClass!
 
+testWarningUnoptimizedConditionNonEmptyBlock
+	| source |
+	#(#and: #or:) do: 
+			[:each |
+			| stem format |
+			"Non-block literal - in this case a SmallInteger"
+			stem := 'x [1] '.
+			format := 'x true <1s> [ ] '.
+			source := format expandMacrosWith: each.
+			self
+				parseMethodError: source
+				code: CErrEmptyConditionBlock
+				range: ((source lastIndexOf: $[) to: (source lastIndexOf: $]))]!
+
 testWarningUnoptimizedConditionNonNiladicArg
 	| source |
 	#(#and: #or: #ifTrue: #ifFalse: #ifNil:) do: 
@@ -1778,31 +1790,41 @@ testWarningUnoptimizedLoopsNonNiladicArg
 testWarningUnoptimizedLoopsNonNiladicReceiver
 	| source |
 	#('whileTrue' 'whileFalse' 'repeat' 'whileTrue: []' 'whileFalse: []') do: 
-			[:each | 
+			[:each |
 			| stem |
 			stem := 'x self '.
 			source := stem , each.
-			self 
+			self
 				parseMethodWarning: source
 				in: BlockClosure
-				range: (stem size + 1 to: stem size + each subStrings first size)
+				range: (3 to: stem size - 1)
 				code: CWarnExpectNiladicBlockReceiver.
 			"Variable as receiver - the expression is valid, but can't be optimized"
 			stem := 'x | a | a := [true]. a '.
 			source := stem , each.
-			self 
+			self
 				parseMethodWarning: source
 				in: Object
-				range: (stem size + 1 to: stem size + each subStrings first size)
+				range: (stem size - 1 to: stem size - 1)
 				code: CWarnExpectNiladicBlockReceiver.
 			"Monadic literal block instead of niladic"
 			stem := 'x [:a | a] '.
 			source := stem , each.
-			self 
+			self
 				parseMethodWarning: source
 				in: Object
-				range: (stem size + 1 to: stem size + each subStrings first size)
-				code: CWarnExpectNiladicBlockReceiver]!
+				range: (3 to: stem size - 1)
+				code: CWarnExpectNiladicBlockReceiver.
+			"Empty block cannot be used for loop condition"
+			each = 'repeat'
+				ifFalse: 
+					[stem := 'x [ | a | ] '.
+					source := stem , each.
+					self
+						parseMethodError: source
+						in: Object
+						range: (3 to: stem size - 1)
+						code: CErrEmptyConditionBlock]]!
 
 testWarningUnreferencedTemp
 	#(#testWarningUnreferencedTempBlock #testWarningUnreferencedTempMethod #testWarningUnreferencedTempOptimizedBlock #testWarningUnreferencedTempBraceArray)
@@ -1941,6 +1963,7 @@ writtenNotReadRange: aString
 !AbstractParserErrorTest categoriesFor: #testWarningRedefiningTemp!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningSelfSendNotImplemented!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningSupersendNotImplemented!public!unit tests! !
+!AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonEmptyBlock!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedConditionNonNiladicArg!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNil!public!unit tests! !
 !AbstractParserErrorTest categoriesFor: #testWarningUnoptimizedIfNotNilNonMonadicArg!public!unit tests! !
