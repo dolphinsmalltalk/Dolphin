@@ -21,6 +21,7 @@ SmalltalkParseErrorCodes at: 'CErrBraceNotClosed' put: 16r25!
 SmalltalkParseErrorCodes at: 'CErrByteArrayNotClosed' put: 16r3F!
 SmalltalkParseErrorCodes at: 'CErrDuplicateArgName' put: 16r56!
 SmalltalkParseErrorCodes at: 'CErrDuplicateTempName' put: 16r55!
+SmalltalkParseErrorCodes at: 'CErrEmptyConditionBlock' put: 16r58!
 SmalltalkParseErrorCodes at: 'CErrErrorInStaticExpression' put: 16r40!
 SmalltalkParseErrorCodes at: 'CErrExpectCloseTag' put: 16r2E!
 SmalltalkParseErrorCodes at: 'CErrExpectExtType' put: 16r32!
@@ -36,7 +37,7 @@ SmalltalkParseErrorCodes at: 'CErrInsufficientArgTypes' put: 16r38!
 SmalltalkParseErrorCodes at: 'CErrInternal' put: 16r42!
 SmalltalkParseErrorCodes at: 'CErrInvalExprStart' put: 16r22!
 SmalltalkParseErrorCodes at: 'CErrInvalidStructArg' put: 16r36!
-SmalltalkParseErrorCodes at: 'CErrLast' put: 16r57!
+SmalltalkParseErrorCodes at: 'CErrLast' put: 16r58!
 SmalltalkParseErrorCodes at: 'CErrMethodTooLarge' put: 16r4F!
 SmalltalkParseErrorCodes at: 'CErrNonsenseAtExprEnd' put: 16r24!
 SmalltalkParseErrorCodes at: 'CErrNonsenseAtMethodEnd' put: 16r23!

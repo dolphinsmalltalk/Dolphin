@@ -719,19 +719,27 @@ void Compiler::GenInteger(int val, const TEXTRANGE& range)
 		GenLiteralConstant(m_piVM->NewSignedInteger(val), range);
 }
 
-int Compiler::PriorInstruction() const
+template <bool ignoreNops> int Compiler::PriorInstruction() const
 {
 	int priorIndex = m_codePointer-1;
-	while (priorIndex >= 0 && m_bytecodes[priorIndex].isData())
+	while (priorIndex >= 0 && (m_bytecodes[priorIndex].isData() || (m_bytecodes[priorIndex].byte == Nop && ignoreNops)))
 		priorIndex--;
 	return priorIndex;
+}
+
+bool Compiler::LastIsPushNil() const
+{
+	int priorIndex = PriorInstruction<true>();
+	if (priorIndex < 0)
+		return false;
+	return m_bytecodes[priorIndex].byte == ShortPushNil;
 }
 
 // Answer whether the previous instruction is a push SmallInteger
 // There are a number of possibilities
 bool Compiler::LastIsPushSmallInteger(int& value) const
 {
-	int priorIndex = PriorInstruction();
+	int priorIndex = PriorInstruction<false>();
 	if (priorIndex < 0)
 		return false;
 	
@@ -747,7 +755,7 @@ bool Compiler::LastIsPushSmallInteger(int& value) const
 
 Oop Compiler::LastIsPushNumber() const
 {
-	int priorIndex = PriorInstruction();
+	int priorIndex = PriorInstruction<false>();
 	if (priorIndex < 0)
 		return NULL;
 
@@ -1291,7 +1299,7 @@ POTE Compiler::ParseMethod()
 
 	if (m_ok) 
 	{
-		int last = PriorInstruction();
+		int last = PriorInstruction<false>();
 
 		// If the method doesn't already end in a return, return the receiver.
 		if (last < 0 || m_bytecodes[last].byte != ReturnMessageStackTop)
@@ -1506,10 +1514,12 @@ void Compiler::ParseBlockStatements()
 		if (AtEnd() || ThisToken() == CloseParen)
 			return;
 
+		int statements = 0;
 		while (m_ok)
 		{
 			int statementStart = ThisTokenRange().m_start;
 			ParseStatement();
+			statements++;
 			bool foundClosing = false;
 			if (ThisToken() == CloseStatement)
 			{
@@ -1529,6 +1539,10 @@ void Compiler::ParseBlockStatements()
 			if (m_ok && !foundClosing)
 				CompileError(TEXTRANGE(statementStart, LastTokenRange().m_stop), CErrUnterminatedStatement);
 			GenPopStack();
+		}
+		if (statements == 1 && LastIsPushNil())
+		{
+			m_pCurrentScope->BeEmptyBlock();
 		}
 	}
 }
@@ -1862,6 +1876,7 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 	
 	Str strPattern = ThisTokenText();
 	TEXTRANGE range = ThisTokenRange();
+	TEXTRANGE receiverRange = TEXTRANGE(textPosition, LastTokenRange().m_stop);
 	NextToken();
 	
 	// There are some special cases to deal with optimized
@@ -1869,11 +1884,11 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 	//
 	if (strPattern == (LPUTF8)"whileTrue:")
 	{
-		specialCase = ParseWhileLoopBlock(true, exprMark, range, textPosition);
+		specialCase = ParseWhileLoopBlock<true>(exprMark, range, receiverRange);
 	}
 	else if (strPattern == (LPUTF8)"whileFalse:")
 	{
-		specialCase = ParseWhileLoopBlock(false, exprMark, range, textPosition);
+		specialCase = ParseWhileLoopBlock<false>(exprMark, range, receiverRange);
 	}
 	else if (strPattern == (LPUTF8)"ifTrue:")
 	{
@@ -1915,7 +1930,7 @@ int Compiler::ParseKeyContinuation(int exprMark, int textPosition)
 	}
 	else if (strPattern == (LPUTF8)"timesRepeat:")
 	{
-		if (ParseTimesRepeatLoop(range))
+		if (ParseTimesRepeatLoop(range, textPosition))
 		{
 			//AddTextMap(textPosition);
 			specialCase=true;
@@ -2057,17 +2072,17 @@ int Compiler::ParseUnaryContinuation(int exprMark, int textPosition)
 		// Check for some optimizations
 		if (strToken == (LPUTF8)"whileTrue")
 		{
-			if (ParseWhileLoop(true, exprMark))
+			if (ParseWhileLoop<true>(exprMark, TEXTRANGE(textPosition, LastTokenRange().m_stop)))
 				isSpecialCase=true;
 		}
 		else if (strToken == (LPUTF8)"whileFalse")
 		{
-			if (ParseWhileLoop(false, exprMark))
+			if (ParseWhileLoop<false>(exprMark, TEXTRANGE(textPosition, LastTokenRange().m_stop)))
 				isSpecialCase=true;
 		}
 		else if (strToken == (LPUTF8)"repeat")
 		{
-			if (ParseRepeatLoop(exprMark))
+			if (ParseRepeatLoop(exprMark, TEXTRANGE(textPosition, LastTokenRange().m_stop)))
 				isSpecialCase=true;
 		}
 		else if (strToken == (LPUTF8)"yourself" && !(m_flags & SendYourself))

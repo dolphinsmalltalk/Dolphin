@@ -270,18 +270,19 @@ private:
 	int ParseIfNotNilBlock();
 	bool ParseIfNil(const TEXTRANGE&, int);
 	bool ParseIfNotNil(const TEXTRANGE&, int);
-	bool ParseWhileLoop(bool, const int mark);
-	bool ParseWhileLoopBlock(const bool bIsWhileTrue, const int mark, const TEXTRANGE& tokenRange, const int textStart);
-	bool ParseRepeatLoop(const int mark);
-	bool ParseTimesRepeatLoop(const TEXTRANGE&);
+	template<bool WhileTrue> bool ParseWhileLoop(const int mark, const TEXTRANGE& receiverRange);
+	template<bool> bool ParseWhileLoopBlock(const int mark, const TEXTRANGE& tokenRange, const TEXTRANGE& receiverRange);
+	bool ParseRepeatLoop(const int mark, const TEXTRANGE& receiverRange);
+	bool ParseTimesRepeatLoop(const TEXTRANGE&, const int textStart);
 	void ParseToByNumberDo(int toPointer, Oop oopStep, bool bNegativeStep);
 	bool ParseToDoBlock(int, int toPointer);
 	bool ParseToByDoBlock(int, int toPointer, int byPointer=0);
-	void ParseZeroArgOptimizedBlock();
+	bool ParseZeroArgOptimizedBlock();
 	int ParseOptimizeBlock(int argc);
 
 	void InlineOptimizedBlock(int nStart, int nStop);
-	bool InlineLoopBlock(const int loopmark, const TEXTRANGE&);
+	enum class LoopReceiverType { NiladicBlock, NonNiladicBlock, EmptyBlock, Other };
+	LoopReceiverType InlineLoopBlock(const int loopmark, const TEXTRANGE&);
 	int PatchBlocks();
 	int PatchBlockAt(int i);
 	void MakeCleanBlockAt(int i);
@@ -290,7 +291,8 @@ private:
 	POTE ParseByteArray();
 	Oop  ParseConstExpression();
 
-	int	PriorInstruction() const;
+	template <bool ignoreNops> int PriorInstruction() const;
+	bool LastIsPushNil() const;
 	bool LastIsPushSmallInteger(int& value) const;
 	Oop LastIsPushNumber() const;
 	Oop IsPushLiteral(int pos) const;

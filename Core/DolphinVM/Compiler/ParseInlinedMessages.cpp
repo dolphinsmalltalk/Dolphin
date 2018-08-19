@@ -17,6 +17,11 @@
 #define _ASSERTE assert
 #endif
 
+template bool Compiler::ParseWhileLoop<true>(const int, const TEXTRANGE&);
+template bool Compiler::ParseWhileLoop<false>(const int, const TEXTRANGE&);
+template bool Compiler::ParseWhileLoopBlock<true>(const int, const TEXTRANGE&, const TEXTRANGE&);
+template bool Compiler::ParseWhileLoopBlock<false>(const int, const TEXTRANGE&, const TEXTRANGE&);
+
 ///////////////////////////////////////////////////////////////////////////////
 // When inlining code the compiler sometimes has to generate temporaries. It prefixes
 // these with a space so that the names cannot possibly clash with user defined temps
@@ -30,12 +35,14 @@ void Compiler::PopOptimizedScope(int textStop)
 	PopScope(textStop);
 }
 
-void Compiler::ParseZeroArgOptimizedBlock()
+bool Compiler::ParseZeroArgOptimizedBlock()
 {
 	PushOptimizedScope();
 	ParseOptimizeBlock(0);
+	bool isEmpty = m_pCurrentScope->IsEmptyBlock();
 	PopOptimizedScope(ThisTokenRange().m_stop);
 	NextToken();
+	return isEmpty;
 }
 
 bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
@@ -159,7 +166,12 @@ bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 	int branchMark = GenJumpInstruction(LongJumpIfFalse);
 	AddTextMap(branchMark, messageRange);
 
-	ParseZeroArgOptimizedBlock();
+	int blockStart = ThisTokenRange().m_start;
+	if (ParseZeroArgOptimizedBlock())
+	{
+		CompileError(TEXTRANGE(blockStart, LastTokenRange().m_stop), CErrEmptyConditionBlock, (Oop)oteSelector);
+		return false;
+	}
 	
 	int jumpOutMark = GenJumpInstruction(LongJump);
 	
@@ -192,8 +204,13 @@ bool Compiler::ParseOrCondition(const TEXTRANGE& messageRange)
 	int jumpOutMark = GenJumpInstruction(LongJump);
 
 	int ifFalse = m_codePointer;
-	ParseZeroArgOptimizedBlock();
-	
+	int blockStart = ThisTokenRange().m_start;
+	if (ParseZeroArgOptimizedBlock())
+	{
+		CompileError(TEXTRANGE(blockStart, LastTokenRange().m_stop), CErrEmptyConditionBlock, (Oop)oteSelector);
+		return false;
+	}
+
 	if (m_ok)
 	{
 		SetJumpTarget(branchMark, ifFalse);
@@ -516,14 +533,14 @@ void Compiler::InlineOptimizedBlock(int nStart, int nStop)
 	}
 }
 
-bool Compiler::InlineLoopBlock(const int loopmark, const TEXTRANGE& tokenRange)
+Compiler::LoopReceiverType Compiler::InlineLoopBlock(const int loopmark, const TEXTRANGE& tokenRange)
 {
 	const int nPrior = m_codePointer-2;
 	BYTECODE& prior=m_bytecodes[nPrior]; // Nop following this instruction
 	if (!prior.isOpCode() || prior.byte != ReturnBlockStackTop || m_bytecodes[loopmark+1].byte != BlockCopy)
 	{
 		// Receiver is not a literal block so do not use optimized loop block form
-		return false;
+		return LoopReceiverType::Other;
 	}
 
 	// We have a block on the stack, remove its wrapper to leave
@@ -531,12 +548,18 @@ bool Compiler::InlineLoopBlock(const int loopmark, const TEXTRANGE& tokenRange)
 	BYTECODE& loopHead = m_bytecodes[loopmark];
 	if (loopHead.pScope->GetArgumentCount() != 0)
 	{
-		// Receiver is not a literal block so do not use optimized loop block form
-		return false;
+		// Receiver is not a niladic block so do not use optimized loop block form
+		return LoopReceiverType::NonNiladicBlock;
+	}
+
+	if (loopHead.pScope->IsEmptyBlock())
+	{
+		return LoopReceiverType::EmptyBlock;
 	}
 
 	_ASSERTE(loopHead.byte == Nop);
-	InlineOptimizedBlock(loopmark+1+BlockCopyInstructionSize, nPrior);
+	int firstInBlock = loopmark + 1 + BlockCopyInstructionSize;
+	InlineOptimizedBlock(firstInBlock, nPrior);
 
 	// Mark the scope as being optimized
 	_ASSERTE(loopHead.byte == Nop);
@@ -553,19 +576,22 @@ bool Compiler::InlineLoopBlock(const int loopmark, const TEXTRANGE& tokenRange)
 		_ASSERTE(m_bytecodes[nPrior-1].byte == Break);
 		UngenInstruction(nPrior-1);
 	}
-	return true;
+
+	return LoopReceiverType::NiladicBlock;
 }
 
-bool Compiler::ParseRepeatLoop(const int loopmark)
+bool Compiler::ParseRepeatLoop(const int loopmark, const TEXTRANGE& receiverRange)
 {
 	// We add a literal symbol to the frame for the message send regardless of 
 	// whether we are able to generate the inlined version so that searching
 	// for references, etc, works as expected.
 	POTE oteSelector = AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
 
-	if (!InlineLoopBlock(loopmark, ThisTokenRange()))
+	switch (InlineLoopBlock(loopmark, ThisTokenRange()))
 	{
-		Warning(ThisTokenRange(), CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
+	case LoopReceiverType::NonNiladicBlock:
+	case LoopReceiverType::Other:
+		Warning(receiverRange, CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
 		return false;
 	}
 
@@ -588,10 +614,10 @@ POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange)
 
 
 // Return whether we it was suitable to optimize this loop block
-bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark, 
-								   const TEXTRANGE& tokenRange, const int textStart)
+template <bool WhileTrue> bool Compiler::ParseWhileLoopBlock(const int loopmark, 
+								   const TEXTRANGE& tokenRange, const TEXTRANGE& receiverRange)
 {
-	POTE oteSelector = AddSymbolToFrame(bIsWhileTrue ? "whileTrue:" : "whileFalse:", tokenRange);
+	POTE oteSelector = AddSymbolToFrame(WhileTrue ? "whileTrue:" : "whileFalse:", tokenRange);
 
 	if (!ThisTokenIsBinary('['))
 	{
@@ -599,9 +625,15 @@ bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark,
 		return false;
 	}
 
-	if (!InlineLoopBlock(loopmark, tokenRange))
+	switch (InlineLoopBlock(loopmark, tokenRange))
 	{
-		Warning(tokenRange, CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
+	case LoopReceiverType::NonNiladicBlock:
+	case LoopReceiverType::Other:
+		Warning(receiverRange, CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
+		return false;
+
+	case LoopReceiverType::EmptyBlock:
+		CompileError(receiverRange, CErrEmptyConditionBlock, (Oop)oteSelector);
 		return false;
 	}
 
@@ -612,7 +644,7 @@ bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark,
 
 	// To have a breakpoint on the loop condition check uncomment the breakpoint and the text map lines marked with *1*
 	//BreakPoint(); // *1*
-	const int popAndJumpInstruction = bIsWhileTrue ? LongJumpIfFalse : LongJumpIfTrue;
+	const int popAndJumpInstruction = WhileTrue ? LongJumpIfFalse : LongJumpIfTrue;
 	int condJumpMark = GenJumpInstruction(popAndJumpInstruction);
 	// We need a text map entry for the loop jump in case a mustBeBoolean error gets raised here
 	int nLoopTextMap = AddTextMap(condJumpMark, tokenRange);// *1* textStart, LastTokenRange().m_stop);
@@ -647,20 +679,26 @@ bool Compiler::ParseWhileLoopBlock(const bool bIsWhileTrue, const int loopmark,
 }
 
 // Returns whether we were able to optimize this loop
-bool Compiler::ParseWhileLoop(bool bWhileTrue, const int loopmark)
+template <bool WhileTrue> bool Compiler::ParseWhileLoop(const int loopmark, const TEXTRANGE& receiverRange)
 {
 	POTE oteSelector = AddSymbolToFrame(ThisTokenText(), ThisTokenRange());
 
-	if (!InlineLoopBlock(loopmark, ThisTokenRange()))
+	switch (InlineLoopBlock(loopmark, ThisTokenRange()))
 	{
-		Warning(ThisTokenRange(), CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
+	case LoopReceiverType::NonNiladicBlock:
+	case LoopReceiverType::Other:
+		Warning(receiverRange, CWarnExpectNiladicBlockReceiver, (Oop)oteSelector);
+		return false;
+
+	case LoopReceiverType::EmptyBlock:
+		CompileError(receiverRange, CErrEmptyConditionBlock, (Oop)oteSelector);
 		return false;
 	}
 
 	// #whileTrue/#whileFalse is very simple to inline - we only need one conditional jump at the end
 	// after the condition block
 
-	int jumpPos = GenJump(bWhileTrue ? LongJumpIfTrue : LongJumpIfFalse, loopmark);
+	int jumpPos = GenJump(WhileTrue ? LongJumpIfTrue : LongJumpIfFalse, loopmark);
 	AddTextMap(jumpPos, ThisTokenRange());
 
 	// Result of a #whileTrue/#whileFalse should be nil
@@ -803,7 +841,7 @@ bool Compiler::ParseToByDoBlock(int exprStart, int toPointer, int byPointer)
 // Produce optimized form of timesRepeat: [...].
 // Returns true if optimization performed.
 // Note that we perform the conditional jump as a backwards jump at the end for optimal performance
-bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange)
+bool Compiler::ParseTimesRepeatLoop(const TEXTRANGE& messageRange, const int textPosition)
 {
 	POTE oteSelector = AddSymbolToFrame("timesRepeat:", messageRange);
 

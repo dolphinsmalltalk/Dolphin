@@ -162,20 +162,45 @@ checkMessage: aStMessageNode hasNiladicOrMonadicBlockArg: aStProgramNode code: a
 				extra: aStMessageNode selector].
 	^false!
 
+checkMessage: aStMessageNode hasNonEmptyNiladicBlockArg: aStProgramNode code: anInteger
+	^(self
+		checkMessage: aStMessageNode
+		hasNiladicBlockArg: aStProgramNode
+		code: anInteger) and: 
+				[aStProgramNode isEmptyBlock not or: 
+						[self
+							signalError: CErrEmptyConditionBlock
+							forNode: aStMessageNode
+							range: aStProgramNode sourceInterval
+							extras: (Array with: aStMessageNode selector).
+						false]]!
+
 checkMessageArgumentCount: aMessageNode 
 	aMessageNode argumentCount > VMConstants.MaxMessageArgs 
 		ifTrue: [self signalError: CErrTooManyArgs forNode: aMessageNode]!
 
-checkMessageHasNiladicBlockReceiver: aMessageNode 
+checkMessageHasNiladicBlockReceiver: aMessageNode
 	| receiver |
 	receiver := aMessageNode receiver.
 	(receiver isBlock and: [receiver argumentCount = 0]) ifTrue: [^true].
-	self 
+	self
 		signalError: CWarnExpectNiladicBlockReceiver
 		forNode: aMessageNode
-		range: aMessageNode selectorParts first sourceInterval
+		range: aMessageNode receiver sourceInterval
 		extras: (Array with: aMessageNode selector).
 	^false!
+
+checkMessageHasNonEmptyNiladicBlockReceiver: aMessageNode
+	^(self checkMessageHasNiladicBlockReceiver: aMessageNode) and: 
+			[| block |
+			block := aMessageNode receiver.
+			block isEmptyBlock not or: 
+					[self
+						signalError: CErrEmptyConditionBlock
+						forNode: aMessageNode
+						range: block sourceInterval
+						extras: (Array with: aMessageNode selector).
+					false]]!
 
 checkOptimizedKeywordMessages: aMessageNode
 	| selector arguments argc |
@@ -185,15 +210,21 @@ checkOptimizedKeywordMessages: aMessageNode
 	selector := aMessageNode selector.
 	argc == 1
 		ifTrue: 
-			[(#(#ifTrue: #ifFalse: #and: #or: #ifNil: #timesRepeat:) identityIncludes: selector)
+			[(#(#ifTrue: #ifFalse: #ifNil: #timesRepeat:) identityIncludes: selector)
 				ifTrue: 
 					[^self
 						checkMessage: aMessageNode
 						hasNiladicBlockArg: arguments first
 						code: CWarnExpectNiladicBlockArg].
+			(selector == #and: or: [selector == #or:])
+				ifTrue: 
+					[^self
+						checkMessage: aMessageNode
+						hasNonEmptyNiladicBlockArg: arguments first
+						code: CWarnExpectNiladicBlockArg].
 			(selector == #whileTrue: or: [selector == #whileFalse:])
 				ifTrue: 
-					[^(self checkMessageHasNiladicBlockReceiver: aMessageNode) and: 
+					[^(self checkMessageHasNonEmptyNiladicBlockReceiver: aMessageNode) and: 
 							[self
 								checkMessage: aMessageNode
 								hasNiladicBlockArg: arguments first
@@ -246,11 +277,12 @@ checkOptimizedMessages: aMessageNode
 	"No optimised binary selectors are present."
 	^false!
 
-checkOptimizedUnaryMessages: aMessageNode 
+checkOptimizedUnaryMessages: aMessageNode
 	| selector |
 	selector := aMessageNode selector.
-	^(selector == #whileTrue or: [selector == #whileFalse or: [selector == #repeat]]) 
-		and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]!
+	^(selector == #whileTrue or: [selector == #whileFalse])
+		ifTrue: [self checkMessageHasNonEmptyNiladicBlockReceiver: aMessageNode]
+		ifFalse: [selector == #repeat and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]]!
 
 checkRedefines: anStVariableNode
 	| var |
@@ -605,8 +637,10 @@ visitVariableNode: aStVariableNode
 !StSemanticAnalyser categoriesFor: #checkMessage:hasMonadicBlockArg:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkMessage:hasNiladicBlockArg:code:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkMessage:hasNiladicOrMonadicBlockArg:code:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #checkMessage:hasNonEmptyNiladicBlockArg:code:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkMessageArgumentCount:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkMessageHasNiladicBlockReceiver:!helpers!private! !
+!StSemanticAnalyser categoriesFor: #checkMessageHasNonEmptyNiladicBlockReceiver:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkOptimizedKeywordMessages:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkOptimizedMessages:!helpers!private! !
 !StSemanticAnalyser categoriesFor: #checkOptimizedUnaryMessages:!helpers!private! !
