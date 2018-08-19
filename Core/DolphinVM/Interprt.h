@@ -461,6 +461,7 @@ private:
 	static VOID CALLBACK SamplerProc(PVOID lpParam, BOOLEAN TimerOrWaitFired);
 	static void ResetInputPollCounter();
 	static void AbandonStepping();
+	static uint64_t GetMicrosecondClock(); 
 
 public:
 	///////////////////////////////////////////////////////////////////////////

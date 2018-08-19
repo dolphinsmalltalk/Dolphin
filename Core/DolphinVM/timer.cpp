@@ -204,6 +204,22 @@ Oop* __fastcall Interpreter::primitiveSignalAtTick(Oop* const sp, unsigned)
 
 Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp, unsigned)
 {
+	Oop result = Integer::NewUnsigned64(GetMicrosecondClock()/1000);
+	*sp = result;
+	ObjectMemory::AddToZct(result);
+	return sp;
+}
+
+Oop* __fastcall Interpreter::primitiveMicrosecondClockValue(Oop* const sp, unsigned)
+{
+	Oop result = Integer::NewUnsigned64(GetMicrosecondClock());
+	*sp = result;
+	ObjectMemory::AddToZct(result);
+	return sp;
+}
+
+uint64_t Interpreter::GetMicrosecondClock()
+{
 	// QPC is declared as returning (via out param) a signed value, but this makes no sense because
 	// the function boils down to a wrapper around the RDTSC instruction, which Intel's docs make
 	// clear provides an unsigned 64-bit counter.
@@ -214,31 +230,10 @@ Oop* __fastcall Interpreter::primitiveMillisecondClockValue(Oop* const sp, unsig
 	// Don't bother checking return value as according to the MSDN docs this won't fail on XP and later 
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&counter));
 
-	// Compiler can optimize this down to a single division operation that calculates both the quotient and remainder
-	uint64_t seconds = counter / m_clockFrequency;
-	uint64_t remainder = counter % m_clockFrequency;
-
-	uint64_t millisecs = seconds * 1000 + (remainder * 1000 / m_clockFrequency);
-	
-	Oop result = Integer::NewUnsigned64(millisecs);
-	*sp = result;
-	ObjectMemory::AddToZct(result);
-	return sp;
-}
-
-Oop* __fastcall Interpreter::primitiveMicrosecondClockValue(Oop* const sp, unsigned)
-{
-	uint64_t counter;
-	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&counter));
-
 	uint64_t seconds = counter / m_clockFrequency;
 	uint64_t remainder = counter % m_clockFrequency;
 	uint64_t microsecs = seconds * 1000000 + (remainder * 1000000 / m_clockFrequency);
-
-	Oop result = Integer::NewUnsigned64(microsecs);
-	*sp = result;
-	ObjectMemory::AddToZct(result);
-	return sp;
+	return microsecs;
 }
 
 // Establish the desired timer resolution and create the Win32 event used to terminate

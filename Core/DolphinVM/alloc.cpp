@@ -317,13 +317,10 @@ PointersOTE* __fastcall ObjectMemory::newPointerObject(BehaviorOTE* classPointer
 	// Initialise the fields to nils
 	const Oop nil = Oop(Pointers.Nil);		// Loop invariant (otherwise compiler reloads each time)
 	VariantObject* pLocation = ote->m_location;
-#ifdef _M_IX86
-	__stosd(reinterpret_cast<DWORD*>(pLocation->m_fields), nil, oops);
-#else
 	const MWORD loopEnd = oops;
 	for (MWORD i = 0; i<loopEnd; i++)
 		pLocation->m_fields[i] = nil;
-#endif
+
 	ASSERT(ote->isPointers());
 
 	return reinterpret_cast<PointersOTE*>(ote);
@@ -734,17 +731,9 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, MWORD init
 
 	// Fill space with nils for initial values
 	const Oop nil = Oop(Pointers.Nil);
-	
-#ifdef _M_IX86
-	__stosd(reinterpret_cast<DWORD*>(pLocation->m_fields), nil, initialSize);
-#else
 	const unsigned loopEnd = initialSize;
 	for (unsigned i = 0; i< loopEnd; i++)
 		pLocation->m_fields[i] = nil;
-#endif
-
-	// All of the above doesn't touch any shared static member vars
-//	EnterCritSection();
 
 	OTE* ote = ObjectMemory::allocateOop(static_cast<POBJECT>(pLocation));
 	ote->setSize(byteSize);
@@ -752,8 +741,6 @@ VirtualOTE* ObjectMemory::newVirtualObject(BehaviorOTE* classPointer, MWORD init
 	classPointer->countUp();
 	ote->m_flags = m_spaceOTEBits[OTEFlags::VirtualSpace];
 	ASSERT(ote->isPointers());
-
-//	ExitCritSection();
 
 	return reinterpret_cast<VirtualOTE*>(ote);
 }
