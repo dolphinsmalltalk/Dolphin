@@ -239,10 +239,12 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\MVP\Base\Dolphin Text Tile Icons';
 	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\MVP\Presenters\Tree\Dolphin Tree Presenter';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\MVP\Gdiplus\Gdiplus';
 	add: '..\..\ActiveX\Components\SHDocVw\Internet Explorer';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
 	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';

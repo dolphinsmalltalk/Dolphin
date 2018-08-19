@@ -11,11 +11,13 @@ CommunityEditionSmalltalkSystem comment: ''!
 !CommunityEditionSmalltalkSystem methodsFor!
 
 initializeSystemFolder
-
 	super initializeSystemFolder.
 	self
-		addSystemFolderIcon: (SmalltalkSystemFolder description: 'Sample Applications' helpId: 10560);
-		addSystemFolderIcon: (SmalltalkSystemFolder 
+		addSystemFolderIcon: (SmalltalkSystemFolder
+					icon: self samplesFolderIcon
+					description: 'Sample Applications'
+					helpId: 10560);
+		addSystemFolderIcon: (SmalltalkSystemFolder
 					icon: self userPreferencesIcon
 					description: 'User Preferences'
 					openBlock: [:folder :item | self inspectSystemOptions]

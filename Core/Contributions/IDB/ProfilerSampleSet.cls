@@ -33,7 +33,7 @@ addItem: anAssociation to: aLookupTable elapsedTime: anInteger
 
 addSample: aCollection elapsedTime: anInteger
 	"Add the frames from aCollection to the tree starting at root. For each frame
-	the node finds a clild of the current node corresponding to the frame (creating one if 
+	the node finds a child of the current node corresponding to the frame (creating one if 
 	necessary), updates its values and answers the new node. We can also check here for 
 	the ip of the active (top) frame being 1. If it is we need to remove it as it causes confusion 
 	as the sample really represents the state at the end of the previous frame"
@@ -43,7 +43,7 @@ addSample: aCollection elapsedTime: anInteger
 	aCollection size to: (aCollection first ip = 1 ifTrue: [2] ifFalse: [1])
 		by: -1
 		do: [:i | leaf := leaf addFrame: (aCollection at: i) elapsedTime: anInteger].
-	samples add: (ProfilerSample
+	samples addLast: (ProfilerSample
 				root: root
 				leaf: leaf
 				elapsedTime: anInteger)!
@@ -61,7 +61,7 @@ initialize
 	"Initialize a new instance of the receiver"
 
 	super initialize.
-	samples := OrderedCollection new.
+	samples := OrderedCollection new: 256.
 	samplingCount := 0.
 	isActive := false.
 	root := ProfilerTreeNode for: nil.
@@ -84,12 +84,15 @@ name
 
 	^name!
 
+printDuration: anInteger on: aPuttableStream
+	Locale userDefault printDuration: anInteger on: aPuttableStream!
+
 profilerIconIndex
 	"Answer the index of the icon to use for the sample set
 		green (Presenter) if the data has been analysed.
 		red (Model) if not"
 
-	^samplesClasses isNil ifTrue: [Model icon imageIndex] ifFalse: [Presenter icon imageIndex]!
+	^samplesClasses isNil ifTrue: [Delay icon imageIndex] ifFalse: [-1]!
 
 reportTo: aStream 
 	"Put the preamble for the report into aStream"
@@ -137,6 +140,12 @@ samplesElapsedTime
 		ifTrue: [samplesElapsedTime := samples inject: 0 into: [:total :each | total + each elapsedTime]].
 	^samplesElapsedTime!
 
+samplesElapsedTimeString
+	| s |
+	s := String writeStream.
+	self printDuration: self samplesElapsedTime on: s.
+	^s contents!
+
 samplesSelectors
 	"Answer the methods used by this set. They are cached so check first"
 
@@ -153,6 +162,17 @@ samplingCount
 	This method was automatically generated, but may be modified."
 
 	^samplingCount!
+
+samplingInterval
+	"Answer the average sampling interval achieved."
+
+	^self samplesElapsedTime // self samplesSize!
+
+samplingIntervalString
+	| s |
+	s := String writeStream.
+	self printDuration: self samplingInterval on: s.
+	^s contents!
 
 samplingTimeStamp
 	"Answer the value of the receiver's instance variable samplingTimeStamp.
@@ -171,7 +191,7 @@ scanSamples
 	| classes selectors updateIndicatorAt |
 	classes := LookupTable new.
 	selectors := LookupTable new.
-	updateIndicatorAt := (self samplesSize * 5.0e-002) truncated max: 1.
+	updateIndicatorAt := (self samplesSize * 0.05) truncated max: 1.
 	samples keysAndValuesDo: 
 			[:index :eachSample | 
 			index \\ updateIndicatorAt = 0 
@@ -188,9 +208,9 @@ scanSamples
 				addItem: eachSample selectorInformation
 				to: selectors
 				elapsedTime: eachSample elapsedTime].
-	samplesClasses := classes asOrderedCollection.
+	samplesClasses := classes asArray.
 	samplesClasses do: [:each | each convertTally: self samplesSize time: self samplesElapsedTime].
-	samplesSelectors := selectors asOrderedCollection.
+	samplesSelectors := selectors asArray.
 	samplesSelectors do: [:each | each convertTally: self samplesSize time: self samplesElapsedTime]!
 
 setName: aString 
@@ -214,21 +234,30 @@ update
 !ProfilerSampleSet categoriesFor: #isActive!accessing!public! !
 !ProfilerSampleSet categoriesFor: #isActive:!accessing!public! !
 !ProfilerSampleSet categoriesFor: #name!accessing!public! !
+!ProfilerSampleSet categoriesFor: #printDuration:on:!private!utilities! !
 !ProfilerSampleSet categoriesFor: #profilerIconIndex!accessing!public! !
 !ProfilerSampleSet categoriesFor: #reportTo:!public!reporting! !
 !ProfilerSampleSet categoriesFor: #rootNodes!accessing!public! !
 !ProfilerSampleSet categoriesFor: #sampleAt:!accessing!public! !
 !ProfilerSampleSet categoriesFor: #samplesClasses!accessing!public! !
 !ProfilerSampleSet categoriesFor: #samplesElapsedTime!accessing!public! !
+!ProfilerSampleSet categoriesFor: #samplesElapsedTimeString!accessing!public! !
 !ProfilerSampleSet categoriesFor: #samplesSelectors!accessing!public! !
 !ProfilerSampleSet categoriesFor: #samplesSize!accessing!public! !
 !ProfilerSampleSet categoriesFor: #samplingCount!accessing!public! !
+!ProfilerSampleSet categoriesFor: #samplingInterval!accessing!public! !
+!ProfilerSampleSet categoriesFor: #samplingIntervalString!accessing!public! !
 !ProfilerSampleSet categoriesFor: #samplingTimeStamp!accessing!public! !
 !ProfilerSampleSet categoriesFor: #scanSamples!operations!public! !
 !ProfilerSampleSet categoriesFor: #setName:!initializing!public! !
 !ProfilerSampleSet categoriesFor: #update!public!updating! !
 
 !ProfilerSampleSet class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Profiler icon!
 
 name: aString 
 	"Answer a new initialized instance of the receiver named aString"
@@ -239,6 +268,7 @@ new
 	"Should only create a new instance using #name:"
 
 	^self shouldNotImplement! !
+!ProfilerSampleSet class categoriesFor: #icon!constants!public! !
 !ProfilerSampleSet class categoriesFor: #name:!instance creation!public! !
 !ProfilerSampleSet class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
 

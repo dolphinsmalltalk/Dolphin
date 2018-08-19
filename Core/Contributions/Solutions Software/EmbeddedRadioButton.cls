@@ -53,6 +53,6 @@ uStateFor: aValue enabled: aBoolean
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^RadioButton defaultIcon! !
+	^RadioButton icon! !
 !EmbeddedRadioButton class categoriesFor: #icon!constants!public! !
 

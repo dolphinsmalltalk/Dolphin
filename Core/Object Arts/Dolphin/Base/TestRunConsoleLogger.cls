@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 TestRunLogger subclass: #TestRunConsoleLogger
 	instanceVariableNames: 'stream timings'
@@ -79,7 +79,7 @@ summarizeTimings: aTestResult baseline: aCollection threshold: anInteger
 	stream
 		print: newLaggards size;
 		nextPutAll: ' test(s) took '.
-	aTestResult class printDuration: anInteger on: stream.
+	Locale userDefault printDuration: anInteger on: stream.
 	stream
 		nextPutAll: ' or more to run, not including ';
 		print: aCollection size;

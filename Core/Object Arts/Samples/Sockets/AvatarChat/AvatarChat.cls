@@ -166,10 +166,11 @@ initialize
 		self initialize
 	"
 
-	Smalltalk developmentSystem 
+	"The Microsoft Agent has been deprecated and was last available for Windows 7, but only as a hotfix."
+	"Smalltalk developmentSystem 
 		addSamplesFolderIconFor: self
 		description: self sampleDescription
-		helpId: 10609!
+		helpId: 10609"!
 
 resource_Minimal_view
 	"Answer the literal data from which the 'Minimal view' resource can be reconstituted.

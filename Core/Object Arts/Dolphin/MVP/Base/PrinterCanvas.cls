@@ -54,6 +54,6 @@ startPage
 !PrinterCanvas class methodsFor!
 
 icon
-	^Icon fromId: 17 in: (ExternalResourceLibrary open: 'Shell32')! !
+	^##(self) defaultIcon! !
 !PrinterCanvas class categoriesFor: #icon!constants!development!public! !
 

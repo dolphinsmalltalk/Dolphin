@@ -64,6 +64,11 @@ setRoot: rootNode leaf: leafNode elapsedTime: anInteger
 
 !ProfilerSample class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Profiler icon!
+
 root: rootNode leaf: leafNode elapsedTime: anInteger 
 	"Answer a new, initialized, instance of the receiver"
 
@@ -71,5 +76,6 @@ root: rootNode leaf: leafNode elapsedTime: anInteger
 		setRoot: rootNode
 		leaf: leafNode
 		elapsedTime: anInteger! !
+!ProfilerSample class categoriesFor: #icon!constants!public! !
 !ProfilerSample class categoriesFor: #root:leaf:elapsedTime:!instance creation!public! !
 

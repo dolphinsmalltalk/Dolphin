@@ -30,6 +30,12 @@ window
 forSource: aWindow
 	^(self basicNew)
 		setSource: aWindow;
-		yourself! !
+		yourself!
+
+icon
+	"Answers an Icon that can be used to represent this class."
+
+	^##(self) defaultIcon! !
 !Event class categoriesFor: #forSource:!instance creation!public! !
+!Event class categoriesFor: #icon!constants!public! !
 

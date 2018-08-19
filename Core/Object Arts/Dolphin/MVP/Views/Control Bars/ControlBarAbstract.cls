@@ -307,7 +307,7 @@ ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selec
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^Toolbar defaultIcon!
 
 stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <View> to version 13."

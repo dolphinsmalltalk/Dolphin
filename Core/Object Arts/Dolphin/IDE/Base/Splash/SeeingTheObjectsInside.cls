@@ -168,10 +168,13 @@ initialize
 	random := Random new.
 	copyright := VMLibrary default versionInfo legalCopyright subStrings: $..
 	info := Utf16String writeStream.
+	info nextPutAll: copyright first.
+	copyright size > 1
+		ifTrue: 
+			[info
+				nextPutAll: ', ';
+				nextPutAll: copyright second].
 	info
-		nextPutAll: copyright first;
-		nextPutAll: ', ';
-		nextPutAll: copyright second;
 		nextPut: $.;
 		cr;
 		nextPutAll: 'Dolphin ';

@@ -27,7 +27,7 @@ outcome
 	^outcome!
 
 printDurationOn: aPuttableStream
-	TestResult printDuration: duration on: aPuttableStream!
+	Locale userDefault printDuration: duration on: aPuttableStream!
 
 setCase: aTestCase duration: anInteger
 	case := aTestCase.

@@ -247,11 +247,3 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 !SystemDictionary categoriesFor: #setEvents:!events!private! !
 !SystemDictionary categoriesFor: #triggerGlobalRenamed:from:!events!private! !
 
-!SystemDictionary class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon! !
-!SystemDictionary class categoriesFor: #icon!constants!public! !
-

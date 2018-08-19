@@ -54,7 +54,6 @@ package methodNames
 	add: 'Color class' -> #caption;
 	add: 'RGB class' -> #dolphinYellow;
 	add: 'RGB class' -> #fromRGBQUAD:;
-	add: 'RGB class' -> #toolbarGray;
 	add: 'RGBQUAD class' -> #fromRGB:;
 	add: 'Toolbar class' -> #resource_ILEditorShell_tools;
 	add: 'Toolbar class' -> #resource_ILLibraryShell_tools;
@@ -77,11 +76,11 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Text Tile Icons';
 	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: 'IDB Common';
 	add: 'IDB DeviceIndependentBitmap';
 	add: 'IDB MultipleFileOpenDialog';
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
 	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
@@ -280,26 +279,18 @@ dolphinYellow
 
 	#idbAdded.
 	^self 
-		red: 255
-		green: 255
-		blue: 230!
+		r: 255
+		g: 255
+		b: 230!
 
 fromRGBQUAD: anRGBQUAD
 	#idbAdded.
 	^self 
 		red: anRGBQUAD rgbRed
 		green: anRGBQUAD rgbGreen
-		blue: anRGBQUAD rgbBlue!
-
-toolbarGray
-	#idbAdded.
-	^self 
-		red: 192
-		green: 192
-		blue: 192! !
+		blue: anRGBQUAD rgbBlue! !
 !RGB class categoriesFor: #dolphinYellow!idb goodies!instance creation!public! !
 !RGB class categoriesFor: #fromRGBQUAD:!idb goodies!instance creation!public! !
-!RGB class categoriesFor: #toolbarGray!idb goodies!instance creation!public! !
 
 !RGBQUAD class methodsFor!
 

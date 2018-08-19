@@ -43,15 +43,9 @@ y
 
 !MoenLink class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^MoenTreeView icon!
-
 x: x y: y nextLink: aLink
 	"Answer a new, initialized, instance of the receiver."
 
 	^(self nextLink: aLink) setX: x y: y! !
-!MoenLink class categoriesFor: #icon!constants!public! !
 !MoenLink class categoriesFor: #x:y:nextLink:!instance creation!public! !
 

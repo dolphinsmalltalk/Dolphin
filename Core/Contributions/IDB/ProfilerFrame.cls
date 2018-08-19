@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ProfilerFrame
-	instanceVariableNames: 'compiledCode methodClass receiverClass selector ip isBlock'
+	instanceVariableNames: 'compiledCode receiverClass ip isBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -70,7 +70,7 @@ doClassAndSelectorMatch: aCompiledMethod
 	Done this way as it it a lot quicker than comparing compiledMethods"
 
 	^self isCompiledExpression not 
-		and: [aCompiledMethod methodClass == methodClass and: [aCompiledMethod selector == selector]]!
+		and: [aCompiledMethod methodClass == compiledCode methodClass and: [aCompiledMethod selector == compiledCode selector]]!
 
 icon
 	"Answer the icon for the frame's object"
@@ -98,37 +98,35 @@ isInSystemPackage
 
 isSameFrameAs: aStackFrame 
 	"Answers true if the receiver represents the same evaluation point as anIProfilerSampleFrame.
-	CompiledCode>>= causes quite a performance hit so only use it for blocks. Note that
-	we base the comparison on the receiverClass and not the methodClass"
+	Note that we no longer match methods by some equivalency, rather by identity. This does mean
+	that if samples are collected around method modifications, that the frames won't be matched
+	in the way they use to be, but then the results of collected profiles with different code are not
+	really valid anyway. The reason for the change is to try and reduce the sampling overhead
+	as much as possible."
 
-	isBlock 
-		ifTrue: [compiledCode = aStackFrame method ifFalse: [^false]]
-		ifFalse: 
-			[(receiverClass = aStackFrame receiver class and: [selector = aStackFrame method selector]) 
-				ifFalse: [^false]].
-	^ip = aStackFrame ip!
+	^compiledCode == aStackFrame method and: [ip == aStackFrame ip]!
 
 methodClass
 	"Answer the value of the receiver's instance variable methodClass.
 	This method was automatically generated, but may be modified."
 
-	^methodClass!
+	^compiledCode methodClass!
 
 printOn: aStream 
 	"Add a description of the receiver onto aStream"
 
 	isBlock ifTrue: [aStream nextPutAll: '[] in '].
 	aStream print: receiverClass.
-	receiverClass == methodClass 
+	receiverClass == self methodClass 
 		ifFalse: 
 			[aStream
 				space;
 				nextPut: $(;
-				print: methodClass;
+				print: self methodClass;
 				nextPut: $)].
 	aStream
 		space;
-		nextPutAll: selector!
+		nextPutAll: self selector!
 
 profilerIconIndex
 	"Answer the icon index for the frame's object"
@@ -149,24 +147,22 @@ selector
 	"Answer the value of the receiver's instance variable selector.
 	This method was automatically generated, but may be modified."
 
-	^selector!
+	^compiledCode selector!
 
 selectorDescription
 	"Answer a description of the compiled code. We use this as the comparison operator
 	for compiledCode is quite slow and it is quicker (when building Sets for example) to use
 	this description and then collect the actual compiled code later"
 
-	^methodClass -> selector!
+	^self methodClass -> self selector!
 
 setFrame: aStackFrame 
 	"Initialize the receiver from aStackFrame"
 
 	compiledCode := aStackFrame method.
-	methodClass := compiledCode methodClass.
 	receiverClass := aStackFrame receiver class.
-	selector := compiledCode selector.
 	ip := aStackFrame ip.
-	isBlock := aStackFrame isKindOf: BlockFrame.
+	isBlock := aStackFrame isBlockFrame.
 	^self! !
 !ProfilerFrame categoriesFor: #coloredSource!displaying!public! !
 !ProfilerFrame categoriesFor: #compiledCode!accessing!public! !
@@ -194,10 +190,16 @@ frame: aStackFrame
 
 	^super new setFrame: aStackFrame!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Profiler icon!
+
 new
 	"Should only create a new instance using #frame:"
 
 	^self shouldNotImplement! !
 !ProfilerFrame class categoriesFor: #frame:!instance creation!public! !
+!ProfilerFrame class categoriesFor: #icon!constants!public! !
 !ProfilerFrame class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
 

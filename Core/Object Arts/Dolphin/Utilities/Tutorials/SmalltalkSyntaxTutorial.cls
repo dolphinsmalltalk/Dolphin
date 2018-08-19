@@ -49,6 +49,10 @@ Character space asciiValue.
 
 Character byteCharacterSet.
 
+"Any Unicode character can be instantiated using its hex code point"
+
+$\x1F42C asString.
+
 ProfStef next.'
 !
 
@@ -588,7 +592,7 @@ ProfStef class compiledMethodAt: #goToNextLesson.
 
 ProfStef class removeSelector: #goToNextLesson.
 
-"So now this should fail - try it and hit Termnate in the box that appears."
+"So now this should fail - try it and hit Terminate in the box that appears."
 
 ProfStef class methodAt: #goToNextLesson.
 

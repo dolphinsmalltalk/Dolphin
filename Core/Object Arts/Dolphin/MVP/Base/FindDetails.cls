@@ -158,7 +158,7 @@ wildcardExpression
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 23 in: (ExternalResourceLibrary open: 'Shell32')!
+	^Icon fromId: 'Find.ico'!
 
 initialize
 	IgnoreCaseMask := 1.

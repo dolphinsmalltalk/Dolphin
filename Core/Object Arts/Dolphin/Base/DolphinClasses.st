@@ -1422,7 +1422,7 @@ ArithmeticValue subclass: #Number
 	classInstanceVariableNames: ''!
 ArithmeticValue subclass: #Point
 	instanceVariableNames: 'x y'
-	classVariableNames: ''
+	classVariableNames: 'Zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number variableByteSubclass: #Float

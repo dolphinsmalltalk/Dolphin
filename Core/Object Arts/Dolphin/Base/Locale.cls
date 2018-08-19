@@ -222,6 +222,22 @@ printDate: aDate format: aStringOrNil flags: dwFlags
 		ifTrue: [self printUnboundedDate: aDate format: aStringOrNil flags: dwFlags]
 		ifFalse: [self printSysDate: aDate asParameter format: aStringOrNil flags: dwFlags]!
 
+printDuration: microsecondsInteger on: aPuttableStream
+	"Display a friendly representation of the (assumed short) microsecond duration, anInteger, onto aPuttableStream."
+
+	| mS |
+	#todo. "Needs to be internationalized."
+	mS := microsecondsInteger / 1000.0.
+	mS < 1000.0
+		ifTrue: 
+			[mS printOn: aPuttableStream decimalPlaces: (mS < 1.0 ifTrue: [3] ifFalse: [0]).
+			aPuttableStream nextPutAll: ' mS']
+		ifFalse: 
+			[| secs |
+			secs := mS / 1000.0.
+			secs printOn: aPuttableStream decimalPlaces: (secs < 10.0 ifTrue: [1] ifFalse: [0]).
+			aPuttableStream nextPutAll: ' s']!
+
 printOn: aStream
 	"Append a debug representation of the receiver to aStream."
 
@@ -391,6 +407,7 @@ timeZoneInformation
 !Locale categoriesFor: #nlsLib!constants!private! !
 !Locale categoriesFor: #pmDesignator!enquiries!public! !
 !Locale categoriesFor: #printDate:format:flags:!printing!private! !
+!Locale categoriesFor: #printDuration:on:!printing!public! !
 !Locale categoriesFor: #printOn:!development!printing!public! !
 !Locale categoriesFor: #printSysDate:format:flags:!printing!private! !
 !Locale categoriesFor: #printTime:format:flags:!printing!private! !
@@ -407,11 +424,6 @@ default
 	"Answer the instance of the receiver which represents the default user locale."
 
 	^self userDefault!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
 
 installedSystemLocales
 	"Private - Answer the installed Win32 system locales.
@@ -486,7 +498,6 @@ userDefault
 	UserDefault isNil ifTrue: [UserDefault := self lcid: KernelLibrary default getUserDefaultLCID].
 	^UserDefault! !
 !Locale class categoriesFor: #default!accessing!public! !
-!Locale class categoriesFor: #icon!constants!public! !
 !Locale class categoriesFor: #installedSystemLocales!enquiries!private! !
 !Locale class categoriesFor: #lcid:!instance creation!public! !
 !Locale class categoriesFor: #makeLangId:subLang:!enquiries!private! !

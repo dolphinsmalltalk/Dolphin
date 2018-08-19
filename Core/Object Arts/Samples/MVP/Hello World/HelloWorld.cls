@@ -82,6 +82,14 @@ onPositionChanged: aPositionEvent
 
 !HelloWorld class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(TextTileIcon
+		text: $\x1F44B
+		fontName: 'Segoe UI Emoji'
+		color: (ARGB named: #darkOrchid))!
+
 initialize
 	"Private - Initialize the receiver. Install as a sample application into the
 	system folder
@@ -114,6 +122,7 @@ uninitialize
 
 	Smalltalk developmentSystem 
 		removeSystemFolderIconNamed: self samplesFolderDescription! !
+!HelloWorld class categoriesFor: #icon!constants!public! !
 !HelloWorld class categoriesFor: #initialize!development!initializing!private! !
 !HelloWorld class categoriesFor: #samplesFolderDescription!accessing!private! !
 !HelloWorld class categoriesFor: #show!instance creation!public! !

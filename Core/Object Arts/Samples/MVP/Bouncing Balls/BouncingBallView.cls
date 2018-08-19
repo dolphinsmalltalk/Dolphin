@@ -10,6 +10,9 @@ BouncingBallView comment: ''!
 !BouncingBallView categoriesForClass!Unclassified! !
 !BouncingBallView methodsFor!
 
+ballExtent
+	^48 @ 48!
+
 balls
 	^self model!
 
@@ -28,7 +31,7 @@ initialize
 				with: Ball blueIcon
 				with: Ball yellowIcon.
 	super initialize.
-	self backcolor: (RGB red: 228 green: 219 blue: 165).
+	self backcolor: (RGB r: 228 g: 219 b: 165).
 	self numberOfBalls timesRepeat: 
 			[| ball |
 			ball := (Ball new)
@@ -62,30 +65,34 @@ render
 !
 
 step
+	| width height |
+	width := self clientWidth.
+	height := self clientHeight.
 	self balls do: 
-			[:each | 
-			| p v w h |
+			[:each |
+			| p v w h ext |
 			v := each velocity.
 			p := each position + v.
-			w := each icon extent x / 2.
-			h := each icon extent y / 2.
+			ext := each icon extent.
+			w := ext x / 2.
+			h := ext y / 2.
 
 			"Hit testing"
-			p x < w 
+			p x < w
 				ifTrue: 
 					[p x: w.
 					v x: v x negated].
-			p y < h 
+			p y < h
 				ifTrue: 
 					[p y: h.
 					v y: v y negated].
-			p x > (self clientWidth - w) 
+			p x > (width - w)
 				ifTrue: 
-					[p x: self clientWidth - w.
+					[p x: width - w.
 					v x: v x negated].
-			p y > (self clientHeight - h) 
+			p y > (height - h)
 				ifTrue: 
-					[p y: self clientHeight - h.
+					[p y: height - h.
 					v y: v y negated].
 			each position: p.
 			each velocity: v.
@@ -93,6 +100,7 @@ step
 
 stepProcess
 	^stepProcess! !
+!BouncingBallView categoriesFor: #ballExtent!constants!private! !
 !BouncingBallView categoriesFor: #balls!accessing!private! !
 !BouncingBallView categoriesFor: #defaultExtent!constants!private! !
 !BouncingBallView categoriesFor: #frameRate!constants!public! !
@@ -119,7 +127,7 @@ displayOn: aStream
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^##(TextTileIcon text: $\x1F3B1 fontName: 'Segoe UI Emoji')!
 
 initialize
 	"Private - Initialize the receiver's class variables

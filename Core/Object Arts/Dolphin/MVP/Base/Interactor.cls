@@ -177,6 +177,11 @@ forPresenter: aPresenter
 	^self basicNew
 		setPresenter: aPresenter!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 new
 	"Use #forPresenter:"
 
@@ -210,6 +215,7 @@ stbConvertToVersion1: anArray
 stbVersion
 	^1! !
 !Interactor class categoriesFor: #forPresenter:!instance creation!public! !
+!Interactor class categoriesFor: #icon!constants!public! !
 !Interactor class categoriesFor: #new!instance creation!public! !
 !Interactor class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
 !Interactor class categoriesFor: #stbConvertFrom:!binary filing!public! !

@@ -34,8 +34,10 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
 	add: '..\..\..\Dolphin\Sockets\Dolphin Sockets';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
 	yourself).
 
 package!

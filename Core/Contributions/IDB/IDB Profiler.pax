@@ -63,12 +63,13 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Text Tile Icons';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
 	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
 	add: 'IDB Common';
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Internal Bitmaps and Icons';
 	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
@@ -77,12 +78,12 @@ package!
 "Class Definitions"!
 
 Object subclass: #Profiler
-	instanceVariableNames: 'samplingInterval isSampling mutex'
+	instanceVariableNames: 'samplingInterval isSampling'
 	classVariableNames: 'Default'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ProfilerFrame
-	instanceVariableNames: 'compiledCode methodClass receiverClass selector ip isBlock'
+	instanceVariableNames: 'compiledCode receiverClass ip isBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -196,17 +197,18 @@ asPercentageOf: aNumber
 
 !Process methodsFor!
 
-stackDepthFrom: aStackFrame 
-	"Answer the number of frames on the stack below aStackFrame"
+stackDepthFrom: aStackFrame
+	"Answer the number of frames on the stack below aStackFrame inclusive."
 
-	| frame i |
-	#idbAdded.
-	frame := aStackFrame.
-	i := 0.
-	[frame notNil and: [frame method selector notNil]] whileTrue: 
-			[frame := frame sender.
-			i := i + 1].
-	^i! !
+	| count i |
+	i := aStackFrame asInteger.
+	count := 0.
+	[i notNil and: [(self at: i + StackFrame.MethodOffset) selector notNil]] whileTrue: 
+			[| sender |
+			sender := self at: i + StackFrame.ReturnOffset.
+			i := sender == 0 ifFalse: [self indexOfSP: sender].
+			count := count + 1].
+	^count! !
 !Process categoriesFor: #stackDepthFrom:!accessing!idb goodies!public! !
 
 "End of package definition"!

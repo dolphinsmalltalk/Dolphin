@@ -28,6 +28,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter';
 	yourself).
 

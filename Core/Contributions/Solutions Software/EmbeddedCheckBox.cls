@@ -80,6 +80,6 @@ uStateFor: aValue enabled: aBoolean
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^CheckBox defaultIcon! !
+	^CheckBox icon! !
 !EmbeddedCheckBox class categoriesFor: #icon!constants!public! !
 

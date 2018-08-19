@@ -111,15 +111,9 @@ MessageSequenceAbstract methodProtocol: #messageSend attributes: #() selectors: 
 
 !MessageSequenceAbstract class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Answer an instance of the receiver; instance require initialization"
 
 	^super new initialize! !
-!MessageSequenceAbstract class categoriesFor: #icon!constants!public! !
 !MessageSequenceAbstract class categoriesFor: #new!instance creation!public! !
 

@@ -2619,11 +2619,6 @@ fromPAXFile: pathname
 	answer isNil ifTrue: [self errorInvalidPAXFile: pathname].
 	^answer!
 
-icon
-	"Answers an Icon that can be used to represent this class."
-
-	^##(self) defaultIcon!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		Package initialize
@@ -2895,7 +2890,6 @@ unsaveableSignal
 !Package class categoriesFor: #fromFile:!instance creation!private! !
 !Package class categoriesFor: #fromPACFile:!instance creation!private! !
 !Package class categoriesFor: #fromPAXFile:!instance creation!private! !
-!Package class categoriesFor: #icon!constants!public! !
 !Package class categoriesFor: #initialize!initializing!private! !
 !Package class categoriesFor: #manager!accessing!public! !
 !Package class categoriesFor: #name:!instance creation!public! !

@@ -77,7 +77,10 @@ aspectBatchClass
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^##((TextTileIcon text: $… fontName: 'Segoe UI')
+		textcolor: Color darkBlue;
+		fontStyle: #bold;
+		yourself)!
 
 subject: anObject keys: aSequencedReadableCollection startingAt: startInteger batchSize: sizeInteger 
 	"Answers an instance of the receiver that is an interface onto a range of

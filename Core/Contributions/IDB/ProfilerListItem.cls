@@ -132,6 +132,12 @@ timeAll
 for: anObject 
 	"Answer a new instance of the receiver for anObject"
 
-	^super new setObject: anObject! !
+	^super new setObject: anObject!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Profiler icon! !
 !ProfilerListItem class categoriesFor: #for:!instance creation!public! !
+!ProfilerListItem class categoriesFor: #icon!constants!public! !
 

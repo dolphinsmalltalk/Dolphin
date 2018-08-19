@@ -23,11 +23,11 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\..\MVP\Views\SysLink\Dolphin SysLink Control';
 	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\MVP\Gdiplus\Gdiplus';
 	add: '..\..\MVP\Gdiplus\Gdiplus ImageView';
-	add: '..\..\IDE\Base\Internal Bitmaps and Icons';
 	yourself).
 
 package!

@@ -39,7 +39,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\..\Dolphin\MVP\Presenters\Tree\Dolphin Tree Presenter';
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
 	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 

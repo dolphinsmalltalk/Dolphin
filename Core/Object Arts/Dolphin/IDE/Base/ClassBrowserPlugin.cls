@@ -22,7 +22,7 @@ createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	self model cardsPresenter view when: #currentCardChanged send: #onBrowserCardChanged to: self.
+	self model ifNotNil: [:m | m cardsPresenter view when: #currentCardChanged send: #onBrowserCardChanged to: self]
 !
 
 destroy

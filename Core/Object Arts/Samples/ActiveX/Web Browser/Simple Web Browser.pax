@@ -35,8 +35,10 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
+	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
 	add: '..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
 	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
 	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';

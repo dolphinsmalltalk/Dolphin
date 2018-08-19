@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'IDB Duration'.
 package paxVersion: 1;
 	basicComment: 'Implementation of the ANSI <Duration> protocol
@@ -35,8 +35,8 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	yourself).
 
 package!

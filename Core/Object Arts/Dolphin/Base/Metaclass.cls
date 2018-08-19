@@ -173,16 +173,3 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!Metaclass class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
-	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
-	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
-	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
-	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
-	from an ExternalResourceLibrary other than the system default."
-
-	^##(self) defaultIcon! !
-!Metaclass class categoriesFor: #icon!constants!public! !
-

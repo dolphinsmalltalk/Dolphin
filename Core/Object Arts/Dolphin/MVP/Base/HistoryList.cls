@@ -298,6 +298,11 @@ HistoryList methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) sele
 
 !HistoryList class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon!
+
 new
 	"Answer a new initialized instance of the receiver
 	with capacity for the default maximum number of
@@ -310,6 +315,7 @@ new: maxAge
 	with capacity for the specified maximum number of items."
 
 	^super new initialize: maxAge! !
+!HistoryList class categoriesFor: #icon!constants!public! !
 !HistoryList class categoriesFor: #new!instance creation!public! !
 !HistoryList class categoriesFor: #new:!instance creation!public! !
 

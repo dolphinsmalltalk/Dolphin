@@ -73,6 +73,11 @@ yes
 
 !Question class methodsFor!
 
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon question!
+
 promptToDistinguish: anOldAnimal from: aNewAnimal
 	"Answers an instance of the receiver (a Question) that will distinguish between
 	anOldAnimal and aNewAnimal. The question should be phrased such that the
@@ -96,6 +101,7 @@ text: aString yes: yesPath no: noPath
 
 	^self new text: aString yes: yesPath no: noPath
 ! !
+!Question class categoriesFor: #icon!constants!public! !
 !Question class categoriesFor: #promptToDistinguish:from:!instance creation!public! !
 !Question class categoriesFor: #text:yes:no:!instance creation!public! !
 

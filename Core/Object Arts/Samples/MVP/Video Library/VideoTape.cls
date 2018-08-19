@@ -89,9 +89,10 @@ defaultTapeLength
 	^240!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"There is actually a codepoint for VHS video tape!! The MS emoji is unclear at small icon
+	size, however, so the symbol representation is preferable."
 
-	^##(self) defaultIcon!
+	^##(TextTileIcon text: $\x1F4FC)!
 
 name: tapeName
 	"Answers an instance of the receiver with the <readableString> tapeName and

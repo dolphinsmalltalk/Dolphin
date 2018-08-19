@@ -159,11 +159,6 @@ description: anObject
 
 	^self new description: anObject!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Error icon!
-
 new
 	"Answer a new correctly initialize instance of the receiver."
 	
@@ -176,7 +171,6 @@ resumableDescription: anObject
 		description: anObject;
 		makeResumable! !
 !Signal class categoriesFor: #description:!instance creation!public! !
-!Signal class categoriesFor: #icon!constants!public! !
 !Signal class categoriesFor: #new!instance creation!public! !
 !Signal class categoriesFor: #resumableDescription:!instance creation!public! !
 

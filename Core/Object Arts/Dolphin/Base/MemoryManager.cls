@@ -512,11 +512,6 @@ gcInterval: anInteger
 
 	GCInterval := anInteger!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 initialize
 	"Initialize the class variables of the receiver
 		Current		-	The singleton instance of the receiver. Can be replaced with an 
@@ -539,7 +534,6 @@ removeFromSystem
 	^self shouldNotImplement! !
 !MemoryManager class categoriesFor: #current!instance creation!public! !
 !MemoryManager class categoriesFor: #gcInterval:!accessing!public! !
-!MemoryManager class categoriesFor: #icon!constants!development!public! !
 !MemoryManager class categoriesFor: #initialize!development!initializing!must strip!public! !
 !MemoryManager class categoriesFor: #new!development!instance creation!public! !
 !MemoryManager class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !

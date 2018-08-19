@@ -29,7 +29,9 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\System\Random\Dolphin Random Stream';
-	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
+	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
+	add: '..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons';
 	yourself).
 
 package!

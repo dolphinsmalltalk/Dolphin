@@ -131,15 +131,9 @@ Mutex methodProtocol: #mutualExclusionLock attributes: #(#readOnly) selectors: #
 
 !Mutex class methodsFor!
 
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##(self) defaultIcon!
-
 new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!Mutex class categoriesFor: #icon!constants!public! !
 !Mutex class categoriesFor: #new!instance creation!public! !
 

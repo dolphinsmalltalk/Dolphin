@@ -20,8 +20,9 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
+	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
 	yourself).
 
 package!

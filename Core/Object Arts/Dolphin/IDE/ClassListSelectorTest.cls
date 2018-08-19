@@ -41,7 +41,7 @@ denyContains: anObject
 
 initializePresenter
 	super initializePresenter.
-	"self halt."!
+	presenter browserEnvironment: BrowserEnvironment new!
 
 listModel
 	^presenter model!
@@ -56,7 +56,6 @@ removalOfSelectionLeaves: aClass
 	^nil!
 
 resetSelection
-	presenter browserEnvironment: BrowserEnvironment new.
 	super resetSelection.
 	self assertContains: Object.
 	self assertContains: Behavior.!

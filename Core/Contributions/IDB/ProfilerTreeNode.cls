@@ -14,7 +14,7 @@ Public Domain Freeware'!
 !ProfilerTreeNode categoriesForClass!IDB Goodies! !
 !ProfilerTreeNode methodsFor!
 
-addFrame: aStackFrame elapsedTime: anInteger 
+addFrame: aStackFrame elapsedTime: anInteger
 	"If aStackFrame is already present a child of the receiver then we just update its values
 	(tally and time). If it is a new child then  we have to create an empty node and add it to 
 	the tree first
@@ -23,9 +23,7 @@ addFrame: aStackFrame elapsedTime: anInteger
 	| node |
 	node := self children detect: [:eachChild | eachChild object isSameFrameAs: aStackFrame]
 				ifNone: [self addChildNode: (ProfilerTreeNode for: (ProfilerFrame frame: aStackFrame))].
-	node
-		incrementTally;
-		incrementTimeBy: anInteger.
+	node incrementTimeBy: anInteger.
 	^node!
 
 allClasses
@@ -95,14 +93,10 @@ firstChild
 hasChildren
 	^self children notEmpty!
 
-incrementTally
-	"Advance the tally by one"
-
-	tally := tally + 1!
-
 incrementTimeBy: anInteger 
-	"Advance the time taken for this node by anInteger"
+	"Add another sample to this node."
 
+	tally := tally + 1.
 	time := time + anInteger!
 
 isAbove: aFloat 
@@ -135,12 +129,11 @@ isParentOfFrameFor: aCompiledCode
 	(self object doClassAndSelectorMatch: aCompiledCode) ifTrue: [^true].
 	^self children anySatisfy: [:each | each isParentOfFrameFor: aCompiledCode]!
 
-object: aProfilerFrame 
+object: aProfilerFrame
 	"Set aFarame as the object for this node and initialize the tally and time counts"
 
-	super object: aProfilerFrame.
-	tally := 0.
-	time := 0!
+	object := aProfilerFrame.
+	tally := time := 0!
 
 tally
 	"Answer the value of the receiver's instance variable tally.
@@ -161,7 +154,6 @@ time
 !ProfilerTreeNode categoriesFor: #clearCache!operations!public! !
 !ProfilerTreeNode categoriesFor: #firstChild!accessing!public! !
 !ProfilerTreeNode categoriesFor: #hasChildren!public!testing! !
-!ProfilerTreeNode categoriesFor: #incrementTally!operations!public! !
 !ProfilerTreeNode categoriesFor: #incrementTimeBy:!operations!public! !
 !ProfilerTreeNode categoriesFor: #isAbove:!public!testing! !
 !ProfilerTreeNode categoriesFor: #isChildOfFrameFor:!public!testing! !

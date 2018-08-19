@@ -864,8 +864,7 @@ fromPredefinedKey: key sam: samDesired
 		yourself!
 
 icon
-	"Answers an Icon that can be used to represent this class.
-	Use the one from the real Windows Registry Editor for fun."
+	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon!
 

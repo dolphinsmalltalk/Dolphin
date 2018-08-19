@@ -77,7 +77,7 @@ displayOn: aStream
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^##(TextTileIcon text: $\x1D6D1 color: (ARGB named: #skyBlue))!
 
 initialize
 	"Private - Initialize the receiver's class variables

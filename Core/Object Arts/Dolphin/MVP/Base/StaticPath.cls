@@ -54,3 +54,11 @@ setWindowText: pathString
 !StaticPath categoriesFor: #plainText:!accessing!private! !
 !StaticPath categoriesFor: #setWindowText:!accessing!private! !
 
+!StaticPath class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##(self) defaultIcon! !
+!StaticPath class categoriesFor: #icon!constants!public! !
+

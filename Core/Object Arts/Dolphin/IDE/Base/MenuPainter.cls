@@ -425,6 +425,12 @@ MenuPainter methodProtocol: #menuPainter attributes: #() selectors: #(#calculate
 forMenu: aMenu 
 	^(self new)
 		menu: aMenu;
-		yourself! !
+		yourself!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Menu icon! !
 !MenuPainter class categoriesFor: #forMenu:!public! !
+!MenuPainter class categoriesFor: #icon!constants!public! !
 
