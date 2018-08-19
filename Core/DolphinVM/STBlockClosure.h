@@ -34,7 +34,7 @@ namespace ST
 	public:
 		// The pool must contain fixed size objects, so choose a suitable maximum number of
 		// copied values permissible; very uncommonly exceed 2 (see Util class>>blockStats)
-		enum { MaxCopiedValues = 2 };
+		enum { MaxCopiedValues = 4 };
 
 		enum { OuterIndex = ObjectFixedSize, MethodIndex, InitialIPIndex, InfoIndex, ReceiverIndex, FixedSize };
 		enum { TempFrameStart = FixedSize };

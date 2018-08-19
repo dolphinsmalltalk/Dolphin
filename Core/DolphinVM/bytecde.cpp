@@ -455,12 +455,7 @@ BlockOTE* __fastcall BlockClosure::New(unsigned copiedValuesCount)
 		#ifdef _DEBUG
 			pClosure->m_receiver = nil;
 		#endif
-		TODO("Don't need to nil out the copied values slots, as these will be overwritten on BlockCopy");
-
-		// Nil out the old frame up to the required number of temps
-		const unsigned loopEnd = copiedValuesCount;
-		for (unsigned i=0;i<loopEnd;i++)
-			pClosure->m_copiedValues[i] = nil;
+		// Don't need to nil out the copied values slots, as these will be overwritten on BlockCopy
 
 		newBlock->setSize(SizeOfPointers(BlockClosure::FixedSize+copiedValuesCount));
 	}
