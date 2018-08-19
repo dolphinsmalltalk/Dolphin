@@ -230,9 +230,9 @@ boxTree
 	| forecolor backcolor |
 	forecolor := Color white.
 	backcolor := RGB 
-				red: 16r80
-				green: 16r80
-				blue: 16r80.
+				r: 16r80
+				g: 16r80
+				b: 16r80.
 	^(OrderedCollection new)
 		add: ((self new)
 					name: #folderOpen;
@@ -285,9 +285,9 @@ circleTree
 	| forecolor backcolor |
 	forecolor := Color white.
 	backcolor := RGB 
-				red: 16r40
-				green: 16r40
-				blue: 16r40.
+				r: 16r40
+				g: 16r40
+				b: 16r40.
 	^(OrderedCollection new)
 		add: ((self new)
 					name: #folderOpen;

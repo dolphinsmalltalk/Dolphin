@@ -14,7 +14,7 @@ bitmap: aBitmap
 	bitmap := aBitmap!
 
 createHandle
-	" Bitmap::Bitmap(
+	"Private -  Bitmap::Bitmap(
 	    IN HBITMAP hbm, 
 	    IN HPALETTE hpal
 	    )
@@ -32,17 +32,17 @@ createHandle
 
 	"SW: This handles 'currently' ,,, but what about 'or was previously' ???"
 	bitmap freeDC.
-	status := self library 
+	status := self library
 				gdipCreateBitmapFromHBITMAP: bitmap asParameter
 				hpal: hPalette
 				bitmap: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating Bitmap'! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #bitmap:!accessing!public! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusBitmapFromBitmapInitializer categoriesFor: #bitmap:!initializing!private! !
+!GdiplusBitmapFromBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusBitmapFromBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !GdiplusBitmapFromBitmapInitializer class methodsFor!

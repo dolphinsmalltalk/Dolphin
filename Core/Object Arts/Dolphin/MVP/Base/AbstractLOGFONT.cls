@@ -27,6 +27,9 @@ faceName: aString
 getData: hFont
 	self subclassResponsibility!
 
+isFixedWidth
+	^(self lfPitchAndFamily bitAnd: 16r3) == 1!
+
 lfCharSet
 	"Answer the receiver's lfCharSet field as a Smalltalk object."
 
@@ -140,6 +143,7 @@ lfWidth: anObject
 !AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
 !AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
 !AbstractLOGFONT categoriesFor: #getData:!accessing!public! !
+!AbstractLOGFONT categoriesFor: #isFixedWidth!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !

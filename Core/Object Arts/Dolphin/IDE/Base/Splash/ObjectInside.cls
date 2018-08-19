@@ -182,11 +182,11 @@ testCollisionIn: aGdiplusBitmap
 		([aGdiplusBitmap pixelAt: each] on: Error do: [:e | nil]) ~= ARGB white])!
 
 transparentColor
-	^ARGB 
+	^##(Color
 		a: 0
 		r: 0
 		g: 0
-		b: 0!
+		b: 0)!
 
 x
 	^self position x!

@@ -876,7 +876,6 @@ indentationFor: anObject
 	We use this to hack an approximation to a tree"
 
 	| depth |
-
 	depth := self depthOf: anObject.
 
 	"try to adjust to take #indentSeparation into account"
@@ -1725,8 +1724,8 @@ setItem: anObject openState: aSymbol
 	"private -- update the 'state' image for anObject"
 
 	| objectIndex stateIndex anLvItem |
-	self systemDrawsStateImages ifFalse: [^self].
-	objectIndex := self displayIndexOf: anObject ifAbsent: [^self].
+	(self systemDrawsStateImages not
+		or: [(objectIndex := self displayIndexOf: anObject ifAbsent: []) isNil]) ifTrue: [^self].
 	stateIndex := self stateImageIndex: aSymbol.
 	anLvItem := LVITEMW new
 				iItem: objectIndex - 1;

@@ -14,7 +14,7 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreatePath: fillMode path: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 fillMode: aNumber
@@ -25,8 +25,8 @@ gdiplusConstructorErrorDescription
 
 isPersistent
 	^false! !
-!GdiplusGraphicsPathInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
-!GdiplusGraphicsPathInitializer categoriesFor: #fillMode:!accessing!public! !
+!GdiplusGraphicsPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusGraphicsPathInitializer categoriesFor: #fillMode:!initializing!private! !
 !GdiplusGraphicsPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !GdiplusGraphicsPathInitializer categoriesFor: #isPersistent!public!testing! !
 

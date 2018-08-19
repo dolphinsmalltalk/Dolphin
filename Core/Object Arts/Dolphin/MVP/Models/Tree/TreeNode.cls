@@ -132,6 +132,6 @@ removeChildNode: aTreeNode ifAbsent: exceptionHandler
 for: anObject
 	"Answer an instance of the receiver that is to represent anObject"
 
-	^self new object: anObject; yourself! !
+	^self new object: anObject! !
 !TreeNode class categoriesFor: #for:!instance creation!public! !
 

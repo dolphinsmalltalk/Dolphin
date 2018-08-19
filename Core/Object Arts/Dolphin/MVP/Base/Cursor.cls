@@ -15,6 +15,18 @@ imageType
 
 	^IMAGE_CURSOR!
 
+load: identifierObject fromInstance: hModule extent: aPoint
+	"Private - Attempts to load the receiver as a resource from an instance.
+	Answers the image's handle, or nil if the image could not be loaded."
+
+	^UserLibrary default
+		loadImage: hModule asParameter
+		lpszName: identifierObject asResourceId
+		uType: self imageType
+		cxDesired: aPoint x
+		cyDesired: aPoint y
+		fuLoad: self loadFlags!
+
 loadFromInstance: hModule
 	"Private - Attempts to load the receiver as a resource from an instance. 
 	I would have expected the User32 loadImage function to be capable of this but
@@ -74,6 +86,7 @@ showWhile: aBlock
 			[Current := previous.
 			UserLibrary default setCursor: actual]! !
 !Cursor categoriesFor: #imageType!constants!private! !
+!Cursor categoriesFor: #load:fromInstance:extent:!private!realizing/unrealizing! !
 !Cursor categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
 !Cursor categoriesFor: #makeCurrent!operations!public! !
 !Cursor categoriesFor: #printOn:!development!printing!public! !
@@ -208,7 +221,7 @@ iBeam
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^self arrow!
+	^self hand!
 
 no
 	"Answer the instance that is the No cursor."

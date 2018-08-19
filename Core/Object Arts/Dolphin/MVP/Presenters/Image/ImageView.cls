@@ -24,7 +24,9 @@ Example:
 
 paintImageOn: aCanvas 
 	| imageRect displayRect |
-	(image isNil or: [image handle isNull]) ifTrue: [^nil].
+	(image isNil or: [
+		image realize.
+		image isRealized not]) ifTrue: [^nil].
 	displayRect := self displayRectangle.
 	imageRect := self calcRectangle: displayRect.
 	image 

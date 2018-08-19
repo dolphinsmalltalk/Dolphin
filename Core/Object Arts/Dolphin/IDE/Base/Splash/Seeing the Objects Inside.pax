@@ -22,7 +22,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\System\Random\Dolphin Random Stream';
 	add: '..\..\..\MVP\Views\Tooltips\Dolphin Tooltips';
 	add: '..\..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\Internal Bitmaps and Icons';
+	add: '..\..\..\MVP\Icons\Internal Bitmaps and Icons';
 	yourself).
 
 package!
@@ -40,7 +40,7 @@ Splash subclass: #DolphinSplash
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusDoubleBufferedView subclass: #SeeingTheObjectsInside
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime'
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
 	classVariableNames: ''
 	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'!

@@ -16,7 +16,7 @@ gdipCreateImageAttributes: imageattr
 
 setUp
 	super setUp.
-	model := GdiplusImageAttributesInitializer new library: self!
+	model := GdiplusImageAttributesInitializer basicNew library: self!
 
 testCreateHandle
 	model createHandle.

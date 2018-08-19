@@ -85,11 +85,14 @@ isEraseBackground: aBoolean
 	#deprecated.
 	self isWholeBackgroundErased: aBoolean!
 
-paintImageOn: aCanvas 
+paintImageOn: aCanvas
 	| imageRect displayRect graphics |
 	"displayRect is the clientRectangle adjusted by the image padding"
 	displayRect := self displayRectangle.
-	[(image isNil or: [image handle isNull]) ifTrue: [^displayRect]] on: Error do: [:e | ^nil].
+	[(image isNil or: 
+			[image realize.
+			image isRealized not]) ifTrue: [^displayRect]] on: Error
+		do: [:e | ^nil].
 	"Stop OLEPicture choking"
 	(displayRect width <= 0 or: [displayRect height <= 0]) ifTrue: [^nil].
 
@@ -99,18 +102,18 @@ paintImageOn: aCanvas
 	graphics interpolationMode: (self class interpolationStyleTable at: self interpolationMode
 				ifAbsent: [InterpolationModeDefault]).
 	
-	[image 
+	[image
 		drawOnGraphics: graphics
 		at: imageRect topLeft
 		extent: imageRect extent
 		from: 0 @ 0
 		extent: image extent
 		unit: nil
-		attributes: self imageAttributes] 
+		attributes: self imageAttributes]
 			on: Error
-			do: [:err | ].
+			do: [:err | err toTrace].
 	graphics free.
-	^self 
+	^self
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !

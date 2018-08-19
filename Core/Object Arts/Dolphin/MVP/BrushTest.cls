@@ -53,9 +53,9 @@ testStbConversion
 	self assert: brush class identicalTo: Brush.
 	self assert: brush logBrush color
 		equals: (RGB
-				red: 50
-				green: 150
-				blue: 250).
+				r: 50
+				g: 150
+				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
 	self assert: brush logBrush style equals: BS_HATCHED! !
 !BrushTest categoriesFor: #testBitmapBrush!public!unit tests! !

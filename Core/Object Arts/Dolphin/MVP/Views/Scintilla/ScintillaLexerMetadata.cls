@@ -6,6 +6,7 @@ Object subclass: #ScintillaLexerMetadata
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaLexerMetadata guid: (GUID fromString: '{46328983-b7d1-40ad-a5aa-68899e36af2e}')!
+ScintillaLexerMetadata isAbstract: true!
 ScintillaLexerMetadata comment: ''!
 !ScintillaLexerMetadata categoriesForClass!Kernel-Objects! !
 !ScintillaLexerMetadata methodsFor!

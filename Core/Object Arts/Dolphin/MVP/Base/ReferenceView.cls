@@ -46,13 +46,13 @@ filerProxy
 	"Implementation Note: We must not save the referee, as the whole point is that this must be
 	restored from the referenced resource in its latest state."
 
-	| temp proxy |
+	| temp |
 	temp := referee.
 	referee := nil.
-	proxy := super filerProxy.
-	proxy clearSubViews.
-	referee := temp.
-	^proxy!
+	^
+	[super filerProxy
+		clearSubViews;
+		yourself] ensure: [referee := temp]!
 
 loadReferee
 	referee := resourceIdentifier loadWithContext: self.
@@ -66,6 +66,11 @@ loadReferee
 	self configureReferee.
 	referee show.
 	^referee!
+
+nonReferenceAncestor
+	"Answer the view that is the first non-reference view in the parent chain of this view, inclusive."
+
+	^self parentView nonReferenceAncestor!
 
 presenterConnectionPoint
 	"Answer the view within the receiver to which a same named presenter should connect.
@@ -137,6 +142,7 @@ validateUserInterface
 !ReferenceView categoriesFor: #createDelegate!event handling!private! !
 !ReferenceView categoriesFor: #filerProxy!binary filing!private! !
 !ReferenceView categoriesFor: #loadReferee!helpers!private! !
+!ReferenceView categoriesFor: #nonReferenceAncestor!accessing!public! !
 !ReferenceView categoriesFor: #presenterConnectionPoint!public! !
 !ReferenceView categoriesFor: #printOn:!development!printing!public! !
 !ReferenceView categoriesFor: #referee!accessing!public! !

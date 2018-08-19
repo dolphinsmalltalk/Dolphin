@@ -15,7 +15,7 @@ color: anARGB width: aFloat
 	width := aFloat!
 
 createHandle
-	"GdiPlusPen.h
+	"Private - GdiPlusPen.h
 		    Pen(IN const Color& color, 
 		        IN REAL width = 1.0f)
 		    {
@@ -31,8 +31,8 @@ createHandle
 				width: (width ?? 1.0) asParameter
 				unit: UnitWorld
 				pen: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusPenFromColorInitializer categoriesFor: #color:width:!accessing!public! !
-!GdiplusPenFromColorInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusPenFromColorInitializer categoriesFor: #color:width:!initializing!private! !
+!GdiplusPenFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 

@@ -10,6 +10,28 @@ GdiplusBitmap comment: 'GdiplusBitmap expands on GdiplusImage by providing addit
 !GdiplusBitmap categoriesForClass!Unclassified! !
 !GdiplusBitmap methodsFor!
 
+asBitmap
+	"Answer a <Bitmap> with the receiver's image."
+
+	| status hbmReturn |
+	hbmReturn := ExternalHandle new.
+	(status := GdiplusLibrary default
+				gdipCreateHBITMAPFromBitmap: self asParameter
+				hbmReturn: hbmReturn
+				background: 0) == Ok
+		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHBITMAPFromBitmap' with: status].
+	^Bitmap fromOwnedHandle: hbmReturn!
+
+asIcon
+	"Answer an <Icon> with the receiver's image."
+
+	| status hbmReturn |
+	hbmReturn := ExternalHandle new.
+	(status := GdiplusLibrary default 
+				gdipCreateHICONFromBitmap: self asParameter hbmReturn: hbmReturn) == Ok 
+		ifFalse: [^GdiplusError signal: 'Error in GdipCreateHICONFromBitmap' with: status].
+	^Icon fromOwnedHandle: hbmReturn!
+
 cloneBitmapRectangle: aRectangle format: aPixelFormatConstant 
 	"Private - Answer a copy of the receiver."
 
@@ -85,6 +107,8 @@ unlockBits: lockedBitmapData
 	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
 				lockedBitmapData: lockedBitmapData) = Ok 
 		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
+!GdiplusBitmap categoriesFor: #asBitmap!public! !
+!GdiplusBitmap categoriesFor: #asIcon!public! !
 !GdiplusBitmap categoriesFor: #cloneBitmapRectangle:format:!copying!private! !
 !GdiplusBitmap categoriesFor: #cloneFormat:!copying!public! !
 !GdiplusBitmap categoriesFor: #lockBits:flags:format:lockedBitmapData:!accessing!public! !

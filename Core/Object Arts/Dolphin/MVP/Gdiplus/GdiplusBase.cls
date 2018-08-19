@@ -61,7 +61,12 @@ printOn: aStream
 	aStream
 		nextPut: $(;
 		print: handle;
-		nextPut: $)! !
+		nextPut: $)!
+
+setInitializer: aGdiplusInitializer
+	self initialize.
+	initializer := aGdiplusInitializer.
+	^self! !
 !GdiplusBase categoriesFor: #=!comparison!public! !
 !GdiplusBase categoriesFor: #basicFree!private!realizing/unrealizing! !
 !GdiplusBase categoriesFor: #copy!copying!public! !
@@ -71,6 +76,7 @@ printOn: aStream
 !GdiplusBase categoriesFor: #initializer:!accessing!public! !
 !GdiplusBase categoriesFor: #isPersistent!private!testing! !
 !GdiplusBase categoriesFor: #printOn:!printing!public! !
+!GdiplusBase categoriesFor: #setInitializer:!initializing!private! !
 
 !GdiplusBase class methodsFor!
 
@@ -314,7 +320,7 @@ fromInitializer: aGdiplusInitializer
 	"Answer an instance of the receiver based on aspects of aGdiplusInitializer.  The instance holds
 	a reference to the initializer which is expected to hold enough information to create the instance."
 
-	^super new initializer: aGdiplusInitializer!
+	^self basicNew setInitializer: aGdiplusInitializer!
 
 guidNamesWithPrefix: aString
 	"Private - Answer a GUID collection of Win32 types that begin with aString.

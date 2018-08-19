@@ -133,10 +133,7 @@ fullIdentifier
 	the class of  Image, the ExternalResourceLibrary (instance handle) 
 	and the standard identifier."
 
-	^Array 
-		with: self class
-		with: self instanceHandle
-		with: self identifier!
+	^{self class. self instanceHandle. self identifier}!
 
 hash
 	"Answer the hash of the identifier. Although #= is implemented to compare
@@ -163,6 +160,11 @@ identifier: id
 	"Set the identifier of the receiver. This can be a string or an integer."
 
 	identifier := id asResourceId!
+
+imageManager
+	"Answer an image manager to use for storing images"
+
+	^self class imageManager!
 
 imageType
 	"Private - Answer the Win32 image type for the receiver."
@@ -266,6 +268,7 @@ printOn: aStream
 !Image categoriesFor: #hotspot!accessing!public! !
 !Image categoriesFor: #identifier!accessing!public! !
 !Image categoriesFor: #identifier:!accessing!public! !
+!Image categoriesFor: #imageManager!accessing!public! !
 !Image categoriesFor: #imageType!constants!private!testing! !
 !Image categoriesFor: #instanceHandle!accessing!public! !
 !Image categoriesFor: #instanceHandle:!accessing!public! !

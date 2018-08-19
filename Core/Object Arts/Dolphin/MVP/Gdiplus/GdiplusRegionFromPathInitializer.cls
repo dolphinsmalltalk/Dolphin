@@ -14,17 +14,21 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreateRegionPath: path asParameter region: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating Region'!
 
+isPersistent
+	^path isPersistent!
+
 path: aPath
 	path := aPath! !
-!GdiplusRegionFromPathInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
-!GdiplusRegionFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusRegionFromPathInitializer categoriesFor: #path:!accessing!public! !
+!GdiplusRegionFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusRegionFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!initializing!private! !
+!GdiplusRegionFromPathInitializer categoriesFor: #isPersistent!public! !
+!GdiplusRegionFromPathInitializer categoriesFor: #path:!initializing!private! !
 
 !GdiplusRegionFromPathInitializer class methodsFor!
 

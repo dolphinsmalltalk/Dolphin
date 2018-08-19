@@ -6,6 +6,7 @@ GdiplusInitializer subclass: #GdiplusLinearGradientBrushInitializer
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusLinearGradientBrushInitializer guid: (GUID fromString: '{5dd72bf9-0464-4f05-b1b3-faa11a8e112e}')!
+GdiplusLinearGradientBrushInitializer isAbstract: true!
 GdiplusLinearGradientBrushInitializer comment: ''!
 !GdiplusLinearGradientBrushInitializer categoriesForClass!Unclassified! !
 !GdiplusLinearGradientBrushInitializer methodsFor!

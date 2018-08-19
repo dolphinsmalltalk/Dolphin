@@ -134,6 +134,12 @@ menuItem: aMenuItem text: aStringOrNil state: stateInteger
 !
 
 setImage: aCommandMenuItem
+	"Private - Populate the receiver with the command image, if any. We no longer use the HBMMENU_CALLBACK method with the menu images
+	drawn on demand by Menu>>drawItemImage:on:at:disabled:, because that approach causes themed menus to be disabled. It seems a
+	retrograde step to have to generate a 32-bit pre-multiplied alpha bitmap specifically for each image and to add that individually to the
+	menu, but that is what we must do. It's not clear why Microsoft didn't use image lists for this instead of individual bitmaps. The 
+	IconImageManager does maintain a cache of menu bitmaps, so at least we don't have multiple copies."
+
 	^aCommandMenuItem image
 		ifNil: [0]
 		ifNotNil: 

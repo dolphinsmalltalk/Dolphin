@@ -11,7 +11,7 @@ GdiplusBitmapFromIconInitializer comment: ''!
 !GdiplusBitmapFromIconInitializer methodsFor!
 
 createHandle
-	" Bitmap::FromHICON(
+	"Private -  Bitmap::FromHICON(
 	    IN HICON hicon
 	    )
 	{
@@ -21,7 +21,7 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreateBitmapFromHICON: icon asParameter bitmap: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -29,9 +29,9 @@ gdiplusConstructorErrorDescription
 
 icon: anIcon
 	icon := anIcon! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusBitmapFromIconInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusBitmapFromIconInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #icon:!accessing!public! !
+!GdiplusBitmapFromIconInitializer categoriesFor: #icon:!initializing!private! !
 
 !GdiplusBitmapFromIconInitializer class methodsFor!
 

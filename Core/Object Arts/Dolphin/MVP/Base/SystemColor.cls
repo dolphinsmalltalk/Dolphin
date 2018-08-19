@@ -57,6 +57,9 @@ initialize
 			syscolor := self basicNew setIndex: each.
 			syscolor isImmutable: true.
 			self addNamed: (NamesByIndex at: each) color: syscolor.
-			ColorsByIndex at: each put: syscolor]! !
+			ColorsByIndex at: each put: syscolor].
+	Color addClassConstant: 'Face3d' value: (self named: #face3d).
+	Color addClassConstant: 'Window' value: (self named: #window).
+	Color addClassConstant: 'WindowText' value: (self named: #windowText)! !
 !SystemColor class categoriesFor: #initialize!class initialization!development!public! !
 

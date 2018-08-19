@@ -17,17 +17,17 @@ bitmap: aBitmap graphics: aGraphics
 createHandle
 	| gpHandle status |
 	gpHandle := ExternalAddress new.
-	status := self library 
+	status := self library
 				gdipCreateCachedBitmap: bitmap asParameter
 				graphics: graphics asParameter
 				cachedBitmap: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating CachedBitmap'! !
-!GdiplusCachedBitmapInitializer categoriesFor: #bitmap:graphics:!accessing!public! !
-!GdiplusCachedBitmapInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusCachedBitmapInitializer categoriesFor: #bitmap:graphics:!initializing!private! !
+!GdiplusCachedBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusCachedBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 
 !GdiplusCachedBitmapInitializer class methodsFor!

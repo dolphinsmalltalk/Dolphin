@@ -98,6 +98,7 @@ package methodNames
 	add: 'RGB class' -> #stdColor:;
 	add: 'STBViewProxy class' -> #for:;
 	add: 'SystemColor class' -> #fromId:;
+	add: 'TextTileIcon class' -> #text:font:color:;
 	add: 'WindowsEvent class' -> #fromMSG:;
 	add: 'WindowsEvent class' -> #handle:message:wParam:lParam:;
 	add: 'WindowsEvent class' -> #message:handle:wParam:lParam:;
@@ -133,6 +134,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Views\Scrollbars\Dolphin Scrollbars';
 	add: '..\Views\Slider\Dolphin Slider Control';
 	add: '..\Presenters\Text\Dolphin Text Presenter';
+	add: '..\Base\Dolphin Text Tile Icons';
 	add: '..\Type Converters\Dolphin Type Converters';
 	yourself).
 
@@ -699,6 +701,16 @@ lines
 !TextEdit categoriesFor: #isUpperCase!public!testing! !
 !TextEdit categoriesFor: #isUppercase:!public!testing! !
 !TextEdit categoriesFor: #lines!accessing!public! !
+
+!TextTileIcon class methodsFor!
+
+text: labelString font: fontString color: aColor
+	Notification deprecated.
+	^self
+		text: labelString
+		fontName: fontString
+		color: aColor! !
+!TextTileIcon class categoriesFor: #text:font:color:!instance creation!public! !
 
 !TreeView methodsFor!
 

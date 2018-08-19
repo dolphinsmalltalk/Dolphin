@@ -11,7 +11,7 @@ GdiplusBitmapFromFileInitializer comment: ''!
 !GdiplusBitmapFromFileInitializer methodsFor!
 
 createHandle
-	"GdiplusBitmap.h
+	"Private - GdiplusBitmap.h
 		Bitmap::Bitmap(
 	    IN const WCHAR *filename, 
 	    IN BOOL useEmbeddedColorManagement
@@ -25,13 +25,12 @@ createHandle
 
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
-	status := self library gdipCreateBitmapFromFile: self absoluteFilename 
-				bitmap: gpHandle.
-	self assertStatusOk: status.
+	status := self library gdipCreateBitmapFromFile: self absoluteFilename bitmap: gpHandle.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
-	^'Error creating Bitmap'! !
-!GdiplusBitmapFromFileInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+	^'Error loading Bitmap'! !
+!GdiplusBitmapFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusBitmapFromFileInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 

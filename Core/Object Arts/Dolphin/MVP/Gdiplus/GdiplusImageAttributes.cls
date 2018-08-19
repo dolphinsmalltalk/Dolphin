@@ -557,7 +557,7 @@ exampleRemapInput
 	^bitmap!
 
 new
-	^self fromInitializer: GdiplusImageAttributesInitializer new! !
+	^self fromInitializer: GdiplusImageAttributesInitializer default! !
 !GdiplusImageAttributes class categoriesFor: #exampleColorBars1!examples!private! !
 !GdiplusImageAttributes class categoriesFor: #exampleColorBars2!examples!private! !
 !GdiplusImageAttributes class categoriesFor: #exampleColorBars3!examples!private! !

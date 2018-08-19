@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ViewComposerTest
-	instanceVariableNames: 'vc testClass'
+	instanceVariableNames: 'vc sampleClass'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -49,18 +49,23 @@ getButtonResource
 getContainerResource
 	^(ResourceIdentifier class: ContainerView) resource!
 
+sampleClass
+	^sampleClass
+		ifNil: 
+			[sampleClass := ViewComposerTest
+						subclass: #ViewComposerTestSample
+						instanceVariableNames: ''
+						classVariableNames: ''
+						poolDictionaries: ''
+						classInstanceVariableNames: '']!
+
 setUp
 	vc := ViewComposer show.
-	testClass := ViewComposerTest 
-				subclass: #ViewComposerTestSample
-				instanceVariableNames: ''
-				classVariableNames: ''
-				poolDictionaries: ''
-				classInstanceVariableNames: ''!
+!
 
 tearDown
 	DragDropSession current ifNotNil: [:dd | dd cancelTrackingAt: 0 @ 0].
-	testClass removeFromSystem.
+	sampleClass ifNotNil: [sampleClass removeFromSystem].
 	vc destroy.
 	vc := nil!
 
@@ -72,10 +77,10 @@ testBasicEdit
 	self assert: vc composingView class identicalTo: ShellView.
 	self assert: vc primarySelection equals: vc composingView.
 	"Test saving"
-	sampleResourceIdentifier := ResourceIdentifier class: testClass.
+	sampleResourceIdentifier := ResourceIdentifier class: self sampleClass.
 	vc resourceIdentifier: sampleResourceIdentifier.
 	vc viewSave.
-	self assert: (testClass class includesSelector: #resource_Default_view).
+	self assert: (self sampleClass class includesSelector: #resource_Default_view).
 	vc viewCloseNoPrompt.
 	self assertIsNil: vc composingView.
 	self assert: vc hasComposingView not.
@@ -252,12 +257,13 @@ testZOrderPreservedByMutate
 	vc selection: shell.
 	vc mutateTo: ContainerView.
 	self assert: (shell subViews collect: [:each | each name]) asArray equals: #('1' '2' '3')! !
-!ViewComposerTest categoriesFor: #doArenaDropOf:operation:!private!unit tests! !
-!ViewComposerTest categoriesFor: #dragResourceFor:!private!unit tests! !
-!ViewComposerTest categoriesFor: #getButtonResource!private!unit tests! !
-!ViewComposerTest categoriesFor: #getContainerResource!private!unit tests! !
-!ViewComposerTest categoriesFor: #setUp!private!unit tests! !
-!ViewComposerTest categoriesFor: #tearDown!private!unit tests! !
+!ViewComposerTest categoriesFor: #doArenaDropOf:operation:!helpers!private! !
+!ViewComposerTest categoriesFor: #dragResourceFor:!helpers!private! !
+!ViewComposerTest categoriesFor: #getButtonResource!helpers!private! !
+!ViewComposerTest categoriesFor: #getContainerResource!helpers!private! !
+!ViewComposerTest categoriesFor: #sampleClass!accessing!private! !
+!ViewComposerTest categoriesFor: #setUp!private!running! !
+!ViewComposerTest categoriesFor: #tearDown!private!running! !
 !ViewComposerTest categoriesFor: #testBasicEdit!public!unit tests! !
 !ViewComposerTest categoriesFor: #testCutCopyPaste!public!unit tests! !
 !ViewComposerTest categoriesFor: #testDragResourceOverEmptyArena!public!unit tests! !

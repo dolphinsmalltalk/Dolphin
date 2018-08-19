@@ -40,7 +40,6 @@ package classNames
 	add: #GdiplusImageFromBytesInitializer;
 	add: #InternalBitmap;
 	add: #InternalIcon;
-	add: #TextTileIcon;
 	yourself.
 
 package methodNames
@@ -51,7 +50,6 @@ package methodNames
 	add: #ClassDescription -> #createIconMethod:ofSize:fromFile:;
 	add: #Collection -> #printOn:upTo:;
 	add: #Collection -> #printStringUpTo:;
-	add: #Color -> #icon;
 	add: #GdiplusImage -> #addToImageList:mask:;
 	add: #GdiplusImage -> #internalize;
 	add: 'GdiplusImage class' -> #fromByteArray2:;
@@ -65,9 +63,9 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Gdiplus\Gdiplus';
+	add: '..\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\Base\Dolphin MVP Base';
+	add: '..\Gdiplus\Gdiplus';
 	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
 	yourself).
 
@@ -79,11 +77,6 @@ Object subclass: #InternalBitmap
 	instanceVariableNames: 'gdiplusBitmap'
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Object subclass: #TextTileIcon
-	instanceVariableNames: 'text font tilecolor'
-	classVariableNames: ''
-	poolDictionaries: 'GdiplusConstants'
 	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusFromBytesInitializer
 	instanceVariableNames: 'bytes'
@@ -221,32 +214,24 @@ printStringUpTo: maxPrintCharacters
 !Collection categoriesFor: #printOn:upTo:!printing!public! !
 !Collection categoriesFor: #printStringUpTo:!printing!public! !
 
-!Color methodsFor!
-
-icon
-	"Answer a dynamically generated icon to represent the receiver. Note that because Icons are
-	typically placed into the IconImageManager, generating a large number of unique dynamic
-	icons will inflate the size of the image manager. Should be okay to do this for Colors
-	though."
-
-	^InternalIcon new
-		tileColor: (self isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [self asRGB])! !
-!Color categoriesFor: #icon!public! !
-
 !GdiplusImage methodsFor!
 
-addToImageList: aWinImageList mask: aColorOrNil 
+addToImageList: aWinImageList mask: aColorOrNil
 	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
-	extent of the image list. We assume that the receiver contains transparency information so
-	the mask color is ignored"
+	extent of the image list."
 
-	"The chage to use a display compatible bitmap is for #2280"
-
-	| thumb bitmap |
-	thumb := self class fromImage: self extent: aWinImageList extent.
-	bitmap := Bitmap displayCompatibleWithExtent: thumb extent.
-	thumb drawOn: bitmap canvas.
-	^bitmap addToImageList: aWinImageList mask: nil!
+	| bitmap index extent bmp |
+	extent := aWinImageList extent.
+	"The change to use a display compatible bitmap is for #2280"
+	bitmap := (extent = self extent ifTrue: [self] ifFalse: [self class fromImage: self extent: extent])
+				asBitmap.
+	"We assume that the receiver contains transparency information so the mask color is ignored."
+	index := CommCtrlLibrary default
+				imageList_AddMasked: aWinImageList asParameter
+				hbmImage: bitmap asParameter
+				crMask: CLR_NONE.
+	bitmap free.
+	^index!
 
 internalize
 	"Answer a copy of the receiver created from the PNG bytes. This can be held in the image and

@@ -6,6 +6,7 @@ GdiplusInitializer subclass: #GdiplusPenInitializer
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusPenInitializer guid: (GUID fromString: '{b5a5d186-b0ef-421c-befb-c5628a17fee9}')!
+GdiplusPenInitializer isAbstract: true!
 GdiplusPenInitializer comment: ''!
 !GdiplusPenInitializer categoriesForClass!Unclassified! !
 !GdiplusPenInitializer methodsFor!

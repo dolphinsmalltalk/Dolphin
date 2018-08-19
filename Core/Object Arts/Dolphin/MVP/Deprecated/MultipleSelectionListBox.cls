@@ -64,7 +64,7 @@ selectionOrNil
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Smalltalk developmentSystem deprecatedMethodIcon!
+	^Smalltalk developmentSystem deprecatedIcon!
 
 publishedEventsOfInstances
     	"Answer a Set of Symbols that describe the published events triggered

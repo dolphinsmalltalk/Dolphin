@@ -6,12 +6,12 @@ MultilineTextEdit subclass: #ScintillaView
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
-ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 512!
-ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 4!
-ScintillaView addClassConstant: 'BraceHilightingMask' value: 1!
-ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 32!
-ScintillaView addClassConstant: 'FoldingMask' value: 2!
-ScintillaView addClassConstant: 'MarginStylesOffset' value: 256!
+ScintillaView addClassConstant: 'AnnotationStylesOffset' value: 16r200!
+ScintillaView addClassConstant: 'BackgroundDwellEvents' value: 16r4!
+ScintillaView addClassConstant: 'BraceHilightingMask' value: 16r1!
+ScintillaView addClassConstant: 'DefaultCallTipTabWidth' value: 16r20!
+ScintillaView addClassConstant: 'FoldingMask' value: 16r2!
+ScintillaView addClassConstant: 'MarginStylesOffset' value: 16r100!
 ScintillaView comment: 'ScintillaView is a <valueView> class that wraps the "Scintilla" programmers'' edit control. 
 
 Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the documentation at http://www.scintilla.org/ScintillaDoc.html if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, this class and its supporting classes are also somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
@@ -12433,24 +12433,24 @@ xmlTextStyles
 				yourself).
 	styles add: ((ScintillaTextStyle name: #number)
 				id: 5;
-				forecolor: (RGB 
-							red: 0
-							green: 127
-							blue: 127);
+				forecolor: (RGB
+							r: 0
+							g: 127
+							b: 127);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #doubleString)
 				id: 6;
-				forecolor: (RGB 
-							red: 127
-							green: 0
-							blue: 127);
+				forecolor: (RGB
+							r: 127
+							g: 0
+							b: 127);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #singleString)
 				id: 7;
-				forecolor: (RGB 
-							red: 127
-							green: 0
-							blue: 127);
+				forecolor: (RGB
+							r: 127
+							g: 0
+							b: 127);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #otherInsideTag)
 				id: 8;
@@ -12480,10 +12480,10 @@ xmlTextStyles
 				yourself).
 	styles add: ((ScintillaTextStyle name: #CDATA)
 				id: 17;
-				backcolor: (RGB 
-							red: 255
-							green: 240
-							blue: 240);
+				backcolor: (RGB
+							r: 255
+							g: 240
+							b: 240);
 				forecolor: Color darkRed;
 				isBackcolorExtendedToEndOfLine: true;
 				yourself).
@@ -12493,15 +12493,15 @@ xmlTextStyles
 				yourself).
 	styles add: ((ScintillaTextStyle name: #unquotedValue)
 				id: 19;
-				forecolor: (RGB 
-							red: 96
-							green: 128
-							blue: 96);
+				forecolor: (RGB
+							r: 96
+							g: 128
+							b: 96);
 				yourself).
-	sgmlBackcolour := RGB 
-				red: 239
-				green: 239
-				blue: 255.
+	sgmlBackcolour := RGB
+				r: 239
+				g: 239
+				b: 255.
 	styles add: ((ScintillaTextStyle name: #sgmlTag)
 				id: 21;
 				backcolor: sgmlBackcolour;
@@ -12516,10 +12516,10 @@ xmlTextStyles
 	styles add: ((ScintillaTextStyle name: #sgmlFirstParam)
 				id: 23;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB 
-							red: 0
-							green: 102
-							blue: 0);
+				forecolor: (RGB
+							r: 0
+							g: 102
+							b: 0);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlDoubleString)
 				id: 24;
@@ -12529,34 +12529,34 @@ xmlTextStyles
 	styles add: ((ScintillaTextStyle name: #sgmlSingleString)
 				id: 25;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB 
-							red: 153
-							green: 51
-							blue: 0);
+				forecolor: (RGB
+							r: 153
+							g: 51
+							b: 0);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlError)
 				id: 26;
-				backcolor: (RGB 
-							red: 255
-							green: 102
-							blue: 102);
+				backcolor: (RGB
+							r: 255
+							g: 102
+							b: 102);
 				forecolor: Color darkRed;
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlSpecial)
 				id: 27;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB 
-							red: 51
-							green: 102
-							blue: 255);
+				forecolor: (RGB
+							r: 51
+							g: 102
+							b: 255);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlEntity)
 				id: 28;
 				backcolor: sgmlBackcolour;
-				forecolor: (RGB 
-							red: 51
-							green: 51
-							blue: 51);
+				forecolor: (RGB
+							r: 51
+							g: 51
+							b: 51);
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlComment)
 				id: 29;
@@ -12565,14 +12565,14 @@ xmlTextStyles
 				yourself).
 	styles add: ((ScintillaTextStyle name: #sgmlBlock)
 				id: 31;
-				backcolor: (RGB 
-							red: 204
-							green: 204
-							blue: 224);
-				forecolor: (RGB 
-							red: 0
-							green: 0
-							blue: 102);
+				backcolor: (RGB
+							r: 204
+							g: 204
+							b: 224);
+				forecolor: (RGB
+							r: 0
+							g: 0
+							b: 102);
 				yourself).
 	^styles! !
 !ScintillaView class categoriesFor: #annotationModes!constants!public! !

@@ -437,28 +437,28 @@ defaultAutoSwitchDelay
 	^1000!
 
 defaultFailColor
-	^RGB 
-		red: 243
-		green: 27
-		blue: 65!
+	^RGB
+		r: 243
+		g: 27
+		b: 65!
 
 defaultNoTestsColor
 	^RGB 
-		red: 111
-		green: 158
-		blue: 238!
+		r: 111
+		g: 158
+		b: 238!
 
 defaultPassColor
 	^RGB 
-		red: 100
-		green: 210
-		blue: 103!
+		r: 100
+		g: 210
+		b: 103!
 
 defaultRunningColor
 	^RGB 
-		red: 235
-		green: 201
-		blue: 65!
+		r: 235
+		g: 201
+		b: 65!
 
 failColor
 	^FailColor!

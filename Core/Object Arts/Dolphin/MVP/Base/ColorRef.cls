@@ -6,6 +6,7 @@ Color subclass: #ColorRef
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ColorRef guid: (GUID fromString: '{ed5fcdeb-52e8-4a5c-9eb7-38bf3a3aa575}')!
+ColorRef isAbstract: true!
 ColorRef comment: '`ColorRef` is the abstract class of palette independent (absolute) color values used with most Win32 APIs.
 
 ## Instance Variables:
@@ -19,13 +20,7 @@ ColorRef comment: '`ColorRef` is the abstract class of palette independent (abso
 	"Answer true if the argument and the reciever are equal (i.e. they are represent the
 	same colour value)."
 
-	^self species == aColorRef species and: [self code = aColorRef code]!
-
-alpha
-	"Answer the receiver's alpha component (a SmallInteger in the range 0..255). This specifies
-	the opacity of the colour, with 0 being completely transparent and 255 completely opaque."
-
-	^self isNone ifTrue: [0] ifFalse: [255]!
+	^self species == aColorRef species and: [code = aColorRef code]!
 
 asColorRef
 	"Answer the receiver as a ColorRef (an RGB value or one of the standard pseudo-colour constants)"
@@ -46,18 +41,12 @@ asIndexedColorUsingPalette: hPalette
 asParameter
 	"Answer the receiver such that it can be used for an API call."
 
-	^self code!
+	^code!
 
 asRGB
 	"Answer the <RGB> colour equivalent to the receiver."
 
-	code > 16rFFFFFF ifTrue: [self errorNotARealColor].
-	^RGB fromInteger: code!
-
-brush
-	"Answer a Brush configured for solid painting of the receiver's color."
-
-	^self isNone ifTrue: [StockBrush fromId: NULL_BRUSH] ifFalse: [super brush]!
+	^self errorNotARealColor!
 
 code
 	"Private - Answer the value of the receiver's ''code'' instance variable."
@@ -73,44 +62,19 @@ errorNotARealColor
 hash
 	"Answer the <integer> hash value for the receiver."
 
-	^self code!
+	^code!
 
-isDefault
-	"Answer whether the receiver is the special <Color> representing the default colour. Which
-	colour this represents in practice will depend on context."
-
-	^code = CLR_DEFAULT!
-
-isNone
-	"Answer whether the receiver is the special <Color> representing no colour."
-
-	^code = CLR_NONE!
-
-printOn: aStream 
+printOn: aStream
 	"Put an ASCII representation of receiver onto aStream."
 
-	aStream nextPut: $(.
-	code = CLR_NONE 
-		ifTrue: 
-			[aStream
-				display: Color;
-				space;
-				display: #none]
-		ifFalse: 
-			[code = CLR_DEFAULT 
-				ifTrue: 
-					[aStream
-						display: Color;
-						space;
-						display: #default]
-				ifFalse: 
-					[aStream
-						display: self class;
-						space;
-						display: #fromInteger:;
-						space;
-						print: code]].
-	aStream nextPut: $)!
+	aStream
+		nextPut: $(;
+		display: self class;
+		space;
+		display: #fromInteger:;
+		space;
+		print: code;
+		nextPut: $)!
 
 setCode: anInteger
 	"Private - Set the <integer> value of the ColorRef (i.e. that value passed to API calls
@@ -118,54 +82,48 @@ setCode: anInteger
 
 	code := anInteger! !
 !ColorRef categoriesFor: #=!comparing!public! !
-!ColorRef categoriesFor: #alpha!accessing!public! !
 !ColorRef categoriesFor: #asColorRef!converting!public! !
 !ColorRef categoriesFor: #asIndexedColor!converting!public! !
 !ColorRef categoriesFor: #asIndexedColorUsingPalette:!converting!public! !
 !ColorRef categoriesFor: #asParameter!converting!public! !
 !ColorRef categoriesFor: #asRGB!converting!public! !
-!ColorRef categoriesFor: #brush!converting!public! !
 !ColorRef categoriesFor: #code!accessing!private! !
-!ColorRef categoriesFor: #errorNotARealColor!exceptions!public! !
+!ColorRef categoriesFor: #errorNotARealColor!exceptions!private! !
 !ColorRef categoriesFor: #hash!comparing!public! !
-!ColorRef categoriesFor: #isDefault!public!testing! !
-!ColorRef categoriesFor: #isNone!public!testing! !
 !ColorRef categoriesFor: #printOn:!development!printing!public! !
 !ColorRef categoriesFor: #setCode:!accessing!private! !
 
 !ColorRef class methodsFor!
-
-default
-	"Answer the special <ColorRef> respresenting the default colour."
-
-	^(self basicNew)
-		setCode: CLR_DEFAULT;
-		yourself!
 
 defaultColorRepresentation
 	"Private - Answer a unique colour that we can use to represent (Color default). This is used in the ColorDialog to allow users to
 	explicitly choose the default colour from a swatch"
 
 	^Color 
-		red: 200
-		green: 200
-		blue: 201!
+		r: 200
+		g: 200
+		b: 201!
 
-fromInteger: anInteger 
+fromInteger: anInteger
 	"Private - Answer an instance with the specified colorref code value."
 
-	^(((anInteger bitShift: -24) == 16rFF ifTrue: [self] ifFalse: [RGB]) basicNew)
-		setCode: anInteger;
-		yourself!
+	^CLR_NONE = anInteger
+		ifTrue: [None]
+		ifFalse: [CLR_DEFAULT = anInteger ifTrue: [Default] ifFalse: [RGB fromInteger: anInteger]]!
 
-none
-	"Answer the special <ColorRef> respresenting no colour."
+stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
 
-	^(self basicNew)
-		setCode: CLR_NONE;
-		yourself! !
-!ColorRef class categoriesFor: #default!instance creation!public! !
+	"Implementation Note: Overridden in order to maintain unique instances without using a proxy"
+
+	| answer ref |
+	anSTBInFiler version < 3 ifTrue: [anSTBInFiler stream skip: 4].
+	"Make a placeholder for the Color"
+	ref := anSTBInFiler register: nil.
+	answer := self fromInteger: anSTBInFiler basicNext.
+	anSTBInFiler fixup: ref to: answer.
+	^answer! !
 !ColorRef class categoriesFor: #defaultColorRepresentation!constants!private! !
 !ColorRef class categoriesFor: #fromInteger:!instance creation!private! !
-!ColorRef class categoriesFor: #none!instance creation!public! !
+!ColorRef class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 

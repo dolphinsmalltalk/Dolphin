@@ -298,19 +298,9 @@ setExtent: aPoint depth: bppInteger initialSize: sizeInteger growBy: growByInteg
 !WinImageList class methodsFor!
 
 defaultColorDepth
-	"Answer the default color depth based on that of the current screen driver.
-	Implementation Note: Use the raw GDI calls to avoid creating a dependency
-	on the Canvas class."
+	"Answer the default color depth based on that of the current screen driver."
 
-	| gdi hDC |
-	gdi := GDILibrary default.
-	hDC := gdi 
-				createDC: 'DISPLAY'
-				lpszDevice: nil
-				lpszOutput: nil
-				lpInitData: nil.
-	^[(gdi getDeviceCaps: hDC nIndex: BITSPIXEL) * (gdi getDeviceCaps: hDC nIndex: PLANES) max: 4] 
-		ensure: [gdi deleteDC: hDC]!
+	^SystemMetrics current defaultColorDepth!
 
 defaultGrowthGranularity
 	"Answers the amount by which an instance of the receiver will grow
@@ -330,7 +320,7 @@ defaultImageFlags
 	Implementation Note: Use the raw GDI calls to avoid creating a dependency
 	on the Canvas class."
 
-	^self defaultColorDepth!
+	^SystemMetrics current defaultColorDepth!
 
 defaultInitialSize
 	"Answers the default initial size of new image lists."

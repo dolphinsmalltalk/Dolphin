@@ -11,7 +11,7 @@ GdiplusGraphicsFromImageInitializer comment: ''!
 !GdiplusGraphicsFromImageInitializer methodsFor!
 
 createHandle
-	" Graphics(IN Image* image)
+	"Private -  Graphics(IN Image* image)
     {
         GpGraphics *graphics = NULL;
 
@@ -24,7 +24,7 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipGetImageGraphicsContext: image asParameter graphics: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -32,9 +32,9 @@ gdiplusConstructorErrorDescription
 
 image: aGdiplusImage
 	image := aGdiplusImage! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusGraphicsFromImageInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusGraphicsFromImageInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsFromImageInitializer categoriesFor: #image:!accessing!public! !
+!GdiplusGraphicsFromImageInitializer categoriesFor: #image:!initializing!private! !
 
 !GdiplusGraphicsFromImageInitializer class methodsFor!
 

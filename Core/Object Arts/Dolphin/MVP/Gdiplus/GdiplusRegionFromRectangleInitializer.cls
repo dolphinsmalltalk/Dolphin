@@ -14,7 +14,7 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreateRegionRectI: rectangle asParameter region: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
@@ -22,9 +22,9 @@ gdiplusConstructorErrorDescription
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusRegionFromRectangleInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusRegionFromRectangleInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #rectangle:!accessing!public! !
+!GdiplusRegionFromRectangleInitializer categoriesFor: #rectangle:!initializing!private! !
 
 !GdiplusRegionFromRectangleInitializer class methodsFor!
 

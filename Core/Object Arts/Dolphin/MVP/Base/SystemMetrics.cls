@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater'
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth'
 	classVariableNames: 'Current FlatMenusMask IconScaleDownMask SmoothScrollingMask VistaMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 SystemMetrics guid: (GUID fromString: '{e56cc456-8490-47f1-bd85-71118b110166}')!
-SystemMetrics addClassConstant: 'FlatMenusMask' value: 12!
-SystemMetrics addClassConstant: 'IconScaleDownMask' value: 192!
-SystemMetrics addClassConstant: 'SmoothScrollingMask' value: 48!
-SystemMetrics addClassConstant: 'VistaMask' value: 3!
+SystemMetrics addClassConstant: 'FlatMenusMask' value: 16rC!
+SystemMetrics addClassConstant: 'IconScaleDownMask' value: 16rC0!
+SystemMetrics addClassConstant: 'SmoothScrollingMask' value: 16r30!
+SystemMetrics addClassConstant: 'VistaMask' value: 16r3!
 SystemMetrics comment: 'SystemMetrics is a singleton class that provides a central service for accessing Windows configuration details such as the configurable aspects of the GUI''s appearance (height of title bars, fonts, etc). It has quite a large number of instance variables that cache information in order to avoid the expense of repeatedly querying it from the operating system.
 
 Instance Variables:
@@ -42,6 +42,12 @@ cursorExtent
 
 	^self getMetric: SM_CXCURSOR pair: SM_CYCURSOR!
 
+defaultColorDepth
+	"Answer the default color depth based on that of the current screen driver."
+
+	^defaultColorDepth ifNil: [defaultColorDepth := self getDefaultColorDepth]
+!
+
 dialogFrameExtent
 	^dialogFrameExtent ifNil: [dialogFrameExtent := self getMetric: SM_CXDLGFRAME pair: SM_CYDLGFRAME]!
 
@@ -58,6 +64,19 @@ edgeExtent
 	"Answer the dimensions of 3d window borders."
 
 	^edgeExtent ifNil: [edgeExtent := self getMetric: SM_CXEDGE pair: SM_CYEDGE]!
+
+getDefaultColorDepth
+	"Private - Answer the default color depth based on that of the current screen driver."
+
+	| gdi hDC |
+	gdi := GDILibrary default.
+	hDC := gdi 
+				createDC: 'DISPLAY'
+				lpszDevice: nil
+				lpszOutput: nil
+				lpInitData: nil.
+	^[(gdi getDeviceCaps: hDC nIndex: BITSPIXEL) * (gdi getDeviceCaps: hDC nIndex: PLANES) max: 4] 
+		ensure: [gdi deleteDC: hDC]!
 
 getIconTitleFont
 	"Private - Answer a <Font> which is that used for icon titles on the desktop.
@@ -382,10 +401,12 @@ virtualScreenRectangle
 	^self virtualScreenOrigin extent: self virtualScreenExtent! !
 !SystemMetrics categoriesFor: #borderExtent!constants!public! !
 !SystemMetrics categoriesFor: #cursorExtent!constants!public! !
+!SystemMetrics categoriesFor: #defaultColorDepth!accessing!public! !
 !SystemMetrics categoriesFor: #dialogFrameExtent!constants!public! !
 !SystemMetrics categoriesFor: #dragHysteresis!constants!public! !
 !SystemMetrics categoriesFor: #dragImageColorDepth!accessing!private! !
 !SystemMetrics categoriesFor: #edgeExtent!constants!public! !
+!SystemMetrics categoriesFor: #getDefaultColorDepth!accessing!helpers!private! !
 !SystemMetrics categoriesFor: #getIconTitleFont!geometry!private! !
 !SystemMetrics categoriesFor: #getMetric:!helpers!private! !
 !SystemMetrics categoriesFor: #getMetric:pair:!helpers!private! !

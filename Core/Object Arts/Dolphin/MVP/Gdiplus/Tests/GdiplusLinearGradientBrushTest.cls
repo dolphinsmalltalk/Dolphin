@@ -33,10 +33,10 @@ testConstructor1
 	self assertPersistedValid!
 
 testConstructor2
-	model := GdiplusLinearGradientBrush 
+	model := GdiplusLinearGradientBrush
 				rect: (0 @ 0 extent: 255 @ 255)
-				color1: (ARGB fromInteger: 4294901760)
-				color2: (ARGB fromInteger: 4278190335)
+				color1: (ARGB fromInteger: 16rFFFF0000)
+				color2: (ARGB fromInteger: 16rFF0000FF)
 				mode: 0.
 	model asParameter.
 	self assertPersistedValid!

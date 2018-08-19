@@ -113,8 +113,7 @@ contents
 
 	"More Samples"
 	contents
-		add: #('Core\Object Arts\Samples\Sockets\Chat\Chat.pax' #plain #imageBased);
-		add: #('Core\Object Arts\Samples\Sockets\AvatarChat\AvatarChat.pax' #plain #imageBased).
+		add: #('Core\Object Arts\Samples\Sockets\Chat\Chat.pax' #plain #imageBased).
 
 	"XmlPad Sample"
 	contents

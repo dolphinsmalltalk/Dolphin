@@ -59,7 +59,9 @@ package classNames
 	add: #Clipboard;
 	add: #ClosedCommandDescription;
 	add: #Color;
+	add: #ColorDefault;
 	add: #ColorEvent;
+	add: #ColorNone;
 	add: #ColorRef;
 	add: #Command;
 	add: #CommandButton;
@@ -71,7 +73,6 @@ package classNames
 	add: #ContainerView;
 	add: #ControlView;
 	add: #Cursor;
-	add: #DefaultColor;
 	add: #DefaultShellSessionManager;
 	add: #DelegatingCommandPolicy;
 	add: #DesktopView;
@@ -196,6 +197,7 @@ package classNames
 	add: #SystemColor;
 	add: #SystemMetrics;
 	add: #TEXTMETRICW;
+	add: #ThemeColor;
 	add: #ThemeLibrary;
 	add: #TRACKMOUSEEVENT;
 	add: #TRIVERTEX;
@@ -215,16 +217,19 @@ package classNames
 
 package methodNames
 	add: #AnsiString -> #copyToClipboard;
+	add: #ClassDescription -> #defaultIcon;
 	add: #InputState -> #getLastInputInfo;
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
 	add: #Object -> #addToImageList:mask:;
+	add: #Object -> #icon;
 	add: #Point -> #@;
 	add: #Point -> #asParameter;
 	add: #Rectangle -> #asParameter;
 	add: #Rectangle -> #subtract:;
 	add: #ResourceIdentifier -> #fixupIcon;
+	add: #ResourceIdentifier -> #icon;
 	add: #ResourceIdentifier -> #loadWithContext:;
 	add: #ResourceIdentifier -> #loadWithContext:forEdit:;
 	add: #ShlwapiLibrary -> #colorHLSToRGB:wLuminance:wSaturation:;
@@ -376,11 +381,7 @@ package methodNames
 	add: #UserLibrary -> #validate:lpRect:;
 	add: #UserLibrary -> #windowFromPoint:;
 	add: 'ConsoleSessionManager class' -> #icon;
-	add: 'Error class' -> #icon;
-	add: 'ExternalLibrary class' -> #icon;
-	add: 'File class' -> #icon;
-	add: 'Notification class' -> #icon;
-	add: 'Warning class' -> #icon;
+	add: 'Object class' -> #icon;
 	yourself.
 
 package globalNames
@@ -427,7 +428,7 @@ Object subclass: #Clipboard
 	classInstanceVariableNames: ''!
 Object subclass: #Color
 	instanceVariableNames: ''
-	classVariableNames: 'NamedColors'
+	classVariableNames: 'Black Default Face3d NamedColors None White Window WindowText'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #Command
@@ -531,7 +532,7 @@ Object subclass: #Presenter
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater'
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth'
 	classVariableNames: 'Current FlatMenusMask IconScaleDownMask SmoothScrollingMask VistaMask'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -565,6 +566,16 @@ Color subclass: #VirtualColor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ColorRef subclass: #ColorDefault
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ColorRef subclass: #ColorNone
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ColorRef subclass: #RGB
 	instanceVariableNames: ''
 	classVariableNames: 'StdColours'
@@ -580,13 +591,13 @@ LogicalColor subclass: #SystemColor
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VirtualColor subclass: #DefaultColor
-	instanceVariableNames: 'name actualColor'
+VirtualColor subclass: #PluggableColor
+	instanceVariableNames: 'valuable'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-VirtualColor subclass: #PluggableColor
-	instanceVariableNames: 'valuable'
+VirtualColor subclass: #ThemeColor
+	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1305,37 +1316,25 @@ copyToClipboard
 	Clipboard current setRegisteredFormat: #AnsiString data: self! !
 !AnsiString categoriesFor: #copyToClipboard!copying!public! !
 
+!ClassDescription methodsFor!
+
+defaultIcon
+	"Answer a suitable default icon to use for this class. Not all classes use their 
+	default icon; one must define an appropriate #icon method in each class where the 
+	icon required differs from that of the superclass."
+
+	^(self environment at: #Icon) fromId: self defaultIconName.
+
+	! !
+!ClassDescription categoriesFor: #defaultIcon!constants!public! !
+
 !ConsoleSessionManager class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 3 in: (ExternalResourceLibrary open: 'Shell32')! !
+	^##(self) defaultIcon! !
 !ConsoleSessionManager class categoriesFor: #icon!constants!development!public! !
-
-!Error class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Icon error! !
-!Error class categoriesFor: #icon!constants!public! !
-
-!ExternalLibrary class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^Icon fromId: 154 in: (ExternalResourceLibrary open: 'Shell32')! !
-!ExternalLibrary class categoriesFor: #icon!constants!public! !
-
-!File class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class. "
-
-	^Icon fromId: 2 in: (ExternalResourceLibrary open: 'Shell32')! !
-!File class categoriesFor: #icon!constants!development!public! !
 
 !InputState methodsFor!
 
@@ -1383,21 +1382,32 @@ queryCommand: query
 	^true! !
 !MessageSend categoriesFor: #queryCommand:!commands!private! !
 
-!Notification class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Icon information! !
-!Notification class categoriesFor: #icon!constants!public! !
-
 !Object methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil 
 	"Private - Add a pictorial representation of the receiver to aWinImageList."
 
-	^self icon addToImageList: aWinImageList mask: aColorOrNil! !
+	^self icon addToImageList: aWinImageList mask: aColorOrNil!
+
+icon
+	"Answer an Icon representing the receiver."
+
+	^self class icon! !
 !Object categoriesFor: #addToImageList:mask:!double dispatch!private! !
+!Object categoriesFor: #icon!constants!public! !
+
+!Object class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class. Here we use a constant expression 
+	evaluated at compile time in order to statically bind 'self' at this position in the class hierarchy 
+	(i.e. to Object). This ensures that subclasses which do not override this method still answer 
+	'Object defaultIcon' rather than 'aSubclass defaultIcon'. Classes which provide their own default icon 
+	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
+	from an ExternalResourceLibrary other than the system default."
+
+	^##(self) defaultIcon! !
+!Object class categoriesFor: #icon!constants!public! !
 
 !Point methodsFor!
 
@@ -1442,6 +1452,9 @@ fixupIcon
 	self icon: icon.
 	^icon!
 
+icon	
+	^self propertyAt: #_icon ifAbsent: [self fixupIcon]!
+
 loadWithContext: context 
 	"Load and answer the resource represented by the receiver with context context."
 
@@ -1456,6 +1469,7 @@ loadWithContext: context forEdit: aBoolean
 				context: context;
 				next]! !
 !ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
+!ResourceIdentifier categoriesFor: #icon!accessing!development!public! !
 !ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
 !ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
 
@@ -3240,14 +3254,6 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #unregisterHotKey:id:!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #validate:lpRect:!public!win32 functions-painting and drawing! !
 !UserLibrary categoriesFor: #windowFromPoint:!public!win32 functions-window! !
-
-!Warning class methodsFor!
-
-icon
-	"Answer the default icon for the receiver and its instances."
-
-	^Icon warning! !
-!Warning class categoriesFor: #icon!constants!public! !
 
 "End of package definition"!
 

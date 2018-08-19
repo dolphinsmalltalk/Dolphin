@@ -20,7 +20,7 @@ brush: aGdiplusBrush width: aFloat
 	width := aFloat!
 
 createHandle
-	"GdiPlusPen.h
+	"Private - GdiPlusPen.h
 		Pen(IN const Brush* brush, IN REAL width = 1.0f)
 		    {
 		        Unit unit = UnitWorld;
@@ -35,9 +35,9 @@ createHandle
 				width: (width ?? 1.0) asParameter
 				unit: UnitWorld
 				pen: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
 !GdiplusPenFromBrushInitializer categoriesFor: #brush!private!test accessing! !
-!GdiplusPenFromBrushInitializer categoriesFor: #brush:width:!accessing!public! !
-!GdiplusPenFromBrushInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusPenFromBrushInitializer categoriesFor: #brush:width:!initializing!private! !
+!GdiplusPenFromBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 

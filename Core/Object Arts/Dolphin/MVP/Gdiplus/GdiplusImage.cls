@@ -10,6 +10,14 @@ GdiplusImage comment: 'GdiplusImage provides methods for loading and saving rast
 !GdiplusImage categoriesForClass!Unclassified! !
 !GdiplusImage methodsFor!
 
+asBitmap
+	"Answer a display-compatible <Bitmap> with the receiver's image."
+
+	| bitmap |
+	bitmap := Bitmap displayCompatibleWithExtent: self extent.
+	self drawOn: bitmap canvas.
+	^bitmap!
+
 asByteArray: mimeString 
 	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses dont) ... is that necessary?"
 
@@ -705,6 +713,7 @@ width
 	"Answer an <Integer> specifying the width of the receiver in pixels."
 
 	^self extent x! !
+!GdiplusImage categoriesFor: #asBitmap!public! !
 !GdiplusImage categoriesFor: #asByteArray:!converting!public! !
 !GdiplusImage categoriesFor: #asByteArray:compression:!converting!public! !
 !GdiplusImage categoriesFor: #basicFree!private!realizing/unrealizing! !
@@ -1444,7 +1453,7 @@ exampleGdipIPrinting4LabeledToAPage
 	margin := 25.	"1/4 inch"
 	"Calculate 1/4 of page in hundredths of inches."
 	quarterExtent := ((printer extent / res * 100 - margin) / 2) truncated.
-	font := GdiplusFont name: 'Arial' emSize: 6.
+	font := GdiplusFont name: 'Arial' pointSize: 6.
 
 	"Load images, rotate as needed, calculate extents, assign labels."
 	images := Array new: 4.
@@ -1453,11 +1462,11 @@ exampleGdipIPrinting4LabeledToAPage
 	labels := Array new: 4.
 	1 to: 4
 		do: 
-			[:i | 
+			[:i |
 			image := GdiplusImage prompt.
 			images at: i put: image.
 			labels at: i put: (File splitStemFrom: image filename).
-			image isLandscape = isPrinterPortrait 
+			image isLandscape = isPrinterPortrait
 				ifTrue: 
 					[rotate at: i put: true.
 					extents at: i put: (image extent transpose scaledTo: quarterExtent) truncated]
@@ -1474,10 +1483,10 @@ exampleGdipIPrinting4LabeledToAPage
 
 	"This could easily be a separate method."
 	drawBlock := 
-			[:graphics :scale | 
+			[:graphics :scale |
 			1 to: 4
 				do: 
-					[:i | 
+					[:i |
 					angle := (rotate at: i) ifTrue: [90] ifFalse: [0].
 					extent := (rotate at: i) ifTrue: [(extents at: i) transpose] ifFalse: [extents at: i].
 					x := (rotate at: i) ifTrue: [(extents at: i) x] ifFalse: [0].

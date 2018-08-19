@@ -33,6 +33,10 @@ onPaintRequired: aPaintEvent
 	self composer notNil ifTrue: [self composer drawAdornment].
 	^answer!
 
+onViewClosed
+	composer := nil.
+	^super onViewClosed!
+
 requestDropOperations: session
 	"Private - Inform the <DragDropSession> of the receiver's supported 
 	drag and drop operation symbols."
@@ -43,5 +47,6 @@ requestDropOperations: session
 !ViewComposerArena categoriesFor: #onLeftButtonPressed:!event handling!private! !
 !ViewComposerArena categoriesFor: #onMouseMoved:!event handling!private! !
 !ViewComposerArena categoriesFor: #onPaintRequired:!event handling!private! !
+!ViewComposerArena categoriesFor: #onViewClosed!event handling!public! !
 !ViewComposerArena categoriesFor: #requestDropOperations:!drag & drop!private! !
 

@@ -14,21 +14,21 @@ createHandle
 	| gpHandle status |
 	gpHandle := ExternalHandle new.
 	status := self library gdipCreatePathGradientFromPath: path asParameter polyGradient: gpHandle.
-	self assertStatusOk: status.
+	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle!
 
 gdiplusConstructorErrorDescription
 	^'Error creating PathGradient'!
 
 isPersistent
-	^path initializer isPersistent!
+	^path isPersistent!
 
 path: aGdiplusPath
 	path := aGdiplusPath! !
-!GdiplusPathGradientFromPathInitializer categoriesFor: #createHandle!public!realizing/unrealizing! !
+!GdiplusPathGradientFromPathInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 !GdiplusPathGradientFromPathInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
 !GdiplusPathGradientFromPathInitializer categoriesFor: #isPersistent!public! !
-!GdiplusPathGradientFromPathInitializer categoriesFor: #path:!public! !
+!GdiplusPathGradientFromPathInitializer categoriesFor: #path:!initializing!private! !
 
 !GdiplusPathGradientFromPathInitializer class methodsFor!
 

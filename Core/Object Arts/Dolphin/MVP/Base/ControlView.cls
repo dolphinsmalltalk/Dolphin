@@ -29,6 +29,9 @@ backcolorChanged
 	self setControlBackcolor: self actualBackcolor.
 	super backcolorChanged!
 
+ccmGetVersion
+	^self sendMessage: CCM_GETVERSION!
+
 ccmSetVersion: anInteger
 	"Inform the contorl that behavior compliant with a particular common control version is expected."
 
@@ -363,6 +366,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 	^nil	"Accept default processing"
 ! !
 !ControlView categoriesFor: #backcolorChanged!helpers!private! !
+!ControlView categoriesFor: #ccmGetVersion!operations!public! !
 !ControlView categoriesFor: #ccmSetVersion:!operations!public! !
 !ControlView categoriesFor: #clearHandle!private!realizing/unrealizing! !
 !ControlView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !

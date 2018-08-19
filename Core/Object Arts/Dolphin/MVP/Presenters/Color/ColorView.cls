@@ -13,8 +13,7 @@ ColorView comment: 'ColorView is a <valueView> for displaying static <color>s. T
 basicActualBackcolor
 	| color |
 	color := super basicActualBackcolor.
-	"Since the purpose of this view is to display a colour, transparency doesn't make sense, so paint it white instead"
-	^color isNone ifTrue: [Color window] ifFalse: [color]!
+	^color isDefault ifTrue: [ColorRef defaultColorRepresentation] ifFalse: [color asRGB]!
 
 displayValue
 	"Answer the displayable contents of the receiver"

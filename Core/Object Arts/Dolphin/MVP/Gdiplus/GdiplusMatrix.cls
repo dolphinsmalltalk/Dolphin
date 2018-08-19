@@ -24,6 +24,13 @@ basicFree
 
 	GdiplusLibrary default gdipDeleteMatrix: handle!
 
+printOn: aStream
+	self basicPrintOn: aStream.
+	aStream nextPut: $(.
+	self isRealized ifTrue: [
+		self asArray do: [:each | aStream print: (each roundTo: 0.000001)] separatedBy: [aStream nextPutAll: ', ']].
+	aStream nextPut: $)!
+
 rotateTransform: aRealAngle
 	self rotateTransform: aRealAngle order: MatrixOrderPrepend!
 
@@ -84,6 +91,7 @@ translateTransform: aPoint order: aMatrixOrderConstant
 		ifFalse: [GdiplusError signal: 'GdipTranslateMatrix failed' with: status]! !
 !GdiplusMatrix categoriesFor: #asArray!converting!public! !
 !GdiplusMatrix categoriesFor: #basicFree!private!realizing/unrealizing! !
+!GdiplusMatrix categoriesFor: #printOn:!printing!public! !
 !GdiplusMatrix categoriesFor: #rotateTransform:!operations!public! !
 !GdiplusMatrix categoriesFor: #rotateTransform:order:!operations!public! !
 !GdiplusMatrix categoriesFor: #scaleTransform:!operations!public! !
@@ -111,12 +119,12 @@ exampleGdipMShadows
 		scaleTransform: 1 @ 0.6;
 		translateTransform: 180 @ 86.
 	graphics transform: matrix.
-	font := GdiplusFont name: 'Times New Roman' emSize: 100.
+	font := GdiplusFont name: 'Times New Roman' pointSize: 100.
 	brush := GdiplusSolidBrush color: ARGB gray.
 	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
 		do: 
-			[:num :char | 
-			graphics 
+			[:num :char |
+			graphics
 				drawString: char asString
 				font: font
 				at: num @ 10
@@ -126,8 +134,8 @@ exampleGdipMShadows
 	brush color: ARGB blue.
 	#(50 150 250 330 415 510 560) with: 'DOLPHIN'
 		do: 
-			[:num :char | 
-			graphics 
+			[:num :char |
+			graphics
 				drawString: char asString
 				font: font
 				at: num @ 10
@@ -186,11 +194,11 @@ exampleGdipMTranslate
 	^bitmap!
 
 fromArray: anArray
-	^self 
-		m11: anArray first
-		m12: anArray second
-		m21: anArray third
-		m22: anArray fourth
+	^self
+		m11: (anArray at: 1)
+		m12: (anArray at: 2)
+		m21: (anArray at: 3)
+		m22: (anArray at: 4)
 		m31: (anArray at: 5)
 		m32: (anArray at: 6)!
 
