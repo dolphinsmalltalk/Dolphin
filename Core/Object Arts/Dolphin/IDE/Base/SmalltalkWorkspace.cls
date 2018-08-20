@@ -2043,7 +2043,7 @@ initialize
 		SmalltalkWorkspace initialize
 	"
 
-	ThemeColor addNamed: #smalltalkWorkspace color: (Color fromHTMLSpec: '#FAEBD7').
+	ThemeColor addNamed: #smalltalkWorkspace color: Color window.
 	DefaultFont := Font name: 'Segoe UI' pointSize: 10.
 	WordWrap := true.
 	DefaultTabWidth := 8.
