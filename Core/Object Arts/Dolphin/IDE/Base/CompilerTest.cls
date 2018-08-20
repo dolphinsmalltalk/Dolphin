@@ -1353,21 +1353,11 @@ testToByDoWithFloatSteps
 			self assert: (method value: nil withArguments: #()) equals: each asOrderedCollection]!
 
 testWhileFalse
-	"Test #whileFalse"
+	"Test #whileFalse."
 
-	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
+	"Test for empty condition block removed as the compiler now treats this as an error."
 
 	| result method |
-	result := self compileExpression: '[] whileFalse'.
-	method := result method.
-	self denyIsNil: method.
-	self deny: method needsContext.
-	self assert: method byteCodes
-		equals: (ByteArray
-				with: ShortPushNil
-				with: NearJumpIfFalse
-				with: 255 - 1 - 1
-				with: ReturnNil).
 
 	"Test a simple counting loop"
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i > 10] whileFalse. i'.
@@ -1387,19 +1377,9 @@ testWhileFalse
 	self assert: (method value: nil withArguments: #()) equals: 11!
 
 testWhileTrue
-	"This is erroneous, but compiler does not detect that, just looks for literal zero arg block, which is OK I think"
+	"Test for empty condition block removed as the compiler now treats this as an error."
 
 	| result method |
-	result := self compileExpression: '[] whileTrue'.
-	method := result method.
-	self denyIsNil: method.
-	self deny: method needsContext.
-	self assert: method byteCodes
-		equals: (ByteArray
-				with: ShortPushNil
-				with: NearJumpIfTrue
-				with: 255 - 1 - 1
-				with: ReturnNil).
 	result := self compileExpression: '| i | i := 0. [i := i + 1. i <= 10] whileTrue. i'.
 	method := result method.
 	self denyIsNil: method.
