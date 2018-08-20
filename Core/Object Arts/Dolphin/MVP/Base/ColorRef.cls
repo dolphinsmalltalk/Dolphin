@@ -111,13 +111,16 @@ fromInteger: anInteger
 		ifTrue: [None]
 		ifFalse: [CLR_DEFAULT = anInteger ifTrue: [Default] ifFalse: [RGB fromInteger: anInteger]]!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
 
 	"Implementation Note: Overridden in order to maintain unique instances without using a proxy"
 
 	| answer ref |
-	anSTBInFiler version < 3 ifTrue: [anSTBInFiler stream skip: 4].
+	anSTBInFiler version < 3
+		ifTrue: 
+			["Skip over the object size that older STB versions used to write for everything"
+			anSTBInFiler stream skip: 4].
 	"Make a placeholder for the Color"
 	ref := anSTBInFiler register: nil.
 	answer := self fromInteger: anSTBInFiler basicNext.
