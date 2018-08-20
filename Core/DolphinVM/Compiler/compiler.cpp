@@ -1514,12 +1514,11 @@ void Compiler::ParseBlockStatements()
 		if (AtEnd() || ThisToken() == CloseParen)
 			return;
 
-		int statements = 0;
+		int start = m_codePointer;
 		while (m_ok)
 		{
 			int statementStart = ThisTokenRange().m_start;
 			ParseStatement();
-			statements++;
 			bool foundClosing = false;
 			if (ThisToken() == CloseStatement)
 			{
@@ -1540,7 +1539,8 @@ void Compiler::ParseBlockStatements()
 				CompileError(TEXTRANGE(statementStart, LastTokenRange().m_stop), CErrUnterminatedStatement);
 			GenPopStack();
 		}
-		if (statements == 1 && LastIsPushNil())
+		// If the block contains only one real instruction, and that is Push Nil, then the block is effectively empty
+		if (m_bytecodes[start].byte == ShortPushNil && PriorInstruction<true>() == start)
 		{
 			m_pCurrentScope->BeEmptyBlock();
 		}
