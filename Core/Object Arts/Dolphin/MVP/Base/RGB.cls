@@ -246,6 +246,17 @@ stbConvertFrom: anSTBClassFormat
 				blue: (data at: 3)]]
 		ifFalse: [super stbConvertFrom: anSTBClassFormat]!
 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Read a sub-instance of the receiver from the binary filer, aSTBInFiler."
+
+	"Implementation Note: Overridden in order to support conversion from pre version 1 instances, which can be found in STB files from versions of Dolphin predating 6.0"
+
+	^(anSTBClassConversion notNil and: [anSTBClassConversion version < 1])
+		ifTrue: [anSTBInFiler readObjectOfClass: self format: anSTBClassConversion]
+		ifFalse: 
+			["Otherwise use the custom deserialization in ColorRef"
+			super stbReadFrom: anSTBInFiler format: anSTBClassConversion]!
+
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
@@ -256,5 +267,6 @@ stbVersion
 !RGB class categoriesFor: #r:g:b:!instance creation!public! !
 !RGB class categoriesFor: #red:green:blue:!instance creation!public! !
 !RGB class categoriesFor: #stbConvertFrom:!binary filing!public! !
+!RGB class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !RGB class categoriesFor: #stbVersion!binary filing!public! !
 
