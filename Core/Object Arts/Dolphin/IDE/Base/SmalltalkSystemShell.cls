@@ -433,7 +433,7 @@ initialize
 	self backImage: self defaultBackImage.
 	self backcolor: self defaultBackcolor.
 	self textcolor: self defaultTextcolor.
-	self viewMode: #tileIcons.
+	self viewMode: #thumbnails.
 	self playSystemSounds: true.
 	self resetWhenInvisible: false.
 	HotKey := 16r3244!
