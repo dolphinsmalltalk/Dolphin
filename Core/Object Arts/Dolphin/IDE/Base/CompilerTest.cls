@@ -901,6 +901,7 @@ testNestedWhileTrueAtStartOfCleanBlock
 	method := self getTestMethod: #testNestedWhileTrueAtStartOfCleanBlock.
 	block := method value: DolphinCompilerTestMethods new withArguments: #().
 	self assert: (method literals identityIncludes: block).
+	self deny: block identicalTo: [].
 	"Block should start immediately after a short push const and return stack top"
 	self assert: block initialIP equals: 3!
 
