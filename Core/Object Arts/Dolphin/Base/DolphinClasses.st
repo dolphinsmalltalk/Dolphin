@@ -260,11 +260,6 @@ Object subclass: #PropertyManager
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Object subclass: #Rectangle
-	instanceVariableNames: 'origin corner'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Object subclass: #ResourceIdentifier
 	instanceVariableNames: 'owningClass selector'
 	classVariableNames: ''
@@ -1418,11 +1413,6 @@ Magnitude subclass: #TimeStamp
 ArithmeticValue subclass: #Number
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArithmeticValue subclass: #Point
-	instanceVariableNames: 'x y'
-	classVariableNames: 'Zero'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Number variableByteSubclass: #Float

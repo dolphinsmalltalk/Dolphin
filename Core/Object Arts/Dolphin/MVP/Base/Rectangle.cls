@@ -69,6 +69,12 @@ areasOutside: aRectangle
 		ifTrue: [areas addLast: (aRectangle right @ yOrigin corner: self right @ yCorner)].
 	^areas!
 
+asParameter
+	"Answer the receiver in a form suitable for passing to an external function, in this case as
+	a Win32 RECT structure."
+
+	^RECT fromRectangle: self!
+
 bottom
 	"Answer the y coordinate of the receiver's bottom edge."
 
@@ -419,6 +425,13 @@ scaleBy: delta
 
 	^self species vertex: origin * delta vertex: corner * delta!
 
+subtract: aRectangle
+	| rect |
+	#todo "Implememt in Smalltalk".
+	rect := RECT new.
+	UserLibrary default subtractRect: rect lprcSrc1: self asParameter lprcSrc2: aRectangle asParameter.
+	^rect asObject!
+
 top
 	"Answer the position of the receiver's top edge."
 
@@ -510,6 +523,7 @@ width: aNumber
 !Rectangle categoriesFor: #=!comparing!public! !
 !Rectangle categoriesFor: #area!accessing!public! !
 !Rectangle categoriesFor: #areasOutside:!accessing!public! !
+!Rectangle categoriesFor: #asParameter!converting!public! !
 !Rectangle categoriesFor: #bottom!accessing!public! !
 !Rectangle categoriesFor: #bottom:!accessing!public! !
 !Rectangle categoriesFor: #bottomAlign!accessing!public! !
@@ -570,6 +584,7 @@ width: aNumber
 !Rectangle categoriesFor: #rightCenter:!accessing!public! !
 !Rectangle categoriesFor: #rounded!public!truncation and round off! !
 !Rectangle categoriesFor: #scaleBy:!public!transforming! !
+!Rectangle categoriesFor: #subtract:!public!rectangle functions! !
 !Rectangle categoriesFor: #top!accessing!public! !
 !Rectangle categoriesFor: #top:!accessing!public! !
 !Rectangle categoriesFor: #topAlign!accessing!public! !

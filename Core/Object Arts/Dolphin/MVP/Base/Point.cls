@@ -36,6 +36,11 @@ Arithmetic operations can be carried out between two Points or between a Point a
 
 	^operand divideIntoPoint: self!
 
+@ zCoord
+	"Answer a Point3D with the receiver as X, Y coordinates and the argument as Z."
+
+	^Point3D x: x y: y z: zCoord!
+
 + anArithmeticValue
 	"Answer the sum of receiver and aPoint as a Point."
 
@@ -100,6 +105,11 @@ asDword
 	procedure (or passing to a function expecting a 32-bit value)."
 
 	^(DWORD fromPoint: self) value!
+
+asParameter
+	"Answer the receiver in a form suitable for passing to an external function."
+
+	^POINTL fromPoint: self!
 
 asPoint
 	"Answer the receiver"
@@ -288,6 +298,7 @@ y: aNumber
 !Point categoriesFor: #-!arithmetic!public! !
 !Point categoriesFor: #*!arithmetic!public! !
 !Point categoriesFor: #/!arithmetic!public! !
+!Point categoriesFor: #@!converting!public! !
 !Point categoriesFor: #+!arithmetic!public! !
 !Point categoriesFor: #<!comparing!public! !
 !Point categoriesFor: #<=!comparing!public! !
@@ -297,6 +308,7 @@ y: aNumber
 !Point categoriesFor: #abs!arithmetic!public! !
 !Point categoriesFor: #addToPoint:!double dispatch!private! !
 !Point categoriesFor: #asDword!converting!public! !
+!Point categoriesFor: #asParameter!converting!public! !
 !Point categoriesFor: #asPoint!converting!public! !
 !Point categoriesFor: #asPoint3D!converting!public! !
 !Point categoriesFor: #asUIntPtr!converting!public! !
