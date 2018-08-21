@@ -35,6 +35,7 @@ asBitmap
 				height: self extent y
 				depth: 32.
 	self drawOn: bitmap canvas.
+	bitmap freeDC.
 	^bitmap!
 
 asByteArray

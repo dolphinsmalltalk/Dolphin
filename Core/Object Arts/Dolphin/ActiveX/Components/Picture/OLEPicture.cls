@@ -47,6 +47,7 @@ asDIBSection
 	| bitmap |
 	bitmap := DIBSection width: self extent x height: self extent y.
 	self drawOn: bitmap canvas.
+	bitmap freeDC.
 	^bitmap!
 
 basicFree

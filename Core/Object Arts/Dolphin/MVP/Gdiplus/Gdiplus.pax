@@ -736,6 +736,7 @@ asColorKeyedBitmap: aKeyColor
 		attributes: imageAttributes.
 	keyedBitmap := Bitmap displayCompatibleWithExtent: self extent.
 	bitmap drawOn: keyedBitmap canvas.
+	keyedBitmap freeDC.
 	^keyedBitmap! !
 !Bitmap categoriesFor: #asColorKeyedBitmap!public! !
 !Bitmap categoriesFor: #asColorKeyedBitmap:!public! !
@@ -842,7 +843,7 @@ createThumbnailExtent: extent mask: aColor
 	canvas := thumbnail canvas.
 	"canvas fillRectangle: (0 @ 0 extent: canvas extent) brush: (Brush color: aColor)."
 	image drawOn: canvas at: ((extent - scaledExtent) / 2) rounded.
-	canvas free.
+	thumbnail freeDC.
 	^thumbnail! !
 !View categoriesFor: #createThumbnailExtent:mask:!private! !
 

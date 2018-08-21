@@ -149,7 +149,7 @@ printRecordsOn: aPuttableStream
 	block := 
 			[:canvas :emfr :handles | 
 			i := i + 1.
-			Transcript
+			aPuttableStream
 				print: i;
 				display: ': ';
 				print: emfr;

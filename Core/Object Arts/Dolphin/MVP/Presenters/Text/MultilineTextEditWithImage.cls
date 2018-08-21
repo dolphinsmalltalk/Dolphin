@@ -62,28 +62,31 @@ createBackBrush
 	"Private - Answer a textured <Brush> that can be used to paint the receiver's background
 	image at the correct position and size depending on the receiver's background mode."
 
-	| symbol rect pos bmp bmpRect |
+	| symbol rect pos bmp bmpRect canvas |
 	backMode == #tile ifTrue: [^Brush bitmap: self backBitmap].
-	backMode == #stretch 
+	backMode == #stretch
 		ifTrue: 
 			[bmp := Bitmap displayCompatibleWithExtent: self clientExtent.
-			self backBitmap 
+			self backBitmap
 				drawOn: bmp canvas
 				at: 0 @ 0
 				extent: bmp extent.
+			bmp freeDC.
 			^Brush bitmap: bmp].
 	symbol := backMode.
 	bmpRect := 0 @ 0 extent: self backBitmap extent.
 	rect := self clientRectangle.
 	pos := (rect perform: symbol) - (bmpRect perform: symbol).
 	bmp := Bitmap displayCompatibleWithExtent: rect extent.
-	(bmp canvas)
+	canvas := bmp canvas.
+	canvas
 		backcolor: self actualBackcolor;
 		erase.
-	self backBitmap 
-		drawOn: bmp canvas
+	self backBitmap
+		drawOn: canvas
 		at: pos
 		extent: bmpRect extent.
+	bmp freeDC.
 	^Brush bitmap: bmp!
 
 defaultBackgroundImage
@@ -122,6 +125,8 @@ defaultBackgroundImage
 		from: 0 @ 0
 		extent: icon extent
 		blend: blend.
+	icon free.
+	bmp freeDC.
 	^bmp!
 
 enUpdate

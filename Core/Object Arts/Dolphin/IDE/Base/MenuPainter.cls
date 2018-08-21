@@ -46,6 +46,7 @@ createDragImage: anInteger using: aCanvas
 			on: bmpCanvas
 			in: rect] 
 			ensure: [bmpCanvas restore].
+	bitmap freeDC.
 	^bitmap!
 
 drawArrawOn: aCanvas in: aRectangle 
