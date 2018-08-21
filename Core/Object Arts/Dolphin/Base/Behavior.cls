@@ -424,12 +424,6 @@ fullBindingFor: aString
 			^env bindingFor: (parts at: count)].
 	^(self bindingFor: aString) ifNil: [self environment bindingFor: aString]!
 
-hasAbstractMethods
-	"Answer whether the receiver has any methods that are by convention considered to be
-	abstract (i.e. they consist solely of a send of #subclassResponsibility to self)."
-
-	^self methodDictionary anySatisfy: [:each | each isAbstract]!
-
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
 
@@ -498,9 +492,6 @@ instVarNames
 	names."
 
 	^#()!
-
-isAbstract
-	^self isNonInstantiable or: [self hasAbstractMethods]!
 
 isBits
 	"Answer whether the variables of instances of the receiver contain bits (i.e. not object pointers)."
@@ -1165,7 +1156,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #extraInstanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #flushMethodCache!methods-removing!private! !
 !Behavior categoriesFor: #fullBindingFor:!compiling!public! !
-!Behavior categoriesFor: #hasAbstractMethods!public!testing! !
 !Behavior categoriesFor: #hasCompilationFailures!public!testing! !
 !Behavior categoriesFor: #hasImmediateInstances!public!testing! !
 !Behavior categoriesFor: #hasMethods!methods-testing!public! !
@@ -1177,7 +1167,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #instanceSpec:!instance specification-accessing!private! !
 !Behavior categoriesFor: #instSize!instance specification-accessing!public! !
 !Behavior categoriesFor: #instVarNames!instance variables!public! !
-!Behavior categoriesFor: #isAbstract!public!testing! !
 !Behavior categoriesFor: #isBits!instance specification-testing!public! !
 !Behavior categoriesFor: #isBytes!instance specification-testing!public! !
 !Behavior categoriesFor: #isFixed!instance specification-testing!public! !

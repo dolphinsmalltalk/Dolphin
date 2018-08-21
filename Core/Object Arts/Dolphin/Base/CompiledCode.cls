@@ -250,11 +250,6 @@ header
 header: aSmallInteger 
 	header := aSmallInteger!
 
-isAbstract
-	"Answer whether this is an abstract method."
-
-	^self isSimpleSelfSend: #subclassResponsibility!
-
 isCompilationFailure
 	^false!
 
@@ -306,19 +301,6 @@ isPublic
 	"Private - Answer whether the receiver is a public method."
 
 	^self isPrivate not!
-
-isSimpleSelfSend: aSymbol
-	"Private - Answer whether the receiver is a method that just sends the specified selector
-	(which must be zero-argument) to self. Note that this does not work for special selectors
-	such as #class, #new, etc, that have specific bytecode encodings."
-
-	^self size > 0 and: 
-			[(self at: 1) == aSymbol and: 
-					[| packed |
-					packed := self basicByteCodes.
-					(packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray)
-						or: [packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
-							and: [self extraIndex == 0]]]!
 
 isUnbound
 	"Answer whether the receiver is unbound (i.e. not linked into a class' method dictionary).
@@ -636,7 +618,6 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #hash!comparing!public! !
 !CompiledCode categoriesFor: #header!accessing!private! !
 !CompiledCode categoriesFor: #header:!accessing!private! !
-!CompiledCode categoriesFor: #isAbstract!private!testing! !
 !CompiledCode categoriesFor: #isCompilationFailure!public!testing! !
 !CompiledCode categoriesFor: #isDebugMethod!development!private!testing! !
 !CompiledCode categoriesFor: #isExpression!private!testing! !
@@ -646,7 +627,6 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #isPrivate!private!testing! !
 !CompiledCode categoriesFor: #isPrivate:!accessing!private! !
 !CompiledCode categoriesFor: #isPublic!private!testing! !
-!CompiledCode categoriesFor: #isSimpleSelfSend:!private!testing! !
 !CompiledCode categoriesFor: #isUnbound!public!testing! !
 !CompiledCode categoriesFor: #literalArray:do:!enumerating!private! !
 !CompiledCode categoriesFor: #literalAt:!accessing!private! !
