@@ -1,0 +1,78 @@
+﻿| package |
+package := Package name: 'Dolphin Basic Geometry'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Basic Geometry.
+Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+'.
+
+
+package classNames
+	add: #Point;
+	add: #Point3D;
+	add: #POINTL;
+	add: #RECT;
+	add: #Rectangle;
+	yourself.
+
+package methodNames
+	add: #Number -> #@;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #Rectangle
+	instanceVariableNames: 'origin corner'
+	classVariableNames: 'Empty'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #POINTL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #RECT
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArithmeticValue subclass: #Point
+	instanceVariableNames: 'x y'
+	classVariableNames: 'Zero'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ArithmeticValue subclass: #Point3D
+	instanceVariableNames: 'x y z'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!Number methodsFor!
+
+@ yCoord 
+	"Answer a Point with the receiver as X and the argument as Y.
+	The traditional Make Point primitive is present because this operation may be
+	performed a few thousand times when opening a complex window (for example).
+	The primitive is simply a VM level implementation of #x:y:, and does not fail."
+
+	^Point x: self y: yCoord! !
+!Number categoriesFor: #@!converting!public! !
+
+"End of package definition"!
+

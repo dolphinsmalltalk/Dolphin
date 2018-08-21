@@ -158,17 +158,12 @@ package classNames
 	add: #PANOSE;
 	add: #Pen;
 	add: #PluggableColor;
-	add: #Point;
-	add: #Point3D;
 	add: #PointEvent;
-	add: #POINTL;
 	add: #PositionEvent;
 	add: #Presenter;
 	add: #PrinterCanvas;
 	add: #ProportionalLayout;
 	add: #PushButton;
-	add: #RECT;
-	add: #Rectangle;
 	add: #ReferenceView;
 	add: #Region;
 	add: #RGB;
@@ -224,7 +219,6 @@ package methodNames
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
-	add: #Number -> #@;
 	add: #Object -> #addToImageList:mask:;
 	add: #Object -> #icon;
 	add: #ResourceIdentifier -> #fixupIcon;
@@ -405,6 +399,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: 'Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin Command-line Parser';
 	add: '..\..\System\Filer\Dolphin Literal Filer';
 	add: '..\Type Converters\Dolphin Type Converters';
@@ -529,11 +524,6 @@ Object subclass: #Presenter
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: ''!
-Object subclass: #Rectangle
-	instanceVariableNames: 'origin corner'
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth'
@@ -910,16 +900,6 @@ Win32Structure subclass: #PANOSE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #POINTL
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #RECT
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 Win32Structure subclass: #RGBQUAD
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1127,16 +1107,6 @@ LayoutManager subclass: #LinearLayout
 	classInstanceVariableNames: ''!
 LinearLayout subclass: #ProportionalLayout
 	instanceVariableNames: 'proportions isVertical'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArithmeticValue subclass: #Point
-	instanceVariableNames: 'x y'
-	classVariableNames: 'Zero'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ArithmeticValue subclass: #Point3D
-	instanceVariableNames: 'x y z'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -1390,17 +1360,6 @@ queryCommand: query
 	query isEnabled: true; receiver: self receiver.
 	^true! !
 !MessageSend categoriesFor: #queryCommand:!commands!private! !
-
-!Number methodsFor!
-
-@ yCoord 
-	"Answer a Point with the receiver as X and the argument as Y.
-	The traditional Make Point primitive is present because this operation may be
-	performed a few thousand times when opening a complex window (for example).
-	The primitive is simply a VM level implementation of #x:y:, and does not fail."
-
-	^Point x: self y: yCoord! !
-!Number categoriesFor: #@!converting!public! !
 
 !Object methodsFor!
 

@@ -50,7 +50,7 @@ deferWindowPositions: aSequencedReadableCollection
 			rect := (each at: 2)
 						ifNil: 
 							[flags := flags bitOr: ##(SWP_NOSIZE | SWP_NOMOVE).
-							##(Rectangle new)]
+							Rectangle.Empty]
 						ifNotNil: [:r | view adjustRectangle: r].
 			(each at: 3)
 				ifNotNil: [:show | flags := flags bitOr: (show ifTrue: [SWP_SHOWWINDOW] ifFalse: [SWP_HIDEWINDOW])].

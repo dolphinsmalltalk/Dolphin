@@ -343,7 +343,7 @@ y: aNumber
 !Point class methodsFor!
 
 initialize
-	self addClassConstant: 'Zero' value: 0@0!
+	self addClassConstant: 'Zero' value: (self x: 0 y: 0)!
 
 new
 	"Answer a new instance of the receiver equal to zero."
@@ -354,6 +354,9 @@ one
 	"Answer the receiver's representation of one."
 
 	^self x: 1 y: 1!
+
+unitialize
+	self addClassVariable: 'Zero' value: nil!
 
 x: xCoord y: yCoord 
 	"Answer a new instance of the receiver with the specified
@@ -366,9 +369,10 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^Zero! !
-!Point class categoriesFor: #initialize!public! !
+!Point class categoriesFor: #initialize!class initialization!development!public! !
 !Point class categoriesFor: #new!instance creation!public! !
 !Point class categoriesFor: #one!instance creation!public! !
+!Point class categoriesFor: #unitialize!class hierarchy-removing!development!public! !
 !Point class categoriesFor: #x:y:!instance creation!public! !
 !Point class categoriesFor: #zero!instance creation!public! !
 
