@@ -20,13 +20,13 @@ The resulting "icon" can be substituted for an actual `Icon` for essentially any
 
 Examples:
 
-	(TextTileIcon text: ''Hello'' fontName: ''Georgia'' color: Color darkBlue) bitmapWithExtent: 256@256
+	(TextTileIcon text: ''aA'' fontName: ''Georgia'' color: Color darkBlue) bitmapWithExtent: 256@256
 
 	"White Dolphin on a green tile"
-	(TextTileIcon text: Character dolphin fontName: ''Segoe UI Symbol'' color: Color darkGreen) bitmapWithExtent: 64@64
+	(TextTileIcon text: Character dolphin fontName: ''Segoe UI Symbol'' color: (ARGB named: #seaGreen)) bitmapWithExtent: 64@64
 
 	"For St Patrick''s day"
-	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'' color: Color darkGreen) fontStyle: FontStyleBold) bitmapWithExtent: 128@128.
+	((TextTileIcon text: $\x2618 fontName: ''Segoe UI Symbol'' color: Color darkGreen) fontStyle: #bold) bitmapWithExtent: 128@128.
 
 	'!
 !TextTileIcon categoriesForClass!Unclassified! !
