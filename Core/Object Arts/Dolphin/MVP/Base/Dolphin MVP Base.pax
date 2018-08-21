@@ -158,6 +158,7 @@ package classNames
 	add: #PANOSE;
 	add: #Pen;
 	add: #PluggableColor;
+	add: #Point;
 	add: #Point3D;
 	add: #PointEvent;
 	add: #POINTL;
@@ -167,6 +168,7 @@ package classNames
 	add: #ProportionalLayout;
 	add: #PushButton;
 	add: #RECT;
+	add: #Rectangle;
 	add: #ReferenceView;
 	add: #Region;
 	add: #RGB;
@@ -222,12 +224,9 @@ package methodNames
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
+	add: #Number -> #@;
 	add: #Object -> #addToImageList:mask:;
 	add: #Object -> #icon;
-	add: #Point -> #@;
-	add: #Point -> #asParameter;
-	add: #Rectangle -> #asParameter;
-	add: #Rectangle -> #subtract:;
 	add: #ResourceIdentifier -> #fixupIcon;
 	add: #ResourceIdentifier -> #icon;
 	add: #ResourceIdentifier -> #loadWithContext:;
@@ -530,6 +529,11 @@ Object subclass: #Presenter
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+Object subclass: #Rectangle
+	instanceVariableNames: 'origin corner'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #SystemMetrics
 	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth'
@@ -1126,6 +1130,11 @@ LinearLayout subclass: #ProportionalLayout
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ArithmeticValue subclass: #Point
+	instanceVariableNames: 'x y'
+	classVariableNames: 'Zero'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ArithmeticValue subclass: #Point3D
 	instanceVariableNames: 'x y z'
 	classVariableNames: ''
@@ -1382,6 +1391,17 @@ queryCommand: query
 	^true! !
 !MessageSend categoriesFor: #queryCommand:!commands!private! !
 
+!Number methodsFor!
+
+@ yCoord 
+	"Answer a Point with the receiver as X and the argument as Y.
+	The traditional Make Point primitive is present because this operation may be
+	performed a few thousand times when opening a complex window (for example).
+	The primitive is simply a VM level implementation of #x:y:, and does not fail."
+
+	^Point x: self y: yCoord! !
+!Number categoriesFor: #@!converting!public! !
+
 !Object methodsFor!
 
 addToImageList: aWinImageList mask: aColorOrNil 
@@ -1408,37 +1428,6 @@ icon
 
 	^##(self) defaultIcon! !
 !Object class categoriesFor: #icon!constants!public! !
-
-!Point methodsFor!
-
-@ zCoord
-	"Answer a Point3D with the receiver as X, Y coordinates and the argument as Z."
-
-	^Point3D x: x y: y z: zCoord!
-
-asParameter
-	"Answer the receiver in a form suitable for passing to an external function."
-
-	^POINTL fromPoint: self! !
-!Point categoriesFor: #@!converting!public! !
-!Point categoriesFor: #asParameter!converting!public! !
-
-!Rectangle methodsFor!
-
-asParameter
-	"Answer the receiver in a form suitable for passing to an external function, in this case as
-	a Win32 RECT structure."
-
-	^RECT fromRectangle: self!
-
-subtract: aRectangle
-	| rect |
-	#todo "Implememt in Smalltalk".
-	rect := RECT new.
-	UserLibrary default subtractRect: rect lprcSrc1: self asParameter lprcSrc2: aRectangle asParameter.
-	^rect asObject! !
-!Rectangle categoriesFor: #asParameter!converting!public! !
-!Rectangle categoriesFor: #subtract:!public!rectangle functions! !
 
 !ResourceIdentifier methodsFor!
 

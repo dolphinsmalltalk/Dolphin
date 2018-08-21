@@ -13,14 +13,6 @@ Its messages support standard arithmetic operations and comparisons, which are m
 !Number categoriesForClass!Magnitude-Numbers! !
 !Number methodsFor!
 
-@ yCoord 
-	"Answer a Point with the receiver as X and the argument as Y.
-	The traditional Make Point primitive is present because this operation may be
-	performed a few thousand times when opening a complex window (for example).
-	The primitive is simply a VM level implementation of #x:y:, and does not fail."
-
-	^Point x: self y: yCoord!
-
 arcCos
 	"Answer a <Float> which is the inverse cosine of the receiver in radians"
 
@@ -264,7 +256,6 @@ to: stop do: operation
 	the compiler, so this implementation is used only when #perform:'ed."
 
 	(self to: stop) do: operation! !
-!Number categoriesFor: #@!converting!public! !
 !Number categoriesFor: #arcCos!mathematical!public! !
 !Number categoriesFor: #arcSin!mathematical!public! !
 !Number categoriesFor: #arcTan!mathematical!public! !
