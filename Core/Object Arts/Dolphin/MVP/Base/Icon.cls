@@ -339,9 +339,7 @@ defaultExtent
 error
 	"Answer a new instance of the default system 'error' icon (used in serious warning messages)"
 
-	"We no longer use the icon provide by the system for IDI_ERROR, because it is no longer the current error icon used in Windows."
-
-	^Error ifNil: [Error := self fromId: 'Error.ico']!
+	^Error ifNil: [Error := self fromSystemId: IDI_ERROR]!
 
 exclamation
 	"Answer a new instance of the Exclamation mark icon (used in warning messages)"
@@ -376,7 +374,7 @@ imageManager
 information
 	"Answer a new instance of the default system 'information' icon (used in informative messages)"
 
-	^Information ifNil: [Information := self fromId: 'Information.ico']!
+	^Information ifNil: [Information := self fromSystemId: IDI_INFORMATION]!
 
 largeExtent
 	"Answer a <Point> that gives the dimensions of a standard size icon."
@@ -400,7 +398,9 @@ onStartup2
 question
 	"Answer a new instance of the Question mark icon (used in prompting messages)"
 
-	^Question ifNil: [Question := self fromId: 'Question.ico']!
+	"N.B. It is imperative that this always loads, as it is used to provide the handle for any icon that fails to load!!"
+
+	^Question ifNil: [Question := self fromSystemId: IDI_QUESTION]!
 
 smallExtent
 	"Answer a <Point> that gives the dimensions of a small size icon."
@@ -422,7 +422,7 @@ uninitialize
 warning
 	"Answer a new instance of the default system 'warning' icon (used in warning messages)"
 
-	^Warning ifNil: [Warning := self fromId: 'Warning.ico']!
+	^Warning ifNil: [Warning := self fromSystemId: IDI_WARNING]!
 
 window
 	"Answer a new instance of the default Windows icon"

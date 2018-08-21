@@ -259,7 +259,6 @@
     <Image Include="Res\EditUndo.ico" />
     <Image Include="Res\EllipsisButton.ico" />
     <Image Include="Res\EnvironmentBrowserShell.ico" />
-    <Image Include="Res\Error.ico" />
     <Image Include="Res\EvaluateIt.ico" />
     <Image Include="Res\Event.ico" />
     <Image Include="Res\EventMessageSend.ico" />
@@ -301,7 +300,6 @@
     <Image Include="Res\NewIdeaSpaceShell.ico" />
     <Image Include="Res\NewPackage.ico" />
     <Image Include="Res\NewWorkspace.ico" />
-    <Image Include="Res\Notification.ico" />
     <Image Include="Res\OpenWorkspace.ico" />
     <Image Include="Res\Options.ico" />
     <Image Include="Res\PackageBrowserShell.ico" />
@@ -354,7 +352,6 @@
     <Image Include="Res\ViewThumbnails.ico" />
     <Image Include="Res\ViewTileIcons.ico" />
     <Image Include="Res\ViewTiles.ico" />
-    <Image Include="Res\Warning.ico" />
     <Image Include="Res\WinImageList.ico" />
     <Image Include="Res\Find.ico" />
     <Image Include="Res\FindDialog.ico" />
