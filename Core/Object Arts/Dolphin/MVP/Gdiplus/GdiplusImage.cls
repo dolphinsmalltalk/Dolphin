@@ -16,6 +16,7 @@ asBitmap
 	| bitmap |
 	bitmap := Bitmap displayCompatibleWithExtent: self extent.
 	self drawOn: bitmap canvas.
+	bitmap freeDC.
 	^bitmap!
 
 asByteArray: mimeString 
@@ -95,12 +96,7 @@ copyPropertiesFrom: anImage
 copyToClipboard
 	"Copy the receiver to the system clipboard."
 
-	| bm canvas |
-	bm := Bitmap displayCompatibleWithExtent: self extent.
-	canvas := bm canvas.
-	self drawOn: canvas.
-	canvas free.
-	bm copyToClipboard!
+	self asBitmap copyToClipboard!
 
 drawOn: aCanvas 
 	"Draw the receiver on aCanvas (no stretching)."

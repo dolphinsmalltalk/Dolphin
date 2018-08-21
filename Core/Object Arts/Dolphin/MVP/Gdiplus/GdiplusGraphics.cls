@@ -1093,13 +1093,11 @@ exampleGdipGFromCanvas
 	"
 
 	| bmp canvas graphics |
-	bmp := Bitmap 
-				gdipCopyOfIcon: self icon
-				extent: 32 @ 32
-				backcolor: Color black.
+	bmp := self icon asAlphaBitmap: 256@256.
 	canvas := bmp canvas.
 	graphics := GdiplusGraphics fromCanvas: canvas.
-	graphics drawString: 'Hi' at: 5 @ 5.
+	graphics drawString: 'Hi' at: 120 @ 120.
+	bmp freeDC.
 	^bmp!
 
 exampleGdipGMeasureString

@@ -2344,9 +2344,9 @@ fillStateImageManager
 	"image for state #Leaf"
 	image := (Bitmap displayCompatibleWithExtent: extent).
 	(image canvas)
-		erase;
-		free.
+		erase.
 	stateImageManager addImage: image.
+	image freeDC.
 
 	"image for state #Open"
 	image := (Bitmap displayCompatibleWithExtent: extent).
@@ -2355,9 +2355,9 @@ fillStateImageManager
 		pen: boxPen;
 		rectangle: box;
 		pen: linePen;
-		lineFrom: hLineF to: hLineT;
-		free.
+		lineFrom: hLineF to: hLineT.
 	stateImageManager addImage: image.
+	image freeDC.
 
 	"image for state #Closed"
 	image := (Bitmap displayCompatibleWithExtent: extent).
@@ -2367,9 +2367,9 @@ fillStateImageManager
 		rectangle: box;
 		pen: linePen;
 		lineFrom: hLineF to: hLineT;
-		lineFrom: vLineF to: vLineT;
-		free.
+		lineFrom: vLineF to: vLineT.
 	stateImageManager addImage: image.
+	image freeDC.
 
 	"image for state #SmallOpen"
 	image := (Bitmap displayCompatibleWithExtent: extent).
@@ -2378,9 +2378,9 @@ fillStateImageManager
 		pen: boxPen;
 		rectangle: smallBox;
 		pen: linePen;
-		lineFrom: hLineF to: hLineT;
-		free.
+		lineFrom: hLineF to: hLineT.
 	stateImageManager addImage: image.
+	image freeDC.
 
 	"image for state #SmallClosed"
 	image := (Bitmap displayCompatibleWithExtent: extent).
@@ -2390,9 +2390,9 @@ fillStateImageManager
 		rectangle: smallBox;
 		pen: linePen;
 		lineFrom: hLineF to: hLineT;
-		lineFrom: vLineF to: vLineT;
-		free.
+		lineFrom: vLineF to: vLineT.
 	stateImageManager addImage: image.
+	image freeDC.
 
 	boxPen free.
 	linePen free.!

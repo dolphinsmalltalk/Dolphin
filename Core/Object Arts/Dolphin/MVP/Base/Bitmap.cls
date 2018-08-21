@@ -268,6 +268,9 @@ createWatermarkAlphaPercent: percent backcolor: backcolor
 		rectangle: rect
 		to: 0 @ 0
 		rop: SRCPAINT.
+	watermark free.
+	self freeDC.
+	combined freeDC.
 	^combined!
 
 depth
@@ -625,7 +628,7 @@ fromView: aView
 		sendMessage: WM_PRINT
 		wParam: canvas handle
 		lParam: PRF_CLIENT | PRF_ERASEBKGND | PRF_CHILDREN | PRF_NONCLIENT | PRF_OWNED.
-	canvas free.
+	answer freeDC.
 	^answer!
 
 initialize

@@ -21,7 +21,13 @@ canvas
 flip
 	"Private - Flip the current back surface to the front and paint it"
 
-	backSurface drawOn: super canvas at: 0@0 extent: backSurface extent.	!
+	| canvas |
+	canvas := super canvas.
+	backSurface
+		drawOn: canvas
+		at: 0 @ 0
+		extent: backSurface extent.
+	canvas free!
 
 initialize
 	"Private - Initialise the receiver."
@@ -39,6 +45,7 @@ initializeSurfacesFor: aPointExtent
 	backSurface notNil ifTrue: [ backSurface free ].
 	canvas := super canvas.
 	backSurface := Bitmap compatible: canvas extent: aPointExtent.
+	canvas free.
 	self invalidate.
 !
 

@@ -33,6 +33,7 @@ paintImageOn: aCanvas
 		drawOn: aCanvas
 		at: imageRect topLeft
 		extent: imageRect extent.
+	image freeDC.
 	^self 
 		drawBorderOn: aCanvas
 		imageRect: imageRect

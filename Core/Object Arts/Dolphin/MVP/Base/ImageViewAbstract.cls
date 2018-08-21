@@ -195,21 +195,22 @@ onEraseRequired: aColorEvent
 
 	^true!
 
-onPaintRequired: aPaintEvent 
+onPaintRequired: aPaintEvent
 	"Private - Handler for paint event. Show the image scaled as defined by viewMode."
 
 	| canvas |
 	canvas := aPaintEvent canvas.
-	self isDoubleBuffered 
+	self isDoubleBuffered
 		ifTrue: 
-			[| rect extent bmp |
+			[| rect extent bmp bmpCanvas |
 			rect := self clientRectangle.
 			extent := rect extent.
 			bmp := Bitmap compatible: canvas extent: extent.
-			self eraseBackground: bmp canvas around: nil.
-			self paintImageOn: bmp canvas.
-			canvas 
-				bitBlt: bmp canvas
+			bmpCanvas := bmp canvas.
+			self eraseBackground: bmpCanvas around: nil.
+			self paintImageOn: bmpCanvas.
+			canvas
+				bitBlt: bmpCanvas
 				rectangle: (0 @ 0 extent: extent)
 				to: rect origin
 				rop: SRCCOPY.

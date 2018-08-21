@@ -18,12 +18,15 @@ backSurface
 flip
 	"Private - Flip the current back surface to the front and paint it"
 
-	self isOpen 
+	self isOpen
 		ifTrue: 
-			[backSurface 
-				drawOn: super canvas
+			[| canvas |
+			canvas := self canvas.
+			backSurface
+				drawOn: canvas
 				at: 0 @ 0
-				extent: backSurface extent]!
+				extent: backSurface extent.
+			canvas free]!
 
 graphics
 	"Answer a <GdiplusGraphics> onto the back surface"

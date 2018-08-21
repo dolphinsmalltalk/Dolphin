@@ -14,7 +14,7 @@ Note that it is expected behavior for a mouse click in this window to bring up a
 package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAAASAQAACwAAAEhlbGxvIFdvcmxkEgEAADgA
 AABDb3JlXE9iamVjdCBBcnRzXFNhbXBsZXNcTVZQXEhlbGxvIFdvcmxkXEhlbGxvIFdvcmxkLmV4
 ZZoAAAASAQAAEAAAAERvbHBoaW4gTVZQIEJhc2VSAAAAFQAAAFJ1bnRpbWVTZXNzaW9uTWFuYWdl
-cu+/JwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
+cue/JwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
 
 package classNames
 	add: #HelloWorld;
@@ -29,7 +29,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Text Tile Icons';
+	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
 	yourself).
 

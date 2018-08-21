@@ -223,7 +223,7 @@ pixelData
 					[:y | 
 					pixData at: n put: (canvas getPixel: x @ y).
 					n := n + 1]].
-	canvas free.
+	self freeDC.
 	^pixData!
 
 printOn: aStream
