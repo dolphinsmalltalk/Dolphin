@@ -2,7 +2,7 @@
 
 Object subclass: #Rectangle
 	instanceVariableNames: 'origin corner'
-	classVariableNames: ''
+	classVariableNames: 'Empty'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Rectangle guid: (GUID fromString: '{87b4c4ad-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -610,6 +610,12 @@ center: centrePoint extent: extentPoint
 
 	^self origin: centrePoint - (extentPoint // 2) extent: extentPoint!
 
+initialize
+	self addClassConstant: 'Empty'
+		value: (self new
+				isImmutable: true;
+				yourself)!
+
 left: leftNumber top: topNumber right: rightNumber bottom: bottomNumber 
 	"Answer an instance of the receiver with the specified coodinates."
 
@@ -633,15 +639,20 @@ origin: originPoint extent: extentPoint
 
 	^self origin: originPoint corner: originPoint + extentPoint!
 
+unitialize
+	self addClassVariable: 'Empty' value: nil!
+
 vertex: aPoint1 vertex: aPoint2 
 	"Answer a new, normalised, instance of the receiver with the specified diagonally opposite
 	vertices."
 
 	^self origin: (aPoint1 min: aPoint2) corner: (aPoint1 max: aPoint2)! !
 !Rectangle class categoriesFor: #center:extent:!instance creation!public! !
+!Rectangle class categoriesFor: #initialize!class initialization!development!public! !
 !Rectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
 !Rectangle class categoriesFor: #new!instance creation!public! !
 !Rectangle class categoriesFor: #origin:corner:!instance creation!public! !
 !Rectangle class categoriesFor: #origin:extent:!instance creation!public! !
+!Rectangle class categoriesFor: #unitialize!class hierarchy-removing!development!public! !
 !Rectangle class categoriesFor: #vertex:vertex:!instance creation!public! !
 
