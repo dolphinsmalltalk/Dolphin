@@ -134,6 +134,8 @@ package methodNames
 	add: #Array -> #assignToResourceIdentifier:;
 	add: #ArrayedCollection -> #newBatchAccessor;
 	add: #Association -> #debugPrintString;
+	add: #Behavior -> #hasAbstractMethods;
+	add: #Behavior -> #isAbstract;
 	add: #Behavior -> #methodFor:;
 	add: #Behavior -> #searchForInTool:;
 	add: #Behavior -> #whichClassDefinesInstVar:;
@@ -159,6 +161,7 @@ package methodNames
 	add: #BrowserEnvironmentWrapper -> #includesResource:;
 	add: #BrowserEnvironmentWrapper -> #openEditor;
 	add: #Character -> #literalTextStyle;
+	add: #Class -> #isAbstract;
 	add: #Class -> #isDeprecated;
 	add: #ClassDescription -> #browse;
 	add: #ClassDescription -> #commentStamp:prior:;
@@ -185,7 +188,9 @@ package methodNames
 	add: #CompiledCode -> #disassembly;
 	add: #CompiledCode -> #hasCompilationIssues;
 	add: #CompiledCode -> #indexOfIP:;
+	add: #CompiledCode -> #isAbstract;
 	add: #CompiledCode -> #isDeprecated;
+	add: #CompiledCode -> #isSimpleSelfSend:;
 	add: #CompiledCode -> #stylerClass;
 	add: #CompiledExpression -> #asDebugMethod;
 	add: #CompiledExpression -> #stylerClass;
@@ -1323,6 +1328,15 @@ publishedAspectsOfInstances
 
 !Behavior methodsFor!
 
+hasAbstractMethods
+	"Answer whether the receiver has any methods that are by convention considered to be
+	abstract (i.e. they consist solely of a send of #subclassResponsibility to self)."
+
+	^self methodDictionary anySatisfy: [:each | each isAbstract]!
+
+isAbstract
+	^self isNonInstantiable or: [self hasAbstractMethods]!
+
 methodFor: aSymbol
 	^self compiledMethodAt: aSymbol ifAbsent: []!
 
@@ -1331,6 +1345,8 @@ searchForInTool: aSmalltalkToolShell
 
 whichClassDefinesInstVar: aString 
 	^self whichClassSatisfies: [:aClass | aClass instVarNames includes: aString]! !
+!Behavior categoriesFor: #hasAbstractMethods!public!testing! !
+!Behavior categoriesFor: #isAbstract!public!testing! !
 !Behavior categoriesFor: #methodFor:!accessing!public! !
 !Behavior categoriesFor: #searchForInTool:!public! !
 !Behavior categoriesFor: #whichClassDefinesInstVar:!public!RefactoringBrowser! !
@@ -1642,8 +1658,12 @@ publishedAspectsOfInstances
 
 !Class methodsFor!
 
+isAbstract
+	^super isAbstract or: [self class isAbstract]!
+
 isDeprecated
 	^false! !
+!Class categoriesFor: #isAbstract!public!testing! !
 !Class categoriesFor: #isDeprecated!development!public!source filing! !
 
 !ClassBuilder class methodsFor!
@@ -1960,8 +1980,26 @@ hasCompilationIssues
 indexOfIP: ip 
 	^self byteCodeDispatcherClass indexOfIP: ip in: self!
 
+isAbstract
+	"Answer whether this is an abstract method."
+
+	^self isSimpleSelfSend: #subclassResponsibility!
+
 isDeprecated
 	^self methodClass isDeprecated or: [MethodCategory deprecatedMethods includesMethod: self]!
+
+isSimpleSelfSend: aSymbol
+	"Private - Answer whether the receiver is a method that just sends the specified selector
+	(which must be zero-argument) to self. Note that this does not work for special selectors
+	such as #class, #new, etc, that have specific bytecode encodings."
+
+	^self size > 0 and: 
+			[(self at: 1) == aSymbol and: 
+					[| packed |
+					packed := self basicByteCodes.
+					(packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. ReturnFromMessage} asByteArray)
+						or: [packed == ##(self packByteCodes: {ShortSendSelfZeroArgs. PopReturnSelf} asByteArray)])
+							and: [self extraIndex == 0]]]!
 
 stylerClass
 	^self subclassResponsibility! !
@@ -1971,7 +2009,9 @@ stylerClass
 !CompiledCode categoriesFor: #disassembly!development!private! !
 !CompiledCode categoriesFor: #hasCompilationIssues!public!searching! !
 !CompiledCode categoriesFor: #indexOfIP:!enquiries!private! !
+!CompiledCode categoriesFor: #isAbstract!private!testing! !
 !CompiledCode categoriesFor: #isDeprecated!enquiries!private! !
+!CompiledCode categoriesFor: #isSimpleSelfSend:!private!testing! !
 !CompiledCode categoriesFor: #stylerClass!constants!public! !
 
 !CompiledCode class methodsFor!

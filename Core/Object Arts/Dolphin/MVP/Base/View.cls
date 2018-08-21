@@ -795,7 +795,7 @@ defaultExtent
 	set the size of a view when it is created. Thereafter preferredExtent is
 	used when the desired size of a view is requested."
 
-	^##(100 @ 100)!
+	^100 @ 100!
 
 defaultId
 	"Private - Answer the id to be used when the receiver is created 
@@ -809,7 +809,7 @@ defaultPositionWithin: aParentView forExtent: aPoint
 	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint.
 	This is used only on creation."
 
-	^0@0!
+	^Point.Zero!
 
 defaultProportion
 	"Private - Answer the default proportion to be assumed by the receiver when associated with
