@@ -138,8 +138,9 @@ resource_Default_view
 resourceLib
 	"Answer the notepad resource library (notepad.exe)"
 
-	ResourceLib isNil ifTrue: [ResourceLib := ExternalResourceLibrary open: 'notepad.exe'].
-	^ResourceLib!
+	^ResourceLib
+		ifNil: 
+			[ResourceLib := ExternalResourceLibrary open: SessionManager current systemDirectory , '\notepad.exe']!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system.
