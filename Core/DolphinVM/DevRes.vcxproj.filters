@@ -751,9 +751,6 @@
     <Image Include="Res\EllipsisButton.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\Error.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Event.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -871,9 +868,6 @@
     <Image Include="Res\ViewTileIcons.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\Warning.ico">
-      <Filter>Icons</Filter>
-    </Image>
     <Image Include="Res\Box.ico">
       <Filter>Icons</Filter>
     </Image>
@@ -935,9 +929,6 @@
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\NewWorkspace.ico">
-      <Filter>Icons</Filter>
-    </Image>
-    <Image Include="Res\Notification.ico">
       <Filter>Icons</Filter>
     </Image>
     <Image Include="Res\OpenWorkspace.ico">

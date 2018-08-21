@@ -167,8 +167,6 @@ ELLIPSISBUTTON.ICO      ICON                    "Res\\EllipsisButton.ico"
 
 ENVIRONMENTBROWSERSHELL.ICO ICON                "Res\\EnvironmentBrowserShell.ico"
 
-ERROR.ICO				ICON					"Res\Error.ico"
-
 EVALUATEIT.ICO          ICON                    "Res\\EvaluateIt.ico"
 
 EVENT.ICO               ICON                    "Res\\Event.ico"
@@ -338,8 +336,6 @@ NEWPACKAGE.ICO          ICON                    "Res\\NewPackage.ico"
 NEWWORKSPACE.ICO        ICON                    "Res\\NewWorkspace.ico"
 
 NEWTHING.ICO            ICON                    "Res\\NewThing.ico"
-
-NOTIFICATION.ICO        ICON                    "Res\\Notification.ico"
 
 NUMBERPRESENTER.ICO     ICON                    "Res\\NumberPresenter.ico"
 
@@ -558,8 +554,6 @@ VIEWSMALLICONS.ICO      ICON                    "Res\\ViewSmallIcons.ico"
 VIEWTILES.ICO           ICON                    "Res\\ViewTiles.ico"
 
 VISUALOBJECTFINDER.ICO  ICON                    "res\\VisualObjectFinder.ico"
-
-WARNING.ICO             ICON                    "Res\\Warning.ico"
 
 WINIMAGELIST.ICO        ICON                    "Res\\WinImageList.ico"
 

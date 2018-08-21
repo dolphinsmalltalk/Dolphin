@@ -411,7 +411,7 @@ icon
 icon
 	"Answer the default icon for the receiver and its instances."
 	
-	^##(self) defaultIcon! !
+	^Icon error! !
 !Error class categoriesFor: #icon!constants!public! !
 
 !Exception class methodsFor!
@@ -680,7 +680,7 @@ icon
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^##(self) defaultIcon! !
+	^Icon information! !
 !Notification class categoriesFor: #icon!constants!public! !
 
 !NotificationSignal class methodsFor!
@@ -921,7 +921,7 @@ icon
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^##(self) defaultIcon! !
+	^Icon warning! !
 !Warning class categoriesFor: #icon!constants!public! !
 
 !WarningSignal class methodsFor!
