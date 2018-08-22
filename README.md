@@ -45,7 +45,7 @@ Follow these instructions to create the product images and launch Dolphin Smallt
 
 You should see Dolphin Professional 7 launch successfully. We’ll leave it as an exercise for the reader to work out how to dismiss the splash screen. You can now continue with the Dolphin [Getting Started](http://object-arts.com/gettingstarted.html) introduction if you wish.
 
-![Dolphin System Folder](https://raw.githubusercontent.com/dolphinsmalltalk/Dolphin/master/Help/Images/SystemFolder.png)
+![Dolphin System Folder](https://user-images.githubusercontent.com/15128107/44483893-33180800-a644-11e8-843b-ce731367e4cb.png)
 
 ## Contributing to Dolphin
 
