@@ -1,0 +1,39 @@
+﻿| package |
+package := Package name: 'Dolphin Random Stream Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #RandomTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Base Tests';
+	add: 'Dolphin Random Stream';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #RandomTest
+	instanceVariableNames: 'gen'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

@@ -1,0 +1,39 @@
+﻿| package |
+package := Package name: 'DolphinSure Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #SecureHashAlgorithmTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\Base\Dolphin';
+	add: '..\Base\Dolphin Base Tests';
+	add: 'DolphinSure';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #SecureHashAlgorithmTest
+	instanceVariableNames: 'hash'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

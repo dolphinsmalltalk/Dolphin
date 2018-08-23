@@ -13,7 +13,6 @@ package classNames
 	add: #ArrayedCollectionTest;
 	add: #ArrayTest;
 	add: #BagTest;
-	add: #Base64CodecTest;
 	add: #BehaviorTest;
 	add: #BehaviorTestClasses;
 	add: #BlockClosureTest;
@@ -39,7 +38,6 @@ package classNames
 	add: #DOUBLEArrayTest;
 	add: #DWORDArrayTest;
 	add: #EqualitySearchPolicyTest;
-	add: #EvaluationConverterTest;
 	add: #EventMessageSendTest;
 	add: #ExceptionTesterClasses;
 	add: #ExternalAddressTest;
@@ -54,7 +52,6 @@ package classNames
 	add: #FILETIMETest;
 	add: #FLOATArrayTest;
 	add: #FloatTest;
-	add: #FolderTest;
 	add: #GenericExternalArrayTest;
 	add: #GUIDTest;
 	add: #HeapsortAlgorithmTest;
@@ -76,22 +73,15 @@ package classNames
 	add: #ObjectTest;
 	add: #OrderedCollectionTest;
 	add: #PackageTest;
-	add: #PluggableEnvironmentTest;
-	add: #Point3DTest;
-	add: #PointTest;
 	add: #PoolConstantsDictionaryTest;
 	add: #PositionableStreamTest;
 	add: #ProcessTest;
 	add: #QuicksortAlgorithmTest;
-	add: #RandomTest;
 	add: #ReadStreamTest;
 	add: #ReadWriteStreamTest;
-	add: #RectangleTest;
 	add: #RunArrayTest;
-	add: #SAFEARRAYTest;
 	add: #SDWORDArrayTest;
 	add: #SearchPolicyTest;
-	add: #SecureHashAlgorithmTest;
 	add: #SemaphoreTest;
 	add: #SequenceableCollectionTest;
 	add: #SequencedGrowableCollectionTest;
@@ -106,7 +96,6 @@ package classNames
 	add: #StableSortAlgorithmTest;
 	add: #STBTest;
 	add: #StdioFileStreamTest;
-	add: #STLFilerTest;
 	add: #StreamTest;
 	add: #StructureArrayTest;
 	add: #SWORDArrayTest;
@@ -119,7 +108,6 @@ package classNames
 	add: #UndefinedObjectTest;
 	add: #Utf16StringTest;
 	add: #Utf8StringTest;
-	add: #VARIANTTest;
 	add: #WORDArrayTest;
 	add: #WriteStreamTest;
 	yourself.
@@ -141,27 +129,15 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: (IdentitySet new
-	add: '..\ActiveX\Automation\ActiveX Automation';
-	add: '..\..\Samples\ActiveX\Random\COM Random Stream';
 	add: '..\System\Trace\Debug Trace Stream';
 	add: '..\IDE\Base\Development System';
 	add: 'Dolphin';
 	add: 'Dolphin Additional Sort Algorithms';
-	add: '..\System\Base64\Dolphin Base64';
 	add: 'Dolphin Command-line Parser';
 	add: '..\System\Random\Dolphin CRT Random Stream';
-	add: '..\System\Filer\Dolphin Literal Filer';
-	add: '..\MVP\Base\Dolphin MVP Base';
 	add: '..\System\Random\Dolphin Random Stream';
-	add: '..\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\DolphinSure\DolphinSure';
-	add: '..\ActiveX\COM\OLE COM';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
 	add: '..\System\Compiler\Smalltalk Parser';
 	add: '..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\ActiveX\Shell\Windows Shell';
 	add: '..\ActiveX\Components\XML DOM\XML DOM';
 	yourself).
 
@@ -195,11 +171,6 @@ TestCase subclass: #DolphinTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #BagTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #Base64CodecTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -245,11 +216,6 @@ DolphinTest subclass: #DiskVolumeInformationTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #DolphinCollectionTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #EvaluationConverterTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -309,11 +275,6 @@ DolphinTest subclass: #FloatTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #FolderTest
-	instanceVariableNames: 'c windows system root oa'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #GUIDTest
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
@@ -344,38 +305,13 @@ DolphinTest subclass: #PackageTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #Point3DTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #PointTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #ProcessTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #RandomTest
-	instanceVariableNames: 'gen'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #RectangleTest
-	instanceVariableNames: 'desktop oddDesktop unary'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #SearchPolicyTest
 	instanceVariableNames: 'policy'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #SecureHashAlgorithmTest
-	instanceVariableNames: 'hash'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -409,11 +345,6 @@ DolphinTest subclass: #STBTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DolphinTest subclass: #STLFilerTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 DolphinTest subclass: #StreamTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -438,11 +369,6 @@ DolphinTest subclass: #UndefinedObjectTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #VARIANTTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 DolphinCollectionTest subclass: #AbstractDictionaryTest
 	instanceVariableNames: ''
@@ -589,11 +515,6 @@ ExternalArrayTest subclass: #WORDArrayTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-GenericExternalArrayTest subclass: #SAFEARRAYTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'Win32Errors'
-	classInstanceVariableNames: ''!
 GenericExternalArrayTest subclass: #StructureArrayTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -705,11 +626,6 @@ AbstractFileStreamTest subclass: #FileStreamTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractFileStreamTest subclass: #StdioFileStreamTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

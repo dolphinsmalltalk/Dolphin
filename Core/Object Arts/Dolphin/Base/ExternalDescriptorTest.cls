@@ -129,35 +129,38 @@ testSmokeTest
 			desc := self newDescriptor: (text copyWithout: $,).
 			self assert: text equals: desc description]!
 
-testStructs
-	self assert: RGBQUAD byteSize equals: 4.
+testStruct4
+	| valueTypes |
+	self assert: DWORD byteSize equals: 4.
+	valueTypes := ExternalDescriptor.ExternalValueTypes.
+	
+	[ExternalDescriptor.ExternalValueTypes := LookupTable with: 'void' -> 0.
 	self
-		parseStructArg: RGBQUAD
+		parseStructArg: DWORD
 		valueType: ExtCallArgSTRUCT4
-		refType: ExtCallArgLP.
-	self assert: POINTL byteSize equals: 8.
+		refType: ExtCallArgLP]
+			ensure: [ExternalDescriptor.ExternalValueTypes := valueTypes]!
+
+testStruct8
+	self assert: FILETIME byteSize equals: 8.
 	self
-		parseStructArg: POINTL
+		parseStructArg: FILETIME
 		valueType: ExtCallArgSTRUCT8
-		refType: ExtCallArgLP.
+		refType: ExtCallArgLP!
+
+testStructs
 	self assert: _FPIEEE_VALUE byteSize > 8.
 	self
 		parseStructArg: _FPIEEE_VALUE
 		valueType: ExtCallArgSTRUCT
-		refType: ExtCallArgLP.
-	self
-		parseStructArg: IUnknown
-		valueType: ExtCallArgSTRUCT
-		refType: ExtCallArgCOMPTR.
-	self
-		parseStructArg: IDispatch
-		valueType: ExtCallArgSTRUCT
-		refType: ExtCallArgCOMPTR! !
+		refType: ExtCallArgLP! !
 !ExternalDescriptorTest categoriesFor: #externalTypes!accessing!private! !
 !ExternalDescriptorTest categoriesFor: #newDescriptor:!private!unit tests! !
 !ExternalDescriptorTest categoriesFor: #parseStructArg:valueType:refType:!private!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testBuiltins!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testIndirections!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testSmokeTest!public!unit tests! !
+!ExternalDescriptorTest categoriesFor: #testStruct4!public!unit tests! !
+!ExternalDescriptorTest categoriesFor: #testStruct8!public!unit tests! !
 !ExternalDescriptorTest categoriesFor: #testStructs!public!unit tests! !
 

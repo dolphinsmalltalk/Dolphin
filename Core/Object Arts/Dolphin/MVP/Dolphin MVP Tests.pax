@@ -14,7 +14,9 @@ package classNames
 	add: #ClipboardTest;
 	add: #ColorTest;
 	add: #ContainerViewTest;
+	add: #EvaluationConverterTest;
 	add: #FlowLayoutTest;
+	add: #FolderTest;
 	add: #FramingLayoutTest;
 	add: #GridLayoutTest;
 	add: #IconTest;
@@ -31,10 +33,13 @@ package classNames
 	add: #MultipleSelectionListViewTest;
 	add: #MultiSelectListBoxTest;
 	add: #MultiSelectListViewTest;
+	add: #Point3DTest;
+	add: #PointTest;
 	add: #PresenterTest;
 	add: #ProportionalLayoutTest;
 	add: #PushButtonTest;
 	add: #RadioButtonSetPresenterTest;
+	add: #RectangleTest;
 	add: #ReferenceViewTest;
 	add: #ResourceIdentifierTest;
 	add: #RichTextEditTest;
@@ -59,6 +64,12 @@ package classNames
 	add: #WindowsEventTest;
 	yourself.
 
+package methodNames
+	add: #STLFilerTest -> #testRectangleReadWrite;
+	add: #STLFilerTest -> #testResourceReadWrite;
+	add: #STLFilerTest -> #testShellReadWrite;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -69,6 +80,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\IDE\Base\Development System';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
+	add: 'Base\Dolphin Basic Geometry';
 	add: 'Presenters\Boolean\Dolphin Boolean Presenter';
 	add: 'Presenters\Choice\Dolphin Choice Presenter';
 	add: 'Presenters\Color\Dolphin Color Presenter';
@@ -77,6 +89,7 @@ package setPrerequisites: (IdentitySet new
 	add: 'Models\List\Dolphin List Models';
 	add: 'Presenters\List\Dolphin List Presenter';
 	add: '..\System\Filer\Dolphin Literal Filer';
+	add: '..\System\Filer\Dolphin Literal Filer Tests';
 	add: 'Views\MoenTree\Dolphin MoenTree View';
 	add: 'Deprecated\Dolphin MVP (Deprecated)';
 	add: 'Base\Dolphin MVP Base';
@@ -91,6 +104,7 @@ package setPrerequisites: (IdentitySet new
 	add: 'Presenters\Text\Dolphin Text Presenter';
 	add: 'Models\Tree\Dolphin Tree Models';
 	add: 'Presenters\Tree\Dolphin Tree Presenter';
+	add: 'Type Converters\Dolphin Type Converters';
 	add: 'Models\Value\Dolphin Value Models';
 	add: '..\System\Compiler\Smalltalk Parser';
 	yourself).
@@ -139,6 +153,16 @@ DolphinTest subclass: #ColorTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #EvaluationConverterTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #FolderTest
+	instanceVariableNames: 'c windows system root oa'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #IconTest
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -159,6 +183,16 @@ DolphinTest subclass: #MultipleSelectionListBoxTest
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+DolphinTest subclass: #Point3DTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PointTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 DolphinTest subclass: #PresenterTest
 	instanceVariableNames: 'presenter'
 	classVariableNames: ''
@@ -171,6 +205,11 @@ DolphinTest subclass: #PushButtonTest
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #RadioButtonSetPresenterTest
 	instanceVariableNames: 'radioSet'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #RectangleTest
+	instanceVariableNames: 'desktop oddDesktop unary'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -364,6 +403,54 @@ MultilineTextEditTest subclass: #ScintillaViewTest
 
 
 "Loose Methods"!
+
+!STLFilerTest methodsFor!
+
+testRectangleReadWrite
+	| contents myRectangle answer |
+	myRectangle := 50 @ 50 extent: 200 @ 200.
+	contents := self checkSimpleReadWriteOf: myRectangle.
+	self assert: (contents includes: Rectangle).
+	self assert: (contents includes: Point).
+
+	"Check that muliple references are identical"
+	answer := self simpleReadWriteOf: (Array with: myRectangle with: myRectangle).
+	self assert: answer first equals: myRectangle.
+	self assert: answer first identicalTo: answer last!
+
+testResourceReadWrite
+	| rid shell shell1 shell2 in contents1 contents2 |
+	rid := ResourceIdentifier class: ClassBrowserShell name: 'Default view'.
+	
+	[shell := rid loadWithContext: View desktop.
+	contents1 := self writeLiteralsFor: shell.
+	in := STLInFiler on: contents1 readStream.
+	in context: View desktop.
+	shell1 := in next.
+	self assert: shell1 isKindOf: ShellView.
+	self assert: shell1 isOpen.
+	contents2 := self writeLiteralsFor: shell1.
+	in := STLInFiler on: contents2 readStream.
+	in context: View desktop.
+	shell2 := in next.
+	self assert: shell2 isKindOf: ShellView.
+	self assert: shell2 isOpen.
+	self assert: contents1 size equals: contents2 size]
+			ensure: 
+				[shell destroy.
+				shell1 destroy.
+				shell2 destroy]!
+
+testShellReadWrite
+	| shell1 shell2 |
+	shell1 := ShellView show.
+	[shell2 := self simpleReadWriteOf: shell1 context: View desktop] ensure: 
+			[shell1 destroy.
+			shell2 destroy].
+! !
+!STLFilerTest categoriesFor: #testRectangleReadWrite!public!unit tests! !
+!STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
+!STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
 
 "End of package definition"!
 

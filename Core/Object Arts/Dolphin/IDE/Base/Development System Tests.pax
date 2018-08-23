@@ -14,6 +14,7 @@ package classNames
 	add: #DolphinCompilerTestMethodsSubclass;
 	add: #KeyedAspectTest;
 	add: #PackageEnvironmentTest;
+	add: #PluggableEnvironmentTest;
 	add: #ProductReleaseTest;
 	add: #RegKeyTest;
 	add: #RewriteTestCase;
@@ -39,6 +40,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: '..\..\Base\Dolphin Base Tests';
 	add: '..\..\System\Base64\Dolphin Base64';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
@@ -138,6 +140,11 @@ AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	poolDictionaries: 'SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
 BrowserEnvironmentTest subclass: #PackageEnvironmentTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+BrowserEnvironmentTest subclass: #PluggableEnvironmentTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTestClassResource subclass: #ClassBuilderTestClasses
 	instanceVariableNames: 'testClass testSubclass1 testSubclass2 testPool1 testPool2 testPool3'

@@ -1,0 +1,40 @@
+﻿| package |
+package := Package name: 'Dolphin Base64 Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package classNames
+	add: #Base64CodecTest;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Base Tests';
+	add: 'Dolphin Base64';
+	add: '..\Random\Dolphin Random Stream';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+DolphinTest subclass: #Base64CodecTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+
