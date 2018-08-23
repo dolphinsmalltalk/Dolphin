@@ -4,6 +4,12 @@ package paxVersion: 1;
 	basicComment: ''.
 
 
+package classNames
+	add: #IDispatchTest;
+	add: #SAFEARRAYTest;
+	add: #VARIANTTest;
+	yourself.
+
 package methodNames
 	add: #ExternalDescriptorTest -> #testComPtrs;
 	yourself.
@@ -16,7 +22,10 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: 'ActiveX Automation';
+	add: '..\..\..\Samples\ActiveX\Random\COM Random Stream';
+	add: '..\..\Base\Dolphin';
 	add: '..\..\Base\Dolphin Base Tests';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\COM\OLE COM';
 	yourself).
 
@@ -24,6 +33,21 @@ package!
 
 "Class Definitions"!
 
+DolphinTest subclass: #IDispatchTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #VARIANTTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'AXAutomationConstants'
+	classInstanceVariableNames: ''!
+GenericExternalArrayTest subclass: #SAFEARRAYTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'Win32Errors'
+	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
