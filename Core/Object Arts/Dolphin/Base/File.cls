@@ -6,8 +6,8 @@ Object subclass: #File
 	poolDictionaries: 'CRTConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: ''!
 File guid: (GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
-File addClassConstant: 'AccessFlagsMask' value: -8!
-File addClassConstant: 'OpenFlagsMask' value: 7!
+File addClassConstant: 'AccessFlagsMask' value: -16r8!
+File addClassConstant: 'OpenFlagsMask' value: 16r7!
 File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
 
 Instance Variables:

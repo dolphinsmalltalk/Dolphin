@@ -31,7 +31,7 @@ testElementSize
 testInvalidLength
 	"#1051."
 
-	self should: [self arrayClass length: -1 elementClass: BSTR] raise: Error! !
+	self should: [self arrayClass length: -1 elementClass: DWORD] raise: Error! !
 !GenericExternalArrayTest categoriesFor: #elementClassNames!constants!private! !
 !GenericExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
 !GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !

@@ -1,4 +1,4 @@
-"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #ExternalLibraryTest
 	instanceVariableNames: ''
@@ -39,7 +39,7 @@ testInvalidCall
 		should: 
 			[UserLibrary default
 				fillRect: obj
-				lprc: RECT new
+				lprc: (ByteArray newFixed: 16)
 				hbr: nil]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
@@ -59,7 +59,7 @@ testInvalidCall
 		should: 
 			[UserLibrary default
 				fillRect: nil
-				lprc: RECT new
+				lprc: (ByteArray newFixed: 16)
 				hbr: obj]
 		raise: KernelLibrary default invalidArgErrorClass
 		matching: 
@@ -70,13 +70,14 @@ testSingletonSerialisation
 	| singletons array bytes |
 	singletons := Array 
 				with: KernelLibrary default
-				with: ShellLibrary default
+				with: VersionLibrary default
 				with: UserLibrary default.
-	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.KernelLibrary) 8 #default 426 8 ##(Smalltalk.ShellLibrary) 464 426 8 ##(Smalltalk.UserLibrary) 464).
+	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Smalltalk.KernelLibrary) 8 #default 426 8 ##(Smalltalk.VersionLibrary) 464 426 8 ##(Smalltalk.UserLibrary) 464).
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
 	array := singletons literalStoreArray.
 	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
-	bytes := #[33 83 84 66 32 51 32 98 0 0 0 3 0 0 0 14 2 17 0 83 84 66 83 105 110 103 108 101 116 111 110 80 114 111 120 121 154 0 0 0 82 0 0 0 7 0 0 0 68 111 108 112 104 105 110 82 0 0 0 13 0 0 0 75 101 114 110 101 108 76 105 98 114 97 114 121 178 0 0 0 7 0 0 0 100 101 102 97 117 108 116 170 1 0 0 154 0 0 0 208 1 0 0 82 0 0 0 12 0 0 0 83 104 101 108 108 76 105 98 114 97 114 121 240 1 0 0 170 1 0 0 154 0 0 0 208 1 0 0 82 0 0 0 11 0 0 0 85 115 101 114 76 105 98 114 97 114 121 240 1 0 0].
+
+	bytes := #[33 83 84 66 32 52 32 98 0 0 0 3 0 0 0 6 1 13 0 75 101 114 110 101 108 76 105 98 114 97 114 121 6 1 14 0 86 101 114 115 105 111 110 76 105 98 114 97 114 121 6 1 11 0 85 115 101 114 76 105 98 114 97 114 121].
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty.
 	bytes := singletons binaryStoreBytes.
 	self assert: ((Object fromBinaryStoreBytes: bytes) asIdentitySet - singletons) isEmpty! !

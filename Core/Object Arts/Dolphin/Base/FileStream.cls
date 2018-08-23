@@ -6,11 +6,11 @@ ReadWriteStream subclass: #FileStream
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileStream guid: (GUID fromString: '{87b4c6ff-026e-11d3-9fd7-00a0cc3e4a32}')!
-FileStream addClassConstant: 'BufferUpdatedMask' value: 3!
-FileStream addClassConstant: 'DirtyBufferMask' value: 2!
-FileStream addClassConstant: 'LimitsChangedMask' value: 1!
-FileStream addClassConstant: 'OwnsFileMask' value: 256!
-FileStream addClassConstant: 'PageSize' value: 8192!
+FileStream addClassConstant: 'BufferUpdatedMask' value: 16r3!
+FileStream addClassConstant: 'DirtyBufferMask' value: 16r2!
+FileStream addClassConstant: 'LimitsChangedMask' value: 16r1!
+FileStream addClassConstant: 'OwnsFileMask' value: 16r100!
+FileStream addClassConstant: 'PageSize' value: 16r2000!
 FileStream comment: 'FileStream is a specialized <ReadWriteStream> for streaming over binary and text files.
 
 The collection instance variable inherited from <Stream> is used to hold a fixed size buffer representing a cached ''page'' of the actual file. This is flushed back to the file either when a new page is loaded, or when explictly requested by #flush or #fullFlush. The readLimit and writeLimit instance variables inherited from <PositionableStream> and <WriteStream> respectively have a different usage in this class than in their defining classes; they are the limits for the current "page" rather than the whole stream. The readLimit will always be equal to the page size, except on the last page of the file. The writeLimit is always equal to the page size. This use of the superclass instance variables allows us to use the stream primitives for every efficient access within the current page, which means that even single character I/O is reasonably fast..

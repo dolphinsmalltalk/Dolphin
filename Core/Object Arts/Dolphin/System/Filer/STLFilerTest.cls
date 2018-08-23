@@ -58,49 +58,6 @@ testInvalidStream
 	self should: [STLInFiler on: #('Test') readStream] raise: STBError.
 	self should: [STLInFiler on: #('!!STL' 9999) readStream] raise: STBError!
 
-testRectangleReadWrite
-	| contents myRectangle answer |
-	myRectangle := 50 @ 50 extent: 200 @ 200.
-	contents := self checkSimpleReadWriteOf: myRectangle.
-	self assert: (contents includes: Rectangle).
-	self assert: (contents includes: Point).
-
-	"Check that muliple references are identical"
-	answer := self simpleReadWriteOf: (Array with: myRectangle with: myRectangle).
-	self assert: answer first equals: myRectangle.
-	self assert: answer first identicalTo: answer last!
-
-testResourceReadWrite
-	| rid shell shell1 shell2 in contents1 contents2 |
-	rid := ResourceIdentifier class: ClassBrowserShell name: 'Default view'.
-	
-	[shell := rid loadWithContext: View desktop.
-	contents1 := self writeLiteralsFor: shell.
-	in := STLInFiler on: contents1 readStream.
-	in context: View desktop.
-	shell1 := in next.
-	self assert: shell1 isKindOf: ShellView.
-	self assert: shell1 isOpen.
-	contents2 := self writeLiteralsFor: shell1.
-	in := STLInFiler on: contents2 readStream.
-	in context: View desktop.
-	shell2 := in next.
-	self assert: shell2 isKindOf: ShellView.
-	self assert: shell2 isOpen.
-	self assert: contents1 size equals: contents2 size]
-			ensure: 
-				[shell destroy.
-				shell1 destroy.
-				shell2 destroy]!
-
-testShellReadWrite
-	| shell1 shell2 |
-	shell1 := ShellView show.
-	[shell2 := self simpleReadWriteOf: shell1 context: View desktop] ensure: 
-			[shell1 destroy.
-			shell2 destroy].
-!
-
 testSymbolReadWrite
 	| contents deserialized data testSymbol |
 	testSymbol := 'testSymbol' asSymbol.
@@ -140,9 +97,6 @@ writeLiteralsFor: value
 !STLFilerTest categoriesFor: #testClassReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testIntegerReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testInvalidStream!public!unit tests! !
-!STLFilerTest categoriesFor: #testRectangleReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testSymbolReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #testSystemDictionaryReadWrite!public!unit tests! !
 !STLFilerTest categoriesFor: #writeLiteralsFor:!private!unit tests! !

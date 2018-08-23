@@ -7,7 +7,7 @@ Object subclass: #SessionManager
 	classInstanceVariableNames: ''!
 SessionManager guid: (GUID fromString: '{87b4c4b7-026e-11d3-9fd7-00a0cc3e4a32}')!
 SessionManager isAbstract: true!
-SessionManager addClassConstant: 'EmbeddingMask' value: 1!
+SessionManager addClassConstant: 'EmbeddingMask' value: 16r1!
 SessionManager comment: 'SessionManager is the class of objects responsible for managing the lifecyle of an application, from startup to shutdown. SessionManagers are also responsible for determining the global policy for dealing with unhandled Exceptions. 
 
 SessionManager itself is abstract, with two further abstract subclasses that divide applications into two groups: <ConsoleSessionManager> whose subclasses implement Console (that is, command line, DOS style) applications, and <GUISessionManager> whose subclasses implement GUI (that is, Windows) applications.

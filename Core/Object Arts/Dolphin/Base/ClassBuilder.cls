@@ -6,8 +6,8 @@ Object subclass: #ClassBuilder
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ClassBuilder guid: (GUID fromString: '{87b4c461-026e-11d3-9fd7-00a0cc3e4a32}')!
-ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 2!
-ClassBuilder addClassConstant: 'RecompileMask' value: 1!
+ClassBuilder addClassConstant: 'IgnoreInstsMask' value: 16r2!
+ClassBuilder addClassConstant: 'RecompileMask' value: 16r1!
 ClassBuilder comment: ''!
 !ClassBuilder categoriesForClass!System-Support! !
 !ClassBuilder methodsFor!

@@ -1,0 +1,47 @@
+﻿| package |
+package := Package name: 'ActiveX Automation Tests'.
+package paxVersion: 1;
+	basicComment: ''.
+
+
+package methodNames
+	add: #ExternalDescriptorTest -> #testComPtrs;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'ActiveX Automation';
+	add: '..\..\Base\Dolphin Base Tests';
+	add: '..\COM\OLE COM';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ExternalDescriptorTest methodsFor!
+
+testComPtrs
+	self
+		parseStructArg: IUnknown
+		valueType: ExtCallArgSTRUCT
+		refType: ExtCallArgCOMPTR.
+	self
+		parseStructArg: IDispatch
+		valueType: ExtCallArgSTRUCT
+		refType: ExtCallArgCOMPTR! !
+!ExternalDescriptorTest categoriesFor: #testComPtrs!public!unit tests! !
+
+"End of package definition"!
+
