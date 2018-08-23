@@ -1,4 +1,4 @@
-| package |
+﻿| package |
 package := Package name: 'ActiveX Tests'.
 package paxVersion: 1;
 	basicComment: ''.
@@ -9,7 +9,6 @@ package classNames
 	add: #AXEventSinkTest;
 	add: #AXTypeLibraryAnalyzerTest;
 	add: #COMInterfaceTest;
-	add: #IDispatchTest;
 	add: #TestTypelib;
 	add: #XmlFormatterTest;
 	yourself.
@@ -49,11 +48,6 @@ DolphinTest subclass: #AXTypeLibraryAnalyzerTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #COMInterfaceTest
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
