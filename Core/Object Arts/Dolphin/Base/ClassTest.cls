@@ -14,7 +14,6 @@ testClassPoolsWellFormed
 	"https://github.com/dolphinsmalltalk/Dolphin/issues/562"
 
 	| badPools |
-	self skip.	"Pending fix for #562"
 	badPools := Smalltalk allClasses reject: 
 					[:each |
 					each classPool class == PoolDictionary
