@@ -3,7 +3,7 @@
 
 param 
 (
-    [string]$VMversion="v7.1.1"
+    [string]$VMversion="v7.1.2"
 )
 
 # Override Powershell's default use of TLS1.0 for web requests; this is insecure and no longer works with GitHub
