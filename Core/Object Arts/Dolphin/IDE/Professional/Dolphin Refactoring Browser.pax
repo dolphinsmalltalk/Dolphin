@@ -221,6 +221,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\..\Contributions\Camp Smalltalk\Refactoring Browser\Refactorings\CSRefactorings';
 	add: '..\Base\Development System';
 	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
@@ -239,7 +240,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\MVP\Base\Dolphin Text Tile Icons';
+	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\MVP\Presenters\Tree\Dolphin Tree Presenter';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
