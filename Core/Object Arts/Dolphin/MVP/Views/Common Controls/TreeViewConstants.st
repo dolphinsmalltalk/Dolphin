@@ -49,6 +49,7 @@ TreeViewConstants at: 'TVM_EDITLABELW' put: 16r1141!
 TreeViewConstants at: 'TVM_ENSUREVISIBLE' put: 16r1114!
 TreeViewConstants at: 'TVM_EXPAND' put: 16r1102!
 TreeViewConstants at: 'TVM_GETCOUNT' put: 16r1105!
+TreeViewConstants at: 'TVM_GETEXTENDEDSTYLE' put: 16r112D!
 TreeViewConstants at: 'TVM_GETIMAGELIST' put: 16r1108!
 TreeViewConstants at: 'TVM_GETINDENT' put: 16r1106!
 TreeViewConstants at: 'TVM_GETITEMRECT' put: 16r1104!
@@ -59,6 +60,7 @@ TreeViewConstants at: 'TVM_HITTEST' put: 16r1111!
 TreeViewConstants at: 'TVM_INSERTITEMW' put: 16r1132!
 TreeViewConstants at: 'TVM_SELECTITEM' put: 16r110B!
 TreeViewConstants at: 'TVM_SETBKCOLOR' put: 16r111D!
+TreeViewConstants at: 'TVM_SETEXTENDEDSTYLE' put: 16r112C!
 TreeViewConstants at: 'TVM_SETIMAGELIST' put: 16r1109!
 TreeViewConstants at: 'TVM_SETINDENT' put: 16r1107!
 TreeViewConstants at: 'TVM_SETITEMW' put: 16r113F!
@@ -86,6 +88,8 @@ TreeViewConstants at: 'TVN_SINGLEEXPAND' put: -16r19F!
 TreeViewConstants at: 'TVS_CHECKBOXES' put: 16r100!
 TreeViewConstants at: 'TVS_DISABLEDRAGDROP' put: 16r10!
 TreeViewConstants at: 'TVS_EDITLABELS' put: 16r8!
+TreeViewConstants at: 'TVS_EX_DOUBLEBUFFER' put: 16r4!
+TreeViewConstants at: 'TVS_EX_FADEINOUTEXPANDOS' put: 16r40!
 TreeViewConstants at: 'TVS_FULLROWSELECT' put: 16r1000!
 TreeViewConstants at: 'TVS_HASBUTTONS' put: 16r1!
 TreeViewConstants at: 'TVS_HASLINES' put: 16r2!

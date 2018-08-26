@@ -446,7 +446,6 @@ package methodNames
 	add: 'Point3D class' -> #publishedAspectsOfInstances;
 	add: 'Presenter class' -> #addView:asResource:;
 	add: 'Presenter class' -> #editNewDefaultView;
-	add: 'Presenter class' -> #resource_Class_browser_filters;
 	add: 'ProgressBar class' -> #publishedAspectsOfInstances;
 	add: 'ProportionalLayout class' -> #publishedAspectsOfInstances;
 	add: 'ProtoObject class' -> #icon;
@@ -571,6 +570,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\System\Trace\Debug Trace Stream';
 	add: '..\..\Base\Dolphin';
 	add: '..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
@@ -3587,20 +3587,9 @@ editNewDefaultView
 	vc := Smalltalk developmentSystem openViewComposerEmpty.
 	vc
 		openOnCopyOf: self defaultResourceIdentifier;
-		resourceIdentifier: resourceIdentifier!
-
-resource_Class_browser_filters
-	"Answer the literal data from which the 'Class browser filters' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Class_browser_filters)
-	"
-
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.CardContainer) 34 16 nil 416 34 2 8 1140850688 131073 512 nil nil nil 5 nil nil nil 512 655878 ##(Smalltalk.CardLayout) 138 144 34 3 721414 ##(Smalltalk.Association) 8 'Categories' 410 ##(Smalltalk.TreeView) 34 27 nil 512 34 2 8 1140916771 1 688 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 524550 ##(Smalltalk.ColorRef) 8 4278190080 nil 29 265030 4 ##(Smalltalk.Menu) nil true 34 4 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #addMethodCategory 8 '&Add...' 1 1 nil nil nil 930 nil true 34 2 978 1 1010 #removeMethodCategory 8 'Category' 1 1 nil nil nil 978 1 1010 #removeMethodsInCategory 8 'Methods' 1 1 nil nil nil 8 'Remove' nil 1 nil nil nil nil nil 978 1 1010 #renameMethodCategory 8 'Rename...' 1 1 nil nil nil 978 1 1010 #browseMethodCategory 8 'Browse' 1 1 nil nil nil 8 'Categories' nil 134217729 nil nil nil nil nil nil nil 688 nil 8 1912658960 459270 ##(Smalltalk.Message) #localName 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil 787814 3 ##(Smalltalk.BlockClosure) 0 nil 1180966 ##(Smalltalk.CompiledExpression) 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx view presenter parentPresenter customDrawCategoryTree: ctx]' 8 #[33 105 226 0 159 160 17 179 106] #view #presenter #parentPresenter #customDrawCategoryTree: 1424 7 257 nil nil nil 170 176 864 17 #noIcons 1 170 ##(Smalltalk.PluggableLookupTable) 864 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 9 97 1666 395 187 688 1618 #contextMenu: 34 1 944 688 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 48 0 0 0 201 0 0 0 141 0 0 0] 8 #() 1666 193 193 nil 27 642 8 'Protocols' 410 ##(Smalltalk.ListView) 34 30 nil 512 34 2 8 1140936777 1 1856 590662 2 ##(Smalltalk.ListModel) 138 144 864 nil 800 882 912 nil 29 930 nil true 34 7 978 1 1010 #browseSelectorsInProtocol 8 '&Selectors' 1 1 nil nil nil 978 1 1010 #toggleProtocolReadOnly 8 '&Read Only' 1 1 nil nil nil 983366 1 ##(Smalltalk.DividerMenuItem) 4097 978 1 1010 #addMethodProtocol 8 '&Add...' 1 1 nil nil nil 930 nil true 34 2 978 1 1010 #removeMethodProtocol 8 'Protocol' 1 1 nil nil nil 978 1 1010 #removeMethodsInProtocol 8 'Methods' 1 1 nil nil nil 8 'Remove' nil 1 nil nil nil nil nil 978 1 1010 #renameMethodProtocol 8 'Rename...' 1 1 nil nil nil 978 1 1010 #browseMethodProtocol 8 'Browse' 1 1 nil nil nil 8 'Protocols' nil 134217729 nil nil nil nil nil nil nil 1856 nil 8 1912800272 1330 #name 8 #() ##(Smalltalk.IconicListAbstract) 1392 nil nil 1410 0 nil 1442 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx view presenter parentPresenter customDrawProtocols: ctx]' 8 #[33 105 226 0 159 160 17 179 106] #view #presenter #parentPresenter #customDrawProtocols: 2496 7 257 nil 1666 65 65 nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Protocols' 387 #left 1330 #name 8 #() ##(Smalltalk.SortedCollection) nil nil 1856 nil 3 nil 1410 0 nil 1442 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:ctx | ctx view presenter parentPresenter customDrawProtocols: ctx]' 8 #[33 105 226 0 159 160 17 179 106] #view #presenter #parentPresenter #customDrawProtocols: 2704 7 257 nil #report 864 nil 133217 nil 8 #(nil) 1554 138 144 34 3 1618 #createAt:extent: 34 2 1666 9 97 1666 395 187 1856 1618 #contextMenu: 34 1 1984 1856 1618 #text: 34 1 8 'Protocols' 1856 1746 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 48 0 0 0 201 0 0 0 141 0 0 0] 8 #() 1808 nil 27 642 8 'Variables' 410 ##(Smalltalk.ListView) 34 30 nil 512 34 2 8 1140920395 1 3072 1922 138 144 864 nil 800 882 912 nil 13 930 nil true 34 10 978 2097153 1010 #browseInstVarReferences 8 'Browse &References' 1 1 nil nil nil 2114 4097 978 1 1010 #addInstanceVariable 8 '&Add...' 1 1 nil nil nil 978 1 1010 #removeInstanceVariables 8 'Remo&ve' 1 1 nil nil nil 978 1 1010 #renameInstanceVariable 8 'Re&name' 1 1 nil nil nil 2114 4097 978 1 1010 #pushDownInstanceVariables 8 'Push &Down' 1 1 nil nil nil 978 1 1010 #createAccessors 8 '&Create Accessors' 1 1 nil nil nil 978 1 1010 #abstractInstanceVariables 8 'Ab&stract' 1 1 nil nil nil 978 1 1010 #protectInstanceVariables 8 '&Protect/Concrete' 1 1 nil nil nil nil nil 134217729 nil nil nil nil nil nil nil 3072 nil 8 1912800272 1330 #value 8 #() 1410 0 nil 1442 4 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a | a key icon imageIndex]' 8 #[32 105 17 158 159 160 106] #key #icon #imageIndex 3680 7 257 nil 1392 nil 1410 0 nil 1442 5 1 ##(Smalltalk.UndefinedObject) 8 'doIt' 8 '[:a | a key name, ''.'', a value]' 8 #[33 105 17 158 159 31 179 17 142 179 106] #key #name 8 '.' #, 3760 7 257 nil nil 1666 65 65 nil nil 138 144 34 1 2626 8 '' 201 #left ##(Smalltalk.BasicListAbstract) ##(Smalltalk.SortedCollection) nil nil 3072 nil 1 nil nil #list 864 nil 133217 nil 8 #(nil) 1554 138 144 34 2 1618 #createAt:extent: 34 2 1666 9 97 1666 395 187 3072 1618 #contextMenu: 34 1 3184 3072 1746 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 48 0 0 0 201 0 0 0 141 0 0 0] 8 #() 1808 nil 27 688 170 192 34 6 3072 8 'variables' 688 8 'categories' 1856 8 'protocols' nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 512 34 2 8 1140916736 1 4224 1922 138 144 34 3 672 1840 3056 nil 800 nil nil 1 nil nil nil 4224 nil 8 1912616880 1410 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 ##(Smalltalk.ListControlView) #defaultGetTextBlock 575230339 8 #[30 105 226 0 106] #displayString 4352 7 257 nil 1410 0 nil 4370 2 3 ##(Smalltalk.IconicListAbstract) #defaultGetImageBlock 579598755 8 #[30 105 226 0 106] #iconImageIndex 4416 7 257 nil 1392 nil nil nil nil nil #noIcons nil nil nil nil nil 1554 138 144 34 3 1618 #createAt:extent: 34 2 1666 1 1 1666 411 291 4224 1618 #basicSelectionsByIndex: 34 1 8 #(1) 4224 1618 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 4224 1746 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 205 0 0 0 145 0 0 0] 8 #() 1808 nil 27 1554 138 144 34 1 1618 #createAt:extent: 34 2 1666 1 1 1666 411 291 512 1746 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 205 0 0 0 145 0 0 0] 34 4 688 1856 3072 4224 1808 nil 27 170 192 34 2 512 8 'filters' nil 1554 138 144 34 1 1618 #createAt:extent: 34 2 1666 3839 21 1666 411 291 416 1746 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 76 8 0 0 155 0 0 0] 34 1 512 1808 nil 27 )! !
+		resourceIdentifier: resourceIdentifier! !
 !Presenter class categoriesFor: #addView:asResource:!operations!public! !
 !Presenter class categoriesFor: #editNewDefaultView!development!operations!public! !
-!Presenter class categoriesFor: #resource_Class_browser_filters!public!resources-views! !
 
 !Process methodsFor!
 
@@ -5677,13 +5666,13 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled) 
+	#(#hasLinesAtRoot #hasLines #hasButtons #canEditLabels #showsSelAlways #isMonoExpandable #hasInfoTips #hasCheckBoxes #isExpandAllEnabled #hasFullRowSelect)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects
 		add: (Aspect integer: #indentSeparation);
 		add: (Aspect choice: #updateMode from: UpdateModes);
 		yourself.
-	^aspects.! !
+	^aspects! !
 !TreeView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
 !TypeConverter class methodsFor!

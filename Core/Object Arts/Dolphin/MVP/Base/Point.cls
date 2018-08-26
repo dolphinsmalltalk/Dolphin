@@ -343,7 +343,7 @@ y: aNumber
 !Point class methodsFor!
 
 initialize
-	self addClassConstant: 'Zero' value: (self x: 0 y: 0)!
+	self addClassConstant: 'Zero' value: ((self x: 0 y: 0) isImmutable: true; yourself)!
 
 new
 	"Answer a new instance of the receiver equal to zero."
