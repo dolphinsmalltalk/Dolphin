@@ -113,11 +113,6 @@ isSymbol
 
 	^true!
 
-isUnary
-	"Answer whether the receiver is valid as an infix message selector."
-
-	^self argumentCount == 1!
-
 keywords
 	"Answer a <sequencedReadableCollection> of the receiver's keywords."
 
@@ -198,7 +193,6 @@ stbSaveOn: anSTBOutFiler
 !Symbol categoriesFor: #isAtomic!public! !
 !Symbol categoriesFor: #isInfix!public!testing! !
 !Symbol categoriesFor: #isSymbol!public!RefactoringBrowser! !
-!Symbol categoriesFor: #isUnary!public!testing! !
 !Symbol categoriesFor: #keywords!accessing!public! !
 !Symbol categoriesFor: #mutableCopy!copying!public! !
 !Symbol categoriesFor: #numArgs!accessing!public! !
