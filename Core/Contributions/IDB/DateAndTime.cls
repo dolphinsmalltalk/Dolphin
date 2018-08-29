@@ -298,7 +298,7 @@ subtractFromDateAndTime: aDateAndTime
 	that would be needed to comply with ANSI if performed in the order specified 
 	by the selector"
 
-	^Duration seconds: self asSecondsUTC - aDateAndTime asSecondsUTC!
+	^Duration seconds: aDateAndTime asSecondsUTC - self asSecondsUTC!
 
 timeZoneAbbreviation
 	"Answer a <readableString> which is the abbreviated  name of the month of 
