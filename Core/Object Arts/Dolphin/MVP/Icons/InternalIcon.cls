@@ -98,6 +98,9 @@ hotspot
 imageIndex
 	^Icon imageManager indexOfImage: self!
 
+imageManager
+	^Icon imageManager!
+
 imageType
 	^Win32Constants.IMAGE_ICON!
 
@@ -134,6 +137,7 @@ tileColor: aColor
 !InternalIcon categoriesFor: #hash!comparing!comparison!public! !
 !InternalIcon categoriesFor: #hotspot!accessing!public! !
 !InternalIcon categoriesFor: #imageIndex!accessing!public! !
+!InternalIcon categoriesFor: #imageManager!public! !
 !InternalIcon categoriesFor: #imageType!constants!public! !
 !InternalIcon categoriesFor: #tileBitmapWithExtent:!accessing!helpers!private! !
 !InternalIcon categoriesFor: #tileColor!accessing!private! !
