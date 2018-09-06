@@ -166,7 +166,9 @@ samplingCount
 samplingInterval
 	"Answer the average sampling interval achieved."
 
-	^self samplesElapsedTime // self samplesSize!
+	| count |
+	count := self samplesSize.
+	^count == 0 ifTrue: [0] ifFalse: [self samplesElapsedTime // count]!
 
 samplingIntervalString
 	| s |

@@ -71,7 +71,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
 	add: 'IDB Common';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!
