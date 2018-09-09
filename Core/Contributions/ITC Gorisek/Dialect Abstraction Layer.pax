@@ -117,7 +117,6 @@ package methodNames
 	add: #SequenceableCollection -> #at:add:;
 	add: #SequenceableCollection -> #doWithIndex:;
 	add: #SequenceableCollection -> #findLastElement:;
-	add: #SequenceableCollection -> #indexOf:startingAt:;
 	add: #SequencedStream -> #itcSkipToAll:;
 	add: #SequencedStream -> #itcUpToAll:;
 	add: #Socket -> #peerAddressString;
@@ -1052,18 +1051,10 @@ findLastElement: discriminator
 	Answer <nil> if none."
 
 	self reverseDo: [:each | (discriminator value: each) ifTrue: [^each]].
-	^nil!
-
-indexOf: target startingAt: start
-	"Answer the <integer> index of the first element of the receiver which is 
-	equal to the <Object> argument, target, within the receiver. If the receiver 
-	does not contain any elements equal to target, answer 0."
-
-	^self nextIndexOf: target from: start to: self size! !
+	^nil! !
 !SequenceableCollection categoriesFor: #at:add:!accessing!public!testing! !
 !SequenceableCollection categoriesFor: #doWithIndex:!enumerating!public! !
 !SequenceableCollection categoriesFor: #findLastElement:!converting!public! !
-!SequenceableCollection categoriesFor: #indexOf:startingAt:!public!searching! !
 
 !SequencedStream methodsFor!
 
