@@ -338,7 +338,6 @@
     <Image Include="Res\TestView.ico" />
     <Image Include="Res\TextDocument.ico" />
     <Image Include="Res\Toolbar.ico" />
-    <Image Include="Res\Toolbox.ico" />
     <Image Include="Res\UpArrow.ico" />
     <Image Include="Res\ViewContent.ico" />
     <Image Include="Res\ViewDetails.ico" />
@@ -347,10 +346,7 @@
     <Image Include="Res\ViewList.ico" />
     <Image Include="Res\ViewMediumSizedIcons.ico" />
     <Image Include="Res\ViewMode.ico" />
-    <Image Include="Res\ViewReportMode.ico" />
     <Image Include="Res\ViewSmallIcons.ico" />
-    <Image Include="Res\ViewThumbnails.ico" />
-    <Image Include="Res\ViewTileIcons.ico" />
     <Image Include="Res\ViewTiles.ico" />
     <Image Include="Res\WinImageList.ico" />
     <Image Include="Res\Find.ico" />
@@ -474,13 +470,9 @@
     <Image Include="Res\Splitter.ico" />
     <Image Include="Res\StaticImage.ico" />
     <Image Include="Res\StaticText.ico" />
-    <Image Include="Res\Status.ico" />
     <Image Include="Res\StepInto.ico" />
     <Image Include="Res\StepOut.ico" />
     <Image Include="Res\StepOver.ico" />
-    <Image Include="Res\String.ico" />
-    <Image Include="Res\SUnitAbsBrowser.ico" />
-    <Image Include="Res\symbol.ico" />
     <Image Include="Res\SystemBrowserShell.ico" />
     <Image Include="Res\SystemDictionary.ico" />
     <Image Include="Res\TabView.ico" />
@@ -504,8 +496,6 @@
     <Image Include="Res\UnitTestPluginNoTest.ico" />
     <Image Include="Res\UnitTestPluginNotRun.ico" />
     <Image Include="Res\UnitTestPluginPass.ico" />
-    <Image Include="Res\UnlockDialog.ico" />
-    <Image Include="Res\Up.ico" />
     <Image Include="Res\ValueAdaptor.ico" />
     <Image Include="Res\ValueBuffer.ico" />
     <Image Include="Res\ValueConverter.ico" />
