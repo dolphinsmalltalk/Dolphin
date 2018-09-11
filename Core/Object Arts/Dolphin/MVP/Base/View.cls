@@ -489,14 +489,14 @@ calcClientRectangleFromRectangle: aRectangle
 
 	| inflated |
 	inflated := self calcRectangleFromClientRectangle: aRectangle.
-	^0 @ 0 extent: aRectangle extent * 2 - inflated extent!
+	^0 @ 0 extent: aRectangle extent * ##(2@2) - inflated extent!
 
-calcExtentFromClientExtent: aPoint 
+calcExtentFromClientExtent: aPoint
 	"Private - Given a client extent represented by the <Point> argument, answer the external
 	view extent that would be required to achieve this taking into account the current window
 	styles etc."
 
-	^(self calcRectangleFromClientRectangle: (0 @ 0 corner: aPoint)) extent!
+	^(self calcRectangleFromClientRectangle: (Rectangle origin: Point.Zero corner: aPoint)) extent!
 
 calcRectangleFromClientRectangle: aRectangle 
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
@@ -2296,14 +2296,6 @@ onEraseRequired: aColorEvent
 					[aColorEvent canvas fillRectangle: self clientRectangle color: bkColor.
 					^true]].
 	^self eraseParentBackground: aColorEvent canvas!
-
-onFullyCreated
-	"Private - This method has been deprecated, but because it is frequently overridden it has been
-	retained in this release (D6) for backwards compability. In a future release it will be
-	removed. You should rename existing overrides to #onViewCreated, and implement that override
-	in any new classes you define."
-
-	!
 
 onGetCursor: aSymbol
 	"The named area of the window associated with the receiver has been hit.
@@ -4703,7 +4695,6 @@ zOrderTop
 !View categoriesFor: #onDrawItem:!event handling-win32!public! !
 !View categoriesFor: #onDrawMenuItem:!event handling-win32!public! !
 !View categoriesFor: #onEraseRequired:!event handling!public! !
-!View categoriesFor: #onFullyCreated!event handling!private! !
 !View categoriesFor: #onGetCursor:!event handling!public! !
 !View categoriesFor: #onHotKey:!event handling!public! !
 !View categoriesFor: #onHScroll:!event handling!public! !

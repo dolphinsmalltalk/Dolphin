@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #POINTF
+ExternalPoint subclass: #POINTF
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 POINTF guid: (GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
-POINTF comment: '<POINTF> is an <ExternalStructure> class to wrap the struct of the same name.
+POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 
-POINTF is a cartesian coordinate with single precision floating point x and y values.'!
+`POINTF` is a cartesian coordinate with single precision floating point x and y values.'!
 !POINTF categoriesForClass!External-Data-Structured! !
 !POINTF methodsFor!
 
@@ -51,6 +51,20 @@ defineFields
 
 	self
 		defineField: #x type: FLOATField new;
-		defineField: #y type: FLOATField new! !
+		defineField: #y type: FLOATField new!
+
+x: x y: y
+	"Answer a new instance of the receiver representing the Point whose 
+	cartesian coordinates are the arguments.
+	Implementation Note: For performance reasons avoid going through
+	all the <ExternalStructure> framework methods."
+
+	^self basicNew 
+		bytes: ((ByteArray newFixed: 8)
+				floatAtOffset: 0 put: x;
+				floatAtOffset: 4 put: y;
+				yourself)
+! !
 !POINTF class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!POINTF class categoriesFor: #x:y:!instance creation!public! !
 

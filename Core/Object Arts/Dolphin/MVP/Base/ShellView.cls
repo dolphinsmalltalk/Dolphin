@@ -614,14 +614,6 @@ onCloseRequested
 			^true].
 	^false!
 
-onCreated: anEvent 
-	"Handler for view creation. We set the view icons here rather than #onCreated as
-	the latter will not be received because it is delivered by WS_PARENTNOTIFY."
-
-	self updateIcons.
-	self lastFocus: nil.
-	^super onCreated: anEvent!
-
 onDrawMenuItem: aDRAWITEMSTRUCT 
 	| menu |
 	(menuBar isNil or: [(menu := menuBar menuFromHandle: aDRAWITEMSTRUCT hwndItem) isNil]) 
@@ -707,6 +699,13 @@ onViewActivated: anEvent
 				ifFalse: [focus setFocus]].
 	[self trigger: #viewActivated] postToMessageQueue.
 	^0!
+
+onViewCreated
+	"The receiver has just been fully created. This is a suitable place to perform
+	initialization of the window from the receiver's instance variables."
+
+	self lastFocus: nil.
+	self updateIcons!
 
 onViewDeactivated: anEvent
 	"Handler for de-activation. Remember the last focus within the receiver
@@ -986,12 +985,17 @@ updateIcons
 	"Private - Update the large and small icons of the receiver"
 
 	| actualLargeIcon |
-	actualLargeIcon := largeIcon notNil 
-		ifTrue: [ largeIcon ]
-		ifFalse: [ self icon ].
-	self sendMessage: WM_SETICON wParam: 1 lParam: actualLargeIcon asParameter.
-	smallIcon notNil ifTrue: [
-		self sendMessage: WM_SETICON wParam: 0 lParam: smallIcon asParameter ]!
+	actualLargeIcon := largeIcon notNil ifTrue: [largeIcon] ifFalse: [self presenter icon].
+	self
+		sendMessage: WM_SETICON
+		wParam: ICON_BIG
+		lParam: actualLargeIcon asParameter.
+	smallIcon notNil
+		ifTrue: 
+			[self
+				sendMessage: WM_SETICON
+				wParam: ICON_SMALL
+				lParam: smallIcon asParameter]!
 
 updateMenuBar
 	self releaseAccelerators.
@@ -1247,7 +1251,6 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #minimize!operations!public! !
 !ShellView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
 !ShellView categoriesFor: #onCloseRequested!event handling!public! !
-!ShellView categoriesFor: #onCreated:!event handling!public! !
 !ShellView categoriesFor: #onDrawMenuItem:!event handling-win32!public! !
 !ShellView categoriesFor: #onGetCursor:!event handling!public! !
 !ShellView categoriesFor: #onIdleEntered!event handling!public! !
@@ -1257,6 +1260,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #onSettingChanged:!event handling-win32!public! !
 !ShellView categoriesFor: #onSubViewRemoved:!event handling!public! !
 !ShellView categoriesFor: #onViewActivated:!event handling!public! !
+!ShellView categoriesFor: #onViewCreated!event handling!public! !
 !ShellView categoriesFor: #onViewDeactivated:!event handling!public! !
 !ShellView categoriesFor: #onViewMinimized:!event handling!public! !
 !ShellView categoriesFor: #onViewNcActivated:!event handling!public! !

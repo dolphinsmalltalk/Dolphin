@@ -184,6 +184,11 @@ instanceHandle: aHandle
 
 	instanceHandle := aHandle.		!
 
+isPersistent
+	"Private - Answer true if the receiver holds sufficient information such that it can recreate itself when the image is saved and restored. This is generally true for images if they have an identifier."
+
+	^identifier notNil!
+
 isShared
 	"Private - Answer true if the receiver is in the shared cache.
 	Shared images must be copied if they will be modified in any way."
@@ -272,6 +277,7 @@ printOn: aStream
 !Image categoriesFor: #imageType!constants!private!testing! !
 !Image categoriesFor: #instanceHandle!accessing!public! !
 !Image categoriesFor: #instanceHandle:!accessing!public! !
+!Image categoriesFor: #isPersistent!private!testing! !
 !Image categoriesFor: #isShared!private!testing! !
 !Image categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
 !Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !

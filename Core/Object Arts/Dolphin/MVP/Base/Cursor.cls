@@ -25,7 +25,7 @@ load: identifierObject fromInstance: hModule extent: aPoint
 		uType: self imageType
 		cxDesired: aPoint x
 		cyDesired: aPoint y
-		fuLoad: self loadFlags!
+		fuLoad: LR_SHARED!
 
 loadFromInstance: hModule
 	"Private - Attempts to load the receiver as a resource from an instance. 

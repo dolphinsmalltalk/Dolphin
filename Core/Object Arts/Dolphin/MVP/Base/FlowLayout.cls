@@ -30,7 +30,7 @@ alignment: aSymbol
 
 	flags := (flags maskClear: AlignmentMask) maskSet: (AlignmentMap at: aSymbol ifAbsent: [0])!
 
-flowSplit: aCompositeView context: aLayoutContext 
+flowSplit: aCompositeView context: aLayoutContext
 	"Private - Split the visible managed views in aContainerView into a sequenced collection of
 	lines. Each line is represented by an <Association>, the key of which is a <Point>
 	specifying the extent of the line i.e. its x-coordinate is the sum of the widths of the
@@ -38,31 +38,30 @@ flowSplit: aCompositeView context: aLayoutContext
 	height of the tallest item on that line. Note that the extent includes horizontal spacing
 	between items, but not any vertical spacing between lines."
 
-	| lines items maxWidth hgap subviews lineWidth lineHeight |
+	| lines items maxWidth subviews lineWidth lineHeight |
 	subviews := self visibleSubViewsOf: aCompositeView context: aLayoutContext.
 	subviews isEmpty ifTrue: [^#()].
 	lines := OrderedCollection new.
-	maxWidth := ((aLayoutContext clientRectangleOf: aCompositeView) 
+	maxWidth := ((aLayoutContext clientRectangleOf: aCompositeView)
 				insetBy: (aCompositeView actualInsets: aLayoutContext)) width.
-	hgap := self horizontalGap.
-	lineWidth := 0 - hgap.
+	lineWidth := 0 - horizontalGap.
 	lineHeight := 0.
 	items := OrderedCollection new.
 	subviews do: 
-			[:each | 
+			[:each |
 			| itemExtent |
 			itemExtent := each layoutExtent: aLayoutContext.
-			(items notEmpty and: [lineWidth + hgap + itemExtent x > maxWidth]) 
+			(items notEmpty and: [lineWidth + horizontalGap + itemExtent x > maxWidth])
 				ifTrue: 
 					["Break onto new line"
-					lines addLast: lineWidth @ lineHeight -> items.
+					lines addLast: {lineWidth @ lineHeight. items}.
 					items := OrderedCollection new.
-					lineWidth := 0 - hgap.
+					lineWidth := 0 - horizontalGap.
 					lineHeight := 0].
 			items addLast: each.
-			lineWidth := lineWidth + hgap + itemExtent x.
+			lineWidth := lineWidth + horizontalGap + itemExtent x.
 			lineHeight := lineHeight max: itemExtent y].
-	items notEmpty ifTrue: [lines addLast: lineWidth @ lineHeight -> items].
+	items notEmpty ifTrue: [lines addLast: {lineWidth @ lineHeight. items}].
 	^lines!
 
 horizontalAlignment
@@ -108,17 +107,18 @@ layoutContainer: aCompositeView context: aLayoutContext
 	(self flowSplit: aCompositeView context: aLayoutContext) inject: clientRect top
 		into: 
 			[:y :eachLine | 
-			| lineExtent |
-			lineExtent := eachLine key.
-			eachLine value inject: (calcX value: lineExtent x)
+			| lineExtent lineHeight |
+			lineExtent := eachLine at: 1.
+			lineHeight := lineExtent y.
+			(eachLine at: 2) inject: (calcX value: lineExtent x)
 				into: 
 					[:x :eachView | 
 					| extent |
 					extent := eachView layoutExtent: aLayoutContext.
 					aLayoutContext setView: eachView
-						rectangle: (x @ ((calcYOffset value: lineExtent y value: extent y) + y) extent: extent).
-					x + extent x + self horizontalGap].
-			y + lineExtent y + self verticalGap]!
+						rectangle: (x @ ((calcYOffset value: lineHeight value: extent y) + y) extent: extent).
+					x + extent x + horizontalGap].
+			y + lineHeight+ verticalGap]!
 
 preferredLayoutExtentOf: aCompositeView context: aLayoutContext 
 	"Answer a <Point> specifying the preferred extent for the <CompositeView> argument when
@@ -136,8 +136,8 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 	lines do: 
 			[:each | 
 			| lineExtent |
-			lineExtent := each key.
-			totalExtent y: totalExtent y + lineExtent y + self verticalGap.
+			lineExtent := each at: 1.
+			totalExtent y: totalExtent y + lineExtent y + verticalGap.
 			totalExtent x: (totalExtent x max: lineExtent x)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^totalExtent + insets origin + insets corner!

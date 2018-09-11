@@ -89,10 +89,6 @@ onPaintRequired: aPaintEvent
 	backSurface := backBitmap canvas.
 	self paintThemedBackgroundOn: backSurface in: pageRect.
 	self paintThemedTabsOn: backSurface offset: itemTransform.
-	tabOrientation == #top 
-		ifTrue: 
-			[self paintTabLabelsOn: backSurface.
-			backBitmap drawOn: canvas].
 	tabOrientation == #bottom 
 		ifTrue: 
 			[backBitmap 

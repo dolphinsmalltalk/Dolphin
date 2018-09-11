@@ -7,6 +7,8 @@ Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Euro
 
 
 package classNames
+	add: #ExternalPoint;
+	add: #ExternalRectangle;
 	add: #Point;
 	add: #Point3D;
 	add: #POINTL;
@@ -16,12 +18,20 @@ package classNames
 
 package methodNames
 	add: #Number -> #@;
+	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
+	yourself.
+
+package globalNames
+	add: #POINT;
+	add: #RECTL;
 	yourself.
 
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #POINT;
+	add: #RECTL;
 	yourself).
 
 package setPrerequisites: (IdentitySet new
@@ -37,12 +47,22 @@ Object subclass: #Rectangle
 	classVariableNames: 'Empty'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #POINTL
+ExternalStructure subclass: #ExternalPoint
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #RECT
+ExternalStructure subclass: #ExternalRectangle
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalPoint subclass: #POINTL
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -60,6 +80,10 @@ ArithmeticValue subclass: #Point3D
 
 "Global Aliases"!
 
+POINT := POINTL!
+
+RECTL := RECT!
+
 
 "Loose Methods"!
 
@@ -73,6 +97,13 @@ ArithmeticValue subclass: #Point3D
 
 	^Point x: self y: yCoord! !
 !Number categoriesFor: #@!converting!public! !
+
+!UserLibrary methodsFor!
+
+subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2 
+	<stdcall: bool SubtractRect RECT* RECT* RECT*>
+	^self invalidCall! !
+!UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 
 "End of package definition"!
 

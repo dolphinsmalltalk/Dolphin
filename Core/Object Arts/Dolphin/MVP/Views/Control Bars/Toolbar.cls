@@ -203,22 +203,20 @@ calculateExtent: aLayoutContext
 	"Implementation Note: Any suggested or existing extent is ignored. We calculate the extent
 	required to draw all the buttons, etc, in the toolbar."
 
-	| size verticalBugs dropDownBug |
+	| size |
 	size := self tbGetMaxSize.
 	"We need to workaround some Windows bugs: TB_GETMAXSIZE treats the height of a separator as
 	being the full bar height, regardless of whether horizontal or vertical. Another bug is it
-	not correctly allowing for the true width of drop down tool buttons. On older Windows
-	versions this was always the case, since XP the bug only applies in vertical mode."
-	verticalBugs := self isVertical.
-	dropDownBug := verticalBugs or: [VMLibrary default isWindowsXPOrGreater not].
-	verticalBugs | dropDownBug
+	not correctly allowing for the true width of drop down tool buttons. Since XP the bug has
+	only applied in vertical mode and we no longer support Windows versions earlier than Vista."
+	self isVertical
 		ifTrue: 
 			[| buttonWidth |
 			buttonWidth := self buttonSize x.
 			items do: 
 					[:each |
-					(verticalBugs and: [each isDivider]) ifTrue: [size y: size y - buttonWidth].
-					(dropDownBug and: [each isDropdownStyle])
+					each isDivider ifTrue: [size y: size y - buttonWidth].
+					each isDropdownStyle
 						ifTrue: 
 							[size x: size x + (each isDropDownOnly ifTrue: [buttonWidth // 3] ifFalse: [buttonWidth * 3 // 4])]]].
 	"The max size calculation does not include any indent."

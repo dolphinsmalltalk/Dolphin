@@ -113,7 +113,7 @@ asAlphaBitmap: aPoint
 	(self imageManager imageListWithExtent: aPoint) 
 		draw: self imageIndex
 		on: bmp canvas
-		at: Point zero
+		at: Point.Zero
 		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!
@@ -256,6 +256,9 @@ fontStyle
 
 fontStyle: aSymbol
 	fontStyle := aSymbol ifNotNil: [(FontStyleNames identityIndexOf: aSymbol) - 1]!
+
+freeDC
+	"For compatibility with the Image hierarchy"!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
@@ -421,6 +424,7 @@ tilecolor
 !TextTileIcon categoriesFor: #fontName!accessing!public! !
 !TextTileIcon categoriesFor: #fontStyle!accessing!public! !
 !TextTileIcon categoriesFor: #fontStyle:!accessing!public! !
+!TextTileIcon categoriesFor: #freeDC!public! !
 !TextTileIcon categoriesFor: #hash!comparison!public! !
 !TextTileIcon categoriesFor: #hotspot!accessing!public! !
 !TextTileIcon categoriesFor: #icon!accessing!public! !
