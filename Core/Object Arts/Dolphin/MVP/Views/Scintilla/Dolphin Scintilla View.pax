@@ -82,6 +82,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
 	add: '..\..\..\Base\Dolphin Additional Sort Algorithms';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\Presenters\Choice\Dolphin Choice Presenter';
 	add: '..\..\Presenters\Collection\Dolphin Collection Presenters';
