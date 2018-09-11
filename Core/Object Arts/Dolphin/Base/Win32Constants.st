@@ -378,6 +378,8 @@ Win32Constants at: 'HWND_MESSAGE' put: -16r3!
 Win32Constants at: 'HWND_NOTOPMOST' put: -16r2!
 Win32Constants at: 'HWND_TOP' put: 16r0!
 Win32Constants at: 'HWND_TOPMOST' put: -16r1!
+Win32Constants at: 'ICON_BIG' put: 16r1!
+Win32Constants at: 'ICON_SMALL' put: 16r0!
 Win32Constants at: 'IDABORT' put: 16r3!
 Win32Constants at: 'IDC_APPSTARTING' put: 16r7F8A!
 Win32Constants at: 'IDC_ARROW' put: 16r7F00!
@@ -422,6 +424,8 @@ Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
 Win32Constants at: 'LCMAP_TITLECASE' put: 16r300!
 Win32Constants at: 'LF_FACESIZE' put: 16r20!
 Win32Constants at: 'LF_FULLFACESIZE' put: 16r40!
+Win32Constants at: 'LIM_LARGE' put: 16r1!
+Win32Constants at: 'LIM_SMALL' put: 16r1!
 Win32Constants at: 'LINGUISTIC_IGNORECASE' put: 16r10!
 Win32Constants at: 'LINGUISTIC_IGNOREDIACRITIC' put: 16r20!
 Win32Constants at: 'LOAD_LIBRARY_AS_DATAFILE' put: 16r2!
@@ -438,6 +442,7 @@ Win32Constants at: 'LOCALE_SLANGUAGE' put: 16r2!
 Win32Constants at: 'LOCALE_SLIST' put: 16rC!
 Win32Constants at: 'LOCALE_SLONGDATE' put: 16r20!
 Win32Constants at: 'LOCALE_SMONTHNAME1' put: 16r38!
+Win32Constants at: 'LOCALE_SNAME' put: 16r5C!
 Win32Constants at: 'LOCALE_SSHORTDATE' put: 16r1F!
 Win32Constants at: 'LOCALE_STIME' put: 16r1E!
 Win32Constants at: 'LOCALE_STIMEFORMAT' put: 16r1003!

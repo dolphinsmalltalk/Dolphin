@@ -91,6 +91,7 @@ package classNames
 	add: #DTBGOPTS;
 	add: #DwmApiLibrary;
 	add: #Event;
+	add: #ExternalSize;
 	add: #FindDetails;
 	add: #FLASHWINFO;
 	add: #FlowLayout;
@@ -159,6 +160,7 @@ package classNames
 	add: #Pen;
 	add: #PluggableColor;
 	add: #PointEvent;
+	add: #POINTF;
 	add: #PositionEvent;
 	add: #Presenter;
 	add: #PrinterCanvas;
@@ -364,7 +366,6 @@ package methodNames
 	add: #UserLibrary -> #setWindowULong:nIndex:dwNewLong:;
 	add: #UserLibrary -> #setWindowULongPtr:nIndex:dwNewLong:;
 	add: #UserLibrary -> #showCursor:;
-	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
 	add: #UserLibrary -> #systemParametersInfo:uiParam:pvParam:fWinIni:;
 	add: #UserLibrary -> #trackMouseEvent:;
 	add: #UserLibrary -> #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:;
@@ -382,8 +383,6 @@ package globalNames
 	add: #ButtonConstants;
 	add: #CommCtrlConstants;
 	add: #HTMLHelpConstants;
-	add: #POINT;
-	add: #RECTL;
 	add: #SIZEL;
 	add: #ThemeConstants;
 	yourself.
@@ -392,8 +391,6 @@ package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
-	add: #POINT;
-	add: #RECTL;
 	add: #SIZEL;
 	yourself).
 
@@ -526,8 +523,8 @@ Object subclass: #Presenter
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth'
-	classVariableNames: 'Current FlatMenusMask IconScaleDownMask SmoothScrollingMask VistaMask'
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
+	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 Object subclass: #View
@@ -730,7 +727,22 @@ ExternalStructure subclass: #DEVMODE
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+ExternalStructure subclass: #ExternalSize
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalPoint subclass: #POINTF
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalSize subclass: #SIZE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -911,11 +923,6 @@ Win32Structure subclass: #RGNDATA
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #SCROLLINFO
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #SIZE
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -1277,10 +1284,6 @@ StaticText subclass: #StaticPath
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
-
-POINT := POINTL!
-
-RECTL := RECT!
 
 SIZEL := SIZE!
 
@@ -2956,10 +2959,6 @@ showCursor: aBoolean
 	<stdcall: sdword ShowCursor bool>
 	^self invalidCall!
 
-subtractRect: lprcDst lprcSrc1: lprcSrc1 lprcSrc2: lprcSrc2 
-	<stdcall: bool SubtractRect RECT* RECT* RECT*>
-	^self invalidCall!
-
 systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
 	"
 	BOOL SystemParametersInfo(
@@ -3193,7 +3192,6 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #showCursor:!public!win32 functions-cursor! !
-!UserLibrary categoriesFor: #subtractRect:lprcSrc1:lprcSrc2:!public!rectangle functions! !
 !UserLibrary categoriesFor: #systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 !UserLibrary categoriesFor: #trackMouseEvent:!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !

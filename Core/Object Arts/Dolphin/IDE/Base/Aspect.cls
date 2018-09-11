@@ -617,9 +617,8 @@ icon: anIconAspectSymbol
 						create: 'Basic image'
 						in: p
 						on: m.
-			ip view
-				isWholeBackgroundErased: true;
-				viewMode: #scaleBestFit.
+			ip view isWholeBackgroundErased: true.
+			(m value notNil and: [m value isPersistent not]) ifTrue: [ip view viewMode: #scaleBestFit].
 			ip]
 		editBlock: [:p | InternalIcon choose ifNotNil: [:icon | p value: icon]])
 		bePresenterBlockReadOnly;

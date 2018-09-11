@@ -1093,7 +1093,15 @@ exampleGdipGFromCanvas
 	"
 
 	| bmp canvas graphics |
-	bmp := self icon asAlphaBitmap: 256@256.
+	bmp := DIBSection
+				width: 256
+				height: 256
+				depth: 32.
+	canvas := bmp canvas.
+	self icon
+		drawOn: bmp canvas
+		at: 0 @ 0
+		extent: 256 @ 256.
 	canvas := bmp canvas.
 	graphics := GdiplusGraphics fromCanvas: canvas.
 	graphics drawString: 'Hi' at: 120 @ 120.

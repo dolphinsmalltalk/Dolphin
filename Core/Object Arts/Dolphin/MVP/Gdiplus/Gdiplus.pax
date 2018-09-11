@@ -213,7 +213,6 @@ package classNames
 	add: #GpWmfPlaceableFileHeader;
 	add: #GpWMFRect16;
 	add: #METAHEADER;
-	add: #POINTF;
 	add: #RECTF;
 	yourself.
 
@@ -243,6 +242,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\Base\Dolphin Basic Geometry';
 	add: '..\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\Presenters\Image\Dolphin Image Presenter';
 	add: '..\Models\List\Dolphin List Models';
@@ -360,12 +360,7 @@ ExternalStructure subclass: #METAHEADER
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #POINTF
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ExternalStructure subclass: #RECTF
+ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

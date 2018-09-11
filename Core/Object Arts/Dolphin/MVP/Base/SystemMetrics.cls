@@ -1,15 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #SystemMetrics
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth'
-	classVariableNames: 'Current FlatMenusMask IconScaleDownMask SmoothScrollingMask VistaMask'
+	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
+	classVariableNames: 'Current'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 SystemMetrics guid: (GUID fromString: '{e56cc456-8490-47f1-bd85-71118b110166}')!
-SystemMetrics addClassConstant: 'FlatMenusMask' value: 16rC!
-SystemMetrics addClassConstant: 'IconScaleDownMask' value: 16rC0!
-SystemMetrics addClassConstant: 'SmoothScrollingMask' value: 16r30!
-SystemMetrics addClassConstant: 'VistaMask' value: 16r3!
 SystemMetrics comment: 'SystemMetrics is a singleton class that provides a central service for accessing Windows configuration details such as the configurable aspects of the GUI''s appearance (height of title bars, fonts, etc). It has quite a large number of instance variables that cache information in order to avoid the expense of repeatedly querying it from the operating system.
 
 Instance Variables:
@@ -137,17 +133,17 @@ getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 hasButtonNotes
 	"Answer whether the host supports 'notes' for link buttons."
 
-	^self isVistaOrLater!
+	^isVistaOrLater!
 
 hasDesktopComposition
 	"Answer whether the host supports off-screen desktop composition,"
 
-	^self isVistaOrLater!
+	^isVistaOrLater!
 
 hasEnhancedThemes
 	"Answer whether the host supports enhanced desktop themes (Vista and later)."
 
-	^self isVistaOrLater!
+	^isVistaOrLater!
 
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
@@ -160,17 +156,13 @@ hasGdiPalettes
 	"Wine doesn't yet implement GDILibrary>>getPaletteEntries:"
 
 	#wineFix.
-	^NTLibrary isWine not!
+	^isNotWine!
 
 hasIconScaleDown
 	"Answer whether the host supports scaling down of larger icons when the requested size is
 	not available (as opposed to scaling up)."
 
-	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
-	availble under Vista and later. Hence we don't allow this to be called even if the Windows
-	version indicates Vista is available."
-
-	^self isVistaOrLater and: [NTLibrary isWine not]!
+	^hasIconScaleDown!
 
 hasImageListDragCursors
 	"Answer whether the host supports using image lists for drag cursors."
@@ -178,32 +170,32 @@ hasImageListDragCursors
 	"Wine doesn't appear to support setting drag cursors from image lists."
 
 	#wineFix.
-	^NTLibrary isWine not!
+	^isNotWine!
 
 hasInternetExplorerControl
 	"Answer whether the host provides an Internet Explorer control."
 
 	#wineFix.
-	^NTLibrary isWine not!
+	^isNotWine!
 
 hasLinkButtons
 	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
 	style)."
 
-	^self isVistaOrLater!
+	^isVistaOrLater!
 
 hasListViewGridLineScrollScarringBug
 	"Answer whether the host has MS bug 813791: 'Gridlines for list-view control are not drawn
 	correctly using the LVS_EX_GRIDLINES style' "
 
-	^(VMLibrary default isWindowsXPOrGreater and: [self isVistaOrLater not])
+	^(VMLibrary default isWindowsXPOrGreater and: [isVistaOrLater not])
 		and: [self hasSmoothScrollingLists]!
 
 hasMenuBitmaps
 	"Answer whether the host support direct setting of menu bitmaps through the menu item info
 	structure. If false they have to be provided through a callback."
 
-	^self isVistaOrLater!
+	^isVistaOrLater!
 
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
@@ -225,7 +217,7 @@ hasTextBoxMargins
 	"Wine doesn't yet implement EM_SETMARGINS "
 
 	#wineFix.
-	^NTLibrary isWine not!
+	^isNotWine!
 
 hasThemes
 	"Answer whether the host support desktop themes (XP and later)."
@@ -233,25 +225,34 @@ hasThemes
 	"Wine currently errors on theme APIs, so bypass"
 
 	#wineFix.
-	^NTLibrary isWine not!
+	^isNotWine!
 
 hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
 
-	^self isVistaOrLater!
+	^isVistaOrLater!
 
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
 
 	^iconTitleFont ifNil: [iconTitleFont := self getIconTitleFont]!
 
+initialize
+	"Private - "
+
+	"So many capabilities depend on these flag, we may as well query them immediately. These also cannot change because of a Windows settings change."
+
+	isVistaOrLater := VMLibrary default isWindowsVistaOrGreater.
+	isNotWine := NTLibrary isWine not.
+	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
+	availble under Vista and later. Hence we don't allow this to be called even if the Windows
+	version indicates Vista is available."
+	hasIconScaleDown := isVistaOrLater & isNotWine!
+
 isSlowMachine
 	"Answer true if this machine is judged to be slow."
 
 	^(self getMetric: SM_SLOWMACHINE) ~~ 0!
-
-isVistaOrLater
-	^isVistaOrLater ifNil: [isVistaOrLater := VMLibrary default isWindowsVistaOrGreater]!
 
 largeIconExtent
 	"Answer a <Point> that gives the dimensions of a large size icon."
@@ -432,8 +433,8 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #hasThemes!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasTreeViewHotTracking!capability enquiries!public! !
 !SystemMetrics categoriesFor: #iconTitleFont!geometry!public! !
+!SystemMetrics categoriesFor: #initialize!initializing!private! !
 !SystemMetrics categoriesFor: #isSlowMachine!public!testing! !
-!SystemMetrics categoriesFor: #isVistaOrLater!capability enquiries!private! !
 !SystemMetrics categoriesFor: #largeIconExtent!constants!public! !
 !SystemMetrics categoriesFor: #menuBarColor!constants!public! !
 !SystemMetrics categoriesFor: #menuBarHeight!constants!public! !
@@ -466,15 +467,11 @@ virtualScreenRectangle
 current
 	"Answer the current instance of the receiver."
 
-	Current isNil ifTrue: [Current := self basicNew].
+	Current isNil ifTrue: [Current := self basicNew initialize].
 	^Current!
 
-initialize
-	self
-		addClassConstant: 'VistaMask' value: 2r11;
-		addClassConstant: 'FlatMenusMask' value: 2r1100;
-		addClassConstant: 'SmoothScrollingMask' value: 2r110000;
-		addClassConstant: 'IconScaleDownMask' value: 2r11000000!
+new
+	^self shouldNotImplement!
 
 onPreStripImage
 	self reset!
@@ -489,7 +486,7 @@ uninitialize
 
 	self reset! !
 !SystemMetrics class categoriesFor: #current!instance creation!public! !
-!SystemMetrics class categoriesFor: #initialize!public! !
+!SystemMetrics class categoriesFor: #new!instance creation!public! !
 !SystemMetrics class categoriesFor: #onPreStripImage!event handling!public! !
 !SystemMetrics class categoriesFor: #reset!initializing!public! !
 !SystemMetrics class categoriesFor: #uninitialize!class hierarchy-removing!private! !

@@ -48,7 +48,7 @@ asAlphaBitmap: aPoint
 	(self class imageManager imageListWithExtent: aPoint) 
 		draw: self imageIndex
 		on: bmp canvas
-		at: Point zero
+		at: Point.Zero
 		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!
