@@ -1590,6 +1590,26 @@ defaultInspectorClass
 defaultInspectorClass: toolClass 
 	defaultInspectorClass := toolClass!
 
+defaultMaxStack
+	"Answer the default maximum stack size for a newly forked <Process>, expressed in 'K' (i.e. units of 1024 slots).
+	This represents the maximum number of slots (each of 4-bytes in a 32-bit VM) that can be allocated in the stack. 
+	The memory space is reserved and then allocated on demand if the stack grows to require it. Normally the stack 
+	will remain physically small, and increasing this maximum size will not directly impact physical memory usage. 
+	On the other hand each Process forked will block out the required maximum from the available virtual memory
+	space, so making this value large rwill consume more of the available 4Gb address space.
+	The minimum recommended size is 32K - less than that and recursive algorithms may hit the limit too easily. 
+	The maximum recommended size is 128K - more than that, and virtual memory limits will be hit too quickly when
+	forking a large number of processes.
+	Note that this is only the default size allocated when forking a process without specifying a different size."
+
+	^(Process classPool at: 'DefaultMaxStack') // 1024!
+
+defaultMaxStack: anInteger
+	"Set the default maximum stack size for a newly forked <Process>, expressed in 'K' (i.e. units of 1024 slots).
+	See #defaultMaxStack for further details."
+
+	Process.DefaultMaxStack := anInteger * 1024!
+
 defaultMethodCategories
 	"Answer an <collection> of the default method categories associated with new
 	methods when there is no other sensible set."
@@ -1948,7 +1968,12 @@ initialize
 
 	"Default break key for interrupting non-responding operations during development."
 	self interruptHotKey: (AcceleratorTable keyCodeFromString: 'CTRL+F12').
-	self initializeArgumentClasses!
+	self initializeArgumentClasses.
+
+	"Choose a default maximum stack size that is a compromise between not being overly 
+	small for recursive algorithms, and not too greedy with virtual memory space. 64K
+	slots will mean that each process reserves 256Kb of virtual address space."
+	self defaultMaxStack: 64!
 
 initializeArgumentClasses
 	argumentClasses := Set new.
@@ -4282,6 +4307,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #defaultFont:!accessing!options!public! !
 !SmalltalkSystem categoriesFor: #defaultInspectorClass!options!public! !
 !SmalltalkSystem categoriesFor: #defaultInspectorClass:!options!public! !
+!SmalltalkSystem categoriesFor: #defaultMaxStack!accessing!public! !
+!SmalltalkSystem categoriesFor: #defaultMaxStack:!accessing!public! !
 !SmalltalkSystem categoriesFor: #defaultMethodCategories!accessing!public! !
 !SmalltalkSystem categoriesFor: #defaultPackage!accessing!public! !
 !SmalltalkSystem categoriesFor: #defaultPackage:!accessing!public! !
@@ -4596,6 +4623,9 @@ publishedAspectsOfInstances
 					choice: #toolbarBitmapSize
 					from: ##({16@16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
 					andNil: nil);
+		add: (Aspect 
+				choice: #defaultMaxStack
+				from: #(32 64 96 128));
 		yourself!
 
 publishedEventsOfInstances

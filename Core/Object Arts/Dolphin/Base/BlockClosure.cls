@@ -278,7 +278,7 @@ fork
 	priority processes in the Ready state, and the receiver is at the front of the
 	queue of Ready Processes at its priority)."
 
-	^self newProcess resume!
+	^self forkMaxStack: nil!
 
 forkAt: anInteger
 	"Evaluate the receiver in a new process at the priority specified by the argument, anInteger. 
@@ -288,9 +288,26 @@ forkAt: anInteger
 	the current active process. N.B. Do not rely on the latter behaviour, as it may change in
 	a future release. Answer the new process."
 
-	^(self newProcess) 
-		priority: anInteger;
+	^self forkAt: anInteger maxStack: nil!
+
+forkAt: priorityInteger maxStack: slotsInteger
+	"Evaluate the receiver in a new process at the priority specified by the argument,
+	priorityInteger, reserving a maximum stack size of slotsInteger slots (i.e. spaces to hold
+	references to objects, not the number of bytes). Answer the new Process."
+
+	^(self newProcess: slotsInteger)
+		priority: priorityInteger;
 		resume!
+
+forkMaxStack: slotsInteger
+	"Create and schedule a new Process at the same priority as the current active process.
+	The new Process will be placed on the end of the queue of processes of the same priority in 
+	the Ready state (i.e. the current active process continues to run). Answer the new Process.
+	The new Process will run when it gets its turn (i.e. when there are no higher
+	priority processes in the Ready state, and the receiver is at the front of the
+	queue of Ready Processes at its priority)."
+
+	^(self newProcess: slotsInteger) resume!
 
 frameClass
 	"Private - Answer the class of <StackFrame> to represent activations of the
@@ -376,17 +393,19 @@ millisecondsToRepeat: anInteger
 
 	^Time millisecondsToRun: [ anInteger timesRepeat: [self value]]!
 
-newProcess
+newProcess: anIntegerOrNil
 	"Answer a new, suspended, <Process> which will evaluate the receiver, and terminate 
 	when and if the code in the receiver returns. The default 'name' given to the process 
 	is the home method - this is useful for debugging because it allows one to locate the source 
-	(e.g. Process name getSource) to determine what the process is doing."
+	(e.g. Process name getSource) to determine what the process is doing. The integer argument
+	specifies the maximum stack size in bytes. If nil, then the default maximum stack size is used."
 
 	^(Process forContext: [ 
 			self on: ProcessTermination do: [:e | e return].
 			"^-return catches attempt to drop off bottom of process stack (which would cause a GPF)"
 			^Processor activeProcess shutdown]
-		priority: Processor activePriority)
+		priority: Processor activePriority
+		maxStack: anIntegerOrNil)
 		name: self method;
 		yourself
 !
@@ -395,7 +414,7 @@ newProcessWithArguments: anArray
 	"Answer a new process which will evaluate the receiver with arguments
 	from anArray, then terminate"
 
-	^[self valueWithArguments: anArray] newProcess!
+	^[self valueWithArguments: anArray] newProcess: nil!
 
 numArgs
 	^self argumentCount!
@@ -746,6 +765,8 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #envTempCount:!accessing!development!private! !
 !BlockClosure categoriesFor: #fork!public!scheduling! !
 !BlockClosure categoriesFor: #forkAt:!public!scheduling! !
+!BlockClosure categoriesFor: #forkAt:maxStack:!public!scheduling! !
+!BlockClosure categoriesFor: #forkMaxStack:!public!scheduling! !
 !BlockClosure categoriesFor: #frameClass!constants!private! !
 !BlockClosure categoriesFor: #home!accessing!private! !
 !BlockClosure categoriesFor: #ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
@@ -758,7 +779,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #method!accessing!private! !
 !BlockClosure categoriesFor: #method:!accessing!private! !
 !BlockClosure categoriesFor: #millisecondsToRepeat:!development!public! !
-!BlockClosure categoriesFor: #newProcess!public!scheduling! !
+!BlockClosure categoriesFor: #newProcess:!public!scheduling! !
 !BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
 !BlockClosure categoriesFor: #numArgs!accessing!public! !
 !BlockClosure categoriesFor: #on:do:!debugger-step through!exceptions!public! !
