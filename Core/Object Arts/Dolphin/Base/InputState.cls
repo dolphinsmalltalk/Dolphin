@@ -144,7 +144,8 @@ forkIdler
 					ifCurtailed: 
 						["If the idler terminates for some reason, start another"
 						Processor activeProcess == idler ifTrue: [self forkIdler]]] 
-					forkAt: Processor systemBasePriority)
+					forkAt: Processor systemBasePriority
+					maxStack: 16384)
 				name: 'Idler';
 				yourself!
 

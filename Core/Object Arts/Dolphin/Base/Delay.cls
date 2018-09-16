@@ -256,20 +256,23 @@ forkTimingProcess
 	A separate timing Process is used with a single semaphore because the VM can maintain 
 	only a single timer, and because this allows for better management of Delays."
 
-	AccessProtect critical: [	
-		self cancelTimer.
-		self initializeTimingSemaphore.
-		TimingProcess isNil ifFalse: [TimingProcess terminate].
-		Current isNil ifFalse: [Current snooze].		"put current back into Pending"
-		self scheduleNext.
-	].
-	TimingProcess := ([
-		[
-			TimingSemaphore wait.		"Wait for a timeout to be signalled by VM" 
-			AccessProtect critical: [
-				Current isNil ifFalse: [Current riseAndShine].
-				self scheduleNext]] repeat.
-	] forkAt: Processor timingPriority) name: 'Timing'; yourself!
+	AccessProtect critical: 
+			[self cancelTimer.
+			self initializeTimingSemaphore.
+			TimingProcess isNil ifFalse: [TimingProcess terminate].
+			Current isNil ifFalse: [Current snooze].	"put current back into Pending"
+			self scheduleNext].
+	TimingProcess := (
+			[
+			[TimingSemaphore wait.
+			AccessProtect critical: 
+					[Current isNil ifFalse: [Current riseAndShine].
+					self scheduleNext]]
+					repeat]
+					forkAt: Processor timingPriority
+					maxStack: 16384)
+				name: 'Timing';
+				yourself!
 
 forMicroseconds: anInteger
 	"Answer a new instance of the receiver with a duration of approximately anInteger
