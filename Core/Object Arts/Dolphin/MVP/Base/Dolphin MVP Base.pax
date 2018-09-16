@@ -343,6 +343,8 @@ package methodNames
 	add: #UserLibrary -> #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:;
 	add: #UserLibrary -> #sendMessage:msg:wParam:lpParam:;
 	add: #UserLibrary -> #sendMessage:msg:wpParam:lpParam:;
+	add: #UserLibrary -> #sendMessageU:msg:wParam:lParam:;
+	add: #UserLibrary -> #sendMessageU:msg:wParam:lpParam:;
 	add: #UserLibrary -> #setCapture:;
 	add: #UserLibrary -> #setClassLong:nIndex:dwNewLong:;
 	add: #UserLibrary -> #setClipboardData:hMem:;
@@ -2684,6 +2686,18 @@ sendMessage: aWindowHandle msg: msg wpParam: wParam lpParam: lParam
 	<stdcall: intptr SendMessageW handle dword lpvoid lpvoid>
 	^self invalidCall !
 
+sendMessageU: aWindowHandle msg: msg wParam: wParam lParam: lParam
+	"As sendMessage:msg:wParam:lParam:, but returns an unsigned integer."
+
+	<stdcall: uintptr SendMessageA handle dword uintptr uintptr>
+	^self invalidCall!
+
+sendMessageU: aWindowHandle msg: msg wParam: wParam lpParam: lParam
+	"As sendMessage:msg:wParam:lpParam, but returns an unsigned integer."
+
+	<stdcall: uintptr SendMessageA handle dword uintptr lpvoid>
+	^self invalidCall !
+
 setCapture: aWindowHandle
 	"Set the mouse capture to the specified window. Once a window has captured the mouse, it receivers all
 	mouse input (unless a button is down while the mouse if over another thread's window).
@@ -3169,6 +3183,8 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
 !UserLibrary categoriesFor: #sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
+!UserLibrary categoriesFor: #sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
+!UserLibrary categoriesFor: #sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
 !UserLibrary categoriesFor: #setCapture:!public!win32 functions-mouse input! !
 !UserLibrary categoriesFor: #setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
 !UserLibrary categoriesFor: #setClipboardData:hMem:!public!win32 functions-clipboard! !
