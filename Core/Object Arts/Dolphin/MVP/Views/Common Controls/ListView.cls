@@ -1331,13 +1331,12 @@ lvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
 	 Answer the receiver's previous WinImagelist."
 
-	^WinImageList fromHandle: 
-		(self 
-			sendMessage: LVM_SETIMAGELIST 
-			wParam: anIntegerImageType 
-			lParam: aWinImageList asParameter) asParameter
-
-	!
+	^WinImageList
+		fromHandle: (UserLibrary default
+				sendMessageU: handle
+				msg: LVM_SETIMAGELIST
+				wParam: anIntegerImageType
+				lParam: aWinImageList asParameter) asParameter!
 
 lvmSetItem: anLvItem
 	"Private - Set some or all of the receivers default attributes as 

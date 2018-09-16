@@ -518,9 +518,9 @@ signedFromUnsigned: anInteger
 	argument. Use the VM's external call primitive to perform the conversion very quickly."
 
 	<stdcall: sdword AnswerDWORD dword>
-	^anInteger isInteger
+	^anInteger highBit > 32
 		ifTrue: [self errorIntegerMoreThan32Bits: anInteger]
-		ifFalse: [self invalidCall]!
+		ifFalse: [(16r80000000 + anInteger bitAnd: 16rFFFFFFFF) - 16r80000000]!
 
 specialSelectors
 	"Private - Answer all special messages that have their own individual bytecodes.
