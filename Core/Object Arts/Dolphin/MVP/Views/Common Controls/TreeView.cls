@@ -54,8 +54,9 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 									tvItem
 										image: index - 1;
 										selectedImage: index - 1]].
-					hItem := self
-								sendMessage: TVM_INSERTITEMW
+					hItem := UserLibrary default
+								sendMessageU: handle
+								msg: TVM_INSERTITEMW
 								wParam: 0
 								lpParam: aTVINSERTSTRUCT.
 					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
@@ -77,7 +78,7 @@ addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 					[:each |
 					| hItem |
 					hItem := user
-								sendMessage: handle
+								sendMessageU: handle
 								msg: TVM_INSERTITEMW
 								wParam: 0
 								lpParam: aTVINSERTSTRUCT.
@@ -1024,19 +1025,22 @@ tvmGetItemRect: aHandle textOnly: aBoolean
 tvmGetNextItem: aHandle code: anInteger
 	"Private - Send TVM_GETNEXTITEM with anInteger and aHandle to the tree view."
 
-	^self sendMessage: TVM_GETNEXTITEM wParam: anInteger lParam: aHandle!
+	^UserLibrary default
+		sendMessageU: handle
+		msg: TVM_GETNEXTITEM
+		wParam: anInteger
+		lParam: aHandle!
 
 tvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
 	 Answer the receiver's previous WinImagelist."
 
-	^WinImageList fromHandle: 
-		(self 
-			sendMessage: TVM_SETIMAGELIST
-			wParam: anIntegerImageType
-			lParam: aWinImageList asParameter) asParameter
-
-	!
+	^WinImageList
+		fromHandle: (UserLibrary default
+				sendMessageU: handle
+				msg: TVM_SETIMAGELIST
+				wParam: anIntegerImageType
+				lParam: aWinImageList asParameter) asParameter!
 
 tvmSetItem: aTvItem
 	"Private - Answer the boolean result of sending the receiver a TVM_SETITEM message."
