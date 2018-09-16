@@ -404,6 +404,27 @@ testForkedBlockHomeFrame
 	[self assertIsNil: Processor activeProcess topFrame homeFrame] fork.
 	Processor sleep: 10!
 
+testLargeAddress
+
+	| blocks sem1 sem2 result proc |
+	blocks := OrderedCollection new: 3000.
+	"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
+	[[blocks addLast: (Array new: 1 max: 1024*1024*128). true] on: OutOfMemoryError do: [:ex | false]] whileTrue.
+	"Reserve enough Process sized blocks of virtual memory to start pushing allocations beyond the 2Gb boundary"
+	[ | block |
+	block := (Process new: 1 max: Process.DefaultMaxStack).
+	blocks addLast: block.
+	block yourAddress <= 16r7FFFFFFF] whileTrue.
+	"Now fork a process in large address space"
+	sem1 := Semaphore new.
+	sem2 := Semaphore new.
+	proc := [ sem1 wait. result := 200 factorial. sem2 signal] fork.
+	self assert: proc yourAddress >= 16r7FFFFFFF.
+	self assert: proc basicSuspendedFrame class equals: SmallInteger.
+	sem1 signal.
+	sem2 wait.
+	self assert: result equals: 200 factorial!
+
 testOverlappedErrno
 	self assert: (CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
 	self assert: Processor activeProcess errno equals: 2!
@@ -503,6 +524,7 @@ testUnwindFromForeignProcess
 !ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
 !ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !
+!ProcessTest categoriesFor: #testLargeAddress!public!unit tests! !
 !ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
 !ProcessTest categoriesFor: #testOverlappedLastError!public!unit tests! !
 !ProcessTest categoriesFor: #testSchedulerTermination!public!tests! !

@@ -667,12 +667,14 @@ new: numSmallInteger max: maxSmallInteger
 	Primitive failure reasons:
 		0 -	numSmallInteger is not a <SmallInteger> or is negative.
 		1 -	maxSmallInteger is not <SmallInteger> or is negative.
-		2 -	the receiver's instances are not indexable."
+		2 -	the receiver's instances are not indexable.
+		3 - 	the receiver is non-instantiable
+		4 -	there was insufficient virtual address space available to reserve the requested maximum size, or insufficient free memory to commit the initial size"
 
 	<primitive: 90>
 	self isFixed ifTrue: [^Error notIndexable: self].
 	self isNonInstantiable ifTrue: [^self errorNonInstantiable].
-	^self primitiveFailed!
+	^OutOfMemoryError signal!
 
 newFixed: aSmallInteger
 	"Answer an instance of the receiver of size aSmallInteger bytes (this method is 
