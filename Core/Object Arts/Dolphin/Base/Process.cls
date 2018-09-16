@@ -553,7 +553,11 @@ spOfIndex: anInteger
 	"Private - Answer a VM stack pointer value (SmallInteger) for the specified index of the
 	receiver."
 
-	^(self yourAddress bitShift: -1) + ((anInteger + self class instSize - 1) * 2)!
+	| sp |
+	sp := (self yourAddress bitShift: -1) + ((anInteger + self class instSize - 1) * 2).
+	"The result must always be a SmallInteger, or the VM will not interpret the stack pointer correctly and may crash,
+	this means the SP value can be negative when interpreted as a signed value"
+	^(16r40000000 + sp bitAnd: 16r7FFFFFFF) + -16r40000000!
 
 stackTrace: anInteger
 	"Private - Answer a <readableString> containing a stack trace to the depth specified by the <integer>
