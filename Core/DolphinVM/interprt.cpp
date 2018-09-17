@@ -577,11 +577,8 @@ int Interpreter::interpreterExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 		break;
 
 	case STATUS_NO_MEMORY:
-		if (PleaseTrapGPFs())
-		{
-			sendExceptionInterrupt(VMI_NOMEMORY, pExInfo);
-			action = EXCEPTION_EXECUTE_HANDLER;
-		}
+		sendExceptionInterrupt(VMI_NOMEMORY, pExInfo);
+		action = EXCEPTION_EXECUTE_HANDLER;
 		break;
 
 	case EXCEPTION_INT_DIVIDE_BY_ZERO:

@@ -18,6 +18,7 @@
 #define IDP_ZCTRESERVEFAIL              518
 #define IDP_ZCTCOMMITFAIL               519
 #define IDP_BADSYSINFO                  520
+#define IDP_OUTOFVIRTUALMEMORY          521
 #define IDP_FAILTOCREATEVMWND           522
 #define IDP_CORRUPTIMAGE                524
 #define IDP_IMAGEREADERROR              525

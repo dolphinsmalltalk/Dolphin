@@ -131,8 +131,9 @@ void __cdecl DebugCrashDump(LPCWSTR szFormat, ...);
 void __cdecl DebugDump(LPCWSTR szFormat, ...);
 HRESULT __cdecl ReportError(int nPrompt, ...);
 HRESULT __cdecl ReportWin32Error(int nPrompt, DWORD errorCode, LPCWSTR arg = NULL);
-void __cdecl RaiseFatalError(int nCode, int nArgs, ...);
+__declspec(noreturn) void __cdecl RaiseFatalError(int nCode, int nArgs, ...);
 __declspec(noreturn) void __stdcall FatalException(const EXCEPTION_RECORD& exRec);
+__declspec(noreturn) void __stdcall DolphinFatalExit(int exitCode, const char* msg);
 void __stdcall DolphinExit(int nExitCode);
 
 BOOL __stdcall GetVersionInfo(VS_FIXEDFILEINFO* lpInfoOut);
