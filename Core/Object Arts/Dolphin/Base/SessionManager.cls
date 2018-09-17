@@ -170,10 +170,6 @@ basicTertiaryStartup
 
 	^self subclassResponsibility!
 
-bootInfo
-	"The default behaviour is no boot info."
-	^ nil.!
-
 clearSessionState
 	"Clear any state saved down for a image save which is will not be required until that saved image is
 	rehydrated."
@@ -1109,7 +1105,6 @@ windowsDirectory
 !SessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
 !SessionManager categoriesFor: #basicStdioStreams!accessing!private! !
 !SessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!SessionManager categoriesFor: #bootInfo!patching!public! !
 !SessionManager categoriesFor: #clearSessionState!operations!public! !
 !SessionManager categoriesFor: #closeConsole!operations!public! !
 !SessionManager categoriesFor: #closeConsoleStreams!operations!public! !
