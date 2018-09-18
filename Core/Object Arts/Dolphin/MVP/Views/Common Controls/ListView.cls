@@ -141,14 +141,12 @@ applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
 	| largeImList smallImList |
-	self imageManager 
-		ifNotNil: 
-			[:im | 
-			largeImList := im imageListWithExtent: self largeIconExtent.
-			smallImList := im imageListWithExtent: Icon smallExtent].
-	self viewMode == #thumbnails 
-		ifTrue: [largeImList := self thumbnailsImageManager imageListWithExtent: self thumbnailExtent]
-		ifFalse: [thumbnailsImageManager := nil].
+	largeImList := self customImageExtent
+				ifNotNil: [:ext | self thumbnailsImageManager imageListWithExtent: ext]
+				ifNil: 
+					[thumbnailsImageManager := nil.
+					self imageManager ifNotNil: [:im | im imageListWithExtent: self largeIconExtent]].
+	smallImList := self imageManager ifNotNil: [:im | im imageListWithExtent: Icon smallExtent].
 	self lvmSetImageList: smallImList type: LVSIL_SMALL.
 	self lvmSetImageList: largeImList type: LVSIL_NORMAL!
 
@@ -494,6 +492,11 @@ customDrawSubItem: context
 				column: column;
 				evaluateDrawBlock: custom]!
 
+customImageExtent
+	viewMode == #thumbnails ifTrue: [^self thumbnailExtent].
+	viewMode == #extraLargeIcons ifTrue: [^Icon extraLargeExtent].
+	^nil!
+
 defaultListViewExStyle
 	"Private - Answer the default ListView extended style. 
 	This is only available with IE4 common controls."
@@ -641,7 +644,7 @@ getSingleSelection
 	!
 
 getThumbnailOf: anObject 
-	^self thumbnailsImageManager addImage: anObject extent: self thumbnailExtent!
+	^self thumbnailsImageManager addImage: anObject extent: self customImageExtent!
 
 hasBorderSelect
 	"Answer whether the receiver displays selected by changing the border colour of an item
@@ -769,6 +772,9 @@ hasInfoTips: aBoolean
 
 	^self listViewStyleMask: LVS_EX_INFOTIP set: aBoolean!
 
+hasLargeImages
+	^viewMode == #thumbnails or: [viewMode == #extraLargeIcons]!
+
 hasPrimaryColumnImages
 	^(self isReportMode and: [self hasColumnImages]) 
 		ifTrue: [self primaryColumn getImageBlock notNil]
@@ -834,7 +840,7 @@ imageFromRow: item
 	As of Dolphin 3.0 the image block is permitted to be nil for the common case
 	where the list does not have images."
 
-	self viewMode == #thumbnails ifTrue: [^self getThumbnailOf: item].
+	self hasLargeImages ifTrue: [^self getThumbnailOf: item].
 	NTLibrary isWine
 		ifTrue: 
 			["Wine ListViews seem to expect image indices to always be set in
@@ -2155,14 +2161,15 @@ textFromRow: item
 !
 
 thumbnailExtent
-	thumbnailExtent isNil ifTrue: [^self defaultThumbnailExtent].
-	^thumbnailExtent!
+	^thumbnailExtent ifNil: [self defaultThumbnailExtent]!
 
 thumbnailExtent: aPointOrNil
-	thumbnailExtent := aPointOrNil!
+	thumbnailExtent := aPointOrNil = self defaultThumbnailExtent ifFalse: [aPointOrNil]!
 
 thumbnailsImageManager
-	"Private - Answer the <ImageManager> containing images for the thumnails view of the receiver"
+	"Private - Answer the  private <ImageManager> containing images for the large images size modes of the receiver.
+	A private image manager is used to avoid bloating the default IconImageManager with large images for every
+	icon that is rendered in a control that uses image lists."
 
 	thumbnailsImageManager isNil 
 		ifTrue: 
@@ -2228,23 +2235,25 @@ updateSelectionCache
 viewMode
 	"Answer the view mode of the receiver.
 	This can be one of: 
-		#smallIcon	- 16x16 icon, (LVS_SMALLICONS)
+		#smallIcon		- 16x16 icon, (LVS_SMALLICONS)
 		#largeIcons	- 32x32 icon, (LVS_ICON)
-		#tileIcons	- 48x48 icon, (LVS_ICON)
-		#thumbnails - custom size (LVS_ICON) 
+		#tileIcons		- 48x48 icon, (LVS_ICON)
+		#thumbnails 	- custom size, default 64x64 (LVS_ICON) 
 		#extraLargeIcons - 256x256 (LVS_ICON)
-		#list		- 16x16 icon, fixed columnar arrangement(LVS_LIST)
+		#list			- 16x16 icon, fixed columnar arrangement(LVS_LIST)
 		#report		- 16x16 icons, multi-column view, normally with column headers (LVS_REPORT)"
 
 	^viewMode!
 
 viewModeChanged
-	| style newIconExtent |
-	viewMode == #largeIcons ifTrue: [newIconExtent := Icon largeExtent].
-	viewMode == #tileIcons ifTrue: [newIconExtent := Icon tileExtent].
-	viewMode == #extraLargeIcons ifTrue: [newIconExtent := Icon extraLargeExtent].
-	viewMode == #thumbnails ifTrue: [newIconExtent := self thumbnailExtent].
-	newIconExtent ifNil: [self applyImageLists] ifNotNil: [self largeIconExtent: newIconExtent].
+	| style |
+	(self customImageExtent
+		ifNil: 
+			[viewMode == #largeIcons
+				ifTrue: [Icon largeExtent]
+				ifFalse: [viewMode == #tileIcons ifTrue: [Icon tileExtent]]])
+			ifNil: [self applyImageLists]
+			ifNotNil: [:ext | self largeIconExtent: ext].
 	style := LvModes at: viewMode ifAbsent: [LVS_REPORT].
 	self
 		baseStyle: style
@@ -2309,6 +2318,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #columnsList:!columns!public! !
 !ListView categoriesFor: #customDrawContextClass!constants!private! !
 !ListView categoriesFor: #customDrawSubItem:!event handling!private! !
+!ListView categoriesFor: #customImageExtent!accessing!private! !
 !ListView categoriesFor: #defaultListViewExStyle!accessing-styles!constants!private! !
 !ListView categoriesFor: #defaultThumbnailExtent!constants!private! !
 !ListView categoriesFor: #defaultWindowStyle!constants!private! !
@@ -2345,6 +2355,7 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #hasHotTracking:!accessing-styles!public! !
 !ListView categoriesFor: #hasInfoTips!accessing-styles!public! !
 !ListView categoriesFor: #hasInfoTips:!accessing-styles!public! !
+!ListView categoriesFor: #hasLargeImages!private!testing! !
 !ListView categoriesFor: #hasPrimaryColumnImages!private!testing! !
 !ListView categoriesFor: #hasSortHeaders!accessing-styles!public! !
 !ListView categoriesFor: #hasSortHeaders:!accessing-styles!public! !
