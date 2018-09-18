@@ -1,4 +1,4 @@
-version: $(APPVEYOR_REPO_TAG_NAME)
+version: v7.0.57.{build}
 skip_non_tags: true
 image: Visual Studio 2017
 configuration: Release
