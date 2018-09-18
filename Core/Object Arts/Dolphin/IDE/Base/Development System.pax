@@ -461,7 +461,6 @@ package methodNames
 	add: 'ResourceIdentifier class' -> #publishedAspectsOfInstances;
 	add: 'RichTextEdit class' -> #publishedAspectsOfInstances;
 	add: 'RichTextPresenter class' -> #publishedEventsOfInstances;
-	add: 'RuntimeSessionManager class' -> #deploy:;
 	add: 'ScalarField class' -> #icon;
 	add: 'ScintillaAttribute class' -> #publishedAspectsOfInstances;
 	add: 'ScintillaIndicatorStyle class' -> #publishedAspectsOfInstances;
@@ -4109,48 +4108,6 @@ publishedEventsOfInstances
 		add: #linkClicked:;
 		yourself! !
 !RichTextPresenter class categoriesFor: #publishedEventsOfInstances!development!events!public! !
-
-!RuntimeSessionManager class methodsFor!
-
-deploy: fileName 
-	"Create an application image with a new instance of this class installed as
-	its <RuntimeSessionManager>. For example:
-
-		HelloWorldSessionManager deploy: 'HelloWorld'
-	or
-		RegEditSessionManager deploy: 'DRegEdit'
-
-	The image can be run by Dolphin.exe (e.g. by double-clicking the .img file).
-	Note that because the application is started by Dolphin.exe the first command
-	line argument will be the image path.
-
-	N.B. The resulting image is for personal use only as it will include all the 
-	development system classes, which must NOT be shipped to third parties.
-	Dolphin Professional has the ability to create true executable (.EXE) applications 
-	which are of a minimal size (<500Kb for Hello World) that can be legally 
-	shipped to third parties. Dolphin Pro can also create console (command line)
-	applications."
-
-	| sesh path devSesh |
-	SessionManager current saveImage.
-	(self inputState)
-		destroyAllWindows;
-		pumpMessages;
-		processDeferredActions;
-		purgeDeadWindows.
-	devSesh := self installNew.
-	sesh := SessionManager current.
-	path := File fullPathOf: (File default: fileName extension: devSesh imageExtension).
-	sesh saveImage: path.
-	MessageBox 
-		notify: ('<1s> application image saved to <2p>. The image can be launched by Dolphin.exe.
-
-N.B. The resulting application is for personal use only and must NOT be shipped to third parties because it contains the development classes.' 
-				expandMacrosWith: sesh applicationName
-				with: path)
-		caption: self name.
-	sesh quit! !
-!RuntimeSessionManager class categoriesFor: #deploy:!development!public! !
 
 !ScalarField methodsFor!
 
