@@ -2894,7 +2894,7 @@ publishedAspectsOfInstances
 		add: (Aspect position: #backImageOffset);
 		add: (Aspect integer: #backImageAlphaPercent) beImmutable;
 		add: (Aspect name: #iconSpacing chooseFrom: #('32@32'));
-		add: (Aspect name: #thumbnailExtent chooseFrom: #('32@32' '48@48' '64@64' '96@96' '128@128'));
+		add: (Aspect name: #thumbnailExtent chooseFrom: #('64@64' '96@96' '128@128'));
 		add: (Aspect sequenceableCollection: #columnOrder) beImmutable;
 		add: (Aspect sequenceableCollection: #columnsList
 					addEvaluationFrom: (Array with: self columnClass name , ' new')) beImmutable;

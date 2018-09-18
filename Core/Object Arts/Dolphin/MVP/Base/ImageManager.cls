@@ -142,7 +142,7 @@ newImageListWithExtent: aPoint
 
 	^(WinImageList
 		newExtent: aPoint
-		initialSize: images size
+		initialSize: (images size max: 16)
 		masked: maskcolor notNil)
 		backcolor: backcolor;
 		yourself!
