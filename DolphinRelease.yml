@@ -1,0 +1,34 @@
+version: v7.1.2.{build}
+skip_non_tags: true
+image: Visual Studio 2017
+configuration: Release
+clone_depth: 1
+install:
+- cmd: "git submodule update --init --recursive\n   \ngit lfs pull"
+before_build:
+- cmd: choco install innosetup -y -version 5.5.2 --allow-empty-checksums
+build:
+  project: Core\DolphinVM\DolphinVM.sln
+  verbosity: minimal
+after_build:
+- cmd: >-
+    Core\DolphinVM\AppVeyorZIPDolphinVM
+
+    BootDPRO
+
+    set PATH="C:\Program Files (x86)\Inno Setup 5";%PATH%
+
+    iscc BuildDolphin7Setup.iss
+artifacts:
+- path: Releases\Dolphin7Setup\Dolphin7Setup.exe
+  name: SetupExe
+- path: DolphinVM.zip
+  name: DolphinVM
+- path: DolphinPdbs.zip
+  name: DolphinPdbs
+deploy:
+- provider: GitHub
+  auth_token:
+    secure: nI7qHVzc64UJLC/OqZZFLCAe6hzyK1o6kvvuo8PDeZgJNq3rTHmZjLP+/00l5QJf
+  artifact: SetupExe,DolphinVM,DolphinPdbs
+  draft: true
