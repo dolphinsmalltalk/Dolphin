@@ -156,6 +156,9 @@ asFloat
 	<primitive: 168>
 	^self primitiveFailed!
 
+asStackPointer
+	^self!
+
 at: index put: value
 	"Replace the receivers indexed instance variable at the argument, index, with the argument,
 	value. Not valid for immediate, objects which are constants. Do not remove this method, as
@@ -465,6 +468,7 @@ yourAddress
 !SmallInteger categoriesFor: #allMask:!bit manipulation!public! !
 !SmallInteger categoriesFor: #anyMask:!bit manipulation!public! !
 !SmallInteger categoriesFor: #asFloat!converting!public! !
+!SmallInteger categoriesFor: #asStackPointer!converting!private! !
 !SmallInteger categoriesFor: #at:put:!accessing!public! !
 !SmallInteger categoriesFor: #basicAt:!accessing!private! !
 !SmallInteger categoriesFor: #basicAt:put:!accessing!private! !

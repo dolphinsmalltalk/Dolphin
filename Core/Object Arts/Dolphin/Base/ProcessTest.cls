@@ -405,25 +405,69 @@ testForkedBlockHomeFrame
 	Processor sleep: 10!
 
 testLargeAddress
-
-	| blocks sem1 sem2 result proc |
+	| blocks sem1 sem2 result proc value copy1 copy2 frame expected |
 	blocks := OrderedCollection new: 3000.
 	"Start by blocking out a few large chunks (mainly just to speed up the test a bit)"
-	[[blocks addLast: (Array new: 1 max: 1024*1024*128). true] on: OutOfMemoryError do: [:ex | false]] whileTrue.
+	
+	[
+	[blocks addLast: (Array new: 1 max: 1024 * 1024 * 128).
+	true] on: OutOfMemoryError
+			do: [:ex | false]]
+			whileTrue.
 	"Reserve enough Process sized blocks of virtual memory to start pushing allocations beyond the 2Gb boundary"
-	[ | block |
-	block := (Process new: 1 max: Process.DefaultMaxStack).
+	
+	[| block |
+	block := Process new: 1 max: Process.DefaultMaxStack.
 	blocks addLast: block.
-	block yourAddress <= 16r7FFFFFFF] whileTrue.
+	block yourAddress <= 16r7FFFFFFF]
+			whileTrue.
 	"Now fork a process in large address space"
 	sem1 := Semaphore new.
 	sem2 := Semaphore new.
-	proc := [ sem1 wait. result := 200 factorial. sem2 signal] fork.
+	value := {nil}.
+	proc := 
+			[
+			sem1 wait.
+			"Deliberately assign to an outer temp to ensure there is a Context to copy"
+			result := 200 factorial.
+			value at: 1 put: result.
+			sem2 signal]
+					fork.
 	self assert: proc yourAddress >= 16r7FFFFFFF.
 	self assert: proc basicSuspendedFrame class equals: SmallInteger.
+	copy1 := proc copy.
+	self assert: copy1 yourAddress > proc yourAddress.
+	self assert: copy1 basicSuspendedFrame class equals: SmallInteger.
+	frame := copy1 topFrame.
+	self assert: frame basicSP class equals: SmallInteger.
+	self assert: frame basicBP class equals: SmallInteger.
+	self assert: frame basicSender class equals: SmallInteger.
+	blocks := nil.
+	MemoryManager current
+		collectGarbage;
+		administerLastRites.
+	copy2 := proc copy.
+	self assert: copy2 yourAddress < proc yourAddress.
+	self assert: copy2 basicSuspendedFrame class equals: SmallInteger.
+	frame := copy2 topFrame.
+	self assert: frame basicSP class equals: SmallInteger.
+	self assert: frame basicBP class equals: SmallInteger.
+	self assert: frame basicSender class equals: SmallInteger.
 	sem1 signal.
 	sem2 wait.
-	self assert: result equals: 200 factorial!
+	expected := 200 factorial.
+	self assert: result equals: expected.
+	self assert: value first equals: expected.
+	value at: 1 put: nil.
+	sem1 signal.
+	copy1 resume.
+	sem2 wait.
+	self assert: value first equals: expected.
+	value at: 1 put: nil.
+	sem1 signal.
+	copy2 resume.
+	sem2 wait.
+	self assert: value first equals: expected!
 
 testOverlappedErrno
 	self assert: (CRTLibrary nonblocking chmod: '' pmode: 0) < 0.
