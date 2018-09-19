@@ -107,7 +107,7 @@ acceptProcessCopier: aProcessCopier
 	^aProcessCopier copyObject: self!
 
 deepenProcessCopy: aProcessCopier 
-	(outer isInteger and: [outer ~~ 0]) ifTrue: [outer := outer + aProcessCopier delta].
+	(outer isInteger and: [outer ~~ 0]) ifTrue: [outer := (outer + aProcessCopier delta) asStackPointer].
 	block := aProcessCopier visit: block.
 	"Visit the shared variables in case referring to an object that must be copied"
 	1 to: self size do: [:i | self at: i put: (aProcessCopier visit: (self at: i))]! !
@@ -202,9 +202,9 @@ rebase: aProcessCopier
 	| senderAddress delta |
 	delta := aProcessCopier delta.
 	senderAddress := self basicSender.
-	senderAddress == 0 ifFalse: [self basicSender: senderAddress + delta].
-	self basicSP: self basicSP + delta.
-	self basicBP: self basicBP + delta! !
+	senderAddress == 0 ifFalse: [self basicSender: (senderAddress + delta) asStackPointer].
+	self basicSP: (self basicSP + delta) asStackPointer.
+	self basicBP: (self basicBP + delta) asStackPointer! !
 !StackFrame categoriesFor: #copyStack!copying!public! !
 !StackFrame categoriesFor: #rebase:!copying!public! !
 

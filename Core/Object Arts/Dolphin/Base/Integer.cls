@@ -180,6 +180,13 @@ asSDword
 
 	^VMLibrary default signedFromUnsigned: self!
 
+asStackPointer
+	"Private - Answer a <SmallInteger> value which can be stored into a stack slot and which will be
+	correctly interpreted by the VM when processing stack frames as a pointer to the value at
+	the address represented by the receiver."
+
+	^(16r40000000 + self bitAnd: 16r7FFFFFFF) + -16r40000000!
+
 asUIntPtr
 	"Answer the receiver as an unsigned double word value. Assumes the receiver is 
 	a 32 bit integer.
@@ -758,6 +765,7 @@ truncated
 !Integer categoriesFor: #asResourceId!converting!public! !
 !Integer categoriesFor: #asScaledDecimal:!converting!public! !
 !Integer categoriesFor: #asSDword!converting!public! !
+!Integer categoriesFor: #asStackPointer!converting!private! !
 !Integer categoriesFor: #asUIntPtr!converting!public! !
 !Integer categoriesFor: #at:!accessing!public! !
 !Integer categoriesFor: #basicPrintDigitsOn:base:!printing!private! !
