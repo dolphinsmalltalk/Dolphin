@@ -678,13 +678,16 @@ onSetFocus
 
 onValueChangedIn: aColumn
 
+	|activeEditorModelIndex|
+	"We keep the index in case of the view being hidden"
+	activeEditorModelIndex := self activeEditorModelIndex.
 	"If the list changed whilst the editor was active the change may be invalid - in this case we set the row being edited to zero"
-	self activeEditorModelIndex > 0 ifFalse: [^self].
+	activeEditorModelIndex > 0 ifFalse: [^self].
 
-	aColumn updateValueIn: self activeEditorModel.
+	aColumn updateValueIn: (self list at: activeEditorModelIndex).
 
 	"attempt to ensure that changes are triggered off the list model"
-	self model refreshAtIndex: self activeEditorModelIndex!
+	self model refreshAtIndex: activeEditorModelIndex!
 
 onViewOpened
 
