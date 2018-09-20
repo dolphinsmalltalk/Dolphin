@@ -286,6 +286,15 @@ forkWaiterOn: s sharing: anIdentityDictionary
 	anIdentityDictionary at: #state put: (anIdentityDictionary at: #state) + 1] 
 			forkAt: Processor userInterruptPriority!
 
+testAsStackPointer
+	{0 -> 0.
+		-1 -> -1.
+		SmallInteger maximum -> SmallInteger maximum.
+		SmallInteger minimum -> SmallInteger minimum.
+		SmallInteger maximum + 1 -> ((SmallInteger maximum + 1) bitInvert + 1).
+		SmallInteger minimum - 1 -> ((SmallInteger minimum - 1) bitInvert - 1).
+		16rFFFFFFFF // 2 -> -1} do: [:pair | self assert: pair key asStackPointer equals: pair value]!
+
 testCopy
 	| sem shared |
 	sem := Semaphore new.
@@ -563,6 +572,7 @@ testUnwindFromForeignProcess
 !ProcessTest categoriesFor: #assertStackFrame:isCopyOf:visited:!helpers!private! !
 !ProcessTest categoriesFor: #forkNested:!helpers!private! !
 !ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
+!ProcessTest categoriesFor: #testAsStackPointer!public!unit tests! !
 !ProcessTest categoriesFor: #testCopy!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
 !ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
