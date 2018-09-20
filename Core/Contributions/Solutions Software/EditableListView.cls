@@ -123,7 +123,7 @@ activeEditorCellRect
 	"Outside the current list? Invalidate the whole column"
 	(editorCoords x between: 1 and: self itemCount) ifFalse: [^self activeColumn rectangle].
 
-	cellRect  := self lvmGetSubItemRect: (editorCoords - (1@1)) bounding: LVIR_LABEL.	
+	cellRect  := self lvmGetSubItemRect: editorCoords x - 1 subitem: editorCoords y - 1 bounding: LVIR_LABEL.	
 
 	"Take off default icon spacing added to primary columnn (we handle this ourselves)"
 	(editorCoords y = 1 and: [self hasRowImage or: [self hasColumnImages]]) 
@@ -629,7 +629,7 @@ onLeftButtonPressed: aMouseEvent
 	itemCoords := (itemStruct iItem @ itemStruct iSubItem) + (1@1).
 
 	"If clicked the icon, then select only"
-	((self columnAtIndex: itemCoords y) hasColumnImage and: [(self lvmGetSubItemRect: (itemCoords - (1@1)) bounding: LVIR_ICON) containsPoint: point]) ifTrue: 
+	((self columnAtIndex: itemCoords y) hasColumnImage and: [(self lvmGetSubItemRect: itemStruct iItem subitem: itemStruct iSubItem bounding: LVIR_ICON) containsPoint: point]) ifTrue: 
 		[self enableRedraw. 
 		^super onLeftButtonPressed: aMouseEvent].
 
@@ -895,7 +895,8 @@ updateHotItem: nowHot
 			((self allColumns size >= pt y) and: [(self allColumns at: pt y) hasHotTracking]) ifTrue: 
 				[self invalidateRect: 
 					(self 
-						lvmGetSubItemRect: (pt - (1@1)) "0-based indexing"
+						lvmGetSubItemRect: pt x - 1 "0-based indexing"
+						subitem: pt y - 1
 						bounding: LVIR_BOUNDS)]]]!
 
 visibleColumns
