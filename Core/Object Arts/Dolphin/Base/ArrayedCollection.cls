@@ -196,6 +196,11 @@ size
 
 !
 
+sort
+	"Perform an in-place sort of the contents of the receiver using the default sort algorithm and sort order, which is defined by the result of sending #<= to pairs of elements."
+
+	self sortUsing: self class defaultSortAlgorithm!
+
 sortUsing: aSortAlgorithm
 	"Perform an in-place sort against the receiver using the specified sort algorithm"
 	
@@ -222,6 +227,7 @@ sortUsing: aSortAlgorithm
 !ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !
 !ArrayedCollection categoriesFor: #resize:!mutating!public! !
 !ArrayedCollection categoriesFor: #size!accessing!public! !
+!ArrayedCollection categoriesFor: #sort!public!sorting! !
 !ArrayedCollection categoriesFor: #sortUsing:!public!sorting! !
 
 !ArrayedCollection class methodsFor!

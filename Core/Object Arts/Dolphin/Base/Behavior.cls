@@ -89,9 +89,7 @@ addSubclass: aClass
 	(subs identityIndexOf: aClass) == 0
 		ifTrue: 
 			["Maintain the array in sorted order as saves sorting on access"
-			subclasses := (subs asSortedCollection
-						add: aClass;
-						yourself) asArray]!
+			subclasses := (subs copyWith: aClass) sort]!
 
 addToSuper
 	"Private - Add the receiver to its superclasses' subclass collection."

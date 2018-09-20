@@ -334,11 +334,6 @@ caseSensitiveSortBlock
 
 	^[:a :b | (a trueCompare: b) <= 0]!
 
-defaultSortAlgorithm
-	"Answer an instance of the default <SortAlgorithm>."
-
-	^DefaultSortAlgorithm current!
-
 defaultSortBlock
 	"Answer a <dyadicValuable> that implements the default sort-order relationship."
 
@@ -385,7 +380,6 @@ withNilsSortBlock
 	^[:a :b | a isNil ifTrue: [true] ifFalse: [b isNil ifTrue: [false] ifFalse: [a <= b]]]
 ! !
 !SortedCollection class categoriesFor: #caseSensitiveSortBlock!constants!public! !
-!SortedCollection class categoriesFor: #defaultSortAlgorithm!instance creation!public! !
 !SortedCollection class categoriesFor: #defaultSortBlock!constants!public! !
 !SortedCollection class categoriesFor: #new:!instance creation!public! !
 !SortedCollection class categoriesFor: #sortAlgorithm:!instance creation!public! !
