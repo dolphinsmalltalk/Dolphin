@@ -184,13 +184,6 @@ hasLinkButtons
 
 	^isVistaOrLater!
 
-hasListViewGridLineScrollScarringBug
-	"Answer whether the host has MS bug 813791: 'Gridlines for list-view control are not drawn
-	correctly using the LVS_EX_GRIDLINES style' "
-
-	^(VMLibrary default isWindowsXPOrGreater and: [isVistaOrLater not])
-		and: [self hasSmoothScrollingLists]!
-
 hasMenuBitmaps
 	"Answer whether the host support direct setting of menu bitmaps through the menu item info
 	structure. If false they have to be provided through a callback."
@@ -426,7 +419,6 @@ virtualScreenRectangle
 !SystemMetrics categoriesFor: #hasImageListDragCursors!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasInternetExplorerControl!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasLinkButtons!capability enquiries!public! !
-!SystemMetrics categoriesFor: #hasListViewGridLineScrollScarringBug!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasMenuBitmaps!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasSmoothScrollingLists!capability enquiries!public! !
 !SystemMetrics categoriesFor: #hasTextBoxMargins!capability enquiries!public! !
