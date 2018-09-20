@@ -1827,16 +1827,6 @@ onViewCreated
 	self refreshContents.
 	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing]!
 
-onVScroll: aScrollEvent 
-	"Handler for a vertical scroll event. Workaround MS bug 813791: 'Gridlines for list-view
-	control are not drawn correctly using the LVS_EX_GRIDLINES style' This is relevant when
-	running on XP only, with smooth scrolling enabled."
-
-	(aScrollEvent endScroll 
-		and: [self hasGridLines and: [SystemMetrics current hasListViewGridLineScrollScarringBug]]) 
-			ifTrue: [self invalidate].
-	^super onVScroll: aScrollEvent!
-
 primaryColumn
 	"Private - Answer the primary column for the report view mode"
 
@@ -2475,7 +2465,6 @@ wantCustomDrawItemNotifications: pNMHDR
 !ListView categoriesFor: #onSelChanging:cause:!event handling!private! !
 !ListView categoriesFor: #onSelRemoved!public!selection! !
 !ListView categoriesFor: #onViewCreated!event handling!public! !
-!ListView categoriesFor: #onVScroll:!event handling!public! !
 !ListView categoriesFor: #primaryColumn!columns!private! !
 !ListView categoriesFor: #primarySelectionIndex!public!selection! !
 !ListView categoriesFor: #queryCommand:!commands!public! !

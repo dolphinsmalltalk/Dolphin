@@ -14,29 +14,18 @@ package classNames
 	yourself.
 
 package methodNames
-	add: #ListView -> #drawGridlines;
-	add: #ListView -> #drawGridlinesOn:;
-	add: #ListView -> #drawHorizontalGridlinesOn:from:to:by:;
-	add: #ListView -> #drawVerticalGridlinesOn:from:to:;
 	add: #ListView -> #fullItemFromPoint:;
 	add: #ListView -> #getHeaderControl;
-	add: #ListView -> #hasVirtualGridLines;
-	add: #ListView -> #hasVirtualGridLines:;
 	add: #ListView -> #headerControl;
 	add: #ListView -> #headerRect;
 	add: #ListView -> #hideToolTipWindow;
 	add: #ListView -> #horzScrollBy:;
 	add: #ListView -> #horzScrollPos;
 	add: #ListView -> #horzScrollPos:;
-	add: #ListView -> #isHorzPaging;
-	add: #ListView -> #isHorzPaging:;
 	add: #ListView -> #lvmGetItemCount;
 	add: #ListView -> #lvmGetToolTips;
 	add: #ListView -> #lvmGetTopIndex;
 	add: #ListView -> #maxTipWidth:;
-	add: #ListView -> #nmCustomDraw:;
-	add: #ListView -> #onHScroll:;
-	add: #ListView -> #onViewOpened;
 	add: #ListView -> #rowPixelHeight;
 	add: #ListView -> #smallImageExtent;
 	add: #ListView -> #themePartName;
@@ -58,6 +47,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
+	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
 	yourself).
@@ -89,67 +79,6 @@ ControlView subclass: #HeaderView
 
 !ListView methodsFor!
 
-drawGridlines
-
-	| canvas |
-
-	canvas := self canvas.
-
-	self drawGridlinesOn: canvas.
-
-	canvas free!
-
-drawGridlinesOn: aCanvas
-
-	| headerHeight first height brush top bottom |
-
-	headerHeight := self headerRect height.
-
-	"Work out start point and spacing"
-	self lvmGetItemCount > 0
-	ifTrue:
-		[| rect |
-		rect := self itemRect: ((self lvmGetTopIndex) + 1).
-		first := rect bottom.
-		height := rect height]
-	ifFalse:
-		[height := self rowPixelHeight.
-		first := headerHeight + height].
-
-	top := first - 1.
-	bottom := self rectangle bottom.
-
-	brush := Color face3d pen.
-	aCanvas pen: brush.
-
-	self drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height.
-
-	self isHorzPaging ifFalse: 
-		[top := top - height.
-		self drawVerticalGridlinesOn: aCanvas from: top to: bottom].
-
-	brush free!
-
-drawHorizontalGridlinesOn: aCanvas from: top to: bottom by: height
-
-	top to: bottom by: height do:
-		[ :i |
-		aCanvas lineFrom: (0@i) to: (self rectangle width@i)]
-!
-
-drawVerticalGridlinesOn: aCanvas from: top to: bottom
-
-	| allColumns |
-
-	allColumns := self allColumns.
-
-	self columnOrder inject: (0 - self horzScrollPos) into:
-		[ :prevLeft :index || col left |
-		col := allColumns at: index.
-		left := prevLeft + col width.
-		aCanvas lineFrom: (left@top) to: (left@bottom).
-		left]!
-
 fullItemFromPoint: coord
 	"Private - Answer a LVHITTESTINFO populated by the control  for the
 	client coordinate represented by the <POINTL>, coord."
@@ -171,14 +100,6 @@ getHeaderControl
 		isManaged: false;
 		yourself
 !
-
-hasVirtualGridLines
-
-	^self propertyAt: #hasVirtualGridLines ifAbsent: [false]!
-
-hasVirtualGridLines: aBoolean
-
-	self propertyAt: #hasVirtualGridLines put: aBoolean!
 
 headerControl
 
@@ -217,14 +138,6 @@ horzScrollPos: anInteger
 
 	self horzScrollBy: (anInteger - self horzScrollPos)!
 
-isHorzPaging
-
-	^self propertyAt: #isHorzPaging ifAbsent: [false]!
-
-isHorzPaging: aBoolean
-
-	self propertyAt: #isHorzPaging put: aBoolean!
-
 lvmGetItemCount
 
 	^self sendMessage: LVM_GETITEMCOUNT!
@@ -248,55 +161,6 @@ maxTipWidth: anInteger
 				msg: TooltipConstants.TTM_SETMAXTIPWIDTH
 				wParam: 0
 				lParam: anInteger]!
-
-nmCustomDraw: pNMHDR
-
-	"Override to request or trap a post-paint notification"
-
-	| context drawStage res |
-
-	"Only required for drawing gridlines"
-	self hasVirtualGridLines ifFalse: [^super nmCustomDraw: pNMHDR].
-
-	context := self customDrawContextClass fromAddress: pNMHDR.
-	drawStage := context dwDrawStage.
-
-	"Overall postpaint notification? Draw the gridlines"
-	((drawStage allMask: CDDS_POSTPAINT) and: [drawStage < CDDS_ITEM]) ifTrue:
-		[self drawGridlinesOn: context canvas.
-		^CDRF_DODEFAULT].
-
-	res := super nmCustomDraw: pNMHDR.
-
-	"Request postdraw notification for the above"
-	^((drawStage allMask: CDDS_PREPAINT) and: [drawStage < CDDS_ITEM]) 
-		ifTrue: [res | CDRF_NOTIFYPOSTPAINT]
-		ifFalse: [res]!
-
-onHScroll: aScrollEvent 
-
-	"Annoyingly, vertical virtual grildines scar on horizontal page scrolling... 
-	have to suppress vertical gridlines when page scrolling..."
-	self hasVirtualGridLines ifTrue:
-		[(aScrollEvent pageLeft or: [aScrollEvent pageRight])
-		ifTrue: 
-			[self isHorzPaging: true]
-		ifFalse: 
-			[(self isHorzPaging and: [aScrollEvent endScroll]) ifTrue: 
-				[self isHorzPaging: false.
-				self drawGridlines]]].
-
-	^super onHScroll: aScrollEvent!
-
-onViewOpened
-	"Turn off real gridlines and activate virtual gridlines on XP to handle corruption when scrolling"
-
-	(self hasGridLines and: [SystemMetrics current hasListViewGridLineScrollScarringBug]) 
-		ifTrue: 
-			[self
-				hasGridLines: false;
-				hasVirtualGridLines: true].
-	^super onViewOpened!
 
 rowPixelHeight
 
@@ -329,29 +193,18 @@ vertScrollPos
 vertScrollPos: anInteger
 
 	self vertScrollBy: (anInteger - self vertScrollPos)! !
-!ListView categoriesFor: #drawGridlines!helpers!public! !
-!ListView categoriesFor: #drawGridlinesOn:!helpers!public! !
-!ListView categoriesFor: #drawHorizontalGridlinesOn:from:to:by:!helpers!private! !
-!ListView categoriesFor: #drawVerticalGridlinesOn:from:to:!helpers!private! !
 !ListView categoriesFor: #fullItemFromPoint:!accessing!private! !
 !ListView categoriesFor: #getHeaderControl!accessing!private! !
-!ListView categoriesFor: #hasVirtualGridLines!accessing!public! !
-!ListView categoriesFor: #hasVirtualGridLines:!accessing!public! !
 !ListView categoriesFor: #headerControl!accessing!public! !
 !ListView categoriesFor: #headerRect!accessing!public! !
 !ListView categoriesFor: #hideToolTipWindow!operations!public! !
 !ListView categoriesFor: #horzScrollBy:!enquiries!public! !
 !ListView categoriesFor: #horzScrollPos!enquiries!public! !
 !ListView categoriesFor: #horzScrollPos:!enquiries!public! !
-!ListView categoriesFor: #isHorzPaging!accessing!public! !
-!ListView categoriesFor: #isHorzPaging:!accessing!public! !
 !ListView categoriesFor: #lvmGetItemCount!accessing!public! !
 !ListView categoriesFor: #lvmGetToolTips!accessing!public! !
 !ListView categoriesFor: #lvmGetTopIndex!accessing!public! !
 !ListView categoriesFor: #maxTipWidth:!helpers!public! !
-!ListView categoriesFor: #nmCustomDraw:!event handling!public! !
-!ListView categoriesFor: #onHScroll:!event handling!public! !
-!ListView categoriesFor: #onViewOpened!event handling!public! !
 !ListView categoriesFor: #rowPixelHeight!helpers!public! !
 !ListView categoriesFor: #smallImageExtent!accessing!private! !
 !ListView categoriesFor: #themePartName!constants!public! !
