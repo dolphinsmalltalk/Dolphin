@@ -1339,6 +1339,11 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 					ifFalse: [high := index - 1]].
 	^low!
 
+defaultSortAlgorithm
+	"Answer an instance of the default <SortAlgorithm>."
+
+	^DefaultSortAlgorithm current!
+
 emitEncodingMarkerOn: aPositionableStream
 	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the
 	<PositionableStream> argument, which is assumed to be at the start of its sequence. This
@@ -1369,6 +1374,7 @@ writeStream: anInteger
 
 	^WriteStream on: (self new: anInteger)! !
 !SequenceableCollection class categoriesFor: #binarySearch:for:using:!public!searching! !
+!SequenceableCollection class categoriesFor: #defaultSortAlgorithm!instance creation!public! !
 !SequenceableCollection class categoriesFor: #emitEncodingMarkerOn:!encode/decode!private! !
 !SequenceableCollection class categoriesFor: #ofSize:!instance creation!private! !
 !SequenceableCollection class categoriesFor: #writeStream!instance creation!public!streaming! !
