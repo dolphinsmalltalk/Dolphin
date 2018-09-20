@@ -63,7 +63,8 @@ customDrawIcon: aContext
 
 	iSubItem := aContext iSubItem.
 	imageRect := aContext view 
-		lvmGetSubItemRect: (aContext dwItemSpec@iSubItem) 
+		lvmGetSubItemRect: aContext dwItemSpec
+		subitem: iSubItem 
 		bounding: LVIR_ICON.
 
 	imageRect right: (imageRect right + self parent columnImagePadding).
@@ -306,7 +307,8 @@ ownerDraw: aContext
 
 	"aContext boundingRectangle unreliable"
 	itemRect := aContext view 
-				lvmGetSubItemRect: (aContext dwItemSpec@iSubItem) 
+				lvmGetSubItemRect: aContext dwItemSpec 
+				subitem: iSubItem
 				bounding: (isPrimaryColumn ifTrue: [LVIR_LABEL] ifFalse: [LVIR_BOUNDS]).
 
 	"Handle custom colors vs. selection/hot highlighting"
@@ -383,7 +385,7 @@ rectangle
 	self isVisible ifFalse: [^##(0@0 corner: 0@0)].
 
 	zeroIndex := self index - 1.
-	itemRectangle := self parent lvmGetSubItemRect: (0@zeroIndex) bounding: LVIR_LABEL.
+	itemRectangle := self parent lvmGetSubItemRect: 0 subitem: zeroIndex bounding: LVIR_LABEL.
 
 	"In row image mode, the first column excludes the row icon. We want the full box"
 	(zeroIndex = 0 and: [self parent hasRowImage]) ifTrue: [itemRectangle left: (itemRectangle left - parent smallImageExtent x)].
