@@ -118,7 +118,7 @@ iState
 		at: #disabled put: PBS_DISABLED;
 		at: #pressed put: PBS_PRESSED;
 		at: #hot put: PBS_HOT;
-		at: #focus put: PBS_DEFAULTED;
+		at: #default put: PBS_DEFAULTED;
 		at: #normal put: PBS_NORMAL;
 		yourself) at: self displayState ifAbsent: [PBS_NORMAL]!
 
@@ -151,7 +151,7 @@ onCustomDraw: anNMCUSTOMDRAW
 	self isOpen ifFalse: [^self].
 
 	self isDefault 
-		ifTrue: [newDisplayState := #focus]
+		ifTrue: [newDisplayState := #default]
 		ifFalse: [newDisplayState := #normal].
 
 	anNMCUSTOMDRAW isHot ifTrue: 

@@ -68,9 +68,14 @@ displayRectangleWithin: aRectangle
 
 displayState
 
-	^self isDisplayingEmbedded
-		ifTrue: [self embeddedDisplayState]
-		ifFalse: [super displayState]!
+	| state |
+
+	self isDisplayingEmbedded ifTrue: [^self embeddedDisplayState].
+
+	"For extra emphasis we display as default when active"
+	^((state := super displayState) = #normal and: [self hasFocus])
+		ifTrue: [#default]
+		ifFalse: [state]!
 
 drawBackgroundOn: aCanvas
 
@@ -125,12 +130,6 @@ hasEmbeddedHotTracking
 hasFocus
 
 	^self isDisplayingEmbedded not and: [super hasFocus]!
-
-isDefault
-
-	"If the receiver is active in its ELV, it is by definition the default button (at least, that's how we want to display it)"
-
-	^self isDisplayingEmbedded not!
 
 isDisplayingEmbedded
 	^isDisplayingEmbedded ifNil: [false]!
@@ -258,7 +257,6 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !EmbeddedPushButton categoriesFor: #extent!accessing!public! !
 !EmbeddedPushButton categoriesFor: #hasEmbeddedHotTracking!public!testing! !
 !EmbeddedPushButton categoriesFor: #hasFocus!public!testing! !
-!EmbeddedPushButton categoriesFor: #isDefault!public!testing! !
 !EmbeddedPushButton categoriesFor: #isDisplayingEmbedded!accessing!private! !
 !EmbeddedPushButton categoriesFor: #isDisplayingEmbedded:!accessing!private! !
 !EmbeddedPushButton categoriesFor: #isDisplayOwnerDrawn!public!testing! !
