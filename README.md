@@ -13,7 +13,7 @@ Note: if you are just looking to install Dolphin and get going as quickly as pos
 
 ## Building the Virtual Machine
 
-* First clone the [Dolphin](https://github.com/dolphinsmalltalk/Dolphin) repo to a `\Dolphin` directory on your machine. It can actually be any location but for convenience we'll call it `\Dolphin`. 
+* First clone the [Dolphin](https://github.com/dolphinsmalltalk/Dolphin) repo to a `\Dolphin` directory on your machine. It can actually be any location but for convenience we'll call it `\Dolphin`.  Use a Git client tool to clone. Downloading the ZIP file won't work due to use of Git LFS.
 
 * _Versions prior to 7.1:_ You should also clone the separate VM repository (DolphinVM) into a `DolphinVM\` subdirectory of `\Dolphin\Core\`.
 
