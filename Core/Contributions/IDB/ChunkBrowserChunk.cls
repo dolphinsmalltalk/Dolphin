@@ -53,7 +53,9 @@ chunkIconIndex
 	"Answer the imageIndex for the icon that represents the match state of the receiver with the
 	current image"
 
-	^(self isMatch ifNil: [Object] ifNotNil: [:arg | arg ifTrue: [Presenter] ifFalse: [Model]]) icon
+	^(self isMatch
+		ifNil: [self missingIcon]
+		ifNotNil: [:arg | arg ifTrue: [self matchIcon] ifFalse: [self mismatchIcon]]) icon
 		imageIndex!
 
 chunkType
@@ -133,6 +135,15 @@ isSeriesStart
 
 	^false!
 
+matchIcon
+	^true icon!
+
+mismatchIcon
+	^false icon!
+
+missingIcon
+	^##(TextTileIcon text: $\x2610 fontName: 'Cambria')!
+
 picked
 	^picked!
 
@@ -173,6 +184,9 @@ showIn: aTextPresenter
 !ChunkBrowserChunk categoriesFor: #isImageSave!public!testing! !
 !ChunkBrowserChunk categoriesFor: #isMatch!public!testing! !
 !ChunkBrowserChunk categoriesFor: #isSeriesStart!public!testing! !
+!ChunkBrowserChunk categoriesFor: #matchIcon!accessing!constants!public! !
+!ChunkBrowserChunk categoriesFor: #mismatchIcon!accessing!constants!public! !
+!ChunkBrowserChunk categoriesFor: #missingIcon!constants!public! !
 !ChunkBrowserChunk categoriesFor: #picked!accessing!public! !
 !ChunkBrowserChunk categoriesFor: #picked:!accessing!public! !
 !ChunkBrowserChunk categoriesFor: #pickedIconIndex!accessing!public! !
