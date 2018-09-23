@@ -110,6 +110,9 @@ onViewOpened
 parseContext
 	^self selectedMethod ifNotNil: [:method | method methodClass]!
 
+recompileDiffs
+	self systemModel recompileDiffs: self method!
+
 saveNewMethod: aString 
 	| method |
 	method := self selectedMethod.
@@ -156,6 +159,7 @@ statusText: aString
 !MethodBrowserShell categoriesFor: #onMethodSelected!event handling!private! !
 !MethodBrowserShell categoriesFor: #onViewOpened!event handling!public! !
 !MethodBrowserShell categoriesFor: #parseContext!accessing!public! !
+!MethodBrowserShell categoriesFor: #recompileDiffs!public! !
 !MethodBrowserShell categoriesFor: #saveNewMethod:!helpers!private! !
 !MethodBrowserShell categoriesFor: #searchEnvironment:!public! !
 !MethodBrowserShell categoriesFor: #selectedMethod!accessing!public! !

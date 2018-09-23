@@ -110,17 +110,11 @@ load
 name
 	"Answer the name of the resource represented by the receiver."
 
-	selector isNil ifTrue: [^nil].
-	selector isSymbol ifFalse: [self name: selector].
 	^self class nameFromSelector: selector!
 
 name: aStringOrNil 
 	"Set the name of the resource represented by the receiver."
 
-	aStringOrNil isNil 
-		ifTrue: 
-			[selector := nil.
-			^self].
 	selector := self class selectorFromName: aStringOrNil!
 
 owningClass
@@ -170,7 +164,10 @@ resourceOrNil
 	^self resource!
 
 selector
-	^self class selectorFromName: self name!
+	^selector!
+
+selector: aSymbol
+	selector := aSymbol!
 
 show
 	"Display the resource identified by the receiver in whatever way is appropriate. 
@@ -219,6 +216,7 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #resourceMethodComment!accessing!constants!private! !
 !ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
 !ResourceIdentifier categoriesFor: #selector!accessing!public! !
+!ResourceIdentifier categoriesFor: #selector:!accessing!public! !
 !ResourceIdentifier categoriesFor: #show!operations!public! !
 !ResourceIdentifier categoriesFor: #storeOn:!printing!public! !
 
@@ -245,8 +243,13 @@ class: aClass name: aString
 		name: aString;
 		yourself!
 
-class: aClass selector: aSymbol 
-	^self class: aClass name: (self nameFromSelector: aSymbol)!
+class: aClass selector: aSymbol
+	(aSymbol beginsWith: self selectorPrefix)
+		ifFalse: [self error: 'Invalid resource selector ' , aSymbol printString].
+	^super new
+		owningClass: aClass;
+		selector: aSymbol;
+		yourself!
 
 exportFileExtension
 	"Answer the file extension associated with resources of this type when
@@ -262,6 +265,7 @@ forMethod: aCompiledMethod
 
 nameFromSelector: aSymbol
 	| resname prefixSize nameSize |
+	aSymbol isNil ifTrue: [^nil].
 	(aSymbol beginsWith: self selectorPrefix) ifFalse: [^nil].
 	prefixSize := self selectorPrefix size.
 	resname := String new: (nameSize := aSymbol size - prefixSize).
@@ -284,6 +288,7 @@ removeResource: aResourceIdentifier
 
 selectorFromName: aString
 	| selector prefix |
+	aString isNil ifTrue: [^nil].
 	prefix := self selectorPrefix.
 	selector := WriteStream on: (aString copyEmpty: prefix size + aString size).
 	selector nextPutAll: prefix.
@@ -296,6 +301,23 @@ selectorFromName: aString
 
 selectorPrefix
 	^'resource_'!
+
+stbConvertFrom: anSTBClassFormat 
+	"Convert from previous version resource. 
+	Version Changes:
+		1) removes stores a selector as the resource name rather than a string name (this change was made an age ago, and not properly converted)
+	"
+
+	^
+	[:data | 
+	| answer |
+	answer := self basicNew.
+	1 to: data size do: [:i | answer instVarAt: i put: (data at: i)].
+	answer selector isSymbol ifFalse: [answer name: answer selector].
+	answer]!
+
+stbVersion
+	^1!
 
 value: a value: b
 	"Private - The receiver acts as the default sort block for its instances."
@@ -319,6 +341,8 @@ viewResourceCategoryName
 !ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !
 !ResourceIdentifier class categoriesFor: #selectorFromName:!helpers!public! !
 !ResourceIdentifier class categoriesFor: #selectorPrefix!constants!private! !
+!ResourceIdentifier class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!ResourceIdentifier class categoriesFor: #stbVersion!binary filing!public! !
 !ResourceIdentifier class categoriesFor: #value:value:!helpers!private! !
 !ResourceIdentifier class categoriesFor: #viewResourceCategoryName!constants!private! !
 

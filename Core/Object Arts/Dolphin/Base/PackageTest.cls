@@ -258,7 +258,7 @@ testLooseResourceIdentifiers
 	| all loose notLoose |
 	loose := Package manager looseResourceIdentifiers.
 	self assert: (loose allSatisfy: [:each | each owningClass owningPackage ~= each owningPackage]).
-	all := ResourceIdentifier allResourceIdentifiers.
+	all := Smalltalk developmentSystem allResourceIdentifiers.
 	self assert: (loose difference: all) isEmpty.
 	notLoose := all difference: loose.
 	self assert: (notLoose allSatisfy: [:each | each owningClass owningPackage = each owningPackage])!

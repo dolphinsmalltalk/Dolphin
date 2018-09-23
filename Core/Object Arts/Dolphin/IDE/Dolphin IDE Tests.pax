@@ -40,6 +40,7 @@ package setPrerequisites: (IdentitySet new
 	add: 'Base\Development System';
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
+	add: '..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\MVP\Base\Dolphin MVP Base';

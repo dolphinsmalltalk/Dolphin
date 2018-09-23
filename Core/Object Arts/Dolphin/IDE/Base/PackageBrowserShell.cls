@@ -1113,17 +1113,26 @@ statusText: aString
 		value: (aString isNil ifFalse: [Notification new messageText: aString])!
 
 updateCaption
-	"The receiver has changed in such a way that the caption may need to be refreshed.
-	Do this here"
+	"Refresh the caption to reflect the currently selected packages in the receiver, if any."
 
-	| text |
-	text := 'Package Browser'.
-	self hasPackages 
-		ifTrue: 
-			[text := self singlePackage 
-						ifNil: ['Multiple Packages']
-						ifNotNil: [:package | '<1d> <2d>' expandMacrosWith: package with: package packageVersion]].
-	self caption: text!
+	| pkgs count text |
+	pkgs := self packages.
+	count := pkgs size.
+	text := String writeStream.
+	count == 0
+		ifTrue: [text display: self class]
+		ifFalse: 
+			[| package version |
+			package := pkgs first.
+			text display: package.
+			version := package packageVersion.
+			(version notNil and: [version notEmpty])
+				ifTrue: 
+					[text
+						space;
+						display: package packageVersion].
+			count == 1 ifFalse: [text nextPutAll: ', and other packages']].
+	self caption: text contents!
 
 updateCardNow: aSymbol
 	| updateInfo |
@@ -1156,7 +1165,6 @@ updateClasses
 updateComment
 	"Private - Update the comment for a single package."
 
-	commentPresenter view forecolor: Color darkGreen.
 	self singlePackage 
 		ifNil: 
 			[commentPresenter text: ''.
