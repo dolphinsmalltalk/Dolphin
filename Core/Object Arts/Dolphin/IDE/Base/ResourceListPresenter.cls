@@ -238,7 +238,7 @@ refresh
 	"Private - Re-display the receiver's contents"
 
 	| rids |
-	rids := ResourceIdentifier allResourceIdentifiers.
+	rids := self systemModel allResourceIdentifiers.
 	filterBlock notNil ifTrue: [rids := rids select: filterBlock].
 	self list: rids!
 
@@ -276,12 +276,12 @@ showResource
 
 	self resourceIdentifier show!
 
-showResourcesOwnedByPackages: aPackageCollection 
+showResourcesOwnedByPackages: aPackageCollection
 	"Set the receiver's filter block to display resources owned by aPackage"
 
-	self filterBlock: 
-			[:resID | 
-			aPackageCollection includes: (Package manager packageOfResourceIdentifierOrItsClass: resID)]!
+	| packages |
+	packages := aPackageCollection asIdentitySet.
+	self filterBlock: [:resID | packages includes: resID owningPackage]!
 
 showResourcesReferencingView: aResourceIdentifier 
 	| idIndex |

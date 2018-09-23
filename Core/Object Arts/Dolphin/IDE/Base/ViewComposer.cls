@@ -142,7 +142,7 @@ alignTops
 	self matchGeometryAspect: #topAlign.!
 
 allResourceIdentifiers
-	^ResourceIdentifier allResourceIdentifiers!
+	^Smalltalk developmentSystem allResourceIdentifiers!
 
 areDragObjects: aCollection acceptableFor: operationSymbol inView: aView 
 	"Private - Answer whether aDragDropObjectCollection are all acceptable for the operation described by

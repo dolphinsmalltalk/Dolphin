@@ -288,7 +288,7 @@ defaultModel
 	"Private - Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^ListModel on: ResourceIdentifier allResourceIdentifiers searchPolicy: SearchPolicy equality!
+	^ListModel on: Smalltalk developmentSystem allResourceIdentifiers searchPolicy: SearchPolicy equality!
 
 icon
 	"Answers an Icon that can be used to represent this class"

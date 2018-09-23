@@ -1124,7 +1124,7 @@ changedResources
 	"Answer a <collection> of <ResourceIdentifier>s identifying all the resources that have been
 	changed."
 
-	^ResourceIdentifier allResourceIdentifiers select: [:each | each isChanged]!
+	^self allResourceIdentifiers select: [:each | each isChanged]!
 
 changeHistorySize
 	"Answer the maximum size of the system change history list."
@@ -3759,7 +3759,7 @@ resaveViewResourcesMatching: matchBlock do: doBlock
 
 	| vc |
 	vc := self openViewComposerEmpty.
-	(vc resourceManager allResourceIdentifiers select: matchBlock) do: 
+	(vc allResourceIdentifiers select: matchBlock) do: 
 			[:rid |
 			vc openOn: rid.
 			(doBlock value: vc) ifTrue: [vc fileSave].

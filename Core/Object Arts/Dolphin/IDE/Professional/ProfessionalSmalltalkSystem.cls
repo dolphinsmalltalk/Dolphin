@@ -100,6 +100,15 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
+recompileDiffs: aCompiledMethod 
+	((Smalltalk at: #DiffBrowser) show: 'Vertical view')
+		caption: aCompiledMethod printString;
+		compare: aCompiledMethod disassembly
+			id: 'Current'
+			and: (Compiler compile: aCompiledMethod getSource in: aCompiledMethod methodClass) 
+					disassembly
+			id: 'Recompiled'!
+
 systemBrowserClass
 	"Answer the class of System Browser (a <SmalltalkToolShell>)
 	to be used by default in the development environment."
@@ -130,6 +139,7 @@ systemBrowserClass: toolClass
 !ProfessionalSmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass:!accessing!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #publishedAspects!constants!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
+!ProfessionalSmalltalkSystem categoriesFor: #recompileDiffs:!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass!accessing!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #systemBrowserClass:!accessing!public! !
 

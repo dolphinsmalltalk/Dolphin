@@ -817,8 +817,8 @@ resources
 resourceSelectorsDo: aMonadicValuable
 	| prefix |
 	prefix := ResourceIdentifier selectorPrefix.
-	self class methodDictionary
-		do: [:each | (each selector beginsWith: prefix) ifTrue: [aMonadicValuable value: each selector]]!
+	self instanceClass class
+		selectorsDo: [:each | (each beginsWith: prefix) ifTrue: [aMonadicValuable value: each]]!
 
 selectorsInCategory: category
 	"Answer an <Collection> of selector <Symbol>s, of the receiver's methods 

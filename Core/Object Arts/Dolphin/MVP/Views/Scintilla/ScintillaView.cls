@@ -2529,14 +2529,16 @@ fontQuality: aSymbol
 
 	self sciSetFontQuality: (self class fontQualities keyAtValue: aSymbol) - 1!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	"Sets the background colour of the receiver to aColorOrNil. If aColorOrNil is nil then
 	inherit the foreground colour of the parent window."
 
 	"Note we don't supersend, because we don't need to invalidate on changing colours - Scintilla takes care of that"
 
-	forecolor := aColorOrNil.
-	self updateTextStyles!
+	forecolor = aColorOrNil
+		ifFalse: 
+			[forecolor := aColorOrNil.
+			self updateTextStyles]!
 
 formatRectangle
 	"Answers the <Rectangle> used to format the text."

@@ -183,6 +183,18 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 				category: categories first name) execute].
 	^self environment lookup: aSymbol!
 
+browseMethodsIn: aBrowserEnvironment
+	| browser |
+	browser := super browseMethodsIn: aBrowserEnvironment.
+	self isOAD ifTrue: [self extendMethodBrowserMenus: browser].
+	^browser!
+
+browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
+	| browser |
+	browser := super browseMethodsInEnvironments: aCollectionOfBrowserEnvironment.
+	self isOAD ifTrue: [self extendMethodBrowserMenus: browser].
+	^browser!
+
 browseSelectors: aCollection caption: aString environment: aBrowserEnvironment 
 	| browser |
 	browser := MethodExplorerShell create.
@@ -352,6 +364,19 @@ executeVariableRefactoring: refactoringClass variables: aCollection within: aBro
 			namespace name: caption contents.
 			self changeManager performChange: namespace changes.
 			namespace]!
+
+extendMethodBrowserMenus: browser
+	| ctxMenu otherMenu |
+	ctxMenu := (browser view viewNamed: 'methodlist') presenterConnectionPoint contextMenu.
+	otherMenu := ctxMenu find: 'Browse other'.
+	otherMenu
+		insertItem: (CommandMenuItem commandDescription: (ClosedCommandDescription
+						command: (Message selector: #recompileDiffs)
+						description: 'Recompile &diffs'
+						queryBlock: [:query | query isEnabled: browser hasMethodSelected]
+						receiver: browser))
+				yourself
+		after: #browseCompilationFailures!
 
 extractMethod: anInterval from: aSymbol in: aBehavior 
 	"Create a method from the selection of source text in the range identified
@@ -1331,6 +1356,8 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 !RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:!commands!public!refactoring! !
 !RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:inPackages:caption:!public!refactoring! !
 !RefactoringSmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
+!RefactoringSmalltalkSystem categoriesFor: #browseMethodsIn:!browsing!public! !
+!RefactoringSmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
 !RefactoringSmalltalkSystem categoriesFor: #browseSelectors:caption:environment:!browsing!private! !
 !RefactoringSmalltalkSystem categoriesFor: #canRefactor!public!testing! !
 !RefactoringSmalltalkSystem categoriesFor: #chooseMethodFromEnvironment:caption:!public! !
@@ -1343,6 +1370,7 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 !RefactoringSmalltalkSystem categoriesFor: #duplicateOf:in:!helpers!private! !
 !RefactoringSmalltalkSystem categoriesFor: #duplicateSuperclassMethodsOf:!enquiries!private! !
 !RefactoringSmalltalkSystem categoriesFor: #executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
+!RefactoringSmalltalkSystem categoriesFor: #extendMethodBrowserMenus:!browsing!private! !
 !RefactoringSmalltalkSystem categoriesFor: #extractMethod:from:in:!public!refactoring! !
 !RefactoringSmalltalkSystem categoriesFor: #extractToComponent:from:in:!public!refactoring! !
 !RefactoringSmalltalkSystem categoriesFor: #extractToTemporary:from:in:!public!refactoring! !
