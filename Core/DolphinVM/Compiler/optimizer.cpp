@@ -611,14 +611,41 @@ int Compiler::OptimizePairs()
 					continue;	// A new instruction will now be at i to be considered, so don't advance
 				}
 			}
-			else if (byte1 == DuplicateStackTop && byte2 == ReturnMessageStackTop)
+			else if (byte1 == DuplicateStackTop)
 			{
-				// A Dup immediately before a Return ToS is redundant
-				_ASSERTE(!bytecode2.isJumpTarget());
-				bytecode1.byte = ReturnMessageStackTop;
-				count++;
-				// Leave the other return to be removed as unreachable code
-				continue;	// A new instruction will now be at i to be considered, so don't advance
+				if (byte2 == ReturnMessageStackTop)
+				{
+					// A Dup immediately before a Return ToS is redundant
+					_ASSERTE(!bytecode2.isJumpTarget());
+					bytecode1.byte = ReturnMessageStackTop;
+					count++;
+					// Leave the other return to be removed as unreachable code
+					continue;	// A new instruction will now be at i to be considered, so don't advance
+				} 
+				else if (byte2 == LongJumpIfNotNil)
+				{
+					// Dup, LongJumpIfNotNil
+					BYTECODE& target = m_bytecodes[bytecode2.target];
+					if (target.byte == PopStackTop && target.jumpsTo == 1)
+					{
+						int nilBranch = next + bytecode2.instructionLength();
+						BYTECODE& bytecode3 = m_bytecodes[nilBranch];
+						if (bytecode3.byte = PopStackTop)
+						{
+							// Remove Dup and Pop from first branch, and retarget jump over to next after the pop
+							target.removeJumpTo();
+							m_bytecodes[++bytecode2.target].addJumpTo();
+
+							_ASSERTE(!m_bytecodes[nilBranch].isJumpTarget());
+							// Remove Pop from nil branch
+							RemoveInstruction(nilBranch);
+							// Remove Dup
+							RemoveInstruction(i);
+
+							continue;	// A new instruction will now be at i to be considered, so don't advance
+						}
+					}
+				}
 			}
 			else if ((bytecode1.isShortPopStoreTemp() && bytecode2.isShortPushTemp())
 						&& (bytecode1.indexOfShortPopStoreTemp() == bytecode2.indexOfShortPushTemp()))

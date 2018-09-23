@@ -306,12 +306,6 @@ bool Compiler::ParseIfNilBlock(bool noPop)
 /*
 Inlined forms of #ifNil:[ifNotNil:] and #ifNotNil:[ifNil:]
 
-Note that if we use SpecialSendIsNil followed by normal conditional jump, then we still 
-need to dup stack top because isNil will consume the value which we'll need. However we
-generate the long form and let the optimizer convert to the conditional jump on nil if 
-possible. We have to do this because the isNil/notNil jumps do not have a long form and 
-our code generator must start with long jumps which are optimized down in OptimizeJumps().
-
 1) ifNil:
 
 		dup
@@ -361,12 +355,11 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, int exprStartPos)
 	int dupMark = GenDup();
 
 	BreakPoint();
-	const int sendIsNil = GenInstruction(SpecialSendIsNil);
-	const int mapEntry = AddTextMap(sendIsNil, exprStartPos, LastTokenRange().m_stop);
 
 	// We're going to add a pop and jump on condition instruction here
 	// Its a forward jump, so we need to patch up the target later
-	const int popAndJumpMark = GenJumpInstruction(LongJumpIfFalse);
+	const int popAndJumpMark = GenJumpInstruction(LongJumpIfNotNil);
+	const int mapEntry = AddTextMap(popAndJumpMark, exprStartPos, LastTokenRange().m_stop);
 
 	ParseIfNilBlock(false);
 	
@@ -435,12 +428,12 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, int exprStartPos)
 
 	int dupMark = GenDup();
 	BreakPoint();
-	const int sendIsNil = GenInstruction(SpecialSendIsNil);
-	AddTextMap(sendIsNil, exprStartPos, LastTokenRange().m_stop);
 
 	// We're going to add a pop and jump on condition instruction here
 	// Its a forward jump, so we need to patch up the target later
-	const int popAndJumpMark = GenJumpInstruction(LongJumpIfTrue);
+	const int popAndJumpMark = GenJumpInstruction(LongJumpIfNil);
+	AddTextMap(popAndJumpMark, exprStartPos, LastTokenRange().m_stop);
+
 	int argc = ParseIfNotNilBlock();
 
 	// If the ifNotNil: block did not have any arguments, then we do not need the Dup, and we also

@@ -1148,7 +1148,7 @@ int Compiler::GenMessage(const Str& pattern, int argCount, int messageStart)
 int Compiler::GenJumpInstruction(BYTE basic)
 {
 	// IT MUST be one of the long jump instructions
-	_ASSERTE(basic == LongJump || basic == LongJumpIfTrue || basic == LongJumpIfFalse);
+	_ASSERTE(basic == LongJump || basic == LongJumpIfTrue || basic == LongJumpIfFalse || basic == LongJumpIfNil || basic == LongJumpIfNotNil);
 	
 	int pos = GenInstruction(basic);
 	GenData(0);						// Long jumps have two byte extension
