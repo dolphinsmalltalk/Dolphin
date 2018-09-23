@@ -78,10 +78,6 @@ ENDIF
 
 ; Other C++ method imports
 
-; Note this function returns 'bool', i.e. single byte in al; doesn't necessarily set whole of eax
-DISABLEINTERRUPTS EQU ?disableInterrupts@Interpreter@@SI_N_N@Z
-extern DISABLEINTERRUPTS:near32
-
 ; We still need to import the C++ primitives that require a thunk to be called from assembler (the ones that change interpreter context)
 IMPORTPRIMITIVE MACRO name
 	extern ?&name&@Interpreter@@CIPAIQAII@Z:near32
@@ -354,38 +350,6 @@ BEGINPRIMITIVE primitiveBecome
 LocalPrimitiveFailure 0
 
 ENDPRIMITIVE primitiveBecome
-
-BEGINPRIMITIVE primitiveEnableInterrupts
-	mov		eax, [_SP]							; Access argument
-	xor		ecx, ecx
-	sub		eax, [oteTrue]
-	jz		@F
-
-	cmp		eax, OTENTRYSIZE
-	jne		localPrimitiveFailure0				; Non-boolean arg
-	
-	mov		ecx, 1								; arg=false, so disable interrupts
-
-@@:
-	call	DISABLEINTERRUPTS
-	; N.B. Returns bool, so only AL will be set, not whole of EAX
-	test	al, al								; Interrupts not previously disabled?
-	je		@F									; Yes, answer true
-
-	mov		ecx, [oteFalse]
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	mov		[_SP-OOPSIZE], ecx
-	ret
-
-@@:
-	mov		ecx, [oteTrue]
-	lea		eax, [_SP-OOPSIZE]					; primitiveSuccess(1)
-	mov		[_SP-OOPSIZE], ecx
-	ret
-
-LocalPrimitiveFailure 0
-
-ENDPRIMITIVE primitiveEnableInterrupts
 
 BEGINPRIMITIVE primitiveStructureIsNull
 	mov		ecx, [_SP]								; Access argument
