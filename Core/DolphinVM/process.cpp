@@ -217,6 +217,25 @@ bool __fastcall Interpreter::disableInterrupts(bool bDisable)
 	return bWasDisabled;
 }
 
+Oop* __fastcall Interpreter::primitiveEnableInterrupts(Oop* const sp, unsigned argCount)
+{
+	Oop arg = *sp;
+	if (arg == (Oop)Pointers.True)
+	{
+		bool wasDisabled = disableInterrupts(false);
+		*(sp - 1) = reinterpret_cast<Oop>(wasDisabled ? Pointers.False : Pointers.True);
+		return sp - 1;
+	}
+	else if (arg == (Oop)Pointers.False)
+	{
+		bool wasDisabled = disableInterrupts(true);
+		*(sp - 1) = reinterpret_cast<Oop>(wasDisabled ? Pointers.False : Pointers.True);
+		return sp - 1;
+	}
+	else
+		return primitiveFailure(0);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Signal a Semaphore without regard to the execution state. The Semaphore will be properly
 SemaphoreOTE* Semaphore::New(int sigs)
