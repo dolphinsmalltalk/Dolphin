@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #RECTF
+ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -27,9 +27,6 @@ struct tagRECTF {
 
 asRectangle
 	^self x @ self y extent: self width @ self height!
-
-extent
-	^self width @ self height!
 
 height
 	"Answer the receiver's height field as a Smalltalk object."
@@ -77,7 +74,6 @@ y: anObject
 
 	bytes floatAtOffset: 4 put: anObject! !
 !RECTF categoriesFor: #asRectangle!converting!public! !
-!RECTF categoriesFor: #extent!public! !
 !RECTF categoriesFor: #height!**compiled accessors**!public! !
 !RECTF categoriesFor: #height:!**compiled accessors**!public! !
 !RECTF categoriesFor: #left!public! !

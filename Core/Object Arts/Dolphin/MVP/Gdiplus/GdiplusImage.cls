@@ -272,6 +272,9 @@ frames
 			images add: bitmap].
 	^images!
 
+freeDC
+	"For compatibility with <Image>."!
+
 getBounds
 	"Private - Answer a 2-element array, the first element a bounding Rectangle, the second 
 	element the UnitConstant that indicates the unit of measure for the bounding rectangle."
@@ -738,6 +741,7 @@ width
 !GdiplusImage categoriesFor: #frameDimensionsCount!accessing-frames!public! !
 !GdiplusImage categoriesFor: #frameDimensionsList!accessing-frames!public! !
 !GdiplusImage categoriesFor: #frames!accessing-frames!public! !
+!GdiplusImage categoriesFor: #freeDC!public! !
 !GdiplusImage categoriesFor: #getBounds!accessing!private! !
 !GdiplusImage categoriesFor: #graphics!accessing!public! !
 !GdiplusImage categoriesFor: #hasPropertyId:!accessing-properties!public!testing! !
