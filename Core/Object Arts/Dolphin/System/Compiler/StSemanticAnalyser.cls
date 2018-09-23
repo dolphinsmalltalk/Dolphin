@@ -476,8 +476,7 @@ signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anAr
 		extras: anArray) signal!
 
 tempDecls
-	tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes].
-	^tempDecls!
+	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
 
 visitArgumentNode: anStParameterNode
 	self checkRedefines: anStParameterNode.

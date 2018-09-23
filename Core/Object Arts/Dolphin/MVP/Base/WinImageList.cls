@@ -202,7 +202,7 @@ extent
 	"Answer a <Point>, the x any y coordinates of which specify the width and height (respectively)
 	of the bitmaps held by the receiver."
 
-	extent 
+	^extent 
 		ifNil: 
 			[| cx cy |
 			cx := SDWORD new.
@@ -211,8 +211,7 @@ extent
 				imageList_GetIconSize: self handle
 				cx: cx
 				cy: cy.
-			extent := cx asInteger @ cy asInteger].
-	^extent!
+			extent := cx asInteger @ cy asInteger]!
 
 getIcon: anIntegerIndex style: anIntegerStyle 
 	"Answer an instance of Icon generated from the image at anIntegerIndex."

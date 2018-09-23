@@ -20,16 +20,17 @@ Class Variables:
 !Base64Codec categoriesForClass!Kernel-Objects! !
 !Base64Codec methodsFor!
 
-decodeFrom: aGettableStream onto: aPuttableStream 
-	[aGettableStream atEnd] whileFalse: 
-			[| t1 t2 |
-			(t1 := self nextBase64From: aGettableStream) ifNil: [^self].
-			(t2 := self nextBase64From: aGettableStream) ifNil: [^self].
-			aPuttableStream nextPut: (t1 bitShift: 2) + (t2 bitShift: -4).
-			(t1 := self nextBase64From: aGettableStream) ifNil: [^self].
-			aPuttableStream nextPut: ((t2 bitAnd: 16rF) bitShift: 4) + (t1 bitShift: -2).
-			(t2 := self nextBase64From: aGettableStream) ifNil: [^self].
-			aPuttableStream nextPut: ((t1 bitAnd: 16r3) bitShift: 6) + t2]!
+decodeFrom: aGettableStream onto: aPuttableStream
+	
+	[| t1 t2 |
+	(t1 := self nextBase64From: aGettableStream) ifNil: [^self].
+	(t2 := self nextBase64From: aGettableStream) ifNil: [^self].
+	aPuttableStream nextPut: (t1 bitShift: 2) + (t2 bitShift: -4).
+	(t1 := self nextBase64From: aGettableStream) ifNil: [^self].
+	aPuttableStream nextPut: ((t2 bitAnd: 16rF) bitShift: 4) + (t1 bitShift: -2).
+	(t2 := self nextBase64From: aGettableStream) ifNil: [^self].
+	aPuttableStream nextPut: ((t1 bitAnd: 16r3) bitShift: 6) + t2]
+			repeat!
 
 encodeFrom: aGettableStream onto: aPuttableStream 
 	| count |
