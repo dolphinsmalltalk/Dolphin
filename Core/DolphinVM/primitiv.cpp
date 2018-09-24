@@ -472,6 +472,20 @@ Oop* __fastcall Interpreter::primitiveStackAtPut(Oop* const sp, unsigned)
 	return sp-2;
 }
 
+Oop* __fastcall Interpreter::primitiveIndexOfSP(Oop* const sp, unsigned)
+{
+	ProcessOTE* oteReceiver = reinterpret_cast<ProcessOTE*>(*(sp - 1));
+	Oop oopArg = *sp;
+	if (ObjectMemoryIsIntegerObject(oopArg))
+	{
+		Oop address = oopArg - offsetof(Process, m_stack) - reinterpret_cast<uintptr_t>(oteReceiver->m_location);
+		Oop index = (address >> 1) + 3;
+		*(sp - 1) = index;
+		return sp - 1;
+	}
+	else
+		return primitiveFailure(0);
+}
 
 // Don't care what effect on stack is!!
 [[noreturn]] void __fastcall Interpreter::primitiveQuit(Oop* const sp, unsigned)
