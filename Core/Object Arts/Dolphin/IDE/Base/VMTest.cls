@@ -1393,6 +1393,24 @@ testPrimitiveIdentical
 	#(#(1 1 true) #(1 2 false) #(2 1 false) #(#x #x true) #(#x #y false) #(1 #x false) #(#x 1 false))
 		do: [:each | self assert: (method value: each first withArguments: {each second}) equals: each third]!
 
+testPrimitiveIndexOfSp
+	| method proc offset size sp |
+	method := self createPrimitiveMethodLike: Process >> #indexOfSP: setsFailCode: true.
+	proc := Processor activeProcess.
+	self assert: (method value: proc withArguments: {SmallInteger maximum + 1}) equals: 'failed0'.
+	offset := Process instSize * VMConstants.IntPtrSize.
+	self assert: (method value: proc withArguments: {((proc yourAddress + offset) // 2) asStackPointer})
+		equals: 1.
+	size := proc size.
+	self assert: (method value: proc
+				withArguments: {((proc yourAddress + ((size - 1) * VMConstants.IntPtrSize) + offset) // 2) asStackPointer})
+		equals: size.
+	"Try round-tripping with spOfIndex:"
+	{1. 1024. proc size} do: 
+			[:i |
+			sp := proc spOfIndex: i.
+			self assert: (method value: proc withArguments: {sp}) equals: i]!
+
 testPrimitiveInstanceCounts
 	"Test primitive that returns instance count stats, but not requesting any specific classes."
 
@@ -2652,6 +2670,7 @@ vmRespectsNonInstantiable
 !VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
+!VMTest categoriesFor: #testPrimitiveIndexOfSp!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
 !VMTest categoriesFor: #testPrimitiveInstVarAt!public!unit tests! !

@@ -604,25 +604,6 @@ DEFINECONTEXTPRIM <primitiveUnwindInterrupt>
 ;; it as potentially context switching primitive
 DEFINECONTEXTPRIM <primitiveSignalAtTick>
 
-BEGINPRIMITIVE primitiveIndexOfSP
-	mov	ecx, [_SP-OOPSIZE]				; Receiver
-	mov	eax, [_SP]						; Frame Oop (i.e. frame address + 1)
-	test al, 1
-	jz	 localPrimitiveFailure0
-	
-	sub	eax, OFFSET Process.m_stack
-	mov	edx, (OTE PTR[ecx]).m_location	; Load address of object
-	sub	eax, edx
-	shr	eax, 1							; Only div byte offset by 2 as need a SmallInteger
-	add	eax, 3							; Add 1 (to convert zero-based offset to 1 based index) and flag as SmallInteger
-	mov	[_SP-OOPSIZE], eax
-	lea	eax, [_SP - OOPSIZE]			; primitiveSuccess(1)
-	ret
-	
-LocalPrimitiveFailure 0
-	
-ENDPRIMITIVE primitiveIndexOfSP
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 
