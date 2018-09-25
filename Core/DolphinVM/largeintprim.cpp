@@ -7,7 +7,7 @@
 	Implementation of the Interpreter class' LargeInteger primitive methods.
 
 	These differ from standard ST-80 in that Dolphin represents LargeIntegers
-	in two's complement representation with a 4-byte (DWORD) granularity, i.e
+	in two's complement representation with a 4-byte (uint32_t) granularity, i.e
 	LargeIntegers are 4, 8, 12, 16, etc bytes long.
 
 	The use of x4 two's complement has certain implications:
@@ -45,20 +45,20 @@
 	#define MASK_DWORD(op) (op)
 #endif
 // This cast sequence can allow the compiler to generate more efficient code (avoids the need for an arithmetic shift)
-#define /*LONG*/ HighSLimb(/*LONGLONG*/ op) (((LARGE_INTEGER*)&op)->HighPart)
-#define /*LONG*/ HighULimb(/*LONGLONG*/ op) (((ULARGE_INTEGER*)&op)->HighPart)
-#define /*DWORD*/ LowLimb(/*LONGLONG*/ op) (static_cast<DWORD>(MASK_DWORD(op)))
+#define /*int32_t*/ HighSLimb(/*int64_t*/ op) (((LARGE_INTEGER*)&op)->HighPart)
+#define /*uint32_t*/ HighULimb(/*int64_t*/ op) (((ULARGE_INTEGER*)&op)->HighPart)
+#define /*uint32_t*/ LowLimb(/*int64_t*/ op) (static_cast<uint32_t>(MASK_DWORD(op)))
 
 // Forward references
 Oop __fastcall liNormalize(LargeIntegerOTE* oteLI);
 
 // Answer the sign bit of the argument
-inline static int signBitOf(SDWORD signedInt)
+inline static int signBitOf(int32_t signedInt)
 {
 	return signedInt < 0 ? -1 : 0;
 }
 
-__declspec(naked) unsigned __fastcall highBit(DWORD )
+__declspec(naked) unsigned __fastcall highBit(uint32_t )
 {
 	_asm {
 		bsr	eax, ecx		// Get high bit index into eax, zero flag set if no bits
@@ -82,7 +82,7 @@ __declspec(naked) unsigned __fastcall highBit(DWORD )
 // Answer a new Integer instantiated from the 32-bit positive integer argument.
 // The answer is not necessarily in the most reduced form possible (i.e. even if the 
 // value would fit in a SmallInteger, this routine will still answer a LargeInteger).
-LargeIntegerOTE* __fastcall LargeInteger::liNewSigned(SDWORD value)
+LargeIntegerOTE* __fastcall LargeInteger::liNewSigned(int32_t value)
 {
 	LargeIntegerOTE* oteR = reinterpret_cast<LargeIntegerOTE*>(Interpreter::NewDWORD(value, Pointers.ClassLargeInteger));
 	oteR->beImmutable();
@@ -91,16 +91,16 @@ LargeIntegerOTE* __fastcall LargeInteger::liNewSigned(SDWORD value)
 
 inline LargeIntegerOTE* LargeInteger::NewWithLimbs(MWORD limbs)
 {
-	return reinterpret_cast<LargeIntegerOTE*>(ObjectMemory::newByteObject<false, true>(Pointers.ClassLargeInteger, limbs*sizeof(DWORD)));
+	return reinterpret_cast<LargeIntegerOTE*>(ObjectMemory::newByteObject<false, true>(Pointers.ClassLargeInteger, limbs*sizeof(uint32_t)));
 }
 
 // Answer a new Integer instantiated from the 32-bit positive integer argument.
 // The answer is not necessarily in the most reduced form possible (i.e. even if the 
 // value would fit in a SmallInteger, this routine will still answer a LargeInteger).
-LargeIntegerOTE* __fastcall LargeInteger::liNewUnsigned(DWORD value)
+LargeIntegerOTE* __fastcall LargeInteger::liNewUnsigned(uint32_t value)
 {
 	LargeIntegerOTE* oteLarge;
-	if (SDWORD(value) < 0)
+	if (static_cast<int32_t>(value) < 0)
 	{
 		// Result would be negative if used only 32 bits, 
 		// so need to use 64-bits to keep positive sign
@@ -117,18 +117,18 @@ LargeIntegerOTE* __fastcall LargeInteger::liNewUnsigned(DWORD value)
 
 // Answer a new Integer instantiated from the 64-bit integer argument.
 // The answer is in the most reduced form possible (i.e. it could even be a SmallInteger
-Oop __stdcall Integer::NewUnsigned64(ULONGLONG ullValue)
+Oop __stdcall Integer::NewUnsigned64(uint64_t ullValue)
 {
 	ULARGE_INTEGER* pValue = reinterpret_cast<ULARGE_INTEGER*>(&ullValue);
-	const DWORD highPart = pValue->HighPart;
-	const DWORD lowPart = pValue->LowPart;
+	const uint32_t highPart = pValue->HighPart;
+	const uint32_t lowPart = pValue->LowPart;
 	if (!highPart)
 		// May fit in 32-bits
 		return NewUnsigned32(lowPart);
 
 	// Need up to 96 bits to represent full range of 64-bit positive numbers as 
 	// 2's complement
-	const unsigned nDigits = SDWORD(highPart) < 0 ? 3 : 2;
+	const unsigned nDigits = static_cast<int32_t>(highPart) < 0 ? 3 : 2;
 	LargeIntegerOTE* oteLarge = LargeInteger::NewWithLimbs(nDigits);
 	LargeInteger* large = oteLarge->m_location;
 	large->m_digits[0] = lowPart;
@@ -140,11 +140,11 @@ Oop __stdcall Integer::NewUnsigned64(ULONGLONG ullValue)
 
 // Answer a new Integer instantiated from the 64-bit integer argument.
 // The answer is in the most reduced form possible (i.e. it could even be a SmallInteger
-Oop __stdcall Integer::NewSigned64(LONGLONG value)
+Oop __stdcall Integer::NewSigned64(int64_t value)
 {
 	LARGE_INTEGER* pValue = reinterpret_cast<LARGE_INTEGER*>(&value);
-	const SDWORD highPart = pValue->HighPart;
-	const DWORD lowPart = pValue->LowPart;
+	const int32_t highPart = pValue->HighPart;
+	const uint32_t lowPart = pValue->LowPart;
 	Oop oopAnswer;
 	if (highPart == signBitOf(lowPart))
 	{
@@ -201,16 +201,16 @@ Oop __fastcall liNormalize(LargeIntegerOTE* oteLI)
 
 	MWORD size = oteLI->getWordSize();
 	MWORD last = size - 1;
-	SDWORD highPart = li->signDigit(oteLI);
+	int32_t highPart = static_cast<int32_t>(li->m_digits[last]);
 	if (last)	// If more than one digit, attempt to remove any which are redundant
 	{
-		SDWORD liSign = li->signBit(oteLI);
+		int32_t liSign = highPart < 0 ? -1 : 0;
 
 		// See if high part is redundant, and remove leading sign words
 		while (last > 0 && highPart == liSign)
 		{
 			last--;
-			highPart = SDWORD(li->m_digits[last]);
+			highPart = static_cast<int32_t>(li->m_digits[last]);
 		}
 
 		if (last == size-1)
@@ -243,7 +243,7 @@ Oop __fastcall liNormalize(LargeIntegerOTE* oteLI)
 		// else More than one digit required, so cannot possibly be SmallInteger
 
 		ASSERT(last+1 < size);
-		ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteLI), (last+1)*sizeof(DWORD));
+		ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteLI), (last+1)*sizeof(uint32_t));
 		// Drop through to return the shrunken object
 	}
 	else
@@ -302,17 +302,17 @@ LargeIntegerOTE* __stdcall liLeftShift(LargeIntegerOTE* oteLI, unsigned shift)
 	LargeIntegerOTE* oteResult = LargeInteger::NewWithLimbs(resultSize);
 	LargeInteger* liResult = oteResult->m_location;
 
-	SDWORD carry = 0;		// Initial carry is 0
+	int32_t carry = 0;		// Initial carry is 0
 	for (int i=0;i<size-1;i++)
 	{
-		LONGLONG digit = li->m_digits[i];
-		LONGLONG accum = (digit << bits) | carry;
+		int64_t digit = li->m_digits[i];
+		int64_t accum = (digit << bits) | carry;
 		liResult->m_digits[i+words] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
 	// Last (signed) digit unrolled to avoid condition in loop
-	LONGLONG digit = static_cast<SDWORD>(li->m_digits[size-1]);
-	LONGLONG accum = (digit << bits) | carry;
+	int64_t digit = static_cast<int32_t>(li->m_digits[size-1]);
+	int64_t accum = (digit << bits) | carry;
 	ASSERT(size+words == resultSize-1);
 	liResult->m_digits[resultSize-2] = LowLimb(accum);
 	liResult->m_digits[resultSize-1] = HighSLimb(accum);
@@ -344,7 +344,7 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, unsigned shift)
 	const int resultSize = size - words;
 	if (resultSize <= 0)
 		// All bits lost. As this is an arithmetic (signed) shift, answer the sign "bit"
-		return ObjectMemoryIntegerObjectOf(li->signBit(oteLI));
+		return ObjectMemoryIntegerObjectOf(static_cast<int32_t>(li->m_digits[size - 1]) < 0 ? -1 : 0);
 
 	LargeIntegerOTE* oteResult = LargeInteger::NewWithLimbs(resultSize);
 	LargeInteger* liResult = oteResult->m_location;
@@ -356,7 +356,7 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, unsigned shift)
 		// avoids problems with shifts of more than 31 bits on Intel 
 		// hardware (which are performed modulo 32, i.e. << 32 actually 
 		// results in << 0 and gives the wrong result - the operand and not 0).
-		memcpy(liResult->m_digits, li->m_digits+words, resultSize*sizeof(DWORD));
+		memcpy(liResult->m_digits, li->m_digits+words, resultSize*sizeof(uint32_t));
 	}
 	else
 	{
@@ -364,11 +364,11 @@ Oop __stdcall liRightShift(LargeIntegerOTE* oteLI, unsigned shift)
 		ASSERT(carryShift >= 0);
 
 		// Do top shift separately because it contains sign
-		DWORD digit = li->m_digits[size-1];
+		uint32_t digit = li->m_digits[size-1];
 		// Perform an arithmetic shift (with sign carry-in) of the top digit
-		liResult->m_digits[resultSize-1] = SDWORD(digit) >> bits;
+		liResult->m_digits[resultSize-1] = static_cast<int32_t>(digit) >> bits;
 		// The carry will be at most 31 bits
-		DWORD carry;
+		uint32_t carry;
 		for (int i=resultSize-2;i>=0;i--)
 		{
 			carry = digit << carryShift;
@@ -397,13 +397,13 @@ static LargeIntegerOTE* __stdcall liNegatePriv(LargeIntegerOTE* oteLI)
 
 	const MWORD size = oteLI->getWordSize();
 
-	SDWORD highDigit = SDWORD(li->m_digits[size-1]);
+	int32_t highDigit = static_cast<int32_t>(li->m_digits[size-1]);
 	MWORD negatedSize = size;
 
 	// Handle boundary conditions to avoid the need to allocate extra digits and/or
 	// normalize the result. Because the range of positive/negative 2's complement
 	// Integers differs by 1, we may have to "increase" or "reduce" the representation
-	if (highDigit == -SDWORD(0x80000000))
+	if (highDigit == -static_cast<int32_t>(0x80000000))
 	{
 		// Will (probably) need extra zero digit to represent as positive value
 		negatedSize++;
@@ -421,12 +421,12 @@ static LargeIntegerOTE* __stdcall liNegatePriv(LargeIntegerOTE* oteLI)
 	LargeIntegerOTE* oteNegated = LargeInteger::NewWithLimbs(negatedSize);
 	LargeInteger* liNegated = oteNegated->m_location;
 	// TODO: Since we are only adding one, only one bit of carry is possible - would be much faster in assembler as simple 32-bit add with carry loop
-	SDWORD carry = 1;
+	int32_t carry = 1;
 	
 	for (MWORD i=0;i<size;i++)
 	{
 		// Must cast at least one operand to 64-bits so that 64-bit (signed) addition performed
-		LONGLONG accum = LONGLONG(~li->m_digits[i]) + carry;
+		int64_t accum = static_cast<int64_t>(~li->m_digits[i]) + carry;
 		liNegated->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
@@ -438,7 +438,7 @@ Oop __stdcall liNegate(LargeIntegerOTE* oteLI)
 {
 	LargeInteger* li = oteLI->m_location;
 	const int size = oteLI->getWordSize();
-	if (size == 1 && SDWORD(li->m_digits[0]) == 0x40000000)
+	if (size == 1 && static_cast<int32_t>(li->m_digits[0]) == 0x40000000)
 	{
 		// Can reduce this large positive integer to negative SmallInteger (boundary case)
 		return ObjectMemoryIntegerObjectOf(-0x40000000);
@@ -486,22 +486,22 @@ Oop __stdcall liAddSingle(LargeIntegerOTE* oteLI, SMALLINTEGER operand)
 	LargeInteger* liSum = oteSum->m_location;
 	const MWORD last = limbs - 1;
 
-	SDWORD addend = operand;
+	int32_t addend = operand;
 	for (MWORD i=0;i<last;i++)
 	{
 		// Must cast at least one operand to 64-bits so that 64-bit addition performed
-		LONGLONG accum = static_cast<LONGLONG>(li->m_digits[i]) + addend;
+		int64_t accum = static_cast<int64_t>(li->m_digits[i]) + addend;
 		liSum->m_digits[i] = LowLimb(accum);
 		addend = HighSLimb(accum);
 	}
 
 	// Last digit unrolled because we need to use signed arithmetic here
-	LONGLONG accum = static_cast<LONGLONG>(static_cast<SDWORD>(li->m_digits[last])) + addend;
+	int64_t accum = static_cast<int64_t>(static_cast<int32_t>(li->m_digits[last])) + addend;
 	liSum->m_digits[last] = LowLimb(accum);
 
 	// If sign of 32-bit representation is not same as 64-bit, then need another sign limb
 	const bool negative = accum < 0;
-	if (negative != static_cast<SDWORD>(accum) < 0)
+	if (negative != static_cast<int32_t>(accum) < 0)
 	{
 		// Add extra digit necessary to represent the sign
 		LargeInteger* pSum = reinterpret_cast<LargeInteger*>(ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteSum), (limbs+1)<<2));
@@ -536,18 +536,18 @@ Oop __stdcall liAdd(LargeIntegerOTE* oteOp1, LargeIntegerOTE* oteOp2)
 
 	__assume(size1 >= size2);
 
-	if (size2 == 1) return liAddSingle(oteOp1, static_cast<SDWORD>(liOp2->m_digits[0]));
+	if (size2 == 1) return liAddSingle(oteOp1, static_cast<int32_t>(liOp2->m_digits[0]));
 
 	LargeIntegerOTE* oteSum = LargeInteger::NewWithLimbs(size1);
 	LargeInteger* liSum = oteSum->m_location;
 
-	SDWORD carry = 0;
+	int32_t carry = 0;
 
 	MWORD i = 0;
 	// add up the least significant limbs up to, but not including, the most-significant limb of the addend (the receiver is at least as large)
 	for (;i<size2-1;i++)
 	{
-		LONGLONG accum = static_cast<LONGLONG>(liOp1->m_digits[i]) + liOp2->m_digits[i] + carry;
+		int64_t accum = static_cast<int64_t>(liOp1->m_digits[i]) + liOp2->m_digits[i] + carry;
 		liSum->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
@@ -555,35 +555,35 @@ Oop __stdcall liAdd(LargeIntegerOTE* oteOp1, LargeIntegerOTE* oteOp2)
 	if (size1 > size2)
 	{
 		// Now the most significant limb of the (smaller) addend is considered - we need to ensure to sign extend it
-		LONGLONG accum = static_cast<LONGLONG>(liOp1->m_digits[i]) + static_cast<SDWORD>(liOp2->m_digits[i]) + carry;
+		int64_t accum = static_cast<int64_t>(liOp1->m_digits[i]) + static_cast<int32_t>(liOp2->m_digits[i]) + carry;
 		liSum->m_digits[i++] = LowLimb(accum);
 		carry = HighSLimb(accum);
 
 		// Ripple any remaining carry through remaining less significant limbs
 		for (;i<size1-1;i++)
 		{
-			LONGLONG accum = static_cast<LONGLONG>(liOp1->m_digits[i]) + carry;
+			int64_t accum = static_cast<int64_t>(liOp1->m_digits[i]) + carry;
 			liSum->m_digits[i] = LowLimb(accum);
 			carry = HighSLimb(accum);
 		}
 
 		ASSERT(i == size1-1);
 		// Add in most significant limb of receiver (+ any carry) - again we must sign extend it
-		accum = static_cast<LONGLONG>(static_cast<SDWORD>(liOp1->m_digits[i])) + carry;
+		accum = static_cast<int64_t>(static_cast<int32_t>(liOp1->m_digits[i])) + carry;
 		liSum->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
 	else
 	{
 		ASSERT(i == size1-1);
-		LONGLONG accum = static_cast<LONGLONG>(static_cast<SDWORD>(liOp1->m_digits[i])) + static_cast<SDWORD>(liOp2->m_digits[i]) + carry;
+		int64_t accum = static_cast<int64_t>(static_cast<int32_t>(liOp1->m_digits[i])) + static_cast<int32_t>(liOp2->m_digits[i]) + carry;
 		liSum->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
 
 	// If sign of 32-bit representation is not same as 64-bit, then need another sign limb
 	// This case should be relatively rare, so we add it later rather than make initially and resize down
-	if ((carry < 0) != (static_cast<SDWORD>(liSum->m_digits[i]) < 0))
+	if ((carry < 0) != (static_cast<int32_t>(liSum->m_digits[i]) < 0))
 	{
 		// Add extra digit necessary to represent the sign
 		LargeInteger* pSum = reinterpret_cast<LargeInteger*>(ObjectMemory::resize(reinterpret_cast<BytesOTE*>(oteSum), (size1+1)<<2));
@@ -611,25 +611,25 @@ Oop __stdcall liSubSingle(LargeIntegerOTE* oteLI, SMALLINTEGER operand)
 	const MWORD last = differenceSize - 1;
 
 	// The initial "borrow" is the argument
-	SDWORD carry = operand * -1;
+	int32_t carry = operand * -1;
 
 	for (MWORD i=0;i<last;i++)
 	{
 		// Must cast at least one operand to 64-bits so that 64-bit subtraction performed
-		LONGLONG accum = LONGLONG(li->m_digits[i]) + carry;
+		int64_t accum = static_cast<int64_t>(li->m_digits[i]) + carry;
 		liDifference->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
 
 	// Last digit unrolled because we need to use signed arithmetic here
 	// May not sign extend correctly without cast
-	LONGLONG accum = LONGLONG(li->signDigit(oteLI)) + carry;
+	int64_t accum = static_cast<int64_t>(li->signDigit(oteLI)) + carry;
 	liDifference->m_digits[last] = LowLimb(accum);
 
 	// Now drop through to handle the final borrow (in accum.HighPart) in common
 	// code. This may involve growing the result if it cannot be represented as
 	// a two's complement number in the current number of digits..
-	if (accum < -(LONGLONG)0x80000000 || accum >= 0x80000000)
+	if (accum < -static_cast<int64_t>(0x80000000) || accum >= 0x80000000)
 	{
 		// Not at 32-bit two's complement number, so there must be a remaining borrow...
 
@@ -664,24 +664,24 @@ Oop __stdcall liSub(LargeIntegerOTE* oteLI, LargeIntegerOTE* oteOperand)
 	LargeIntegerOTE* oteDifference = LargeInteger::NewWithLimbs(differenceSize);
 	LargeInteger* liDifference = oteDifference->m_location;
 
-	SDWORD carry = 0;
+	int32_t carry = 0;
 
 	for (MWORD i=0;i<differenceSize;i++)
 	{
 		TODO("Unroll this loop to avoid conditionals in loop")
 		// Compiler unable to optimize size() calls out
-		//LONGLONG a = receiver.digitAt(i);
-		LONGLONG a = i<size ? (i==size-1 ? LONGLONG(SDWORD(li->m_digits[i])) : li->m_digits[i]) : 0;
+		//int64_t a = receiver.digitAt(i);
+		int64_t a = i<size ? (i==size-1 ? static_cast<int64_t>(static_cast<int32_t>(li->m_digits[i])) : li->m_digits[i]) : 0;
 		
-		//LONGLONG b = larg.digitAt(i);
-		LONGLONG b = i<operandSize ? (i==operandSize-1 ? LONGLONG(SDWORD(liOperand->m_digits[i])) : liOperand->m_digits[i]) : 0;
+		//int64_t b = larg.digitAt(i);
+		int64_t b = i<operandSize ? (i==operandSize-1 ? static_cast<int64_t>(static_cast<int32_t>(liOperand->m_digits[i])) : liOperand->m_digits[i]) : 0;
 
-		LONGLONG accum = a - b + carry;
+		int64_t accum = a - b + carry;
 		liDifference->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
 
-	SDWORD signLimb = static_cast<SDWORD>(liDifference->m_digits[differenceSize-1]);
+	int32_t signLimb = static_cast<int32_t>(liDifference->m_digits[differenceSize-1]);
 	if ((carry < 0) !=  (signLimb < 0))
 	{
 		// Not at 32-bit two's complement number, so there must be a remaining borrow...
@@ -715,7 +715,7 @@ Oop __stdcall liMul(const LargeInteger* liOuter, const MWORD outerSize, const La
 	const MWORD productSize = innerSize + outerSize;
 	LargeIntegerOTE* productPointer = LargeInteger::NewWithLimbs(productSize);
 	LargeInteger* product = productPointer->m_location;
-	BYTE* prodBytes = reinterpret_cast<BYTE*>(product->m_digits);
+	uint8_t* prodBytes = reinterpret_cast<uint8_t*>(product->m_digits);
 	
 	const MWORD innerByteSize = innerSize << 2;
 	const MWORD outerByteSize = outerSize << 2;
@@ -723,24 +723,24 @@ Oop __stdcall liMul(const LargeInteger* liOuter, const MWORD outerSize, const La
 	ASSERT(outerByteSize > 3);
 	ASSERT(innerByteSize > 3);
 
-	const BYTE* outerBytes = reinterpret_cast<const BYTE*>(liOuter->m_digits);
-	const BYTE* innerBytes = reinterpret_cast<const BYTE*>(liInner->m_digits);
+	const uint8_t* outerBytes = reinterpret_cast<const uint8_t*>(liOuter->m_digits);
+	const uint8_t* innerBytes = reinterpret_cast<const uint8_t*>(liInner->m_digits);
 
-	SDWORD accum;
+	int32_t accum;
 	MWORD k=0;
 	for (MWORD i=0;i<outerByteSize;i++)
 	{
-		SDWORD outerDigit = i==outerByteSize-1 ? SDWORD(SBYTE(outerBytes[i])) : outerBytes[i];
+		int32_t outerDigit = i==outerByteSize-1 ? static_cast<int32_t>(static_cast<int8_t>(outerBytes[i])) : outerBytes[i];
 		if (outerDigit)
 		{
 			k = i;
-			SDWORD carry = 0;
+			int32_t carry = 0;
 			for (MWORD j=0;j<innerByteSize;j++)
 			{
-				SDWORD innerDigit = j==innerByteSize-1 ? SDWORD(SBYTE(innerBytes[j])) : innerBytes[j];
+				int32_t innerDigit = j==innerByteSize-1 ? static_cast<int32_t>(static_cast<int8_t>(innerBytes[j])) : innerBytes[j];
 				ASSERT(k < productSize<<2);
 				accum = innerDigit * outerDigit + prodBytes[k] + carry;
-				prodBytes[k] = static_cast<BYTE>(accum & 0xFF);
+				prodBytes[k] = static_cast<uint8_t>(accum & 0xFF);
 				carry = accum >> 8;
 				k++;
 			}
@@ -750,7 +750,7 @@ Oop __stdcall liMul(const LargeInteger* liOuter, const MWORD outerSize, const La
 			while(carry && k < productByteSize)
 			{
 				accum = prodBytes[k] + carry;
-				prodBytes[k] = static_cast<BYTE>(accum & 0xFF);
+				prodBytes[k] = static_cast<uint8_t>(accum & 0xFF);
 				carry = accum >> 8;
 				k++;
 			}
@@ -791,19 +791,19 @@ Oop __stdcall liMulSingle(LargeIntegerOTE* oteInner, SMALLINTEGER outerDigit)
 	LargeIntegerOTE* oteProduct = LargeInteger::NewWithLimbs(productSize);
 	LargeInteger* product = oteProduct->m_location;
 	
-	SDWORD carry = 0;
+	int32_t carry = 0;
 	for (MWORD i=0;i<innerSize-1;i++)
 	{
 		// This operations requires a 64-bit multiply because positive 32-bit int 
 		// might need 64-bit 2's complement bits to represent it
-		LONGLONG innerDigit = liInner->m_digits[i];
-		LONGLONG accum = innerDigit * outerDigit + carry;
+		int64_t innerDigit = liInner->m_digits[i];
+		int64_t accum = innerDigit * outerDigit + carry;
 		product->m_digits[i] = LowLimb(accum);
 		carry = HighSLimb(accum);
 	}
-	LONGLONG innerDigit = SDWORD(liInner->m_digits[innerSize-1]);
+	int64_t innerDigit = static_cast<int32_t>(liInner->m_digits[innerSize-1]);
 	// This operation can be done with a single 32-bit imul yielding 64-bit result
-	LONGLONG accum = innerDigit * outerDigit + carry;
+	int64_t accum = innerDigit * outerDigit + carry;
 	product->m_digits[innerSize-1] = LowLimb(accum);
 	product->m_digits[innerSize] = HighSLimb(accum);
 
@@ -946,17 +946,17 @@ liDiv_t __stdcall liDivSingleUnsigned(LargeIntegerOTE* oteLI, SMALLUNSIGNED v)
 	LargeIntegerOTE* oteQ = LargeInteger::NewWithLimbs(qSize);
 	LargeInteger* q = oteQ->m_location;
 
-	DWORD rem = 0;
+	uint32_t rem = 0;
 	for (int i=qSize-1;i>=0;i--)
 	{
-		DWORDLONG ui = liU->m_digits[i] + (DWORDLONG(rem) << 32);
+		uint64_t ui = liU->m_digits[i] + (static_cast<uint64_t>(rem) << 32);
 
 		// 64-bit division is done using a rather slow CRT function, but
 		// this is still much faster than doing it byte-by-byte because IDIV is
 		// a very slow instruction anyway.
 		// Its a shame the divide function doesn't also calculate the remainder!
-		q->m_digits[i] = static_cast<DWORD>(ui / v);
-		rem = static_cast<DWORD>(ui % v);
+		q->m_digits[i] = static_cast<uint32_t>(ui / v);
+		rem = static_cast<uint32_t>(ui % v);
 	}
 
 	liDiv_t quoAndRem;
@@ -989,7 +989,7 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 	if (qSize == 1)
 	{
 		// 32-bit / 32-bit, optimized case
-		SDWORD ui = liU->m_digits[0];
+		int32_t ui = liU->m_digits[0];
 		ldiv_t qr = quoRem(v, ui);
 		Oop oopQuo = LargeInteger::NewSigned32(qr.quot);
 		quoAndRem.quo = oopQuo;
@@ -999,11 +999,11 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 	else if (qSize == 2)
 	{
 		// 64-bit / 32-bit optimized case
-		LONGLONG ui = *reinterpret_cast<LONGLONG*>(liU->m_digits);
-		LONGLONG quo = ui/v;
+		int64_t ui = *reinterpret_cast<int64_t*>(liU->m_digits);
+		int64_t quo = ui/v;
 		Oop oopQuo = LargeInteger::NewSigned64(quo);
 		quoAndRem.quo = oopQuo;
-		SDWORD rem = static_cast<SDWORD>(ui%v);
+		int32_t rem = static_cast<int32_t>(ui%v);
 		_ASSERTE(ObjectMemoryIsIntegerValue(rem));
 		quoAndRem.rem = ObjectMemoryIntegerObjectOf(rem);
 	}
@@ -1015,7 +1015,7 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 		// division, even by a single precision divisor, and in any case division by
 		// a positive divisor is much more common and will run faster this way
 
-		SDWORD uHigh = liU->signDigit(oteU);
+		int32_t uHigh = liU->signDigit(oteU);
 
 		// Note: Remainder will always have same sign as numerator
 
@@ -1081,7 +1081,7 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 
 /*		unsigned last = qSize-1;
 		// Get the sign word
-		SDWORD ui = liU->m_digits[last];
+		int32_t ui = liU->m_digits[last];
 
 		if (ui == 0)
 		{
@@ -1102,8 +1102,8 @@ liDiv_t __stdcall liDivSingle(LargeIntegerOTE* oteU, SMALLINTEGER v)
 
 		for (int i=last-1;i>=0;i--)
 		{
-			LONGLONG ui = liU->m_digits[i] + (LONGLONG(rem) << 32);
-			//DWORDLONG ui = u->m_digits[i] + (DWORDLONG(rem) << 32);
+			int64_t ui = liU->m_digits[i] + (static_cast<int64_t>(rem) << 32);
+			//uint64_t ui = u->m_digits[i] + (static_cast<uint64_t>(rem) << 32);
 
 			// 64-bit division is done using a rather slow CRT function, but
 			// this is still much faster than doing it byte-by-byte because IDIV is
@@ -1135,7 +1135,7 @@ ArrayOTE* __fastcall liNewArray2(Oop oop1, Oop oop2)
 
 /*
 
-inline __declspec(naked) DWORDLONG __fastcall liMul32x32(DWORD , DWORD )
+inline __declspec(naked) uint64_t __fastcall liMul32x32(uint32_t , uint32_t )
 {
 	_asm
 	{
@@ -1151,8 +1151,8 @@ inline __declspec(naked) DWORDLONG __fastcall liMul32x32(DWORD , DWORD )
 
 liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee)
 {
-	const DWORDLONG b = 0x100000000;
-	const DWORD WM1 = 0xFFFFFFFF;
+	const uint64_t b = 0x100000000;
+	const uint32_t WM1 = 0xFFFFFFFF;
 
 	LargeInteger* liEwe = oteEwe->m_location;
 	LargeInteger* liVee = oteVee->m_location;
@@ -1221,17 +1221,17 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 	LargeIntegerOTE* oteQuo = LargeInteger::NewWithLimbs(m+1);
 	LargeInteger* liQuo = oteQuo->m_location;
 
-	DWORD v1 = liV->m_digits[n-1];
+	uint32_t v1 = liV->m_digits[n-1];
 	// MUST have top bit set from normalization
 	ASSERT(v1 >= 0x80000000);
 
 #if 1
 	// This version should work for single-precision divisor too
-	DWORD v2 = n > 1 ? liV->m_digits[n-2] : 0;
+	uint32_t v2 = n > 1 ? liV->m_digits[n-2] : 0;
 #else
 	// divSize must be > 1 because we perform single-precision division separately
 	ASSERT(n > 1);
-	DWORD v2 = liV->m_digits[n-2];
+	uint32_t v2 = liV->m_digits[n-2];
 #endif
 
 	TRACE(L"d=%d, v1=%X, v2=%X, entering loop 1...\n", d, v1, v2);
@@ -1245,11 +1245,11 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 		/*
 			Step D3: Calculate q^
 		*/
-		DWORD uj = liU->m_digits[j];
-		DWORD uj1 = liU->m_digits[j-1];			// j must be >= 1
-		DWORDLONG ujb = (DWORDLONG)uj * b;
+		uint32_t uj = liU->m_digits[j];
+		uint32_t uj1 = liU->m_digits[j-1];			// j must be >= 1
+		uint64_t ujb = static_cast<uint64_t>(uj) * b;
 
-		DWORD qHat;
+		uint32_t qHat;
 		if (uj == v1)
 			qHat = WM1;
 		else
@@ -1259,15 +1259,15 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			// where the v1 is minimum (i.e. 0x80000000), and two consecutive words of u are
 			// maximum (i.e. 16rFFFFFFFF). THEREFORE the maximum value of qHat which can result
 			// from the calculation is indeed WM1
-			ASSERT(((ujb + (DWORDLONG)uj1) / (DWORDLONG)v1) <= WM1);
+			ASSERT(((ujb + static_cast<uint64_t>(uj1)) / static_cast<uint64_t>(v1)) <= WM1);
 			// Should be possible to divide 64-bit value by 32-bits very efficiently
-			qHat = static_cast<DWORD>((ujb + uj1) / v1);
+			qHat = static_cast<uint32_t>((ujb + uj1) / v1);
 		}
 
 		// Now correct any trial value of q^ which is too large
-		DWORD uj2 = j < 2 ? 0 : liU->m_digits[j-2];
+		uint32_t uj2 = j < 2 ? 0 : liU->m_digits[j-2];
 
-		DWORDLONG rHat = ujb + uj1 - ((DWORDLONG)v1*(DWORDLONG)qHat);
+		uint64_t rHat = ujb + uj1 - (static_cast<uint64_t>(v1) * static_cast<uint64_t>(qHat));
 		if (HighULimb(rHat) == 0)
 		{
 			ASSERT(rHat <= WM1);
@@ -1278,17 +1278,17 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			rHatb.LowPart = 0;
 
 			// r^ = ujb + uj1 - v1.q^
-			rHatb.HighPart = static_cast<DWORD>(rHat);
+			rHatb.HighPart = static_cast<uint32_t>(rHat);
 			TRACE(L"	%d: j=%d, uj=%X, uj1=%X, ujb=%I64X, uj2=%X, trial q^=%X, r^=%X\n", k, j, uj, uj1, ujb, uj2, qHat, rHatb.HighPart);
 
-			while ((DWORDLONG(v2)*qHat > (rHatb.QuadPart + uj2)))
+			while ((static_cast<uint64_t>(v2)*qHat > (rHatb.QuadPart + uj2)))
 			{
 				qHat--;
 				TRACE(L"	Adjusting trial q^ to %X, ",qHat);
 				if (rHatb.HighPart + v1 < rHatb.HighPart)
 				{
 					// overflowed - If rHat is >= b, then v2.q^ will be < b.r^
-					TRACE(L"\nWARNING: rHat overflow (%I64X)\n", DWORDLONG(rHatb.HighPart)+v1);
+					TRACE(L"\nWARNING: rHat overflow (%I64X)\n", static_cast<uint64_t>(rHatb.HighPart)+v1);
 					break;
 				}
 				else
@@ -1315,12 +1315,12 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 		for (int i=0;i<=n;i++)
 		{
 			ASSERT(l >= 0 && l < int(oteU->getWordSize()));
-			DWORD uij = liU->m_digits[l];
-			DWORD vi = liV->m_digits[i];
+			uint32_t uij = liU->m_digits[l];
+			uint32_t vi = liV->m_digits[i];
 
 			ULARGE_INTEGER qvi;
 			// Avoid slow compiler 64-bit multiply (used even though args 32-bit) ...
-			//qvi.QuadPart = DWORDLONG(vi)*qHat;
+			//qvi.QuadPart = static_cast<uint64_t>(vi)*qHat;
 			// ...Unfortunately this macro is no better...
 			//qvi.QuadPart = UInt32x32To64(vi, qHat);
 			// ...so do it in assembler
@@ -1337,8 +1337,8 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			// it in assembler using 96 bit arithmetic.
 			// N.B. This is not optimal, but I'm more interested
 			// in getting this working at the moment!
-			// accum.QuadPart = carry + DWORDLONG(uij) - qvi;
-			DWORD accum;
+			// accum.QuadPart = carry + static_cast<uint64_t>(uij) - qvi;
+			uint32_t accum;
 			_asm
 			{
 				// were going to use ecx for the bottom word, and eax:edx for the more significant words
@@ -1372,7 +1372,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			//	(1-b)...+1
 			// i.e. -16rFFFFFFFF..16r1, which is not trivially representable 
 			// as 32-bit 2's complement!
-			ASSERT(carry.QuadPart >= LONGLONG(1-b) && carry.QuadPart <= 1);
+			ASSERT(carry.QuadPart >= static_cast<int64_t>(1-b) && carry.QuadPart <= 1);
 			TRACE(L"		i=%d,l=%d: uij=%X, vi=%X, result=%08X %08X %08X (carry %I64d), liU->m_digits[%d]=%X\n",
 						i, l, uij, vi, carry.HighPart, carry.LowPart, accum, carry.QuadPart, l, liU->m_digits[l]);
 			l++;
@@ -1392,7 +1392,7 @@ liDiv_t __stdcall liDivUnsigned(LargeIntegerOTE* oteEwe, LargeIntegerOTE* oteVee
 			for (int i=0;i<=n;i++)
 			{
 				ASSERT(l >= 0 && l < int(oteU->getWordSize()));
-				accum.QuadPart = DWORDLONG(accum.HighPart) + liU->m_digits[l] + liV->m_digits[i];
+				accum.QuadPart = static_cast<uint64_t>(accum.HighPart) + liU->m_digits[l] + liV->m_digits[i];
 				liU->m_digits[l] = accum.LowPart;
 				l++;
 			}
@@ -1449,8 +1449,8 @@ liDiv_t __stdcall liDiv(LargeIntegerOTE* oteU, LargeIntegerOTE* oteV)
 	LargeInteger* liU = oteU->m_location;
 	LargeInteger* liV = oteV->m_location;
 
-	SDWORD uHigh = liU->signDigit(oteU);
-	SDWORD vHigh = liV->signDigit(oteV);
+	int32_t uHigh = liU->signDigit(oteU);
+	int32_t vHigh = liV->signDigit(oteV);
 
 	liDiv_t quoAndRem;
 
@@ -1554,7 +1554,7 @@ Oop __stdcall liBitAnd(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
 		return liBitAnd(oteB, oteA);
 
 	LargeIntegerOTE* oteR;
-	if (SDWORD(liB->m_digits[bSize-1]) < 0)
+	if (static_cast<int32_t>(liB->m_digits[bSize-1]) < 0)
 	{
 		// bitAnd with shorter negative number
 		// The answer must have the correct sign
@@ -1625,7 +1625,7 @@ Oop __stdcall liBitAndSingle(LargeIntegerOTE* oteA, SMALLINTEGER mask)
 	}
 
 	LargeInteger* liR = oteR->m_location;
-	liR->m_digits[0] = liA->m_digits[0] & DWORD(mask);
+	liR->m_digits[0] = liA->m_digits[0] & static_cast<uint32_t>(mask);
 
 	// The result MUST have the correct sign, because if both negative then
 	// sign bit will be set in both, and hence in the result. OR if 
@@ -1674,14 +1674,14 @@ Oop __stdcall liBitOr(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
 
 	// Treatment of digits of A (always longer) above size of B
 	// differs according to sign of B
-	if (SDWORD(liB->m_digits[bSize-1]) < 0)
+	if (static_cast<int32_t>(liB->m_digits[bSize-1]) < 0)
 	{
 		// bitOr with shorter negative number
 		// The answer must be negative
 		// All the digits above the size of B will be -1
 		// (anything bitOr'd with 2's complement -1 is -1).
 		for (unsigned i=bSize;i<aSize;i++)
-			liR->m_digits[i] = DWORD(-1);
+			liR->m_digits[i] = static_cast<uint32_t>(-1);
 	}
 	else
 	{
@@ -1725,7 +1725,7 @@ Oop __stdcall liBitOrSingle(LargeIntegerOTE* oteA, SMALLINTEGER mask)
 		// All high digits must be -1 (anything bitOr'd
 		// with -1 is -1).
 		for (unsigned i=1;i<aSize;i++)
-			liR->m_digits[i] = DWORD(-1);
+			liR->m_digits[i] = static_cast<uint32_t>(-1);
 	}
 	else
 	{
@@ -1735,7 +1735,7 @@ Oop __stdcall liBitOrSingle(LargeIntegerOTE* oteA, SMALLINTEGER mask)
 			liR->m_digits[i] = liA->m_digits[i];
 	}
 
-	liR->m_digits[0] = liA->m_digits[0] | DWORD(mask);
+	liR->m_digits[0] = liA->m_digits[0] | static_cast<uint32_t>(mask);
 
 	// Debug check the result has the correct sign
 	#ifdef _DEBUG
@@ -1779,11 +1779,11 @@ Oop __stdcall liBitXor(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
 
 	// Treatment of digits of A (always longer) above size of B
 	// differs according to sign of B
-	if (SDWORD(liB->m_digits[bSize-1]) < 0)
+	if (static_cast<int32_t>(liB->m_digits[bSize-1]) < 0)
 	{
 		// bitXor with shorter negative number
 		for (unsigned i=bSize;i<aSize;i++)
-			liR->m_digits[i] = liA->m_digits[i] ^ DWORD(-1);
+			liR->m_digits[i] = liA->m_digits[i] ^ static_cast<uint32_t>(-1);
 	}
 	else
 	{
@@ -1825,7 +1825,7 @@ Oop __stdcall liBitXorSingle(LargeIntegerOTE* oteA, SMALLINTEGER mask)
 	{
 		// bitXor with single-precision negative number
 		for (unsigned i=1;i<aSize;i++)
-			liR->m_digits[i] = liA->m_digits[i] ^ DWORD(-1);
+			liR->m_digits[i] = liA->m_digits[i] ^ static_cast<uint32_t>(-1);
 	}
 	else
 	{
@@ -1835,7 +1835,7 @@ Oop __stdcall liBitXorSingle(LargeIntegerOTE* oteA, SMALLINTEGER mask)
 			liR->m_digits[i] = liA->m_digits[i];
 	}
 
-	liR->m_digits[0] = liA->m_digits[0] ^ DWORD(mask);
+	liR->m_digits[0] = liA->m_digits[0] ^ static_cast<uint32_t>(mask);
 
 	// Debug check the result has the correct sign
 	#ifdef _DEBUG
@@ -1849,51 +1849,6 @@ Oop __stdcall liBitXorSingle(LargeIntegerOTE* oteA, SMALLINTEGER mask)
 
 	// Made immutable when normalized later
 	return Oop(oteR);
-}
-
-
-///////////////////////////////////////////////////////////////////////////////
-//	Compare two large integers, answering 
-//	-ve for a < b, 0 for a = b, +ve for a > b
-
-__int64 __stdcall liCmp(LargeIntegerOTE* oteA, LargeIntegerOTE* oteB)
-{
-	LargeInteger* liA = oteA->m_location;
-	LargeInteger* liB = oteB->m_location;
-
-	const int aSign = liA->sign(oteA);
-	const int bSign = liB->sign(oteB);
-
-	__int64 cmp;
-
-	if (aSign != bSign)
-		cmp = aSign - bSign;
-	else
-	{
-		// Same sign
-		const MWORD aSize = oteA->getWordSize();
-		const MWORD bSize = oteB->getWordSize();
-		if (aSize == bSize)
-		{
-			cmp = 0;
-			// Same size, need to compare words
-			for (int i=aSize-1;i>=0;i--)
-			{
-				const DWORD digA = liA->m_digits[i];
-				const DWORD digB = liB->m_digits[i];
-				cmp = __int64(digA) - digB;
-				if (cmp)
-					break;
-			}
-		}
-		else
-		{
-			// Different sizes, can compare based on length
-			cmp = (int(aSize) - int(bSize)) * aSign;
-		}
-	}
-
-	return cmp;
 }
 
 
@@ -1925,6 +1880,93 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerNegate(Oop* const sp, unsigned
 	ObjectMemory::AddToZct(oopNegated);
 	return sp;
 }
+
+
+//template <class O1, class O2> __forceinline static Oop* primitiveLargeIntegerBinaryOp(Oop* const sp, const O1 &op, const O2& opMixed)
+//{
+//	Oop oopArg = *sp;
+//	FloatOTE* oteReceiver = reinterpret_cast<FloatOTE*>(*(sp - 1));
+//	Float* receiver = oteReceiver->m_location;
+//
+//	FloatOTE* oteResult;
+//	if (!ObjectMemoryIsIntegerObject(oopArg))
+//	{
+//		FloatOTE* oteArg = reinterpret_cast<FloatOTE*>(oopArg);
+//		if (oteArg->m_oteClass == Pointers.ClassFloat)
+//		{
+//			oteResult = Float::New();
+//			oteResult->m_location->m_fValue = op(receiver->m_fValue, oteArg->m_location->m_fValue);
+//		}
+//		else
+//		{
+//			return NULL;
+//		}
+//	}
+//	else
+//	{
+//		oteResult = Float::New();
+//		oteResult->m_location->m_fValue = opMixed(receiver->m_fValue, ObjectMemoryIntegerValueOf(oopArg));
+//	}
+//
+//	*(sp - 1) = reinterpret_cast<Oop>(oteResult);
+//	ObjectMemory::AddToZct((OTE*)oteResult);
+//	return sp - 1;
+//}
+//
+//// std::plus requires that T1 = T2
+//template <class T1, class T2> struct plus {
+//	double operator() (const T1& x, const T2& y) const { return x + y; }
+//};
+//
+//;; Macro for operations for which the result is the receiver if the operand is zero
+//LIARITHMPRIMR MACRO Op
+//li&Op&Single EQU ? li & Op&Single@@YGIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
+//extern li&Op&Single:near32
+//
+//li&Op EQU ? li & Op&@@YGIPAV?$TOTE@VLargeInteger@ST@@@@0@Z
+//extern li&Op&:near32
+//
+//BEGINPRIMITIVE primitiveLargeInteger&Op
+//mov		eax, [_SP]
+//mov		ecx, [_SP - OOPSIZE]; Load receiver(under argument)
+//ASSUME	ecx : PTR OTE
+//
+//.IF(al & 1); SmallInteger ?
+//ASSUME	eax : Oop
+//sar		eax, 1
+//jz		noOp; Operand is zero ? -result is receiver
+//push	eax
+//push	ecx
+//; N.B.SP not saved down here, so assumed not used by routine(which is independent)
+//call	li&Op&Single
+//.ELSE
+//ASSUME	eax : PTR OTE
+//
+//mov		edx, [eax].m_oteClass
+//cmp		edx, [Pointers.ClassLargeInteger]
+//jne		localPrimitiveFailure0
+//
+//push	eax
+//push	ecx
+//call	li&Op
+//.ENDIF
+//
+//; Normalize and return
+//push	eax
+//call	normalizeIntermediateResult
+//test	al, 1
+//mov[_SP - OOPSIZE], eax; Overwrite receiver class with new object
+//jnz		noOp
+//AddToZct <a>
+//
+//noOp :
+//	lea		eax, [_SP - OOPSIZE]; primitiveSuccess(0)
+//	ret
+//
+//	LocalPrimitiveFailure 0
+//
+//ENDPRIMITIVE primitiveLargeInteger&Op
+//ENDM
 
 #ifndef _M_IX86
 
@@ -2015,7 +2057,7 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerNegate(Oop* const sp, unsigned
 TODO("Make this routine work - suffers overflow problems at present")
 /*
 // Private - Answer the result of multiplying the receiver by the argument, anInteger
-static LargeIntegerOTE* liMul32(DWORD *const outer, MWORD outerSize, DWORD *const inner, MWORD innerSize)
+static LargeIntegerOTE* liMul32(uint32_t *const outer, MWORD outerSize, uint32_t *const inner, MWORD innerSize)
 {
 	// The algorithm is substantially faster if the outer loop is shorter
 	ASSERT(innerSize >= outerSize);
@@ -2032,13 +2074,13 @@ static LargeIntegerOTE* liMul32(DWORD *const outer, MWORD outerSize, DWORD *cons
 	for (MWORD i=0;i<outerSize;i++)
 	{
 		accum.QuadPart = 0;
-		LONGLONG outerDigit = i==outerSize-1 ? LONGLONG(SDWORD(outer[i])) : outer[i];
+		int64_t outerDigit = i==outerSize-1 ? static_cast<int64_t>(static_cast<int32_t>(outer[i])) : outer[i];
 		if (outerDigit)
 		{
 			k = i;
 			for (MWORD j=0;j<innerSize;j++)
 			{
-				LONGLONG innerDigit = j==innerSize-1 ? LONGLONG(SDWORD(inner[j])) : inner[j];
+				int64_t innerDigit = j==innerSize-1 ? static_cast<int64_t>(static_cast<int32_t>(inner[j])) : inner[j];
 				ASSERT(k < productSize);
 				accum.QuadPart = innerDigit * outerDigit + product->m_digits[k] + accum.HighPart;
 				product->m_digits[k] = accum.LowPart;
@@ -2054,8 +2096,8 @@ static LargeIntegerOTE* liMul32(DWORD *const outer, MWORD outerSize, DWORD *cons
 
 	// May need to sign extend into remaining digits
 	// Could perhaps optimize this by normalizing at same time
-	if ((SDWORD(outer[outerSize-1]) < 0) !=
-		(SDWORD(inner[innerSize-1]) < 0))
+	if ((static_cast<int32_t>(outer[outerSize-1]) < 0) !=
+		(static_cast<int32_t>(inner[innerSize-1]) < 0))
 	{
 		// Result is negative
 		for (MWORD i=k;i<productSize;i++)
@@ -2170,88 +2212,169 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerQuoAndRem(Oop* const sp, unsig
 	return sp - 1;
 }		
 
+//////////////////////////////////////////////////////////////////////////////
+//	Compare two large integers, answering 
+//	-ve for a < b, 0 for a = b, +ve for a > b
+
+template <bool Lt, bool Eq> static bool liCmp(const LargeIntegerOTE* oteA, const LargeIntegerOTE* oteB)
+{
+	const LargeInteger* liA = oteA->m_location;
+	const LargeInteger* liB = oteB->m_location;
+
+	const int aSign = liA->sign(oteA);
+	const int bSign = liB->sign(oteB);
+
+	// Compiler will optimize this to one comparison, and two conditional jumps
+	if (aSign < bSign)
+		return Lt;
+	if (aSign > bSign)
+		return !Lt;
+
+	// Same sign
+
+	const MWORD ai = oteA->getWordSize();
+	const MWORD bi = oteB->getWordSize();
+
+	if (ai == bi)
+	{
+		int i = ai - 1;
+		// Same sign and size: Compare words (same sign, so comparison can be unsigned)
+		do
+		{
+			const uint32_t digitA = liA->m_digits[i];
+			const uint32_t digitB = liB->m_digits[i];
+			// Again single comparison, two conditional jumps
+			if (digitA < digitB)
+				return Lt;
+			if (digitA > digitB)
+				return !Lt;
+		} while (--i >= 0);
+
+		// Equal - same sign, same size, all limbs same
+		return Eq;
+	}
+	else
+	{
+		// Same sign, different lengths, can compare based on number of limbs
+		return ((static_cast<int>(ai) - static_cast<int>(bi)) * aSign) < 0 ? Lt : !Lt;
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Compare macro to generate relational ops (all the same layout)
+// Compare template to generate relational ops (all the same layout)
 
-#define LICOMPARE(X) \
-	Oop argPointer = *sp;\
-	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp-1));\
-\
-	if (ObjectMemoryIsIntegerObject(argPointer))\
-	{\
-		/* SmallInteger argument, which is lesser depends on sign of receiver*/\
-		/* and arg only since LargeIntegers are always normalized*/\
-		LargeInteger* receiver = oteReceiver->m_location;\
-		int cmp = receiver->sign(oteReceiver);\
-		*(sp-1) = reinterpret_cast<Oop>(cmp X 0 ? Pointers.True : Pointers.False);\
-	}\
-	else\
-	{\
-		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(argPointer);\
-		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)\
-		{\
-			__int64 cmp = liCmp(oteReceiver, oteArg);\
-			*(sp-1) = reinterpret_cast<Oop>(cmp X 0 ? Pointers.True : Pointers.False);\
-		}\
-		else\
-			return NULL;	/* Arg not an integer, fall back on Smalltalk code*/\
-	}\
-	return sp-1;	// Pop one Oop
-
-
-///////////////////////////////////////////////////////////////////////////////
-//	Relational operator primitives for LargeIntegers
-//
-//	Note that these don't pop the stack, but return the number of bytes to pop
-
-Oop* __fastcall Interpreter::primitiveLargeIntegerLessThan(Oop* const sp, unsigned)
+template <bool Lt, bool Eq> static __forceinline Oop* primitiveLargeIntegerCmp(Oop* const sp)
 {
-	LICOMPARE(<)
-}
-
-Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterThan(Oop* const sp, unsigned)
-{
-	LICOMPARE(>)
-}
-
-Oop* __fastcall Interpreter::primitiveLargeIntegerLessOrEqual(Oop* const sp, unsigned)
-{
-	LICOMPARE(<=)
-}
-
-Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterOrEqual(Oop* const sp, unsigned)
-{
-	LICOMPARE(>=)
-}
-
-Oop* __fastcall Interpreter::primitiveLargeIntegerEqual(Oop* const sp, unsigned)
-{
-	// We Implement this specially, because the generic comparison macro does more work than necessary
 	Oop argPointer = *sp;
+	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
 
 	if (ObjectMemoryIsIntegerObject(argPointer))
 	{
-		// SmallInteger cannot be equal to a normalized large integer
-		*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+		// SmallInteger argument, which is lesser depends on sign of receiver only because,
+		// since LargeIntegers are always normalized, any negative LargeInteger must be less
+		// than any SmallInteger, and any positive LargeInteger must be greater than any SmallInteger
+		// SmallIntegers can never be equal to normalized large integers
+		int sign = oteReceiver->m_location->signDigit(oteReceiver);
+		*(sp - 1) = reinterpret_cast<Oop>((sign < 0 ? Lt : !Lt) ? Pointers.True : Pointers.False);
+		return sp - 1;
 	}
 	else
 	{
 		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(argPointer);
 		if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
 		{
-			LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
-			__int64 cmp = liCmp(oteReceiver, oteArg);
-			*(sp - 1) = reinterpret_cast<Oop>(cmp == 0 ? Pointers.True : Pointers.False);
+			bool cmp = liCmp<Lt, Eq>(oteReceiver, oteArg);
+			*(sp - 1) = reinterpret_cast<Oop>(cmp ? Pointers.True : Pointers.False);
+			return sp - 1;
 		}
 		else
-			return NULL;	/* Arg not an integer, fall back on Smalltalk code*/
+			return nullptr;	/* Arg not an integer, fall back on Smalltalk code*/
 	}
-	
-	return sp - 1;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//	Relational operator primitives for LargeIntegers
+//
 
+Oop* __fastcall Interpreter::primitiveLargeIntegerLessOrEqual(Oop* const sp, unsigned)
+{
+	return primitiveLargeIntegerCmp<true, true>(sp);
+}
+
+Oop* __fastcall Interpreter::primitiveLargeIntegerLessThan(Oop* const sp, unsigned)
+{
+	return primitiveLargeIntegerCmp<true,false>(sp);
+}
+
+Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterThan(Oop* const sp, unsigned)
+{
+	return primitiveLargeIntegerCmp<false,false>(sp);
+}
+
+Oop* __fastcall Interpreter::primitiveLargeIntegerGreaterOrEqual(Oop* const sp, unsigned)
+{
+	return primitiveLargeIntegerCmp<false,true>(sp);
+}
+
+Oop* __fastcall Interpreter::primitiveLargeIntegerEqual(Oop* const sp, unsigned)
+{
+	// We Implement this specially, because the generic comparison template does more work than necessary for equality comparison - this is about 20% faster
+	Oop argPointer = *sp;
+
+	if (ObjectMemoryIsIntegerObject(argPointer))
+	{
+		// SmallIntegers cannot be equal to a normalized large integers
+		*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+		return sp - 1;
+	}
+	else
+	{
+		LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
+		LargeIntegerOTE* oteArg = reinterpret_cast<LargeIntegerOTE*>(argPointer);
+		if (oteReceiver != oteArg)
+		{
+			if (oteArg->m_oteClass == Pointers.ClassLargeInteger)
+			{
+				const MWORD receiverSize = oteReceiver->getSize();
+				if (receiverSize != oteArg->getSize())
+				{
+					// Different sizes, cannot be equal if both normalized
+					*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+					return sp - 1;
+				}
+				else
+				{
+					// If the same size, we can just memcmp the content. Has to be identical to be equal. 
+					// This will account correctly for +/-ve
+
+					const LargeInteger* liReceiver = oteReceiver->m_location;
+					const LargeInteger* liArg = oteArg->m_location;
+
+					const int words = receiverSize / sizeof(uint32_t);
+					for (int i = 0; i < words; i++)
+					{
+						if (liReceiver->m_digits[i] != liArg->m_digits[i])
+						{
+							*(sp - 1) = reinterpret_cast<Oop>(Pointers.False);
+							return sp - 1;
+						}
+					}
+
+					*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+					return sp - 1;
+				}
+			}
+		}
+		else
+		{
+			// Identical
+			*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+			return sp - 1;
+		}
+	}
+
+	return nullptr;	/* Arg not an integer, fall back on Smalltalk code*/
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //	Bit manipulation primitives for LargeIntegers
@@ -2326,8 +2449,8 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerAsFloat(Oop* const sp, unsigne
 	{
 		FloatOTE* oteResult = Float::New();
 		oteResult->m_location->m_fValue = size <= 1
-			? static_cast<double>(*reinterpret_cast<SDWORD*>(liReceiver->m_digits)) 
-			: static_cast<double>(*reinterpret_cast<__int64*>(liReceiver->m_digits));
+			? static_cast<double>(*reinterpret_cast<int32_t*>(liReceiver->m_digits)) 
+			: static_cast<double>(*reinterpret_cast<int64_t*>(liReceiver->m_digits));
 		*sp = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteResult));
 		return sp;
@@ -2366,10 +2489,10 @@ Oop* __fastcall Interpreter::primitiveQWORDAt(Oop* const sp, unsigned)
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
 		SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(oopOffset);
-		if (static_cast<SMALLINTEGER>(offset) >= 0 && offset + sizeof(ULONGLONG) <= oteReceiver->bytesSize())
+		if (static_cast<SMALLINTEGER>(offset) >= 0 && offset + sizeof(uint64_t) <= oteReceiver->bytesSize())
 		{
 			VariantByteObject* pBytes = oteReceiver->m_location;
-			Oop result = Integer::NewUnsigned64(*(ULONGLONG*)(pBytes->m_fields + offset));
+			Oop result = Integer::NewUnsigned64(*reinterpret_cast<uint64_t*>(pBytes->m_fields + offset));
 
 			*(sp - 1) = result;
 			ObjectMemory::AddToZct(result);
@@ -2389,10 +2512,10 @@ Oop* __fastcall Interpreter::primitiveSQWORDAt(Oop* const sp, unsigned)
 	if (ObjectMemoryIsIntegerObject(oopOffset))
 	{
 		SMALLUNSIGNED offset = ObjectMemoryIntegerValueOf(oopOffset);
-		if (static_cast<SMALLINTEGER>(offset) >= 0 && offset + sizeof(LONGLONG) <= oteReceiver->bytesSize())
+		if (static_cast<SMALLINTEGER>(offset) >= 0 && offset + sizeof(int64_t) <= oteReceiver->bytesSize())
 		{
 			VariantByteObject* pBytes = oteReceiver->m_location;
-			Oop result = Integer::NewSigned64(*(LONGLONG*)(pBytes->m_fields + offset));
+			Oop result = Integer::NewSigned64(*reinterpret_cast<int64_t*>(pBytes->m_fields + offset));
 
 			*(sp-1) = result;
 			ObjectMemory::AddToZct(result);

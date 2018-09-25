@@ -430,14 +430,14 @@ ASYNCPENDING			EQU		?m_bAsyncPending@Interpreter@@0JC
 EXTERN ASYNCPENDING:DWORD
 NEWDWORD				EQU		?NewDWORD@Interpreter@@SIPAV?$TOTE@VVariantByteObject@ST@@@@KPAV?$TOTE@VBehavior@ST@@@@@Z
 extern NEWDWORD:near32
-LINEWSIGNED				EQU		?liNewSigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@J@Z
+LINEWSIGNED				EQU		?liNewSigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@H@Z
 extern LINEWSIGNED:near32
 NEWFLOATOBJ				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@XZ
 extern NEWFLOATOBJ:near32
 NEWFLOAT8				EQU		?New@Float@ST@@SGPAV?$TOTE@VFloat@ST@@@@N@Z
 extern NEWFLOAT8:near32
 
-LINEWUNSIGNED32 EQU ?liNewUnsigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@K@Z
+LINEWUNSIGNED32 EQU ?liNewUnsigned@LargeInteger@ST@@SIPAV?$TOTE@VLargeInteger@ST@@@@I@Z
 extern LINEWUNSIGNED32:near32
 
 oteNil					EQU		Pointers.Nil
