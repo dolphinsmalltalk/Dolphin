@@ -393,6 +393,13 @@ millisecondsToRepeat: anInteger
 
 	^Time millisecondsToRun: [ anInteger timesRepeat: [self value]]!
 
+newProcess
+	"Answer a new, suspended, <Process> which will evaluate the receiver, and terminate when and
+	if the code in the receiver returns. The default 'name' given to the process is the home
+	method. The process will have the default initial and maximum stack sizes."
+
+	^self newProcess: nil!
+
 newProcess: anIntegerOrNil
 	"Answer a new, suspended, <Process> which will evaluate the receiver, and terminate 
 	when and if the code in the receiver returns. The default 'name' given to the process 
@@ -779,6 +786,7 @@ whileTrue: iterationBlock
 !BlockClosure categoriesFor: #method!accessing!private! !
 !BlockClosure categoriesFor: #method:!accessing!private! !
 !BlockClosure categoriesFor: #millisecondsToRepeat:!development!public! !
+!BlockClosure categoriesFor: #newProcess!public!scheduling! !
 !BlockClosure categoriesFor: #newProcess:!public!scheduling! !
 !BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
 !BlockClosure categoriesFor: #numArgs!accessing!public! !
