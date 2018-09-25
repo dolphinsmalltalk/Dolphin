@@ -13,6 +13,36 @@ LargeIntegerTest comment: ''!
 canonicalInstance
 	^2 raisedToInteger: 63 - 1!
 
+largeComparisonPairs
+	^{{SmallInteger maximum + 1. SmallInteger maximum + 2}.
+		#(16r7FFFFFFE 16r7FFFFFFF).
+		#(16r7FFFFFFF 16r80000000).
+		#(16r80000000 16r80000001).
+		#(16r7FFFFFFF 16r7FFFFFFFFFFFFFFF).
+		#(16r80000000 16r7FFFFFFFFFFFFFFF).
+		#(16r7FFFFFFF 16r8000000000000000).
+		#(16r80000000 16r8000000000000000).
+		#(16r7FFFFFFF00000000 16r7FFFFFFF7FFFFFFF).
+		#(16r7FFFFFFF00000000 16r7FFFFFFFFFFFFFFF).
+		#(16r7FFFFFFFFFFFFFFF 16r8000000000000000).
+		#(16r8000000000000000 16r8000000000000001).
+		#(-16r7FFFFFFF -16r7FFFFFFE).
+		#(-16r80000000 -16r7FFFFFFF).
+		#(-16r80000001 -16r80000000).
+		#(-16r100000000 -16rFFFFFFFF).
+		#(-16r100000000 -16r80000001).
+		#(-16r8000000000000000 -16r7FFFFFFFFFFFFFFF).
+		{100 factorial - 1. 100 factorial}}!
+
+largeNegative
+	^{SmallInteger minimum - 1. -2 ** 31. -2 ** 31 - 1. 2 ** 32 * -1. -2 ** 63. -2 ** 63 - 1. 99 factorial * -1}!
+
+largePositive
+	^{SmallInteger maximum + 1. 2 ** 31 - 1. 2 ** 31. 2 ** 32 - 1. 2 ** 32. 2 ** 63 - 1. 2 ** 63. 99 factorial}!
+
+smallIntegerComparisons
+	^{SmallInteger minimum. -1. 0. 1. SmallInteger maximum}!
+
 testAddDoubleToDoubleNeg
 	"Test adding double limb addend to a double-limbed large negative integer."
 
@@ -691,6 +721,22 @@ testDivideSmall
 	self assert: result basicSize equals: 8.
 	self assert: result equals: 2 ** 62!
 
+testEqual
+	self largePositive do: 
+			[:each |
+			self assert: each = each.
+			self smallIntegerComparisons do: [:i | self deny: each = i]].
+	self largeNegative do: 
+			[:each |
+			self assert: each = each.
+			self smallIntegerComparisons do: [:i | self deny: each = i]].
+	self largeComparisonPairs do: 
+			[:pair |
+			self assert: pair first = pair first.
+			self assert: pair last = pair last.
+			self deny: pair first = pair last.
+			self deny: pair last = pair first]!
+
 testEven
 	#(1073741824 4294967294 9223372036854775808) do: 
 			[:each | 
@@ -708,6 +754,40 @@ testGcd
 	b := 16rE5320F2E379803D724363D84FD61C43CA4E6CA6F16628F59DDEB6557D904639C55F59C2F6BA21E5481107AA947A4653CCC0A5889B6ABCAECF6B58D60F8CC7EEB.
 	expectedAgcdB := 16r00000001.
 	self assert: (a gcd: b) equals: expectedAgcdB!
+
+testGreaterOrEqual
+	self largePositive do: 
+			[:each |
+			self assert: each >= each.
+			self smallIntegerComparisons do: [:i | self assert: each >= i]].
+	self largeNegative do: 
+			[:each |
+			self deny: each > each.
+			self smallIntegerComparisons do: [:i | self deny: each >= i]].
+	self largeComparisonPairs do: 
+			[:pair |
+			self assert: pair first >= pair first.
+			self assert: pair last >= pair last.
+			self deny: pair first >= pair last.
+			self assert: pair last >= pair first].
+	self should: [SmallInteger maximum + 1 >= nil] raise: MessageNotUnderstood!
+
+testGreaterThan
+	self largePositive do: 
+			[:each |
+			self deny: each > each.
+			self smallIntegerComparisons do: [:i | self assert: each > i]].
+	self largeNegative do: 
+			[:each |
+			self deny: each > each.
+			self smallIntegerComparisons do: [:i | self deny: each > i]].
+	self largeComparisonPairs do: 
+			[:pair |
+			self deny: pair first > pair first.
+			self deny: pair last > pair last.
+			self deny: pair first > pair last.
+			self assert: pair last > pair first].
+	self should: [SmallInteger maximum + 1 > nil] raise: MessageNotUnderstood!
 
 testHighBit
 	31 to: 256 do: [:each | self assert: (2 ** each) highBit equals: each + 1]!
@@ -767,6 +847,40 @@ testImmutable
 						tmp := x bitXor: int.
 						self assert: tmp isImmutable.
 						self assert: int bitInvert isImmutable]]!
+
+testLessOrEqual
+	self largePositive do: 
+			[:each |
+			self assert: each <= each.
+			self smallIntegerComparisons do: [:i | self deny: each <= i]].
+	self largeNegative do: 
+			[:each |
+			self deny: each < each.
+			self smallIntegerComparisons do: [:i | self assert: each <= i]].
+	self largeComparisonPairs do: 
+			[:pair |
+			self assert: pair first <= pair first.
+			self assert: pair last <= pair last.
+			self assert: pair first <= pair last.
+			self deny: pair last <= pair first].
+	self should: [SmallInteger maximum + 1 <= nil] raise: MessageNotUnderstood!
+
+testLessThan
+	self largePositive do: 
+			[:each |
+			self deny: each < each.
+			self smallIntegerComparisons do: [:i | self deny: each < i]].
+	self largeNegative do: 
+			[:each |
+			self deny: each < each.
+			self smallIntegerComparisons do: [:i | self assert: each < i]].
+	self largeComparisonPairs do: 
+			[:pair |
+			self deny: pair first < pair first.
+			self deny: pair last < pair last.
+			self assert: pair first < pair last.
+			self deny: pair last < pair first].
+	self should: [SmallInteger maximum + 1 < nil] raise: MessageNotUnderstood!
 
 testMod
 	| b mod expected result |
@@ -1035,6 +1149,10 @@ testSubtractSmall
 	self assert: res class identicalTo: SmallInteger.
 	self assert: res isImmutable! !
 !LargeIntegerTest categoriesFor: #canonicalInstance!constants!private! !
+!LargeIntegerTest categoriesFor: #largeComparisonPairs!constants!private! !
+!LargeIntegerTest categoriesFor: #largeNegative!constants!private! !
+!LargeIntegerTest categoriesFor: #largePositive!constants!private! !
+!LargeIntegerTest categoriesFor: #smallIntegerComparisons!constants!private! !
 !LargeIntegerTest categoriesFor: #testAddDoubleToDoubleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddDoubleToDoublePos!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddDoubleToTripleNeg!public!unit tests! !
@@ -1054,10 +1172,15 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testBitXorSmall!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testDivideSmall!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testEqual!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testEven!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testGcd!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testGreaterOrEqual!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testGreaterThan!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testHighBit!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testImmutable!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testLessOrEqual!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testLessThan!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMod!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testModulo!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testMulSmall!public!unit tests! !
