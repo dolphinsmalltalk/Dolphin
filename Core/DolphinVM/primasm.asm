@@ -604,9 +604,6 @@ DEFINECONTEXTPRIM <primitiveUnwindInterrupt>
 ;; it as potentially context switching primitive
 DEFINECONTEXTPRIM <primitiveSignalAtTick>
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-
 ;; This is actually the GC primitive, and it may switch contexts
 ;; because is synchronously signals a Semaphore (sometimes)
 DEFINECONTEXTPRIM <primitiveCoreLeft>
