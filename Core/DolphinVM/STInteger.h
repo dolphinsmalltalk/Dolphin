@@ -44,8 +44,8 @@ namespace ST
 		uint32_t m_digits[];		// Variable length array of 32-bit digits
 
 		int32_t	signDigit(const LargeIntegerOTE* oteLI)	const { return static_cast<int32_t>(m_digits[oteLI->getWordSize() - 1]); }
-		int32_t	sign(const LargeIntegerOTE* oteLI) const { return signDigit(oteLI) < 0 ? -1 : 1; }
-		int32_t	signBit(const LargeIntegerOTE* oteLI) const { return signDigit(oteLI) < 0 ? -1 : 0; }
+		int32_t	sign(const LargeIntegerOTE* oteLI) const { return 1 | (signDigit(oteLI) >> 31); }
+		int32_t	signBit(const LargeIntegerOTE* oteLI) const { return signDigit(oteLI) >> 31; }
 
 		static LargeIntegerOTE* NewWithLimbs(MWORD limbs);
 
