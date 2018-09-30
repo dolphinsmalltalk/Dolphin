@@ -55,7 +55,7 @@ basicNextAvailable
 	^self atEnd ifFalse: [self basicNext]!
 
 basicNextAvailable: anInteger
-	^self basicNext: (self lastPosition - position min: anInteger)!
+	^self basicNext: (self lastPosition - self position min: anInteger)!
 
 basicUpTo: anObject
 	"Private - Answer a collection of elements starting with the next element accessed by the receiver,
