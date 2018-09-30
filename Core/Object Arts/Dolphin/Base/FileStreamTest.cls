@@ -70,6 +70,22 @@ testFileTimes
 	file := filestream file.
 	self assert: file lastWriteTime asInteger >= now asInteger!
 
+testNextAvailableColonWithPaging
+
+	"#640"
+
+	| bytes random subject writeStream |
+
+	bytes := ByteArray new: self streamClass bufferSize + 1.
+	random := Random new.
+	1 to: bytes size do: [ :index | bytes at: index put: (random next * 255) truncated].
+
+	subject := self streamOn: bytes.
+	writeStream := ByteArray writeStream: bytes size. 
+	self shouldnt: [[subject atEnd] whileFalse: [writeStream nextPutAll: (subject nextAvailable: 64)]] raise: self streamClass endOfStreamSignal.
+
+	self assert: writeStream contents equals: bytes!
+
 testSingleByteOverflow
 	"Test that overflowing the FileStream buffer by a single byte and letting the FileStream be finalized
 	doesn't lose the last byte."
@@ -162,6 +178,7 @@ testWritePastEnd
 !FileStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
 !FileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
 !FileStreamTest categoriesFor: #testFileTimes!public!unit tests! !
+!FileStreamTest categoriesFor: #testNextAvailableColonWithPaging!public!unit tests! !
 !FileStreamTest categoriesFor: #testSingleByteOverflow!public!unit tests! !
 !FileStreamTest categoriesFor: #testVeryLargeSparseFile!public!unit tests! !
 !FileStreamTest categoriesFor: #testWritePastEnd!public!unit tests! !
