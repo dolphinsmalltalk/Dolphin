@@ -498,6 +498,88 @@ testAddSmall
 	self assert: res class identicalTo: SmallInteger.
 	self assert: res isImmutable!
 
+testAddToQuad
+	"Test adding various sized boundary case large integers to boundary case quad-limbed large positive integers."
+
+	| res a |
+	a := 2 ** 95.	"Smallest 4-limb large positive integer"
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a - 1) byteSize identicalTo: 12.
+	#(#(16r40000000 16r800000000000000040000000) #(-16r40000001 16r7FFFFFFFFFFFFFFFBFFFFFFF) #(16r7FFFFFFF 16r80000000000000007FFFFFFF) #(-16r80000000 16r7FFFFFFFFFFFFFFF80000000) #(16r80000000 16r800000000000000080000000) #(-16r80000001 16r7FFFFFFFFFFFFFFF7FFFFFFF) #(16rFFFFFFFF 16r8000000000000000FFFFFFFF) #(-16rFFFFFFFF 16r7FFFFFFFFFFFFFFF00000001) #(16r7FFFFFFFFFFFFFFF 16r800000007FFFFFFFFFFFFFFF) #(-16r8000000000000000 16r7FFFFFFF8000000000000000) #(16r8000000000000000 16r800000008000000000000000) #(-16r8000000000000001 16r7FFFFFFF7FFFFFFFFFFFFFFF))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a + b.
+			self assert: res equals: eachPair second.
+			res := b + a.
+			self assert: res equals: eachPair second.
+			self assert: res - a equals: b.
+			self assert: res - b equals: a].
+	"Largest 4-limb large positive integer"
+	a := 2 ** 127 - 1.
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a + 1) byteSize identicalTo: 20.
+	#(#(16r3FFFFFFF 16r8000000000000000000000003FFFFFFE) #(16r40000000 16r8000000000000000000000003FFFFFFF) #(-16r40000000 16r7FFFFFFFFFFFFFFFFFFFFFFFBFFFFFFF) #(-16r40000001 16r7FFFFFFFFFFFFFFFFFFFFFFFBFFFFFFE) #(16r7FFFFFFF 16r8000000000000000000000007FFFFFFE) #(-16r80000000 16r7FFFFFFFFFFFFFFFFFFFFFFF7FFFFFFF) #(16r80000000 16r8000000000000000000000007FFFFFFF) #(-16r80000001 16r7FFFFFFFFFFFFFFFFFFFFFFF7FFFFFFE) #(16rFFFFFFFF 16r800000000000000000000000FFFFFFFE) #(-16rFFFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFF00000000) #(16r7FFFFFFFFFFFFFFF 16r80000000000000007FFFFFFFFFFFFFFE) #(-16r8000000000000000 16r7FFFFFFFFFFFFFFF7FFFFFFFFFFFFFFF) #(16r8000000000000000 16r80000000000000007FFFFFFFFFFFFFFF) #(-16r8000000000000001 16r7FFFFFFFFFFFFFFF7FFFFFFFFFFFFFFE))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a + b.
+			self assert: res equals: eachPair second.
+			res := b + a.
+			self assert: res equals: eachPair second.
+			self assert: res - a equals: b.
+			self assert: res - b equals: a].
+
+	"Negative case with max value lower limbs"
+	a := -16r7FFFFFFF000000000000000000000001.
+	#(#(16r3FFFFFFF -16r7FFFFFFEFFFFFFFFFFFFFFFFC0000002) #(16r7FFFFFFF -16r7FFFFFFEFFFFFFFFFFFFFFFF80000002) #(16r7FFFFFFFFFFFFFFF -16r7FFFFFFEFFFFFFFF8000000000000002) #(16r7FFFFFFFFFFFFFFFFFFFFFFF -16r7FFFFFFE800000000000000000000002))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a + b.
+			self assert: res equals: eachPair second.
+			res := b + a.
+			self assert: res equals: eachPair second.
+			self assert: res - a equals: b.
+			self assert: res - b equals: a]!
+
+testAddToQuadNeg
+	"Test adding various sized boundary case large integers to boundardy case quad-limbed large negative integers."
+
+	| res a |
+	a := -2 ** 95 - 1.	"Smallest 4-limb large negative integer"
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a + 1) byteSize identicalTo: 12.
+	#(#(16r3FFFFFFF -16r7FFFFFFFFFFFFFFFC0000002) #(16r40000000 -16r7FFFFFFFFFFFFFFFC0000001) #(-16r40000000 -16r800000000000000040000001) #(-16r40000001 -16r800000000000000040000002) #(16r7FFFFFFF -16r7FFFFFFFFFFFFFFF80000002) #(-16r80000000 -16r800000000000000080000001) #(16r80000000 -16r7FFFFFFFFFFFFFFF80000001) #(-16r80000001 -16r800000000000000080000002) #(16rFFFFFFFF -16r7FFFFFFFFFFFFFFF00000002) #(-16rFFFFFFFF -16r800000000000000100000000) #(16r7FFFFFFFFFFFFFFF -16r7FFFFFFF8000000000000002) #(-16r8000000000000000 -16r800000008000000000000001) #(16r8000000000000000 -16r7FFFFFFF8000000000000001) #(-16r8000000000000001 -16r800000008000000000000002))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a + b.
+			self assert: res equals: eachPair second.
+			res := b + a.
+			self assert: res equals: eachPair second.
+			self assert: res - a equals: b.
+			self assert: res - b equals: a].
+	"Largest 4-limb negative large integer"
+	a := -2 ** 127.
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a - 1) byteSize identicalTo: 20.
+	#(#(16r3FFFFFFF -16r7FFFFFFFFFFFFFFFFFFFFFFFC0000001) #(16r40000000 -16r7FFFFFFFFFFFFFFFFFFFFFFFC0000000) #(-16r40000000 -16r80000000000000000000000040000000) #(-16r40000001 -16r80000000000000000000000040000001) #(16r7FFFFFFF -16r7FFFFFFFFFFFFFFFFFFFFFFF80000001) #(-16r80000000 -16r80000000000000000000000080000000) #(16r80000000 -16r7FFFFFFFFFFFFFFFFFFFFFFF80000000) #(-16r80000001 -16r80000000000000000000000080000001) #(16rFFFFFFFF -16r7FFFFFFFFFFFFFFFFFFFFFFF00000001) #(-16rFFFFFFFF -16r800000000000000000000000FFFFFFFF) #(16r7FFFFFFFFFFFFFFF -16r7FFFFFFFFFFFFFFF8000000000000001) #(-16r8000000000000000 -16r80000000000000008000000000000000) #(16r8000000000000000 -16r7FFFFFFFFFFFFFFF8000000000000000) #(-16r8000000000000001 -16r80000000000000008000000000000001))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a + b.
+			self assert: res equals: eachPair second.
+			res := b + a.
+			self assert: res equals: eachPair second.
+			self assert: res - a equals: b.
+			self assert: res - b equals: a]!
+
 testAddTripleToTripleNeg
 	"Test adding triple limb addend to a triple-limbed large negative integer."
 
@@ -567,6 +649,28 @@ testAddTripleToTriplePos
 			self assert: res - a equals: b.
 			self assert: res - b equals: a]!
 
+testBitAnd
+	self assert: (16r7FFFFFFF bitAnd: 16r80000000) equals: 0.
+	self assert: (16r80000000 bitAnd: 16r7FFFFFFF) equals: 0.
+	self assert: (16r7FEDCBA9 bitAnd: 16r81123456) identicalTo: 16r1000000.
+	self assert: (16r81123456 bitAnd: 16r7FEDCBA9) identicalTo: 16r1000000.
+	self assert: (16r7FEDCBA9 bitAnd: 16r81123456) identicalTo: 16r1000000.
+	self assert: (16r81123456 bitAnd: 16r7FEDCBA9) identicalTo: 16r1000000.
+	self assert: (16r7FEDCBA9 bitAnd: 16r40123456) equals: 16r40000000.
+	self assert: (16r40123456 bitAnd: 16r7FEDCBA9) equals: 16r40000000.
+	self assert: (16rFFEDCBA9 bitAnd: 16r80123456) equals: 16r80000000.
+	self assert: (16r80123456 bitAnd: 16rFFEDCBA9) equals: 16r80000000.
+	self assert: (16rF1234567 bitAnd: 16r89ABCDEF40000123) equals: 16r40000123.
+	self assert: (16r89ABCDEF40000123 bitAnd: 16rF1234567) equals: 16r40000123.
+	self assert: (16r80000000 bitAnd: -16r80000000) equals: 16r80000000.
+	self assert: (-16r80000000 bitAnd: 16r80000000) equals: 16r80000000.
+	self assert: (-16r80000000 bitAnd: -16r80000000) equals: -16r80000000.
+	self assert: (16r7FFFFFFF bitAnd: -16r7FFFFFFF) identicalTo: 1.
+	self assert: (16r7FFFFFFFFFFFFFFFFFFFFFFF bitAnd: 16r7FFFFFFF) equals: 16r7FFFFFFF.
+	self assert: (16r7FFFFFFF bitAnd: 16r7FFFFFFFFFFFFFFFFFFFFFFF) equals: 16r7FFFFFFF.
+	self assert: (16r8000000010000000 bitAnd: 16r7FFFFFFFFFFFFFFFFFFFFFFF) equals: 16r8000000010000000.
+	self assert: (16r7FFFFFFFFFFFFFFFFFFFFFFF bitAnd: 16r8000000010000000) equals: 16r8000000010000000!
+
 testBitAndSmall
 	| res a |
 	a := 16r7FFFFFFF.
@@ -584,11 +688,23 @@ testBitAndSmall
 	self assert: res equals: 16r40000000.
 	self assert: res isImmutable!
 
+testBitOr
+	self assert: (16r7FFFFFFF bitOr: 16r80000000) equals: 16rFFFFFFFF.
+	self assert: (16r80000000 bitOr: 16r7FFFFFFF) equals: 16rFFFFFFFF.
+	self assert: (16r7FEDCBA9 bitOr: 16r80123456) equals: 16rFFFFFFFF.
+	self assert: (16r80123456 bitOr: 16r7FEDCBA9) equals: 16rFFFFFFFF.
+	self assert: (16rF1234567 bitOr: 16r89ABCDEF00003210) equals: 16r89ABCDEFF1237777.
+	self assert: (16r89ABCDEF00003210 bitOr: 16rF1234567) equals: 16r89ABCDEFF1237777.
+	self assert: (-16r80000000 bitOr: 16r7FFFFFFF) identicalTo: -1.
+	self assert: (16r7FFFFFFF bitOr: -16r80000000) identicalTo: -1
+
+!
+
 testBitOrSmall
 	| res a |
 	a := 16r7FFFFFFF.
 	res := a bitOr: 0.
-	"VM optimizes this caseas as a noop and returns the receiver"
+	"VM optimizes this case as as a noop and returns the receiver"
 	self assert: res identicalTo: a.
 	res := a bitOr: 1.
 	self assert: res equals: a.
@@ -623,6 +739,27 @@ testBitShiftRand512n
 	self assert: result equals: expectedNLeftShift.
 	result := n >> shiftAmount.
 	self assert: result equals: expectedNRightShift!
+
+testBitXor
+	| larger large |
+	self assert: (16rFFFFFFFF bitXor: 16rFFFFFFFF) identicalTo: 0.
+	self assert: (16rC0000000 bitXor: 16rFFFFFFFF) identicalTo: 16r3FFFFFFF.
+	self assert: (16r7FFFFFFF bitXor: 16r40000000) identicalTo: 16r3FFFFFFF.
+	self assert: (16r800000007FFFFFFF bitXor: 16r8000000040000000) identicalTo: 16r3FFFFFFF.
+	self assert: (16rFFFFFFFF bitXor: 16r7FFFFFFF) equals: 16r80000000.
+	self assert: (16r80000000 bitXor: 16rFFFFFFFF) equals: 16r7FFFFFFF.
+	self assert: (16rFFFFFFFF bitXor: 16rFFFFFFFFFFFFFFFF) equals: 16rFFFFFFFF00000000.
+	self assert: (16rFFFFFFFFFFFFFFFF bitXor: 16rFFFFFFFF) equals: 16rFFFFFFFF00000000.
+	self assert: (16r88442211FFFFFFFF bitXor: 16r88442211C0000000) identicalTo: 16r3FFFFFFF.
+	self assert: (16rFFFFFFFFFFFFFFFF bitXor: 16rFFFFFFFF00000000) equals: 16rFFFFFFFF.
+	self assert: (16r89ABCDEFF1234567 bitXor: 16r80000000) equals: 16r89ABCDEF71234567.
+	self assert: (16r89ABCDEFF1234567 bitXor: -16r80000000) equals: -16r89ABCDEF8EDCBA99.
+	self assert: (-16r80000000 bitXor: 16r89ABCDEFF1234567) equals: -16r89ABCDEF8EDCBA99.
+	self assert: (16r80000000 bitXor: 16r89ABCDEFF1234567) equals: 16r89ABCDEF71234567.
+	larger := 99 factorial.
+	large := 91 factorial.
+	self assert: ((larger bitXor: large) bitXor: large) equals: larger.
+	self assert: ((large bitXor: larger) bitXor: larger) equals: large!
 
 testBitXorSmall
 	| res a |
@@ -1122,6 +1259,62 @@ testRem
 					"Sanity check"
 					self assert: quotient * divisor + actual equals: dividend]]!
 
+testSubFromQuad
+	"Test adding various sized boundary case large integers to boundary case quad-limbed large positive integers."
+
+	| res a |
+	a := 2 ** 95.	"Smallest 4-limb large positive integer"
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a - 1) byteSize identicalTo: 12.
+	#(#(16r40000000 16r7FFFFFFFFFFFFFFFC0000000) #(-16r40000001 16r800000000000000040000001) #(16r7FFFFFFF 16r7FFFFFFFFFFFFFFF80000001) #(-16r80000000 16r800000000000000080000000) #(16r80000000 16r7FFFFFFFFFFFFFFF80000000) #(-16r80000001 16r800000000000000080000001) #(16rFFFFFFFF 16r7FFFFFFFFFFFFFFF00000001) #(-16rFFFFFFFF 16r8000000000000000FFFFFFFF) #(16r7FFFFFFFFFFFFFFF 16r7FFFFFFF8000000000000001) #(-16r8000000000000000 16r800000008000000000000000) #(16r8000000000000000 16r7FFFFFFF8000000000000000) #(-16r8000000000000001 16r800000008000000000000001))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a - b.
+			self assert: res equals: eachPair second.
+			self assert: res + b equals: a].
+	"Largest 4-limb large positive integer"
+	a := 2 ** 127 - 1.
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a + 1) byteSize identicalTo: 20.
+	#(#(16r3FFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFFC0000000) #(16r40000000 16r7FFFFFFFFFFFFFFFFFFFFFFFBFFFFFFF) #(-16r40000000 16r8000000000000000000000003FFFFFFF) #(-16r40000001 16r80000000000000000000000040000000) #(16r7FFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFF80000000) #(-16r80000000 16r8000000000000000000000007FFFFFFF) #(16r80000000 16r7FFFFFFFFFFFFFFFFFFFFFFF7FFFFFFF) #(-16r80000001 16r80000000000000000000000080000000) #(16rFFFFFFFF 16r7FFFFFFFFFFFFFFFFFFFFFFF00000000) #(-16rFFFFFFFF 16r800000000000000000000000FFFFFFFE) #(16r7FFFFFFFFFFFFFFF 16r7FFFFFFFFFFFFFFF8000000000000000) #(-16r8000000000000000 16r80000000000000007FFFFFFFFFFFFFFF) #(16r8000000000000000 16r7FFFFFFFFFFFFFFF7FFFFFFFFFFFFFFF) #(-16r8000000000000001 16r80000000000000008000000000000000))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a - b.
+			self assert: res equals: eachPair second.
+			self assert: res + b equals: a]!
+
+testSubFromQuadNeg
+	"Test adding various sized boundary case large integers to boundardy case quad-limbed large negative integers."
+
+	| res a |
+	a := -2 ** 95 - 1.	"Smallest 4-limb large negative integer"
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a + 1) byteSize identicalTo: 12.
+	#(#(16r3FFFFFFF -16r800000000000000040000000) #(16r40000000 -16r800000000000000040000001) #(-16r40000000 -16r7FFFFFFFFFFFFFFFC0000001) #(-16r40000001 -16r7FFFFFFFFFFFFFFFC0000000) #(16r7FFFFFFF -16r800000000000000080000000) #(-16r80000000 -16r7FFFFFFFFFFFFFFF80000001) #(16r80000000 -16r800000000000000080000001) #(-16r80000001 -16r7FFFFFFFFFFFFFFF80000000) #(16rFFFFFFFF -16r800000000000000100000000) #(-16rFFFFFFFF -16r7FFFFFFFFFFFFFFF00000002) #(16r7FFFFFFFFFFFFFFF -16r800000008000000000000000) #(-16r8000000000000000 -16r7FFFFFFF8000000000000001) #(16r8000000000000000 -16r800000008000000000000001) #(-16r8000000000000001 -16r7FFFFFFF8000000000000000))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a - b.
+			self assert: res equals: eachPair second.
+			self assert: res + b equals: a].
+	"Largest 4-limb negative large integer"
+	a := -2 ** 127.
+	self assert: a byteSize identicalTo: 16.
+	self assert: (a - 1) byteSize identicalTo: 20.
+	#(#(16r3FFFFFFF -16r8000000000000000000000003FFFFFFF) #(16r40000000 -16r80000000000000000000000040000000) #(-16r40000000 -16r7FFFFFFFFFFFFFFFFFFFFFFFC0000000) #(-16r40000001 -16r7FFFFFFFFFFFFFFFFFFFFFFFBFFFFFFF) #(16r7FFFFFFF -16r8000000000000000000000007FFFFFFF) #(-16r80000000 -16r7FFFFFFFFFFFFFFFFFFFFFFF80000000) #(16r80000000 -16r80000000000000000000000080000000) #(-16r80000001 -16r7FFFFFFFFFFFFFFFFFFFFFFF7FFFFFFF) #(16rFFFFFFFF -16r800000000000000000000000FFFFFFFF) #(-16rFFFFFFFF -16r7FFFFFFFFFFFFFFFFFFFFFFF00000001) #(16r7FFFFFFFFFFFFFFF -16r80000000000000007FFFFFFFFFFFFFFF) #(-16r8000000000000000 -16r7FFFFFFFFFFFFFFF8000000000000000) #(16r8000000000000000 -16r80000000000000008000000000000000) #(-16r8000000000000001 -16r7FFFFFFFFFFFFFFF7FFFFFFFFFFFFFFF))
+		do: 
+			[:eachPair |
+			| b |
+			b := eachPair first.
+			res := a - b.
+			self assert: res equals: eachPair second.
+			self assert: res + b equals: a]!
+
 testSubtractSmall
 	| res |
 	res := 16r40000000 - 1.
@@ -1136,17 +1329,17 @@ testSubtractSmall
 	self assert: res equals: 16r40000001.
 	self assert: res class identicalTo: LargeInteger.
 	self assert: res isImmutable.
-	res := 16r40000000 + SmallInteger minimum.
-	self assert: res equals: 0.
-	self assert: res class identicalTo: SmallInteger.
-	self assert: res isImmutable.
-	res := 16r80000000 + SmallInteger minimum.
-	self assert: res equals: 16r40000000.
+	res := 16r40000000 - SmallInteger minimum.
+	self assert: res equals: 16r80000000.
 	self assert: res class identicalTo: LargeInteger.
 	self assert: res isImmutable.
-	res := 16r7FFFFFFF + SmallInteger minimum.
-	self assert: res equals: SmallInteger maximum.
-	self assert: res class identicalTo: SmallInteger.
+	res := 16r80000000 - SmallInteger minimum.
+	self assert: res equals: 16rC0000000.
+	self assert: res class identicalTo: LargeInteger.
+	self assert: res isImmutable.
+	res := (16r7FFFFFFF - SmallInteger minimum).
+	self assert: res equals: 16rBFFFFFFF.
+	self assert: res class identicalTo: LargeInteger.
 	self assert: res isImmutable! !
 !LargeIntegerTest categoriesFor: #canonicalInstance!constants!private! !
 !LargeIntegerTest categoriesFor: #largeComparisonPairs!constants!private! !
@@ -1163,12 +1356,17 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testAddSingleToSinglePos!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSingleToTripleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddSmall!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testAddToQuad!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testAddToQuadNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddTripleToTripleNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testAddTripleToTriplePos!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testBitAnd!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testBitAndSmall!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testBitOr!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testBitOrSmall!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testBitShiftRand2048n!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testBitShiftRand512n!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testBitXor!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testBitXorSmall!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testDivideSmall!public!unit tests! !
@@ -1192,5 +1390,7 @@ testSubtractSmall
 !LargeIntegerTest categoriesFor: #testQuoRem3!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testRaisedToInteger!public! !
 !LargeIntegerTest categoriesFor: #testRem!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testSubFromQuad!public!unit tests! !
+!LargeIntegerTest categoriesFor: #testSubFromQuadNeg!public!unit tests! !
 !LargeIntegerTest categoriesFor: #testSubtractSmall!public!unit tests! !
 
