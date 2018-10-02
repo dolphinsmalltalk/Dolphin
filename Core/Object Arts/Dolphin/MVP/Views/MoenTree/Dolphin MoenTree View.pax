@@ -28,6 +28,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\Models\Tree\Dolphin Tree Models';
@@ -74,7 +75,7 @@ resource_Moen_tree
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Moen_tree)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MoenTreeView)  98 30 0 0 98 2 8 1409286144 1 416 590918 3 ##(Smalltalk.TreeModel)  0 1310726 ##(Smalltalk.IdentitySearchPolicy)  525062 ##(Smalltalk.TreeNode)  0 0 0 234 256 98 0 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 517 0 0 0 416 788998 ##(Smalltalk.MoenTreeNode)  0 721926 ##(Smalltalk.MoenContour)  0 0 0 0 328198 ##(Smalltalk.Point)  1 1 752 0 0 0 0 0 7 459270 ##(Smalltalk.Message)  8 #displayString 98 0 432 268435457 738 5 3 1049670 1 ##(Smalltalk.IconImageManager)  738 1 1 41 0 197382 ##(Smalltalk.Pen)  0 16 393478 ##(Smalltalk.LOGPEN)  8 #[0 0 0 0 1 0 0 0 0 0 0 0 192 192 192 0] 738 33 33 738 19999 19999 114721 880 738 35 1 0 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 1 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 738 2799 21 738 271 251 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 254 5 0 0 135 0 0 0] 98 0 738 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.MoenTreeView) 34 30 nil nil 34 2 8 1409286144 1 416 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 517 nil nil nil 416 788998 ##(Smalltalk.MoenTreeNode) nil 721926 ##(Smalltalk.MoenContour) nil nil nil nil 328198 ##(Smalltalk.Point) 1 1 736 nil nil nil nil nil 7 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.MoenTreeView) 268435457 722 5 3 1049926 1 ##(Smalltalk.IconImageManager) 722 1 1 41 nil 197382 ##(Smalltalk.Pen) nil true 393478 ##(Smalltalk.LOGPEN) 8 #[0 0 0 0 1 0 0 0 0 0 0 0 192 192 192 0] 722 33 33 722 19999 19999 114721 848 722 35 1 nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 722 2799 21 722 271 251 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 254 5 0 0 135 0 0 0] 8 #() 722 193 193 nil 27 )! !
 !TreePresenter class categoriesFor: #resource_Moen_tree!public!resources-views! !
 
 "End of package definition"!

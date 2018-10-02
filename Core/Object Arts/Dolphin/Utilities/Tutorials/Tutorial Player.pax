@@ -19,6 +19,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\IDE\Base\Development System';
 	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\..\MVP\Views\SysLink\Dolphin SysLink Control';

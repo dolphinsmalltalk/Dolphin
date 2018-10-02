@@ -33,6 +33,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\Type Converters\Dolphin Type Converters';
@@ -64,7 +65,7 @@ resource_Slider_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Slider_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.Slider)  98 18 0 0 98 2 8 1140916225 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1376774 ##(Smalltalk.PluggableSearchPolicy)  459270 ##(Smalltalk.Message)  8 #= 98 0 562 8 #hash 98 0 1 0 0 7 0 0 0 416 0 8 4294903655 852486 ##(Smalltalk.NullConverter)  0 0 21 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  3777 21 850 501 71 416 786 8 #range: 98 1 525062 ##(Smalltalk.Interval)  1 201 21 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 96 7 0 0 10 0 0 0 90 8 0 0 45 0 0 0] 98 0 850 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Slider) 34 18 nil nil 34 2 8 1140916225 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 1 nil nil 7 nil nil nil 416 nil 8 1915076416 852486 ##(Smalltalk.NullConverter) nil nil 21 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3777 21 786 501 71 416 738 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 21 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 96 7 0 0 10 0 0 0 90 8 0 0 45 0 0 0] 8 #() 786 193 193 nil 27 )! !
 !NumberPresenter class categoriesFor: #resource_Slider_view!public!resources-views! !
 
 "End of package definition"!

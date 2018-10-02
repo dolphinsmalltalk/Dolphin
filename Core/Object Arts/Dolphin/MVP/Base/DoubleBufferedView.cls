@@ -18,6 +18,14 @@ canvas
 		yourself
 		!
 
+filerProxy
+	| saved proxy |
+	saved := backSurface.
+	backSurface := nil.
+	proxy := super filerProxy.
+	backSurface := saved.
+	^proxy!
+
 flip
 	"Private - Flip the current back surface to the front and paint it"
 
@@ -111,6 +119,7 @@ wmNcHitTest: message wParam: wParam lParam: lParam
 		wParam: wParam
 		lParam: lParam! !
 !DoubleBufferedView categoriesFor: #canvas!accessing!public! !
+!DoubleBufferedView categoriesFor: #filerProxy!binary filing!private! !
 !DoubleBufferedView categoriesFor: #flip!operations!public! !
 !DoubleBufferedView categoriesFor: #initialize!initializing!private! !
 !DoubleBufferedView categoriesFor: #initializeSurfacesFor:!initializing!private! !

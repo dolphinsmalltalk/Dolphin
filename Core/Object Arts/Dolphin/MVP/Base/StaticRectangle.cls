@@ -67,7 +67,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(StaticRectangle)  98 14 0 0 98 2 8 1140850951 1 416 0 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294906439 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 690 211 51 416 626 8 #isEnabled: 98 1 32 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 110 0 0 0 30 0 0 0] 98 0 690 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticRectangle) 34 14 nil nil 34 2 8 1140850951 1 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 7 nil nil nil 416 nil 8 1915124368 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 211 51 416 610 #isEnabled: 8 #(false) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 110 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 27 )!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."

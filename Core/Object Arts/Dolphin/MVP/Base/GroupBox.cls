@@ -63,7 +63,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(GroupBox)  98 14 0 0 98 2 8 1140850695 65 416 0 524550 ##(ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294905805 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  1 1 690 301 201 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 150 0 0 0 100 0 0 0] 98 0 690 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GroupBox) 34 14 nil nil 34 2 8 1140850695 65 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915188384 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 658 301 201 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 150 0 0 0 100 0 0 0] 8 #() 658 193 193 nil 27 )!
 
 resource_Static_group_box
 	"Answer the literal data from which the 'Static group box' resource can be reconstituted.
@@ -73,7 +73,7 @@ resource_Static_group_box
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Static_group_box)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(GroupBox)  98 14 0 0 98 2 8 1140850695 65 416 0 524550 ##(ColorRef)  8 4294967295 0 5 0 0 0 416 0 8 4294906781 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  25 29 690 299 201 416 626 8 #text: 98 1 8 'Text here' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 14 0 0 0 161 0 0 0 114 0 0 0] 98 0 690 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.GroupBox) 34 14 nil nil 34 2 8 1140850695 65 416 nil 590086 ##(Smalltalk.ColorNone) 8 4294967295 nil 5 nil nil nil 416 nil 8 1915188384 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 25 29 658 299 201 416 610 #text: 34 1 8 'Text here' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 12 0 0 0 14 0 0 0 161 0 0 0 114 0 0 0] 8 #() 658 193 193 nil 27 )!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver.

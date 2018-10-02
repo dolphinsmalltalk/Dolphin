@@ -38,6 +38,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
 	add: '..\..\..\Base\Dolphin Additional Sort Algorithms';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Models\List\Dolphin List Models';
 	add: '..\..\Base\Dolphin MVP Base';
 	yourself).

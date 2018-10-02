@@ -29,7 +29,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(TextEdit)  98 16 0 0 98 2 8 1140916224 1025 416 0 524550 ##(ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294906635 787206 ##(NumberToText)  0 8 '' 0 1 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 738 241 39 416 674 8 #selectionRange: 98 1 525062 ##(Interval)  3 1 3 416 674 8 #isTextModified: 98 1 32 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 125 0 0 0 24 0 0 0] 98 0 738 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1140916224 1025 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915280032 787206 ##(Smalltalk.NumberToText) nil 8 '' nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 706 241 39 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 125 0 0 0 24 0 0 0] 8 #() 706 193 193 nil 27 )!
 
 resource_Integer_text
 	"Answer the literal data from which the 'Integer text' resource can be reconstituted.
@@ -39,7 +39,7 @@ resource_Integer_text
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Integer_text)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(TextEdit)  98 16 0 0 98 2 8 1140924416 1025 416 0 524550 ##(ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294906635 852742 ##(IntegerToText)  0 8 '' 0 1 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 738 231 39 416 674 8 #selectionRange: 98 1 525062 ##(Interval)  3 1 3 416 674 8 #isTextModified: 98 1 32 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 120 0 0 0 24 0 0 0] 98 0 738 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1140924416 1025 416 nil 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915280032 852742 ##(Smalltalk.IntegerToText) nil 8 '' nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 706 231 39 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 120 0 0 0 24 0 0 0] 8 #() 706 193 193 nil 27 )! !
 !NumberPresenter class categoriesFor: #defaultModel!models!public! !
 !NumberPresenter class categoriesFor: #icon!constants!public! !
 !NumberPresenter class categoriesFor: #resource_Default_view!public!resources-views! !

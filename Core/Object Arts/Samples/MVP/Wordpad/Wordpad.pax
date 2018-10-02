@@ -24,6 +24,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
 	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';

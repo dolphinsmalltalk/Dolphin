@@ -31,6 +31,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter';
 	add: '..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\..\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls';
@@ -41,7 +42,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Text Tile Icons';
+	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
 	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';

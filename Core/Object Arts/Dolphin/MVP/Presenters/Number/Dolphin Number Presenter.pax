@@ -23,6 +23,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\Text\Dolphin Text Presenter';
 	add: '..\..\Type Converters\Dolphin Type Converters';

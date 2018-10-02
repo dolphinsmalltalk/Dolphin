@@ -35,6 +35,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Presenters\Date Time\Dolphin Date Time Presenters';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Type Converters\Dolphin Type Converters';
@@ -81,7 +82,7 @@ resource_Month_calendar_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Month_calendar_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.MonthCalendarView)  98 15 0 0 98 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 32 1310726 ##(Smalltalk.EqualitySearchPolicy)  262406 ##(Smalltalk.Date)  74655 524550 ##(Smalltalk.ColorRef)  8 4278190080 328198 ##(Smalltalk.Point)  395 307 5 0 0 0 416 0 8 4294904889 852486 ##(Smalltalk.NullConverter)  0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 642 2799 21 642 395 307 416 786 8 #range: 98 1 98 2 0 0 416 786 8 #mcmSetFirstDayOfWeek: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 60 6 0 0 163 0 0 0] 98 0 642 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.MonthCalendarView) 34 15 nil nil 34 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) 262406 ##(Smalltalk.Date) 74655 786694 ##(Smalltalk.ColorDefault) 8 4278190080 328198 ##(Smalltalk.Point) 395 307 5 nil nil nil 416 nil 8 1915903680 852486 ##(Smalltalk.NullConverter) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 626 2799 21 626 395 307 416 770 #range: 34 1 8 #(nil nil) 416 770 #mcmSetFirstDayOfWeek: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 60 6 0 0 163 0 0 0] 8 #() 626 193 193 nil 27 )!
 
 resource_Picker_view
 	"Answer the literal data from which the 'Picker view' resource can be reconstituted.
@@ -91,7 +92,7 @@ resource_Picker_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Picker_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(DateTimePicker)  98 16 0 0 98 2 8 1140916230 1 416 721990 2 ##(ValueHolder)  0 0 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 262406 ##(Date)  70769 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294907103 852486 ##(NullConverter)  0 0 0 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 930 521 51 416 866 8 #text: 98 1 8 '17 November 1997' 416 866 8 #range: 98 1 98 2 0 0 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 9 1 0 0 30 0 0 0] 98 0 930 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916230 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 262406 ##(Smalltalk.Date) 70769 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 7 nil nil nil 416 nil 8 1915873632 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 866 521 51 416 818 #text: 34 1 8 '17 November 1997' 416 818 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 9 1 0 0 30 0 0 0] 8 #() 866 193 193 nil 27 )! !
 !DatePresenter class categoriesFor: #resource_Month_calendar_view!public!resources-views! !
 !DatePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
 
@@ -105,7 +106,7 @@ resource_Picker_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Picker_view)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(DateTimePicker)  98 16 0 0 98 2 8 1140916235 1 416 721990 2 ##(ValueHolder)  0 0 1376774 ##(PluggableSearchPolicy)  459270 ##(Message)  8 #= 98 0 562 8 #hash 98 0 262406 ##(Time)  1 524550 ##(ColorRef)  8 4278190080 0 7 0 0 0 416 0 8 4294907103 852486 ##(NullConverter)  0 0 0 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 930 251 51 416 866 8 #text: 98 1 8 '00:00:00' 416 866 8 #range: 98 1 98 2 0 0 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 30 0 0 0] 98 0 930 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916235 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 262406 ##(Smalltalk.Time) 1 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 7 nil nil nil 416 nil 8 1915873632 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 866 251 51 416 818 #text: 34 1 8 '00:00:00' 416 818 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 130 0 0 0 30 0 0 0] 8 #() 866 193 193 nil 27 )! !
 !TimePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
 
 "End of package definition"!

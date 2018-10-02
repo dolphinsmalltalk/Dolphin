@@ -36,6 +36,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Type Converters\Dolphin Type Converters';
