@@ -31,6 +31,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points';
 	add: '..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
 	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';

@@ -22,6 +22,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Presenters\Radio\Dolphin Radio Buttons';

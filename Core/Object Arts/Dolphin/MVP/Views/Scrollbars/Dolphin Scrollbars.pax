@@ -27,6 +27,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\Type Converters\Dolphin Type Converters';
@@ -68,7 +69,7 @@ resource_Horizontal_scroll_bar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Horizontal_scroll_bar)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ScrollBar)  98 16 0 0 98 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 0 1114118 ##(Smalltalk.NeverSearchPolicy)  1 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904997 852486 ##(Smalltalk.NullConverter)  0 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 786 351 35 416 722 8 #range: 98 1 525062 ##(Smalltalk.Interval)  1 201 3 416 722 8 #pageSize: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 38 6 0 0 27 0 0 0] 98 0 786 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollBar) 34 16 nil nil 34 2 8 1409351680 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 1 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915294880 852486 ##(Smalltalk.NullConverter) nil nil true 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 754 351 35 416 706 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 416 706 #pageSize: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 38 6 0 0 27 0 0 0] 8 #() 754 193 193 nil 27 )!
 
 resource_Vertical_scroll_bar
 	"Answer the literal data from which the 'Vertical scroll bar' resource can be reconstituted.
@@ -78,7 +79,7 @@ resource_Vertical_scroll_bar
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Vertical_scroll_bar)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.ScrollBar)  98 16 0 0 98 2 8 1409351681 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 0 1114118 ##(Smalltalk.NeverSearchPolicy)  1 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294904997 852486 ##(Smalltalk.NullConverter)  0 0 16 983302 ##(Smalltalk.MessageSequence)  202 208 98 3 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 786 35 291 416 722 8 #range: 98 1 525062 ##(Smalltalk.Interval)  1 201 3 416 722 8 #pageSize: 98 1 1 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 136 5 0 0 155 0 0 0] 98 0 786 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollBar) 34 16 nil nil 34 2 8 1409351681 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) 1 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915294880 852486 ##(Smalltalk.NullConverter) nil nil true 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 754 35 291 416 706 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 416 706 #pageSize: 8 #(0) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 136 5 0 0 155 0 0 0] 8 #() 754 193 193 nil 27 )! !
 !NumberPresenter class categoriesFor: #resource_Horizontal_scroll_bar!public!resources-views! !
 !NumberPresenter class categoriesFor: #resource_Vertical_scroll_bar!public!resources-views! !
 
@@ -92,7 +93,7 @@ resource_Scrolling_container
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Scrolling_container)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ScrollingDecorator)  98 18 0 0 98 2 8 1143996416 131073 416 0 0 0 5 0 0 0 416 1573190 1 ##(ScrollingDecoratorLayout)  16 234 256 98 0 0 328198 ##(Point)  1 1 16 562 17 17 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 562 11 11 562 701 501 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 98 0 562 193 193 0 27 )! !
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ScrollingDecorator) 34 18 nil nil 34 2 8 1143996416 131073 416 nil nil nil 5 nil nil nil 416 1573190 1 ##(Smalltalk.ScrollingDecoratorLayout) true 170 192 8 #() nil 328198 ##(Smalltalk.Point) 1 1 true 546 17 17 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 546 11 11 546 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 99 1 0 0 255 0 0 0] 8 #() 546 193 193 nil 27 )! !
 !Presenter class categoriesFor: #resource_Scrolling_container!public!resources-views! !
 
 "End of package definition"!

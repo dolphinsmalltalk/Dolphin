@@ -18,6 +18,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';

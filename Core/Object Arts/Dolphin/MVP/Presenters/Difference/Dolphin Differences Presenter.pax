@@ -22,6 +22,7 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: 'Diff Algorithm';
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\Text\Dolphin Text Presenter';

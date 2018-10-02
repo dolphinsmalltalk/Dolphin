@@ -307,7 +307,7 @@ resource_Cancel_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Cancel_button)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(PushButton)  98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription)  8 #cancel 8 '&Cancel' 1 1 0 0 32 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 706 141 51 416 642 8 #isEnabled: 98 1 32 416 642 8 #text: 98 1 8 '&Cancel' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 98 0 706 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #cancel 8 '&Cancel' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Cancel' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )!
 
 resource_No_button
 	"Answer the literal data from which the 'No button' resource can be reconstituted.
@@ -317,7 +317,7 @@ resource_No_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_No_button)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(PushButton)  98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription)  8 #no 8 '&No' 1 1 0 0 32 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  21 11 706 141 51 416 642 8 #isEnabled: 98 1 32 416 642 8 #text: 98 1 8 '&No' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 5 0 0 0 80 0 0 0 30 0 0 0] 98 0 706 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #no 8 '&No' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&No' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 5 0 0 0 80 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )!
 
 resource_OK_button
 	"Answer the literal data from which the 'OK button' resource can be reconstituted.
@@ -327,7 +327,7 @@ resource_OK_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_OK_button)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(PushButton)  98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription)  8 #ok 8 '&OK' 1 1 0 0 16 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 706 141 51 416 642 8 #isEnabled: 98 1 32 416 642 8 #text: 98 1 8 '&OK' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 98 0 706 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #ok 8 '&OK' 1 1 nil nil true nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&OK' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 658 193 193 nil 29 )!
 
 resource_Push_and_check
 	"Answer the literal data from which the 'Push and check' resource can be reconstituted.
@@ -337,7 +337,7 @@ resource_Push_and_check
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_and_check)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(Smalltalk.STBViewProxy)  8 ##(Smalltalk.CheckBox)  98 16 0 0 98 2 8 1409363971 1 416 721990 2 ##(Smalltalk.ValueHolder)  0 0 1114118 ##(Smalltalk.NeverSearchPolicy)  32 524550 ##(Smalltalk.ColorRef)  8 4278190080 0 5 0 0 0 416 0 8 4294903631 852486 ##(Smalltalk.NullConverter)  0 0 0 983302 ##(Smalltalk.MessageSequence)  202 208 98 2 721670 ##(Smalltalk.MessageSend)  8 #createAt:extent: 98 2 328198 ##(Smalltalk.Point)  2799 21 786 231 61 416 722 8 #text: 98 1 8 'Push and Check' 416 983302 ##(Smalltalk.WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 234 5 0 0 40 0 0 0] 98 0 786 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.CheckBox) 34 16 nil nil 34 2 8 1409363971 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1114118 ##(Smalltalk.NeverSearchPolicy) false 786694 ##(Smalltalk.ColorDefault) 8 4278190080 nil 5 nil nil nil 416 nil 8 1915188384 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 2799 21 754 231 61 416 706 #text: 34 1 8 'Push and Check' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 119 5 0 0 10 0 0 0 234 5 0 0 40 0 0 0] 8 #() 754 193 193 nil 27 )!
 
 resource_Push_button
 	"Answer the literal data from which the 'Push button' resource can be reconstituted.
@@ -347,7 +347,7 @@ resource_Push_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Push_button)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(PushButton)  98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription)  0 0 1 1 0 0 32 983302 ##(MessageSequence)  202 208 98 2 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 674 141 51 416 610 8 #isEnabled: 98 1 32 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 98 0 674 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) nil nil 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 642 141 51 416 594 #isEnabled: 8 #(false) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 75 0 0 0 30 0 0 0] 8 #() 642 193 193 nil 29 )!
 
 resource_Yes_button
 	"Answer the literal data from which the 'Yes button' resource can be reconstituted.
@@ -357,7 +357,7 @@ resource_Yes_button
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Yes_button)
 	"
 
-	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(PushButton)  98 17 0 0 98 2 8 1140924416 1 416 0 0 0 5 0 0 0 416 0 8 4294906781 1180998 4 ##(CommandDescription)  8 #yes 8 '&Yes' 1 1 0 0 32 983302 ##(MessageSequence)  202 208 98 3 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  21 21 706 141 51 416 642 8 #isEnabled: 98 1 32 416 642 8 #text: 98 1 8 '&Yes' 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 80 0 0 0 35 0 0 0] 98 0 706 193 193 0 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.PushButton) 34 20 nil nil 34 2 8 1140924416 1 416 nil nil nil 5 nil nil nil 416 nil 8 1915188384 1180998 4 ##(Smalltalk.CommandDescription) #yes 8 '&Yes' 1 1 nil nil false nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 21 21 658 141 51 416 610 #isEnabled: 8 #(false) 416 610 #text: 34 1 8 '&Yes' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 10 0 0 0 10 0 0 0 80 0 0 0 35 0 0 0] 8 #() 658 193 193 nil 29 )!
 
 stbConvertFromVersion1: anArray 
 	"Private - Perform an STB conversion from a version 1 (or earlier) <View> to version 2."

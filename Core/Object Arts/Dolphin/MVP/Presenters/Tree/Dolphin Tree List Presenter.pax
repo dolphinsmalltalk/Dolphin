@@ -21,6 +21,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Models\List\Dolphin List Models';
 	add: '..\..\Base\Dolphin MVP Base';

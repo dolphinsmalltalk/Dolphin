@@ -536,6 +536,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\ActiveX\Automation\ActiveX Automation';
 	add: '..\Base\Development System';
 	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';

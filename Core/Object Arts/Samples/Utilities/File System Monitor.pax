@@ -22,6 +22,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Dolphin\Base\Dolphin';
+	add: '..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\Dolphin\System\Win32\Dolphin File System Watcher';

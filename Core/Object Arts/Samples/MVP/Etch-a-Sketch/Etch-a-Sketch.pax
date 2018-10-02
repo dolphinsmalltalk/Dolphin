@@ -29,13 +29,14 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
+	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\..\Dolphin\MVP\Views\Slider\Dolphin Slider Control';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\IDE\Base\Internal Bitmaps and Icons';
+	add: '..\..\..\Dolphin\MVP\Icons\Internal Bitmaps and Icons';
 	add: '..\Scribble\Scribble';
 	yourself).
 
