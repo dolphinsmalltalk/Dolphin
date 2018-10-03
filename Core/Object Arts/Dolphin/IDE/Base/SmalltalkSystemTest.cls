@@ -13,6 +13,17 @@ SmalltalkSystemTest comment: ''!
 setUp
 	devsys := Smalltalk developmentSystem!
 
+testAllSelectorsImplementedIn
+	| env all |
+	"Github #645"
+	env := BrowserEnvironment new forPackages: {Object owningPackage}.
+	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
+	self assert: (all includes: #loadLegacyPAC:).
+	env := BrowserEnvironment new
+				forPackages: {Object owningPackage. (Package >> #loadLegacyPAC:) owningPackage}.
+	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
+	self deny: (all includes: #loadLegacyPAC:)!
+
 testBuildSimpleSignature
 	self assert: (devsys buildSimpleSignatureFor: #=) equals: '= arg1'.
 	self assert: (devsys buildSimpleSignatureFor: #x) equals: 'x'.
@@ -169,6 +180,7 @@ wxy'.
 	mn op
 	q'! !
 !SmalltalkSystemTest categoriesFor: #setUp!public!Running! !
+!SmalltalkSystemTest categoriesFor: #testAllSelectorsImplementedIn!public!unit tests! !
 !SmalltalkSystemTest categoriesFor: #testBuildSimpleSignature!public!unit tests! !
 !SmalltalkSystemTest categoriesFor: #testDefaultInspectorClass!public!unit tests! !
 !SmalltalkSystemTest categoriesFor: #testNameForArgument!public!unit tests! !
