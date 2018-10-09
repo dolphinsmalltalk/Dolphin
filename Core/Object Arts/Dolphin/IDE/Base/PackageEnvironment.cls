@@ -20,7 +20,7 @@ classesDo: aBlock
 	environment (#1324)."
 
 	| seen |
-	seen := Set new.
+	seen := Set new: 20.
 	packages do: 
 			[:eachPackage | 
 			eachPackage behaviorsDo: 

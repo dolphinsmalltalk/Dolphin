@@ -243,15 +243,18 @@ allSelectors
 	allSelectors isNil ifTrue: [allSelectors := self buildAllSelectors].
 	^allSelectors!
 
-allSelectorsImplementedIn: aBrowserEnvironment 
+allSelectorsImplementedIn: aBrowserEnvironment
 	"Answer an <IdentitySet> of all the <Symbol>s which currently have at least one implementation in 
-	the scope of the <BrowserEnvironment> argument.
-		SmalltalkSystem current 
-	"
+	the scope of the <BrowserEnvironment> argument."
 
-	| selectors |
+	| selectors classes |
 	selectors := IdentitySet new: 1000.
-	aBrowserEnvironment classesDo: [:each | selectors addAll: each understoodSelectors].
+	classes := IdentitySet new: 50.
+	aBrowserEnvironment classesAndSelectorsDo: 
+			[:class :selector |
+			selectors add: selector.
+			((classes addNewElement: class) and: [aBrowserEnvironment definesClass: class])
+				ifTrue: [class dynamicSelectorsDo: [:each | selectors add: each]]].
 	^selectors!
 
 allSelectorsSentIn: aBrowserEnvironment
@@ -1057,8 +1060,8 @@ buildAllSelectors
 			[:i |
 			| each |
 			each := classes at: i.
-			each understoodSelectors do: [:s | set add: s].
-			each class understoodSelectors do: [:s | set add: s]].
+			each understoodSelectorsDo: [:s | set add: s].
+			each class understoodSelectorsDo: [:s | set add: s]].
 	^set!
 
 buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector extraArgs: extraArgs browseOtherSelector: browseOtherSelector
@@ -4669,7 +4672,7 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current notNil ifTrue: [Current uninitialize].
-	Color removedNamed: #toolBackground.
+	Color removeNamed: #toolBackground.
 	Current := nil.
 	RegisteredTools := nil!
 
