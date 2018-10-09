@@ -375,6 +375,19 @@ definitionOf: aSymbol
 			(each includesSelector: aSymbol) ifTrue: [^each compiledMethodAt: aSymbol]].
 	^self errorNotFound: aSymbol!
 
+dynamicSelectors
+	"Answer a <collection> of all the extra message selectors understood by the receiver at run time that might not have an associated method."
+
+	| answer |
+	answer := IdentitySet new.
+	self dynamicSelectorsDo: [:each | answer add: each].
+	^answer!
+
+dynamicSelectorsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
+
+	"To be overridden by subclasses that handle #doesNotUnderstand: to process additional messages."!
+
 environment
 	"Answer the receiver's name space."
 
@@ -880,6 +893,12 @@ selectors
 
 	^(methodDictionary ifNil: [^#()]) keys!
 
+selectorsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the selectors in the receiver's method
+	dictionary."
+
+	^methodDictionary ifNotNil: [methodDictionary keysDo: aMonadicValuable]!
+
 setInstSize: anInteger
 	(anInteger between: 0 and: (self isBytes ifTrue: [0] ifFalse: [_SizeMask]))
 		ifFalse: [self error: 'Invalid number of fixed fields'].
@@ -965,11 +984,19 @@ superclass: aClass
 	superclass := aClass!
 
 understoodSelectors
-	"Answer a <Set> of all message selectors understood by the receiver, not including those understood because
-	they are implemented in superclasses. This should however include those that are not in the method dictionary
-	but will be understood as a result of #doesNotUnderstand: processing, if that is possible."
+	"Answer a <collection> of all message selectors understood by the receiver, not including those understood only because they are implemented in superclasses. This should however include those that are not in the method  dictionary but will be understood as a result of #doesNotUnderstand: processing, if that is possible."
 
-	^self selectors!
+	| answer |
+	answer := IdentitySet new: 12.
+	self understoodSelectorsDo: [:each | answer add: each].
+	^answer!
+
+understoodSelectorsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the message selectors understood by the receiver at run time, not necessarily including those understood by superclasses.
+	The block may be evaluated more than once for the same selector."
+
+	self selectors do: aMonadicValuable.
+	self dynamicSelectorsDo: aMonadicValuable!
 
 whichClassIncludesSelector: selector
 	"Answer the first class on the receiver's superclass chain (including the receiver) where 
@@ -1149,6 +1176,8 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #decompile:!compiling!development!public! !
 !Behavior categoriesFor: #defaultCompilationFlags!compiling!constants!public! !
 !Behavior categoriesFor: #definitionOf:!methods-testing!public! !
+!Behavior categoriesFor: #dynamicSelectors!methods-accessing!public! !
+!Behavior categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
 !Behavior categoriesFor: #environment!constants!public! !
 !Behavior categoriesFor: #errorNonInstantiable!error handling!private! !
 !Behavior categoriesFor: #errorNotPinnable!error handling!private! !
@@ -1207,6 +1236,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #scopeHas:ifTrue:!class hierarchy-testing!public! !
 !Behavior categoriesFor: #selectMethods:!methods-testing!private! !
 !Behavior categoriesFor: #selectors!methods-accessing!public! !
+!Behavior categoriesFor: #selectorsDo:!enumerating!public! !
 !Behavior categoriesFor: #setInstSize:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
@@ -1220,6 +1250,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #superclass!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #superclass:!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #understoodSelectors!methods-accessing!public! !
+!Behavior categoriesFor: #understoodSelectorsDo:!methods-accessing!public! !
 !Behavior categoriesFor: #whichClassIncludesSelector:!methods-testing!public! !
 !Behavior categoriesFor: #whichClassSatisfies:!helpers!private! !
 !Behavior categoriesFor: #whichMethodsAccess:!development!methods-testing!public! !

@@ -17,12 +17,18 @@ testAllSelectorsImplementedIn
 	| env all |
 	"Github #645"
 	env := BrowserEnvironment new forPackages: {Object owningPackage}.
+	"Preconditions"
+	self assert: (env definesClass: MSG) description: 'Test inconclusive; package does not own expected class'.
+	self assert: (MSG dynamicSelectors includes: #x) description: 'Test inconclusive; MSG does not have expected dynamic selector'.
+	self assert: ((Package>>#loadPAC) sendsSelector: #loadLegacyPAC:) description: 'Test inconclusive; example unimplemented selector not sent'.
 	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
 	self assert: (all includes: #loadLegacyPAC:).
+	self deny: (all includes: #x).
 	env := BrowserEnvironment new
 				forPackages: {Object owningPackage. (Package >> #loadLegacyPAC:) owningPackage}.
 	all := Smalltalk developmentSystem unimplementedSelectorsIn: env.
-	self deny: (all includes: #loadLegacyPAC:)!
+	self deny: (all includes: #loadLegacyPAC:).
+	!
 
 testBuildSimpleSignature
 	self assert: (devsys buildSimpleSignatureFor: #=) equals: '= arg1'.

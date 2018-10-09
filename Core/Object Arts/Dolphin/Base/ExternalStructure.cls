@@ -701,6 +701,11 @@ descriptorClass
 
 	^ExternalDescriptor!
 
+dynamicSelectorsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
+
+	self template keysDo: aMonadicValuable!
+
 elementSize
 	"Answer the size (in bytes) of the structure the receiver represents
 	when used as an array element."
@@ -1044,16 +1049,6 @@ template
 	self ensureDefined.
 	^template!
 
-understoodSelectors
-	"Answer a Set of all message selectors understood by the receiver, not including those understood because
-	they are implemented in superclasses. This should however include those that are not in the method dictionary
-	but will be understood as a result of #doesNotUnderstand: processing, if that is possible."
-
-	| selectors |
-	selectors := super understoodSelectors asSet.
-	self template keysDo: [:each | selectors add: each].
-	^selectors!
-
 uninitializeBeforeRemove
 	"Perform any pre-removal uninitialisation for the class.
 	We need to unregister all subclasses as they are removed. This
@@ -1101,6 +1096,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #definesNewFields!private!testing! !
 !ExternalStructure class categoriesFor: #defineTemplate!initializing!public! !
 !ExternalStructure class categoriesFor: #descriptorClass!constants!private! !
+!ExternalStructure class categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
 !ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
@@ -1141,7 +1137,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #stbReadFrom:format:!binary filing!public! !
 !ExternalStructure class categoriesFor: #structurePacker!accessing!public! !
 !ExternalStructure class categoriesFor: #template!accessing!private! !
-!ExternalStructure class categoriesFor: #understoodSelectors!methods-accessing!public! !
 !ExternalStructure class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !ExternalStructure class categoriesFor: #unregister!public!removing! !
 !ExternalStructure class categoriesFor: #withBytes:!instance creation!public! !
