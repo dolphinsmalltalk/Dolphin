@@ -425,16 +425,15 @@ size: anInteger
 	(KernelLibrary default setEndOfFile: handle) ifFalse: [self signalOsError: false]!
 
 sniffEncoding
-	| ituResult buf count |
+	| buf count |
 	buf := ByteArray newFixed: 1024.
 	count := self
 				reset;
 				read: buf.
-	ituResult := DWORDBytes new.
 	^(AdvApiLibrary default
 		isTextUnicode: buf
 		iSize: count
-		lpiResult: ituResult)
+		lpiResult: nil)
 			ifTrue: [String.EncodingUtf16]
 			ifFalse: 
 				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
@@ -448,9 +447,17 @@ sniffEncoding
 								[self position: 2.
 								String.EncodingUtf16]
 							ifFalse: 
-								[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
+								[| utf8Stream |
 								self reset.
-								String.EncodingAnsi]]]!
+								"Do a minimal evaluation of the unknown encoding. If the first 1k reads as UTF-8 
+								(allowing for that fact that we may have truncated the final character) then assume 
+								it is UTF-8, otherwise some ANSI code page."
+								utf8Stream := (Utf8String fromByteArray: buf) readStream.
+								((utf8Stream skipTo: Character replacement) not or: [utf8Stream atEnd])
+									ifTrue: [String.EncodingUtf8]
+									ifFalse: 
+										["Not valid UTF-8, assume ASCII"
+										String.EncodingAnsi]]]]!
 
 spec: aString
 	"Private - Set the file path to the <readableString> argument."
