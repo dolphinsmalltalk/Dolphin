@@ -235,11 +235,10 @@ buildMessageMap
 		referencesFromObjectsInClasses: (Class allClasses difference: BasicImageStripper withAllSubclasses)!
 
 buildPreservedAspectSetters
-	| behaviors excluded catClass aspectSetters |
+	| behaviors excluded aspectSetters |
 	aspectSetters := IdentitySet new.
 	self preserveAspectSetters ifFalse: [^aspectSetters].
-	catClass := Object methodCategoryClass.
-	excluded := self nonAspectSetterCategories collect: [:each | catClass name: each].
+	excluded := self nonAspectSetterCategories collect: [:each | each asMethodCategory].
 	behaviors := Class allBehaviors difference: self behaviorsWithIgnoredAspectSetters.
 	behaviors do: 
 			[:each |
@@ -259,17 +258,16 @@ buildPreservedAspectSetters
 	^aspectSetters!
 
 buildPreservedMessages
-	"Private - Build the set of all the message selectors that are to be preserved due to
-	membership of one of the requiredMethodCategories. If preserving aspect setters, also build
-	a (weak) collection of all potential aspect setter methods which is later used to identify
-	methods that should not be deleted."
+	"Private - Build the set of all the message selectors that are to be preserved due, for example, to
+	membership of one of the requiredMethodCategories."
 
 	preservedMessages := IdentitySet new.
 	self requiredMethodCategories
-		do: [:each | each contents do: [:method | preservedMessages add: method selector]].
+		do: [:each | each asMethodCategory contents do: [:method | preservedMessages add: method selector]].
 	"Currently we have to preserve all resources because they are referenced by string name
-	(except from ReferenceViews in other resources)"
-	self resourceManager allResourceIdentifiers do: [:each | preservedMessages add: each selector]!
+	(except from ReferenceViews in other resources). Resources will only be removed if the
+	owning class is removed."
+	ResourceIdentifier allResourceIdentifiers do: [:each | preservedMessages add: each selector]!
 
 buildRootClasses
 	"Private - Build the <IdentitySet> of <Class>es that are considered the roots of the 
@@ -437,10 +435,9 @@ developmentMethods
 	"Answer a <collection> of the loose <CompiledMethod>s which are considered part of the development system, 
 	and which must therefore be stripped from the image when it is deployed."
 
-	| catClass devMethods |
-	catClass := Object methodCategoryClass.
+	| devMethods |
 	devMethods := WeakSet new: 500.
-	self developmentMethodCategoryNames do: [:name | devMethods addAll: (catClass name: name) contents].
+	self developmentMethodCategoryNames do: [:name | devMethods addAll: name asMethodCategory contents].
 	^devMethods!
 
 developmentResources
@@ -809,7 +806,7 @@ logPreservedMessages
 
 	self startElement: 'RequiredMethodCategories'.
 	self requiredMethodCategories asSortedCollection
-		do: [:each | self logElement: 'MethodCategory' value: each name].
+		do: [:each | self logElement: 'MethodCategory' value: each asString].
 	self endElement.
 	self startElement: 'PreservedMessages'.
 	preservedMessages asSortedCollection do: [:each | self logSelector: each].
@@ -1302,17 +1299,13 @@ requiredClasses
 		yourself!
 
 requiredMethodCategories
-	"Answer an IdentitySet of MethodCategorys whose methods are known to be required
+	"Answer a collection of method categories whose methods are known to be required
 	and should be preserved during an image strip. Can be overridden by subclasses to 
 	alter the stripping strategy"
 
 	"By default we preserve only the 'must not strip' and the view resource categories"
 
-	| cat |
-	cat := Object methodCategoryClass.
-	^IdentitySet new
-		add: (cat name: 'must not strip');
-		yourself
+	^#('must not strip')
 
 	!
 
@@ -2129,7 +2122,7 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #deploy!operations!public! !
 !ImageStripper categoriesFor: #developmentClasses!configuration!public! !
 !ImageStripper categoriesFor: #developmentMethodCategoryNames!constants!public! !
-!ImageStripper categoriesFor: #developmentMethods!configuration!public! !
+!ImageStripper categoriesFor: #developmentMethods!accessing!public! !
 !ImageStripper categoriesFor: #developmentResources!configuration!public! !
 !ImageStripper categoriesFor: #disableClassChangeFlagging!operations!private! !
 !ImageStripper categoriesFor: #disableDevelopmentSystem!operations!private! !

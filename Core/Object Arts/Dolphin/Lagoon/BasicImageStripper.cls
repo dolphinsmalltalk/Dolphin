@@ -400,9 +400,8 @@ stripNotRequiredMethodsNotifying: notifier
 	| methods |
 	methods := IdentitySet new: 100.
 	self notify: notifier status: 'Removing methods that are not required or which must be stripped'.
-	self startElement: 'ForcedStripMethods'.
-	self notRequiredMethodCategories
-		do: [:each | methods addAll: (Object methodCategoryClass name: each) contents].
+	self startElement: 'ForcedStripMethods' attributes: #().
+	self notRequiredMethodCategories do: [:each | methods addAll: each asMethodCategory contents].
 
 	"We don't go through #removeMethods:notifying:, since we want the packages to be updated to reflect the lost
 	methods so that when their pre-requisites are recalculated the removed methods do not affect the result."
@@ -414,7 +413,7 @@ stripNotRequiredMethodsNotifying: notifier
 			[:each |
 			self logMethod: each.
 			each methodClass removeSelector: each selector ifAbsent: []].
-	self endElement!
+	self endElement: true!
 
 stripPackageManagementNotifying: notifier 
 	"Private - Remove packages structure."

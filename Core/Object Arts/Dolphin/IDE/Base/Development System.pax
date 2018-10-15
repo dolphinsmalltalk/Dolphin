@@ -2504,7 +2504,7 @@ allCalculations
 	method is placed in the 'instance creation' category in order for the calculation to be
 	offered as a choice in the view composer."
 
-	^(((MethodCategory name: 'instance creation') methodsInBehavior: self class) 
+	^(('instance creation' asMethodCategory methodsInBehavior: self class)
 		select: [:each | each argumentCount = 0]) collect: [:each | each value: self withArguments: #()]! !
 !FramingCalculation class categoriesFor: #allCalculations!accessing!development!public! !
 

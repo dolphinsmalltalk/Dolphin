@@ -65,9 +65,9 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	categoryClass := Object methodCategoryClass.
+	categoryClass := MethodCategory.
 	flags := 0.
-	treePresenter model: CategoryTreeModel new.!
+	treePresenter model: CategoryTreeModel new!
 
 list: categories
 	"Set the list of categories displayed in the receiver to the <collection>, categories."
@@ -152,7 +152,7 @@ defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^Object methodCategoryClass unclassified asValue!
+	^MethodCategory unclassified asValue!
 
 icon
 	"Answers an Icon that can be used to represent this class."

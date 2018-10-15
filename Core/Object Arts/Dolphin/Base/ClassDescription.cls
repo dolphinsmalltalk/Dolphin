@@ -119,19 +119,19 @@ canUnderstandProtocol: protName
 	protocol := self methodProtocolClass name: protName asSymbol.
 	^protocol selectors allSatisfy: [:s | self canUnderstand: s]!
 
-categoriesFor: selector 
+categoriesFor: selector
 	"Answer a chunk reader which will include the selector in
 	each of the method category names to be read in.
 	If the receiver doesn't actually include the selector, then just stream 
 	over the categories and ignore them"
 
-	^(self compiledMethodAt: selector ifAbsent: []) 
+	^(self compiledMethodAt: selector ifAbsent: [])
 		ifNil: [ChunkReader null]
 		ifNotNil: 
-			[:method | 
+			[:method |
 			| categories |
 			categories := OrderedCollection new.
-			ChunkReader do: [:chunk | categories addLast: (self methodCategoryClass name: chunk)]
+			ChunkReader do: [:chunk | categories addLast: chunk asMethodCategory]
 				atEnd: 
 					[method categories: categories.
 					method storeCategories]]!
@@ -141,14 +141,12 @@ categoriesFor: selector are: categories
 	<class> categoriesFor: <selector> are: #([<categoryString>]*).
 	Sets the additional categories of a selector if it exists."
 
-	(self includesSelector: selector) ifTrue: [
-		categories do: [:categoryString |
-			self 
-				includeSelector: selector 
-				inCategory: (self methodCategoryClass name: categoryString)]]
-!
+	(self includesSelector: selector)
+		ifTrue: 
+			[categories
+				do: [:categoryString | self includeSelector: selector inCategory: categoryString asMethodCategory]]!
 
-categoriesOfMethod: aCompiledMethod 
+categoriesOfMethod: aCompiledMethod
 	"Private - Answer a <Set> of all the <methodCategory> objects in the receiver
 	of which the <CompiledMethod> (assumed to belong to the receiver), 
 	method, is a member."
@@ -164,16 +162,13 @@ categoriesOfMethod: aCompiledMethod
 	"The simple implementation - about one third the speed
 	^self methodCategories select: [:category | category includesMethod: method]"
 
-	| answer catClass unclassified aSelector |
-	catClass := self methodCategoryClass.
-	unclassified := catClass unclassified.
+	| answer unclassified aSelector |
+	unclassified := MethodCategory unclassified.
 	aSelector := aCompiledMethod selector.
 	answer := self whichNonVirtualCategoriesIncludeSelector: aSelector.
-	answer isEmpty ifTrue: [answer add: catClass unclassified].
-	catClass pseudoCategories do: 
-			[:each | 
-			(each ~~ unclassified and: [each includesMethod: aCompiledMethod]) 
-				ifTrue: [answer add: each]].
+	answer isEmpty ifTrue: [answer add: unclassified].
+	MethodCategory pseudoCategories
+		do: [:each | (each ~~ unclassified and: [each includesMethod: aCompiledMethod]) ifTrue: [answer add: each]].
 	answer add: aCompiledMethod privacyCategory.
 	^answer!
 
@@ -245,7 +240,7 @@ compile: aString categories: categories package: aPackageOrNil
 		package: aPackageOrNil
 		flags: self defaultCompilationFlags!
 
-compile: aString categories: categories package: aPackageOrNil flags: anInteger 
+compile: aString categories: categories package: aPackageOrNil flags: anInteger
 	"Compile the <readableString> argument, aString, as source code in the context of the
 	receiver with the specified compilation flags, and add the resulting method to the
 	receiver's method dictionary, in the <collection> of <MethodCategory>s, categories. A
@@ -259,23 +254,18 @@ compile: aString categories: categories package: aPackageOrNil flags: anInteger
 
 	| method result |
 	result := self basicCompile: aString flags: anInteger.
-	result notNil 
+	result notNil
 		ifTrue: 
 			[| allCats |
 			result package: aPackageOrNil.
-			allCats := categories.
+			allCats := categories collect: [:each | each asMethodCategory].
 			method := result method.
-			(allCats anySatisfy: [:c | c isPrivacy]) 
+			(allCats anySatisfy: [:c | c isPrivacy])
 				ifFalse: 
-					[(self suggestedPrivacyFor: method) 
-						ifNotNil: 
-							[:privacy | 
-							allCats := (OrderedCollection
-										withAll: categories)
-										addLast: privacy;
-										yourself]].
+					[(self suggestedPrivacyFor: method)
+						ifNotNil: [:privacy | allCats := allCats asArray copyWith: privacy]].
 			"To avoid generating a recategorization event we eschew CompiledMethod>>categories:"
-			self methodCategoryClass setMethod: method categories: allCats.
+			MethodCategory setMethod: method categories: allCats.
 			method storeCategories.
 			"Now we can safely trigger #methodAdded/Updated: since the source and categories are now available"
 			result fireSystemUpdateEvent].
@@ -294,14 +284,12 @@ compile: codeString classified: categoryString
 
 	| method result |
 	result := self basicCompile: codeString.
-	result notNil 
+	result notNil
 		ifTrue: 
 			[| category |
 			method := result method.
-			category := self methodCategoryClass name: categoryString asString.
-			result isNew 
-				ifTrue: [category addMethodSilently: method]
-				ifFalse: [category addMethod: method].
+			category := categoryString asMethodCategory.
+			result isNew ifTrue: [category addMethodSilently: method] ifFalse: [category addMethod: method].
 			method storeCategories.
 			result fireSystemUpdateEvent].
 	^method!
@@ -338,7 +326,7 @@ copy: aSymbol from: aClass categories: aCollection
 		categories: aCollection
 		package: method owningPackageIfLoose!
 
-copy: aSymbol from: aClass classified: aString 
+copy: aSymbol from: aClass classified: aString
 	"Copy the method with the specified selector <Symbol>, in the <Behavior>, aClass, to the
 	receiver's method dictionary, adding it to the category identified by the final <String>
 	argument."
@@ -351,8 +339,8 @@ copy: aSymbol from: aClass classified: aString
 
 	| categories |
 	categories := (aClass compiledMethodAt: aSymbol) categories.
-	categories add: (self methodCategoryClass name: aString asString).
-	^self 
+	categories add: aString asMethodCategory.
+	^self
 		copy: aSymbol
 		from: aClass
 		categories: categories!
@@ -387,9 +375,12 @@ copyCategory: category from: aClass
 	of the methods copied successfully."
 
 	| cat |
-	cat := self methodCategoryClass name: category asString.
-	^(cat methodsInBehavior: self) 
-		allSatisfy: [:m | (self copy: m selector from: aClass classified: cat) notNil]!
+	cat := category asMethodCategory.
+	^(cat methodsInBehavior: self)
+		allSatisfy: [:m | (self
+				copy: m selector
+				from: aClass
+				classified: cat) notNil]!
 
 copyCategory: category from: aClass classified: newCategory
 	"Copy all methods of the <ClassDescription> class, in the <MethodCategory>
@@ -398,19 +389,12 @@ copyCategory: category from: aClass classified: newCategory
 	under the <MethodCategory> named by the <readableString>, newCategory."
 
 	| cat |
-	cat := self methodCategoryClass name: category asString.
-	^(cat methodsInBehavior: self) 
-			allSatisfy: [:m | (self copy: m selector from: aClass classified: newCategory) notNil]!
-
-defaultIconFrom: anExternalResourceLibrary
-	"Answer a suitable default icon to use for this class. If anExternalResourceLibrary
-	is, for some reason not open, then use the icon for the Object class."
-
-	anExternalResourceLibrary asParameter isNull
-		ifTrue: [^Object defaultIcon].
-	^(self environment at: #Icon) fromId: self defaultIconName in: anExternalResourceLibrary.
-
-	!
+	cat := category asMethodCategory.
+	^(cat methodsInBehavior: self)
+		allSatisfy: [:m | (self
+				copy: m selector
+				from: aClass
+				classified: newCategory) notNil]!
 
 defaultIconName
 	"Answer a filename to use for an icon of this class."
@@ -449,13 +433,13 @@ displayOn: aStream
 includesCategory: category
 	"Answer whether the receiver includes the named category."
 
-	^self methodsCatalogue includesKey: (self methodCategoryClass name: category)!
+	^self methodsCatalogue includesKey: category asMethodCategory!
 
-includeSelector: aSelector inCategory: category
+includeSelector: aSelector inCategory: categoryObject
 	"Add aSelector to aCategoryString while leaving it in its existing set of categories."
 
-	| catalogue selectors |
-	self assert: [category isKindOf: self methodCategoryClass].
+	| category catalogue selectors |
+	category := categoryObject asMethodCategory.
 
 	"Ensure a methods catalogue entry exists for the requested category"
 	catalogue := self methodsCatalogue.
@@ -549,17 +533,9 @@ methodCategories
 	"Answer a <collection> of all the <methodCategory>s in which 
 	the receiver's methods are classified."
 
-	^(self realMethodCategories)
-		addAll: self methodCategoryClass pseudoCategories;
+	^self realMethodCategories
+		addAll: MethodCategory pseudoCategories;
 		yourself!
-
-methodCategoryClass
-	"Private - Answer the class of object used to categorize methods in the receiver.
-	Implementation Note: This method cannot be stripped because it is required for
-	compilation, but we want to allow the class to be stripped, and so answer a
-	DeafObject if it has been."
-
-	^Smalltalk at: #MethodCategory ifAbsent: [DeafObject current]!
 
 methodChanged: aCompiledMethod
 	"Private - Flag the receiver as changed or not changed, according to the value 
@@ -661,11 +637,9 @@ realMethodCategories
 	Note, though, that public/private categories are included since
 	these are not 'calculated' as such, but based on a flag in the method header."
 
-	| catClass |
-	catClass := self methodCategoryClass.
 	^self methodsCatalogue keys
-		add: catClass public;
-		add: catClass private;
+		add: 'public' asMethodCategory;
+		add: 'private' asMethodCategory;
 		yourself!
 
 recompileAllReferencesToVarNamed: aString
@@ -682,8 +656,8 @@ removeCategory: category
 	category are removed even if the method belongs to any other categories.
 	In other words this removes a category of methods, not just the category."
 
-	self removeSelectors: (((self methodCategoryClass name: category asString) methodsInBehavior: self) 
-						collect: [:method | method selector])!
+	self removeSelectors: ((category asMethodCategory methodsInBehavior: self)
+				collect: [:method | method selector])!
 
 removeInstVarName: aString
 	"Remove the instance variable of the receiver with the specified <readableString> name."
@@ -962,15 +936,14 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
 !ClassDescription categoriesFor: #compile:classified:!compiling!public! !
 !ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
-!ClassDescription categoriesFor: #copy:from:!methods-copying!public! !
+!ClassDescription categoriesFor: #copy:from:!development!methods-copying!public! !
 !ClassDescription categoriesFor: #copy:from:categories:!development!methods-copying!public! !
 !ClassDescription categoriesFor: #copy:from:classified:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copyAll:from:!methods-copying!public! !
-!ClassDescription categoriesFor: #copyAll:from:classified:!methods-copying!public! !
-!ClassDescription categoriesFor: #copyAllCategoriesFrom:!methods-copying!public! !
+!ClassDescription categoriesFor: #copyAll:from:!development!methods-copying!public! !
+!ClassDescription categoriesFor: #copyAll:from:classified:!development!methods-copying!public! !
+!ClassDescription categoriesFor: #copyAllCategoriesFrom:!development!methods-copying!public! !
 !ClassDescription categoriesFor: #copyCategory:from:!development!methods-copying!public! !
 !ClassDescription categoriesFor: #copyCategory:from:classified:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #defaultIconFrom:!constants!public! !
 !ClassDescription categoriesFor: #defaultIconName!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
@@ -989,7 +962,6 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #logRemoveSelector:!helpers!private! !
 !ClassDescription categoriesFor: #logRemoveSelectors:!helpers!private! !
 !ClassDescription categoriesFor: #methodCategories!categories-accessing!public! !
-!ClassDescription categoriesFor: #methodCategoryClass!constants!private! !
 !ClassDescription categoriesFor: #methodChanged:!development!helpers!private! !
 !ClassDescription categoriesFor: #methodProtocol:attributes:selectors:!development!public!source filing-methods! !
 !ClassDescription categoriesFor: #methodProtocolClass!constants!private! !

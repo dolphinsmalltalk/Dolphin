@@ -30,7 +30,7 @@ categories: categories
 	Implementation Note: The receiver has no knowledge of categories, so fires
 	this request straight off to the category system."
 
-	(self methodClass methodCategoryClass setMethod: self categories: categories) 
+	(MethodCategory setMethod: self categories: categories)
 		ifTrue: [self methodClass environment trigger: #methodCategorized: with: self]!
 
 changeManager
@@ -180,9 +180,7 @@ printOn: aStream
 	self displayOn: aStream!
 
 privacyCategory
-	^self isPrivate 
-		ifTrue: [self methodClass methodCategoryClass private]
-		ifFalse: [self methodClass methodCategoryClass public]!
+	^(self isPrivate ifTrue: ['private'] ifFalse: ['public']) asMethodCategory!
 
 protocols
 	"Answer a <Collection> of all the method protocols in which the receiver is included."

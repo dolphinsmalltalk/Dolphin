@@ -24,7 +24,7 @@ specialAssert: aBoolean
 
 testCompilationFailures
 	| failed |
-	failed := (MethodCategory name: '*-compilation failures') contents.
+	failed := '*-compilation failures' asMethodCategory contents.
 	self assert: failed isEmpty! !
 !ProductReleaseTest categoriesFor: #checkNoClass:!public!unit tests! !
 !ProductReleaseTest categoriesFor: #isReleased!private!unit tests! !
