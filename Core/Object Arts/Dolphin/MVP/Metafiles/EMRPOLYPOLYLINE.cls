@@ -145,9 +145,9 @@ defineFields
 			type: DWORDField new
 			offset: 28;
 		defineField: #aPolyCounts
-			type: (ConformantArrayField type: DWORDArray length: #nPolys)
+			type: (ArrayField type: DWORDArray lengthField: #nPolys)
 			offset: 32;
-		defineField: #aptl type: (ConformantStructureArrayField type: POINTL length: #cptl).
+		defineField: #aptl type: (StructureArrayField type: POINTL lengthField: #cptl).
 	self byteSize: 40!
 
 iTypes

@@ -130,7 +130,7 @@ defineFields
 			type: DWORDField new
 			offset: 344;
 		defineField: #Data
-			type: (ConformantArrayField type: ExternalArray length: #cbData)
+			type: (ArrayField type: ExternalArray lengthField: #cbData)
 			offset: 348!
 
 iTypes

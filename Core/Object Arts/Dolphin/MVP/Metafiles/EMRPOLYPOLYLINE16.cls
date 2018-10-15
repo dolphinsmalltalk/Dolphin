@@ -147,9 +147,9 @@ defineFields
 			type: DWORDField new
 			offset: 28;
 		defineField: #aPolyCounts
-			type: (ConformantArrayField type: DWORDArray length: #nPolys)
+			type: (ArrayField type: DWORDArray lengthField: #nPolys)
 			offset: 32;
-		defineField: #apts type: (ConformantStructureArrayField type: POINTS length: #cpts)!
+		defineField: #apts type: (StructureArrayField type: POINTS lengthField: #cpts)!
 
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."

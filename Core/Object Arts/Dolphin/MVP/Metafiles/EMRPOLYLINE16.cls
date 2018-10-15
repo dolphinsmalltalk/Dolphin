@@ -99,7 +99,7 @@ defineFields
 			type: DWORDField new
 			offset: 24;
 		defineField: #apts
-			type: (ConformantStructureArrayField type: POINTS length: #cpts)
+			type: (StructureArrayField type: POINTS lengthField: #cpts)
 			offset: 28.
 	self byteSize: 32!
 

@@ -113,7 +113,7 @@ defineFields
 			type: DWORDField new
 			offset: 16;
 		defineField: #Data
-			type: (ConformantArrayField type: ExternalArray length: #dataLength)
+			type: (ArrayField type: ExternalArray lengthField: #dataLength)
 			offset: 20.
 	self byteSize: 24!
 
