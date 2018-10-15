@@ -1244,6 +1244,45 @@ findItemHandle: anInteger ifAbsent: exceptionHandler
 		ifNotNil: [:hWnd | ^hWnd].
 	^exceptionHandler value!
 
+findMatch: aFindDetails inRange: anInterval
+	"Private - Find the first occurrence of text in the receiver that matches the specified
+	<FindDetails>, within the range, anInterval. Answer the <Interval> of the match (an
+	empty interval if not found)."
+
+	| text matchString matchLen start stop textLen |
+	textLen := self textLength.
+	aFindDetails isForwards
+		ifTrue: 
+			[text := self plainText.
+			matchString := aFindDetails pattern.
+			start := anInterval start.
+			stop := anInterval stop]
+		ifFalse: 
+			[text := self plainText reverse.
+			matchString := aFindDetails pattern reverse.
+			start := textLen - anInterval stop + 1.
+			stop := textLen - anInterval start + 1].
+	aFindDetails isCaseSensitive
+		ifFalse: 
+			[text := text asLowercase.
+			matchString := matchString asLowercase].
+	matchLen := matchString size.
+	start to: stop - matchLen + 1
+		do: 
+			[:pos |
+			matchString = (text midString: matchLen from: pos)
+				ifTrue: 
+					["Possible match - check for whole word if necessary."
+					(aFindDetails isWholeWord not or: 
+							[aFindDetails isWholeWord and: 
+									[(pos > 1 and: [(text at: pos - 1) isAlphaNumeric not])
+										and: [pos + matchLen < textLen and: [(text at: pos + matchLen) isAlphaNumeric not]]]])
+						ifTrue: 
+							[| first |
+							first := aFindDetails isForwards ifTrue: [pos] ifFalse: [textLen - pos + 1 - matchLen + 1].
+							^first to: first + matchLen - 1]]].
+	^0 to: -1!
+
 firstSubView
 	"Answers the first sub view of the receiver or nil if there is none"
 
@@ -2671,6 +2710,20 @@ plainText: aString
 
 	self setWindowText: aString
 !
+
+plainTextFrom: startInteger to: stopInteger
+	"Answer a string containing the plain text contents of the receiver
+	in the specified 1-based, end-inclusive, range. If stopInteger is -1, 
+	then answers text from startInteger up to the end."
+
+	| text |
+	text := self plainText.
+	^stopInteger < 0 
+		ifTrue: [text copyFrom: startInteger]
+		ifFalse: [text copyFrom: startInteger to: stopInteger]!
+
+plainTextRange: anInterval
+	^self plainTextFrom: anInterval start to: anInterval stop!
 
 position
 	"Answers the position of the receiver in the coordinates of its parent."
@@ -4547,6 +4600,7 @@ zOrderTop
 !View categoriesFor: #extent:!geometry!public! !
 !View categoriesFor: #filerProxy!binary filing!private! !
 !View categoriesFor: #findItemHandle:ifAbsent:!hierarchy!private! !
+!View categoriesFor: #findMatch:inRange:!private!searching & replacing! !
 !View categoriesFor: #firstSubView!hierarchy!public!sub views! !
 !View categoriesFor: #flash:!operations!public! !
 !View categoriesFor: #font!accessing!public! !
@@ -4747,7 +4801,9 @@ zOrderTop
 !View categoriesFor: #placement!geometry!public! !
 !View categoriesFor: #placement:!geometry!public! !
 !View categoriesFor: #plainText!accessing!public! !
-!View categoriesFor: #plainText:!accessing!private! !
+!View categoriesFor: #plainText:!private!updating! !
+!View categoriesFor: #plainTextFrom:to:!accessing!public! !
+!View categoriesFor: #plainTextRange:!accessing!public! !
 !View categoriesFor: #position!geometry!public! !
 !View categoriesFor: #position:!geometry!public! !
 !View categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
@@ -4755,7 +4811,7 @@ zOrderTop
 !View categoriesFor: #preferredExtent!geometry!public! !
 !View categoriesFor: #preferredExtent:!geometry!public! !
 !View categoriesFor: #presenter!accessing!public! !
-!View categoriesFor: #presenter:!accessing!public! !
+!View categoriesFor: #presenter:!initializing!public! !
 !View categoriesFor: #presenterConnectionPoint!accessing!public! !
 !View categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
 !View categoriesFor: #preTranslateMessage:!dispatching!public! !
@@ -4832,7 +4888,7 @@ zOrderTop
 !View categoriesFor: #textLength!accessing!private! !
 !View categoriesFor: #themeSubAppName!constants!private! !
 !View categoriesFor: #toolTipWindow!accessing!private! !
-!View categoriesFor: #toolTipWindow:!accessing!private! !
+!View categoriesFor: #toolTipWindow:!accessing!not an aspect!private! !
 !View categoriesFor: #topShell!hierarchy!public! !
 !View categoriesFor: #topView!hierarchy!public! !
 !View categoriesFor: #trackContextMenu:!menus!private! !

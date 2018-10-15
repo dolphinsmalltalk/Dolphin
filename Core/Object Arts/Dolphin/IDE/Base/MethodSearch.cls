@@ -28,7 +28,7 @@ findDetails: aFindDetails
 	findDetails := aFindDetails!
 
 initialize
-	findDetails := FindDetails new!
+	findDetails := AdvancedFindDetails new!
 
 literal
 	^literal!
@@ -212,7 +212,7 @@ newLiteral: anObject
 		yourself!
 
 newPattern: aString 
-	^self newFindDetails: (FindDetails newPattern: aString)!
+	^self newFindDetails: (AdvancedFindDetails newPattern: aString)!
 
 newSelector: aSymbol 
 	^self newLiteral: aSymbol asSymbol! !

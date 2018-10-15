@@ -51,7 +51,7 @@ setWindowText: pathString
 !StaticPath categoriesFor: #isSingleLine!private!testing! !
 !StaticPath categoriesFor: #layout:!geometry!private! !
 !StaticPath categoriesFor: #plainText!accessing!public! !
-!StaticPath categoriesFor: #plainText:!accessing!private! !
+!StaticPath categoriesFor: #plainText:!private!updating! !
 !StaticPath categoriesFor: #setWindowText:!accessing!private! !
 
 !StaticPath class methodsFor!

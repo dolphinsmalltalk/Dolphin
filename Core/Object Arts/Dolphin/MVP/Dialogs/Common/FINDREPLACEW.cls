@@ -23,7 +23,6 @@ findDetails
 		isForwards: self isForwards;
 		isCaseSensitive: self isCaseSensitive;
 		isWholeWord: self isWholeWord;
-		isRegularExpression: false;
 		action: (self isReplaceAll 
 					ifTrue: [#replaceAll]
 					ifFalse: [self isReplace ifTrue: [#replace] ifFalse: [#findNext]]);
