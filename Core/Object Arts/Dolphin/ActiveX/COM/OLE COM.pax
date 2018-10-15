@@ -77,7 +77,6 @@ package classNames
 	add: #EXCEPINFO;
 	add: #IClassFactory;
 	add: #IClassFactory2;
-	add: #ICreateErrorInfo;
 	add: #IEnumString;
 	add: #IEnumStruct;
 	add: #IEnumUnknown;
@@ -228,11 +227,6 @@ COMInterface subclass: #IUnknown
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IUnknown subclass: #IClassFactory
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICreateErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

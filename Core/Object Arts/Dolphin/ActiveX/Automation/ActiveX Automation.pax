@@ -47,6 +47,7 @@ package classNames
 	add: #ELEMDESC;
 	add: #FONTDESC;
 	add: #FUNCDESC;
+	add: #ICreateErrorInfo;
 	add: #IDispatch;
 	add: #IDLDESC;
 	add: #IEnumVARIANT;
@@ -90,7 +91,6 @@ package methodNames
 	add: #Collection -> #asVariant;
 	add: #COMInterface -> #coclassTypeInfo;
 	add: #COMInterface -> #coclassTypeInfoIfNone:;
-	add: #COMInterface -> #supportsErrorInfo:;
 	add: #COMInterface -> #typeInfo;
 	add: #COMInterface -> #typeInfoIfNone:;
 	add: #Date -> #asFloat;
@@ -105,8 +105,6 @@ package methodNames
 	add: #Float -> #asVariant;
 	add: #FLOAT -> #asVariant;
 	add: #Fraction -> #asVariant;
-	add: #HRESULTError -> #errorInfo:;
-	add: #HRESULTError -> #source;
 	add: #Integer -> #asVariant;
 	add: #IUnknown -> #asVariant;
 	add: #LargeInteger -> #asVariant;
@@ -227,6 +225,8 @@ package methodNames
 	add: 'GUID class' -> #typeName;
 	add: 'HRESULT class' -> #typeName;
 	add: 'HRESULT class' -> #vt;
+	add: 'IErrorInfo class' -> #fromEXCEPINFO:guid:;
+	add: 'IErrorInfo class' -> #source:description:helpContext:helpFile:guid:;
 	add: 'INT_PTR class' -> #typeName;
 	add: 'INT_PTR class' -> #vt;
 	add: 'IUnknown class' -> #vt;
@@ -381,6 +381,11 @@ AXDualImp subclass: #AXForwardingDualImp
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 COMEnumerator subclass: #COMVariantEnumerator
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #ICreateErrorInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -740,32 +745,6 @@ coclassTypeInfoIfNone: exceptionHandler
 			[AXTypeInfoAnalyzer onTypeInfo: ipc getClassInfo] on: HRESULTError
 				do: [:ex | ^exceptionHandler value]]!
 
-supportsErrorInfo: interface 
-	"Answer whether the <COMInterface>, interface, as implemented by the receiver supports
-	extended Automation error information.
-	Implementation Note: Some COM Objects (e.g. Microsoft Agent 2) have a bug whereby 
-	they claim not to support error info at their most derived interfaces (e.g. IAgentCtlEx) but 
-	change their minds when 	one moves up the inheritance chain. We provide a general 
-	workaround for this bug here by asking each interface up to (but not including) IUnknown.
-	Note also that we call QueryInterface() directly to avoid the possibility of a recursive error
-	as this method is usually invoked when handling an error."
-
-	| piSEI hr |
-	piSEI := ISupportErrorInfo newPointer.
-	hr := self QueryInterface: ISupportErrorInfo iid ppvObject: piSEI.
-	hr == S_OK 
-		ifTrue: 
-			[| itfClass |
-			itfClass := interface.
-			[itfClass == IUnknown] whileFalse: 
-					["The MonthView control has a horrible bug whereby it
-					 overwrites the first four bytes of the GUID argument, so to
-					 work around that (and the same potential bug elsewhere), we
-					 pass a copy of the IID."
-					(piSEI InterfaceSupportsErrorInfo: itfClass iid copy) == S_OK ifTrue: [^true].
-					itfClass := itfClass superclass]].
-	^false!
-
 typeInfo
 	"Answer any type information that exists for the receiver.
 	Not all custom interfaces have an associated type library, but many do."
@@ -779,7 +758,6 @@ typeInfoIfNone: exceptionHandler
 	^(self coclassTypeInfoIfNone: [^exceptionHandler value]) defaultInterface! !
 !COMInterface categoriesFor: #coclassTypeInfo!accessing!public! !
 !COMInterface categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
-!COMInterface categoriesFor: #supportsErrorInfo:!public!testing! !
 !COMInterface categoriesFor: #typeInfo!accessing!public! !
 !COMInterface categoriesFor: #typeInfoIfNone:!accessing!public! !
 
@@ -1508,20 +1486,31 @@ vt
 !HRESULT class categoriesFor: #typeName!constants!private! !
 !HRESULT class categoriesFor: #vt!constants!private! !
 
-!HRESULTError methodsFor!
+!IErrorInfo class methodsFor!
 
-errorInfo: err
-	"Private - Set the IErrorInfo/EXCEPINFO associated with the receiver."
+fromEXCEPINFO: excepInfo guid: id
+	"Answer a new instance of the receiver on a system extended error object
+	with details from the <EXCEPINFO> structure, excepInfo."
 
-	errorInfo := err!
+	^(ICreateErrorInfo fromEXCEPINFO: excepInfo guid: id) errorInfo!
 
-source
-	"Answer the 'source' of the error (by convention the Prog ID of the component which raised the error).
-	This is only available if extended error information is associated with the receiver."
+source: sourceString description: descriptionString helpContext: anInteger helpFile: helpFilePath guid: aGUID
+	"Answer a new instance of the receiver encapsulating all of the specified details.
+		ice := self source: 'Dolphin' description: 'It is all going horribly wrong' helpContext: 1 helpFile: nil guid: GUID newUnique.
+	"
 
-	^errorInfo notNull ifTrue: [errorInfo source]! !
-!HRESULTError categoriesFor: #errorInfo:!accessing!private! !
-!HRESULTError categoriesFor: #source!accessing!public! !
+	| ice |
+	ice := ICreateErrorInfo new.
+	ice SetSource: sourceString.
+	ice SetDescription: descriptionString.
+	ice SetHelpContext: anInteger.
+	ice SetHelpFile: helpFilePath.
+	ice SetGuid: aGUID.
+	^ice errorInfo
+
+! !
+!IErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
+!IErrorInfo class categoriesFor: #source:description:helpContext:helpFile:guid:!instance creation!public! !
 
 !INT_PTR class methodsFor!
 

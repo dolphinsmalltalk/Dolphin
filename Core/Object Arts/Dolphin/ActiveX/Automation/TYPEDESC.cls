@@ -267,5 +267,5 @@ initialize
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
 !TYPEDESC class categoriesFor: #defineFields!initializing!public! !
-!TYPEDESC class categoriesFor: #initialize!class initialization!public! !
+!TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
 
