@@ -124,9 +124,9 @@ defineFields
 			type: DWORDField new
 			offset: 24;
 		defineField: #aptl
-			type: (ConformantStructureArrayField type: POINTL length: #cptl)
+			type: (StructureArrayField type: POINTL lengthField: #cptl)
 			offset: 28;
-		defineField: #abTypes type: (ConformantArrayField type: ExternalArray length: #cptl)!
+		defineField: #abTypes type: (ArrayField type: ExternalArray lengthField: #cptl)!
 
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."

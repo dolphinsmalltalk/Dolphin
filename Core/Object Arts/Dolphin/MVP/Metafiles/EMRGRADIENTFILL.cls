@@ -133,7 +133,7 @@ defineFields
 			type: DWORDField new
 			offset: 32;
 		defineField: #Ver
-			type: (ConformantStructureArrayField  type: TRIVERTEX length: #nVer)
+			type: (StructureArrayField type: TRIVERTEX lengthField: #nVer)
 			offset: 36!
 
 iTypes

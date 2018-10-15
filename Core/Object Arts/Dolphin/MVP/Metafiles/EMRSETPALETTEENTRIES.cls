@@ -112,7 +112,7 @@ defineFields
 			type: DWORDField new
 			offset: 16;
 		defineField: #aPalEntries
-			type: (ConformantStructureArrayField type: PALETTEENTRY length: #cEntries)
+			type: (StructureArrayField type: PALETTEENTRY lengthField: #cEntries)
 			offset: 20!
 
 iTypes

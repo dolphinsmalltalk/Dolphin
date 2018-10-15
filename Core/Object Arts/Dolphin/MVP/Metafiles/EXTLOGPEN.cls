@@ -158,7 +158,7 @@ defineFields
 			type: DWORDField new
 			offset: 20;
 		defineField: #elpStyleEntry
-			type: (ConformantArrayField type: DWORDArray length: #elpNumEntries)
+			type: (ArrayField type: DWORDArray lengthField: #elpNumEntries)
 			offset: 24! !
 !EXTLOGPEN class categoriesFor: #defineFields!initializing!public! !
 

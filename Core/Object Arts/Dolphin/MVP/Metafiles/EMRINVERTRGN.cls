@@ -96,7 +96,7 @@ defineFields
 			type: DWORDField new
 			offset: 24;
 		defineField: #RGNDATA
-			type: (ConformantArrayField type: ExternalArray length: #cbRgnData)
+			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)
 			offset: 28!
 
 iTypes

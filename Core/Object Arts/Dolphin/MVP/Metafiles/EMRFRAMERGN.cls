@@ -134,7 +134,7 @@ defineFields
 			type: (StructureField type: SIZE)
 			offset: 32;
 		defineField: #RGNDATA
-			type: (ConformantArrayField type: ExternalArray length: #cbRgnData)
+			type: (ArrayField type: ExternalArray lengthField: #cbRgnData)
 			offset: 40!
 
 iTypes

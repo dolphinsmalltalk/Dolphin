@@ -99,7 +99,7 @@ defineFields
 			type: DWORDField new
 			offset: 24;
 		defineField: #aptl
-			type: (ConformantStructureArrayField type: POINTL length: #cptl)
+			type: (StructureArrayField type: POINTL lengthField: #cptl)
 			offset: 28.
 	self byteSize: 32!
 

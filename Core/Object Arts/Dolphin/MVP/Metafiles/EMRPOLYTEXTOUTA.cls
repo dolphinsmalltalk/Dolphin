@@ -150,7 +150,7 @@ defineFields
 			type: SDWORDField new
 			offset: 36;
 		defineField: #aemrtext
-			type: (ConformantStructureArrayField type: EMRTEXT length: #cStrings)
+			type: (StructureArrayField type: EMRTEXT lengthField: #cStrings)
 			offset: 40!
 
 iTypes

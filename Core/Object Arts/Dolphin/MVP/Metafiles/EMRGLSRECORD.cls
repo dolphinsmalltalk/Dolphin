@@ -75,7 +75,7 @@ defineFields
 			type: DWORDField new
 			offset: 8;
 		defineField: #Data
-			type: (ConformantArrayField type: ExternalArray length: #cbData)
+			type: (ArrayField type: ExternalArray lengthField: #cbData)
 			offset: 12.
 	self byteSize: 16!
 
