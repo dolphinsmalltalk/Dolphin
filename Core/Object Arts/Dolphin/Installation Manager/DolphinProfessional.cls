@@ -83,21 +83,16 @@ contents
 		add: #('Core\Object Arts\Dolphin\IDE\Professional\Dolphin Refactoring Browser.pax' #encrypted #imageBased).
 	^contents!
 
+defaultSystemFolderExtent
+	^865 @ 370!
+
 fullName
 	"Answer the full product name associated with the receiver"
 
-	^'Dolphin Smalltalk Professional'!
-
-installSystemFolderOptions
-	Smalltalk at: #SmalltalkSystemShell
-		ifPresent: 
-			[:systemFolder | 
-			systemFolder
-				defaultExtent: (self calcSystemFolderExtentFor: 865@370);
-				backcolor: self defaultSystemFolderColor]! !
+	^'Dolphin Smalltalk Professional'! !
 !DolphinProfessional categoriesFor: #contents!accessing!public! !
+!DolphinProfessional categoriesFor: #defaultSystemFolderExtent!private! !
 !DolphinProfessional categoriesFor: #fullName!accessing!public! !
-!DolphinProfessional categoriesFor: #installSystemFolderOptions!private! !
 
 !DolphinProfessional class methodsFor!
 

@@ -10,18 +10,13 @@ DolphinCommunityEdition comment: ''!
 !DolphinCommunityEdition categoriesForClass!Development! !
 !DolphinCommunityEdition methodsFor!
 
+defaultSystemFolderExtent
+	^760 @ 355!
+
 fullName
 	"Answer the full product name associated with the receiver"
 
 	^'Dolphin Smalltalk Community Edition'!
-
-installSystemFolderOptions
-	Smalltalk at: #SmalltalkSystemShell
-		ifPresent: 
-			[:systemFolder | 
-			systemFolder
-				defaultExtent: (self calcSystemFolderExtentFor: 760 @ 355);
-				backcolor: self defaultSystemFolderColor]!
 
 preShrink
 	"Private - Perform any pre-shrinkage actions. "
@@ -30,8 +25,8 @@ preShrink
 	because they contain references to Lagoon, which only belongs in DolphinProfessional"
 
 	self packages do: [:each | each imageStripperBytes: nil]! !
+!DolphinCommunityEdition categoriesFor: #defaultSystemFolderExtent!private! !
 !DolphinCommunityEdition categoriesFor: #fullName!accessing!public! !
-!DolphinCommunityEdition categoriesFor: #installSystemFolderOptions!private! !
 !DolphinCommunityEdition categoriesFor: #preShrink!private! !
 
 !DolphinCommunityEdition class methodsFor!
