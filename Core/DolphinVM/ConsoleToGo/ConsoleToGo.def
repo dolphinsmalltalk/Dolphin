@@ -78,6 +78,7 @@ uncompress
 	iswpunct
 	iswspace
 	memcmp
+	memcpy_s
 	memset
 	rand
 	rewind

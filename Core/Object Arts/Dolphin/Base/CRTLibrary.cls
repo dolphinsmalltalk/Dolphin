@@ -355,6 +355,10 @@ memcmp: buf1 buf2: buf2 count: count
 	<cdecl: sdword memcmp lpvoid lpvoid intptr>
 	^self invalidCall!
 
+memcpy_s: dest destSize: destSize src: src count: count
+	<cdecl: sdword memcpy_s void* dword void* dword>
+	^self invalidCall!
+
 memset: dest c: c count: count
 	"Fill a block of memory.
 				void *memset( void *dest, int c, size_t count );
@@ -513,6 +517,7 @@ wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource coun
 !CRTLibrary categoriesFor: #iswpunct:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
+!CRTLibrary categoriesFor: #memcpy_s:destSize:src:count:!public! !
 !CRTLibrary categoriesFor: #memset:c:count:!CRT functions-buffer manipulation!public! !
 !CRTLibrary categoriesFor: #setlocale:locale:!CRT functions-localization!public! !
 !CRTLibrary categoriesFor: #strcat_s:bufferSize:strSource:!CRT functions-string manipulation!public! !
