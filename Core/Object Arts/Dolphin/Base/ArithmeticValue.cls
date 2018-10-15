@@ -56,27 +56,6 @@ ArithmeticValue comment: ''!
 
 	^self - (self // operand * operand)!
 
-_expandRectangle: rect
-	"Private - Expand the <Rectangle>, rect, by the magnitude of the receiver.
-	 All sides of the rectangle are expanded by the specified amount.
-	Double-dispatched from the Rectangle itself."
-
-	^rect species
-		origin: (rect origin - self)
-		corner: (rect corner + self)!
-
-_insetRectangle: aRectangle 
-	"Private - Inset the <Rectangle> argument by the magnitude of the receiver. All sides of the
-	rectangle are inset by the specified amount. Double-dispatched from the Rectangle itself."
-
-	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner - self!
-
-_offsetRectangle: aRectangle 
-	"Private - Offset the <Rectangle> argument by the magnitude of the receiver.
-	Double-dispatched from the Rectangle itself."
-
-	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self!
-
 + operand
 	"Answer the sum of the receiver and the <number> argument, 
 	operand."
@@ -499,9 +478,6 @@ understandsArithmetic
 !ArithmeticValue categoriesFor: #/!arithmetic!public! !
 !ArithmeticValue categoriesFor: #//!arithmetic!public! !
 !ArithmeticValue categoriesFor: #\\!arithmetic!public! !
-!ArithmeticValue categoriesFor: #_expandRectangle:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #_insetRectangle:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #_offsetRectangle:!double dispatch!private! !
 !ArithmeticValue categoriesFor: #+!arithmetic!public! !
 !ArithmeticValue categoriesFor: #=!comparing!public! !
 !ArithmeticValue categoriesFor: #abs!arithmetic!public! !

@@ -17,7 +17,12 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #ArithmeticValue -> #_expandRectangle:;
+	add: #ArithmeticValue -> #_insetRectangle:;
+	add: #ArithmeticValue -> #_offsetRectangle:;
 	add: #Number -> #@;
+	add: #Number -> #asPoint;
+	add: #Number -> #asPoint3D;
 	add: #UserLibrary -> #subtractRect:lprcSrc1:lprcSrc2:;
 	yourself.
 
@@ -87,6 +92,32 @@ RECTL := RECT!
 
 "Loose Methods"!
 
+!ArithmeticValue methodsFor!
+
+_expandRectangle: rect
+	"Private - Expand the <Rectangle>, rect, by the magnitude of the receiver.
+	 All sides of the rectangle are expanded by the specified amount.
+	Double-dispatched from the Rectangle itself."
+
+	^rect species
+		origin: (rect origin - self)
+		corner: (rect corner + self)!
+
+_insetRectangle: aRectangle 
+	"Private - Inset the <Rectangle> argument by the magnitude of the receiver. All sides of the
+	rectangle are inset by the specified amount. Double-dispatched from the Rectangle itself."
+
+	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner - self!
+
+_offsetRectangle: aRectangle 
+	"Private - Offset the <Rectangle> argument by the magnitude of the receiver.
+	Double-dispatched from the Rectangle itself."
+
+	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self! !
+!ArithmeticValue categoriesFor: #_expandRectangle:!double dispatch!private! !
+!ArithmeticValue categoriesFor: #_insetRectangle:!double dispatch!private! !
+!ArithmeticValue categoriesFor: #_offsetRectangle:!double dispatch!private! !
+
 !Number methodsFor!
 
 @ yCoord 
@@ -95,8 +126,20 @@ RECTL := RECT!
 	performed a few thousand times when opening a complex window (for example).
 	The primitive is simply a VM level implementation of #x:y:, and does not fail."
 
-	^Point x: self y: yCoord! !
+	^Point x: self y: yCoord!
+
+asPoint
+	"Answer a Point with the receiver as both co-ordinates."
+
+	^self @ self!
+
+asPoint3D
+	"Answer a Point with the receiver as all three co-ordinates."
+
+	^self @ self @ self! !
 !Number categoriesFor: #@!converting!public! !
+!Number categoriesFor: #asPoint!converting!public! !
+!Number categoriesFor: #asPoint3D!converting!public! !
 
 !UserLibrary methodsFor!
 
