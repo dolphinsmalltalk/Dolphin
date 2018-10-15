@@ -110,12 +110,6 @@ errorInconsistentSTB: anObject
 				expandMacrosWith: anObject
 				with: self signature)!
 
-errorNotSTB
-	"Private - Signal an STBError indicating that the stream being
-	read is not in Smalltalk Binary (STB) format."
-
-	STBError signal: ('Input stream not in <1s> format' expandMacrosWith: self signature)!
-
 errorUnrecognisedClass: aClass version: version 
 	"Private - Signal an STBError indicating that the STB data contains
 	instances of aClass of version that we don't know how to convert."
@@ -123,14 +117,6 @@ errorUnrecognisedClass: aClass version: version
 	STBError 
 		signal: self signature , ' contains a version ' , version displayString , ' instance of ' 
 				, aClass name , ' and is unable to convert it.'!
-
-errorVersion: anInteger 
-	"Private - Signal an STBError indicating that the stream being
-	read has been written in a different version of STB."
-
-	^STBError 
-		signal: ('Input stream is an incompatible <2s> format (version <1d>)' expandMacrosWith: anInteger
-				with: self signature)!
 
 fixedClasses
 	"Answer a <sequencedReadableCollection> of the classes that are pre-registered in every STB
@@ -183,9 +169,7 @@ version
 	^4
 ! !
 !STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
-!STBFiler class categoriesFor: #errorNotSTB!exceptions!private! !
 !STBFiler class categoriesFor: #errorUnrecognisedClass:version:!exceptions!private! !
-!STBFiler class categoriesFor: #errorVersion:!exceptions!private! !
 !STBFiler class categoriesFor: #fixedClasses!constants!public! !
 !STBFiler class categoriesFor: #on:!instance creation!public! !
 !STBFiler class categoriesFor: #signature!constants!private! !

@@ -33,7 +33,8 @@ readLiteralData
 	^newObject!
 
 readVersion
-	version := stream next!
+	version := stream next.
+	^true!
 
 registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
@@ -64,7 +65,7 @@ signature
 	"Private - Answer the signature that identifies the data as
 	being in Smalltalk Literal (STL) format."
 
-	^STLOutFiler signature! !
+	^#'!!STL'! !
 !STLInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
 !STLInFiler class categoriesFor: #signature!constants!private! !
 

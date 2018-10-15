@@ -213,7 +213,7 @@ readVersion
 	version := 0.
 	[(char := Character ansiValue: stream next) isDigit]
 		whileTrue: [version := version * 10 + char digitValue].
-	char == $\x20 ifFalse: [self class errorNotSTB]!
+	^char == $\x20!
 
 register: anObject
 	"Private - Add anObject to the readMap."
@@ -232,9 +232,13 @@ reset
 	super reset!
 
 resetAndValidateStream
-	(self class peekForSignatureIn: stream) ifFalse: [self class errorNotSTB].
-	self readVersion.
-	version > self class version ifTrue: [self class errorVersion: version]!
+	((self class peekForSignatureIn: stream) and: [self readVersion])
+		ifFalse: [STBError signal: ('Input stream not in <1s> format' expandMacrosWith: self class signature)].
+	version > self class version
+		ifTrue: 
+			[STBError
+				signal: ('Input stream is an incompatible <2s> format (version <1d>)' expandMacrosWith: version
+						with: self class signature)]!
 
 setRefOffset: anInteger
 	readMap setSize: anInteger!
