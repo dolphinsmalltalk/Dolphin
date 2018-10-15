@@ -175,30 +175,6 @@ defineFunctions
 			argumentTypes: 'bstr*';
 		defineFunction: #GetHelpContext:
 			argumentTypes: 'dword*'
-!
-
-fromEXCEPINFO: excepInfo guid: id
-	"Answer a new instance of the receiver on a system extended error object
-	with details from the <EXCEPINFO> structure, excepInfo."
-
-	^(ICreateErrorInfo fromEXCEPINFO: excepInfo guid: id) errorInfo!
-
-source: sourceString description: descriptionString helpContext: anInteger helpFile: helpFilePath guid: aGUID
-	"Answer a new instance of the receiver encapsulating all of the specified details.
-		ice := self source: 'Dolphin' description: 'It is all going horribly wrong' helpContext: 1 helpFile: nil guid: GUID newUnique.
-	"
-
-	| ice |
-	ice := ICreateErrorInfo new.
-	ice SetSource: sourceString.
-	ice SetDescription: descriptionString.
-	ice SetHelpContext: anInteger.
-	ice SetHelpFile: helpFilePath.
-	ice SetGuid: aGUID.
-	^ice errorInfo
-
 ! !
 !IErrorInfo class categoriesFor: #defineFunctions!**auto generated**!public! !
-!IErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
-!IErrorInfo class categoriesFor: #source:description:helpContext:helpFile:guid:!instance creation!public! !
 

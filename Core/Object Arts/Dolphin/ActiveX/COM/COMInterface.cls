@@ -107,23 +107,27 @@ free
 
 	!
 
+getExtendedErrorInfo: excep
+	"Private - Add extended error information to the <HRESULTError> argument, if available."
+
+	| errorInfo |
+	self supportsErrorInfo ifFalse: [^self].
+	errorInfo := IErrorInfo newPointer.
+	(OLEAutLibrary default getErrorInfo: 0 pperrinfo: errorInfo) == S_OK
+		ifTrue: [excep errorInfo: errorInfo]!
+
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
 	^bytes hash!
 
-hresultError: hr 
+hresultError: hr
 	"Signal that a member function in the receiver returned the specified hresult.
 	Include the COM object's extended error information, if available."
 
 	| excep |
 	excep := HRESULTError fromInteger: hr.
-	self supportsErrorInfo 
-		ifTrue: 
-			[| errorInfo |
-			errorInfo := IErrorInfo newPointer.
-			(OLEAutLibrary default getErrorInfo: 0 pperrinfo: errorInfo) == S_OK 
-				ifTrue: [excep errorInfo: errorInfo]].
+	self getExtendedErrorInfo: excep.
 	^excep signal!
 
 identity
@@ -268,6 +272,32 @@ supportsErrorInfo
 
 	^self supportsErrorInfo: self class!
 
+supportsErrorInfo: interface 
+	"Answer whether the <COMInterface>, interface, as implemented by the receiver supports
+	extended Automation error information.
+	Implementation Note: Some COM Objects (e.g. Microsoft Agent 2) have a bug whereby 
+	they claim not to support error info at their most derived interfaces (e.g. IAgentCtlEx) but 
+	change their minds when 	one moves up the inheritance chain. We provide a general 
+	workaround for this bug here by asking each interface up to (but not including) IUnknown.
+	Note also that we call QueryInterface() directly to avoid the possibility of a recursive error
+	as this method is usually invoked when handling an error."
+
+	| piSEI hr |
+	piSEI := ISupportErrorInfo newPointer.
+	hr := self QueryInterface: ISupportErrorInfo iid ppvObject: piSEI.
+	hr == S_OK 
+		ifTrue: 
+			[| itfClass |
+			itfClass := interface.
+			[itfClass == IUnknown] whileFalse: 
+					["The MonthView control has a horrible bug whereby it
+					 overwrites the first four bytes of the GUID argument, so to
+					 work around that (and the same potential bug elsewhere), we
+					 pass a copy of the IID."
+					(piSEI InterfaceSupportsErrorInfo: itfClass iid copy) == S_OK ifTrue: [^true].
+					itfClass := itfClass superclass]].
+	^false!
+
 supportsIID: anIID
 	"Answer whether the receiver supports the interface identified by the IID, anIID.
 	The default is to support only those interfaces with an exactly matching IID."
@@ -294,6 +324,7 @@ vtbl: anObject
 !COMInterface categoriesFor: #copy!copying!public! !
 !COMInterface categoriesFor: #detach!public!realizing/unrealizing! !
 !COMInterface categoriesFor: #free!private!realizing/unrealizing! !
+!COMInterface categoriesFor: #getExtendedErrorInfo:!exceptions!private! !
 !COMInterface categoriesFor: #hash!comparing!public! !
 !COMInterface categoriesFor: #hresultError:!exceptions!public! !
 !COMInterface categoriesFor: #identity!accessing!public! !
@@ -315,6 +346,7 @@ vtbl: anObject
 !COMInterface categoriesFor: #referenceCount!development!private! !
 !COMInterface categoriesFor: #Release!methods!public! !
 !COMInterface categoriesFor: #supportsErrorInfo!public!testing! !
+!COMInterface categoriesFor: #supportsErrorInfo:!public!testing! !
 !COMInterface categoriesFor: #supportsIID:!public!testing! !
 !COMInterface categoriesFor: #supportsInterface:!public!testing! !
 !COMInterface categoriesFor: #vtbl:!**compiled accessors**!public! !
@@ -368,7 +400,7 @@ calcArgSizes
 	"self instanceCount > 0 ifTrue: [ Warning signal: 'Attempting to redefine COM Interface with outstanding instances' ]."
 	sizes := functions collect: [ :cb | cb argumentsSize ].
 	count := functions size.
-	argSizes := ByteArray newFixed: count*4.
+	argSizes ifNil: [argSizes := ByteArray newFixed: count*4].
 	1 to: count do: [ :i |
 		argSizes dwordAtOffset: (i-1*4) put: (sizes at: i) ].!
 

@@ -22,6 +22,11 @@ _descriptionFormat
 
 	^'HRESULT Error 0x%1!!X!!: %2 (%3)'!
 
+errorInfo: err
+	"Private - Set the IErrorInfo/EXCEPINFO associated with the receiver."
+
+	errorInfo := err!
+
 hresult
 	"Answer the HRESULT error code associated with the receiver."
 
@@ -48,16 +53,24 @@ osErrorMessage
 
 	^self hresult displayString!
 
+source
+	"Answer the 'source' of the error (by convention the Prog ID of the component which raised the error).
+	This is only available if extended error information is associated with the receiver."
+
+	^errorInfo notNull ifTrue: [errorInfo source]!
+
 statusCode
 	"Answer the error status code from the receiver's details."
 
 	^self hresult statusCode! !
 !HRESULTError categoriesFor: #_descriptionArguments!displaying!public! !
 !HRESULTError categoriesFor: #_descriptionFormat!displaying!public! !
+!HRESULTError categoriesFor: #errorInfo:!accessing!private! !
 !HRESULTError categoriesFor: #hresult!accessing!public! !
 !HRESULTError categoriesFor: #hresult:!accessing!public! !
 !HRESULTError categoriesFor: #messageText!accessing!public! !
 !HRESULTError categoriesFor: #osErrorMessage!displaying!public! !
+!HRESULTError categoriesFor: #source!accessing!public! !
 !HRESULTError categoriesFor: #statusCode!accessing!public! !
 
 !HRESULTError class methodsFor!
