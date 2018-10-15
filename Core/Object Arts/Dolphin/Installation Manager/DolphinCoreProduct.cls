@@ -10,12 +10,6 @@ DolphinCoreProduct comment: ''!
 !DolphinCoreProduct categoriesForClass!Development! !
 !DolphinCoreProduct methodsFor!
 
-calcSystemFolderExtentFor: aPoint 
-	"Answer a system folder extent that will yield the specified extent for the folder list
-	view.Just a guess at this level"
-
-	^aPoint + (20 @ 85)!
-
 contents
 	"Answer the list of package contents of the receiver"
 
@@ -101,7 +95,7 @@ contents
 	^contents!
 
 defaultSystemFolderColor
-	"Reference RGB indirectly to eliminate hard dependency on Dolphin MVP Base.
+	"Private - Reference RGB indirectly to eliminate hard dependency on Dolphin MVP Base.
 	This method will only be called if SmalltalkSystemShell is loaded, in which case RGB will be as well."
 
 	^(Smalltalk at: #RGB)
@@ -109,23 +103,17 @@ defaultSystemFolderColor
 		g: 124
 		b: 182.!
 
+defaultSystemFolderExtent
+	^860 @ 225!
+
 fullName
 	"Answer the full product name associated with the receiver"
 
-	^'Dolphin Smalltalk Core'!
-
-installSystemFolderOptions
-	Smalltalk at: #SmalltalkSystemShell
-		ifPresent: 
-			[:systemFolder | 
-			systemFolder
-				defaultExtent: (self calcSystemFolderExtentFor: 860 @ 225);
-				backcolor: self defaultSystemFolderColor]! !
-!DolphinCoreProduct categoriesFor: #calcSystemFolderExtentFor:!private! !
+	^'Dolphin Smalltalk Core'! !
 !DolphinCoreProduct categoriesFor: #contents!accessing!public! !
-!DolphinCoreProduct categoriesFor: #defaultSystemFolderColor!public! !
+!DolphinCoreProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
+!DolphinCoreProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
 !DolphinCoreProduct categoriesFor: #fullName!accessing!public! !
-!DolphinCoreProduct categoriesFor: #installSystemFolderOptions!private! !
 
 !DolphinCoreProduct class methodsFor!
 

@@ -53,6 +53,11 @@ boot
 
 !
 
+calcSystemFolderExtentFor: aPoint
+	"Answer a system folder extent that will yield the specified extent for the folder list view. Just a guess at this level."
+
+	^aPoint + (20 @ 85)!
+
 contents
 	"Answer the list of package contents associated with the receiver. Each content item is a
 	three element array containing the package path, a <Symbol> describing the encryption mode
@@ -139,6 +144,12 @@ contents
 		yourself.
 	^answer!
 
+defaultSystemFolderColor
+	^self subclassResponsibility!
+
+defaultSystemFolderExtent
+	^self subclassResponsibility!
+
 diskBasedPackages
 	"Private - Answer the list of package names associated with the receiver that are intended to be disk based"
 
@@ -210,6 +221,15 @@ installProductSounds
 
 installSplash
 	"Use the default"!
+
+installSystemFolderOptions
+	Smalltalk at: #SmalltalkSystemShell
+		ifPresent: [:systemFolder | self installSystemFolderOptions: systemFolder]!
+
+installSystemFolderOptions: systemFolder
+	systemFolder
+		defaultExtent: (self calcSystemFolderExtentFor: self defaultSystemFolderExtent);
+		backcolor: self defaultSystemFolderColor!
 
 isSafeToEncrypt: aClass
 	"Private -- Answer whether it is safe to encrypt the given class.
@@ -407,7 +427,10 @@ warnOfUnlistedContent
 !DolphinProduct categoriesFor: #basicLoad!operations!private! !
 !DolphinProduct categoriesFor: #beCurrent!operations!public! !
 !DolphinProduct categoriesFor: #boot!operations!private! !
+!DolphinProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
 !DolphinProduct categoriesFor: #contents!accessing!public! !
+!DolphinProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
+!DolphinProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
 !DolphinProduct categoriesFor: #diskBasedPackages!accessing!private! !
 !DolphinProduct categoriesFor: #displayOn:!printing!public! !
 !DolphinProduct categoriesFor: #encryptedClasses!accessing!public! !
@@ -419,7 +442,9 @@ warnOfUnlistedContent
 !DolphinProduct categoriesFor: #installProductDetails!operations!private! !
 !DolphinProduct categoriesFor: #installProductSounds!operations!private! !
 !DolphinProduct categoriesFor: #installSplash!private! !
-!DolphinProduct categoriesFor: #isSafeToEncrypt:!helpers!private! !
+!DolphinProduct categoriesFor: #installSystemFolderOptions!operations!private! !
+!DolphinProduct categoriesFor: #installSystemFolderOptions:!private! !
+!DolphinProduct categoriesFor: #isSafeToEncrypt:!operations!public! !
 !DolphinProduct categoriesFor: #load!operations!public! !
 !DolphinProduct categoriesFor: #loadAndShrink!operations!public! !
 !DolphinProduct categoriesFor: #loadShrinkAndCompress!operations!public! !
