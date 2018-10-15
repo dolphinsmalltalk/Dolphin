@@ -94,6 +94,9 @@ winStructClass
 
 !FindDialog class methodsFor!
 
+defaultModel
+	^FindDetails new!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -130,6 +133,7 @@ showModeless: aView on: aFindDetails
 				ownerView: aView.
 	"N.B. Doesn't really show as a modal dialog"
 	dialog showModal! !
+!FindDialog class categoriesFor: #defaultModel!public! !
 !FindDialog class categoriesFor: #initialize!initializing!private! !
 !FindDialog class categoriesFor: #ownerView:!instance creation!public! !
 !FindDialog class categoriesFor: #ownerView:findWhat:!instance creation!public! !

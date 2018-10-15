@@ -143,7 +143,7 @@ canPaste
 	"Answer whether the window can paste from the current contents of
 	the clipboard."
 
-	^self isReadOnly not and: [Clipboard current isTextAvailable]!
+	^self isReadOnly not and: [UserLibrary default isClipboardFormatAvailable: CF_TEXT]!
 
 canRedo
 	"Answer whether the window can redo the last undone operation."
@@ -345,44 +345,10 @@ find
 
 find: aFindDetails range: anInterval 
 	"Private - Find the first occurrence of text in the receiver that matches the specified
-	<AdvancedFindDetails>, within the range, anInterval. Answer the <Interval> of the match (an
+	<FindDetails>, within the range, anInterval. Answer the <Interval> of the match (an
 	empty interval if not found)."
 
-	| text matchString matchLen start stop textLen |
-	aFindDetails isRegularExpression 
-		ifTrue: [^self findRegularExpression: aFindDetails inRange: anInterval].
-	textLen := self textLength.
-	aFindDetails isForwards 
-		ifTrue: 
-			[text := self plainText.
-			matchString := aFindDetails pattern.
-			start := anInterval start.
-			stop := anInterval stop]
-		ifFalse: 
-			[text := self plainText reverse.
-			matchString := aFindDetails pattern reverse.
-			start := textLen - anInterval stop + 1.
-			stop := textLen - anInterval start + 1].
-	aFindDetails isCaseSensitive 
-		ifFalse: 
-			[text := text asLowercase.
-			matchString := matchString asLowercase].
-	matchLen := matchString size.
-	start to: stop - matchLen + 1
-		do: 
-			[:pos | 
-			matchString = (text midString: matchLen from: pos) 
-				ifTrue: 
-					["Possible match - check for whole word if necessary."
-					(aFindDetails isWholeWord not or: 
-							[aFindDetails isWholeWord and: 
-									[(pos > 1 and: [(text at: pos - 1) isAlphaNumeric not]) 
-										and: [pos + matchLen < textLen and: [(text at: pos + matchLen) isAlphaNumeric not]]]]) 
-						ifTrue: 
-							[| first |
-							first := aFindDetails isForwards ifTrue: [pos] ifFalse: [textLen - pos + 1 - matchLen + 1].
-							^first to: first + matchLen - 1]]].
-	^0 to: -1!
+	^aFindDetails findIn: self range: anInterval!
 
 findDetails
 	"Private - TextEdit does not store information about the find operation, but its presenter
@@ -440,22 +406,15 @@ findNextWrapped: aFindDetails
 	match isEmpty ifFalse: [self highlightFindMatch: match].
 	^match!
 
-findPrompt: aString 
+findPrompt: aString
 	"Private - Launch the modeless Find dialog.
 	Pre-populate the dialog with aString."
 
-	| details |
-	details := self findDetails ifNil: [FindDetails new].
+	| details dialogClass |
+	dialogClass := self findDialogClass.
+	details := self findDetails ifNil: [dialogClass defaultModel].
 	details pattern: aString.
-	^self findDialogClass showModeless: self on: details!
-
-findRegularExpression: aFindDetails inRange: anInterval 
-	| regexp text matches range |
-	regexp := aFindDetails regularExpression.
-	text := self plainTextRange: anInterval.
-	matches := regexp execute: text.
-	range := matches isEmpty ifTrue: [1 to: 0] ifFalse: [matches first range].
-	^range + (anInterval start - 1)!
+	^dialogClass showModeless: self on: details!
 
 findReplace
 	"Launch the FindReplaceText dialog."
@@ -844,20 +803,6 @@ pastePlainText
 
 plainTextAtLine: anInteger 
 	^self plainTextRange: (self lineRange: anInteger)!
-
-plainTextFrom: startInteger to: stopInteger
-	"Answer a string containing the plain text contents of the receiver
-	in the specified 1-based, end-inclusive, range. If stopInteger is -1, 
-	then answers text from startInteger up to the end."
-
-	| text |
-	text := self plainText.
-	^stopInteger < 0 
-		ifTrue: [text copyFrom: startInteger]
-		ifFalse: [text copyFrom: startInteger to: stopInteger]!
-
-plainTextRange: anInterval
-	^self plainTextFrom: anInterval start to: anInterval stop!
 
 positionAtLine: anInteger 
 	"Answer the index of the first character in the specified line (if 0 then
@@ -1365,7 +1310,6 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #findNext:!helpers!private!searching & replacing! !
 !TextEdit categoriesFor: #findNextWrapped:!public!searching & replacing! !
 !TextEdit categoriesFor: #findPrompt:!private!searching & replacing! !
-!TextEdit categoriesFor: #findRegularExpression:inRange:!public! !
 !TextEdit categoriesFor: #findReplace!commands!public!searching & replacing! !
 !TextEdit categoriesFor: #findReplacePrompt:!public!searching & replacing! !
 !TextEdit categoriesFor: #format!public!testing! !
@@ -1413,8 +1357,6 @@ wmSetFocus: message wParam: wParam lParam: lParam
 !TextEdit categoriesFor: #pasteClipboard!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #pastePlainText!clipboard operations!commands!public! !
 !TextEdit categoriesFor: #plainTextAtLine:!public! !
-!TextEdit categoriesFor: #plainTextFrom:to:!accessing!public! !
-!TextEdit categoriesFor: #plainTextRange:!accessing!public! !
 !TextEdit categoriesFor: #positionAtLine:!accessing!public! !
 !TextEdit categoriesFor: #positionForKeyboardContextMenu!enquiries!public! !
 !TextEdit categoriesFor: #positionOfChar:!accessing!public! !

@@ -11,6 +11,7 @@ package basicPackageVersion: '6.1'.
 
 
 package classNames
+	add: #AdvancedFindDetails;
 	add: #AdvancedFindDialog;
 	yourself.
 
@@ -29,12 +30,18 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\Type Converters\Dolphin Type Converters';
 	add: '..\..\Models\Value\Dolphin Value Models';
+	add: '..\..\..\ActiveX\Components\VBScript\VBScript Regular Expressions';
 	yourself).
 
 package!
 
 "Class Definitions"!
 
+FindDetails subclass: #AdvancedFindDetails
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Dialog subclass: #AdvancedFindDialog
 	instanceVariableNames: 'patternPresenter wholeWordPresenter matchCasePresenter modePresenter directionPresenter actionButton closeButton flags validationBlock wrapPresenter'
 	classVariableNames: 'RegExpMask WildCardMask'

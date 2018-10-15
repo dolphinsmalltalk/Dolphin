@@ -45,7 +45,7 @@ findNext
 
 initialize
 	super initialize.
-	flags := FindDetails regexpClass isNil ifTrue: [0] ifFalse: [RegExpMask].
+	flags := RegExpMask.
 	validationBlock := [:details | self isValidSearch: details]!
 
 isRegExpEnabled
@@ -191,7 +191,7 @@ defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
 
-	^FindDetails new!
+	^AdvancedFindDetails new!
 
 icon
 	"Answers an Icon that can be used to represent this class"

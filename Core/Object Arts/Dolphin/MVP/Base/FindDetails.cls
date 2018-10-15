@@ -18,13 +18,14 @@ action
 action: aSymbol 
 	action := aSymbol!
 
+findIn: aView range: anIntervalOfInteger
+	^aView findMatch: self inRange: anIntervalOfInteger!
+
 findWhat
 	^pattern!
 
 hasValidRegularExpression
-	^
-	[self regularExpression test: ''.
-	true] on: HRESULTError do: [:ex | false]!
+	^false!
 
 initialize
 	pattern := replaceWith := ''.
@@ -55,12 +56,7 @@ isForwards: aBoolean
 isRegularExpression
 	"Answer true if this is a regular expression search."
 
-	^self searchMode == #regularExpression!
-
-isRegularExpression: aBoolean 
-	"Set whether this is a regular expression search."
-
-	self searchMode: (aBoolean ifTrue: [#regularExpression] ifFalse: [#text])!
+	^false!
 
 isWholeWord
 	"Answer true if this is a whole word match operation"
@@ -99,16 +95,7 @@ pattern: aString
 	pattern := aString ?? ''!
 
 regularExpression
-	| regexp |
-	regexp := self class regexpClass 
-				ifNil: [self error: 'Regular expression search not supported']
-				ifNotNil: [:class | class new].
-	regexp pattern: self pattern asString.
-	regexp ignoreCase: self isCaseSensitive not.
-	"	regexp
-		multiline: true;
-		global: true."
-	^regexp!
+	^self error: 'Regular expression search not supported'!
 
 replaceWith
 	^replaceWith!
@@ -123,12 +110,10 @@ searchMode
 
 searchMode: aSymbol 
 	(self class searchModes includes: aSymbol) ifFalse: [self error: 'Invalid search mode: ' , aSymbol].
-	searchMode := aSymbol!
-
-wildcardExpression
-	! !
+	searchMode := aSymbol! !
 !FindDetails categoriesFor: #action!accessing!public! !
 !FindDetails categoriesFor: #action:!accessing!public! !
+!FindDetails categoriesFor: #findIn:range:!public! !
 !FindDetails categoriesFor: #findWhat!accessing!public! !
 !FindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
 !FindDetails categoriesFor: #initialize!initializing!public! !
@@ -137,7 +122,6 @@ wildcardExpression
 !FindDetails categoriesFor: #isForwards!public!testing! !
 !FindDetails categoriesFor: #isForwards:!accessing!public! !
 !FindDetails categoriesFor: #isRegularExpression!public!testing! !
-!FindDetails categoriesFor: #isRegularExpression:!accessing!public! !
 !FindDetails categoriesFor: #isWholeWord!public!testing! !
 !FindDetails categoriesFor: #isWholeWord:!accessing!public! !
 !FindDetails categoriesFor: #isWildcard!public!testing! !
@@ -151,7 +135,6 @@ wildcardExpression
 !FindDetails categoriesFor: #replaceWith:!accessing!public! !
 !FindDetails categoriesFor: #searchMode!accessing!public! !
 !FindDetails categoriesFor: #searchMode:!accessing!public! !
-!FindDetails categoriesFor: #wildcardExpression!accessing!public! !
 
 !FindDetails class methodsFor!
 
@@ -185,15 +168,11 @@ newPattern: aString
 		searchMode: mode;
 		yourself!
 
-regexpClass
-	^Smalltalk lookup: #IRegExp2!
-
 searchModes
-	^#(#text #wildcardExpression #regularExpression)! !
+	^#(#text #wildcardExpression)! !
 !FindDetails class categoriesFor: #icon!constants!public! !
-!FindDetails class categoriesFor: #initialize!initializing!public! !
+!FindDetails class categoriesFor: #initialize!development!initializing!public! !
 !FindDetails class categoriesFor: #new!instance creation!public! !
 !FindDetails class categoriesFor: #newPattern:!instance creation!public! !
-!FindDetails class categoriesFor: #regexpClass!constants!public! !
 !FindDetails class categoriesFor: #searchModes!constants!public! !
 

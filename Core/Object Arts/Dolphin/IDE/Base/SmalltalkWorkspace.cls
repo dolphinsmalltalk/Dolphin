@@ -614,23 +614,6 @@ findDetails
 findDetails: aFindDetails 
 	"Sets the findDetails instance variable to the argument."
 
-	"Nasty, but for backwards compatibility - will be removed in a future release"
-
-	(aFindDetails isKindOf: Array) 
-		ifTrue: 
-			[| array sender |
-			sender := Processor activeProcess topFrame sender.
-			Notification 
-				signal: ('Deprecated usage of TextPresenter>>findDetails: from <1p> (Argument is no longer an Array)' 
-						expandMacrosWith: sender method).
-			array := aFindDetails.
-			findDetails := (FindDetails new)
-						findWhat: array first;
-						isForwards: array second;
-						isCaseSensitive: array third;
-						isWholeWord: array fourth;
-						yourself.
-			^self].
 	findDetails := aFindDetails!
 
 firstError
