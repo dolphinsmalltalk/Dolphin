@@ -8,8 +8,38 @@ Wordpad is a reduced functionality implementation of the standard system utility
 
 Try me out with:
 
-Wordpad show'.
+```
+WordPad show
+```
 
+
+## Deployment:
+
+All code removal options can be enabled, but aspect setters must be preserved for the paragraph dialog.
+The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved int the application.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+WordPad show.
+(ImageStripper new)
+	rootPackage: WordPad owningPackage;
+	executableName: ''DWordpad.exe'';
+	preserveAspectSetters: true;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''DWordpad.xml''
+"Or view the log"
+XmlPad openOn: ''DWordpad.xml''
+```'.
+
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem 
+	addSamplesFolderIconFor: WordPad
+	helpId: 10624'.
 
 package classNames
 	add: #WordPad;
@@ -31,6 +61,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
@@ -41,14 +72,14 @@ package!
 
 "Class Definitions"!
 
-Dialog subclass: #WordpadParagraphDialog
-	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 TextDocument subclass: #WordPad
 	instanceVariableNames: ''
 	classVariableNames: 'ResourceLib'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Dialog subclass: #WordpadParagraphDialog
+	instanceVariableNames: 'leftPresenter rightPresenter firstLinePresenter alignmentPresenter'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
