@@ -832,7 +832,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #uninitialize!initializing!private! !
+!Class categoriesFor: #uninitialize!development!initializing!private! !
 !Class categoriesFor: #uninitializeBeforeRemove!initializing!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
@@ -925,7 +925,7 @@ foldLiteralStrings
 							[:i |
 							| literal |
 							literal := each literalAt: i.
-							literal class == String
+							(literal isString and: [literal isSymbol not])
 								ifTrue: 
 									[total := total + 1.
 									literalStrings add: literal.
