@@ -6,31 +6,31 @@ BasicImageStripper subclass: #ImageStripper
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ImageStripper guid: (GUID fromString: '{87b4c667-026e-11d3-9fd7-00a0cc3e4a32}')!
-ImageStripper addClassConstant: 'AllResourcesStripped' value: 4194304!
-ImageStripper addClassConstant: 'ClearGuidsMask' value: 1!
-ImageStripper addClassConstant: 'CompileStructsMask' value: 256!
-ImageStripper addClassConstant: 'EmptyMethodDictsMask' value: 2048!
-ImageStripper addClassConstant: 'FoldBytecodesMask' value: 4096!
-ImageStripper addClassConstant: 'FoldMethodDictsMask' value: 512!
-ImageStripper addClassConstant: 'FoldStringsMask' value: 2!
-ImageStripper addClassConstant: 'IgnoreViewReferencesMask' value: 524288!
-ImageStripper addClassConstant: 'LogPrerequisitesMask' value: 262144!
-ImageStripper addClassConstant: 'LogReferencesMask' value: 8192!
-ImageStripper addClassConstant: 'NoXPManifestMask' value: 2097152!
-ImageStripper addClassConstant: 'PreserveAspectsMask' value: 4!
-ImageStripper addClassConstant: 'RetainInstVarNamesMask' value: 8!
-ImageStripper addClassConstant: 'RetainSubclassRespMask' value: 8388608!
-ImageStripper addClassConstant: 'StripClassBuilderMask' value: 16384!
-ImageStripper addClassConstant: 'StripClassesMask' value: 16!
-ImageStripper addClassConstant: 'StripClassInfoMask' value: 32!
-ImageStripper addClassConstant: 'StripDeprecatedMask' value: 65536!
-ImageStripper addClassConstant: 'StripMethodsMask' value: 64!
-ImageStripper addClassConstant: 'StripPackagesMask' value: 131072!
-ImageStripper addClassConstant: 'StripResourcesMask' value: 128!
-ImageStripper addClassConstant: 'StripShouldNotImplMask' value: 32768!
-ImageStripper addClassConstant: 'ToGoMask' value: 1048576!
-ImageStripper addClassConstant: 'UnattendedMask' value: 16777216!
-ImageStripper addClassConstant: 'WriteLogMask' value: 1024!
+ImageStripper addClassConstant: 'AllResourcesStripped' value: 16r400000!
+ImageStripper addClassConstant: 'ClearGuidsMask' value: 16r1!
+ImageStripper addClassConstant: 'CompileStructsMask' value: 16r100!
+ImageStripper addClassConstant: 'EmptyMethodDictsMask' value: 16r800!
+ImageStripper addClassConstant: 'FoldBytecodesMask' value: 16r1000!
+ImageStripper addClassConstant: 'FoldMethodDictsMask' value: 16r200!
+ImageStripper addClassConstant: 'FoldStringsMask' value: 16r2!
+ImageStripper addClassConstant: 'IgnoreViewReferencesMask' value: 16r80000!
+ImageStripper addClassConstant: 'LogPrerequisitesMask' value: 16r40000!
+ImageStripper addClassConstant: 'LogReferencesMask' value: 16r2000!
+ImageStripper addClassConstant: 'NoXPManifestMask' value: 16r200000!
+ImageStripper addClassConstant: 'PreserveAspectsMask' value: 16r4!
+ImageStripper addClassConstant: 'RetainInstVarNamesMask' value: 16r8!
+ImageStripper addClassConstant: 'RetainSubclassRespMask' value: 16r800000!
+ImageStripper addClassConstant: 'StripClassBuilderMask' value: 16r4000!
+ImageStripper addClassConstant: 'StripClassesMask' value: 16r10!
+ImageStripper addClassConstant: 'StripClassInfoMask' value: 16r20!
+ImageStripper addClassConstant: 'StripDeprecatedMask' value: 16r10000!
+ImageStripper addClassConstant: 'StripMethodsMask' value: 16r40!
+ImageStripper addClassConstant: 'StripPackagesMask' value: 16r20000!
+ImageStripper addClassConstant: 'StripResourcesMask' value: 16r80!
+ImageStripper addClassConstant: 'StripShouldNotImplMask' value: 16r8000!
+ImageStripper addClassConstant: 'ToGoMask' value: 16r100000!
+ImageStripper addClassConstant: 'UnattendedMask' value: 16r1000000!
+ImageStripper addClassConstant: 'WriteLogMask' value: 16r400!
 ImageStripper comment: 'An ImageStripper holds deployment information that indicates how a Dolphin image should be stripped of redundant objects during deployment. ImageStripper is part of the Application Deployment Kit package.
 
 Instance Variables:
@@ -404,6 +404,10 @@ defaultStubFilePath
 
 deferredSaveExecutable: aString 
 	SessionManager inputState queueDeferredAction: [self saveExecutable: aString]!
+
+deploy
+	self canDeploy ifFalse: [self error: 'Deployment configuration incomplete'].
+	SessionManager inputState queueDeferredAction: (MessageSend receiver: self selector: #stripAndSaveWithProgress) !
 
 developmentClasses
 	"Answers a weak <collection> of all the classes that are in the basic development system.
@@ -2122,6 +2126,7 @@ writeLogFile: aBoolean
 !ImageStripper categoriesFor: #copyAndUpdateStub:to:!operations!private! !
 !ImageStripper categoriesFor: #defaultStubFilePath!constants!private! !
 !ImageStripper categoriesFor: #deferredSaveExecutable:!must not strip!private! !
+!ImageStripper categoriesFor: #deploy!operations!public! !
 !ImageStripper categoriesFor: #developmentClasses!configuration!public! !
 !ImageStripper categoriesFor: #developmentMethodCategoryNames!constants!public! !
 !ImageStripper categoriesFor: #developmentMethods!configuration!public! !
