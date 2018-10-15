@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DocumentShell subclass: #PersonalMoneyShell
+AbstractDocumentShell subclass: #PersonalMoneyShell
 	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -97,6 +97,16 @@ selectedAccountOrNil: aPersonalAccountOrNil
 
 	^accountsPresenter selectionOrNil: aPersonalAccountOrNil!
 
+streamIn: aStream
+	"Private - Stream the receiver's model contents in from aStream"
+
+	self setDocumentData: (Object binaryReadFrom: aStream)!
+
+streamOut: aStream
+	"Private - Stream the receiver's model out to aStream"
+
+	self getDocumentData binaryStoreOn: aStream!
+
 updateAccount: aPersonalAccount
 	"Update aPersonalAccount in the accounts list"
 
@@ -111,6 +121,8 @@ updateAccount: aPersonalAccount
 !PersonalMoneyShell categoriesFor: #removeAccount!commands!public! !
 !PersonalMoneyShell categoriesFor: #selectedAccountOrNil!accessing!public! !
 !PersonalMoneyShell categoriesFor: #selectedAccountOrNil:!accessing!public! !
+!PersonalMoneyShell categoriesFor: #streamIn:!private!streaming! !
+!PersonalMoneyShell categoriesFor: #streamOut:!private!streaming! !
 !PersonalMoneyShell categoriesFor: #updateAccount:!operations!public! !
 
 !PersonalMoneyShell class methodsFor!

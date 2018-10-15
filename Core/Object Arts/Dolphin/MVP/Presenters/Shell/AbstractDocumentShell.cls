@@ -1,21 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-Shell subclass: #DocumentShell
+Shell subclass: #AbstractDocumentShell
 	instanceVariableNames: 'filename'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DocumentShell guid: (GUID fromString: '{87b4c69b-026e-11d3-9fd7-00a0cc3e4a32}')!
-DocumentShell comment: 'DocumentShell is an abstract class describing <documentPresenter>s that wish to be able to load and save their model data from/to a file. 
-
-The <documentPresenter> protocol defines a number of methods which may be overriden by the concrete subclasses of DocumentShell. In particular, #isText and #isRichText are available to indicate whether the document data can be saved to one of these two common file formats (ASCII and RTF). If both these methods answer false then the default implementation will choose to save the model data to an STB file stream.
+AbstractDocumentShell guid: (GUID fromString: '{7f3ab0c3-d1ed-4fb5-b64e-bfba5d74d038}')!
+AbstractDocumentShell isAbstract: true!
+AbstractDocumentShell comment: '`AbstractDocumentShell` is an abstract class of `<documentPresenter>`s, i.e. `Shell` presenters present a documented model which can be loaded from and saved to a file.
 
 Instance Variables:
-	filename		<readableString> or nil, describing the document filename (if it has been set).
-
+	filename		`<readableString>` or `nil`, describing the document filename (if it has been set).
 '!
-!DocumentShell categoriesForClass!MVP-Presenters! !
-!DocumentShell methodsFor!
+!AbstractDocumentShell categoriesForClass!MVP-Presenters! !
+!AbstractDocumentShell methodsFor!
 
 addToRecentList: aFilenameString 
 	"Adds aFilenameString to the <orderedCollection> of recently accessed files"
@@ -234,7 +232,7 @@ saveDocument
 	| saved |
 	saved := false.
 	
-	[self hasFilename 
+	[self hasFilename
 		ifTrue: 
 			[| stream |
 			stream := FileStream write: self filename text: self isText.
@@ -242,10 +240,10 @@ saveDocument
 			self isModified: false.
 			self addToRecentList: self filename.
 			saved := true]
-		ifFalse: [saved := self saveDocumentAs]] 
+		ifFalse: [saved := self saveDocumentAs]]
 			on: FileException
 			do: 
-				[:e | 
+				[:e |
 				MessageBox errorMsg: 'Unable to save file ' , e file name printString
 					caption: 'Error - ' , e messageText].
 	^saved!
@@ -270,17 +268,6 @@ saveDocumentAs
 				saveDocument].
 	^proceed!
 
-saveStateOn: aWriteStream 
-	"Private - Write the source of a monadic block that will configure an instance of the receiver's class
-	to match the state current receiver, to aWriteStream. The block expects a fresh instance of
-	the receiver's class as it's parameter"
-
-	aWriteStream nextPutAll: '[:aDocumentShell | 
-	aDocumentShell setDocumentData: '.
-	self getDocumentData literalStoreEvaluationOn: aWriteStream.
-	aWriteStream nextPutAll: (';
-		filename: <1p>]' expandMacrosWith: self filename)!
-
 setDocumentData: anObject
 	"Private - Set the data for the receiver's document to be anObject.
 	Can be overidden by subclasses"
@@ -304,24 +291,17 @@ shortCaption
 			stream contents]
 		ifFalse: [super shortCaption]!
 
-streamIn: aStream 
+streamIn: aStream
 	"Private - Stream the receiver's model contents in from aStream"
 
-	self setDocumentData: (self isText 
-				ifTrue: 
-					[aStream
-						setToEnd;
-						contents]
-				ifFalse: [Object binaryReadFrom: aStream])!
+	self setDocumentData: (aStream
+				setToEnd;
+				contents)!
 
 streamOut: aStream
 	"Private - Stream the receiver's model out to aStream"
 
-	| data |
-	data := self getDocumentData.
-	self isText 
-		ifTrue: [aStream nextPutAll: data]
-		ifFalse: [data binaryStoreOn: aStream]!
+	aStream nextPutAll: self getDocumentData!
 
 updateCaption
 	"Private - The receiver has changed in such a way that the caption may need to be refreshed.
@@ -338,52 +318,51 @@ updateCaption
 				nextPutAll: suffix].
 	self isModified ifTrue: [stream nextPut: $*].
 	self caption: stream contents! !
-!DocumentShell categoriesFor: #addToRecentList:!public! !
-!DocumentShell categoriesFor: #basicCaption!accessing!private! !
-!DocumentShell categoriesFor: #canSave!public!testing! !
-!DocumentShell categoriesFor: #canSaveState!private!saved state! !
-!DocumentShell categoriesFor: #createSchematicWiring!initializing!public! !
-!DocumentShell categoriesFor: #fileClearRecentList!commands!public! !
-!DocumentShell categoriesFor: #fileLoad!commands!public! !
-!DocumentShell categoriesFor: #filename!accessing!public! !
-!DocumentShell categoriesFor: #filename:!accessing!public! !
-!DocumentShell categoriesFor: #fileOpen!commands!public! !
-!DocumentShell categoriesFor: #fileRevert!commands!public! !
-!DocumentShell categoriesFor: #fileSave!commands!public! !
-!DocumentShell categoriesFor: #fileSaveAs!commands!public! !
-!DocumentShell categoriesFor: #getDocumentData!accessing!private! !
-!DocumentShell categoriesFor: #getRecentList!private! !
-!DocumentShell categoriesFor: #hasContents!public! !
-!DocumentShell categoriesFor: #hasFilename!public!testing! !
-!DocumentShell categoriesFor: #isModified!public!testing! !
-!DocumentShell categoriesFor: #isModified:!modes!public! !
-!DocumentShell categoriesFor: #isText!public!testing! !
-!DocumentShell categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
-!DocumentShell categoriesFor: #onCloseRequested:!event handling!private! !
-!DocumentShell categoriesFor: #onPromptToSaveChanges:!private!testing! !
-!DocumentShell categoriesFor: #openOn:!public! !
-!DocumentShell categoriesFor: #promptToSaveChanges!commands!private! !
-!DocumentShell categoriesFor: #queryCommand:!commands!private! !
-!DocumentShell categoriesFor: #saveChangesPrompt!private! !
-!DocumentShell categoriesFor: #saveDocument!operations!private! !
-!DocumentShell categoriesFor: #saveDocumentAs!operations!private! !
-!DocumentShell categoriesFor: #saveStateOn:!private!saved state! !
-!DocumentShell categoriesFor: #setDocumentData:!accessing!private! !
-!DocumentShell categoriesFor: #setRecentList:!private! !
-!DocumentShell categoriesFor: #shortCaption!accessing!public! !
-!DocumentShell categoriesFor: #streamIn:!private!streaming! !
-!DocumentShell categoriesFor: #streamOut:!private!streaming! !
-!DocumentShell categoriesFor: #updateCaption!private!updating! !
+!AbstractDocumentShell categoriesFor: #addToRecentList:!public! !
+!AbstractDocumentShell categoriesFor: #basicCaption!accessing!private! !
+!AbstractDocumentShell categoriesFor: #canSave!public!testing! !
+!AbstractDocumentShell categoriesFor: #canSaveState!private!saved state! !
+!AbstractDocumentShell categoriesFor: #createSchematicWiring!initializing!public! !
+!AbstractDocumentShell categoriesFor: #fileClearRecentList!commands!public! !
+!AbstractDocumentShell categoriesFor: #fileLoad!commands!public! !
+!AbstractDocumentShell categoriesFor: #filename!accessing!public! !
+!AbstractDocumentShell categoriesFor: #filename:!accessing!public! !
+!AbstractDocumentShell categoriesFor: #fileOpen!commands!public! !
+!AbstractDocumentShell categoriesFor: #fileRevert!commands!public! !
+!AbstractDocumentShell categoriesFor: #fileSave!commands!public! !
+!AbstractDocumentShell categoriesFor: #fileSaveAs!commands!public! !
+!AbstractDocumentShell categoriesFor: #getDocumentData!accessing!private! !
+!AbstractDocumentShell categoriesFor: #getRecentList!private! !
+!AbstractDocumentShell categoriesFor: #hasContents!public! !
+!AbstractDocumentShell categoriesFor: #hasFilename!public!testing! !
+!AbstractDocumentShell categoriesFor: #isModified!public!testing! !
+!AbstractDocumentShell categoriesFor: #isModified:!modes!not an aspect!public! !
+!AbstractDocumentShell categoriesFor: #isText!public!testing! !
+!AbstractDocumentShell categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
+!AbstractDocumentShell categoriesFor: #onCloseRequested:!event handling!private! !
+!AbstractDocumentShell categoriesFor: #onPromptToSaveChanges:!private!testing! !
+!AbstractDocumentShell categoriesFor: #openOn:!public! !
+!AbstractDocumentShell categoriesFor: #promptToSaveChanges!commands!private! !
+!AbstractDocumentShell categoriesFor: #queryCommand:!commands!private! !
+!AbstractDocumentShell categoriesFor: #saveChangesPrompt!private! !
+!AbstractDocumentShell categoriesFor: #saveDocument!operations!private! !
+!AbstractDocumentShell categoriesFor: #saveDocumentAs!operations!private! !
+!AbstractDocumentShell categoriesFor: #setDocumentData:!accessing!private! !
+!AbstractDocumentShell categoriesFor: #setRecentList:!private! !
+!AbstractDocumentShell categoriesFor: #shortCaption!accessing!public! !
+!AbstractDocumentShell categoriesFor: #streamIn:!private!streaming! !
+!AbstractDocumentShell categoriesFor: #streamOut:!private!streaming! !
+!AbstractDocumentShell categoriesFor: #updateCaption!private!updating! !
 
-DocumentShell methodProtocol: #documentPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #fileLoad #filename #filename: #fileOpen #fileRevert #fileSave #fileSaveAs #getDocumentData #hasFilename #isModified #isModified: #isText #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setDocumentData: #setFocus #show #streamIn: #streamOut: #topShell #view)!
+AbstractDocumentShell methodProtocol: #documentPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #fileLoad #filename #filename: #fileOpen #fileRevert #fileSave #fileSaveAs #getDocumentData #hasFilename #isModified #isModified: #isText #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setDocumentData: #setFocus #show #streamIn: #streamOut: #topShell #view)!
 
-!DocumentShell class methodsFor!
+!AbstractDocumentShell class methodsFor!
 
 defaultFileExtension
 	"Answer a default extension that will be used for files saved from
 	the receiver"
 
-	^''!
+	^self subclassResponsibility!
 
 filename: aStringFilename 
 	"Answers an instance of the receiver open on aStringFilename"
@@ -409,7 +388,7 @@ getFilename
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^Icon fromId: 'DocumentShell.ico'!
 
 open
 	"Answers an instance of the receiver open on a filename that has been
@@ -427,11 +406,11 @@ openOn: aStringFilename
 	^(self show)
 		openOn: aStringFilename;
 		yourself! !
-!DocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
-!DocumentShell class categoriesFor: #filename:!instance creation!public! !
-!DocumentShell class categoriesFor: #fileTypes!constants!public! !
-!DocumentShell class categoriesFor: #getFilename!instance creation!private! !
-!DocumentShell class categoriesFor: #icon!constants!public! !
-!DocumentShell class categoriesFor: #open!instance creation!public! !
-!DocumentShell class categoriesFor: #openOn:!instance creation!public! !
+!AbstractDocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
+!AbstractDocumentShell class categoriesFor: #filename:!instance creation!public! !
+!AbstractDocumentShell class categoriesFor: #fileTypes!constants!public! !
+!AbstractDocumentShell class categoriesFor: #getFilename!instance creation!private! !
+!AbstractDocumentShell class categoriesFor: #icon!constants!public! !
+!AbstractDocumentShell class categoriesFor: #open!instance creation!public! !
+!AbstractDocumentShell class categoriesFor: #openOn:!instance creation!public! !
 

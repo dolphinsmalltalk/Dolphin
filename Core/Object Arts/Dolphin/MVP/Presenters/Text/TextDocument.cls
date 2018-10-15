@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-DocumentShell subclass: #TextDocument
-	instanceVariableNames: 'documentPresenter statusModel'
+AbstractDocumentShell subclass: #TextDocument
+	instanceVariableNames: 'documentPresenter statusModel modifiedModel'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TextDocument guid: (GUID fromString: '{87b4c6bb-026e-11d3-9fd7-00a0cc3e4a32}')!
-TextDocument comment: 'TextDocument is a <documentPresenter> capable of displaying and editing a <readableString> document.
+TextDocument comment: '`TextDocument` is a `<documentPresenter>` capable of displaying and editing a `<readableString>` document.
 
 Instance Variables:
-	documentPresenter	<TextPresenter> holding the document text.
+	documentPresenter	`TextPresenter` holding the document text.
 
 '!
 !TextDocument categoriesForClass!MVP-Presenters! !
@@ -20,7 +20,8 @@ createComponents
 
 	super createComponents.
 	documentPresenter := self add: self documentPresenterClass new name: 'document'.
-	statusModel := ValueHolder new!
+	statusModel := ValueHolder new.
+	modifiedModel := false asValue!
 
 documentPresenterClass
 	^TextPresenter!
@@ -70,14 +71,11 @@ onViewOpened
 	"Received when the receiver's view is been connected. "
 
 	super onViewOpened.
-	(self view viewNamed: 'status' ifNone: []) 
-		ifNotNil: 
-			[:item | 
-			"item 
-				when: #doubleClicked:
-				send: #onStatusDoubleClicked:
-				to: self."
-			item model: statusModel].
+	(self view viewNamed: 'status' ifNone: []) ifNotNil: [:item | item model: statusModel].
+	modifiedModel
+		when: #valueChanged
+		send: #updateCaption
+		to: self.
 	self restoreUserSettings!
 
 openFile: pathString 
@@ -106,7 +104,11 @@ restoreUserSettings
 saveUserSettings
 	"Private - Save the users configuration to the registry, isolated storage, etc."
 
-	! !
+	!
+
+validateUserInterface
+	modifiedModel value: self isModified.
+	^super validateUserInterface! !
 !TextDocument categoriesFor: #createComponents!initializing!public! !
 !TextDocument categoriesFor: #documentPresenterClass!constants!public! !
 !TextDocument categoriesFor: #fileNew!commands!public! !
@@ -120,6 +122,7 @@ saveUserSettings
 !TextDocument categoriesFor: #openFile:!operations!public! !
 !TextDocument categoriesFor: #restoreUserSettings!operations!options!private! !
 !TextDocument categoriesFor: #saveUserSettings!helpers!private! !
+!TextDocument categoriesFor: #validateUserInterface!operations!public! !
 
 !TextDocument class methodsFor!
 

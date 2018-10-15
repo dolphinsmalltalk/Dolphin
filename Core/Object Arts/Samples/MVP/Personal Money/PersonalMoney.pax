@@ -29,6 +29,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
 	add: '..\..\..\Dolphin\MVP\Views\Date Time\Dolphin Date Time Controls';
 	add: '..\..\..\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\..\Dolphin\MVP\Presenters\Shell\Dolphin Document Presenter';
 	add: '..\..\..\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
@@ -62,13 +63,13 @@ Shell subclass: #PersonalAccountShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Dialog subclass: #PersonalAccountTransactionDialog
-	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
+AbstractDocumentShell subclass: #PersonalMoneyShell
+	instanceVariableNames: 'ownerPresenter accountsPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DocumentShell subclass: #PersonalMoneyShell
-	instanceVariableNames: 'ownerPresenter accountsPresenter'
+Dialog subclass: #PersonalAccountTransactionDialog
+	instanceVariableNames: 'datePresenter amountPresenter descriptionPresenter isDebitPresenter'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
