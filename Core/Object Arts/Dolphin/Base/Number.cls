@@ -70,16 +70,6 @@ asInteger
 
 	^self rounded!
 
-asPoint
-	"Answer a Point with the receiver as both co-ordinates."
-
-	^self @ self!
-
-asPoint3D
-	"Answer a Point with the receiver as all three co-ordinates."
-
-	^self @ self @ self!
-
 asScaledDecimal: scale
 	"Answer a <ScaledDecimal> number, with the fractional precision 
 	specified by the <integer>, scale, which most nearly approximates
@@ -266,8 +256,6 @@ to: stop do: operation
 !Number categoriesFor: #asFloatQ!converting!public! !
 !Number categoriesFor: #asFraction!converting!public! !
 !Number categoriesFor: #asInteger!converting!public! !
-!Number categoriesFor: #asPoint!converting!public! !
-!Number categoriesFor: #asPoint3D!converting!public! !
 !Number categoriesFor: #asScaledDecimal:!converting!public! !
 !Number categoriesFor: #copy!copying!public! !
 !Number categoriesFor: #cos!mathematical!public! !
