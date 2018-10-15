@@ -6,13 +6,42 @@ Copyright (c) Object Arts Ltd, 2000-2002.
 
 A simple console calculator that allows Smalltalk expressions to be evaluated in a read-eval loop from the command line. This illustrates the use of the Smalltalk compiler at runtime and the use of stdio streams in a console application. Note that although this package''s image stripper is configured to remove only redundant packages (and not redundant classes and methods), when this application is deployed many classes and methods will have been removed from the system so not all expressions that would work in the development environment will work at runtime.
 
-You can deploy Calculator as true executable using the Application Deployment Wizard (select ''Deploy Executable'' from the Package Browser''s package context menu), and follow the instructions. Note that the calculator requires the Smalltalk compiler, so it will not run correctly unless the compiler DLL is either registered as a COM object, or on the application''s path.
-
 You can test this application from within the development environment by evaluating the following expression:
 
+```
 	[CommandLineCalculator run] fork. "Ctrl+E. Then Ctrl+Z, Enter to exit"
+```
 
-N.B.  You can safely press Ctrl+C to interrupt/terminate application when deployed as an executable, but if you attempt to interrupt the application when testing from the development environment, both may lock up.'.
+N.B.  You can safely press Ctrl+C to interrupt/terminate application when deployed as an executable, but if you attempt to interrupt the application when testing from the development environment, both may lock up.
+
+## Deployment
+
+You can deploy Calculator as true executable using the Application Deployment Wizard (select ''Deploy Executable'' from the Package Browser''s package context menu), and follow the instructions, or evaluate the expression below.
+
+Note that the calculator requires the Smalltalk compiler, so it will not run correctly unless the compiler DLL is either registered as a COM object, or on the application''s path.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: CommandLineCalculator owningPackage;
+	executableName: ''dcalc.exe'';
+	stripRedundantClasses: false;
+	stripRedundantMethods: false;
+	stripClassInfo: false;
+	retainInstVarNames: true;
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''dcalc.xml''.
+"Or just view the log"
+XmlPad filename: ''dcalc.xml''
+```
+'.
 
 
 package classNames

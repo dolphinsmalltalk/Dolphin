@@ -8,8 +8,10 @@ This package contains a non-GUI (console or command line) implementation of the 
 
 CommandLineHelloWorld is actually a specialised <SessionManager>, and is itself a subclass of a session manager class specialised for command line applications, namely <ConsoleSessionManager>. ConsoleSessionManager contains a series of startup applications that are similar in purpose to the startup code linked with every C program from the C runtime library. Like a C program the first point at which user code takes control is the #main function or method. CommandLineHelloWorld is such a simple program, that it is reasonable to implement it entirely in the #main method, which looks like this (with comments removed):
 
+```
 main
     self stdout nextPutAll: ''Hello World!!''; cr
+```
 
 All this does is to access a Smalltalk stream, which is attached to the standard output file of the process, and write a string of characters onto it, followed by a carriage return. Just as a C program exits when its main() function returns, so the Dolphin console application (when deployed) will exit when the #main method returns.
 
@@ -17,17 +19,46 @@ All this does is to access a Smalltalk stream, which is attached to the standard
 
 To test out the use of the console from a GUI application (the development environment) try evaluating:
 
+```
   SessionManager current stdout nextPutAll: ''Dolphin is getting cooler every day''; cr; flush.
+```
 
 (Be aware that console might pop up in the background somewhere).
 
 You can also try to read some input from the console, as below. When you do this the system will block until you''ve entered at least 5 characters into the console and pressed enter/return: 
 
+```
    SessionManager current stdin next: 5
+```
 
 If however the operation is run in an independent process then the Dolphin GUI will not be blocked:
 
-   [MessageBox notify: ''You typed: '', (SessionManager current stdin next: 5) printString] fork'.
+```
+   [MessageBox notify: ''You typed: '', (SessionManager current stdin next: 5) printString] fork.
+```
+
+## Deployment:
+
+Deployment should always be initiated in a freshly started image for best results. Do not attempt to deploy the application with the console window open.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: CommandLineHelloWorld owningPackage;
+	executableName: ''HelloCli.exe'';
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+"Open a browser on the classes and methods that were deployed"
+Smalltalk developmentSystem browseDeploymentLog: ''HelloCli.xml''.
+"Or just view the log"
+XmlPad filename: ''HelloCli.xml''
+```'.
 
 
 package classNames

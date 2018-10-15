@@ -10,8 +10,12 @@ ProfessionalSmalltalkSystem comment: ''!
 !ProfessionalSmalltalkSystem categoriesForClass!Development! !
 !ProfessionalSmalltalkSystem methodsFor!
 
-browseDeployedPackage: aPackage 
-	self browseEnvironment: (self browserEnvFromDeployedPackage: aPackage)!
+browseDeployedPackage: aPackage
+	self browseDeploymentLog: aPackage imageStripper logFileName!
+
+browseDeploymentLog: aString
+	self browseEnvironment: (self
+				browserEnvFromDeploymentLog: (FileLocator imageRelative localFileSpecFor: aString))!
 
 browseEnvironment: aBrowserEnvironment 
 	"Open an Environment Browser Shell on all classes and methods included in the specified <BrowserEnvironment>."
@@ -20,6 +24,9 @@ browseEnvironment: aBrowserEnvironment
 
 browserEnvFromDeployedPackage: aPackage 
 	^self browserEnvFromDom: (self openDeploymentLog: aPackage)!
+
+browserEnvFromDeploymentLog: aString
+	^self browserEnvFromDom: (self openDeploymentLog: aString)!
 
 browseSources
 	"Open a browser on the sources for the entire system,"
@@ -65,10 +72,10 @@ ideaSpaceClass: toolClass
 newIdeaSpace
 	^self ideaSpaceClass show!
 
-openDeploymentLog: aPackage 
+openDeploymentLog: fileName
 	| dom |
 	dom := IXMLDOMDocument new.
-	dom loadURL: 'file://' , aPackage imageStripper logFileName.
+	dom loadURL: 'file://' , fileName.
 	^dom!
 
 packagedResourceIdentifierDialogClass
@@ -123,8 +130,10 @@ systemBrowserClass: toolClass
 
 	systemBrowserClass := toolClass! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseDeployedPackage:!helpers!public! !
+!ProfessionalSmalltalkSystem categoriesFor: #browseDeploymentLog:!helpers!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeployedPackage:!helpers!private! !
+!ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeploymentLog:!helpers!private! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSources!commands!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSystemPackages:!browsing!public! !
