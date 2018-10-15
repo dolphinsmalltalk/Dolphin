@@ -8,13 +8,36 @@ XmlPad is a simple XML text editor. It is intended to demonstrate the DocumentSh
 
 Try me out with:
 
+```
 XmlPad show
+```
 
-Note that if deploying this sample as a .exe that the "Retain instance variable names" option should be checked on page 5 of the wizard.'.
+## Deployment:
 
-package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAAASAQAABgAAAFhtbFBhZBIBAAAKAAAAWG1s
-UGFkLmV4ZZoAAACwAQAAUgAAABQAAABYbWxQYWRTZXNzaW9uTWFuYWdlcve/JwAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
+Note that if deploying this sample as a .exe that the "Retain instance variable names" option should be checked on page 5 of the wizard. Aspect setters must also be preserved because of the text styles dialog, etc.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: XmlPad owningPackage;
+	executableName: ''XmlPad.exe'';
+	preserveAspectSetters: true;
+	retainInstVarNames: true;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''XmlPad.xml''.
+"Or view the log"
+XmlPad openOn: ''XmlPad.xml''
+```'.
+
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem 
+	addSamplesFolderIconFor: XmlPad
+	helpId: 10625'.
 
 package classNames
 	add: #XmlFormatter;
@@ -23,6 +46,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #IXMLDOMComment -> #formatAsText;
 	add: #IXMLDOMEntityReference -> #formatAsText;
 	add: #IXMLDOMNode -> #formatAsText;
 	yourself.
@@ -77,6 +101,12 @@ XmlDomVisitor subclass: #XmlFormatter
 
 
 "Loose Methods"!
+
+!IXMLDOMComment methodsFor!
+
+formatAsText
+	^false! !
+!IXMLDOMComment categoriesFor: #formatAsText!public! !
 
 !IXMLDOMEntityReference methodsFor!
 
