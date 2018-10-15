@@ -9,9 +9,35 @@ RegEdit is a reduced functionality clone of the well known Windows applet, Reged
 RegEdit is supplied with a session manager, which Dolphin Pro users can use to deploy RegEdit as a .EXE. 
 
 Try me out with:
+```
 	RegEdit show
+```
 
-Be warned: It is possible to corrupt your registry with this tool, so please use with care!!'.
+Be warned: It is possible to corrupt your registry with this tool (if you run it elevated), so please use with care!!
+
+## Deployment:
+
+All code removal options can be enabled.
+The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved int the application.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+RegEdit show.
+(ImageStripper new)
+	rootPackage: RegEdit owningPackage;
+	executableName: ''DRegEdit.exe'';
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''DRegEdit.xml''.
+"Or view the log"
+XmlPad openOn: ''DRegEdit.xml''
+```'.
 
 package basicPackageVersion: '2011.6.5.16'.
 
