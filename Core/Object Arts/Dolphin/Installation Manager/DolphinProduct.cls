@@ -91,6 +91,8 @@ contents
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Views\Scrollbars\Dolphin Scrollbars.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Shell\Dolphin Document Presenter.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Presenters\Shell\Dolphin Legacy Document Presenter.pax' #plain #imageBased);
 		yourself.
 	answer
 		add: #('Core\Object Arts\Dolphin\MVP\Models\Tree\Dolphin Tree Models.pax' #plain #imageBased);

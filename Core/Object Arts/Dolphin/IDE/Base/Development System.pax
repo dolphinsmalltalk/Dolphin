@@ -939,6 +939,11 @@ Shell subclass: #SmalltalkToolShell
 	classVariableNames: 'CanUseIdeaSpaceMask HistoryDwellTime ReuseIfOpenMask SearchFieldFlashes'
 	poolDictionaries: ''
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalAccelerators commandQueryHandlers'!
+AbstractDocumentShell subclass: #SmalltalkWorkspaceDocument
+	instanceVariableNames: 'workspacePresenter searchPresenter'
+	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Dialog subclass: #AspectEditorDialog
 	instanceVariableNames: 'aspectPresenterInDialog hookPresenter subjectModel aspect aspectRectangle'
 	classVariableNames: ''
@@ -992,11 +997,6 @@ ValueDialog subclass: #PackagePrompter
 MenuComposer subclass: #MenuBarComposer
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-DocumentShell subclass: #SmalltalkWorkspaceDocument
-	instanceVariableNames: 'workspacePresenter searchPresenter'
-	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalltalkToolShell subclass: #ClassBrowserAbstract
