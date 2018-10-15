@@ -67,7 +67,6 @@ package methodNames
 	add: #AXInterfaceTypeAnalyzer -> #buildMethodName:defaultOptionals:;
 	add: #AXInterfaceTypeAnalyzer -> #buildPublishedAspects:forObject:;
 	add: #AXInterfaceTypeAnalyzer -> #classCategories;
-	add: #AXInterfaceTypeAnalyzer -> #classMethodCategoryClass;
 	add: #AXInterfaceTypeAnalyzer -> #compilePropertyAccessor:;
 	add: #AXInterfaceTypeAnalyzer -> #compileRawMethod:categories:;
 	add: #AXInterfaceTypeAnalyzer -> #determineNewBase:forExistingWrapper:;
@@ -99,7 +98,6 @@ package methodNames
 	add: #AXInterfaceTypeAnalyzer -> #idlAttributes;
 	add: #AXInterfaceTypeAnalyzer -> #inspectableProperties;
 	add: #AXInterfaceTypeAnalyzer -> #instanceMethodCategories:;
-	add: #AXInterfaceTypeAnalyzer -> #instanceMethodCategoryClass;
 	add: #AXInterfaceTypeAnalyzer -> #interfaceCategoryName;
 	add: #AXInterfaceTypeAnalyzer -> #isAutomationCompatible;
 	add: #AXInterfaceTypeAnalyzer -> #isInspectablePropGet:;
@@ -134,7 +132,6 @@ package methodNames
 	add: #AXMemberDesc -> #printIDLOn:;
 	add: #AXMemberDesc -> #printIDLOn:indent:;
 	add: #AXRecord -> #publishedAspects;
-	add: #AXStructureTypeAnalyzer -> #classMethodCategoryClass;
 	add: #AXStructureTypeAnalyzer -> #conformsToRequiredProtocols:;
 	add: #AXStructureTypeAnalyzer -> #determineNewBase:forExistingWrapper:;
 	add: #AXStructureTypeAnalyzer -> #generateClassSide:;
@@ -164,7 +161,6 @@ package methodNames
 	add: #AXTypeInfoAnalyzer -> #classCategories;
 	add: #AXTypeInfoAnalyzer -> #classConstantsCategories;
 	add: #AXTypeInfoAnalyzer -> #classInitializerCategories;
-	add: #AXTypeInfoAnalyzer -> #classMethodCategoryClass;
 	add: #AXTypeInfoAnalyzer -> #compileClassMethod:categories:;
 	add: #AXTypeInfoAnalyzer -> #compileMethod:categories:;
 	add: #AXTypeInfoAnalyzer -> #compileRawMethod:categories:;
@@ -190,7 +186,6 @@ package methodNames
 	add: #AXTypeInfoAnalyzer -> #handleClash:response:;
 	add: #AXTypeInfoAnalyzer -> #identifierFrom:;
 	add: #AXTypeInfoAnalyzer -> #idlTypeOfVT:;
-	add: #AXTypeInfoAnalyzer -> #instanceMethodCategoryClass;
 	add: #AXTypeInfoAnalyzer -> #isClassCheck:;
 	add: #AXTypeInfoAnalyzer -> #packageCheck:;
 	add: #AXTypeInfoAnalyzer -> #printAutoGenMethodPostambleOn:;
@@ -642,13 +637,7 @@ areWrappersRequired
 	^(self generationFlags noMask: RawMethodsOnly)!
 
 compileMethodWrapper: aString
-	| catClass |
-	catClass := self instanceMethodCategoryClass.
-	self compileMethod: aString
-		categories: (Array 
-				with: (catClass name: self autoGenCategoryName)
-				with: (catClass name: 'methods')
-				with: catClass public)!
+	self compileMethod: aString categories: {self autoGenCategoryName. 'methods'. 'public'}!
 
 functionHasReturnValue: aFUNCDESC
 	"Private - Answer whether or not the function described by the <FUNCDESC>, method,
@@ -701,17 +690,17 @@ generateRawMethod: aFUNCDESC categories: aCollection
 
 	| methodName |
 	methodName := self rawMethodNameForFunction: aFUNCDESC.
-	(self canGenerateMethodNamed: methodName) 
+	(self canGenerateMethodNamed: methodName)
 		ifTrue: 
 			[| target |
 			target := String writeStream: 512.
 			methodName printSignatureOn: target.
 			target cr.
-			self 
+			self
 				printRawMethodComment: aFUNCDESC
 				on: target
-				isPrivate: (aCollection includes: self instanceMethodCategoryClass private).
-			self 
+				isPrivate: (aCollection includes: 'private').
+			self
 				printRawMethodBody: aFUNCDESC
 				name: methodName
 				on: target.
@@ -994,11 +983,7 @@ autoGenPropertiesCategories
 	"Private - Answer the special method categories for auto-generated
 	property accessors in the receivers wrapper class."
 
-	| catClass |
-	catClass := self instanceMethodCategoryClass.
-	^Array with: (catClass name: self autoGenCategoryName)
-		with: (catClass name: 'properties')
-		with: catClass public!
+	^{self autoGenCategoryName. 'properties'. 'public'}!
 
 buildMethodName: aFUNCDESC defaultOptionals: aBoolean 
 	"Private - Answer a high-level wrapper method name for the function 
@@ -1089,12 +1074,6 @@ classCategories
 	^super classCategories
 		add: (self class classCategoryClass name: 'COM-Interfaces');
 		yourself!
-
-classMethodCategoryClass
-	"Private - Answer the class of method category to be used in association with methods generated
-	by the receiver for class side methods."
-
-	^COMInterface class methodCategoryClass!
 
 compilePropertyAccessor: aString
 	self compileMethod: aString categories: self autoGenPropertiesCategories!
@@ -1287,7 +1266,7 @@ generateMethodWrappers: aFUNCDESC
 			(self isDefaultedWrapperRequiredFor: aFUNCDESC) 
 				ifTrue: [self generateDefaultMethod: aFUNCDESC wrapping: methodName]]!
 
-generateNewForCoclass: aTKindCoclassAnalyzer 
+generateNewForCoclass: aTKindCoclassAnalyzer
 	| target |
 	target := String writeStream: 256.
 	target
@@ -1303,9 +1282,7 @@ generateNewForCoclass: aTKindCoclassAnalyzer
 		print: aTKindCoclassAnalyzer clsid asString;
 		nextPut: $);
 		cr.
-	self compileClassMethod: target contents
-		categories: (Array with: (self classMethodCategoryClass name: self autoGenCategoryName)
-				with: (self classMethodCategoryClass name: 'instance creation'))!
+	self compileClassMethod: target contents categories: {self autoGenCategoryName. 'instance creation'}!
 
 generatePropertyAccessors
 	"Private - Generate get/set wrappers for the properties accessible via the dispinterface."
@@ -1530,18 +1507,9 @@ instanceMethodCategories: aBoolean
 	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean>
 	argument indicates whether the categories are for a public or private method."
 
-	| catClass |
-	catClass := self instanceMethodCategoryClass.
-	^Array 
-		with: (catClass name: self interfaceCategoryName)
-		with: (catClass name: self autoGenCategoryName)
-		with: (aBoolean ifTrue: [catClass private] ifFalse: [catClass public])!
-
-instanceMethodCategoryClass
-	"Private - Answer the class of method category to be used in association with methods generated
-	by the receiver for class side methods."
-
-	^COMInterface methodCategoryClass!
+	^{self interfaceCategoryName.
+		self autoGenCategoryName.
+		aBoolean ifTrue: ['private'] ifFalse: ['public']}!
 
 interfaceCategoryName
 	"Private - Answer the name of the special method category for the interface described
@@ -1756,13 +1724,9 @@ rawPropCategories
 	"Private - Answer the special method categories for auto-generated
 	property accessors in the receivers wrapper class."
 
-	| catClass privacy |
-	catClass := self instanceMethodCategoryClass.
-	privacy := self areWrappersRequired ifTrue: [catClass private] ifFalse: [catClass public].
-	^Array 
-		with: (catClass name: self autoGenCategoryName)
-		with: (catClass name: self interfaceCategoryName)
-		with: privacy!
+	| privacy |
+	privacy := self areWrappersRequired ifTrue: ['private'] ifFalse: ['public'].
+	^{self autoGenCategoryName. self interfaceCategoryName. privacy}!
 
 reservedSelectors
 	"Answer a <Set> of all the selectors which are reserved, and should not be overridden by any
@@ -1784,7 +1748,6 @@ wrapMethodComment: aString
 !AXInterfaceTypeAnalyzer categoriesFor: #buildMethodName:defaultOptionals:!development!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #buildPublishedAspects:forObject:!helpers!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #classCategories!constants!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #classMethodCategoryClass!constants!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #compilePropertyAccessor:!development!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #compileRawMethod:categories:!development!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!development!private! !
@@ -1816,7 +1779,6 @@ wrapMethodComment: aString
 !AXInterfaceTypeAnalyzer categoriesFor: #idlAttributes!development!printing-IDL!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #inspectableProperties!enumerating!public! !
 !AXInterfaceTypeAnalyzer categoriesFor: #instanceMethodCategories:!development!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #instanceMethodCategoryClass!constants!development!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #interfaceCategoryName!constants!development!private! !
 !AXInterfaceTypeAnalyzer categoriesFor: #isAutomationCompatible!public!testing! !
 !AXInterfaceTypeAnalyzer categoriesFor: #isInspectablePropGet:!enumerating!private! !
@@ -1992,12 +1954,6 @@ publishedAspects
 !AXRecord categoriesFor: #publishedAspects!accessing!development!public! !
 
 !AXStructureTypeAnalyzer methodsFor!
-
-classMethodCategoryClass
-	"Private - Answer the class of method category to be used in association with methods generated
-	by the receiver for class side methods."
-
-	^ExternalStructure class methodCategoryClass!
 
 conformsToRequiredProtocols: binding
 	"Private - Answer whether the global object with the specified binding conforms to all the necessary
@@ -2253,7 +2209,6 @@ printNamedFieldDefinition: aVARDESC offset: anInteger prefix: aString hidden: aB
 	aPuttableStream
 		nextPutAll: ' offset: ';
 		print: anInteger + aVARDESC oInst! !
-!AXStructureTypeAnalyzer categoriesFor: #classMethodCategoryClass!constants!private! !
 !AXStructureTypeAnalyzer categoriesFor: #conformsToRequiredProtocols:!development!private!testing! !
 !AXStructureTypeAnalyzer categoriesFor: #determineNewBase:forExistingWrapper:!development!private! !
 !AXStructureTypeAnalyzer categoriesFor: #generateClassSide:!development!private! !
@@ -2388,27 +2343,13 @@ classConstantsCategories
 	methods generated into the wrapper class.
 	We don't specify a privacy category, but let the class decide as appropriate when compiling."
 
-	| catClass |
-	catClass := self classMethodCategoryClass.
-	^Array 
-		with: (catClass name: self autoGenCategoryName)
-		with: (catClass name: 'constants')!
+	^{self autoGenCategoryName. 'constants'}!
 
 classInitializerCategories
 	"Private - Answer the <collection> of method categories for non-specific auto-generated methods.
 	We don't specify a privacy category, but let the class decide as appropriate when compiling."
 
-	| catClass |
-	catClass := self classMethodCategoryClass.
-	^Array 
-		with: (catClass name: self autoGenCategoryName)
-		with: (catClass name: 'initializing')!
-
-classMethodCategoryClass
-	"Private - Answer the class of method category to be used in association with methods generated
-	by the receiver for class side methods."
-
-	^self class methodCategoryClass!
+	^{self autoGenCategoryName. 'initializing'}!
 
 compileClassMethod: aString categories: categories 
 	"Private - Generate the method or send to trace, depending on the mode."
@@ -2431,14 +2372,7 @@ compileRawMethod: source categories: categories
 compileTestingMethod: source
 	"Private - Generate a 'testing' method or send to trace, depending on the mode."
 
-	| catClass |
-	catClass := self instanceMethodCategoryClass.
-	self 
-		compileMethod: source
-		categories: (Array 
-					with: (catClass name: self autoGenCategoryName)
-					with: (catClass name: 'testing')
-					with: catClass public)!
+	self compileMethod: source categories: {self autoGenCategoryName. 'testing'. 'public'}!
 
 conformsToRequiredProtocols: binding
 	"Private - Answer whether the global object with the specified binding conforms to all the necessary
@@ -2729,12 +2663,6 @@ idlTypeOfVT: vt
 
 	^VTtoIDLTypeMap at: vt!
 
-instanceMethodCategoryClass
-	"Private - Answer the class of method category to be used in association with methods generated
-	by the receiver for class side methods."
-
-	^self classMethodCategoryClass!
-
 isClassCheck: binding 
 	"Private - The receiver's global is already present, check to make sure it is actually a class."
 
@@ -3020,7 +2948,6 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !AXTypeInfoAnalyzer categoriesFor: #classCategories!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #classConstantsCategories!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #classInitializerCategories!constants!private! !
-!AXTypeInfoAnalyzer categoriesFor: #classMethodCategoryClass!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #compileClassMethod:categories:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #compileMethod:categories:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #compileRawMethod:categories:!development!private! !
@@ -3046,7 +2973,6 @@ You can Ignore this warning, but it is suggested that you check the location of 
 !AXTypeInfoAnalyzer categoriesFor: #handleClash:response:!development!helpers!private! !
 !AXTypeInfoAnalyzer categoriesFor: #identifierFrom:!helpers!private! !
 !AXTypeInfoAnalyzer categoriesFor: #idlTypeOfVT:!helpers!private! !
-!AXTypeInfoAnalyzer categoriesFor: #instanceMethodCategoryClass!constants!private! !
 !AXTypeInfoAnalyzer categoriesFor: #isClassCheck:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #packageCheck:!development!private! !
 !AXTypeInfoAnalyzer categoriesFor: #printAutoGenMethodPostambleOn:!printing!private! !
@@ -6484,11 +6410,11 @@ generateRawPropGet: aFUNCDESC
 	target := String writeStream: 512.
 	methodName printSignatureOn: target.
 	target cr.
-	self 
+	self
 		printRawPropGetComment: aFUNCDESC
 		on: target
-		isPrivate: (cats includes: self instanceMethodCategoryClass private).
-	self 
+		isPrivate: (cats includes: 'private').
+	self
 		printRawPropGetBody: aFUNCDESC
 		name: methodName
 		on: target.
@@ -6503,21 +6429,20 @@ generateRawPropPut: aFUNCDESC
 
 	| methodName |
 	methodName := self rawMethodNameForFunction: aFUNCDESC.
-	(self canGenerateMethodNamed: methodName) 
+	(self canGenerateMethodNamed: methodName)
 		ifTrue: 
-			["Now emit the method body"
-
-			| cats target |
+			[| cats target |
+			"Now emit the method body"
 			cats := self rawPropCategories.
 			target := String writeStream: 512.
 			methodName printSignatureOn: target.
 			target cr.
-			self 
+			self
 				printRawPropPutComment: aFUNCDESC
 				name: methodName
 				on: target
-				isPrivate: (cats includes: self instanceMethodCategoryClass private).
-			self 
+				isPrivate: (cats includes: 'private').
+			self
 				printRawPropPutBody: aFUNCDESC
 				name: methodName
 				on: target.
@@ -6956,10 +6881,7 @@ instanceMethodCategories: aBoolean
 	"Private - Answer a collection of categories with which instance side methods are to be associated. The <boolean>
 	argument indicates whether the categories are for a public or private method."
 
-	| catClass |
-	catClass := self instanceMethodCategoryClass.
-	^Array with: (catClass name: self autoGenCategoryName)
-		with: (aBoolean ifTrue: [catClass private] ifFalse: [catClass public])!
+	^{self autoGenCategoryName. aBoolean ifTrue: ['private'] ifFalse: ['public']}!
 
 methodCommentDescription
 	^'function of the module wrapped by the receiver'!

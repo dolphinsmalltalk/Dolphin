@@ -215,6 +215,9 @@ asLowercase
 
 	^self subclassResponsibility!
 
+asMethodCategory
+	^MethodCategory name: self!
+
 asNumber
 	"Answer a Number constructed by interpreting the receiver's characters as the
 	printString of a Number."
@@ -1170,6 +1173,7 @@ withNormalizedLineDelimiters
 !String categoriesFor: #asAnsiString!converting!public! !
 !String categoriesFor: #asByteArray!converting!public! !
 !String categoriesFor: #asLowercase!converting!public! !
+!String categoriesFor: #asMethodCategory!converting!public! !
 !String categoriesFor: #asNumber!converting!public! !
 !String categoriesFor: #asPhrase!converting!public! !
 !String categoriesFor: #asResourceId!converting!public! !

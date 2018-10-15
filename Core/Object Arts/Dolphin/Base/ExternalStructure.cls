@@ -529,10 +529,10 @@ atAddress: anAddress
 	^self fromAddress: anAddress!
 
 autoGenCategory
-	"Private - Answer the basic<MethodCategory>s into which the auto-generated 
+	"Private - Answer the name of the <MethodCategory> into which the auto-generated 
 	structure accessors for the receiver should be compiled."
 
-	^self methodCategoryClass name: '**compiled accessors**'!
+	^'**compiled accessors**'!
 
 baseAlignment
 	^self == ##(self) ifTrue: [1] ifFalse: [self superclass alignment]!
@@ -759,7 +759,7 @@ hasHandCodedMethodFor: selector
 
 	| method |
 	method := self compiledMethodAt: selector ifAbsent: [^false].
-	^(self autoGenCategory includesMethod: method) not!
+	^(self autoGenCategory asMethodCategory includesMethod: method) not!
 
 inheritTemplate
 	| ancestor |

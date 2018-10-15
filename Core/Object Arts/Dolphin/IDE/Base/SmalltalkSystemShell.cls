@@ -60,7 +60,7 @@ browseCompilationIssues
 	self systemModel browseCompilationIssuesIn: self searchEnvironment!
 
 browseDeprecatedMethods
-	self browseMethodCategory: (MethodCategory name: '*-deprecated')!
+	self browseMethodCategory: '*-deprecated'!
 
 browseMessageDefinitions
 	"Prompt for a selector and open a method browser displaying the implementors of that
@@ -74,25 +74,23 @@ browseMessageReferences
 
 	self model browseMessageReferencesIn: self searchEnvironment!
 
-browseMethodCategory: aMethodCategory 
-	self model browseMethodCategories: (Array with: aMethodCategory) in: self searchEnvironment!
+browseMethodCategory: aMethodCategory
+	self model browseMethodCategories: {aMethodCategory} in: self searchEnvironment!
 
 browseNotYetImplemented
-	self browseMethodCategory: (MethodCategory name: '*-not yet implemented')!
+	self browseMethodCategory: '*-not yet implemented'!
 
 browseUnclassifiedMethods
-	self browseMethodCategory: MethodCategory unclassified!
+	self browseMethodCategory: '*-unclassified'!
 
 createComponents
 	"Create the presenters contained by the receiver"
 
 	super createComponents.
-	systemFolderPresenter := (self 
-				add: (FolderPresenter new beSorted: 
-							[:a :b | 
-							a description < b description])
+	systemFolderPresenter := (self
+				add: (FolderPresenter new beSorted: [:a :b | a description < b description])
 				name: 'systemFolder')
-				openBlock: [:presenter :item | presenter openItem: item];
+				openBlock: [:presenter :item | item openIn: presenter];
 				yourself!
 
 createSchematicWiring

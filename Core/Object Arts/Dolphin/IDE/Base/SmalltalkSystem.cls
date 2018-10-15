@@ -278,9 +278,10 @@ allSelectorsSentIn: aBrowserEnvironment
 	selectors := (IdentitySet new: 512)
 				addAll: VMLibrary default specialSelectors;
 				yourself.
-	excluded := (MethodCategory name: 'examples') contents.
-	aBrowserEnvironment
-		methodsDo: [:each | (excluded includes: each) ifFalse: [selectors addAll: each messages]].
+	excluded := 'examples' asMethodCategory contents.
+	aBrowserEnvironment methodsDo: 
+			[:each |
+			(excluded includes: each) ifFalse: [each messagesDo: [:selector | selectors add: selector]]].
 	^selectors!
 
 allSymbolsReferencedIn: aBrowserEnvironment
@@ -743,23 +744,24 @@ browseMethodCategories: aCollection
 
 	self browseMethodCategories: aCollection in: self systemEnvironment!
 
-browseMethodCategories: aCollection in: aBrowserEnvironment 
+browseMethodCategories: aCollection in: aBrowserEnvironment
 	"Browse the set of methods defined in the specified <BrowserEnvironment> which is the union
 	of all those belonging to at least one of the specified <collection> of <MethodCategory>s."
 
-	| categoryEnv |
-	categoryEnv := aBrowserEnvironment forMethodCategories: aCollection.
-	self 
-		browseMethodsIn: ((aCollection anySatisfy: [:each | each isVirtual and: [each isSlowToEnumerate]]) 
+	| categoryEnv categories |
+	categories := aCollection collect: [:each | each asMethodCategory].
+	categoryEnv := aBrowserEnvironment forMethodCategories: categories.
+	self
+		browseMethodsIn: ((categories anySatisfy: [:each | each isVirtual and: [each isSlowToEnumerate]])
 				ifTrue: 
-					[(self 
-						selectMethods: [:method | aCollection anySatisfy: [:each | each includesMethod: method]]
+					[(self
+						selectMethods: [:method | categories anySatisfy: [:each | each includesMethod: method]]
 						in: aBrowserEnvironment
-						withProgress: ('Finding methods in <1d>' 
-								expandMacrosWith: (aCollection size = 1 ifTrue: [aCollection anyOne] ifFalse: ['categories']))) 
+						withProgress: ('Finding methods in <1d>'
+								expandMacrosWith: (categories size = 1 ifTrue: [categories anyOne] ifFalse: ['categories'])))
 							ifNil: [^self]
 							ifNotNil: 
-								[:env | 
+								[:env |
 								env
 									label: categoryEnv label;
 									yourself]]
@@ -769,11 +771,11 @@ browseMethodCategory
 	"Browse all the methods which belong to a chosen method category."
 
 	| chosenCategory categories |
-	categories := Object methodCategoryClass allMethodCategories.
+	categories := MethodCategory allMethodCategories.
 	chosenCategory := (CategoryPrompter choices: categories caption: 'Browse category ...')
 				allowReadOnly: true;
 				showModal.
-	chosenCategory notNil ifTrue: [self browseMethodCategories: (Array with: chosenCategory)]!
+	chosenCategory notNil ifTrue: [self browseMethodCategories: {chosenCategory}]!
 
 browseMethodHierarchyFrom: aCompiledMethod 
 	"Opens a MethodBrowser on all the overidden methods in the superclass chain for aCompiledMethod."
@@ -1128,10 +1130,10 @@ changedIcon
 						yourself	"Sparkles"]!
 
 changedMethodCategory
-	^MethodCategory name: '*-changed'!
+	^'*-changed'!
 
-changedMethodsIn: aBrowserEnvironment 
-	^(aBrowserEnvironment forMethodCategories: (Array with: self changedMethodCategory))
+changedMethodsIn: aBrowserEnvironment
+	^(aBrowserEnvironment forMethodCategories: {self changedMethodCategory})
 		label: ('Changed methods in <1d>' expandMacrosWith: aBrowserEnvironment);
 		yourself!
 
@@ -1364,7 +1366,7 @@ Are you sure that you would like to proceed?')
 		do: [:each | each presenter class == self systemFolderClass ifFalse: [each close]]!
 
 compilationFailuresCategory
-	^MethodCategory name: '*-compilation failures'!
+	^'*-compilation failures'!
 
 compilationWarningClass
 	^CompilerWarningNotification!
@@ -1500,7 +1502,7 @@ createSubclassOf: aClass inPackage: aPackageOrNil
 				package: details package
 				subclasses: details subclasses]!
 
-createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBrowserEnvironment 
+createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBrowserEnvironment
 	"Generate get and set accessors for the specified class and variable name pairs. Note that
 	if any methods with the same selectors as the generated accessors already exist, then these
 	are left unchanged.
@@ -1516,16 +1518,16 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 	default."
 
 	| name changes categories |
-	aBoolean 
+	aBoolean
 		ifTrue: 
 			["Not implemented for class variables"
 			^Error notYetImplemented].
-	categories := Array with: (MethodCategory name: 'accessing') with: MethodCategory private.
+	categories := {'accessing'. 'private'}.
 	name := String writeStream.
 	name nextPutAll: 'Create accessors for '.
 	changes := CompositeRefactoryChange new.
 	variableNamePairs do: 
-			[:each | 
+			[:each |
 			| instVarNames selector aClass variable |
 			variable := each value.
 			aClass := each key.
@@ -1536,25 +1538,25 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 			instVarNames := aClass instVarNames.
 			(instVarNames includes: variable) ifFalse: [^aClass errorNotFound: variable].
 			selector := variable asSymbol.
-			(aClass includesSelector: selector) 
+			(aClass includesSelector: selector)
 				ifFalse: 
-					[changes 
+					[changes
 						compile: ('<1s>
 	"Private - Answer the value of the receiver''s ''<2s>'' instance variable."
 
-	^<2s>' 
+	^<2s>'
 								expandMacrosWith: selector
 								with: variable)
 						in: aClass
 						categories: categories].
 			selector := (variable , ':') asSymbol.
-			(aClass includesSelector: selector) 
+			(aClass includesSelector: selector)
 				ifFalse: 
-					[changes 
+					[changes
 						compile: ('<1s> anObject
 	"Private - Set the value of the receiver''s ''<2s>'' instance variable to the argument."
 
-	<2s> := anObject' 
+	<2s> := anObject'
 								expandMacrosWith: selector
 								with: variable)
 						in: aClass
@@ -2202,9 +2204,9 @@ methodsContainingText: aString in: aBrowserEnvironment prompt: aBoolean
 								with: aBrowserEnvironment);
 					yourself]!
 
-methodsThatFailedToCompileIn: aBrowserEnvironment 
+methodsThatFailedToCompileIn: aBrowserEnvironment
 	| failed |
-	failed := aBrowserEnvironment forMethodCategories: (Array with: self compilationFailuresCategory).
+	failed := aBrowserEnvironment forMethodCategories: {self compilationFailuresCategory}.
 	failed label: ('Compilation failures in <1d>' expandMacrosWith: aBrowserEnvironment).
 	^failed!
 
@@ -3098,11 +3100,10 @@ privatizeMethod: aCompiledMethod
 	private pseudo-category, and ensuring that its first comment (if any) starts with 'Private -
 	'."
 
-	| catClass parseTree class |
+	| parseTree class  |
 	parseTree := aCompiledMethod parseTreeNoError.
 	parseTree isNil ifTrue: [^self].
 	class := aCompiledMethod methodClass.
-	catClass := class methodCategoryClass.
 	parseTree comments notEmpty 
 		ifTrue: 
 			[| source commentStart start |
@@ -3125,8 +3126,8 @@ privatizeMethod: aCompiledMethod
 												with: self privatePrefix)
 										in: class
 										categories: ((aCompiledMethod categories)
-												remove: catClass public ifAbsent: [];
-												add: catClass private;
+												remove: MethodCategory public ifAbsent: [];
+												add: MethodCategory private;
 												yourself)
 										package: nil
 										extraFlags: 0.
@@ -3136,7 +3137,7 @@ privatizeMethod: aCompiledMethod
 	"Doesn't contain a comment, or comment is already suitably endowed"
 	aCompiledMethod isPrivate 
 		ifFalse: 
-			[catClass private addMethod: aCompiledMethod.
+			[MethodCategory private addMethod: aCompiledMethod.
 			aCompiledMethod storeCategories]!
 
 promptForClass
@@ -3237,43 +3238,44 @@ protocolBrowserClass: toolClass
 	
 	protocolBrowserClass := toolClass!
 
-publicizeMethod: aCompiledMethod 
+publicizeMethod: aCompiledMethod
 	"Private - Make the <CompiledMethod> argument public. This involves placing it in the public
 	pseudo-category, and ensuring that its first comment (if any) does not start with 'Private -
 	'."
 
-	| catClass class parseTree |
+	| class parseTree public private |
 	parseTree := aCompiledMethod parseTreeNoError.
 	parseTree isNil ifTrue: [^self].
 	class := aCompiledMethod methodClass.
-	catClass := class methodCategoryClass.
-	parseTree comments notEmpty 
+	public := 'public' asMethodCategory.
+	private := 'private' asMethodCategory.
+	parseTree comments notEmpty
 		ifTrue: 
 			[| source commentStart |
 			source := aCompiledMethod getSource.
 			commentStart := source findString: '"' , self privatePrefix
 						startingAt: parseTree comments first start.
-			commentStart == 0 
+			commentStart == 0
 				ifFalse: 
 					[| change |
-					change := self 
-								compile: (source 
+					change := self
+								compile: (source
 										copyReplaceFrom: commentStart + 1
 										to: commentStart + self privatePrefix size
 										with: '')
 								in: class
-								categories: ((aCompiledMethod categories)
-										remove: catClass private ifAbsent: [];
-										add: catClass public;
+								categories: (aCompiledMethod categories
+										remove: private ifAbsent: [];
+										add: public;
 										yourself)
 								package: nil
 								extraFlags: 0.
 					change name: ('Publicize <1d>' expandMacrosWith: aCompiledMethod).
 					^self]].
 	"Comment is absent or doesn't start with the private prefix."
-	aCompiledMethod isPrivate 
+	aCompiledMethod isPrivate
 		ifTrue: 
-			[catClass public addMethod: aCompiledMethod.
+			[public addMethod: aCompiledMethod.
 			aCompiledMethod storeCategories]!
 
 publicMethodIcon

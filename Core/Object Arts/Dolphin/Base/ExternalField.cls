@@ -26,10 +26,7 @@ alignment
 	^self byteSize!
 
 autoGenCategories
-	^{ExternalStructure autoGenCategory.
-		self isNonBrowsable
-			ifTrue: [self class methodCategoryClass private]
-			ifFalse: [self class methodCategoryClass public]}!
+	^{ExternalStructure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}!
 
 autoGenComment
 	"Private - Answer a suitable piece of comment to warn the user that a

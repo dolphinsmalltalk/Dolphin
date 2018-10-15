@@ -126,10 +126,9 @@ addMethod: method toCategory: target
 addMethodCategory
 	"Private - Add a new method category to the receiver's category pane."
 
-	| actualClass newCategory catman |
+	| actualClass newCategory |
 	actualClass := self actualClass.
-	catman := actualClass methodCategoryClass.
-	newCategory := (CategoryPrompter choices: catman allMethodCategories
+	newCategory := (CategoryPrompter choices: MethodCategory allMethodCategories
 				caption: 'Add Method Category ...') showModal.
 	newCategory notNil ifFalse: [^self].
 	categoriesPresenter model addCategory: newCategory.
@@ -2087,34 +2086,34 @@ renameItCommand
 renameMethodCategory
 	"Private - Prompter for a new name for the current category, and rename it."
 
-	| originalCategory newName |
+	| originalCategory newName actualClass |
 	originalCategory := self category.
+	actualClass := self actualClass.
 	newName := (CategoryPrompter createOn: originalCategory asValue)
-				list: self actualClass methodCategoryClass allMethodCategories;
-				caption: ('Rename  ''<1d>'' within <2p>' expandMacrosWith: originalCategory with: self actualClass);
+				list: MethodCategory allMethodCategories;
+				caption: ('Rename  ''<1d>'' within <2p>' expandMacrosWith: originalCategory with: actualClass);
 				allowIntermediates: originalCategory isIntermediate;
 				showModal.
 	self renameMethodCategory: originalCategory to: newName!
 
-renameMethodCategory: aMethodCategory to: aString 
+renameMethodCategory: aMethodCategory to: aString
 	"Private - Rename the specified <MethodCategory>. This is complicated by the pseudo category hierarchy which
 	is built up - if a branch category is renamed, then we need to rename all its sub-categories."
 
-	| rootSubNames originalSubNames catClass actualClass |
+	| rootSubNames originalSubNames actualClass |
 	(aString notNil and: [aString ~= aMethodCategory]) ifFalse: [^self].
 	originalSubNames := aMethodCategory subNames.
 	actualClass := self actualClass.
-	catClass := actualClass methodCategoryClass.
 	rootSubNames := aString subNames.
 	self categories do: 
-			[:category | 
+			[:category |
 			| methods subNames newSubNames name newCategory |
 			subNames := category subNames.
 			newSubNames := rootSubNames copy , (subNames copyFrom: originalSubNames size + 1).
 			name := String new.
 			newSubNames do: [:subName | name := name , subName]
-				separatedBy: [name := name copyWith: catClass separator].
-			newCategory := catClass name: name.
+				separatedBy: [name := name copyWith: MethodCategory separator].
+			newCategory := MethodCategory name: name.
 
 			"Ensure it is in the category tree"
 			categoriesPresenter model addCategory: newCategory.

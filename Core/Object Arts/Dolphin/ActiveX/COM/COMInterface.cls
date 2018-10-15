@@ -499,7 +499,7 @@ compileFunctions
 	superclass functions size+1 to: functions size do: [:i | self compileFunction: i].
 	self subclasses do: [:s | s compileFunctions]!
 
-compileFunctionsIntoImplementor: aClass 
+compileFunctionsIntoImplementor: aClass
 	"Helper to compile a set of method templates for the receiver's interface
 	into the implementing class, aClass. These methods are of the form:
 
@@ -518,20 +518,20 @@ compileFunctionsIntoImplementor: aClass
 	| aStream cat |
 	cat := self generatedFunctionCategories first.
 	((aClass includesCategory: cat) and: 
-			[(MessageBox 
+			[(MessageBox
 				confirm: ('<1p> already includes the method category ''<2s>''
 The generated template methods may overwrite existing methods in the class.
-Are you sure you want to proceed?' 
+Are you sure you want to proceed?'
 						expandMacrosWith: aClass
-						with: cat asString)) 
-					not]) 
+						with: cat))
+					not])
 		ifTrue: [^self].
 	aStream := (Utf8String new: 256) writeStream.
-	functions 
+	functions
 		from: superclass functions size + 1
 		to: functions size
 		do: 
-			[:fn | 
+			[:fn |
 			aStream
 				nextPutAll: fn messageSelectorAndArgumentNames;
 				cr;
@@ -692,15 +692,11 @@ functions
 	^functions!
 
 generatedFunctionCategories
-	"Answer the base category into which COMInterface functions are compiled
+	"Answer the categories into which COMInterface functions are compiled
 	during the autogeneration process.
 	N.B. It is important that the main category appears first in the list."
 
-	| catClass |
-	catClass := self methodCategoryClass.
-	^Array 
-		with: (catClass name: 'COM Interfaces', '-', self name)
-		with: catClass public!
+	^{'COM Interfaces', '-', self name. 'public'}!
 
 getObject: aString
 	"Answer an instance or subinstance of the receiver on an instance of the COM component 
@@ -1005,7 +1001,7 @@ registerSubclasses
 removeCompiledFunctions
 	"Remove the functions generated automatically from the receiver's function table."
 
-	[self removeCategory: self generatedFunctionCategories first] on: NotFoundError do: [:e|e notify]!
+	[self removeCategory: self generatedFunctionCategories first] on: NotFoundError do: [:e | e notify]!
 
 setGuid: id
 	"Private - Set the value of the receiver's 'guid' instance variable to the 

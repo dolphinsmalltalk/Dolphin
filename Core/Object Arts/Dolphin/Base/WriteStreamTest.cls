@@ -139,8 +139,7 @@ testUpToUtf
 
 allTestSelectors
 	| roCategory |
-	roCategory := MethodCategory name: 'gettableStream only'.
-	^super allTestSelectors reject: [:each |
-		roCategory includesMethod: (self lookupMethod: each)]! !
+	roCategory := 'gettableStream only' asMethodCategory.
+	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
 !WriteStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
 

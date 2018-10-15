@@ -32,7 +32,7 @@ restore
 		ifNil: [index -> 'Target class or method missing']
 		ifNotNil:
 			[:arg | 
-			(MethodCategory name: rawText) addMethod: arg.
+			rawText asMethodCategory addMethod: arg.
 			nil]! !
 !ChunkBrowserMethodCategoryChunk categoriesFor: #browseTarget!operations!public! !
 !ChunkBrowserMethodCategoryChunk categoriesFor: #isMatch!public!testing! !

@@ -39,6 +39,9 @@ addMethodSilently: method
 
 	method methodClass includeSelector: method selector inCategory: self!
 
+asMethodCategory
+	^self!
+
 behaviors
 	"Answer a <sequencedReadableCollection> of all the <ClassDescription> objects which have
 	methods in this category in class hierarchy order (i.e. superclasses first)."
@@ -115,6 +118,7 @@ removeMethodSilently: method
 !MethodCategory categoriesFor: #addMethod:!adding!public! !
 !MethodCategory categoriesFor: #addMethods:!adding!public! !
 !MethodCategory categoriesFor: #addMethodSilently:!adding!private! !
+!MethodCategory categoriesFor: #asMethodCategory!converting!public! !
 !MethodCategory categoriesFor: #behaviors!enumerating!private! !
 !MethodCategory categoriesFor: #behaviorsDo:!enumerating!public! !
 !MethodCategory categoriesFor: #contents!enumerating!public! !
@@ -232,14 +236,19 @@ removePseud: pseud
 
 	^Pseuds notNil ifTrue: [Pseuds remove: (Table removeKey: pseud asString ifAbsent: []) ifAbsent: []]!
 
-setMethod: method categories: categories 
+setMethod: method categories: categories
 	"Private - Set the categories of the <CompiledMethod>, method, to be the <Collection> of
 	<methodCategory>s, categories, only (i.e. any existing non-pseudo classifications
 	not in 'categories' are removed)."
 
 	| newCategories original unwanted |
 	original := method realCategories.
-	newCategories := categories reject: [:each | each isPseud].
+	newCategories := IdentitySet new.
+	categories do: 
+			[:each |
+			| category |
+			category := each asMethodCategory.
+			each isPseud ifFalse: [newCategories add: category]].
 	unwanted := original difference: newCategories.
 	newCategories := newCategories difference: original.
 	unwanted do: [:c | c removeMethodSilently: method].
