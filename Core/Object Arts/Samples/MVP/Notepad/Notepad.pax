@@ -8,8 +8,31 @@ Notepad is a slightly reduced functionality (printing is missing) implementation
 
 Try me out with:
 
-Notepad show'.
+```
+Notepad show
+```
 
+## Deployment:
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: Notepad owningPackage;
+	executableName: ''DNotepad.exe'';
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''DNotepad.xml''
+```'.
+
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem
+	addSamplesFolderIconFor: Notepad
+	helpId: 10623'.
 
 package classNames
 	add: #Notepad;
@@ -26,10 +49,15 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
+	add: '..\..\..\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control';
 	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
 	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
 	yourself).
+
+package setManualPrerequisites: #(
+	'Dolphin SpinButton Control').
 
 package!
 
