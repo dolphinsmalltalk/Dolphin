@@ -395,11 +395,12 @@ messages
 	self messagesDo: [:sel | answer add: sel].
 	^answer!
 
-messagesDo: aBlock 
+messagesDo: aBlock
 	"Evaluate the <monadicValuable> argument, aBlock, for each of the messages 
 	actually sent by the receiver, including any special selectors."
 
-	(MessageSendCollector dispatcher: self byteCodeDispatcher) messagesDo: aBlock!
+	self extraIndex == 0
+		ifTrue: [(MessageSendCollector dispatcher: self byteCodeDispatcher) messagesDo: aBlock]!
 
 methodClass
 	"Answer the Class to which this method belongs (as opposed to the class of CompiledMethods)"

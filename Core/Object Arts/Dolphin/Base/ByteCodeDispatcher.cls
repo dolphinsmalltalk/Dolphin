@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #ByteCodeDispatcher
-	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode'
+	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
 	classVariableNames: 'FirstShowSpecialSend InstructionLengths Instructions RunStarts'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
@@ -101,7 +101,7 @@ containsInstruction: discriminator
 
 	self reset.
 	[ip > byteCodes basicSize]
-		whileFalse: [(self instruction: (Instructions at: self next + 1) do: discriminator) ifTrue: [^true]].
+		whileFalse: [(self instruction: (instructions at: self next + 1) do: discriminator) ifTrue: [^true]].
 	^false!
 
 dispatchAll
@@ -117,40 +117,41 @@ dispatchNext
 
 	"Implementation Note: For performance reasons this effectively duplicates the code in #instruction:do:"
 
-	| aSymbol |
-	aSymbol := self fetch.
-	instructionLength == 1 
-		ifTrue: 
-			[aSymbol last == $: 
-				ifTrue: [interpreter perform: aSymbol with: byteCode - (RunStarts at: aSymbol)]
-				ifFalse: [interpreter perform: aSymbol]]
-		ifFalse: 
-			[instructionLength == 2 
-				ifTrue: [interpreter perform: aSymbol with: (byteCodes at: ip - 1)]
+	self fetch
+		ifNotNil: 
+			[:instr |
+			instructionLength == 1
+				ifTrue: 
+					[instr last == $:
+						ifTrue: [interpreter perform: instr with: byteCode - (RunStarts at: instr)]
+						ifFalse: [interpreter perform: instr]]
 				ifFalse: 
-					[instructionLength == 3 
-						ifTrue: 
-							[interpreter 
-								perform: aSymbol
-								with: (byteCodes at: ip - 2)
-								with: (byteCodes at: ip - 1)]
+					[instructionLength == 2
+						ifTrue: [interpreter perform: instr with: (byteCodes at: ip - 1)]
 						ifFalse: 
-							[instructionLength == 4 
+							[instructionLength == 3
 								ifTrue: 
-									[interpreter 
-										perform: aSymbol
-										with: (byteCodes at: ip - 3)
+									[interpreter
+										perform: instr
 										with: (byteCodes at: ip - 2)
 										with: (byteCodes at: ip - 1)]
 								ifFalse: 
-									[| args argc |
-									argc := instructionLength - 1.
-									args := Array new: argc.
-									1 to: argc do: [:i | args at: argc - i + 1 put: (byteCodes at: ip - i)].
-									interpreter perform: aSymbol withArguments: args]]]]!
+									[instructionLength == 4
+										ifTrue: 
+											[interpreter
+												perform: instr
+												with: (byteCodes at: ip - 3)
+												with: (byteCodes at: ip - 2)
+												with: (byteCodes at: ip - 1)]
+										ifFalse: 
+											[| args argc |
+											argc := instructionLength - 1.
+											args := Array new: argc.
+											1 to: argc do: [:i | args at: argc - i + 1 put: (byteCodes at: ip - i)].
+											interpreter perform: instr withArguments: args]]]]]!
 
 fetch
-	^Instructions at: self next + 1!
+	^instructions at: self next + 1!
 
 indexOfInstVarAccess: aSymbol 
 	^(self indexOfInstVarRead: aSymbol) ifNil: [self indexOfInstVarWrite: aSymbol]!
@@ -204,6 +205,9 @@ instructions
 	self instructionsDo: [:selector :args | answer add: (selector -> args)].
 	^answer!
 
+instructions: anArray 
+	instructions := anArray!
+
 instructionsDo: operation
 	"Evaluate the dyadic valuable, operation, for each instruction in the receiver, passing 
 	the instruction symbolic name (a keyword selector) and an array of arguments (which should not be
@@ -212,7 +216,7 @@ instructionsDo: operation
 	| count |
 	self reset.
 	count := byteCodes basicSize.
-	[ip > count] whileFalse: [self instruction: (Instructions at: self next + 1) do: operation]!
+	[ip > count] whileFalse: [self instruction: (instructions at: self next + 1) do: operation]!
 
 interpreter: anInstructionInterpreter 
 	"Private - Set the receiver's interpreter client. The client is sent messages (the
@@ -241,7 +245,9 @@ method
 method: aCompiledMethod
 	ip := 1.
 	method := aCompiledMethod.
-	byteCodes := aCompiledMethod byteCodes!
+	byteCodes := aCompiledMethod byteCodes.
+	instructions := Instructions.
+	^self!
 
 next
 	"Answer the next instruction byte code of the receiver, advancing ip appropriately."
@@ -352,38 +358,7 @@ specialMessages
 	count := byteCodes basicSize.
 	[ip > count] whileFalse: 
 			[| op |
-			op := Instructions at: self next + 1.
-			op == #shortSpecialSend:
-				ifTrue: [answer add: (vmlib selectorOfSpecialSend: byteCode - ShortSpecialSend)]
-				ifFalse: 
-					[op == #shortSpecialSendEx:
-						ifTrue: [answer add: (vmlib selectorOfSpecialSendEx: byteCode - ShortSpecialSendEx)]]].
-	^answer!
-
-specialMessages1
-	"Private - Answer the set of special message sends in the byte code stream."
-
-	| answer vmlib |
-	answer := IdentitySet new.
-	vmlib := VMLibrary default.
-	self instructionsDo: 
-			[:op :args |
-			op == #shortSpecialSend:
-				ifTrue: [answer add: (vmlib selectorOfSpecialSend: args first)]
-				ifFalse: [op == #shortSpecialSendEx: ifTrue: [answer add: (vmlib selectorOfSpecialSendEx: args first)]]].
-	^answer!
-
-specialMessages2
-	"Private - Answer the set of special message sends in the byte code stream."
-
-	| answer vmlib count |
-	answer := IdentitySet new.
-	vmlib := VMLibrary default.
-	self reset.
-	count := byteCodes basicSize.
-	[ip > count] whileFalse: 
-			[| op |
-			op := Instructions at: self next + 1.
+			op := instructions at: self next + 1.
 			op == #shortSpecialSend:
 				ifTrue: [answer add: (vmlib selectorOfSpecialSend: byteCode - ShortSpecialSend)]
 				ifFalse: 
@@ -431,6 +406,7 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #indexOfIP:!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #instruction:do:!interpreting!private! !
 !ByteCodeDispatcher categoriesFor: #instructions!interpreting!public! !
+!ByteCodeDispatcher categoriesFor: #instructions:!public! !
 !ByteCodeDispatcher categoriesFor: #instructionsDo:!interpreting!public! !
 !ByteCodeDispatcher categoriesFor: #interpreter:!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
@@ -449,12 +425,13 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #sendsSpecialSelector:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #specialMessages!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #specialMessages1!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #specialMessages2!accessing!private! !
 !ByteCodeDispatcher categoriesFor: #writesInstVarAt:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #writesStatic:!public!testing! !
 
 !ByteCodeDispatcher class methodsFor!
+
+bytecodeRuns
+	^#(#(1 #break) #(16 #shortPushInstVar:) #(8 #shortPushTemp:) #(2 #pushContextTemp:) #(2 #shortPushOuterTemp:) #(16 #shortPushConst:) #(12 #shortPushStatic:) #(1 #pushSelf) #(3 #pushPseudo:) #(4 #shortPushImmediate:) #(4 #shortPushSelfAndTemp:) #(4 #shortStoreTemp:) #(2 #shortPopPushTemp:) #(1 #popPushSelf) #(1 #popDup) #(2 #popContextTemp:) #(2 #shortPopOuterTemp:) #(8 #shortPopInstVar:) #(8 #shortPopTemp:) #(1 #popStackTop) #(1 #incrementStackTop) #(1 #decrementStackTop) #(1 #duplicateStackTop) #(1 #returnSelf) #(3 #returnPseudo:) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #popReturnSelf) #(1 #nop) #(8 #shortJump:) #(8 #shortJumpIfFalse:) #(32 #shortSpecialSend:) #(13 #shortSendZeroArgs:) #(5 #shortSendSelfZeroArgs:) #(14 #shortSendOneArg:) #(8 #shortSendTwoArgs:) #(1 #isZero) #(1 #pushActiveFrame) #(4 #shortSpecialSendEx:) #(1 #pushInstVar:) #(1 #pushTemp:) #(1 #pushConst:) #(1 #pushStatic:) #(1 #storeInstVar:) #(1 #storeTemp:) #(1 #storeStatic:) #(1 #popInstVar:) #(1 #popTemp:) #(1 #popStatic:) #(1 #pushImmediate:) #(1 #pushChar:) #(1 #send:) #(1 #supersend:) #(1 #specialSend:) #(1 #nearJump:) #(1 #nearJumpIfTrue:) #(1 #nearJumpIfFalse:) #(1 #nearJumpIfNil:) #(1 #nearJumpIfNotNil:) #(2 #unused:) #(1 #sendTempZeroArgs:) #(1 #pushSelfAndTemp:) #(1 #pushOuterTemp:) #(1 #storeOuterTemp:) #(1 #popOuterTemp:) #(1 #sendSelfZeroArgs:) #(1 #unused:) #(1 #pushTempPair:) #(1 #longPushConst:with:) #(1 #longPushStatic:with:) #(1 #longStoreStatic:with:) #(1 #longPopStoreStatic:with:) #(1 #longPushImmediate:with:) #(1 #longSend:with:) #(1 #longSupersend:with:) #(1 #longJump:with:) #(1 #longJumpIfTrue:with:) #(1 #longJumpIfFalse:with:) #(1 #longJumpIfNil:with:) #(1 #longJumpIfNotNil:with:) #(1 #pushOuter:temp:) #(1 #storeOuter:temp:) #(1 #incTemp:temp:) #(1 #incPushTemp:temp:) #(1 #decTemp:temp:) #(1 #decPushTemp:temp:) #(1 #blockCopy:stack:env:copy:offset1:offset2:) #(1 #exLongSend:with:with:) #(1 #exLongSupersend:with:with:) #(1 #exLongPushImmediate:byte2:byte3:byte4:))!
 
 byteCodeSegments: aCompiledMethod
 	"Private - Answer an Array of segment arrays. Each segment is an Array with one
@@ -481,8 +458,7 @@ initialize
 	| instructions runStarts |
 	instructions := OrderedCollection new.
 	runStarts := IdentityDictionary new.
-	#(#(1 #break) #(16 #shortPushInstVar:) #(8 #shortPushTemp:) #(2 #pushContextTemp:) #(2 #shortPushOuterTemp:) #(16 #shortPushConst:) #(12 #shortPushStatic:) #(1 #pushSelf) #(3 #pushPseudo:) #(4 #shortPushImmediate:) #(4 #shortPushSelfAndTemp:) #(4 #shortStoreTemp:) #(2 #shortPopPushTemp:) #(1 #popPushSelf) #(1 #popDup) #(2 #popContextTemp:) #(2 #shortPopOuterTemp:) #(8 #shortPopInstVar:) #(8 #shortPopTemp:) #(1 #popStackTop) #(1 #incrementStackTop) #(1 #decrementStackTop) #(1 #duplicateStackTop) #(1 #returnSelf) #(3 #returnPseudo:) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #popReturnSelf) #(1 #nop) #(8 #shortJump:) #(8 #shortJumpIfFalse:) #(32 #shortSpecialSend:) #(13 #shortSendZeroArgs:) #(5 #shortSendSelfZeroArgs:) #(14 #shortSendOneArg:) #(8 #shortSendTwoArgs:) #(1 #isZero) #(1 #pushActiveFrame) #(4 #shortSpecialSendEx:) #(1 #pushInstVar:) #(1 #pushTemp:) #(1 #pushConst:) #(1 #pushStatic:) #(1 #storeInstVar:) #(1 #storeTemp:) #(1 #storeStatic:) #(1 #popInstVar:) #(1 #popTemp:) #(1 #popStatic:) #(1 #pushImmediate:) #(1 #pushChar:) #(1 #send:) #(1 #supersend:) #(1 #specialSend:) #(1 #nearJump:) #(1 #nearJumpIfTrue:) #(1 #nearJumpIfFalse:) #(1 #nearJumpIfNil:) #(1 #nearJumpIfNotNil:) #(2 #unused:) #(1 #sendTempZeroArgs:) #(1 #pushSelfAndTemp:) #(1 #pushOuterTemp:) #(1 #storeOuterTemp:) #(1 #popOuterTemp:) #(1 #sendSelfZeroArgs:) #(1 #unused:) #(1 #pushTempPair:) #(1 #longPushConst:with:) #(1 #longPushStatic:with:) #(1 #longStoreStatic:with:) #(1 #longPopStoreStatic:with:) #(1 #longPushImmediate:with:) #(1 #longSend:with:) #(1 #longSupersend:with:) #(1 #longJump:with:) #(1 #longJumpIfTrue:with:) #(1 #longJumpIfFalse:with:) #(1 #longJumpIfNil:with:) #(1 #longJumpIfNotNil:with:) #(1 #pushOuter:temp:) #(1 #storeOuter:temp:) #(1 #incTemp:temp:) #(1 #incPushTemp:temp:) #(1 #decTemp:temp:) #(1 #decPushTemp:temp:) #(1 #blockCopy:stack:env:copy:offset1:offset2:) #(1 #exLongSend:with:with:) #(1 #exLongSupersend:with:with:) #(1 #exLongPushImmediate:byte2:byte3:byte4:))
-		do: 
+	self bytecodeRuns do: 
 			[:each |
 			| instruction runLength |
 			instruction := each last.
@@ -503,7 +479,8 @@ initialize
 								ifFalse: 
 									[i < FirstMultiByte
 										ifTrue: [3]
-										ifFalse: [i == BlockCopy ifTrue: [7] ifFalse: [i == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]]]]]) asByteArray!
+										ifFalse: [i == BlockCopy ifTrue: [7] ifFalse: [i == ExLongPushImmediate ifTrue: [5] ifFalse: [4]]]]]])
+				asByteArray!
 
 instructions
 	^Instructions!
@@ -513,22 +490,24 @@ lengthOfInstruction: anInteger
 
 	^InstructionLengths at: anInteger + 1!
 
-on: aCompiledMethod 
+on: aCompiledMethod
 	"Answer a new instance of the receiver to interpret the <CompiledCode> argument."
 
-	^self on: aCompiledMethod for: nil!
+	^self new
+		method: aCompiledMethod!
 
-on: aCompiledCode for: anInstructionInterpreter 
+on: aCompiledCode for: anInstructionInterpreter
 	"Answer a new instance of the receiver to interpret, aMethod, which will dispatch
 	instructions to the specified <bytecodeInterpreter> client."
 
-	^(self new)
-		method: aCompiledCode;
-		interpreter: anInstructionInterpreter! !
+	^(self on: aCompiledCode)
+		interpreter: anInstructionInterpreter;
+		yourself! !
+!ByteCodeDispatcher class categoriesFor: #bytecodeRuns!constants!must not strip!private! !
 !ByteCodeDispatcher class categoriesFor: #byteCodeSegments:!interpreting!private! !
 !ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
 !ByteCodeDispatcher class categoriesFor: #indexOfIP:in:!interpreting!private! !
-!ByteCodeDispatcher class categoriesFor: #initialize!initializing!public! !
+!ByteCodeDispatcher class categoriesFor: #initialize!development!initializing!public! !
 !ByteCodeDispatcher class categoriesFor: #instructions!accessing!public! !
 !ByteCodeDispatcher class categoriesFor: #lengthOfInstruction:!interpreting!private! !
 !ByteCodeDispatcher class categoriesFor: #on:!instance creation!public! !

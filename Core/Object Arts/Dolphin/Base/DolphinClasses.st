@@ -41,7 +41,7 @@ Object subclass: #Bytecode
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #ByteCodeDispatcher
-	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode'
+	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
 	classVariableNames: 'FirstShowSpecialSend InstructionLengths Instructions RunStarts'
 	poolDictionaries: 'OpcodePool'
 	classInstanceVariableNames: ''!
@@ -1372,7 +1372,7 @@ RelativeFileLocator subclass: #PackageRelativeFileLocator
 	classInstanceVariableNames: ''!
 InstructionInterpreter subclass: #MessageSendCollector
 	instanceVariableNames: 'messageBlock superMessageBlock'
-	classVariableNames: ''
+	classVariableNames: 'SendInstructions'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Link variableSubclass: #Process
@@ -1574,11 +1574,6 @@ SourceFiler subclass: #ChunkSourceFiler
 	instanceVariableNames: 'sourceFileIndex'
 	classVariableNames: 'NormalizeEolsMask'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-SourceManager subclass: #VeryBasicSourceManager
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 StackFrame subclass: #BlockFrame
 	instanceVariableNames: ''
