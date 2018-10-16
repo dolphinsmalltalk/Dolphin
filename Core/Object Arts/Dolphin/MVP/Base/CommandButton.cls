@@ -120,7 +120,8 @@ initialize
 	"We don't use IDOK as it has some nasty behaviour, such as insisting on being the default
 	button when focus is moved, even if another default button exists."
 
-	StandardCommands := (IdentityDictionary new: 10)
+	self addClassConstant: 'StandardCommands'
+		value: ((IdentityDictionary new: 10)
 				at: #cancel put: IDCANCEL;
 				at: #abort put: IDABORT;
 				at: #retry put: IDRETRY;
@@ -132,7 +133,8 @@ initialize
 				at: #retry put: IDTRYAGAIN;
 				at: #ignore put: IDCONTINUE;
 				shrink;
-				yourself! !
+				isImmutable: true;
+				yourself)! !
 !CommandButton class categoriesFor: #icon!constants!public! !
 !CommandButton class categoriesFor: #initialize!development!initializing!private! !
 

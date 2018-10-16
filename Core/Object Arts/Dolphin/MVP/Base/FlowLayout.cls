@@ -224,7 +224,7 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!FlowLayout class categoriesFor: #initialize!helpers!public! !
+!FlowLayout class categoriesFor: #initialize!development!helpers!public! !
 !FlowLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !FlowLayout class categoriesFor: #stbVersion!constants!public! !
 

@@ -418,5 +418,5 @@ wmPrint: message wParam: wParam lParam: lParam
 
 initialize
 	PinImageList := nil! !
-!SlidingCardTray class categoriesFor: #initialize!public! !
+!SlidingCardTray class categoriesFor: #initialize!initializing!private! !
 

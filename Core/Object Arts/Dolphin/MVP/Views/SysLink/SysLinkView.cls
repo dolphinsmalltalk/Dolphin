@@ -161,7 +161,7 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!SysLinkView class categoriesFor: #initialize!initializing!public! !
+!SysLinkView class categoriesFor: #initialize!development!initializing!private! !
 !SysLinkView class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 !SysLinkView class categoriesFor: #winClassName!constants!private! !
 

@@ -247,7 +247,7 @@ text: aString
 	super text: aString.
 	commandDescription description: aString! !
 !PushButton categoriesFor: #baseCreationStyle!private!realizing/unrealizing! !
-!PushButton categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!must not strip!private! !
+!PushButton categoriesFor: #bmSetStyle:wParam:lParam:!event handling-win32!private! !
 !PushButton categoriesFor: #command:id:!commands!private! !
 !PushButton categoriesFor: #defaultWindowStyle!constants!private! !
 !PushButton categoriesFor: #getNote!helpers!private! !
@@ -277,6 +277,9 @@ PushButton methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(
 
 !PushButton class methodsFor!
 
+buttonMessageMappings
+	^{BM_SETSTYLE -> #bmSetStyle:wParam:lParam:}!
+
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
@@ -287,14 +290,16 @@ initialize
 		PushButton initialize
 	"
 
-	self registerMessages: {BM_SETSTYLE -> #bmSetStyle:wParam:lParam:}.
-	ButtonStyleMap := IdentityDictionary new
+	self registerMessageMappings: self buttonMessageMappings.
+	self addClassConstant: 'ButtonStyleMap'
+		value: (IdentityDictionary new
 				at: #push put: BS_PUSHBUTTON;
 				at: #toggle put: BS_CHECKBOX | BS_PUSHLIKE;
 				at: #check put: BS_CHECKBOX;
 				at: #link put: BS_COMMANDLINK;
 				shrink;
-				yourself.
+				isImmutable: true;
+				yourself).
 
 	"Implementation makes some assumptions about the nature of the default button encoding in the style flags"
 	self assert: [BS_DEFPUSHBUTTON == 1 and: [BS_DEFCOMMANDLINK == (BS_COMMANDLINK | BS_DEFPUSHBUTTON)]]!
@@ -380,13 +385,14 @@ stbVersion
 	^14!
 
 uninitialize
-	self unregisterMessages: {BM_SETSTYLE}!
+	self unregisterMessageMappings: {BM_SETSTYLE}!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."
 
 	^'BUTTON'
 ! !
+!PushButton class categoriesFor: #buttonMessageMappings!constants!must not strip!private! !
 !PushButton class categoriesFor: #icon!constants!public! !
 !PushButton class categoriesFor: #initialize!development!initializing!private! !
 !PushButton class categoriesFor: #resource_Cancel_button!public!resources-views! !
@@ -398,6 +404,6 @@ winClassName
 !PushButton class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
 !PushButton class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !PushButton class categoriesFor: #stbVersion!public! !
-!PushButton class categoriesFor: #uninitialize!class hierarchy-removing!development!initializing!private! !
+!PushButton class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !PushButton class categoriesFor: #winClassName!constants!private! !
 

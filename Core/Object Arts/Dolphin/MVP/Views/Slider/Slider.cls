@@ -6,6 +6,7 @@ ValueConvertingControlView subclass: #Slider
 	poolDictionaries: 'TrackBarConstants'
 	classInstanceVariableNames: ''!
 Slider guid: (GUID fromString: '{425d0eab-542e-11d3-998b-d5ca2c3c1d61}')!
+Slider addClassConstant: 'TickStyleMask' value: 16rC!
 Slider comment: 'Slider is a <valueView> implementing the Windows "msctls_trackbar32" common control. The <valueModel> associated with a Slider must always yield an <integer> value when mapped through the installed type converter. A Slider will normally be used in conjunction with a <NumberPresenter>.
 
 Thanks to Ian Bartholomew for donating his original version of this class.'!
@@ -458,19 +459,23 @@ initialize
 		self initialize
 	"
 
-	TickStyleMask := ##(TBS_TOP | TBS_BOTH | TBS_BOTTOM).
-	HorizontalTickStyles := (IdentityDictionary new)
+	self addClassConstant: 'TickStyleMask' value: ##(TBS_TOP | TBS_BOTH | TBS_BOTTOM).
+	self addClassConstant: 'HorizontalTickStyles'
+		value: (IdentityDictionary new
 				at: #top put: TBS_TOP;
 				at: #bottom put: TBS_BOTTOM;
 				at: #bothSides put: TBS_BOTH;
 				shrink;
-				yourself.
-	VerticalTickStyles := (IdentityDictionary new)
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'VerticalTickStyles'
+		value: (IdentityDictionary new
 				at: #left put: TBS_LEFT;
 				at: #right put: TBS_RIGHT;
 				at: #bothSides put: TBS_BOTH;
 				shrink;
-				yourself!
+				shrink;
+				yourself)!
 
 stbConvertFromVersion9: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,
@@ -484,7 +489,7 @@ winClassName
 	^'msctls_trackbar32'! !
 !Slider class categoriesFor: #defaultModel!models!public! !
 !Slider class categoriesFor: #icon!constants!public! !
-!Slider class categoriesFor: #initialize!initializing!private! !
+!Slider class categoriesFor: #initialize!development!initializing!private! !
 !Slider class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !Slider class categoriesFor: #winClassName!constants!private! !
 

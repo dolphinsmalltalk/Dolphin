@@ -2,11 +2,14 @@
 
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
-	classVariableNames: 'DisableExpandAllMask NonVirtualMask TvnMap UpdateModeMask UpdateModes'
+	classVariableNames: 'DisableExpandAllMask NonVirtualMask UpdateModeMask UpdateModes'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TreeView guid: (GUID fromString: '{87b4c732-026e-11d3-9fd7-00a0cc3e4a32}')!
-TreeView addClassConstant: 'TvnMap' value: #(#tvnSelChanging: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #nmDummy: #tvnGetInfoTip: #nmDummy: #nmDummy: #tvnItemChanging: #nmDummy: #tvnItemChanged: #tvnAsyncDraw: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmSelChanged: #nmGetDispInfoW: #nmSetDispInfoW: #tvnItemExpanding: #tvnItemExpanded: #nmBeginDrag: #nmBeginRDrag: #nmDeleteItem: #nmBeginLabelEdit: #nmEndLabelEdit: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
+TreeView addClassConstant: 'DisableExpandAllMask' value: 16r1!
+TreeView addClassConstant: 'NonVirtualMask' value: 16r2!
+TreeView addClassConstant: 'UpdateModeMask' value: 16r6!
+TreeView addClassConstant: 'UpdateModes' value: #(#dynamic #static #lazy)!
 TreeView comment: 'TreeView is a <treeView> wrapping the Windows "SysTreeView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <treeModel>. 
 
 A TreeView is capable of displaying its items in one of three modes (#smallIcons, #largeIcons, #noIcons) which can be set using the #viewMode aspect. 
@@ -576,7 +579,24 @@ nmDeleteItem: pNMHDR
 nmNotify: pNMHDR
 	"Private - Handler for a redirected TreeView WM_NOTIFY message."
 
-	^(TvnMap lookup: TVN_FIRST - (pNMHDR sdwordAtOffset: 8))
+	^(##((Array new: TVN_FIRST - TVN_ENDLABELEDITW + 1 withAll: #nmDummy:)
+		at: TVN_FIRST - TVN_SELCHANGINGW + 1 put: #tvnSelChanging:;
+		at: TVN_FIRST - TVN_SELCHANGEDW + 1 put: #nmSelChanged:;
+		at: TVN_FIRST - TVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
+		at: TVN_FIRST - TVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
+		at: TVN_FIRST - TVN_ITEMEXPANDINGW + 1 put: #tvnItemExpanding:;
+		at: TVN_FIRST - TVN_ITEMEXPANDEDW + 1 put: #tvnItemExpanded:;
+		at: TVN_FIRST - TVN_BEGINDRAGW + 1 put: #nmBeginDrag:;
+		at: TVN_FIRST - TVN_BEGINRDRAGW + 1 put: #nmBeginRDrag:;
+		at: TVN_FIRST - TVN_DELETEITEMW + 1 put: #nmDeleteItem:;
+		at: TVN_FIRST - TVN_KEYDOWN + 1 put: #nmKeyDown:;
+		at: TVN_FIRST - TVN_GETINFOTIPW + 1 put: #tvnGetInfoTip:;
+		at: TVN_FIRST - TVN_ASYNCDRAW + 1 put: #tvnAsyncDraw:;
+		at: TVN_FIRST - TVN_ITEMCHANGINGW + 1 put: #tvnItemChanging:;
+		at: TVN_FIRST - TVN_ITEMCHANGEDW + 1 put: #tvnItemChanged:;
+		at: TVN_FIRST - TVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEdit:;
+		at: TVN_FIRST - TVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
+		yourself) lookup: ##(TVN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -1095,7 +1115,7 @@ tvnItemExpanding: pNMHDR
 	^nil	"accept the default processing"!
 
 tvnSelChanging: pNMHDR
-	"Private - Default handler for the TVN_SELCHANGING notification message.
+	"Private - Default handler for the TVN_SELCHANGINGW notification message.
 	Answer false to permit the selection to change, true to prevent it.
 	Note that the tree view sends this for all selection changes, whether programmatically
 	or user initiated."
@@ -1328,39 +1348,10 @@ initialize
 		TreeView initialize
 	"
 
-	self initializeNotificationMap.
-	DisableExpandAllMask := 1.
-	NonVirtualMask := 2.
-	UpdateModes := #(#dynamic #static #lazy).
-	UpdateModeMask := 16r6!
-
-initializeNotificationMap
-	"Private - Initialise the map of TreeView notification codes to selector/parameter-class pairs.
-	N.B. This method must not be stripped in order to ensure that the notification event handler
-	methods (which are looked up in the table) are preserved.
-		self initializeNotificationMap
-	"
-
-	| tvnMap |
-	tvnMap := (Array new: TVN_FIRST - TVN_LAST withAll: #nmDummy:)
-				at: TVN_FIRST - TVN_SELCHANGING put: #tvnSelChanging:;
-				at: TVN_FIRST - TVN_SELCHANGEDW put: #nmSelChanged:;
-				at: TVN_FIRST - TVN_GETDISPINFOW put: #nmGetDispInfoW:;
-				at: TVN_FIRST - TVN_SETDISPINFOW put: #nmSetDispInfoW:;
-				at: TVN_FIRST - TVN_ITEMEXPANDINGW put: #tvnItemExpanding:;
-				at: TVN_FIRST - TVN_ITEMEXPANDEDW put: #tvnItemExpanded:;
-				at: TVN_FIRST - TVN_BEGINDRAGW put: #nmBeginDrag:;
-				at: TVN_FIRST - TVN_BEGINRDRAGW put: #nmBeginRDrag:;
-				at: TVN_FIRST - TVN_DELETEITEMW put: #nmDeleteItem:;
-				at: TVN_FIRST - TVN_BEGINLABELEDITW put: #nmBeginLabelEdit:;
-				at: TVN_FIRST - TVN_ENDLABELEDITW put: #nmEndLabelEdit:;
-				at: TVN_FIRST - TVN_KEYDOWN put: #nmKeyDown:;
-				at: TVN_FIRST - TVN_GETINFOTIPW put: #tvnGetInfoTip:;
-				at: TVN_FIRST - TVN_ASYNCDRAW put: #tvnAsyncDraw:;
-				at: TVN_FIRST - TVN_ITEMCHANGINGW put: #tvnItemChanging:;
-				at: TVN_FIRST - TVN_ITEMCHANGEDW put: #tvnItemChanged:;
-				yourself.
-	self addClassConstant: 'TvnMap' value: tvnMap!
+	self addClassConstant: 'DisableExpandAllMask' value: 1.
+	self addClassConstant: 'NonVirtualMask' value: 2.
+	self addClassConstant: 'UpdateModes' value: #(#dynamic #static #lazy).
+	self addClassConstant: 'UpdateModeMask' value: 16r6!
 
 stbConvertFromVersion10: anArray 
 	"Private - Perform an STB conversion from a version 10 <TreeView> to version 11,
@@ -1387,8 +1378,7 @@ winClassName
 	^'SysTreeView32'! !
 !TreeView class categoriesFor: #defaultModel!models!public! !
 !TreeView class categoriesFor: #icon!constants!public! !
-!TreeView class categoriesFor: #initialize!initializing!private! !
-!TreeView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
+!TreeView class categoriesFor: #initialize!development!initializing!private! !
 !TreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
 !TreeView class categoriesFor: #updateModes!accessing!private! !
 !TreeView class categoriesFor: #winClassName!constants!private! !

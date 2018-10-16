@@ -2,10 +2,11 @@
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
-	classVariableNames: 'LabelsMask TbnMap'
+	classVariableNames: 'LabelsMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
 Toolbar guid: (GUID fromString: '{87b4c72f-026e-11d3-9fd7-00a0cc3e4a32}')!
+Toolbar addClassConstant: 'LabelsMask' value: 16r1!
 Toolbar comment: '`Toolbar` is a `<compositeView>` implementing the Windows _ToolbarWindow32_ common control.
 
 Toolbar holds a list of `<ToolbarItem>` items matching the order of items in the control. Items may be added and deleted once the view has been created.  It also allows a name to be associated with each item. 
@@ -482,7 +483,20 @@ layoutManager: aLayoutManager
 nmNotify: pNMHDR
 	"Private - Handler for a WM_NOTIFY message."
 
-	^(TbnMap lookup: (pNMHDR sdwordAtOffset: 8))
+	^(##((Array new: TBN_FIRST - TBN_GETBUTTONINFOW + 1 withAll: #nmDummy:)
+		at: TBN_FIRST - TBN_BEGINDRAG + 1 put: #tbnBeginDrag:;
+		at: TBN_FIRST - TBN_ENDDRAG + 1 put: #tbnEndDrag:;
+		at: TBN_FIRST - TBN_BEGINADJUST + 1 put: #tbnBeginAdjust:;
+		at: TBN_FIRST - TBN_ENDADJUST + 1 put: #tbnEndAdjust:;
+		at: TBN_FIRST - TBN_RESET + 1 put: #tbnReset:;
+		at: TBN_FIRST - TBN_QUERYINSERT put: #tbnQueryInsert:;
+		at: TBN_FIRST - TBN_QUERYDELETE + 1 put: #tbnQueryDelete:;
+		at: TBN_FIRST - TBN_TOOLBARCHANGE + 1 put: #tbnToolbarChange:;
+		at: TBN_FIRST - TBN_CUSTHELP + 1 put: #tbnCustHelp:;
+		at: TBN_FIRST - TBN_DROPDOWN + 1 put: #tbnDropDown:;
+		at: TBN_FIRST - TBN_CLOSEUP + 1 put: #tbnCloseUp:;
+		at: TBN_FIRST - TBN_GETBUTTONINFOW + 1 put: #tbnGetButtonInfo:;
+		yourself) lookup: ##(TBN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -1168,30 +1182,7 @@ initialize
 		Toolbar initialize
 	"
 
-	self initializeNotificationMap.
-	LabelsMask := 1!
-
-initializeNotificationMap
-	"Private - Initialise the map of Toolbar notification codes to selector/parameter-class pairs.
-	N.B. Must not be stripped in order to preserve notification handlers.#
-		self initializeNotificationMap
-	"
-
-	TbnMap := (IdentityDictionary new: 14)			
-			at: TBN_GETBUTTONINFOW	put: #tbnGetButtonInfo:;
-			at: TBN_BEGINDRAG			put: #tbnBeginDrag:;
-			at: TBN_ENDDRAG				put: #tbnEndDrag:;
-			at: TBN_BEGINADJUST			put: #tbnBeginAdjust:;	
-			at: TBN_ENDADJUST			put: #tbnEndAdjust:;
-			at: TBN_RESET				put: #tbnReset:;
-			at: TBN_QUERYINSERT			put: #tbnQueryInsert:;
-			at: TBN_QUERYDELETE			put: #tbnQueryDelete:;
-			at: TBN_TOOLBARCHANGE	put: #tbnToolbarChange:;
-			at: TBN_CUSTHELP			put: #tbnCustHelp:;
-			at: TBN_DROPDOWN			put: #tbnDropDown:;
-			at: TBN_CLOSEUP				put: #tbnCloseUp:;
-			shrink;
-			yourself!
+	self addClassConstant: 'LabelsMask' value: 1!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1272,8 +1263,7 @@ winClassName
 
 	^'ToolbarWindow32'
 ! !
-!Toolbar class categoriesFor: #initialize!initializing!private! !
-!Toolbar class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
+!Toolbar class categoriesFor: #initialize!development!initializing!private! !
 !Toolbar class categoriesFor: #resource_Default_view!public!resources-views! !
 !Toolbar class categoriesFor: #resource_Edit_tools!public!resources-views! !
 !Toolbar class categoriesFor: #resource_File_tools!public!resources-views! !

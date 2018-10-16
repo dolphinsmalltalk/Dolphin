@@ -2,10 +2,11 @@
 
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
-	classVariableNames: 'AlignmentMap AlignmentMask UdnMap'
+	classVariableNames: 'AlignmentMap AlignmentMask'
 	poolDictionaries: 'UpDownControlConstants'
 	classInstanceVariableNames: ''!
 SpinButton guid: (GUID fromString: '{425d0eac-542e-11d3-998b-d5ca2c3c1d61}')!
+SpinButton addClassConstant: 'AlignmentMask' value: 16rC!
 SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down common control. The <valueModel> associated with a SpinButton must always yield an <integer> value when mapped through the installed type converter.
 
 Note that comctl32.dll version 5.80 or later is required, mandating at least Internet Explorer 5 on the target machine. This is to support the 32-bit integer range, 16-bit seeming hardly worthwhile.
@@ -182,11 +183,9 @@ isWraparound: aBoolean
 nmNotify: pNMHDR
 	"Private - Handle a redirected WM_NOTIFY message from the control."
 
-	"Implementation Note: Rather than create the appropriate header structure object here, we
-	delay that until the handler, because most of the time we don't need to look at the
-	notification at all."
-
-	^(UdnMap lookup: UDN_FIRST - (pNMHDR sdwordAtOffset: 8))
+	^(##((Array new: UDN_FIRST - UDN_DELTAPOS + 1 withAll: #nmDummy:)
+		at: UDN_FIRST - UDN_DELTAPOS + 1 put: #udnDeltaPos:;
+		yourself) lookup: ##(UDN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -377,22 +376,15 @@ initialize
 		self initialize
 	"
 
-	AlignmentMask := ##(UDS_ALIGNLEFT | UDS_ALIGNRIGHT).
-	AlignmentMap := IdentityDictionary new
+	self addClassConstant: 'AlignmentMask' value: ##(UDS_ALIGNLEFT | UDS_ALIGNRIGHT).
+	self addClassConstant: 'AlignmentMap'
+		value: (IdentityDictionary new
 				at: #left put: UDS_ALIGNLEFT;
 				at: #right put: UDS_ALIGNRIGHT;
 				at: #unattached put: 0;
 				shrink;
-				yourself.
-	self initializeNotificationMap!
-
-initializeNotificationMap
-	"Implementation Note: At present there is only one notification, but follow the normal
-	notification map idiom in case further events are added at a later date."
-
-	UdnMap := (Array new: 1)
-				at: UDN_FIRST - UDN_DELTAPOS put: #udnDeltaPos:;
-				yourself!
+				isImmutable: true;
+				yourself)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
@@ -400,7 +392,6 @@ winClassName
 	^'msctls_updown32'! !
 !SpinButton class categoriesFor: #defaultModel!models!public! !
 !SpinButton class categoriesFor: #icon!constants!public! !
-!SpinButton class categoriesFor: #initialize!initializing!private! !
-!SpinButton class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
+!SpinButton class categoriesFor: #initialize!development!initializing!private! !
 !SpinButton class categoriesFor: #winClassName!constants!private! !
 

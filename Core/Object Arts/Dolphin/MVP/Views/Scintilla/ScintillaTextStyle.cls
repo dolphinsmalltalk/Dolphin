@@ -6,12 +6,12 @@ ScintillaAttribute subclass: #ScintillaTextStyle
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaTextStyle guid: (GUID fromString: '{441d5422-db7d-4872-a16d-d6ca9d88e0b8}')!
-ScintillaTextStyle addClassConstant: 'EolFilledMask' value: 192!
-ScintillaTextStyle addClassConstant: 'HotspotMask' value: 3072!
-ScintillaTextStyle addClassConstant: 'InvisibleMask' value: 12288!
-ScintillaTextStyle addClassConstant: 'ItalicMask' value: 12!
-ScintillaTextStyle addClassConstant: 'ReadOnlyMask' value: 768!
-ScintillaTextStyle addClassConstant: 'UnderlinedMask' value: 48!
+ScintillaTextStyle addClassConstant: 'EolFilledMask' value: 16rC0!
+ScintillaTextStyle addClassConstant: 'HotspotMask' value: 16rC00!
+ScintillaTextStyle addClassConstant: 'InvisibleMask' value: 16r3000!
+ScintillaTextStyle addClassConstant: 'ItalicMask' value: 16rC!
+ScintillaTextStyle addClassConstant: 'ReadOnlyMask' value: 16r300!
+ScintillaTextStyle addClassConstant: 'UnderlinedMask' value: 16r30!
 ScintillaTextStyle comment: 'ScintillaStyle instances represent the visual styles that can be applied to colour text in a particular <ScintillaView>.
 
 There are a number of predefined styles:
@@ -395,6 +395,81 @@ weight: anInteger
 
 !ScintillaTextStyle class methodsFor!
 
+buildPropertyMap
+	^IdentityDictionary new
+		at: #forecolor
+			put: (ScintillaPropertyDescriptor
+					getSelector: #forecolor
+					defaultValue: Color black
+					setMessage: SCI_STYLESETFORE);
+		at: #backcolor
+			put: (ScintillaPropertyDescriptor
+					getSelector: #backcolor
+					defaultValue: Color white
+					setMessage: SCI_STYLESETBACK);
+		at: #fontName
+			put: (ScintillaPropertyDescriptor
+					getSelector: #fontName
+					defaultValue: nil
+					setMessage: SCI_STYLESETFONT);
+		at: #isBold
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isBold
+					defaultValue: false
+					setMessage: SCI_STYLESETBOLD);
+		at: #isItalic
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isItalic
+					defaultValue: false
+					setMessage: SCI_STYLESETITALIC);
+		at: #isUnderlined
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isUnderlined
+					defaultValue: false
+					setMessage: SCI_STYLESETUNDERLINE);
+		at: #case
+			put: (ScintillaPropertyDescriptor
+					getSelector: #case
+					defaultValue: SC_CASE_MIXED
+					setMessage: SCI_STYLESETCASE);
+		at: #characterSet
+			put: (ScintillaPropertyDescriptor
+					getSelector: #characterSet
+					defaultValue: SC_CHARSET_DEFAULT
+					setMessage: SCI_STYLESETCHARACTERSET);
+		at: #pointSize
+			put: (ScintillaPropertyDescriptor
+					getSelector: #centiPointSize
+					defaultValue: nil
+					setMessage: SCI_STYLESETSIZEFRACTIONAL);
+		at: #isBackcolorExtendedToEndOfLine
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isBackcolorExtendedToEndOfLine
+					defaultValue: false
+					setMessage: SCI_STYLESETEOLFILLED);
+		at: #isChangeable
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isChangeable
+					defaultValue: true
+					setMessage: SCI_STYLESETCHANGEABLE);
+		at: #isHotspot
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isHotspot
+					defaultValue: false
+					setMessage: SCI_STYLESETHOTSPOT);
+		at: #isVisible
+			put: (ScintillaPropertyDescriptor
+					getSelector: #isVisible
+					defaultValue: true
+					setMessage: SCI_STYLESETVISIBLE);
+		at: #weight
+			put: (ScintillaPropertyDescriptor
+					getSelector: #weight
+					defaultValue: SC_WEIGHT_NORMAL
+					setMessage: SCI_STYLESETWEIGHT);
+		shrink;
+		yourself!
+
 caseNames
 	^#(#mixed #upper #lower #camel)!
 
@@ -413,78 +488,7 @@ initialize
 	self addClassConstant: 'ReadOnlyMask' value: 2r1100000000.
 	self addClassConstant: 'HotspotMask' value: 2r110000000000.
 	self addClassConstant: 'InvisibleMask' value: 2r11000000000000.
-	propertyMap := (IdentityDictionary new)
-				at: #forecolor
-					put: (ScintillaPropertyDescriptor
-							getSelector: #forecolor
-							defaultValue: Color black
-							setMessage: SCI_STYLESETFORE);
-				at: #backcolor
-					put: (ScintillaPropertyDescriptor
-							getSelector: #backcolor
-							defaultValue: Color white
-							setMessage: SCI_STYLESETBACK);
-				at: #fontName
-					put: (ScintillaPropertyDescriptor
-							getSelector: #fontName
-							defaultValue: nil
-							setMessage: SCI_STYLESETFONT);
-				at: #isBold
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isBold
-							defaultValue: false
-							setMessage: SCI_STYLESETBOLD);
-				at: #isItalic
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isItalic
-							defaultValue: false
-							setMessage: SCI_STYLESETITALIC);
-				at: #isUnderlined
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isUnderlined
-							defaultValue: false
-							setMessage: SCI_STYLESETUNDERLINE);
-				at: #case
-					put: (ScintillaPropertyDescriptor
-							getSelector: #case
-							defaultValue: SC_CASE_MIXED
-							setMessage: SCI_STYLESETCASE);
-				at: #characterSet
-					put: (ScintillaPropertyDescriptor
-							getSelector: #characterSet
-							defaultValue: SC_CHARSET_DEFAULT
-							setMessage: SCI_STYLESETCHARACTERSET);
-				at: #pointSize
-					put: (ScintillaPropertyDescriptor
-							getSelector: #centiPointSize
-							defaultValue: nil
-							setMessage: SCI_STYLESETSIZEFRACTIONAL);
-				at: #isBackcolorExtendedToEndOfLine
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isBackcolorExtendedToEndOfLine
-							defaultValue: false
-							setMessage: SCI_STYLESETEOLFILLED);
-				at: #isChangeable
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isChangeable
-							defaultValue: true
-							setMessage: SCI_STYLESETCHANGEABLE);
-				at: #isHotspot
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isHotspot
-							defaultValue: false
-							setMessage: SCI_STYLESETHOTSPOT);
-				at: #isVisible
-					put: (ScintillaPropertyDescriptor
-							getSelector: #isVisible
-							defaultValue: true
-							setMessage: SCI_STYLESETVISIBLE);
-				at: #weight
-					put: (ScintillaPropertyDescriptor
-							getSelector: #weight
-							defaultValue: SC_WEIGHT_NORMAL
-							setMessage: SCI_STYLESETWEIGHT);
-				shrink;
+	propertyMap := self buildPropertyMap
 				isImmutable: true;
 				yourself.
 	predefinedStyleNames := IdentityDictionary new: STYLE_LASTPREDEFINED + 1.
@@ -541,9 +545,10 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
+!ScintillaTextStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
 !ScintillaTextStyle class categoriesFor: #caseNames!constants!public! !
 !ScintillaTextStyle class categoriesFor: #icon!constants!public! !
-!ScintillaTextStyle class categoriesFor: #initialize!initializing!public! !
+!ScintillaTextStyle class categoriesFor: #initialize!development!initializing!public! !
 !ScintillaTextStyle class categoriesFor: #name:!instance creation!public! !
 !ScintillaTextStyle class categoriesFor: #new!instance creation!public! !
 !ScintillaTextStyle class categoriesFor: #normal!instance creation!public! !

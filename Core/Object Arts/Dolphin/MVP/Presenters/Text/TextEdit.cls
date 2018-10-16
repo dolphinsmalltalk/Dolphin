@@ -6,6 +6,12 @@ ValueConvertingControlView subclass: #TextEdit
 	poolDictionaries: 'TextEditConstants'
 	classInstanceVariableNames: ''!
 TextEdit guid: (GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
+TextEdit addClassConstant: 'FindDisabledMask' value: 16r20!
+TextEdit addClassConstant: 'ModifiedMask' value: 16r8!
+TextEdit addClassConstant: 'ReadOnlyMask' value: 16r1!
+TextEdit addClassConstant: 'StaticMask' value: 16r10!
+TextEdit addClassConstant: 'UpdatePerCharMask' value: 16r2!
+TextEdit addClassConstant: 'WantTabMask' value: 16r4!
 TextEdit comment: 'TextEdit is a <valueView> class that implements the Windows "EDIT" control for the displaying and editing of single line text. The <valueModel> associated with a TextEdit must always yield a <readableString> value when mapped through the installed type converter. A TextEdit will normally be used in conjunction with a <TextPresenter>. 
 
 The alignment of the text can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right). The #updatePerChar aspect, if set to true, will ensure that the editor''s associated model will be kept up to date with the view as each character is typed. If false, the update only takes place when the view loses focus.
@@ -198,7 +204,16 @@ clearSelection
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(EnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
+	^((IdentityDictionary new
+		at: 16r100 put: #enSetFocus;
+		at: 16r200 put: #enKillFocus;
+		at: 16r300 put: #enChange;
+		at: 16r400 put: #enUpdate;
+		at: 16r500 put: #errorOutOfMemory;
+		at: 16r501 put: #enMaxText;
+		shrink;
+		yourself) lookup: anInteger)
+		ifNotNil: [:selector | self perform: selector]!
 
 copySelection
 	"Copy the current selection to the clipboard."
@@ -1418,43 +1433,29 @@ initialize
 			TextEdit initialize
 	"
 
-	AlignmentMap := (IdentityDictionary new)
+	self addClassConstant: 'AlignmentMap'
+		value: (IdentityDictionary new
 				at: #left put: ES_LEFT;
 				at: #right put: ES_RIGHT;
 				at: #center put: ES_CENTER;
 				shrink;
-				yourself.
-	FormatMap := (IdentityDictionary new)
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'FormatMap'
+		value: (IdentityDictionary new
 				at: #mixed put: 0;
 				at: #uppercase put: ES_UPPERCASE;
 				at: #lowercase put: ES_LOWERCASE;
 				at: #numeric put: ES_NUMBER;
 				shrink;
-				yourself.
-	self initializeNotificationMap.
-	ReadOnlyMask := 16r01.
-	UpdatePerCharMask := 16r02.
-	WantTabMask := 16r04.
-	ModifiedMask := 16r08.
-	StaticMask := 16r10.
-	FindDisabledMask := 16r20.!
-
-initializeNotificationMap
-	"Private - Initialise the receiver's map between notification codes and the selector of
-	the corresponding event handlers in the receiver. N.B. Must not be stripped in order
-	to prevent notification handlers from being stripped."
-
-	EnMap := IdentityDictionary new
-				at: 16r100 put: #enSetFocus;
-				at: 16r200 put: #enKillFocus;
-				at: 16r300 put: #enChange;
-				at: 16r400 put: #enUpdate;
-				at: 16r500 put: #errorOutOfMemory;
-				at: 16r501 put: #enMaxText;
-				shrink; 
-				yourself.
-
-!
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'ReadOnlyMask' value: 16r01.
+	self addClassConstant: 'UpdatePerCharMask' value: 16r02.
+	self addClassConstant: 'WantTabMask' value: 16r04.
+	self addClassConstant: 'ModifiedMask' value: 16r08.
+	self addClassConstant: 'StaticMask' value: 16r10.
+	self addClassConstant: 'FindDisabledMask' value: 16r20!
 
 onStartup
 	"Lookup the value of the FindDialog message.
@@ -1470,7 +1471,6 @@ winClassName
 ! !
 !TextEdit class categoriesFor: #icon!constants!public! !
 !TextEdit class categoriesFor: #initialize!development!initializing!private! !
-!TextEdit class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
 !TextEdit class categoriesFor: #onStartup!event handling!public! !
 !TextEdit class categoriesFor: #winClassName!constants!private! !
 

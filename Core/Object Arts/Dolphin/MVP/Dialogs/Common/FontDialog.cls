@@ -76,5 +76,5 @@ initialize
 	hookHandlers := IdentityDictionary new.
 	hookHandlers at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:! !
 !FontDialog class categoriesFor: #defaultModel!models!public! !
-!FontDialog class categoriesFor: #initialize!initializing!private! !
+!FontDialog class categoriesFor: #initialize!development!initializing!private! !
 

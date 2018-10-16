@@ -114,9 +114,11 @@ name: anObject
 	name := anObject.
 	id := name isInteger ifTrue: [name]!
 
-newForLine: anInteger 
+newForLine: anInteger
 	"Answer a new <ScintillaMarker> of the type described by the receiver, for insertion
 	at the specified line."
+
+	"This method is in the 'must not strip' category to prevent ScintillaMarker being removed if not otherwise referenced."
 
 	^ScintillaMarker definition: self line: anInteger!
 
@@ -160,7 +162,7 @@ view: aScintillaView
 !ScintillaMarkerDefinition categoriesFor: #glyphName:!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #name!accessing!public! !
 !ScintillaMarkerDefinition categoriesFor: #name:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!public! !
+!ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
 !ScintillaMarkerDefinition categoriesFor: #printableProperties!development!helpers!printing!private! !
 !ScintillaMarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
 !ScintillaMarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
@@ -278,6 +280,36 @@ boxTree
 					yourself);
 		yourself!
 
+buildPropertyMap
+	^IdentityDictionary new
+		at: #backcolor
+			put: (ScintillaPropertyDescriptor
+					getSelector: #basicBackcolor
+					defaultValue: Color white asParameter
+					setMessage: SCI_MARKERSETBACK);
+		at: #forecolor
+			put: (ScintillaPropertyDescriptor
+					getSelector: #basicForecolor
+					defaultValue: Color black asParameter
+					setMessage: SCI_MARKERSETFORE);
+		at: #glyphName
+			put: (ScintillaPropertyDescriptor
+					getSelector: #code
+					defaultValue: 0
+					setMessage: SCI_MARKERDEFINE);
+		at: #alpha
+			put: (ScintillaPropertyDescriptor
+					getSelector: #alpha
+					defaultValue: SC_ALPHA_NOALPHA
+					setMessage: SCI_MARKERSETALPHA);
+		at: #selectionBackcolor
+			put: (ScintillaPropertyDescriptor
+					getSelector: #basicSelectionBackcolor
+					defaultValue: Color red asParameter
+					setMessage: SCI_MARKERSETBACKSELECTED);
+		shrink;
+		yourself!
+
 circleTree
 	"Answer a set of marker definitions for fold margin markers in the 'Circle Tree' style. This
 	is like a flattened tree control using circular headers and curved joins."
@@ -376,40 +408,11 @@ initialize
 	self initialize
 	"
 
-	"Maps from a symbolic attribute name to a property descriptor that describes the selector to
-	access the value, the default value if unspecified (nil), and the Scintilla control message
-	to send to set the value."
-
-	propertyMap := (IdentityDictionary new)
-				at: #backcolor
-					put: (ScintillaPropertyDescriptor
-							getSelector: #basicBackcolor
-							defaultValue: Color white asParameter
-							setMessage: SCI_MARKERSETBACK);
-				at: #forecolor
-					put: (ScintillaPropertyDescriptor
-							getSelector: #basicForecolor
-							defaultValue: Color black asParameter
-							setMessage: SCI_MARKERSETFORE);
-				at: #glyphName
-					put: (ScintillaPropertyDescriptor
-							getSelector: #code
-							defaultValue: 0
-							setMessage: SCI_MARKERDEFINE);
-				at: #alpha
-					put: (ScintillaPropertyDescriptor
-							getSelector: #alpha
-							defaultValue: SC_ALPHA_NOALPHA
-							setMessage: SCI_MARKERSETALPHA);
-				at: #selectionBackcolor
-					put: (ScintillaPropertyDescriptor
-							getSelector: #basicSelectionBackcolor
-							defaultValue: Color red asParameter
-							setMessage: SCI_MARKERSETBACKSELECTED);
-				shrink;
+	propertyMap := self buildPropertyMap
 				isImmutable: true;
 				yourself.
-	FolderNames := (IdentityDictionary new)
+	self addClassConstant: 'FolderNames'
+		value: (IdentityDictionary new
 				at: #folderEnd put: SC_MARKNUM_FOLDEREND;
 				at: #folderOpenMid put: SC_MARKNUM_FOLDEROPENMID;
 				at: #folderMidTail put: SC_MARKNUM_FOLDERMIDTAIL;
@@ -419,7 +422,7 @@ initialize
 				at: #folderOpen put: SC_MARKNUM_FOLDEROPEN;
 				shrink;
 				isImmutable: true;
-				yourself!
+				yourself)!
 
 plusMinus
 	"Answer a set of marker definitions for fold margin markers in the 'Plus/Minus' style. This
@@ -499,11 +502,12 @@ visibleCharacterGlyphs
 		collect: [:each | each asSymbol]! !
 !ScintillaMarkerDefinition class categoriesFor: #arrows!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #boxTree!constants!public! !
+!ScintillaMarkerDefinition class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
 !ScintillaMarkerDefinition class categoriesFor: #circleTree!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #folderIds!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #foldMarkerNames!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #glyphNames!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #initialize!initializing!public! !
+!ScintillaMarkerDefinition class categoriesFor: #initialize!development!initializing!public! !
 !ScintillaMarkerDefinition class categoriesFor: #plusMinus!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !ScintillaMarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !

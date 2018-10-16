@@ -32,6 +32,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Basic Geometry';
 	add: '..\..\Base\Dolphin MVP Base';
 	add: '..\..\..\Registry\Dolphin Registry Access';
 	yourself).
@@ -57,7 +58,7 @@ MessageBoxAbstract subclass: #MessageBubble
 	classInstanceVariableNames: ''!
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
-	classVariableNames: 'TtnMap'
+	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
 

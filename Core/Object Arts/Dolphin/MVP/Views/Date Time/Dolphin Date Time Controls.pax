@@ -55,7 +55,7 @@ ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'DateTimeCommCtrlConstants'
-	classInstanceVariableNames: 'notificationMap'!
+	classInstanceVariableNames: ''!
 DateTimeCommonControl subclass: #DateTimePicker
 	instanceVariableNames: 'displayFormat'
 	classVariableNames: ''

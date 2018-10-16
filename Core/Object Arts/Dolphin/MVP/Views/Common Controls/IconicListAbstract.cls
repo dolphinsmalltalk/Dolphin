@@ -817,7 +817,8 @@ initialize
 		IconicListAbstract initialize
 	"
 
-	ViewModes := (IdentityDictionary new)
+	self addClassConstant: 'ViewModes'
+		value: (IdentityDictionary new
 				at: #noIcons put: 0 @ 0;
 				at: #smallIcons put: 16 @ 16;
 				at: #mediumIcons put: 24 @ 24;
@@ -825,7 +826,8 @@ initialize
 				at: #tileIcons put: 48 @ 48;
 				at: #extraLargeIcons put: 256 @ 256;
 				shrink;
-				yourself!
+				isImmutable: true;
+				yourself)!
 
 stbConvertFromVersion3: anArray 
 	"Private - Perform an STB conversion from a version 3 (or earlier) <View> to version 4, 
@@ -878,7 +880,7 @@ value: anObject
 
 viewModes
 	^ViewModes! !
-!IconicListAbstract class categoriesFor: #initialize!initializing!private! !
+!IconicListAbstract class categoriesFor: #initialize!development!initializing!private! !
 !IconicListAbstract class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
 !IconicListAbstract class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !IconicListAbstract class categoriesFor: #value:!evaluating!private! !

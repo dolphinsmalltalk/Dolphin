@@ -60,7 +60,7 @@ NMHDR subclass: #NMUPDOWN
 	classInstanceVariableNames: ''!
 ValueConvertingControlView subclass: #SpinButton
 	instanceVariableNames: ''
-	classVariableNames: 'AlignmentMap AlignmentMask UdnMap'
+	classVariableNames: 'AlignmentMap AlignmentMask'
 	poolDictionaries: 'UpDownControlConstants'
 	classInstanceVariableNames: ''!
 

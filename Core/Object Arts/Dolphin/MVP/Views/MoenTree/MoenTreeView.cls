@@ -6,6 +6,10 @@ View subclass: #MoenTreeView
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 MoenTreeView guid: (GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
+MoenTreeView addClassConstant: 'AutoExpandingMask' value: 16r8000000!
+MoenTreeView addClassConstant: 'HasButtonsMask' value: 16r1!
+MoenTreeView addClassConstant: 'MultilineMask' value: 16rA010!
+MoenTreeView addClassConstant: 'SingleLineMask' value: 16r8024!
 MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
 For more information on the underlying algorithms see:
@@ -1986,11 +1990,12 @@ initialize
 		line case too.
 	"
 
-	SingleLineMask := DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS.
-	MultilineMask := DT_WORDBREAK | DT_EDITCONTROL | DT_END_ELLIPSIS.
-	HasButtonsMask := 16r1.
-	AutoExpandingMask := 16r8000000.
-	ViewModes := IdentityDictionary new
+	self addClassConstant: 'SingleLineMask' value: DT_SINGLELINE | DT_VCENTER | DT_END_ELLIPSIS.
+	self addClassConstant: 'MultilineMask' value: DT_WORDBREAK | DT_EDITCONTROL | DT_END_ELLIPSIS.
+	self addClassConstant: 'HasButtonsMask' value: 16r1.
+	self addClassConstant: 'AutoExpandingMask' value: 16r8000000.
+	self addClassConstant: 'ViewModes'
+		value: (IdentityDictionary new
 				at: #noIcons put: -1 @ 0;
 				at: #smallIcons put: 16 @ 16;
 				at: #mediumIcons put: 24 @ 24;
@@ -1998,7 +2003,8 @@ initialize
 				at: #tileIcons put: 48 @ 48;
 				at: #custom put: nil;
 				shrink;
-				yourself!
+				isImmutable: true;
+				yourself)!
 
 stbConvertFromVersion10: anArray 
 	"Private - Perform an STB conversion from a version 9 (or earlier) <View> to version 10,

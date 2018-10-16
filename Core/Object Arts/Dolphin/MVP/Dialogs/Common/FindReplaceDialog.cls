@@ -74,6 +74,6 @@ ownerView: aView findWhat: find replaceWith: replace
 		replaceWith: replace;
 		showModal;
 		yourself! !
-!FindReplaceDialog class categoriesFor: #initialize!initializing!private! !
+!FindReplaceDialog class categoriesFor: #initialize!development!initializing!private! !
 !FindReplaceDialog class categoriesFor: #ownerView:findWhat:replaceWith:!constants!instance creation!public! !
 

@@ -2,10 +2,11 @@
 
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
-	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap RtnMap StreamingDescriptor StreamInIndex'
+	classVariableNames: 'AutoUrlDetectionMask Library ParagraphAlignmentMap StreamingDescriptor StreamInIndex'
 	poolDictionaries: 'CommonDialogConstants RichEditConstants'
 	classInstanceVariableNames: ''!
 RichTextEdit guid: (GUID fromString: '{87b4c744-026e-11d3-9fd7-00a0cc3e4a32}')!
+RichTextEdit addClassConstant: 'AutoUrlDetectionMask' value: 16r1000000!
 RichTextEdit comment: 'RichTextEdit is a <valueView> class that implements the Windows "RichEdit" control for the displaying and editing of multi-line rich text. The <valueModel> associated with a RichTextEdit  must always yield a <richString> value when mapped through the installed type converter. A RichTextEdit will normally be used in conjunction with a <RichTextPresenter>. 
 
 Note that the <richString> protocol relies on double dispatch (using #setTextInto:) to set either plain text or rich text into a destination <view> depending on it''s capabilities.
@@ -362,7 +363,10 @@ isUrlDetectionEnabled: aBoolean
 	self isOpen ifTrue: [self setAutoUrlDetection: aBoolean]!
 
 nmNotify: pNMHDR
-	^(RtnMap lookup: (pNMHDR sdwordAtOffset: 8))
+	^(##((Array new: EN_DRAGDROPDONE - EN_MSGFILTER + 1 withAll: #nmDummy:)
+		at: EN_SELCHANGE - EN_MSGFILTER + 1 put: #enSelChange:;
+		at: EN_LINK - EN_MSGFILTER + 1 put: #enLink:;
+		yourself) lookup: (pNMHDR sdwordAtOffset: 8) - ##(EN_MSGFILTER - 1))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -1025,19 +1029,7 @@ initialize
 				shrink;
 				isImmutable: true;
 				yourself.
-	AutoUrlDetectionMask := 16r1000000.
-	self initializeNotificationMap!
-
-initializeNotificationMap
-	"
-	self initializeNotificationMap
-	"
-
-	RtnMap := (IdentityDictionary new)
-				at: EN_LINK put: #enLink:;
-				at: EN_SELCHANGE put: #enSelChange:;
-				shrink;
-				yourself!
+	self addClassConstant: 'AutoUrlDetectionMask' value: 16r1000000.!
 
 maxTextLimit
 	"Private - Answer the absolute maximum amount of text that the receiver can ever hold."
@@ -1060,7 +1052,6 @@ winClassName
 	self registerClass.
 	^'RichEdit20W'! !
 !RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
-!RichTextEdit class categoriesFor: #initializeNotificationMap!private! !
 !RichTextEdit class categoriesFor: #maxTextLimit!constants!private! !
 !RichTextEdit class categoriesFor: #registerClass!initializing!private! !
 !RichTextEdit class categoriesFor: #richEditDllName!constants!private! !

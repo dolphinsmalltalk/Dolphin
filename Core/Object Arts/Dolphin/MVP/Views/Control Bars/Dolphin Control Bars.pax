@@ -138,7 +138,7 @@ ControlBarAbstract subclass: #StatusBar
 	classInstanceVariableNames: ''!
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'
-	classVariableNames: 'LabelsMask TbnMap'
+	classVariableNames: 'LabelsMask'
 	poolDictionaries: 'ToolbarConstants'
 	classInstanceVariableNames: ''!
 

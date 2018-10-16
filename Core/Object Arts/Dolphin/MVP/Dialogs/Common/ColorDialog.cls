@@ -97,7 +97,7 @@ wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger
 !ColorDialog categoriesFor: #initialize!accessing!initializing!private! !
 !ColorDialog categoriesFor: #prepareStruct!helpers!private! !
 !ColorDialog categoriesFor: #validationBlock!accessing!public! !
-!ColorDialog categoriesFor: #validationBlock:!accessing!public! !
+!ColorDialog categoriesFor: #validationBlock:!initializing!public! !
 !ColorDialog categoriesFor: #winStructClass!constants!private! !
 !ColorDialog categoriesFor: #wmColorOk:wParam:lParam:!event handling-win32!private! !
 
@@ -162,9 +162,9 @@ uninitialize
 !ColorDialog class categoriesFor: #customColors!accessing!public! !
 !ColorDialog class categoriesFor: #defaultModel!models!public! !
 !ColorDialog class categoriesFor: #icon!constants!public! !
-!ColorDialog class categoriesFor: #initialize!initializing!private! !
+!ColorDialog class categoriesFor: #initialize!development!initializing!private! !
 !ColorDialog class categoriesFor: #onStartup!events-session!public! !
-!ColorDialog class categoriesFor: #registerColorOkMessage!events-session!public! !
+!ColorDialog class categoriesFor: #registerColorOkMessage!events-session!private! !
 !ColorDialog class categoriesFor: #resetCustomColors!accessing!public! !
-!ColorDialog class categoriesFor: #uninitialize!development!initializing!private! !
+!ColorDialog class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

@@ -2,12 +2,11 @@
 
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'OrientationMask TabOrientations TcnMap'
+	classVariableNames: 'OrientationMask TabOrientations TabViewModes'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 TabView guid: (GUID fromString: '{87b4c731-026e-11d3-9fd7-00a0cc3e4a32}')!
 TabView addClassConstant: 'OrientationMask' value: 16r82!
-TabView addClassConstant: 'TcnMap' value: #(#nmKeyDown: #nmSelChanged: #tcnSelChanging: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 TabView comment: 'TabView is the <listView> implementing the Windows "SysTabControl32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol. Each of the list items displayed by the view appear in separate "tabs". The list operates in one of three modes (#noIcons, #smallIcons, #largeIcons) that can be selected using the #viewMode aspect.
 
 The most typical use of a <TabView> is as part of a <CardContainer> where each of the cards is identified by a separate tab.
@@ -294,12 +293,13 @@ makeTcItemStruct: anObject
 nmNotify: pNMHDR
 	"Private - Handler for a redirected WinTab WM_NOTIFY message."
 
-	| code |
-	code := pNMHDR sdwordAtOffset: 8.
-	"Note that the notification codes are negative"
-	^(code <= TCN_FIRST and: [code >= TCN_LAST])
-		ifTrue: [self perform: (TcnMap at: ##(TCN_FIRST + 1) - code) with: pNMHDR]
-		ifFalse: [super nmNotify: pNMHDR]!
+	^(##((Array new: TCN_FIRST - TCN_SELCHANGING + 1 withAll: #nmDummy:)
+		at: TCN_FIRST - TCN_KEYDOWN + 1 put: #nmKeyDown:;
+		at: TCN_FIRST - TCN_SELCHANGE + 1 put: #nmSelChanged:;
+		at: TCN_FIRST - TCN_SELCHANGING + 1 put: #tcnSelChanging:;
+		yourself) lookup: ##(TCN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		ifNil: [super nmNotify: pNMHDR]
+		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onItem: anObject removedAtIndex: anInteger 
 	"Event received when the <Object>, anObject, has been removed from the receiver's
@@ -661,45 +661,35 @@ initialize
 		TabView initialize
 	"
 
-	self initializeNotificationMap.
 	self addClassConstant: 'OrientationMask' value: TCS_VERTICAL | TCS_BOTTOM.
-	TabOrientations := (IdentityDictionary new)
+	self addClassConstant: 'TabOrientations'
+		value: (IdentityDictionary new
 				at: 0 put: #top;
 				at: TCS_BOTTOM put: #bottom;
 				at: TCS_VERTICAL put: #left;
 				at: TCS_BOTTOM | TCS_VERTICAL put: #right;
 				shrink;
-				yourself.
-	ViewModes := (IdentityDictionary new)
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'TabViewModes'
+		value: (IdentityDictionary new
 				at: #noIcons put: 0 @ 0;
 				at: #smallIcons put: 16 @ 16;
-				at: #mediumSmallIcons put: 20@20;
+				at: #mediumSmallIcons put: 20 @ 20;
 				at: #mediumIcons put: 24 @ 24;
 				at: #largeIcons put: 32 @ 32;
 				at: #tileIcons put: 48 @ 48;
-				at: #thumbnails put: 64@64;
-				at: #extraLargeIcons put: 256@256;
+				at: #thumbnails put: 64 @ 64;
+				at: #extraLargeIcons put: 256 @ 256;
 				shrink;
-				yourself!
-
-initializeNotificationMap
-	"Private - Initialise the map of TabView notification codes to selectors.
-	N.B. This method must not be stripped in order to ensure that the notification event handler
-	methods (which are looked up in the table) are preserved.
-
-		self initializeNotificationMap
-	"
-	| tcnMap |
-	tcnMap := (Array new: TCN_FIRST - TCN_LAST withAll: #nmDummy:)
-				at: TCN_FIRST - TCN_KEYDOWN + 1 put: #nmKeyDown:;
-				at: TCN_FIRST - TCN_SELCHANGE + 1 put: #nmSelChanged:;
-				at: TCN_FIRST - TCN_SELCHANGING + 1 put: #tcnSelChanging:;
-				yourself.
-	self addClassConstant: 'TcnMap' value: tcnMap
-!
+				isImmutable: true;
+				yourself)!
 
 tabOrientations
 	^TabOrientations!
+
+viewModes
+	^TabViewModes!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
@@ -707,8 +697,8 @@ winClassName
 	^'SysTabControl32'
 ! !
 !TabView class categoriesFor: #icon!constants!public! !
-!TabView class categoriesFor: #initialize!initializing!private! !
-!TabView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
+!TabView class categoriesFor: #initialize!development!initializing!private! !
 !TabView class categoriesFor: #tabOrientations!accessing!constants!public! !
+!TabView class categoriesFor: #viewModes!accessing!public! !
 !TabView class categoriesFor: #winClassName!constants!private! !
 

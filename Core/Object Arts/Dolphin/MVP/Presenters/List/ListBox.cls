@@ -2,10 +2,11 @@
 
 BasicListAbstract subclass: #ListBox
 	instanceVariableNames: '_reserved'
-	classVariableNames: 'LbnMap SelectionModeMask SelectionModes'
+	classVariableNames: 'SelectionModeMask SelectionModes'
 	poolDictionaries: 'ListBoxConstants'
 	classInstanceVariableNames: ''!
 ListBox guid: (GUID fromString: '{87b4c72c-026e-11d3-9fd7-00a0cc3e4a32}')!
+ListBox addClassConstant: 'SelectionModeMask' value: 16r808!
 ListBox comment: 'ListBox is the <listView> implementing the standard Windows LISTBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol  for use with any <listModel>.
 
 Instance Variables:
@@ -129,7 +130,14 @@ clearSelectionsByIndex: collection
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(LbnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
+	^((IdentityDictionary new
+		at: -2 put: #lbnErrSpace;
+		at: 1 put: #lbnSelChange;
+		at: 2 put: #lbnDblClk;
+		at: 3 put: #lbnSelCancel;
+		shrink;
+		yourself) lookup: anInteger)
+		ifNotNil: [:selector | self perform: selector]!
 
 defaultWindowStyle
 	"Private - Answer the default basic window creation style for a list box"
@@ -537,33 +545,34 @@ initialize
 	"Private - Initialise the receiver's class variables:
 		LbnMap - a map of interesting ListBox-specific command notification codes to selectors."
 
-	LbnMap := (IdentityDictionary new: 4)
-				at: -2 put: #lbnErrSpace;
-				at: 1 put: #lbnSelChange;
-				at: 2 put: #lbnDblClk;
-				at: 3 put: #lbnSelCancel;
-				yourself.
-	self registerMessages: {WM_BEGINDRAG -> #wmBeginDrag:wParam:lParam:}.
-	SelectionModes := IdentityDictionary new
+	self registerMessageMappings: self listboxMessageMappings.
+	self addClassConstant: 'SelectionModes'
+		value: (IdentityDictionary new
 				at: #single put: 0;
 				at: #multi put: LBS_EXTENDEDSEL;
 				at: #toggle put: LBS_MULTIPLESEL;
 				shrink;
-				yourself.
-	SelectionModeMask := SelectionModes inject: 0 into: [:sum :each | sum + each]!
+				isImmutable: true;
+				yourself).
+	self addClassConstant: 'SelectionModeMask'
+		value: (SelectionModes inject: 0 into: [:sum :each | sum + each])!
+
+listboxMessageMappings
+	^{WM_BEGINDRAG -> #wmBeginDrag:wParam:lParam:}!
 
 selectionModes
 	^SelectionModes!
 
 uninitialize
-	self unregisterMessages: {WM_BEGINDRAG}!
+	self unregisterMessageMappings: {WM_BEGINDRAG}!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'LISTBOX'
 ! !
-!ListBox class categoriesFor: #initialize!initializing!private! !
+!ListBox class categoriesFor: #initialize!development!initializing!private! !
+!ListBox class categoriesFor: #listboxMessageMappings!constants!must not strip!private! !
 !ListBox class categoriesFor: #selectionModes!constants!public! !
 !ListBox class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !ListBox class categoriesFor: #winClassName!constants!private! !

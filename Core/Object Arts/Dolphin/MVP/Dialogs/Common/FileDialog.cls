@@ -2,7 +2,7 @@
 
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
-	classVariableNames: 'CDNMap'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileDialog guid: (GUID fromString: '{87b4c6b1-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -290,7 +290,16 @@ wmInitDialog: message wParam: wParam lParam: lParam
 wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 	| ptr |
 	ptr := lParamInteger asExternalAddress.
-	^(CDNMap lookup: CDN_FIRST - (ptr sdwordAtOffset: 8) + 1)
+	^(##((Array new: CDN_FIRST - CDN_INCLUDEITEM + 1 withAll: #nmDummy:)
+		at: CDN_FIRST - CDN_INITDONE + 1 put: #cdnInitDone:;
+		at: CDN_FIRST - CDN_SELCHANGE + 1 put: #cdnSelChange:;
+		at: CDN_FIRST - CDN_FOLDERCHANGE + 1 put: #cdnFolderChange:;
+		at: CDN_FIRST - CDN_SHAREVIOLATION + 1 put: #cdnShareViolation:;
+		at: CDN_FIRST - CDN_HELP + 1 put: #cdnHelp:;
+		at: CDN_FIRST - CDN_FILEOK + 1 put: #cdnFileOk:;
+		at: CDN_FIRST - CDN_TYPECHANGE + 1 put: #cdnTypeChange:;
+		at: CDN_FIRST - CDN_INCLUDEITEM + 1 put: #cdnIncludeItem:;
+		yourself) lookup: ##(CDN_FIRST + 1) - (ptr sdwordAtOffset: 8))
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
 !FileDialog categoriesFor: #allFilesType!constants!private! !
@@ -322,7 +331,7 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 !FileDialog categoriesFor: #style!accessing!public! !
 !FileDialog categoriesFor: #style:!accessing!public! !
 !FileDialog categoriesFor: #validationBlock!accessing!public! !
-!FileDialog categoriesFor: #validationBlock:!accessing!public! !
+!FileDialog categoriesFor: #validationBlock:!initializing!public! !
 !FileDialog categoriesFor: #winStructClass!accessing!private! !
 !FileDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
 !FileDialog categoriesFor: #wmNotify:wParam:lParam:!private! !
@@ -345,13 +354,6 @@ defaultModel
 icon
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	CDNMap := #(#cdnInitDone: #cdnSelChange: #cdnFolderChange: #cdnShareViolation: #cdnHelp: #cdnFileOk: #cdnTypeChange: #cdnIncludeItem:)!
-
 initializeDefaultHooks
 	super initializeDefaultHooks.
 	hookHandlers at: WM_NOTIFY put: #wmNotify:wParam:lParam:!
@@ -361,7 +363,6 @@ textFilesType
 !FileDialog class categoriesFor: #allFilesType!constants!private! !
 !FileDialog class categoriesFor: #defaultModel!models!public! !
 !FileDialog class categoriesFor: #icon!constants!public! !
-!FileDialog class categoriesFor: #initialize!initializing!private! !
-!FileDialog class categoriesFor: #initializeDefaultHooks!initializing!private! !
+!FileDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
 !FileDialog class categoriesFor: #textFilesType!public! !
 

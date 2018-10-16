@@ -135,6 +135,7 @@ ToolbarConstants at: 'TBN_FIRST' put: -16r2BC!
 ToolbarConstants at: 'TBN_GETBUTTONINFOW' put: -16r2D0!
 ToolbarConstants at: 'TBN_GETDISPINFOW' put: -16r2CD!
 ToolbarConstants at: 'TBN_GETINFOTIPW' put: -16r2CF!
+ToolbarConstants at: 'TBN_LAST' put: -16r2D0!
 ToolbarConstants at: 'TBN_QUERYDELETE' put: -16r2C3!
 ToolbarConstants at: 'TBN_QUERYINSERT' put: -16r2C2!
 ToolbarConstants at: 'TBN_RESET' put: -16r2C1!

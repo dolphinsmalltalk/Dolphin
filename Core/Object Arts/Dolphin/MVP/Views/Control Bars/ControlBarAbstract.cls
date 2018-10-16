@@ -287,7 +287,7 @@ viewNamed: aString ifNone: aBlock
 !ControlBarAbstract categoriesFor: #isVertical!accessing-styles!public! !
 !ControlBarAbstract categoriesFor: #isVertical:!accessing-styles!public! !
 !ControlBarAbstract categoriesFor: #layout:!geometry!private! !
-!ControlBarAbstract categoriesFor: #layoutManager:!accessing!public! !
+!ControlBarAbstract categoriesFor: #layoutManager:!geometry!public! !
 !ControlBarAbstract categoriesFor: #name:as:!public!subpresenters! !
 !ControlBarAbstract categoriesFor: #nameOf:!public!subpresenters! !
 !ControlBarAbstract categoriesFor: #nmClick:!event handling-win32!public! !
@@ -307,7 +307,7 @@ ControlBarAbstract methodProtocol: #compositeView attributes: #(#readOnly) selec
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Toolbar defaultIcon!
+	^Icon fromId: 'Toolbar.ico'!
 
 stbConvertFromVersion12: anArray 
 	"Private - Perform an STB conversion from a version 12 <View> to version 13."

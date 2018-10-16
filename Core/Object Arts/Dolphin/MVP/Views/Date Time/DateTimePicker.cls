@@ -65,6 +65,11 @@ dtnDateTimeChange: pNMHDR
 	self updateModel.
 	^0!
 
+dtNotificationMap
+	^##((Array new: DTN_FIRST - DTN_DATETIMECHANGE + 1 withAll: #nmDummy:)
+		at: DTN_FIRST - DTN_DATETIMECHANGE + 1 put: #dtnDateTimeChange:;
+		yourself)!
+
 getRangeMessage
 	^DTM_GETRANGE!
 
@@ -141,7 +146,7 @@ modelClass
 !
 
 nmFirst
-	^DTN_FIRST!
+	^DTN_FIRST + 1!
 
 onViewCreated
 	"The receiver window has been created. Finish the job and apply any
@@ -172,6 +177,7 @@ setSystemTime: aSYSTEMTIMEOrNil
 !DateTimePicker categoriesFor: #dtmSetFormat:!accessing!public! !
 !DateTimePicker categoriesFor: #dtmSetSystemTime:lpSysTime:!accessing!public! !
 !DateTimePicker categoriesFor: #dtnDateTimeChange:!event handling-win32!public! !
+!DateTimePicker categoriesFor: #dtNotificationMap!private! !
 !DateTimePicker categoriesFor: #getRangeMessage!constants!private! !
 !DateTimePicker categoriesFor: #getSystemTime!accessing!private! !
 !DateTimePicker categoriesFor: #hasLongDateFormat!accessing-styles!public! !
@@ -195,30 +201,10 @@ defaultModel
 
 	^Date today asValue!
 
-initialize
-	"Private - Initialise the map of DateTimePicker notification codes to selector/parameter-class pairs.
-
-		DateTimePicker initialize
-
-	Note the bug in the codes which are supposed to be in the range -760..-799, however (i.e. 
-	DTN_FIRST..DTN_LAST), yet the first code is defined as (DTN_FIRST + 1) (i.e. -759).
-	"
-
-	notificationMap := (Array new: 1 "max of 40")
-			at: 1	put: #dtnDateTimeChange:; "NM_DATETIMECHANGE"
-			"at: 2 put: #dtnUserStringA:;"
-			"at: 3 put: #dtnKeyDownA:;"
-			"at: 4 put: #dtnFormatA:;"
-			"at: 5 put: #dtnFormatQueryA:;"
-			"at: 6 put: #dtnDropDown:;"
-			"at: 7 put: #dtnCloseUp:;"
-			yourself!
-
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysDateTimePick32'! !
 !DateTimePicker class categoriesFor: #defaultModel!models!public! !
-!DateTimePicker class categoriesFor: #initialize!initializing!private! !
 !DateTimePicker class categoriesFor: #winClassName!constants!private! !
 

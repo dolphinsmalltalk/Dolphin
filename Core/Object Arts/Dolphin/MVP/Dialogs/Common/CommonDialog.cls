@@ -200,7 +200,7 @@ showModalOn: aModel
 	^(self on: aModel) showModal! !
 !CommonDialog class categoriesFor: #defaultView!constants!public! !
 !CommonDialog class categoriesFor: #hookHandlers!accessing!private! !
-!CommonDialog class categoriesFor: #initializeDefaultHooks!initializing!private! !
+!CommonDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
 !CommonDialog class categoriesFor: #showModal!instance creation!public! !
 !CommonDialog class categoriesFor: #showModal:!instance creation!private! !
 !CommonDialog class categoriesFor: #showModal:on:!instance creation!private! !

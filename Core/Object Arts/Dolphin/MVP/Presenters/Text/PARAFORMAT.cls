@@ -22,59 +22,59 @@ alignment: anInteger
 	self wAlignment: anInteger!
 
 cTabCount
-	"Answer the receiver's cTabCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cTabCount' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #cTabCount)!
 
-cTabCount: anObject 
-	"Set the receiver's cTabCount field to the value of anObject."
+cTabCount: anInteger
+	"Set the receiver's 'cTabCount' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #cTabCount) put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #cTabCount) put: anInteger!
 
 dwMask
-	"Answer the receiver's dwMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwMask)!
 
-dwMask: anObject 
-	"Set the receiver's dwMask field to the value of anObject."
+dwMask: anInteger
+	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwMask) put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 dxOffset
-	"Answer the receiver's dxOffset field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dxOffset' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #dxOffset)!
 
-dxOffset: anObject 
-	"Set the receiver's dxOffset field to the value of anObject."
+dxOffset: anInteger
+	"Set the receiver's 'dxOffset' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #dxOffset) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #dxOffset) put: anInteger!
 
 dxRightIndent
-	"Answer the receiver's dxRightIndent field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dxRightIndent' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #dxRightIndent)!
 
-dxRightIndent: anObject 
-	"Set the receiver's dxRightIndent field to the value of anObject."
+dxRightIndent: anInteger
+	"Set the receiver's 'dxRightIndent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #dxRightIndent) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #dxRightIndent) put: anInteger!
 
 dxStartIndent
-	"Answer the receiver's dxStartIndent field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dxStartIndent' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #dxStartIndent)!
 
-dxStartIndent: anObject 
-	"Set the receiver's dxStartIndent field to the value of anObject."
+dxStartIndent: anInteger
+	"Set the receiver's 'dxStartIndent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #dxStartIndent) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #dxStartIndent) put: anInteger!
 
 maskIn: anInteger
 	"Private - OR in to contents mask member the bit flags represented by anInteger.
@@ -94,16 +94,16 @@ offset: anInteger
 	self dxOffset: anInteger!
 
 rgxTabs
-	"Answer the receiver's rgxTabs field as a Smalltalk object."
+	"Answer the <DWORDArray> value of the receiver's 'rgxTabs' field."
 
 	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #rgxTabs) length: 32!
 
-rgxTabs: anObject 
-	"Set the receiver's rgxTabs field to the value of anObject."
+rgxTabs: aDWORDArray
+	"Set the receiver's 'rgxTabs' field to the value of the argument, aDWORDArray"
 
 	| size |
-	size := anObject byteSize min: 32 * ##(DWORDArray elementSize).
-	anObject 
+	size := aDWORDArray byteSize min: ##(32 * DWORDArray elementSize).
+	aDWORDArray
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rgxTabs) + 1)
 		to: ##(self offsetOf: #rgxTabs) + size
@@ -121,24 +121,34 @@ startIndent: anInteger
 	self dxStartIndent: anInteger!
 
 wAlignment
-	"Answer the receiver's wAlignment field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wAlignment' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wAlignment)!
 
-wAlignment: anObject 
-	"Set the receiver's wAlignment field to the value of anObject."
+wAlignment: anInteger
+	"Set the receiver's 'wAlignment' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wAlignment) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #wAlignment) put: anInteger!
+
+wEffects
+	"Answer the <Integer> value of the receiver's 'wEffects' field."
+
+	^bytes wordAtOffset: ##(self offsetOf: #wEffects)!
+
+wEffects: anInteger
+	"Set the receiver's 'wEffects' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: ##(self offsetOf: #wEffects) put: anInteger!
 
 wNumbering
-	"Answer the receiver's wNumbering field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wNumbering' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wNumbering)!
 
-wNumbering: anObject 
-	"Set the receiver's wNumbering field to the value of anObject."
+wNumbering: anInteger
+	"Set the receiver's 'wNumbering' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wNumbering) put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #wNumbering) put: anInteger! !
 !PARAFORMAT categoriesFor: #alignment!accessing!public! !
 !PARAFORMAT categoriesFor: #alignment:!accessing!public! !
 !PARAFORMAT categoriesFor: #cTabCount!**compiled accessors**!public! !
@@ -161,6 +171,8 @@ wNumbering: anObject
 !PARAFORMAT categoriesFor: #startIndent:!accessing!public! !
 !PARAFORMAT categoriesFor: #wAlignment!**compiled accessors**!public! !
 !PARAFORMAT categoriesFor: #wAlignment:!**compiled accessors**!public! !
+!PARAFORMAT categoriesFor: #wEffects!**compiled accessors**!public! !
+!PARAFORMAT categoriesFor: #wEffects:!**compiled accessors**!public! !
 !PARAFORMAT categoriesFor: #wNumbering!**compiled accessors**!public! !
 !PARAFORMAT categoriesFor: #wNumbering:!**compiled accessors**!public! !
 
@@ -177,7 +189,7 @@ defineFields
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #dwMask type: DWORDField new;
 		defineField: #wNumbering type: WORDField new;
-		defineField: #wReserved type: WORDField filler;
+		defineField: #wEffects type: WORDField new;
 		defineField: #dxStartIndent type: SDWORDField new;
 		defineField: #dxRightIndent type: SDWORDField new;
 		defineField: #dxOffset type: SDWORDField new;

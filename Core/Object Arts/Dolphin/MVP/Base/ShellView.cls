@@ -201,16 +201,23 @@ defaultWindowStyle
 
 	^##(WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX)!
 
+dialogMessageMap
+	^##(IdentityDictionary new
+		at: DM_GETDEFID - WM_USER put: #dmGetDefId:wParam:lParam:;
+		at: DM_SETDEFID - WM_USER put: #dmSetDefId:wParam:lParam:;
+		shrink;
+		yourself)!
+
 dispatchUser: userId wParam: wParam lParam: lParam
 	"Private - Dispatch the WM_USER+userId message which was sent to the receiver.
 	To be overridden by subclasses which implement WM_USER+N messages in an appropriate 
 	manner (e.g. by a secondary message map, or, if few in number, by conditional tests)"
 
-	^self 
-		dispatchUser: userId 
-		wParam: wParam 
-		lParam: lParam 
-		map: DialogMessageMap!
+	^self
+		dispatchUser: userId
+		wParam: wParam
+		lParam: lParam
+		map: self dialogMessageMap!
 
 dmGetDefId: message wParam: wParam lParam: lParam
 	"Private - Default handler for a DM_GETDEFID message sent to request the id of any default
@@ -249,12 +256,9 @@ drawMenuBar
 	^UserLibrary default drawMenuBar: self asParameter!
 
 ensureSubViewVisible: aSubView 
-	"Terminate the recursion so that where shells are embedded in a card container (e.g. in the
-	Idea Space) they don't cause the tab to change just because a sub-tab inside the shell has
-	changed to make a sub-card visible."
+	self parentView == View desktop ifTrue: [super ensureSubViewVisible: aSubView]
 
-	"Do nothing"
-
+	"If the shell is not a direct child of the desktop, then terminate the recursion so that where shells are embedded in a card container (e.g. in the Idea Space) they don't cause the tab to change just because a sub-tab inside the shell has changed to make a sub-card visible."
 	!
 
 exit
@@ -1198,6 +1202,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ShellView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
 !ShellView categoriesFor: #defaultShowStyle!constants!private! !
 !ShellView categoriesFor: #defaultWindowStyle!constants!private! !
+!ShellView categoriesFor: #dialogMessageMap!private! !
 !ShellView categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
 !ShellView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
 !ShellView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
@@ -1341,21 +1346,6 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		ShellView initialize
-	"
-
-	"N.B. This method is not in the 'development' category (as most class initialize methods are) as it must be preserved in a deployed GUI application in order to 
-	prevent the #dm[G|S]etDefId:wParam:lParam: methods from being stripped."
-
-	DialogMessageMap := (LookupTable new)
-				at: DM_GETDEFID - WM_USER put: #dmGetDefId:wParam:lParam:;
-				at: DM_SETDEFID - WM_USER put: #dmSetDefId:wParam:lParam:;
-				shrink;
-				isImmutable: true;
-				yourself!
-
 installNew
 	^(self asSessionManagerClass basicNew mainShellClass: self) install!
 
@@ -1426,12 +1416,11 @@ stbConvertFromVersion9: anArray
 			startingAt: 25;
 		yourself! !
 !ShellView class categoriesFor: #asSessionManagerClass!converting!public!VM and session managerment! !
-!ShellView class categoriesFor: #createHookBlock!accessing!private! !
-!ShellView class categoriesFor: #createHookBlock:!accessing!private! !
+!ShellView class categoriesFor: #createHookBlock!accessing!private!realizing/unrealizing! !
+!ShellView class categoriesFor: #createHookBlock:!accessing!private!realizing/unrealizing! !
 !ShellView class categoriesFor: #defaultExtentBlock!accessing!geometry!private! !
 !ShellView class categoriesFor: #defaultExtentBlock:!accessing!geometry!private! !
 !ShellView class categoriesFor: #icon!constants!public! !
-!ShellView class categoriesFor: #initialize!initializing!private! !
 !ShellView class categoriesFor: #installNew!public! !
 !ShellView class categoriesFor: #shutdownOnExit!public!testing! !
 !ShellView class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !

@@ -168,7 +168,8 @@ initialize
 		CheckButton initialize
 	"
 
-	AlignmentMap := IdentityDictionary new
+	self addClassConstant: 'AlignmentMap'
+		value: (IdentityDictionary new
 				at: #leftCenter put: BS_LEFT | BS_VCENTER;
 				at: #rightCenter put: BS_RIGHT | BS_VCENTER;
 				at: #topCenter put: BS_CENTER | BS_TOP;
@@ -179,7 +180,8 @@ initialize
 				at: #bottomLeft put: BS_LEFT | BS_BOTTOM;
 				at: #bottomRight put: BS_RIGHT | BS_BOTTOM;
 				shrink;
-				yourself!
+				isImmutable: true;
+				yourself)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realising the receiver."

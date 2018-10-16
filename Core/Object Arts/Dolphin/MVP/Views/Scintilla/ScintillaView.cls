@@ -2,7 +2,7 @@
 
 MultilineTextEdit subclass: #ScintillaView
 	instanceVariableNames: 'this currentTextStyles styleIdMap styler markerDefinitions markers wordChars registeredImages modificationEventMask autoCStops autoCFillups whitespaceBackcolor whitespaceForecolor selectionBackcolor selectionForecolor indicators callTipTabWidth punctuation callTipHighlightColor braceChars whitespaces scFlags allTextStyles foldMarginColor foldMarginHiColor foldMarkerStyle foldFlags codePage keyBindings indicatorStyles secondarySelectionForecolor secondarySelectionBackcolor annotationStyles foldTextTagStyle'
-	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset ScnMap'
+	classVariableNames: 'AnnotationStylesOffset BackgroundDwellEvents BraceHilightingMask CodePages DefaultCallTipTabWidth DefaultKeyBindings DefaultTextStyles FoldingMask MarginStylesOffset'
 	poolDictionaries: 'ScintillaConstants Win32Constants'
 	classInstanceVariableNames: ''!
 ScintillaView guid: (GUID fromString: '{47a3310b-b7e4-4aa9-b6e6-640ad9fe7a3a}')!
@@ -2431,6 +2431,23 @@ firstVisibleLine: anInteger
 
 	self sciSetFirstVisibleLine: anInteger - 1!
 
+foldAll
+	"Collapse the document at the fold points identified by the language lexer."
+
+	"Implementation Note: Scintilla's SCI_FOLDALL operation just folds at the top-level, and then expanding that again shows the entire document again. Frankly this isn't very useful. What the user most likely wants is to recursively fold the entire document, such that when one expands it again, it unfolds only the top-level. This makes it possible to collapse a large XML document, and then walk down expanding just the branches of the fold tree that one wants to see."
+
+	| lines line |
+	lines := self lineCount.
+	line := 0.
+	[line < lines] whileTrue: 
+			[| lastChild |
+			lastChild := self sciGetLastChild: line level: -1.
+			lastChild > line
+				ifTrue: 
+					[self sciFoldChildren: line action: SC_FOLDACTION_CONTRACT.
+					line := lastChild].
+			line := line + 1]!
+
 foldFlags
 	^foldFlags!
 
@@ -4441,7 +4458,40 @@ newTextBuffer: anInteger
 nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
 
-	^(ScnMap lookup: (pNMHDR sdwordAtOffset: 8) - 1999)
+	^(##((Array new: SCN_AUTOCSELECTIONCHANGE - SCN_STYLENEEDED + 1)
+		at: SCN_STYLENEEDED - SCN_STYLENEEDED + 1 put: #scnStyleNeeded:;
+		at: SCN_CHARADDED - SCN_STYLENEEDED + 1 put: #scnCharAdded:;
+		at: SCN_SAVEPOINTREACHED - SCN_STYLENEEDED + 1 put: #scnSavePointReached:;
+		at: SCN_SAVEPOINTLEFT - SCN_STYLENEEDED + 1 put: #scnSavePointLeft:;
+		at: SCN_MODIFYATTEMPTRO - SCN_STYLENEEDED + 1 put: #scnModifyAttemptRO:;
+		at: SCN_KEY - SCN_STYLENEEDED + 1 put: #scnKey:;
+		at: SCN_DOUBLECLICK - SCN_STYLENEEDED + 1 put: #scnDoubleClick:;
+		at: SCN_UPDATEUI - SCN_STYLENEEDED + 1 put: #scnUpdateUI:;
+		at: SCN_MODIFIED - SCN_STYLENEEDED + 1 put: #scnModified:;
+		at: SCN_MACRORECORD - SCN_STYLENEEDED + 1 put: #scnMacroRecord:;
+		at: SCN_MARGINCLICK - SCN_STYLENEEDED + 1 put: #scnMarginClick:;
+		at: SCN_NEEDSHOWN - SCN_STYLENEEDED + 1 put: #scnNeedShown:;
+		at: SCN_PAINTED - SCN_STYLENEEDED + 1 put: #scnPainted:;
+		at: SCN_USERLISTSELECTION - SCN_STYLENEEDED + 1 put: #scnUserListSelection:;
+		at: SCN_URIDROPPED - SCN_STYLENEEDED + 1 put: #scnURIDropped:;
+		at: SCN_DWELLSTART - SCN_STYLENEEDED + 1 put: #scnDwellStart:;
+		at: SCN_DWELLEND - SCN_STYLENEEDED + 1 put: #scnDwellEnd:;
+		at: SCN_ZOOM - SCN_STYLENEEDED + 1 put: #scnZoom:;
+		at: SCN_HOTSPOTCLICK - SCN_STYLENEEDED + 1 put: #scnHotSpotClick:;
+		at: SCN_HOTSPOTDOUBLECLICK - SCN_STYLENEEDED + 1 put: #scnHotSpotDoubleClick:;
+		at: SCN_CALLTIPCLICK - SCN_STYLENEEDED + 1 put: #scnCallTipClick:;
+		at: SCN_AUTOCSELECTION - SCN_STYLENEEDED + 1 put: #scnAutoCSelection:;
+		at: SCN_INDICATORCLICK - SCN_STYLENEEDED + 1 put: #scnIndicatorClick:;
+		at: SCN_INDICATORRELEASE - SCN_STYLENEEDED + 1 put: #scnIndicatorRelease:;
+		at: SCN_AUTOCCANCELLED - SCN_STYLENEEDED + 1 put: #scnAutoCCancelled:;
+		at: SCN_AUTOCCHARDELETED - SCN_STYLENEEDED + 1 put: #scnAutoCCharDeleted:;
+		at: SCN_HOTSPOTRELEASECLICK - SCN_STYLENEEDED + 1 put: #scnHotSpotReleaseClick:;
+		at: SCN_FOCUSIN - SCN_STYLENEEDED + 1 put: #scnFocusIn:;
+		at: SCN_FOCUSOUT - SCN_STYLENEEDED + 1 put: #scnFocusOut:;
+		at: SCN_AUTOCCOMPLETED - SCN_STYLENEEDED + 1 put: #scnAutoCCompleted:;
+		at: SCN_MARGINRIGHTCLICK - SCN_STYLENEEDED + 1 put: #scnMarginRightClick:;
+		at: SCN_AUTOCSELECTIONCHANGE - SCN_STYLENEEDED + 1 put: #scnAutoCSelectionChange:;
+		yourself) lookup: (pNMHDR sdwordAtOffset: 8) - ##(SCN_STYLENEEDED - 1))
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onEraseRequired: aColorEvent 
@@ -10466,6 +10516,9 @@ undo
 	self cancelModes.
 	self basicUndo!
 
+unfoldAll
+	self sciFoldAll: SC_FOLDACTION_EXPAND!
+
 unindent
 	"Dedent the selected lines."
 
@@ -11044,6 +11097,7 @@ zoomOut
 !ScintillaView categoriesFor: #findString:startingAt:!public!searching & replacing! !
 !ScintillaView categoriesFor: #findStyleStart:before:!brace highlighting!public! !
 !ScintillaView categoriesFor: #firstVisibleLine:!public!scrolling! !
+!ScintillaView categoriesFor: #foldAll!commands!folding!public! !
 !ScintillaView categoriesFor: #foldFlags!folding!public! !
 !ScintillaView categoriesFor: #foldFlags:!folding!public! !
 !ScintillaView categoriesFor: #foldLine:level:!folding!public!scintilla interface! !
@@ -11254,7 +11308,7 @@ zoomOut
 !ScintillaView categoriesFor: #newLine!**auto generated**!commands!public!scintilla interface!text retrieval & modification! !
 !ScintillaView categoriesFor: #newNotification:!autocompletion!event handling-scintilla!helpers!notifications!private! !
 !ScintillaView categoriesFor: #newTextBuffer:!helpers!private! !
-!ScintillaView categoriesFor: #nmNotify:!event handling-win32!private! !
+!ScintillaView categoriesFor: #nmNotify:!**auto generated**!event handling-win32!private!scintilla interface! !
 !ScintillaView categoriesFor: #onEraseRequired:!event handling!public! !
 !ScintillaView categoriesFor: #onKillFocus!event handling!public! !
 !ScintillaView categoriesFor: #onSetFocus!event handling!public! !
@@ -11264,7 +11318,7 @@ zoomOut
 !ScintillaView categoriesFor: #pasteClipboard!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #performUndoableAction:!public!undo & redo! !
 !ScintillaView categoriesFor: #plainText!**auto generated**!accessing!public!scintilla interface!text retrieval & modification! !
-!ScintillaView categoriesFor: #plainText:!accessing!private!text retrieval & modification! !
+!ScintillaView categoriesFor: #plainText:!private!text retrieval & modification!updating! !
 !ScintillaView categoriesFor: #plainTextFrom:to:!accessing!public!text retrieval & modification! !
 !ScintillaView categoriesFor: #positionCacheSize!**auto generated**!line wrapping!public!scintilla interface! !
 !ScintillaView categoriesFor: #positionCacheSize:!**auto generated**!line wrapping!public!scintilla interface! !
@@ -11778,6 +11832,7 @@ zoomOut
 !ScintillaView categoriesFor: #tokenStartAt:!enquiries!public! !
 !ScintillaView categoriesFor: #twiddleLines!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #undo!commands!public!scintilla interface!undo & redo! !
+!ScintillaView categoriesFor: #unfoldAll!commands!folding!public! !
 !ScintillaView categoriesFor: #unindent!**auto generated**!commands!public!scintilla interface! !
 !ScintillaView categoriesFor: #updateIndicators!helpers!indicators!private! !
 !ScintillaView categoriesFor: #updateIndicatorStyles!helpers!indicators!private! !
@@ -12006,9 +12061,8 @@ initialize
 	"
 
 	| defaultKeyBindings |
-	self initializeNotificationMap.
 	self addClassConstant: 'CodePages'
-		value: ((IdentityDictionary new)
+		value: (IdentityDictionary new
 				at: CP_ACP put: #ansi;
 				at: SC_CP_UTF8 put: #utf8;
 				shrink;
@@ -12018,7 +12072,7 @@ initialize
 	self addClassConstant: 'FoldingMask' value: 2.
 	self addClassConstant: 'BackgroundDwellEvents' value: 4.
 	self addClassConstant: 'DefaultTextStyles'
-		value: ((IdentityDictionary new)
+		value: (IdentityDictionary new
 				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
 				at: #xml put: (self immutableCopyOfCollection: self xmlTextStyles);
 				at: #text put: (self immutableCopyOfCollection: self txtTextStyles);
@@ -12044,43 +12098,6 @@ initialize
 	"Offsets must always be multiples of 256 for implementation reasons"
 	self addClassConstant: 'MarginStylesOffset' value: 256.
 	self addClassConstant: 'AnnotationStylesOffset' value: 512!
-
-initializeNotificationMap
-	ScnMap := (Array new: 33)
-				at: SCN_STYLENEEDED - 1999 put: #scnStyleNeeded:;
-				at: SCN_CHARADDED - 1999 put: #scnCharAdded:;
-				at: SCN_SAVEPOINTREACHED - 1999 put: #scnSavePointReached:;
-				at: SCN_SAVEPOINTLEFT - 1999 put: #scnSavePointLeft:;
-				at: SCN_MODIFYATTEMPTRO - 1999 put: #scnModifyAttemptRO:;
-				at: SCN_KEY - 1999 put: #scnKey:;
-				at: SCN_DOUBLECLICK - 1999 put: #scnDoubleClick:;
-				at: SCN_UPDATEUI - 1999 put: #scnUpdateUI:;
-				at: SCN_MODIFIED - 1999 put: #scnModified:;
-				at: SCN_MACRORECORD - 1999 put: #scnMacroRecord:;
-				at: SCN_MARGINCLICK - 1999 put: #scnMarginClick:;
-				at: SCN_NEEDSHOWN - 1999 put: #scnNeedShown:;
-				at: SCN_PAINTED - 1999 put: #scnPainted:;
-				at: SCN_USERLISTSELECTION - 1999 put: #scnUserListSelection:;
-				at: SCN_URIDROPPED - 1999 put: #scnURIDropped:;
-				at: SCN_DWELLSTART - 1999 put: #scnDwellStart:;
-				at: SCN_DWELLEND - 1999 put: #scnDwellEnd:;
-				at: SCN_ZOOM - 1999 put: #scnZoom:;
-				at: SCN_HOTSPOTCLICK - 1999 put: #scnHotSpotClick:;
-				at: SCN_HOTSPOTDOUBLECLICK - 1999 put: #scnHotSpotDoubleClick:;
-				at: SCN_CALLTIPCLICK - 1999 put: #scnCallTipClick:;
-				at: SCN_AUTOCSELECTION - 1999 put: #scnAutoCSelection:;
-				at: SCN_INDICATORCLICK - 1999 put: #scnIndicatorClick:;
-				at: SCN_INDICATORRELEASE - 1999 put: #scnIndicatorRelease:;
-				at: SCN_AUTOCCANCELLED - 1999 put: #scnAutoCCancelled:;
-				at: SCN_AUTOCCHARDELETED - 1999 put: #scnAutoCCharDeleted:;
-				at: SCN_HOTSPOTRELEASECLICK - 1999 put: #scnHotSpotReleaseClick:;
-				at: SCN_FOCUSIN - 1999 put: #scnFocusIn:;
-				at: SCN_FOCUSOUT - 1999 put: #scnFocusOut:;
-				at: SCN_AUTOCCOMPLETED - 1999 put: #scnAutoCCompleted:;
-				at: SCN_MARGINRIGHTCLICK - 1999 put: #scnMarginRightClick:;
-				at: SCN_AUTOCSELECTIONCHANGE - 1999 put: #scnAutoCSelectionChange:;
-				isImmutable: true;
-				yourself!
 
 layoutCachingModes
 	^#(#none #caret #page #document)!
@@ -12590,7 +12607,6 @@ xmlTextStyles
 !ScintillaView class categoriesFor: #immutableCopyOfCollection:!helpers!private! !
 !ScintillaView class categoriesFor: #indentationGuideStyles!constants!private! !
 !ScintillaView class categoriesFor: #initialize!development!initializing!private! !
-!ScintillaView class categoriesFor: #initializeNotificationMap!**auto generated**!must not strip!public!scintilla interface! !
 !ScintillaView class categoriesFor: #layoutCachingModes!constants!public! !
 !ScintillaView class categoriesFor: #lexerLanguages!constants!public! !
 !ScintillaView class categoriesFor: #lineEndings!constants!public! !

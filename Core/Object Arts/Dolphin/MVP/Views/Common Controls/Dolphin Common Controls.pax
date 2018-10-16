@@ -212,17 +212,17 @@ ListControlView subclass: #IconicListAbstract
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes LvnMap RevertSelMessage UnknownItem'
+	classVariableNames: 'LvModes RevertSelMessage UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #TabView
 	instanceVariableNames: 'viewMode'
-	classVariableNames: 'OrientationMask TabOrientations TcnMap'
+	classVariableNames: 'OrientationMask TabOrientations TabViewModes'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
-	classVariableNames: 'DisableExpandAllMask NonVirtualMask TvnMap UpdateModeMask UpdateModes'
+	classVariableNames: 'DisableExpandAllMask NonVirtualMask UpdateModeMask UpdateModes'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TabView subclass: #TabViewXP

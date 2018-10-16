@@ -26,9 +26,6 @@ ResourceIdentifier comment: ''!
 		self owningClass == aResourceIdentifier owningClass and: [
 			self name = aResourceIdentifier name]]!
 
-canShow
-	^self resourceOrNil notNil and: [self owningClass respondsTo: #show:]!
-
 compiledMethod
 	^self owningClass class compiledMethodAt: self selector ifAbsent: []!
 
@@ -169,13 +166,6 @@ selector
 selector: aSymbol
 	selector := aSymbol!
 
-show
-	"Display the resource identified by the receiver in whatever way is appropriate. 
-	Answer the <Presenter> opended to display it."
-
-	^self owningClass show: self name.
-!
-
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
@@ -190,7 +180,6 @@ storeOn: aStream
 		nextPut: $)! !
 !ResourceIdentifier categoriesFor: #<=!comparing!public! !
 !ResourceIdentifier categoriesFor: #=!comparing!public! !
-!ResourceIdentifier categoriesFor: #canShow!public!testing! !
 !ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
 !ResourceIdentifier categoriesFor: #copy!copying!public! !
 !ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
@@ -217,7 +206,6 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
 !ResourceIdentifier categoriesFor: #selector!accessing!public! !
 !ResourceIdentifier categoriesFor: #selector:!accessing!public! !
-!ResourceIdentifier categoriesFor: #show!operations!public! !
 !ResourceIdentifier categoriesFor: #storeOn:!printing!public! !
 
 !ResourceIdentifier class methodsFor!
