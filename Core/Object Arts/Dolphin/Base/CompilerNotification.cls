@@ -334,6 +334,6 @@ severity
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
 !CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
 !CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
-!CompilerNotification class categoriesFor: #initialize!initializing!public! !
+!CompilerNotification class categoriesFor: #initialize!development!initializing!public! !
 !CompilerNotification class categoriesFor: #severity!constants!public! !
 

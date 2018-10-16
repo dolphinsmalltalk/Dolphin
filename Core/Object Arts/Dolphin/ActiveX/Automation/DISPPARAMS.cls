@@ -231,7 +231,7 @@ zeroArgs
 	^ZeroArgs! !
 !DISPPARAMS class categoriesFor: #defineFields!initializing!public! !
 !DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
-!DISPPARAMS class categoriesFor: #uninitialize!initializing!private! !
+!DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !DISPPARAMS class categoriesFor: #with:!instance creation!public! !
 !DISPPARAMS class categoriesFor: #withArguments:!instance creation!public! !
 !DISPPARAMS class categoriesFor: #zeroArgs!instance creation!public! !

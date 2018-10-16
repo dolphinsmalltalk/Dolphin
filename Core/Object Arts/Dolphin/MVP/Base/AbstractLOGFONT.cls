@@ -149,7 +149,7 @@ lfWidth: anObject
 !AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfEscapement:!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfFaceName!public! !
-!AbstractLOGFONT categoriesFor: #lfFaceName:!public! !
+!AbstractLOGFONT categoriesFor: #lfFaceName:!accessing!public! !
 !AbstractLOGFONT categoriesFor: #lfHeight!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfHeight:!**compiled accessors**!public! !
 !AbstractLOGFONT categoriesFor: #lfItalic!**compiled accessors**!public! !

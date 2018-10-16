@@ -726,5 +726,5 @@ initialize
 	RestrictedSelectors isImmutable: true.
 	self addClassConstant: 'SpecialSelectors' value: VMLibrary default specialSelectors! !
 !StSemanticAnalyser class categoriesFor: #analyzeParseTree:for:context:pools:!accessing!public! !
-!StSemanticAnalyser class categoriesFor: #initialize!public! !
+!StSemanticAnalyser class categoriesFor: #initialize!development!initializing!public! !
 

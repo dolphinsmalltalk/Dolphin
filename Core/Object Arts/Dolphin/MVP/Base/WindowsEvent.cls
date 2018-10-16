@@ -99,7 +99,7 @@ wParam
 !WindowsEvent categoriesFor: #lParamX!accessing!public! !
 !WindowsEvent categoriesFor: #lParamY!accessing!public! !
 !WindowsEvent categoriesFor: #lResult!accessing!public! !
-!WindowsEvent categoriesFor: #lResult:!accessing!public! !
+!WindowsEvent categoriesFor: #lResult:!accessing!not an aspect!public! !
 !WindowsEvent categoriesFor: #message!accessing!private! !
 !WindowsEvent categoriesFor: #printLParamOn:!printing!private! !
 !WindowsEvent categoriesFor: #printOn:!development!printing!public! !

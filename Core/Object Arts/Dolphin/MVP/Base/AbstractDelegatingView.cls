@@ -193,7 +193,7 @@ viewNamed: aString ifNone: aBlock
 !AbstractDelegatingView categoriesFor: #show!operations!public! !
 !AbstractDelegatingView categoriesFor: #tabFocus!private!tabbing! !
 !AbstractDelegatingView categoriesFor: #usePreferredExtent!accessing!public! !
-!AbstractDelegatingView categoriesFor: #usePreferredExtent:!accessing!public! !
+!AbstractDelegatingView categoriesFor: #usePreferredExtent:!accessing!not an aspect!public! !
 !AbstractDelegatingView categoriesFor: #validateSubViewLayouts:!geometry!private! !
 !AbstractDelegatingView categoriesFor: #validateUserInterface!operations!public! !
 !AbstractDelegatingView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !

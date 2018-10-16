@@ -890,7 +890,7 @@ on: aStream errorHandler: parseErrorHandler
 
 patternVariableCharacter
 	^PatternVariableCharacter! !
-!SmalltalkScanner class categoriesFor: #initialize!initializing!public! !
+!SmalltalkScanner class categoriesFor: #initialize!development!initializing!public! !
 !SmalltalkScanner class categoriesFor: #initializeClassificationTable!initializing!private! !
 !SmalltalkScanner class categoriesFor: #isSelector:!public!testing! !
 !SmalltalkScanner class categoriesFor: #isVariable:!public!testing! !

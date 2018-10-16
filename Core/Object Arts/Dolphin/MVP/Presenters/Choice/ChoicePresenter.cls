@@ -150,7 +150,7 @@ viewModel
 !ChoicePresenter categoriesFor: #isMultiChoice!private!testing! !
 !ChoicePresenter categoriesFor: #model:!accessing!public! !
 !ChoicePresenter categoriesFor: #nilChoice!accessing!public! !
-!ChoicePresenter categoriesFor: #nilChoice:!accessing!public! !
+!ChoicePresenter categoriesFor: #nilChoice:!initializing!public! !
 !ChoicePresenter categoriesFor: #onChoiceChanged!event handling!private! !
 !ChoicePresenter categoriesFor: #onSelectionChanged!event handling!private! !
 !ChoicePresenter categoriesFor: #onSelectionChanging:!event handling!private! !

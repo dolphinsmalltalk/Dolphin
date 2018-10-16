@@ -547,7 +547,7 @@ yellow
 !Color class categoriesFor: #r:g:b:!instance creation!public! !
 !Color class categoriesFor: #red!instance creation!named colors!public! !
 !Color class categoriesFor: #red:green:blue:!instance creation!public! !
-!Color class categoriesFor: #removeNamed:!instance creation!named colors!public! !
+!Color class categoriesFor: #removeNamed:!named colors!public! !
 !Color class categoriesFor: #shadow3d!instance creation!named colors!public! !
 !Color class categoriesFor: #systemColor:!instance creation!public! !
 !Color class categoriesFor: #tooltip!instance creation!named colors!public! !

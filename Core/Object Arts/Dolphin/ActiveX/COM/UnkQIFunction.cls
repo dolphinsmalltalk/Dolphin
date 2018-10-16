@@ -66,5 +66,5 @@ uninitialize
 
 	Descriptor := nil! !
 !UnkQIFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkQIFunction class categoriesFor: #uninitialize!accessing!class hierarchy-removing!private! !
+!UnkQIFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

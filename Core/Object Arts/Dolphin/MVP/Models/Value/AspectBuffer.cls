@@ -128,16 +128,16 @@ value
 !AspectBuffer categoriesFor: #aspectValue:!accessing!public! !
 !AspectBuffer categoriesFor: #doesNotUnderstand:!exceptions!public! !
 !AspectBuffer categoriesFor: #gate!accessing!public! !
-!AspectBuffer categoriesFor: #gate:!accessing!public! !
+!AspectBuffer categoriesFor: #gate:!accessing!not an aspect!public! !
 !AspectBuffer categoriesFor: #initialize!initializing!private! !
 !AspectBuffer categoriesFor: #isValid!public!testing! !
 !AspectBuffer categoriesFor: #isValidBlock!accessing!public! !
-!AspectBuffer categoriesFor: #isValidBlock:!accessing!public! !
+!AspectBuffer categoriesFor: #isValidBlock:!accessing!not an aspect!public! !
 !AspectBuffer categoriesFor: #notifyChanged!operations!public! !
 !AspectBuffer categoriesFor: #onGateChanged!event handling!private! !
 !AspectBuffer categoriesFor: #revert!commands!public! !
 !AspectBuffer categoriesFor: #subject!accessing!public! !
-!AspectBuffer categoriesFor: #subject:!accessing!public! !
+!AspectBuffer categoriesFor: #subject:!accessing!not an aspect!public! !
 !AspectBuffer categoriesFor: #value!accessing!public! !
 
 !AspectBuffer class methodsFor!

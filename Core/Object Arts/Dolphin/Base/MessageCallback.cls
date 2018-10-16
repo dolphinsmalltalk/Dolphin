@@ -53,7 +53,7 @@ valueWithArgumentsAt: anAddress
 !MessageCallback categoriesFor: #closure!accessing!public! !
 !MessageCallback categoriesFor: #closure:!accessing!public! !
 !MessageCallback categoriesFor: #printOn:!development!printing!public! !
-!MessageCallback categoriesFor: #receiver:!accessing!private! !
-!MessageCallback categoriesFor: #selector:!accessing!private! !
+!MessageCallback categoriesFor: #receiver:!initializing!private! !
+!MessageCallback categoriesFor: #selector:!initializing!private! !
 !MessageCallback categoriesFor: #valueWithArgumentsAt:!evaluating!private! !
 

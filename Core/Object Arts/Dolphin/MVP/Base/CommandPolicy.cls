@@ -232,7 +232,7 @@ visitPresenter: presenter
 !CommandPolicy categoriesFor: #route:!operations!public! !
 !CommandPolicy categoriesFor: #routeFrom:!operations!public! !
 !CommandPolicy categoriesFor: #source!accessing!private! !
-!CommandPolicy categoriesFor: #source:!accessing!private! !
+!CommandPolicy categoriesFor: #source:!initializing!private! !
 !CommandPolicy categoriesFor: #visitPresenter:!operations!private! !
 
 CommandPolicy methodProtocol: #commandPolicy attributes: #(#readOnly) selectors: #(#query: #route:)!

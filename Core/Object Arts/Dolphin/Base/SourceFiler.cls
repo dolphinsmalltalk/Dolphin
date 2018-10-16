@@ -355,6 +355,6 @@ on: aWriteStream
 	^(self new)
 		setStream: aWriteStream;
 		yourself! !
-!SourceFiler class categoriesFor: #initialize!public! !
+!SourceFiler class categoriesFor: #initialize!class initialization!development!public! !
 !SourceFiler class categoriesFor: #on:!instance creation!public! !
 

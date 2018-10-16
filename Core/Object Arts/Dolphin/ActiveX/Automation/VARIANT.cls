@@ -1184,7 +1184,7 @@ vt
 !VARIANT class categoriesFor: #nameOfVT:!enquiries!public! !
 !VARIANT class categoriesFor: #null!instance creation!public! !
 !VARIANT class categoriesFor: #typeName!constants!private! !
-!VARIANT class categoriesFor: #uninitialize!initializing!private! !
+!VARIANT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !VARIANT class categoriesFor: #unspecified!instance creation!public! !
 !VARIANT class categoriesFor: #vt!constants!public! !
 

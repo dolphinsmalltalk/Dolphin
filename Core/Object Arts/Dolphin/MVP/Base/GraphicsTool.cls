@@ -221,7 +221,7 @@ stbSaveOn: anSTBOutFiler
 !GraphicsTool categoriesFor: #onStartup!event handling!private! !
 !GraphicsTool categoriesFor: #ownedHandle:!accessing!private! !
 !GraphicsTool categoriesFor: #ownsHandle!public!testing! !
-!GraphicsTool categoriesFor: #ownsHandle:!private!testing! !
+!GraphicsTool categoriesFor: #ownsHandle:!initializing!private! !
 !GraphicsTool categoriesFor: #postCopy!copying!public! !
 !GraphicsTool categoriesFor: #realize!public!realizing/unrealizing! !
 !GraphicsTool categoriesFor: #stbFixup:at:!binary filing!public! !

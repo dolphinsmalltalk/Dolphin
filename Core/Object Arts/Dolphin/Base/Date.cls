@@ -741,6 +741,6 @@ yesterday
 !Date class categoriesFor: #tomorrow!public! !
 !Date class categoriesFor: #yearAsDays:!converting!private! !
 !Date class categoriesFor: #yearPivot!accessing!public! !
-!Date class categoriesFor: #yearPivot:!accessing!public! !
+!Date class categoriesFor: #yearPivot:!accessing!not an aspect!public! !
 !Date class categoriesFor: #yesterday!instance creation!public! !
 

@@ -53,14 +53,14 @@ value
 	^self subclassResponsibility! !
 !SelectionChangeEvent categoriesFor: #canIntercept!public!testing! !
 !SelectionChangeEvent categoriesFor: #cause!accessing!public! !
-!SelectionChangeEvent categoriesFor: #cause:!accessing!public! !
+!SelectionChangeEvent categoriesFor: #cause:!initializing!public! !
 !SelectionChangeEvent categoriesFor: #newSelection!accessing!public! !
-!SelectionChangeEvent categoriesFor: #newSelection:!accessing!public! !
+!SelectionChangeEvent categoriesFor: #newSelection:!initializing!public! !
 !SelectionChangeEvent categoriesFor: #newSelections!accessing!public! !
-!SelectionChangeEvent categoriesFor: #newSelections:!accessing!public! !
+!SelectionChangeEvent categoriesFor: #newSelections:!initializing!public! !
 !SelectionChangeEvent categoriesFor: #oldSelection!accessing!public! !
-!SelectionChangeEvent categoriesFor: #oldSelection:!accessing!public! !
+!SelectionChangeEvent categoriesFor: #oldSelection:!initializing!public! !
 !SelectionChangeEvent categoriesFor: #oldSelections!accessing!public! !
-!SelectionChangeEvent categoriesFor: #oldSelections:!accessing!public! !
+!SelectionChangeEvent categoriesFor: #oldSelections:!initializing!public! !
 !SelectionChangeEvent categoriesFor: #value!accessing!public! !
 

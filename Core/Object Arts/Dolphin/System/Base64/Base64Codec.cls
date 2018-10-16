@@ -127,6 +127,6 @@ new
 		yourself! !
 !Base64Codec class categoriesFor: #decodeFrom:onto:!operations!public! !
 !Base64Codec class categoriesFor: #encodeFrom:onto:!operations!public! !
-!Base64Codec class categoriesFor: #initialize!private! !
+!Base64Codec class categoriesFor: #initialize!development!private! !
 !Base64Codec class categoriesFor: #new!instance creation!private! !
 

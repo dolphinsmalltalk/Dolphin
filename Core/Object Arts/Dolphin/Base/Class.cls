@@ -395,7 +395,8 @@ owningPackage
 	this development class in a runtime image. The answer should always be nil
 	in a runtime application."
 
-	^(self environment lookup: #Package) ifNotNil: [:pkgClass | pkgClass manager packageOfClass: self]!
+	^(self environment lookup: #PackageManager)
+		ifNotNil: [:pkgClass | pkgClass current packageOfClass: self]!
 
 owningPackage: aPackageOrNil
 	"Set the receiver's <Package> to be the argument. Any current package association is lost.
@@ -832,7 +833,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!Class categoriesFor: #uninitialize!development!initializing!private! !
+!Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
 !Class categoriesFor: #uninitializeBeforeRemove!initializing!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !

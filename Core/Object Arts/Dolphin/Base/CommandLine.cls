@@ -288,7 +288,7 @@ processOptions
 !CommandLine categoriesFor: #arguments!accessing!public! !
 !CommandLine categoriesFor: #checkForErrors!private! !
 !CommandLine categoriesFor: #getOpt:!getopt protocol!public! !
-!CommandLine categoriesFor: #initialize:!private! !
+!CommandLine categoriesFor: #initialize:!initializing!private! !
 !CommandLine categoriesFor: #optArg!getopt protocol!public! !
 !CommandLine categoriesFor: #options!accessing!public! !
 !CommandLine categoriesFor: #options:!public! !
