@@ -162,11 +162,6 @@ subNames
 
 !Category class methodsFor!
 
-categoryIcon
-	"Answer an Icon representing the Category objects which the receiver collects." 
-
-	^self icon!
-
 initialize
 	"Private - Initialize the receiver's class variables."
 
@@ -212,7 +207,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	PermanentCategories := nil.! !
-!Category class categoriesFor: #categoryIcon!constants!public! !
 !Category class categoriesFor: #initialize!initializing!private! !
 !Category class categoriesFor: #name:!instance creation!public! !
 !Category class categoriesFor: #new!instance creation!public! !

@@ -6,6 +6,7 @@ package paxVersion: 1;
 
 package classNames
 	add: #CRTLibraryImportTest;
+	add: #PackageClosureTests;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -17,6 +18,11 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\Base\Dolphin';
 	add: '..\Base\Dolphin Base Tests';
+	add: '..\..\Samples\MVP\Hello World\Hello World';
+	add: '..\..\Samples\Console\Hello World\Hello World (Console)';
+	add: 'Lagoon Image Stripper';
+	add: '..\..\Samples\MVP\Notepad\Notepad';
+	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
 	yourself).
 
 package!
@@ -24,6 +30,11 @@ package!
 "Class Definitions"!
 
 DolphinTest subclass: #CRTLibraryImportTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+DolphinTest subclass: #PackageClosureTests
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

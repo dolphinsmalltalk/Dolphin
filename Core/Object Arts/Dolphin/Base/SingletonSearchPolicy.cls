@@ -6,6 +6,7 @@ SearchPolicy subclass: #SingletonSearchPolicy
 	poolDictionaries: ''
 	classInstanceVariableNames: 'current'!
 SingletonSearchPolicy guid: (GUID fromString: '{0f05b43d-e5e5-41cc-91d2-4e924305aafb}')!
+SingletonSearchPolicy isAbstract: true!
 SingletonSearchPolicy comment: ''!
 !SingletonSearchPolicy categoriesForClass!Collections-Support! !
 !SingletonSearchPolicy methodsFor!

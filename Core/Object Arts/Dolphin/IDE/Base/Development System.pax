@@ -140,9 +140,11 @@ package methodNames
 	add: #Behavior -> #methodFor:;
 	add: #Behavior -> #searchForInTool:;
 	add: #Behavior -> #whichClassDefinesInstVar:;
+	add: #Behavior -> #whichMethodsOnlySelfSend:;
 	add: #BlockFrame -> #debugIpFor:;
 	add: #BlockFrame -> #isRestartable;
 	add: #BlockFrame -> #makeDebug;
+	add: #BlockFrame -> #mapInitialIpFrom:to:;
 	add: #Boolean -> #literalTextStyle;
 	add: #BOOLField -> #newAspect:class:;
 	add: #BorderLayout -> #arrangementAspect;
@@ -248,7 +250,9 @@ package methodNames
 	add: #Package -> #browse;
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
+	add: #Package -> #hasImageStripper;
 	add: #Package -> #icon;
+	add: #Package -> #imageStripper;
 	add: #Package -> #publishedAspects;
 	add: #Package -> #searchForInTool:;
 	add: #PackageManager -> #getVersionInfoFor:;
@@ -279,6 +283,8 @@ package methodNames
 	add: #ResourceIdentifier -> #assignLiteralResourceData:;
 	add: #ResourceIdentifier -> #browse;
 	add: #ResourceIdentifier -> #edit;
+	add: #ResourceIdentifier -> #editViewUsing:;
+	add: #ResourceIdentifier -> #emit:asStringOn:;
 	add: #ResourceIdentifier -> #prompt;
 	add: #ResourceIdentifier -> #publishedAspects;
 	add: #ResourceIdentifier -> #reassign;
@@ -390,6 +396,12 @@ package methodNames
 	add: 'ExternalInteger class' -> #newInstanceAspect:class:;
 	add: 'ExternalIntegerBytes class' -> #newInstanceAspect:class:;
 	add: 'ExternalMethod class' -> #publishedAspectsOfInstances;
+	add: 'ExternalStructure class' -> #compileAllDefinitions;
+	add: 'ExternalStructure class' -> #compileDefinition;
+	add: 'ExternalStructure class' -> #compileGetMethod:forField:;
+	add: 'ExternalStructure class' -> #compileSetMethod:forField:;
+	add: 'ExternalStructure class' -> #formatAndCompile:categories:;
+	add: 'ExternalStructure class' -> #recompileDefinition;
 	add: 'Float class' -> #newInstanceAspect:class:;
 	add: 'FLOAT class' -> #newInstanceAspect:class:;
 	add: 'FlowLayout class' -> #publishedAspectsOfInstances;
@@ -1357,12 +1369,32 @@ searchForInTool: aSmalltalkToolShell
 	aSmalltalkToolShell searchForClass: self!
 
 whichClassDefinesInstVar: aString 
-	^self whichClassSatisfies: [:aClass | aClass instVarNames includes: aString]! !
+	^self whichClassSatisfies: [:aClass | aClass instVarNames includes: aString]!
+
+whichMethodsOnlySelfSend: aSymbol
+	"Answer a Set of methods which consist purely of a send-to-self of the specified zero-arg selector."
+
+	^self selectMethods: ((VMLibrary default indexOfSpecialSelector: aSymbol ifAbsent: [])
+				ifNil: [[:method | method isSimpleSelfSend: aSymbol]]
+				ifNotNil: 
+					[:index |
+					| specialSend send sendRet |
+					specialSend := index + OpcodePool.ShortSpecialSend - 1.
+					sendRet := CompiledCode
+								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnFromMessage} asByteArray.
+					send := CompiledCode
+								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnSelf} asByteArray.
+					
+					[:method |
+					| packed |
+					packed := method basicByteCodes.
+					packed == send or: [packed == sendRet]]])! !
 !Behavior categoriesFor: #hasAbstractMethods!public!testing! !
 !Behavior categoriesFor: #isAbstract!public!testing! !
 !Behavior categoriesFor: #methodFor:!accessing!public! !
 !Behavior categoriesFor: #searchForInTool:!public! !
 !Behavior categoriesFor: #whichClassDefinesInstVar:!public!RefactoringBrowser! !
+!Behavior categoriesFor: #whichMethodsOnlySelfSend:!development!methods-testing!public! !
 
 !Bitmap class methodsFor!
 
@@ -1422,10 +1454,21 @@ makeDebug
 		ifNotNil: 
 			[:home | 
 			home makeDebug.
-			home sender ifNotNil: [:sender | sender makeDebug]]! !
+			home sender ifNotNil: [:sender | sender makeDebug]]!
+
+mapInitialIpFrom: aCompiledMethod to: debugCompiledMethod 
+	| map debugMap i ip |
+	map := aCompiledMethod debugInfo textMap.
+	debugMap := debugCompiledMethod debugInfo textMap.
+	self assert: [map size == debugMap size].
+	ip := self block initialIP.
+	i := self findIP: ip inTextMap: map.
+	self assert: [(map at: i) key = ip].
+	^(debugMap at: i) key! !
 !BlockFrame categoriesFor: #debugIpFor:!development!private! !
 !BlockFrame categoriesFor: #isRestartable!development!private!testing! !
 !BlockFrame categoriesFor: #makeDebug!development!private! !
+!BlockFrame categoriesFor: #mapInitialIpFrom:to:!private! !
 
 !Boolean methodsFor!
 
@@ -2433,6 +2476,70 @@ publishedAspects
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!development!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!development!public! !
 
+!ExternalStructure class methodsFor!
+
+compileAllDefinitions
+	"Compile the definitions of the receiver and all its subclasses"
+
+	self withAllSubclassesDo: [:each | each compileDefinition].
+!
+
+compileDefinition
+	"Builds a new template and generates compiled methods for accessing the fields 
+	described by it. Depending on the description held in each field, some accessor
+	methods may be left as uncompiled to be addressed via the template and 
+	#doesNotUnderstand:"
+
+	self
+		newTemplate;
+		defineTemplate;
+		recompileDefinition;
+		shrink!
+
+compileGetMethod: aSymbol forField: anExternalField
+	"Private - Generate a compiled 'get' accessor method for the selector aSymbol 
+	and field definition anExternalField."
+
+	| methodText |
+	anExternalField canGenerateAccessor ifFalse: [^self].
+	methodText := String writeStream: 256.
+	anExternalField printAccessor: aSymbol on: methodText.
+	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
+
+compileSetMethod: aSelector forField: anExternalField
+	"Private - Generate a compiled 'set' accessor method for the selector aSymbol 
+	and field definition, anExternalField"
+
+	| methodText |
+	anExternalField canGenerateMutator ifFalse: [^self].
+	methodText := String writeStream: 256.
+	anExternalField printMutator: aSelector on: methodText.
+	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
+
+formatAndCompile: aString categories: categories 
+	| source |
+	source := Smalltalk developmentSystem reformatSource: aString in: self.
+	^self compile: source categories: categories!
+
+recompileDefinition
+	"Private - Recompiles the existing template for the receiver"
+
+	self decompileDefinition.
+	self definesNewFields ifFalse: [^self].
+	self template keysAndValuesDo: 
+			[:selector :field |
+			(self shouldCompile: selector forField: field)
+				ifTrue: 
+					[selector last == $:
+						ifTrue: [self compileSetMethod: selector forField: field]
+						ifFalse: [self compileGetMethod: selector forField: field]]]! !
+!ExternalStructure class categoriesFor: #compileAllDefinitions!development!public! !
+!ExternalStructure class categoriesFor: #compileDefinition!development!public! !
+!ExternalStructure class categoriesFor: #compileGetMethod:forField:!development!private! !
+!ExternalStructure class categoriesFor: #compileSetMethod:forField:!development!private! !
+!ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
+!ExternalStructure class categoriesFor: #recompileDefinition!development!private! !
+
 !Float class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -3387,9 +3494,21 @@ defaultAboutBitmap
 			olePicture fromFile: bitmapFile usingLocator: (FolderRelativeFileLocator basePath: self path)]
 		ifFalse: [DIBSection width: 480 height: 360]!
 
+hasImageStripper
+	^imageStripperBytes notNil and: [self imageStripper notNil]!
+
 icon
 	self isBasePackage ifTrue: [^self class dolphinPackageIcon].
 	^super icon!
+
+imageStripper
+	"Answer an image stripper for the receiver, or nil ImageStripper class is not present.
+	Since we have to be able to load the receiver into images that do no necessarily have the 
+	ImageStripper class installed, we hold the stripper as a binary filed out ByteArray in imageStripperBytes.
+	We reconstitute this here."
+
+	^self environment at: #ImageStripper
+		ifPresent: [:stripperClass | self rehydrateImageStripper: stripperClass]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -3407,7 +3526,9 @@ searchForInTool: aSmalltalkToolShell
 !Package categoriesFor: #browse!development!enumerating!public! !
 !Package categoriesFor: #defaultAbout!development!public! !
 !Package categoriesFor: #defaultAboutBitmap!constants!public! !
+!Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #icon!public! !
+!Package categoriesFor: #imageStripper!accessing!public! !
 !Package categoriesFor: #publishedAspects!accessing!development!public! !
 !Package categoriesFor: #searchForInTool:!development!public! !
 
@@ -4047,6 +4168,18 @@ edit
 	ViewComposer openOn: self
     	!
 
+editViewUsing: aMonadicBlock 
+	| view | 
+	view := self loadWithContext: View desktop.
+	aMonadicBlock value: view.
+	self assign: view literalStoreArray.
+	view destroy!
+
+emit: aResourceArray asStringOn: aWriteStream 
+	aWriteStream nextPutAll: '#('.
+	aResourceArray do: [:each |  each literalPrintOn: aWriteStream. aWriteStream space].
+	aWriteStream nextPut: $)!
+
 prompt
 	"Prompt for and answer a new ResourceIdentifier using the receiver to give the default settings."
 
@@ -4073,6 +4206,8 @@ reassign
 !ResourceIdentifier categoriesFor: #assignLiteralResourceData:!accessing!private! !
 !ResourceIdentifier categoriesFor: #browse!development!public! !
 !ResourceIdentifier categoriesFor: #edit!development!operations!public! !
+!ResourceIdentifier categoriesFor: #editViewUsing:!operations!public! !
+!ResourceIdentifier categoriesFor: #emit:asStringOn:!helpers!private! !
 !ResourceIdentifier categoriesFor: #prompt!development!operations!public! !
 !ResourceIdentifier categoriesFor: #publishedAspects!constants!development!public! !
 !ResourceIdentifier categoriesFor: #reassign!public! !
@@ -5442,7 +5577,7 @@ resource_View_composer_tools
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_View_composer_tools)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1915204752 170 192 8 #() 170 192 34 8 48139 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #zFront 8 'Bring to Front' 1 1 nil 48139 395334 3 ##(Smalltalk.Bitmap) 1 true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'ListBar.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 7 328198 ##(Smalltalk.Point) 1 1 5 48141 610 416 1 642 #zForward 8 'Bring Forward' 1 1 nil 48141 704 1 48143 610 416 1 642 #zBackward 8 'Send Backward' 1 1 nil 48143 704 3 48145 610 416 1 642 #zBack 8 'Send to Back' 1 1 nil 48145 704 7 34 5 624 848 896 944 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil 818 33 33 818 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 818 3839 21 818 1415 51 416 1138 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 66 10 0 0 35 0 0 0] 8 #() 818 193 193 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 786694 ##(Smalltalk.ColorDefault) 8 4278190080 8 1915204752 170 192 8 #() 170 192 34 8 37139 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #zFront 8 'Bring to Front' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x23EE 8 'Georgia' nil 262406 ##(Smalltalk.ARGB) 8 4281833960 nil nil 3 nil nil 37139 37175 610 416 1 642 #zBackward 8 'Send Backward' 1 1 690 $\x25BC nil nil 738 8 4281833960 nil nil 1 nil nil 37175 37177 610 416 1 642 #zBack 8 'Send to Back' 1 1 690 $\x23ED 8 'Georgia' nil 738 8 4281833960 nil nil 3 nil nil 37177 37157 610 416 1 642 #zForward 8 'Bring Forward' 1 1 690 $\x25B2 8 'Segoe UI' nil 738 8 4281833960 nil nil 1 nil nil 37157 34 5 624 992 784 880 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil 328198 ##(Smalltalk.Point) 33 33 1154 45 45 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 1154 3839 21 1154 1415 51 416 1266 #updateSizePosted 560 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 66 10 0 0 35 0 0 0] 8 #() 1154 193 193 nil 27 )!
 
 resource_Workspace_tools
 	"Answer the literal data from which the 'Workspace tools' resource can be reconstituted.

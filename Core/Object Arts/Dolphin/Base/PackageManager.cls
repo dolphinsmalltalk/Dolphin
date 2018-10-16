@@ -214,7 +214,7 @@ allGlobalAliases
 !
 
 allPackagedClasses
-	"Private - Answer a <collection> of all the packaged classes in the system."
+	"Answer a <collection> of all the packaged classes in the system."
 
 	| answer |
 	answer := OrderedCollection new: 2000.
@@ -265,11 +265,9 @@ basicUninstall: aPackage
 	All the packages owned objects are removed from the system.
 	Answer aPackage."
 
-	self beNotProcessingEvents.
-	[	
-		aPackage removeEventsTriggeredFor: self.
-		[aPackage privateUninstall]	 ensure: [self basicRemovePackage: aPackage]
-	] ensure: [self beProcessingEvents]!
+	self noEventsDo: 
+			[aPackage removeEventsTriggeredFor: self.
+			[aPackage privateUninstall] ensure: [self basicRemovePackage: aPackage]]!
 
 beNotProcessingEvents
 	"Private - Temporarily suspend the processing of system events or
@@ -324,9 +322,10 @@ changeProcessEventsBy: countChange
 	processing."
 
 	processEvents := processEvents + countChange.
-	processEvents < 0 ifTrue: [
-		Notification signal: 'PackageManager processEvents became corrupt and has been reset.'.
-		processEvents := 0].
+	processEvents < 0
+		ifTrue: 
+			[Notification signal: 'PackageManager processEvents became corrupt and has been reset.'.
+			processEvents := 0].
 	^processEvents!
 
 classRepackaged: aClass from: source to: destination
@@ -641,8 +640,7 @@ looseMethods
 	material since the cache is then bypassed and is regenerated when event processing is again
 	enabled."
 
-	looseMethods isNil ifTrue: [looseMethods := self getLooseMethods].
-	^looseMethods!
+	^looseMethods ifNil: [looseMethods := self getLooseMethods]!
 
 looseMethodUpdated: aCompilationResult 
 	"There is nothing to do because the loose method cache now holds method 'names' which are
@@ -735,6 +733,10 @@ newPackage: aString
 	self addManagedPackage: pkg.
 	self loadedChanged.
 	^pkg!
+
+noEventsDo: aNiladicBlock
+	self beNotProcessingEvents.
+	aNiladicBlock ensure: [self beProcessingEvents]!
 
 observePackage: aPackage 
 	"Private - Subscribe to certain events from the specified managed <Package>."
@@ -976,13 +978,13 @@ packageNames
 
 	^self packages keys!
 
-packageOfClass: aBehavior 
-	"Answer the package held by the receiver which owns aBehavior or the special 'Uncommitted' package if the class has no other assignment."
+packageOfClass: aBehavior
+	"Answer the Package held by the receiver which owns aBehavior, or nil if the class is unpackaged."
 
-	^packagedGlobals at: aBehavior instanceClass name
-		ifAbsentPut: 
+	^(packagedGlobals lookup: aBehavior instanceClass name)
+		ifNil: 
 			["Fall back on enumerating the packages."
-			self packages detect: [:p | p includesClass: aBehavior] ifNone: [^nil	"Package uncommitted"]]!
+			self packages detect: [:p | p includesClass: aBehavior] ifNone: []]!
 
 packageOfGlobalNamed: globalName 
 	"Answer the package held by the receiver which owns globalName (excluding
@@ -1190,7 +1192,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #addResourceIdentifier:to:!adding!public! !
 !PackageManager categoriesFor: #allDependentPackagesOf:visited:!accessing!private! !
 !PackageManager categoriesFor: #allGlobalAliases!enquiries!public! !
-!PackageManager categoriesFor: #allPackagedClasses!accessing!private! !
+!PackageManager categoriesFor: #allPackagedClasses!accessing!public! !
 !PackageManager categoriesFor: #allPackagedGlobalNames!accessing!private! !
 !PackageManager categoriesFor: #allSourceObjects!public!source filing! !
 !PackageManager categoriesFor: #basePackages!accessing!public! !
@@ -1244,6 +1246,7 @@ Would you like to re-enable change monitoring (recommended)?')
 !PackageManager categoriesFor: #moveLooseMethod:from:to:!helpers!private! !
 !PackageManager categoriesFor: #moveMethod:from:to:!helpers!private! !
 !PackageManager categoriesFor: #newPackage:!adding!private! !
+!PackageManager categoriesFor: #noEventsDo:!helpers!private! !
 !PackageManager categoriesFor: #observePackage:!private!updating! !
 !PackageManager categoriesFor: #onClassAdded:!event handling!private! !
 !PackageManager categoriesFor: #onClassRemoved:!event handling!private! !

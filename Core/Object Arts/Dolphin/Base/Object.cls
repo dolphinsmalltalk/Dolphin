@@ -607,25 +607,22 @@ errorAt: index
 	"An at: operation on the receiver failed. Determine the cause of the error, and 
 	raise an appropriate error."
 
-	^self isIndexable 
-		ifTrue: [ 
-			index isInteger
-				ifTrue: [self errorSubscriptBounds: index]
-				ifFalse: [Error nonIntegerIndex: index]]
-		ifFalse: [Error notIndexable: self]
-!
+	^self class isVariable
+		ifTrue: 
+			[index isInteger ifTrue: [self errorSubscriptBounds: index] ifFalse: [Error nonIntegerIndex: index]]
+		ifFalse: [Error notIndexable: self]!
 
 errorAt: index put: value
 	"An at:put: operation on the receiver failed. Determine the cause of the error, and 
 	raise an appropriate error."
 
-	^self isIndexable
+	^self class isVariable
 		ifTrue: 
-			[index isInteger 
+			[index isInteger
 				ifTrue: 
-					[(index between: 1 and: self size) 
+					[(index between: 1 and: self size)
 						ifTrue: 
-							[self isImmutable 
+							[self isImmutable
 								ifTrue: [Processor constWriteSignal signalWith: self]
 								ifFalse: [self errorCantHold: value]]
 						ifFalse: [self errorSubscriptBounds: index]]

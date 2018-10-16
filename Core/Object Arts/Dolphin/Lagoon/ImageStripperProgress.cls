@@ -346,11 +346,11 @@ wmInitDialog: message wParam: wParam lParam: lParam
 
 	| bkcolor |
 	cursor := UserLibrary default loadCursor: 0 lpCursorName: IDC_WAIT.
-	self setItem: CaptionId text: 'Image Stripping in Progress'.
+	self setItem: CaptionId text: 'Application Deployment in Progress'.
 	self setItem: ExplanationId
-		text: 'The stripping process may take several minutes depending on the ImageStripper configuration. 
+		text: 'The deployment process may take up to a minute depending on the deployment options. 
 
-This progress dialog will disappear some seconds before the stripping is complete. A message box will appear informing you when the procedure is finished and, once confirmed,  the  development image will exit.'.
+This progress dialog will disappear some seconds before deployment is complete. A message box will appear informing you when the procedure is finished and, once confirmed, the development image will exit.'.
 	progress := self getItemHandle: ProgressId ifAbsent: [].
 	bkcolor := UserLibrary default getSysColor: COLOR_WINDOW.
 	UserLibrary default 
@@ -417,7 +417,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !ImageStripperProgress categoriesFor: #show!operations!public! !
 !ImageStripperProgress categoriesFor: #status:!accessing!public! !
 !ImageStripperProgress categoriesFor: #stopProcess!helpers!private! !
-!ImageStripperProgress categoriesFor: #subclassWindow:!accessing!private! !
+!ImageStripperProgress categoriesFor: #subclassWindow:!operations!private! !
 !ImageStripperProgress categoriesFor: #template!constants!public! !
 !ImageStripperProgress categoriesFor: #update!drawing!public! !
 !ImageStripperProgress categoriesFor: #validateUserInterface!operations!public! !
@@ -463,8 +463,14 @@ initialize
 		at: WM_GETDLGCODE			put: #wmGetDlgCode:wParam:lParam:
 !
 
+onPreStripImage
+	self
+		removeSelectors: #(#forkProgressMonitor #primHookWindowCreate: #show #subclassWindow: #template #wmInitDialog:wParam:lParam: #wmCreate:wParam:lParam:).
+	self class removeSelectors: self selectors!
+
 show
 	^self new show! !
 !ImageStripperProgress class categoriesFor: #initialize!initializing!public! !
+!ImageStripperProgress class categoriesFor: #onPreStripImage!private! !
 !ImageStripperProgress class categoriesFor: #show!operations!public! !
 

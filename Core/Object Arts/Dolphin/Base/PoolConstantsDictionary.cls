@@ -210,7 +210,7 @@ removeIndex: anInteger
 	super removeIndex: anInteger.
 	self isChanged: true! !
 !PoolConstantsDictionary categoriesFor: #associationClass!constants!private! !
-!PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!public! !
+!PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #at:put:!adding!development!public! !
 !PoolConstantsDictionary categoriesFor: #canFileOut!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
@@ -242,10 +242,6 @@ PoolConstantsDictionary methodProtocol: #sourceObject attributes: #() selectors:
 named: aSymbol 
 	^(self new)
 		name: aSymbol;
-		yourself!
-
-uninitialize
-	VMLibrary default registryAt: self name put: nil! !
+		yourself! !
 !PoolConstantsDictionary class categoriesFor: #named:!instance creation!public! !
-!PoolConstantsDictionary class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

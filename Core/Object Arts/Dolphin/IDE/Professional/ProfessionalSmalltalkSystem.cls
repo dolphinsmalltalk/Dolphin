@@ -22,8 +22,6 @@ browseEnvironment: aBrowserEnvironment
 
 	^EnvironmentBrowserShell onEnvironment: aBrowserEnvironment!
 
-browserEnvFromDeployedPackage: aPackage 
-	^self browserEnvFromDom: (self openDeploymentLog: aPackage)!
 
 browserEnvFromDeploymentLog: aString
 	^self browserEnvFromDom: (self openDeploymentLog: aString)!
@@ -72,10 +70,10 @@ ideaSpaceClass: toolClass
 newIdeaSpace
 	^self ideaSpaceClass show!
 
-openDeploymentLog: fileName
+openDeploymentLog: aString
 	| dom |
 	dom := IXMLDOMDocument new.
-	dom loadURL: 'file://' , fileName.
+	dom loadURL: 'file://' , aString.
 	^dom!
 
 packagedResourceIdentifierDialogClass
@@ -132,7 +130,6 @@ systemBrowserClass: toolClass
 !ProfessionalSmalltalkSystem categoriesFor: #browseDeployedPackage:!helpers!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseDeploymentLog:!helpers!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
-!ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeployedPackage:!helpers!private! !
 !ProfessionalSmalltalkSystem categoriesFor: #browserEnvFromDeploymentLog:!helpers!private! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSources!commands!public! !
 !ProfessionalSmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !

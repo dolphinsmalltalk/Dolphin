@@ -163,7 +163,7 @@ removeKey: key ifAbsent: exceptionHandler
 	Override in order to accept Symbols/Strings."
 
 	^super removeKey: key asString ifAbsent: exceptionHandler! !
-!PoolDictionary categoriesFor: #add:!adding!public! !
+!PoolDictionary categoriesFor: #add:!adding!development!public! !
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
 !PoolDictionary categoriesFor: #at:ifAbsent:!accessing!public! !
 !PoolDictionary categoriesFor: #at:put:!accessing!public! !

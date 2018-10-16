@@ -20,6 +20,7 @@ package classNames
 package methodNames
 	add: #ImageStripper -> #defaultSessionManagerClass;
 	add: #ImageStripper -> #editCustomOptions;
+	add: #ImageStripper -> #queryCommand:;
 	add: #PackageSelector -> #deploy;
 	add: 'ImageStripper class' -> #publishedAspectsOfInstances;
 	add: 'VersionResource class' -> #publishedAspectsOfInstances;
@@ -82,9 +83,17 @@ editCustomOptions
 
 	| inspector |
 	inspector := (Smalltalk at: #PublishedAspectInspector) shellOn: self.
-	inspector topShell caption: self class name , ' Properties'! !
-!ImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
-!ImageStripper categoriesFor: #editCustomOptions!commands!public! !
+	inspector topShell caption: self class name , ' Properties'!
+
+queryCommand: query 
+	"Private - Enter details about a potential command for the receiver 
+	into the <CommandQuery>, query."
+
+	(query canPerformAgainst: self) ifTrue: [query isEnabled: true].
+	^false	"There was no specific enablement of the command at this level"! !
+!ImageStripper categoriesFor: #defaultSessionManagerClass!accessing!public! !
+!ImageStripper categoriesFor: #editCustomOptions!accessing!public! !
+!ImageStripper categoriesFor: #queryCommand:!commands!development!private! !
 
 !ImageStripper class methodsFor!
 

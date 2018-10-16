@@ -874,9 +874,6 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 
 	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion!
 
-storeCategoriesOfMethod: aCompiledMethod
-	aCompiledMethod storeCategories!
-
 storeClassCategories
 	"Private - Record the categories of the receiver to the change log.
 	The job is simply delegated to the receiver's source manager (if available)."
@@ -913,7 +910,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 	^answer! !
 !ClassDescription categoriesFor: #<=!comparing!public! !
 !ClassDescription categoriesFor: #>>!accessing!public! !
-!ClassDescription categoriesFor: #addInstVarName:!instance variables!public! !
+!ClassDescription categoriesFor: #addInstVarName:!class hierarchy-mutating!instance variables!public! !
 !ClassDescription categoriesFor: #addProtocol:!private!protocols! !
 !ClassDescription categoriesFor: #addSharedPool:!pool variables!public! !
 !ClassDescription categoriesFor: #allClassVarNames!class variables!public! !
@@ -947,7 +944,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #defaultIconName!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
-!ClassDescription categoriesFor: #definition!development!public!source filing-class definition! !
+!ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
 !ClassDescription categoriesFor: #includesCategory:!categories-testing!development!public! !
 !ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!development!public! !
@@ -979,7 +976,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #realMethodCategories!categories-accessing!public! !
 !ClassDescription categoriesFor: #recompileAllReferencesToVarNamed:!development!private! !
 !ClassDescription categoriesFor: #removeCategory:!categories-removing!public! !
-!ClassDescription categoriesFor: #removeInstVarName:!instance variables!public! !
+!ClassDescription categoriesFor: #removeInstVarName:!class hierarchy-mutating!instance variables!public! !
 !ClassDescription categoriesFor: #removeMethodFromNonVirtualCategories:!development!helpers!private! !
 !ClassDescription categoriesFor: #removeProtocol:!private!protocols! !
 !ClassDescription categoriesFor: #removeProtocol:ifAbsent:!private!protocols! !
@@ -1004,7 +1001,6 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #sharedVariableString!accessing!public! !
 !ClassDescription categoriesFor: #sourceManager!accessing!public! !
 !ClassDescription categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ClassDescription categoriesFor: #storeCategoriesOfMethod:!compiling!private! !
 !ClassDescription categoriesFor: #storeClassCategories!private!source filing-methods! !
 !ClassDescription categoriesFor: #suggestedPrivacyFor:!compiling!private! !
 !ClassDescription categoriesFor: #whichCategoriesIncludeSelector:!categories-accessing!private! !

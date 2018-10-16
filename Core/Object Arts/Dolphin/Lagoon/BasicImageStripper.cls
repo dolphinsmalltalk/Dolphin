@@ -6,24 +6,43 @@ Model subclass: #BasicImageStripper
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BasicImageStripper guid: (GUID fromString: '{51ce4971-61e8-431f-9823-437cf7293e8a}')!
+BasicImageStripper isAbstract: true!
 BasicImageStripper comment: 'Base image stripping methods. These can safely be encrypted during release.'!
 !BasicImageStripper categoriesForClass!MVP-Models! !
 !BasicImageStripper methodsFor!
 
-basicRemoveClass: aClass notifying: notifier 
+actualRequiredPackages
+	"Private - Answer the <collection> of  <Package>s to be included in the deployed application."
+
+	^self systemPackageManager packages!
+
+allMethodsInClasses: classes do: operation 
+	"Private - Evaluate the <monadicValuable>, operation, for each and every method
+	in the <collection> of <Class>es, classes."
+
+	classes do: 
+			[:eachClass | 
+			eachClass methodDictionary do: [:eachMethod | operation value: eachMethod].
+			eachClass class methodDictionary do: [:eachMethod | operation value: eachMethod]]!
+
+allReferencedClasses
+	^Class allClasses!
+
+basicRemoveClass: aClass notifying: notifier
 	"Private - Remove the specified class from the system. Note that we do not use the ClassBuilder for this purpose."
+
 	| subs |
 	[aClass uninitializeBeforeRemove] on: Error
 		do: 
-			[:x | 
-			self 
+			[:x |
+			self
 				logElement: 'Error'
-				attributes: (Array with: 'class' -> x class name)
+				attributes: {'class' -> x class name}
 				value: 'Error uninitializing ' , aClass name , ': ' , x description].
 	subs := aClass subclasses.
-	subs notEmpty 
+	subs notEmpty
 		ifTrue: 
-			[Notification signal: ((String writeStream)
+			[Notification signal: (String writeStream
 						print: aClass;
 						nextPutAll: ' has ';
 						display: subs size;
@@ -40,7 +59,10 @@ collectGarbage: iterations
 	memMan := MemoryManager current.
 	iterations timesRepeat: [memMan collectGarbage; administerLastRites].!
 
-compileExternalStructuresNotifying: notifier 
+compileExternalStructures
+	^false!
+
+compileExternalStructures: aCollection notifying: notifier
 	"Private - Fully compile all ExternalStructure subclasses so that the template definitions and
 	the AttributeDescriptor subclasses may be removed. In order to do this we forcibly and
 	fully compile all the ExternalStructure accessor methods before removing the templates. If we
@@ -48,35 +70,44 @@ compileExternalStructuresNotifying: notifier
 	message for a field that is not normally compiled."
 
 	self notify: notifier status: 'Fully compiling ExternalStructures'.
-	self startElement: 'CompileExternalStructures'.
-	ExternalStructure withAllSubclasses do: [:each | each fullyCompileDefinition].
+	self startElement: 'CompileExternalStructures' attributes: #().
+	self systemPackageManager noEventsDo: [aCollection do: [:each | each fullyCompileDefinition]].
 
 	"Remove template in a second pass"
-	ExternalStructure withAllSubclasses do: [:each | each newTemplate].
+	aCollection do: [:each | each newTemplate].
 	"ExternalStructure DNU processing is no longer needed since fully compiled"
-	self 
-		removeSelector: #doesNotUnderstand:
+	self
+		removeSelectors: #(#doesNotUnderstand:)
 		of: ExternalStructure
 		notifying: notifier.
-	"Now we should be able to remove AttributeDescriptor and all its subclasses"
-	self removeClassNamed: #AttributeDescriptor notifying: notifier.
-	self endElement!
+	"Lazy template definition is not required"
+	(ExternalStructure class compile: 'ensureDefined').
+	"Field meta-data classes are no longer required"
+	self assert: [self systemPackageManager isProcessingEvents].
+	self uncheckedRemoveClass: (Smalltalk at: #AttributeDescriptor) notifying: notifier.
+	self endElement: true!
 
-defineExternalStructuresNotifying: notifier 
+defineExternalStructures: aCollection notifying: notifier
 	"Private - Ensure that all external structures are fully defined to avoid any recompilation that might
 	otherwise be triggered in a run-time image should the size be lazily determined."
 
 	self notify: notifier status: 'Building all ExternalStructure templates'.
-	self logElement: 'DefineExternalStructures' value: nil.
-	ExternalStructure withAllSubclasses do: [:each | each byteSize]!
+	self
+		logElement: 'DefineExternalStructures'
+		attributes: #()
+		value: nil.
+	self systemPackageManager noEventsDo: [aCollection do: [:each | each byteSize]]!
 
 destroyAndRemoveProgressNotifying: notifier
 	"Private - Destroy the progress view and remove its class if possible."
 
-	self logElement: 'CloseProgressDialog' value: nil.
+	self
+		logElement: 'CloseProgressDialog'
+		attributes: #()
+		value: nil.
 	
 	[notifier first destroy.
-	(SessionManager inputState)
+	SessionManager inputState
 		pumpMessages;
 		processDeferredActions.
 	"We remove the only reference to the notifier, which is why we have held it indirectly inside an Array, it should then
@@ -91,11 +122,45 @@ destroyAndRemoveProgressNotifying: notifier
 			on: Error
 			do: 
 				[:e |
-				self logError: e.
+				self logStrippingError: e.
 				VMLibrary default crashDump: e description].
 	self collectGarbage: 3.
 	self
 		finishedWithAll: #(#progressDialogClass #stripForConsoleApplicationNotifying: #destroyAndRemoveProgressNotifying:)!
+
+developmentResources
+	"Answer a <collection> of <ResourceIdentifier>s representing any development system resources that
+	are not owned directly by development classes."
+
+	^#()!
+
+emptyMethodDictionariesOfStubbornClasses
+	"Answer whether the method dictionaries of classes that refuse to uninstall with their
+	owning package should be emptied. Although this is somewhat of a risky option, it does
+	help one to track down the root of stripping problems since it helps to remove the knock
+	on effects of the original source of the problem."
+
+	^false.!
+
+endElement: aBoolean
+	!
+
+endTag
+!
+
+externalStructureClasses
+	^ExternalStructure withAllSubclasses!
+
+finishedWithAll: aCollectionOfSymbols
+	"Private - The receiver has finished with its method identified by the selectors in the <collection> argument, so they can be stripped. We do this by removing them up the inheritance chain, but stopping at BasicImageStripper."
+
+	aCollectionOfSymbols do: 
+			[:each |
+			| current |
+			current := self class.
+			[current name == #Model] whileFalse: 
+					[current methodDictionary removeKey: each ifAbsent: [].
+					current := current superclass]]!
 
 foldDuplicateBytecodesNotifying: notifier 
 	"Private - Eliminate duplicate byte code arrays"
@@ -120,11 +185,7 @@ foldDuplicateBytecodesNotifying: notifier
 	self 
 		logFold: 'FoldBytecodes'
 		folded: total - byteCodes size
-		total: total
-	"	self notify: notifier
-		status: (before - after) displayString 
-				, ' duplicate byte code arrays were stripped leaving ' , after displayString
-"!
+		total: total!
 
 foldDuplicateStringsNotifying: notifier 
 	| a |
@@ -136,13 +197,90 @@ foldDuplicateStringsNotifying: notifier
 		folded: a first - a second
 		total: a first!
 
+logElement: aString attributes: aCollection value: anObject 
+	self startTag: aString attributes: aCollection.
+	anObject notNil ifTrue: [self logValue: anObject].
+	self endTag!
+
+logFold: aString folded: count total: total
+	self startElement: aString attributes: #().
+	self
+		logElement: 'Total'
+		attributes: #()
+		value: total.
+	self
+		logElement: 'Folded'
+		attributes: #()
+		value: count.
+	self endElement: true!
+
+logMethod: aCompiledMethod
+	self
+		logElement: 'Method'
+		attributes: {'methodClass' -> aCompiledMethod methodClass name}
+		value: aCompiledMethod selector!
+
+logStrippingError: anError
+	!
+
+logValue: anObject 
+!
+
+messagesSentByClasses: aCollectionOfClasses
+	| sent |
+	sent := (IdentitySet new: aCollectionOfClasses size * 10)
+				addAll: self speciallySentMessages;
+				yourself.	"presize for an average of 10 unique sends per class"
+	self allMethodsInClasses: aCollectionOfClasses
+		do: 
+			[:eachMethod |
+			| selector |
+			selector := eachMethod selector.
+			eachMethod allSymbolLiteralsDo: 
+					[:eachSymbol |
+					"Note that self references are now excluded to prevent this particular form of
+					 circular reference preventing a method from being stripped"
+					eachSymbol == selector ifFalse: [sent add: eachSymbol]]].
+
+	"Add all messages that can be triggered by events"
+	Object._EventsRegister
+		do: [:each | each do: [:mseq | mseq messagesDo: [:ms | sent add: ms selector]]].
+	^sent!
+
+notify: notifier status: aString 
+!
+
+notRequiredClasses
+	"Answer an IdentitySet of Classes that are known to be not required and that
+	should be forcibly dropped during an image strip. Can be overridden by subclasses 
+	to alter the stripping strategy"
+
+	^IdentitySet new
+!
+
+notRequiredMethodCategories
+	"Answer an IdentitySet of MethodCategorys whose methods are known to be not required
+	and should be forcibly dropped during an image strip. Can be overridden by subclasses to 
+	alter the stripping strategy"
+
+	^#()
+
+!
+
+onNotification: aNotification notifier: notifier
+	self notify: notifier status: aNotification description!
+
 prepareExternalStructuresNotifying: notifier
 	"Private - Fully compile all ExternalStructure subclasses if required. They must already
 	have fully defined templates."
 
-	self startElement: 'PrepareExternalStructures'.
-	self compileExternalStructures ifTrue: [self compileExternalStructuresNotifying: notifier].
-	ExternalStructure withAllSubclasses do: 
+	| structs |
+	structs := self externalStructureClasses.
+	self defineExternalStructures: structs notifying: notifier.
+	self startElement: 'PrepareExternalStructures' attributes: #().
+	self compileExternalStructures
+		ifTrue: [self compileExternalStructures: structs notifying: notifier].
+	structs do: 
 			[:each |
 			"Access the byteSize to ensure set, especially important if not compiling external structures"
 			each byteSize.
@@ -150,67 +288,44 @@ prepareExternalStructuresNotifying: notifier
 
 	"Having defined all the templates, we can now remove the methods used to create them"
 	"We can now remove the structure template definition mechanism"
-	ExternalStructure class withAllSubclasses do: 
+	structs do: 
 			[:each |
 			self
 				removeSelectors: #(#shrink #defineTemplate #byteSize:)
-				of: each
+				of: each class
 				notifying: notifier].
 	self compileExternalStructures
 		ifTrue: 
 			[self
-				removeSelector: #offsetOf:
+				removeSelectors: #('offsetOf:')
 				of: ExternalStructure class
 				notifying: notifier].
-	self endElement.
-
-	"We no longer need this method. Referenced methods will become eligible to be stripped also"
+	self endElement: true.
 	self
-		finishedWithAll: #(#compileExternalStructures #compileExternalStructures: #compileExternalStructuresNotifying: #defineExternalStructuresNotifying: #prepareExternalStructuresNotifying:)!
+		finishedWithAll: #(#compileExternalStructures #compileExternalStructures: #compileExternalStructures:notifying: #defineExternalStructures:notifying: #prepareExternalStructuresNotifying: #externalStructureClasses)!
+
+preStripTidy
+	"Private - Remove any methods of ImageStripper that are no longer required to ensure these don't impact the calculated package pre-reqs when they are determined"
+
+	self
+		finishedWithAll: #(#initialize #notRequiredMethodCategories #preStripTidy #stripNotRequiredMethodsNotifying:)!
 
 purgeStubbornClass: aClass notifying: notifier
 	"Private - Remove what we can of a stubborn class that refuses to uninstall for some reason."
+!
 
-	self emptyMethodDictionariesOfStubbornClasses ifFalse: [^self].
-	Notification signal: 'Purging class ' , aClass name.
-	aClass clearGuid.
-	aClass class methodDictionary: nil.
-	aClass methodDictionary: nil!
-
-removeClass: aClass notifying: notifier 
+removeClass: aClass notifying: notifier
 	"Private - Removes aClass from the image. Answer the number of classes that
 	were actually removed (subclasses may be removed too)."
 
-	| removed className |
-	className := aClass name.
-	(aClass environment includesKey: className) ifFalse: [^0].
-	(self rootClasses includes: aClass) 
-		ifTrue: 
-			[Warning 
-				signal: 'The class ' , className , ' cannot be removed because it is a root of the application'.
-			^0].
-	"First remove subclasses"
-	removed := aClass allSubclasses inject: 0
-				into: [:sum :each | sum + (self removeClass: each notifying: notifier)].
-	self logElement: 'RemoveClass' value: className.
-	^
-	[self basicRemoveClass: aClass notifying: notifier.
-	aClass clearGuid.
-	removed + 1] on: Error
-			do: 
-				[:ex | 
-				self logError: ex.
-				"self notify: notifier detail: (x stackTrace: 10)."
-				aClass primAllInstances do: [:each | Notification signal: each printString].
-				self purgeStubbornClass: aClass notifying: notifier.
-				removed]!
+	(aClass environment includesKey: aClass name) ifFalse: [^0].
+	^self uncheckedRemoveClass: aClass notifying: notifier!
 
-removeClasses: aCollection notifying: notifier 
+removeClasses: aCollection notifying: notifier
 	| count |
 	aCollection isEmpty ifTrue: [^0].
 	count := 0.
-	self startElement: 'StripClasses'.
-	"Remove hierarchies from the bottom up."
+	self startElement: 'StripClasses' attributes: #().
 	aCollection reverseDo: [:each | count := count + (self removeClass: each notifying: notifier)].
 	self endElement: count > 0.
 	self shrinkEventsRegister.
@@ -224,46 +339,67 @@ removeClassNamed: classNameSymbol notifying: notifier
 		ifNil: [0]
 		ifNotNil: [:class | self removeClass: class notifying: notifier]!
 
-removeMethods: aCollection force: aBoolean notifying: notifier
+removeMethod: aCompiledMethod notifying: notifier
+	self logMethod: aCompiledMethod.
+	aCompiledMethod methodClass methodDictionary removeKey: aCompiledMethod selector
+		ifAbsent: 
+			["Could be in a weakly held development class which has evaporated"
+			]!
+
+removeMethods: aCollection reason: aString force: aBoolean notifying: notifier
 	"Private - Removes the <collection> of <CompiledMethod>s, methods, from the image."
 
 	| removed |
 	aCollection isEmpty ifTrue: [^0].
-	self startElement: 'StripMethods'.
-	removed := aCollection asSortedCollection select: 
-					[:method |
-					self
-						removeMethod: method
-						force: aBoolean
-						notifying: notifier].
-	self endElement.
+	self startElement: 'StripMethods' attributes: {'reason' -> aString}.
+	removed := aCollection asArray sort.
+	aBoolean
+		ifTrue: [removed do: [:each | self removeMethod: each notifying: notifier]]
+		ifFalse: [removed := removed select: [:each | self removeMethodSoft: each notifying: notifier]].
+	self endElement: true.
 	^removed size!
 
-removeSelector: aSymbol of: aClass notifying: notifier 
-	self 
-		removeSelectors: (Array with: aSymbol)
-		of: aClass
-		notifying: notifier!
+removeMethodSoft: aCompiledMethod notifying: notifier
+	^false!
 
 removeSelectors: aCollectionOfSelectors of: aBehavior notifying: notifier
 	aCollectionOfSelectors do: 
 			[:each |
 			(aBehavior compiledMethodAt: each asSymbol ifAbsent: [])
-				ifNotNil: 
-					[:method |
-					self
-						removeMethod: method
-						force: true
-						notifying: notifier]]!
+				ifNotNil: [:method | self removeMethod: method notifying: notifier]]!
+
+retainInstVarNames
+	"Answer whether the stripping process should preserve instance variable names.
+	Normally these are not required unless certain reflective messages are used."
+
+	^true!
+
+rootClasses
+	^#()!
 
 shrinkEventsRegister
 	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
+
+speciallySentMessages
+	"Private - A number of messages can be sent without  appearing in the literal
+	frame of any method. Answer a Set of these selectors here."
+
+	^WeakSet withAll: (VMLibrary default registry select: [:each | each class == Symbol])!
+
+startElement: aString attributes: anArray 
+!
+
+startTag: aString attributes: aCollection 
+!
 
 stripCategoryManagementNotifying: notifier
 	"Private - Remove categories information"
 
 	self notify: notifier status: 'Removing category management'.
-	self logElement: 'RemoveCategoryManagement' value: nil.
+	self
+		logElement: 'RemoveCategoryManagement'
+		attributes: #()
+		value: nil.
 	Behavior allSubinstances do: [:each | each methodsCatalogue: nil].
 	Class allSubinstances do: 
 			[:each |
@@ -279,10 +415,19 @@ stripCategoryManagementNotifying: notifier
 			Smalltalk at: #MethodCategory ifPresent: [:c | c uninitialize]]
 		ifNotNil: [:catman | catman current initialize]!
 
-stripClassBuilderNotifying: notifier 
+stripClassBuilder
+	^false!
+
+stripClassBuilder: anArray notifying: notifier
 	"Private - Remove the ClassBuilder if so configured."
 
-	self stripClassBuilder ifTrue: [self removeClassNamed: #ClassBuilder notifying: notifier]!
+	!
+
+stripClassInfo
+	"Answer true if the stripping process will remove class information such as
+	instance variable names, pools names and comments"
+
+	^false!
 
 stripClassInfoNotifying: notifier
 	"Private - Remove all (presumably) redundant class info"
@@ -290,7 +435,7 @@ stripClassInfoNotifying: notifier
 	self stripClassInfo
 		ifTrue: 
 			[| keepInstVars |
-			self startElement: 'RemoveClassMetaInfo'.
+			self startElement: 'RemoveClassMetaInfo' attributes: #().
 			keepInstVars := self retainInstVarNames.
 			Class allClassesDo: 
 					[:each |
@@ -302,54 +447,52 @@ stripClassInfoNotifying: notifier
 			self endTag].
 	self finishedWithAll: #(#stripClassInfo #retainInstVarNames #stripClassInfoNotifying:)!
 
-stripClassRemovalNotifying: notifier 
+stripClassRemoval: aCollection notifying: notifier
 	"Private - Removal of classes has finished. If the image doesn't have the ClassBuilder in it, 
 	remove any uninitializers as they will not be needed."
 
-	self startElement: 'StripClassRemoval'.
-	(Smalltalk includesKey: #ClassBuilder) 
+	self startElement: 'StripClassRemoval' attributes: #().
+	(Smalltalk includesKey: #ClassBuilder)
 		ifTrue: [Notification signal: 'ClassBuilder still present, no action taken']
 		ifFalse: 
-			[Class allClassesDo: 
-					[:each | 
-					self 
-						removeSelectors: #('uninitialize')
+			[aCollection do: [:each | self removeMethod: each notifying: notifier].
+			"Remove any remaining class uninitialize methods that may be miscategorized"
+			Class allClassesDo: 
+					[:each |
+					self
+						removeSelectors: #('uninitialize' 'uninitializeBeforeRemove')
 						of: each class
-						notifying: notifier	"'uninitializeBeforeRemove'"].
-			self 
-				removeSelector: 'removeClass:'
-				of: SystemDictionary
-				notifying: notifier].
-	self endElement.
-	self 
-		finishedWithAll: #(#removeClass:notifying: #removeClassNamed:notifying: #removeClasses:notifying:).
+						notifying: notifier]].
+	self endElement: true.
+	self
+		finishedWithAll: #(#addClassesReferencedByClass:to: #addClassesReferencedByMethod:to: #allReferencedClasses #basicRemoveClass:notifying: #classesReferencedByMethod: #classReferencesToIgnore #emptyMethodDictionariesOfStubbornClasses #notRequiredClasses #purgeStubbornClass:notifying: #removeClass:notifying: #removeClasses:notifying: #removeClassNamed:notifying: #removeSelectors:of:notifying: #shrinkEventsRegister #stripClassRemoval:notifying: #stripRedundantClasses #uncheckedRemoveClass:notifying:).
 	self collectGarbage: 3!
 
-stripDevelopmentInfoNotifying: notifier 
+stripDevelopmentInfoNotifying: notifier
 	"Private - Remove development structures, etc."
 
-	self startElement: 'StripDevelopmentInfo'.
+	self startElement: 'StripDevelopmentInfo' attributes: #().
 	self stripCategoryManagementNotifying: notifier.
 	self stripProtocolManagementNotifying: notifier.
 	Smalltalk developmentSystem perform: #clearSystemFolder.
 	Class allSubinstances do: 
-			[:b | 
+			[:b |
 			b removePropertyAt: #changeIndex ifAbsent: [].
 			"Remove all source references (may be LargeIntegers)"
 			b methodDictionary do: [:m | m sourceDescriptor: nil].
 			b class methodDictionary do: [:m | m sourceDescriptor: nil]].
 	self collectGarbage: 3.
-	self endElement.
+	self endElement: true.
 	self finishedWithAll: #(#stripCategoryManagementNotifying: #stripProtocolManagementNotifying:)!
 
-stripDevelopmentResourcesNotifying: notifier 
+stripDevelopmentResourcesNotifying: notifier
 	"Private - Remove development classes resources. We can't actually remove the
 	classes themselves yet since some are required by the remainder of the 
 	stripping process. By removing the resources we give the  class/method strip
 	that follows the best chance of isolating redundant items."
 
-	self developmentResources do: [:ri | self resourceManager removeResource: ri].
-	self finishedWith: #developmentResources!
+	self developmentResources do: [:ri | ResourceIdentifier removeResource: ri].
+	self finishedWithAll: #(#developmentResources)!
 
 stripDevelopmentSystemNotifying: notifier 
 	"Private - Remove all the development stuff that we can."
@@ -365,21 +508,32 @@ stripDevelopmentSystemNotifying: notifier
 	self stripDevelopmentInfoNotifying: notifier.
 	self stripPackageManagementNotifying: notifier.
 	self stripNotRequiredClassesNotifying: notifier.
-	self stripClassBuilderNotifying: notifier.
 	self 
 		finishedWithAll: #(#stripDevelopmentResourcesNotifying: #stripDevelopmentInfoNotifying: #stripPackageManagementNotifying: #stripNotRequiredClassesNotifying: #stripClassBuilderNotifying:)!
 
-stripForConsoleApplicationNotifying: notifier 
+stripDuplicateBytecodes
+	"Answer true if the stripping process will fold instances of duplicate byte code arrays 
+	into one common instance"
+
+	^false!
+
+stripDuplicateStrings
+	"Answer true if the stripping process will fold instances of duplicate strings
+	into one common instance"
+
+	^false!
+
+stripForConsoleApplicationNotifying: notifier
 	"Private - A console application is being deployed, so uninitialize parts of the GUI system
 	that will allow the entire View hierarchy, etc, to be removed."
 
-	self startElement: 'StripConsoleApplication'.
-	#(#ImageRelativeFileLocator #InstallRelativeFileLocator) 
+	self startElement: 'StripConsoleApplication' attributes: #().
+	#(#ImageRelativeFileLocator #InstallRelativeFileLocator)
 		do: [:each | Smalltalk at: each ifPresent: [:class | class uninitialize]].
-	(Smalltalk includesKey: #View) 
+	(Smalltalk includesKey: #View)
 		ifFalse: [VMLibrary default unregisterObject: #wndProc:message:wParam:lParam:cookie:].
 	self collectGarbage: 3.
-	self endElement!
+	self endElement: true!
 
 stripNotRequiredClassesNotifying: notifier
 	"Private - Strip the classes that are explicitly listed as not being required,
@@ -413,33 +567,44 @@ stripNotRequiredMethodsNotifying: notifier
 			[:each |
 			self logMethod: each.
 			each methodClass removeSelector: each selector ifAbsent: []].
-	self endElement: true!
+	self endElement: true.
+	self preStripTidy!
 
-stripPackageManagementNotifying: notifier 
+stripPackageManagementNotifying: notifier
 	"Private - Remove packages structure."
 
-	self startElement: 'StripPackageManagement'.
+	self startElement: 'StripPackageManagement' attributes: #().
 	self systemPackageManager class reset.
 	"Note that we must leave the #owningPackage definition in Class for potential runtime STB use"
 	#(#PoolDictionary #PoolConstantsDictionary #ResourceIdentifier #CompiledMethod) do: 
-			[:each | 
+			[:each |
 			Smalltalk at: each
 				ifPresent: 
-					[:class | 
-					self 
-						removeSelector: 'owningPackage'
+					[:class |
+					self
+						removeSelectors: #('owningPackage')
 						of: class
-						notifying: notifier]].
-	self finishedWith: #systemPackageManager.
-	self endElement!
+						notifying: notifier.
+					self]].
+	self finishedWithAll: #(#systemPackageManager).
+	self endElement: true!
 
-stripProtocolManagementNotifying: notifier 
+stripProtocolManagementNotifying: notifier
 	"Private - Remove protocol information. Note that only the MethodProtocol objects
 	themselves are removed, not the list of protocol names stored in each
 	class."
 
-	self logElement: 'RemoveMethodProtocols' value: nil.
+	self
+		logElement: 'RemoveMethodProtocols'
+		attributes: #()
+		value: nil.
 	Smalltalk at: #MethodProtocol ifPresent: [:p | p initializeProtocols]!
+
+stripRedundantClasses
+	"Answer true if the receiver will attempt to remove redundant classes not
+	required in the deployed application."
+
+	^false!
 
 stripRedundantClassesAndResources: stripResources notifying: notifier 
 	"Private - Removes redundant classes from the current image. A redundant class is one
@@ -460,31 +625,28 @@ stripRedundantClassesAndResources: stripResources notifying: notifier
 		ifTrue: [count := count + (self stripRedundantResources: referencedClasses notifying: notifier)].
 	^count + (self removeClasses: (Class allClasses difference: referencedClasses) notifying: notifier)!
 
+stripRedundantMethods
+	"Answer true if the receiver will attempt to remove methods that will not be
+	referenced in the deployed application."
+
+	^false!
+
 stripRedundantMethodsNotifying: notifier 
 	"Private - Removes redundant methods from the pseudo image.
 	Answers the count of methods stripped"
 
-	| sum classes |
-	self stripRedundantMethods ifFalse: [^0].
-	sum := 0.
-	classes := Class allClasses.
-	
-	[| count |
-	count := self stripRedundantMethodsOnceFrom: classes notifying: notifier.
-	sum := sum + count.
-	count > 0] 
-			whileTrue.
-	^sum!
+	^0!
 
 stripRedundantMethodsOnceFrom: aCollectionOfClasses notifying: notifier
 	"Private - Removes redundant methods from the pseudo image.
 	Answers the count of methods stripped"
 
-	| redundantMessages redundantMethods sent asc implemented |
+	| redundantMessages redundantMethods sent implemented |
 	self notify: notifier status: 'Removing redundant methods...'.
 	self collectGarbage: 1.
 	sent := self messagesSentByClasses: aCollectionOfClasses.
-	implemented := self messagesImplementedBy: aCollectionOfClasses.
+	implemented := IdentitySet new: aCollectionOfClasses size * 12.
+	self allMethodsInClasses: aCollectionOfClasses do: [:each | implemented add: each selector].
 	redundantMessages := implemented difference: sent.
 	redundantMessages isEmpty ifTrue: [^0].
 	redundantMethods := OrderedCollection new.
@@ -492,23 +654,30 @@ stripRedundantMethodsOnceFrom: aCollectionOfClasses notifying: notifier
 		do: [:each | (redundantMessages includes: each selector) ifTrue: [redundantMethods addLast: each]].
 	^self
 		removeMethods: redundantMethods
+		reason: 'unsent'
 		force: false
 		notifying: notifier!
 
-stripRedundantObjects: stripResources notifying: notifier 
+stripRedundantObjects: stripResources notifying: notifier
 	"Cycle around removing redundant classes and methods until all remaining
 	classes and methods appear to be required to complete the deployed image."
 
 	
 	[| continue |
-	self startElement: 'StripCycle'.
-	continue := (self 
+	self startElement: 'StripCycle' attributes: #().
+	continue := (self
 				stripRedundantClassesAndResources: (stripResources and: [self stripRedundantResources])
-				notifying: notifier) + (self stripRedundantMethodsNotifying: notifier) 
+				notifying: notifier) + (self stripRedundantMethodsNotifying: notifier)
 				> 0.
 	self endElement: continue.
-	continue] 
+	continue]
 			whileTrue!
+
+stripRedundantPackages
+	"Answer true if the receiver will attempt to remove redundant packages not
+	referenced from a root package during its stripping process."
+
+	^false!
 
 stripRedundantPackagesNotifying: notifier
 	"Private - Strips the unwanted packages from the image."
@@ -523,12 +692,17 @@ stripRedundantPackagesNotifying: notifier
 	pacman beNotProcessingEvents.
 	"We don't want to uninstall the DevelopmentSessionManager until it has been replaced by the run-time session manager"
 	pacman addClass: SessionManager current class to: nil.
-	self startElement: 'RedundantPackages'.
-	(redundantPackages asSortedCollection: [:a :b | a name < b name])
-		do: [:each | self logElement: 'Package' value: each].
-	self endElement.
+	self startElement: 'RedundantPackages' attributes: #().
+	(redundantPackages asSortedCollection: [:a :b | a name < b name]) do: 
+			[:each |
+			self
+				logElement: 'Package'
+				attributes: #()
+				value: each.
+			self].
+	self endElement: true.
 	self notify: notifier status: 'Removing unwanted packages'.
-	self startElement: 'StripPackages'.
+	self startElement: 'StripPackages' attributes: #().
 	[redundantPackages do: 
 			[:each |
 			pacman uninstall: each.
@@ -539,10 +713,19 @@ stripRedundantPackagesNotifying: notifier
 			self onNotification: e notifier: notifier.
 			self purgeStubbornClass: e tag notifying: notifier.
 			e resume: true].	"Remove classes regardless"
-	self endElement.
+	self endElement: true.
 	pacman beProcessingEvents!
 
-stripSystemDictionaryNotifying: notifier 
+stripRedundantResources
+	"Answer true if the receiver will attempt to remove resources that are not required in the
+	deployed application."
+
+	^false!
+
+stripRedundantResources: referencedClasses notifying: notifier 
+!
+
+stripSystemDictionaryNotifying: notifier
 	"Private - Remove all non-class globals from the SystemDictionary.
 	This should only be performed if the application does not intend
 	to look up objects dynamically by name in Smalltalk.
@@ -553,50 +736,119 @@ stripSystemDictionaryNotifying: notifier
 	in place to ensure STB can still loate the appropriate class for these."
 
 	| globals |
-	self startElement: 'EmptySystemDictionary'.
+	self startElement: 'EmptySystemDictionary' attributes: #().
 	globals := OrderedCollection new.
 	Smalltalk associationsDo: 
-			[:each | 
+			[:each |
 			(each value class isMeta not or: [each value name ~~ each key]) ifTrue: [globals add: each key]].
 	globals do: 
-			[:each | 
-			self logElement: 'Global' value: each.
+			[:each |
+			self
+				logElement: 'Global'
+				attributes: #()
+				value: each.
 			Smalltalk removeKey: each].
 	self collectGarbage: 3.
-	self finishedWith: #stripSystemDictionaryNotifying:.
-	self endElement! !
+	self finishedWithAll: #(#stripSystemDictionaryNotifying:).
+	self endElement: true!
+
+systemPackageManager
+	"Private - Answer the package manager to be used by the receiver.
+	N.B. All references to PackageManager must be through this accessor
+	to prevent the PackageManager and Package classes remaining in the
+	deployed image."
+
+	^(Smalltalk at: #Package ifAbsent: [DeafObject current]) manager!
+
+uncheckedRemoveClass: aClass notifying: notifier
+	| removed |
+	removed := aClass allSubclasses inject: 0
+				into: [:sum :each | sum + (self removeClass: each notifying: notifier)].	"First remove subclasses"
+	self
+		logElement: 'RemoveClass'
+		attributes: #()
+		value: aClass name.
+	^
+	[self basicRemoveClass: aClass notifying: notifier.
+	aClass clearGuid.
+	removed + 1] on: Error
+			do: 
+				[:ex |
+				self logStrippingError: ex.
+				"self notify: notifier detail: (x stackTrace: 10)."
+				aClass primAllInstances do: [:each | Notification signal: each printString].
+				self purgeStubbornClass: aClass notifying: notifier.
+				removed]! !
+!BasicImageStripper categoriesFor: #actualRequiredPackages!accessing!private! !
+!BasicImageStripper categoriesFor: #allMethodsInClasses:do:!helpers!private! !
+!BasicImageStripper categoriesFor: #allReferencedClasses!operations!private! !
 !BasicImageStripper categoriesFor: #basicRemoveClass:notifying:!helpers!private! !
 !BasicImageStripper categoriesFor: #collectGarbage:!operations!private! !
-!BasicImageStripper categoriesFor: #compileExternalStructuresNotifying:!operations!private! !
-!BasicImageStripper categoriesFor: #defineExternalStructuresNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #compileExternalStructures!public!testing! !
+!BasicImageStripper categoriesFor: #compileExternalStructures:notifying:!operations!private! !
+!BasicImageStripper categoriesFor: #defineExternalStructures:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #destroyAndRemoveProgressNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #developmentResources!accessing!public! !
+!BasicImageStripper categoriesFor: #emptyMethodDictionariesOfStubbornClasses!public!testing! !
+!BasicImageStripper categoriesFor: #endElement:!operations-logging!private! !
+!BasicImageStripper categoriesFor: #endTag!operations-logging!private! !
+!BasicImageStripper categoriesFor: #externalStructureClasses!accessing!private! !
+!BasicImageStripper categoriesFor: #finishedWithAll:!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateBytecodesNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #foldDuplicateStringsNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #logElement:attributes:value:!operations-logging!private! !
+!BasicImageStripper categoriesFor: #logFold:folded:total:!operations!private! !
+!BasicImageStripper categoriesFor: #logMethod:!operations!private! !
+!BasicImageStripper categoriesFor: #logStrippingError:!operations-logging!private! !
+!BasicImageStripper categoriesFor: #logValue:!operations-logging!private! !
+!BasicImageStripper categoriesFor: #messagesSentByClasses:!helpers!private! !
+!BasicImageStripper categoriesFor: #notify:status:!operations!private! !
+!BasicImageStripper categoriesFor: #notRequiredClasses!configuration!public! !
+!BasicImageStripper categoriesFor: #notRequiredMethodCategories!configuration!public! !
+!BasicImageStripper categoriesFor: #onNotification:notifier:!event handling!private! !
 !BasicImageStripper categoriesFor: #prepareExternalStructuresNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #preStripTidy!operations!private! !
 !BasicImageStripper categoriesFor: #purgeStubbornClass:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #removeClass:notifying:!helpers!private! !
 !BasicImageStripper categoriesFor: #removeClasses:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #removeClassNamed:notifying:!helpers!private! !
-!BasicImageStripper categoriesFor: #removeMethods:force:notifying:!private!removing! !
-!BasicImageStripper categoriesFor: #removeSelector:of:notifying:!operations!private! !
+!BasicImageStripper categoriesFor: #removeMethod:notifying:!private!removing! !
+!BasicImageStripper categoriesFor: #removeMethods:reason:force:notifying:!private!removing! !
+!BasicImageStripper categoriesFor: #removeMethodSoft:notifying:!private!removing! !
 !BasicImageStripper categoriesFor: #removeSelectors:of:notifying:!operations!private! !
+!BasicImageStripper categoriesFor: #retainInstVarNames!public!testing! !
+!BasicImageStripper categoriesFor: #rootClasses!accessing!private! !
 !BasicImageStripper categoriesFor: #shrinkEventsRegister!private! !
+!BasicImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
+!BasicImageStripper categoriesFor: #startElement:attributes:!operations-logging!private! !
+!BasicImageStripper categoriesFor: #startTag:attributes:!operations-logging!private! !
 !BasicImageStripper categoriesFor: #stripCategoryManagementNotifying:!operations!private! !
-!BasicImageStripper categoriesFor: #stripClassBuilderNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripClassBuilder!public!testing! !
+!BasicImageStripper categoriesFor: #stripClassBuilder:notifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripClassInfo!public!testing! !
 !BasicImageStripper categoriesFor: #stripClassInfoNotifying:!operations!private! !
-!BasicImageStripper categoriesFor: #stripClassRemovalNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripClassRemoval:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripDevelopmentInfoNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripDevelopmentResourcesNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripDevelopmentSystemNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripDuplicateBytecodes!public!testing! !
+!BasicImageStripper categoriesFor: #stripDuplicateStrings!public!testing! !
 !BasicImageStripper categoriesFor: #stripForConsoleApplicationNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripNotRequiredClassesNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripNotRequiredMethodsNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripPackageManagementNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripProtocolManagementNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripRedundantClasses!public!testing! !
 !BasicImageStripper categoriesFor: #stripRedundantClassesAndResources:notifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripRedundantMethods!public!testing! !
 !BasicImageStripper categoriesFor: #stripRedundantMethodsNotifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripRedundantMethodsOnceFrom:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripRedundantObjects:notifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripRedundantPackages!public!testing! !
 !BasicImageStripper categoriesFor: #stripRedundantPackagesNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #stripRedundantResources!public!testing! !
+!BasicImageStripper categoriesFor: #stripRedundantResources:notifying:!operations!private! !
 !BasicImageStripper categoriesFor: #stripSystemDictionaryNotifying:!operations!private! !
+!BasicImageStripper categoriesFor: #systemPackageManager!accessing!private! !
+!BasicImageStripper categoriesFor: #uncheckedRemoveClass:notifying:!helpers!private! !
 

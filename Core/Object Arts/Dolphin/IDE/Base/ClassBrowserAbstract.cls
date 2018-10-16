@@ -2033,16 +2033,14 @@ removeMethodsInCategory
 	drastic the user will be prompted."
 
 	| classEnvironment categoryEnvironment |
-	classEnvironment := self searchEnvironment forClasses: (Array with: self actualClass).
+	classEnvironment := self searchEnvironment forClasses: {self actualClass}.
 	categoryEnvironment := classEnvironment forMethodCategories: self categories.
-	categoryEnvironment 
-		label: ('methods of <1d> in the ''<2d>'' category and its subcategories' 
+	categoryEnvironment label: ('methods of <1d> in the ''<2d>'' category and its subcategories'
 				expandMacrosWith: classEnvironment
 				with: self category).
-	[self systemModel removeMethodsIn: categoryEnvironment within: self searchEnvironment] 
+	[self systemModel removeMethodsIn: categoryEnvironment within: self searchEnvironment]
 		on: OperationAborted
-		do: [:ex | self statusModel value: ex]
-	!
+		do: [:ex | self statusModel value: ex]!
 
 removeMethodsInProtocol
 	"Private - Remove all of the methods in the currently selected protocol.

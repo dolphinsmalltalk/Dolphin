@@ -861,9 +861,6 @@ hasCyclicPrerequisites: trail safe: safe
 	answer ifFalse: [safe add: self].
 	^answer.!
 
-hasImageStripper
-	^imageStripperBytes notNil and: [self imageStripper notNil]!
-
 hasUncommittedPrerequisites
 	"Private - Answer whether any of the receivers prerequisites or their
 	prerequisites are current uncomitted. If so the package should not be saved
@@ -878,15 +875,6 @@ hierarchyOrderOfClasses: aCollection
 	being first if it is owned by the receiver."
 
 	^self environment allClasses intersection: aCollection!
-
-imageStripper
-	"Answer an image stripper for the receiver, or nil ImageStripper class is not present.
-	Since we have to be able to load the receiver into images that do no necessarily have the 
-	ImageStripper class installed, we hold the stripper as a binary filed out ByteArray in imageStripperBytes.
-	We reconstitute this here."
-
-	^self environment at: #ImageStripper
-		ifPresent: [:stripperClass | self rehydrateImageStripper: stripperClass]!
 
 imageStripper: anImageStripper 
 	"Set the image stripper for the receiver to anImageStripper. 
@@ -2405,10 +2393,8 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #globalVariables!private!source filing! !
 !Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
 !Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
-!Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
 !Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
-!Package categoriesFor: #imageStripper!accessing!public! !
 !Package categoriesFor: #imageStripper:!accessing!public! !
 !Package categoriesFor: #imageStripperBytes!accessing!private! !
 !Package categoriesFor: #imageStripperBytes:!accessing!private! !
@@ -2534,7 +2520,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #tracePrerequisitesOfImageStripper:!operations!private! !
 !Package categoriesFor: #tracePrerequisitesOfMethods:!operations!private! !
 !Package categoriesFor: #uninstall!public!removing! !
-!Package categoriesFor: #uninstallClasses!private!removing! !
+!Package categoriesFor: #uninstallClasses!class hierarchy-removing!private!removing! !
 !Package categoriesFor: #uninstallGlobals!private!removing! !
 !Package categoriesFor: #uninstallMethods!private!removing! !
 !Package categoriesFor: #untracedGlobals!accessing!public! !

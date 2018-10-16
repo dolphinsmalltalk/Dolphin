@@ -761,7 +761,7 @@ variableSubclass: aClassSymbol
 	^subclass
 
 ! !
-!Class categoriesFor: #addClassConstant:value:!class variables!public! !
+!Class categoriesFor: #addClassConstant:value:!class variables!development!public! !
 !Class categoriesFor: #addClassVariable:value:!class variables!public! !
 !Class categoriesFor: #addClassVarNamed:!class variables!public! !
 !Class categoriesFor: #addToSuper!class hierarchy-adding!private! !
@@ -792,7 +792,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #fileOutOn:!development!public! !
 !Class categoriesFor: #fileOutStem!development!private!source filing! !
 !Class categoriesFor: #guid!constants!public! !
-!Class categoriesFor: #guid:!accessing!private! !
+!Class categoriesFor: #guid:!class hierarchy-adding!private! !
 !Class categoriesFor: #includeInCategory:!categories-adding!development!public! !
 !Class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
 !Class categoriesFor: #initializeAfterLoad!initializing!public! !
@@ -814,8 +814,8 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #removeFromCategory:!categories-removing!public! !
 !Class categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Class categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
-!Class categoriesFor: #rename:!class hierarchy-accessing!development!private! !
-!Class categoriesFor: #rename:in:!class hierarchy-accessing!private! !
+!Class categoriesFor: #rename:!class hierarchy-mutating!private! !
+!Class categoriesFor: #rename:in:!class hierarchy-mutating!private! !
 !Class categoriesFor: #renameClassVar:to:!class variables!private! !
 !Class categoriesFor: #requiresInstallation!public!testing! !
 !Class categoriesFor: #setClassVarNames:!class variables!private! !
@@ -834,7 +834,7 @@ variableSubclass: aClassSymbol
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 !Class categoriesFor: #uninitialize!class hierarchy-removing!development!private! !
-!Class categoriesFor: #uninitializeBeforeRemove!initializing!public! !
+!Class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !Class categoriesFor: #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
