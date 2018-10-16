@@ -54,5 +54,5 @@ initialize
 				setCode: CLR_NONE;
 				isImmutable: true;
 				yourself)! !
-!ColorNone class categoriesFor: #initialize!public! !
+!ColorNone class categoriesFor: #initialize!development!initializing!public! !
 

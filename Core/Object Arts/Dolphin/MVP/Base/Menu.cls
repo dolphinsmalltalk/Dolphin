@@ -800,6 +800,14 @@ icon
 
 	^##(self) defaultIcon!
 
+initialize
+	View registerMessageMappings: self menuMessageMappings!
+
+menuMessageMappings
+	^{WM_CONTEXTMENU -> #wmContextMenu:wParam:lParam:.
+		WM_INITMENU -> #wmInitMenu:wParam:lParam:.
+		WM_INITMENUPOPUP -> #wmInitMenuPopup:wParam:lParam:}!
+
 stbConvertFrom: anSTBClassFormat
 	"Convert from earlier Menu versions."
 	^
@@ -842,13 +850,19 @@ stbConvertToVersion3: anArray
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
-	^4! !
+	^4!
+
+uninitialize
+	View unregisterMessageMappings: {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}! !
 !Menu class categoriesFor: #description:!instance creation!public! !
 !Menu class categoriesFor: #fromStrings:!instance creation!public! !
 !Menu class categoriesFor: #icon!constants!public! !
+!Menu class categoriesFor: #initialize!class initialization!development!public! !
+!Menu class categoriesFor: #menuMessageMappings!constants!must not strip!private! !
 !Menu class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !Menu class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
 !Menu class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
 !Menu class categoriesFor: #stbConvertToVersion3:!binary filing!private! !
 !Menu class categoriesFor: #stbVersion!binary filing!public! !
+!Menu class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

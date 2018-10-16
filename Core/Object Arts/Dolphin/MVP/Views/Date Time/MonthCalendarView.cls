@@ -31,6 +31,14 @@ defaultExtent
 
 	^##(200 @ 200)!
 
+dtNotificationMap
+	^##((Array new: MCN_FIRST - MCN_LAST + 1 withAll: #nmDummy:)
+		at: MCN_FIRST - MCN_SELECT + 1 put: #mcnSelect:;
+		at: MCN_FIRST - MCN_GETDAYSTATE + 1 put: #nmDummy:;
+		at: MCN_FIRST - MCN_SELCHANGE + 1 put: #mcnSelChange:;
+		at: MCN_FIRST - MCN_VIEWCHANGE + 1 put: #nmDummy:;
+		yourself)!
+
 firstDayOfWeek
 	"Answer the <integer> number of the first day of the week, with 0 being Monday thru 6 for Sunday."
 
@@ -115,14 +123,10 @@ mcmSetFirstDayOfWeek: anInteger
 		lpParam: (anInteger bitAnd: 16rFFFF)!
 
 mcnSelChange: pNMHDR 
-"	| struct |
-	struct := NMSELCHANGE fromAddress: pNMHDR."
 	self updateModel.
 	^0!
 
 mcnSelect: pNMHDR
-	"| struct |
-	struct := NMSELCHANGE fromAddress: pNMHDR."
 	^0
 !
 
@@ -132,7 +136,7 @@ modelClass
 	^Date!
 
 nmFirst
-	^MCN_FIRST!
+	^MCN_FIRST + 1!
 
 onViewCreated
 	"The receiver window has been created. Copy the info held in instance variables across to
@@ -172,6 +176,7 @@ today
 	^self mcmGetToday asTimeStamp date! !
 !MonthCalendarView categoriesFor: #calculateExtent:!geometry!private! !
 !MonthCalendarView categoriesFor: #defaultExtent!constants!private! !
+!MonthCalendarView categoriesFor: #dtNotificationMap!private! !
 !MonthCalendarView categoriesFor: #firstDayOfWeek!accessing!public! !
 !MonthCalendarView categoriesFor: #firstDayOfWeek:!accessing!public! !
 !MonthCalendarView categoriesFor: #getRangeMessage!constants!private! !
@@ -204,26 +209,10 @@ defaultModel
 
 	^Date today asValue!
 
-initialize
-	"Private - Initialise the map of MonthCalendarView notification codes to selector/parameter-class pairs.
-
-		MonthCalendarView initialize
-
-	Note the bug in the codes which are supposed to be in the range -750..-759, however (i.e. 
-	MCN_FIRST..MCN_LAST), yet the first code is defined as (DTN_FIRST + 1) (i.e. -749).
-	"
-
-	notificationMap := (Array new: 4)
-				at: 1 put: #mcnSelChange:;
-				at: 3 put: #mcnGetDayState:;
-				at: 4 put: #mcnSelect:;
-				yourself!
-
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysMonthCal32'! !
 !MonthCalendarView class categoriesFor: #defaultModel!models!public! !
-!MonthCalendarView class categoriesFor: #initialize!initializing!private! !
 !MonthCalendarView class categoriesFor: #winClassName!constants!private! !
 

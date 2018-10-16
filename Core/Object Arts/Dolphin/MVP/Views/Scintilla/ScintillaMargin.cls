@@ -6,6 +6,7 @@ QueryableScintillaAttribute subclass: #ScintillaMargin
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ScintillaMargin guid: (GUID fromString: '{fd6f73fe-70d8-4e4a-8332-ec147e5ba899}')!
+ScintillaMargin addClassConstant: 'MarginTypes' value: #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color)!
 ScintillaMargin comment: 'ScintillaMargin instances represent the ''margin'' attributes of a <ScintillaView>.
 
 From the Scintilla Documentation:
@@ -182,66 +183,72 @@ width: anInteger
 
 !ScintillaMargin class methodsFor!
 
+buildPropertyMap
+	^IdentityDictionary new
+		at: #isSensitive
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicIsSensitive
+					defaultValue: 0
+					setMessage: SCI_SETMARGINSENSITIVEN
+					setSelector: #basicIsSensitive:
+					getMessage: SCI_GETMARGINSENSITIVEN);
+		at: #mask
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #mask
+					defaultValue: 0
+					setMessage: SCI_SETMARGINMASKN
+					setSelector: #mask:
+					getMessage: SCI_GETMARGINMASKN);
+		at: #type
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicType
+					defaultValue: SC_MARGIN_SYMBOL
+					setMessage: SCI_SETMARGINTYPEN
+					setSelector: #basicType:
+					getMessage: SCI_GETMARGINTYPEN);
+		at: #width
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicWidth
+					defaultValue: nil
+					setMessage: SCI_SETMARGINWIDTHN
+					setSelector: #basicWidth:
+					getMessage: SCI_GETMARGINWIDTHN);
+		at: #cursorType
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicCursorType
+					defaultValue: SC_CURSORREVERSEARROW
+					setMessage: SCI_SETMARGINCURSORN
+					setSelector: #basicCursorType:
+					getMessage: SCI_GETMARGINCURSORN);
+		at: #backcolor
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicBackcolor
+					defaultValue: 0
+					setMessage: SCI_SETMARGINBACKN
+					setSelector: #basicBackcolor:
+					getMessage: SCI_GETMARGINBACKN);
+		shrink;
+		yourself!
+
 initialize
 	"
 		self initialize
 	"
 
-	propertyMap := (IdentityDictionary new)
-				at: #isSensitive
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicIsSensitive
-							defaultValue: 0
-							setMessage: SCI_SETMARGINSENSITIVEN
-							setSelector: #basicIsSensitive:
-							getMessage: SCI_GETMARGINSENSITIVEN);
-				at: #mask
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #mask
-							defaultValue: 0
-							setMessage: SCI_SETMARGINMASKN
-							setSelector: #mask:
-							getMessage: SCI_GETMARGINMASKN);
-				at: #type
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicType
-							defaultValue: SC_MARGIN_SYMBOL
-							setMessage: SCI_SETMARGINTYPEN
-							setSelector: #basicType:
-							getMessage: SCI_GETMARGINTYPEN);
-				at: #width
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicWidth
-							defaultValue: nil "varies by default margin"
-							setMessage: SCI_SETMARGINWIDTHN
-							setSelector: #basicWidth:
-							getMessage: SCI_GETMARGINWIDTHN);
-				at: #cursorType
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicCursorType
-							defaultValue: SC_CURSORREVERSEARROW
-							setMessage: SCI_SETMARGINCURSORN
-							setSelector: #basicCursorType:
-							getMessage: SCI_GETMARGINCURSORN);
-				at: #backcolor
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicBackcolor
-							defaultValue: 0
-							setMessage: SCI_SETMARGINBACKN
-							setSelector: #basicBackcolor:
-							getMessage: SCI_GETMARGINBACKN);
-				shrink;
+	propertyMap := self buildPropertyMap
 				isImmutable: true;
 				yourself.
-	MarginTypes := #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color).
-	CursorTypes := (LookupTable new)
+	self addClassConstant: 'MarginTypes'
+		value: #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color).
+	self addClassConstant: 'CursorTypes'
+		value: (LookupTable new
 				at: SC_CURSORARROW put: #arrow;
 				at: SC_CURSORREVERSEARROW put: #reverseArrow;
 				at: SC_CURSORWAIT put: #wait;
 				at: SC_CURSORNORMAL put: #normal;
 				shrink;
 				isImmutable: true;
-				yourself!
+				yourself)!
 
 stbConvertFrom: anSTBClassFormat 
 	^
@@ -253,7 +260,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^2! !
-!ScintillaMargin class categoriesFor: #initialize!initializing!public! !
+!ScintillaMargin class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
+!ScintillaMargin class categoriesFor: #initialize!development!initializing!public! !
 !ScintillaMargin class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !ScintillaMargin class categoriesFor: #stbVersion!binary filing!public! !
 

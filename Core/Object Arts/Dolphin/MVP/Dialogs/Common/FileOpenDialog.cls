@@ -43,5 +43,5 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!FileOpenDialog class categoriesFor: #initialize!initializing!private! !
+!FileOpenDialog class categoriesFor: #initialize!development!initializing!private! !
 

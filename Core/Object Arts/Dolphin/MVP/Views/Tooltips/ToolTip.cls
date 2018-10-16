@@ -2,7 +2,7 @@
 
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
-	classVariableNames: 'TtnMap'
+	classVariableNames: ''
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
 Tooltip guid: (GUID fromString: '{ba32bd21-5167-4bd1-949c-ab76875cdeb7}')!
@@ -104,12 +104,16 @@ maxWidth: anInteger
 		wParam: 0
 		lParam: anInteger!
 
-nmNotify: anNMHDR
-	"Handler for a redirected WinListView WM_NOTIFY message."
+nmNotify: pNMHDR
+	"Private - Handler for a redirected WM_NOTIFY message."
 
-	^(TtnMap lookup: (anNMHDR sdwordAtOffset: 8))
-		ifNil: [super nmNotify: anNMHDR]
-		ifNotNil: [:action | self perform: action with: anNMHDR]!
+	^(##((Array new: TTN_FIRST - TTN_LINKCLICK + 1 withAll: #nmDummy:)
+		at: TTN_FIRST - TTN_SHOW + 1 put: #ttnShow:;
+		at: TTN_FIRST - TTN_POP + 1 put: #ttnPop:;
+		at: TTN_FIRST - TTN_LINKCLICK + 1 put: #ttnLinkClick:;
+		yourself) lookup: ##(TTN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		ifNil: [super nmNotify: pNMHDR]
+		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 onLeftButtonReleased: aMouseEvent 
 	"Default handler for a Left button up mouse event.
@@ -372,22 +376,11 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialise the map of Tooltip notification codes to selector/parameter-class pairs."
-
-	TtnMap := (IdentityDictionary new)
-				at: TTN_SHOW put: #ttnShow:;
-				at: TTN_POP put: #ttnPop:;
-				at: TTN_LINKCLICK put: #ttnLinkClick:;
-				shrink;
-				yourself!
-
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'tooltips_class32'
 ! !
 !Tooltip class categoriesFor: #icon!constants!public! !
-!Tooltip class categoriesFor: #initialize!public! !
 !Tooltip class categoriesFor: #winClassName!constants!private! !
 

@@ -46,7 +46,8 @@ initialize
 			self initialize
 	"
 
-	StyleMap := IdentityDictionary new
+	self addClassConstant: 'StyleMap'
+		value: (IdentityDictionary new
 				at: #blackFrame put: SS_BLACKFRAME;
 				at: #blackRectangle put: SS_BLACKRECT;
 				at: #grayFrame put: SS_GRAYFRAME;
@@ -56,8 +57,9 @@ initialize
 				at: #etchedFrame put: SS_ETCHEDFRAME;
 				at: #etchedHorizontal put: SS_ETCHEDHORZ;
 				at: #etchedVertical put: SS_ETCHEDVERT;
-				shrink
-!
+				shrink;
+				isImmutable: true;
+				yourself)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

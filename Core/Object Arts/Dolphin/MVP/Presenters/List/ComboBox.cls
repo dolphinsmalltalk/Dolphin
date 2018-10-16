@@ -2,10 +2,11 @@
 
 BasicListAbstract subclass: #ComboBox
 	instanceVariableNames: 'droppedHeight'
-	classVariableNames: 'CbnMap Modes'
+	classVariableNames: 'Modes'
 	poolDictionaries: 'ComboBoxConstants'
 	classInstanceVariableNames: ''!
 ComboBox guid: (GUID fromString: '{87b4c72b-026e-11d3-9fd7-00a0cc3e4a32}')!
+ComboBox addClassConstant: 'Modes' value: #(#simple #dropDown #dropDownList)!
 ComboBox comment: 'ComboBox is the <listView> implementing the standard Windows COMBOBOX control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 Instance Variables:
@@ -146,7 +147,15 @@ cbnSetFocus
 command: anInteger id: id
 	"Private - Handler for a redirected WM_COMMAND notification message."
 
-	^(CbnMap lookup: anInteger) ifNotNil: [:selector | self perform: selector]!
+	^((IdentityDictionary new
+		at: -1 put: #cbnErrSpace;
+		at: 1 put: #cbnSelChange;
+		at: 2 put: #cbnDblClk;
+		at: 3 put: #cbnSetFocus;
+		at: 4 put: #cbnKillFocus;
+		shrink;
+		yourself) lookup: anInteger)
+		ifNotNil: [:selector | self perform: selector]!
 
 cueBanner
 	"Answer the textual cue to be displayed when this combo box is empty and does not have
@@ -375,15 +384,7 @@ initialize
 		ComboBox initialize
 	"
 
-	CbnMap := (IdentityDictionary new)
-				at: -1 put: #cbnErrSpace;
-				at: 1 put: #cbnSelChange;
-				at: 2 put: #cbnDblClk;
-				at: 3 put: #cbnSetFocus;
-				at: 4 put: #cbnKillFocus;
-				shrink;
-				yourself.
-	Modes := #(#simple #dropDown #dropDownList)!
+	self addClassConstant: 'Modes' value: #(#simple #dropDown #dropDownList)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
@@ -391,6 +392,6 @@ winClassName
 	^'COMBOBOX'
 ! !
 !ComboBox class categoriesFor: #icon!constants!public! !
-!ComboBox class categoriesFor: #initialize!initializing!private! !
+!ComboBox class categoriesFor: #initialize!development!initializing!private! !
 !ComboBox class categoriesFor: #winClassName!constants!private! !
 

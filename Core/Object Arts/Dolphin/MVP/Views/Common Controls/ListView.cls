@@ -2,11 +2,10 @@
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent moreParams'
-	classVariableNames: 'LvModes LvnMap RevertSelMessage UnknownItem'
+	classVariableNames: 'LvModes RevertSelMessage UnknownItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 ListView guid: (GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
-ListView addClassConstant: 'LvnMap' value: #(#lvnItemChanging: #lvnItemChanged: #lvnInsertItem: #nmDeleteItem: #lvnDeleteAllItems: #nmDummy: #nmDummy: #nmDummy: #lvnColumnClick: #nmBeginDrag: #nmDummy: #nmBeginRDrag: #nmDummy: #nmDummy: #lvnItemActivate: #lvnODStateChanged: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmKeyDown: #lvnMarqueeBegin: #nmDummy: #lvnGetInfoTip: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #lvnIncrementalSearch: #lvnColumnDropDown: #nmDummy: #lvnColumnOverflowClick: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmBeginLabelEdit: #nmEndLabelEdit: #nmGetDispInfoW: #nmSetDispInfoW: #lvnFindItem: #lvnBeginScroll: #lvnEndScroll: #nmDummy: #nmDummy: #lvnLinkClick: #nmDummy: #nmDummy: #lvnGetEmptyMarkup: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy: #nmDummy:)!
 ListView comment: 'ListView is the <listView> implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the <selectableItems> protocol for use with any <listModel>.
 
 A ListView is capable of displaying it items in one of four modes (#smallIcons, #largeIcons, #list, #report) which can be set using the #viewMode aspect. In the first three of these modes the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of ListViewColumn. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
@@ -1585,17 +1584,39 @@ nmClick: pNMHDR
 	^super nmClick: pNMHDR!
 
 nmNotify: pNMHDR
-	"Private - Handler for a redirected ListView WM_NOTIFY message.
-	Implementation Note: Rather than create the appropriate header structure
-	object here, we delay that until the handler, because most of the time
-	we don't need to look at the notification at all."
+	"Private - Handler for a redirected ListView WM_NOTIFY message."
 
-	| code |
-	code := pNMHDR sdwordAtOffset: 8.
-	"Note that the notification codes are negative"
-	^(code <= LVN_FIRST and: [code >= LVN_LAST])
-		ifTrue: [self perform: (LvnMap at: ##(LVN_FIRST + 1) - code) with: pNMHDR]
-		ifFalse: [super nmNotify: pNMHDR]!
+	^(##((Array new: LVN_FIRST - LVN_GETEMPTYMARKUP + 1 withAll: #nmDummy:)
+		at: LVN_FIRST - LVN_ITEMCHANGING + 1 put: #lvnItemChanging:;
+		at: LVN_FIRST - LVN_ITEMCHANGED + 1 put: #lvnItemChanged:;
+		at: LVN_FIRST - LVN_INSERTITEM + 1 put: #lvnInsertItem:;
+		at: LVN_FIRST - LVN_DELETEITEM + 1 put: #nmDeleteItem:;
+		at: LVN_FIRST - LVN_DELETEALLITEMS + 1 put: #lvnDeleteAllItems:;
+		at: LVN_FIRST - LVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEdit:;
+		at: LVN_FIRST - LVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
+		at: LVN_FIRST - LVN_COLUMNCLICK + 1 put: #lvnColumnClick:;
+		at: LVN_FIRST - LVN_BEGINDRAG + 1 put: #nmBeginDrag:;
+		at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDrag:;
+		at: LVN_FIRST - LVN_ODCACHEHINT + 1 put: #nmDummy:;
+		at: LVN_FIRST - LVN_ITEMACTIVATE + 1 put: #lvnItemActivate:;
+		at: LVN_FIRST - LVN_ODSTATECHANGED + 1 put: #lvnODStateChanged:;
+		at: LVN_FIRST - LVN_HOTTRACK + 1 put: #nmDummy:;
+		at: LVN_FIRST - LVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
+		at: LVN_FIRST - LVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
+		at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItem:;
+		at: LVN_FIRST - LVN_KEYDOWN + 1 put: #nmKeyDown:;
+		at: LVN_FIRST - LVN_MARQUEEBEGIN + 1 put: #lvnMarqueeBegin:;
+		at: LVN_FIRST - LVN_GETINFOTIPW + 1 put: #lvnGetInfoTip:;
+		at: LVN_FIRST - LVN_INCREMENTALSEARCHW + 1 put: #lvnIncrementalSearch:;
+		at: LVN_FIRST - LVN_COLUMNDROPDOWN + 1 put: #lvnColumnDropDown:;
+		at: LVN_FIRST - LVN_COLUMNOVERFLOWCLICK + 1 put: #lvnColumnOverflowClick:;
+		at: LVN_FIRST - LVN_BEGINSCROLL + 1 put: #lvnBeginScroll:;
+		at: LVN_FIRST - LVN_ENDSCROLL + 1 put: #lvnEndScroll:;
+		at: LVN_FIRST - LVN_LINKCLICK + 1 put: #lvnLinkClick:;
+		at: LVN_FIRST - LVN_GETEMPTYMARKUP + 1 put: #lvnGetEmptyMarkup:;
+		yourself) lookup: ##(LVN_FIRST + 1) - (pNMHDR sdwordAtOffset: 8))
+		ifNil: [super nmNotify: pNMHDR]
+		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 nmRClick: pNMHDR 
 	"Private - Handler for a NM_RCLICK notification message.
@@ -2534,7 +2555,8 @@ initialize
 		self initialize
 	"
 
-	LvModes := (IdentityDictionary new)
+	self addClassConstant: 'LvModes'
+		value: (IdentityDictionary new
 				at: #thumbnails put: LVS_ICON;
 				at: #smallIcons put: LVS_SMALLICON;
 				at: #largeIcons put: LVS_ICON;
@@ -2543,50 +2565,9 @@ initialize
 				at: #list put: LVS_LIST;
 				at: #report put: LVS_REPORT;
 				shrink;
-				yourself.
+				isImmutable: true;
+				yourself).
 	UnknownItem := Object new!
-
-initializeNotificationMap
-	"Private - Initialise the map of ListView notification codes to selector/parameter-class pairs.
-	N.B. This method must not be stripped in order to ensure that the notification event handler
-	methods (which are looked up in the table) are preserved.
-		self initializeNotificationMap
-	"
-
-	"Implementation Note: Use an Array for best lookup performance since the notification
-	nodes are in a contiguous range, even if it is a little sparse"
-
-	| lvnMap |
-	lvnMap := (Array new: LVN_FIRST - LVN_LAST withAll: #nmDummy:)
-				at: LVN_FIRST - LVN_ITEMCHANGING + 1 put: #lvnItemChanging:;
-				at: LVN_FIRST - LVN_ITEMCHANGED + 1 put: #lvnItemChanged:;
-				at: LVN_FIRST - LVN_INSERTITEM + 1 put: #lvnInsertItem:;
-				at: LVN_FIRST - LVN_DELETEITEM + 1 put: #nmDeleteItem:;
-				at: LVN_FIRST - LVN_DELETEALLITEMS + 1 put: #lvnDeleteAllItems:;
-				at: LVN_FIRST - LVN_BEGINLABELEDITW + 1 put: #nmBeginLabelEdit:;
-				at: LVN_FIRST - LVN_ENDLABELEDITW + 1 put: #nmEndLabelEdit:;
-				at: LVN_FIRST - LVN_COLUMNCLICK + 1 put: #lvnColumnClick:;
-				at: LVN_FIRST - LVN_BEGINDRAG + 1 put: #nmBeginDrag:;
-				at: LVN_FIRST - LVN_BEGINRDRAG + 1 put: #nmBeginRDrag:;
-				at: LVN_FIRST - LVN_ODCACHEHINT + 1 put: #nmDummy:;
-				at: LVN_FIRST - LVN_ITEMACTIVATE + 1 put: #lvnItemActivate:;
-				at: LVN_FIRST - LVN_ODSTATECHANGED + 1 put: #lvnODStateChanged:;
-				at: LVN_FIRST - LVN_HOTTRACK + 1 put: #nmDummy:;
-				at: LVN_FIRST - LVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
-				at: LVN_FIRST - LVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
-				at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItem:;
-				at: LVN_FIRST - LVN_KEYDOWN + 1 put: #nmKeyDown:;
-				at: LVN_FIRST - LVN_MARQUEEBEGIN + 1 put: #lvnMarqueeBegin:;
-				at: LVN_FIRST - LVN_GETINFOTIPW + 1 put: #lvnGetInfoTip:;
-				at: LVN_FIRST - LVN_INCREMENTALSEARCHW + 1 put: #lvnIncrementalSearch:;
-				at: LVN_FIRST - LVN_COLUMNDROPDOWN + 1 put: #lvnColumnDropDown:;
-				at: LVN_FIRST - LVN_COLUMNOVERFLOWCLICK + 1 put: #lvnColumnOverflowClick:;
-				at: LVN_FIRST - LVN_BEGINSCROLL + 1 put: #lvnBeginScroll:;
-				at: LVN_FIRST - LVN_ENDSCROLL + 1 put: #lvnEndScroll:;
-				at: LVN_FIRST - LVN_LINKCLICK + 1 put: #lvnLinkClick:;
-				at: LVN_FIRST - LVN_GETEMPTYMARKUP + 1 put: #lvnGetEmptyMarkup:;
-				yourself.
-	self addClassConstant: 'LvnMap' value: lvnMap!
 
 onStartup
 	"The system is starting: Register a message to be used for cancelling a selection after
@@ -2644,8 +2625,7 @@ winClassName
 	^'SysListView32'! !
 !ListView class categoriesFor: #columnClass!constants!private! !
 !ListView class categoriesFor: #icon!constants!public! !
-!ListView class categoriesFor: #initialize!initializing!private! !
-!ListView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
+!ListView class categoriesFor: #initialize!development!initializing!private! !
 !ListView class categoriesFor: #onStartup!events-session!public! !
 !ListView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
 !ListView class categoriesFor: #stbConvertFromVersion11:!binary filing!private! !

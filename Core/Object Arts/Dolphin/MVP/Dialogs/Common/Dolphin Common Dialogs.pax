@@ -106,7 +106,7 @@ CommonDialog subclass: #ColorDialog
 	classInstanceVariableNames: ''!
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
-	classVariableNames: 'CDNMap'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommonDialog subclass: #FindDialog

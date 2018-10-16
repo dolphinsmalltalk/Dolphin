@@ -163,7 +163,7 @@ uninitialize
 	BarBreak := Break := Separator := nil! !
 !DividerMenuItem class categoriesFor: #barBreak!instance creation!public! !
 !DividerMenuItem class categoriesFor: #break!instance creation!public! !
-!DividerMenuItem class categoriesFor: #initialize!initializing!private! !
+!DividerMenuItem class categoriesFor: #initialize!development!initializing!private! !
 !DividerMenuItem class categoriesFor: #new!instance creation!public! !
 !DividerMenuItem class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !DividerMenuItem class categoriesFor: #separator!instance creation!public! !

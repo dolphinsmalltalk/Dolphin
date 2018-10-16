@@ -25,8 +25,10 @@ colorText: aString in: aScintillaView startingAt: aSmallInteger
 
 	^self subclassResponsibility!
 
-colorTextFrom: startInteger to: endInteger in: aScintillaView 
-	self 
+colorTextFrom: startInteger to: endInteger in: aScintillaView
+	"#colorText:in:startingAt: may not be implemented in a deployed application that does not use container based styling (i.e. all concrete stylers are stripped)."
+
+	self
 		colorText: (aScintillaView plainTextFrom: startInteger to: endInteger)
 		in: aScintillaView
 		startingAt: startInteger!

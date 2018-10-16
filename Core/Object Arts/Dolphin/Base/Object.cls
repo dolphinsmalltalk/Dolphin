@@ -735,9 +735,6 @@ hash
 	<primitive: 147>
 	^self identityHash!
 
-iconImageIndex
-	^self icon imageIndex!
-
 identityHash
 	"Answer the <integer> identity hash value for the receiver. Be aware that this is based on a
 	16-bit integer randomly generated for each object on first request, so there are only 65536
@@ -1601,7 +1598,6 @@ yourself
 !Object categoriesFor: #getEvents!events!private! !
 !Object categoriesFor: #getSpecialBehavior!accessing!private! !
 !Object categoriesFor: #hash!comparing!public! !
-!Object categoriesFor: #iconImageIndex!accessing!public! !
 !Object categoriesFor: #identityHash!comparing!public! !
 !Object categoriesFor: #ifNil:!control flow!public! !
 !Object categoriesFor: #ifNil:ifNotNil:!control flow!public! !

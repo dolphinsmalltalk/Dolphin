@@ -244,71 +244,73 @@ styleName: aSymbol
 
 !ScintillaIndicatorStyle class methodsFor!
 
+buildPropertyMap
+	^IdentityDictionary new
+		at: #forecolor
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicForecolor
+					defaultValue: Color black asParameter
+					setMessage: SCI_INDICSETFORE
+					setSelector: #basicForecolor:
+					getMessage: SCI_INDICGETFORE);
+		at: #styleName
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #style
+					defaultValue: nil
+					setMessage: SCI_INDICSETSTYLE
+					setSelector: #basicStyle:
+					getMessage: SCI_INDICGETSTYLE);
+		at: #hoverStyleName
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #hoverStyle
+					defaultValue: INDIC_SQUIGGLE
+					setMessage: SCI_INDICSETHOVERSTYLE
+					setSelector: #basicHoverStyle:
+					getMessage: SCI_INDICGETHOVERSTYLE);
+		at: #isUnderText
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicIsUnderText
+					defaultValue: 0
+					setMessage: SCI_INDICSETUNDER
+					setSelector: #basicIsUnderText:
+					getMessage: SCI_INDICGETUNDER);
+		at: #alpha
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #alpha
+					defaultValue: 30
+					setMessage: SCI_INDICSETALPHA
+					setSelector: #basicAlpha:
+					getMessage: SCI_INDICGETALPHA);
+		at: #hoverForecolor
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #basicHoverForecolor
+					defaultValue: Color black asParameter
+					setMessage: SCI_INDICSETHOVERFORE
+					setSelector: #basicHoverForecolor:
+					getMessage: SCI_INDICGETHOVERFORE);
+		at: #flags
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #flags
+					defaultValue: 0
+					setMessage: SCI_INDICSETFLAGS
+					setSelector: #flags:
+					getMessage: SCI_INDICGETFLAGS);
+		at: #foreAlpha
+			put: (QueryableScintillaPropertyDescriptor
+					getSelector: #foreAlpha
+					defaultValue: 50
+					setMessage: SCI_INDICSETOUTLINEALPHA
+					setSelector: #basicForeAlpha:
+					getMessage: SCI_INDICSETOUTLINEALPHA);
+		shrink;
+		yourself!
+
 initialize
 	"
 		self initialize
 	"
 
-	propertyMap := (IdentityDictionary new)
-				at: #forecolor
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicForecolor
-							defaultValue: Color black asParameter
-							setMessage: SCI_INDICSETFORE
-							setSelector: #basicForecolor:
-							getMessage: SCI_INDICGETFORE);
-				at: #styleName
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #style
-							defaultValue: nil
-							setMessage: SCI_INDICSETSTYLE
-							setSelector: #basicStyle:
-							getMessage: SCI_INDICGETSTYLE);
-				at: #hoverStyleName
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #hoverStyle
-							defaultValue: INDIC_SQUIGGLE
-							setMessage: SCI_INDICSETHOVERSTYLE
-							setSelector: #basicHoverStyle:
-							getMessage: SCI_INDICGETHOVERSTYLE);
-				at: #isUnderText
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicIsUnderText
-							defaultValue: 0
-							setMessage: SCI_INDICSETUNDER
-							setSelector: #basicIsUnderText:
-							getMessage: SCI_INDICGETUNDER);
-				at: #alpha
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #alpha
-							defaultValue: 30
-							setMessage: SCI_INDICSETALPHA
-							setSelector: #basicAlpha:
-							getMessage: SCI_INDICGETALPHA);
-				at: #hoverForecolor
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #basicHoverForecolor
-							defaultValue: Color black asParameter
-							setMessage: SCI_INDICSETHOVERFORE
-							setSelector: #basicHoverForecolor:
-							getMessage: SCI_INDICGETHOVERFORE);
-				at: #flags
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #flags
-							defaultValue: 0
-							setMessage: SCI_INDICSETFLAGS
-							setSelector: #flags:
-							getMessage: SCI_INDICGETFLAGS);
-				at: #foreAlpha
-					put: (QueryableScintillaPropertyDescriptor
-							getSelector: #foreAlpha
-							defaultValue: 50
-							setMessage: SCI_INDICSETOUTLINEALPHA
-							setSelector: #basicForeAlpha:
-							getMessage: SCI_INDICSETOUTLINEALPHA);
-				shrink;
-				isImmutable: true;
-				yourself!
+	propertyMap := self buildPropertyMap isImmutable: true; yourself!
 
 new
 	^(super new)
@@ -328,7 +330,8 @@ stbVersion
 
 styleNames
 	^#(#underline #squiggle #tt #hatch #strikeOut #hidden #box #roundBox #container #dash #dots #squiggleLow #dotBox #squigglePixmap #compositionThick #compositionThin #fullBox #textFore #point #pointCharacter #gradient #gradientCentre)! !
-!ScintillaIndicatorStyle class categoriesFor: #initialize!initializing!public! !
+!ScintillaIndicatorStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
+!ScintillaIndicatorStyle class categoriesFor: #initialize!development!initializing!public! !
 !ScintillaIndicatorStyle class categoriesFor: #new!public! !
 !ScintillaIndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !ScintillaIndicatorStyle class categoriesFor: #stbVersion!binary filing!public! !

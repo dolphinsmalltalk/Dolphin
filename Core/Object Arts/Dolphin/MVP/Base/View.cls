@@ -5029,6 +5029,92 @@ activeHandle
 
 	^UserLibrary default getActiveWindow!
 
+buildMessageMap
+	"Private - Initialize the map of Windows message numbers to the selectors of the low-level event handlers in the receiver.
+	N.B. Must not be stripped, as this is the only thing which prevents the handlers themselves from being stripped.
+	"
+
+	^(Array new: 1024)
+		at: WM_CREATE + 1 put: #wmCreate:wParam:lParam:;
+		at: WM_DESTROY + 1 put: #wmDestroy:wParam:lParam:;
+		at: WM_MOVE + 1 put: nil;
+		at: WM_SIZE + 1 put: #wmSize:wParam:lParam:;
+		at: WM_ACTIVATE + 1 put: #wmActivate:wParam:lParam:;
+		at: WM_SETFOCUS + 1 put: #wmSetFocus:wParam:lParam:;
+		at: WM_KILLFOCUS + 1 put: #wmKillFocus:wParam:lParam:;
+		at: WM_PAINT + 1 put: #wmPaint:wParam:lParam:;
+		at: WM_CLOSE + 1 put: #wmClose:wParam:lParam:;
+		at: WM_ERASEBKGND + 1 put: #wmEraseBkGnd:wParam:lParam:;
+		at: WM_SHOWWINDOW + 1 put: #wmShowWindow:wParam:lParam:;
+		at: WM_NCACTIVATE + 1 put: #wmNcActivate:wParam:lParam:;
+		at: WM_NCCREATE + 1 put: #wmNcCreate:wParam:lParam:;
+		at: WM_NCDESTROY + 1 put: #wmNcDestroy:wParam:lParam:;
+		at: WM_NCCALCSIZE + 1 put: #wmNcCalcSize:wParam:lParam:;
+		at: WM_NCHITTEST + 1 put: #wmNcHitTest:wParam:lParam:;
+		at: WM_NCPAINT + 1 put: #wmNcPaint:wParam:lParam:;
+		at: WM_NOTIFY + 1 put: #wmNotify:wParam:lParam:;
+		at: WM_PARENTNOTIFY + 1 put: #wmParentNotify:wParam:lParam:;
+		at: WM_CHAR + 1 put: #wmChar:wParam:lParam:;
+		at: WM_INITDIALOG + 1 put: #wmInitDialog:wParam:lParam:;
+		at: WM_COMMAND + 1 put: #wmCommand:wParam:lParam:;
+		at: WM_TIMER + 1 put: #wmTimer:wParam:lParam:;
+		at: WM_MOUSEMOVE + 1 put: #wmMouseMove:wParam:lParam:;
+		at: WM_LBUTTONDOWN + 1 put: #wmLButtonDown:wParam:lParam:;
+		at: WM_LBUTTONUP + 1 put: #wmLButtonUp:wParam:lParam:;
+		at: WM_LBUTTONDBLCLK + 1 put: #wmLButtonDblClk:wParam:lParam:;
+		at: WM_RBUTTONDOWN + 1 put: #wmRButtonDown:wParam:lParam:;
+		at: WM_RBUTTONUP + 1 put: #wmRButtonUp:wParam:lParam:;
+		at: WM_RBUTTONDBLCLK + 1 put: #wmRButtonDblClk:wParam:lParam:;
+		at: WM_MBUTTONDOWN + 1 put: #wmMButtonDown:wParam:lParam:;
+		at: WM_MBUTTONUP + 1 put: #wmMButtonUp:wParam:lParam:;
+		at: WM_MBUTTONDBLCLK + 1 put: #wmMButtonDblClk:wParam:lParam:;
+		at: WM_XBUTTONDOWN + 1 put: #wmXButtonDown:wParam:lParam:;
+		at: WM_XBUTTONUP + 1 put: #wmXButtonUp:wParam:lParam:;
+		at: WM_XBUTTONDBLCLK + 1 put: #wmXButtonDblClk:wParam:lParam:;
+		at: WM_HSCROLL + 1 put: #wmHScroll:wParam:lParam:;
+		at: WM_VSCROLL + 1 put: #wmVScroll:wParam:lParam:;
+		at: WM_SETCURSOR + 1 put: #wmSetCursor:wParam:lParam:;
+		at: WM_QUERYENDSESSION + 1 put: #wmQueryEndSession:wParam:lParam:;
+		at: WM_DRAWITEM + 1 put: #wmDrawItem:wParam:lParam:;
+		at: WM_KEYDOWN + 1 put: #wmKeyDown:wParam:lParam:;
+		at: WM_KEYUP + 1 put: #wmKeyUp:wParam:lParam:;
+		at: WM_SYSKEYDOWN + 1 put: #wmSysKeyDown:wParam:lParam:;
+		at: WM_SYSKEYUP + 1 put: #wmSysKeyUp:wParam:lParam:;
+		at: WM_SYSDEADCHAR + 1 put: #wmSysDeadChar:wParam:lParam:;
+		at: WM_SYSCOLORCHANGE + 1 put: #wmSysColorChange:wParam:lParam:;
+		at: WM_CTLCOLORMSGBOX + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLOREDIT + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORLISTBOX + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORBTN + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORDLG + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORSCROLLBAR + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORSTATIC + 1 put: #wmCtlColor:wParam:lParam:;
+		at: WM_GETDLGCODE + 1 put: #wmGetDlgCode:wParam:lParam:;
+		at: WM_ENTERIDLE + 1 put: #wmEnterIdle:wParam:lParam:;
+		at: WM_WINDOWPOSCHANGING + 1 put: #wmWindowPosChanging:wParam:lParam:;
+		at: WM_WINDOWPOSCHANGED + 1 put: #wmWindowPosChanged:wParam:lParam:;
+		at: WM_ENTERMENULOOP + 1 put: #wmEnterMenuLoop:wParam:lParam:;
+		at: WM_EXITMENULOOP + 1 put: #wmExitMenuLoop:wParam:lParam:;
+		at: WM_CANCELMODE + 1 put: #wmCancelMode:wParam:lParam:;
+		at: WM_CAPTURECHANGED + 1 put: #wmCaptureChanged:wParam:lParam:;
+		at: WM_MOUSEWHEEL + 1 put: #wmMouseWheel:wParam:lParam:;
+		at: WM_MOUSEHWHEEL + 1 put: #wmMouseHWheel:wParam:lParam:;
+		at: WM_GETMINMAXINFO + 1 put: #wmGetMinMaxInfo:wParam:lParam:;
+		at: WM_MENUCOMMAND + 1 put: #wmMenuCommand:wParam:lParam:;
+		at: WM_MEASUREITEM + 1 put: #wmMeasureItem:wParam:lParam:;
+		at: WM_DRAWITEM + 1 put: #wmDrawItem:wParam:lParam:;
+		at: WM_SYSCOMMAND + 1 put: #wmSysCommand:wParam:lParam:;
+		at: WM_SYSCHAR + 1 put: #wmSysChar:wParam:lParam:;
+		at: WM_HOTKEY + 1 put: #wmHotKey:wParam:lParam:;
+		at: WM_MOUSELEAVE + 1 put: #wmMouseLeave:wParam:lParam:;
+		at: WM_MOUSEHOVER + 1 put: #wmMouseHover:wParam:lParam:;
+		at: WM_THEMECHANGED + 1 put: #wmThemeChanged:wParam:lParam:;
+		at: WM_SETTINGCHANGE + 1 put: #wmSettingChange:wParam:lParam:;
+		at: WM_PRINTCLIENT + 1 put: #wmPrintClient:wParam:lParam:;
+		at: WM_PRINT + 1 put: #wmPrint:wParam:lParam:;
+		at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
+		yourself!
+
 capture
 	"Answer the View that has the mouse capture or nil if none."
 
@@ -5186,103 +5272,13 @@ initialize
 
 	NextId := 0.
 	ViewClosedError := Signal description: 'View closed'.
-	self initializeMessageMap.
+	"Note that the message map is not const variable, since view packages may add new messages they want to receive, although must do so by sending #registerMessageMappings:"
+	MessageMap isNil
+		ifTrue: 
+			[MessageMap := self buildMessageMap
+						isImmutable: true;
+						yourself].
 	VMLibrary default primRegistryAt: 54 put: #subclassWindow:!
-
-initializeMessageMap
-	"Private - Initialize the map of Windows message numbers to the selectors of
-	the low-level event handlers in the receiver.
-	N.B. Must not be stripped, as this is the only thing which prevents the handlers
-	themselves from being stripped.
-		self initializeMessageMap
-	"
-
-	"Note that this is not const, since view packages may add new messages they want to receive"
-
-	MessageMap := (Array new: 1024)
-				at: WM_CREATE + 1 put: #wmCreate:wParam:lParam:;
-				at: WM_DESTROY + 1 put: #wmDestroy:wParam:lParam:;
-				at: WM_MOVE + 1 put: nil;
-				at: WM_SIZE + 1 put: #wmSize:wParam:lParam:;
-				at: WM_ACTIVATE + 1 put: #wmActivate:wParam:lParam:;
-				at: WM_SETFOCUS + 1 put: #wmSetFocus:wParam:lParam:;
-				at: WM_KILLFOCUS + 1 put: #wmKillFocus:wParam:lParam:;
-				at: WM_PAINT + 1 put: #wmPaint:wParam:lParam:;
-				at: WM_CLOSE + 1 put: #wmClose:wParam:lParam:;
-				at: WM_ERASEBKGND + 1 put: #wmEraseBkGnd:wParam:lParam:;
-				at: WM_SHOWWINDOW + 1 put: #wmShowWindow:wParam:lParam:;
-				at: WM_NCACTIVATE + 1 put: #wmNcActivate:wParam:lParam:;
-				at: WM_NCCREATE + 1 put: #wmNcCreate:wParam:lParam:;
-				at: WM_NCDESTROY + 1 put: #wmNcDestroy:wParam:lParam:;
-				at: WM_NCCALCSIZE + 1 put: #wmNcCalcSize:wParam:lParam:;
-				at: WM_NCHITTEST + 1 put: #wmNcHitTest:wParam:lParam:;
-				at: WM_NCPAINT + 1 put: #wmNcPaint:wParam:lParam:;
-				at: WM_NOTIFY + 1 put: #wmNotify:wParam:lParam:;
-				at: WM_PARENTNOTIFY + 1 put: #wmParentNotify:wParam:lParam:;
-				at: WM_CHAR + 1 put: #wmChar:wParam:lParam:;
-				at: WM_INITDIALOG + 1 put: #wmInitDialog:wParam:lParam:;
-				at: WM_COMMAND + 1 put: #wmCommand:wParam:lParam:;
-				at: WM_CONTEXTMENU + 1 put: #wmContextMenu:wParam:lParam:;
-				at: WM_TIMER + 1 put: #wmTimer:wParam:lParam:;
-				at: WM_INITMENU + 1 put: #wmInitMenu:wParam:lParam:;
-				at: WM_INITMENUPOPUP + 1 put: #wmInitMenuPopup:wParam:lParam:;
-				at: WM_MOUSEMOVE + 1 put: #wmMouseMove:wParam:lParam:;
-				at: WM_LBUTTONDOWN + 1 put: #wmLButtonDown:wParam:lParam:;
-				at: WM_LBUTTONUP + 1 put: #wmLButtonUp:wParam:lParam:;
-				at: WM_LBUTTONDBLCLK + 1 put: #wmLButtonDblClk:wParam:lParam:;
-				at: WM_RBUTTONDOWN + 1 put: #wmRButtonDown:wParam:lParam:;
-				at: WM_RBUTTONUP + 1 put: #wmRButtonUp:wParam:lParam:;
-				at: WM_RBUTTONDBLCLK + 1 put: #wmRButtonDblClk:wParam:lParam:;
-				at: WM_MBUTTONDOWN + 1 put: #wmMButtonDown:wParam:lParam:;
-				at: WM_MBUTTONUP + 1 put: #wmMButtonUp:wParam:lParam:;
-				at: WM_MBUTTONDBLCLK + 1 put: #wmMButtonDblClk:wParam:lParam:;
-				at: WM_XBUTTONDOWN + 1 put: #wmXButtonDown:wParam:lParam:;
-				at: WM_XBUTTONUP + 1 put: #wmXButtonUp:wParam:lParam:;
-				at: WM_XBUTTONDBLCLK + 1 put: #wmXButtonDblClk:wParam:lParam:;
-				at: WM_HSCROLL + 1 put: #wmHScroll:wParam:lParam:;
-				at: WM_VSCROLL + 1 put: #wmVScroll:wParam:lParam:;
-				at: WM_SETCURSOR + 1 put: #wmSetCursor:wParam:lParam:;
-				at: WM_QUERYENDSESSION + 1 put: #wmQueryEndSession:wParam:lParam:;
-				at: WM_DRAWITEM + 1 put: #wmDrawItem:wParam:lParam:;
-				at: WM_KEYDOWN + 1 put: #wmKeyDown:wParam:lParam:;
-				at: WM_KEYUP + 1 put: #wmKeyUp:wParam:lParam:;
-				at: WM_SYSKEYDOWN + 1 put: #wmSysKeyDown:wParam:lParam:;
-				at: WM_SYSKEYUP + 1 put: #wmSysKeyUp:wParam:lParam:;
-				at: WM_SYSDEADCHAR + 1 put: #wmSysDeadChar:wParam:lParam:;
-				at: WM_SYSCOLORCHANGE + 1 put: #wmSysColorChange:wParam:lParam:;
-				at: WM_CTLCOLORMSGBOX + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_CTLCOLOREDIT + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_CTLCOLORLISTBOX + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_CTLCOLORBTN + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_CTLCOLORDLG + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_CTLCOLORSCROLLBAR + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_CTLCOLORSTATIC + 1 put: #wmCtlColor:wParam:lParam:;
-				at: WM_GETDLGCODE + 1 put: #wmGetDlgCode:wParam:lParam:;
-				at: WM_ENTERIDLE + 1 put: #wmEnterIdle:wParam:lParam:;
-				at: WM_WINDOWPOSCHANGING + 1 put: #wmWindowPosChanging:wParam:lParam:;
-				at: WM_WINDOWPOSCHANGED + 1 put: #wmWindowPosChanged:wParam:lParam:;
-				at: WM_ENTERMENULOOP + 1 put: #wmEnterMenuLoop:wParam:lParam:;
-				at: WM_EXITMENULOOP + 1 put: #wmExitMenuLoop:wParam:lParam:;
-				at: WM_CANCELMODE + 1 put: #wmCancelMode:wParam:lParam:;
-				at: WM_CAPTURECHANGED + 1 put: #wmCaptureChanged:wParam:lParam:;
-				at: WM_MOUSEWHEEL + 1 put: #wmMouseWheel:wParam:lParam:;
-				at: WM_MOUSEHWHEEL + 1 put: #wmMouseHWheel:wParam:lParam:;
-				at: WM_GETMINMAXINFO + 1 put: #wmGetMinMaxInfo:wParam:lParam:;
-				at: WM_MENUCOMMAND + 1 put: #wmMenuCommand:wParam:lParam:;
-				at: WM_MEASUREITEM + 1 put: #wmMeasureItem:wParam:lParam:;
-				at: WM_DRAWITEM + 1 put: #wmDrawItem:wParam:lParam:;
-				at: WM_SYSCOMMAND + 1 put: #wmSysCommand:wParam:lParam:;
-				at: WM_SYSCHAR + 1 put: #wmSysChar:wParam:lParam:;
-				at: WM_HOTKEY + 1 put: #wmHotKey:wParam:lParam:;
-				at: WM_MOUSELEAVE + 1 put: #wmMouseLeave:wParam:lParam:;
-				at: WM_MOUSEHOVER + 1 put: #wmMouseHover:wParam:lParam:;
-				at: WM_THEMECHANGED + 1 put: #wmThemeChanged:wParam:lParam:;
-				at: WM_SETTINGCHANGE + 1 put: #wmSettingChange:wParam:lParam:;
-				at: WM_PRINTCLIENT + 1 put: #wmPrintClient:wParam:lParam:;
-				at: WM_PRINT + 1 put: #wmPrint:wParam:lParam:;
-				at: WM_ACTIVATEAPP + 1 put: #wmActivateApp:wParam:lParam:;
-				isImmutable: true;
-				yourself!
 
 mapRectangle: aRectangle from: aSourceView to: aDestinationView
 	"Answers a RECT like aRectangle mapped from the coordinate system of aSourceView 
@@ -5351,8 +5347,8 @@ registerMessage: aString
 
 	^UserLibrary default registerWindowMessage: aString!
 
-registerMessages: aCollectionOfAssociations 
-	MessageMap 
+registerMessageMappings: aCollectionOfAssociations
+	MessageMap
 		whileMutableDo: [aCollectionOfAssociations do: [:each | MessageMap at: each key + 1 put: each value]]!
 
 releaseCapture
@@ -5544,7 +5540,7 @@ unregisterClass
 		unregisterClass: WndClassAtom
 		hInstance: VMLibrary default applicationHandle!
 
-unregisterMessages: aCollectionOfIntegers 
+unregisterMessageMappings: aCollectionOfIntegers
 	MessageMap whileMutableDo: [aCollectionOfIntegers do: [:each | MessageMap at: each + 1 put: nil]]!
 
 viewClosedError
@@ -5603,6 +5599,7 @@ wndClassName
 	^'DolphinWindow'! !
 !View class categoriesFor: #active!accessing!public! !
 !View class categoriesFor: #activeHandle!accessing!private! !
+!View class categoriesFor: #buildMessageMap!constants!must not strip!private! !
 !View class categoriesFor: #capture!accessing!public! !
 !View class categoriesFor: #closeAll!operations!private! !
 !View class categoriesFor: #cursor!accessing!public! !
@@ -5621,14 +5618,13 @@ wndClassName
 !View class categoriesFor: #fromPoint:!instance creation!private! !
 !View class categoriesFor: #icon!constants!public! !
 !View class categoriesFor: #initialize!development!initializing!private! !
-!View class categoriesFor: #initializeMessageMap!initializing!must not strip!private! !
 !View class categoriesFor: #mapRectangle:from:to:!geometry!public! !
 !View class categoriesFor: #new!instance creation!public! !
 !View class categoriesFor: #onExit!event handling!public! !
 !View class categoriesFor: #onStartup!event handling!public! !
 !View class categoriesFor: #registerClass!operations!private! !
 !View class categoriesFor: #registerMessage:!dispatching!public! !
-!View class categoriesFor: #registerMessages:!helpers!public! !
+!View class categoriesFor: #registerMessageMappings:!class initialization!public! !
 !View class categoriesFor: #releaseCapture!operations!public! !
 !View class categoriesFor: #reregisterClass!operations!private! !
 !View class categoriesFor: #resource_Default_view!public!resources-views! !
@@ -5653,7 +5649,7 @@ wndClassName
 !View class categoriesFor: #topLevelViews!accessing!public! !
 !View class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !View class categoriesFor: #unregisterClass!operations!private! !
-!View class categoriesFor: #unregisterMessages:!helpers!public! !
+!View class categoriesFor: #unregisterMessageMappings:!class hierarchy-removing!public! !
 !View class categoriesFor: #viewClosedError!accessing!public! !
 !View class categoriesFor: #winClassBrush!constants!private! !
 !View class categoriesFor: #winClassCursor!constants!private! !

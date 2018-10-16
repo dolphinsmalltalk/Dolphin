@@ -122,16 +122,18 @@ wmDropFiles: msgInteger wParam: wParamInteger lParam: lParamInteger
 !View categoriesFor: #wmDropFiles:wParam:lParam:!public! !
 
 !View class methodsFor!
-
+ 
 registerShellMessages
-	self registerMessages: (Array with: WM_DROPFILES -> #wmDropFiles:wParam:lParam:)!
+	self registerMessageMappings: self shellMessageMappings!
 
+shellMessageMappings
+	^{WM_DROPFILES -> #wmDropFiles:wParam:lParam:}!
+ 
 unregisterShellMessages
-	| aCollectionOfIntegers |
-	aCollectionOfIntegers := Array with: WM_DROPFILES.
-	self unregisterMessages: aCollectionOfIntegers! !
-!View class categoriesFor: #registerShellMessages!public! !
+	self unregisterMessageMappings: {WM_DROPFILES}! !
+!View class categoriesFor: #registerShellMessages!development!initializing!public! !
+!View class categoriesFor: #shellMessageMappings!constants!must not strip!private! !
 !View class categoriesFor: #unregisterShellMessages!public! !
-
+ 
 "End of package definition"!
 

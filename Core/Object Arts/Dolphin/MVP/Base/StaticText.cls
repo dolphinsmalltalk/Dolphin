@@ -168,14 +168,16 @@ initialize
 		StaticText initialize
 	"
 
-	AlignmentMap := IdentityDictionary new
+	self addClassConstant: 'AlignmentMap'
+		value: (IdentityDictionary new
 				at: #left put: SS_LEFT;
 				at: #right put: SS_RIGHT;
 				at: #center put: SS_CENTER;
 				at: #leftNoWrap put: SS_LEFTNOWORDWRAP;
 				at: #simple put: SS_SIMPLE;
 				shrink;
-				yourself! !
+				isImmutable: true;
+				yourself)! !
 !StaticText class categoriesFor: #icon!constants!public! !
 !StaticText class categoriesFor: #initialize!development!initializing!private! !
 

@@ -2,11 +2,10 @@
 
 View subclass: #ControlView
 	instanceVariableNames: 'forecolor oldWndProc'
-	classVariableNames: 'CommonControlCallError NmMap'
+	classVariableNames: 'CommonControlCallError'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 ControlView guid: (GUID fromString: '{87b4c70d-026e-11d3-9fd7-00a0cc3e4a32}')!
-ControlView isAbstract: true!
 ControlView comment: 'ControlView is the abstract superclass for all <view>s that are based on Windows controls. In general, controls are responsible for their own painting and so it is not necessary, or advisable, to override #onPaintRequired: in any of the ControlView subclasses.
 
 Some controls, but not all, allow control over the foreground and background colours used when painting. If neither of the #forecolor and #backcolor aspects is explicitly set then the default control colours will be used.
@@ -41,6 +40,43 @@ clearHandle
 	super clearHandle.
 	oldWndProc := nil
 	!
+
+commonNotificationMap
+	"Private - Answer a 'map' between notification codes and the selector of the corresponding event handlers in the receiver. 
+	We used to store this in a class variable, but then special steps are needed to ensure the notification handlers are not stripped during application deployment. By returning a constant from a method we ensure that the notification handlers are always reachable when traversing the reference graph."
+
+	^##(| nmMap |
+	nmMap := IdentityDictionary new.
+	nmMap
+		at: NM_OUTOFMEMORY put: #nmOutOfMemory:;
+		at: NM_CLICK put: #nmClick:;
+		at: NM_DBLCLK put: #nmDblClk:;
+		at: NM_RETURN put: #nmReturn:;
+		at: NM_RCLICK put: #nmRClick:;
+		at: NM_RDBLCLK put: #nmRDblClk:;
+		at: NM_SETFOCUS put: #nmSetFocus:;
+		at: NM_KILLFOCUS put: #nmKillFocus:;
+		at: -9 put: #nmStartWait:;
+		at: -10 put: #nmEndWait:;
+		at: -11 put: #nmDummy:.
+
+	"IE3 Notifications - Common controls version 4.70"
+	nmMap
+		at: NM_CUSTOMDRAW put: #nmCustomDraw:;
+		at: NM_HOVER put: #nmHover:.
+
+	"IE4 Notifications - Common controls version 4.71"
+	nmMap
+		at: NM_NCHITTEST put: #nmDummy:;
+		at: NM_KEYDOWN put: #nmKeyDown:;
+		at: NM_RELEASEDCAPTURE put: #nmDummy:;
+		at: NM_SETCURSOR put: #nmDummy:;
+		at: NM_CHAR put: #nmDummy:.
+
+	"Tooltip support - because these are discontinuous, we can't use an array for the lookup table here"
+	nmMap at: TTN_GETDISPINFOW put: #ttnGetDispInfoW:.
+	nmMap shrink.
+	nmMap)!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass a message to the 'default' window procedure of the receiver."
@@ -162,7 +198,8 @@ nmKillFocus: pNMHDR
 nmNotify: pNMHDR
 	"Private - Handler for a redirected generic WM_NOTIFY message."
 
-	^(NmMap lookup: (pNMHDR sdwordAtOffset: 8)) ifNotNil: [:action | self perform: action with: pNMHDR]!
+	^(self commonNotificationMap lookup: (pNMHDR sdwordAtOffset: 8))
+		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
 nmOutOfMemory: pNMHDR
 	"Default handler for a NM_OUTOFMEMORY notification message.
@@ -369,6 +406,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ControlView categoriesFor: #ccmGetVersion!operations!public! !
 !ControlView categoriesFor: #ccmSetVersion:!operations!public! !
 !ControlView categoriesFor: #clearHandle!private!realizing/unrealizing! !
+!ControlView categoriesFor: #commonNotificationMap!constants!private! !
 !ControlView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !ControlView categoriesFor: #defaultWindowStyle!constants!private! !
 !ControlView categoriesFor: #errorInCommonControlCall!exceptions!public! !
@@ -393,7 +431,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 !ControlView categoriesFor: #nmSetFocus:!event handling-win32!private! !
 !ControlView categoriesFor: #nmStartWait:!event handling-win32!private! !
 !ControlView categoriesFor: #oldWndProc!accessing!private! !
-!ControlView categoriesFor: #oldWndProc:!accessing!private! !
+!ControlView categoriesFor: #oldWndProc:!accessing!not an aspect!private! !
 !ControlView categoriesFor: #onColorRequired:!event handling!private! !
 !ControlView categoriesFor: #onEraseRequired:!event handling!public! !
 !ControlView categoriesFor: #onInputMaskRequired:!event handling!public! !
@@ -428,46 +466,7 @@ initialize
 		ControlView initialize
 	"
 
-	CommonControlCallError := Signal description: 'Common control call failed'.
-
-	self initializeNotificationMap!
-
-initializeNotificationMap
-	"Private - Initialise the receiver's map between notification codes and the selector of
-	the corresponding event handlers in the receiver. N.B. Must not be stripped in order
-	to prevent notification handlers from being stripped."
-
-	NmMap := IdentityDictionary new.
-	NmMap
-		at: NM_OUTOFMEMORY put: #nmOutOfMemory:;
-		at: NM_CLICK put: #nmClick:;
-		at: NM_DBLCLK put: #nmDblClk:;
-		at: NM_RETURN put: #nmReturn:;
-		at: NM_RCLICK put: #nmRClick:;
-		at: NM_RDBLCLK put: #nmRDblClk:;
-		at: NM_SETFOCUS put: #nmSetFocus:;
-		at: NM_KILLFOCUS put: #nmKillFocus:;
-		at: -9 put: #nmStartWait:;
-		at: -10 put: #nmEndWait:;
-		at: -11 put: #nmDummy:.
-
-	"IE3 Notifications - Common controls version 4.70"
-	NmMap
-		at: NM_CUSTOMDRAW put: #nmCustomDraw:;
-		at: NM_HOVER put: #nmHover:.
-
-	"IE4 Notifications - Common controls version 4.71"
-	NmMap
-		at: NM_NCHITTEST put: #nmDummy:;
-		at: NM_KEYDOWN put: #nmKeyDown:;
-		at: NM_RELEASEDCAPTURE put: #nmDummy:;
-		at: NM_SETCURSOR put: #nmDummy:;
-		at: NM_CHAR put: #nmDummy:.
-
-	"Tooltip support - because these are discontinuous, we can't use an array for the lookup table here"
-	NmMap
-		at: TTN_GETDISPINFOW put: #ttnGetDispInfoW:.
-	NmMap shrink!
+	CommonControlCallError := Signal description: 'Common control call failed'!
 
 maxTextLimit
 	"Answer the absolute maximum amount of text that the receiver can ever hold."
@@ -480,7 +479,6 @@ winClassName
 	^self subclassResponsibility! !
 !ControlView class categoriesFor: #commonControlCallError!constants!public! !
 !ControlView class categoriesFor: #initialize!development!initializing!private! !
-!ControlView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
 !ControlView class categoriesFor: #maxTextLimit!constants!public! !
 !ControlView class categoriesFor: #winClassName!constants!private! !
 

@@ -6,6 +6,7 @@ ShellView subclass: #DialogView
 	poolDictionaries: 'ThemeConstants'
 	classInstanceVariableNames: ''!
 DialogView guid: (GUID fromString: '{87b4c71e-026e-11d3-9fd7-00a0cc3e4a32}')!
+DialogView addClassConstant: 'InProcLoopMask' value: 16r100000!
 DialogView comment: 'DialogView is a specialisation of <topView> that provides the ability to be displayed modally and to return a value.
 
 Instance Variables:
@@ -376,15 +377,15 @@ wmInitDialog: message wParam: wParam lParam: lParam
 
 	^self onInitDialog! !
 !DialogView categoriesFor: #answer!accessing!public! !
-!DialogView categoriesFor: #answer:!accessing!public! !
+!DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
 !DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
 !DialogView categoriesFor: #cancel!commands!public! !
 !DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
 !DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
 !DialogView categoriesFor: #defaultWindowStyle!constants!private! !
 !DialogView categoriesFor: #destroy!public!realizing/unrealizing! !
-!DialogView categoriesFor: #dmGetDefId:wParam:lParam:!event handling-win32!private! !
-!DialogView categoriesFor: #dmSetDefId:wParam:lParam:!event handling-win32!private! !
+!DialogView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
+!DialogView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
 !DialogView categoriesFor: #enableItem:state:!accessing!private! !
 !DialogView categoriesFor: #endDialog:!operations!public! !
 !DialogView categoriesFor: #getItemText:!accessing!private! !
@@ -410,7 +411,7 @@ wmInitDialog: message wParam: wParam lParam: lParam
 !DialogView categoriesFor: #setItem:text:!accessing!private! !
 !DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
 !DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
-!DialogView categoriesFor: #subclassWindow:!accessing!private! !
+!DialogView categoriesFor: #subclassWindow:!operations!private! !
 !DialogView categoriesFor: #templateId!constants!private! !
 !DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!public! !
 
@@ -422,7 +423,7 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	InProcLoopMask := 16r100000!
+	self addClassConstant: 'InProcLoopMask' value: 16r100000!
 
 new
 	"Answer an instance of the receiver on a nil model"
@@ -435,7 +436,7 @@ on: aSubjectModel
 	^super new model: aSubjectModel.
 ! !
 !DialogView class categoriesFor: #icon!constants!public! !
-!DialogView class categoriesFor: #initialize!initializing!public! !
+!DialogView class categoriesFor: #initialize!development!initializing!public! !
 !DialogView class categoriesFor: #new!instance creation!public! !
 !DialogView class categoriesFor: #on:!instance creation!public! !
 

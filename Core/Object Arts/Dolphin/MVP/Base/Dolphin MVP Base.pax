@@ -217,16 +217,22 @@ package classNames
 package methodNames
 	add: #AnsiString -> #copyToClipboard;
 	add: #ClassDescription -> #defaultIcon;
+	add: #InputState -> #allTopLevelWindowHandlesDo:;
 	add: #InputState -> #getLastInputInfo;
+	add: #InputState -> #topLevelWindowHandlesDo:;
+	add: #InputState -> #topLevelWindowsInZOrder;
 	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
 	add: #Object -> #addToImageList:mask:;
 	add: #Object -> #icon;
+	add: #Object -> #iconImageIndex;
+	add: #ResourceIdentifier -> #canShow;
 	add: #ResourceIdentifier -> #fixupIcon;
 	add: #ResourceIdentifier -> #icon;
 	add: #ResourceIdentifier -> #loadWithContext:;
 	add: #ResourceIdentifier -> #loadWithContext:forEdit:;
+	add: #ResourceIdentifier -> #show;
 	add: #ShlwapiLibrary -> #colorHLSToRGB:wLuminance:wSaturation:;
 	add: #ShlwapiLibrary -> #colorRGBToHLS:pwHue:pwLuminance:pwSaturation:;
 	add: #String -> #copyToClipboard;
@@ -1186,7 +1192,7 @@ View subclass: #ContainerView
 	classInstanceVariableNames: ''!
 View subclass: #ControlView
 	instanceVariableNames: 'forecolor oldWndProc'
-	classVariableNames: 'CommonControlCallError NmMap'
+	classVariableNames: 'CommonControlCallError'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 View subclass: #DesktopView
@@ -1322,12 +1328,43 @@ icon
 
 !InputState methodsFor!
 
+allTopLevelWindowHandlesDo: aMonadicValuable
+	| callback answer |
+	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
+	callback free.
+	^answer!
+
 getLastInputInfo
 	| lastInputInfo |
 	lastInputInfo := LASTINPUTINFO new.
 	^(UserLibrary default getLastInputInfo: lastInputInfo)
 		ifTrue: [lastInputInfo dwTime]
 		ifFalse: [UserLibrary default systemError]!
+
+topLevelWindowHandlesDo: aMonadicValuable
+	| callback answer |
+	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
+				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
+	answer := UserLibrary default enumThreadWindows: (KernelLibrary default getCurrentThreadId) lpfn: callback asParameter lParam: 0.
+	callback free.
+	^answer!
+
+topLevelWindowsInZOrder
+	"Answer a <sequencedReadableCollection> containing all top level windows belonging to the
+	Dolphin process in the correct z-order (i.e. the topmost window is first). Note that this
+	will include windows which are not frame windows (e.g. tool tips), and furthermore it is not
+	lightening fast. In fact it is more than an order of magnitude slower than #topLevelWindows,
+	which answers the same collection of windows in a random order."
+
+	| views |
+	views := OrderedCollection new: 20.
+	self topLevelWindowHandlesDo: 
+			[:hwnd |
+			(self windowAt: hwnd ifAbsent: []) ifNotNil: [:view | views addLast: view].
+			true].
+	^views!
 
 userSessionIdleMs
 	"Answer the <integer> number of milliseconds that the user session has been idle.
@@ -1339,7 +1376,10 @@ userSessionIdleMs
 	lastInputTime := self getLastInputInfo.
 	currentTime < lastInputTime ifTrue: [^currentTime].	"In case of 49.7-day wrap, we understate the idle time"
 	^currentTime - lastInputTime! !
+!InputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
 !InputState categoriesFor: #getLastInputInfo!helpers!private! !
+!InputState categoriesFor: #topLevelWindowHandlesDo:!enumerating!private! !
+!InputState categoriesFor: #topLevelWindowsInZOrder!enumerating!public! !
 !InputState categoriesFor: #userSessionIdleMs!idling!public! !
 
 !KernelLibrary methodsFor!
@@ -1376,9 +1416,13 @@ addToImageList: aWinImageList mask: aColorOrNil
 icon
 	"Answer an Icon representing the receiver."
 
-	^self class icon! !
+	^self class icon!
+
+iconImageIndex
+	^self icon imageIndex! !
 !Object categoriesFor: #addToImageList:mask:!double dispatch!private! !
 !Object categoriesFor: #icon!constants!public! !
+!Object categoriesFor: #iconImageIndex!accessing!public! !
 
 !Object class methodsFor!
 
@@ -1394,6 +1438,9 @@ icon
 !Object class categoriesFor: #icon!constants!public! !
 
 !ResourceIdentifier methodsFor!
+
+canShow
+	^self resourceOrNil notNil and: [self owningClass respondsTo: #show:]!
 
 fixupIcon
 	"Private - Now try to determine the icon to use from the class of the top level object in the 
@@ -1420,11 +1467,20 @@ loadWithContext: context forEdit: aBoolean
 			(STLInFiler on: resource readStream)
 				isUpgrading: aBoolean;
 				context: context;
-				next]! !
+				next]!
+
+show
+	"Display the resource identified by the receiver in whatever way is appropriate. 
+	Answer the <Presenter> opended to display it."
+
+	^self owningClass show: self name.
+! !
+!ResourceIdentifier categoriesFor: #canShow!public!testing! !
 !ResourceIdentifier categoriesFor: #fixupIcon!helpers!private! !
 !ResourceIdentifier categoriesFor: #icon!accessing!development!public! !
 !ResourceIdentifier categoriesFor: #loadWithContext:!operations!public! !
 !ResourceIdentifier categoriesFor: #loadWithContext:forEdit:!operations!private! !
+!ResourceIdentifier categoriesFor: #show!operations!public! !
 
 !ShlwapiLibrary methodsFor!
 
@@ -3121,7 +3177,7 @@ windowFromPoint: aPOINTL
 !UserLibrary categoriesFor: #getCursor!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
 !UserLibrary categoriesFor: #getDC!operations!public! !
-!UserLibrary categoriesFor: #getDC:!public!win32 functions-device context! !
+!UserLibrary categoriesFor: #getDC:!not an aspect!public!win32 functions-device context! !
 !UserLibrary categoriesFor: #getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
 !UserLibrary categoriesFor: #getFocus!public!win32 functions-keyboard input! !
 !UserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !

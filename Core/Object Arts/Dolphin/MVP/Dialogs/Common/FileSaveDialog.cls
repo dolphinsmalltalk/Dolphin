@@ -30,5 +30,5 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!FileSaveDialog class categoriesFor: #initialize!initializing!private! !
+!FileSaveDialog class categoriesFor: #initialize!development!initializing!private! !
 

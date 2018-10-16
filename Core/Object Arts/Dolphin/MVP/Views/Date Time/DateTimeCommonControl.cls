@@ -4,7 +4,7 @@ ValueConvertingControlView subclass: #DateTimeCommonControl
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'DateTimeCommCtrlConstants'
-	classInstanceVariableNames: 'notificationMap'!
+	classInstanceVariableNames: ''!
 DateTimeCommonControl guid: (GUID fromString: '{6c107e8a-4cd1-474f-bb07-c61aac8c12c9}')!
 DateTimeCommonControl isAbstract: true!
 DateTimeCommonControl comment: 'DateTimeCommonControl is the abstract class of <valueView>s implementing the Windows date/time common controls. 
@@ -29,6 +29,9 @@ displayValue: aDateOrTimeOrNil
 	self displayValue = aDateOrTimeOrNil ifTrue: [^self].
 	self setSystemTime: (aDateOrTimeOrNil notNil ifTrue: [aDateOrTimeOrNil asTimeStamp]) 
 				asParameter!
+
+dtNotificationMap
+	^self subclassResponsibility!
 
 getRangeMessage
 	^self subclassResponsibility!
@@ -75,12 +78,9 @@ nmFirst
 	^self subclassResponsibility!
 
 nmNotify: pNMHDR
-	"Private - Handler for a redirected MonthCal WM_NOTIFY message.
-	Implementation Note: Rather than create the appropriate header structure
-	object here, we delay that until the handler, because most of the time
-	we don't need to look at the notification at all."
+	"Private - Handler for a redirected MonthCal WM_NOTIFY message."
 
-	^(self class notificationMap lookup: (pNMHDR sdwordAtOffset: 8) - self nmFirst)
+	^(self dtNotificationMap lookup: self nmFirst - (pNMHDR sdwordAtOffset: 8))
 		ifNil: [super nmNotify: pNMHDR]
 		ifNotNil: [:action | self perform: action with: pNMHDR]!
 
@@ -138,6 +138,7 @@ state
 		yourself! !
 !DateTimeCommonControl categoriesFor: #displayValue!private!updating! !
 !DateTimeCommonControl categoriesFor: #displayValue:!private!updating! !
+!DateTimeCommonControl categoriesFor: #dtNotificationMap!private! !
 !DateTimeCommonControl categoriesFor: #getRangeMessage!constants!private! !
 !DateTimeCommonControl categoriesFor: #getSystemTime!accessing!private! !
 !DateTimeCommonControl categoriesFor: #maximum!accessing!public! !
@@ -161,7 +162,7 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	"
+	"Private - 
 	self initialize.
 	"
 
@@ -169,13 +170,9 @@ initialize
 		initFlags: (CommCtrlLibrary initFlags maskSet: ICC_DATE_CLASSES);
 		closeDefault!
 
-notificationMap
-	^notificationMap!
-
 uninitialize
 	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskClear: ICC_DATE_CLASSES)! !
 !DateTimeCommonControl class categoriesFor: #icon!constants!public! !
-!DateTimeCommonControl class categoriesFor: #initialize!initializing!public! !
-!DateTimeCommonControl class categoriesFor: #notificationMap!accessing!private! !
+!DateTimeCommonControl class categoriesFor: #initialize!development!initializing!private! !
 !DateTimeCommonControl class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 

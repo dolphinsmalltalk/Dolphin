@@ -301,7 +301,8 @@ example1
 			fork!
 
 initialize
-	BackModes := #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)! !
+	self addClassConstant: 'BackModes'
+		value: #(#tile #topLeft #topCenter #topRight #rightCenter #bottomRight #bottomCenter #bottomLeft #leftCenter #center #stretch)! !
 !MultilineTextEditWithImage class categoriesFor: #example1!examples!public! !
-!MultilineTextEditWithImage class categoriesFor: #initialize!initializing!public! !
+!MultilineTextEditWithImage class categoriesFor: #initialize!development!initializing!private! !
 

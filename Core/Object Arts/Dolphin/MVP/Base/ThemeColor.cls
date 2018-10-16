@@ -107,5 +107,5 @@ uninitialize
 !ThemeColor class categoriesFor: #initialize!class initialization!development!public! !
 !ThemeColor class categoriesFor: #name:actualColor:!instance creation!public! !
 !ThemeColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ThemeColor class categoriesFor: #uninitialize!class hierarchy-removing!development!public! !
+!ThemeColor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

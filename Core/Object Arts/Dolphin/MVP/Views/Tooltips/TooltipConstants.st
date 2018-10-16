@@ -52,6 +52,7 @@ TooltipConstants at: 'TTM_UPDATE' put: 16r41D!
 TooltipConstants at: 'TTM_UPDATETIPTEXTW' put: 16r439!
 TooltipConstants at: 'TTM_WINDOWFROMPOINT' put: 16r410!
 TooltipConstants at: 'TTN_FIRST' put: -16r208!
+TooltipConstants at: 'TTN_LAST' put: -16r225!
 TooltipConstants at: 'TTN_LINKCLICK' put: -16r20B!
 TooltipConstants at: 'TTN_POP' put: -16r20A!
 TooltipConstants at: 'TTN_SHOW' put: -16r209!
