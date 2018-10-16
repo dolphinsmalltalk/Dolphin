@@ -43,7 +43,7 @@ canHScroll: aBoolean
 	(self 
 		baseStyleMask: ##(WS_HSCROLL | ES_AUTOHSCROLL)
 		set: aBoolean
-		recreateIfChanged: false) 
+		recreateIfChanged: true) 
 			ifTrue: 
 				[self invalidateCalculatedExtent.
 				self frameChanged]!
