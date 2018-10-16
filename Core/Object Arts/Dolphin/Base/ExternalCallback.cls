@@ -263,12 +263,15 @@ register: instance
 	^Registry addAnsweringIndex: instance!
 
 uninitializeBeforeRemove
-	"If this is the last of the concrete callback classes, then we don't need the callback entry point."
-
+	| remaining |
 	super uninitializeBeforeRemove.
-	(##(self) subclasses copyWithout: self) isEmpty
+	"If this is the last of the concrete callback classes, then we don't need the callback entry point."
+	remaining := ##(self) allSubclasses reject: [:each | each isNonInstantiable].
+	(remaining size = 1 and: [remaining first == self])
 		ifTrue: 
-			[ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie:.
+			[
+			Notification signal: 'Uninstalling VM callback entry point'.
+			ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie:.
 			VMLibrary default primRegistryAt: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
 				put: nil]!
 

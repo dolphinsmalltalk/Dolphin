@@ -39,19 +39,6 @@ editExpression
 
 	^'ViewComposer openOn: (ResourceIdentifier class: self selector: <1p>)' expandMacrosWith: self selector!
 
-editViewUsing: aMonadicBlock 
-	"Use dynamic lookup to avoid boot ordering problems."
-	| view | 
-	view := self loadWithContext: (Smalltalk at: #View) desktop.
-	aMonadicBlock value: view.
-	self assign: view literalStoreArray.
-	view destroy!
-
-emit: aResourceArray asStringOn: aWriteStream 
-	aWriteStream nextPutAll: '#('.
-	aResourceArray do: [:each |  each literalPrintOn: aWriteStream. aWriteStream space].
-	aWriteStream nextPut: $)!
-
 emitMethodHeaderFor: aSymbol on: stream 
 	stream
 		nextPutAll: aSymbol;
@@ -183,8 +170,6 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
 !ResourceIdentifier categoriesFor: #copy!copying!public! !
 !ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
-!ResourceIdentifier categoriesFor: #editViewUsing:!operations!public! !
-!ResourceIdentifier categoriesFor: #emit:asStringOn:!helpers!private! !
 !ResourceIdentifier categoriesFor: #emitMethodHeaderFor:on:!accessing!private! !
 !ResourceIdentifier categoriesFor: #exists!public!testing! !
 !ResourceIdentifier categoriesFor: #exportedFileName!accessing!development!private! !
@@ -197,7 +182,7 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #name!accessing!public! !
 !ResourceIdentifier categoriesFor: #name:!accessing!public! !
 !ResourceIdentifier categoriesFor: #owningClass!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningClass:!accessing!public! !
+!ResourceIdentifier categoriesFor: #owningClass:!initializing!public! !
 !ResourceIdentifier categoriesFor: #owningPackage!accessing!public! !
 !ResourceIdentifier categoriesFor: #owningPackage:!accessing!development!public! !
 !ResourceIdentifier categoriesFor: #printOn:!printing!public! !
@@ -205,7 +190,7 @@ storeOn: aStream
 !ResourceIdentifier categoriesFor: #resourceMethodComment!accessing!constants!private! !
 !ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
 !ResourceIdentifier categoriesFor: #selector!accessing!public! !
-!ResourceIdentifier categoriesFor: #selector:!accessing!public! !
+!ResourceIdentifier categoriesFor: #selector:!initializing!public! !
 !ResourceIdentifier categoriesFor: #storeOn:!printing!public! !
 
 !ResourceIdentifier class methodsFor!

@@ -54,10 +54,11 @@ withClassLocator: aClassLocator
 forClass: aClass
 	"Answer a new instance with its locator key representing aClass."
 
-	^self basicNew
-		locatorKey: aClass name asString;
-		packageName: aClass owningPackage name;
-		yourself!
+	| answer |
+	answer := self basicNew.
+	answer locatorKey: aClass name asString.
+	aClass owningPackage ifNotNil: [:package | answer packageName: package name].
+	^answer!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier version models.

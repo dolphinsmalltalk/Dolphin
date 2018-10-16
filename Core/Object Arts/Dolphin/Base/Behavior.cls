@@ -306,7 +306,6 @@ compile: code
 	result notNil 
 		ifTrue: 
 			[method := result method.
-			self storeCategoriesOfMethod: method.
 			result fireSystemUpdateEvent].
 	^method!
 
@@ -941,11 +940,6 @@ sourceCodeAt: aSymbol
 
 	^(self compiledMethodAt: aSymbol) getSource!
 
-storeCategoriesOfMethod: aCompiledMethod
-	"Do nothing - method categories are not supported at this level"
-
-	!
-
 subclasses
 	"Answer a <collection> containing the receiver's immediate subclasses.
 
@@ -1046,25 +1040,6 @@ whichMethodsContainSource: aString
 	the specified source string."
 
 	^self selectMethods: [:method | method containsSource: aString]!
-
-whichMethodsOnlySelfSend: aSymbol
-	"Answer a Set of methods which consist purely of a send-to-self of the specified zero-arg selector."
-
-	^self selectMethods: ((VMLibrary default indexOfSpecialSelector: aSymbol ifAbsent: [])
-				ifNil: [[:method | method isSimpleSelfSend: aSymbol]]
-				ifNotNil: 
-					[:index |
-					| specialSend send sendRet |
-					specialSend := index + OpcodePool.ShortSpecialSend - 1.
-					sendRet := CompiledCode
-								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnFromMessage} asByteArray.
-					send := CompiledCode
-								packByteCodes: {OpcodePool.PushSelf. specialSend. OpcodePool.ReturnSelf} asByteArray.
-					
-					[:method |
-					| packed |
-					packed := method basicByteCodes.
-					packed == send or: [packed == sendRet]]])!
 
 whichMethodsRead: aString
 	"Answer a <collection> of <CompiledMethod>s that read the instance variable
@@ -1240,15 +1215,14 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #setInstSize:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setShapeFlags:to:!instance specification-accessing!private! !
 !Behavior categoriesFor: #setSpecialBehavior:to:!instance specification-accessing!private! !
-!Behavior categoriesFor: #setSuperclass:!class hierarchy-accessing!private! !
+!Behavior categoriesFor: #setSuperclass:!class hierarchy-mutating!private! !
 !Behavior categoriesFor: #shallowCopy!copying!public! !
 !Behavior categoriesFor: #sourceCodeAt:!development!methods-accessing!public! !
-!Behavior categoriesFor: #storeCategoriesOfMethod:!compiling!private! !
 !Behavior categoriesFor: #subclasses!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #subclasses:!class hierarchy-accessing!public! !
+!Behavior categoriesFor: #subclasses:!class hierarchy-mutating!public! !
 !Behavior categoriesFor: #subclassInstVarNames!instance variables!public! !
 !Behavior categoriesFor: #superclass!class hierarchy-accessing!public! !
-!Behavior categoriesFor: #superclass:!class hierarchy-accessing!public! !
+!Behavior categoriesFor: #superclass:!class hierarchy-mutating!public! !
 !Behavior categoriesFor: #understoodSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #understoodSelectorsDo:!methods-accessing!public! !
 !Behavior categoriesFor: #whichClassIncludesSelector:!methods-testing!public! !
@@ -1258,7 +1232,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #whichMethodsAssign:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsAssign:at:!development!methods-testing!private! !
 !Behavior categoriesFor: #whichMethodsContainSource:!development!methods-testing!public! !
-!Behavior categoriesFor: #whichMethodsOnlySelfSend:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsRead:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsRead:at:!development!methods-testing!private! !
 !Behavior categoriesFor: #whichMethodsReferTo:!methods-testing!public! !

@@ -586,44 +586,6 @@ clear: addressOrBytes
 	which resides at the specified address. Note that this is not about freeing
 	the specified memory block, but any resources which it references."!
 
-compileAllDefinitions
-	"Compile the definitions of the receiver and all its subclasses"
-
-	self withAllSubclassesDo: [:each | each compileDefinition].
-!
-
-compileDefinition
-	"Builds a new template and generates compiled methods for accessing the fields 
-	described by it. Depending on the description held in each field, some accessor
-	methods may be left as uncompiled to be addressed via the template and 
-	#doesNotUnderstand:"
-
-	self
-		newTemplate;
-		defineTemplate;
-		recompileDefinition;
-		shrink!
-
-compileGetMethod: aSymbol forField: anExternalField
-	"Private - Generate a compiled 'get' accessor method for the selector aSymbol 
-	and field definition anExternalField."
-
-	| methodText |
-	anExternalField canGenerateAccessor ifFalse: [^self].
-	methodText := String writeStream: 256.
-	anExternalField printAccessor: aSymbol on: methodText.
-	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
-
-compileSetMethod: aSelector forField: anExternalField
-	"Private - Generate a compiled 'set' accessor method for the selector aSymbol 
-	and field definition, anExternalField"
-
-	| methodText |
-	anExternalField canGenerateMutator ifFalse: [^self].
-	methodText := String writeStream: 256.
-	anExternalField printMutator: aSelector on: methodText.
-	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
-
 contentsAccessText
 	"Private - Answer the method text that must be inserted to get access to the
 	contents (bytes) of the instances of the receiver"
@@ -714,14 +676,6 @@ elementSize
 
 ensureDefined
 	template isNil ifTrue: [self defineTemplate]	"ensure the structure accessors are correctly defined"!
-
-formatAndCompile: aString categories: categories 
-	| source |
-	source := (Smalltalk at: #SmalltalkSystem ifPresent: [:c | c current]) 
-				ifNil: [aString]
-				ifNotNil: [:devSys | devSys reformatSource: aString in: self].
-	"Notification signal: source."
-	^self compile: source categories: categories!
 
 fromAddress: anAddress 
 	"Answer a new instance that points to the ExternalAddress 
@@ -946,19 +900,6 @@ pointerClass
 
 	^ExternalAddress!
 
-recompileDefinition
-	"Private - Recompiles the existing template for the receiver"
-
-	self decompileDefinition.
-	self definesNewFields ifFalse: [^self].
-	self template keysAndValuesDo: 
-			[:selector :field |
-			(self shouldCompile: selector forField: field)
-				ifTrue: 
-					[selector last == $:
-						ifTrue: [self compileSetMethod: selector forField: field]
-						ifFalse: [self compileGetMethod: selector forField: field]]]!
-
 recompileReferences
 	"Private - Recompile all directly referencing external call methods that might need to
 	change if the receiver's size changes such any ExternalLibrary FFI methods that reference
@@ -1084,10 +1025,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #byteSize:!accessing!private! !
 !ExternalStructure class categoriesFor: #changedByteSizeFrom:!development!initializing!private! !
 !ExternalStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
-!ExternalStructure class categoriesFor: #compileAllDefinitions!development!public! !
-!ExternalStructure class categoriesFor: #compileDefinition!development!public! !
-!ExternalStructure class categoriesFor: #compileGetMethod:forField:!development!private! !
-!ExternalStructure class categoriesFor: #compileSetMethod:forField:!development!private! !
 !ExternalStructure class categoriesFor: #contentsAccessText!constants!private! !
 !ExternalStructure class categoriesFor: #decompileDefinition!development!public! !
 !ExternalStructure class categoriesFor: #defineField:type:!initializing!public! !
@@ -1099,7 +1036,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
-!ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
 !ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !
 !ExternalStructure class categoriesFor: #getFieldList!accessing!private! !
@@ -1126,7 +1062,6 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #packing!constants!public! !
 !ExternalStructure class categoriesFor: #paddedSizeFor:!helpers!public! !
 !ExternalStructure class categoriesFor: #pointerClass!constants!private! !
-!ExternalStructure class categoriesFor: #recompileDefinition!development!private! !
 !ExternalStructure class categoriesFor: #recompileReferences!development!private! !
 !ExternalStructure class categoriesFor: #register!adding!public! !
 !ExternalStructure class categoriesFor: #registerClass:forGUID:!adding!public! !

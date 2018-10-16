@@ -46,7 +46,6 @@ package methodNames
 	add: #PackageSelector -> #browseSources;
 	add: #Process -> #priorityName;
 	add: #ProcessorScheduler -> #nameOfPriority:;
-	add: #SmalltalkSystem -> #openDeploymentLog:;
 	add: #SmalltalkSystem -> #openIdeaSpace;
 	add: #SmalltalkToolShell -> #addToNewIdeaSpace;
 	add: #SmalltalkToolShell -> #browseSystem;
@@ -310,17 +309,10 @@ publishedAspectsOfInstances
 
 !SmalltalkSystem methodsFor!
 
-openDeploymentLog: aPackage 
-	| dom |
-	dom := IXMLDOMDocument new.
-	dom loadURL: 'file://' , aPackage imageStripper logFileName.
-	^dom!
-
 openIdeaSpace
 	"Create a new IdeaSpace by opening a template file"
 
 	^IdeaSpaceShell open! !
-!SmalltalkSystem categoriesFor: #openDeploymentLog:!helpers!private! !
 !SmalltalkSystem categoriesFor: #openIdeaSpace!commands!public! !
 
 !SmalltalkToolShell methodsFor!

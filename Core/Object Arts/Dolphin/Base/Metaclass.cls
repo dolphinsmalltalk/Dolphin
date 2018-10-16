@@ -163,7 +163,7 @@ stbSaveOn: anSTBOutFiler
 !Metaclass categoriesFor: #comment:!accessing!public! !
 !Metaclass categoriesFor: #instanceClass!accessing!public! !
 !Metaclass categoriesFor: #instanceClass:!accessing!private! !
-!Metaclass categoriesFor: #instanceVariableNames:!instance variables!public! !
+!Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
 !Metaclass categoriesFor: #isChanged:!development!public!source filing! !
 !Metaclass categoriesFor: #isMeta!public!testing! !
 !Metaclass categoriesFor: #name!accessing!public! !

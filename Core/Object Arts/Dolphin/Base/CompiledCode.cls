@@ -161,7 +161,7 @@ byteCodes: anObject
 	byteCodes := codes!
 
 byteCodeSegments
-	^self byteCodeDispatcher byteCodeSegments!
+	^self byteCodeDispatcher segments!
 
 clear
 	"Private - Clear down temporary information cached in the receiver.
@@ -601,8 +601,8 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #argumentCount!method header!public! !
 !CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !
 !CompiledCode categoriesFor: #basicByteCodes!accessing!private! !
-!CompiledCode categoriesFor: #byteCodeDispatcher!development!private!testing! !
-!CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!development!private! !
+!CompiledCode categoriesFor: #byteCodeDispatcher!private!testing! !
+!CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!private! !
 !CompiledCode categoriesFor: #byteCodes!accessing!private! !
 !CompiledCode categoriesFor: #byteCodes:!accessing!private! !
 !CompiledCode categoriesFor: #byteCodeSegments!accessing!private! !

@@ -27,7 +27,9 @@ package methodNames
 	add: #_FPIEEE_VALUE -> #valueType;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
+	add: #ByteCodeDispatcher -> #byteCodeSegments;
 	add: #Class -> #addClassVarName:;
+	add: #ClassDescription -> #defaultIconFrom:;
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
 	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
@@ -104,6 +106,7 @@ package methodNames
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
+	add: 'Category class' -> #categoryIcon;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
 	add: 'ExternalCallback class' -> #receiver:selector:;
@@ -223,12 +226,40 @@ makeNullTerminated
 !Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
 !Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
 
+!ByteCodeDispatcher methodsFor!
+
+byteCodeSegments
+	#deprecated.
+	^self segments! !
+!ByteCodeDispatcher categoriesFor: #byteCodeSegments!accessing!public! !
+
+!Category class methodsFor!
+
+categoryIcon
+	"Answer an Icon representing the Category objects which the receiver collects." 
+
+	^self icon! !
+!Category class categoriesFor: #categoryIcon!constants!public! !
+
 !Class methodsFor!
 
 addClassVarName: aString
 	#deprecated.	"Use addClassVarNamed:"
 	^self addClassVarNamed: aString! !
 !Class categoriesFor: #addClassVarName:!class variables!public! !
+
+!ClassDescription methodsFor!
+
+defaultIconFrom: anExternalResourceLibrary
+	"Answer a suitable default icon to use for this class. If anExternalResourceLibrary
+	is, for some reason not open, then use the icon for the Object class."
+
+	anExternalResourceLibrary asParameter isNull
+		ifTrue: [^Object defaultIcon].
+	^(self environment at: #Icon) fromId: self defaultIconName in: anExternalResourceLibrary.
+
+	! !
+!ClassDescription categoriesFor: #defaultIconFrom:!constants!public! !
 
 !CompilerNotification methodsFor!
 

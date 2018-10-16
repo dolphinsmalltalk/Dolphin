@@ -57,6 +57,9 @@ onViewOpened
 	intervalPresenter model: self model!
 
 setSpinnerRange
+	"Note that if the spinner view is not present, then the interval presenter view will be a DeafObject, which will silently not understand #range:.
+	If you are using an IntegerPrompter in an application and see that #range: among the unimplemented messges, and it is sent from here, then you will need to add a the 'Dolphin SpinButton Control' package as a manual pre-requisite."
+
 	intervalPresenter view range: self interval! !
 !IntegerPrompter categoriesFor: #createComponents!initializing!public! !
 !IntegerPrompter categoriesFor: #initialize!initializing!private! !

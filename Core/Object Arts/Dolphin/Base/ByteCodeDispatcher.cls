@@ -80,21 +80,6 @@ byteCodes
 
 	^byteCodes!
 
-byteCodeSegments
-	"Answer an Array of segment arrays. Each segment is an Array with one
-	or more elements. The first element being the opcode, followed
-	by any extension bytes."
-
-	| answer |
-	answer := OrderedCollection new: (byteCodes basicSize bitShift: -1).
-	ip := 1.
-	[self atEnd] whileFalse: 
-			[| start |
-			start := ip.
-			self next.
-			answer add: (byteCodes copyFrom: start to: ip - 1)].
-	^answer!
-
 containsInstruction: discriminator
 	"Answer whether the dyadic valuable, discriminator, evaluates to true for
 	any instruction/parameter pair in the receiver."
@@ -306,6 +291,19 @@ readsStatic: anAssociation
 reset
 	ip := 1!
 
+segments
+	"Answer an <Array> of segment <ByteArrays>, where each segment is the integer byte values of an individual instruction. The first element of each segment is the opcode, followed by any extension bytes."
+
+	| answer |
+	answer := Array writeStream: (byteCodes basicSize bitShift: -1).
+	ip := 1.
+	[self atEnd] whileFalse: 
+			[| start |
+			start := ip.
+			self next.
+			answer nextPut: (byteCodes copyFrom: start to: ip - 1)].
+	^answer!
+
 selectorOfMessageSend: aSymbol 
 	aSymbol == #shortSendZeroArgs: 
 		ifTrue: [^method literalAt: byteCode - ShortSendZeroArgs + 1].
@@ -395,7 +393,6 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #accessToInstVarAt:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #atEnd!private!testing! !
 !ByteCodeDispatcher categoriesFor: #byteCodes!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #byteCodeSegments!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #containsInstruction:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #dispatchAll!interpreting!private! !
 !ByteCodeDispatcher categoriesFor: #dispatchNext!interpreting!private! !
@@ -420,6 +417,7 @@ writesStatic: anAssociation
 !ByteCodeDispatcher categoriesFor: #readsInstVarAt:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #readsStatic:!public!testing! !
 !ByteCodeDispatcher categoriesFor: #reset!interpreting!public! !
+!ByteCodeDispatcher categoriesFor: #segments!accessing!public! !
 !ByteCodeDispatcher categoriesFor: #selectorOfMessageSend:!interpreting!private! !
 !ByteCodeDispatcher categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
 !ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
@@ -432,13 +430,6 @@ writesStatic: anAssociation
 
 bytecodeRuns
 	^#(#(1 #break) #(16 #shortPushInstVar:) #(8 #shortPushTemp:) #(2 #pushContextTemp:) #(2 #shortPushOuterTemp:) #(16 #shortPushConst:) #(12 #shortPushStatic:) #(1 #pushSelf) #(3 #pushPseudo:) #(4 #shortPushImmediate:) #(4 #shortPushSelfAndTemp:) #(4 #shortStoreTemp:) #(2 #shortPopPushTemp:) #(1 #popPushSelf) #(1 #popDup) #(2 #popContextTemp:) #(2 #shortPopOuterTemp:) #(8 #shortPopInstVar:) #(8 #shortPopTemp:) #(1 #popStackTop) #(1 #incrementStackTop) #(1 #decrementStackTop) #(1 #duplicateStackTop) #(1 #returnSelf) #(3 #returnPseudo:) #(1 #returnFromMessage) #(1 #returnFromBlock) #(1 #returnFromBlockHome) #(1 #popReturnSelf) #(1 #nop) #(8 #shortJump:) #(8 #shortJumpIfFalse:) #(32 #shortSpecialSend:) #(13 #shortSendZeroArgs:) #(5 #shortSendSelfZeroArgs:) #(14 #shortSendOneArg:) #(8 #shortSendTwoArgs:) #(1 #isZero) #(1 #pushActiveFrame) #(4 #shortSpecialSendEx:) #(1 #pushInstVar:) #(1 #pushTemp:) #(1 #pushConst:) #(1 #pushStatic:) #(1 #storeInstVar:) #(1 #storeTemp:) #(1 #storeStatic:) #(1 #popInstVar:) #(1 #popTemp:) #(1 #popStatic:) #(1 #pushImmediate:) #(1 #pushChar:) #(1 #send:) #(1 #supersend:) #(1 #specialSend:) #(1 #nearJump:) #(1 #nearJumpIfTrue:) #(1 #nearJumpIfFalse:) #(1 #nearJumpIfNil:) #(1 #nearJumpIfNotNil:) #(2 #unused:) #(1 #sendTempZeroArgs:) #(1 #pushSelfAndTemp:) #(1 #pushOuterTemp:) #(1 #storeOuterTemp:) #(1 #popOuterTemp:) #(1 #sendSelfZeroArgs:) #(1 #unused:) #(1 #pushTempPair:) #(1 #longPushConst:with:) #(1 #longPushStatic:with:) #(1 #longStoreStatic:with:) #(1 #longPopStoreStatic:with:) #(1 #longPushImmediate:with:) #(1 #longSend:with:) #(1 #longSupersend:with:) #(1 #longJump:with:) #(1 #longJumpIfTrue:with:) #(1 #longJumpIfFalse:with:) #(1 #longJumpIfNil:with:) #(1 #longJumpIfNotNil:with:) #(1 #pushOuter:temp:) #(1 #storeOuter:temp:) #(1 #incTemp:temp:) #(1 #incPushTemp:temp:) #(1 #decTemp:temp:) #(1 #decPushTemp:temp:) #(1 #blockCopy:stack:env:copy:offset1:offset2:) #(1 #exLongSend:with:with:) #(1 #exLongSupersend:with:with:) #(1 #exLongPushImmediate:byte2:byte3:byte4:))!
-
-byteCodeSegments: aCompiledMethod
-	"Private - Answer an Array of segment arrays. Each segment is an Array with one
-	or more elements. The first element being the bytecode, followed
-	by any 'arguments' of the code."
-
-	^(self on: aCompiledMethod) byteCodeSegments!
 
 decodeLongJump: byte1 byte2: byte2 
 	^(byte2 >= 128 ifTrue: [byte2 - 256] ifFalse: [byte2]) * 256 + byte1!
@@ -504,7 +495,6 @@ on: aCompiledCode for: anInstructionInterpreter
 		interpreter: anInstructionInterpreter;
 		yourself! !
 !ByteCodeDispatcher class categoriesFor: #bytecodeRuns!constants!must not strip!private! !
-!ByteCodeDispatcher class categoriesFor: #byteCodeSegments:!interpreting!private! !
 !ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
 !ByteCodeDispatcher class categoriesFor: #indexOfIP:in:!interpreting!private! !
 !ByteCodeDispatcher class categoriesFor: #initialize!development!initializing!public! !
