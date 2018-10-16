@@ -10,14 +10,6 @@ ShellLibrary comment: 'ShellLibrary is the <ExternalLibrary> class to represent 
 !ShellLibrary categoriesForClass!External-Libraries-Win32! !
 !ShellLibrary methodsFor!
 
-allocator
-	"Answer the shell's <IMalloc>."
-
-	| answer |
-	answer := IMalloc newPointer.
-	self SHGetMalloc: answer.
-	^answer!
-
 dragAcceptFiles: hwnd fAccept: fAccept
 	"Invoke the DragAcceptFiles() function of the module wrapped by the receiver.
 	Helpstring: Registers whether a window accepts dropped files
@@ -108,18 +100,6 @@ findExecutable: lpFile lpDirectory: directoryStringIn lpResult: buf
 	^self invalidCall
 !
 
-getDesktopFolder
-	"Answer an <IShellFolder> on the desktop (top-level) folder.
-
-		sh := ShellLibrary default getDesktopFolder.
-	"
-
-	| answer |
-	answer := IShellFolder newPointer.
-	self SHGetDesktopFolder: answer.
-	^answer
-!
-
 getSpecialFolderLocation: anInteger
 	"
 	self default getSpecialFolderLocation: CSIDL_PERSONAL
@@ -142,16 +122,6 @@ isUserAnAdmin
 		BOOL __stdcall IsUserAnAdmin();"
 
 	<stdcall: bool IsUserAnAdmin>
-	^self invalidCall!
-
-pathFromIDList: idList
-	| pathname |
-	pathname := File pathBuffer.
-	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
-
-SHBrowseForFolder: aWin32BROWSEINFO
-
-	<stdcall: handle SHBrowseForFolderW lpvoid>
 	^self invalidCall!
 
 SHChangeNotify: wEventId uFlags: unit dwItem1: aLPCVOID1 dwItem2: aLPCVOID2
@@ -207,11 +177,6 @@ shellOpen: fileString directory: dirString parameters: paramString
 				nShowCmd: SW_SHOWNORMAL.
 	^hInst asInteger <= 32 ifTrue: [self systemError] ifFalse: [hInst]!
 
-SHGetDesktopFolder: ppshf
-
-	<stdcall: hresult SHGetDesktopFolder IShellFolder**>
-	^self invalidCall!
-
 shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszPath: pszPath
 	"Invoke the SHGetFolderPath() function of the module wrapped by the receiver.
 	Helpstring: Takes the CSIDL of a folder and returns the path
@@ -224,19 +189,7 @@ shGetFolderPath: hwndOwner nFolder: nFolder hToken: hToken dwFlags: dwFlags pszP
 			LPWSTR pszPath);"
 
 	<stdcall: hresult SHGetFolderPathW handle sdword handle dword lpwstr>
-	^self invalidCall!
-
-SHGetMalloc: ppMalloc
-	"Get a pointer to the shell's IMalloc."
-
-	<stdcall: hresult SHGetMalloc IMalloc**>
-	^self invalidCall!
-
-SHGetPathFromIDList: pidl pszPath: pszPath
-
-	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
 	^self invalidCall! !
-!ShellLibrary categoriesFor: #allocator!accessing!public! !
 !ShellLibrary categoriesFor: #dragAcceptFiles:fAccept:!**auto generated**!public! !
 !ShellLibrary categoriesFor: #dragFinish:!**auto generated**!public! !
 !ShellLibrary categoriesFor: #dragQueryFile:iFile:lpszFile:cch:!**auto generated**!public! !
@@ -245,20 +198,14 @@ SHGetPathFromIDList: pidl pszPath: pszPath
 !ShellLibrary categoriesFor: #findExecutable:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #findExecutable:directory:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #findExecutable:lpDirectory:lpResult:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #getDesktopFolder!accessing!public! !
 !ShellLibrary categoriesFor: #getSpecialFolderLocation:!**auto generated**!public! !
 !ShellLibrary categoriesFor: #isUserAnAdmin!**auto generated**!public! !
-!ShellLibrary categoriesFor: #pathFromIDList:!helpers!private! !
-!ShellLibrary categoriesFor: #SHBrowseForFolder:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #SHChangeNotify:uFlags:dwItem1:dwItem2:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #shellExecute:lpOperation:lpFile:lpParameters:lpDirectory:nShowCmd:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #shellOpen:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #shellOpen:directory:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #shellOpen:directory:parameters:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetDesktopFolder:!public!win32 functions-shell library! !
 !ShellLibrary categoriesFor: #shGetFolderPath:nFolder:hToken:dwFlags:pszPath:!**auto generated**!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetMalloc:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetPathFromIDList:pszPath:!public!win32 functions-shell library! !
 
 !ShellLibrary class methodsFor!
 

@@ -1,0 +1,142 @@
+﻿| package |
+package := Package name: 'Windows Shell Namespace'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk Windows Shell Namespace Support
+Copyright (c) Object Arts Ltd, 1998-2000. 
+
+This package provides nascent access to the Windows shell by wrapping IShellFolder. It also includes the standard system dialog for locating folders/directories (the BrowseFolderDialog).
+
+For example: 
+
+	BrowseFolderDialog showModal	"Ctrl+D"'.
+
+
+package classNames
+	add: #BrowseFolderDialog;
+	add: #BROWSEINFOW;
+	add: #IShellFolder;
+	add: #ITEMIDLIST;
+	add: #SHITEMID;
+	add: #WindowsShellMemory;
+	yourself.
+
+package methodNames
+	add: #ShellLibrary -> #allocator;
+	add: #ShellLibrary -> #getDesktopFolder;
+	add: #ShellLibrary -> #pathFromIDList:;
+	add: #ShellLibrary -> #SHBrowseForFolder:;
+	add: #ShellLibrary -> #SHGetDesktopFolder:;
+	add: #ShellLibrary -> #SHGetMalloc:;
+	add: #ShellLibrary -> #SHGetPathFromIDList:pszPath:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\COM\OLE COM';
+	add: 'Windows Shell';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+ExternalMemory variableByteSubclass: #WindowsShellMemory
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+IUnknown subclass: #IShellFolder
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+OLEStructure subclass: #ITEMIDLIST
+	instanceVariableNames: 'back'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #SHITEMID
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialogStructure subclass: #BROWSEINFOW
+	instanceVariableNames: 'title displayName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+CommonDialog subclass: #BrowseFolderDialog
+	instanceVariableNames: 'style bfFlags'
+	classVariableNames: 'InitializedMask'
+	poolDictionaries: 'ShellConstants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!ShellLibrary methodsFor!
+
+allocator
+	"Answer the shell's <IMalloc>."
+
+	| answer |
+	answer := IMalloc newPointer.
+	self SHGetMalloc: answer.
+	^answer!
+
+getDesktopFolder
+	"Answer an <IShellFolder> on the desktop (top-level) folder.
+
+		sh := ShellLibrary default getDesktopFolder.
+	"
+
+	| answer |
+	answer := IShellFolder newPointer.
+	self SHGetDesktopFolder: answer.
+	^answer
+!
+
+pathFromIDList: idList
+	| pathname |
+	pathname := File pathBuffer.
+	^(self SHGetPathFromIDList: idList pszPath: pathname) ifTrue: [pathname trimNulls]!
+
+SHBrowseForFolder: aWin32BROWSEINFO
+
+	<stdcall: handle SHBrowseForFolderW lpvoid>
+	^self invalidCall!
+
+SHGetDesktopFolder: ppshf
+
+	<stdcall: hresult SHGetDesktopFolder IShellFolder**>
+	^self invalidCall!
+
+SHGetMalloc: ppMalloc
+	"Get a pointer to the shell's IMalloc."
+
+	<stdcall: hresult SHGetMalloc IMalloc**>
+	^self invalidCall!
+
+SHGetPathFromIDList: pidl pszPath: pszPath
+
+	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
+	^self invalidCall! !
+!ShellLibrary categoriesFor: #allocator!accessing!public! !
+!ShellLibrary categoriesFor: #getDesktopFolder!accessing!public! !
+!ShellLibrary categoriesFor: #pathFromIDList:!helpers!private! !
+!ShellLibrary categoriesFor: #SHBrowseForFolder:!public!win32 functions-shell library! !
+!ShellLibrary categoriesFor: #SHGetDesktopFolder:!public!win32 functions-shell library! !
+!ShellLibrary categoriesFor: #SHGetMalloc:!public!win32 functions-shell library! !
+!ShellLibrary categoriesFor: #SHGetPathFromIDList:pszPath:!public!win32 functions-shell library! !
+
+"End of package definition"!
+
