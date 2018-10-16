@@ -117,6 +117,9 @@ ensureSubView: aView rectangleVisible: aRectangle
 	is visible in the receiver if the parent has this level of control."
 !
 
+ensureSubViewVisible: aSubView
+	aSubView zOrderTop!
+
 ensureVisible
 	"Ensures that the receiver is visible. 
 	The desktop is always visible so do nothing"
@@ -324,6 +327,7 @@ workArea
 !DesktopView categoriesFor: #defaultExtentOf:!geometry!helpers!private! !
 !DesktopView categoriesFor: #displayOn:!displaying!public! !
 !DesktopView categoriesFor: #ensureSubView:rectangleVisible:!private!updating! !
+!DesktopView categoriesFor: #ensureSubViewVisible:!public!sub views! !
 !DesktopView categoriesFor: #ensureVisible!accessing!public! !
 !DesktopView categoriesFor: #filerProxy!binary filing!private! !
 !DesktopView categoriesFor: #helpId!accessing!public! !
@@ -376,7 +380,7 @@ icon
 	^##(self) defaultIcon!
 
 initialize
-	"Initialize the DesktopView singleton."
+	"Private - Initialize the DesktopView singleton."
 
 	Current := self new
 			assumeDesktopHandle;
@@ -414,7 +418,7 @@ uninitialize
 !DesktopView class categoriesFor: #current!accessing!public! !
 !DesktopView class categoriesFor: #current:!accessing!public! !
 !DesktopView class categoriesFor: #icon!constants!public! !
-!DesktopView class categoriesFor: #initialize!development!initializing!public! !
+!DesktopView class categoriesFor: #initialize!development!initializing!private! !
 !DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
 !DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
