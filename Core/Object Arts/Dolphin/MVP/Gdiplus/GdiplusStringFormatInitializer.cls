@@ -34,10 +34,14 @@ onPreStripImage
 	"Private -  Allow the receiver and subclasses to be stripped by clearing lazy initialized class variables
 	which hold sub-instance of the receiver."
 
+	self uninitialize!
+
+uninitialize
 	GenericDefault := GenericTypographic := nil! !
 !GdiplusStringFormatInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
 !GdiplusStringFormatInitializer class categoriesFor: #genericDefault!instance creation!public! !
 !GdiplusStringFormatInitializer class categoriesFor: #genericTypographic!instance creation!public! !
 !GdiplusStringFormatInitializer class categoriesFor: #new!development!instance creation!public! !
 !GdiplusStringFormatInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!GdiplusStringFormatInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

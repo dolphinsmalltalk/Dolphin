@@ -133,6 +133,7 @@ package classNames
 	add: #GdiplusBitmap;
 	add: #GdiplusBitmapFromBitmapInitializer;
 	add: #GdiplusBitmapFromBlankInitializer;
+	add: #GdiplusBitmapFromBytesInitializer;
 	add: #GdiplusBitmapFromFileInitializer;
 	add: #GdiplusBitmapFromIconInitializer;
 	add: #GdiplusBitmapFromIStreamInitializer;
@@ -151,6 +152,7 @@ package classNames
 	add: #GdiplusFontFamilyGenericSerifInitializer;
 	add: #GdiplusFontFamilyInitializer;
 	add: #GdiplusFontFromFontFamilyInitializer;
+	add: #GdiplusFromBytesInitializer;
 	add: #GdiplusFromFileInitializer;
 	add: #GdiplusGraphics;
 	add: #GdiplusGraphicsFromHDCInitializer;
@@ -163,6 +165,7 @@ package classNames
 	add: #GdiplusImage;
 	add: #GdiplusImageAttributes;
 	add: #GdiplusImageAttributesInitializer;
+	add: #GdiplusImageFromBytesInitializer;
 	add: #GdiplusImageFromFileInitializer;
 	add: #GdiplusImageFromIStreamInitializer;
 	add: #GdiplusInitializer;
@@ -248,7 +251,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Models\List\Dolphin List Models';
 	add: '..\Base\Dolphin MVP Base';
 	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
-	add: '..\..\ActiveX\Shell\Windows Shell';
 	yourself).
 
 package!
@@ -410,6 +412,11 @@ GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+GdiplusInitializer subclass: #GdiplusFromBytesInitializer
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 GdiplusInitializer subclass: #GdiplusFromFileInitializer
 	instanceVariableNames: 'filename fileLocator'
 	classVariableNames: ''
@@ -528,6 +535,16 @@ GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSansSerifInitial
 GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSerifInitializer
 	instanceVariableNames: ''
 	classVariableNames: 'Default'
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
+	instanceVariableNames: ''
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusFromFileInitializer subclass: #GdiplusBitmapFromFileInitializer

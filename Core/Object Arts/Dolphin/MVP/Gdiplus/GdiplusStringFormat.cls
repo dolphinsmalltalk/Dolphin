@@ -367,7 +367,16 @@ near
 new
 	"Answer an instance of the receiver with no format flags set and which uses the user's default language."
 
-	^self flags: nil language: nil! !
+	^self flags: nil language: nil!
+
+onPreStripImage
+	"Private -  Allow the receiver and subclasses to be stripped by clearing lazy initialized class variables
+	which hold sub-instance of the receiver."
+
+	self uninitialize!
+
+uninitialize
+	GenericDefault := GenericTypographic := nil! !
 !GdiplusStringFormat class categoriesFor: #centered!instance creation!public! !
 !GdiplusStringFormat class categoriesFor: #exampleGdipSFFormatText!examples!public!sunit! !
 !GdiplusStringFormat class categoriesFor: #exampleGdipSFGenerics!examples!public!sunit! !
@@ -380,4 +389,6 @@ new
 !GdiplusStringFormat class categoriesFor: #genericTypographic!instance creation!public! !
 !GdiplusStringFormat class categoriesFor: #near!instance creation!public! !
 !GdiplusStringFormat class categoriesFor: #new!instance creation!public! !
+!GdiplusStringFormat class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!GdiplusStringFormat class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

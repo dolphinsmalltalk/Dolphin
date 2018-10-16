@@ -35,9 +35,6 @@ package basicPackageVersion: '0.010'.
 
 
 package classNames
-	add: #GdiplusBitmapFromBytesInitializer;
-	add: #GdiplusFromBytesInitializer;
-	add: #GdiplusImageFromBytesInitializer;
 	add: #InternalBitmap;
 	add: #InternalIcon;
 	yourself.
@@ -52,7 +49,6 @@ package methodNames
 	add: #Collection -> #printStringUpTo:;
 	add: #GdiplusImage -> #addToImageList:mask:;
 	add: #GdiplusImage -> #internalize;
-	add: 'GdiplusImage class' -> #fromByteArray2:;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -67,7 +63,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Dialogs\Common\Dolphin Common Dialogs';
 	add: '..\Base\Dolphin MVP Base';
 	add: '..\Gdiplus\Gdiplus';
-	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
 	yourself).
 
 package!
@@ -76,21 +71,6 @@ package!
 
 Object subclass: #InternalBitmap
 	instanceVariableNames: 'gdiplusBitmap'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-GdiplusInitializer subclass: #GdiplusFromBytesInitializer
-	instanceVariableNames: 'bytes'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-GdiplusFromBytesInitializer subclass: #GdiplusImageFromBytesInitializer
-	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -117,7 +97,7 @@ createIconMethod
 
 	^self createIconMethod: #icon OfSize: 48!
 
-createIconMethod: methodName fromIcon: anInternalIcon 
+createIconMethod: methodName fromIcon: anInternalIcon
 	| methodSourceStream |
 	methodSourceStream := String writeStream.
 	methodSourceStream
@@ -125,9 +105,7 @@ createIconMethod: methodName fromIcon: anInternalIcon
 		cr;
 		nextPutAll: '^'.
 	anInternalIcon printOn: methodSourceStream.
-	
-	self class compile: methodSourceStream contents
-		categories: (Array with: MethodCategory public with: (MethodCategory name: 'constants'))!
+	self class compile: methodSourceStream contents categories: {'public'. 'constants'}!
 
 createIconMethod: methodName OfSize: pixelSize 
 	| extent imageFileName |
@@ -139,13 +117,13 @@ createIconMethod: methodName OfSize: pixelSize
 		ofSize: extent
 		fromFile: imageFileName!
 
-createIconMethod: methodName ofSize: pixelSize fromFile: imageFileName 
+createIconMethod: methodName ofSize: pixelSize fromFile: imageFileName
 	| extent internalIcon methodSourceStream |
 	extent := pixelSize asPoint.
-	(File splitExtensionFrom: imageFileName) asLowercase = 'ico' 
+	(File splitExtensionFrom: imageFileName) asLowercase = 'ico'
 		ifTrue: 
 			[#todo.	"Anyone care to fix this?"
-			MessageBox 
+			MessageBox
 				warning: 'Can''t currently compile from ICO files. 
 
 Why not use: 
@@ -171,8 +149,7 @@ to convert to PNG format first?'.
 	"
 	^'.
 	internalIcon printOn: methodSourceStream.
-	self class compile: methodSourceStream contents
-		categories: (Array with: MethodCategory public with: (MethodCategory name: 'constants'))! !
+	self class compile: methodSourceStream contents categories: {'public'. 'constants'}! !
 !ClassDescription categoriesFor: #createBadgeMethod!development!public! !
 !ClassDescription categoriesFor: #createIconMethod!development!public! !
 !ClassDescription categoriesFor: #createIconMethod:fromIcon:!public! !
@@ -238,20 +215,9 @@ internalize
 	"Answer a copy of the receiver created from the PNG bytes. This can be held in the image and
 	removes the need for an external file reference"
 
-	^self class fromByteArray2: (self asByteArray: 'image/png')! !
+	^self class fromByteArray: (self asByteArray: 'image/png')! !
 !GdiplusImage categoriesFor: #addToImageList:mask:!private! !
 !GdiplusImage categoriesFor: #internalize!public! !
-
-!GdiplusImage class methodsFor!
-
-fromByteArray2: aByteArray 
-	"Answer an instance of the receiver created from data in aByteArray. The results is an instance with a persistent
-	initializer that can be used after an image reload or after passing through STB serialization/deserialization. Eventually,
-	this should replace the original #fromByteArray: method."
-
-	#todo.	"Replace #fromByteArray: with this"
-	^self fromInitializer: (GdiplusImageFromBytesInitializer bytes: aByteArray)! !
-!GdiplusImage class categoriesFor: #fromByteArray2:!instance creation!public! !
 
 "End of package definition"!
 

@@ -260,6 +260,12 @@ fromBitmap: aBitmap
 
 	^self fromInitializer: (GdiplusBitmapFromBitmapInitializer bitmap: aBitmap)!
 
+fromByteArray: aByteArray 
+	"Answer an instance of the receiver created from data in aByteArray. The results is an instance with a persistent
+	initializer that can be used after an image reload or after passing through STB serialization/deserialization."
+
+	^self fromInitializer: (GdiplusBitmapFromBytesInitializer bytes: aByteArray)!
+
 fromFile: aFilename usingLocator: aFileLocator
 	"Answer an instance loaded from the file aFilename by using aFileLocator."
 
@@ -364,6 +370,7 @@ width: width height: height format: aPixelFormat
 !GdiplusBitmap class categoriesFor: #exampleLockBitsTest2Bmp!examples!private! !
 !GdiplusBitmap class categoriesFor: #extent:!instance creation!public! !
 !GdiplusBitmap class categoriesFor: #fromBitmap:!instance creation!public! !
+!GdiplusBitmap class categoriesFor: #fromByteArray:!instance creation!public! !
 !GdiplusBitmap class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
 !GdiplusBitmap class categoriesFor: #fromIcon:!instance creation!public! !
 !GdiplusBitmap class categoriesFor: #fromImage:centeredIn:!instance creation!public! !
