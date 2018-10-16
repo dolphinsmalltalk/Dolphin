@@ -110,19 +110,10 @@ resource_Default_view
 sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
-	^'Scribble Pad'!
-
-uninitialize
-	"Private - Un-register the system folder icon for the receiver.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem 
-		removeSystemFolderIconNamed: self sampleDescription! !
+	^'Scribble Pad'! !
 !Scribble class categoriesFor: #defaultModel!models!public! !
 !Scribble class categoriesFor: #icon!constants!public! !
 !Scribble class categoriesFor: #initialize!initializing!private! !
 !Scribble class categoriesFor: #resource_Default_view!public!resources-views! !
 !Scribble class categoriesFor: #sampleDescription!constants!development!private! !
-!Scribble class categoriesFor: #uninitialize!initializing!must strip!private! !
 

@@ -73,11 +73,7 @@ show
 	| profStef |
 	profStef := self default.
 	profStef view beActive.
-	^profStef!
-
-uninitialize
-	
-	Smalltalk developmentSystem removeSystemFolderIconNamed: 'Learn Smalltalk'! !
+	^profStef! !
 !ProfStef class categoriesFor: #default!initialize!public! !
 !ProfStef class categoriesFor: #defaultModel!public! !
 !ProfStef class categoriesFor: #first!navigation!public! !
@@ -87,5 +83,4 @@ uninitialize
 !ProfStef class categoriesFor: #previous!navigation!public! !
 !ProfStef class categoriesFor: #reset!initialize!private! !
 !ProfStef class categoriesFor: #show!initialize!public! !
-!ProfStef class categoriesFor: #uninitialize!public! !
 

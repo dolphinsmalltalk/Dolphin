@@ -160,5 +160,5 @@ uninitialize
 !Notepad class categoriesFor: #onStartup!development!events-session!private! !
 !Notepad class categoriesFor: #resource_Default_view!public!resources-views! !
 !Notepad class categoriesFor: #resourceLib!constants!public! !
-!Notepad class categoriesFor: #uninitialize!development!initializing!private! !
+!Notepad class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

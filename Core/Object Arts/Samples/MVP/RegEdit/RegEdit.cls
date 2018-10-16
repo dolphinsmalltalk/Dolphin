@@ -496,14 +496,7 @@ shutdownOnExit
 stringIcon
 	"Answers an Icon that can be used to string values."
 
-	^RegKeyValues icon!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem removeSystemFolderIconNamed: self displayString! !
+	^RegKeyValues icon! !
 !RegEdit class categoriesFor: #about!enquiries!private! !
 !RegEdit class categoriesFor: #binaryIcon!constants!public! !
 !RegEdit class categoriesFor: #displayOn:!displaying!public! !
@@ -516,5 +509,4 @@ uninitialize
 !RegEdit class categoriesFor: #resource_Default_view!public!resources-views! !
 !RegEdit class categoriesFor: #shutdownOnExit!public!testing! !
 !RegEdit class categoriesFor: #stringIcon!constants!public! !
-!RegEdit class categoriesFor: #uninitialize!development!initializing!private! !
 

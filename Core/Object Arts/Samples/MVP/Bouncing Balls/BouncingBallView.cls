@@ -142,20 +142,10 @@ initialize
 show
 	"Answer and show an instance of the receiver"
 
-	^super show topShell text: self displayString; yourself!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-
-	self uninitialize.
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self displayString! !
+	^super show topShell text: self displayString; yourself! !
 !BouncingBallView class categoriesFor: #defaultModel!models!public! !
 !BouncingBallView class categoriesFor: #displayOn:!displaying!public! !
 !BouncingBallView class categoriesFor: #icon!constants!public! !
 !BouncingBallView class categoriesFor: #initialize!development!initializing!private! !
 !BouncingBallView class categoriesFor: #show!operations!public! !
-!BouncingBallView class categoriesFor: #uninitialize!development!initializing!private! !
 

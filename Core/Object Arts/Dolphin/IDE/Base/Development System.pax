@@ -130,6 +130,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #AbstractDocumentShell -> #saveStateOn:;
 	add: #AndEnvironment -> #includesResource:;
 	add: #Array -> #assignToResourceIdentifier:;
 	add: #ArrayedCollection -> #newBatchAccessor;
@@ -580,6 +581,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\MVP\Views\Date Time\Dolphin Date Time Controls';
 	add: '..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
+	add: '..\..\MVP\Presenters\Shell\Dolphin Document Presenter';
 	add: '..\..\MVP\Dialogs\Find\Dolphin Find Dialog';
 	add: '..\..\MVP\Presenters\Folder\Dolphin Folder Presenter';
 	add: '..\..\MVP\Presenters\Font\Dolphin Font Presenter';

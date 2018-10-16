@@ -52,22 +52,19 @@ approxSize
 	"Private - Answer the approximate size of the receiver.
 	Implementation Note: This does not have to be accurate, but it should be fast
 	(i.e. don't calculate it by counting the receiver's elements).
-	The default is to guess at 2. Subclasses which can give a more
+	The default is to guess at 8. Subclasses which can give a more
 	accurate size quickly will get better conversion performance."
 
-	^2!
+	^8!
 
 asArray
 	"Answer an Array whose elements are those of the receiver.
 	(ordering is that of the #do: operation as implemented by the receiver)."
 
-	| anArray i |
-	anArray := Array new: self size.
-	i := 1.
-	self do: [ :e |
-		anArray basicAt: i put: e.
-		i := i + 1].
-	^anArray!
+	| stream |
+	stream := Array writeStream: self approxSize.
+	self do: [:e | stream nextPut: e].
+	^stream contents!
 
 asBag
 	"Answer a Bag whose elements are those stored in the receiver"
@@ -162,6 +159,18 @@ countElements
 	tally := 0.
 	self do: [ :each | tally := tally + 1].
 	^tally!
+
+detect: discriminator ifNone: exceptionHandler
+	"Evaluate the <monadicValuable> argument, discriminator, for each of the receiver's 
+	elements.  Answer the first element (in the #do: order) for which discriminator evaluates 
+	to true. If none evaluates to true answer the result of evaluating the <niladicValuable> 
+	argument, exceptionHandler.
+	Implementation Note: It is important for Shared subclasses that the exceptionHandler is 
+	not evaluated inside the enumeration in case it is a niladic block containing an explicit 
+	return (we try to avoid explicit returns from critical sections, as these require an unwind)."
+
+	self do: [:each | (discriminator value: each) ifTrue: [^each]].
+	^exceptionHandler value!
 
 do: operation
 	"Evaluate monadic value argument, operation, for each of the elements of the 
@@ -360,6 +369,15 @@ searchPolicy: aSearchPolicy
 
 	searchPolicy := aSearchPolicy!
 
+select: discriminator
+	"Evaluate the monadic valuable argument, discriminator, for each of the receiver's elements. Answer a new <sequencedReadableCollection> containing only those elements for which the discriminator evaluates to true. The order of the selected elements in the resulting collection will be the same as the #do: enumeration order of the tree, which by default is performed using a pre-order traversal."
+
+	| stream |
+	stream := Array writeStream: self approxSize.
+	self do: [:each | (discriminator value: each) ifTrue: [stream nextPut: each]].
+	^stream contents
+!
+
 setRoots: aCollection
 	"Private - Initialize the receiver with the roots in the <Collection> argument."
 
@@ -415,6 +433,7 @@ withAllParents: anObject
 !TreeModelAbstract categoriesFor: #collapse:!public!removing! !
 !TreeModelAbstract categoriesFor: #collapse:ifAbsent:!public!removing! !
 !TreeModelAbstract categoriesFor: #countElements!accessing!private! !
+!TreeModelAbstract categoriesFor: #detect:ifNone:!converting!public! !
 !TreeModelAbstract categoriesFor: #do:!enumerating!public! !
 !TreeModelAbstract categoriesFor: #endOrderDo:!enumerating!public! !
 !TreeModelAbstract categoriesFor: #endOrderDo:on:!enumerating!private! !
@@ -440,6 +459,7 @@ withAllParents: anObject
 !TreeModelAbstract categoriesFor: #roots:!accessing!public! !
 !TreeModelAbstract categoriesFor: #searchPolicy!accessing!public! !
 !TreeModelAbstract categoriesFor: #searchPolicy:!initializing!private! !
+!TreeModelAbstract categoriesFor: #select:!converting!public! !
 !TreeModelAbstract categoriesFor: #setRoots:!initializing!private! !
 !TreeModelAbstract categoriesFor: #setRoots:searchPolicy:!initializing!private! !
 !TreeModelAbstract categoriesFor: #size!accessing!public! !

@@ -128,19 +128,10 @@ resource_Default_view
 sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
-	^'Etch-a-Sketch'!
-
-uninitialize
-	"Private - Un-register the system folder icon for the receiver.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem 
-		removeSystemFolderIconNamed: self sampleDescription! !
+	^'Etch-a-Sketch'! !
 !EtchASketch class categoriesFor: #defaultModel!models!public! !
 !EtchASketch class categoriesFor: #icon!constants!public! !
 !EtchASketch class categoriesFor: #initialize!initializing!private! !
 !EtchASketch class categoriesFor: #resource_Default_view!public!resources-views! !
 !EtchASketch class categoriesFor: #sampleDescription!constants!development!private! !
-!EtchASketch class categoriesFor: #uninitialize!initializing!must strip!private! !
 

@@ -102,21 +102,12 @@ resource_Default_view
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
-	^true!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-
-	self uninitialize
-	"
-
-	Smalltalk developmentSystem removeSystemFolderIconNamed: self displayString! !
+	^true! !
 !Calculator class categoriesFor: #displayOn:!displaying!public! !
 !Calculator class categoriesFor: #icon!constants!public! !
 !Calculator class categoriesFor: #initialize!development!initializing!private! !
 !Calculator class categoriesFor: #resource_Default_view!public!resources-views! !
 !Calculator class categoriesFor: #shutdownOnExit!public!testing! !
-!Calculator class categoriesFor: #uninitialize!development!initializing!private! !
 
 Calculator class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

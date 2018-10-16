@@ -177,19 +177,10 @@ resource_Default_view
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
-	^true!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self displayString! !
+	^true! !
 !FileSystemMonitor class categoriesFor: #defaultModel!models!public! !
 !FileSystemMonitor class categoriesFor: #icon!public! !
 !FileSystemMonitor class categoriesFor: #initialize!development!initializing!private! !
 !FileSystemMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
 !FileSystemMonitor class categoriesFor: #shutdownOnExit!public!testing! !
-!FileSystemMonitor class categoriesFor: #uninitialize!development!initializing!private! !
 

@@ -208,6 +208,16 @@ addSamplesFolderIconFor: anInstallableSystemTool description: titleString helpId
 				description: titleString
 				helpId: helpId)!
 
+addSamplesFolderIconFor: anInstallableSystemTool helpId: helpId
+	"Add a <SmalltalkSystemIcon> to the Sample Applications system folder for the
+	specified <installableSystemTool> and with the <readableString> description, titleString and
+	context help identifier, helpId."
+
+	^self
+		addSamplesFolderIconFor: anInstallableSystemTool
+		description: anInstallableSystemTool displayString
+		helpId: helpId!
+
 addSelectors: sels toProtocol: protocol 
 	"Add the <collection> of selectors, sels, to the <MethodProtocol>, protocol.
 	Bring up a warning indicating the ramifications of such a global action."
@@ -1095,6 +1105,14 @@ buildSimpleSignatureFor: aSymbol
 	self printSignatureForKeywordsAndArgs: (self keywordsAndArgsForSelector: aSymbol) on: stream.
 	^stream contents!
 
+buildSystemFolder
+	systemFolder := TreeModel new.
+	self initializeSystemFolder.
+	self
+		when: #classRemoved:
+		send: #removeSystemFolderIconsForClass:
+		to: self!
+
 canRefactor
 	"Answer whether the receiver is capable of performing refactorings."
 
@@ -1950,15 +1968,14 @@ imageFilesType
 initialize
 	"Private - Initialize the receiver.
 
-	self initialize.
-"
+		self initialize.
+	"
 
 	super initialize.
 	self registerSystemEvents.
 
 	"Create and initialize the system folder"
-	systemFolder := TreeModel new.
-	self initializeSystemFolder.
+	self buildSystemFolder.
 	preferAlternateInspectors := false.
 
 	"Set the development system Help/About dialog"
@@ -2370,7 +2387,7 @@ onClassCommented: aClass
 	self classChanged: aClass.
 	self trigger: #classCommented: with: aClass!
 
-onClassRemoved: aClass 
+onClassRemoved: aClass
 	"The class aClass has been removed. Inform interested parties"
 
 	allSelectors := nil.
@@ -3634,6 +3651,14 @@ removeSystemFolderIconNamed: aString
 	^(systemFolder asOrderedCollection detect: [:each | each description = aString] ifNone: []) 
 		ifNotNil: [:matchingIcon | systemFolder remove: matchingIcon]!
 
+removeSystemFolderIconsForClass: aClass
+	"Private - Removes any <SmalltalkSystemIcon> which is associated with the specified tool class."
+
+	"Implementation Note: This method may be called during stripping when classes are removed, but after the system folder has been cleared, therefore we try and avoid lazily re-initializing the system folder!!"
+
+	systemFolder isNil ifTrue: [^self].
+	(systemFolder select: [:each | each tool == aClass]) do: [:each | systemFolder remove: each]!
+
 renameClass: aClass 
 	"Rename aClass to a new name requested from the user."
 
@@ -3951,9 +3976,7 @@ systemFolder
 	"Answer the <TreeModel> that holds the system folder hierarchy.
 	We'll lazily initialize this in order to avoid problems with the boot."
 
-	systemFolder isNil ifTrue: [
-		systemFolder := TreeModel new.
-		self initializeSystemFolder ].
+	systemFolder isNil ifTrue: [self buildSystemFolder].
 	^systemFolder!
 
 systemFolderClass
@@ -4161,6 +4184,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #addSamplesFolderIcon:!operations!public! !
 !SmalltalkSystem categoriesFor: #addSamplesFolderIconFor:description:!operations!public! !
 !SmalltalkSystem categoriesFor: #addSamplesFolderIconFor:description:helpId:!operations!public! !
+!SmalltalkSystem categoriesFor: #addSamplesFolderIconFor:helpId:!operations!public! !
 !SmalltalkSystem categoriesFor: #addSelectors:toProtocol:!operations!protocols!public! !
 !SmalltalkSystem categoriesFor: #addSystemFolderIcon:!operations!public! !
 !SmalltalkSystem categoriesFor: #addSystemFolderIcon:to:!operations!public! !
@@ -4261,6 +4285,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #buildAllSelectors!helpers!private! !
 !SmalltalkSystem categoriesFor: #buildMessageMenu:forMethods:browseSelector:extraArgs:browseOtherSelector:!helpers!menus!private! !
 !SmalltalkSystem categoriesFor: #buildSimpleSignatureFor:!autocompletion!helpers!private! !
+!SmalltalkSystem categoriesFor: #buildSystemFolder!accessing!private! !
 !SmalltalkSystem categoriesFor: #canRefactor!public!testing! !
 !SmalltalkSystem categoriesFor: #changedIcon!constants!private! !
 !SmalltalkSystem categoriesFor: #changedMethodCategory!constants!private! !
@@ -4497,6 +4522,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #removeSelectors:fromProtocol:!operations!protocols!public! !
 !SmalltalkSystem categoriesFor: #removeSystemFolderIcon:!operations!public! !
 !SmalltalkSystem categoriesFor: #removeSystemFolderIconNamed:!operations!public! !
+!SmalltalkSystem categoriesFor: #removeSystemFolderIconsForClass:!event handling!private! !
 !SmalltalkSystem categoriesFor: #renameClass:!operations!public! !
 !SmalltalkSystem categoriesFor: #renameClass:to:!operations!public! !
 !SmalltalkSystem categoriesFor: #renameClassVariable:in:!public!refactoring! !
