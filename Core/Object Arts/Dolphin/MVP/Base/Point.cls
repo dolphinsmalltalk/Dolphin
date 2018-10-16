@@ -372,7 +372,7 @@ zero
 !Point class categoriesFor: #initialize!class initialization!development!public! !
 !Point class categoriesFor: #new!instance creation!public! !
 !Point class categoriesFor: #one!instance creation!public! !
-!Point class categoriesFor: #unitialize!class hierarchy-removing!development!public! !
+!Point class categoriesFor: #unitialize!class hierarchy-removing!public! !
 !Point class categoriesFor: #x:y:!instance creation!public! !
 !Point class categoriesFor: #zero!instance creation!public! !
 

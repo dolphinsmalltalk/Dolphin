@@ -287,7 +287,7 @@ trackPositionDelta: aPointDelta
 !MouseTracker categoriesFor: #dragButton:!accessing!public! !
 !MouseTracker categoriesFor: #dragButtonUp:!drag & drop!private! !
 !MouseTracker categoriesFor: #hysteresis!accessing!private! !
-!MouseTracker categoriesFor: #hysteresis:!accessing!public! !
+!MouseTracker categoriesFor: #hysteresis:!initializing!public! !
 !MouseTracker categoriesFor: #isHorizontalOnly!private!testing! !
 !MouseTracker categoriesFor: #isTracking!private!testing! !
 !MouseTracker categoriesFor: #isTracking:!private!testing! !

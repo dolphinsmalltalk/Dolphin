@@ -503,7 +503,7 @@ optimizedSelectors
 !StProgramNode class categoriesFor: #defaultFormatterClass!constants!public! !
 !StProgramNode class categoriesFor: #formatterClass!accessing!public! !
 !StProgramNode class categoriesFor: #formatterClass:!accessing!public! !
-!StProgramNode class categoriesFor: #initialize!constants!public! !
+!StProgramNode class categoriesFor: #initialize!class initialization!development!public! !
 !StProgramNode class categoriesFor: #inlinedBlockSelectors!constants!public! !
 !StProgramNode class categoriesFor: #optimizedSelectors!constants!public! !
 

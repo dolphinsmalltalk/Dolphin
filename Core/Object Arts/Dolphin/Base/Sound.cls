@@ -73,7 +73,7 @@ woofAndWait
 !Sound categoriesFor: #name:!accessing!private! !
 !Sound categoriesFor: #play:!private!woofing! !
 !Sound categoriesFor: #type!accessing!public! !
-!Sound categoriesFor: #type:!accessing!private! !
+!Sound categoriesFor: #type:!initializing!private! !
 !Sound categoriesFor: #woof!public!woofing! !
 !Sound categoriesFor: #woofAndWait!public!woofing! !
 
@@ -205,7 +205,7 @@ woofFor: aSymbol ifAbsent: exceptionBlock
 	sound := Registry lookup: aSymbol.
 	sound notNil ifTrue: [sound woof] ifFalse: [exceptionBlock value]! !
 !Sound class categoriesFor: #beep!parping!public! !
-!Sound class categoriesFor: #beep:!parping!public! !
+!Sound class categoriesFor: #beep:!not an aspect!parping!public! !
 !Sound class categoriesFor: #beep:duration:!parping!public! !
 !Sound class categoriesFor: #bell!parping!public! !
 !Sound class categoriesFor: #clearRegistry!development!initializing!public! !

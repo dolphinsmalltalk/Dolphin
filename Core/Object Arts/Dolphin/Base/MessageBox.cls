@@ -316,7 +316,7 @@ uniqueId: anObject
 !MessageBox categoriesFor: #confirm:onYes:onNo:onCancel:!displaying!public! !
 !MessageBox categoriesFor: #confirmOrCancel:!displaying!public! !
 !MessageBox categoriesFor: #defaultButton!accessing!public! !
-!MessageBox categoriesFor: #defaultButton:!accessing-styles!public! !
+!MessageBox categoriesFor: #defaultButton:!initializing!public! !
 !MessageBox categoriesFor: #globallyUniqueId!helpers!private! !
 !MessageBox categoriesFor: #hasOwner!displaying!private! !
 !MessageBox categoriesFor: #icon:!accessing!public! !
@@ -325,7 +325,7 @@ uniqueId: anObject
 !MessageBox categoriesFor: #idOfButtonAt:!helpers!private! !
 !MessageBox categoriesFor: #initialize!initializing!private! !
 !MessageBox categoriesFor: #isSuppressible!public!testing! !
-!MessageBox categoriesFor: #isSuppressible:!accessing!public! !
+!MessageBox categoriesFor: #isSuppressible:!initializing!public! !
 !MessageBox categoriesFor: #isTaskModal!accessing-styles!public! !
 !MessageBox categoriesFor: #modality!accessing-styles!public! !
 !MessageBox categoriesFor: #modality:!accessing-styles!public! !
@@ -336,7 +336,7 @@ uniqueId: anObject
 !MessageBox categoriesFor: #showIndirect!displaying!private! !
 !MessageBox categoriesFor: #showSuppressible!operations!public! !
 !MessageBox categoriesFor: #uniqueId!accessing!public! !
-!MessageBox categoriesFor: #uniqueId:!accessing!public! !
+!MessageBox categoriesFor: #uniqueId:!initializing!public! !
 
 !MessageBox class methodsFor!
 

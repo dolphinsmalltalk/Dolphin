@@ -92,7 +92,7 @@ postCopy
 !AcceleratorTable categoriesFor: #addCommand:!adding!public! !
 !AcceleratorTable categoriesFor: #basicFree!private!realizing/unrealizing! !
 !AcceleratorTable categoriesFor: #commands!accessing!public! !
-!AcceleratorTable categoriesFor: #commands:!accessing!private! !
+!AcceleratorTable categoriesFor: #commands:!initializing!private! !
 !AcceleratorTable categoriesFor: #createHandle!private!realizing/unrealizing! !
 !AcceleratorTable categoriesFor: #includes:!public!searching! !
 !AcceleratorTable categoriesFor: #initialize!initializing!private! !

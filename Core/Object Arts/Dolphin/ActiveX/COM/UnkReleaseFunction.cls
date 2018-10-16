@@ -52,5 +52,5 @@ uninitialize
 
 	Descriptor := nil! !
 !UnkReleaseFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkReleaseFunction class categoriesFor: #uninitialize!accessing!class hierarchy-removing!private! !
+!UnkReleaseFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

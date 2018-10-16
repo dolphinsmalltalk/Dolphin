@@ -653,6 +653,6 @@ vertex: aPoint1 vertex: aPoint2
 !Rectangle class categoriesFor: #new!instance creation!public! !
 !Rectangle class categoriesFor: #origin:corner:!instance creation!public! !
 !Rectangle class categoriesFor: #origin:extent:!instance creation!public! !
-!Rectangle class categoriesFor: #unitialize!class hierarchy-removing!development!public! !
+!Rectangle class categoriesFor: #unitialize!class hierarchy-removing!public! !
 !Rectangle class categoriesFor: #vertex:vertex:!instance creation!public! !
 

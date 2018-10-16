@@ -485,6 +485,6 @@ on: aWriteStream sourceFileIndex: anInteger
 	^(self on: aWriteStream)
 		sourceFileIndex: anInteger;
 		yourself! !
-!ChunkSourceFiler class categoriesFor: #initialize!public! !
+!ChunkSourceFiler class categoriesFor: #initialize!development!initializing!public! !
 !ChunkSourceFiler class categoriesFor: #on:sourceFileIndex:!instance creation!public! !
 

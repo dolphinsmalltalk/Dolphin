@@ -236,7 +236,7 @@ width: widthInteger
 !StatusBarItemAbstract categoriesFor: #onViewOpened!event handling!public! !
 !StatusBarItemAbstract categoriesFor: #parentView!accessing!private! !
 !StatusBarItemAbstract categoriesFor: #parentView:!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #presenter:!accessing!public! !
+!StatusBarItemAbstract categoriesFor: #presenter:!initializing!public! !
 !StatusBarItemAbstract categoriesFor: #presenterConnectionPoint!accessing!public! !
 !StatusBarItemAbstract categoriesFor: #rectangle!accessing!public! !
 !StatusBarItemAbstract categoriesFor: #refreshContents!public!updating! !

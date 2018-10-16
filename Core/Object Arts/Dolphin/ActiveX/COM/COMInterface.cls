@@ -1059,7 +1059,7 @@ unregister
 !COMInterface class categoriesFor: #clsid!accessing!public! !
 !COMInterface class categoriesFor: #comObjectClass!constants!public! !
 !COMInterface class categoriesFor: #compileFunction:!automatic generation!development!private! !
-!COMInterface class categoriesFor: #compileFunctions!automatic generation!public! !
+!COMInterface class categoriesFor: #compileFunctions!automatic generation!development!public! !
 !COMInterface class categoriesFor: #compileFunctionsIntoImplementor:!automatic generation!development!public! !
 !COMInterface class categoriesFor: #createContextFlags!constants!public! !
 !COMInterface class categoriesFor: #createObject:!instance creation!public! !
@@ -1109,7 +1109,7 @@ unregister
 !COMInterface class categoriesFor: #stdMethodCallType!constants!private! !
 !COMInterface class categoriesFor: #stdMethodReturnType!constants!private! !
 !COMInterface class categoriesFor: #supportsInterface:!public!testing! !
-!COMInterface class categoriesFor: #uninitialize!initializing!private! !
+!COMInterface class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !COMInterface class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !COMInterface class categoriesFor: #unregister!public!removing! !
 

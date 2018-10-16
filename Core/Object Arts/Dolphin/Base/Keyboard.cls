@@ -317,7 +317,7 @@ vKeyToScanCode: anInteger
 !Keyboard class categoriesFor: #keyNameFromVKey:!constants!private! !
 !Keyboard class categoriesFor: #keyNameFromVKey:ifNone:!constants!private! !
 !Keyboard class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Keyboard class categoriesFor: #uninitialize!initializing!private! !
+!Keyboard class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !Keyboard class categoriesFor: #virtualKey:!constants!public! !
 !Keyboard class categoriesFor: #vKeyToScanCode:!constants!private! !
 

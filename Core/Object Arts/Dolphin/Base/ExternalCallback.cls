@@ -108,7 +108,7 @@ valueWithArgumentsAt: anAddress
 !ExternalCallback categoriesFor: #cookie!accessing!public! !
 !ExternalCallback categoriesFor: #cookie:!accessing!private! !
 !ExternalCallback categoriesFor: #descriptor!accessing!private! !
-!ExternalCallback categoriesFor: #descriptor:!accessing!private! !
+!ExternalCallback categoriesFor: #descriptor:!initializing!private! !
 !ExternalCallback categoriesFor: #free!public!realizing/unrealizing! !
 !ExternalCallback categoriesFor: #makeProcInstance!private!realizing/unrealizing! !
 !ExternalCallback categoriesFor: #thunk!converting!private! !
