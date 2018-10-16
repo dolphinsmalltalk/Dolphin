@@ -6,6 +6,7 @@ SessionManager subclass: #ConsoleSessionManager
 	poolDictionaries: 'CRTConstants'
 	classInstanceVariableNames: ''!
 ConsoleSessionManager guid: (GUID fromString: '{b41feb01-21e0-4ad4-998e-ac8529155bee}')!
+ConsoleSessionManager isAbstract: true!
 ConsoleSessionManager comment: 'ConsoleSessionManager is the class of <SessionManager>s used to manage the life-cycle of a deployed console, or command-line, application.
 
 The main entry point hook is the #main method. The program logic can be implemented entirely in #main in the case of simple applications, but it is recommended that a separate application class be constructed, with additional support classes as required. A console application normally exits when the #main method returns.
@@ -77,6 +78,11 @@ openConsoleStreams
 	vm := VMLibrary default.
 	stdioStreams := {vm stdin. vm stdout. vm stderr} collect: [:each | StdioFileStream fromHandle: each]!
 
+registerConsoleCtrlHandler
+	#todo "Rather ironically, registering a console ctrl handler does not work very well in a console app any more.  The signal is delivered on a background thread, which the Dolphin VM will marshal across the to main 	thread by sending it via the message queue. In a typical console application that is not going idle, the  signal will not be received.
+	One way to solve this would be to add a console control handler to the VM and send through the events to the image using the interrupt mechanism. In the meantime, don't register a handler so that Ctrl+C will perform the default action and above the app."
+!
+
 startUI
 	"Start up the input loop/message loop (instruct InputState appropriate depending on whether
 	this is a GUI or console session)."
@@ -109,6 +115,7 @@ unhandledException: anException
 !ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
 !ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
 !ConsoleSessionManager categoriesFor: #openConsoleStreams!operations!public! !
+!ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
 !ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
 !ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !
 !ConsoleSessionManager categoriesFor: #unhandledException:!exceptions!private! !
