@@ -730,38 +730,21 @@ onAboutToDisplayMenu: aMenu
 		fromMethods: (Array with: self selectedMethod)
 		environment: self searchEnvironment!
 
-onBreak: pFrame 
+onBreak: pFrame
 	"Private - A break interrupt has been intercepted, take control once more. The argument is
 	the process frame address. N.B. This method is entered with async events disabled, and it is
 	important not to attempt anything which will cause a callback with interrupts disabled."
 
 	| interruptFrame |
-	self assert: [Processor activeProcess == process].
 	process size.
 	interruptFrame := process frameAtAddress: pFrame.
 	[breakWhen isEmpty] whileFalse: 
-			[(breakWhen last value: interruptFrame) 
-				ifTrue: 
-					["Transcript
-						print: breakWhen size;
-						display: ': Could break at ';
-						print: interruptFrame;
-						cr."
-					breakWhen removeLast]
-				ifFalse: 
-					["Transcript
-						print: breakWhen size;
-						display: ': Don''t break at ';
-						print: interruptFrame;
-						cr."
-					^Processor enableInterrupts]	"re-enable further debug events"].
-	(((self skipMaskFor: interruptFrame method) allMask: 1) and: [self isInCompositeOp not]) 
+			[(breakWhen last value: interruptFrame)
+				ifTrue: [breakWhen removeLast]
+				ifFalse: [^Processor enableInterrupts]	"re-enable further debug events"].
+	(((self skipMaskFor: interruptFrame method) allMask: 1) and: [self isInCompositeOp not])
 		ifTrue: 
 			["Step through..."
-			"Transcript
-				display: 'Step through ';
-				print: interruptFrame;
-				cr."
 			self assert: [interruptFrame method isDebugMethod].
 			^process
 				step;
@@ -2112,7 +2095,7 @@ initializeSkipTable
 	DebuggerMethodCategory initialize!
 
 interrupts
-	^#(#(3 #debugBreak:) #(4 #singleStep:))!
+	^#(#(3 #onBreak:) #(4 #singleStep:))!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
