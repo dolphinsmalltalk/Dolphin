@@ -85,6 +85,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\Categories\ActiveX Categories';
 	add: '..\Connection Points\ActiveX Connection Points';
 	add: '..\..\Base\Dolphin';
+	add: '..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
