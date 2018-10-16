@@ -22,7 +22,7 @@ ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStruct
 	signed	LARGE_INTEGER
 	unsigned	ULARGE_INTEGER
 '!
-!ExternalInteger categoriesForClass!External-Data-Structured! !
+!ExternalInteger categoriesForClass!External-Data-Unstructured! !
 !ExternalInteger methodsFor!
 
 = anObject

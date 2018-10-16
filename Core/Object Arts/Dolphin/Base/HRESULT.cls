@@ -7,7 +7,7 @@ ExternalInteger subclass: #HRESULT
 	classInstanceVariableNames: ''!
 HRESULT guid: (GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
 HRESULT comment: ''!
-!HRESULT categoriesForClass!External-Data-Structured! !
+!HRESULT categoriesForClass!External-Data-Unstructured! !
 !HRESULT methodsFor!
 
 asSignedInteger

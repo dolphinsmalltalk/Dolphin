@@ -7,7 +7,7 @@ ExternalInteger subclass: #UINT_PTR
 	classInstanceVariableNames: ''!
 UINT_PTR guid: (GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
 UINT_PTR comment: ''!
-!UINT_PTR categoriesForClass!External-Data-Structured! !
+!UINT_PTR categoriesForClass!External-Data-Structured-Win32! !
 !UINT_PTR methodsFor!
 
 asSignedInteger

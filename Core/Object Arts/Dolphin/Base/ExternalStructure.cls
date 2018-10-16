@@ -1141,5 +1141,5 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #unregister!public!removing! !
 !ExternalStructure class categoriesFor: #withBytes:!instance creation!public! !
 
-ExternalStructure class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #compileDefinition #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
+ExternalStructure class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 

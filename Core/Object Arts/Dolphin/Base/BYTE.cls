@@ -12,7 +12,7 @@ BYTE is used to represent unsigned 8-bit integers in conjunction with Win32 APIs
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**8)-1	(i.e. 0 to: 255).'!
-!BYTE categoriesForClass!External-Data-Structured! !
+!BYTE categoriesForClass!External-Data-Unstructured! !
 !BYTE methodsFor!
 
 asSignedInteger

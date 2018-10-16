@@ -12,7 +12,7 @@ DWORD is used to represent unsigned 32-bit integers in conjunction with Win32 AP
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**32)-1'!
-!DWORD categoriesForClass!External-Data-Structured! !
+!DWORD categoriesForClass!External-Data-Unstructured! !
 !DWORD methodsFor!
 
 asSignedInteger
