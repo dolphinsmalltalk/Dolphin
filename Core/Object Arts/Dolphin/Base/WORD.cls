@@ -12,7 +12,7 @@ WORD is used to represent unsigned 16-bit integers in conjunction with Win32 API
 
 The range of integer values that can be represented by instances of this class is defined by the interval:
 	0 to: (2**16)-1'!
-!WORD categoriesForClass!External-Data-Structured! !
+!WORD categoriesForClass!External-Data-Unstructured! !
 !WORD methodsFor!
 
 asSignedInteger

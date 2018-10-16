@@ -14,7 +14,7 @@ The range of integer values that can be represented by instances of this class i
 	(-2**63) to: (2**63)-1
 
 '!
-!LARGE_INTEGER categoriesForClass!External-Data-Structured-Win32! !
+!LARGE_INTEGER categoriesForClass!External-Data-Unstructured! !
 !LARGE_INTEGER methodsFor!
 
 highPart

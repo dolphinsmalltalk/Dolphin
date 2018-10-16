@@ -24,7 +24,7 @@ formatName
 	"Answer the symbolic name of the operation being attemped when the exception
 	occurred. See fpieee.h in the MS Win32 SDK for further information."
 
-	^self class formatCodes at: self valueType + 1 ifAbsent: [#Unknown]!
+	^self class formatCodes at: self format + 1 ifAbsent: [#Unknown]!
 
 isValid
 	^(self flags allMask: 1)!

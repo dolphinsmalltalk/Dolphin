@@ -9,7 +9,7 @@ QWORD guid: (GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
 QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
 
 This class of structures is useful for communication with Win32 services that require 64-bit integer parameters. They also provide for easy access to the high and low 32-bit constituents of the integer''s native representation (Intel format 2''s complement).'!
-!QWORD categoriesForClass!External-Data-Structured-Win32! !
+!QWORD categoriesForClass!External-Data-Unstructured! !
 !QWORD methodsFor!
 
 asSignedInteger

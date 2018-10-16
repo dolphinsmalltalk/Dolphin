@@ -237,9 +237,6 @@ clear: addressOrBytes
 	which resides at the specified address. Note that this is not about freeing
 	the specified memory block, but any resources which it references."!
 
-compileDefinition
-	"Implemented as part of the <externalStructure class> protocol, but nothing to do here."!
-
 defineFields
 	"Define the fields of the GUID structure.
 		GUID defineTemplate
@@ -355,7 +352,6 @@ uninitialize
 !GUID class categoriesFor: #basicByteSize!public! !
 !GUID class categoriesFor: #byteSize!constants!public! !
 !GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
-!GUID class categoriesFor: #compileDefinition!development!public! !
 !GUID class categoriesFor: #defineFields!initializing!public! !
 !GUID class categoriesFor: #elementSize!accessing!private! !
 !GUID class categoriesFor: #fromAddress:!instance creation!public! !
@@ -371,5 +367,5 @@ uninitialize
 !GUID class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
 !GUID class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 
-GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #compileDefinition #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
+GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 
