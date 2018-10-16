@@ -18,3 +18,9 @@ createHandle
 	^gpHandle! !
 !GdiplusStringFormatGenericTypographicInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 
+!GdiplusStringFormatGenericTypographicInitializer class methodsFor!
+
+uninitialize
+	GenericTypographic := nil! !
+!GdiplusStringFormatGenericTypographicInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+

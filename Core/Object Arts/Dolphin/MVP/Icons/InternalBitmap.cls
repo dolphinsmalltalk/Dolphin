@@ -196,7 +196,7 @@ to convert to PNG format first?'.
 	^self fromFile: filename!
 
 fromBytes: aByteArray 
-	^self fromGdiplusBitmap: (GdiplusBitmap fromByteArray2: aByteArray)!
+	^self fromGdiplusBitmap: (GdiplusBitmap fromByteArray: aByteArray)!
 
 fromFile: aFilename 
 	^self fromGdiplusBitmap: (GdiplusBitmap fromFile: aFilename) internalize!

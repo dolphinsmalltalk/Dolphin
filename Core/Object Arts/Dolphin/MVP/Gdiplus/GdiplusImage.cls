@@ -1565,7 +1565,7 @@ exampleGdipIPropertyItems
 	"
 
 	| directory filenames strm image |
-	(directory := (BrowseFolderDialog new)
+	(directory := ((Smalltalk at: #BrowseFolderDialog) new)
 				value: 'c:\my documents';
 				showModal) ifNil: [^nil].
 	filenames := (File find: (File appendPathDelimiter: directory) , '*.jpg') 
@@ -1682,10 +1682,11 @@ fileTypes
 		addLast: FileDialog allFilesType.
 	^types asArray!
 
-fromByteArray: aByteArray
-	"Answer an instance of the receiver created from data in aByteArray."
+fromByteArray: aByteArray 
+	"Answer an instance of the receiver created from data in aByteArray. The results is an instance with a persistent
+	initializer that can be used after an image reload or after passing through STB serialization/deserialization."
 
-	^self fromIStream: (IStream fromBytes: aByteArray)!
+	^self fromInitializer: (GdiplusImageFromBytesInitializer bytes: aByteArray)!
 
 fromFile: aFilename
 	"Answer an instance of the receiver created from data in the specified file."

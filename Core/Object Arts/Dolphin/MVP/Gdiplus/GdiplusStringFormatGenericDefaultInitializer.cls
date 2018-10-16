@@ -18,3 +18,9 @@ createHandle
 	^gpHandle! !
 !GdiplusStringFormatGenericDefaultInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
 
+!GdiplusStringFormatGenericDefaultInitializer class methodsFor!
+
+uninitialize
+	GenericDefault := nil! !
+!GdiplusStringFormatGenericDefaultInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+

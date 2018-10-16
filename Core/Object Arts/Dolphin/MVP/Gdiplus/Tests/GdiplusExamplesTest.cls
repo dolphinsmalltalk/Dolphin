@@ -622,6 +622,6 @@ buildTestCase
 							display: each methodClass instanceClass name;
 							space;
 							display: each selector.
-						self compile: stream contents categories: (Array with: autoCategory)]]! !
+						self compile: stream contents categories: {autoCategory}]]! !
 !GdiplusExamplesTest class categoriesFor: #buildTestCase!helpers!public! !
 

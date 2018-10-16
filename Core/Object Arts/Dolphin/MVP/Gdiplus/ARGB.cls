@@ -372,7 +372,7 @@ stdColourTable
 !ARGB class categoriesFor: #fromInteger:!instance creation!public! !
 !ARGB class categoriesFor: #fromNormalizedArray:!instance creation!public! !
 !ARGB class categoriesFor: #green!instance creation!public! !
-!ARGB class categoriesFor: #initialize!initializing!public! !
+!ARGB class categoriesFor: #initialize!development!initializing!public! !
 !ARGB class categoriesFor: #named:!instance creation!public! !
 !ARGB class categoriesFor: #none!instance creation!public! !
 !ARGB class categoriesFor: #r:g:b:!instance creation!public! !
