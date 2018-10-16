@@ -71,6 +71,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Gdiplus\Gdiplus';
 	add: '..\..\Lagoon\Product Protection Base';
 	add: '..\..\ActiveX\Shell\Windows Shell';
+	add: '..\..\ActiveX\Shell\Windows Shell Namespace';
 	yourself).
 
 package!
