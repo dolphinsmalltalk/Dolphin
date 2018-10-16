@@ -225,7 +225,11 @@ objectFromValue: bytes type: type size: size
 	"Private - Instantiate an appropriate object to represent the registry value with the
 	specified type, content, and size."
 
-	type == REG_SZ ifTrue: [^Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1].
+	type == REG_SZ
+		ifTrue: 
+			[^size = 0
+				ifTrue: [Utf16String empty]
+				ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
 	type == REG_DWORD ifTrue: [^bytes sdwordAtOffset: 0].
 	type == REG_BINARY ifTrue: [^bytes copyFrom: 1 to: size].
 	type == REG_MULTI_SZ
