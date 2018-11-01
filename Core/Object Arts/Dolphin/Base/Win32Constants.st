@@ -420,6 +420,10 @@ Win32Constants at: 'IMAGE_ENHMETAFILE' put: 16r3!
 Win32Constants at: 'IMAGE_ICON' put: 16r1!
 Win32Constants at: 'INFINITE' put: -16r1!
 Win32Constants at: 'INVALID_HANDLE_VALUE' put: 16rFFFFFFFF!
+Win32Constants at: 'IS_TEXT_UNICODE_REVERSE_MASK' put: 16rF0!
+Win32Constants at: 'IS_TEXT_UNICODE_REVERSE_STATISTICS' put: 16r20!
+Win32Constants at: 'IS_TEXT_UNICODE_STATISTICS' put: 16r2!
+Win32Constants at: 'IS_TEXT_UNICODE_UNICODE_MASK' put: 16rF!
 Win32Constants at: 'ISOLATIONAWARE_MANIFEST_RESOURCE_ID' put: 16r2!
 Win32Constants at: 'LCMAP_TITLECASE' put: 16r300!
 Win32Constants at: 'LF_FACESIZE' put: 16r20!
