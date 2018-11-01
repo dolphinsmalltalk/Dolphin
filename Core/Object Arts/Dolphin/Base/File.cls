@@ -441,7 +441,7 @@ sniffEncoding
 				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
 				count > 128 or: [(ituResult bitAnd: IS_TEXT_UNICODE_UNICODE_MASK) ~= IS_TEXT_UNICODE_STATISTICS]])
 		ifTrue: 
-			[self position: ((buf beginsWith: Utf16String.Bom) ifTrue: [2] ifFalse: [0]).
+			[self position: ((ituResult allMask: IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
 			String.EncodingUtf16]
 		ifFalse: 
 			["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"

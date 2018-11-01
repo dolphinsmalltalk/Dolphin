@@ -412,28 +412,38 @@ testShortPath
 			ensure: [File deleteDirectory: tmpDir]!
 
 testSniffEncoding
-	| fn |
 	tempFile := File temporary.
-	fn := tempFile name.
-	tempFile close.
-	{#utf16le -> Utf16String.Bom.
-		#ansi -> (Utf16String.Bom , 'odd' asAnsiString asByteArray).
-		#utf16le -> (Utf16String.Bom , 'even' asAnsiString asByteArray).
-		#utf16le -> (Utf16String.Bom , Character dolphin asUtf8String asByteArray).
-		#utf16le -> ('a ' , Character dolphin asUtf16String) asByteArray.
-		#utf8 -> Utf8String.Bom.
-		#utf8 -> 'a b c ' asByteArray.
-		#ansi -> $£ asAnsiString asByteArray.
-		#utf8 -> $£ asUtf8String asByteArray.
-		#utf16le -> 'a £' asUtf16String asByteArray.
-		#utf8 -> ('a ' , Character dolphin asUtf8String) asByteArray} do: 
+	{Utf16String.Bom.
+		Utf16String.Bom , 'even' asAnsiString asByteArray.
+		Utf16String.Bom , Character dolphin asUtf8String asByteArray.
+		('a ' , Character dolphin asUtf16String) asByteArray.
+		'a £' asUtf16String asByteArray} do: 
 				[:each |
-				| actual |
-				(File open: fn mode: #truncate)
-					write: each value;
-					close.
-				actual := File sniffEncoding: tempFile name.
-				self assert: actual equals: each key]!
+				tempFile
+					size: 0;
+					write: each.
+				self assert: tempFile sniffEncoding equals: String.EncodingUtf16.
+				self assert: tempFile position
+					equals: ((each beginsWith: Utf16String.Bom) ifTrue: [Utf16String.Bom size] ifFalse: [0])].
+	{Utf8String.Bom.
+		Utf8String.Bom , $£ asAnsiString asByteArray.
+		'a b c ' asByteArray.
+		$£ asUtf8String asByteArray.
+		('a ' , Character dolphin asUtf8String) asByteArray} do: 
+				[:each |
+				tempFile
+					size: 0;
+					write: each.
+				self assert: tempFile sniffEncoding equals: String.EncodingUtf8.
+				self assert: tempFile position
+					equals: ((each beginsWith: Utf8String.Bom) ifTrue: [Utf8String.Bom size] ifFalse: [0])].
+	{Utf16String.Bom , 'odd' asAnsiString asByteArray. $£ asAnsiString asByteArray} do: 
+			[:each |
+			tempFile
+				size: 0;
+				write: each.
+			self assert: tempFile sniffEncoding equals: String.EncodingAnsi.
+			self assert: tempFile position equals: 0]!
 
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
