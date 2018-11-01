@@ -117,10 +117,13 @@ copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	^self invalidCall!
 
 copyMemory: destination source: source length: length
-	^CRTLibrary default
-		memcpy: destination
-		src: source
-		count: length!
+	| errno |
+	(errno := CRTLibrary default
+				memcpy_s: destination
+				destSize: length
+				src: source
+				count: length) == 0
+		ifFalse: [CRTError signalWith: errno]!
 
 createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES 
 	"Create a new directory with the specified <String> path, 
