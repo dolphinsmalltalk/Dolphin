@@ -93,14 +93,16 @@ nextLine
 	read == (blockSize - 1)]
 			whileTrue.
 	answer := answer contents.
-	len := answer size.
-	last := answer at: len.
-	^last == $\n
-		ifTrue: 
-			[(len > 1 and: [(answer at: len - 1) == $\r])
-				ifTrue: [answer copyFrom: 1 to: len - 2]
-				ifFalse: [answer copyFrom: 1 to: len - 1]]
-		ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]!
+	^(len := answer size) == 0
+		ifTrue: [answer]
+		ifFalse: 
+			[last := answer at: len.
+			last == $\n
+				ifTrue: 
+					[(len > 1 and: [(answer at: len - 1) == $\r])
+						ifTrue: [answer copyFrom: 1 to: len - 2]
+						ifFalse: [answer copyFrom: 1 to: len - 1]]
+				ifFalse: [last == $\r ifTrue: [answer copyFrom: 1 to: len - 1] ifFalse: [answer]]]!
 
 nextPut: aCharacter
 	"Store the <Character> as the next element of the receiver."
