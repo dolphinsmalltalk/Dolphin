@@ -434,7 +434,9 @@ sniffEncoding
 		isTextUnicode: buf
 		iSize: count
 		lpiResult: nil)
-			ifTrue: [String.EncodingUtf16]
+			ifTrue: 
+				[self position: ((buf beginsWith: Utf16String.Bom) ifTrue: [2] ifFalse: [0]).
+				String.EncodingUtf16]
 			ifFalse: 
 				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
 				(buf beginsWith: Utf8String.Bom)
