@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 DolphinTest subclass: #FileTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
@@ -99,61 +99,64 @@ removeDirectory: aString
 !
 
 tearDown
-	[self deleteTestDirectories] on: Win32Error do: [:e |]!
+	[self deleteTestDirectories] on: Win32Error do: [:e | ].
+	tempFile
+		ifNotNil: [
+			[tempFile close.
+			File delete: tempFile name] on: Win32Error do: [:e | ]]!
 
 test64BitSeek
 	"Tests #755"
 
-	| f dist pointer |
-	f := File temporary.
+	| dist pointer |
+	tempFile := File temporary.
 	0 to: 31
 		do: 
 			[:i |
 			dist := 2 raisedToInteger: i.
-			pointer := f seek: dist sense: FILE_BEGIN.
+			pointer := tempFile seek: dist sense: FILE_BEGIN.
 			self assert: pointer equals: dist.
-			pointer := f seek: -1 sense: FILE_CURRENT.
+			pointer := tempFile seek: -1 sense: FILE_CURRENT.
 			self assert: pointer equals: dist - 1.
-			pointer := f seek: 1 sense: FILE_CURRENT.
+			pointer := tempFile seek: 1 sense: FILE_CURRENT.
 			self assert: pointer equals: dist.
-			pointer := f seek: 1 sense: FILE_CURRENT.
+			pointer := tempFile seek: 1 sense: FILE_CURRENT.
 			self assert: pointer equals: dist + 1.
-			pointer := f seek: dist negated sense: FILE_CURRENT.
+			pointer := tempFile seek: dist negated sense: FILE_CURRENT.
 			self assert: pointer equals: 1].
 	32 to: 62
 		do: 
 			[:i |
 			dist := 2 raisedToInteger: i.
-			pointer := f seek: dist sense: FILE_BEGIN.
+			pointer := tempFile seek: dist sense: FILE_BEGIN.
 			self assert: pointer equals: dist.
-			pointer := f seek: -1 sense: FILE_CURRENT.
+			pointer := tempFile seek: -1 sense: FILE_CURRENT.
 			self assert: pointer equals: dist - 1.
-			pointer := f seek: 1 sense: FILE_CURRENT.
+			pointer := tempFile seek: 1 sense: FILE_CURRENT.
 			self assert: pointer equals: dist.
-			pointer := f seek: 1 sense: FILE_CURRENT.
+			pointer := tempFile seek: 1 sense: FILE_CURRENT.
 			self assert: pointer equals: dist + 1.
-			pointer := f seek: dist negated sense: FILE_CURRENT.
+			pointer := tempFile seek: dist negated sense: FILE_CURRENT.
 			self assert: pointer equals: 1].
-	pointer := f seek: -1 sense: FILE_CURRENT.
+	pointer := tempFile seek: -1 sense: FILE_CURRENT.
 	self assert: pointer identicalTo: 0.
 	"As the 64-bit offset is signed, the maximum seek offset is 2^63-1"
-	self should: [f seek: 2 ** 63 sense: FILE_BEGIN] raise: Error.
+	self should: [tempFile seek: 2 ** 63 sense: FILE_BEGIN] raise: Error.
 	"Test the condition where the low-word of the return is 16rFFFFFFFF, so GetLastError() is needed to disambiguate from an error condition."
 	dist := 2 ** 32 - 1.
-	pointer := f seek: dist sense: FILE_BEGIN.
+	pointer := tempFile seek: dist sense: FILE_BEGIN.
 	"Now test maximum seek distance"
 	dist := 2 ** 63 - 1.
-	pointer := f seek: dist sense: FILE_BEGIN.
+	pointer := tempFile seek: dist sense: FILE_BEGIN.
 	self assert: pointer equals: dist.
 	"Although not really a negative seek, it would cause a 64-bit signed file pointer to go negative"
 	self
-		should: [f seek: 1 sense: FILE_CURRENT]
+		should: [tempFile seek: 1 sense: FILE_CURRENT]
 		raise: FileException
 		matching: [:ex | ex statusCode = 131	"ERROR_NEGATIVE_SEEK"].
-	pointer := f seek: dist negated sense: FILE_CURRENT.
+	pointer := tempFile seek: dist negated sense: FILE_CURRENT.
 	self assert: pointer equals: 0.
-	f close.
-	File delete: f name!
+!
 
 testClassAppendPathSeparator
 	"N.B. To path is assumed to be a directory only if it has a trailing slash, *otherwise the last portion is ignored*"
@@ -408,6 +411,40 @@ testShortPath
 	self assert: (File exists: short)]
 			ensure: [File deleteDirectory: tmpDir]!
 
+testSniffEncoding
+	tempFile := File temporary.
+	{Utf16String.Bom.
+		Utf16String.Bom , 'even' asAnsiString asByteArray.
+		Utf16String.Bom , Character dolphin asUtf8String asByteArray.
+		('a ' , Character dolphin asUtf16String) asByteArray.
+		'a £' asUtf16String asByteArray} do: 
+				[:each |
+				tempFile
+					size: 0;
+					write: each.
+				self assert: tempFile sniffEncoding equals: String.EncodingUtf16.
+				self assert: tempFile position
+					equals: ((each beginsWith: Utf16String.Bom) ifTrue: [Utf16String.Bom size] ifFalse: [0])].
+	{Utf8String.Bom.
+		Utf8String.Bom , $£ asAnsiString asByteArray.
+		'a b c ' asByteArray.
+		$£ asUtf8String asByteArray.
+		('a ' , Character dolphin asUtf8String) asByteArray} do: 
+				[:each |
+				tempFile
+					size: 0;
+					write: each.
+				self assert: tempFile sniffEncoding equals: String.EncodingUtf8.
+				self assert: tempFile position
+					equals: ((each beginsWith: Utf8String.Bom) ifTrue: [Utf8String.Bom size] ifFalse: [0])].
+	{Utf16String.Bom , 'odd' asAnsiString asByteArray. $£ asAnsiString asByteArray} do: 
+			[:each |
+			tempFile
+				size: 0;
+				write: each.
+			self assert: tempFile sniffEncoding equals: String.EncodingAnsi.
+			self assert: tempFile position equals: 0]!
+
 testSplitDriveFrom
 	self should: [File splitDriveFrom: nil] raise: Error.
 	self assert: (File splitDriveFrom: 'c:\a\a2/b.txt') equals: 'c:'.
@@ -523,6 +560,7 @@ testSplitStemFrom
 !FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
 !FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
 !FileTest categoriesFor: #testShortPath!public!unit tests! !
+!FileTest categoriesFor: #testSniffEncoding!public!unit tests! !
 !FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
 !FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
 !FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !

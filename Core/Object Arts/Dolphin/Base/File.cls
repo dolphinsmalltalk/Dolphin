@@ -430,27 +430,33 @@ sniffEncoding
 	count := self
 				reset;
 				read: buf.
-	ituResult := DWORDBytes new.
-	^(AdvApiLibrary default
+	ituResult := DWORDBytes fromInteger: -1.
+	^((AdvApiLibrary default
 		isTextUnicode: buf
 		iSize: count
-		lpiResult: ituResult)
-			ifTrue: [String.EncodingUtf16]
-			ifFalse: 
-				["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
-				(buf beginsWith: Utf8String.Bom)
-					ifTrue: 
-						[self position: 3.
-						String.EncodingUtf8]
-					ifFalse: 
-						[(buf beginsWith: Utf16String.Bom)
-							ifTrue: 
-								[self position: 2.
-								String.EncodingUtf16]
-							ifFalse: 
-								[#todo.	"Otherwise assume ANSI. Should do a better job as many UTF-8 files don't have a BOM!! "
-								self reset.
-								String.EncodingAnsi]]]!
+		lpiResult: ituResult) and: 
+				[ituResult := ituResult value.
+				(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
+					ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].
+				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"
+				count > 128 or: [(ituResult bitAnd: IS_TEXT_UNICODE_UNICODE_MASK) ~= IS_TEXT_UNICODE_STATISTICS]])
+		ifTrue: 
+			[self position: ((ituResult allMask: IS_TEXT_UNICODE_SIGNATURE) ifTrue: [2] ifFalse: [0]).
+			String.EncodingUtf16]
+		ifFalse: 
+			["If it starts with the UTF-8 BOM ( #[16rEF 16rBB 16rBF]), then we can be 99% certain it is UTF-8"
+			(buf beginsWith: Utf8String.Bom)
+				ifTrue: 
+					[self position: 3.
+					String.EncodingUtf8]
+				ifFalse: 
+					[| utf8Stream |
+					self reset.
+					"Do a minimal evaluation of the unknown encoding. If the first 1k reads as UTF-8 (allowing for that fact that we may have truncated the final character) then assume it is UTF-8, otherwise some ANSI code page."
+					utf8Stream := (Utf8String fromByteArray: buf) readStream.
+					((utf8Stream skipTo: Character replacement) not or: [utf8Stream atEnd])
+						ifTrue: [String.EncodingUtf8]
+						ifFalse: [String.EncodingAnsi]]]!
 
 spec: aString
 	"Private - Set the file path to the <readableString> argument."

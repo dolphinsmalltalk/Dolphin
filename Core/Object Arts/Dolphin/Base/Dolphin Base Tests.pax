@@ -261,7 +261,7 @@ DolphinTest subclass: #FileLocatorTest
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DolphinTest subclass: #FileTest
-	instanceVariableNames: ''
+	instanceVariableNames: 'tempFile'
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
