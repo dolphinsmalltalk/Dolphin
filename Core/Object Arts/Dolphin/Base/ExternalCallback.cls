@@ -260,7 +260,20 @@ register: instance
 	"Private - Register the subinstance of the receiver, instance, answering its
 	unique integer cookie."
 
-	^Registry addAnsweringIndex: instance! !
+	^Registry addAnsweringIndex: instance!
+
+uninitializeBeforeRemove
+	"If this is the last of the concrete callback classes, then we don't need the callback entry point."
+
+	super uninitializeBeforeRemove.
+	(##(self) subclasses copyWithout: self) isEmpty
+		ifTrue: 
+			[ProcessorScheduler removeSelector: #callback:withArgumentsAt:cookie:.
+			VMLibrary default primRegistryAt: (VMLibrary.Registry indexOf: #callback:withArgumentsAt:cookie:)
+				put: nil]!
+
+unitializeSubclass: anExternalCallbackClass
+	! !
 !ExternalCallback class categoriesFor: #allocateThunks!helpers!private! !
 !ExternalCallback class categoriesFor: #block:argumentTypes:!instance creation!public! !
 !ExternalCallback class categoriesFor: #block:descriptor:!instance creation!public! !
@@ -275,4 +288,6 @@ register: instance
 !ExternalCallback class categoriesFor: #onStartup!event handling!public! !
 !ExternalCallback class categoriesFor: #receiver:selector:descriptor:!instance creation!public! !
 !ExternalCallback class categoriesFor: #register:!instance creation!private! !
+!ExternalCallback class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
+!ExternalCallback class categoriesFor: #unitializeSubclass:!development!initializing!public! !
 
