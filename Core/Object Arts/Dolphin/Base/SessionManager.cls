@@ -129,13 +129,13 @@ basicPrimaryStartup
 	VMLibrary default onStartup.	"The VMLibrary must be initialized before we do anything else."
 	self openLibraries.	"Now we can open the permanent libraries"
 	self imagePath: imagePath.	"Split off the extension now can use lib functions."
-	ExternalCallback onStartup.	"Old callbacks will be invalid"
+	self class environment at: #ExternalCallback
+		ifPresent: [:ec | ec onStartup	"Old callbacks will be invalid"].
 	Character onStartup.
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
 	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"
-	sessionId := GUID newUnique.		"Allow deferred tasks to know if they passed a startup boundary"
-!
+	sessionId := GUID newUnique	"Allow deferred tasks to know if they passed a startup boundary"!
 
 basicSecondaryStartup
 	"Perform secondary startup operations which initialize non-critical
@@ -308,8 +308,11 @@ freeConsole
 		SessionManager current freeConsole
 	"
 
+	
+	KernelLibrary default closeHandle: hConsole.
+	hConsole := nil.
 	KernelLibrary default freeConsole.
-	hConsole := nil!
+!
 
 getCommandLine
 	"Private - Answer the command line String used to start Dolphin."
@@ -1123,7 +1126,7 @@ windowsDirectory
 !SessionManager categoriesFor: #exit:!operations-shutdown!public! !
 !SessionManager categoriesFor: #forkMain!operations!public! !
 !SessionManager categoriesFor: #free!public!realizing/unrealizing! !
-!SessionManager categoriesFor: #freeConsole!operations!public! !
+!SessionManager categoriesFor: #freeConsole!operations!private! !
 !SessionManager categoriesFor: #getCommandLine!accessing!private! !
 !SessionManager categoriesFor: #getenv:!accessing!public! !
 !SessionManager categoriesFor: #hasActiveServers!private!testing! !
