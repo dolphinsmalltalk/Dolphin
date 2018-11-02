@@ -20,6 +20,10 @@ ntQueryTimerResolution: pulMinimumResolution maximum: pulMaximumResolution actua
 	<stdcall: sdword NtQueryTimerResolution lpvoid lpvoid lpvoid>
 	^self invalidCall!
 
+rtlNtStatusToDosError: status
+	<stdcall: dword RtlNtStatusToDosError dword>
+	^self invalidCall!
+
 setTimerResolution: anInteger set: aBoolean actualResolution: actualResolution 
 	"NTSYSAPI
 		NTSTATUS
@@ -38,6 +42,7 @@ wineGetVersion
 	<stdcall: lpstr wine_get_version>
 	^nil	"instead of reporting an error"! !
 !NTLibrary categoriesFor: #ntQueryTimerResolution:maximum:actual:!public! !
+!NTLibrary categoriesFor: #rtlNtStatusToDosError:!public!win32 functions-error handling! !
 !NTLibrary categoriesFor: #setTimerResolution:set:actualResolution:!accessing!public! !
 !NTLibrary categoriesFor: #wineGetVersion!public! !
 
