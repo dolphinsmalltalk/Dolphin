@@ -182,11 +182,7 @@ initialize
 	"
 
 	RandPool := 0.
-	10 timesRepeat: [self churnRandPool].
-	SessionManager current 
-		when: #sessionStarted
-		send: #churnRandPool
-		to: self!
+	10 timesRepeat: [self churnRandPool]!
 
 randPool
 	"Private - Answer the 160 bit random pool seed generated from real world events.

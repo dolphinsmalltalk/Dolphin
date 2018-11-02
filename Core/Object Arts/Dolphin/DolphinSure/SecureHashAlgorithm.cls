@@ -13,10 +13,12 @@ This standard is described in FIPS PUB 180-1, "SECURE HASH STANDARD", April 17, 
 
 context
 	"Private - Gets an SHA context"
-	
-	context isNil ifTrue: [ context := self shaLibrary shaCreate ].
-	^context
-!
+
+	context isNil
+		ifTrue: 
+			[VMLibrary default isWindows7OrGreater ifFalse: [self error: 'Not supported on Vista and earlier versions of  Windows'].
+			context := self shaLibrary shaCreate].
+	^context!
 
 finalHash
 	"Private - Answers the final hash from the context and closes it"
