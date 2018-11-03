@@ -43,6 +43,21 @@ testCreateUnderRoot
 	self assert: key parentKey name equals: '2'.
 	RegKey userRoot removeKey: '1'!
 
+testEmptySz
+	| temp |
+	temp := RegKey userRoot createKey: GUID newUnique asString.
+	
+	[self assert: (AdvApiLibrary default
+				regSetValueEx: temp asParameter
+				lpValueName: 'Empty'
+				reserved: 0
+				dwType: WinRegConstants.REG_SZ
+				lpData: #[]
+				cbData: 0)
+		equals: 0.
+	self assert: (temp valueAt: 'Empty') equals: Utf16String empty]
+			ensure: [RegKey userRoot removeKey: temp name]!
+
 testExpandSz
 	| path |
 	path := KernelLibrary default expandEnvironmentStrings: '%PATH%'.
@@ -124,6 +139,7 @@ testSz
 !RegKeyTest categoriesFor: #setUp!private!unit tests! !
 !RegKeyTest categoriesFor: #tearDown!private!unit tests! !
 !RegKeyTest categoriesFor: #testCreateUnderRoot!public!unit tests! !
+!RegKeyTest categoriesFor: #testEmptySz!public!unit tests! !
 !RegKeyTest categoriesFor: #testExpandSz!public!unit tests! !
 !RegKeyTest categoriesFor: #testIntegerSerialisation!public!unit tests! !
 !RegKeyTest categoriesFor: #testMultiSz!public!unit tests! !
