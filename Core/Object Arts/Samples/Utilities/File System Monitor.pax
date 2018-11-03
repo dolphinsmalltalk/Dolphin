@@ -14,6 +14,10 @@ package classNames
 	add: #FileSystemMonitorSessionManager;
 	yourself.
 
+package methodNames
+	add: 'FileSystemChangeReader class' -> #icon;
+	yourself.
+
 package binaryGlobalNames: (Set new
 	yourself).
 
@@ -54,6 +58,12 @@ RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 
 
 "Loose Methods"!
+
+!FileSystemChangeReader class methodsFor!
+
+icon
+	^FileSystemMonitor icon! !
+!FileSystemChangeReader class categoriesFor: #icon!initializing!public! !
 
 "End of package definition"!
 
