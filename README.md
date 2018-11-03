@@ -23,9 +23,9 @@ Note: if you are just looking to install Dolphin and get going as quickly as pos
 
 * Load the DolphinVM solution into Visual Studio. Choose the **Release** profile (**Debug** will compile but will run slowly) and then _Build Solution_. A bunch of DLLs and `Dolphin7.exe` will have been copied to the `\Dolphin` root folder.
 
-## Building the Dolphin 7 Product Images
+## Building the Dolphin 7 Product Image
 
-Follow these instructions to create the product images and launch Dolphin Smalltalk for the first time.
+Follow these instructions to create the product image and launch Dolphin Smalltalk for the first time.
 
 * First clone the Dolphin repository (this one) into a suitable working directory on your machine, let's call it `\Dolphin`. Any version of Windows from Vista onwards should be suitable but most validation has been done under Windows 10.
 
@@ -35,9 +35,7 @@ Follow these instructions to create the product images and launch Dolphin Smallt
 
 * Before proceeding you will also need to pull the boot image from github large file storage. To do this execute `git lfs pull`.
 
-* In the root folder of the repo you will find a number of CMD files used boot the images for the various products. Two such products are available, DCORE and DPRO. Normally, you will want to use DPRO only, since this is a superset of DCORE. Sometimes it worthwhile booting both products after a change to make sure that nothing in the boot sequence has been broken. This can be done with the `BootAll` CMD file, but let's assume you just want to boot DPRO. _Note: DPRO stands for Dolphin Professional_.
-
-* Double-click `BootDPRO.cmd` or run it from a console window. When the boot process has completed, you should see a `DPRO.img7` file in your directory. IMG7 is the new image extension for Dolphin 7.
+* In the root folder of the repo you will find the `BootDPRO.cmd` script and a small boot image, `DBOOT.img7`. Double-click `BootDPRO.cmd` or run it from a console window. When the boot process has completed, you should see a `DPRO.img7` file in your directory. IMG7 is the new image extension for Dolphin 7, and DPRO stands for _Dolphin Professional_.
 
 * Should you wish to test your booted image before proceeding with your own changes or work, you may want to run the standard regression test suite. This is recommended, and easy to do. Just run the `TestDPRO.cmd` script in the root folder. This will launch Dolphin, load the tests, and then execute them. As it runs you will see results being reported as console output. When complete a summary will state whether there were any failures. You should expect there to be none, but check the [AppVeyor build](https://ci.appveyor.com/project/dolphinsmalltalk/dolphin-db22v/branch/master) to see the current build status.
 
