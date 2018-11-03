@@ -1810,7 +1810,7 @@ fileOpen
 	self openWorkspace!
 
 findDetails
-	findDetails isNil ifTrue: [findDetails := FindDetails new].
+	findDetails isNil ifTrue: [findDetails := AdvancedFindDetails new].
 	^findDetails!
 
 findMatchingClass: aString in: aBrowserEnvironment
@@ -3198,7 +3198,7 @@ promptForSelector: suggestionString caption: captionString
 	"
 
 	| details dialog |
-	details := FindDetails newPattern: (self suggestedWord: suggestionString).
+	details := AdvancedFindDetails newPattern: (self suggestedWord: suggestionString).
 	details isWholeWord: true.
 	dialog := AdvancedFindDialog create: 'Selector view' on: details.
 	dialog
