@@ -7,14 +7,44 @@ Copyright (c) Object Arts Ltd, 1998-2000.
 This package contains a sample "Hello World" class. 
 To open a "Hello World" window evaluate:
 
-HelloWorld new show
+```
+HelloWorld show
+```
 
-Note that it is expected behavior for a mouse click in this window to bring up a #doesNotUnderstand walkback for the message #thisIsADeliberateError. This deliberate error is used to illustrate how such things are reported in the runtime environment.'.
+## Deployment:
 
-package imageStripperBytes: (ByteArray fromBase64String: 'IVNUQiA0IEYPDQAEAAAASW1hZ2VTdHJpcHBlcgAAAAASAQAACwAAAEhlbGxvIFdvcmxkEgEAADgA
-AABDb3JlXE9iamVjdCBBcnRzXFNhbXBsZXNcTVZQXEhlbGxvIFdvcmxkXEhlbGxvIFdvcmxkLmV4
-ZZoAAAASAQAAEAAAAERvbHBoaW4gTVZQIEJhc2VSAAAAFQAAAFJ1bnRpbWVTZXNzaW9uTWFuYWdl
-cue/JwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA').
+The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved in the application.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+HelloWorld show.
+(ImageStripper new)
+	rootPackage: HelloWorld owningPackage;
+	executableName: ''HelloGui.exe'';
+	preserveAspectSetters: false;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''HelloGui.xml''
+"Or view the log"
+XmlPad openOn: ''HelloGui.xml''
+```
+
+'.
+
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem addSamplesFolderIcon: (SmalltalkSystemIcon
+			tool: HelloWorld
+			icon: (TextTileIcon
+					text: $\x1F44B
+					fontName: ''Segoe UI Emoji''
+					color: (ARGB named: #darkOrchid))
+			description: ''Hello World''
+			openBlock: nil
+			helpId: 10739)'.
 
 package classNames
 	add: #HelloWorld;
@@ -29,8 +59,6 @@ package globalAliases: (Set new
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Dolphin\Base\Dolphin';
 	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
 	yourself).
 
 package!

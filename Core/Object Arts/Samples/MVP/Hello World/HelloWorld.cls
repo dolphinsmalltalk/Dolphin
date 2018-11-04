@@ -83,48 +83,16 @@ onPositionChanged: aPositionEvent
 !HelloWorld class methodsFor!
 
 icon
-	"Answers an Icon that can be used to represent this class"
+	"Answer an icon for the receiver and its instances."
 
-	^##(TextTileIcon
-		text: $\x1F44B
-		fontName: 'Segoe UI Emoji'
-		color: (ARGB named: #darkOrchid))!
-
-initialize
-	"Private - Initialize the receiver. Install as a sample application into the
-	system folder
-		self initialize.
-	"
-
-	Smalltalk developmentSystem 
-		addSamplesFolderIconFor: self description: self samplesFolderDescription helpId: 10739!
-
-samplesFolderDescription
-	"Private - Answer the description to be used for the receiver in the in the samples folder."
-
-	^'Hello World'!
+	^Icon fromId: '!!APPLICATION'!
 
 show
 	"Creates and shows an instance of the receiver"
 
 	self new show
 
-	!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-	Un-register the system folder icon for the receiver.
-	N.B. This must be in the 'must strip' category because it relies on the
-	#samplesFolderIcon method, which must in turn be stripped.
-
-	self uninitialize
-	"
-
-	Smalltalk developmentSystem 
-		removeSystemFolderIconNamed: self samplesFolderDescription! !
+	! !
 !HelloWorld class categoriesFor: #icon!constants!public! !
-!HelloWorld class categoriesFor: #initialize!development!initializing!private! !
-!HelloWorld class categoriesFor: #samplesFolderDescription!accessing!private! !
 !HelloWorld class categoriesFor: #show!instance creation!public! !
-!HelloWorld class categoriesFor: #uninitialize!initializing!private! !
 
