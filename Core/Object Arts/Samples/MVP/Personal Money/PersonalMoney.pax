@@ -5,7 +5,30 @@ package paxVersion: 1;
 Copyright (c) Object Arts Ltd, 1998-2005
 
 To start the application evaluate: 
-	PersonalMoneyShell show'.
+```
+PersonalMoneyShell show
+```
+
+## Deployment:
+
+The sample does not have a RuntimeSessionManager, so we need to open an instance. This method of deployment is not recommended for real applications. You should always implement a RuntimeSessionManager that opens your main application window. This ensures that everything is initialized properly through normal code paths, rather than relying on restoring correctly from an instance saved int the application.
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+PersonalMoneyShell show.
+(ImageStripper new)
+	rootPackage: PersonalMoneyShell owningPackage;
+	executableName: ''PersonalMoney.exe'';
+	preserveAspectSetters: true;
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''PersonalMoney.xml''
+```'.
 
 
 package classNames
