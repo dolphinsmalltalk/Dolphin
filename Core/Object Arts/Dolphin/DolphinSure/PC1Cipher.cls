@@ -123,12 +123,9 @@ churnRandPool
 
 	| sha |
 	sha := SecureHashAlgorithm new.
-	sha hashInInteger: RandPool.
+	sha hashInInteger: self randPool.
 	sha hashInInteger: Random systemClockSeed.
-	^RandPool := sha finalHash
-	
-	
-	!
+	^RandPool := sha finalHash!
 
 example1
 	"Encrypt a simple string.
@@ -175,26 +172,17 @@ generateRandomWithBits: bitSize
 			len := len - n].
 	^random!
 
-initialize
-	"Private - Initialize the receiver.
-	
-	self initialize.
-	"
-
-	RandPool := 0.
-	10 timesRepeat: [self churnRandPool]!
-
 randPool
 	"Private - Answer the 160 bit random pool seed generated from real world events.
 
 	Applied Cryptography (Schneier) p427
 	"
-	
-	^RandPool.
-!
 
-uninitialize
-	SessionManager current removeEventsTriggeredFor: self!
+	RandPool
+		ifNil: 
+			[RandPool := 0.
+			10 timesRepeat: [self churnRandPool]].
+	^RandPool!
 
 withKeyBytes: aKeyByteArray 
 	"Answer an instance of the receiver with aKeyByteArray"
@@ -220,9 +208,7 @@ withStrength: bits
 !PC1Cipher class categoriesFor: #example1!examples!public! !
 !PC1Cipher class categoriesFor: #example2!examples!public! !
 !PC1Cipher class categoriesFor: #generateRandomWithBits:!helpers!public! !
-!PC1Cipher class categoriesFor: #initialize!initializing!public! !
 !PC1Cipher class categoriesFor: #randPool!helpers!private! !
-!PC1Cipher class categoriesFor: #uninitialize!class hierarchy-removing!public! !
 !PC1Cipher class categoriesFor: #withKeyBytes:!instance creation!public! !
 !PC1Cipher class categoriesFor: #withKeyInteger:!instance creation!public! !
 !PC1Cipher class categoriesFor: #withKeyString:!instance creation!public! !
