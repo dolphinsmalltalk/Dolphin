@@ -34,7 +34,7 @@ main
 			whileFalse: 
 				[
 				[(self stdout)
-					display: (Compiler evaluate: expr logged: false);
+					display: (Compiler evaluate: expr);
 					cr;
 					flush] 
 						on: Compiler errorClass , Error

@@ -21,7 +21,7 @@ addEntry
 				caption: self caption) showModal.
 	entry ifNil: [^self].
 	key := entry key asString.
-	value := entry value notNil ifTrue: [Compiler evaluate: entry value logged: false].
+	value := entry value notNil ifTrue: [Compiler evaluate: entry value].
 	pool := self selectionOrNil.
 	newAssoc := pool newAssociation: key value: value.
 	pool add: newAssoc.

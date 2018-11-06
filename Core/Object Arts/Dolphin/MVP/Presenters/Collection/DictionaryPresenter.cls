@@ -25,8 +25,8 @@ defaultAddItem
 				error := nil.
 				result := 
 						[| key value |
-						key := Compiler evaluate: pair key logged: false.
-						value := Compiler evaluate: pair value logged: false.
+						key := Compiler evaluate: pair key.
+						value := Compiler evaluate: pair value.
 						self value newAssociation: key value: value] 
 								on: Compiler errorClass , Error
 								do: 

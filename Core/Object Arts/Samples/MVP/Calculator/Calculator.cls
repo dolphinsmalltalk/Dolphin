@@ -39,7 +39,7 @@ evaluateIt
 
 	| result |
 	
-	[[result := Compiler evaluate: input value logged: false] on: Compiler errorClass
+	[[result := Compiler evaluate: input value] on: Compiler errorClass
 		do: [:x | self print: ' (' , x description , ')']] 
 			on: Error
 			do: [:x | self print: ' (Error: ' , x description , ')'].

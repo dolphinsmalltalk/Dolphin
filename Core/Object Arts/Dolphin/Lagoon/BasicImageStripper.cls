@@ -71,17 +71,18 @@ compileExternalStructures: aCollection notifying: notifier
 
 	self notify: notifier status: 'Fully compiling ExternalStructures'.
 	self startElement: 'CompileExternalStructures' attributes: #().
-	self systemPackageManager noEventsDo: [aCollection do: [:each | each fullyCompileDefinition]].
+	self systemPackageManager noEventsDo: 
+			[aCollection do: [:each | each fullyCompileDefinition].
 
-	"Remove template in a second pass"
-	aCollection do: [:each | each newTemplate].
-	"ExternalStructure DNU processing is no longer needed since fully compiled"
-	self
-		removeSelectors: #(#doesNotUnderstand:)
-		of: ExternalStructure
-		notifying: notifier.
-	"Lazy template definition is not required"
-	(ExternalStructure class compile: 'ensureDefined').
+			"Remove template in a second pass"
+			aCollection do: [:each | each newTemplate].
+			"ExternalStructure DNU processing is no longer needed since fully compiled"
+			self
+				removeSelectors: #(#doesNotUnderstand:)
+				of: ExternalStructure
+				notifying: notifier.
+			"Lazy template definition is not required"
+			ExternalStructure class compile: 'ensureDefined'].
 	"Field meta-data classes are no longer required"
 	self assert: [self systemPackageManager isProcessingEvents].
 	self uncheckedRemoveClass: (Smalltalk at: #AttributeDescriptor) notifying: notifier.

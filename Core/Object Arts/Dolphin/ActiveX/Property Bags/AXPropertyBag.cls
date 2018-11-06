@@ -21,7 +21,7 @@ inStream: inputStream
 	inputStream."
 
 	| arrays |
-	arrays := Compiler evaluate: inputStream contents logged: false.
+	arrays := Compiler evaluate: inputStream contents.
 	arrays isNil ifTrue: [self error: 'Invalid persisted data format'].
 	self setProperties: arrays!
 

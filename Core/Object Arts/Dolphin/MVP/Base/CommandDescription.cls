@@ -84,7 +84,7 @@ commandString: commandText
 	"Sets the receiver's command from the <readableString> representation, commandText."
 
 	| c |
-	c := Compiler evaluate: commandText logged: false.
+	c := Compiler evaluate: commandText.
 	c notNil ifTrue: [self command: c]!
 
 commandSymbol

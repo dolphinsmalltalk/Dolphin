@@ -18,7 +18,7 @@ evaluate: aString for: anObject evaluationPools: anArrayOfPools
 	N.B. This message is sent by the compiler to evaluate constant expressions
 	DO NOT REMOVE IT."
 
-	self storeSourceString: aString evaluationPools: anArrayOfPools logged: false.
+	self storeSourceString: aString evaluationPools: anArrayOfPools.
 	^self value: anObject!
 
 evaluationPools
@@ -57,12 +57,11 @@ isExpression
 owningPackage
 	^self methodClass owningPackage!
 
-storeSourceString: aString evaluationPools: anArray logged: aBoolean
+storeSourceString: aString evaluationPools: anArray
 	"Private - Ask the receiver's source manager to record its expression 
 	source, aString, logging the evaluation to the change log if requested."
 
 	| pools |
-	aBoolean ifTrue: [self class sourceManager logEvaluate: aString].
 	pools := anArray notNil
 				ifTrue: 
 					[| nonEmptyPools |
@@ -86,7 +85,7 @@ value: anObject
 !CompiledExpression categoriesFor: #getSource!accessing!development!public! !
 !CompiledExpression categoriesFor: #isExpression!private!testing! !
 !CompiledExpression categoriesFor: #owningPackage!accessing!public! !
-!CompiledExpression categoriesFor: #storeSourceString:evaluationPools:logged:!accessing!private! !
+!CompiledExpression categoriesFor: #storeSourceString:evaluationPools:!accessing!private! !
 !CompiledExpression categoriesFor: #value!evaluating!public! !
 !CompiledExpression categoriesFor: #value:!evaluating!public! !
 
