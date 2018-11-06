@@ -196,7 +196,7 @@ removeKey: key ifAbsent: exceptionHandler
 				ifTrue: 
 					[self trigger: #globalRemoved: with: element.
 					"Uninitialize any global which is not a class name alias"
-					(isClass not and: [global respondsTo: #uninitialize]) ifTrue: [global uninitialize]].
+					(isClass not and: [global respondsTo: #uninitialize]) ifTrue: [global perform: #uninitialize]].
 			global]!
 
 renameGlobal: oldName to: newName
