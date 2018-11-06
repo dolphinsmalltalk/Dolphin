@@ -134,7 +134,7 @@ promptForExpression: promptString caption: captionString
 	expression notNil and: 
 			[| error |
 			
-			[result := Compiler evaluate: expression logged: false.
+			[result := Compiler evaluate: expression.
 			error := nil] 
 					on: Compiler errorClass , Error
 					do: 

@@ -2668,7 +2668,7 @@ readFrom: pacStream
 
 	| chunk |
 	chunk := (ChunkSourceFiler on: pacStream) nextChunk.
-	^Compiler evaluate: chunk logged: false!
+	^Compiler evaluate: chunk!
 
 sourceGlobalExtension
 	"Private - Answer the file extension for the files to which source globals are stored."

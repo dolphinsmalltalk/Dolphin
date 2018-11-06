@@ -278,14 +278,14 @@ compileRange: anInterval ifFail: failBlock
 	^self compileRange: anInterval ifFail: failBlock debug: false
 !
 
-compileRange: anInterval ifFail: failBlock debug: aBoolean 
+compileRange: anInterval ifFail: failBlock debug: aBoolean
 	"Private - Compile the specified, inclusive, range of text in the receiver within the
 	receiver's evaluation context, evaluating failBlock if the compilation experiences errors,
 	or the expression fails to complete when evaluated. Answers an instance of
 	CompiledExpression."
 
 	| result source offset compiler context |
-	anInterval isEmpty 
+	anInterval isEmpty
 		ifTrue: 
 			[source := String new.
 			offset := 0]
@@ -297,20 +297,20 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 	context := self evaluationContext.
 	compiler := context basicClass compilerClass.
 	
-	[| f |
+	[| f pools |
 	f := self defaultCompilerFlags.
 	aBoolean ifTrue: [f := f | DebugMethod].
-	result := compiler 
+	pools := self allPools.
+	result := compiler
 				compileForEvaluation: source
 				in: context basicClass
-				evaluationPools: self allPools
-				logged: true
-				flags: f] 
+				evaluationPools: pools
+				flags: f]
 			on: compiler warningClass
 			do: [:cw | self compilerNotification: cw offset: offset]
 			on: compiler errorClass
 			do: 
-				[:cn | 
+				[:cn |
 				"Note that this method sets the source selection appropriately"
 				self compilerNotification: cn offset: offset].
 	"A number of errors may have been recorded and displayed, go back to the first"
@@ -551,31 +551,33 @@ evaluateRange: anInterval ifFail: failBlock
 	^self evaluateRange: anInterval ifFail: failBlock debug: false
 !
 
-evaluateRange: anInterval ifFail: failBlock debug: aBoolean 
+evaluateRange: anInterval ifFail: failBlock debug: aBoolean
 	"Private - Evaluate the specified, inclusive, range of text in the receiver within the
 	receiver's evaluation context, evaluating failBlock if the compilation experiences errors,
 	or the expression fails to complete when evaluated. If aBoolean is true then a debugger is
 	brought up on the evaluation."
 
-	| result |
+	| result expr |
 	self cancelAutoCompletion.
-	result := self 
+	result := self
 				compileRange: anInterval
 				ifFail: failBlock
 				debug: aBoolean.
+	expr := result method.
+	self systemModel sourceManager logEvaluate: expr getSource.
 
 	".. if it is a debug request then associate a debugger with the active process"
-	aBoolean 
+	aBoolean
 		ifTrue: 
 			[| process |
 			process := Processor activeProcess.
-			process 
+			process
 				attachDebugger: 'Debug it'
 				topFrame: process topFrame
 				resumable: true].
 
 	"... and evaluate the expression"
-	result := result method value: self evaluationContext.
+	result := expr value: self evaluationContext.
 	self trigger: #expressionEvaluated: with: result.
 	^result!
 
@@ -1397,19 +1399,16 @@ showSymbolCompletionListAt: posInteger maxItems: maxInteger
 	quoted ifTrue: [symbols := symbols collect: [:each | each displayString printString]].
 	self showCompletionList: symbols prefixLength: prefixLength!
 
-showTipForIdentifier: anStIdentifierToken 
+showTipForIdentifier: anStIdentifierToken
 	| context name |
 	context := self evaluationContext.
 	name := anStIdentifierToken value.
 	
-	[| result |
-	result := context basicClass compilerClass 
-				evaluate: name
-				for: context
-				evaluationPools: self allPools
-				logged: false
-				ifFail: [^self].
-	self view showCallTip: result debugPrintString at: anStIdentifierToken stop + 2] 
+	[(context basicClass compilerClass
+		evaluate: name
+		for: context
+		evaluationPools: self allPools)
+			ifNotNil: [:result | self view showCallTip: result debugPrintString at: anStIdentifierToken stop + 2]]
 			on: Compiler notificationClass
 			do: [:ex | ]!
 

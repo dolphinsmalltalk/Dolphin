@@ -828,30 +828,29 @@ BlockClosure methodProtocol: #niladicValuable attributes: #(#readOnly) selectors
 
 !BlockClosure class methodsFor!
 
-attemptToRecompile: aBlockClosure 
+attemptToRecompile: aBlockClosure
 	| oldMethod result newBlock newMethod receiver |
 	oldMethod := aBlockClosure method.
-	Notification signal: 'Recompilng block: ' , aBlockClosure printString.
-	oldMethod class ~~ CompiledExpression 
+	Notification signal: 'Recompiling block: ' , aBlockClosure printString.
+	oldMethod class ~~ CompiledExpression
 		ifTrue: 
 			[Notification signal: 'Unable to recompile block because it was created by a method '.
 			^aBlockClosure].
 	receiver := aBlockClosure receiver.
-	result := Compiler 
+	result := Compiler
 				compileForEvaluation: oldMethod getSource
 				in: (receiver isNil ifTrue: [UndefinedObject] ifFalse: [oldMethod methodClass])
 				evaluationPools: oldMethod evaluationPools
-				logged: false
 				flags: 0.
 	newMethod := result method.
-	newMethod isNil 
+	newMethod isNil
 		ifTrue: 
 			[Notification signal: 'Error recompiling block'.
 			^aBlockClosure].
 	newBlock := [newMethod value: receiver withArguments: #()] on: Error
 				do: 
-					[:ex | 
-					Notification signal: 'Error creating block: ', ex printString.
+					[:ex |
+					Notification signal: 'Error creating block: ' , ex printString.
 					nil].
 	^newBlock ?? aBlockClosure!
 

@@ -502,7 +502,7 @@ collection: aSymbol presenterClass: collectionPresenterClass addEvaluationFrom: 
 					choice := anArrayOfStrings size > 1 
 								ifTrue: [ChoicePrompter choices: anArrayOfStrings caption: 'Add an Evaluation']
 								ifFalse: [anArrayOfStrings first].
-					choice notNil ifTrue: [Compiler evaluate: choice logged: false]]]
+					choice notNil ifTrue: [Compiler evaluate: choice]]]
 		editBlock: self defaultCollectionEditBlock!
 
 collection: aCollectionAspectSymbol presenterClass: collectionPresenterClass addFrom: anArray 
@@ -726,7 +726,7 @@ name: aSymbol chooseFrom: anArrayOEvaluableStrings
 			[:p | 
 			| choice |
 			choice := ChoicePrompter choices: anArrayOEvaluableStrings caption: 'Set ' , aSymbol , ' to:'.
-			choice notNil ifTrue: [p value: (Compiler evaluate: choice logged: false)]]!
+			choice notNil ifTrue: [p value: (Compiler evaluate: choice)]]!
 
 name: aSymbol editBlock: aOneArgEditBlock 
 	"Answer an instance of the receiver for anAspectSymbol.

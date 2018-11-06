@@ -59,7 +59,6 @@ configureFromSavedStateString: aSavedStateString
 				compileForEvaluation: aSavedStateString
 				in: UndefinedObject
 				evaluationPools: #()
-				logged: false
 				flags: 0.
 	self view noRedrawDo: [(result method value: nil) value: self]!
 
