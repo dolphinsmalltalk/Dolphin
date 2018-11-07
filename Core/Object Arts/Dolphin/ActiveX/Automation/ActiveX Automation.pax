@@ -35,7 +35,6 @@ package classNames
 	add: #AXTypeInfoStructure;
 	add: #AXTypeLibDocumentation;
 	add: #AXTypeLibraryAnalyzer;
-	add: #AXTypeLibRegistration;
 	add: #COMVariantEnumerator;
 	add: #CURRENCY;
 	add: #CUSTDATA;
@@ -287,11 +286,6 @@ Object subclass: #AXTypeInfoObject
 	classInstanceVariableNames: ''!
 Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Object subclass: #AXTypeLibRegistration
-	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

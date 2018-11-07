@@ -15,7 +15,7 @@ Instance Variables:
 
 
 '!
-!ProtocolBrowserShell categoriesForClass!Development!MVP-Presenters! !
+!ProtocolBrowserShell categoriesForClass!MVP-Presenters! !
 !ProtocolBrowserShell methodsFor!
 
 actualClass

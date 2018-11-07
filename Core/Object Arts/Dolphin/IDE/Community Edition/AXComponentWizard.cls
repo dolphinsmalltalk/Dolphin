@@ -43,7 +43,7 @@ Instance Variables:
 	defineProtocols 	<BooleanPresenter>. Whether to generate Dolphin method protocols for COM interfaces.
 	defineFunctionTables	<BooleanPresenter>. Whether to generate #defineFunctions methods to enable Dolphin COM servers
 '!
-!AXComponentWizard categoriesForClass!Development!MVP-Presenters! !
+!AXComponentWizard categoriesForClass!MVP-Presenters! !
 !AXComponentWizard methodsFor!
 
 apply

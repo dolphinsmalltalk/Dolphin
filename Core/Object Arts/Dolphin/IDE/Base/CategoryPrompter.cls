@@ -18,7 +18,7 @@ Instance Variables:
 	categoryClass	<Category class> indicating the class of category being displayed.
 
 '!
-!CategoryPrompter categoriesForClass!Development!MVP-Presenters! !
+!CategoryPrompter categoriesForClass!MVP-Presenters! !
 !CategoryPrompter methodsFor!
 
 allowIntermediates

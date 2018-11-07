@@ -27,7 +27,7 @@ Class Variables:
 	InfoTips				<boolean> indicating whether method info tips (showing category information) should be displayed. If nil then configured by view.
 
 '!
-!MethodBrowser categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!MethodBrowser categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !MethodBrowser methodsFor!
 
 addMethods: aCollectionOfMethods toCategory: aMethodCategory 

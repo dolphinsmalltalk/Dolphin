@@ -17,7 +17,7 @@ Instance Variables:
 	eventsPresenter	<ListPresenter>. List of events in the control''s default source interface.
 
 '!
-!AXControlBrowser categoriesForClass!Development!MVP-Presenters! !
+!AXControlBrowser categoriesForClass!MVP-Presenters! !
 !AXControlBrowser methodsFor!
 
 about

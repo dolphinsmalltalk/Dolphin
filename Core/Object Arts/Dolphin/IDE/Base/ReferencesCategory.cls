@@ -15,7 +15,7 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!ReferencesCategory categoriesForClass!Development! !
+!ReferencesCategory categoriesForClass!System-Support! !
 !ReferencesCategory methodsFor!
 
 includesMethod: aCompiledMethod 

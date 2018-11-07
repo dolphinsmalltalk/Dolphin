@@ -7,7 +7,7 @@ SmalltalkToolShell subclass: #UserPreferencesShell
 	classInstanceVariableNames: ''!
 UserPreferencesShell guid: (GUID fromString: '{952571b1-f954-4626-bf12-bdd570b30a14}')!
 UserPreferencesShell comment: ''!
-!UserPreferencesShell categoriesForClass!Development! !
+!UserPreferencesShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !UserPreferencesShell methodsFor!
 
 createComponents

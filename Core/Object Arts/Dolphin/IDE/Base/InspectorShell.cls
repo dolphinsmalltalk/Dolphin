@@ -10,7 +10,7 @@ InspectorShell comment: 'InspectorShell is a <SmalltalkToolShell> that implement
 
 
 '!
-!InspectorShell categoriesForClass!Development!MVP-Presenters! !
+!InspectorShell categoriesForClass!MVP-Presenters! !
 !InspectorShell methodsFor!
 
 initialize

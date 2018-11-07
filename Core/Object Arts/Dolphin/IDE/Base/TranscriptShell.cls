@@ -16,7 +16,7 @@ Instance Variables:
 	bufferProtect		<Mutex> protecting the buffer.
 
 '!
-!TranscriptShell categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!TranscriptShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !TranscriptShell methodsFor!
 
 addToCommandRoute: route

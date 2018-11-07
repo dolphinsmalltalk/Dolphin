@@ -14,7 +14,7 @@ Instance Variables:
 	classValue		<ValueAspectAdaptor> for the #owningClass aspect.
 
 '!
-!ResourceIdentifierDialog categoriesForClass!Development!MVP-Presenters! !
+!ResourceIdentifierDialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !
 !ResourceIdentifierDialog methodsFor!
 
 canApply

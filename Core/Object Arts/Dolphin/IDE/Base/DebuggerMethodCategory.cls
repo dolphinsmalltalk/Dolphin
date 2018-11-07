@@ -7,7 +7,7 @@ MethodCategory subclass: #DebuggerMethodCategory
 	classInstanceVariableNames: ''!
 DebuggerMethodCategory guid: (GUID fromString: '{424b6561-1ba5-4a45-b1e3-6936f126dcd5}')!
 DebuggerMethodCategory comment: ''!
-!DebuggerMethodCategory categoriesForClass!Development! !
+!DebuggerMethodCategory categoriesForClass!System-Support! !
 !DebuggerMethodCategory methodsFor!
 
 addMethodSilently: aCompiledMethod 

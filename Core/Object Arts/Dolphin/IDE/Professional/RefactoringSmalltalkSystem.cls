@@ -8,7 +8,7 @@ ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 RefactoringSmalltalkSystem guid: (GUID fromString: '{e3e901a0-a7d5-401c-8230-885e9236d3b4}')!
 RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends SmalltalkSystem to support the refactorings available in the Refactoring Browser''s refactoring engine.
 '!
-!RefactoringSmalltalkSystem categoriesForClass!Development!MVP-Models!System-Support! !
+!RefactoringSmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
 !RefactoringSmalltalkSystem methodsFor!
 
 abstractClassVariable: aString in: aClass within: aBrowserEnvironment 

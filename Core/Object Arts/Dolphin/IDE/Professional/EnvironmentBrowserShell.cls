@@ -7,7 +7,7 @@ ClassBrowserAbstract subclass: #EnvironmentBrowserShell
 	classInstanceVariableNames: ''!
 EnvironmentBrowserShell guid: (GUID fromString: '{b6ccd231-d2fb-4d98-b006-6a3ba26a4849}')!
 EnvironmentBrowserShell comment: ''!
-!EnvironmentBrowserShell categoriesForClass!Development! !
+!EnvironmentBrowserShell categoriesForClass!MVP-Presenters! !
 !EnvironmentBrowserShell methodsFor!
 
 browseExecutableManifest

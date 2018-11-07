@@ -12,7 +12,7 @@ Instance Variables:
 	stream		<puttableStream>. The stream to which disassembled instructions are written.
 
 '!
-!Disassembler categoriesForClass!Development! !
+!Disassembler categoriesForClass!System-Support! !
 !Disassembler methodsFor!
 
 blockCopy: argc stack: stack env: env copy: copy offset1: offset1 offset2: offset2 

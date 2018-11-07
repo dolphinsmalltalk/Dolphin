@@ -14,7 +14,7 @@ Instance Variables:
 Class Variables:
 	LocalHierarchyMask		<integer> mask flag for the local hierarchy mode.
 '!
-!ClassBrowserShell categoriesForClass!Development! !
+!ClassBrowserShell categoriesForClass!MVP-Presenters! !
 !ClassBrowserShell methodsFor!
 
 createComponents

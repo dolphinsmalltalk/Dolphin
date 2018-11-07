@@ -55,7 +55,7 @@ Class Variables:
 	TerminateOnClose	<Symbol>. Option controlling action on closing debugger in respect of the debugged process.
 	ArgumentClasses	<Set> of <Class>. Generic classes to be used in place of specific classes when naming auto-generated arguments for the Implement In command.
 '!
-!Debugger categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!Debugger categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Debugger methodsFor!
 
 accept

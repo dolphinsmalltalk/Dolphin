@@ -11,7 +11,7 @@ DolphinSplash comment: 'DolphinSplash is the Dolphin development system''s spash
 To display the splash screen, evaluate:
 
 self new show'!
-!DolphinSplash categoriesForClass!Development!MVP-Views! !
+!DolphinSplash categoriesForClass!MVP-Views! !
 !DolphinSplash methodsFor!
 
 animationDuration

@@ -16,7 +16,7 @@ Class Variables:
 	HistoryListSize		<integer>
 
 '!
-!MethodExplorerShell categoriesForClass!Development! !
+!MethodExplorerShell categoriesForClass!MVP-Presenters! !
 !MethodExplorerShell methodsFor!
 
 addSearch: aBrowserEnvironment under: parentBrowserEnvironment 

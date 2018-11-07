@@ -7,7 +7,7 @@ Object subclass: #MethodCategorizationPolicy
 	classInstanceVariableNames: ''!
 MethodCategorizationPolicy guid: (GUID fromString: '{87b4c4a1-026e-11d3-9fd7-00a0cc3e4a32}')!
 MethodCategorizationPolicy comment: ''!
-!MethodCategorizationPolicy categoriesForClass!Development! !
+!MethodCategorizationPolicy categoriesForClass!System-Support! !
 !MethodCategorizationPolicy methodsFor!
 
 allCategoriesOfSelector: selector

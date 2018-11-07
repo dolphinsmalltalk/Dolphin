@@ -16,7 +16,7 @@ Instance Variables:
 
 
 '!
-!CommandMenuItemDialog categoriesForClass!Development!MVP-Presenters! !
+!CommandMenuItemDialog categoriesForClass!MVP-Presenters! !
 !CommandMenuItemDialog methodsFor!
 
 createComponents

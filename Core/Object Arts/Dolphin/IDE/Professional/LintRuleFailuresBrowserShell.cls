@@ -7,7 +7,7 @@ MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	classInstanceVariableNames: ''!
 LintRuleFailuresBrowserShell guid: (GUID fromString: '{1f17dd01-e9d4-4f6b-a722-e0f62aed9b74}')!
 LintRuleFailuresBrowserShell comment: ''!
-!LintRuleFailuresBrowserShell categoriesForClass!Development! !
+!LintRuleFailuresBrowserShell categoriesForClass!MVP-Presenters! !
 !LintRuleFailuresBrowserShell methodsFor!
 
 addToCommandRoute: route

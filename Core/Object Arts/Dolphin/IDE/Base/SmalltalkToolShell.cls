@@ -20,7 +20,7 @@ Class Instance Variables:
 	defaultExtent		<Point> specifying the default size of new views, nil if none set.
 	additionalAccelerators	<Array> of 2-element <Array>s, being command <Symbol> accelerator key <String> pairs
 '!
-!SmalltalkToolShell categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!SmalltalkToolShell categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !SmalltalkToolShell methodsFor!
 
 applyOptions

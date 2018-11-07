@@ -17,7 +17,7 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!MethodPrivacyCategory categoriesForClass!Development! !
+!MethodPrivacyCategory categoriesForClass!System-Support! !
 !MethodPrivacyCategory methodsFor!
 
 acceptsAdditions

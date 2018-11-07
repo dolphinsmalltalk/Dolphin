@@ -13,7 +13,7 @@ Instance Variables:
 	parametersPresenter		<ListValuePresenter>. List of argument names.
 
 '!
-!MethodNameDialog categoriesForClass!Development!MVP-Presenters! !
+!MethodNameDialog categoriesForClass!MVP-Presenters! !
 !MethodNameDialog methodsFor!
 
 allowParameterRename: aBoolean

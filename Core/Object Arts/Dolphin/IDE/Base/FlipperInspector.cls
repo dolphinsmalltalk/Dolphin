@@ -7,7 +7,7 @@ SmalltalkToolShell subclass: #FlipperInspector
 	classInstanceVariableNames: ''!
 FlipperInspector guid: (GUID fromString: '{8dc9ca40-c164-11d5-9849-0800460222f0}')!
 FlipperInspector comment: ''!
-!FlipperInspector categoriesForClass!Development! !
+!FlipperInspector categoriesForClass!MVP-Presenters! !
 !FlipperInspector methodsFor!
 
 addToCommandRoute: route

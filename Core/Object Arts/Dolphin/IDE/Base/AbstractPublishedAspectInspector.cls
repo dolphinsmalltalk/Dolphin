@@ -8,7 +8,7 @@ AspectInspector subclass: #AbstractPublishedAspectInspector
 AbstractPublishedAspectInspector guid: (GUID fromString: '{f1cdcdf4-e0b8-4070-953a-c17010bab8ad}')!
 AbstractPublishedAspectInspector isAbstract: true!
 AbstractPublishedAspectInspector comment: ''!
-!AbstractPublishedAspectInspector categoriesForClass!Development! !
+!AbstractPublishedAspectInspector categoriesForClass!MVP-Presenters! !
 !AbstractPublishedAspectInspector methodsFor!
 
 addToCommandRoute: route 

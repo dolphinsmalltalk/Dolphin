@@ -14,7 +14,7 @@ Instance Variables:
 	textModel		<ValueHolder> holding the textual rendition of the model''s value.
 
 '!
-!ValueWorkspace categoriesForClass!Development!MVP-Presenters! !
+!ValueWorkspace categoriesForClass!MVP-Presenters! !
 !ValueWorkspace methodsFor!
 
 accept

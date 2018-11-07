@@ -9,7 +9,7 @@ PackedReferencesCategory guid: (GUID fromString: '{a8cdf33b-5f72-4df4-9ee0-91e91
 PackedReferencesCategory comment: 'PackedReferencesCategory is the class of virtual method categories dynamically determines their membership to include only those methods which have packed byte codes and reference a particular object from their literal frame. In practice this will include only those methods that consist of a send to self of a zero argument selector.
 
 PackedReferencesCategory has no instances by default, but you can create your own packed reference categories by following the examples in the class #initialize method.'!
-!PackedReferencesCategory categoriesForClass!Development! !
+!PackedReferencesCategory categoriesForClass!System-Support! !
 !PackedReferencesCategory methodsFor!
 
 includesMethod: aCompiledMethod 

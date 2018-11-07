@@ -19,7 +19,7 @@ Class Variables:
 
 
 '!
-!SmalltalkSystemShell categoriesForClass!Development!MVP-Presenters! !
+!SmalltalkSystemShell categoriesForClass!MVP-Presenters! !
 !SmalltalkSystemShell methodsFor!
 
 addToCommandRoute: route 

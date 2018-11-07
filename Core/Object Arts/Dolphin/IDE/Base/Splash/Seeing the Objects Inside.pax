@@ -18,6 +18,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\..\Base\Dolphin';
+	add: '..\..\..\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\..\System\Random\Dolphin Random Stream';
 	add: '..\..\..\MVP\Views\Tooltips\Dolphin Tooltips';

@@ -13,7 +13,7 @@ Instance Variables:
 	resourceTree			<UndefinedObject> not used.
 	packagesPresenter			<ListPresenter> displaying a list of all the current packages.
 '!
-!ResourceBrowser categoriesForClass!Development!MVP-Presenters! !
+!ResourceBrowser categoriesForClass!MVP-Presenters! !
 !ResourceBrowser methodsFor!
 
 canSaveState

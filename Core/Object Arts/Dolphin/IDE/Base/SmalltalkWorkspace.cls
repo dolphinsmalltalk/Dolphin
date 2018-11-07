@@ -26,7 +26,7 @@ Class Variables:
 	AdditionalAccelerators	<Array> of 2-element <Array>s, being command <Symbol> accelerator key <String> pairs
 
 '!
-!SmalltalkWorkspace categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!SmalltalkWorkspace categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !SmalltalkWorkspace methodsFor!
 
 allDefinedVariablesDo: aMonadicValuable 

@@ -18,7 +18,7 @@ Instance Variables:
 	path		<TextPresenter> displaying the path to the chosen type library.
 
 '!
-!AXTypeLibraryPrompter categoriesForClass!Development!MVP-Presenters! !
+!AXTypeLibraryPrompter categoriesForClass!MVP-Presenters! !
 !AXTypeLibraryPrompter methodsFor!
 
 createComponents

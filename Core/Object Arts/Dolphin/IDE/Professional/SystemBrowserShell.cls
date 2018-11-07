@@ -12,7 +12,7 @@ Class Variables:
 	AutoSelectPackages		<Boolean>. Controls whether the packages in a folder are automatically selected when a new folder is selected (the default).
 
 '!
-!SystemBrowserShell categoriesForClass!Development! !
+!SystemBrowserShell categoriesForClass!MVP-Presenters! !
 !SystemBrowserShell methodsFor!
 
 canSaveMethod

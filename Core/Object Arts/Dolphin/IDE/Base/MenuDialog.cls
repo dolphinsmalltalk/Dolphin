@@ -13,7 +13,7 @@ Instance Variables:
 	checkColumnModePresenter	<ChoicePresenter>
 
 '!
-!MenuDialog categoriesForClass!Development!MVP-Presenters! !
+!MenuDialog categoriesForClass!MVP-Presenters! !
 !MenuDialog methodsFor!
 
 createComponents

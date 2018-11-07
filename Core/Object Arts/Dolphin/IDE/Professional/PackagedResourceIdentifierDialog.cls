@@ -8,7 +8,7 @@ ResourceIdentifierDialog subclass: #PackagedResourceIdentifierDialog
 PackagedResourceIdentifierDialog guid: (GUID fromString: '{17c3843c-c032-4108-a7ef-7e784dea4647}')!
 PackagedResourceIdentifierDialog comment: 'PackagedResourceIdentifierDialog is a specialised <ResourceIdentifierDialog> that uses the <PackagedClassSelector> for class selection, rather than the standard <ClassHierarchySslector>. 
 '!
-!PackagedResourceIdentifierDialog categoriesForClass!Development! !
+!PackagedResourceIdentifierDialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !
 !PackagedResourceIdentifierDialog methodsFor!
 
 classesPresenterClass
