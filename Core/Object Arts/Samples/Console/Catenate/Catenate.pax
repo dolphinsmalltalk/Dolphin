@@ -25,7 +25,9 @@ Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to los
 And to examine the content: 
 
 ```
-Smalltalk developmentSystem browseDeploymentLog: ''cat.xml''
+Smalltalk developmentSystem browseDeploymentLog: ''cat.xml''.
+"Or just view the log"
+XmlPad filename: ''cat.xml''
 ```'.
 
 
