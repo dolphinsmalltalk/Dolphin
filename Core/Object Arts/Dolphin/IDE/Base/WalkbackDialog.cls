@@ -23,7 +23,7 @@ Class Variables:
 	KillId		<integer> ID of the "kill" button.
 
 '!
-!WalkbackDialog categoriesForClass!Development!MVP-Views! !
+!WalkbackDialog categoriesForClass!MVP-Views! !
 !WalkbackDialog methodsFor!
 
 actualBackcolor

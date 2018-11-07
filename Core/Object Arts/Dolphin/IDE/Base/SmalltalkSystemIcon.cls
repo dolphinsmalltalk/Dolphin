@@ -7,7 +7,7 @@ Object subclass: #SmalltalkSystemIcon
 	classInstanceVariableNames: ''!
 SmalltalkSystemIcon guid: (GUID fromString: '{87b4c4ba-026e-11d3-9fd7-00a0cc3e4a32}')!
 SmalltalkSystemIcon comment: ''!
-!SmalltalkSystemIcon categoriesForClass!Development! !
+!SmalltalkSystemIcon categoriesForClass!MVP-Models! !
 !SmalltalkSystemIcon methodsFor!
 
 = aSmalltalkSystemIcon

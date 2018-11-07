@@ -7,7 +7,7 @@ GUISessionManager subclass: #DevelopmentSessionManager
 	classInstanceVariableNames: ''!
 DevelopmentSessionManager guid: (GUID fromString: '{5902537a-8d40-49c3-94f3-2cd287656c38}')!
 DevelopmentSessionManager comment: ''!
-!DevelopmentSessionManager categoriesForClass!Development!System-Support! !
+!DevelopmentSessionManager categoriesForClass!System-Support! !
 !DevelopmentSessionManager methodsFor!
 
 advanceImageVersionMinor

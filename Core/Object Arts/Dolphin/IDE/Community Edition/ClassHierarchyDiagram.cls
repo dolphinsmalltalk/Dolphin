@@ -13,7 +13,7 @@ Instance Variables:
 	commentPresenter	<SmalltalkWorkspace> displaying the comment of the selected class.
 
 '!
-!ClassHierarchyDiagram categoriesForClass!Development!MVP-Presenters! !
+!ClassHierarchyDiagram categoriesForClass!MVP-Presenters! !
 !ClassHierarchyDiagram methodsFor!
 
 canSaveState

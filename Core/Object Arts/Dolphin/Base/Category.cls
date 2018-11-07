@@ -16,7 +16,7 @@ Instance Variables:
 Class Variables:
 	PermanentCategories		<Set> of all categories which are always available, even if empty
 	'!
-!Category categoriesForClass!Development! !
+!Category categoriesForClass!Development!System-Support! !
 !Category methodsFor!
 
 <= comperand

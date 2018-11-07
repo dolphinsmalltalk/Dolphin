@@ -7,7 +7,7 @@ Dialog subclass: #ConvertToSiblingDialog
 	classInstanceVariableNames: ''!
 ConvertToSiblingDialog guid: (GUID fromString: '{2e1173da-ad55-42da-beb3-e8d674480103}')!
 ConvertToSiblingDialog comment: ''!
-!ConvertToSiblingDialog categoriesForClass!Development! !
+!ConvertToSiblingDialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !
 !ConvertToSiblingDialog methodsFor!
 
 createComponents

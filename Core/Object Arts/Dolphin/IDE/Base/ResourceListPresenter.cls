@@ -16,7 +16,7 @@ Instance Variables:
 
 
 '!
-!ResourceListPresenter categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools!MVP-Resources-Misc! !
+!ResourceListPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools!MVP-Resources-Misc! !
 !ResourceListPresenter methodsFor!
 
 browseClass

@@ -18,7 +18,7 @@ Instance Variables:
 
 Class Variables:
 	None'!
-!VirtualMethodCategory categoriesForClass!Development! !
+!VirtualMethodCategory categoriesForClass!System-Support! !
 !VirtualMethodCategory methodsFor!
 
 addMethodSilently: aCompiledMethod 

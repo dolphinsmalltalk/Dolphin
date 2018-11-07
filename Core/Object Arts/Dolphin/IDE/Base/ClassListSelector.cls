@@ -13,7 +13,7 @@ Instance Variables:
 	environment			<RBEnvironment> defining the set of classes in the list.
 
 '!
-!ClassListSelector categoriesForClass!Development!MVP-Resources-IDE Tools! !
+!ClassListSelector categoriesForClass!MVP-Resources-IDE Tools! !
 !ClassListSelector methodsFor!
 
 browseItCommand

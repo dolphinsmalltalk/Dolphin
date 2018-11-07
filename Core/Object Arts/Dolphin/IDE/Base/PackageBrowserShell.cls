@@ -29,7 +29,7 @@ Class Variables:
 	UpdateMap 
 	WordWrapComment		<boolean> indicating that the comment pane should word wrap.
 '!
-!PackageBrowserShell categoriesForClass!Development!MVP-Presenters! !
+!PackageBrowserShell categoriesForClass!MVP-Presenters! !
 !PackageBrowserShell methodsFor!
 
 accept

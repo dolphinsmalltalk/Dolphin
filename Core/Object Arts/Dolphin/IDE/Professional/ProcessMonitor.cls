@@ -26,7 +26,7 @@ Class Variables:
 	UpdateIntervals		<IdentityDictionary>. Map between update speeds and corresponding interval in mS, or nil for paused.
 
 '!
-!ProcessMonitor categoriesForClass!Development!MVP-Presenters! !
+!ProcessMonitor categoriesForClass!MVP-Presenters! !
 !ProcessMonitor methodsFor!
 
 createComponents

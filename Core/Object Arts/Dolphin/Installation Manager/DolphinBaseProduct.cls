@@ -7,7 +7,7 @@ DolphinCoreProduct subclass: #DolphinBaseProduct
 	classInstanceVariableNames: ''!
 DolphinBaseProduct guid: (GUID fromString: '{2a3b6d22-63cb-4287-905e-8221eb59e17d}')!
 DolphinBaseProduct comment: ''!
-!DolphinBaseProduct categoriesForClass!Development! !
+!DolphinBaseProduct categoriesForClass!System-Support! !
 !DolphinBaseProduct methodsFor!
 
 calcSystemFolderExtentFor: aPoint 

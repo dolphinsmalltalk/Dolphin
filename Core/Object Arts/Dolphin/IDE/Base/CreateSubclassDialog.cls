@@ -17,7 +17,7 @@ Instance Variables:
 	superclassPresenter		<TextPresenter> used to display the superclass of the new class.
 
 '!
-!CreateSubclassDialog categoriesForClass!Development!MVP-Presenters! !
+!CreateSubclassDialog categoriesForClass!MVP-Presenters! !
 !CreateSubclassDialog methodsFor!
 
 canApply

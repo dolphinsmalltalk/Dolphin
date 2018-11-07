@@ -13,7 +13,7 @@ The view resources are saved down as class-side methods, usually associated with
 The View Composer works by loading its ''composing view'' as a child of the desktop and positioning it offscreen so that it is invisible to the user. It then uses WM_PRINT messages to render an image of this view which it displays in its arenaPresenter. Using this shadow image of the real view has a couple of benefits. The first is that mouse clicks over the image can be intercepted directly, whereas mouse clicks over the real view would be handled by the Windows controls themselves. We also discovered that placing a real shell view inside another (e.g. as a composing view inside the View Composer) caused the menu bars for the shell view not to be displayed.
 
 '!
-!ViewComposer categoriesForClass!Development! !
+!ViewComposer categoriesForClass!MVP-Presenters! !
 !ViewComposer methodsFor!
 
 addGrabberFor: aGrabAspectSymbol of: aView

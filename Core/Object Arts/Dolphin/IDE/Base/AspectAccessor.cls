@@ -12,7 +12,7 @@ Instance Variables:
 	aspectDescriptor	<Aspect> the descriptor for the aspect being accessed.
 	parentAccessor	<AspectAccessor> the parent accessor or nil.
 '!
-!AspectAccessor categoriesForClass!Development!MVP-Models! !
+!AspectAccessor categoriesForClass!MVP-Models! !
 !AspectAccessor methodsFor!
 
 <= anAspectAccessor

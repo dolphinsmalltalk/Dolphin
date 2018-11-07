@@ -15,7 +15,7 @@ Instance Variables:
 
 Class Variables:
 	ClassModeMask	<integer>. Masks flags inst. var. to determine if in class mode.'!
-!ClassSelector categoriesForClass!Development!MVP-Presenters! !
+!ClassSelector categoriesForClass!MVP-Presenters! !
 !ClassSelector methodsFor!
 
 actualClass

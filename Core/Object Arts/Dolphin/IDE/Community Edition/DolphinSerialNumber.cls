@@ -25,7 +25,7 @@ adkSockets := adk | DolphinSerialNumber socketsMask.
 
 (DolphinSerialNumber for: DolphinProfessional new upgradeLevel: self baseMask expiry: 2) displayString.
 '!
-!DolphinSerialNumber categoriesForClass!Development! !
+!DolphinSerialNumber categoriesForClass!Cryptography-Support! !
 !DolphinSerialNumber methodsFor!
 
 canUnlock: product

@@ -13,7 +13,7 @@ Instance Variables:
 
 
 '!
-!MethodBrowserShell categoriesForClass!Development!MVP-Presenters! !
+!MethodBrowserShell categoriesForClass!MVP-Presenters! !
 !MethodBrowserShell methodsFor!
 
 browseMethodsIn: aBrowserEnvironment 

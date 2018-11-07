@@ -7,7 +7,7 @@ CommunityEditionSmalltalkSystem subclass: #ProfessionalSmalltalkSystem
 	classInstanceVariableNames: ''!
 ProfessionalSmalltalkSystem guid: (GUID fromString: '{ff97cec8-db85-4932-b9c0-163380844b27}')!
 ProfessionalSmalltalkSystem comment: ''!
-!ProfessionalSmalltalkSystem categoriesForClass!Development! !
+!ProfessionalSmalltalkSystem categoriesForClass!MVP-Models! !
 !ProfessionalSmalltalkSystem methodsFor!
 
 browseDeployedPackage: aPackage
@@ -21,7 +21,6 @@ browseEnvironment: aBrowserEnvironment
 	"Open an Environment Browser Shell on all classes and methods included in the specified <BrowserEnvironment>."
 
 	^EnvironmentBrowserShell onEnvironment: aBrowserEnvironment!
-
 
 browserEnvFromDeploymentLog: aString
 	^self browserEnvFromDom: (self openDeploymentLog: aString)!

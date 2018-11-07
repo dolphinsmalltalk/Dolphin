@@ -34,7 +34,7 @@ Class Variables:
 	SystemIcon		<UndefinedObject>
 
 '!
-!ApplicationDeploymentWizard categoriesForClass!Development!MVP-Presenters! !
+!ApplicationDeploymentWizard categoriesForClass!MVP-Presenters! !
 !ApplicationDeploymentWizard methodsFor!
 
 accept

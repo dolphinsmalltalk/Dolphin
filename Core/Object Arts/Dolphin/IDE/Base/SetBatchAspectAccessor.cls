@@ -7,7 +7,7 @@ IndexedInstVarBatchAccessor subclass: #SetBatchAspectAccessor
 	classInstanceVariableNames: ''!
 SetBatchAspectAccessor guid: (GUID fromString: '{cacfd817-4dcb-46be-bba9-bcb1585438f2}')!
 SetBatchAspectAccessor comment: ''!
-!SetBatchAspectAccessor categoriesForClass!Unclassified! !
+!SetBatchAspectAccessor categoriesForClass!MVP-Models! !
 !SetBatchAspectAccessor methodsFor!
 
 aspectClass

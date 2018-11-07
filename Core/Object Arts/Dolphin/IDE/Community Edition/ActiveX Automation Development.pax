@@ -28,6 +28,7 @@ package classNames
 	add: #AXMethodName;
 	add: #AXRecordAspect;
 	add: #AXTypeLibraryPrompter;
+	add: #AXTypeLibRegistration;
 	add: #DispatchAspect;
 	yourself.
 
@@ -420,7 +421,6 @@ package methodNames
 	add: 'AXTypeLibraryAnalyzer class' -> #registerTypeLib;
 	add: 'AXTypeLibraryAnalyzer class' -> #superclassClashSignal;
 	add: 'AXTypeLibraryAnalyzer class' -> #typeLibRegistrations;
-	add: 'AXTypeLibRegistration class' -> #icon;
 	add: 'BSTR class' -> #newInstanceAspect:class:;
 	add: 'BSTR class' -> #printDefaultValue:on:;
 	add: 'BSTR class' -> #printMethodArgument:elemdesc:indirections:on:;
@@ -558,6 +558,11 @@ package!
 
 Object subclass: #AXMethodName
 	instanceVariableNames: 'keywords argumentNames indices'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+Object subclass: #AXTypeLibRegistration
+	instanceVariableNames: 'description guidString versionString minor major'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -4181,14 +4186,6 @@ typeLibRegistrations
 !AXTypeLibraryAnalyzer class categoriesFor: #registerTypeLib!helpers!public! !
 !AXTypeLibraryAnalyzer class categoriesFor: #superclassClashSignal!constants!examples!public! !
 !AXTypeLibraryAnalyzer class categoriesFor: #typeLibRegistrations!development!enquiries!private! !
-
-!AXTypeLibRegistration class methodsFor!
-
-icon
-	"Answers an <Icon> that can be used to represent this class"
-
-	^AXTypeLibraryAnalyzer icon! !
-!AXTypeLibRegistration class categoriesFor: #icon!constants!development!public! !
 
 !BSTR class methodsFor!
 

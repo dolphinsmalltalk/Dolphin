@@ -16,7 +16,7 @@ For example to view the contents of a view resource, one can proceed as follows:
 	in next.
 	in traceStream contents.	"Display-it"
 '!
-!STBDebugger categoriesForClass!Development!System-Binary storage! !
+!STBDebugger categoriesForClass!System-Binary storage! !
 !STBDebugger methodsFor!
 
 basicNext

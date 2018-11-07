@@ -16,7 +16,7 @@ Instance Variables:
 	refreshBlock		<monadicValuable> that can be evaluated to refresh the browser display.
 
 '!
-!SourceBrowser categoriesForClass!Development!MVP-Presenters! !
+!SourceBrowser categoriesForClass!MVP-Presenters! !
 !SourceBrowser methodsFor!
 
 allSourceObjects

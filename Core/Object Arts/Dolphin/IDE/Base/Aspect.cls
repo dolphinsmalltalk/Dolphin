@@ -21,7 +21,7 @@ Instance Variables:
 	presenterBlock	<dyadicValuable> to be evaluated to bring up a presenter on the aspect
 	editBlock		<monadicValue> to be evaluated to edit the aspect
 	isMutable		<Boolean> specifying whether the aspect can be modified in-place'!
-!Aspect categoriesForClass!Development! !
+!Aspect categoriesForClass!Attribute-Definition! !
 !Aspect methodsFor!
 
 <= anAspect

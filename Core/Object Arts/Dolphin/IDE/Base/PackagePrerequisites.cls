@@ -9,7 +9,7 @@ PackagePrerequisites guid: (GUID fromString: '{87b4c6c1-026e-11d3-9fd7-00a0cc3e4
 PackagePrerequisites comment: 'PackagePrerequisites is a development tool that displays a package pre-requisite hierarchy, rooted in the immedaite pre-requisites of a particular <Package>. For each prerequisite the list of all the links from the package to the prerequisite are listed. Each link shows: the object belonging to the package,  why it forced the prerequisite, and the object owned by the prerequisite which it relies upon. The links are generated and described within the Package>>tracePrerequisites method.
 
 	'!
-!PackagePrerequisites categoriesForClass!Development!MVP-Presenters! !
+!PackagePrerequisites categoriesForClass!MVP-Presenters! !
 !PackagePrerequisites methodsFor!
 
 childrenFor: node 

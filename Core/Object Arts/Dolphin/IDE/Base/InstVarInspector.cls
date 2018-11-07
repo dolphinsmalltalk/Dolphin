@@ -7,7 +7,7 @@ AspectInspector subclass: #InstVarInspector
 	classInstanceVariableNames: ''!
 InstVarInspector guid: (GUID fromString: '{da630ac4-c186-11d5-9849-0800460222f0}')!
 InstVarInspector comment: ''!
-!InstVarInspector categoriesForClass!Development!MVP-Resources-IDE Tools! !
+!InstVarInspector categoriesForClass!MVP-Resources-IDE Tools! !
 !InstVarInspector methodsFor!
 
 accept

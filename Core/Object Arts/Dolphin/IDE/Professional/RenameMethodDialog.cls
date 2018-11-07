@@ -13,7 +13,7 @@ Instance Variables:
 	allowExistingSelector			<boolean>
 
 '!
-!RenameMethodDialog categoriesForClass!Development! !
+!RenameMethodDialog categoriesForClass!MVP-Presenters!MVP-Resources-Dialogs! !
 !RenameMethodDialog methodsFor!
 
 allowExistingSelector: aBoolean 

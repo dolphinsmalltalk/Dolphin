@@ -8,7 +8,7 @@ Object subclass: #DolphinProduct
 DolphinProduct guid: (GUID fromString: '{0bcc007b-10ed-40ce-940e-83882e2f70d8}')!
 DolphinProduct isAbstract: true!
 DolphinProduct comment: ''!
-!DolphinProduct categoriesForClass!Development! !
+!DolphinProduct categoriesForClass!System-Support! !
 !DolphinProduct methodsFor!
 
 allPackages

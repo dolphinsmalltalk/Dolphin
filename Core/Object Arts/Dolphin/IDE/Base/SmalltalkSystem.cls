@@ -19,7 +19,7 @@ Class Variables:
 	Current			<SmalltalkSystem>
 
 '!
-!SmalltalkSystem categoriesForClass!Development!MVP-Models!System-Support! !
+!SmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
 !SmalltalkSystem methodsFor!
 
 aboutBoxClass

@@ -7,7 +7,7 @@ SmalltalkToolShell subclass: #IdeaSpaceShell
 	classInstanceVariableNames: ''!
 IdeaSpaceShell guid: (GUID fromString: '{402cf4f5-0b2e-4533-9664-c99fe1bf84fa}')!
 IdeaSpaceShell comment: ''!
-!IdeaSpaceShell categoriesForClass!Development!MVP-Presenters! !
+!IdeaSpaceShell categoriesForClass!MVP-Presenters! !
 !IdeaSpaceShell methodsFor!
 
 absorbCard: card 

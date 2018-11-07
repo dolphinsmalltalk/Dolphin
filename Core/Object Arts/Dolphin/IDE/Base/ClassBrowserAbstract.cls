@@ -37,7 +37,7 @@ Class Instance Variables:
 	DefaultShowInheritedMethods	<boolean>
 	DefaultFilterObjectMethods		<boolean>
 '!
-!ClassBrowserAbstract categoriesForClass!Development!MVP-Presenters! !
+!ClassBrowserAbstract categoriesForClass!MVP-Presenters! !
 !ClassBrowserAbstract methodsFor!
 
 accept

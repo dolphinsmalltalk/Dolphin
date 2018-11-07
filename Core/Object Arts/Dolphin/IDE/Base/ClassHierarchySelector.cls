@@ -7,7 +7,7 @@ ClassSelector subclass: #ClassHierarchySelector
 	classInstanceVariableNames: ''!
 ClassHierarchySelector guid: (GUID fromString: '{e11cf5f9-c2ec-47e1-ba1f-fa2fc4c88ad7}')!
 ClassHierarchySelector comment: 'A ClassHierarchySelector is used to display a tree of classes. It implements the behaviour common to the class hierarchy panes in the <ClassBrowserShell> and <ClassHierarchyDiagram>.'!
-!ClassHierarchySelector categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!ClassHierarchySelector categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !ClassHierarchySelector methodsFor!
 
 createComponents

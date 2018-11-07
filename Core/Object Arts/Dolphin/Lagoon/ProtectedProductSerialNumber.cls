@@ -30,7 +30,7 @@ If you find that a serial number has been illegally distributed to others you ca
 For a simple example see the ''Protected Scribble'' sample package (under Samples/Lagoon/Product Protection/).
 
 It is possible to override more of the class-side methods in the ''constants'' category in order to use different encryption of both the serial number itself, and of the ''garbled'' methods.  The ''Protected Notepad'' sample application showns one example of this.'!
-!ProtectedProductSerialNumber categoriesForClass!Unclassified! !
+!ProtectedProductSerialNumber categoriesForClass!Cryptography-Support! !
 !ProtectedProductSerialNumber methodsFor!
 
 displayOn: aStream 

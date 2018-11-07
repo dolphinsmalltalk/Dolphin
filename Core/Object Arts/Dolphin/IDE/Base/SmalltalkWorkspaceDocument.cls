@@ -15,7 +15,7 @@ Class Variables:
 	ReuseIfOpen	`<boolean>` indicating whether an open workspace should be re-used in preference to opening a new one.
 
 '!
-!SmalltalkWorkspaceDocument categoriesForClass!Development!MVP-Presenters!MVP-Resources-IDE Tools! !
+!SmalltalkWorkspaceDocument categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !SmalltalkWorkspaceDocument methodsFor!
 
 aboutDolphin
