@@ -24,7 +24,6 @@ package basicPackageVersion: '6.1'.
 package classNames
 	add: #ClassHierarchyDiagram;
 	add: #CommunityEditionSmalltalkSystem;
-	add: #DolphinSerialNumber;
 	add: #PoolDictionariesShell;
 	add: #ProtocolBrowserShell;
 	add: #SourceBrowser;
@@ -33,7 +32,6 @@ package classNames
 
 package methodNames
 	add: #ClassBrowserAbstract -> #browseMethodProtocol;
-	add: #DolphinProduct -> #serialNumberClass;
 	add: #SmalltalkSystem -> #inspectPoolDictionaries;
 	add: #SmalltalkSystem -> #inspectSystemOptions;
 	add: 'ITEMIDLIST class' -> #publishedAspectsOfInstances;
@@ -60,16 +58,13 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Installation Manager\Dolphin Products';
 	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
 	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
 	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
 	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
 	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
 	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\DolphinSure\DolphinSure';
 	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\Lagoon\Product Protection Base';
 	add: '..\..\ActiveX\Shell\Windows Shell';
 	add: '..\..\ActiveX\Shell\Windows Shell Namespace';
 	yourself).
@@ -108,11 +103,6 @@ SmalltalkToolShell subclass: #UserPreferencesShell
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ProtectedProductSerialNumber subclass: #DolphinSerialNumber
-	instanceVariableNames: ''
-	classVariableNames: 'CompromisedSerialNumbersTrusted UpgradeLevelsMap UpgradeLevelsNamesMap VariationMasksMap'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 
 "Global Aliases"!
 
@@ -128,14 +118,6 @@ browseMethodProtocol
 		protocol: self protocols first;
 		actualClass: self actualClass! !
 !ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
-
-!DolphinProduct methodsFor!
-
-serialNumberClass
-	"Answer the class of <ProtectedProductSerialNumber> to use for the receiver"
-
-	^DolphinSerialNumber! !
-!DolphinProduct categoriesFor: #serialNumberClass!constants!public! !
 
 !ITEMIDLIST class methodsFor!
 

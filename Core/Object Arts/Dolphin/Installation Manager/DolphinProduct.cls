@@ -270,15 +270,6 @@ loadShrinkAndCompress
 		shrink.
 	SourceManager default compressSources!
 
-lock
-	"Lock the receiver with the serial number determined by our serial number class."
-
-	"the serial number class holds policy decisions about how locking is done, so
-	we ask it to arrange the process"
-
-	self serialNumberClass lockClasses: self encryptedClasses.
-!
-
 majorVersion
 	"Answer the receiver's major version <Integer>"
 
@@ -395,13 +386,6 @@ unlistedPrerequisites
 	listed := self packages.
 	^all difference: listed!
 
-unlockUsing: aSerialNumber 
-	"Unlock the receiver with aSerialNumber
-	The serial number class holds policy decisions about how locking is done, so
-	we ask it to arrange the process"
-
-	self serialNumberClass unlockClasses: self encryptedClasses using: aSerialNumber!
-
 unwantedClasses
 	"Answer a collection of the names of classes that are (or might) be in the distributed packages, but which we don't
 	want included in the actual distributions."
@@ -450,7 +434,6 @@ warnOfUnlistedContent
 !DolphinProduct categoriesFor: #load!operations!public! !
 !DolphinProduct categoriesFor: #loadAndShrink!operations!public! !
 !DolphinProduct categoriesFor: #loadShrinkAndCompress!operations!public! !
-!DolphinProduct categoriesFor: #lock!operations!public! !
 !DolphinProduct categoriesFor: #majorVersion!accessing!public! !
 !DolphinProduct categoriesFor: #minorVersion!accessing!public! !
 !DolphinProduct categoriesFor: #name!accessing!public! !
@@ -471,7 +454,6 @@ warnOfUnlistedContent
 !DolphinProduct categoriesFor: #uninstallPackage:!operations!private! !
 !DolphinProduct categoriesFor: #unlistedContentException!operations!public! !
 !DolphinProduct categoriesFor: #unlistedPrerequisites!public! !
-!DolphinProduct categoriesFor: #unlockUsing:!operations!public! !
 !DolphinProduct categoriesFor: #unwantedClasses!constants!public! !
 !DolphinProduct categoriesFor: #version!accessing!public! !
 !DolphinProduct categoriesFor: #versionMask!accessing!private! !
