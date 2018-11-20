@@ -17,6 +17,7 @@ StdOut
 StdErr
 RegisterAsEventSource
 IsUserBreakRequested
+AnsiCodePage=?m_ansiCodePage@Interpreter@@2IA
 
 CompileForClass=_PrimCompileForClass@20
 CompileForEval=_PrimCompileForEval@24
