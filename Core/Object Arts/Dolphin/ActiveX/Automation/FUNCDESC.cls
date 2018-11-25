@@ -432,16 +432,18 @@ defineFields
 	self
 		defineField: #memid type: SDWORDField readOnly;
 		defineField: #lprgscode
-			type: (StructureArrayPointerField type: HRESULT lengthField: #cScodes) beReadOnly;
+			type: (StructureArrayPointerField type: HRESULT
+					arrayLength: (ConformantArrayFieldLength lengthField: #cScodes)) beReadOnly;
 		defineField: #lprgelemdescParam
-			type: (StructureArrayPointerField type: ELEMDESC lengthField: #cParams) beReadOnly;
+			type: (StructureArrayPointerField type: ELEMDESC
+					arrayLength: (ConformantArrayFieldLength lengthField: #cParams)) beReadOnly;
 		defineField: #funckind type: SDWORDField readOnly;
 		defineField: #invkind type: SDWORDField readOnly;
 		defineField: #callconv type: SDWORDField readOnly;
 		defineField: #cParams type: SWORDField readOnly beNonBrowsable;
 		defineField: #cParamsOpt type: SWORDField readOnly;
 		defineField: #oVft type: SWORDField readOnly;
-		defineField: #cScodes type: SWORDField readOnly beNonBrowsable ;
+		defineField: #cScodes type: SWORDField readOnly beNonBrowsable;
 		defineField: #elemdescFunc type: (StructureField type: ELEMDESC) beReadOnly;
 		defineField: #wFuncFlags type: WORDField readOnly!
 

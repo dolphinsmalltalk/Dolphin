@@ -103,8 +103,13 @@ defineFields
 "
 
 	self
-		defineField: #cbData type: DWORDField new beNonBrowsable offset: 0;
-		defineField: #pbData type: (ArrayPointerField type: ExternalArray lengthField: #cbData) offset: 4.
+		defineField: #cbData
+			type: DWORDField new beNonBrowsable
+			offset: 0;
+		defineField: #pbData
+			type: (ArrayPointerField type: ExternalArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cbData))
+			offset: 4.
 	self byteSize: 8!
 
 fromBytes: aByteObject

@@ -87,15 +87,7 @@ type: aClass length: anInteger
 	"Answer a new instance of the receiver which is used for dereferencing
 	pointers to arrays objects of type aClass, of the specified fixed <integer> length."
 
-	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)!
-
-type: aClass lengthField: aSymbol
-	"Answer a new instance of the receiver which is used for dereferencing pointers to
-	conformant arrays objects of type aClass, where the length is specified by the another field
-	of the structure with the specified <Symbol> name."
-
-	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
+	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
 !ArrayPointerField class categoriesFor: #type:arrayLength:!instance creation!public! !
 !ArrayPointerField class categoriesFor: #type:length:!instance creation!public! !
-!ArrayPointerField class categoriesFor: #type:lengthField:!instance creation!public! !
 

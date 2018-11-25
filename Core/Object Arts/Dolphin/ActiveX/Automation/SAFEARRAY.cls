@@ -516,7 +516,8 @@ defineFields
 		defineField: #cLocks type: DWORDField readOnly;
 		defineField: #pvData type: LPVOIDField readOnly;
 		defineField: #rgsabound
-			type: (StructureArrayField type: SAFEARRAYBOUND lengthField: #cDims) beReadOnly!
+			type: (StructureArrayField type: SAFEARRAYBOUND
+					arrayLength: (ConformantArrayFieldLength lengthField: #cDims)) beReadOnly!
 
 elementSize
 	"Answer the size (in bytes) of the structure the receiver represents

@@ -73,7 +73,8 @@ defineFields
 			type: DWORDField new
 			offset: 0;
 		defineField: #Parameter
-			type: (StructureArrayField type: GpEncoderParameter lengthField: #Count)
+			type: (StructureArrayField type: GpEncoderParameter
+					arrayLength: (ConformantArrayFieldLength lengthField: #Count))
 			offset: 4.
 	"The byteSize includes space for one parameter, i.e. as in the above structure definition"
 	self byteSize: 32!

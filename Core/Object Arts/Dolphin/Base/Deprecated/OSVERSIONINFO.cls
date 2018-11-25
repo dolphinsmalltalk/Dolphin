@@ -12,7 +12,7 @@ OSVERSIONINFO was used to retrieve version information about the host OS on whic
 
 Note that rather than test for a specific OS version in class library methods, it is preferable to define a capability enquiry with an appropriate intention revealing name, e.g. see those in SystemMetrics. In other words, don''t check for the OS version info that supports the functionality you required from your application code you should use (or define and use) a query to test for the specific feature or functionality on which you depend.
 '!
-!OSVERSIONINFO categoriesForClass!External-Data-Structured-Win32! !
+!OSVERSIONINFO categoriesForClass!Deprecated! !
 !OSVERSIONINFO methodsFor!
 
 calculateOsName

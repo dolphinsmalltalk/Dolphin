@@ -75,7 +75,9 @@ defineFields
 		defineField: #idReserved type: WORDField readOnly;
 		defineField: #idType type: WORDField new;
 		defineField: #idCount type: WORDField new;
-		defineField: #idEntries type: (StructureArrayField type: ICONDIRENTRY lengthField: #idCount)!
+		defineField: #idEntries
+			type: (StructureArrayField type: ICONDIRENTRY
+					arrayLength: (ConformantArrayFieldLength lengthField: #idCount))!
 
 for: anInteger
 	"Create an ICONDIR using this method and not new as we need to know
