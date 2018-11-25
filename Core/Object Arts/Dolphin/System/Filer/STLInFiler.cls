@@ -32,6 +32,10 @@ readLiteralData
 	self register: newObject.
 	^newObject!
 
+readObjectWithPrefix: anInteger
+	anInteger == STBPrefix.LiteralPrefixMask ifTrue: [^self readLiteralData].
+	^super readObjectWithPrefix: anInteger!
+
 readVersion
 	version := stream next.
 	^true!
@@ -44,6 +48,7 @@ registerPredefinedObjects
 !STLInFiler categoriesFor: #readClassLocator:!helpers!private! !
 !STLInFiler categoriesFor: #readInteger!helpers!private! !
 !STLInFiler categoriesFor: #readLiteralData!private! !
+!STLInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
 !STLInFiler categoriesFor: #readVersion!initializing!private! !
 !STLInFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
 

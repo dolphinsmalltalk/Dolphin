@@ -369,13 +369,6 @@ sortBlock: aDyadicValuable
 
 	^self sortAlgorithm: (self defaultSortAlgorithmClass newSortBlock: aDyadicValuable)!
 
-value: anObject1 value: anObject2 
-	"Private - Implement this part of the <dyadicValuable> protocol in order that the receiver
-	can be its own default sort 'block' for historical reasons. This is no longer used in
-	Dolphin 6 and will be officially deprecated in a future release."
-
-	^anObject1 <= anObject2!
-
 withNilsSortBlock
 	^[:a :b | a isNil ifTrue: [true] ifFalse: [b isNil ifTrue: [false] ifFalse: [a <= b]]]
 ! !
@@ -384,7 +377,6 @@ withNilsSortBlock
 !SortedCollection class categoriesFor: #new:!instance creation!public! !
 !SortedCollection class categoriesFor: #sortAlgorithm:!instance creation!public! !
 !SortedCollection class categoriesFor: #sortBlock:!instance creation!public! !
-!SortedCollection class categoriesFor: #value:value:!evaluating!private! !
 !SortedCollection class categoriesFor: #withNilsSortBlock!instance creation!public! !
 
 SortedCollection class methodProtocol: #'SortedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #sortBlock: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!

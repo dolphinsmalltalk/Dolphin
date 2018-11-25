@@ -135,12 +135,16 @@ package methodNames
 	add: #Array -> #assignToResourceIdentifier:;
 	add: #ArrayedCollection -> #newBatchAccessor;
 	add: #Association -> #debugPrintString;
+	add: #Behavior -> #changedMethods;
 	add: #Behavior -> #hasAbstractMethods;
 	add: #Behavior -> #isAbstract;
 	add: #Behavior -> #methodFor:;
 	add: #Behavior -> #searchForInTool:;
 	add: #Behavior -> #whichClassDefinesInstVar:;
+	add: #Behavior -> #whichMethodsContainSource:;
 	add: #Behavior -> #whichMethodsOnlySelfSend:;
+	add: #Behavior -> #whichMethodsReferTo:;
+	add: #Behavior -> #whichSelectorsReferTo:;
 	add: #BlockFrame -> #debugIpFor:;
 	add: #BlockFrame -> #isRestartable;
 	add: #BlockFrame -> #makeDebug;
@@ -164,16 +168,38 @@ package methodNames
 	add: #BrowserEnvironmentWrapper -> #includesResource:;
 	add: #BrowserEnvironmentWrapper -> #openEditor;
 	add: #Character -> #literalTextStyle;
+	add: #ChunkSourceFiler -> #emitCommentOfClass:;
+	add: #Class -> #canFileOut;
+	add: #Class -> #changeIndex;
+	add: #Class -> #changeIndexValue:;
+	add: #Class -> #definitionChunk;
+	add: #Class -> #fileOut;
+	add: #Class -> #fileOutOn:;
 	add: #Class -> #isAbstract;
+	add: #Class -> #isChanged:;
 	add: #Class -> #isDeprecated;
+	add: #Class -> #methodChanged:;
+	add: #Class -> #notifyPackageOfChange;
+	add: #Class -> #renameClassVar:to:;
+	add: #Class -> #storeClassCategories;
 	add: #ClassDescription -> #browse;
+	add: #ClassDescription -> #categoriesFor:are:;
 	add: #ClassDescription -> #commentStamp:prior:;
+	add: #ClassDescription -> #copy:from:;
+	add: #ClassDescription -> #copy:from:categories:;
+	add: #ClassDescription -> #copy:from:classified:;
+	add: #ClassDescription -> #copyAll:from:;
+	add: #ClassDescription -> #copyAll:from:classified:;
+	add: #ClassDescription -> #copyAllCategoriesFrom:;
+	add: #ClassDescription -> #copyCategory:from:;
+	add: #ClassDescription -> #copyCategory:from:classified:;
 	add: #ClassDescription -> #isDeprecated;
 	add: #ClassDescription -> #methodsFor:;
 	add: #ClassDescription -> #methodsFor:stamp:;
 	add: #ClassDescription -> #newInstanceAspect:class:;
 	add: #ClassDescription -> #privateMethods;
 	add: #ClassDescription -> #publicMethods;
+	add: #ClassDescription -> #renameInstVar:to:;
 	add: #ClassEnvironment -> #includesResource:;
 	add: #ClassEnvironment -> #openEditor;
 	add: #Collection -> #aspectDisplayOn:;
@@ -201,6 +227,8 @@ package methodNames
 	add: #CompiledMethod -> #browse;
 	add: #CompiledMethod -> #icon;
 	add: #CompiledMethod -> #searchForInTool:;
+	add: #CompiledMethod -> #storeCategories;
+	add: #CompiledMethod -> #storeSourceString:;
 	add: #CompiledMethod -> #stylerClass;
 	add: #CompileFailedMethod -> #asDebugMethod;
 	add: #DateTimeCommonControl -> #publishedAspects;
@@ -212,6 +240,7 @@ package methodNames
 	add: #ExternalArray -> #publishedAspects;
 	add: #ExternalArray -> #publishedKeyedAspects;
 	add: #ExternalArray -> #publishedKeyedAspectsBatchSize;
+	add: #ExternalField -> #autoGenCategories;
 	add: #ExternalIntegerBytes -> #debugPrintString;
 	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
 	add: #ExternalStructure -> #alternateInspectorClass;
@@ -227,7 +256,11 @@ package methodNames
 	add: #Menu -> #edit;
 	add: #Menu -> #painterClass;
 	add: #MenuBar -> #painterClass;
+	add: #Metaclass -> #changeIndex;
+	add: #Metaclass -> #isChanged:;
 	add: #Metaclass -> #isDeprecated;
+	add: #Metaclass -> #methodChanged:;
+	add: #Metaclass -> #storeClassCategories;
 	add: #MethodProtocol -> #icon;
 	add: #MoenTreeView -> #visualObjectAtPoint:;
 	add: #MSG -> #printOn:;
@@ -247,20 +280,56 @@ package methodNames
 	add: #Object -> #publishedEvents;
 	add: #Object -> #searchForInTool:;
 	add: #OrEnvironment -> #includesResource:;
+	add: #Package -> #allFileOutNames;
+	add: #Package -> #beNotUsingPAX;
+	add: #Package -> #beUsingPAX;
 	add: #Package -> #browse;
+	add: #Package -> #canFileOut;
+	add: #Package -> #checkTimestamps;
+	add: #Package -> #createPackagePath;
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
+	add: #Package -> #fileModificationTime;
+	add: #Package -> #fileOut;
+	add: #Package -> #fileOutAll;
+	add: #Package -> #fileOutAllChanged;
+	add: #Package -> #fileOutAllOn:;
+	add: #Package -> #fileOutBinaryGlobalsOn:;
+	add: #Package -> #fileOutClassesOn:;
+	add: #Package -> #fileOutGlobalAliasesOn:;
+	add: #Package -> #fileOutLooseMethodsOn:;
+	add: #Package -> #fileOutNames;
+	add: #Package -> #fileOutOn:;
+	add: #Package -> #fileOutSourceGlobalsOn:;
 	add: #Package -> #hasImageStripper;
 	add: #Package -> #icon;
 	add: #Package -> #imageStripper;
+	add: #Package -> #isRenegade;
+	add: #Package -> #isUsingPAX;
+	add: #Package -> #isUsingPAX:;
 	add: #Package -> #publishedAspects;
+	add: #Package -> #save;
+	add: #Package -> #saveChanges;
+	add: #Package -> #savePAC;
+	add: #Package -> #savePAX;
+	add: #Package -> #savePAXNames:on:;
+	add: #Package -> #savePAXPackageOn:;
+	add: #Package -> #savePAXPrerequisiteNamesOn:;
+	add: #Package -> #saveSingleFilePackage;
 	add: #Package -> #searchForInTool:;
+	add: #Package -> #toggleUsingPAX;
+	add: #Package -> #updateTimestamp;
 	add: #PackageManager -> #getVersionInfoFor:;
 	add: #PackageManager -> #isConnected;
 	add: #PackageManager -> #sourceControl;
 	add: #PoolConstantsDictionary -> #aspectDisplayOn:;
 	add: #PoolConstantsDictionary -> #browse;
+	add: #PoolConstantsDictionary -> #canFileOut;
+	add: #PoolConstantsDictionary -> #fileOut;
+	add: #PoolConstantsDictionary -> #referencesTo:;
 	add: #PoolDictionary -> #aspectDisplayOn:;
+	add: #PoolDictionary -> #canFileOut;
+	add: #PoolDictionary -> #fileOut;
 	add: #Process -> #attachDebugger:topFrame:resumable:;
 	add: #Process -> #debug;
 	add: #Process -> #debug:topFrame:resumable:;
@@ -296,7 +365,24 @@ package methodNames
 	add: #SequenceableCollection -> #newBatchAccessor;
 	add: #Set -> #newBatchAccessor;
 	add: #Slider -> #publishedAspects;
+	add: #SourceFiler -> #emitMessages:ofBehavior:;
+	add: #SourceFiler -> #fileOutAttributesOfClass:;
+	add: #SourceFiler -> #fileOutClass:;
+	add: #SourceFiler -> #fileOutDefinitionOfClass:;
+	add: #SourceFiler -> #fileOutMessages:ofBehavior:;
+	add: #SourceFiler -> #fileOutMethods:;
+	add: #SourceManager -> #basicCompressSources:;
+	add: #SourceManager -> #compressChangedMethodsOf:onto:;
+	add: #SourceManager -> #compressChangesOf:onto:;
+	add: #SourceManager -> #compressChangesOnto:;
+	add: #SourceManager -> #compressPackageCommentsOn:;
+	add: #SourceManager -> #compressSources;
 	add: #SourceManager -> #compressSourcesWith:;
+	add: #SourceManager -> #fileOut:;
+	add: #SourceManager -> #fileOut:to:;
+	add: #SourceManager -> #fileOutPackagedClass:;
+	add: #SourceManager -> #fileOutPackagedClass:to:;
+	add: #SourceManager -> #logChanged:;
 	add: #SpinButton -> #publishedAspects;
 	add: #StAbstractVariableNode -> #displayOn:;
 	add: #StackFrame -> #debugIpFor:;
@@ -378,7 +464,6 @@ package methodNames
 	add: 'ComboBox class' -> #publishedAspectsOfInstances;
 	add: 'CommandDescription class' -> #publishedAspectsOfInstances;
 	add: 'CommandMenuItem class' -> #publishedAspectsOfInstances;
-	add: 'ComparisonPolicy class' -> #isDeprecated;
 	add: 'CompiledCode class' -> #publishedAspectsOfInstances;
 	add: 'CompiledMethod class' -> #overriddenIcon;
 	add: 'CompiledMethod class' -> #publishedAspectsOfInstances;
@@ -393,15 +478,24 @@ package methodNames
 	add: 'Dictionary class' -> #newInstanceAspect:class:;
 	add: 'DOUBLE class' -> #newInstanceAspect:class:;
 	add: 'ExternalArray class' -> #newInstanceAspect:class:;
+	add: 'ExternalInteger class' -> #decompileDefinition;
 	add: 'ExternalInteger class' -> #newInstanceAspect:class:;
 	add: 'ExternalIntegerBytes class' -> #newInstanceAspect:class:;
 	add: 'ExternalMethod class' -> #publishedAspectsOfInstances;
+	add: 'ExternalScalar class' -> #shouldOverrideGetFieldList;
+	add: 'ExternalStructure class' -> #autoGenCategory;
 	add: 'ExternalStructure class' -> #compileAllDefinitions;
 	add: 'ExternalStructure class' -> #compileDefinition;
+	add: 'ExternalStructure class' -> #compileGetFieldList;
 	add: 'ExternalStructure class' -> #compileGetMethod:forField:;
+	add: 'ExternalStructure class' -> #compileNewFields;
 	add: 'ExternalStructure class' -> #compileSetMethod:forField:;
+	add: 'ExternalStructure class' -> #decompileDefinition;
 	add: 'ExternalStructure class' -> #formatAndCompile:categories:;
+	add: 'ExternalStructure class' -> #hasHandCodedMethodFor:;
 	add: 'ExternalStructure class' -> #recompileDefinition;
+	add: 'ExternalStructure class' -> #shouldCompile:forField:;
+	add: 'ExternalStructure class' -> #shouldOverrideGetFieldList;
 	add: 'Float class' -> #newInstanceAspect:class:;
 	add: 'FLOAT class' -> #newInstanceAspect:class:;
 	add: 'FlowLayout class' -> #publishedAspectsOfInstances;
@@ -603,7 +697,6 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
 	add: '..\..\MVP\Views\MoenTree\Dolphin MoenTree View';
-	add: '..\..\MVP\Deprecated\Dolphin MVP (Deprecated)';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Presenters\Number\Dolphin Number Presenter';
 	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
@@ -1353,6 +1446,11 @@ publishedAspectsOfInstances
 
 !Behavior methodsFor!
 
+changedMethods
+	"Private - Answer a <collection> of all the changed methods in the receiver."
+
+	^self methodDictionary select: [:method | method hasChanged]!
+
 hasAbstractMethods
 	"Answer whether the receiver has any methods that are by convention considered to be
 	abstract (i.e. they consist solely of a send of #subclassResponsibility to self)."
@@ -1371,6 +1469,12 @@ searchForInTool: aSmalltalkToolShell
 whichClassDefinesInstVar: aString 
 	^self whichClassSatisfies: [:aClass | aClass instVarNames includes: aString]!
 
+whichMethodsContainSource: aString
+	"Answer a <Set> of methods from the receiver's local method dictionary whose methods contain
+	the specified source string."
+
+	^self selectMethods: [:method | method containsSource: aString]!
+
 whichMethodsOnlySelfSend: aSymbol
 	"Answer a Set of methods which consist purely of a send-to-self of the specified zero-arg selector."
 
@@ -1388,13 +1492,28 @@ whichMethodsOnlySelfSend: aSymbol
 					[:method |
 					| packed |
 					packed := method basicByteCodes.
-					packed == send or: [packed == sendRet]]])! !
+					packed == send or: [packed == sendRet]]])!
+
+whichMethodsReferTo: anObject
+	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
+
+	^self selectMethods: (self referenceFilterFor: anObject)!
+
+whichSelectorsReferTo: anObject
+	"Answer a Set of selectors whose methods access the argument, anObject.
+	This is really only included for Blue Book compatibility."
+
+	^(self whichMethodsReferTo: anObject) collect: [:each | each selector]! !
+!Behavior categoriesFor: #changedMethods!methods-accessing!private! !
 !Behavior categoriesFor: #hasAbstractMethods!public!testing! !
 !Behavior categoriesFor: #isAbstract!public!testing! !
 !Behavior categoriesFor: #methodFor:!accessing!public! !
 !Behavior categoriesFor: #searchForInTool:!public! !
 !Behavior categoriesFor: #whichClassDefinesInstVar:!public!RefactoringBrowser! !
+!Behavior categoriesFor: #whichMethodsContainSource:!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsOnlySelfSend:!development!methods-testing!public! !
+!Behavior categoriesFor: #whichMethodsReferTo:!methods-testing!public! !
+!Behavior categoriesFor: #whichSelectorsReferTo:!methods-testing!public! !
 
 !Bitmap class methodsFor!
 
@@ -1712,15 +1831,119 @@ publishedAspectsOfInstances
 		yourself! !
 !CheckButton class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!ChunkSourceFiler methodsFor!
+
+emitCommentOfClass: aClass
+	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
+	aWriteStream."
+
+	stream
+		nextPutAll: aClass name;
+		space;
+		display: #comment:;
+		space.
+	self
+		nextChunkPut: aClass comment printString;
+		cr! !
+!ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
+
 !Class methodsFor!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	the file out file is writeable"
+
+	^File isWriteable: self  fileOutName!
+
+changeIndex
+	^self propertyAt: #changeIndex ifAbsent: []!
+
+changeIndexValue: aBlock 
+	self propertyManager 
+		propertyOf: self
+		at: #changeIndex
+		ifAbsentPut: aBlock!
+
+definitionChunk
+	"Answer a chunk string for the definition of the receiver"
+
+	| stream |
+	stream := String writeStream: 256.
+	(self sourceManager sourceFilerOn: stream) fileOutDefinitionOfClass: self.
+	^stream contents!
+
+fileOut
+	"File out the receiver's definition to a class file in the receiver's
+	package directory."
+
+	self sourceManager fileOutPackagedClass: self!
+
+fileOutOn: aSourceFiler
+	aSourceFiler fileOutClass: self!
 
 isAbstract
 	^super isAbstract or: [self class isAbstract]!
 
+isChanged: aBoolean 
+	"Flag the receiver as changed or not changed, according to the value 
+	of the <Boolean> argument. If the receiver is marked as changed, then
+	its owning package (if any) is also so marked."
+
+	self propertyManager isNil ifTrue: [^self].
+	"Note that we don't test the existing value of the change flag here, because
+	 we want to inform the package regardless (in case it isn't currently changed
+	 for some reason)"
+	aBoolean 
+		ifTrue: 
+			[self changeIndexValue: [self sourceManager changesFileSize].
+			self notifyPackageOfChange]
+		ifFalse: [self removePropertyAt: #changeIndex ifAbsent: []]!
+
 isDeprecated
-	^false! !
+	^(ClassCategory name: 'Deprecated') includesClass: self!
+
+methodChanged: aCompiledMethod 
+	"Private - Flag the receiver as changed or not changed, according to the value 
+	of the <Boolean> argument. If the receiver is marked as changed, then
+	its owning package (if any) is also so marked."
+
+	self propertyManager isNil ifTrue: [^self].
+	self changeIndexValue: [aCompiledMethod changePosition].
+	self notifyPackageOfChange!
+
+notifyPackageOfChange
+	self owningPackage ifNotNil: [:package | package isChanged: true]!
+
+renameClassVar: oldString to: newString
+	"Private - Rename the class variable of the receiver named by the <readableString>, oldString, to be
+	named by the <readableString>, newString. The variable must be one of the receiver's own class 
+	variables , not of one of its superclass'.
+	Note: This is a low-level operation that does not recompile any methods, however since the methods
+	access class variables via the binding (Association) they will remain valid until recompiled. It is the 
+	caller's responsibility to rewrite and recompile methods that reference the variable."
+
+	self classPool changeKey: oldString to: newString.
+	self logDefinition.
+	self environment classUpdated: self!
+
+storeClassCategories
+	"Private - Record the categories of the receiver to the change log.
+	The job is simply delegated to the receiver's source manager (if available)."
+
+	self sourceManager storeCategoriesForClass: self! !
+!Class categoriesFor: #canFileOut!public!source filing! !
+!Class categoriesFor: #changeIndex!accessing!private! !
+!Class categoriesFor: #changeIndexValue:!accessing!private! !
+!Class categoriesFor: #definitionChunk!public!source filing-class definition! !
+!Class categoriesFor: #fileOut!public!source filing! !
+!Class categoriesFor: #fileOutOn:!public!source filing! !
 !Class categoriesFor: #isAbstract!public!testing! !
-!Class categoriesFor: #isDeprecated!development!public!source filing! !
+!Class categoriesFor: #isChanged:!accessing!public! !
+!Class categoriesFor: #isDeprecated!public!source filing! !
+!Class categoriesFor: #methodChanged:!helpers!private! !
+!Class categoriesFor: #notifyPackageOfChange!helpers!private! !
+!Class categoriesFor: #renameClassVar:to:!class variables!private! !
+!Class categoriesFor: #storeClassCategories!private!source filing-methods! !
 
 !ClassBuilder class methodsFor!
 
@@ -1742,11 +1965,114 @@ browse
     
     	Smalltalk developmentSystem browseClass: self!
 
+categoriesFor: selector are: categories
+	"Compatibility ith IBM Smalltalk fileIn format (which is of the form
+	<class> categoriesFor: <selector> are: #([<categoryString>]*).
+	Sets the additional categories of a selector if it exists."
+
+	(self includesSelector: selector)
+		ifTrue: 
+			[categories
+				do: [:categoryString | self includeSelector: selector inCategory: categoryString asMethodCategory]]!
+
 commentStamp: stamp prior: prior 
 	"Answer a chunk reader which will add a comment to the receiver. Supplied for 
 	compatibility with the Squeak fileout format"
 
 	^SingleChunkReader do: [:chunk | self comment: chunk]!
+
+copy: selector from: class
+	"Copy the method with the selector <Symbol>, selector, in <ClassDescription>, 
+	class, to the receiver's method dictionary, maintaining any existing categories.
+	If a compile error occurs then a CompilerNotification is signalled. 
+	Answers the new method or nil."
+
+	^self copy: selector from: class categories: (class compiledMethodAt: selector) categories
+
+!
+
+copy: aSymbol from: aClass categories: aCollection 
+	"Copy the method with the specified selector <Symbol>, in the <Behavior>, aClass, to the
+	receiver's method dictionary, classifying it in each of the the <Collection> of
+	<methodCategory>s specified by the last argument. If a compile error occurs then a
+	CompilerNotification is signalled. Answers the new method or nil."
+
+	| method |
+	method := aClass compiledMethodAt: aSymbol.
+	^self 
+		compile: method getSource
+		categories: aCollection
+		package: method owningPackageIfLoose!
+
+copy: aSymbol from: aClass classified: aString
+	"Copy the method with the specified selector <Symbol>, in the <Behavior>, aClass, to the
+	receiver's method dictionary, adding it to the category identified by the final <String>
+	argument."
+
+	"This method is primarily present for Smalltalk-80 compatibility, but differs in that as
+	Dolphin supports multiple categories, the existing method classifications are retained and
+	'cat' is treated as a new classification. The method is recompiled in its new class. If a
+	compile error occurs then a CompilerNotification is signalled. Answers the new method or
+	nil."
+
+	| categories |
+	categories := (aClass compiledMethodAt: aSymbol) categories.
+	categories add: aString asMethodCategory.
+	^self
+		copy: aSymbol
+		from: aClass
+		categories: categories!
+
+copyAll: selectors from: class
+	"Copy each of the methods with selectors in the <Collection> of <Symbol>s,
+	selectors, from the <Behavior>, class, to the receiver's method dictionary, 
+	maintaining the methods current categories.
+	Answers whether all of the methods copied successfully."
+
+	^selectors allSatisfy: [:selector | (self copy: selector from: class) notNil]!
+
+copyAll: selectors from: class classified: cat
+	"Copy each of the methods with selectors in the <Collection> of <Symbol>s,
+	selectors, from the <Behavior>, class, to the receiver's method dictionary, 
+	adding the new methods to the category with <readableString> name, cat,
+	as well as the methods current categories.
+	Answers whether all of the methods copied successfully."
+
+	^selectors allSatisfy: [:selector | 
+		(self copy: selector from: class classified: cat) notNil]!
+
+copyAllCategoriesFrom: class
+	"Copy all categories of method from the <Behavior>, class, to the receiver.
+	Answers whether all of the methods copied successfully."
+	
+	^class selectors allSatisfy: [:selector | (self copy: selector from: class) notNil]!
+
+copyCategory: category from: aClass
+	"Copy all methods of the <ClassDescription> class, in the <MethodCategory>
+	named by the <readableString>, category, to the receiver. Answers whether all 
+	of the methods copied successfully."
+
+	| cat |
+	cat := category asMethodCategory.
+	^(cat methodsInBehavior: self)
+		allSatisfy: [:m | (self
+				copy: m selector
+				from: aClass
+				classified: cat) notNil]!
+
+copyCategory: category from: aClass classified: newCategory
+	"Copy all methods of the <ClassDescription> class, in the <MethodCategory>
+	named by the <readableString>, category, to the receiver. Answers whether all 
+	of the methods copied successfully. The methods are additionally classified
+	under the <MethodCategory> named by the <readableString>, newCategory."
+
+	| cat |
+	cat := category asMethodCategory.
+	^(cat methodsInBehavior: self)
+		allSatisfy: [:m | (self
+				copy: m selector
+				from: aClass
+				classified: newCategory) notNil]!
 
 isDeprecated
 	^self subclassResponsibility!
@@ -1798,15 +2124,37 @@ publicMethods
 
 	^self methodsFor: 'public'
 
-! !
+!
+
+renameInstVar: oldString to: newString
+	"Private - Rename the instance variable of the receiver named by the <readableString>, oldString, to be
+	named by the <readableString>, newString. The variable must be one of the receiver's own instance 
+	variables , not of one of its superclasses.
+	Note: This is a low-level operation that does not recompile any methods, however since the methods
+	access instance variables by index they will remain valid until recompiled. It is the caller's responsibility
+	to rewrite and recompile methods that reference the instance variable."
+
+	self setInstanceVariables: (self instVarNames copyReplacing: oldString withObject: newString).
+	self logDefinition.
+	self environment classUpdated: self! !
 !ClassDescription categoriesFor: #browse!development!public! !
+!ClassDescription categoriesFor: #categoriesFor:are:!public!source filing-methods! !
 !ClassDescription categoriesFor: #commentStamp:prior:!public!source filing-methods!squeak! !
+!ClassDescription categoriesFor: #copy:from:!methods-copying!public! !
+!ClassDescription categoriesFor: #copy:from:categories:!methods-copying!public! !
+!ClassDescription categoriesFor: #copy:from:classified:!methods-copying!public! !
+!ClassDescription categoriesFor: #copyAll:from:!methods-copying!public! !
+!ClassDescription categoriesFor: #copyAll:from:classified:!methods-copying!public! !
+!ClassDescription categoriesFor: #copyAllCategoriesFrom:!methods-copying!public! !
+!ClassDescription categoriesFor: #copyCategory:from:!methods-copying!public! !
+!ClassDescription categoriesFor: #copyCategory:from:classified:!methods-copying!public! !
 !ClassDescription categoriesFor: #isDeprecated!development!public!source filing! !
 !ClassDescription categoriesFor: #methodsFor:!public!source filing-methods! !
 !ClassDescription categoriesFor: #methodsFor:stamp:!public!source filing-methods!squeak! !
 !ClassDescription categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 !ClassDescription categoriesFor: #privateMethods!public!source filing-methods! !
 !ClassDescription categoriesFor: #publicMethods!public!source filing-methods! !
+!ClassDescription categoriesFor: #renameInstVar:to:!instance variables!private! !
 
 !ClassEnvironment methodsFor!
 
@@ -1977,12 +2325,6 @@ publishedAspectsOfInstances
 		yourself! !
 !CommandMenuItem class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
-!ComparisonPolicy class methodsFor!
-
-isDeprecated
-	^true! !
-!ComparisonPolicy class categoriesFor: #isDeprecated!development!public!source filing! !
-
 !CompiledCode methodsFor!
 
 alternateInspectorClass
@@ -2137,12 +2479,25 @@ icon
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForMethod: self!
 
+storeCategories
+	"Private - Record the categories of the receiver.
+	The job is simply delegated to the receiver's source manager."
+
+	self class sourceManager storeCategoriesForMethod: self.!
+
+storeSourceString: aString
+	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
+
+	self class sourceManager storeSourceString: aString forMethod: self!
+
 stylerClass
 	^Smalltalk developmentSystem methodStylerClass! !
 !CompiledMethod categoriesFor: #asDebugMethod!development!private! !
 !CompiledMethod categoriesFor: #browse!development!public! !
 !CompiledMethod categoriesFor: #icon!constants!development!public! !
 !CompiledMethod categoriesFor: #searchForInTool:!public! !
+!CompiledMethod categoriesFor: #storeCategories!categories!private!source filing-methods! !
+!CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
 !CompiledMethod categoriesFor: #stylerClass!constants!public! !
 
 !CompiledMethod class methodsFor!
@@ -2410,13 +2765,25 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass sequenceableCollection: aSymbol! !
 !ExternalArray class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
+!ExternalField methodsFor!
+
+autoGenCategories
+	^{ExternalStructure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}! !
+!ExternalField categoriesFor: #autoGenCategories!development!private! !
+
 !ExternalInteger class methodsFor!
+
+decompileDefinition
+	"Don't allow the receiver and its subclasses to be decompiled since they are
+	required by fundamental aspects of the system such as streaming"
+	!
 
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass integer: aSymbol! !
+!ExternalInteger class categoriesFor: #decompileDefinition!development!public! !
 !ExternalInteger class categoriesFor: #newInstanceAspect:class:!adapters!development!private! !
 
 !ExternalIntegerBytes methodsFor!
@@ -2452,6 +2819,12 @@ publishedAspectsOfInstances
     ! !
 !ExternalMethod class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!ExternalScalar class methodsFor!
+
+shouldOverrideGetFieldList
+	^false! !
+!ExternalScalar class categoriesFor: #shouldOverrideGetFieldList!development!private! !
+
 !ExternalStructure methodsFor!
 
 alternateInspectorClass
@@ -2478,6 +2851,12 @@ publishedAspects
 
 !ExternalStructure class methodsFor!
 
+autoGenCategory
+	"Private - Answer the name of the <MethodCategory> into which the auto-generated 
+	structure accessors for the receiver should be compiled."
+
+	^'**compiled accessors**'!
+
 compileAllDefinitions
 	"Compile the definitions of the receiver and all its subclasses"
 
@@ -2496,6 +2875,20 @@ compileDefinition
 		recompileDefinition;
 		shrink!
 
+compileGetFieldList
+	"Private - Define a #getFieldList method for the structure class so that the field names are available even if the template is removed."
+
+	| methodText |
+	self shouldOverrideGetFieldList ifTrue: [^self].
+	methodText := String writeStream: 256.
+	methodText
+		nextPutAll: 'getFieldList';
+		crtab;
+		nextPutAll: '^#('.
+	self fieldNamesFromTemplate do: [:each | methodText print: each] separatedBy: [methodText space].
+	methodText nextPut: $).
+	self class compile: methodText contents categories: {'constants'. 'private'. self autoGenCategory}!
+
 compileGetMethod: aSymbol forField: anExternalField
 	"Private - Generate a compiled 'get' accessor method for the selector aSymbol 
 	and field definition anExternalField."
@@ -2505,6 +2898,16 @@ compileGetMethod: aSymbol forField: anExternalField
 	methodText := String writeStream: 256.
 	anExternalField printAccessor: aSymbol on: methodText.
 	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
+
+compileNewFields
+	self definesNewFields ifFalse: [^self].
+	self template keysAndValuesDo: 
+			[:selector :field |
+			(self shouldCompile: selector forField: field)
+				ifTrue: 
+					[selector last == $:
+						ifTrue: [self compileSetMethod: selector forField: field]
+						ifFalse: [self compileGetMethod: selector forField: field]]]!
 
 compileSetMethod: aSelector forField: anExternalField
 	"Private - Generate a compiled 'set' accessor method for the selector aSymbol 
@@ -2516,29 +2919,58 @@ compileSetMethod: aSelector forField: anExternalField
 	anExternalField printMutator: aSelector on: methodText.
 	self formatAndCompile: methodText contents categories: anExternalField autoGenCategories!
 
+decompileDefinition
+	"Remove generated accessor methods from the receiver. The template will be lazily rebuilt."
+
+	{self. self class}
+		do: [:each | [each removeCategory: self autoGenCategory] on: NotFoundError do: [:e | e notify]]!
+
 formatAndCompile: aString categories: categories 
 	| source |
 	source := Smalltalk developmentSystem reformatSource: aString in: self.
 	^self compile: source categories: categories!
 
+hasHandCodedMethodFor: selector
+	"Private - Answer whether the receiver appears to have a hand coded implementation
+	for the specified selector <Symbol>."
+
+	| method |
+	method := self compiledMethodAt: selector ifAbsent: [^false].
+	^(self autoGenCategory asMethodCategory includesMethod: method) not!
+
 recompileDefinition
 	"Private - Recompiles the existing template for the receiver"
 
 	self decompileDefinition.
-	self definesNewFields ifFalse: [^self].
-	self template keysAndValuesDo: 
-			[:selector :field |
-			(self shouldCompile: selector forField: field)
-				ifTrue: 
-					[selector last == $:
-						ifTrue: [self compileSetMethod: selector forField: field]
-						ifFalse: [self compileGetMethod: selector forField: field]]]! !
-!ExternalStructure class categoriesFor: #compileAllDefinitions!development!public! !
-!ExternalStructure class categoriesFor: #compileDefinition!development!public! !
-!ExternalStructure class categoriesFor: #compileGetMethod:forField:!development!private! !
-!ExternalStructure class categoriesFor: #compileSetMethod:forField:!development!private! !
+	self compileNewFields.
+	self compileGetFieldList!
+
+shouldCompile: selector forField: anExternalField
+	"Private - Answer whether to compile an accessor method
+	with the specified selector for the specified field in the
+	receiver."
+
+	^anExternalField canGenerateAccessors 
+		and: [(self hasHandCodedMethodFor: selector) not		"Don't overwrite manually written methods"
+			and: ["Don't generate inherited fields unless specifically marked for override"
+				anExternalField isOverride or: [
+					(self superclass template includesKey: (selector upTo: $:) asSymbol) not]]]!
+
+shouldOverrideGetFieldList
+	^self hasHandCodedMethodFor: #getFieldList! !
+!ExternalStructure class categoriesFor: #autoGenCategory!compiling!constants!private! !
+!ExternalStructure class categoriesFor: #compileAllDefinitions!compiling!public! !
+!ExternalStructure class categoriesFor: #compileDefinition!compiling!public! !
+!ExternalStructure class categoriesFor: #compileGetFieldList!compiling!private! !
+!ExternalStructure class categoriesFor: #compileGetMethod:forField:!compiling!private! !
+!ExternalStructure class categoriesFor: #compileNewFields!compiling!private! !
+!ExternalStructure class categoriesFor: #compileSetMethod:forField:!compiling!private! !
+!ExternalStructure class categoriesFor: #decompileDefinition!compiling!public! !
 !ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
-!ExternalStructure class categoriesFor: #recompileDefinition!development!private! !
+!ExternalStructure class categoriesFor: #hasHandCodedMethodFor:!compiling!private! !
+!ExternalStructure class categoriesFor: #recompileDefinition!compiling!private! !
+!ExternalStructure class categoriesFor: #shouldCompile:forField:!compiling!private! !
+!ExternalStructure class categoriesFor: #shouldOverrideGetFieldList!compiling!private! !
 
 !Float class methodsFor!
 
@@ -3130,9 +3562,36 @@ icon
 
 !Metaclass methodsFor!
 
+changeIndex
+	^self instanceClass changeIndex!
+
+isChanged: aBoolean
+	"Flag the receiver as changed or not changed, according to the value 
+	of the <Boolean> argument.
+	Implementation Note: The change flags are held on the instance side."
+
+	self instanceClass isChanged: aBoolean!
+
 isDeprecated
-	^self instanceClass isDeprecated! !
-!Metaclass categoriesFor: #isDeprecated!development!public!source filing! !
+	^self instanceClass isDeprecated!
+
+methodChanged: aCompiledMethod
+	"Private - Flag the receiver as changed or not changed, according to the value 
+	of the <Boolean> argument. If the receiver is marked as changed, then
+	its owning package (if any) is also so marked."
+
+	self instanceClass methodChanged: aCompiledMethod!
+
+storeClassCategories
+	"Private - Record the categories of the receiver to the change log.
+	The job is simply delegated to the receiver's source manager (if available)."
+
+	self instanceClass storeClassCategories! !
+!Metaclass categoriesFor: #changeIndex!accessing!private! !
+!Metaclass categoriesFor: #isChanged:!public!source filing! !
+!Metaclass categoriesFor: #isDeprecated!public!source filing! !
+!Metaclass categoriesFor: #methodChanged:!helpers!private! !
+!Metaclass categoriesFor: #storeClassCategories!private!source filing-methods! !
 
 !MethodCategory class methodsFor!
 
@@ -3460,10 +3919,80 @@ includesResource: aResourceIdentifier
 
 !Package methodsFor!
 
+allFileOutNames
+	"Private - Answers an OrderedCollection of the source filenames for the receiver and all of its 
+	contents when in PAX source mode. Note that the PAX filename is alway last in the collection."
+
+	| answer |
+	answer := OrderedCollection new.
+	self allSourceObjectsDo: [:each | answer add: each fileOutName].
+	^answer!
+
+beNotUsingPAX
+	"Place the receiver into a mode where it is not using PAX source files.
+	This simply involves deleting any PAX source files that currently exist. Without the
+	presence of a same named PAX file, the receiver assumes it is operating in
+	non-PAX mode for all future save operations."
+
+	| msg names |
+	self isUsingPAX ifFalse: [^self].
+	names := self allFileOutNames.
+	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
+				expandMacrosWith: self name
+				with: names size
+				with: self path.
+	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
+		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
+
+beUsingPAX
+	"Place the receiver into a mode where it is using PAX source files.
+	This simply involves creating the PAX source files for the first time. With the
+	presence of a same named PAX file, the receiver assumes it is operating in
+	PAX mode for all future save operations."
+
+	| msg |
+	self isUsingPAX ifTrue: [^self].
+	msg := 'Placing this package into PAX source mode will create <1d> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?' 
+				expandMacrosWith: self allSourceObjects size
+				with: self path.
+	(MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name)) 
+		ifTrue: [self fileOutAll]!
+
 browse
     	"Open a suitable browser onto the receiver."
     
     	Smalltalk developmentSystem browsePackages: (Array with: self)!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	all the file out names associated with the PAX file are writeable."
+
+	^self fileOutNames allSatisfy: [:each | File isWriteable: each]!
+
+checkTimestamps
+	"Compare the timestamp cached when the package was installed against the timestamp of the
+	package file. If the package file has been modified since the package was loaded, then warn
+	the user to avoid inadvertent overwrites of later package versions causing loss of changes."
+
+	(CheckTimestamps and: [self isRenegade]) ifFalse: [^self].
+	Warning 
+		signal: ('The package <1s> has been modified outside this image since it was loaded or last saved.
+
+	Package timestamp:	<2s>
+	File modification time:	<3s>
+
+If you proceed and save it from this image then you may lose changes that have been made in another image. It is recommended that before proceeding you first take a backup copy of the current version on disk, or that you abort this operation.' 
+				expandMacrosWith: self name
+				with: self timestamp displayString
+				with: (FILETIME fromInteger: self fileModificationTime) displayString)
+
+!
+
+createPackagePath
+	"Private - Create the directory where the receiver resides on disk"
+
+	File createDirectoryPath: (File splitPathFrom: self fileOutName)
+!
 
 defaultAbout
 	"Shows a default About splash screen for the receiver. This looks for a bitmap of the same
@@ -3494,6 +4023,137 @@ defaultAboutBitmap
 			olePicture fromFile: bitmapFile usingLocator: (FolderRelativeFileLocator basePath: self path)]
 		ifFalse: [DIBSection width: 480 height: 360]!
 
+fileModificationTime
+	"Private - Answer the modification time of the receiver's package file on disk as the
+	<integer> number of 100-nanosecond intervals since 12:00 A.M. January 1, 1601 UTC (i.e. a
+	Win32 FILETIME), or 0 if it does not currently exist."
+
+	| fileName |
+	fileName := self isSystemPackage 
+				ifTrue: [self classDefinitionsFileName]
+				ifFalse: [self isUsingPAX ifTrue: [self fileOutName] ifFalse: [self packageFileName]].
+	^(File lastWriteTime: fileName) ifNil: [0] ifNotNil: [:filetime | filetime asInteger]!
+
+fileOut
+	"Private - File out a definition of the receiver to source files. Normally this
+	involves saving a PAX file except in the case where the receiver is a system package
+	when separate class and resource definitions files are saved instead."
+
+	self isSystemPackage 
+		ifFalse: 
+			[self
+				savePAC;
+				savePAX;
+				versionIfRequired]
+		ifTrue: [self fileOutBootDefinitions].
+	self updateTimestamp.
+	self isChanged: false!
+
+fileOutAll
+	"Fileout the receiver to a PAX file and all out it's associated source files.
+	The .PAC file is also saved when the .PAX is created in order to ensure that
+	the two remain in sync."
+
+	self allSourceObjectsDo: [:each | each fileOut]!
+
+fileOutAllChanged
+	"Fileout the changed source objects in the receiver"
+
+	self allSourceObjectsDo: [:each | each isChanged ifTrue: [each fileOut]]!
+
+fileOutAllOn: aSourceFiler 
+	self fileOutOn: aSourceFiler.
+	self
+		fileOutSourceGlobalsOn: aSourceFiler;
+		fileOutClassesOn: aSourceFiler;
+		fileOutBinaryGlobalsOn: aSourceFiler
+!
+
+fileOutBinaryGlobalsOn: aSourceFiler 
+	"Private - File out the binary representation of the receiver's non-<sourceObject> 
+	globals onto the <SourceFiler> argument. Binary globals are saved as the literal 
+	representation of their #binaryStoreBytes.  This is used in the single-file .PAC format."
+
+	aSourceFiler 
+		emitComment: 'Binary Globals';
+		cr.
+	(self binaryGlobalVariables asSortedCollection: self variableSortBlock) 
+		do: [:var | aSourceFiler fileOutBinaryGlobal: var; cr]!
+
+fileOutClassesOn: aSourceFiler 
+	"Private - Append definitions of all the classes owned by the
+	receiver to the <SourceFiler>, aSourceFiler.
+	Note that the classes are filed out in class hierarchy order to 
+	avoid creating forward references and to create a consistently
+	ordered source file that can be effectively diff'd."
+
+	aSourceFiler
+		emitComment: 'Classes';
+		cr.
+	self classesInHierarchyOrder do: 
+			[:aClass | 
+			aSourceFiler fileOutAttributesOfClass: aClass.
+			self fileOutMethodsOfClass: aClass on: aSourceFiler.
+			self fileOutMethodsOfClass: aClass class on: aSourceFiler]!
+
+fileOutGlobalAliasesOn: aSourceFiler 
+	"Private - File out the text representation of the receiver's global aliases onto the
+	<puttableStream>, stream."
+
+	aSourceFiler
+		emitComment: 'Global Aliases';
+		cr.
+	(self globalAliasVariables asSortedCollection: self variableSortBlock) 
+		do: [:var | aSourceFiler fileOutExpression: var key , ' := ' , var value name].
+	aSourceFiler cr!
+
+fileOutLooseMethodsOn: aSourceFiler 
+	"Private - File out the loose methods owned by the receiver to the <SourceFiler> argument."
+
+	aSourceFiler
+		emitComment: 'Loose Methods';
+		cr.
+	aSourceFiler fileOutMethods: self methods!
+
+fileOutNames
+	"Private - Answers a set of the source filenames for the receiver when in the multi-file
+	(.PAX) source mode. This contains pathnames used to store the PAX file and each of the
+	binary globals, etc. It does not include the source files for the	<sourceObject>s held by the 
+	receiver."
+	
+	^self isSystemPackage 
+		ifTrue: [Set with: self classDefinitionsFileName]
+		ifFalse: [
+			Set new 
+				add: self fileOutName;
+				addAll: (self binaryGlobalNames collect: [:each | self fileNameForBinaryGlobal: each]);
+				yourself]!
+
+fileOutOn: aSourceFiler
+	"Append the definition of the receiver in PAX format onto the
+	<SourceFiler> argument. This does not file out the source files of the 
+	receiver's contents."
+
+	self savePAXChunkOn: aSourceFiler.
+	self fileOutClassDefinitionsOn: aSourceFiler.
+	self fileOutGlobalAliasesOn: aSourceFiler.
+	self fileOutLooseMethodsOn: aSourceFiler.
+	aSourceFiler
+		emitComment: 'End of package definition';
+		cr!
+
+fileOutSourceGlobalsOn: aSourceFiler 
+	"Private - File out the text representation of the receiver's globals onto the
+	<puttableStream>, stream. This is used in the single-file .PAC format."
+
+	aSourceFiler
+		emitComment: 'Source Globals';
+		cr.
+	(self sourceGlobalVariables asSortedCollection: self variableSortBlock) do: 
+			[:var | 
+			var value fileOutOn: aSourceFiler.
+			aSourceFiler cr]!
+
 hasImageStripper
 	^imageStripperBytes notNil and: [self imageStripper notNil]!
 
@@ -3510,6 +4170,28 @@ imageStripper
 	^self environment at: #ImageStripper
 		ifPresent: [:stripperClass | self rehydrateImageStripper: stripperClass]!
 
+isRenegade
+	"Answer whether the receiver was loaded (or last saved) before its source representation in the file system.
+	An example of where a package might be a renegade is if it has been modified and saved from another image."
+
+	| lastWriteTime |
+	lastWriteTime := self fileModificationTime.
+	^lastWriteTime > timestamp!
+
+isUsingPAX
+	"Answer true if the receiver is using PAX mode. If a PAX file of the same name as the
+	receiver exists on disk then both PAC and PAX files are saved simultaneously."
+
+	^self isSystemPackage or: [File exists: self fileOutName]!
+
+isUsingPAX: aBoolean
+	"Place the receiver into a mode where it is using PAX source format according to aBoolean."
+
+	self assert: [self isSystemPackage not].
+	aBoolean 
+		ifTrue: [ self beUsingPAX ]
+		ifFalse: [ self beNotUsingPAX ]!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
@@ -3521,16 +4203,183 @@ publishedAspects
 				addFrom: self globalNames asSortedCollection).
 	^aspects!
 
+save
+	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
+	If the receiver is operating in PAX source mode then all of the source files are also
+	filed out, including a .PAX definition. Answer whether the package was actually saved.
+	This is the implementation behind the Package Browser's 'Save' command."
+
+	self isUsingPAX ifTrue: [self fileOutAll] ifFalse: [self saveSingleFilePackage].
+	^true!
+
+saveChanges
+	"Save the receiver, if changed. This includes all of the source for the receiver's contents.
+	If the receiver is operating in PAX source mode then all of the changed source files are
+	also filed out. including a .PAX definition. Answer whether the package was actually saved.
+	This is the implementation behind the Package Browser's 'Save Changes' command."
+
+	self isChanged ifFalse: [^self].
+	self isUsingPAX 
+		ifTrue: 
+			[self fileOutAllChanged.
+			self isChanged: false]
+		ifFalse: [self saveSingleFilePackage]!
+
+savePAC
+	"Private - File out a definition of the receiver and all the objects it owns to a single
+	text .PAC file. Any binary objects (views, non-<sourceObject> globals) are saved as a
+	printed representation of their STB'd binary store bytes."
+
+	| filer |
+	self okToSaveOrDeploy.
+	self checkTimestamps.
+	self createPackagePath.
+	"This event can be hooked to backup the old package before it is overwritten, etc"
+	self manager trigger: #aboutToSave: with: self.
+	filer := self sourceManager sourceFilerOn: (FileStream write: self dotPacPath).
+	[self fileOutAllOn: filer] ensure: [filer close]!
+
+savePAX
+	"Private - File out a definition of the receiver to a .PAX source file. This does not file
+	out the source files of the receiver's contents."
+
+	"Implementation Note: All fileouts use case sensitive collation in order to avoid problem of order
+	switches for same named identifiers with different case, which can cause a line-based source
+	management system to detect a change where there isn't one."
+
+	| filer |
+	self createPackagePath.
+	filer := self sourceManager sourceFilerOn: (FileStream write: self fileOutName).
+	[self fileOutOn: filer] ensure: [filer close].
+
+	"We must also file out the binary globals at this stage, as they are not <sourceObject>s."
+	self fileOutBinaryGlobals!
+
+savePAXNames: names on: stream
+	"Private - File out the PAX source file representation of the list of source object
+	names, names, onto the <puttableStream>, stream, in ascending order of their
+	printable representation."
+
+	((names collect: [:each | each printString]) asSortedCollection: SortedCollection caseSensitiveSortBlock)
+		do: [:eachName | stream tab; nextPutAll: 'add: '; nextPutAll: eachName; nextPut: $;; cr ].
+	stream 
+		tab; nextPutAll: 'yourself'!
+
+savePAXPackageOn: stream
+	"Private - Save the basic details of the receiver in the PAX source file 
+	representation onto the <puttableStream>, target."
+
+	"Create package and set some basic attributes"
+
+	stream
+		nextPutAll: '| package |';
+		cr;
+		nextPutAll: 'package := ';
+		print: self class;
+		space;
+		nextPutAll: #name:;
+		space;
+		print: self name;
+		nextPut: $.;
+		cr;
+		nextPutAll: 'package ';
+		nextPutAll: #paxVersion:;
+		space;
+		print: self paxVersion;
+		nextPut: $;;
+		crtab;
+		nextPutAll: #basicComment:;
+		space;
+		print: self comment;
+		nextPut: $.;
+		cr;
+		cr.
+!
+
+savePAXPrerequisiteNamesOn: target
+	"Private - File out names of the pre-requisite packages of the receiver onto the onto 
+	the <puttableStream>, target, in ascending order."
+
+	| basePath |
+	target
+		nextPutAll: 'package ';
+		nextPutAll: #setPrerequisites:;
+		nextPutAll: ' (IdentitySet new';
+		cr.
+	basePath := self path.
+	(self prerequisites asSortedCollection: [:a :b | (a name trueCompare: b name) < 0]) do: 
+			[:each | 
+			target
+				tab;
+				nextPutAll: 'add: ';
+				print: (File removeExtension: (File relativePathOf: each packageFileName to: basePath));
+				nextPut: $;;
+				cr].
+	target
+		tab;
+		nextPutAll: 'yourself).';
+		cr;
+		cr!
+
+saveSingleFilePackage
+	"Save the receiver and all owned objects to a single .PAC file.
+	The complementary message to save a multi-file package is #fileOutAll."
+
+	self savePAC.
+	self updateTimestamp.
+	self resetChangeFlags!
+
 searchForInTool: aSmalltalkToolShell 
-	aSmalltalkToolShell searchForPackage: self! !
+	aSmalltalkToolShell searchForPackage: self!
+
+toggleUsingPAX
+	"Toggles the use of PAX mode."
+
+	^self isUsingPAX: self isUsingPAX not!
+
+updateTimestamp
+	"Private - Synchronise the receiver's timestamp with its source file."
+
+	timestamp := self fileModificationTime! !
+!Package categoriesFor: #allFileOutNames!accessing!private!source filing! !
+!Package categoriesFor: #beNotUsingPAX!modes!public! !
+!Package categoriesFor: #beUsingPAX!modes!public! !
 !Package categoriesFor: #browse!development!enumerating!public! !
+!Package categoriesFor: #canFileOut!public!source filing! !
+!Package categoriesFor: #checkTimestamps!helpers!private! !
+!Package categoriesFor: #createPackagePath!private!source filing! !
 !Package categoriesFor: #defaultAbout!development!public! !
 !Package categoriesFor: #defaultAboutBitmap!constants!public! !
+!Package categoriesFor: #fileModificationTime!helpers!private! !
+!Package categoriesFor: #fileOut!public!source filing! !
+!Package categoriesFor: #fileOutAll!public!source filing! !
+!Package categoriesFor: #fileOutAllChanged!public!source filing! !
+!Package categoriesFor: #fileOutAllOn:!public!source filing! !
+!Package categoriesFor: #fileOutBinaryGlobalsOn:!private!source filing! !
+!Package categoriesFor: #fileOutClassesOn:!private!source filing! !
+!Package categoriesFor: #fileOutGlobalAliasesOn:!private!source filing! !
+!Package categoriesFor: #fileOutLooseMethodsOn:!private!source filing! !
+!Package categoriesFor: #fileOutNames!private!source filing! !
+!Package categoriesFor: #fileOutOn:!public!source filing! !
+!Package categoriesFor: #fileOutSourceGlobalsOn:!private!source filing! !
 !Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #icon!public! !
 !Package categoriesFor: #imageStripper!accessing!public! !
+!Package categoriesFor: #isRenegade!public!testing! !
+!Package categoriesFor: #isUsingPAX!public!testing! !
+!Package categoriesFor: #isUsingPAX:!public!testing! !
 !Package categoriesFor: #publishedAspects!accessing!development!public! !
+!Package categoriesFor: #save!operations!public! !
+!Package categoriesFor: #saveChanges!operations!public! !
+!Package categoriesFor: #savePAC!helpers!private! !
+!Package categoriesFor: #savePAX!private!source filing-pax! !
+!Package categoriesFor: #savePAXNames:on:!private!source filing-pax! !
+!Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
+!Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
+!Package categoriesFor: #saveSingleFilePackage!public!source filing! !
 !Package categoriesFor: #searchForInTool:!development!public! !
+!Package categoriesFor: #toggleUsingPAX!commands!public! !
+!Package categoriesFor: #updateTimestamp!helpers!private! !
 
 !Package class methodsFor!
 
@@ -3675,9 +4524,36 @@ aspectDisplayOn: aStream
 browse
     	"Open a browser on the receiver"
     
-    	Smalltalk developmentSystem browsePoolConstantsDictionary: self! !
+    	Smalltalk developmentSystem browsePoolConstantsDictionary: self!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	the file out file is writeable"
+
+	^File isWriteable: self  fileOutName!
+
+fileOut
+	"File out the receiver to <name>.st"
+
+	self class sourceManager fileOut: self.
+	self isChanged: false!
+
+referencesTo: keyString 
+	"Answer the collection of any methods which references the named key, assumed to
+	be a variable name from the receiver."
+
+	| refs |
+	refs := OrderedCollection new.
+	self classesReferencing do: 
+			[:c | 
+			c methodDictionary do: [:m | (m containsSource: keyString) ifTrue: [refs add: m]].
+			c class methodDictionary do: [:m | (m containsSource: keyString) ifTrue: [refs add: m]]].
+	^refs! !
 !PoolConstantsDictionary categoriesFor: #aspectDisplayOn:!development!private! !
 !PoolConstantsDictionary categoriesFor: #browse!development!operations-browsing!public! !
+!PoolConstantsDictionary categoriesFor: #canFileOut!development!public!source filing! !
+!PoolConstantsDictionary categoriesFor: #fileOut!development!public!source filing! !
+!PoolConstantsDictionary categoriesFor: #referencesTo:!development!private! !
 
 !PoolDictionary methodsFor!
 
@@ -3688,8 +4564,22 @@ aspectDisplayOn: aStream
   	formats. In this case we override back to the Object implementation.
   	N.B. This is a development time only method that supports the PublishedAspectInspector."
   
-  	self displayOn: aStream! !
+  	self displayOn: aStream!
+
+canFileOut
+	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
+	the file out file is writeable"
+
+	^File isWriteable: self  fileOutName!
+
+fileOut
+	"File out the receiver to <name>.st"
+
+	self class sourceManager fileOut: self.
+	self isChanged: false! !
 !PoolDictionary categoriesFor: #aspectDisplayOn:!development!private! !
+!PoolDictionary categoriesFor: #canFileOut!development!public!source filing! !
+!PoolDictionary categoriesFor: #fileOut!development!public!source filing! !
 
 !Presenter class methodsFor!
 
@@ -4677,7 +5567,179 @@ publishedAspectsOfInstances
 	^aspects! !
 !Slider class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
 
+!SourceFiler methodsFor!
+
+emitMessages: aClass ofBehavior: selectors 
+	| methods sortedSelectors |
+	sortedSelectors := selectors 
+				asSortedCollection: SortedCollection caseSensitiveSortBlock.
+	methods := sortedSelectors asArray collect: 
+					[:selector | 
+					| method |
+					self
+						cr;
+						cr.
+					method := aClass compiledMethodAt: selector.
+					self emitMethod: method.
+					method].
+	^methods!
+
+fileOutAttributesOfClass: aClass
+	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
+	aClass definition, onto the source stream."
+
+	self emitGUIDOfClass: aClass.
+	self emitSpecialBehaviourAttributesOfClass: aClass.
+	self emitClassPoolOfClass: aClass.
+	self emitCommentOfClass: aClass.
+	self emitCategoriesOfClass: aClass.
+!
+
+fileOutClass: aClass 
+	"File out a full definition of the <ClassDescription>, aClass, to the source stream
+	including all methods, categories and protocols. This includes all methods of the
+	class, including any loose methods that may belong to packages other than the
+	owning package of the class."
+
+	self
+		fileOutDefinitionOfClass: aClass;
+		fileOutAllMethodsOfBehavior: aClass;
+		fileOutAllMethodsOfBehavior: aClass class!
+
+fileOutDefinitionOfClass: aClass 
+	"File-out a definition of the <Class> to the source stream."
+
+	self
+		fileOutBasicDefinitionOfClass: aClass;
+		fileOutAttributesOfClass: aClass!
+
+fileOutMessages: selectors ofBehavior: aClass 
+	"Append the definitions of the methods of the <ClassDescription>, aClassDescription,
+	whose names match the selectors in the <collection> of <Symbol>, aCollection, to the source 
+	stream. Any method category settings are included."
+
+	| methods |
+	selectors isEmpty ifTrue: [^self].
+	self emitHeaderForMethodsOf: aClass.
+	methods := self emitMessages: aClass ofBehavior: selectors.
+	self emitFooterForMethodsOf: aClass.
+	self isSourceOnly ifFalse: [self emitCategoriesOfMethods: methods].
+	self cr!
+
+fileOutMethods: aCollection 
+	"Append the definitions of the methods in the <collection> argument to the source stream,
+	ordered by class. Any method category settings are included."
+
+	| methodsByClass |
+	methodsByClass := Dictionary new.
+	aCollection do: 
+			[:each | 
+			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
+			(methodsByClass at: each methodClass ifAbsentPut: [OrderedCollection new]) add: each selector].
+	(methodsByClass associations 
+		asSortedCollection: [:a :b | (a key name trueCompare: b key name) <= 0]) 
+			do: [:each | self fileOutMessages: each value ofBehavior: each key]! !
+!SourceFiler categoriesFor: #emitMessages:ofBehavior:!private!source filing! !
+!SourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
+!SourceFiler categoriesFor: #fileOutClass:!public!source filing! !
+!SourceFiler categoriesFor: #fileOutDefinitionOfClass:!public!source filing! !
+!SourceFiler categoriesFor: #fileOutMessages:ofBehavior:!public!source filing! !
+!SourceFiler categoriesFor: #fileOutMethods:!public!source filing! !
+
 !SourceManager methodsFor!
+
+basicCompressSources: progress 
+	"Private - Compresses the sources file reporting the progress to
+	<monadicValuable>, progress."
+
+	| totalClasses index tmpPath smlFile filer classes |
+	index := 0.
+	classes := self class environment allClasses.
+	totalClasses := classes size.
+
+	"Create temporary stream file"
+	tmpPath := File temporaryFilenameWithPrefix: self changesExtension.
+	smlFile := self sourcesFileName.
+	filer := self sourceFilerOn: (FileStream write: tmpPath).
+	filer
+		sourceFileIndex: SourcesIndex;
+		isSourceOnly: true.
+	self logComment: 'Compressing sources....' to: filer.
+	index := 0.
+	classes do: 
+			[:class | 
+			filer storeCommentString: class comment forClass: class.
+			filer fileOutAllMethodsOfBehavior: class class.
+			filer fileOutAllMethodsOfBehavior: class.
+			progress value: (index := index + 1) * 100 / totalClasses].
+	self compressPackageCommentsOn: filer.
+	filer close.
+
+	"Copy temporary file over to dolphin.sml"
+	self closeSourcesFile.
+	File
+		delete: smlFile;
+		rename: tmpPath to: smlFile.
+	self openSourcesFile: smlFile.
+
+	"Save image"
+	SessionManager current saveImage.
+
+	"Clear down change log"
+	self truncateChanges.
+	self logComment: 'Compressed sources'!
+
+compressChangedMethodsOf: aBehavior onto: aSourceFiler 
+	"Private - Emits the changed methods of aBehavior onto aSourceFiler."
+
+	| changed |
+	changed := aBehavior changedMethods collect: [:each | each selector].
+	aSourceFiler fileOutMessages: changed ofBehavior: aBehavior!
+
+compressChangesOf: aClass onto: aSourceFiler 
+	"Private - Compress any changes to the specified class onto the <SourceFiler>."
+
+	"First the comment ..."
+
+	(self sourceIndexFromDescriptor: aClass sourceDescriptor) = ChangesIndex 
+		ifTrue: [aSourceFiler storeCommentString: aClass comment forClass: aClass].
+	"...then the methods..."
+	self
+		compressChangedMethodsOf: aClass class onto: aSourceFiler;
+		compressChangedMethodsOf: aClass onto: aSourceFiler.
+	"Have to reset the changes index so that all changed methods are included since we have lost
+	the save point"
+	aClass isChanged 
+		ifTrue: 
+			["Note that it is necessary to remove the existing change index first since
+			 attempts after the first to set it are ignored"
+			aClass
+				isChanged: false;
+				changeIndexValue: [0]]!
+
+compressChangesOnto: aSourceFiler 
+	self class environment allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
+	Package manager packages do: 
+			[:each | 
+			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex 
+				ifTrue: [aSourceFiler storeCommentString: each comment forPackage: each]]!
+
+compressPackageCommentsOn: aSourceFiler 
+	Package manager packages do: 
+			[:each | 
+			| comment |
+			comment := each comment.
+			comment isEmpty 
+				ifTrue: [each sourceDescriptor: nil]
+				ifFalse: [aSourceFiler storeCommentString: comment forPackage: each]]!
+
+compressSources
+	"Compresses the change log into the sources file. The result is a new empty changes log.
+	The image must be saved to keep it in sync."
+
+	self basicCompressSources: [:x | ]
+
+!
 
 compressSourcesWith: aProgressDialog
 	"Compresses the change log into the sources file. The result is a new empty changes log.
@@ -4685,8 +5747,70 @@ compressSourcesWith: aProgressDialog
 
 	aProgressDialog operation: [:progress | self basicCompressSources: progress ].
 	aProgressDialog showModal.
-! !
+!
+
+fileOut: anObject
+	"File out anObject to its default file. If an error occurs during file out, the file
+	will be closed by finalization."
+
+	self fileOut: anObject to: anObject fileOutName.!
+
+fileOut: anObject to: aFileName 
+	"File out anObject to aFileName. If an error occurs during file out, the file
+	will be closed by finalization."
+
+	| filer |
+	filer := self newSourceFiler: aFileName.
+	anObject fileOutOn: filer.
+	filer close!
+
+fileOutPackagedClass: aClass
+	"File out aClass via the package mechanism. The class is filed out to the same directory as the
+	package which contains it. Only the methods contained in this package are included in the 
+	generated file and following this call the class and its methods are marked as unchanged."
+
+	self fileOutPackagedClass: aClass to: aClass fileOutName.
+	!
+
+fileOutPackagedClass: aClass to: aFileName 
+	"File out aClass via the package mechanism. The class is filed out to aFileName.
+	Only the methods contained in this package are included in the 
+	generated file and following this call the class and its methods are marked as unchanged."
+
+	| package filer |
+	package := self packageManager packageOfClass: aClass.
+	package isNil 
+		ifTrue: 
+			["Not in any package so just file out normally"
+			^self fileOut: aClass to: aFileName].
+	filer := self newSourceFiler: aFileName.
+	filer fileOutDefinitionOfClass: aClass.
+	package fileOutMethodsOfClass: aClass on: filer.
+	package fileOutMethodsOfClass: aClass class on: filer.
+	filer close.
+
+	"Flag the class as being saved, i.e. no longer changed"
+	aClass isChanged: false!
+
+logChanged: aSourceObject
+	"File out the changed <sourceObject>, aSourceObject, to the change log."
+
+	self changesFiler 
+		ifNotNil: [:logger | mutex critical: 
+					[aSourceObject fileOutOn: logger.
+					logger flush]]! !
+!SourceManager categoriesFor: #basicCompressSources:!operations-source files!private! !
+!SourceManager categoriesFor: #compressChangedMethodsOf:onto:!operations-source files!private! !
+!SourceManager categoriesFor: #compressChangesOf:onto:!operations-source files!private! !
+!SourceManager categoriesFor: #compressChangesOnto:!operations-source files!public! !
+!SourceManager categoriesFor: #compressPackageCommentsOn:!operations-source files!private! !
+!SourceManager categoriesFor: #compressSources!operations-source files!public! !
 !SourceManager categoriesFor: #compressSourcesWith:!operations-source files!public! !
+!SourceManager categoriesFor: #fileOut:!public!source filing! !
+!SourceManager categoriesFor: #fileOut:to:!public!source filing! !
+!SourceManager categoriesFor: #fileOutPackagedClass:!public!source filing! !
+!SourceManager categoriesFor: #fileOutPackagedClass:to:!public!source filing! !
+!SourceManager categoriesFor: #logChanged:!public!source filing! !
 
 !SpinButton methodsFor!
 

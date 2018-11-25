@@ -158,10 +158,9 @@ argumentTypes
 	descriptions for the receiver."
 
 	| types |
-	types := OrderedCollection new: self argumentCount.
-	self argumentsDo: [:n :type |
-		types add: (self class nameOf: n type: type)].
-	^types!
+	types := Array writeStream: self argumentCount.
+	self argumentsDo: [:n :type | types nextPut: (self class nameOf: n type: type)].
+	^types contents!
 
 calleeCleans
 	"Answer whether the receiver describes a function which pops its own arguments
@@ -237,14 +236,18 @@ printOn: aStream
 	self printDescriptionOn: aStream.
 	aStream nextPut: $)!
 
+retType
+	"Private - Answer the return type as a value from the external type enumeration."
+
+	^(descriptor at: 3) bitAnd: RetTypeMask!
+
 returnType
 	"Private - Answer the return type name of the external function described by the receiver.
 	This is an integer enumeration."
 
 	| type class |
-	type := (descriptor at: 3) bitAnd: RetTypeMask.
-	class := (self class typeHasArgument: type) 
-				ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
+	type := self retType.
+	class := (self class typeHasArgument: type) ifTrue: [self at: (descriptor at: RetClassIndex) + 1].
 	^self class nameOf: type type: class! !
 !ExternalDescriptor categoriesFor: #argumentCount!accessing!private! !
 !ExternalDescriptor categoriesFor: #argumentIndexFromOffset:!helpers!private! !
@@ -261,6 +264,7 @@ returnType
 !ExternalDescriptor categoriesFor: #name:!accessing!public! !
 !ExternalDescriptor categoriesFor: #printDescriptionOn:!accessing!private! !
 !ExternalDescriptor categoriesFor: #printOn:!printing!public! !
+!ExternalDescriptor categoriesFor: #retType!accessing!private! !
 !ExternalDescriptor categoriesFor: #returnType!accessing!private! !
 
 !ExternalDescriptor class methodsFor!
@@ -481,7 +485,7 @@ parseArgDesc: aString
 
 	| qualifier typeName assoc |
 	typeName := aString upTo: $*.
-	qualifier := aString rightString: aString size - typeName size.
+	qualifier := aString copyFrom: typeName size + 1 to: aString size.
 
 	"Get an association between a type code for the name and the associated indirection type code or class name"
 	assoc := (self typeFromName: typeName ifAbsent: []) 
@@ -505,24 +509,24 @@ parseDescriptor: aString
 	| descriptor literals stream argCount returnType |
 	stream := aString readStream.
 	descriptor := OrderedCollection new: 10.
-	descriptor add: (self parseCallingConvention: stream).
-	descriptor add: nil.	"Reserve slot for argument count"
+	descriptor addLast: (self parseCallingConvention: stream).
+	descriptor addLast: nil.	"Reserve slot for argument count"
 	returnType := self parseArgDesc: stream nextWord.
-	descriptor add: returnType key.
-	descriptor add: 0.
+	descriptor addLast: returnType key.
+	descriptor addLast: 0.
 	literals := OrderedCollection new.
-	returnType value notNil ifTrue: [literals add: returnType value].
+	returnType value notNil ifTrue: [literals addLast: returnType value].
 	argCount := 0.
 	stream skipSeparators.
 	[stream atEnd] whileFalse: 
 			[| argType |
 			argType := self parseArgDesc: stream nextWord.
 			argCount := argCount + 1.
-			descriptor add: argType key.
+			descriptor addLast: argType key.
 			argType value notNil
 				ifTrue: 
-					[descriptor add: literals size.
-					literals add: argType value]].
+					[descriptor addLast: literals size.
+					literals addLast: argType value]].
 	descriptor at: 2 put: argCount.
 	^{descriptor. literals}!
 

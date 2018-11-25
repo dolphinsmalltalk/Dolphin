@@ -97,15 +97,6 @@ allDependentPackages
 
 	^self manager allDependentPackagesOf: self visited: Set new!
 
-allFileOutNames
-	"Private - Answers an OrderedCollection of the source filenames for the receiver and all of its 
-	contents when in PAX source mode. Note that the PAX filename is alway last in the collection."
-
-	| answer |
-	answer := OrderedCollection new.
-	self allSourceObjectsDo: [:each | answer add: each fileOutName].
-	^answer!
-
 allMethods
 	"Answer an <IdentitySet> of all the <CompiledMethod>s directly owned by
 	the receiver or by owning the class in which it is situated."
@@ -274,36 +265,6 @@ behaviorsDo: operation
 	self classesDo: [:aClass | operation value: aClass; value: aClass class].
 !
 
-beNotUsingPAX
-	"Place the receiver into a mode where it is not using PAX source files.
-	This simply involves deleting any PAX source files that currently exist. Without the
-	presence of a same named PAX file, the receiver assumes it is operating in
-	non-PAX mode for all future save operations."
-
-	| msg names |
-	self isUsingPAX ifFalse: [^self].
-	names := self allFileOutNames.
-	msg := 'Placing this package into PAC mode will delete <2d> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
-				expandMacrosWith: self name
-				with: names size
-				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAC mode...' expandMacrosWith: self name))
-		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
-
-beUsingPAX
-	"Place the receiver into a mode where it is using PAX source files.
-	This simply involves creating the PAX source files for the first time. With the
-	presence of a same named PAX file, the receiver assumes it is operating in
-	PAX mode for all future save operations."
-
-	| msg |
-	self isUsingPAX ifTrue: [^self].
-	msg := 'Placing this package into PAX source mode will create <1d> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?' 
-				expandMacrosWith: self allSourceObjects size
-				with: self path.
-	(MessageBox confirm: msg caption: ('Convert <1p> to PAX mode...' expandMacrosWith: self name)) 
-		ifTrue: [self fileOutAll]!
-
 binaryGlobalNames
 	"Private - Answer a <Collection> of <Symbol>s, being the names of all binary global variables
 	in this package. This information is cached temporarily during package loading, and
@@ -341,12 +302,6 @@ calculatePrerequisites
 
 	^self tracePrerequisites keys!
 
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	all the file out names associated with the PAX file are writeable."
-
-	^self fileOutNames allSatisfy: [:each | File isWriteable: each]!
-
 canShowAbout
 	"Answer true if we can show an about box for the receiver, i.e. we have an aboutBlock"
 
@@ -367,25 +322,6 @@ changeIndexValue: aBlock
 		propertyOf: self
 		at: #changeIndex
 		ifAbsentPut: aBlock!
-
-checkTimestamps
-	"Compare the timestamp cached when the package was installed against the timestamp of the
-	package file. If the package file has been modified since the package was loaded, then warn
-	the user to avoid inadvertent overwrites of later package versions causing loss of changes."
-
-	(CheckTimestamps and: [self isRenegade]) ifFalse: [^self].
-	Warning 
-		signal: ('The package <1s> has been modified outside this image since it was loaded or last saved.
-
-	Package timestamp:	<2s>
-	File modification time:	<3s>
-
-If you proceed and save it from this image then you may lose changes that have been made in another image. It is recommended that before proceeding you first take a backup copy of the current version on disk, or that you abort this operation.' 
-				expandMacrosWith: self name
-				with: self timestamp displayString
-				with: (FILETIME fromInteger: self fileModificationTime) displayString)
-
-!
 
 classDefinitionsFileName
 	"Private - Answer a filename to use for filing out the class definitions of the receiver.
@@ -447,12 +383,6 @@ comment: aString
 	self basicComment: aString.
 	self storeComment.
 	self isChanged: true!
-
-createPackagePath
-	"Private - Create the directory where the receiver resides on disk"
-
-	File createDirectoryPath: (File splitPathFrom: self fileOutName)
-!
 
 declareClasses
 	"Private - Predefine global variables for each of the classes in the package prior to those classes
@@ -539,17 +469,6 @@ fileInScript: aSymbol
 fileLocator
 	^PackageRelativeFileLocator package: self!
 
-fileModificationTime
-	"Private - Answer the modification time of the receiver's package file on disk as the
-	<integer> number of 100-nanosecond intervals since 12:00 A.M. January 1, 1601 UTC (i.e. a
-	Win32 FILETIME), or 0 if it does not currently exist."
-
-	| fileName |
-	fileName := self isSystemPackage 
-				ifTrue: [self classDefinitionsFileName]
-				ifFalse: [self isUsingPAX ifTrue: [self fileOutName] ifFalse: [self packageFileName]].
-	^(File lastWriteTime: fileName) ifNil: [0] ifNotNil: [:filetime | filetime asInteger]!
-
 fileNameForBinaryGlobal: globalName
 	"Private - Answer a filename for storing the binary globalName."
 
@@ -560,41 +479,6 @@ fileNameForSourceGlobal: globalName
 	"Private - Answer a filename for storing the source globalObject."
 
 	^File composePath: self path stem: globalName extension: self class sourceGlobalExtension
-!
-
-fileOut
-	"Private - File out a definition of the receiver to source files. Normally this
-	involves saving a PAX file except in the case where the receiver is a system package
-	when separate class and resource definitions files are saved instead."
-
-	self isSystemPackage 
-		ifFalse: 
-			[self
-				savePAC;
-				savePAX;
-				versionIfRequired]
-		ifTrue: [self fileOutBootDefinitions].
-	self updateTimestamp.
-	self isChanged: false!
-
-fileOutAll
-	"Fileout the receiver to a PAX file and all out it's associated source files.
-	The .PAC file is also saved when the .PAX is created in order to ensure that
-	the two remain in sync."
-
-	self allSourceObjectsDo: [:each | each fileOut]!
-
-fileOutAllChanged
-	"Fileout the changed source objects in the receiver"
-
-	self allSourceObjectsDo: [:each | each isChanged ifTrue: [each fileOut]]!
-
-fileOutAllOn: aSourceFiler 
-	self fileOutOn: aSourceFiler.
-	self
-		fileOutSourceGlobalsOn: aSourceFiler;
-		fileOutClassesOn: aSourceFiler;
-		fileOutBinaryGlobalsOn: aSourceFiler
 !
 
 fileOutBinaryGlobals
@@ -608,17 +492,6 @@ fileOutBinaryGlobals
 		globalStream close].
 
 !
-
-fileOutBinaryGlobalsOn: aSourceFiler 
-	"Private - File out the binary representation of the receiver's non-<sourceObject> 
-	globals onto the <SourceFiler> argument. Binary globals are saved as the literal 
-	representation of their #binaryStoreBytes.  This is used in the single-file .PAC format."
-
-	aSourceFiler 
-		emitComment: 'Binary Globals';
-		cr.
-	(self binaryGlobalVariables asSortedCollection: self variableSortBlock) 
-		do: [:var | aSourceFiler fileOutBinaryGlobal: var; cr]!
 
 fileOutBootDefinitions
 	"Private - If this is a system package then only write out .st files capable of defining
@@ -641,41 +514,6 @@ fileOutClassDefinitionsOn: aSourceFiler
 	self classesInHierarchyOrder 
 		do: [:aClass | aSourceFiler fileOutBasicDefinitionOfClass: aClass].
 	aSourceFiler cr!
-
-fileOutClassesOn: aSourceFiler 
-	"Private - Append definitions of all the classes owned by the
-	receiver to the <SourceFiler>, aSourceFiler.
-	Note that the classes are filed out in class hierarchy order to 
-	avoid creating forward references and to create a consistently
-	ordered source file that can be effectively diff'd."
-
-	aSourceFiler
-		emitComment: 'Classes';
-		cr.
-	self classesInHierarchyOrder do: 
-			[:aClass | 
-			aSourceFiler fileOutAttributesOfClass: aClass.
-			self fileOutMethodsOfClass: aClass on: aSourceFiler.
-			self fileOutMethodsOfClass: aClass class on: aSourceFiler]!
-
-fileOutGlobalAliasesOn: aSourceFiler 
-	"Private - File out the text representation of the receiver's global aliases onto the
-	<puttableStream>, stream."
-
-	aSourceFiler
-		emitComment: 'Global Aliases';
-		cr.
-	(self globalAliasVariables asSortedCollection: self variableSortBlock) 
-		do: [:var | aSourceFiler fileOutExpression: var key , ' := ' , var value name].
-	aSourceFiler cr!
-
-fileOutLooseMethodsOn: aSourceFiler 
-	"Private - File out the loose methods owned by the receiver to the <SourceFiler> argument."
-
-	aSourceFiler
-		emitComment: 'Loose Methods';
-		cr.
-	aSourceFiler fileOutMethods: self methods!
 
 fileOutMethodsOfClass: aClass on: aSourceFiler 
 	"Private - Append any definitions of the classes methods which
@@ -718,45 +556,6 @@ fileOutName
 	"Answer the pathname used to store the PAX file for the sources of the receiver"
 
 	^File composePath: self path stem: self name extension: self class sourcePackageExtension!
-
-fileOutNames
-	"Private - Answers a set of the source filenames for the receiver when in the multi-file
-	(.PAX) source mode. This contains pathnames used to store the PAX file and each of the
-	binary globals, etc. It does not include the source files for the	<sourceObject>s held by the 
-	receiver."
-	
-	^self isSystemPackage 
-		ifTrue: [Set with: self classDefinitionsFileName]
-		ifFalse: [
-			Set new 
-				add: self fileOutName;
-				addAll: (self binaryGlobalNames collect: [:each | self fileNameForBinaryGlobal: each]);
-				yourself]!
-
-fileOutOn: aSourceFiler
-	"Append the definition of the receiver in PAX format onto the
-	<SourceFiler> argument. This does not file out the source files of the 
-	receiver's contents."
-
-	self savePAXChunkOn: aSourceFiler.
-	self fileOutClassDefinitionsOn: aSourceFiler.
-	self fileOutGlobalAliasesOn: aSourceFiler.
-	self fileOutLooseMethodsOn: aSourceFiler.
-	aSourceFiler
-		emitComment: 'End of package definition';
-		cr!
-
-fileOutSourceGlobalsOn: aSourceFiler 
-	"Private - File out the text representation of the receiver's globals onto the
-	<puttableStream>, stream. This is used in the single-file .PAC format."
-
-	aSourceFiler
-		emitComment: 'Source Globals';
-		cr.
-	(self sourceGlobalVariables asSortedCollection: self variableSortBlock) do: 
-			[:var | 
-			var value fileOutOn: aSourceFiler.
-			aSourceFiler cr]!
 
 getEvents
 	"Private - Answer the EventsCollection belonging to the receiver, or nil if the receiver
@@ -998,14 +797,6 @@ isInstalled
 
 	^self manager includesPackage: self!
 
-isRenegade
-	"Answer whether the receiver was loaded (or last saved) before its source representation in the file system.
-	An example of where a package might be a renegade is if it has been modified and saved from another image."
-
-	| lastWriteTime |
-	lastWriteTime := self fileModificationTime.
-	^lastWriteTime > timestamp!
-
 isSourceGlobal: aGlobal
 	"Private - Answer true if aGlobal can be filed out as an external source file"
 
@@ -1016,20 +807,6 @@ isSystemPackage
 	"Answer whether the receiver is the system package"
 
 	^self manager systemPackage == self!
-
-isUsingPAX
-	"Answer true if the receiver is using PAX mode. If a PAX file of the same name as the
-	receiver exists on disk then both PAC and PAX files are saved simultaneously."
-
-	^self isSystemPackage or: [File exists: self fileOutName]!
-
-isUsingPAX: aBoolean
-	"Place the receiver into a mode where it is using PAX source format according to aBoolean."
-
-	self assert: [self isSystemPackage not].
-	aBoolean 
-		ifTrue: [ self beUsingPAX ]
-		ifFalse: [ self beNotUsingPAX ]!
 
 load
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
@@ -1454,18 +1231,6 @@ prerequisites
 	^self prerequisiteNames 
 		collect: [:packageName | pacman packageNamed: packageName ifNone: [_Uncommitted]]!
 
-printBinaryStoreBytesOf: anObject
-	"Private - Prints the literal representation of the binary store bytes of anObject
-	onto a String and answers this."
-
-	| bytes stream |
-	stream := String writeStream.
-	bytes := anObject binaryStoreBytes.
-	bytes printPrefixOn: stream.
-	bytes do: [:each | stream display: each; display: ' '].
-	bytes printSuffixOn: stream.
-	^stream contents!
-
 printOn: aStream
 	"Append a representation of the receiver to aStream."
 
@@ -1595,61 +1360,9 @@ resourceIdentifiers
 
 	^self allResourceIdentifiers!
 
-save
-	"Save the receiver to a single PAC file. This includes all of the source for the receiver's contents.
-	If the receiver is operating in PAX source mode then all of the source files are also
-	filed out, including a .PAX definition. Answer whether the package was actually saved.
-	This is the implementation behind the Package Browser's 'Save' command."
-
-	self isUsingPAX ifTrue: [self fileOutAll] ifFalse: [self saveSingleFilePackage].
-	^true!
-
 saveAs: aString 
 	self manager renamePackage: self to: aString.
 	self save!
-
-saveChanges
-	"Save the receiver, if changed. This includes all of the source for the receiver's contents.
-	If the receiver is operating in PAX source mode then all of the changed source files are
-	also filed out. including a .PAX definition. Answer whether the package was actually saved.
-	This is the implementation behind the Package Browser's 'Save Changes' command."
-
-	self isChanged ifFalse: [^self].
-	self isUsingPAX 
-		ifTrue: 
-			[self fileOutAllChanged.
-			self isChanged: false]
-		ifFalse: [self saveSingleFilePackage]!
-
-savePAC
-	"Private - File out a definition of the receiver and all the objects it owns to a single
-	text .PAC file. Any binary objects (views, non-<sourceObject> globals) are saved as a
-	printed representation of their STB'd binary store bytes."
-
-	| filer |
-	self okToSaveOrDeploy.
-	self checkTimestamps.
-	self createPackagePath.
-	"This event can be hooked to backup the old package before it is overwritten, etc"
-	self manager trigger: #aboutToSave: with: self.
-	filer := self sourceManager sourceFilerOn: (FileStream write: self dotPacPath).
-	[self fileOutAllOn: filer] ensure: [filer close]!
-
-savePAX
-	"Private - File out a definition of the receiver to a .PAX source file. This does not file
-	out the source files of the receiver's contents."
-
-	"Implementation Note: All fileouts use case sensitive collation in order to avoid problem of order
-	switches for same named identifiers with different case, which can cause a line-based source
-	management system to detect a change where there isn't one."
-
-	| filer |
-	self createPackagePath.
-	filer := self sourceManager sourceFilerOn: (FileStream write: self fileOutName).
-	[self fileOutOn: filer] ensure: [filer close].
-
-	"We must also file out the binary globals at this stage, as they are not <sourceObject>s."
-	self fileOutBinaryGlobals!
 
 savePAXAboutBlockOn: stream 
 	aboutBlock isNil ifTrue: [^self].
@@ -1722,16 +1435,6 @@ savePAXManualPrerequisitesOn: target
 		cr;
 		cr!
 
-savePAXNames: names on: stream
-	"Private - File out the PAX source file representation of the list of source object
-	names, names, onto the <puttableStream>, stream, in ascending order of their
-	printable representation."
-
-	((names collect: [:each | each printString]) asSortedCollection: SortedCollection caseSensitiveSortBlock)
-		do: [:eachName | stream tab; nextPutAll: 'add: '; nextPutAll: eachName; nextPut: $;; cr ].
-	stream 
-		tab; nextPutAll: 'yourself'!
-
 savePAXNamesOn: target 
 	"Private - File out the PAX source file representation of the class names, loose method 
 	names, global names, resource names, onto the <puttableStream>, stream, in ascending 
@@ -1753,37 +1456,6 @@ savePAXNamesOn: target
 						cr;
 						cr]]!
 
-savePAXPackageOn: stream
-	"Private - Save the basic details of the receiver in the PAX source file 
-	representation onto the <puttableStream>, target."
-
-	"Create package and set some basic attributes"
-
-	stream
-		nextPutAll: '| package |';
-		cr;
-		nextPutAll: 'package := ';
-		print: self class;
-		space;
-		nextPutAll: #name:;
-		space;
-		print: self name;
-		nextPut: $.;
-		cr;
-		nextPutAll: 'package ';
-		nextPutAll: #paxVersion:;
-		space;
-		print: self paxVersion;
-		nextPut: $;;
-		crtab;
-		nextPutAll: #basicComment:;
-		space;
-		print: self comment;
-		nextPut: $.;
-		cr;
-		cr.
-!
-
 savePAXPackageVersionOn: aStream 
 	"Private - Save Package Version - this is the version of the package, not the file out format"
 
@@ -1794,31 +1466,6 @@ savePAXPackageVersionOn: aStream
 		space;
 		print: self packageVersion;
 		nextPut: $.;
-		cr;
-		cr!
-
-savePAXPrerequisiteNamesOn: target
-	"Private - File out names of the pre-requisite packages of the receiver onto the onto 
-	the <puttableStream>, target, in ascending order."
-
-	| basePath |
-	target
-		nextPutAll: 'package ';
-		nextPutAll: #setPrerequisites:;
-		nextPutAll: ' (IdentitySet new';
-		cr.
-	basePath := self path.
-	(self prerequisites asSortedCollection: [:a :b | (a name trueCompare: b name) < 0]) do: 
-			[:each | 
-			target
-				tab;
-				nextPutAll: 'add: ';
-				print: (File removeExtension: (File relativePathOf: each packageFileName to: basePath));
-				nextPut: $;;
-				cr].
-	target
-		tab;
-		nextPutAll: 'yourself).';
 		cr;
 		cr!
 
@@ -1865,14 +1512,6 @@ savePAXUntracedGlobalsOn: aWriteStream
 		nextPutAll: ').';
 		cr;
 		cr!
-
-saveSingleFilePackage
-	"Save the receiver and all owned objects to a single .PAC file.
-	The complementary message to save a multi-file package is #fileOutAll."
-
-	self savePAC.
-	self updateTimestamp.
-	self resetChangeFlags!
 
 scriptAt: scriptName 
 	"Answer the script <String> associated with the <Symbol>, scriptName.
@@ -1992,10 +1631,11 @@ timestamp
 
 	^FILETIME fromInteger: timestamp!
 
-toggleUsingPAX
-	"Toggles the use of PAX mode."
+timestamp: anObject
+	timestamp := anObject!
 
-	^self isUsingPAX: self isUsingPAX not!
+timestamp1
+	^timestamp!
 
 trace: trace prerequisite: aPackage from: from to: to type: type
 	"Private - Append the supplied details of a prerequisite link
@@ -2223,15 +1863,9 @@ uninstallMethods
 	owned by the receiver (i.e. methods installed into classes outside this package)."
 
 	self methodNames do: 
-			[:methodName | 
-			| method |
-			method := self methodFromName: methodName ifAbsent: [].
-			method isNil 
-				ifTrue: 
-					[Notification 
-						signal: ('Packaged method <1s>>><2s> no longer exists' expandMacrosWith: methodName key
-								with: methodName value)]
-				ifFalse: [method methodClass removeSelector: method selector]]!
+			[:methodName |
+			(self methodFromName: methodName ifAbsent: [])
+				ifNotNil: [:method | method methodClass removeSelector: method selector]]!
 
 untracedGlobals
 	"Answer a <collection> of <Symbol>s, being the names of the global variables which should be
@@ -2257,11 +1891,6 @@ upateFileNames
 	"The prereqs may be out of date due to changes since last load, also the pre-reqs set at package load time
 	include relative paths, so just toss them away"
 	prerequisiteNames := nil!
-
-updateTimestamp
-	"Private - Synchronise the receiver's timestamp with its source file."
-
-	timestamp := self fileModificationTime!
 
 validate
 	"Private - Validate the internal structure repairing any errors"
@@ -2308,7 +1937,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #addPackagedMethod:!adding!private! !
 !Package categoriesFor: #addResourceIdentifier:!adding!public! !
 !Package categoriesFor: #allDependentPackages!accessing!public! !
-!Package categoriesFor: #allFileOutNames!accessing!private!source filing! !
 !Package categoriesFor: #allMethods!accessing!public! !
 !Package categoriesFor: #allMethodsDo:!enumerating!private! !
 !Package categoriesFor: #allPrerequisites!accessing!private! !
@@ -2327,19 +1955,15 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #behaviorFromName:ifAbsent:!mapping!private! !
 !Package categoriesFor: #behaviors!enumerating!public! !
 !Package categoriesFor: #behaviorsDo:!enumerating!public! !
-!Package categoriesFor: #beNotUsingPAX!modes!public! !
-!Package categoriesFor: #beUsingPAX!modes!public! !
 !Package categoriesFor: #binaryGlobalNames!accessing!private! !
 !Package categoriesFor: #binaryGlobalNames:!accessing!private! !
 !Package categoriesFor: #binaryGlobalVariables!private!source filing! !
 !Package categoriesFor: #buildPrerequisiteNames!helpers!private! !
 !Package categoriesFor: #calculatePrerequisites!operations!private! !
-!Package categoriesFor: #canFileOut!public!source filing! !
 !Package categoriesFor: #canShowAbout!public!testing! !
 !Package categoriesFor: #changedFrom:!public!source filing! !
 !Package categoriesFor: #changeIndex!accessing!development!private! !
 !Package categoriesFor: #changeIndexValue:!accessing!development!private! !
-!Package categoriesFor: #checkTimestamps!helpers!private! !
 !Package categoriesFor: #classDefinitionsFileName!constants!private! !
 !Package categoriesFor: #classes!enumerating!public! !
 !Package categoriesFor: #classesDo:!enumerating!public! !
@@ -2349,7 +1973,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #classNames!accessing!public! !
 !Package categoriesFor: #comment!accessing!public! !
 !Package categoriesFor: #comment:!accessing!public! !
-!Package categoriesFor: #createPackagePath!private!source filing! !
 !Package categoriesFor: #declareClasses!helpers!private! !
 !Package categoriesFor: #declareGlobals!helpers!private! !
 !Package categoriesFor: #dependentPackages!accessing!public! !
@@ -2359,28 +1982,16 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #endClassDefinitionsMarker!constants!private! !
 !Package categoriesFor: #environment!constants!private! !
 !Package categoriesFor: #errorFileCorrupt!exceptions!private! !
-!Package categoriesFor: #fileInClasses!private!source filing! !
+!Package categoriesFor: #fileInClasses!development!private!source filing! !
 !Package categoriesFor: #fileInScript:!private!source filing! !
 !Package categoriesFor: #fileLocator!accessing!public! !
-!Package categoriesFor: #fileModificationTime!helpers!private! !
 !Package categoriesFor: #fileNameForBinaryGlobal:!mapping!private! !
 !Package categoriesFor: #fileNameForSourceGlobal:!mapping!private! !
-!Package categoriesFor: #fileOut!public!source filing! !
-!Package categoriesFor: #fileOutAll!public!source filing! !
-!Package categoriesFor: #fileOutAllChanged!public!source filing! !
-!Package categoriesFor: #fileOutAllOn:!public!source filing! !
 !Package categoriesFor: #fileOutBinaryGlobals!private!source filing! !
-!Package categoriesFor: #fileOutBinaryGlobalsOn:!private!source filing! !
 !Package categoriesFor: #fileOutBootDefinitions!development!private! !
 !Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
-!Package categoriesFor: #fileOutClassesOn:!private!source filing! !
-!Package categoriesFor: #fileOutGlobalAliasesOn:!private!source filing! !
-!Package categoriesFor: #fileOutLooseMethodsOn:!private!source filing! !
 !Package categoriesFor: #fileOutMethodsOfClass:on:!private!source filing! !
 !Package categoriesFor: #fileOutName!public!source filing! !
-!Package categoriesFor: #fileOutNames!private!source filing! !
-!Package categoriesFor: #fileOutOn:!public!source filing! !
-!Package categoriesFor: #fileOutSourceGlobalsOn:!private!source filing! !
 !Package categoriesFor: #getEvents!events!private! !
 !Package categoriesFor: #getPrerequisites!enumerating!private! !
 !Package categoriesFor: #globalAliases!private!source filing! !
@@ -2414,11 +2025,8 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #isGlobalAlias:!private!testing! !
 !Package categoriesFor: #isImportedClass:!private!testing! !
 !Package categoriesFor: #isInstalled!public!testing! !
-!Package categoriesFor: #isRenegade!public!testing! !
 !Package categoriesFor: #isSourceGlobal:!private!testing! !
 !Package categoriesFor: #isSystemPackage!public!testing! !
-!Package categoriesFor: #isUsingPAX!public!testing! !
-!Package categoriesFor: #isUsingPAX:!public!testing! !
 !Package categoriesFor: #load!operations!private! !
 !Package categoriesFor: #loadBinaryGlobals!binary filing!private! !
 !Package categoriesFor: #loadPAC!private!source filing! !
@@ -2458,7 +2066,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #paxVersion:!accessing!private! !
 !Package categoriesFor: #prerequisiteNames!accessing!private! !
 !Package categoriesFor: #prerequisites!enumerating!public! !
-!Package categoriesFor: #printBinaryStoreBytesOf:!helpers!private! !
 !Package categoriesFor: #printOn:!printing!public! !
 !Package categoriesFor: #privateUninstall!private!removing! !
 !Package categoriesFor: #rebaseTo:!public!testing! !
@@ -2475,24 +2082,16 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #resetChangeFlags!public!source filing! !
 !Package categoriesFor: #resetPrerequisites!operations!private! !
 !Package categoriesFor: #resourceIdentifiers!accessing!public! !
-!Package categoriesFor: #save!operations!public! !
 !Package categoriesFor: #saveAs:!commands!public! !
-!Package categoriesFor: #saveChanges!operations!public! !
-!Package categoriesFor: #savePAC!helpers!private! !
-!Package categoriesFor: #savePAX!private!source filing-pax! !
 !Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXGlobalNamesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXNames:on:!private!source filing-pax! !
 !Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXUntracedGlobalsOn:!public!source filing-pax! !
-!Package categoriesFor: #saveSingleFilePackage!public!source filing! !
 !Package categoriesFor: #scriptAt:!accessing!public! !
 !Package categoriesFor: #scriptAt:put:!accessing!public! !
 !Package categoriesFor: #scripts!accessing!private! !
@@ -2510,7 +2109,8 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #synchronizeNames!helpers!private! !
 !Package categoriesFor: #systemGlobalRenamed:to:!event handling!private! !
 !Package categoriesFor: #timestamp!accessing!public! !
-!Package categoriesFor: #toggleUsingPAX!commands!public! !
+!Package categoriesFor: #timestamp:!accessing!private! !
+!Package categoriesFor: #timestamp1!accessing!private! !
 !Package categoriesFor: #trace:prerequisite:from:to:type:!helpers!private! !
 !Package categoriesFor: #tracePrerequisiteGlobals:packagedGlobals:!operations!private! !
 !Package categoriesFor: #tracePrerequisites!operations!private! !
@@ -2526,13 +2126,10 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #untracedGlobals!accessing!public! !
 !Package categoriesFor: #untracedGlobals:!accessing!public! !
 !Package categoriesFor: #upateFileNames!operations!private! !
-!Package categoriesFor: #updateTimestamp!helpers!private! !
 !Package categoriesFor: #validate!operations!private! !
 !Package categoriesFor: #variableSortBlock!constants!private! !
 !Package categoriesFor: #versionIfRequired!public! !
 !Package categoriesFor: #vmVersionCheck:!constants!private! !
-
-Package methodProtocol: #sourceObject attributes: #() selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage)!
 
 !Package class methodsFor!
 

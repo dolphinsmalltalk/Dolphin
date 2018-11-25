@@ -16,7 +16,8 @@ ExceptionSet comment: 'ExceptionSet is a system class forming part of the Dolphi
 	The ANSI standard does not specify whether the answer is a new
 	exceptionSet, or the receiver - we answer the receiver."
 
-	selectors add: anotherException!
+	selectors := selectors copyWith: anotherException.
+	^self!
 
 handles: exception
 	"Answer whether the receiver contains an <exceptionSelector> which
@@ -27,7 +28,7 @@ handles: exception
 initialize
 	"Initialize the receiver."
 
-	selectors := OrderedCollection new!
+	selectors := #()!
 
 selectors
 	"Answer the value of the receiver's instance variable 'selectors'.
@@ -56,12 +57,10 @@ new
 
 	^super new initialize!
 
-with: selector1 with: selector2
-	"Private - Answer a new instance of the receiver containing 
-	the <exceptionSelector> arguments, selector1 and selector2"
+selectors: anArray
+	"Private - Answer a new instance of the receiver containing representing a set of the <exceptionSelector>s in the <Array> argument."
 
-	^super new
-		selectors: (OrderedCollection with: selector1 with: selector2)! !
+	^super new selectors: anArray! !
 !ExceptionSet class categoriesFor: #new!instance creation!public! !
-!ExceptionSet class categoriesFor: #with:with:!instance creation!private! !
+!ExceptionSet class categoriesFor: #selectors:!instance creation!private! !
 

@@ -115,12 +115,14 @@ forecolorChanged
 forkProgressMonitor
 	"Private - Start a background process to monitor the progress"
 
-	self monitorProgress.
-	progressProcess := [[
-		Processor sleep: self monitorProgressPeriod.
-		self monitorProgress] repeat ] forkAt: Processor userInterruptPriority.
-
-!
+	| pollingInterval |
+	self progress: self currentProgress.
+	pollingInterval := self monitorProgressPeriod.
+	progressProcess := 
+			[
+			[Processor sleep: pollingInterval.
+			self progress: self currentProgress] repeat]
+					forkAt: Processor userInterruptPriority!
 
 getItemHandle: anInteger ifAbsent: exceptionHandler 
 	"Private - Answer the handle of the receiver's sub view with the specified ID, 
@@ -167,11 +169,6 @@ isWindowVisible
 
 	^UserLibrary default isWindowVisible: handle
 !
-
-monitorProgress
-	"Private - Update the progress bar with the current progress amount"
-
-	self progress: self currentProgress!
 
 monitorProgressPeriod
 	"Private - Answer the number of milliseconds to wait between progress monitoring updates"
@@ -402,14 +399,13 @@ wmSetCursor: message wParam: wParam lParam: lParam
 !ImageStripperProgress categoriesFor: #isPersistentView!public!testing! !
 !ImageStripperProgress categoriesFor: #isView!public!testing! !
 !ImageStripperProgress categoriesFor: #isWindowVisible!public!testing! !
-!ImageStripperProgress categoriesFor: #monitorProgress!operations!private! !
 !ImageStripperProgress categoriesFor: #monitorProgressPeriod!constants!private! !
 !ImageStripperProgress categoriesFor: #onStartup!event handling!public! !
 !ImageStripperProgress categoriesFor: #parentPresenter!presenter!public! !
 !ImageStripperProgress categoriesFor: #presenter!accessing!public! !
 !ImageStripperProgress categoriesFor: #preTranslateMessage:!dispatching!public! !
 !ImageStripperProgress categoriesFor: #primHookWindowCreate:!helpers!private! !
-!ImageStripperProgress categoriesFor: #progress:!accessing!private! !
+!ImageStripperProgress categoriesFor: #progress:!accessing!must not strip!private! !
 !ImageStripperProgress categoriesFor: #progressRange!operations!private! !
 !ImageStripperProgress categoriesFor: #resourceLib!constants!public! !
 !ImageStripperProgress categoriesFor: #setItem:font:!accessing!private! !

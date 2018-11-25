@@ -13,7 +13,7 @@ Signal comment: ''!
 , arg
 	"Answer a new <ExceptionSet> containing the receiver and the argument."
 
-	^ExceptionSet with: self with: arg!
+	^ExceptionSet selectors: {self. arg}!
 
 defaultAction: exception
 	"Private - Perform the default action for the raised incarnation of the receiver,

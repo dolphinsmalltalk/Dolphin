@@ -452,13 +452,13 @@ formatMessage: messageId source: aHandleOrString flags: dwFlag withArguments: ar
 	| ptr len msg args wideStrings |
 	ptr := ExternalAddress new.
 	args := ByteArray new: arguments size * VMConstants.IntPtrSize.
-	wideStrings := OrderedCollection new.
+	wideStrings := Array writeStream.
 	arguments keysAndValuesDo: 
 			[:i :a |
 			args uintPtrAtOffset: (i - 1) * VMConstants.IntPtrSize
 				put: (a isInteger
 						ifTrue: [a]
-						ifFalse: [a isString ifTrue: [(wideStrings add: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
+						ifFalse: [a isString ifTrue: [(wideStrings nextPut: a asUtf16String) yourAddress] ifFalse: [a yourAddress]])].
 	len := self
 				setLastError: 0;
 				formatMessage: (dwFlag bitOr: ##(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY))

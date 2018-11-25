@@ -57,7 +57,7 @@ basicNext
 			self printValueToTrace: anObject.
 			^anObject].
 
-	"Literal? (Hook for STL filer)"
+	"Literal?"
 	prefixOrLiteral = STBPrefix.LiteralPrefixMask
 		ifTrue: 
 			[| literal |

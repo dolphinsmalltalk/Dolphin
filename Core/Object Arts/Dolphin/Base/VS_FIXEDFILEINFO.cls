@@ -15,22 +15,22 @@ See also the VersionInfo and VersionLibrary classes.'!
 !VS_FIXEDFILEINFO methodsFor!
 
 dwFileVersionLS
-	"Answer the receiver's dwFileVersionLS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFileVersionLS' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFileVersionLS)!
 
 dwFileVersionMS
-	"Answer the receiver's dwFileVersionMS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFileVersionMS' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFileVersionMS)!
 
 dwProductVersionLS
-	"Answer the receiver's dwProductVersionLS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwProductVersionLS' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwProductVersionLS)!
 
 dwProductVersionMS
-	"Answer the receiver's dwProductVersionMS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwProductVersionMS' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwProductVersionMS)!
 
@@ -129,6 +129,10 @@ defineFields
 		defineField: #dwFileSubtype type: DWORDField readOnly;
 		defineField: #dwFileDateMS type: DWORDField readOnly;
 		defineField: #dwFileDateLS type: DWORDField readOnly
-! !
+!
+
+getFieldList
+	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !
 !VS_FIXEDFILEINFO class categoriesFor: #defineFields!initializing!public! !
+!VS_FIXEDFILEINFO class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

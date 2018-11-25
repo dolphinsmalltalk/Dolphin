@@ -53,6 +53,9 @@ fieldType
 
 	^BYTEField!
 
+getFieldList
+	^#(#value)!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -65,6 +68,7 @@ uninitialize
 
 	VMLibrary default registryAt: self name put: nil! !
 !BYTE class categoriesFor: #fieldType!constants!development!private! !
+!BYTE class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !BYTE class categoriesFor: #initialize!development!initializing!private! !
 !BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

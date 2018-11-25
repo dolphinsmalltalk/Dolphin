@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #ExternalInteger
+ExternalScalar subclass: #ExternalInteger
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -24,11 +24,6 @@ ExternalInteger comment: 'ExternalInteger is an abstract class of ExternalStruct
 '!
 !ExternalInteger categoriesForClass!External-Data-Unstructured! !
 !ExternalInteger methodsFor!
-
-= anObject
-	"Answer whether the receiver is equivalent to anObject."
-
-	^anObject = self value!
 
 asInteger
 	"Answer the Integer value of the receiver, signed or
@@ -60,12 +55,6 @@ asUnsignedInteger
 
 	^self subclassResponsibility!
 
-displayOn: aStream
-	"Append, to aStream, a String whose characters are a representation of the receiver as a user
-	would want to see it."
-
-	self value displayOn: aStream!
-
 hash
 	"Answer the SmallInteger hash value for the receiver."
 
@@ -86,39 +75,17 @@ printOn: aStream
 			ifFalse: [self value printStringRadix: 16].
 	aStream
 		basicPrint: self;
-		nextPut: $(; display: hex; nextPut: $)!
-
-value
-	"Answer the receiver's value as a Smalltalk <Integer>.
-	Note: All subclasses defining this as a structure member named #value
-	must mark that field as an override (send it #beOverride) as otherwise
-	the necessary accessor will not be generated."
-
-	^self subclassResponsibility!
-
-value: anObject
-	"Set the receiver's value field to the value of anObject."
-
-	^self subclassResponsibility! !
-!ExternalInteger categoriesFor: #=!comparing!public! !
+		nextPut: $(; display: hex; nextPut: $)! !
 !ExternalInteger categoriesFor: #asInteger!converting!public! !
 !ExternalInteger categoriesFor: #asSignedInteger!converting!public! !
 !ExternalInteger categoriesFor: #asString!converting!public! !
 !ExternalInteger categoriesFor: #asUIntPtr!converting!public! !
 !ExternalInteger categoriesFor: #asUnsignedInteger!converting!public! !
-!ExternalInteger categoriesFor: #displayOn:!printing!public! !
 !ExternalInteger categoriesFor: #hash!comparing!public! !
 !ExternalInteger categoriesFor: #isNull!public!testing! !
 !ExternalInteger categoriesFor: #printOn:!printing!public! !
-!ExternalInteger categoriesFor: #value!converting!public! !
-!ExternalInteger categoriesFor: #value:!**compiled accessors**!public! !
 
 !ExternalInteger class methodsFor!
-
-decompileDefinition
-	"Don't allow the receiver and its subclasses to be decompiled since they are
-	required by fundamental aspects of the system such as streaming"
-	!
 
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
@@ -138,10 +105,13 @@ defineTemplate
 fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
-	^self new value: anInteger! !
-!ExternalInteger class categoriesFor: #decompileDefinition!development!public! !
+	^self new value: anInteger!
+
+getFieldList
+	^#(#value)! !
 !ExternalInteger class categoriesFor: #defineFields!initializing!public! !
 !ExternalInteger class categoriesFor: #definesNewFields!private!testing! !
 !ExternalInteger class categoriesFor: #defineTemplate!development!initializing!public! !
 !ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
+!ExternalInteger class categoriesFor: #getFieldList!constants!private! !
 

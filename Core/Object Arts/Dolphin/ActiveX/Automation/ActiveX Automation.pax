@@ -94,15 +94,13 @@ package methodNames
 	add: #COMInterface -> #typeInfoIfNone:;
 	add: #Date -> #asFloat;
 	add: #Date -> #asVariant;
-	add: #DOUBLE -> #asVariant;
 	add: #ExternalArray -> #asSAFEARRAY;
 	add: #ExternalArray -> #asVariant;
-	add: #ExternalInteger -> #asVariant;
+	add: #ExternalScalar -> #asVariant;
 	add: #ExternalStructure -> #asVariant;
 	add: #ExternalStructure -> #recordInfo;
 	add: #ExternalStructure -> #vt;
 	add: #Float -> #asVariant;
-	add: #FLOAT -> #asVariant;
 	add: #Fraction -> #asVariant;
 	add: #Integer -> #asVariant;
 	add: #IUnknown -> #asVariant;
@@ -272,6 +270,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Conformant Array Fields';
 	add: '..\COM\OLE COM';
 	yourself).
 
@@ -439,15 +438,15 @@ ITypeLib subclass: #ITypeLib2
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-DOUBLE subclass: #DATE
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'AXAutomationConstants'
-	classInstanceVariableNames: ''!
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
 	classVariableNames: ''
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
+	classInstanceVariableNames: ''!
+DOUBLE subclass: #DATE
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 SWORD subclass: #VARIANT_BOOL
 	instanceVariableNames: ''
@@ -831,16 +830,6 @@ asVariant
 !Date categoriesFor: #asFloat!converting!public! !
 !Date categoriesFor: #asVariant!converting!public! !
 
-!DOUBLE methodsFor!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^(VARIANT new)
-		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
-		reference: self! !
-!DOUBLE categoriesFor: #asVariant!converting!public! !
-
 !DOUBLE class methodsFor!
 
 typeName
@@ -921,16 +910,6 @@ typeName
 	^#handle! !
 !ExternalHandle class categoriesFor: #typeName!constants!private! !
 
-!ExternalInteger methodsFor!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^(VARIANT new)
-		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
-		reference: self! !
-!ExternalInteger categoriesFor: #asVariant!converting!public! !
-
 !ExternalInteger class methodsFor!
 
 typeName
@@ -945,6 +924,16 @@ vt
 	^self subclassResponsibility! !
 !ExternalInteger class categoriesFor: #typeName!constants!private! !
 !ExternalInteger class categoriesFor: #vt!constants!private! !
+
+!ExternalScalar methodsFor!
+
+asVariant
+	"Answer the <VARIANT> representation of the receiver."
+
+	^(VARIANT new)
+		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
+		reference: self! !
+!ExternalScalar categoriesFor: #asVariant!converting!public! !
 
 !ExternalStructure methodsFor!
 
@@ -1421,16 +1410,6 @@ asVariant
 
 	^VARIANT fromFloat: self! !
 !Float categoriesFor: #asVariant!converting!public! !
-
-!FLOAT methodsFor!
-
-asVariant
-	"Answer the <VARIANT> representation of the receiver."
-
-	^(VARIANT new)
-		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
-		reference: self! !
-!FLOAT categoriesFor: #asVariant!converting!public! !
 
 !FLOAT class methodsFor!
 

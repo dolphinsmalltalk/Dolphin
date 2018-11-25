@@ -70,19 +70,6 @@ emitComment: aString
 		cr;
 		flush!
 
-emitCommentOfClass: aClass
-	"Private - Emit a chunk which defines the comment for the <Class>, aClass, to the <puttableStream>
-	aWriteStream."
-
-	stream
-		nextPutAll: aClass name;
-		space;
-		display: #comment:;
-		space.
-	self
-		nextChunkPut: aClass comment printString;
-		cr!
-
 emitDeclarationForClass: aClass variable: anAssociation
 	| value |
 	stream
@@ -443,7 +430,6 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #emitCategoriesOfMethod:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitChunk:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitComment:!operations-logging!private! !
-!ChunkSourceFiler categoriesFor: #emitCommentOfClass:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitDeclarationForClass:variable:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
 !ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !

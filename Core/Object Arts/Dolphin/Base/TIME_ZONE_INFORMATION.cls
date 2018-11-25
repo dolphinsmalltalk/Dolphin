@@ -84,7 +84,7 @@ zoneId
 zoneId: anInteger
 	zoneId := anInteger! !
 !TIME_ZONE_INFORMATION categoriesFor: #bias!**compiled accessors**!public! !
-!TIME_ZONE_INFORMATION categoriesFor: #currentBias!**compiled accessors**!public! !
+!TIME_ZONE_INFORMATION categoriesFor: #currentBias!accessing!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightBias!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightDate!**compiled accessors**!public! !
 !TIME_ZONE_INFORMATION categoriesFor: #daylightName!**compiled accessors**!public! !
@@ -122,6 +122,10 @@ defineFields
 		defineField: #daylightName type: (StringField type: Utf16String length: 32) beReadOnly offset: 88;
 		defineField: #daylightDate type: (StructureField type: SYSTEMTIME) beReadOnly offset: 152;
 		defineField: #daylightBias type: SDWORDField new beReadOnly offset: 168.
-	self byteSize: 172! !
+	self byteSize: 172!
+
+getFieldList
+	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
 !TIME_ZONE_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!TIME_ZONE_INFORMATION class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

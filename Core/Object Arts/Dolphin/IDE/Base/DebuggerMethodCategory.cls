@@ -42,8 +42,8 @@ initialize
 				mask: 1;
 				yourself.
 	stepOver := (self newNamed: 'debugger-step over') mask: 2 yourself.
-	steppedThrough := (self name: stepThrough name) contents.
-	steppedOver := (self name: stepOver name) contents.
+	steppedThrough := (self name: stepThrough name) methods.
+	steppedOver := (self name: stepOver name) methods.
 	self
 		removeCategory: stepThrough name;
 		removeCategory: stepOver name.

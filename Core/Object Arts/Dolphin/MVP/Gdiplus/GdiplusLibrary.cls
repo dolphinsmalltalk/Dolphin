@@ -7578,24 +7578,10 @@ uninitialize
 
 !GdiplusLibrary class methodsFor!
 
-clear
-	SessionManager current imageVersionMajor lowWord < 6 
-		ifTrue: 
-			["Dolphin 5 doesn't send any kind of initialization message to a default
-			 library instance when it is reopened. This means that the GdiplusStartup()
-			 call is not made. Therefore we must discard any pre-existing default
-			 instance."
-			self closeDefault.
-			self clearMethodDictionary: self methodDictionary]
-		ifFalse: 
-			["Dolphin 6 re-initializes the default instance when it is opened, so we don't need to discard it"
-			super clear]!
-
 fileName
 	"Answer the host system file name for the library."
 
 	^'GDIPLUS'
 ! !
-!GdiplusLibrary class categoriesFor: #clear!initializing!private! !
 !GdiplusLibrary class categoriesFor: #fileName!**auto generated**!constants!public! !
 

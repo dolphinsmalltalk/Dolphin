@@ -560,7 +560,7 @@ topLevelWindows
 	and in a random order."
 
 	| shells bEnabled desktop |
-	shells := OrderedCollection new: 20.
+	shells := Array writeStream: 20.
 	desktop := Smalltalk at: #View ifPresent: [:view | view desktop].
 	bEnabled := Processor enableAsyncEvents: false.
 	windows do: 
@@ -570,9 +570,9 @@ topLevelWindows
 			the answered collection. This resulted in the View Composer not having any
 			non-shell views it was editing being saved and restored across an image
 			restart."
-			(each isView and: [each parentView == desktop]) ifTrue: [shells add: each]].
+			(each isView and: [each parentView == desktop]) ifTrue: [shells nextPut: each]].
 	Processor enableAsyncEvents: bEnabled.
-	^shells!
+	^shells contents!
 
 uiIdle
 	"Private - Inform the receiver's registered windows that the UI is going idle so that they

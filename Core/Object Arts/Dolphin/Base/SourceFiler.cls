@@ -85,21 +85,6 @@ emitHeaderForMethodsOf: aClass
 
 	^self subclassResponsibility!
 
-emitMessages: aClass ofBehavior: selectors 
-	| methods sortedSelectors |
-	sortedSelectors := selectors 
-				asSortedCollection: SortedCollection caseSensitiveSortBlock.
-	methods := sortedSelectors asArray collect: 
-					[:selector | 
-					| method |
-					self
-						cr;
-						cr.
-					method := aClass compiledMethodAt: selector.
-					self emitMethod: method.
-					method].
-	^methods!
-
 emitMethod: aCompiledMethod 
 	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, to the source stream."
 
@@ -140,17 +125,6 @@ fileOutAllMethodsOfBehavior: aClassDescription
 	self isSourceOnly 
 		ifFalse: [self fileOutProtocols: aClassDescription protocols ofBehavior: aClassDescription]!
 
-fileOutAttributesOfClass: aClass
-	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
-	aClass definition, onto the source stream."
-
-	self emitGUIDOfClass: aClass.
-	self emitSpecialBehaviourAttributesOfClass: aClass.
-	self emitClassPoolOfClass: aClass.
-	self emitCommentOfClass: aClass.
-	self emitCategoriesOfClass: aClass.
-!
-
 fileOutBasicDefinitionOfClass: aClass 
 	"Print a definition of the <Class>, aClass, to the source stream."
 
@@ -163,55 +137,10 @@ fileOutBinaryGlobal: anAssociation
 
 	^self subclassResponsibility!
 
-fileOutClass: aClass 
-	"File out a full definition of the <ClassDescription>, aClass, to the source stream
-	including all methods, categories and protocols. This includes all methods of the
-	class, including any loose methods that may belong to packages other than the
-	owning package of the class."
-
-	self
-		fileOutDefinitionOfClass: aClass;
-		fileOutAllMethodsOfBehavior: aClass;
-		fileOutAllMethodsOfBehavior: aClass class!
-
-fileOutDefinitionOfClass: aClass 
-	"File-out a definition of the <Class> to the source stream."
-
-	self
-		fileOutBasicDefinitionOfClass: aClass;
-		fileOutAttributesOfClass: aClass!
-
 fileOutExpression: aString
 	"Append an immediate expression evaluation to the the source stream."
 
 	^self subclassResponsibility!
-
-fileOutMessages: selectors ofBehavior: aClass 
-	"Append the definitions of the methods of the <ClassDescription>, aClassDescription,
-	whose names match the selectors in the <collection> of <Symbol>, aCollection, to the source 
-	stream. Any method category settings are included."
-
-	| methods |
-	selectors isEmpty ifTrue: [^self].
-	self emitHeaderForMethodsOf: aClass.
-	methods := self emitMessages: aClass ofBehavior: selectors.
-	self emitFooterForMethodsOf: aClass.
-	self isSourceOnly ifFalse: [self emitCategoriesOfMethods: methods].
-	self cr!
-
-fileOutMethods: aCollection 
-	"Append the definitions of the methods in the <collection> argument to the source stream,
-	ordered by class. Any method category settings are included."
-
-	| methodsByClass |
-	methodsByClass := Dictionary new.
-	aCollection do: 
-			[:each | 
-			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
-			(methodsByClass at: each methodClass ifAbsentPut: [OrderedCollection new]) add: each selector].
-	(methodsByClass associations 
-		asSortedCollection: [:a :b | (a key name trueCompare: b key name) <= 0]) 
-			do: [:each | self fileOutMessages: each value ofBehavior: each key]!
 
 fileOutPoolDictionary: aPoolDictionary 
 	"Append a definition of the <PoolDictionary> (or <PoolConstantsDictionary>, aPoolDictionary,
@@ -309,7 +238,6 @@ stream
 !SourceFiler categoriesFor: #emitFooterForMethodsOf:!private!source filing! !
 !SourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing! !
-!SourceFiler categoriesFor: #emitMessages:ofBehavior:!private!source filing! !
 !SourceFiler categoriesFor: #emitMethod:!private!source filing! !
 !SourceFiler categoriesFor: #emitSetBehaviorFlag:forClass:!private!source filing! !
 !SourceFiler categoriesFor: #emitSpecialBehaviourAttributesOfClass:!private!source filing! !
@@ -317,14 +245,9 @@ stream
 !SourceFiler categoriesFor: #evaluationContext:!accessing!public! !
 !SourceFiler categoriesFor: #fileIn!public!source filing! !
 !SourceFiler categoriesFor: #fileOutAllMethodsOfBehavior:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutAttributesOfClass:!public!source filing! !
 !SourceFiler categoriesFor: #fileOutBasicDefinitionOfClass:!public!source filing! !
 !SourceFiler categoriesFor: #fileOutBinaryGlobal:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutClass:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutDefinitionOfClass:!public!source filing! !
 !SourceFiler categoriesFor: #fileOutExpression:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutMessages:ofBehavior:!public!source filing! !
-!SourceFiler categoriesFor: #fileOutMethods:!public!source filing! !
 !SourceFiler categoriesFor: #fileOutPoolDictionary:!public!source filing! !
 !SourceFiler categoriesFor: #fileOutProtocols:ofBehavior:!public!source filing! !
 !SourceFiler categoriesFor: #fileOutResource:!public!source filing! !
@@ -340,8 +263,6 @@ stream
 !SourceFiler categoriesFor: #storeSource:for:!private!source filing! !
 !SourceFiler categoriesFor: #storeSourceString:forMethod:!public!source filing! !
 !SourceFiler categoriesFor: #stream!accessing!private! !
-
-SourceFiler methodProtocol: #sourceFiler attributes: #(#readOnly) selectors: #(#atEnd #close #cr #fileIn #fileOutAllMethodsOfBehavior: #fileOutAttributesOfClass: #fileOutBasicDefinitionOfClass: #fileOutBinaryGlobal: #fileOutClass: #fileOutDefinitionOfClass: #fileOutExpression: #fileOutMessages:ofBehavior: #fileOutPoolDictionary: #fileOutProtocols:ofBehavior: #fileOutResource: #flush #getSourceFromDescriptor: #setToEnd #storeCommentString:forClass: #storeCommentString:forPackage: #storeSourceString:forMethod:)!
 
 !SourceFiler class methodsFor!
 

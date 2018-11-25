@@ -484,6 +484,9 @@ fromAddress: anAddress length: anInteger
 				initializeAtAddress: anAddress;
 				basicLength: anInteger]!
 
+getFieldList
+	^#()!
+
 length: count elementSize: bytes
 	"Private - Answer a new instance of the receiver allocated 
 	with space for count elements of bytes size."
@@ -519,6 +522,7 @@ withAll: newElements
 !ExternalArray class categoriesFor: #elementSize!instance creation!private! !
 !ExternalArray class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalArray class categoriesFor: #fromAddress:length:!instance creation!public! !
+!ExternalArray class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !ExternalArray class categoriesFor: #length:elementSize:!instance creation!private! !
 !ExternalArray class categoriesFor: #new:!instance creation!public! !
 !ExternalArray class categoriesFor: #with:!instance creation!public! !

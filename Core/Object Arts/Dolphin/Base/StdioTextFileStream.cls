@@ -62,7 +62,7 @@ next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	| block end |
 	end := startInteger + countInteger - 1.
 	block := self bufferClass
-				fromString: ((startInteger == 1 and: [end == aSequenceableCollection size])
+				coerceString: ((startInteger == 1 and: [end == aSequenceableCollection size])
 						ifTrue: [aSequenceableCollection]
 						ifFalse: [aSequenceableCollection copyFrom: startInteger to: end]).
 	self nextPutAll: block.

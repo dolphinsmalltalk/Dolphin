@@ -103,7 +103,7 @@ classNames
 
 classNamesFor: aCategoryName
 	#rbFix. "Dolphin class category system not compatible"
-	^((ClassCategory name: aCategoryName) contents select: [:class |
+	^((ClassCategory name: aCategoryName) classes select: [:class |
 			class notNil and: [(self includesClass: class)
 					or: [self includesClass: class class]]]) collect: [:e | e name]
 

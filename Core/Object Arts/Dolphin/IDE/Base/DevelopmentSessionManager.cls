@@ -89,31 +89,31 @@ commandLineParser
 	-x - immediately exit
 	"
 
-	| startupGUID |
-	startupGUID := self sessionId.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
+	| startupSession |
+	startupSession := self sessionId.	"deferred actions might get saved and show up in a new session and we want to do them only in the original session"
 	^super commandLineParser
 		addOption: $u;
 		addOptionAllowingArgument: $d
 			whenPresentDo: 
 				[:rebasePath |
 				self inputState queueDeferredAction: 
-						[startupGUID == self sessionId
+						[startupSession == self sessionId
 							ifTrue: 
 								[Package manager rebaseBasePackagesTo: rebasePath ?? '.'.
 								self saveImage]]];
 		addOptionRequiringArgument: $f
 			whenPresentDo: 
 				[:fileInFile |
-				self inputState
-					queueDeferredAction: [startupGUID == self sessionId ifTrue: [SourceManager default fileIn: fileInFile]]];
+				self inputState queueDeferredAction: 
+						[startupSession == self sessionId ifTrue: [SourceManager default fileIn: fileInFile]]];
 		addOptionAllowingArgument: $i
 			whenPresentDo: 
 				[:newImageFile |
 				self inputState queueDeferredAction: 
-						[startupGUID == self sessionId ifTrue: [self saveImage: newImageFile ?? 'Dolphin']]];
+						[startupSession == self sessionId ifTrue: [self saveImage: newImageFile ?? 'Dolphin']]];
 		addOption: $x
 			whenPresentDo: 
-				[self inputState queueDeferredAction: [startupGUID = self sessionId ifTrue: [self quit]]];
+				[self inputState queueDeferredAction: [startupSession == self sessionId ifTrue: [self quit]]];
 		yourself!
 
 dolphinNewsgroupUrl
@@ -541,7 +541,7 @@ resetPatchLevel
 !
 
 resourcesLocatorForClass: aClass 
-	^PackageRelativeFileLocator package: aClass owningPackage !
+	^aClass owningPackage fileLocator!
 
 retire
 	"This SessionManager instance is stepping down in favour of a new boy. Perform any

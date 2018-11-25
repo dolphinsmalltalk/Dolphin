@@ -23,6 +23,7 @@ package methodNames
 	add: #Package -> #rehydrateImageStripper:;
 	add: #UserLibrary -> #messageBox:lpText:lpCaption:uType:;
 	add: 'ExternalStructure class' -> #fullyCompileDefinition;
+	add: 'ExternalStructure class' -> #removeTemplate;
 	add: 'Object class' -> #onPreStripImage;
 	yourself.
 
@@ -40,6 +41,11 @@ package!
 
 "Class Definitions"!
 
+Object subclass: #BasicImageStripper
+	instanceVariableNames: 'events'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'
 	classVariableNames: 'CaptionId ExplanationId MessageMap ProgressId StatusId'
@@ -50,20 +56,15 @@ Object subclass: #VersionResource
 	classVariableNames: ''
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
-Win32Structure subclass: #VS_VERSION_INFO_HEADER
-	instanceVariableNames: 'key valueOffset'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Model subclass: #BasicImageStripper
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 BasicImageStripper subclass: #ImageStripper
 	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters _unused18'
 	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
+	classInstanceVariableNames: ''!
+Win32Structure subclass: #VS_VERSION_INFO_HEADER
+	instanceVariableNames: 'key valueOffset'
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!
@@ -80,8 +81,12 @@ fullyCompileDefinition
 
 	self newTemplate; defineTemplate.
 	self template do: [:each | each beCompiled].
-	self recompileDefinition; shrink.! !
-!ExternalStructure class categoriesFor: #fullyCompileDefinition!development!public! !
+	self recompileDefinition; shrink.!
+
+removeTemplate
+	template := nil! !
+!ExternalStructure class categoriesFor: #fullyCompileDefinition!compiling!public! !
+!ExternalStructure class categoriesFor: #removeTemplate!private!template definition! !
 
 !Object class methodsFor!
 

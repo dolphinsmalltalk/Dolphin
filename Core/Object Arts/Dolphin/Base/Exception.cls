@@ -85,9 +85,7 @@ _propagate
 
 	| answer |
 	answer := self _propagateFrom: Processor activeProcess exceptionEnvironment.
-	^answer == _resignalBlock
-		ifFalse: [answer]
-		ifTrue: [_resignalException signal]!
+	^answer == _resignalBlock ifTrue: [_resignalException signal] ifFalse: [answer]!
 
 _propagateFrom: anExceptionEnvironmentOrNil 
 	"Private - Propagate the receiver up through the chain of handlers starting at anExceptionHandlerOrNil,
@@ -591,7 +589,7 @@ Exception methodProtocol: #signaledException attributes: #(#ansi #readOnly) sele
 	argument, anotherException. Note that the 'set' is a bit of a misnomer, as the result 
 	does not conform to that protocol."
 
-	^ExceptionSet with: self with: anotherException!
+	^ExceptionSet selectors: {self. anotherException}!
 
 beep
 	"Sound an appropriate beep to draw the users attention."

@@ -100,7 +100,7 @@ developmentClasses
 	"Answer a <collection> containing all development classes."
 
 	| classes |
-	classes := (ClassCategory name: 'Development') contents asSet.
+	classes := (ClassCategory name: 'Development') classes asSet.
 
 	"Should already all be there, but just in case"
 	#('Development System' 'Dolphin Community Edition Tools' 'Dolphin Professional Tools' 'Dolphin Refactoring Browser') 

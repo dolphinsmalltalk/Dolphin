@@ -153,7 +153,7 @@ allSubclassesBreadthFirstDo: aMonadicValuable
 			classes do: [:each | each allSubclassesBreadthFirstDo: aMonadicValuable]]!
 
 allSubclassesDo: aMonadicValuable
-	"Private - Evaluate the monadic valuable argument for each of the 
+	"Evaluate the monadic valuable argument for each of the 
 	receiver's subclasses using a pre-order depth first traversal."
 
 	self allSubclassesPreOrderDo: aMonadicValuable!
@@ -290,11 +290,6 @@ canUnderstand: aSymbol
 	The selector can be in the method dictionary of the receiver's class or any of its superclasses."
 
 	^(self lookupMethod: aSymbol) notNil!
-
-changedMethods
-	"Private - Answer a <collection> of all the changed methods in the receiver."
-
-	^self methodDictionary select: [:method | method hasChanged]!
 
 compile: code
 	"Compile the argument, code, and enter the result in the receiver's method dictionary. 
@@ -1035,12 +1030,6 @@ whichMethodsAssign: aString at: anInteger
 	^self 
 		selectMethods: [:method | method writesInstVar: aString at: anInteger]!
 
-whichMethodsContainSource: aString
-	"Answer a <Set> of methods from the receiver's local method dictionary whose methods contain
-	the specified source string."
-
-	^self selectMethods: [:method | method containsSource: aString]!
-
 whichMethodsRead: aString
 	"Answer a <collection> of <CompiledMethod>s that read the instance variable
 	named by the <readableString> argument."
@@ -1050,11 +1039,6 @@ whichMethodsRead: aString
 whichMethodsRead: aString at: anInteger
 	^self 
 		selectMethods: [:method | method readsInstVar: aString at: anInteger]!
-
-whichMethodsReferTo: anObject
-	"Answer a <Set> of methods in the receiver whose literal frames include the argument, anObject."
-
-	^self selectMethods: (self referenceFilterFor: anObject)!
 
 whichSelectorsAccess: aString
 	"Answer a <collection> of <Symbol>s, being the selectors of methods of the receiver
@@ -1074,12 +1058,6 @@ whichSelectorsRead: aString
 	that read the instance variable named by the <readableString> argument."
 
 	^(self whichMethodsRead: aString) collect: [:each | each selector]!
-
-whichSelectorsReferTo: anObject
-	"Answer a Set of selectors whose methods access the argument, anObject.
-	This is really only included for Blue Book compatibility."
-
-	^(self whichMethodsReferTo: anObject) collect: [:each | each selector]!
 
 whichSelectorsWrite: aString
 	"Answer a <Set> of selectors whose methods write to the instance variable
@@ -1128,7 +1106,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #allSelectors!methods-accessing!public! !
 !Behavior categoriesFor: #allSubclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #allSubclassesBreadthFirstDo:!class hierarchy-accessing!enumerating!public! !
-!Behavior categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!private! !
+!Behavior categoriesFor: #allSubclassesDo:!class hierarchy-accessing!enumerating!public! !
 !Behavior categoriesFor: #allSubclassesEndOrderDo:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
 !Behavior categoriesFor: #allSubinstances!instances!public! !
@@ -1141,7 +1119,6 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #basicNewFixed:!instance creation!private! !
 !Behavior categoriesFor: #bindingFor:!compiling!public! !
 !Behavior categoriesFor: #canUnderstand:!methods-testing!public! !
-!Behavior categoriesFor: #changedMethods!methods-accessing!private! !
 !Behavior categoriesFor: #compile:!compiling!public! !
 !Behavior categoriesFor: #compileAll!compiling!development!public! !
 !Behavior categoriesFor: #compileAllSubclasses!compiling!development!public! !
@@ -1200,7 +1177,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #recompile:!compiling!development!public! !
 !Behavior categoriesFor: #recompileAll!compiling!development!public! !
 !Behavior categoriesFor: #recompileReferencesToVarNamed:!development!private! !
-!Behavior categoriesFor: #referenceFilterFor:!methods-testing!private! !
+!Behavior categoriesFor: #referenceFilterFor:!development!methods-testing!private! !
 !Behavior categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeFromSystem!class hierarchy-removing!private! !
 !Behavior categoriesFor: #removeSelector:!methods-removing!public! !
@@ -1231,14 +1208,11 @@ withAllSuperclassesDo: aMonadicValuable
 !Behavior categoriesFor: #whichMethodsAccess:at:!development!methods-testing!private! !
 !Behavior categoriesFor: #whichMethodsAssign:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsAssign:at:!development!methods-testing!private! !
-!Behavior categoriesFor: #whichMethodsContainSource:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsRead:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichMethodsRead:at:!development!methods-testing!private! !
-!Behavior categoriesFor: #whichMethodsReferTo:!methods-testing!public! !
 !Behavior categoriesFor: #whichSelectorsAccess:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichSelectorsAssign:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichSelectorsRead:!development!methods-testing!public! !
-!Behavior categoriesFor: #whichSelectorsReferTo:!development!methods-testing!public! !
 !Behavior categoriesFor: #whichSelectorsWrite:!development!methods-testing!public! !
 !Behavior categoriesFor: #withAllSubclasses!class hierarchy-accessing!public! !
 !Behavior categoriesFor: #withAllSubclassesDo:!enumerating!public! !
