@@ -462,7 +462,12 @@ selections
 	"Answer a <sequencedReadableCollection> of the <Object>s selected from the list.
 	If there is no selection, then the collection will be empty."
 
-	^self selectionsByIndex collect: [:each | self objectFromHandle: each]!
+	| answer |
+	answer := Array writeStream.
+	"There is a window of opportunity for the list content to change between retrieving the selections and looking up the objects"
+	self selectionsByIndex
+		do: [:each | (self objectFromHandle: each ifAbsent: []) ifNotNil: [:object | answer nextPut: object]].
+	^answer contents!
 
 selections: aSequencedReadableCollection 
 	"Set the objects selected in the receiver to be the elements of the <sequencedReadableCollection> argument.
