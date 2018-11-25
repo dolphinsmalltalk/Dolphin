@@ -189,9 +189,12 @@ defineFields
 	"
 
 	self
-		defineField: #rgvarg type: (StructureArrayPointerField type: VARIANT lengthField: #cArgs);
+		defineField: #rgvarg
+			type: (StructureArrayPointerField type: VARIANT
+					arrayLength: (ConformantArrayFieldLength lengthField: #cArgs));
 		defineField: #rgdispidNamedArgs
-			type: (ArrayPointerField type: SDWORDArray lengthField: #cNamedArgs);
+			type: (ArrayPointerField type: SDWORDArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cNamedArgs));
 		defineField: #cArgs type: DWORDField new beNonBrowsable;
 		defineField: #cNamedArgs type: DWORDField new beNonBrowsable!
 

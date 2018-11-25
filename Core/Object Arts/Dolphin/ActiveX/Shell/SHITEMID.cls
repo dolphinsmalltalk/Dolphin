@@ -49,8 +49,13 @@ defineFields
 "
 
 	self
-		defineField: #cb type: WORDField new beReadOnly beNonBrowsable offset: 0;
-		defineField: #abID type: (ArrayField type: ExternalArray lengthField: #cb) beReadOnly offset: 2.
+		defineField: #cb
+			type: WORDField new beReadOnly beNonBrowsable
+			offset: 0;
+		defineField: #abID
+			type: (ArrayField type: ExternalArray arrayLength: (ConformantArrayFieldLength lengthField: #cb))
+					beReadOnly
+			offset: 2.
 	self byteSize: 4!
 
 packing

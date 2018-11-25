@@ -247,6 +247,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
 	add: '..\Base\Dolphin Basic Geometry';
 	add: '..\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Base\Dolphin Conformant Array Fields';
 	add: '..\Presenters\Image\Dolphin Image Presenter';
 	add: '..\Models\List\Dolphin List Models';
 	add: '..\Base\Dolphin MVP Base';

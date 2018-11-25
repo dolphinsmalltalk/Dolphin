@@ -537,6 +537,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
 	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
 	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Base\Dolphin Conformant Array Fields';
 	add: '..\..\MVP\Models\List\Dolphin List Models';
 	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
@@ -4458,8 +4459,13 @@ printConformantArrayLength: aVARDESC on: aPuttableStream
 		ifTrue: 
 			["Simple size_is expression which names another field, e.g. size_is(cbBytes)."
 			aPuttableStream
-				nextPutAll: ' lengthField: #';
-				nextPutAll: sizeIs name]
+				nextPutAll: ' arrayLength: (';
+				print: ConformantArrayFieldLength;
+				space;
+				display: #lengthField;
+				space;
+				nextPutAll: sizeIs name;
+				nextPut: $)]
 		ifFalse: 
 			[(sizeIs isLiteralNode and: [sizeIs value isInteger])
 				ifTrue: 

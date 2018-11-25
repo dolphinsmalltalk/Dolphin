@@ -7,7 +7,7 @@ Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	classInstanceVariableNames: ''!
 MEMORY_BASIC_INFORMATION guid: (GUID fromString: '{87b4c5fe-026e-11d3-9fd7-00a0cc3e4a32}')!
 MEMORY_BASIC_INFORMATION comment: ''!
-!MEMORY_BASIC_INFORMATION categoriesForClass!External-Data-Structured-Win32! !
+!MEMORY_BASIC_INFORMATION categoriesForClass!Deprecated! !
 !MEMORY_BASIC_INFORMATION methodsFor!
 
 AllocationBase

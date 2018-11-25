@@ -74,9 +74,16 @@ defineFields
 "
 
 	self
-		defineField: #palVersion type: WORDField new offset: 0;
-		defineField: #palNumEntries type: WORDField new offset: 2;
-		defineField: #palPalEntry type: (StructureArrayField type: PALETTEENTRY lengthField: #palNumEntries) beReadOnly offset: 4.
+		defineField: #palVersion
+			type: WORDField new
+			offset: 0;
+		defineField: #palNumEntries
+			type: WORDField new
+			offset: 2;
+		defineField: #palPalEntry
+			type: (StructureArrayField type: PALETTEENTRY
+					arrayLength: (ConformantArrayFieldLength lengthField: #palNumEntries)) beReadOnly
+			offset: 4.
 	self byteSize: 1028!
 
 new

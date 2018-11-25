@@ -70,7 +70,8 @@ defineFields
 	self
 		defineField: #cCustData type: DWORDField readOnly beNonBrowsable;
 		defineField: #prgCustData
-			type: (StructureArrayPointerField type: CUSTDATAITEM lengthField: #cCustData) beReadOnly!
+			type: (StructureArrayPointerField type: CUSTDATAITEM
+					arrayLength: (ConformantArrayFieldLength lengthField: #cCustData)) beReadOnly!
 
 initialize
 	"Define some custom attributes to work around the limitiations of type libraries in not

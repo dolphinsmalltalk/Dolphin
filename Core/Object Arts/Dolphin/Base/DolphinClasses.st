@@ -345,11 +345,6 @@ Object subclass: #VersionInfo
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ArrayFieldLength subclass: #ConformantArrayFieldLength
-	instanceVariableNames: 'lengthField'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ArrayFieldLength subclass: #FixedArrayFieldLength
 	instanceVariableNames: 'elementCount'
 	classVariableNames: ''

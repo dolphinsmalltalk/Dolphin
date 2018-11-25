@@ -17,7 +17,7 @@ For example:
 
 Note that because BSTR is an indirection class (BSTRs are pointers to strings), it is necessary to send its instances #basicYourAddress to get the address of the object, rather than #yourAddress which will return the contained address.
 '!
-!LPBSTR categoriesForClass!External-Data-Structured! !
+!LPBSTR categoriesForClass!External-Data-Unstructured! !
 !LPBSTR methodsFor!
 
 asString

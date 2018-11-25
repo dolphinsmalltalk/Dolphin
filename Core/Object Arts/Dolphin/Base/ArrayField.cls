@@ -218,15 +218,7 @@ type: aClass length: anInteger
 	"Answer a new instance of the receiver which is used for describing
 	embedded arrays of type aClass, with anInteger elements."
 
-	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)!
-
-type: aClass lengthField: aSymbol
-	"Answer a new instance of the receiver which is used for describing embedded conformant
-	array objects of type, aClass, where the length is specified by another field of the
-	structure being described with the specified <Symbol> name."
-
-	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
+	^self type: aClass arrayLength: (FixedArrayFieldLength elementCount: anInteger)! !
 !ArrayField class categoriesFor: #type:arrayLength:!instance creation!public! !
 !ArrayField class categoriesFor: #type:length:!instance creation!public! !
-!ArrayField class categoriesFor: #type:lengthField:!instance creation!public! !
 

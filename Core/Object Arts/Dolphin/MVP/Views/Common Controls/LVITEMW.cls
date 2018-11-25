@@ -296,20 +296,50 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #iItem type: SDWORDField new offset: 4;
-		defineField: #iSubItem type: SDWORDField new offset: 8;
-		defineField: #dwState type: DWORDField new offset: 12;
-		defineField: #stateMask type: DWORDField new offset: 16;
-		defineField: #pszText type: (PointerField type: Utf16String) offset: 20;
-		defineField: #cchTextMax type: SDWORDField new offset: 24;
-		defineField: #iImage type: SDWORDField new offset: 28; 
-		defineField: #lParam type: INT_PTRField new offset: 32;
-		defineField: #iIndent type: SDWORDField new offset: 36;
-		defineField: #iGroupId type: SDWORDField new offset: 40;
-		defineField: #cColumns type: DWORDField new offset: 44;
-		defineField: #puColumns type: (ArrayPointerField type: DWORDArray lengthField: #cColumns) offset: 48;
-		defineField: #piColFmt type: (ArrayPointerField type: SDWORDArray lengthField: #cColumns) offset: 52;
-		defineField: #iGroup type: SDWORDField new beReadOnly offset: 56.
+		defineField: #iItem
+			type: SDWORDField new
+			offset: 4;
+		defineField: #iSubItem
+			type: SDWORDField new
+			offset: 8;
+		defineField: #dwState
+			type: DWORDField new
+			offset: 12;
+		defineField: #stateMask
+			type: DWORDField new
+			offset: 16;
+		defineField: #pszText
+			type: (PointerField type: Utf16String)
+			offset: 20;
+		defineField: #cchTextMax
+			type: SDWORDField new
+			offset: 24;
+		defineField: #iImage
+			type: SDWORDField new
+			offset: 28;
+		defineField: #lParam
+			type: INT_PTRField new
+			offset: 32;
+		defineField: #iIndent
+			type: SDWORDField new
+			offset: 36;
+		defineField: #iGroupId
+			type: SDWORDField new
+			offset: 40;
+		defineField: #cColumns
+			type: DWORDField new
+			offset: 44;
+		defineField: #puColumns
+			type: (ArrayPointerField type: DWORDArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns))
+			offset: 48;
+		defineField: #piColFmt
+			type: (ArrayPointerField type: SDWORDArray
+					arrayLength: (ConformantArrayFieldLength lengthField: #cColumns))
+			offset: 52;
+		defineField: #iGroup
+			type: SDWORDField new beReadOnly
+			offset: 56.
 	self byteSize: 60!
 
 initialize

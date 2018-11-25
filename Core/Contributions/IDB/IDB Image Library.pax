@@ -69,6 +69,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
 	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
 	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
+	add: '..\..\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields';
 	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
 	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
 	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';

@@ -28,6 +28,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\..\Base\Dolphin';
+	add: '..\..\Base\Dolphin Conformant Array Fields';
 	yourself).
 
 package!
