@@ -310,6 +310,9 @@ font: aFont
 	self selectObject: aFont.
 	^oldFont!
 
+fontHandle
+	^self getCurrentObject: OBJ_FONT!
+
 fontNames
 	"Answer a <collection> containing the face names of all the Fonts supported by the receiver."
 
@@ -414,7 +417,7 @@ getDeviceCaps: anInteger
 	^GDILibrary default getDeviceCaps: self asParameter nIndex: anInteger!
 
 getFont
-	^Font fromHandle: (self getCurrentObject: OBJ_FONT)!
+	^Font fromHandle: self fontHandle!
 
 getPixel: aPoint
 	"Private - Get the colour of the pixel at x@y. Note that the indices are zero-based!!"
@@ -1041,6 +1044,7 @@ windowScaling
 !Canvas categoriesFor: #fillRegion:brush:!drawing!public! !
 !Canvas categoriesFor: #font!accessing!public!tools! !
 !Canvas categoriesFor: #font:!accessing!public!tools! !
+!Canvas categoriesFor: #fontHandle!accessing!private!tools! !
 !Canvas categoriesFor: #fontNames!enquiries!public! !
 !Canvas categoriesFor: #fonts:do:!enumerating!public! !
 !Canvas categoriesFor: #forecolor!modes!public! !

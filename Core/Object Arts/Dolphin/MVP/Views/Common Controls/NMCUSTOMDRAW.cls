@@ -6,9 +6,9 @@ NMHDR subclass: #NMCUSTOMDRAW
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
-NMCUSTOMDRAW comment: 'NMCUSTOMDRAW is an <ExternalStructure> class to represent the Win32 structure of the same name.
+NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
-NMCUSTOMDRAW structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the <ListView> and <TreeView> to request custom draw information for individual items (and optionally sub-items).
+`NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).
 
 All the fields in this structure are read-only. Specialized sub-structures provide fields which can be written to in order to pass custom draw settings back to the control (for example the foreground and background text colours). The DC associated with this structure can also be updated by changing the font, and so forth.
 
@@ -20,14 +20,15 @@ applyFont
 	"Private - Apply the new font (if changed) to the custom draw DC and answer whether
 	a new font was indeed selected."
 
-	^font notNil and: [
-		(font basicHandle ~= self canvas font basicHandle) and: [
-			#todo "It's definitely not a good idea to delete old font here (the default font will
+	^(font notNil and: [font basicHandle ~= self canvas fontHandle])
+		ifTrue: 
+			[#todo.	"It's definitely not a good idea to delete old font here (the default font will
 			 probably get deleted, but we rely on the fact that finalization happens in
 			 the background so that the font we supply in place is not deleted until
-			 after the drawing cycle is complete. This seems dangerous.".
+			 after the drawing cycle is complete. This seems dangerous."
 			self canvas font: font.
-			true]]!
+			CDRF_NEWFONT]
+		ifFalse: [CDRF_DODEFAULT]!
 
 backcolor
 	"Answer the background <Color>."
@@ -66,19 +67,12 @@ evaluateDrawBlock: customDrawBlock
 	"Private - Evaluate the <monadicValuable>, customDrawBlock, and answer the appropriate instruction
 	 for a common control to complete the draw operation (or skip it if total control is taken)."
 
-	^(customDrawBlock value: self) == true 
-		ifTrue: [CDRF_SKIPDEFAULT]
-		ifFalse: [
-			self applyFont
-				ifTrue: [CDRF_NEWFONT]
-				ifFalse: [CDRF_DODEFAULT]]
-!
+	^(customDrawBlock value: self) == true ifTrue: [CDRF_SKIPDEFAULT] ifFalse: [self applyFont]!
 
 font
 	"Answer the character font."
-	
-	font isNil ifTrue: [font := self canvas font].
-	^font!
+
+	^font ifNil: [font := self canvas font]!
 
 font: aFont
 	"Set the character font.

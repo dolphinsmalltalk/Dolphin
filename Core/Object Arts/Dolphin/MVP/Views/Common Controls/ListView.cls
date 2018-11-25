@@ -483,11 +483,13 @@ customDrawSubItem: context
 	| column idx custom |
 	idx := context iSubItem.
 	column := columns at: idx + 1.
-	^(custom := column customDrawBlock) isNil 
-		ifTrue: [CDRF_DODEFAULT]
+	custom := column customDrawBlock.
+	"If not the first column, and the previous column has a custom draw block, then we need to reset the custom draw settings as otherwise we'll end up picking up whatever customizations might have been applied to the previous column."
+	(idx ~~ 0 and: [(columns at: idx) customDrawBlock notNil]) ifTrue: [context reset].
+	^custom isNil
+		ifTrue: [context applyFont]
 		ifFalse: 
 			[context
-				view: self;
 				column: column;
 				evaluateDrawBlock: custom]!
 
