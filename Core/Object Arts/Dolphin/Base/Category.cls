@@ -16,7 +16,7 @@ Instance Variables:
 Class Variables:
 	PermanentCategories		<Set> of all categories which are always available, even if empty
 	'!
-!Category categoriesForClass!Development!System-Support! !
+!Category categoriesForClass!System-Support! !
 !Category methodsFor!
 
 <= comperand
@@ -49,8 +49,7 @@ asString
 	^self name!
 
 contents
-	"Answer all the objects held by the receiver."
-
+	#deprecated.
 	^self subclassResponsibility!
 
 displayOn: aStream
@@ -78,15 +77,15 @@ isPermanent
 	"Answer whether the receiver should be not removed from a CategoryManager
 	when there are no references to it."
 
-	^PermanentCategories includes: self!
+	^self permanentCategories includes: self!
 
 isPermanent: aBoolean
 	"Set whether the receiver should not be removed when there are
 	no references to it."
 
 	aBoolean
-		ifTrue: [PermanentCategories add: self]
-		ifFalse: [PermanentCategories remove: self ifAbsent: []]!
+		ifTrue: [self permanentCategories add: self]
+		ifFalse: [self permanentCategories remove: self ifAbsent: []]!
 
 isPseud
 	"Answer whether the receiver is a pseudo (i.e. not a 'real') category.
@@ -110,6 +109,9 @@ name
 	"Answer a unique, amongst Category objects, <readableString> name for the receiver."
 
 	^name!
+
+permanentCategories
+	^PermanentCategories ifNil: [PermanentCategories := IdentitySet new]!
 
 printOn: aStream
 	"Append a representation of the receiver to aStream."
@@ -155,17 +157,13 @@ subNames
 !Category categoriesFor: #isVirtual!public!testing! !
 !Category categoriesFor: #localName!accessing!public! !
 !Category categoriesFor: #name!accessing!public! !
+!Category categoriesFor: #permanentCategories!accessing!public! !
 !Category categoriesFor: #printOn:!printing!public! !
 !Category categoriesFor: #removeClass:!public!removing! !
 !Category categoriesFor: #setName:!initializing!private! !
 !Category categoriesFor: #subNames!accessing!public! !
 
 !Category class methodsFor!
-
-initialize
-	"Private - Initialize the receiver's class variables."
-
-	PermanentCategories := IdentitySet new!
 
 name: categoryName
 	"Answer the subinstance of the receiver with the 
@@ -207,7 +205,6 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	PermanentCategories := nil.! !
-!Category class categoriesFor: #initialize!initializing!private! !
 !Category class categoriesFor: #name:!instance creation!public! !
 !Category class categoriesFor: #new!instance creation!public! !
 !Category class categoriesFor: #newNamed:!instance creation!private! !

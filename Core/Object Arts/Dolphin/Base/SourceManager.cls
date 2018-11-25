@@ -13,47 +13,6 @@ SourceManager comment: ''!
 basicChangesFiler
 	^SourceFiles at: ChangesIndex!
 
-basicCompressSources: progress 
-	"Private - Compresses the sources file reporting the progress to
-	<monadicValuable>, progress."
-
-	| totalClasses index tmpPath smlFile filer classes |
-	index := 0.
-	classes := self class environment allClasses.
-	totalClasses := classes size.
-
-	"Create temporary stream file"
-	tmpPath := File temporaryFilenameWithPrefix: self changesExtension.
-	smlFile := self sourcesFileName.
-	filer := self sourceFilerOn: (FileStream write: tmpPath).
-	filer
-		sourceFileIndex: SourcesIndex;
-		isSourceOnly: true.
-	self logComment: 'Compressing sources....' to: filer.
-	index := 0.
-	classes do: 
-			[:class | 
-			filer storeCommentString: class comment forClass: class.
-			filer fileOutAllMethodsOfBehavior: class class.
-			filer fileOutAllMethodsOfBehavior: class.
-			progress value: (index := index + 1) * 100 / totalClasses].
-	self compressPackageCommentsOn: filer.
-	filer close.
-
-	"Copy temporary file over to dolphin.sml"
-	self closeSourcesFile.
-	File
-		delete: smlFile;
-		rename: tmpPath to: smlFile.
-	self openSourcesFile: smlFile.
-
-	"Save image"
-	SessionManager current saveImage.
-
-	"Clear down change log"
-	self truncateChanges.
-	self logComment: 'Compressed sources'!
-
 basicOpenSources: filePath
 	"Private - Open the source streams"
 
@@ -143,13 +102,6 @@ closeSourcesFile
 	self closeSourceAt: SourcesIndex
 !
 
-compressChangedMethodsOf: aBehavior onto: aSourceFiler 
-	"Private - Emits the changed methods of aBehavior onto aSourceFiler."
-
-	| changed |
-	changed := aBehavior changedMethods collect: [:each | each selector].
-	aSourceFiler fileOutMessages: changed ofBehavior: aBehavior!
-
 compressChanges
 	"Compresses the change log to remove duplicate entries, and save the image to keep it in sync."
 
@@ -165,51 +117,6 @@ compressChanges
 
 	"Save image"
 	SessionManager current saveImage!
-
-compressChangesOf: aClass onto: aSourceFiler 
-	"Private - Compress any changes to the specified class onto the <SourceFiler>."
-
-	"First the comment ..."
-
-	(self sourceIndexFromDescriptor: aClass sourceDescriptor) = ChangesIndex 
-		ifTrue: [aSourceFiler storeCommentString: aClass comment forClass: aClass].
-	"...then the methods..."
-	self
-		compressChangedMethodsOf: aClass class onto: aSourceFiler;
-		compressChangedMethodsOf: aClass onto: aSourceFiler.
-	"Have to reset the changes index so that all changed methods are included since we have lost
-	the save point"
-	aClass isChanged 
-		ifTrue: 
-			["Note that it is necessary to remove the existing change index first since
-			 attempts after the first to set it are ignored"
-			aClass
-				isChanged: false;
-				changeIndexValue: [0]]!
-
-compressChangesOnto: aSourceFiler 
-	self class environment allClasses do: [:each | self compressChangesOf: each onto: aSourceFiler].
-	Package manager packages do: 
-			[:each | 
-			(self sourceIndexFromDescriptor: each sourceDescriptor) = ChangesIndex 
-				ifTrue: [aSourceFiler storeCommentString: each comment forPackage: each]]!
-
-compressPackageCommentsOn: aSourceFiler 
-	Package manager packages do: 
-			[:each | 
-			| comment |
-			comment := each comment.
-			comment isEmpty 
-				ifTrue: [each sourceDescriptor: nil]
-				ifFalse: [aSourceFiler storeCommentString: comment forPackage: each]]!
-
-compressSources
-	"Compresses the change log into the sources file. The result is a new empty changes log.
-	The image must be saved to keep it in sync."
-
-	self basicCompressSources: [:x | ]
-
-!
 
 copyAndReopenSources: aString 
 	"Private - Copy sources to the path and root file name (i.e. without extension) specified
@@ -338,49 +245,6 @@ fileItIn: aString
 	self fileInFrom: aString readStream
 !
 
-fileOut: anObject
-	"File out anObject to its default file. If an error occurs during file out, the file
-	will be closed by finalization."
-
-	self fileOut: anObject to: anObject fileOutName.!
-
-fileOut: anObject to: aFileName 
-	"File out anObject to aFileName. If an error occurs during file out, the file
-	will be closed by finalization."
-
-	| filer |
-	filer := self newSourceFiler: aFileName.
-	anObject fileOutOn: filer.
-	filer close!
-
-fileOutPackagedClass: aClass
-	"File out aClass via the package mechanism. The class is filed out to the same directory as the
-	package which contains it. Only the methods contained in this package are included in the 
-	generated file and following this call the class and its methods are marked as unchanged."
-
-	self fileOutPackagedClass: aClass to: aClass fileOutName.
-	!
-
-fileOutPackagedClass: aClass to: aFileName 
-	"File out aClass via the package mechanism. The class is filed out to aFileName.
-	Only the methods contained in this package are included in the 
-	generated file and following this call the class and its methods are marked as unchanged."
-
-	| package filer |
-	package := self packageManager packageOfClass: aClass.
-	package isNil 
-		ifTrue: 
-			["Not in any package so just file out normally"
-			^self fileOut: aClass to: aFileName].
-	filer := self newSourceFiler: aFileName.
-	filer fileOutDefinitionOfClass: aClass.
-	package fileOutMethodsOfClass: aClass on: filer.
-	package fileOutMethodsOfClass: aClass class on: filer.
-	filer close.
-
-	"Flag the class as being saved, i.e. no longer changed"
-	aClass isChanged: false!
-
 flushChanges
 	"Private - Perform a full flush (i.e. flush OS file buffers) on the change log so 
 	that change log file is guaranteed to be up-to-date. This should be performed before 
@@ -450,14 +314,6 @@ isMethodChanged: aCompiledMethod
 				ifFalse: [aCompiledMethod methodClass instanceClass changeIndex]) 
 					ifNil: [false]
 					ifNotNil: [:i | (self changePositionOf: aCompiledMethod) >= i]]!
-
-logChanged: aSourceObject
-	"File out the changed <sourceObject>, aSourceObject, to the change log."
-
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: 
-					[aSourceObject fileOutOn: logger.
-					logger flush]]!
 
 logComment: aString
 	"Record aString to the change log as a comment. All comments
@@ -675,7 +531,6 @@ truncateChanges
 			(FileStream write: chgFile) close.	"truncate it"
 			self openChangesFile: chgFile]! !
 !SourceManager categoriesFor: #basicChangesFiler!accessing!private! !
-!SourceManager categoriesFor: #basicCompressSources:!operations-source files!private! !
 !SourceManager categoriesFor: #basicOpenSources:!operations-source files!private! !
 !SourceManager categoriesFor: #changePositionFromDescriptor:!private!source filing! !
 !SourceManager categoriesFor: #changePositionOf:!development!private!testing! !
@@ -690,12 +545,7 @@ truncateChanges
 !SourceManager categoriesFor: #closeSourceAt:!operations-source files!private! !
 !SourceManager categoriesFor: #closeSources!operations-source files!private! !
 !SourceManager categoriesFor: #closeSourcesFile!operations-source files!private! !
-!SourceManager categoriesFor: #compressChangedMethodsOf:onto:!operations-source files!private! !
 !SourceManager categoriesFor: #compressChanges!operations-source files!public! !
-!SourceManager categoriesFor: #compressChangesOf:onto:!operations-source files!private! !
-!SourceManager categoriesFor: #compressChangesOnto:!operations-source files!public! !
-!SourceManager categoriesFor: #compressPackageCommentsOn:!operations-source files!private! !
-!SourceManager categoriesFor: #compressSources!operations-source files!public! !
 !SourceManager categoriesFor: #copyAndReopenSources:!operations-source files!private! !
 !SourceManager categoriesFor: #copySourceFilesTo:!operations-source files!private! !
 !SourceManager categoriesFor: #createSources:!operations-source files!private! !
@@ -707,13 +557,9 @@ truncateChanges
 !SourceManager categoriesFor: #fileInFrom:!private!source filing! !
 !SourceManager categoriesFor: #fileInFrom:normalizeLineEndings:!private!source filing! !
 !SourceManager categoriesFor: #fileInHere:!public!source filing! !
-!SourceManager categoriesFor: #fileInPackagedClass:!public!source filing! !
+!SourceManager categoriesFor: #fileInPackagedClass:!development!public!source filing! !
 !SourceManager categoriesFor: #fileInPackagedClass:from:!public!source filing! !
 !SourceManager categoriesFor: #fileItIn:!public!source filing! !
-!SourceManager categoriesFor: #fileOut:!public!source filing! !
-!SourceManager categoriesFor: #fileOut:to:!public!source filing! !
-!SourceManager categoriesFor: #fileOutPackagedClass:!public!source filing! !
-!SourceManager categoriesFor: #fileOutPackagedClass:to:!public!source filing! !
 !SourceManager categoriesFor: #flushChanges!operations-source files!private! !
 !SourceManager categoriesFor: #getSourceFromDescriptor:!public!source filing! !
 !SourceManager categoriesFor: #getSourceOfMethod:!public!source filing! !
@@ -722,7 +568,6 @@ truncateChanges
 !SourceManager categoriesFor: #ignoreSources!operations-source files!private! !
 !SourceManager categoriesFor: #initialize!initializing!private! !
 !SourceManager categoriesFor: #isMethodChanged:!development!private!testing! !
-!SourceManager categoriesFor: #logChanged:!public!source filing! !
 !SourceManager categoriesFor: #logComment:!operations-logging!public! !
 !SourceManager categoriesFor: #logComment:to:!operations-logging!private! !
 !SourceManager categoriesFor: #logEvaluate:!operations-logging!public! !

@@ -77,7 +77,7 @@ initialize
 
 	| hermits cave |
 	cave := self private.
-	hermits := cave contents.
+	hermits := cave methods.
 	self removeCategory: 'private'; removeCategory: 'public'.
 	Private:= (self newNamed: 'private') privacy: true; yourself.
 	Public := (self newNamed: 'public') privacy: false; yourself.

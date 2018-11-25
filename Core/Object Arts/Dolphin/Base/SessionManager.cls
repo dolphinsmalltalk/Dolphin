@@ -135,7 +135,7 @@ basicPrimaryStartup
 	self createInputState.	"Register input semaphore, etc, kill previous idler in case on a different host OS"
 	self class environment at: #Delay ifPresent: [:d | d onStartup].	"Reschedule delays etc."
 	MemoryManager current onStartup.	"Start (if necessary) finalization/bereavement processing, etc"
-	sessionId := GUID newUnique	"Allow deferred tasks to know if they passed a startup boundary"!
+	sessionId := Object new	"Allow deferred tasks to know if they passed a startup boundary"!
 
 basicSecondaryStartup
 	"Perform secondary startup operations which initialize non-critical
@@ -347,7 +347,7 @@ hasActiveServers
 	"Private - Answer whether there are any servers still registered in this
 	session."
 
-	^self servers notEmpty!
+	^servers notNil and: [servers notEmpty]!
 
 imageBase
 	"Answer the base directory in which the image resides"
@@ -932,11 +932,10 @@ serverShutdown
 	it should shut down."
 
 	Notification signal: 'Server shutdown request'.
-	(self isHeadless and: [self servers isEmpty])
-		ifTrue: [self exit]!
+	(self isHeadless and: [self hasActiveServers not]) ifTrue: [self exit]!
 
 sessionId
-	"A unique GUID reset at startup; used initially in DevelopmentSessionManager>>commandLineParser to avoid executing deferred actions on a restart"
+	"A unique <Object> reset at startup; used initially in DevelopmentSessionManager>>commandLineParser to avoid executing deferred actions on a restart"
 
 	^sessionId!
 

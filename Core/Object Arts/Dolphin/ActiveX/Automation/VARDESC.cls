@@ -64,8 +64,8 @@ getAllCustData
 	^analyzer tlbInterface getAllVarCustData: index!
 
 getValidFields
-	"Private - Answer a <sequencedReadableCollection> of the fields defined 
-	in the receiver's template, sorted in ascending order of offset from the start of the
+	"Private - Answer a <sequencedReadableCollection> of <Symbol>, being the fields defined in
+	the receiver's template, sorted in ascending order of offset from the start of the
 	structure, that are valid in this particular instance."
 
 	| fields |

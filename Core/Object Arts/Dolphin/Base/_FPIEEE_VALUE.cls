@@ -11,7 +11,7 @@ _FPIEEE_VALUE comment: '_FPIEEE_VALUE is an <ExternalStructure> class to represe
 !_FPIEEE_VALUE methodsFor!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
 
@@ -86,7 +86,11 @@ defineFields
 		defineField: #filler type: DWORDField filler!
 
 formatCodes
-	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)! !
+	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)!
+
+getFieldList
+	^#(#flags)! !
 !_FPIEEE_VALUE class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
+!_FPIEEE_VALUE class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

@@ -130,9 +130,6 @@ readInteger
 
 	^stream nextSDWORD!
 
-readLiteralData
-	self shouldNotImplement!
-
 readMap
 	"Private - Answer the value of the receiver's readMap. This is an OrderedCollection of all
 	the object read so far from the filer. It is used  to map the object identifiers in
@@ -188,8 +185,6 @@ readObjectWithPrefix: anInteger
 	"SmallInteger?"
 	(anInteger allMask: STBPrefix.SmallIntegerMask) ifTrue: [^anInteger bitShift: -1].
 
-	"Literal? (Hook for STL filer)"
-	anInteger == STBPrefix.LiteralPrefixMask ifTrue: [^self readLiteralData].
 	(anInteger allMask: STBPrefix.DataPrefixMask)
 		ifFalse: 
 			[^(anInteger allMask: STBPrefix.CharacterMask)
@@ -267,7 +262,6 @@ timedNext
 !STBInFiler categoriesFor: #readClassData:!helpers!private! !
 !STBInFiler categoriesFor: #readClassLocator:!helpers!private! !
 !STBInFiler categoriesFor: #readInteger!helpers!private! !
-!STBInFiler categoriesFor: #readLiteralData!helpers!private! !
 !STBInFiler categoriesFor: #readMap!accessing!private! !
 !STBInFiler categoriesFor: #readObjectOfClass:!accessing!private! !
 !STBInFiler categoriesFor: #readObjectOfClass:format:!operations!private! !

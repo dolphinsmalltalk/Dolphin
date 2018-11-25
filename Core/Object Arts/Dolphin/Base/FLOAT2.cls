@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-ExternalStructure subclass: #FLOAT
+ExternalScalar subclass: #FLOAT
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -18,14 +18,14 @@ asFloat
 	^(bytes floatAtOffset: 0)!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'value' field."
 
 	^bytes floatAtOffset: 0!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: aFloat
+	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: anObject! !
+	bytes floatAtOffset: 0 put: aFloat! !
 !FLOAT categoriesFor: #asFloat!converting!public! !
 !FLOAT categoriesFor: #value!**compiled accessors**!public! !
 !FLOAT categoriesFor: #value:!**compiled accessors**!public! !
@@ -45,6 +45,9 @@ fileOutStem
 
 	^'FLOAT2'
 !
+
+getFieldList
+	^#(#value)!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -66,6 +69,7 @@ uninitialize
 	VMLibrary default registryAt: self name put: nil! !
 !FLOAT class categoriesFor: #defineFields!initializing!public! !
 !FLOAT class categoriesFor: #fileOutStem!private!source filing! !
+!FLOAT class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !FLOAT class categoriesFor: #initialize!development!initializing!private! !
 !FLOAT class categoriesFor: #maximum!constants!public! !
 !FLOAT class categoriesFor: #minimum!constants!public! !

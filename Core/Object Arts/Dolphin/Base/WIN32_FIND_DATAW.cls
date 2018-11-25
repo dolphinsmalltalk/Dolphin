@@ -148,6 +148,10 @@ defineFields
 		defineField: #dwReserved0 type: DWORDField filler;
 		defineField: #dwReserved1 type: DWORDField filler;
 		defineField: #cFileName type: (StringField type: Utf16String length: File maxPath) beReadOnly;
-		defineField: #cAlternateFileName type: (StringField type: Utf16String length: 14) beReadOnly! !
+		defineField: #cAlternateFileName type: (StringField type: Utf16String length: 14) beReadOnly!
+
+getFieldList
+	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow #cFileName #cAlternateFileName)! !
 !WIN32_FIND_DATAW class categoriesFor: #defineFields!initializing!public! !
+!WIN32_FIND_DATAW class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

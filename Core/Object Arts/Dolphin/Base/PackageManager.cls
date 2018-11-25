@@ -1330,6 +1330,7 @@ newSystemPackage
 	N.B. This should only ever be used during the boot process."
 
 	| dolphin globalNames all inst |
+	Notification signal: 'Creating new system package'.
 	inst := self current.
 	self assert: [inst packages isEmpty].
 	(dolphin := Package name: self systemPackageName)
@@ -1342,6 +1343,9 @@ Copyright (c) Object Arts Ltd. 1997-2016';
 	globalNames removeAll: (all collect: [:aClass | aClass name]).
 	globalNames do: [:globalName | inst addGlobalNamed: globalName to: dolphin].
 	dolphin untracedGlobals: {#Transcript}.
+	dolphin timestamp: ((File lastWriteTime: dolphin classDefinitionsFileName)
+				ifNil: [0]
+				ifNotNil: [:filetime | filetime asInteger]).
 	dolphin isChanged: false.
 	^dolphin!
 
@@ -1355,9 +1359,7 @@ reset
 systemPackage
 	"Answer the Package which contains all the base objects of the system."
 
-	SystemPackage isNil ifTrue: [
-		SystemPackage := self newSystemPackage.
-		SystemPackage updateTimestamp].
+	SystemPackage isNil ifTrue: [SystemPackage := self newSystemPackage].
 	^SystemPackage!
 
 systemPackageName

@@ -4,7 +4,7 @@ package paxVersion: 1;
 	basicComment: 'Dolphin Smalltalk Base System (Deprecated Classes and Methods)
 Copyright (c) Object Arts Ltd 1997-2002. Portions copyright (c) CGI Group (Europe) Ltd, 1997.
 
-This package includes legacy classes and methods from Dolphin''s base package that have been deprecated. If you have no requirement to use code imported from pre-5.0 versions of Dolphin, then this package can be safely uninstalled.
+This package includes legacy classes and methods from Dolphin''s base package that have been deprecated. If you have no requirement to use code imported from older versions of Dolphin, then this package can be safely uninstalled.
 '.
 
 package basicPackageVersion: '6.1'.
@@ -29,10 +29,12 @@ package methodNames
 	add: #Behavior -> #makeNullTerminated;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
 	add: #Class -> #addClassVarName:;
+	add: #Class -> #noClassCategoryName;
 	add: #ClassDescription -> #defaultIconFrom:;
 	add: #CompilerNotification -> #extra;
 	add: #CRTLibrary -> #_controlfp:mask:;
 	add: #CRTLibrary -> #_ecvt:count:dec:sign:;
+	add: #CRTLibrary -> #_eof:;
 	add: #CRTLibrary -> #_filelength:;
 	add: #CRTLibrary -> #_finite:;
 	add: #CRTLibrary -> #_fpclass:;
@@ -43,12 +45,16 @@ package methodNames
 	add: #CRTLibrary -> #_ltoa:string:radix:;
 	add: #CRTLibrary -> #_makepath:drive:dir:fname:ext:;
 	add: #CRTLibrary -> #_putenv:;
+	add: #CRTLibrary -> #_rotl:shift:;
+	add: #CRTLibrary -> #_rotr:shift:;
 	add: #CRTLibrary -> #_splitpath:drive:dir:fname:ext:;
+	add: #CRTLibrary -> #_stricoll:string2:;
 	add: #CRTLibrary -> #acos:;
 	add: #CRTLibrary -> #asin:;
 	add: #CRTLibrary -> #atan:;
 	add: #CRTLibrary -> #atan:x:;
 	add: #CRTLibrary -> #ceil:;
+	add: #CRTLibrary -> #chmod:pmode:;
 	add: #CRTLibrary -> #cos:;
 	add: #CRTLibrary -> #exp:;
 	add: #CRTLibrary -> #fabs:;
@@ -61,6 +67,7 @@ package methodNames
 	add: #CRTLibrary -> #fseek:offset:origin:;
 	add: #CRTLibrary -> #ftell:;
 	add: #CRTLibrary -> #getenv:;
+	add: #CRTLibrary -> #iswspace:;
 	add: #CRTLibrary -> #ldexp:exp:;
 	add: #CRTLibrary -> #log:;
 	add: #CRTLibrary -> #log10:;
@@ -103,6 +110,7 @@ package methodNames
 	add: #MessageBoxAbstract -> #warning;
 	add: #Process -> #fpeMask;
 	add: #Process -> #fpeMask:;
+	add: #STBPrefix -> #isLiteralPrefix;
 	add: #Stream -> #nextOrNil;
 	add: #String -> #asUnicodeString;
 	add: #WinMMLibrary -> #timeGetTime;
@@ -115,6 +123,7 @@ package methodNames
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
 	add: 'SortAlgorithm class' -> #sortBlock:;
+	add: 'SortedCollection class' -> #value:value:;
 	add: 'STBClassProxy class' -> #for:;
 	add: 'STBCollectionProxy class' -> #for:;
 	add: 'STBSingletonProxy class' -> #for:;
@@ -136,6 +145,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: (IdentitySet new
 	add: '..\Dolphin';
+	add: '..\Dolphin Conformant Array Fields';
 	yourself).
 
 package!
@@ -245,8 +255,15 @@ categoryIcon
 
 addClassVarName: aString
 	#deprecated.	"Use addClassVarNamed:"
-	^self addClassVarNamed: aString! !
+	^self addClassVarNamed: aString!
+
+noClassCategoryName
+	"Answer the String name of the ClassCategory used to mark that no
+	category has been set for a Class."
+
+	^self classCategoryClass unclassifiedName! !
 !Class categoriesFor: #addClassVarName:!class variables!public! !
+!Class categoriesFor: #noClassCategoryName!constants!public! !
 
 !ClassDescription methodsFor!
 
@@ -278,6 +295,11 @@ _controlfp: newInteger mask: maskInteger
 _ecvt: aFloat count: anInteger dec: decInteger sign: signInteger
 	<cdecl: lpstr _ecvt double sdword sdword* sdword*>
 	#deprecated.	"This function is considered insecure and should not be used - see MSDN"
+	^self invalidCall!
+
+_eof: handleInteger
+	<cdecl: sdword _eof sdword>
+	#deprecated. "Unused"
 	^self invalidCall!
 
 _filelength: handleInteger
@@ -330,9 +352,24 @@ _putenv: aString
 	#deprecated.	"Insecure - see MSDN"
 	^self invalidCall!
 
+_rotl: anUnsignedlInteger shift: anInteger
+	<cdecl: dword _rotl dword sdword>
+	#deprecated. "Unused"
+	^self invalidCall!
+
+_rotr: anUnsignedlInteger shift: anInteger
+	<cdecl: dword _rotr dword sdword>
+	#deprecated. "Unused"
+	^self invalidCall!
+
 _splitpath: path drive: drive dir: dir fname: fname ext: ext
 	<cdecl: void _splitpath char* char* char* char* char*>
 	#deprecated.	"Insecure - use _splitpath_s"
+	^self invalidCall!
+
+_stricoll: string1 string2: string2
+	<cdecl: sdword _stricoll lpstr lpstr>
+	#deprecated. "Unused"
 	^self invalidCall!
 
 acos: aFloat
@@ -359,6 +396,10 @@ ceil: aFloat
 	<cdecl: double ceil double>
 	#deprecated.
 	^self invalidCall!
+
+chmod: aFilenameString pmode: aModeInteger
+	#deprecated.
+	^self _chmod: aFilenameString pmode: aModeInteger!
 
 cos: aFloat
 	<cdecl: double cos double>
@@ -418,6 +459,11 @@ ftell: aFILE
 getenv: varname
 	<cdecl: lpstr getenv lpstr>
 	#deprecated.	"Insecure - see MSDN"
+	^self invalidCall!
+
+iswspace: aCharacter
+	<cdecl: bool iswspace char>
+	#deprecated.	"Unused"
 	^self invalidCall!
 
 ldexp: aFloat exp: anInteger
@@ -501,6 +547,7 @@ thread_errno
 	^self invalidCall! !
 !CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
@@ -511,12 +558,16 @@ thread_errno
 !CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
 !CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
+!CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
+!CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
 !CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+!CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
 !CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
 !CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
@@ -529,6 +580,7 @@ thread_errno
 !CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
 !CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
+!CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
 !CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
 !CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
@@ -773,6 +825,17 @@ sortBlock: aDyadicValuable
 	^self newSortBlock: aDyadicValuable! !
 !SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
 
+!SortedCollection class methodsFor!
+
+value: anObject1 value: anObject2 
+	"Private - Implement this part of the <dyadicValuable> protocol in order that the receiver
+	can be its own default sort 'block' for historical reasons. This is no longer used as of
+	Dolphin 6, and is deprecated in Dolphin 7.1"
+
+	Notification deprecated.
+	^anObject1 <= anObject2! !
+!SortedCollection class categoriesFor: #value:value:!evaluating!private! !
+
 !STBClassProxy class methodsFor!
 
 for: aClass 
@@ -786,6 +849,13 @@ for: aCollection
 	#deprecated.
 	^self forCollection: aCollection! !
 !STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
+
+!STBPrefix methodsFor!
+
+isLiteralPrefix
+	#deprecated.
+	^dword anyMask: LiteralPrefixMask! !
+!STBPrefix categoriesFor: #isLiteralPrefix!public!testing! !
 
 !STBSingletonProxy class methodsFor!
 

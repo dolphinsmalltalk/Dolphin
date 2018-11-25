@@ -115,6 +115,10 @@ defineFields
 		defineField: #ExceptionAddress type: LPVOIDField new beReadOnly offset: 12;
 		defineField: #NumberParameters type: DWORDField new beReadOnly offset: 16;
 		defineField: #ExceptionInformation type: (ArrayField type: UINT_PTRArray length: 15) beReadOnly beFiller offset: 20.
-	self byteSize: 80! !
+	self byteSize: 80!
+
+getFieldList
+	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
 !EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EXCEPTION_RECORD class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

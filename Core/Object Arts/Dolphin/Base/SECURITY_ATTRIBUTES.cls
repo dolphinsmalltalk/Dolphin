@@ -26,29 +26,29 @@ struct tagSECURITY_ATTRIBUTES {
 !SECURITY_ATTRIBUTES methodsFor!
 
 bInheritHandle
-	"Answer the receiver's bInheritHandle field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'bInheritHandle' field."
 
 	^(bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle)) asBoolean!
 
-bInheritHandle: anObject
-	"Set the receiver's bInheritHandle field to the value of anObject."
+bInheritHandle: aBoolean
+	"Set the receiver's 'bInheritHandle' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle) put: anObject asParameter!
+	bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle) put: aBoolean asParameter!
 
-dwSize: anObject
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 lpSecurityDescriptor
-	"Answer the receiver's lpSecurityDescriptor field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'lpSecurityDescriptor' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor)) asExternalAddress!
 
-lpSecurityDescriptor: anObject
-	"Set the receiver's lpSecurityDescriptor field to the value of anObject."
+lpSecurityDescriptor: anExternalAddress
+	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor) put: anObject! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor) put: anExternalAddress! !
 !SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
 !SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
 !SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !
@@ -73,6 +73,10 @@ defineFields
 	self
 		defineField: #dwSize type: DWORDField new beWriteOnly;
 		defineField: #lpSecurityDescriptor type: LPVOIDField new;
-		defineField: #bInheritHandle type: BOOLField new! !
+		defineField: #bInheritHandle type: BOOLField new!
+
+getFieldList
+	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
 !SECURITY_ATTRIBUTES class categoriesFor: #defineFields!initializing!public! !
+!SECURITY_ATTRIBUTES class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

@@ -6,6 +6,7 @@ Object subclass: #ExternalStructure
 	poolDictionaries: ''
 	classInstanceVariableNames: 'template flags alignment'!
 ExternalStructure guid: (GUID fromString: '{87b4c489-026e-11d3-9fd7-00a0cc3e4a32}')!
+ExternalStructure isAbstract: true!
 ExternalStructure comment: ''!
 !ExternalStructure categoriesForClass!External-Data-Structured! !
 !ExternalStructure methodsFor!
@@ -306,6 +307,13 @@ invalidCall
 	"All arguments were apparently valid, it must have been some system or unknown error."
 	^self primitiveFailed!
 
+isFieldBrowsable: aSymbol
+	| field fields |
+	fields := self template.
+	^(fields notNil and: [(field := self template at: aSymbol ifAbsent: []) notNil])
+		ifTrue: [field isBrowsable]
+		ifFalse: [self respondsTo: aSymbol]!
+
 isNull
 	"Answer whether the receiver is a null external data item
 	(that is, a null pointer, or a nilled out structure)."
@@ -358,18 +366,15 @@ printCyclicRefOn: aStream
 	aStream nextPutAll: '...'!
 
 printFields: aCollection on: aStream limit: anInteger
-	| sep template |
+	| sep |
 	sep := [sep := [aStream space]].
-	template := self template.
 	aCollection do: 
 			[:each |
-			| field |
 			aStream position > anInteger
 				ifTrue: 
 					[aStream nextPutAll: '... etc ...'.
 					^self].
-			field := template at: each.
-			field isBrowsable
+			(self isFieldBrowsable: each)
 				ifTrue: 
 					[sep value.
 					aStream
@@ -486,6 +491,7 @@ yourAddress
 !ExternalStructure categoriesFor: #initializePointer!initializing!private! !
 !ExternalStructure categoriesFor: #invalidArgErrorClass!constants!private! !
 !ExternalStructure categoriesFor: #invalidCall!exceptions!public! !
+!ExternalStructure categoriesFor: #isFieldBrowsable:!development!printing!private! !
 !ExternalStructure categoriesFor: #isNull!public!testing! !
 !ExternalStructure categoriesFor: #isPointer!public!testing! !
 !ExternalStructure categoriesFor: #maxPrint!constants!private! !
@@ -527,12 +533,6 @@ atAddress: anAddress
 	elements of arrays."
 
 	^self fromAddress: anAddress!
-
-autoGenCategory
-	"Private - Answer the name of the <MethodCategory> into which the auto-generated 
-	structure accessors for the receiver should be compiled."
-
-	^'**compiled accessors**'!
 
 baseAlignment
 	^self == ##(self) ifTrue: [1] ifFalse: [self superclass alignment]!
@@ -585,18 +585,6 @@ clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
 	which resides at the specified address. Note that this is not about freeing
 	the specified memory block, but any resources which it references."!
-
-contentsAccessText
-	"Private - Answer the method text that must be inserted to get access to the
-	contents (bytes) of the instances of the receiver"
-
-	^'bytes'!
-
-decompileDefinition
-	"Remove generated accessor methods from the receiver, and rebuild the
-	structure template"
-
-	[self removeCategory: self autoGenCategory] on: NotFoundError do: [:e | e notify]!
 
 defineField: fieldName type: anExternalField
 	"Add the argument anExternalField as the next field of the receiver's template, 
@@ -677,6 +665,14 @@ elementSize
 ensureDefined
 	template isNil ifTrue: [self defineTemplate]	"ensure the structure accessors are correctly defined"!
 
+fieldNamesFromTemplate
+	| answer pairs |
+	pairs := self template associations.
+	answer := OrderedCollection new: pairs size.
+	(pairs asSortedCollection: [:x :y | x value offset <= y value offset])
+		do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
+	^answer!
+
 fromAddress: anAddress 
 	"Answer a new instance that points to the ExternalAddress 
 	respresented by anAddress (which responds to the protocol
@@ -697,23 +693,9 @@ fromBytes: aByteObject
 	^self new copyBytes: aByteObject!
 
 getFieldList
-	"Private - Answer a <sequencedReadableCollection> of the fields defined 
-	in the receiver's template, sorted in ascending order of offset from the start of the
-	structure."
+	"Private - Answer a <sequencedReadableCollection> of <Symbol>, being the identifiers of the fields defined in the receiver's template, sorted in ascending order of offset from the start of the	structure."
 
-	| answer |
-	answer := OrderedCollection new.
-	(self template associations asSortedCollection: [:x :y | x value offset <= y value offset]) 
-		do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
-	^answer!
-
-hasHandCodedMethodFor: selector
-	"Private - Answer whether the receiver appears to have a hand coded implementation
-	for the specified selector <Symbol>."
-
-	| method |
-	method := self compiledMethodAt: selector ifAbsent: [^false].
-	^(self autoGenCategory asMethodCategory includesMethod: method) not!
+	^self fieldNamesFromTemplate!
 
 inheritTemplate
 	| ancestor |
@@ -734,15 +716,6 @@ initialize
 	"
 
 	CompiledMask := 16r1.!
-
-initializeAfterBinaryLoad
-	"Private - Perform any post-binary load initialisation for the class. 
-	Implementation Note: Use the template lazy accessor to cause the template
-	to be defined (if not already). This is a non-destructive way to ensure the class
-	is initialized."
-
-	self template.
-	self register!
 
 initializeAfterLoad
 	"Private - Ensure the template is removed. This could have been incorrectly initialised
@@ -951,17 +924,6 @@ setGuid: aGUID
 		self register]
 !
 
-shouldCompile: selector forField: anExternalField
-	"Private - Answer whether to compile an accessor method
-	with the specified selector for the specified field in the
-	receiver."
-
-	^anExternalField canGenerateAccessors 
-		and: [(self hasHandCodedMethodFor: selector) not		"Don't overwrite manually written methods"
-			and: ["Don't generate inherited fields unless specifically marked for override"
-				anExternalField isOverride or: [
-					(self superclass template includesKey: (selector upTo: $:) asSymbol) not]]]!
-
 shrink
 	"Private - Reduce the size of the structure template by removing the write accessors.
 	This should only be done to compiled structures."
@@ -1016,36 +978,32 @@ withBytes: aByteObject
 		yourself! !
 !ExternalStructure class categoriesFor: #alignment!constants!public! !
 !ExternalStructure class categoriesFor: #atAddress:!instance creation!public! !
-!ExternalStructure class categoriesFor: #autoGenCategory!constants!development!private! !
-!ExternalStructure class categoriesFor: #baseAlignment!accessing!private! !
+!ExternalStructure class categoriesFor: #baseAlignment!private!template definition! !
 !ExternalStructure class categoriesFor: #basicByteSize!accessing!public! !
-!ExternalStructure class categoriesFor: #beCompiled!modes!public! !
-!ExternalStructure class categoriesFor: #beUncompiled!modes!public! !
+!ExternalStructure class categoriesFor: #beCompiled!modes!public!template definition! !
+!ExternalStructure class categoriesFor: #beUncompiled!modes!public!template definition! !
 !ExternalStructure class categoriesFor: #byteSize!accessing!public! !
 !ExternalStructure class categoriesFor: #byteSize:!accessing!private! !
-!ExternalStructure class categoriesFor: #changedByteSizeFrom:!development!initializing!private! !
+!ExternalStructure class categoriesFor: #changedByteSizeFrom:!private!template definition! !
 !ExternalStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
-!ExternalStructure class categoriesFor: #contentsAccessText!constants!private! !
-!ExternalStructure class categoriesFor: #decompileDefinition!development!public! !
-!ExternalStructure class categoriesFor: #defineField:type:!initializing!public! !
-!ExternalStructure class categoriesFor: #defineField:type:offset:!initializing!public! !
-!ExternalStructure class categoriesFor: #defineFields!initializing!public! !
-!ExternalStructure class categoriesFor: #definesNewFields!private!testing! !
-!ExternalStructure class categoriesFor: #defineTemplate!initializing!public! !
+!ExternalStructure class categoriesFor: #defineField:type:!public!template definition! !
+!ExternalStructure class categoriesFor: #defineField:type:offset:!public!template definition! !
+!ExternalStructure class categoriesFor: #defineFields!public!template definition! !
+!ExternalStructure class categoriesFor: #definesNewFields!private!template definition!testing! !
+!ExternalStructure class categoriesFor: #defineTemplate!public!template definition! !
 !ExternalStructure class categoriesFor: #descriptorClass!constants!private! !
-!ExternalStructure class categoriesFor: #dynamicSelectorsDo:!methods-accessing!public! !
+!ExternalStructure class categoriesFor: #dynamicSelectorsDo:!compiling!methods-accessing!public! !
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
+!ExternalStructure class categoriesFor: #fieldNamesFromTemplate!accessing!compiling!private! !
 !ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !
 !ExternalStructure class categoriesFor: #getFieldList!accessing!private! !
-!ExternalStructure class categoriesFor: #hasHandCodedMethodFor:!development!private!testing! !
-!ExternalStructure class categoriesFor: #inheritTemplate!initializing!private! !
+!ExternalStructure class categoriesFor: #inheritTemplate!private!template definition! !
 !ExternalStructure class categoriesFor: #init:!initializing!public! !
 !ExternalStructure class categoriesFor: #initialize!development!initializing!private! !
-!ExternalStructure class categoriesFor: #initializeAfterBinaryLoad!initializing!private! !
-!ExternalStructure class categoriesFor: #initializeAfterLoad!initializing!private! !
-!ExternalStructure class categoriesFor: #initializeTemplate!initializing!private! !
+!ExternalStructure class categoriesFor: #initializeAfterLoad!development!initializing!private! !
+!ExternalStructure class categoriesFor: #initializeTemplate!private!template definition! !
 !ExternalStructure class categoriesFor: #isCompiled!private!testing! !
 !ExternalStructure class categoriesFor: #libraryAndIndex!constants!public! !
 !ExternalStructure class categoriesFor: #new!instance creation!public! !
@@ -1056,25 +1014,22 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #newHeapPointer!instance creation!public! !
 !ExternalStructure class categoriesFor: #newPointer!instance creation!public! !
 !ExternalStructure class categoriesFor: #newPointer:!instance creation!public! !
-!ExternalStructure class categoriesFor: #newTemplate!accessing!private! !
-!ExternalStructure class categoriesFor: #offsetFor:base:!helpers!public! !
+!ExternalStructure class categoriesFor: #newTemplate!private!template definition! !
+!ExternalStructure class categoriesFor: #offsetFor:base:!public!template definition! !
 !ExternalStructure class categoriesFor: #offsetOf:!accessing!public! !
 !ExternalStructure class categoriesFor: #packing!constants!public! !
-!ExternalStructure class categoriesFor: #paddedSizeFor:!helpers!public! !
+!ExternalStructure class categoriesFor: #paddedSizeFor:!public!template definition! !
 !ExternalStructure class categoriesFor: #pointerClass!constants!private! !
-!ExternalStructure class categoriesFor: #recompileReferences!development!private! !
+!ExternalStructure class categoriesFor: #recompileReferences!private!template definition! !
 !ExternalStructure class categoriesFor: #register!adding!public! !
 !ExternalStructure class categoriesFor: #registerClass:forGUID:!adding!public! !
-!ExternalStructure class categoriesFor: #resetTemplate!initializing!public! !
+!ExternalStructure class categoriesFor: #resetTemplate!public!template definition! !
 !ExternalStructure class categoriesFor: #setGuid:!accessing!private! !
-!ExternalStructure class categoriesFor: #shouldCompile:forField:!development!private!testing! !
-!ExternalStructure class categoriesFor: #shrink!operations!private! !
+!ExternalStructure class categoriesFor: #shrink!compiling!private! !
 !ExternalStructure class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ExternalStructure class categoriesFor: #structurePacker!accessing!public! !
+!ExternalStructure class categoriesFor: #structurePacker!public!template definition! !
 !ExternalStructure class categoriesFor: #template!accessing!private! !
 !ExternalStructure class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
 !ExternalStructure class categoriesFor: #unregister!public!removing! !
 !ExternalStructure class categoriesFor: #withBytes:!instance creation!public! !
-
-ExternalStructure class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 

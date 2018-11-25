@@ -193,6 +193,12 @@ unescapePercents
 
 !AnsiString class methodsFor!
 
+coerceString: aString
+	"Answer an instance of the receiver containing the same characters as the <String> argument, aString.
+	Any characters of aString that are not representable on the current ANSI code page are replaced with the ANSI replacement character, $?"
+
+	^aString asAnsiString!
+
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
@@ -205,11 +211,6 @@ fromAddress: anAddress
 	has the useful property that it returns NULL for NULL argument too)."
 
 	^VMLibrary default stringFromAddress: anAddress!
-
-fromString: aString
-	"Answer an instance of the receiver containing the same characters as the argument, aString."
-
-	^aString asAnsiString!
 
 initialize
 	empty := ''.
@@ -259,9 +260,9 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
+!AnsiString class categoriesFor: #coerceString:!instance creation!public! !
 !AnsiString class categoriesFor: #elementSize!constants!public! !
 !AnsiString class categoriesFor: #fromAddress:!instance creation!public! !
-!AnsiString class categoriesFor: #fromString:!instance creation!public! !
 !AnsiString class categoriesFor: #initialize!class initialization!development!public! !
 !AnsiString class categoriesFor: #with:!instance creation!public! !
 !AnsiString class categoriesFor: #with:with:!instance creation!public! !

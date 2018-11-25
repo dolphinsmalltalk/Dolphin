@@ -167,11 +167,11 @@ nextPut: anObject
 
 	<primitive: 66>
 	^position + collection maxEncoding <= writeLimit
+		ifTrue: [position := collection encodedAt: position + 1 put: anObject]
 		ifFalse: 
 			[self
 				growCollection;
-				primitiveNextPut: anObject]
-		ifTrue: [position := collection encodedAt: position + 1 put: anObject]!
+				primitiveNextPut: anObject]!
 
 nextPutAll: aCollection
 	"Store the elements in the argument, aCollection, as the next elements accessible by the receiver. 

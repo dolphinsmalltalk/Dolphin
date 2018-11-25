@@ -120,7 +120,11 @@ defineFields
 		defineField: #UnicodeDefaultChar type: WORDField new beReadOnly offset: 18;
 		defineField: #codepage type: DWORDField new beReadOnly offset: 20;
 		defineField: #CodePageName type: (StringField type: Utf16String length: 260) beReadOnly offset: 24.
-	self byteSize: 544! !
+	self byteSize: 544!
+
+getFieldList
+	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
 !CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
 !CPINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CPINFOEXW class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

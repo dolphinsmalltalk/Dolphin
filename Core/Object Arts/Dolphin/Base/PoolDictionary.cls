@@ -40,12 +40,6 @@ at: key put: anObject
 
 	^super at: key asString put: anObject!
 
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	the file out file is writeable"
-
-	^File isWriteable: self  fileOutName!
-
 displayOn: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver as a user
 	would want to see it."
@@ -58,12 +52,6 @@ environment
 
 	^Smalltalk
 !
-
-fileOut
-	"File out the receiver to <name>.st"
-
-	self class sourceManager fileOut: self.
-	self isChanged: false!
 
 fileOutName
 	"Answer the receiver's default file name for file outs (<name>.st)."
@@ -167,10 +155,8 @@ removeKey: key ifAbsent: exceptionHandler
 !PoolDictionary categoriesFor: #associationClass!constants!private! !
 !PoolDictionary categoriesFor: #at:ifAbsent:!accessing!public! !
 !PoolDictionary categoriesFor: #at:put:!accessing!public! !
-!PoolDictionary categoriesFor: #canFileOut!development!public!source filing! !
 !PoolDictionary categoriesFor: #displayOn:!displaying!public! !
 !PoolDictionary categoriesFor: #environment!constants!public! !
-!PoolDictionary categoriesFor: #fileOut!development!public!source filing! !
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolDictionary categoriesFor: #fileOutOn:!development!public! !
 !PoolDictionary categoriesFor: #includesKey:!public!searching! !
@@ -183,8 +169,6 @@ removeKey: key ifAbsent: exceptionHandler
 !PoolDictionary categoriesFor: #owningPackage!development!public!source filing! !
 !PoolDictionary categoriesFor: #owningPackage:!accessing!development!public! !
 !PoolDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-
-PoolDictionary methodProtocol: #sourceObject attributes: #() selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage)!
 
 !PoolDictionary class methodsFor!
 

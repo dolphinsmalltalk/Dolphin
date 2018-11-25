@@ -197,21 +197,10 @@ realCategories
 recompile
 	"Private - Recompile the receiver."
 
-	self methodClass recompile: self selector!
-
-storeCategories
-	"Private - Record the categories of the receiver.
-	The job is simply delegated to the receiver's source manager."
-
-	self class sourceManager storeCategoriesForMethod: self.!
-
-storeSourceString: aString
-	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
-
-	self class sourceManager storeSourceString: aString forMethod: self! !
+	self methodClass recompile: self selector! !
 !CompiledMethod categoriesFor: #<=!comparing!public! !
 !CompiledMethod categoriesFor: #categories!categories!development!public! !
-!CompiledMethod categoriesFor: #categories:!categories!development!private! !
+!CompiledMethod categoriesFor: #categories:!categories!private! !
 !CompiledMethod categoriesFor: #changeManager!development!private! !
 !CompiledMethod categoriesFor: #changePosition!development!private!testing! !
 !CompiledMethod categoriesFor: #displayOn:!printing!public! !
@@ -236,10 +225,8 @@ storeSourceString: aString
 !CompiledMethod categoriesFor: #printOn:!printing!public! !
 !CompiledMethod categoriesFor: #privacyCategory!categories-accessing!private! !
 !CompiledMethod categoriesFor: #protocols!categories!development!public! !
-!CompiledMethod categoriesFor: #realCategories!categories!development!public! !
+!CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
 !CompiledMethod categoriesFor: #recompile!compiling!development!private! !
-!CompiledMethod categoriesFor: #storeCategories!categories!development!private!source filing-methods! !
-!CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
 
 !CompiledMethod class methodsFor!
 

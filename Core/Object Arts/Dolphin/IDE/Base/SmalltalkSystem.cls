@@ -278,7 +278,7 @@ allSelectorsSentIn: aBrowserEnvironment
 	selectors := (IdentitySet new: 512)
 				addAll: VMLibrary default specialSelectors;
 				yourself.
-	excluded := 'examples' asMethodCategory contents.
+	excluded := 'examples' asMethodCategory methods.
 	aBrowserEnvironment methodsDo: 
 			[:each |
 			(excluded includes: each) ifFalse: [each messagesDo: [:selector | selectors add: selector]]].

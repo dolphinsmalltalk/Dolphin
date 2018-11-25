@@ -82,6 +82,12 @@ openConsoleStreams
 					((crt _isatty: each key) ifTrue: [self consoleStreamClass] ifFalse: [self fileStreamClass])
 						fromHandle: each value]!
 
+quit: anInteger
+	"Private - Force a close down of the session with the specified exit code."
+
+	self onExit == true ifTrue: [self primQuit: anInteger].
+	^false	"cancelled"!
+
 registerConsoleCtrlHandler
 	#todo "Rather ironically, registering a console ctrl handler does not work very well in a console app any more.  The signal is delivered on a background thread, which the Dolphin VM will marshal across the to main 	thread by sending it via the message queue. In a typical console application that is not going idle, the  signal will not be received.
 	One way to solve this would be to add a console control handler to the VM and send through the events to the image using the interrupt mechanism. In the meantime, don't register a handler so that Ctrl+C will perform the default action and above the app."
@@ -119,6 +125,7 @@ unhandledException: anException
 !ConsoleSessionManager categoriesFor: #logError:!operations-logging!public! !
 !ConsoleSessionManager categoriesFor: #onCloseConsole!event handling!private! !
 !ConsoleSessionManager categoriesFor: #openConsoleStreams!operations!public! !
+!ConsoleSessionManager categoriesFor: #quit:!operations-shutdown!private! !
 !ConsoleSessionManager categoriesFor: #registerConsoleCtrlHandler!operations!private! !
 !ConsoleSessionManager categoriesFor: #startUI!operations-startup!public! !
 !ConsoleSessionManager categoriesFor: #traceStream!accessing!operations-logging!public! !

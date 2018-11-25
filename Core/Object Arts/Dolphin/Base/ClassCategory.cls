@@ -7,7 +7,7 @@ Category subclass: #ClassCategory
 	classInstanceVariableNames: ''!
 ClassCategory guid: (GUID fromString: '{87b4c500-026e-11d3-9fd7-00a0cc3e4a32}')!
 ClassCategory comment: ''!
-!ClassCategory categoriesForClass!Development! !
+!ClassCategory categoriesForClass!System-Support! !
 !ClassCategory methodsFor!
 
 addClass: class
@@ -15,11 +15,14 @@ addClass: class
 
 	class includeInCategory: self!
 
-contents
-	"Answer a Collection of all Class objects which are 
-	held by the receiver."
+classes
+	"Answer a Collection of all Class objects which are held by the receiver."
 
 	^self class environment allClasses select: [:aClass | self includesClass: aClass]!
+
+contents
+	Notification deprecated.
+	^self classes!
 
 includesClass: class
 	"Answer whether the receiver includes the <ClassDescription>, class."
@@ -28,6 +31,11 @@ includesClass: class
 		ifNil: [self == self class unclassified]
 		ifNotNil: [:classCategories | classCategories identityIncludes: self]!
 
+isEmpty
+	"Answer whether the receiver is an empty category (with no members)"
+
+	^self class environment allClasses anySatisfy: [:aClass | self includesClass: aClass]!
+
 removeClass: aClass
 	"Remove aClass from the classes held by the reciver. Answer
 	aMethod."
@@ -35,8 +43,10 @@ removeClass: aClass
 	aClass removeFromCategory: self.
 	^aClass! !
 !ClassCategory categoriesFor: #addClass:!adding!public! !
+!ClassCategory categoriesFor: #classes!public! !
 !ClassCategory categoriesFor: #contents!enumerating!public! !
 !ClassCategory categoriesFor: #includesClass:!public!testing! !
+!ClassCategory categoriesFor: #isEmpty!public!testing! !
 !ClassCategory categoriesFor: #removeClass:!public!removing! !
 
 !ClassCategory class methodsFor!
@@ -44,7 +54,7 @@ removeClass: aClass
 allClassCategories
 	"Answer the set of all <classCategory>s current registered in the system."
 
-	^Table asArray!
+	^self table asArray!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -77,12 +87,19 @@ name: cat
 	nameString := cat asString.
 	^nameString isEmpty 
 		ifTrue: [self unclassified]
-		ifFalse: [Table at: nameString ifAbsentPut: [self newNamed: nameString]]!
+		ifFalse: [self table at: nameString ifAbsentPut: [self newNamed: nameString]]!
+
+table
+	^Table ifNil: [Table := WeakLookupTable new]!
 
 unclassified
 	"Answer a <ClassCategory> used to mark an unclassified classes."
 
-	^Unclassified!
+	^Unclassified
+		ifNil: 
+			[Unclassified := self newNamed: self unclassifiedName.
+			self table at: self unclassifiedName put: Unclassified.
+			Unclassified]!
 
 unclassifiedName
 	"Private - Answer the String name used to mark a none existing category."
@@ -97,6 +114,7 @@ uninitialize
 !ClassCategory class categoriesFor: #allClassCategories!accessing!public! !
 !ClassCategory class categoriesFor: #initialize!initializing!private! !
 !ClassCategory class categoriesFor: #name:!instance creation!public! !
+!ClassCategory class categoriesFor: #table!accessing!private! !
 !ClassCategory class categoriesFor: #unclassified!instance creation!public! !
 !ClassCategory class categoriesFor: #unclassifiedName!constants!private! !
 !ClassCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !

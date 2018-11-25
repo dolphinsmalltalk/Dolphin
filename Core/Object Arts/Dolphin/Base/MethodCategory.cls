@@ -13,7 +13,7 @@ Instance Variables: (None)
 Class Variables:
 	Pseuds		<Set> of <VirtualMethodCategory>s. The pseudo-categories.
 	Table		<WeakLookupTable> mapping <String> names to <MethodCategory> instances.'!
-!MethodCategory categoriesForClass!Development! !
+!MethodCategory categoriesForClass!System-Support! !
 !MethodCategory methodsFor!
 
 addClass: class
@@ -56,12 +56,8 @@ behaviorsDo: aMonadicValuable
 		allBehaviorsDo: [:each | (each includesCategory: self) ifTrue: [aMonadicValuable value: each]]!
 
 contents
-	"Answer a <collection> of all methods classified under the receiver."
-
-	| foundMethods |
-	foundMethods := IdentitySet new.
-	self behaviorsDo: [:aBehavior | foundMethods addAll: (self methodsInBehavior: aBehavior)].
-	^foundMethods!
+	Notification deprecated.
+	^self methods!
 
 includesMethod: method
 	"Answer whether the receiver includes the <CompiledMethod>, method."
@@ -72,6 +68,14 @@ isPrivacy
 	"Private - Answer whether the receiver is a method privacy category."
 
 	^false!
+
+methods
+	"Answer a <collection> of all methods classified under the receiver."
+
+	| foundMethods |
+	foundMethods := IdentitySet new.
+	self behaviorsDo: [:aBehavior | foundMethods addAll: (self methodsInBehavior: aBehavior)].
+	^foundMethods!
 
 methodsInBehavior: aBehavior 
 	"Answer a <sequencedReadableCollection> of <CompiledMethods>s being all the methods in the <Behavior>
@@ -124,6 +128,7 @@ removeMethodSilently: method
 !MethodCategory categoriesFor: #contents!enumerating!public! !
 !MethodCategory categoriesFor: #includesMethod:!public!testing! !
 !MethodCategory categoriesFor: #isPrivacy!private!testing! !
+!MethodCategory categoriesFor: #methods!public! !
 !MethodCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
 !MethodCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
 !MethodCategory categoriesFor: #removeClass:!public!removing! !
@@ -158,27 +163,10 @@ initialize
 		MethodCategory initialize
 	"
 
-	self initializeTable!
+	"It is unwise to clear down the method category table, as the development system expects methods and classes
+	to be correctly categorized. However during the booting of the system weakness is not operative so we must
+	repair the table by cleaning out the dead wood."
 
-initializeTable
-	"Private - Initialize the receiver's dictionary of instances.
-
-	This is a No-Op because we have to create the table
-	during the booting process of Dolphin so all the methods
-	categories can be set as they are loaded. Support for the booting
-	of the system is unnecessary in the release version of Dolphin but
-	it resolves the conundrom of creating the Smalltalk system, which
-	relies on itself to work, from nothing using smalltalk. 
-
-	It is unwise to clear down this table, as the development system
-	expects methods and classes to be correctly categorized."
-"	| newTable |
-
-	newTable := WeakLookupTable new.
-	newTable addAll: Table associations.
-	Table := newTable"
-
-	"Repair table as weakness not operative during boot process"
 	Table removeAllKeys: (Table keys select: [:k | k isKindOf: DeadObject])!
 
 name: categoryName
@@ -196,8 +184,7 @@ primitives
 private
 	"Answer the category for private methods."
 
-	Private isNil ifTrue: [Private := self name: 'private'].
-	^Private!
+	^Private ifNil: [Private := self name: 'private']!
 
 pseudoCategories
 	"Answer the <collection> of standard pseudo categories, the contents of which 
@@ -214,8 +201,7 @@ pseudPrefix
 public
 	"Answer the category for public methods."
 
-	Public isNil ifTrue: [Public := self name: 'public'].
-	^Public!
+	^Public ifNil: [Public := self name: 'public']!
 
 removeCategory: category
 	"Remove the specified category from all classes with which it is associated,
@@ -261,14 +247,14 @@ unclassifiedName
 	^ '*-unclassified'!
 
 uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system."
+	"Private - Uninitialize the receiver as it may be about to be removed from the system."
 
-	Pseuds := Table := nil! !
+	Pseuds := Set new.
+	Table := WeakLookupTable new! !
 !MethodCategory class categoriesFor: #addPseud:!adding!public! !
 !MethodCategory class categoriesFor: #allMethodCategories!accessing!public! !
 !MethodCategory class categoriesFor: #deprecatedMethods!instance creation!public! !
 !MethodCategory class categoriesFor: #initialize!initializing!private! !
-!MethodCategory class categoriesFor: #initializeTable!initializing!private! !
 !MethodCategory class categoriesFor: #name:!instance creation!public! !
 !MethodCategory class categoriesFor: #primitives!instance creation!public! !
 !MethodCategory class categoriesFor: #private!instance creation!public! !

@@ -348,18 +348,12 @@ clear
 	Similary function addresses will be lazily requeried as required."
 
 	default notNil ifTrue: [default handle: nil].
-	self clearMethodDictionary: self methodDictionary.!
-
-clearMethodDictionary: aMethodDictionary
-	"Private - Clear down cached proc addresses in the argument, aMethodDictionary."
-
-	aMethodDictionary do: [ :m | m clear ]!
+	self methodDictionary do: [:m | m clear]!
 
 closeAllDefaults
 	"Private - Close all open default libraries."
-	
-	self allSubclasses do: [ :c | c closeDefault ]
-!
+
+	self allSubclassesBreadthFirstDo: [:each | each closeDefault]!
 
 closeDefault
 	"Private - Close the default instance of the receiver (if there is one).
@@ -437,7 +431,7 @@ onPreStripImage
 onStartup
 	"Private - Perform session startup processing for the receiver and its subclasses."
 
-	self allSubclasses do: [:c | c clear].
+	self allSubclassesBreadthFirstDo: [:each | each clear].
 	"If we don't have a handle for the Kernel32.DLL then we can't open any other libraries"
 	KernelLibrary openDefault.
 	PermanentLibrary onStartup2.
@@ -499,7 +493,6 @@ versionInfo
 
 	^VersionInfo forPath: self fileName! !
 !ExternalLibrary class categoriesFor: #clear!initializing!private! !
-!ExternalLibrary class categoriesFor: #clearMethodDictionary:!initializing!private! !
 !ExternalLibrary class categoriesFor: #closeAllDefaults!finalizing!private! !
 !ExternalLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
 !ExternalLibrary class categoriesFor: #default!accessing!instance creation!public! !

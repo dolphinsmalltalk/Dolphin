@@ -383,6 +383,11 @@ codePage
 
 	^Win32Constants.CP_UNICODE!
 
+coerceString: aString
+	"Answer an instance of the receiver containing the same characters as the <String> argument."
+
+	^aString asUtf16String!
+
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
@@ -442,12 +447,6 @@ fromBytes: aByteArray codePage: anInteger
 		cchWideChar: cch.
 	^answer!
 
-fromString: aString
-	"Answer an instance of the receiver containing the same characters as the <String>
-	argument."
-
-	^aString asUtf16String!
-
 fromUtf16String: anAddressOrUtf16String
 	"Answer a new instance of the receiver which is a copy of the the UTF-16 string pointed at by the argument."
 
@@ -479,12 +478,12 @@ with: aCharacter
 				encodedAt: 1 put: cp;
 				yourself]! !
 !Utf16String class categoriesFor: #codePage!constants!public! !
+!Utf16String class categoriesFor: #coerceString:!instance creation!public! !
 !Utf16String class categoriesFor: #elementSize!constants!public! !
 !Utf16String class categoriesFor: #fromAddress:!instance creation!public! !
 !Utf16String class categoriesFor: #fromAddress:length:!instance creation!public! !
 !Utf16String class categoriesFor: #fromAtomId:!instance creation!public! !
 !Utf16String class categoriesFor: #fromBytes:codePage:!instance creation!public! !
-!Utf16String class categoriesFor: #fromString:!instance creation!public! !
 !Utf16String class categoriesFor: #fromUtf16String:!instance creation!public! !
 !Utf16String class categoriesFor: #initialize!development!initializing!public! !
 !Utf16String class categoriesFor: #with:!instance creation!public! !

@@ -136,16 +136,6 @@ categoriesFor: selector
 					[method categories: categories.
 					method storeCategories]]!
 
-categoriesFor: selector are: categories
-	"Compatibility ith IBM Smalltalk fileIn format (which is of the form
-	<class> categoriesFor: <selector> are: #([<categoryString>]*).
-	Sets the additional categories of a selector if it exists."
-
-	(self includesSelector: selector)
-		ifTrue: 
-			[categories
-				do: [:categoryString | self includeSelector: selector inCategory: categoryString asMethodCategory]]!
-
 categoriesOfMethod: aCompiledMethod
 	"Private - Answer a <Set> of all the <methodCategory> objects in the receiver
 	of which the <CompiledMethod> (assumed to belong to the receiver), 
@@ -171,6 +161,12 @@ categoriesOfMethod: aCompiledMethod
 		do: [:each | (each ~~ unclassified and: [each includesMethod: aCompiledMethod]) ifTrue: [answer add: each]].
 	answer add: aCompiledMethod privacyCategory.
 	^answer!
+
+changeIndex
+	^nil!
+
+changeIndexValue: aBlock 
+	"Ignored"!
 
 classCategoryClass
 	"Private - Answer the class of object used to categorize classes.
@@ -303,99 +299,6 @@ conformsToProtocol: protocol
 		superclass notNil and: [superclass conformsToProtocol: protName]]
 !
 
-copy: selector from: class
-	"Copy the method with the selector <Symbol>, selector, in <ClassDescription>, 
-	class, to the receiver's method dictionary, maintaining any existing categories.
-	If a compile error occurs then a CompilerNotification is signalled. 
-	Answers the new method or nil."
-
-	^self copy: selector from: class categories: (class compiledMethodAt: selector) categories
-
-!
-
-copy: aSymbol from: aClass categories: aCollection 
-	"Copy the method with the specified selector <Symbol>, in the <Behavior>, aClass, to the
-	receiver's method dictionary, classifying it in each of the the <Collection> of
-	<methodCategory>s specified by the last argument. If a compile error occurs then a
-	CompilerNotification is signalled. Answers the new method or nil."
-
-	| method |
-	method := aClass compiledMethodAt: aSymbol.
-	^self 
-		compile: method getSource
-		categories: aCollection
-		package: method owningPackageIfLoose!
-
-copy: aSymbol from: aClass classified: aString
-	"Copy the method with the specified selector <Symbol>, in the <Behavior>, aClass, to the
-	receiver's method dictionary, adding it to the category identified by the final <String>
-	argument."
-
-	"This method is primarily present for Smalltalk-80 compatibility, but differs in that as
-	Dolphin supports multiple categories, the existing method classifications are retained and
-	'cat' is treated as a new classification. The method is recompiled in its new class. If a
-	compile error occurs then a CompilerNotification is signalled. Answers the new method or
-	nil."
-
-	| categories |
-	categories := (aClass compiledMethodAt: aSymbol) categories.
-	categories add: aString asMethodCategory.
-	^self
-		copy: aSymbol
-		from: aClass
-		categories: categories!
-
-copyAll: selectors from: class
-	"Copy each of the methods with selectors in the <Collection> of <Symbol>s,
-	selectors, from the <Behavior>, class, to the receiver's method dictionary, 
-	maintaining the methods current categories.
-	Answers whether all of the methods copied successfully."
-
-	^selectors allSatisfy: [:selector | (self copy: selector from: class) notNil]!
-
-copyAll: selectors from: class classified: cat
-	"Copy each of the methods with selectors in the <Collection> of <Symbol>s,
-	selectors, from the <Behavior>, class, to the receiver's method dictionary, 
-	adding the new methods to the category with <readableString> name, cat,
-	as well as the methods current categories.
-	Answers whether all of the methods copied successfully."
-
-	^selectors allSatisfy: [:selector | 
-		(self copy: selector from: class classified: cat) notNil]!
-
-copyAllCategoriesFrom: class
-	"Copy all categories of method from the <Behavior>, class, to the receiver.
-	Answers whether all of the methods copied successfully."
-	
-	^class selectors allSatisfy: [:selector | (self copy: selector from: class) notNil]!
-
-copyCategory: category from: aClass
-	"Copy all methods of the <ClassDescription> class, in the <MethodCategory>
-	named by the <readableString>, category, to the receiver. Answers whether all 
-	of the methods copied successfully."
-
-	| cat |
-	cat := category asMethodCategory.
-	^(cat methodsInBehavior: self)
-		allSatisfy: [:m | (self
-				copy: m selector
-				from: aClass
-				classified: cat) notNil]!
-
-copyCategory: category from: aClass classified: newCategory
-	"Copy all methods of the <ClassDescription> class, in the <MethodCategory>
-	named by the <readableString>, category, to the receiver. Answers whether all 
-	of the methods copied successfully. The methods are additionally classified
-	under the <MethodCategory> named by the <readableString>, newCategory."
-
-	| cat |
-	cat := category asMethodCategory.
-	^(cat methodsInBehavior: self)
-		allSatisfy: [:m | (self
-				copy: m selector
-				from: aClass
-				classified: newCategory) notNil]!
-
 defaultIconName
 	"Answer a filename to use for an icon of this class."
 
@@ -504,11 +407,17 @@ instVarNames
 			instanceVariables subStrings: $\x20]
 		ifFalse: [instanceVariables]!
 
+isChanged
+	"Answer true if the receiver or any of it's contents have been changed since
+	their changed flag was last reset."
+
+	^self changeIndex notNil!
+
 isChanged: aBoolean
 	"Flag the receiver as changed or not changed, according to the value 
 	of the <Boolean> argument."
 
-	self subclassResponsibility!
+	"When not running in a development system, changes are not tracked"!
 
 logDefinition
 	self sourceManager logEvaluate: self definition!
@@ -542,7 +451,8 @@ methodChanged: aCompiledMethod
 	of the <Boolean> argument. If the receiver is marked as changed, then
 	its owning package (if any) is also so marked."
 
-	self instanceClass methodChanged: aCompiledMethod!
+	"Ignored if the development system is not present."
+!
 
 methodProtocol: protocolName attributes: attributes selectors: selectors
 	"Instantiate and install the MethodProtocol named by the <Symbol>, protocolName,
@@ -595,7 +505,7 @@ name
 	^self subclassResponsibility!
 
 owningPackage
-	^self instanceClass owningPackage!
+	^nil!
 
 printDefinitionOn: target
 	"Private - Append the textual definition of the receiver to the <puttableStream>, target."
@@ -666,7 +576,7 @@ removeInstVarName: aString
 	newClass := (ClassBuilder forModifying: self)
 				instanceVariables: (self instVarNames copyWithout: aString);
 				modifyExistingClass.
-	newClass notNil ifTrue: [	newClass notNil ifTrue: [newClass logDefinition]].
+	newClass notNil ifTrue: [newClass logDefinition].
 	^newClass!
 
 removeMethodFromNonVirtualCategories: aCompiledMethod 
@@ -753,18 +663,6 @@ removeUnsupportedProtocols: superUnsupported selector: removedSelector
 		(s canUnderstand: removedSelector)
 			ifTrue: [unsupported do: [:p | p addClass: s]]
 			ifFalse: [s removeUnsupportedProtocols: unsupported selector: removedSelector]]!
-
-renameInstVar: oldString to: newString
-	"Private - Rename the instance variable of the receiver named by the <readableString>, oldString, to be
-	named by the <readableString>, newString. The variable must be one of the receiver's own instance 
-	variables , not of one of its superclasses.
-	Note: This is a low-level operation that does not recompile any methods, however since the methods
-	access instance variables by index they will remain valid until recompiled. It is the caller's responsibility
-	to rewrite and recompile methods that reference the instance variable."
-
-	self setInstanceVariables: (self instVarNames copyReplacing: oldString withObject: newString).
-	self logDefinition.
-	self environment classUpdated: self!
 
 resourceIdentifiers
 	| identifiers |
@@ -875,10 +773,9 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	^anSTBInFiler readObjectOfClass: self format: anSTBClassConversion!
 
 storeClassCategories
-	"Private - Record the categories of the receiver to the change log.
-	The job is simply delegated to the receiver's source manager (if available)."
+	"Private - Record the categories of the receiver to the change log."
 
-	self sourceManager storeCategoriesForClass: self!
+	"Ignored in the absence of the development system"!
 
 suggestedPrivacyFor: aCompiledMethod
 	| policy |
@@ -920,8 +817,9 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #allSharedPools!pool variables!public! !
 !ClassDescription categoriesFor: #canUnderstandProtocol:!methods-testing!public! !
 !ClassDescription categoriesFor: #categoriesFor:!public!source filing-methods! !
-!ClassDescription categoriesFor: #categoriesFor:are:!development!public!source filing-methods! !
 !ClassDescription categoriesFor: #categoriesOfMethod:!categories-accessing!private! !
+!ClassDescription categoriesFor: #changeIndex!accessing!private! !
+!ClassDescription categoriesFor: #changeIndexValue:!accessing!private! !
 !ClassDescription categoriesFor: #classCategoryClass!constants!private! !
 !ClassDescription categoriesFor: #classPool!class variables!public! !
 !ClassDescription categoriesFor: #classVariableString!accessing!public! !
@@ -933,33 +831,26 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #compile:categories:package:flags:!compiling!development!public! !
 !ClassDescription categoriesFor: #compile:classified:!compiling!public! !
 !ClassDescription categoriesFor: #conformsToProtocol:!protocols!public! !
-!ClassDescription categoriesFor: #copy:from:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copy:from:categories:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copy:from:classified:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copyAll:from:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copyAll:from:classified:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copyAllCategoriesFrom:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copyCategory:from:!development!methods-copying!public! !
-!ClassDescription categoriesFor: #copyCategory:from:classified:!development!methods-copying!public! !
 !ClassDescription categoriesFor: #defaultIconName!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIcon!constants!public! !
 !ClassDescription categoriesFor: #defaultResourceIconName!constants!public! !
 !ClassDescription categoriesFor: #definition!public!source filing-class definition! !
 !ClassDescription categoriesFor: #displayOn:!displaying!public! !
-!ClassDescription categoriesFor: #includesCategory:!categories-testing!development!public! !
-!ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!development!public! !
+!ClassDescription categoriesFor: #includesCategory:!categories-testing!public! !
+!ClassDescription categoriesFor: #includeSelector:inCategory:!categories-testing!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:!instance variables!public! !
 !ClassDescription categoriesFor: #indexOfInstVar:ifAbsent:!instance variables!public! !
 !ClassDescription categoriesFor: #instanceClass!accessing!public! !
 !ClassDescription categoriesFor: #instanceVariableString!accessing!public! !
 !ClassDescription categoriesFor: #instanceVariableString:!accessing!private! !
 !ClassDescription categoriesFor: #instVarNames!instance variables!public! !
-!ClassDescription categoriesFor: #isChanged:!development!public!source filing! !
+!ClassDescription categoriesFor: #isChanged!public!source filing!testing! !
+!ClassDescription categoriesFor: #isChanged:!public!source filing! !
 !ClassDescription categoriesFor: #logDefinition!instance variables!private! !
 !ClassDescription categoriesFor: #logRemoveSelector:!helpers!private! !
 !ClassDescription categoriesFor: #logRemoveSelectors:!helpers!private! !
 !ClassDescription categoriesFor: #methodCategories!categories-accessing!public! !
-!ClassDescription categoriesFor: #methodChanged:!development!helpers!private! !
+!ClassDescription categoriesFor: #methodChanged:!helpers!private! !
 !ClassDescription categoriesFor: #methodProtocol:attributes:selectors:!development!public!source filing-methods! !
 !ClassDescription categoriesFor: #methodProtocolClass!constants!private! !
 !ClassDescription categoriesFor: #methods!public!source filing-methods! !
@@ -967,8 +858,8 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #methodsCatalogue:!categories-accessing!private! !
 !ClassDescription categoriesFor: #methodsFor!public!source filing-methods! !
 !ClassDescription categoriesFor: #name!accessing!public! !
-!ClassDescription categoriesFor: #owningPackage!accessing!development!public! !
-!ClassDescription categoriesFor: #printDefinitionOn:!development!private!source filing-class definition! !
+!ClassDescription categoriesFor: #owningPackage!accessing!public! !
+!ClassDescription categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
 !ClassDescription categoriesFor: #printOn:!printing!public! !
 !ClassDescription categoriesFor: #protocolNames!private!protocols! !
 !ClassDescription categoriesFor: #protocols!private!protocols! !
@@ -985,7 +876,6 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #removeSelectors:!development!methods-removing!public! !
 !ClassDescription categoriesFor: #removeSharedPool:!pool variables!public! !
 !ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !
-!ClassDescription categoriesFor: #renameInstVar:to:!instance variables!private! !
 !ClassDescription categoriesFor: #resourceIdentifiers!accessing!public! !
 !ClassDescription categoriesFor: #resourceIdentifiersDo:!enumerating!public! !
 !ClassDescription categoriesFor: #resourceNames!accessing!public! !

@@ -25,9 +25,6 @@ alignment
 
 	^self byteSize!
 
-autoGenCategories
-	^{ExternalStructure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}!
-
 autoGenComment
 	"Private - Answer a suitable piece of comment to warn the user that a
 	method is automatically generated and should not be modified.
@@ -211,7 +208,6 @@ valueParameterName
 
 	^self makeInstanceName: self fieldClassName! !
 !ExternalField categoriesFor: #alignment!constants!public! !
-!ExternalField categoriesFor: #autoGenCategories!development!private! !
 !ExternalField categoriesFor: #autoGenComment!constants!development!private! !
 !ExternalField categoriesFor: #beFiller!modes!public! !
 !ExternalField categoriesFor: #byteSize!accessing!private! !

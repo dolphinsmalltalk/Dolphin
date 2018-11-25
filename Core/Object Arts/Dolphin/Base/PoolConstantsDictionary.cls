@@ -43,12 +43,6 @@ at: key put: anObject
 		ifTrue: [anObject	"No attempt was made to change the value"]
 		ifFalse: [self errorModify: keyString value: anObject]!
 
-canFileOut
-	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
-	the file out file is writeable"
-
-	^File isWriteable: self  fileOutName!
-
 classesReferencing
 	^self environment allClasses select: [:c | c allSharedPools includes: self]!
 
@@ -78,12 +72,6 @@ errorModify: key value: value
 	super at: key put: value.
 	self isChanged: true.
 	recompile ifTrue: [self recompileReferencesToVarNamed: key]!
-
-fileOut
-	"File out the receiver to <name>.st"
-
-	self class sourceManager fileOut: self.
-	self isChanged: false!
 
 fileOutName
 	"Answer the receiver's default file name for file outs (<name>.st)."
@@ -191,18 +179,6 @@ recompileReferencesToVarNamed: keyString
 			c class recompileReferencesToVarNamed: keyString.
 			self]!
 
-referencesTo: keyString 
-	"Answer the collection of any methods which references the named key, assumed to
-	be a variable name from the receiver."
-
-	| refs |
-	refs := OrderedCollection new.
-	self classesReferencing do: 
-			[:c | 
-			c methodDictionary do: [:m | (m containsSource: keyString) ifTrue: [refs add: m]].
-			c class methodDictionary do: [:m | (m containsSource: keyString) ifTrue: [refs add: m]]].
-	^refs!
-
 removeIndex: anInteger
 	"Private - Remove the element at index, anInteger, in the receiver. Does not
 	check that the element is empty."
@@ -212,12 +188,10 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #associationClass!constants!private! !
 !PoolConstantsDictionary categoriesFor: #at:ifAbsentPut:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #at:put:!adding!development!public! !
-!PoolConstantsDictionary categoriesFor: #canFileOut!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
 !PoolConstantsDictionary categoriesFor: #displayOn:!displaying!public! !
 !PoolConstantsDictionary categoriesFor: #environment!constants!public! !
 !PoolConstantsDictionary categoriesFor: #errorModify:value:!development!exceptions!private! !
-!PoolConstantsDictionary categoriesFor: #fileOut!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #fileOutOn:!development!public! !
 !PoolConstantsDictionary categoriesFor: #findKeyOrNil:!private!searching! !
@@ -232,10 +206,7 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #owningPackage:!accessing!development!public! !
 !PoolConstantsDictionary categoriesFor: #preResize:!adding!private! !
 !PoolConstantsDictionary categoriesFor: #recompileReferencesToVarNamed:!development!private! !
-!PoolConstantsDictionary categoriesFor: #referencesTo:!development!private! !
 !PoolConstantsDictionary categoriesFor: #removeIndex:!development!private!removing! !
-
-PoolConstantsDictionary methodProtocol: #sourceObject attributes: #() selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage)!
 
 !PoolConstantsDictionary class methodsFor!
 

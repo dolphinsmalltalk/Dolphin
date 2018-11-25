@@ -11,7 +11,7 @@ _FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to repre
 !_FPIEEE_RECORD methodsFor!
 
 cause
-	"Answer the receiver's cause field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cause' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cause)!
 
@@ -31,8 +31,13 @@ causeNames
 	self class exceptionFlags: self cause do: [:each | stream nextPut: each].
 	^stream contents!
 
+enable
+	"Answer the <Integer> value of the receiver's 'enable' field."
+
+	^bytes dwordAtOffset: ##(self offsetOf: #enable)!
+
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
 	^bytes dwordAtOffset: 0!
 
@@ -66,12 +71,12 @@ isZeroDivide
 	^(self cause isBitSet: 4) or: [self isDivide and: [self operand1 value isZero]]!
 
 operand1
-	"Answer the receiver's operand1 field as a Smalltalk object."
+	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand1' field."
 
 	^_FPIEEE_VALUE fromAddress: bytes yourAddress + ##(self offsetOf: #operand1)!
 
 operand2
-	"Answer the receiver's operand2 field as a Smalltalk object."
+	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand2' field."
 
 	^_FPIEEE_VALUE fromAddress: bytes yourAddress + ##(self offsetOf: #operand2)!
 
@@ -146,6 +151,7 @@ roundingModeName
 !_FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
+!_FPIEEE_RECORD categoriesFor: #enable!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
 !_FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
 !_FPIEEE_RECORD categoriesFor: #isOverflow!public!testing! !
@@ -195,6 +201,9 @@ exceptionFlags: anInteger do: aMonadicValuable
 					(anInteger anyMask: mask) ifTrue: [aMonadicValuable value: each].
 					mask << 1]]!
 
+getFieldList
+	^#(#flags #cause #enable #status #operand1 #operand2)!
+
 operationCodes
 	^#(#Add #Subtract #Multiply #Divide #SquareRoot #Remainder #Compare #Convert #Round #Truncate #Floor #Ceil #Acos #Asin #Atan #Atan2 #Cabs #Cos #Cosh #Exp #Fabs #Fmod #Frexp #Hypot #Ldexp #Log #Log10 #Modf #Pow #Sin #Sinh #Tan #Tanh #Y0 #Y1 #Yn #Logb #Nextafter #Negate #Fmin #Fmax #ConvertTrunc #Addps #Addss #Subps #Subss #Mulps #Mulss #Divps #Divss #Sqrtps #Sqrtss #Maxps #Maxss #Minps #Minss #Cmpps #Cmpss #Comiss #UComiss #Cvtpi2ps #Cvtsi2ss #Cvtps2pi #Cvtss2si #Cvttps2pi #Cvttss2si #Addsubps #Haddps #Hsubps #Roundps #Roundss #Dpps #Addpd #Addsd #Subpd #Subsd #Mulpd #Mulsd #Divpd #Divsd #Sqrtpd #Sqrtsd #Maxpd #Maxsd #Minpd #Minsd #Cmppd #Cmpsd #Comisd #UComisd #Cvtpd2pi #Cvtsd2si #Cvttpd2pi #Cvttsd2si #Cvtps2pd #Cvtss2sd #Cvtpd2ps #Cvtsd2ss #Cvtdq2ps #Cvttps2dq #Cvtps2dq #Cvttpd2dq #Cvtpd2dq #Addsubpd #Haddpd #Hsubpd #Roundpd #Roundsd #Dppd #Fma #FmaSingle #FmaDouble #Fms #FmsSingle #FmsDouble #Fnma #FnmaSingle #FnmaDouble #Famin #Famax)!
 
@@ -219,6 +228,7 @@ roundingModes
 !_FPIEEE_RECORD class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
+!_FPIEEE_RECORD class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !_FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !

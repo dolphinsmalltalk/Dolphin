@@ -153,11 +153,6 @@ isDataPrefix
 
 	^dword anyMask: DataPrefixMask!
 
-isLiteralPrefix
-	"Answer the Boolean value of the isLiteralPrefix bit flag."
-
-	^dword anyMask: LiteralPrefixMask!
-
 isNonZeroVersion
 	"Answer the Boolean value of the isNonZeroVersion bit flag."
 
@@ -220,7 +215,6 @@ smallInteger
 !STBPrefix categoriesFor: #isCharacter!public!testing! !
 !STBPrefix categoriesFor: #isClassPrefix!public!testing! !
 !STBPrefix categoriesFor: #isDataPrefix!public!testing! !
-!STBPrefix categoriesFor: #isLiteralPrefix!public!testing! !
 !STBPrefix categoriesFor: #isNonZeroVersion!public!testing! !
 !STBPrefix categoriesFor: #isProxy!public!testing! !
 !STBPrefix categoriesFor: #isSmallInteger!public!testing! !

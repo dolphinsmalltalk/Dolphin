@@ -13,7 +13,7 @@ MSG is an represents the state associated with a Windows message retrieved via G
 !MSG methodsFor!
 
 hwnd
-	"Answer the receiver's hwnd field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hwnd' field."
 
 	^bytes uintPtrAtOffset: 0!
 
@@ -41,12 +41,12 @@ isMouseInput
 	^msg >= WM_MOUSEFIRST and: [msg <= WM_MOUSELAST]!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
 
 message
-	"Answer the receiver's message field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'message' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #message)!
 
@@ -57,7 +57,7 @@ swParam
 	^bytes intPtrAtOffset: 8!
 
 wParam
-	"Answer the receiver's wParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #wParam)! !
 !MSG categoriesFor: #hwnd!**compiled accessors**!public! !
@@ -95,6 +95,10 @@ defineFields
 		defineField: #time type: DWORDField readOnly;
 		defineField: #x type: SDWORDField readOnly;
 		defineField: #y type: SDWORDField readOnly
-	"The real structure has a POINT here, but that is not part of the base Dolphin package any more so we 'inline' it"! !
+	"The real structure has a POINT here, but that is not part of the base Dolphin package any more so we 'inline' it"!
+
+getFieldList
+	^#(#hwnd #message #wParam #lParam #time #x #y)! !
 !MSG class categoriesFor: #defineFields!initializing!public! !
+!MSG class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

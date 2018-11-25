@@ -145,7 +145,7 @@ wSuiteMask: anInteger
 defineFields
 	"Define the fields of the OSVERSIONINFOEXW structure.
 
-	OSVERSIONINFOEX compileDefinition
+	OSVERSIONINFOEXW compileDefinition
 
 		typedef [uuid(1c5e8929-8791-4aa9-b7ea-152ef36b23dd)]
 		struct tagOSVERSIONINFOEXW {
@@ -175,6 +175,10 @@ defineFields
 		defineField: #wSuiteMask type: WORDField new offset: 280;
 		defineField: #wProductType type: BYTEField new offset: 282;
 		defineField: #wReserved type: BYTEField new beFiller offset: 283.
-	self byteSize: 284! !
+	self byteSize: 284!
+
+getFieldList
+	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
 !OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OSVERSIONINFOEXW class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 

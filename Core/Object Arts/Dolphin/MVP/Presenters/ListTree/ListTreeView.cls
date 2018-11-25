@@ -2594,27 +2594,7 @@ stbVersion
 	unamgiguity over the range [0, thePrime).
 	Note that we multiply *our* local version by the prime, this is necessary
 	to allow for older instances to appear to have a local version of 0"
-	^ self stbEncodingPrime * self localStbVersion + super stbVersion.!
-
-useIconsLikeWinXP
-	"set the open/closed icons to 'resemble' those in a default installation
-	of XP.
-
-		self useIconsLikeWinXP.
-
-	which will take effect next time you start the image.  To turn it off again:
-
-		ListTreeView stateImageBlock: nil.
-
-	"
-
-	| bitmap |
-
-	bitmap := Bitmap
-			fromFile: 'Resources\ListTreeIconsForXP.bmp'
-			usingLocator: (PackageRelativeFileLocator packageNamed: 'CU ListTree').
-
-	self stateImageBlock: [bitmap].! !
+	^ self stbEncodingPrime * self localStbVersion + super stbVersion.! !
 !ListTreeView class categoriesFor: #configureExampleView:!do not copy!examples!must strip!private! !
 !ListTreeView class categoriesFor: #convertToLocalVersion0:from:!binary filing!do copy!private! !
 !ListTreeView class categoriesFor: #convertToLocalVersion1:from:!binary filing!do copy!private! !
@@ -2639,5 +2619,4 @@ useIconsLikeWinXP
 !ListTreeView class categoriesFor: #stbConvert:fromVersion:!binary filing!do copy!private! !
 !ListTreeView class categoriesFor: #stbEncodingPrime!binary filing!constants!do copy!private! !
 !ListTreeView class categoriesFor: #stbVersion!binary filing!do copy!public! !
-!ListTreeView class categoriesFor: #useIconsLikeWinXP!do not copy!initializing!public! !
 
