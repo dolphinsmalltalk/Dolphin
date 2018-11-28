@@ -57,6 +57,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\Object Arts\Dolphin\ActiveX\COM\OLE COM';
 	add: '..\..\Object Arts\Dolphin\ActiveX\Components\Picture\OLE Picture';
 	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
+	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace';
 	yourself).
 
 package!
