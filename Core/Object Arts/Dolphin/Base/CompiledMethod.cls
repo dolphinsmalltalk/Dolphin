@@ -197,7 +197,12 @@ realCategories
 recompile
 	"Private - Recompile the receiver."
 
-	self methodClass recompile: self selector! !
+	self methodClass recompile: self selector!
+
+storeSourceString: aString
+	"Private - Record aString as the source for the receiver. Delegate to the receiver's source manager"
+
+	self class sourceManager storeSourceString: aString forMethod: self! !
 !CompiledMethod categoriesFor: #<=!comparing!public! !
 !CompiledMethod categoriesFor: #categories!categories!development!public! !
 !CompiledMethod categoriesFor: #categories:!categories!private! !
@@ -227,6 +232,7 @@ recompile
 !CompiledMethod categoriesFor: #protocols!categories!development!public! !
 !CompiledMethod categoriesFor: #realCategories!categories-accessing!public! !
 !CompiledMethod categoriesFor: #recompile!compiling!development!private! !
+!CompiledMethod categoriesFor: #storeSourceString:!private!source filing-methods! !
 
 !CompiledMethod class methodsFor!
 

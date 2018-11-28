@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Object subclass: #Package
-	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals'
+	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties'
 	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -315,13 +315,12 @@ changedFrom: aMonadicValuable
 	self trigger: #changed!
 
 changeIndex
-	^self propertyAt: #changeIndex ifAbsent: []!
+	^changeIndex!
 
-changeIndexValue: aBlock 
-	self propertyManager 
-		propertyOf: self
-		at: #changeIndex
-		ifAbsentPut: aBlock!
+changeIndexValue: aBlock
+	aBlock isNil
+		ifTrue: [changeIndex := nil]
+		ifFalse: [changeIndex isNil ifTrue: [changeIndex := aBlock value]]!
 
 classDefinitionsFileName
 	"Private - Answer a filename to use for filing out the class definitions of the receiver.
@@ -492,65 +491,6 @@ fileOutBinaryGlobals
 		globalStream close].
 
 !
-
-fileOutBootDefinitions
-	"Private - If this is a system package then only write out .st files capable of defining
-	the classes independently of the PAX. These are required by the Dolphin boot process.
-	Note that the base system package cannot contain any resources."
-
-	| filer |
-	filer := ChunkSourceFiler 
-				on: (FileStream write: self classDefinitionsFileName text: true).
-	[self fileOutClassDefinitionsOn: filer] ensure: [filer close]!
-
-fileOutClassDefinitionsOn: aSourceFiler 
-	"Private - Append the text definitions of the receivers owned classes to aFileStream.
-	This should produce the minimal amount of information to create a new class when 
-	loaded in (i.e. only the basic definitions are emitted)."
-
-	aSourceFiler
-		emitComment: 'Class Definitions';
-		cr.
-	self classesInHierarchyOrder 
-		do: [:aClass | aSourceFiler fileOutBasicDefinitionOfClass: aClass].
-	aSourceFiler cr!
-
-fileOutMethodsOfClass: aClass on: aSourceFiler 
-	"Private - Append any definitions of the classes methods which
-	are not owned by another package to the <puttableStream>, target."
-
-	| methods |
-	methods := self methodsOfClass: aClass.
-	methods size = aClass methodDictionary size 
-		ifTrue: 
-			["The common case is that all methods of the class also belong to the this package..."
-
-			aSourceFiler fileOutAllMethodsOfBehavior: aClass]
-		ifFalse: 
-			["...but if some methods are not owned by this package we have more work to do"
-
-			| selectors prereqs addBlock |
-			selectors := methods collect: [:m | m selector].
-			aSourceFiler fileOutMessages: selectors ofBehavior: aClass.
-
-			"File out the intersection of the immediate protocols of the class and those of this
-			and prerequisite packages' methods"
-
-			"First add all selectors in the superclass chain which are in this package or one of its
-			pre-requisites into the set of available selectors."
-			prereqs := self prerequisites.
-			addBlock := 
-					[:e :p | 
-					selectors addAll: ((p methodsOfClass: e) collect: [:m | m selector])].
-			prereqs do: [:p | addBlock value: aClass value: p].
-			aClass allSuperclassesDo: 
-					[:e | 
-					addBlock value: e value: self.
-					prereqs do: [:p | addBlock value: e value: p]].
-			#todo.	"File out partial protocols, although tools should prevent protocols being split across packages really"
-			aSourceFiler fileOutProtocols: (aClass protocols 
-						select: [:p | (p selectors difference: selectors) isEmpty])
-				ofBehavior: aClass]!
 
 fileOutName
 	"Answer the pathname used to store the PAX file for the sources of the receiver"
@@ -771,9 +711,7 @@ isChanged: aBoolean
 	"Set the changed flag for the receiver to aBoolean"
 
 	self isChanged = aBoolean ifTrue: [^self].
-	aBoolean 
-		ifTrue: [self changeIndexValue: [Package sourceManager changesFileSize]]
-		ifFalse: [self removePropertyAt: #changeIndex ifAbsent: []].
+	self changeIndexValue: (aBoolean ifTrue: [[Package sourceManager changesFileSize]]).
 	self trigger: #changed!
 
 isDefaultPackage
@@ -1255,6 +1193,9 @@ privateUninstall
 		uninstallClasses;
 		uninstallMethods!
 
+propertyManager
+	^properties ifNil: [properties := PropertyManager new]!
+
 rebaseTo: basePathName 
 	"Rebase this package relative to the give base image directory"
 
@@ -1321,8 +1262,9 @@ removePackagedMethod: method
 removePAXProperties
 	"Private - Throw away any info cached to load the package, and make sure not marked as changed"
 
-	#(#allResourceNames #binaryGlobalNames #globalAliases #paxVersion #changeIndex) 
-		do: [:each | self removePropertyAt: each ifAbsent: []]!
+	#(#allResourceNames #binaryGlobalNames #globalAliases #paxVersion) 
+		do: [:each | self removePropertyAt: each ifAbsent: []].
+	changeIndex := nil!
 
 renameLooseMethodsOf: oldClassNameString to: newClassNameString 
 	| oldMetaName renamed |
@@ -1360,60 +1302,6 @@ resourceIdentifiers
 
 	^self allResourceIdentifiers!
 
-saveAs: aString 
-	self manager renamePackage: self to: aString.
-	self save!
-
-savePAXAboutBlockOn: stream 
-	aboutBlock isNil ifTrue: [^self].
-	stream nextPutAll: 'package aboutBlockBytes: '.
-	aboutBlock binaryStoreBytes base64StoreOn: stream.
-	stream
-		nextPut: $.;
-		cr!
-
-savePAXChunkOn: aSourceFiler 
-	"Private - File out the receiver's package description stream in PAX source file format
-	to the <puttableStream>, stream. This is in the form of a chunk which, when re-evaluated,
-	creates an equivalent package description in a state which can be used for comparision
-	or loading, etc. None of the code in the package, with the exception of the package scripts,
-	is included. None of the code, including the package scripts, is evaluated."
-
-	| stream |
-	stream := String writeStream: 1024.
-	self
-		savePAXPackageOn: stream;
-		savePAXPackageVersionOn: stream;
-		savePAXAboutBlockOn: stream;
-		savePAXStripperBytesOn: stream;
-		savePAXScriptsOn: stream;
-		savePAXNamesOn: stream;
-		savePAXGlobalNamesOn: stream;
-		savePAXPrerequisiteNamesOn: stream;
-		savePAXManualPrerequisitesOn: stream;
-		savePAXUntracedGlobalsOn: stream.
-
-	"Finish off the stream by answering the package loaded"
-	stream nextPutAll: 'package'.
-	aSourceFiler fileOutExpression: stream contents!
-
-savePAXGlobalNamesOn: target
-	"Private - File out the PAX source file expressions to record the names of
-	the non-source globals owned by the receiver."
-
-	#(#binaryGlobalNames #globalAliases) do: 
-			[:each | 
-			target
-				nextPutAll: 'package ';
-				nextPutAll: each;
-				nextPutAll: ': (Set new';
-				cr.
-			self savePAXNames: (self perform: each) on: target.
-			target
-				nextPutAll: ').';
-				cr;
-				cr]!
-
 savePAXManualPrerequisitesOn: target 
 	"Private - File out the names of any manually configured pre-requisite packages 
 	of the receiver onto the <puttableStream>, target."
@@ -1434,27 +1322,6 @@ savePAXManualPrerequisitesOn: target
 		nextPutAll: ').';
 		cr;
 		cr!
-
-savePAXNamesOn: target 
-	"Private - File out the PAX source file representation of the class names, loose method 
-	names, global names, resource names, onto the <puttableStream>, stream, in ascending 
-	order of their printable representation."
-
-	#(#classNames #methodNames #globalNames) do: 
-			[:each | 
-			| names |
-			names := self perform: each.
-			names notEmpty 
-				ifTrue: 
-					[target
-						nextPutAll: 'package ';
-						nextPutAll: each;
-						cr.
-					self savePAXNames: names on: target.
-					target
-						nextPut: $.;
-						cr;
-						cr]]!
 
 savePAXPackageVersionOn: aStream 
 	"Private - Save Package Version - this is the version of the package, not the file out format"
@@ -1486,32 +1353,6 @@ savePAXScriptsOn: target
 				nextPut: $.;
 				cr].
 	target cr!
-
-savePAXStripperBytesOn: stream 
-	"Private - File out the PAX source file representation of the receiver's 
-	image stripper bytes (if any) onto the <puttableStream>, target."
-
-	imageStripperBytes isNil ifTrue: [^self].
-	stream nextPutAll: 'package imageStripperBytes: '.
-	imageStripperBytes base64StoreOn: stream.
-	stream
-		nextPut: $.;
-		cr!
-
-savePAXUntracedGlobalsOn: aWriteStream 
-	| untraced |
-	untraced := self untracedGlobals.
-	untraced isEmpty ifTrue: [^self].
-	aWriteStream
-		nextPutAll: 'package ';
-		display: #untracedGlobals:;
-		nextPutAll: ' (Set new';
-		cr.
-	self savePAXNames: self untracedGlobals on: aWriteStream.
-	aWriteStream
-		nextPutAll: ').';
-		cr;
-		cr!
 
 scriptAt: scriptName 
 	"Answer the script <String> associated with the <Symbol>, scriptName.
@@ -1988,9 +1829,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #fileNameForBinaryGlobal:!mapping!private! !
 !Package categoriesFor: #fileNameForSourceGlobal:!mapping!private! !
 !Package categoriesFor: #fileOutBinaryGlobals!private!source filing! !
-!Package categoriesFor: #fileOutBootDefinitions!development!private! !
-!Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
-!Package categoriesFor: #fileOutMethodsOfClass:on:!private!source filing! !
 !Package categoriesFor: #fileOutName!public!source filing! !
 !Package categoriesFor: #getEvents!events!private! !
 !Package categoriesFor: #getPrerequisites!enumerating!private! !
@@ -2068,6 +1906,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #prerequisites!enumerating!public! !
 !Package categoriesFor: #printOn:!printing!public! !
 !Package categoriesFor: #privateUninstall!private!removing! !
+!Package categoriesFor: #propertyManager!private!properties! !
 !Package categoriesFor: #rebaseTo:!public!testing! !
 !Package categoriesFor: #remainingClasses!accessing!public! !
 !Package categoriesFor: #removeClass:!public!removing! !
@@ -2082,16 +1921,9 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #resetChangeFlags!public!source filing! !
 !Package categoriesFor: #resetPrerequisites!operations!private! !
 !Package categoriesFor: #resourceIdentifiers!accessing!public! !
-!Package categoriesFor: #saveAs:!commands!public! !
-!Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXGlobalNamesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXUntracedGlobalsOn:!public!source filing-pax! !
 !Package categoriesFor: #scriptAt:!accessing!public! !
 !Package categoriesFor: #scriptAt:put:!accessing!public! !
 !Package categoriesFor: #scripts!accessing!private! !
@@ -2440,7 +2272,13 @@ stbConvertFromVersion5: anArray
 	| newPackage |
 	anArray at: 8 put: nil.	"singleFile"
 	anArray at: 10 put: nil.
-	"Last converter in the chain, so return a package instance"
+	^anArray!
+
+stbConvertFromVersion6: anArray 
+	"Private - Convert version 6 to 7: Adds changeIndex and paxVersion instance variables."
+
+	| newPackage |
+	"Last converter in the chain"
 	newPackage := self new.
 	anArray keysAndValuesDo: [:eachKey :eachValue | newPackage instVarAt: eachKey put: eachValue].
 	^newPackage!
@@ -2448,7 +2286,7 @@ stbConvertFromVersion5: anArray
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
-	^6!
+	^7!
 
 uncommitted
 	"Answer the special package used to 'hold' uncommitted classes and other globals."
@@ -2491,6 +2329,7 @@ unsaveableSignal
 !Package class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
 !Package class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
 !Package class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
+!Package class categoriesFor: #stbConvertFromVersion6:!binary filing!private! !
 !Package class categoriesFor: #stbVersion!binary filing!public! !
 !Package class categoriesFor: #uncommitted!accessing!public! !
 !Package class categoriesFor: #uninitialize!class hierarchy-removing!private! !

@@ -258,6 +258,7 @@ basicRemovePackage: aPackage
 
 	self packages removeKey: aPackage name.
 	defaultPackage == aPackage ifTrue: [defaultPackage := nil].
+	aPackage removeEventsTriggeredFor: self.
 	^aPackage!
 
 basicUninstall: aPackage

@@ -83,9 +83,6 @@ fileOutName
 		path := File replacePath:  path with: package path ].
 	^path!
 
-fileOutOn: aSourceFiler
-	aSourceFiler fileOutPoolDictionary: self!
-
 findKeyOrNil: anObject 
 	"Private - Answer the index of the given key in the receiver, or, if not found,
 	the index of the first empty slot including and after that to which 
@@ -193,7 +190,6 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #environment!constants!public! !
 !PoolConstantsDictionary categoriesFor: #errorModify:value:!development!exceptions!private! !
 !PoolConstantsDictionary categoriesFor: #fileOutName!development!public!source filing! !
-!PoolConstantsDictionary categoriesFor: #fileOutOn:!development!public! !
 !PoolConstantsDictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !PoolConstantsDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
 !PoolConstantsDictionary categoriesFor: #isChanged:!development!public!source filing! !

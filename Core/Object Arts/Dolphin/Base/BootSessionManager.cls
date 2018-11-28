@@ -26,7 +26,7 @@ basicTertiaryStartup
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
 
-initializeSystemPackage
+initializeBootPackages
 	"Initialize any base system classes that require initialization not performed to create the boot image.
 	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
 	all safe to re-run. Therefore we must do this selectively."
@@ -141,7 +141,7 @@ quit: anInteger
 	self onExit == true ifTrue: [self primQuit: anInteger].
 	^false	"cancelled"!
 
-reloadSystemPackage
+reloadBootPackages
 	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses classesBefore |
 	basePackage := PackageManager systemPackage.
 	imageDir := self imageBase.
@@ -191,6 +191,7 @@ reloadSystemPackage
 			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
 			each removeFromSystem.
 			basePackage basicRemoveClass: each].
+	Package manager packages do: [:each | each == basePackage ifFalse: [self reloadPackage: each]].
 	Notification signal: 'Deleting obsolete boot image methods...'.
 	obsoleteMethodFilter := [:each | each hasChanged not].
 	(baseClasses difference: missingClasses) do: 
@@ -203,7 +204,34 @@ reloadSystemPackage
 						[:m |
 						Notification signal: 'Removing obsolete boot image method ' , m printString.
 						m methodClass removeSelector: m selector]].
-	self initializeSystemPackage!
+	self initializeBootPackages!
+
+reloadPackage: aPackage
+	| newPackage missingClasses |
+	Notification signal: 'Reloading ' , aPackage name, ' ...'.
+	newPackage := Package
+				fromFile: (File relativePathOf: aPackage fileOutName to: SessionManager current imageBase).
+	Package manager
+		basicRemovePackage: aPackage;
+		forgetLooseMethods;
+		basicAddPackage: newPackage;
+		basicInstall: newPackage;
+		observePackage: newPackage.
+
+	"Remove names of any classes that have been renamed from the old package"
+	aPackage classNames do: 
+			[:each |
+			| class |
+			class := newPackage classFromName: each.
+			class name == each
+				ifFalse: 
+					[Notification signal: 'Boot class ' , each , ' renamed to ' , class name.
+					aPackage removeClassName: each]].
+	missingClasses := aPackage classesInHierarchyOrder difference: newPackage classes.
+	missingClasses reverseDo: 
+			[:each |
+			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
+			each removeFromSystem]!
 
 saveImageDefault
 	"Save an image of the current session to the default persistant store (whatever that is)."
@@ -309,11 +337,11 @@ updateBootImage
 
 	"The only thing done currently is to reload the BCL."
 
-	self reloadSystemPackage! !
+	self reloadBootPackages! !
 !BootSessionManager categoriesFor: #allocConsole!operations!private! !
 !BootSessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
 !BootSessionManager categoriesFor: #fileInClass:!private! !
-!BootSessionManager categoriesFor: #initializeSystemPackage!initializing!public! !
+!BootSessionManager categoriesFor: #initializeBootPackages!initializing!public! !
 !BootSessionManager categoriesFor: #keepAlive!idling!public! !
 !BootSessionManager categoriesFor: #logError:!operations-logging!public! !
 !BootSessionManager categoriesFor: #main!operations-startup!public! !
@@ -325,7 +353,8 @@ updateBootImage
 !BootSessionManager categoriesFor: #productDetails:!accessing!private!product! !
 !BootSessionManager categoriesFor: #productVersion!accessing!product!public! !
 !BootSessionManager categoriesFor: #quit:!operations-shutdown!private! !
-!BootSessionManager categoriesFor: #reloadSystemPackage!operations-startup!public! !
+!BootSessionManager categoriesFor: #reloadBootPackages!operations-startup!public! !
+!BootSessionManager categoriesFor: #reloadPackage:!operations-startup!public! !
 !BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
 !BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
 !BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
