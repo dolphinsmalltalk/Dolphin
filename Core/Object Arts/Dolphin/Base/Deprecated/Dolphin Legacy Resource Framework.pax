@@ -176,7 +176,7 @@ fileOutResource: aResourceIdentifier
 		cr.
 	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
 	self emitChunk: ')'! !
-!ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing! !
+!ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
 
 !ResourceIdentifier methodsFor!
 

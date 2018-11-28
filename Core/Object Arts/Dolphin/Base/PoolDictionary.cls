@@ -63,9 +63,6 @@ fileOutName
 		path := File replacePath:  path with: package path ].
 	^path!
 
-fileOutOn: aSourceFiler
-	aSourceFiler fileOutPoolDictionary: self!
-
 includesKey: key
 	"Answer whether the receiver has a key equal to the argument, key.
 	Override superclass to permit symbolic/string keys."
@@ -158,7 +155,6 @@ removeKey: key ifAbsent: exceptionHandler
 !PoolDictionary categoriesFor: #displayOn:!displaying!public! !
 !PoolDictionary categoriesFor: #environment!constants!public! !
 !PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
-!PoolDictionary categoriesFor: #fileOutOn:!development!public! !
 !PoolDictionary categoriesFor: #includesKey:!public!searching! !
 !PoolDictionary categoriesFor: #initializerFor:!public!source filing-sif! !
 !PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !

@@ -20,24 +20,24 @@ asUIntPtr
 	^VMConstants.IsWin64 ifTrue: [bytes uintPtrAtOffset: 0] ifFalse: [self asPoint asUIntPtr]!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
 	^bytes sdwordAtOffset: 0!
 
-x: anObject 
-	"Set the receiver's x field to the value of anObject."
+x: anInteger
+	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #y)!
 
-y: anObject 
-	"Set the receiver's y field to the value of anObject."
+y: anInteger
+	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #y) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #y) put: anInteger! !
 !POINTL categoriesFor: #asUIntPtr!converting!public! !
 !POINTL categoriesFor: #x!**compiled accessors**!public! !
 !POINTL categoriesFor: #x:!**compiled accessors**!public! !
@@ -60,6 +60,9 @@ defineFields
 		defineField: #x type: SDWORDField new;
 		defineField: #y type: SDWORDField new!
 
+getFieldList
+	^#(#x #y)!
+
 uninitialize
 	"Private - Unitialize the receiver as it is about to be removed from the system.
 	Make sure our alias disappears with us."
@@ -79,6 +82,7 @@ x: x y: y
 				yourself)
 ! !
 !POINTL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!POINTL class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !POINTL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !POINTL class categoriesFor: #x:y:!instance creation!public! !
 

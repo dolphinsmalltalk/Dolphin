@@ -102,48 +102,6 @@ closeSourcesFile
 	self closeSourceAt: SourcesIndex
 !
 
-compressChanges
-	"Compresses the change log to remove duplicate entries, and save the image to keep it in sync."
-
-	| tmpPath filer |
-	tmpPath := File temporaryFilenameWithPrefix: self changesExtension.
-	filer := self chunkFilerOn: (FileStream write: tmpPath).
-	filer sourceFileIndex: ChangesIndex.
-	mutex critical: 
-			[self compressChangesOnto: filer.
-			filer close.
-			self openNewChangesFile: tmpPath].
-	self logComment: 'Compressed changes'.
-
-	"Save image"
-	SessionManager current saveImage!
-
-copyAndReopenSources: aString 
-	"Private - Copy sources to the path and root file name (i.e. without extension) specified
-	by the <readableString> argument, and then open the copies for any further perusal and 
-	modification.
-
-	Take a special interest if we do not currently have the source files available.
-	This will be the case when we load from a .exe. In this case we generate some
-	suitable empty source files. We also have to mark methods so that they know
-	they have lost any reference to information in a .sml file."
-
-	| hadSources |
-	hadSources := self hasSources.
-
-	"Copy and and swap over sources. Take care to end up with a good sources and imagePath"
-	hadSources 
-		ifTrue: 
-			[self copySourceFilesTo: aString.
-			self closeSources].
-	hadSources 
-		ifFalse: 
-			[self createSources: aString.
-			"We have permanently lost access to any source information so mark all methods"
-			self class environment 
-				allBehaviorsDo: [:aBehavior | aBehavior methodDictionary do: [:aMethod | aMethod loseSource]]].
-	self openSources: aString!
-
 copySourceFilesTo: path
 	"Private - Copy the various Smalltalk sources files to a new root name"
 
@@ -156,26 +114,6 @@ copySourceFilesTo: path
 			do: 
 				[:e |
 				self error: ('Failed to copy sources to <1s> (<2s>)' expandMacrosWith: path with: e osErrorMessage)]!
-
-createSources: filePath
-	"Private - This will create a sources and changes file for the current image. Does not
-	update the receiver to use these new files though."
-
-	self createSourcesFile: filePath.
-	(File open: (self changesFileNameFromPath: filePath) mode: #truncate check: false) close!
-
-createSourcesFile: filePath 
-	"Private - Create (or truncate) a source file with the specified path (and default extension)."
-
-	(self newSourceFiler: (self sourcesFileNameFromPath: filePath)) close!
-
-emitFileOutHeaderOn: aSourceFiler 
-	"Private - Append the standard Dolphin file out header to the
-	<puttableStream>, aWriteStream."
-
-	aSourceFiler
-		emitComment: 'Filed out from ' , VMLibrary default productName;
-		cr!
 
 errorNotPackaged: anObject
 	"Private - Signal an error to indicate than anObject is not yet assigned to a packaged
@@ -315,20 +253,6 @@ isMethodChanged: aCompiledMethod
 					ifNil: [false]
 					ifNotNil: [:i | (self changePositionOf: aCompiledMethod) >= i]]!
 
-logComment: aString
-	"Record aString to the change log as a comment. All comments
-	logged are prefixed with a timestamp.
-	N.B. Logging requests should be directed through the SessionManager."
-
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: [self logComment: aString to: logger]]!
-
-logComment: aString to: aSourceFiler
-	"Private - Record aString to the specified source file as a comment. All comments
-	logged are prefixed with a timestamp."
-
-	aSourceFiler emitComment: TimeStamp current displayString, ': ', aString; cr!
-
 logEvaluate: aString
 	"Record aString to the change log as an expression which has been evaluated."
 
@@ -337,17 +261,6 @@ logEvaluate: aString
 					[logger
 						fileOutExpression: aString;
 						flush]]!
-
-newSourceFiler: path
-	"Private - Answer a new <SourceFiler> on the specified path with the default
-	format. Any existing file with at the specified path is truncated."
-
-	| answer dir |
-	dir := File splitPathFrom: path.
-	(File isDirectory: dir) ifFalse: [File createDirectoryPath: dir].
-	answer := self sourceFilerOn: (FileStream write: path).
-	self emitFileOutHeaderOn: answer.
-	^answer!
 
 onExit
 	"Private - The system is about to exit, close the source files."
@@ -448,28 +361,6 @@ sourcesFileStream
 
 	^(SourceFiles at: SourcesIndex) ifNotNil: [:sourceFile | sourceFile stream]!
 
-storeCategoriesForClass: class
-	"Private - Store the categories of the <ClassDescription>, class, to
-	the change log so that they may be reloaded later."
-
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: 
-					[logger
-						emitCategoriesOfClass: class;
-						flush]]!
-
-storeCategoriesForMethod: method
-	"Private - Store the categories of the <CompiledMethod>, method, to the change
-	log so that they may be reloaded later."
-
-	self changesFiler ifNotNil: 
-			[:logger | 
-			mutex critical: 
-					[logger
-						emitCategoriesOfMethod: method;
-						cr;
-						flush]]!
-
 storeCommentString: aString forClass: aClass 
 	"Private - Append the <readableString> comment, aString, for the <Class>, aClass, to the
 	change log, saving the position and index so that it may be retrieved later. If a valid
@@ -545,12 +436,7 @@ truncateChanges
 !SourceManager categoriesFor: #closeSourceAt:!operations-source files!private! !
 !SourceManager categoriesFor: #closeSources!operations-source files!private! !
 !SourceManager categoriesFor: #closeSourcesFile!operations-source files!private! !
-!SourceManager categoriesFor: #compressChanges!operations-source files!public! !
-!SourceManager categoriesFor: #copyAndReopenSources:!operations-source files!private! !
 !SourceManager categoriesFor: #copySourceFilesTo:!operations-source files!private! !
-!SourceManager categoriesFor: #createSources:!operations-source files!private! !
-!SourceManager categoriesFor: #createSourcesFile:!operations-source files!private! !
-!SourceManager categoriesFor: #emitFileOutHeaderOn:!private!source filing! !
 !SourceManager categoriesFor: #errorNotPackaged:!exceptions!private! !
 !SourceManager categoriesFor: #fileIn:!public!source filing! !
 !SourceManager categoriesFor: #fileIn:normalizeLineEndings:!public!source filing! !
@@ -568,10 +454,7 @@ truncateChanges
 !SourceManager categoriesFor: #ignoreSources!operations-source files!private! !
 !SourceManager categoriesFor: #initialize!initializing!private! !
 !SourceManager categoriesFor: #isMethodChanged:!development!private!testing! !
-!SourceManager categoriesFor: #logComment:!operations-logging!public! !
-!SourceManager categoriesFor: #logComment:to:!operations-logging!private! !
 !SourceManager categoriesFor: #logEvaluate:!operations-logging!public! !
-!SourceManager categoriesFor: #newSourceFiler:!private!source filing! !
 !SourceManager categoriesFor: #onExit!event handling!private! !
 !SourceManager categoriesFor: #openChangesFile:!operations-source files!private! !
 !SourceManager categoriesFor: #openNewChangesFile:!helpers!private! !
@@ -587,8 +470,6 @@ truncateChanges
 !SourceManager categoriesFor: #sourcesFileName!accessing!public! !
 !SourceManager categoriesFor: #sourcesFileNameFromPath:!private!source filing! !
 !SourceManager categoriesFor: #sourcesFileStream!accessing!private! !
-!SourceManager categoriesFor: #storeCategoriesForClass:!private!source filing! !
-!SourceManager categoriesFor: #storeCategoriesForMethod:!private!source filing! !
 !SourceManager categoriesFor: #storeCommentString:forClass:!private!source filing! !
 !SourceManager categoriesFor: #storeCommentString:forPackage:!private!source filing! !
 !SourceManager categoriesFor: #storeGUIDForClass:!private!source filing! !

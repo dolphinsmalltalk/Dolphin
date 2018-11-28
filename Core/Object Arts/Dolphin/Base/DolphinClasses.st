@@ -236,7 +236,7 @@ Object subclass: #ObjectRegistry
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #Package
-	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals'
+	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties'
 	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
