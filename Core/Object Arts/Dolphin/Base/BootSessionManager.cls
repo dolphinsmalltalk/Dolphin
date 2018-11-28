@@ -209,8 +209,7 @@ reloadBootPackages
 reloadPackage: aPackage
 	| newPackage missingClasses |
 	Notification signal: 'Reloading ' , aPackage name, ' ...'.
-	newPackage := Package
-				fromFile: (File relativePathOf: aPackage fileOutName to: SessionManager current imageBase).
+	newPackage := Package fromFile: aPackage fileOutName.
 	Package manager
 		basicRemovePackage: aPackage;
 		forgetLooseMethods;
