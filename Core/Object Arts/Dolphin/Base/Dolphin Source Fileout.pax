@@ -137,10 +137,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'Dolphin';
-	add: 'Dolphin Message Box';
-	yourself).
+package setPrerequisites: #(
+	'Dolphin'
+	'Dolphin Message Box').
 
 package!
 
@@ -974,20 +973,17 @@ savePAXPrerequisiteNamesOn: target
 	target
 		nextPutAll: 'package ';
 		nextPutAll: #setPrerequisites:;
-		nextPutAll: ' (IdentitySet new';
+		nextPutAll: ' #(';
 		cr.
 	basePath := self path.
 	(self prerequisites asSortedCollection: [:a :b | (a name trueCompare: b name) < 0]) do: 
-			[:each | 
+			[:each |
 			target
 				tab;
-				nextPutAll: 'add: ';
-				print: (File removeExtension: (File relativePathOf: each packageFileName to: basePath));
-				nextPut: $;;
-				cr].
+				print: (File removeExtension: (File relativePathOf: each packageFileName to: basePath))]
+		separatedBy: [target cr].
 	target
-		tab;
-		nextPutAll: 'yourself).';
+		nextPutAll: ').';
 		cr;
 		cr!
 
