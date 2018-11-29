@@ -220,7 +220,7 @@ testPrimesUpTo
 	primes := OrderedCollection with: 2.
 	(3 to: max by: 2) do: [:n | primes detect: [:p | n \\ p == 0] ifNone: [primes add: n]].
 	primes2 := Integer primesUpTo: 2000.
-	self assert: primes equals: primes2!
+	self assert: primes asArray equals: primes2!
 
 testPrintString
 	| pairs |
