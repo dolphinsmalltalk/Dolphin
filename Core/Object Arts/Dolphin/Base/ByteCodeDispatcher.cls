@@ -302,7 +302,7 @@ segments
 			start := ip.
 			self next.
 			answer nextPut: (byteCodes copyFrom: start to: ip - 1)].
-	^answer!
+	^answer contents!
 
 selectorOfMessageSend: aSymbol 
 	aSymbol == #shortSendZeroArgs: 
