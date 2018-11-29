@@ -200,11 +200,6 @@ Object subclass: #Message
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Object subclass: #MessageBoxAbstract
-	instanceVariableNames: 'text caption owner'
-	classVariableNames: 'DefaultCaptions IconStyles'
-	poolDictionaries: 'MessageBoxConstants'
-	classInstanceVariableNames: ''!
 Object subclass: #MessageSequenceAbstract
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -970,11 +965,6 @@ CompilerNotification subclass: #CompilerWarningNotification
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-Warning subclass: #ConfirmationRequiredWarning
-	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ExceptionHandlerAbstract subclass: #ExceptionHandler
 	instanceVariableNames: 'selector handler'
 	classVariableNames: ''
@@ -1464,11 +1454,6 @@ MessageSendAbstract subclass: #MessageSend
 	instanceVariableNames: 'receiver'
 	classVariableNames: 'EmptySend'
 	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-MessageBoxAbstract subclass: #MessageBox
-	instanceVariableNames: 'button uniqueId flags icon styleFlags'
-	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
-	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 MessageSequenceAbstract subclass: #EventMessageSequence
 	instanceVariableNames: 'receivers messages tally'

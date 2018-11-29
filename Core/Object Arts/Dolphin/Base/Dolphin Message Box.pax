@@ -1,0 +1,50 @@
+﻿| package |
+package := Package name: 'Dolphin Message Box'.
+package paxVersion: 1;
+	basicComment: 'Dolphin MessageBox
+Copyright (c) Object Arts Ltd. 1997-2016'.
+
+
+package classNames
+	add: #ConfirmationRequiredWarning;
+	add: #MessageBox;
+	add: #MessageBoxAbstract;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: (IdentitySet new
+	add: 'Dolphin';
+	yourself).
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #MessageBoxAbstract
+	instanceVariableNames: 'text caption owner'
+	classVariableNames: 'DefaultCaptions IconStyles'
+	poolDictionaries: 'MessageBoxConstants'
+	classInstanceVariableNames: ''!
+Warning subclass: #ConfirmationRequiredWarning
+	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+MessageBoxAbstract subclass: #MessageBox
+	instanceVariableNames: 'button uniqueId flags icon styleFlags'
+	classVariableNames: 'ButtonMap ButtonsForStyle ButtonStyles ModeStyles SuppressibleMask'
+	poolDictionaries: 'Win32Constants'
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+"End of package definition"!
+

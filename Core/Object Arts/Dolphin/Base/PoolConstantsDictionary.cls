@@ -59,20 +59,6 @@ environment
 	^Smalltalk
 !
 
-errorModify: key value: value
-	"Private - An attempt was made to modify the value of the constant named, key."
-
-	| recompile |
-	recompile := ConfirmationRequiredWarning
-				signal: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
-						expandMacrosWith: key
-						with: value
-						with: (self at: key)).
-	recompile isNil ifTrue: [^self].
-	super at: key put: value.
-	self isChanged: true.
-	recompile ifTrue: [self recompileReferencesToVarNamed: key]!
-
 fileOutName
 	"Answer the receiver's default file name for file outs (<name>.st)."
 
@@ -188,7 +174,6 @@ removeIndex: anInteger
 !PoolConstantsDictionary categoriesFor: #classesReferencing!development!private! !
 !PoolConstantsDictionary categoriesFor: #displayOn:!displaying!public! !
 !PoolConstantsDictionary categoriesFor: #environment!constants!public! !
-!PoolConstantsDictionary categoriesFor: #errorModify:value:!development!exceptions!private! !
 !PoolConstantsDictionary categoriesFor: #fileOutName!development!public!source filing! !
 !PoolConstantsDictionary categoriesFor: #findKeyOrNil:!private!searching! !
 !PoolConstantsDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
