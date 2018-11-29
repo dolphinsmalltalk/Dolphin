@@ -1488,7 +1488,7 @@ verifyTextMapsOf: each
 !CompilerTest categoriesFor: #evalTestMethod:!helpers!private! !
 !CompilerTest categoriesFor: #evalTestMethod:withArgs:!helpers!private! !
 !CompilerTest categoriesFor: #evaluateExpression:!helpers!private! !
-!CompilerTest categoriesFor: #findIP:inTextMap:!development!private! !
+!CompilerTest categoriesFor: #findIP:inTextMap:!private! !
 !CompilerTest categoriesFor: #getTestMethod:!private! !
 !CompilerTest categoriesFor: #messageFromError:!helpers!private! !
 !CompilerTest categoriesFor: #scan:class:!helpers!private! !

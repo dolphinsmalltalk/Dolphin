@@ -1188,7 +1188,7 @@ versionModel
 !MethodBrowser categoriesFor: #sortBlock!accessing!private! !
 !MethodBrowser categoriesFor: #sortBlock:!accessing!private! !
 !MethodBrowser categoriesFor: #source!accessing!public! !
-!MethodBrowser categoriesFor: #sourceControl!constants!development!public! !
+!MethodBrowser categoriesFor: #sourceControl!constants!public! !
 !MethodBrowser categoriesFor: #sourcePresenter!accessing!private! !
 !MethodBrowser categoriesFor: #sourcePresenter:!accessing!private! !
 !MethodBrowser categoriesFor: #sourceSelection!accessing!public! !
@@ -1316,8 +1316,8 @@ wordWrap: aBoolean
 !MethodBrowser class categoriesFor: #hasInfoTips:!accessing!options!public! !
 !MethodBrowser class categoriesFor: #icon!constants!public! !
 !MethodBrowser class categoriesFor: #initialize!initializing!private! !
-!MethodBrowser class categoriesFor: #publishedAspects!development!public! !
-!MethodBrowser class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!MethodBrowser class categoriesFor: #publishedAspects!public! !
+!MethodBrowser class categoriesFor: #publishedEventsOfInstances!events!public! !
 !MethodBrowser class categoriesFor: #resource_Class_browser_method_list!public!resources-views! !
 !MethodBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !MethodBrowser class categoriesFor: #resource_Method_browser_method_list!public!resources-views! !

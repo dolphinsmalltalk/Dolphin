@@ -210,7 +210,7 @@ yourselfAspect
 !AspectAccessor categoriesFor: #=!comparing!public! !
 !AspectAccessor categoriesFor: #aspectDescriptor!accessing!private! !
 !AspectAccessor categoriesFor: #aspectDescriptor:!accessing!private! !
-!AspectAccessor categoriesFor: #aspectDisplayOn:!development!private! !
+!AspectAccessor categoriesFor: #aspectDisplayOn:!private! !
 !AspectAccessor categoriesFor: #canEdit!operations!public! !
 !AspectAccessor categoriesFor: #canGet!public!testing! !
 !AspectAccessor categoriesFor: #canImmediateAction!public!testing! !

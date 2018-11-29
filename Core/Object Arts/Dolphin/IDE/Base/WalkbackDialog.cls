@@ -197,5 +197,5 @@ initialize
 				yourself).
 	self addClassConstant: 'CallStackId' value: 1001.
 	self addClassConstant: 'IconId' value: 1009! !
-!WalkbackDialog class categoriesFor: #initialize!development!initializing!private! !
+!WalkbackDialog class categoriesFor: #initialize!initializing!private! !
 

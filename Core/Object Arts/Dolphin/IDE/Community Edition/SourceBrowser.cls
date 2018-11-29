@@ -423,7 +423,7 @@ uninitialize
 !SourceBrowser class categoriesFor: #forSourcesOfPackages:!instance creation!public! !
 !SourceBrowser class categoriesFor: #icon!constants!public! !
 !SourceBrowser class categoriesFor: #initialize!initializing!private! !
-!SourceBrowser class categoriesFor: #publishedAspects!development!public! !
+!SourceBrowser class categoriesFor: #publishedAspects!public! !
 !SourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !SourceBrowser class categoriesFor: #show!instance creation!public! !
 !SourceBrowser class categoriesFor: #toolsFolderHelpId!public! !

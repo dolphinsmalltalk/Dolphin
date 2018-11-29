@@ -114,5 +114,5 @@ icon
 
 	^AXTypeLibraryAnalyzer icon! !
 !AXTypeLibRegistration class categoriesFor: #description:guidString:versionString:!instance creation!public! !
-!AXTypeLibRegistration class categoriesFor: #icon!constants!development!public! !
+!AXTypeLibRegistration class categoriesFor: #icon!constants!public! !
 

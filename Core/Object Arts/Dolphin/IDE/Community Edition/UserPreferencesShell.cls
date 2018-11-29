@@ -86,7 +86,7 @@ uninitialize
 !UserPreferencesShell class categoriesFor: #displayOn:!public! !
 !UserPreferencesShell class categoriesFor: #icon!constants!public! !
 !UserPreferencesShell class categoriesFor: #initialize!initializing!private! !
-!UserPreferencesShell class categoriesFor: #publishedAspects!development!public! !
+!UserPreferencesShell class categoriesFor: #publishedAspects!public! !
 !UserPreferencesShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !UserPreferencesShell class categoriesFor: #toolsFolderHelpId!private! !
 !UserPreferencesShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !

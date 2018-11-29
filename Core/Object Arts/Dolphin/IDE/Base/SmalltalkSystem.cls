@@ -4190,7 +4190,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #addSelectors:toProtocol:!operations!protocols!public! !
 !SmalltalkSystem categoriesFor: #addSystemFolderIcon:!operations!public! !
 !SmalltalkSystem categoriesFor: #addSystemFolderIcon:to:!operations!public! !
-!SmalltalkSystem categoriesFor: #allResourceIdentifiers!development!public! !
+!SmalltalkSystem categoriesFor: #allResourceIdentifiers!public! !
 !SmalltalkSystem categoriesFor: #allSelectors!accessing!public! !
 !SmalltalkSystem categoriesFor: #allSelectorsImplementedIn:!enquiries!public! !
 !SmalltalkSystem categoriesFor: #allSelectorsSentIn:!enquiries!public! !
@@ -4348,7 +4348,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #definitionsOf:!browsing!private! !
 !SmalltalkSystem categoriesFor: #deleteClassHierarchy:!operations!public! !
 !SmalltalkSystem categoriesFor: #deleteResource:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #deprecatedIcon!constants!development!private! !
+!SmalltalkSystem categoriesFor: #deprecatedIcon!constants!private! !
 !SmalltalkSystem categoriesFor: #disassembleMethod:!public! !
 !SmalltalkSystem categoriesFor: #disassemblyStylerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #displayOn:!displaying!public! !
@@ -4382,7 +4382,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #helpWhatsThis!commands!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #iconForMethod:!development!helpers!public! !
+!SmalltalkSystem categoriesFor: #iconForMethod:!helpers!public! !
 !SmalltalkSystem categoriesFor: #ideaSpaceFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #imageFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #initialize!initializing!private! !
@@ -4486,7 +4486,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #preferAlternateInspectors:!accessing!public! !
 !SmalltalkSystem categoriesFor: #printBlockStatsOn:!public!utilities! !
 !SmalltalkSystem categoriesFor: #printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
-!SmalltalkSystem categoriesFor: #privateMethodIcon!constants!development!private! !
+!SmalltalkSystem categoriesFor: #privateMethodIcon!constants!private! !
 !SmalltalkSystem categoriesFor: #privatePrefix!constants!private! !
 !SmalltalkSystem categoriesFor: #privatizeMethod:!operations!private! !
 !SmalltalkSystem categoriesFor: #promptForClass!enquiries!public! !
@@ -4500,7 +4500,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #protocolBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #protocolBrowserClass:!options!public! !
 !SmalltalkSystem categoriesFor: #publicizeMethod:!operations!private! !
-!SmalltalkSystem categoriesFor: #publicMethodIcon!constants!development!private! !
+!SmalltalkSystem categoriesFor: #publicMethodIcon!constants!private! !
 !SmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
 !SmalltalkSystem categoriesFor: #redoChange!commands!public! !
 !SmalltalkSystem categoriesFor: #referencesMatching:in:!browsing!private! !
@@ -4536,14 +4536,14 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
 !SmalltalkSystem categoriesFor: #requestPackageFileName:!operations!private! !
 !SmalltalkSystem categoriesFor: #requiresDolphinPro:!browsing!public! !
-!SmalltalkSystem categoriesFor: #resaveViewResourcesMatching:do:!development!public! !
+!SmalltalkSystem categoriesFor: #resaveViewResourcesMatching:do:!public! !
 !SmalltalkSystem categoriesFor: #resetPublishedAspectsToDefaultsFor:!operations!private!theming! !
 !SmalltalkSystem categoriesFor: #resetSystemOptionsToDefaults!operations!private!theming! !
 !SmalltalkSystem categoriesFor: #resourceBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #resourceBrowserClass:!options!public! !
 !SmalltalkSystem categoriesFor: #resourceIdentifierDialogClass!options!public! !
 !SmalltalkSystem categoriesFor: #resourceIdentifierDialogClass:!accessing!public! !
-!SmalltalkSystem categoriesFor: #resourceManager!development!private! !
+!SmalltalkSystem categoriesFor: #resourceManager!private! !
 !SmalltalkSystem categoriesFor: #samplesFolder!accessing!private! !
 !SmalltalkSystem categoriesFor: #samplesFolderIcon!initializing!private! !
 !SmalltalkSystem categoriesFor: #saveDefaultPublishedAspectsOf:!operations!private!theming! !
@@ -4716,8 +4716,8 @@ unregisterTool: aToolClass
 !SmalltalkSystem class categoriesFor: #initialize!initializing!public! !
 !SmalltalkSystem class categoriesFor: #initializeFileDrops!initializing!private! !
 !SmalltalkSystem class categoriesFor: #new!instance creation!private! !
-!SmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
-!SmalltalkSystem class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!SmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!SmalltalkSystem class categoriesFor: #publishedEventsOfInstances!events!public! !
 !SmalltalkSystem class categoriesFor: #registeredTools!accessing!public! !
 !SmalltalkSystem class categoriesFor: #registerTool:!accessing!public! !
 !SmalltalkSystem class categoriesFor: #toolBackgroundColor!accessing!public! !

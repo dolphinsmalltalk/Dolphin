@@ -225,7 +225,7 @@ uninitialize
 !SystemBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !SystemBrowserShell class categoriesFor: #icon!constants!public! !
 !SystemBrowserShell class categoriesFor: #initialize!initializing!private! !
-!SystemBrowserShell class categoriesFor: #publishedAspects!development!public! !
+!SystemBrowserShell class categoriesFor: #publishedAspects!public! !
 !SystemBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !SystemBrowserShell class categoriesFor: #toolsFolderHelpId!constants!public! !
 !SystemBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !

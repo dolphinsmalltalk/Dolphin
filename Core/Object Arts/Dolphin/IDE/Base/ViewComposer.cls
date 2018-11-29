@@ -2821,7 +2821,7 @@ uninitialize
 !ViewComposer class categoriesFor: #initialize!initializing!private! !
 !ViewComposer class categoriesFor: #openOn:!instance creation!public! !
 !ViewComposer class categoriesFor: #positionImage!constants!private! !
-!ViewComposer class categoriesFor: #publishedAspects!constants!development!public! !
+!ViewComposer class categoriesFor: #publishedAspects!constants!public! !
 !ViewComposer class categoriesFor: #resource_Vertical_view!public!resources-views! !
 !ViewComposer class categoriesFor: #toolsFolderHelpId!public! !
 !ViewComposer class categoriesFor: #uninitialize!class hierarchy-removing!private! !

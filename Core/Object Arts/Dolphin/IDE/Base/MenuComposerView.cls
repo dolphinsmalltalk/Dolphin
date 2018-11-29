@@ -202,5 +202,5 @@ publishedEventsOfInstances
 		yourself.
 ! !
 !MenuComposerView class categoriesFor: #icon!constants!public! !
-!MenuComposerView class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!MenuComposerView class categoriesFor: #publishedEventsOfInstances!events!public! !
 

@@ -432,7 +432,7 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
 !AbstractPublishedAspectInspector class categoriesFor: #resource_Vertical_view!public!resources-views! !
 !AbstractPublishedAspectInspector class categoriesFor: #shellOn:!instance creation!public! !
 

@@ -182,7 +182,7 @@ uninstallCurrent
 				become: Current]! !
 !ProfessionalSmalltalkSystem class categoriesFor: #initialize!initializing!private! !
 !ProfessionalSmalltalkSystem class categoriesFor: #installCurrent!initializing!private! !
-!ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!ProfessionalSmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!public! !
 !ProfessionalSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !ProfessionalSmalltalkSystem class categoriesFor: #uninstallCurrent!class hierarchy-removing!private! !
 

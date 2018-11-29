@@ -464,7 +464,7 @@ uninitialize
 !ProtocolBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !ProtocolBrowserShell class categoriesFor: #icon!constants!public! !
 !ProtocolBrowserShell class categoriesFor: #initialize!initializing!private! !
-!ProtocolBrowserShell class categoriesFor: #publishedAspects!development!public! !
+!ProtocolBrowserShell class categoriesFor: #publishedAspects!public! !
 !ProtocolBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !ProtocolBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
 !ProtocolBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !

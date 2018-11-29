@@ -1626,7 +1626,7 @@ wrapLinesInRange: anInterval indent: anInteger
 !SmalltalkWorkspace categoriesFor: #printIt!public! !
 !SmalltalkWorkspace categoriesFor: #prompt:toSaveChanges:!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #promptForVariableName:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #publishedAspects!development!public! !
+!SmalltalkWorkspace categoriesFor: #publishedAspects!public! !
 !SmalltalkWorkspace categoriesFor: #queryCommand:!commands!private! !
 !SmalltalkWorkspace categoriesFor: #rangeToCompleteAt:!autocompletion!helpers!private! !
 !SmalltalkWorkspace categoriesFor: #reformatComment!commands!public! !
@@ -2201,19 +2201,19 @@ wrapIndentMode: aSymbol
 !SmalltalkWorkspace class categoriesFor: #defaultCaretColor:!accessing!options!public! !
 !SmalltalkWorkspace class categoriesFor: #defaultFont!accessing!options!public! !
 !SmalltalkWorkspace class categoriesFor: #defaultFont:!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultIndicatorStyles!constants!development!public! !
+!SmalltalkWorkspace class categoriesFor: #defaultIndicatorStyles!constants!public! !
 !SmalltalkWorkspace class categoriesFor: #defaultKeywordCompletions!autocompletion!private! !
 !SmalltalkWorkspace class categoriesFor: #defaultTabWidth!accessing!public! !
 !SmalltalkWorkspace class categoriesFor: #defaultTabWidth:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultTextStyle!development!private! !
-!SmalltalkWorkspace class categoriesFor: #defaultTextStyles!constants!development!public! !
+!SmalltalkWorkspace class categoriesFor: #defaultTextStyle!private! !
+!SmalltalkWorkspace class categoriesFor: #defaultTextStyles!constants!public! !
 !SmalltalkWorkspace class categoriesFor: #defaultUnaryReturnTypes!autocompletion!private! !
 !SmalltalkWorkspace class categoriesFor: #getAdditionalAccelerators!accessing!private! !
 !SmalltalkWorkspace class categoriesFor: #getCommandQueryHandlers!accessing!private! !
 !SmalltalkWorkspace class categoriesFor: #icon!constants!public! !
 !SmalltalkWorkspace class categoriesFor: #indicatorStyles!accessing!public! !
 !SmalltalkWorkspace class categoriesFor: #indicatorStyles:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #indicatorStylesAspect!development!private! !
+!SmalltalkWorkspace class categoriesFor: #indicatorStylesAspect!private! !
 !SmalltalkWorkspace class categoriesFor: #initialize!initializing!public! !
 !SmalltalkWorkspace class categoriesFor: #isAutoCompletionCaseInsensitive!accessing!autocompletion!public! !
 !SmalltalkWorkspace class categoriesFor: #isAutoCompletionCaseInsensitive:!accessing!autocompletion!public! !
@@ -2225,14 +2225,14 @@ wrapIndentMode: aSymbol
 !SmalltalkWorkspace class categoriesFor: #isAutoCompletionTruncating:!accessing!autocompletion!public! !
 !SmalltalkWorkspace class categoriesFor: #maxAutoCompletionListSize!accessing!autocompletion!public! !
 !SmalltalkWorkspace class categoriesFor: #maxAutoCompletionListSize:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #publishedAspects!development!public! !
+!SmalltalkWorkspace class categoriesFor: #publishedAspects!public! !
 !SmalltalkWorkspace class categoriesFor: #publishedEventsOfInstances!events!public! !
 !SmalltalkWorkspace class categoriesFor: #resource_Default_view!public!resources-views! !
 !SmalltalkWorkspace class categoriesFor: #setAdditionalAccelerators:!accessing!private! !
 !SmalltalkWorkspace class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
 !SmalltalkWorkspace class categoriesFor: #textStyles!accessing!public! !
 !SmalltalkWorkspace class categoriesFor: #textStyles:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #textStylesAspect!development!private! !
+!SmalltalkWorkspace class categoriesFor: #textStylesAspect!private! !
 !SmalltalkWorkspace class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !SmalltalkWorkspace class categoriesFor: #wordWrap!accessing!options!public! !
 !SmalltalkWorkspace class categoriesFor: #wordWrap:!accessing!options!public! !

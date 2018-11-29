@@ -1876,7 +1876,7 @@ variableAtIndex: anInteger put: anObject
 !Debugger categoriesFor: #canImplementMessage!private!testing! !
 !Debugger categoriesFor: #canSaveMethod!private!testing! !
 !Debugger categoriesFor: #clearCachedMethodInfo!helpers!private! !
-!Debugger categoriesFor: #continue:with:!development!operations!private! !
+!Debugger categoriesFor: #continue:with:!operations!private! !
 !Debugger categoriesFor: #createComponents!initializing!public! !
 !Debugger categoriesFor: #createSchematicWiring!initializing!public! !
 !Debugger categoriesFor: #cursorIPRange!commands!private! !
@@ -2218,7 +2218,7 @@ unskipSelector: aSymbol of: aClass
 !Debugger class categoriesFor: #initialize!initializing!public! !
 !Debugger class categoriesFor: #initializeSkipTable!initializing!public! !
 !Debugger class categoriesFor: #interrupts!constants!private! !
-!Debugger class categoriesFor: #publishedAspects!development!public! !
+!Debugger class categoriesFor: #publishedAspects!public! !
 !Debugger class categoriesFor: #resource_Basic_debugger!public!resources-views! !
 !Debugger class categoriesFor: #resource_Default_view!public!resources-views! !
 !Debugger class categoriesFor: #restartOnMethodSave!options!public! !

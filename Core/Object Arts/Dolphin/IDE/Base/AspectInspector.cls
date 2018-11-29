@@ -279,7 +279,7 @@ treeUpdateMode
 
 treeUpdateMode: aSymbol
 	treeUpdateMode := aSymbol! !
-!AspectInspector class categoriesFor: #publishedAspects!development!public! !
+!AspectInspector class categoriesFor: #publishedAspects!public! !
 !AspectInspector class categoriesFor: #registerAsToolWith:!operations!public! !
 !AspectInspector class categoriesFor: #treeHasGridLines!accessing!private! !
 !AspectInspector class categoriesFor: #treeHasGridLines:!accessing!private! !

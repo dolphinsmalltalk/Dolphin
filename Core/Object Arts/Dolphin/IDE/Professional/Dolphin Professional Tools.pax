@@ -87,6 +87,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Presenters\Image\Dolphin Image Presenter';
 	add: '..\..\MVP\Models\List\Dolphin List Models';
 	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
+	add: '..\..\Base\Dolphin Message Box';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Presenters\Radio\Dolphin Radio Buttons';
 	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
@@ -211,7 +212,7 @@ publishedAspectsOfInstances
 		add: (Aspect name: #commandDescription) beReadOnly;
 		yourself.
 	^answer! !
-!LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !PackageSelector methodsFor!
 
@@ -251,7 +252,7 @@ priorityName
 
 	^Processor nameOfPriority: self priority
 ! !
-!Process categoriesFor: #priorityName!accessing!development!public! !
+!Process categoriesFor: #priorityName!accessing!public! !
 
 !ProcessorScheduler methodsFor!
 
@@ -270,7 +271,7 @@ nameOfPriority: anInteger
 		highIOPriority
 		timingPriority)
 			at: anInteger ifAbsent: [#unknownPriority]! !
-!ProcessorScheduler categoriesFor: #nameOfPriority:!development!enquiries!public! !
+!ProcessorScheduler categoriesFor: #nameOfPriority:!enquiries!public! !
 
 !SlideyInneyOuteyThing class methodsFor!
 
@@ -305,7 +306,7 @@ publishedAspectsOfInstances
 	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
 	^aspects! !
 !SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
-!SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !SmalltalkSystem methodsFor!
 
@@ -396,7 +397,7 @@ publishedAspectsOfInstances
 					isNullable: false;
 					yourself).
 	^aspects! !
-!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
 !SysLinkView class methodsFor!
 
@@ -415,7 +416,7 @@ publishedEventsOfInstances
     		add: #linkClicked:;
     		yourself.
     ! !
-!SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 !SysLinkView class categoriesFor: #publishedEventsOfInstances!events!public! !
 
 !TestCase class methodsFor!
