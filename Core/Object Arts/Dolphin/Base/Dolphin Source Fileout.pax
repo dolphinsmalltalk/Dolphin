@@ -41,11 +41,13 @@ package methodNames
 	add: #Package -> #canFileOut;
 	add: #Package -> #checkTimestamps;
 	add: #Package -> #createPackagePath;
+	add: #Package -> #dotPacPath;
 	add: #Package -> #fileModificationTime;
 	add: #Package -> #fileOut;
 	add: #Package -> #fileOutAll;
 	add: #Package -> #fileOutAllChanged;
 	add: #Package -> #fileOutAllOn:;
+	add: #Package -> #fileOutBinaryGlobals;
 	add: #Package -> #fileOutBinaryGlobalsOn:;
 	add: #Package -> #fileOutBootDefinitions;
 	add: #Package -> #fileOutClassDefinitionsOn:;
@@ -67,10 +69,13 @@ package methodNames
 	add: #Package -> #savePAXAboutBlockOn:;
 	add: #Package -> #savePAXChunkOn:;
 	add: #Package -> #savePAXGlobalNamesOn:;
+	add: #Package -> #savePAXManualPrerequisitesOn:;
 	add: #Package -> #savePAXNames:on:;
 	add: #Package -> #savePAXNamesOn:;
 	add: #Package -> #savePAXPackageOn:;
+	add: #Package -> #savePAXPackageVersionOn:;
 	add: #Package -> #savePAXPrerequisiteNamesOn:;
+	add: #Package -> #savePAXScriptsOn:;
 	add: #Package -> #savePAXStripperBytesOn:;
 	add: #Package -> #savePAXUntracedGlobalsOn:;
 	add: #Package -> #saveSingleFilePackage;
@@ -585,6 +590,9 @@ createPackagePath
 	File createDirectoryPath: (File splitPathFrom: self fileOutName)
 !
 
+dotPacPath
+	^File path: self packageFileName extension: self class packageExtension!
+
 fileModificationTime
 	"Private - Answer the modification time of the receiver's package file on disk as the
 	<integer> number of 100-nanosecond intervals since 12:00 A.M. January 1, 1601 UTC (i.e. a
@@ -629,6 +637,18 @@ fileOutAllOn: aSourceFiler
 		fileOutSourceGlobalsOn: aSourceFiler;
 		fileOutClassesOn: aSourceFiler;
 		fileOutBinaryGlobalsOn: aSourceFiler
+!
+
+fileOutBinaryGlobals
+	"Private - File out binary globals to individual .STB files.
+	This is used in the multi-file .PAX format to avoid binary merge conflicts in the
+	main PAX."
+
+	(self binaryGlobalVariables - self globalAliasVariables) do: [:var | | globalStream |
+		globalStream := FileStream write: (self fileNameForBinaryGlobal: var key) text: false.
+		var value binaryStoreOn: globalStream.
+		globalStream close].
+
 !
 
 fileOutBinaryGlobalsOn: aSourceFiler 
@@ -903,6 +923,27 @@ savePAXGlobalNamesOn: target
 				cr;
 				cr]!
 
+savePAXManualPrerequisitesOn: target 
+	"Private - File out the names of any manually configured pre-requisite packages 
+	of the receiver onto the <puttableStream>, target."
+
+	| prereqs |
+	prereqs := self manualPrerequisites.
+	prereqs isEmpty ifTrue: [^self].
+	target
+		nextPutAll: 'package ';
+		nextPutAll: #setManualPrerequisites:;
+		nextPutAll: ' #('.
+	manualPrerequisites do: 
+			[:s | 
+			target
+				crtab;
+				print: s].
+	target
+		nextPutAll: ').';
+		cr;
+		cr!
+
 savePAXNames: names on: stream
 	"Private - File out the PAX source file representation of the list of source object
 	names, names, onto the <puttableStream>, stream, in ascending order of their
@@ -965,6 +1006,19 @@ savePAXPackageOn: stream
 		cr.
 !
 
+savePAXPackageVersionOn: aStream 
+	"Private - Save Package Version - this is the version of the package, not the file out format"
+
+	packageVersion isNil ifTrue: [^self].
+	aStream
+		nextPutAll: 'package ';
+		nextPutAll: #basicPackageVersion:;
+		space;
+		print: self packageVersion;
+		nextPut: $.;
+		cr;
+		cr!
+
 savePAXPrerequisiteNamesOn: target
 	"Private - File out names of the pre-requisite packages of the receiver onto the onto 
 	the <puttableStream>, target, in ascending order."
@@ -986,6 +1040,24 @@ savePAXPrerequisiteNamesOn: target
 		nextPutAll: ').';
 		cr;
 		cr!
+
+savePAXScriptsOn: target 
+	"Private - File out the PAX source file representation of the receiver's scripts
+	onto the <puttableStream>, target.
+	Implementation Note: The scripts are installed using #basicScriptAt:put: to
+	avoid the package being flagged as changed and the consequent transmission 
+	of a change event."
+
+	self scripts keys asSortedCollection do: 
+			[:each | 
+			target
+				nextPutAll: 'package basicScriptAt: ';
+				print: each;
+				nextPutAll: ' put: ';
+				print: (self scriptAt: each);
+				nextPut: $.;
+				cr].
+	target cr!
 
 savePAXStripperBytesOn: stream 
 	"Private - File out the PAX source file representation of the receiver's 
@@ -1036,11 +1108,13 @@ updateTimestamp
 !Package categoriesFor: #canFileOut!public!source filing! !
 !Package categoriesFor: #checkTimestamps!helpers!private! !
 !Package categoriesFor: #createPackagePath!private!source filing! !
+!Package categoriesFor: #dotPacPath!helpers!private! !
 !Package categoriesFor: #fileModificationTime!helpers!private! !
 !Package categoriesFor: #fileOut!public!source filing! !
 !Package categoriesFor: #fileOutAll!public!source filing! !
 !Package categoriesFor: #fileOutAllChanged!public!source filing! !
 !Package categoriesFor: #fileOutAllOn:!public!source filing! !
+!Package categoriesFor: #fileOutBinaryGlobals!private!source filing! !
 !Package categoriesFor: #fileOutBinaryGlobalsOn:!private!source filing! !
 !Package categoriesFor: #fileOutBootDefinitions!development!private! !
 !Package categoriesFor: #fileOutClassDefinitionsOn:!private!source filing! !
@@ -1062,10 +1136,13 @@ updateTimestamp
 !Package categoriesFor: #savePAXAboutBlockOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXChunkOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXGlobalNamesOn:!private!source filing-pax! !
+!Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXNames:on:!private!source filing-pax! !
 !Package categoriesFor: #savePAXNamesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXPackageOn:!private!source filing-pax! !
+!Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXPrerequisiteNamesOn:!private!source filing-pax! !
+!Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXStripperBytesOn:!private!source filing-pax! !
 !Package categoriesFor: #savePAXUntracedGlobalsOn:!public!source filing-pax! !
 !Package categoriesFor: #saveSingleFilePackage!public!source filing! !

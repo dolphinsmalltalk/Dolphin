@@ -421,15 +421,6 @@ displayOn: aStream
 
 	aStream nextPutAll: self name!
 
-dotPacPath
-	^File path: self packageFileName extension: self class packageExtension!
-
-endClassDefinitionsMarker
-	"Private - Answer a String marker used to indicate the end of the
-	class definitions section in a legacy (pre 4.0) package file."
-
-	^'end-class-definition'!
-
 environment
 	"Private - Answer the global name associated with the receiver."
 
@@ -478,18 +469,6 @@ fileNameForSourceGlobal: globalName
 	"Private - Answer a filename for storing the source globalObject."
 
 	^File composePath: self path stem: globalName extension: self class sourceGlobalExtension
-!
-
-fileOutBinaryGlobals
-	"Private - File out binary globals to individual .STB files.
-	This is used in the multi-file .PAX format to avoid binary merge conflicts in the
-	main PAX."
-
-	(self binaryGlobalVariables - self globalAliasVariables) do: [:var | | globalStream |
-		globalStream := FileStream write: (self fileNameForBinaryGlobal: var key) text: false.
-		var value binaryStoreOn: globalStream.
-		globalStream close].
-
 !
 
 fileOutName
@@ -1302,58 +1281,6 @@ resourceIdentifiers
 
 	^self allResourceIdentifiers!
 
-savePAXManualPrerequisitesOn: target 
-	"Private - File out the names of any manually configured pre-requisite packages 
-	of the receiver onto the <puttableStream>, target."
-
-	| prereqs |
-	prereqs := self manualPrerequisites.
-	prereqs isEmpty ifTrue: [^self].
-	target
-		nextPutAll: 'package ';
-		nextPutAll: #setManualPrerequisites:;
-		nextPutAll: ' #('.
-	manualPrerequisites do: 
-			[:s | 
-			target
-				crtab;
-				print: s].
-	target
-		nextPutAll: ').';
-		cr;
-		cr!
-
-savePAXPackageVersionOn: aStream 
-	"Private - Save Package Version - this is the version of the package, not the file out format"
-
-	packageVersion isNil ifTrue: [^self].
-	aStream
-		nextPutAll: 'package ';
-		nextPutAll: #basicPackageVersion:;
-		space;
-		print: self packageVersion;
-		nextPut: $.;
-		cr;
-		cr!
-
-savePAXScriptsOn: target 
-	"Private - File out the PAX source file representation of the receiver's scripts
-	onto the <puttableStream>, target.
-	Implementation Note: The scripts are installed using #basicScriptAt:put: to
-	avoid the package being flagged as changed and the consequent transmission 
-	of a change event."
-
-	self scripts keys asSortedCollection do: 
-			[:each | 
-			target
-				nextPutAll: 'package basicScriptAt: ';
-				print: each;
-				nextPutAll: ' put: ';
-				print: (self scriptAt: each);
-				nextPut: $.;
-				cr].
-	target cr!
-
 scriptAt: scriptName 
 	"Answer the script <String> associated with the <Symbol>, scriptName.
 
@@ -1474,9 +1401,6 @@ timestamp
 
 timestamp: anObject
 	timestamp := anObject!
-
-timestamp1
-	^timestamp!
 
 trace: trace prerequisite: aPackage from: from to: to type: type
 	"Private - Append the supplied details of a prerequisite link
@@ -1819,8 +1743,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #dependentPackages!accessing!public! !
 !Package categoriesFor: #depthOfClass:!helpers!public! !
 !Package categoriesFor: #displayOn:!displaying!public! !
-!Package categoriesFor: #dotPacPath!helpers!private! !
-!Package categoriesFor: #endClassDefinitionsMarker!constants!private! !
 !Package categoriesFor: #environment!constants!private! !
 !Package categoriesFor: #errorFileCorrupt!exceptions!private! !
 !Package categoriesFor: #fileInClasses!development!private!source filing! !
@@ -1828,7 +1750,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #fileLocator!accessing!public! !
 !Package categoriesFor: #fileNameForBinaryGlobal:!mapping!private! !
 !Package categoriesFor: #fileNameForSourceGlobal:!mapping!private! !
-!Package categoriesFor: #fileOutBinaryGlobals!private!source filing! !
 !Package categoriesFor: #fileOutName!public!source filing! !
 !Package categoriesFor: #getEvents!events!private! !
 !Package categoriesFor: #getPrerequisites!enumerating!private! !
@@ -1921,9 +1842,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #resetChangeFlags!public!source filing! !
 !Package categoriesFor: #resetPrerequisites!operations!private! !
 !Package categoriesFor: #resourceIdentifiers!accessing!public! !
-!Package categoriesFor: #savePAXManualPrerequisitesOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXPackageVersionOn:!private!source filing-pax! !
-!Package categoriesFor: #savePAXScriptsOn:!private!source filing-pax! !
 !Package categoriesFor: #scriptAt:!accessing!public! !
 !Package categoriesFor: #scriptAt:put:!accessing!public! !
 !Package categoriesFor: #scripts!accessing!private! !
@@ -1942,7 +1860,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #systemGlobalRenamed:to:!event handling!private! !
 !Package categoriesFor: #timestamp!accessing!public! !
 !Package categoriesFor: #timestamp:!accessing!private! !
-!Package categoriesFor: #timestamp1!accessing!private! !
 !Package categoriesFor: #trace:prerequisite:from:to:type:!helpers!private! !
 !Package categoriesFor: #tracePrerequisiteGlobals:packagedGlobals:!operations!private! !
 !Package categoriesFor: #tracePrerequisites!operations!private! !
