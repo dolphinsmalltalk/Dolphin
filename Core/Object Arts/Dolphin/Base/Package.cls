@@ -1389,12 +1389,12 @@ setPackageFileName: aString
 	^self packagePathname: (FileLocator imageRelative
 				relativePathTo: (File default: aString extension: self class packageExtension))!
 
-setPrerequisites: anIdentitySet
+setPrerequisites: aCollectionOfStrings
 	"Private - Set the pre-computed pre-requisites of the receiver to specified Set of package names. 
 	**Note that this is sent from the chunks which define a package in .PAC and .PAX files
 	and should not be deleted**."
 
-	prerequisiteNames := anIdentitySet!
+	prerequisiteNames := aCollectionOfStrings!
 
 sourceDescriptor
 	^comment isInteger ifTrue: [comment]!
