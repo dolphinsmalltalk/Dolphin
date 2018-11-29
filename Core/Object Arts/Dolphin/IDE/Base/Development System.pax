@@ -223,6 +223,7 @@ package methodNames
 	add: #CompiledMethod -> #searchForInTool:;
 	add: #CompiledMethod -> #stylerClass;
 	add: #CompileFailedMethod -> #asDebugMethod;
+	add: #CompilerNotification -> #okToContinue;
 	add: #DateTimeCommonControl -> #publishedAspects;
 	add: #Dictionary -> #alternateInspectorClass;
 	add: #Dictionary -> #debugPrintString;
@@ -284,6 +285,7 @@ package methodNames
 	add: #PackageManager -> #sourceControl;
 	add: #PoolConstantsDictionary -> #aspectDisplayOn:;
 	add: #PoolConstantsDictionary -> #browse;
+	add: #PoolConstantsDictionary -> #errorModify:value:;
 	add: #PoolConstantsDictionary -> #referencesTo:;
 	add: #PoolDictionary -> #aspectDisplayOn:;
 	add: #Process -> #attachDebugger:topFrame:resumable:;
@@ -634,6 +636,7 @@ package setPrerequisites: (IdentitySet new
 	add: '..\..\MVP\Models\List\Dolphin List Models';
 	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
 	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
+	add: '..\..\Base\Dolphin Message Box';
 	add: '..\..\MVP\Views\MoenTree\Dolphin MoenTree View';
 	add: '..\..\MVP\Base\Dolphin MVP Base';
 	add: '..\..\MVP\Presenters\Number\Dolphin Number Presenter';
@@ -2407,6 +2410,30 @@ asDebugMethod
 	^self! !
 !CompileFailedMethod categoriesFor: #asDebugMethod!development!private! !
 
+!CompilerNotification methodsFor!
+
+okToContinue
+	"Throw up an OK/Cancel message box with the receiver's compilation error/warning
+	message, answering true if the user pressed OK to contine the compilation."
+
+	| mb severity |
+	severity := self severityClass.
+	mb := (MessageBox new)
+				caption: 'Compilation ' , self severityName;
+				text: ('line <1d>: <2s>' expandMacrosWith: self line with: self errorMessage);
+				iconStyleFlag: severity mbIconId;
+				yourself.
+	^severity == Error 
+		ifTrue: 
+			[mb
+				ok;
+				open.
+			false]
+		ifFalse: 
+			[mb buttonStyle: #okCancel.
+			mb open == #ok]! !
+!CompilerNotification categoriesFor: #okToContinue!public!testing! !
+
 !ContainerView class methodsFor!
 
 applicableLayoutManagerCategories
@@ -4008,6 +4035,20 @@ browse
     
     	Smalltalk developmentSystem browsePoolConstantsDictionary: self!
 
+errorModify: key value: value
+	"Private - An attempt was made to modify the value of the constant named, key."
+
+	| recompile |
+	recompile := ConfirmationRequiredWarning
+				signal: ('Would you like to recompile references to <1p><n>to reflect the new value <2d> (currently <3d>)'
+						expandMacrosWith: key
+						with: value
+						with: (self at: key)).
+	recompile isNil ifTrue: [^self].
+	super at: key put: value.
+	self isChanged: true.
+	recompile ifTrue: [self recompileReferencesToVarNamed: key]!
+
 referencesTo: keyString 
 	"Answer the collection of any methods which references the named key, assumed to
 	be a variable name from the receiver."
@@ -4021,6 +4062,7 @@ referencesTo: keyString
 	^refs! !
 !PoolConstantsDictionary categoriesFor: #aspectDisplayOn:!development!private! !
 !PoolConstantsDictionary categoriesFor: #browse!development!operations-browsing!public! !
+!PoolConstantsDictionary categoriesFor: #errorModify:value:!development!exceptions!private! !
 !PoolConstantsDictionary categoriesFor: #referencesTo:!development!private! !
 
 !PoolDictionary methodsFor!

@@ -1169,20 +1169,13 @@ youShouldBeProcessingEvents
 	should expect to be responding to events as otherwise change flags, and pre-requisites, etc
 	will not be operating correctly."
 
-	| mb |
 	self isProcessingEvents ifTrue: [^self].
-	mb := MessageBox new.
-	mb
-		buttonStyle: #yesNo;
-		beTaskModal.
-	(mb 
-		warning: 'The package system is not currently monitoring change events. This means that changes may not be detected and flagged, caches are not maintained, and pre-requisites may be incorrect. Change monitoring should normally only be suppressed during lengthy install/uninstall operations. A previous error or debugging session may have left the package manager in an inconsistent state. 
+	Warning
+		signal: 'The package system is not currently monitoring change events. This means that changes may not be detected and flagged, caches are not maintained, and pre-requisites may be incorrect. Change monitoring should normally only be suppressed during lengthy install/uninstall operations. A previous error or debugging session may have left the package manager in an inconsistent state. 
 
-Would you like to re-enable change monitoring (recommended)?') 
-			== #yes 
-			ifTrue: 
-				[[self isProcessingEvents] whileFalse: [self beProcessingEvents].
-				self clearCachedInformation]! !
+	Change monitoring will be enabled if you ignore this warning (recommended)'.
+	[self isProcessingEvents] whileFalse: [self beProcessingEvents].
+	self clearCachedInformation! !
 !PackageManager categoriesFor: #addClass:to:!adding!public! !
 !PackageManager categoriesFor: #addGlobalNamed:to:!adding!public! !
 !PackageManager categoriesFor: #addLooseMethod:to:!helpers!private! !

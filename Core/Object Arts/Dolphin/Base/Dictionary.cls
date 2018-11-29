@@ -240,6 +240,11 @@ errorKeyNotFound: aKey
 	^self errorNotFound: aKey
 !
 
+errorModify: key value: value
+	"Private - An attempt was made to modify the value of the constant named, key."
+
+	self error: 'Cannot modify read-only value associated with key ', key printString!
+
 errorValueNotFound: aValue
 	"Private - Report that an attempt was made to look up the key for a value which was not
 	in receiver"
@@ -558,6 +563,7 @@ values
 !Dictionary categoriesFor: #copyElementsInto:!adding!private! !
 !Dictionary categoriesFor: #do:!enumerating!public! !
 !Dictionary categoriesFor: #errorKeyNotFound:!exceptions!private! !
+!Dictionary categoriesFor: #errorModify:value:!exceptions!private! !
 !Dictionary categoriesFor: #errorValueNotFound:!exceptions!private! !
 !Dictionary categoriesFor: #findElementOrNil:!private!searching! !
 !Dictionary categoriesFor: #findKeyOrNil:!private!searching! !

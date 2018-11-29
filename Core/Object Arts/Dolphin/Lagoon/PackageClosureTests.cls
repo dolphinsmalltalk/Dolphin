@@ -12,14 +12,12 @@ PackageClosureTests comment: ''!
 
 basePackageUnimplemented
 	"Private - Ideally the set of missing selectors would be empty, but due to some mispackaging and less than ideal code structuring in some cases, there are some selectors sent on code paths that should not be executed:
-		- convertBlockToClosure:, initializeLegacyResources, loadLegacyPAC: - sent by the legacy package loader code
 		- desktop, parentView - sent by InputState topLevelWindows, but only if there any Views, which there will not be if the MVP base package is not present (which defines these methods)
-		- ensureVisible - sent by MessageBox, but only if there is an owner View (so MVP base must be loaded)
-		- identifier, instanceHandle - also sent by MessageBox, but only if an Icon is set (so MVP base must be loaded)
+		- initializeLegacyResources, loadLegacyPAC: - sent by the legacy package loader code
 	
 	To explore the dependencies in detail, open a package browser on the Dolphin package, then run the Browse/Unimplemented Messages command."
 
-	^#(#base64StoreOn: #convertBlockToClosure: #desktop #ensureVisible #identifier #initializeLegacyResources #instanceHandle #loadLegacyPAC: #parentView)!
+	^#(#desktop #initializeLegacyResources #loadLegacyPAC: #parentView)!
 
 environmentForPackageClosure: aCollectionOfPackages
 	| closure |
@@ -55,7 +53,7 @@ testHelloWorld
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
 
 	self verifyPackageClosure: {ImageStripper owningPackage. HelloWorld owningPackage}
-		missing: #(#base64StoreOn: #convertBlockToClosure: #createThumbnailExtent:mask: #defaultSessionManagerClass #initializeLegacyResources #loadLegacyPAC: #recompileDefinition #ttmRelayEvent:)!
+		missing: #(#createThumbnailExtent:mask: #defaultSessionManagerClass #initializeLegacyResources #loadLegacyPAC: #recompileDefinition #ttmRelayEvent:)!
 
 testNotepad
 	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods. In addition to the majority of the base package missing methods, the following additional methods are missing:
@@ -65,7 +63,7 @@ testNotepad
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
 
 	self verifyPackageClosure: {Notepad owningPackage. ImageStripper owningPackage}
-		missing: #(#base64StoreOn: #convertBlockToClosure: #createThumbnailExtent:mask: #defaultSessionManagerClass #initializeLegacyResources #loadLegacyPAC: #recompileDefinition #ttmRelayEvent:)!
+		missing: #(#createThumbnailExtent:mask: #defaultSessionManagerClass #initializeLegacyResources #loadLegacyPAC: #recompileDefinition #ttmRelayEvent:)!
 
 testSystemPackage
 	| aPackage |
