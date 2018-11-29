@@ -238,48 +238,6 @@ saveImageDefault
 	self class sourceManager flushChanges.
 	self snapshot.!
 
-saveImageTo: aString 
-	"Private - Snapshot to filePath.img, marking the log with a timestamp and copying sources
-	files. N.B. Use the public entry point #saveImage: to save an image to a new path.
-
-	Take a special interest if we do not currently have the source files available. This will be
-	the case when we load from a .exe. In this case we generate some suitable empty source
-	files. We also have to mark methods so that they know they have lost any reference to
-	information in a .sml file."
-
-	| oldImagePath oldSentry |
-	oldImagePath := self imagePath.
-	oldSentry := sentry.
-
-	"Now save image and swap over sources. Take care to end up with a good sources and imagePath"
-	
-	[self imagePath: aString.
-	self createSentinel 
-		ifTrue: 
-			[| mb |
-			mb := MessageBox new.
-			mb beTaskModal.
-			mb 
-				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!' 
-						expandMacrosWith: self imageFileName).
-			^self].
-	self class sourceManager copyAndReopenSources: self imagePath.
-	self
-		snapshot: self imageFileName;
-		logComment: ('Image saved to <1p>' expandMacrosWith: aString).
-	KernelLibrary default closeHandle: oldSentry] 
-			ifCurtailed: 
-				["Attempt to return to the old state so sources & stuff are intact
-				 before showing the user the problem."
-				
-				[KernelLibrary default closeHandle: sentry.
-				sentry := oldSentry.
-				self
-					imagePath: oldImagePath;
-					openSources] 
-						on: Error
-						do: [:anError | anError resignalAsWarning]]!
-
 shellClosed: aShell
 	"Inform the receiver that aShell has been closed"
 !
@@ -355,7 +313,6 @@ updateBootImage
 !BootSessionManager categoriesFor: #reloadBootPackages!operations-startup!public! !
 !BootSessionManager categoriesFor: #reloadPackage:!operations-startup!public! !
 !BootSessionManager categoriesFor: #saveImageDefault!operations-saving!public! !
-!BootSessionManager categoriesFor: #saveImageTo:!operations-saving!private! !
 !BootSessionManager categoriesFor: #shellClosed:!operations-startup!private! !
 !BootSessionManager categoriesFor: #shellOpened:!operations-startup!private! !
 !BootSessionManager categoriesFor: #shutdown!operations-shutdown!public! !

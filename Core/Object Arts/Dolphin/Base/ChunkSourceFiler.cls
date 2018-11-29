@@ -68,6 +68,13 @@ emitString: aString
 		ifFalse: [stream nextPutAll: aString].
 	^aString!
 
+endChunk
+	"Private - Output an end of chunk marker to the argument, aStream."
+
+	stream
+		nextPutAll: ' !!';
+		cr!
+
 fileIn
 	"File in the expressions/definitions from receiver's source stream, which is
 	expected to be in the receiver's chunk format. Any methods that fail to compile are stubbed 
@@ -191,6 +198,7 @@ storeSourceString: aString forMethod: aCompiledMethod
 !ChunkSourceFiler categoriesFor: #emitGUIDOfClass:!private!source filing-file out! !
 !ChunkSourceFiler categoriesFor: #emitHeaderForMethodsOf:!private!source filing-file out! !
 !ChunkSourceFiler categoriesFor: #emitString:!private!source filing-file out! !
+!ChunkSourceFiler categoriesFor: #endChunk!private!source filing-file out! !
 !ChunkSourceFiler categoriesFor: #fileIn!public!source filing-file in! !
 !ChunkSourceFiler categoriesFor: #fileOutExpression:!public!source filing-file out! !
 !ChunkSourceFiler categoriesFor: #getSourceFromDescriptor:!public!source filing-file in! !
