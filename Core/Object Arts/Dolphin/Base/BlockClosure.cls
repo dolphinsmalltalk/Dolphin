@@ -869,30 +869,6 @@ attemptToUpgradeBlock: aBlockClosure data: data
 				do: [:i | (newMethod at: i) == recompiledBlock ifTrue: [newMethod at: i put: data]]].
 	^recompiledBlock!
 
-stbConvertFrom: anSTBClassFormat 
-	"Convert from earlier binary filed versions."
-
-	"Note: It is assumed that all blocks will be upgraded before application deployment, so this
-	conversion is deliberately placed in the 'development' category, and will not be available
-	at runtime."
-
-	| ver upgrading |
-	ver := anSTBClassFormat version.
-	upgrading := anSTBClassFormat isUpgrading.
-	^
-	[:data | 
-	| newBlock |
-	ver < 1 
-		ifTrue: [newBlock := self convertBlockToClosure: data]
-		ifFalse: 
-			[ver < 2 
-				ifTrue: [self error: 'Unable to convert interim block format']
-				ifFalse: 
-					[newBlock := self basicNew: data size - self instSize.
-					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
-	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
-	newBlock]!
-
 stbVersion
 	"Answer the current binary filer version number for instances of the receiver.
 		0 	- Original Smalltalk-80 style blocks (pre Dolphin 6.0)
@@ -903,6 +879,5 @@ stbVersion
 	^3! !
 !BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
 !BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
 
