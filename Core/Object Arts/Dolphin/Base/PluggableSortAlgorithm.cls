@@ -37,7 +37,9 @@ sortBlock
 new
 	"Answer a new instance of the receiver with the default sort block."
 
-	^self newSortBlock: [:a :b | a <= b]!
+	^self basicNew
+		setSortBlock: [:a :b | a <= b];
+		yourself!
 
 newSortBlock: aDyadicValuable
 	<primitive: 157>
