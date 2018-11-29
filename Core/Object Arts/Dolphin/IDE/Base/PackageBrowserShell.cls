@@ -1476,7 +1476,7 @@ wordWrapComment: aBoolean
 !PackageBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !PackageBrowserShell class categoriesFor: #icon!constants!public! !
 !PackageBrowserShell class categoriesFor: #initialize!initializing!private! !
-!PackageBrowserShell class categoriesFor: #publishedAspects!development!public! !
+!PackageBrowserShell class categoriesFor: #publishedAspects!public! !
 !PackageBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !PackageBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
 !PackageBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !

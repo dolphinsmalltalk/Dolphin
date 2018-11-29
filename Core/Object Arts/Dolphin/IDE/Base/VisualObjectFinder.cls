@@ -216,7 +216,7 @@ unregisterAsToolWith: aSmalltalkSystem
 !VisualObjectFinder class categoriesFor: #findNonDolphinWindows:!accessing!public! !
 !VisualObjectFinder class categoriesFor: #icon!constants!public! !
 !VisualObjectFinder class categoriesFor: #initialize!initializing!private! !
-!VisualObjectFinder class categoriesFor: #publishedAspects!constants!development!public! !
+!VisualObjectFinder class categoriesFor: #publishedAspects!constants!public! !
 !VisualObjectFinder class categoriesFor: #registerAsToolWith:!operations!public! !
 !VisualObjectFinder class categoriesFor: #resource_Default_view!public!resources-views! !
 !VisualObjectFinder class categoriesFor: #uninitialize!class hierarchy-removing!private! !

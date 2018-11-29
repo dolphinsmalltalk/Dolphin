@@ -587,7 +587,7 @@ viewMode: aSymbol
 !SmalltalkSystemShell class categoriesFor: #onStartup!events-session!private! !
 !SmalltalkSystemShell class categoriesFor: #playSystemSounds!accessing!options!public! !
 !SmalltalkSystemShell class categoriesFor: #playSystemSounds:!accessing!options!public! !
-!SmalltalkSystemShell class categoriesFor: #publishedAspects!constants!development!public! !
+!SmalltalkSystemShell class categoriesFor: #publishedAspects!constants!public! !
 !SmalltalkSystemShell class categoriesFor: #reset!operations!public! !
 !SmalltalkSystemShell class categoriesFor: #resetWhenInvisible!accessing!options!public! !
 !SmalltalkSystemShell class categoriesFor: #resetWhenInvisible:!accessing!options!public! !

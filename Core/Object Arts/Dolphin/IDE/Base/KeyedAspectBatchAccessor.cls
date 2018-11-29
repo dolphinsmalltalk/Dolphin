@@ -44,7 +44,7 @@ publishedAspects
 	^LookupTable new! !
 !KeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
 !KeyedAspectBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!KeyedAspectBatchAccessor categoriesFor: #publishedAspects!constants!development!public! !
+!KeyedAspectBatchAccessor categoriesFor: #publishedAspects!constants!public! !
 
 !KeyedAspectBatchAccessor class methodsFor!
 

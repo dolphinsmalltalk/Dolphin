@@ -155,5 +155,5 @@ publishedEventsOfInstances
 		yourself.
 ! !
 !MenuComposerArena class categoriesFor: #icon!constants!public! !
-!MenuComposerArena class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!MenuComposerArena class categoriesFor: #publishedEventsOfInstances!events!public! !
 

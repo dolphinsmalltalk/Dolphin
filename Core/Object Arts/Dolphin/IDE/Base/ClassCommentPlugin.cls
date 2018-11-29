@@ -137,7 +137,7 @@ wordWrap: aBoolean
 !ClassCommentPlugin class categoriesFor: #grayedIcon!constants!public! !
 !ClassCommentPlugin class categoriesFor: #icon!constants!public! !
 !ClassCommentPlugin class categoriesFor: #initialize!initializing!public! !
-!ClassCommentPlugin class categoriesFor: #publishedAspects!development!public! !
+!ClassCommentPlugin class categoriesFor: #publishedAspects!public! !
 !ClassCommentPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
 !ClassCommentPlugin class categoriesFor: #textStyles!accessing!options!public! !
 !ClassCommentPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !

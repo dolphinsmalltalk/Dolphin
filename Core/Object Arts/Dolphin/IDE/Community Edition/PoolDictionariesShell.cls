@@ -211,7 +211,7 @@ uninitialize
 !PoolDictionariesShell class categoriesFor: #displayOn:!public! !
 !PoolDictionariesShell class categoriesFor: #icon!constants!public! !
 !PoolDictionariesShell class categoriesFor: #initialize!initializing!private! !
-!PoolDictionariesShell class categoriesFor: #publishedAspects!development!public! !
+!PoolDictionariesShell class categoriesFor: #publishedAspects!public! !
 !PoolDictionariesShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !PoolDictionariesShell class categoriesFor: #toolsFolderHelpId!private! !
 !PoolDictionariesShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !

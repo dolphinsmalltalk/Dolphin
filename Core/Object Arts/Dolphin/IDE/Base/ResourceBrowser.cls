@@ -185,7 +185,7 @@ uninitialize
 !ResourceBrowser class categoriesFor: #displayOn:!displaying!public! !
 !ResourceBrowser class categoriesFor: #icon!constants!public! !
 !ResourceBrowser class categoriesFor: #initialize!initializing!private! !
-!ResourceBrowser class categoriesFor: #publishedAspects!development!public! !
+!ResourceBrowser class categoriesFor: #publishedAspects!public! !
 !ResourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !ResourceBrowser class categoriesFor: #showAsToolboxFor:at:!instance creation!public! !
 !ResourceBrowser class categoriesFor: #toolsFolderHelpId!public! !

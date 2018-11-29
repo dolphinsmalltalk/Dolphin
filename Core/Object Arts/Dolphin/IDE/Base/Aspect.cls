@@ -876,7 +876,7 @@ time: aSymbol
 	^self name: aSymbol presenterBlock: [:p :m | TimePresenter createIn: p on: m]! !
 !Aspect class categoriesFor: #autostring:!instance creation!public! !
 !Aspect class categoriesFor: #bitmap:!instance creation!public! !
-!Aspect class categoriesFor: #block:!development!instance creation!public! !
+!Aspect class categoriesFor: #block:!instance creation!public! !
 !Aspect class categoriesFor: #boolean:!instance creation!public! !
 !Aspect class categoriesFor: #choice:choiceBlock:!instance creation!public! !
 !Aspect class categoriesFor: #choice:evaluationFrom:!instance creation!public! !
@@ -892,7 +892,7 @@ time: aSymbol
 !Aspect class categoriesFor: #color:!instance creation!public! !
 !Aspect class categoriesFor: #date:!instance creation!public! !
 !Aspect class categoriesFor: #defaultCollectionEditBlock!constants!private! !
-!Aspect class categoriesFor: #defaultPresenterBlock!constants!development!private! !
+!Aspect class categoriesFor: #defaultPresenterBlock!constants!private! !
 !Aspect class categoriesFor: #dictionary:!instance creation!public! !
 !Aspect class categoriesFor: #extent:!instance creation!public! !
 !Aspect class categoriesFor: #fileOpen:!instance creation!public! !
@@ -913,9 +913,9 @@ time: aSymbol
 !Aspect class categoriesFor: #menu:!instance creation!must strip!public! !
 !Aspect class categoriesFor: #menuBar:!instance creation!must strip!public! !
 !Aspect class categoriesFor: #multilineString:!instance creation!public! !
-!Aspect class categoriesFor: #name:!development!instance creation!public! !
-!Aspect class categoriesFor: #name:chooseFrom:!development!instance creation!public! !
-!Aspect class categoriesFor: #name:editBlock:!development!instance creation!public! !
+!Aspect class categoriesFor: #name:!instance creation!public! !
+!Aspect class categoriesFor: #name:chooseFrom:!instance creation!public! !
+!Aspect class categoriesFor: #name:editBlock:!instance creation!public! !
 !Aspect class categoriesFor: #name:presenterBlock:!instance creation!public! !
 !Aspect class categoriesFor: #name:presenterBlock:editBlock:!instance creation!public! !
 !Aspect class categoriesFor: #new!instance creation!private! !

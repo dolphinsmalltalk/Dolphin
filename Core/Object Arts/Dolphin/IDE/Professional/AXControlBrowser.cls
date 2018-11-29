@@ -423,7 +423,7 @@ uninitialize
 !AXControlBrowser class categoriesFor: #displayOn:!displaying!public! !
 !AXControlBrowser class categoriesFor: #icon!constants!public! !
 !AXControlBrowser class categoriesFor: #initialize!initializing!must strip!private! !
-!AXControlBrowser class categoriesFor: #publishedAspects!development!public! !
+!AXControlBrowser class categoriesFor: #publishedAspects!public! !
 !AXControlBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !AXControlBrowser class categoriesFor: #toolsFolderHelpId!constants!public! !
 !AXControlBrowser class categoriesFor: #uninitialize!initializing!private! !

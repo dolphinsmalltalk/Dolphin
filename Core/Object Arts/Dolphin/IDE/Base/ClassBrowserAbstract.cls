@@ -2943,7 +2943,7 @@ wordWrapSource: aBoolean
 !ClassBrowserAbstract class categoriesFor: #looseMethodColor:!accessing!options!public! !
 !ClassBrowserAbstract class categoriesFor: #plugins!accessing!public!wine fix! !
 !ClassBrowserAbstract class categoriesFor: #plugins:!accessing!public! !
-!ClassBrowserAbstract class categoriesFor: #publishedAspects!development!public! !
+!ClassBrowserAbstract class categoriesFor: #publishedAspects!public! !
 !ClassBrowserAbstract class categoriesFor: #removePlugin:!initializing!private! !
 !ClassBrowserAbstract class categoriesFor: #wordWrapDefinition!accessing!options!public! !
 !ClassBrowserAbstract class categoriesFor: #wordWrapDefinition:!accessing!options!public! !

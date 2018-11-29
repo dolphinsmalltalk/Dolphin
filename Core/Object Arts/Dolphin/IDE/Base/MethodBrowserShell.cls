@@ -224,6 +224,6 @@ resource_Default_view
 !MethodBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !MethodBrowserShell class categoriesFor: #icon!constants!public! !
 !MethodBrowserShell class categoriesFor: #initialize!initializing!private! !
-!MethodBrowserShell class categoriesFor: #publishedAspects!development!public! !
+!MethodBrowserShell class categoriesFor: #publishedAspects!public! !
 !MethodBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 

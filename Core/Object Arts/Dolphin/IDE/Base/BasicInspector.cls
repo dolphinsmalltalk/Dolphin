@@ -478,7 +478,7 @@ shellOn: anObject
 	^inspector! !
 !BasicInspector class categoriesFor: #headerList!constants!public! !
 !BasicInspector class categoriesFor: #icon!constants!public! !
-!BasicInspector class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!BasicInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
 !BasicInspector class categoriesFor: #resource_Default_view!public!resources-views! !
 !BasicInspector class categoriesFor: #shellOn:!instance creation!public! !
 

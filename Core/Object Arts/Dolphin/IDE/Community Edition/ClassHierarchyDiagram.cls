@@ -128,7 +128,7 @@ uninitialize
 !ClassHierarchyDiagram class categoriesFor: #displayOn:!displaying!public! !
 !ClassHierarchyDiagram class categoriesFor: #icon!constants!public! !
 !ClassHierarchyDiagram class categoriesFor: #initialize!initializing!private! !
-!ClassHierarchyDiagram class categoriesFor: #publishedAspects!development!public! !
+!ClassHierarchyDiagram class categoriesFor: #publishedAspects!public! !
 !ClassHierarchyDiagram class categoriesFor: #resource_Default_view!public!resources-views! !
 !ClassHierarchyDiagram class categoriesFor: #toolsFolderHelpId!public! !
 !ClassHierarchyDiagram class categoriesFor: #uninitialize!class hierarchy-removing!private! !
