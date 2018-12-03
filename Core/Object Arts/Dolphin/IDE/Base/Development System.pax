@@ -240,7 +240,6 @@ package methodNames
 	add: #ExternalStructure -> #publishedAspects;
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
-	add: #InputState -> #destroyAllWindows;
 	add: #Interval -> #newBatchAccessor;
 	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
 	add: #LayoutManager -> #arrangementAspect;
@@ -610,69 +609,68 @@ package globalAliases: (Set new
 	add: #Inspector;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\..\System\Trace\Debug Trace Stream';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter';
-	add: '..\..\MVP\Presenters\Collection\Dolphin Collection Presenters';
-	add: '..\..\MVP\Presenters\Color\Dolphin Color Presenter';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\MVP\Views\Date Time\Dolphin Date Time Controls';
-	add: '..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters';
-	add: '..\..\MVP\Presenters\Shell\Dolphin Document Presenter';
-	add: '..\..\MVP\Dialogs\Find\Dolphin Find Dialog';
-	add: '..\..\MVP\Presenters\Folder\Dolphin Folder Presenter';
-	add: '..\..\MVP\Presenters\Font\Dolphin Font Presenter';
-	add: '..\..\MVP\Presenters\Image\Dolphin Image Presenter';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter';
-	add: '..\..\MVP\Models\List\Dolphin List Models';
-	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter';
-	add: '..\..\Base\Dolphin Message Box';
-	add: '..\..\MVP\Views\MoenTree\Dolphin MoenTree View';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Presenters\Number\Dolphin Number Presenter';
-	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\..\MVP\Presenters\Radio\Dolphin Radio Buttons';
-	add: '..\..\Registry\Dolphin Registry Access';
-	add: '..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter';
-	add: '..\..\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\MVP\Views\Scrollbars\Dolphin Scrollbars';
-	add: '..\..\MVP\Views\Slider\Dolphin Slider Control';
-	add: '..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing';
-	add: '..\..\Base\Dolphin Source Fileout';
-	add: '..\..\MVP\Views\SpinButton\Dolphin SpinButton Control';
-	add: '..\..\MVP\Views\Styled Views\Dolphin Styled Views';
-	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\MVP\Views\Tooltips\Dolphin Tooltips';
-	add: 'Dolphin Transcript';
-	add: '..\..\MVP\Presenters\Tree\Dolphin Tree List Presenter';
-	add: '..\..\MVP\Models\Tree\Dolphin Tree Models';
-	add: '..\..\MVP\Presenters\Tree\Dolphin Tree Presenter';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess';
-	add: '..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\MVP\Icons\Internal Bitmaps and Icons';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters';
-	add: 'Splash\Seeing the Objects Inside';
-	add: '..\..\System\Compiler\Smalltalk Compiler';
-	add: '..\..\System\Compiler\Smalltalk Parser';
-	add: '..\..\ActiveX\Components\VBScript\VBScript Regular Expressions';
-	add: '..\..\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\ActiveX\OCX\ActiveX Control Hosting'
+	'..\..\System\Trace\Debug Trace Stream'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\MVP\Presenters\Collection\Dolphin Collection Presenters'
+	'..\..\MVP\Presenters\Color\Dolphin Color Presenter'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Views\Date Time\Dolphin Date Time Controls'
+	'..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\..\MVP\Presenters\Shell\Dolphin Document Presenter'
+	'..\..\MVP\Dialogs\Find\Dolphin Find Dialog'
+	'..\..\MVP\Presenters\Folder\Dolphin Folder Presenter'
+	'..\..\MVP\Presenters\Font\Dolphin Font Presenter'
+	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
+	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\MVP\Views\MoenTree\Dolphin MoenTree View'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Presenters\Number\Dolphin Number Presenter'
+	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\..\MVP\Presenters\Radio\Dolphin Radio Buttons'
+	'..\..\Registry\Dolphin Registry Access'
+	'..\..\MVP\Presenters\Text\Dolphin Rich Text Presenter'
+	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\MVP\Views\Scrollbars\Dolphin Scrollbars'
+	'..\..\MVP\Views\Slider\Dolphin Slider Control'
+	'..\..\MVP\Views\Sliding Tray\Dolphin Slidey-Inney-Outey Thing'
+	'..\..\Base\Dolphin Source Fileout'
+	'..\..\MVP\Views\SpinButton\Dolphin SpinButton Control'
+	'..\..\MVP\Views\Styled Views\Dolphin Styled Views'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\MVP\Views\Tooltips\Dolphin Tooltips'
+	'Dolphin Transcript'
+	'..\..\MVP\Presenters\Tree\Dolphin Tree List Presenter'
+	'..\..\MVP\Models\Tree\Dolphin Tree Models'
+	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\..\Contributions\Burning River\ExternalProcess\ExternalProcess'
+	'..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\MVP\Icons\Internal Bitmaps and Icons'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
+	'Splash\Seeing the Objects Inside'
+	'..\..\System\Compiler\Smalltalk Compiler'
+	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
+	'..\..\ActiveX\Shell\Windows Shell').
 
 package setManualPrerequisites: #(
 	'Dolphin Source Fileout').
@@ -3162,15 +3160,6 @@ publishedAspectsOfInstances
 		add: (Aspect choice: #imageBorder from: self edgeStyles);
 		yourself! !
 !ImageViewAbstract class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-
-!InputState methodsFor!
-
-destroyAllWindows
-	"Private - Destroy all top-level Windows."
-
-	self topLevelWindows do: [:w | w destroy].
-	self purgeDeadWindows! !
-!InputState categoriesFor: #destroyAllWindows!helpers!private! !
 
 !InputState class methodsFor!
 

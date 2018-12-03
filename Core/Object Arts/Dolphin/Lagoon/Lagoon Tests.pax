@@ -15,15 +15,14 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	add: '..\..\Samples\MVP\Hello World\Hello World';
-	add: '..\..\Samples\Console\Hello World\Hello World (Console)';
-	add: 'Lagoon Image Stripper';
-	add: '..\..\Samples\MVP\Notepad\Notepad';
-	add: '..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'..\..\Samples\MVP\Hello World\Hello World'
+	'..\..\Samples\Console\Hello World\Hello World (Console)'
+	'Lagoon Image Stripper'
+	'..\..\Samples\MVP\Notepad\Notepad'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments').
 
 package!
 

@@ -122,6 +122,7 @@ package methodNames
 	add: 'ExternalDescriptor class' -> #oneStringArg;
 	add: 'File class' -> #change:extension:;
 	add: 'File class' -> #for:inAndBelow:do:;
+	add: 'KernelLibrary class' -> #clear;
 	add: 'SortAlgorithm class' -> #sortBlock:;
 	add: 'SortedCollection class' -> #value:value:;
 	add: 'STBClassProxy class' -> #for:;
@@ -143,10 +144,10 @@ package globalAliases: (Set new
 	add: #UnicodeString;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Dolphin';
-	add: '..\Dolphin Conformant Array Fields';
-	yourself).
+package setPrerequisites: #(
+	'..\Dolphin'
+	'..\Dolphin Conformant Array Fields'
+	'..\Dolphin Message Box').
 
 package!
 
@@ -736,6 +737,17 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 !KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
 !KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file! !
+
+!KernelLibrary class methodsFor!
+
+clear
+	"Private - Clear down cached external function addresses and any default 
+	instances of the receiver from previous runs. etc."
+
+	super clear.
+	OSVERSIONINFO clear
+! !
+!KernelLibrary class categoriesFor: #clear!initializing!private! !
 
 !MessageBox methodsFor!
 

@@ -605,8 +605,6 @@ setClassVariablesOf: aClass
 	"Private - Set class variables of aClass to those described by
 	the receiver's classVariables inst var."
 
-	| oldClassVars |
-	oldClassVars := aClass classVarNames.
 	(classVariables notNil and: [aClass setClassVarNames: self classVariables])
 		ifTrue: [self recompilationRequired: true]!
 
@@ -635,8 +633,7 @@ setSharedPoolsOf: aClass
 	newPoolNames := self sharedPools.
 	(newPoolNames noDifference: oldPoolNames)
 		ifFalse: 
-			[| s |
-			aClass setSharedPoolNames: newPoolNames.
+			[aClass setSharedPoolNames: newPoolNames.
 			self recompilationRequired: true]!
 
 sharedPools

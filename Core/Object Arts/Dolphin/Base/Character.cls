@@ -576,7 +576,7 @@ initialize
 				yourself).
 	self addClassConstant: 'Utf8Mask' value: String.EncodingUtf8 << 24.
 	self addClassConstant: 'Utf16Mask' value: String.EncodingUtf16 << 24.
-	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf16 << 24.
+	self addClassConstant: 'Utf32Mask' value: String.EncodingUtf32 << 24.
 	self addClassConstant: 'EncodingMask' value: 2r111111 << 24.
 	self addClassConstant: 'Utf8TrailMask' value: 16rC0.!
 

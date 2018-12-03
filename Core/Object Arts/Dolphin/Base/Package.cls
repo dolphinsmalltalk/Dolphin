@@ -2,7 +2,7 @@
 
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties'
-	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
+	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Package guid: (GUID fromString: '{87b4c4a6-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -387,10 +387,10 @@ declareClasses
 	"Private - Predefine global variables for each of the classes in the package prior to those classes
 	being loaded. Only required for PAX (not PAC) loading"
 
-	self classNames do: 
-			[:each | 
-			Object 
-				subclass: each asSymbol
+	(self classNames reject: [:each | self environment includesKey: each]) do: 
+			[:each |
+			Object
+				subclass: each
 				instanceVariableNames: ''
 				classVariableNames: ''
 				poolDictionaries: '']!
@@ -662,6 +662,17 @@ initializeGlobals
 	self globalAliasVariables 
 		do: [:each | each value class isMeta ifTrue: [ClassLocator addAlias: each key forClass: each value]]!
 
+initializeLegacyResources
+	"Private - For old (pre-D6) packages, we have to make sure that the resources loaded by this package actually
+	below to it. Obviously, those resources that already belong to classes in the package will be ok, so really
+	we are only concerned with loose resources"
+
+	self allResourceNames do: 
+			[:each | 
+			| rid |
+			rid := ResourceIdentifier class: (self environment at: each key) name: each value.
+			rid owningPackage == self ifFalse: [self manager addLooseMethod: rid compiledMethod to: self]]!
+
 initializeOldSourcePackage
 	(self respondsTo: #loadLegacyResources) 
 		ifTrue: [self perform: #loadLegacyResources]
@@ -757,7 +768,9 @@ loadPAC
 	(STBInFiler peekForSignatureIn: stream)
 		ifTrue: 
 			[stream reset.
-			self loadLegacyPAC: stream]
+			BinaryPacLoader
+				ifNil: [self error: 'Legacy binary package loading support is not available']
+				ifNotNil: [:loader | loader value: self value: stream]]
 		ifFalse: [self loadPAC: stream]]
 			ensure: [stream close]!
 
@@ -1775,6 +1788,7 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #initialize!initializing!private! !
 !Package categoriesFor: #initializeClasses!initializing!private! !
 !Package categoriesFor: #initializeGlobals!initializing!private! !
+!Package categoriesFor: #initializeLegacyResources!helpers!private! !
 !Package categoriesFor: #initializeOldSourcePackage!private!source filing-pax! !
 !Package categoriesFor: #isBaseImagePackage!public! !
 !Package categoriesFor: #isBasePackage!public! !
@@ -1887,6 +1901,9 @@ binaryGlobalExtension
 
 	^ 'stb'!
 
+binaryPacLoader: aDyadicValuable
+	BinaryPacLoader := aDyadicValuable!
+
 clashSignal
 	"Private - Answer the <Signal> which is raised should overlapping/clashing membership
 	be detected when attempting to install a package."
@@ -1956,13 +1973,15 @@ initialize
 		Package initialize
 	"
 
-	_Uncommitted := (self basicNew)
+	_Uncommitted := self basicNew
 				initialize;
 				packagePathname: '<Unpackaged>';
 				yourself.
 	ClashSignal := Signal resumableDescription: 'Package contents clash'.
-	UnsaveableSignal := Signal description: 'Package cannot be saved (check for cyclic dependencies or unpackaged prereqs)'.
-	CheckTimestamps := true!
+	UnsaveableSignal := Signal
+				description: 'Package cannot be saved (check for cyclic dependencies or unpackaged prereqs)'.
+	CheckTimestamps := true.
+	BinaryPacLoader := nil!
 
 manager
 	"Answer the object responsible for managing the collection of installed packages.
@@ -2221,6 +2240,7 @@ unsaveableSignal
 
 	^UnsaveableSignal! !
 !Package class categoriesFor: #binaryGlobalExtension!constants!private! !
+!Package class categoriesFor: #binaryPacLoader:!accessing!private! !
 !Package class categoriesFor: #clashSignal!constants!private! !
 !Package class categoriesFor: #defaultSortBlock!constants!public! !
 !Package class categoriesFor: #errorInvalidPACFile:!exceptions!private! !
