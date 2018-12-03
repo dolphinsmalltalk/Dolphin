@@ -2,9 +2,9 @@
 
 Object subclass: #InputState
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
-	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
+	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: 'maxIdleSleep'!
+	classInstanceVariableNames: ''!
 InputState guid: (GUID fromString: '{87b4c494-026e-11d3-9fd7-00a0cc3e4a32}')!
 InputState comment: '<InputState> is a singleton responsible for managing the windows message loop and related <Process>es.
 
@@ -29,8 +29,7 @@ Class Variables:
 
 aboutToForkUI
 	"Private - A new main UI process is being started. Reset any global UI state."
-
-	Smalltalk at: #Cursor ifPresent: [:cursorClass | cursorClass reset]!
+!
 
 aboutToIdle
 	"The message loop is about to go to sleep - perform any actions necessary before that
@@ -153,17 +152,6 @@ forkMain
 		name: 'Main';
 		yourself!
 
-guiStartup
-	"Private - System startup has entered the second stage, and it is time to reinitialize the
-	user interaction subsystem for a GUI session."
-
-	| oldWindows |
-	oldWindows := windows.
-	lastWindow := nil.
-	windows := LookupTable new.
-	oldWindows notNil ifTrue: [oldWindows do: [:w | w onStartup]].
-	self createPostedActionWindow!
-
 hasVisibleWindows
 	"Private - Answer whether there are any visible windows belonging to the current session
 	still open."
@@ -195,7 +183,7 @@ idle
 	UserLibrary default 
 		msgWaitForMultipleObjectsEx: 1
 		pHandles: wakeupEvent
-		dwMilliseconds: self class maxIdleSleep
+		dwMilliseconds: MaxIdleSleep
 		dwWakeMask: queueStatusMask
 		dwFlags: Win32Constants.MWMO_ALERTABLE.
 	"Rather than use the return value from MsgWaitForMultipleObjectsEx() we call
@@ -254,11 +242,6 @@ inputSemaphore
 	"Private - Answer the queue empty/not-empty semaphore"
 
 	^inputSemaphore!
-
-isDolphinWindow: hWnd 
-	"Answer whether the window with handle, hWnd, is a Dolphin window or not."
-
-	^(self windowAt: hWnd ifAbsent: []) notNil!
 
 isInputAvailable
 	"Private - Answer whether there is any input waiting in the Windows message queue. Note that
@@ -555,45 +538,14 @@ stopIdleTimer: aView
 			critical!
 
 topLevelWindows
-	"Answer an unordered <Collection> containing all top level windows belonging to the Dolphin
-	process. Note that this will include windows which are not frame windows (e.g. tool tips),
-	and in a random order."
+	"Answer an unordered <Collection> containing all top level windows belonging to the Dolphin process."
 
-	| shells bEnabled desktop |
-	shells := Array writeStream: 20.
-	desktop := Smalltalk at: #View ifPresent: [:view | view desktop].
-	bEnabled := Processor enableAsyncEvents: false.
-	windows do: 
-			[:each | 
-			"This selection filter has been re-written for bug fix #2261. Previously
-			WS_CHILD views that were children of the desktop were not being included in
-			the answered collection. This resulted in the View Composer not having any
-			non-shell views it was editing being saved and restored across an image
-			restart."
-			(each isView and: [each parentView == desktop]) ifTrue: [shells nextPut: each]].
-	Processor enableAsyncEvents: bEnabled.
-	^shells contents!
+	^#()!
 
 uiIdle
-	"Private - Inform the receiver's registered windows that the UI is going idle so that they
-	can update visual elements accordingly - e.g. enable/disable toolbar buttons. The windows
-	can do other processing from their idle notification handlers, but it should be of very
-	short duration, or the responsiveness of the UI will be adversely affected."
+	"Private - The application is about to go idle."
 
-	self topLevelWindows do: 
-			[:each | 
-			self isInputAvailable 
-				ifTrue: 
-					[self inputSemaphore set.
-					^false	"stop enumerating"]
-				ifFalse: [self uiIdle: each]].
 	^true!
-
-uiIdle: aShellWindow 
-	"Private - If the argument is one of the receiver's currently visible windows, then request
-	it to update its UI."
-
-	(UserLibrary default isWindowVisible: aShellWindow asParameter) ifTrue: [aShellWindow enterIdle]!
 
 userInterruptSignal
 	"Answer the user interrupt <Signal>."
@@ -601,22 +553,6 @@ userInterruptSignal
 	UserInterruptSignal isNil 
 		ifTrue: [UserInterruptSignal := Signal resumableDescription: 'User Interrupt'].
 	^UserInterruptSignal!
-
-visibleWindows
-	"Private - Answer a collection of the visible windows belonging to the current session."
-
-	"Implementation Note: We use the bare metal UserLibrary functions to avoid any dependency on
-	the existing View classes. This might be important to those wanting to implement their own
-	window class hieararchy."
-
-	| hDesktop user |
-	user := UserLibrary default.
-	hDesktop := user getDesktopWindow.
-	^windows select: 
-			[:each | 
-			| hWnd |
-			hWnd := each asParameter.
-			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]!
 
 waitForInput: aBoolean 
 	"Private - The input queues are empty, so quiesce the main process to avoid consuming CPU
@@ -704,7 +640,6 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !InputState categoriesFor: #enterIdle!idling!private! !
 !InputState categoriesFor: #forkIdler!idling!private! !
 !InputState categoriesFor: #forkMain!message dispatching!private! !
-!InputState categoriesFor: #guiStartup!operations-startup!private! !
 !InputState categoriesFor: #hasVisibleWindows!private!testing! !
 !InputState categoriesFor: #idle!idling!private! !
 !InputState categoriesFor: #idleLoop!idling!private! !
@@ -712,7 +647,6 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !InputState categoriesFor: #idler!idling!private! !
 !InputState categoriesFor: #initializeFrom:!initializing!private! !
 !InputState categoriesFor: #inputSemaphore!accessing!private! !
-!InputState categoriesFor: #isDolphinWindow:!private!testing! !
 !InputState categoriesFor: #isInputAvailable!idling!private! !
 !InputState categoriesFor: #isInputReady:!message dispatching!private! !
 !InputState categoriesFor: #keepAlive!idling!private! !
@@ -739,9 +673,7 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 !InputState categoriesFor: #stopIdleTimer:!idling!private! !
 !InputState categoriesFor: #topLevelWindows!enumerating!public! !
 !InputState categoriesFor: #uiIdle!idling!private! !
-!InputState categoriesFor: #uiIdle:!idling!private! !
 !InputState categoriesFor: #userInterruptSignal!constants!public! !
-!InputState categoriesFor: #visibleWindows!private!testing! !
 !InputState categoriesFor: #waitForInput:!idling!private! !
 !InputState categoriesFor: #windowAt:ifAbsent:!accessing!public! !
 !InputState categoriesFor: #windowAt:put:!accessing!public! !
@@ -753,13 +685,13 @@ wndProc: hWnd message: message wParam: wParam lParam: lParam cookie: cookie
 initialize
 	SamplingInterval := 16384.
 	EnumHandlesDescriptor := ExternalDescriptor fromString: 'stdcall: dword handle dword'.
-	maxIdleSleep := 15000!
+	MaxIdleSleep := 15000!
 
 maxIdleSleep
-	^maxIdleSleep!
+	^MaxIdleSleep!
 
 maxIdleSleep: aSmallInteger 
-	maxIdleSleep := aSmallInteger!
+	MaxIdleSleep := aSmallInteger!
 
 newFromOld: anInputState 
 	^(self new)

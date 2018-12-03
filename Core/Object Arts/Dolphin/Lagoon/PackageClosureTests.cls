@@ -10,14 +10,14 @@ PackageClosureTests comment: ''!
 !PackageClosureTests categoriesForClass!Unclassified! !
 !PackageClosureTests methodsFor!
 
-basePackageUnimplemented
-	"Private - Ideally the set of missing selectors would be empty, but due to some mispackaging and less than ideal code structuring in some cases, there are some selectors sent on code paths that should not be executed:
-		- desktop, parentView - sent by InputState topLevelWindows, but only if there any Views, which there will not be if the MVP base package is not present (which defines these methods)
-		- initializeLegacyResources, loadLegacyPAC: - sent by the legacy package loader code
-	
-	To explore the dependencies in detail, open a package browser on the Dolphin package, then run the Browse/Unimplemented Messages command."
+consoleAppUnimplemented
+	"Private - Expected missing selectors in a console app with the image stripper (which actually causes all of these)
+		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
+		- instVars, viewClass - Sent to STBViewProxy instances built when reading view resources, but only when deploying GUI apps (which will prevent STBViewProxy being removed)
+		- recompileDefinition - sent before the development package which defines it is unloaded
+		- setWindowULong:&c - sent to subclass the application deployment progress dialog, before any packages are unloaded"
 
-	^#(#desktop #initializeLegacyResources #loadLegacyPAC: #parentView)!
+	^#(#defaultSessionManagerClass #instVars #recompileDefinition #setWindowULong:nIndex:dwNewLong: #viewClass)!
 
 environmentForPackageClosure: aCollectionOfPackages
 	| closure |
@@ -28,48 +28,44 @@ environmentForPackageClosure: aCollectionOfPackages
 			closure addAll: each allPrerequisites].
 	^BrowserEnvironment new forPackages: closure!
 
-imageStripperUnimplemented
-	"Private - Expected missing selectors caused by the image stripper package alone
-		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
-		- instVars, viewClass - Sent to STBViewProxy instances built when reading view resources, but only when deploying GUI apps (which will prevent STBViewProxy being removed)
-		- recompileDefinition - sent before the development package which defines it is unloaded
-		- setWindowULong:&c - sent to subclass the application deployment progress dialog, before any packages are unloaded"
-
-	^#(#defaultSessionManagerClass #instVars #recompileDefinition #setWindowULong:nIndex:dwNewLong: #viewClass)!
+simpleGuiAppUnimplementedMessages
+	^#(#createThumbnailExtent:mask: #defaultSessionManagerClass #recompileDefinition #ttmRelayEvent:)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log."
 
 	self verifyPackageClosure: {CommandLineHelloWorld owningPackage. ImageStripper owningPackage}
-		missing: self basePackageUnimplemented , self imageStripperUnimplemented!
+		missing: self consoleAppUnimplemented!
 
 testHelloWorld
 	"Tests predicted unimplemented messages of a minimal GUI application.
 
 	Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods.In addition to the base package missing methods, the following methods are missing:
-		- #createThumbnailExtent:mask:
+		- #createThumbnailExtent:mask: - sent only when GDI+ is loaded (guarded by a respondsTo: check)
 		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
 		- recompileDefinition - sent from base package, but before the development package which defines it is unloaded
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
 
 	self verifyPackageClosure: {ImageStripper owningPackage. HelloWorld owningPackage}
-		missing: #(#createThumbnailExtent:mask: #defaultSessionManagerClass #initializeLegacyResources #loadLegacyPAC: #recompileDefinition #ttmRelayEvent:)!
+		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
 	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods. In addition to the majority of the base package missing methods, the following additional methods are missing:
-		- createThumbnailExtent:mask: - send by View>>addToImageList:extent:, but only if understood.
+		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood.
 		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
 		- recompileDefinition - sent from base package before the development package which defines it is unloaded
 		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
 
 	self verifyPackageClosure: {Notepad owningPackage. ImageStripper owningPackage}
-		missing: #(#createThumbnailExtent:mask: #defaultSessionManagerClass #initializeLegacyResources #loadLegacyPAC: #recompileDefinition #ttmRelayEvent:)!
+		missing: self simpleGuiAppUnimplementedMessages!
 
 testSystemPackage
 	| aPackage |
 	aPackage := Object owningPackage.
+	"The base package should have no prerequisites"
 	self assert: aPackage prerequisiteNames asArray equals: #().
-	self verifyPackageClosure: {aPackage} missing: self basePackageUnimplemented!
+	"There should be no undefined messages in the base package"
+	self verifyPackageClosure: {aPackage} missing: #()!
 
 verifyPackageClosure: aCollectionOfPackages missing: aCollectionOfSymbols
 	| missing env |
@@ -77,9 +73,9 @@ verifyPackageClosure: aCollectionOfPackages missing: aCollectionOfSymbols
 	missing := Smalltalk developmentSystem unimplementedSelectorsIn: env.
 	"Use symmetric  difference, as we also want to fix up the test if some missing message is fixed."
 	self assert: (missing symmetricDifference: aCollectionOfSymbols) asArray sort equals: #()! !
-!PackageClosureTests categoriesFor: #basePackageUnimplemented!constants!private! !
+!PackageClosureTests categoriesFor: #consoleAppUnimplemented!constants!private! !
 !PackageClosureTests categoriesFor: #environmentForPackageClosure:!helpers!private! !
-!PackageClosureTests categoriesFor: #imageStripperUnimplemented!constants!private! !
+!PackageClosureTests categoriesFor: #simpleGuiAppUnimplementedMessages!constants!private! !
 !PackageClosureTests categoriesFor: #testCommandLineHelloWorld!public!unit tests! !
 !PackageClosureTests categoriesFor: #testHelloWorld!public!unit tests! !
 !PackageClosureTests categoriesFor: #testNotepad!public!unit tests! !

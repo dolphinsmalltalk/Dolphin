@@ -76,6 +76,9 @@ commandLineParser
 		options: 'hq';
 		yourself!
 
+inputStateClass
+	^GuiInputState!
+
 isUnattended
 	"Answer whether the session was started with a unattended flag"
 
@@ -174,6 +177,7 @@ windowSystemStartup
 !GUISessionManager categoriesFor: #clearSessionState!operations!public! !
 !GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
 !GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
+!GUISessionManager categoriesFor: #inputStateClass!constants!private! !
 !GUISessionManager categoriesFor: #isUnattended!public!testing! !
 !GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
 !GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !

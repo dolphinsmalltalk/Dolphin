@@ -1810,14 +1810,6 @@ zeroMemory: pvDest length: cBytes
 
 !KernelLibrary class methodsFor!
 
-clear
-	"Private - Clear down cached external function addresses and any default 
-	instances of the receiver from previous runs. etc."
-
-	super clear.
-	Smalltalk at: #OSVERSIONINFO ifPresent: [:osver | osver clear]
-!
-
 fileName
 	"Answer the host system file name of the external library which
 	the receiver represents."
@@ -1831,7 +1823,6 @@ open
 	VM object registry on startup."
 
 	^self fromHandle: VMLibrary default kernelHandle! !
-!KernelLibrary class categoriesFor: #clear!initializing!private! !
 !KernelLibrary class categoriesFor: #fileName!constants!public! !
 !KernelLibrary class categoriesFor: #open!instance creation!public! !
 

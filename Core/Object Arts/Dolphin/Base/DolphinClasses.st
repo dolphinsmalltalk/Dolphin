@@ -162,9 +162,9 @@ Object variableByteSubclass: #GUID
 	classInstanceVariableNames: ''!
 Object subclass: #InputState
 	instanceVariableNames: 'inputSemaphore idler idleTimer main windows deferredActions lastWindow wakeupEvent msgWindow queueStatusMask'
-	classVariableNames: 'EnumHandlesDescriptor SamplingInterval UserInterruptSignal'
+	classVariableNames: 'EnumHandlesDescriptor MaxIdleSleep SamplingInterval UserInterruptSignal'
 	poolDictionaries: 'Win32Constants'
-	classInstanceVariableNames: 'maxIdleSleep'!
+	classInstanceVariableNames: ''!
 Object subclass: #InstructionInterpreter
 	instanceVariableNames: 'dispatcher'
 	classVariableNames: ''
@@ -232,7 +232,7 @@ Object subclass: #ObjectRegistry
 	classInstanceVariableNames: ''!
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties'
-	classVariableNames: '_Uncommitted ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
+	classVariableNames: '_Uncommitted BinaryPacLoader ChangedIcon CheckTimestamps ClashSignal SourcePackageIcon UnsaveableSignal'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Object subclass: #PackageManager

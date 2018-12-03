@@ -152,7 +152,7 @@ reloadBootPackages
 		collect: [:each | srcMgr fileIn: (File relativePathOf: each value fileOutName to: imageDir)].
 	Notification signal: 'Updating ClassBuilder...'.
 	self fileInClass: ClassBuilder.
-	classesBefore := basePackage classNames.
+	classesBefore := (Package manager allPackagedClasses collect: [:each | each name]) asSet.
 	Notification signal: 'Reloading BCL class definitions...'.
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: nil.

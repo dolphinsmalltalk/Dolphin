@@ -425,7 +425,8 @@ inputState: anInputState
 	"Private - Set the receiver's InputState.
 	WARNING: Do this very carefully, or the system will crash."
 
-	inputState := anInputState!
+	inputState := anInputState.
+	inputState becomeA: self inputStateClass!
 
 inputStateClass
 	^InputState!

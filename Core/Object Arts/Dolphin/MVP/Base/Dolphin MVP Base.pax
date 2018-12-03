@@ -107,6 +107,7 @@ package classNames
 	add: #Grid;
 	add: #GridLayout;
 	add: #GroupBox;
+	add: #GuiInputState;
 	add: #GUISessionManager;
 	add: #HistoryList;
 	add: #HTMLHelpLibrary;
@@ -217,11 +218,6 @@ package classNames
 package methodNames
 	add: #AnsiString -> #copyToClipboard;
 	add: #ClassDescription -> #defaultIcon;
-	add: #InputState -> #allTopLevelWindowHandlesDo:;
-	add: #InputState -> #getLastInputInfo;
-	add: #InputState -> #topLevelWindowHandlesDo:;
-	add: #InputState -> #topLevelWindowsInZOrder;
-	add: #InputState -> #userSessionIdleMs;
 	add: #KernelLibrary -> #getConsoleWindow;
 	add: #MessageSend -> #queryCommand:;
 	add: #Object -> #addToImageList:mask:;
@@ -402,15 +398,14 @@ package globalAliases: (Set new
 	add: #SIZEL;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: 'Dolphin Basic Geometry';
-	add: '..\..\Base\Dolphin Command-line Parser';
-	add: '..\..\Base\Dolphin Conformant Array Fields';
-	add: '..\..\System\Filer\Dolphin Literal Filer';
-	add: '..\Type Converters\Dolphin Type Converters';
-	add: '..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Basic Geometry'
+	'..\..\Base\Dolphin Command-line Parser'
+	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\..\System\Filer\Dolphin Literal Filer'
+	'..\Type Converters\Dolphin Type Converters'
+	'..\Models\Value\Dolphin Value Models').
 
 package!
 
@@ -1081,6 +1076,11 @@ ImageManager subclass: #IconImageManager
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+InputState subclass: #GuiInputState
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Interactor subclass: #CapturingInteractor
 	instanceVariableNames: 'oldInteractor stateFlags'
 	classVariableNames: 'HotMask LeftDownMask MiddleDownMask RightDownMask'
@@ -1326,62 +1326,6 @@ icon
 
 	^##(self) defaultIcon! !
 !ConsoleSessionManager class categoriesFor: #icon!constants!development!public! !
-
-!InputState methodsFor!
-
-allTopLevelWindowHandlesDo: aMonadicValuable
-	| callback answer |
-	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
-	answer := UserLibrary default enumWindows: callback asParameter lParam: 0.
-	callback free.
-	^answer!
-
-getLastInputInfo
-	| lastInputInfo |
-	lastInputInfo := LASTINPUTINFO new.
-	^(UserLibrary default getLastInputInfo: lastInputInfo)
-		ifTrue: [lastInputInfo dwTime]
-		ifFalse: [UserLibrary default systemError]!
-
-topLevelWindowHandlesDo: aMonadicValuable
-	| callback answer |
-	callback := ExternalCallback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
-				descriptor: (ExternalDescriptor returnType: 'bool' argumentTypes: 'ExternalHandle uintptr').
-	answer := UserLibrary default enumThreadWindows: (KernelLibrary default getCurrentThreadId) lpfn: callback asParameter lParam: 0.
-	callback free.
-	^answer!
-
-topLevelWindowsInZOrder
-	"Answer a <sequencedReadableCollection> containing all top level windows belonging to the
-	Dolphin process in the correct z-order (i.e. the topmost window is first). Note that this
-	will include windows which are not frame windows (e.g. tool tips), and furthermore it is not
-	lightening fast. In fact it is more than an order of magnitude slower than #topLevelWindows,
-	which answers the same collection of windows in a random order."
-
-	| views |
-	views := OrderedCollection new: 20.
-	self topLevelWindowHandlesDo: 
-			[:hwnd |
-			(self windowAt: hwnd ifAbsent: []) ifNotNil: [:view | views addLast: view].
-			true].
-	^views!
-
-userSessionIdleMs
-	"Answer the <integer> number of milliseconds that the user session has been idle.
-		(Delay forSeconds: 1) wait. SessionManager inputState userSessionIdleMs.
-	"
-
-	| currentTime lastInputTime |
-	currentTime := KernelLibrary default getTickCount.
-	lastInputTime := self getLastInputInfo.
-	currentTime < lastInputTime ifTrue: [^currentTime].	"In case of 49.7-day wrap, we understate the idle time"
-	^currentTime - lastInputTime! !
-!InputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
-!InputState categoriesFor: #getLastInputInfo!helpers!private! !
-!InputState categoriesFor: #topLevelWindowHandlesDo:!enumerating!private! !
-!InputState categoriesFor: #topLevelWindowsInZOrder!enumerating!public! !
-!InputState categoriesFor: #userSessionIdleMs!idling!public! !
 
 !KernelLibrary methodsFor!
 
