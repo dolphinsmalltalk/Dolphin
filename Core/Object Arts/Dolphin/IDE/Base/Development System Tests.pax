@@ -32,28 +32,27 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Community Edition\ActiveX Automation Development';
-	add: '..\..\..\Samples\MVP\Animal Game\Animals';
-	add: '..\..\System\Continuations\Continuation Tests';
-	add: 'Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base Tests';
-	add: '..\..\System\Base64\Dolphin Base64';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Registry\Dolphin Registry Access';
-	add: '..\..\Lagoon\Lagoon Image Stripper';
-	add: '..\..\ActiveX\COM\OLE COM';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint';
-	add: '..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests';
-	add: '..\..\System\Compiler\Smalltalk Parser';
-	add: '..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit';
-	add: '..\..\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'..\Community Edition\ActiveX Automation Development'
+	'..\..\..\Samples\MVP\Animal Game\Animals'
+	'..\..\System\Continuations\Continuation Tests'
+	'Development System'
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
+	'..\..\System\Base64\Dolphin Base64'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\Registry\Dolphin Registry Access'
+	'..\..\Lagoon\Lagoon Image Stripper'
+	'..\..\ActiveX\COM\OLE COM'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
+	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\ActiveX\Components\XML DOM\XML DOM').
 
 package!
 

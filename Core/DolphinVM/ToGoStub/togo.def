@@ -82,7 +82,9 @@ uncompress
 	memcmp
 	memcpy_s
 	memset
+	rand
 	setlocale
+	srand
 	strcat_s
 	strcmp
 	strcspn
