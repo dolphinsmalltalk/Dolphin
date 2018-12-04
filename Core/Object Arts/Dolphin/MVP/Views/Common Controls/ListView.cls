@@ -1985,7 +1985,7 @@ selectIndex: anInteger set: aBoolean
 	aBoolean ifTrue: [anLvItem dwState: mask].
 	self lvmSetItem: anInteger - 1 state: anLvItem!
 
-selections: aCollection ifAbsent: aNiladicOrMonadicValuable 
+selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	"Select the first occurrences of the specified collection of <Object>s in the receiver and
 	answer the new selection. If any of the elements of the collection are not present in the
 	receiver's list, then answer the result of evaluating the <monadicValuable>,
@@ -1996,14 +1996,9 @@ selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	missing := OrderedCollection new.
 	indices := self handlesFromObjects: aCollection whenAbsent: [:e | missing addLast: e].
 	self setSelectionsByIndex: indices.
-	^missing isEmpty 
-		ifTrue: [aCollection]
-		ifFalse: 
-			[aNiladicOrMonadicValuable argumentCount == 1 
-				ifTrue: [aNiladicOrMonadicValuable value: missing]
-				ifFalse: [aNiladicOrMonadicValuable value]]!
+	^missing isEmpty ifTrue: [aCollection] ifFalse: [aNiladicOrMonadicValuable cull: missing]!
 
-selectionsByIndex: aCollection ifAbsent: exceptionHandler 
+selectionsByIndex: aCollection ifAbsent: exceptionHandler
 	"Select the objects identified by the <collection> of <integer> indices, indices, in the
 	receiver. If any of the indices are out of bounds, then evaluate the <monadicValuable>,
 	exceptionHandler, passing it a <collection> of the offending indices. For backwards
@@ -2015,11 +2010,8 @@ selectionsByIndex: aCollection ifAbsent: exceptionHandler
 	size := self size.
 	inRange := aCollection select: [:i | i between: 1 and: size].
 	self setSelectionsByIndex: inRange.
-	^aCollection size ~= inRange size 
-		ifTrue: 
-			[exceptionHandler argumentCount == 1 
-				ifTrue: [exceptionHandler value: (aCollection difference: inRange)]
-				ifFalse: [exceptionHandler value]]
+	^aCollection size ~= inRange size
+		ifTrue: [exceptionHandler cull: (aCollection difference: inRange)]
 		ifFalse: [inRange]!
 
 setColumnIcon: anImage atIndex: anInteger
