@@ -127,16 +127,18 @@ clearSelection
 
 	self perform: self deleteItCommand!
 
-commonFolder: aCollectionOfPackages 
+commonFolder: aCollectionOfPackages
 	| commonPrefix |
-	commonPrefix := nil.
-	aCollectionOfPackages do: 
-			[:each | 
-			commonPrefix := commonPrefix 
+	aCollectionOfPackages isEmpty ifTrue: [^nil].
+	commonPrefix := aCollectionOfPackages inject: nil
+				into: 
+					[:prefix :each |
+					prefix
 						ifNil: [File splitPathFrom: each packagePathname]
-						ifNotNil: [File commonPrefixOf: commonPrefix and: each packagePathname]].
-	^(commonPrefix notNil and: [commonPrefix notEmpty]) 
-		ifTrue: [self folderClass pathname: (File appendPathDelimiter: commonPrefix)]!
+						ifNotNil: [File commonPrefixOf: prefix and: each packagePathname]].
+	^commonPrefix isEmpty
+		ifTrue: [self folderClass root]
+		ifFalse: [self folderClass pathname: (File appendPathDelimiter: commonPrefix)]!
 
 confirmUninstall: aPackage 
 	"Private - If the <Package> argument has any dependents, then prompt the user to confirm
@@ -753,8 +755,7 @@ resetForItem: aPackage
 resetForItems: aCollectionOfPackages 
 	aCollectionOfPackages notEmpty 
 		ifTrue: 
-			[filterPresenter selection: (self commonFolder: aCollectionOfPackages).
-			self selections: aCollectionOfPackages]!
+			[filterPresenter selection: (self commonFolder: aCollectionOfPackages)]!
 
 rootFolder
 	^self folderClass root!
@@ -889,7 +890,10 @@ sourceControl
 	^Package manager sourceControl!
 
 synchronizeFilter
-	self resetForItems: self selections!
+	| packages |
+	packages := self selections.
+	self resetForItems: packages.
+	self selections: packages!
 
 systemModel
 	"Private - Answer the development system model."
