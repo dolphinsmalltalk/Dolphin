@@ -195,13 +195,16 @@ critical
 	oldState := Processor enableAsyncEvents: false.
 	[self value] ensure: [Processor enableAsyncEvents: oldState]!
 
-cull: arg1 
-	^self argumentCount = 0 ifTrue: [self value] ifFalse: [self value: arg1]!
+cull: arg1
+	<primitive: 81>
+	^self argumentCount == 0 ifTrue: [self value] ifFalse: [self value: arg1]!
 
-cull: arg1 cull: arg2 
+cull: arg1 cull: arg2
+	<primitive: 81>
 	^self argumentCount < 2 ifTrue: [self cull: arg1] ifFalse: [self value: arg1 value: arg2]!
 
 cull: arg1 cull: arg2 cull: arg3 
+	<primitive: 81>
 	^self argumentCount < 3 
 		ifTrue: [self cull: arg1 cull: arg2]
 		ifFalse: 
@@ -211,6 +214,7 @@ cull: arg1 cull: arg2 cull: arg3
 				value: arg3]!
 
 cull: arg1 cull: arg2 cull: arg3 cull: arg4 
+	<primitive: 81>
 	^self argumentCount < 4 
 		ifTrue: 
 			[self 

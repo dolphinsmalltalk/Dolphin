@@ -823,57 +823,57 @@ promptToSaveChanges
 				oldSelection: method;
 				yourself)!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into the 
 	<CommandQuery> argument."
 
 	| selector method methods |
 	selector := aCommandQuery commandSymbol.
 	#browseIt == selector ifTrue: [selector := self browseItCommand].
-	#clearSelection == selector 
+	#clearSelection == selector
 		ifTrue: 
 			[selector := self deleteItCommand.
-			selector isNil 
+			selector isNil
 				ifTrue: 
 					[aCommandQuery isEnabled: false.
 					^true]].
-	#newMethod == selector 
+	#newMethod == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: false.
 			^false].	"Can't add new methods as don't know class"
-	(#(#definitionsMenu #referencesMenu) identityIncludes: selector) 
+	(#(#definitionsMenu #referencesMenu) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
 	methods := self selections.
 	method := methods size = 1 ifTrue: [methods first].
-	#browseMethodInheritanceChain == selector 
+	#browseMethodInheritanceChain == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (method notNil and: [method isOverride]).
 			^true].
-	(#(#inspectIt #browsePackages) identityIncludes: selector) 
+	(#(#inspectIt #browsePackages) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: methods notEmpty.
 			^true].
-	(#(#browseMessages #browseDefinitions #browseReferences #browseHierarchy #browsePackages) 
-		identityIncludes: selector) 
+	(#(#browseMessages #browseDefinitions #browseReferences #browseHierarchy #browsePackages)
+		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: method notNil.
 				^true].
-	#browseSystem == selector 
+	#browseSystem == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: method notNil.
 			^true].
-	(#(#addCategoryMenu #removeCategoryMenu #categorizeMethods #methodPackage #removeMethod) 
-		identityIncludes: selector) 
+	(#(#addCategoryMenu #removeCategoryMenu #categorizeMethods #methodPackage #removeMethod)
+		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (methods notEmpty 
+				[aCommandQuery isEnabled: (methods notEmpty
 							and: [methods allSatisfy: [:each | parentPresenter isEditableMethod: each]]).
 				^true].
-	#browseMethodClasses == selector 
+	#browseMethodClasses == selector
 		ifTrue: 
 			[| text |
-			text := method isNil 
+			text := method isNil
 						ifTrue: 
 							[aCommandQuery isEnabled: methods notEmpty.
 							'Classes']
@@ -882,27 +882,28 @@ queryCommand: aCommandQuery
 							method methodClass name].
 			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: text).
 			^true].
-	#browseMethodPackages == selector 
+	#browseMethodPackages == selector
 		ifTrue: 
-			[| name packages |
+			[| packages |
 			packages := (methods collect: [:each | each owningPackage]) asSet.
-			name := packages size = 1 ifTrue: [packages anyOne name printString] ifFalse: ['Packages'].
 			aCommandQuery isEnabled: packages notEmpty.
-			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWith: name).
+			aCommandQuery text: (packages size = 1
+						ifTrue: [aCommandQuery commandDescription menuText expandMacrosWith: packages anyOne name printString]
+						ifFalse: ['Packages']).
 			^true].
 	"We want find next to work, even when the source pane does not have focus"
-	#findNext == selector 
+	#findNext == selector
 		ifTrue: 
-			[(method notNil and: [sourcePresenter findDetails notNil]) 
+			[(method notNil and: [sourcePresenter findDetails notNil])
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
 						receiver: sourcePresenter view.
 					^true]].
-	#togglePrivate == selector 
+	#togglePrivate == selector
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: (methods notEmpty 
+				isEnabled: (methods notEmpty
 							and: [methods allSatisfy: [:each | parentPresenter isEditableMethod: each]]);
 				isChecked: (methods notEmpty and: [methods allSatisfy: [:each | each isPrivate]]).
 			^true].

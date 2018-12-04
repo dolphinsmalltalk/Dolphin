@@ -583,6 +583,7 @@ commonPrefixOf: pathString1 and: pathString2
 				pathCommonPrefix: path1
 				pszFile2: path2
 				achPath: nil.
+	len == 0 ifTrue: [^''].
 	prefix := Utf16String newFixed: len.
 	ShlwapiLibrary default
 		pathCommonPrefix: path1

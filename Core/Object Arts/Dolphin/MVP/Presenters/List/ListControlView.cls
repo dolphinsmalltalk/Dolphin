@@ -397,7 +397,7 @@ selection: newSelection ifAbsent: exceptionHandler
 	<niladicValuable>, exceptionHandler."
 
 	^(self handleFromObject: newSelection ifAbsent: []) 
-		ifNil: [exceptionHandler value]
+		ifNil: [exceptionHandler cull: newSelection]
 		ifNotNil: 
 			[:index | 
 			self selectionByIndex: index.
@@ -469,12 +469,11 @@ selections
 		do: [:each | (self objectFromHandle: each ifAbsent: []) ifNotNil: [:object | answer nextPut: object]].
 	^answer contents!
 
-selections: aSequencedReadableCollection 
+selections: aSequencedReadableCollection
 	"Set the objects selected in the receiver to be the elements of the <sequencedReadableCollection> argument.
 	If any of those elements are not present in the receiver, raise a NotFoundError."
 
-	^self selections: aSequencedReadableCollection
-		ifAbsent: [self errorNotFound: aSequencedReadableCollection]!
+	^self selections: aSequencedReadableCollection ifAbsent: [:missing | self errorNotFound: missing]!
 
 selections: newSelection ifAbsent: exceptionHandler 
 	"Select the first occurrence of the first <Object> in the <sequencedReadableCollection>, 
