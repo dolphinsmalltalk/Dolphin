@@ -897,6 +897,7 @@ resolutionScaledBy: scale
 	scale. Note that the placement (position and extent) of the receiver has already been scaled
 	in #restorePlacement:resolution:."
 
+	indentSeparation isNil ifTrue: [^self].
 	indentSeparation := (indentSeparation * scale x) truncated.
 
 
