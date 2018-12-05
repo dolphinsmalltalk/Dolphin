@@ -96,8 +96,15 @@ encodedSizeOf: anObject
 	^self subclassResponsibility!
 
 encodeOn: aWriteStream next: sizeInteger putAll: aSequenceableCollection startingAt: startInteger
-	startInteger to: startInteger + sizeInteger - 1
-		do: [:i | self encodeOn: aWriteStream put: (aSequenceableCollection at: i)].
+	aSequenceableCollection class == self class
+		ifTrue: 
+			[aWriteStream
+				basicNext: sizeInteger
+				putAll: aSequenceableCollection
+				startingAt: startInteger]
+		ifFalse: 
+			[startInteger to: startInteger + sizeInteger - 1
+				do: [:i | self encodeOn: aWriteStream put: (aSequenceableCollection at: i)]].
 	^aSequenceableCollection!
 
 growSize

@@ -73,6 +73,9 @@ peekFor: anObject
 					[crtlib ungetc: ch stream: stream.
 					false]]!
 
+translationMode
+	^CRTConstants._O_BINARY!
+
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -87,5 +90,19 @@ upToEnd
 !StdioBinaryFileStream categoriesFor: #nextLine!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #peek!accessing!public! !
 !StdioBinaryFileStream categoriesFor: #peekFor:!accessing!public! !
+!StdioBinaryFileStream categoriesFor: #translationMode!constants!private! !
 !StdioBinaryFileStream categoriesFor: #upToEnd!accessing!public! !
+
+!StdioBinaryFileStream class methodsFor!
+
+encodingMode
+	^$b!
+
+encodingType
+	"Answer the standard encoding to use when attaching streams of this class. 
+	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
+
+	^#binary! !
+!StdioBinaryFileStream class categoriesFor: #encodingMode!constants!private! !
+!StdioBinaryFileStream class categoriesFor: #encodingType!constants!public! !
 

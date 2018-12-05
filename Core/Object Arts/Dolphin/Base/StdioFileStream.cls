@@ -365,7 +365,9 @@ setStream: anExternalAddress name: aString mode: modeString
 	(crtlib _isatty: fd)
 		ifTrue: 
 			[crtlib := CRTLibrary nonblocking.
-			flags := flags bitOr: DeviceMask]!
+			flags := flags bitOr: DeviceMask].
+	(crtlib _setmode: fd mode: self translationMode) < 0
+		ifTrue: [self error: 'Unable to set translation mode ' , self translationMode printString]!
 
 setToEnd
 	"Set the file pointer to the end of the file."
@@ -402,6 +404,9 @@ tab: anInteger
 	"Append the specified number of tabs to the receiver."
 
 	anInteger timesRepeat: [self tab]!
+
+translationMode
+	^CRTConstants._O_TEXT!
 
 upTo: anObject
 	"Answer a collection of elements starting with the next element accessed by the receiver,
@@ -459,6 +464,7 @@ upTo: anObject
 !StdioFileStream categoriesFor: #space!constants!public! !
 !StdioFileStream categoriesFor: #tab!accessing!public! !
 !StdioFileStream categoriesFor: #tab:!accessing!public! !
+!StdioFileStream categoriesFor: #translationMode!constants!private! !
 !StdioFileStream categoriesFor: #upTo:!accessing!public! !
 
 StdioFileStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
@@ -467,16 +473,24 @@ StdioFileStream methodProtocol: #readFileStream attributes: #(#ansi #readOnly) s
 
 !StdioFileStream class methodsFor!
 
+attach: anExternalHandle toFd: fdInteger mode: modeSymbol
+	"Answer a new sub-instance of the receiver representing a text stdio stream with the file descriptor, fdInteger, attached to the OS file handle, anExternalHandle, The modeSymbol argument identifies the manner in which the file is opened, #read for a read-only stream (e.g. stdin), or any other mode integer for a writable stream."
+
+	^self basicNew
+		attach: anExternalHandle
+		toFd: fdInteger
+		mode: (self attachMode: modeSymbol)!
+
 attach: anExternalHandle toFd: fdInteger mode: modeSymbol type: aSymbol
 	"Answer a new instance of the receiver representing a text stdio stream with the file
 	descriptor, fdInteger, attached to the OS file handle, anExternalHandle, The <symbol>
 	argument identifies the manner in which the file is opened, #read for a read-only stream
 	(e.g. stdin), or any other mode integer for a writable stream."
 
-	^(self classForEncoding: aSymbol) basicNew
+	^(self classForEncoding: aSymbol)
 		attach: anExternalHandle
 		toFd: fdInteger
-		mode: (self attachMode: modeSymbol)!
+		mode: modeSymbol!
 
 attachMode: modeSymbol
 	^String with: (modeSymbol == #read ifTrue: [$r] ifFalse: [$w]) with: self encodingMode!
@@ -485,23 +499,27 @@ classForEncoding: typeSymbol
 	^(ClassForEncoding lookup: typeSymbol) ifNil: [self error: 'Unsupported encoding ' , typeSymbol]!
 
 encodingMode
-	^$b!
+	^self subclassResponsibility!
+
+encodingType
+	"Answer the standard encoding to use when attaching streams of this class. 
+	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
+
+	^#text!
 
 fromHandle: anExternalHandle
-	"Answer a new instance of the receiver on the specified stdio FILE pointer,
+	"Answer a new sub-instance of the receiver on the specified stdio FILE pointer,
 	assumed to be in text mode."
 
-	#todo "Can we determine the encoding?".
 	^self
 		newStream: anExternalHandle
 		name: nil
-		type: #text
+		type: self encodingType
 		mode: 'w+'!
 
 initialize
 	self addClassConstant: 'ReadOnlyMask' value: 16r01.
 	self addClassConstant: 'DeviceMask' value: 16r40.
-	self addClassConstant: 'EncodingMask' value: 16r78.
 	self addClassConstant: 'ClassForEncoding'
 		value: (IdentityDictionary new
 				at: #binary put: StdioBinaryFileStream;
@@ -597,6 +615,9 @@ open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	stream open: path mode: mode.
 	modeSymbol == #append ifTrue: [stream setToEnd].
 	^stream!
+
+openFd: fd mode: mode
+	^self fromHandle: (CRTLibrary default _fdopen: fd mode: (self attachMode: mode))!
 
 read: aString 
 	"Answer a new text mode instance of the receiver whose future sequence values consist
@@ -698,10 +719,12 @@ write: aString type: aSymbol
 		mode: #truncate
 		check: false
 		type: aSymbol! !
+!StdioFileStream class categoriesFor: #attach:toFd:mode:!instance creation!public! !
 !StdioFileStream class categoriesFor: #attach:toFd:mode:type:!instance creation!public! !
 !StdioFileStream class categoriesFor: #attachMode:!helpers!private! !
 !StdioFileStream class categoriesFor: #classForEncoding:!helpers!private! !
 !StdioFileStream class categoriesFor: #encodingMode!constants!private! !
+!StdioFileStream class categoriesFor: #encodingType!constants!public! !
 !StdioFileStream class categoriesFor: #fromHandle:!instance creation!public! !
 !StdioFileStream class categoriesFor: #initialize!development!initializing!public! !
 !StdioFileStream class categoriesFor: #newStream:name:type:mode:!instance creation!private! !
@@ -709,6 +732,7 @@ write: aString type: aSymbol
 !StdioFileStream class categoriesFor: #on:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #on:type:!instance creation!public! !
 !StdioFileStream class categoriesFor: #open:mode:check:type:!instance creation!private! !
+!StdioFileStream class categoriesFor: #openFd:mode:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:text:!instance creation!public! !
 !StdioFileStream class categoriesFor: #read:type:!instance creation!public! !
