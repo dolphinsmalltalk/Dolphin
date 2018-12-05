@@ -225,6 +225,12 @@ comShutdown
 	self outer notNull ifTrue: [self outer free].
 	Smalltalk at: #COMInterface ifPresent: [:c | c onExit]!
 
+consoleStreamClass
+	"Answer the class of stdio stream to use for stdin, stdout, and/or stderr when connected to the console.
+	UTF-16 streams are more efficient when reading/writing from the console than UTF-8, as they minimize translations between encodings (the CRT functions and underlying Windows APIs use wide characters)."
+
+	^StdioUtf16FileStream!
+
 createInputState
 	inputState := self inputStateClass newFromOld: inputState!
 
@@ -287,6 +293,11 @@ exit: anInteger
 	"Request to close down the session with the specified exit code (user may cancel)."
 
 	self inputState postQuit: anInteger!
+
+fileStreamClass
+	"Answer the class of stdio stream to use for stdin, stdout, stderr when redirected to a file or pipe, as opposed to being connected to the console. We assume UTF-8 should be read/written, i.e. if stdin is redirected to a file it is assumed the file is UTF-8 encoded, and likewise any output to a redirected stdout/stderr will be written in UTF-8. This may not be correct for any particular app or usage, so override if necessary."
+
+	^StdioUtf8FileStream!
 
 forkMain
 	"Start a new main process appropriate for the session.
@@ -720,9 +731,7 @@ openConsole
 	^wasOpen!
 
 openConsoleStreams
-	"Private - Open the standard console I/O streams. Note that the actual C-runtime library
-	stdin/stdout/stderr streams will be correctly set up so that it is possible to use the CRT
-	stdio functions such as puts(), printf(), etc."
+	"Private - Open the standard console I/O streams. This sets up the actual C-runtime library stdin/stdout/stderr streams correctly so that it is possible to use the CRT stdio functions such as puts(), printf(), etc."
 
 	| kernel crt |
 	stdioStreams isNil ifFalse: [^self].
@@ -730,17 +739,18 @@ openConsoleStreams
 	crt := CRTLibrary default.
 	stdioStreams := (0 to: 2) collect: 
 					[:fd |
+					| mode |
+					mode := fd == 0 ifTrue: [#read] ifFalse: [#append].
 					(crt _get_osfhandle: fd) asSignedInteger < 0
 						ifTrue: 
-							["stdio file descriptor is not currently established"
-							StdioFileStream
+							["stdio file descriptor is not currently established, attach to the console handle"
+							self consoleStreamClass
 								attach: (kernel getStdHandle: STD_INPUT_HANDLE - fd)
 								toFd: fd
-								mode: (fd == 0 ifTrue: [#read] ifFalse: [#append])
-								type: #utf16le]
+								mode: mode]
 						ifFalse: 
 							["stdio file descriptor already initialized, e.g. because of pipe or redirection to a file"
-							StdioFileStream fromHandle: (crt _fdopen: fd mode: (fd == 0 ifTrue: ['rt'] ifFalse: ['wt']))]]!
+							self fileStreamClass openFd: fd mode: mode]]!
 
 openEventLog
 	"Private - Open the NT event log for writing, and answer a handle onto it that can be passed to the
@@ -1114,6 +1124,7 @@ windowsDirectory
 !SessionManager categoriesFor: #closeEventLog!operations-logging!private! !
 !SessionManager categoriesFor: #computerName!accessing!public! !
 !SessionManager categoriesFor: #comShutdown!operations-shutdown!private! !
+!SessionManager categoriesFor: #consoleStreamClass!constants!private! !
 !SessionManager categoriesFor: #createInputState!initializing!private! !
 !SessionManager categoriesFor: #createSentinel!operations-startup!private! !
 !SessionManager categoriesFor: #defaultResLibPath!constants!public! !
@@ -1124,6 +1135,7 @@ windowsDirectory
 !SessionManager categoriesFor: #eventLogSource!constants!public! !
 !SessionManager categoriesFor: #exit!must not strip!operations-shutdown!public! !
 !SessionManager categoriesFor: #exit:!operations-shutdown!public! !
+!SessionManager categoriesFor: #fileStreamClass!constants!private! !
 !SessionManager categoriesFor: #forkMain!operations!public! !
 !SessionManager categoriesFor: #free!public!realizing/unrealizing! !
 !SessionManager categoriesFor: #freeConsole!operations!private! !

@@ -50,6 +50,9 @@ size
 
 	^super size - offset!
 
+translationMode
+	^CRTConstants._O_U8TEXT!
+
 upToEnd
 	"Answer a collection consisting of the future sequence values of the receiver (i.e. from 
 	the current position to the end)."
@@ -60,5 +63,12 @@ upToEnd
 !StdioUtf8FileStream categoriesFor: #position!accessing!public! !
 !StdioUtf8FileStream categoriesFor: #position:!positioning!public! !
 !StdioUtf8FileStream categoriesFor: #size!accessing!public! !
+!StdioUtf8FileStream categoriesFor: #translationMode!constants!private! !
 !StdioUtf8FileStream categoriesFor: #upToEnd!accessing!public! !
+
+!StdioUtf8FileStream class methodsFor!
+
+encodingType
+	^#utf8! !
+!StdioUtf8FileStream class categoriesFor: #encodingType!constants!public! !
 

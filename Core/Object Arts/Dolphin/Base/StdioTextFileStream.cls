@@ -87,7 +87,7 @@ nextLine
 			^answer contents].
 	read := buf strlen.
 	answer
-		basicNext: read
+		next: read
 		putAll: buf
 		startingAt: 1.
 	read == (blockSize - 1)]

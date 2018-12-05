@@ -16,11 +16,13 @@ N.B.  You can safely press Ctrl+C to interrupt/terminate application when deploy
 !CommandLineHelloWorld methodsFor!
 
 main
-	"Implement the main body of the Headless Hello World application	
-	by printing that familiar greeting to the standard output stream."
+	"Implement the main body of the Headless Hello World application by printing that familiar
+	greeting to the standard output stream. Note that international characters are supported,
+	but you may need to change the console font in order to see them as the standard console
+	fonts have glyphs for only a limited range of code points."
 
 	self stdout 
-		nextPutAll: 'Hello World!!'; cr; flush.
+		nextPutAll: 'Hello World!! 你好'; cr; flush.
 	self stderr
 		nextPutAll: 'Press <Enter> to exit:'; flush.
 	self stdin nextLine! !

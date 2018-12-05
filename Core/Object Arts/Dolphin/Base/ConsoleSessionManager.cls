@@ -72,11 +72,15 @@ openConsoleStreams
 	In this case we attach to pre-existing C run-time library stdio streams, as they
 	will have been correctly set up by CRT library initialization."
 
-	| vm |
+	| vm crt |
 	stdioStreams isNil ifFalse: [^self].
 	"Note that all the stdio streams should be in text/translating mode"
 	vm := VMLibrary default.
-	stdioStreams := {vm stdin. vm stdout. vm stderr} collect: [:each | StdioFileStream fromHandle: each]!
+	crt := CRTLibrary default.
+	stdioStreams := {0 -> vm stdin. 1 -> vm stdout. 2 -> vm stderr} collect: 
+					[:each |
+					((crt _isatty: each key) ifTrue: [self consoleStreamClass] ifFalse: [self fileStreamClass])
+						fromHandle: each value]!
 
 registerConsoleCtrlHandler
 	#todo "Rather ironically, registering a console ctrl handler does not work very well in a console app any more.  The signal is delivered on a background thread, which the Dolphin VM will marshal across the to main 	thread by sending it via the message queue. In a typical console application that is not going idle, the  signal will not be received.

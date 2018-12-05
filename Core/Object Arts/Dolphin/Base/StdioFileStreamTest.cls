@@ -74,7 +74,7 @@ testCharacterTranslation
 testNextLineCrOnly
 	"Test PositionableStream>>nextLine for text streams with <CR> between lines"
 
-	#('a' 'ab' 'abc') do: 
+	#('a' 'ab' 'a£c') do: 
 			[:each |
 			| chars |
 			chars := each , (String with: Character cr) , each.

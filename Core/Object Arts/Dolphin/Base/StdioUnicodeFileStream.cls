@@ -11,14 +11,6 @@ StdioUnicodeFileStream comment: ''!
 !StdioUnicodeFileStream categoriesForClass!Collections-Streams! !
 !StdioUnicodeFileStream methodsFor!
 
-attach: anExternalHandle toFd: fdInteger mode: aString
-	"Private - Attach the stdio descriptor identified by fdInteger (usually one of 0=stdin,
-	1=stdout, or 2-stderr) to the specified OS file, and open a stdio stream onto it in the
-	specified stdio mode."
-
-	super attach: anExternalHandle toFd: fdInteger mode: aString.
-	crtlib _setmode: fd mode: CRTConstants._O_U16TEXT!
-
 basicNextAvailable
 	"Private - Answer an <integer> in the range 0..65535, being the next of the receiver's future sequence
 	values. Answer nil if at EOF."
@@ -73,8 +65,10 @@ setStream: anExternalAddress name: aString mode: modeString
 	super
 		setStream: anExternalAddress
 		name: aString
-		mode: modeString! !
-!StdioUnicodeFileStream categoriesFor: #attach:toFd:mode:!initializing!private! !
+		mode: modeString!
+
+translationMode
+	^CRTConstants._O_U16TEXT! !
 !StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
 !StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
 !StdioUnicodeFileStream categoriesFor: #basicPeek!accessing!private! !
@@ -83,4 +77,11 @@ setStream: anExternalAddress name: aString mode: modeString
 !StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
 !StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
 !StdioUnicodeFileStream categoriesFor: #setStream:name:mode:!initializing!private! !
+!StdioUnicodeFileStream categoriesFor: #translationMode!constants!private! !
+
+!StdioUnicodeFileStream class methodsFor!
+
+encodingType
+	^#utf16le! !
+!StdioUnicodeFileStream class categoriesFor: #encodingType!constants!public! !
 
