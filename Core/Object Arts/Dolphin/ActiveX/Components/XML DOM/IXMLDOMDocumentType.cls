@@ -12,9 +12,6 @@ This is a specialized DOM node to represent document type declarations.'!
 !IXMLDOMDocumentType categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
 !IXMLDOMDocumentType methodsFor!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptDocumentType: self!
-
 entities
 	"Answer the <IXMLDOMNamedNodeMap> value of the 'entities' property of the receiver.
 	Helpstring: 'a list of entities in the document'.
@@ -73,7 +70,6 @@ notations
 	answer := IXMLDOMNamedNodeMap newPointer.
 	self get_notations: answer.
 	^DOMNotationsMap onInterface: answer parentNode: self! !
-!IXMLDOMDocumentType categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMDocumentType categoriesFor: #entities!properties!public! !
 !IXMLDOMDocumentType categoriesFor: #get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
 !IXMLDOMDocumentType categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !

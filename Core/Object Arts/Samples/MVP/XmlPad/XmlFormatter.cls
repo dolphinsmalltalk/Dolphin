@@ -21,129 +21,6 @@ Example usage:
 !XmlFormatter categoriesForClass!Kernel-Objects! !
 !XmlFormatter methodsFor!
 
-acceptAttribute: anIXMLDOMAttribute 
-	stream nextPutAll: anIXMLDOMAttribute xml!
-
-acceptCharacterData: anIXMLDOMCharacterData 
-	stream nextPutAll: anIXMLDOMCharacterData xml!
-
-acceptComment: anIXMLDOMComment 
-	self newlineIfNeeded.
-	stream
-		nextPutAll: '<!!--';
-		nextPutAll: anIXMLDOMComment data;
-		nextPutAll: '-->'.
-	indent = 0 ifTrue: [newlineNeeded := true].!
-
-acceptDocument: anIXMLDOMDocument 
-	super visitNodeChildren: anIXMLDOMDocument!
-
-acceptDocumentType: anIXMLDOMDocumentType 
-	self newlineIfNeeded.
-	stream nextPutAll: anIXMLDOMDocumentType xml.
-	self assert: [indent = 0].
-	newlineNeeded := true.
-	^self.
-	stream
-		nextPutAll: '<!!DOCTYPE ';
-		display: anIXMLDOMDocumentType name;
-		nextPutAll: ' ['.
-	self newline.
-	self indentAround: 
-			[anIXMLDOMDocumentType notations do: 
-					[:each | 
-					self newline.
-					self visitNode: each].
-			anIXMLDOMDocumentType entities do: 
-					[:each | 
-					self newline.
-					self visitNode: each]].
-	self newline.
-	stream nextPutAll: ']>'!
-
-acceptElement: anIXMLDOMElement 
-	| tag childNodes hasText textNodes |
-	tag := anIXMLDOMElement tagName.
-	self newlineIfNeeded.
-	self startTag: tag.
-	self visitAttributes: anIXMLDOMElement.
-	childNodes := anIXMLDOMElement childNodes asArray.
-	#todo.	"Need to handle the different content types separately. If text only, emit as is, retaining whitespace. If mixed (or element only) then strip existing whitespace and reformat if all text is whitespace. This won't work in all cases where text is significant, but is probably sufficient for reformatting data documents."
-	"If there is any text, we must emit the nodes preserving whitespace, if there are no text
-	nodes apart from whitespace, then we emit only the non-text nodes."
-	textNodes := childNodes select: [:each | each formatAsText].
-	hasText := textNodes anySatisfy: [:each | each xml trimBlanks notEmpty].
-	hasText 
-		ifTrue: 
-			[stream nextPut: $>.
-			self indentAround: 
-					[childNodes do: 
-							[:each | 
-							newlineNeeded := false.
-							self visitNode: each]]]
-		ifFalse: 
-			[childNodes := childNodes difference: textNodes.
-			childNodes isEmpty 
-				ifTrue: 
-					["Try and preserve the original format of empty elements"
-					| xml |
-					xml := anIXMLDOMElement xml.
-					(xml endsWith: '/>') 
-						ifTrue: 
-							[newlineNeeded := true.
-							stream nextPutAll: '/>'.
-							^self]
-						ifFalse: [stream nextPut: $>]]
-				ifFalse: 
-					[stream nextPut: $>.
-					newlineNeeded := true.
-					self indentAround: 
-							[childNodes do: 
-									[:each | 
-									newlineNeeded := true.
-									self visitNode: each]].
-					self newlineIfNeeded]].
-	newlineNeeded := true.
-	stream
-		nextPutAll: '</';
-		nextPutAll: tag;
-		nextPut: $>!
-
-acceptEntity: anIXMLDOMEntity 
-	self newlineIfNeeded.
-	self startTag: '!!ENTITY'.
-	stream
-		space;
-		display: anIXMLDOMEntity key;
-		space;
-		display: anIXMLDOMEntity value;
-		nextPut: $>.
-	newlineNeeded := true!
-
-acceptEntityReference: anIXMLDOMEntityReference 
-	stream nextPutAll: anIXMLDOMEntityReference xml!
-
-acceptNotation: anIXMLDOMNotation
-	^self shouldNotImplement!
-
-acceptProcessingInstruction: anIXMLDOMProcessingInstruction 
-	| data |
-	newlineNeeded 
-		ifTrue: 
-			[newlineNeeded := false.
-			indent = 0 ifTrue: [self newline]].
-	stream
-		nextPutAll: '<?';
-		nextPutAll: anIXMLDOMProcessingInstruction target.
-	data := anIXMLDOMProcessingInstruction data.
-	data notEmpty 
-		ifTrue: 
-			[stream
-				space;
-				nextPutAll: data].
-	stream nextPutAll: '?>'.
-	indent = 0 ifTrue: [newlineNeeded := true]!
-
 format: anIXMLDOMNode 
 	| answer |
 	self initialize.
@@ -179,6 +56,9 @@ startTag: aString
 		nextPut: $<;
 		nextPutAll: aString!
 
+visitAttribute: anIXMLDOMAttribute
+	stream nextPutAll: anIXMLDOMAttribute xml!
+
 visitAttributes: anIXMLDOMNode 
 	anIXMLDOMNode attributes associations asSortedCollection do: 
 			[:each | 
@@ -192,18 +72,128 @@ visitAttributes: anIXMLDOMNode
 					[stream space.
 					self visitNode: each]]!
 
+visitCharacterData: anIXMLDOMCharacterData
+	stream nextPutAll: anIXMLDOMCharacterData xml!
+
+visitComment: anIXMLDOMComment
+	self newlineIfNeeded.
+	stream
+		nextPutAll: '<!!--';
+		nextPutAll: anIXMLDOMComment data;
+		nextPutAll: '-->'.
+	indent = 0 ifTrue: [newlineNeeded := true]!
+
+visitDocument: anIXMLDOMDocument
+	super visitNodeChildren: anIXMLDOMDocument!
+
+visitDocumentType: anIXMLDOMDocumentType
+	self newlineIfNeeded.
+	stream nextPutAll: anIXMLDOMDocumentType xml.
+	self assert: [indent = 0].
+	newlineNeeded := true.
+	^self.
+	stream
+		nextPutAll: '<!!DOCTYPE ';
+		display: anIXMLDOMDocumentType name;
+		nextPutAll: ' ['.
+	self newline.
+	self indentAround: 
+			[anIXMLDOMDocumentType notations do: 
+					[:each |
+					self newline.
+					self visitNode: each].
+			anIXMLDOMDocumentType entities do: 
+					[:each |
+					self newline.
+					self visitNode: each]].
+	self newline.
+	stream nextPutAll: ']>'!
+
+visitElement: anIXMLDOMElement
+	| tag childNodes hasText textNodes |
+	tag := anIXMLDOMElement tagName.
+	self newlineIfNeeded.
+	self startTag: tag.
+	self visitAttributes: anIXMLDOMElement.
+	childNodes := anIXMLDOMElement childNodes asArray.
+	#todo.	"Need to handle the different content types separately. If text only, emit as is, retaining whitespace. If mixed (or element only) then strip existing whitespace and reformat if all text is whitespace. This won't work in all cases where text is significant, but is probably sufficient for reformatting data documents."
+	"If there is any text, we must emit the nodes preserving whitespace, if there are no text
+	nodes apart from whitespace, then we emit only the non-text nodes."
+	textNodes := childNodes select: [:each | each formatAsText].
+	hasText := textNodes anySatisfy: [:each | each xml trimBlanks notEmpty].
+	hasText
+		ifTrue: 
+			[stream nextPut: $>.
+			self indentAround: 
+					[childNodes do: 
+							[:each |
+							newlineNeeded := false.
+							self visitNode: each]]]
+		ifFalse: 
+			[childNodes := childNodes difference: textNodes.
+			childNodes isEmpty
+				ifTrue: 
+					[| xml |
+					"Try and preserve the original format of empty elements"
+					xml := anIXMLDOMElement xml.
+					(xml endsWith: '/>')
+						ifTrue: 
+							[newlineNeeded := true.
+							stream nextPutAll: '/>'.
+							^self]
+						ifFalse: [stream nextPut: $>]]
+				ifFalse: 
+					[stream nextPut: $>.
+					newlineNeeded := true.
+					self indentAround: 
+							[childNodes do: 
+									[:each |
+									newlineNeeded := true.
+									self visitNode: each]].
+					self newlineIfNeeded]].
+	newlineNeeded := true.
+	stream
+		nextPutAll: '</';
+		nextPutAll: tag;
+		nextPut: $>!
+
+visitEntity: anIXMLDOMEntity
+	self newlineIfNeeded.
+	self startTag: '!!ENTITY'.
+	stream
+		space;
+		display: anIXMLDOMEntity key;
+		space;
+		display: anIXMLDOMEntity value;
+		nextPut: $>.
+	newlineNeeded := true!
+
+visitEntityReference: anIXMLDOMEntityReference
+	stream nextPutAll: anIXMLDOMEntityReference xml!
+
 visitNodeChildren: anIXMLDOMNode 
-	self indentAround: [super visitNodeChildren: anIXMLDOMNode]! !
-!XmlFormatter categoriesFor: #acceptAttribute:!public! !
-!XmlFormatter categoriesFor: #acceptCharacterData:!private! !
-!XmlFormatter categoriesFor: #acceptComment:!public! !
-!XmlFormatter categoriesFor: #acceptDocument:!public!visiting! !
-!XmlFormatter categoriesFor: #acceptDocumentType:!public!visiting! !
-!XmlFormatter categoriesFor: #acceptElement:!public! !
-!XmlFormatter categoriesFor: #acceptEntity:!public!visiting! !
-!XmlFormatter categoriesFor: #acceptEntityReference:!public!visiting! !
-!XmlFormatter categoriesFor: #acceptNotation:!public!visiting! !
-!XmlFormatter categoriesFor: #acceptProcessingInstruction:!public! !
+	self indentAround: [super visitNodeChildren: anIXMLDOMNode]!
+
+visitNotation: anIXMLDOMNotation
+	^self shouldNotImplement!
+
+visitProcessingInstruction: anIXMLDOMProcessingInstruction
+	| data |
+	newlineNeeded
+		ifTrue: 
+			[newlineNeeded := false.
+			indent = 0 ifTrue: [self newline]].
+	stream
+		nextPutAll: '<?';
+		nextPutAll: anIXMLDOMProcessingInstruction target.
+	data := anIXMLDOMProcessingInstruction data.
+	data notEmpty
+		ifTrue: 
+			[stream
+				space;
+				nextPutAll: data].
+	stream nextPutAll: '?>'.
+	indent = 0 ifTrue: [newlineNeeded := true]! !
 !XmlFormatter categoriesFor: #format:!operations!public! !
 !XmlFormatter categoriesFor: #indent:around:!formatting!private! !
 !XmlFormatter categoriesFor: #indentAround:!formatting!private! !
@@ -211,6 +201,16 @@ visitNodeChildren: anIXMLDOMNode
 !XmlFormatter categoriesFor: #newline!public! !
 !XmlFormatter categoriesFor: #newlineIfNeeded!private!visiting! !
 !XmlFormatter categoriesFor: #startTag:!private! !
+!XmlFormatter categoriesFor: #visitAttribute:!public! !
 !XmlFormatter categoriesFor: #visitAttributes:!private! !
+!XmlFormatter categoriesFor: #visitCharacterData:!private! !
+!XmlFormatter categoriesFor: #visitComment:!public! !
+!XmlFormatter categoriesFor: #visitDocument:!public!visiting! !
+!XmlFormatter categoriesFor: #visitDocumentType:!public!visiting! !
+!XmlFormatter categoriesFor: #visitElement:!public! !
+!XmlFormatter categoriesFor: #visitEntity:!public!visiting! !
+!XmlFormatter categoriesFor: #visitEntityReference:!public!visiting! !
 !XmlFormatter categoriesFor: #visitNodeChildren:!private!visiting! !
+!XmlFormatter categoriesFor: #visitNotation:!public!visiting! !
+!XmlFormatter categoriesFor: #visitProcessingInstruction:!public! !
 

@@ -32,9 +32,6 @@ This is a specialized node type to represent DOM attributes.'!
 = anObject 
 	^self class == anObject class and: [self key = anObject key and: [self value = anObject value]]!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptAttribute: self!
-
 get_name: attributeName
 	"Private - Get the value of the 'name' property of the receiver.
 
@@ -106,7 +103,6 @@ value: attributeValue
 ! !
 !IXMLDOMAttribute categoriesFor: #<=!comparing!public! !
 !IXMLDOMAttribute categoriesFor: #=!comparing!public! !
-!IXMLDOMAttribute categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMAttribute categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
 !IXMLDOMAttribute categoriesFor: #get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
 !IXMLDOMAttribute categoriesFor: #key!accessing!public! !

@@ -12,9 +12,6 @@ This is a specialized DOM node to represent comments.'!
 !IXMLDOMComment categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
 !IXMLDOMComment methodsFor!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptComment: self!
-
 printOn: aStream
 	"Append a developer friendly textual representation of the receiver to aStream."
 
@@ -23,6 +20,5 @@ printOn: aStream
 		on: Error do: [:e | aStream nextPut: $(; print: bytes; nextPut: $)]
 
 ! !
-!IXMLDOMComment categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMComment categoriesFor: #printOn:!printing!public! !
 

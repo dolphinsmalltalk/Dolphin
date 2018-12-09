@@ -10,9 +10,3 @@ IXMLDOMCDATASection comment: '<IXMLDOMCDATASection> is a wrapper class for the C
 
 This is a specialized DOM node to represent CDATA nodes, which are quoted/escaped blocks of text that are interpreted literally rather than as markup.'!
 !IXMLDOMCDATASection categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
-!IXMLDOMCDATASection methodsFor!
-
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptCDATA: self! !
-!IXMLDOMCDATASection categoriesFor: #acceptVisitor:!public!visitor! !
-
