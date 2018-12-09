@@ -170,6 +170,7 @@ onViewDestroyed
 	and is expected to be the last communication from Windows. There is nothing
 	more we can do to save the patient. No event is triggered."
 
+	SessionManager current removeEventsTriggeredFor: self.
 	self unregisterHotKey.
 	super onViewDestroyed!
 
