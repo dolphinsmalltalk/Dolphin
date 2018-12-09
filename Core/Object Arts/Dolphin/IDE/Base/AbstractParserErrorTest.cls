@@ -858,7 +858,14 @@ testErrorsLexicalBadChar
 				lexicalError: '#(' , each asString
 				range: (3 to: 3)
 				line: 1
-				code: LErrBadChar]!
+				code: LErrBadChar].
+	self
+		lexicalError: (Character dolphin asUtf8String
+				basicAt: 4 put: 16rC0;
+				yourself)
+		range: (1 to: 1)
+		line: 1
+		code: LErrBadChar!
 
 testErrorsLexicalBadCodePoint
 	#('$\x110000' '$\xFFFFFFFF') do: 
