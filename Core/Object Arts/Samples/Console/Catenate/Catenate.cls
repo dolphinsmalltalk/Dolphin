@@ -11,17 +11,12 @@ Catenate comment: 'Catenate is a sample command line application that performs t
 !Catenate methodsFor!
 
 cat: fileNames 
-	"Dump the contents of all the files listed as arguments to stdout"
-
-	"One thing to watch out for is that the stdio streams are opened in translating mode by
-	default - this means that sending a LF to an output stream will result in the emission of a
-	CR/LF pair, and vice versa on input. This means that it doesn't make sense to mix and match
-	Dolphin's standard high performance FileStreams with StdioFileStreams."
+	"Dump the contents of all the files listed as arguments to stdout without any text translation."
 
 	fileNames do: 
 			[:f | 
 			| in next |
-			in := StdioFileStream read: f.
+			in := FileStream read: f text: false.
 			
 			[next := in nextAvailable: 1024.
 			next isEmpty] whileFalse: [self stdout nextPutAll: next]].
@@ -39,7 +34,13 @@ main
 				display: self argv first;
 				nextPutAll: ' <file1>,<file2>,...<fileN>';
 				cr]
-		ifFalse: [self cat: (self argv copyFrom: 2)]! !
+		ifFalse: [self cat: (self argv copyFrom: 2)]!
+
+openStdOut
+	"Private - We want to open stdout in untranslated mode as we are going to dump the file contents exactly as they are."
+
+	^StdioBinaryFileStream fromHandle: VMLibrary default stdout! !
 !Catenate categoriesFor: #cat:!operations-startup!public! !
 !Catenate categoriesFor: #main!operations-startup!public! !
+!Catenate categoriesFor: #openStdOut!helpers!private! !
 
