@@ -12,9 +12,6 @@ This is a specialized DOM node to represent parsed or unparsed entities in the X
 !IXMLDOMEntity categoriesForClass!COM-Interfaces!MSXML-Interfaces! !
 !IXMLDOMEntity methodsFor!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptEntity: self!
-
 get_notationName: name
 	"Private - Get the value of the 'notationName' property of the receiver.
 
@@ -110,7 +107,6 @@ value: arg1
 	is fixed)."
 
 	^self shouldNotImplement! !
-!IXMLDOMEntity categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMEntity categoriesFor: #get_notationName:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
 !IXMLDOMEntity categoriesFor: #get_publicId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !
 !IXMLDOMEntity categoriesFor: #get_systemId:!**auto generated**!COM Interfaces-IXMLDOMEntity!private! !

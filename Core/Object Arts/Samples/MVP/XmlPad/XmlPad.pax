@@ -57,21 +57,22 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\Registry\Dolphin Registry Access';
-	add: '..\..\..\Dolphin\Registry\Dolphin Registry Serialisation';
-	add: '..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions';
-	add: '..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Dolphin\MVP\Dialogs\Find\Dolphin Find Dialog'
+	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
+	'..\..\..\Dolphin\Registry\Dolphin Registry Serialisation'
+	'..\..\..\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\ActiveX\Components\VBScript\VBScript Regular Expressions'
+	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM'
+	'..\..\..\Dolphin\ActiveX\Components\XML DOM\XML DOM Visitor').
 
 package setManualPrerequisites: #(
 	'Dolphin Registry Serialisation'

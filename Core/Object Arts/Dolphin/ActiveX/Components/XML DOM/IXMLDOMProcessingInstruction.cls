@@ -15,9 +15,6 @@ This is a specialized DOM node to represent processing instructions. These are u
 = anObject 
 	^self class == anObject class and: [self target = anObject target and: [self data = anObject data]]!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptProcessingInstruction: self!
-
 childNodes
 	"Answer the a <sequencedReadableCollection> on the <IXMLDOMNodeList> 
 	value of the 'childNodes' property of the receiver."
@@ -90,7 +87,6 @@ target
 	^answer asObject
 ! !
 !IXMLDOMProcessingInstruction categoriesFor: #=!comparing!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMProcessingInstruction categoriesFor: #childNodes!properties!public! !
 !IXMLDOMProcessingInstruction categoriesFor: #data!**auto generated**!properties!public! !
 !IXMLDOMProcessingInstruction categoriesFor: #data:!**auto generated**!properties!public! !

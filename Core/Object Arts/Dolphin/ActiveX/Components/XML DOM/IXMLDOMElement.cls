@@ -20,9 +20,6 @@ This is a specialized DOM node to represent elements (i.e. structures).'!
 			myAttribs size = hisAttribs size 
 				and: [(myAttribs associations symmetricDifference: hisAttribs associations) isEmpty]]!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptElement: self!
-
 get_tagName: tagName
 	"Private - Get the value of the 'tagName' property of the receiver.
 
@@ -203,7 +200,6 @@ tagName
 	^answer asObject
 ! !
 !IXMLDOMElement categoriesFor: #=!comparing!public! !
-!IXMLDOMElement categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMElement categoriesFor: #get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
 !IXMLDOMElement categoriesFor: #getAttribute:!**auto generated**!methods!public! !
 !IXMLDOMElement categoriesFor: #GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !

@@ -1,0 +1,127 @@
+﻿| package |
+package := Package name: 'XML DOM Visitor'.
+package paxVersion: 1;
+	basicComment: 'Dolphin Smalltalk XML DOM Visitor Package. 
+Copyright (c) Object Arts Ltd, 2000-2006
+
+An abstract visitor for XML DOM trees.'.
+
+
+package classNames
+	add: #XmlDomVisitor;
+	yourself.
+
+package methodNames
+	add: #IXMLDOMAttribute -> #acceptVisitor:;
+	add: #IXMLDOMCDATASection -> #acceptVisitor:;
+	add: #IXMLDOMComment -> #acceptVisitor:;
+	add: #IXMLDOMDocument -> #acceptVisitor:;
+	add: #IXMLDOMDocumentType -> #acceptVisitor:;
+	add: #IXMLDOMElement -> #acceptVisitor:;
+	add: #IXMLDOMEntity -> #acceptVisitor:;
+	add: #IXMLDOMEntityReference -> #acceptVisitor:;
+	add: #IXMLDOMNode -> #acceptVisitor:;
+	add: #IXMLDOMNotation -> #acceptVisitor:;
+	add: #IXMLDOMProcessingInstruction -> #acceptVisitor:;
+	add: #IXMLDOMText -> #acceptVisitor:;
+	yourself.
+
+package binaryGlobalNames: (Set new
+	yourself).
+
+package globalAliases: (Set new
+	yourself).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'XML DOM').
+
+package!
+
+"Class Definitions"!
+
+Object subclass: #XmlDomVisitor
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+
+"Global Aliases"!
+
+
+"Loose Methods"!
+
+!IXMLDOMAttribute methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitAttribute: self! !
+!IXMLDOMAttribute categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMCDATASection methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitCDATA: self! !
+!IXMLDOMCDATASection categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMComment methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitComment: self! !
+!IXMLDOMComment categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMDocument methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitDocument: self! !
+!IXMLDOMDocument categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMDocumentType methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitDocumentType: self! !
+!IXMLDOMDocumentType categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMElement methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitElement: self! !
+!IXMLDOMElement categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMEntity methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitEntity: self! !
+!IXMLDOMEntity categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMEntityReference methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitEntityReference: self! !
+!IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMNode methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitDomNode: self! !
+!IXMLDOMNode categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMNotation methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitNotation: self! !
+!IXMLDOMNotation categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMProcessingInstruction methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitProcessingInstruction: self! !
+!IXMLDOMProcessingInstruction categoriesFor: #acceptVisitor:!public!visitor! !
+
+!IXMLDOMText methodsFor!
+
+acceptVisitor: anXmlNodeVisitor
+	anXmlNodeVisitor visitText: self! !
+!IXMLDOMText categoriesFor: #acceptVisitor:!public!visitor! !
+
+"End of package definition"!
+

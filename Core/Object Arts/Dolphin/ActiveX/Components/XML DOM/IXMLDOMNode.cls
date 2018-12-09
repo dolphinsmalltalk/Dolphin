@@ -15,9 +15,6 @@ This is the generic interface for a single node in the DOM document tree. In the
 = anObject 
 	^self class == anObject class and: [self childNodes = anObject childNodes]!
 
-acceptVisitor: anXmlNodeVisitor 
-	anXmlNodeVisitor acceptNode: self!
-
 addCDATASection: sectionName
 	"Create and append a new CDATA section to the receiver with the <readableString> name, 
 	sectionName. Answer an <IXMLDOMCDATASection> on the new node."
@@ -872,7 +869,6 @@ xml
 	^answer asObject
 ! !
 !IXMLDOMNode categoriesFor: #=!comparing!public! !
-!IXMLDOMNode categoriesFor: #acceptVisitor:!public!visitor! !
 !IXMLDOMNode categoriesFor: #addCDATASection:!adding!public! !
 !IXMLDOMNode categoriesFor: #addComment:!adding!public! !
 !IXMLDOMNode categoriesFor: #addElement:!adding!public! !

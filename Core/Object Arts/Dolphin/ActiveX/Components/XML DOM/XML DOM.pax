@@ -185,7 +185,6 @@ package classNames
 	add: #IXMLHttpRequest;
 	add: #IXSLProcessor;
 	add: #IXSLTemplate;
-	add: #XmlDomVisitor;
 	yourself.
 
 package globalNames
@@ -200,21 +199,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Automation\ActiveX Automation';
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Automation\ActiveX Automation'
+	'..\..\..\Base\Dolphin'
+	'..\..\COM\OLE COM').
 
 package!
 
 "Class Definitions"!
 
-Object subclass: #XmlDomVisitor
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 SequenceableCollection subclass: #DOMNodeList
 	instanceVariableNames: 'interface'
 	classVariableNames: ''
