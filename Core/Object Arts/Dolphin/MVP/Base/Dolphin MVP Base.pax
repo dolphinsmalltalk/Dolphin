@@ -145,7 +145,6 @@ package classNames
 	add: #MouseEvent;
 	add: #MouseTracker;
 	add: #MouseWheelEvent;
-	add: #Msimg32Library;
 	add: #NCCALCSIZE_PARAMS;
 	add: #NEWTEXTMETRICW;
 	add: #NMHDR;
@@ -700,11 +699,6 @@ ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
 	classVariableNames: ''
 	poolDictionaries: 'HTMLHelpConstants'
-	classInstanceVariableNames: ''!
-ExternalLibrary subclass: #Msimg32Library
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 ExternalLibrary subclass: #ThemeLibrary
 	instanceVariableNames: ''
