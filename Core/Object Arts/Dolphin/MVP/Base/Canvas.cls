@@ -32,18 +32,18 @@ alphaBlend: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent blend:
 	"Alpha blends a rectangular region from aCanvas to the receiver with scaling.
 	Answer true if the operation succeeds"
 
-	^Msimg32Library default 
-		alphaBlend: self asParameter
-		nXOriginDest: dstOrigin x
-		nYOriginDest: dstOrigin y
-		nWidthDest: dstExtent x
-		nHeightDest: dstExtent y
+	^GDILibrary default
+		gdiAlphaBlend: self asParameter
+		xoriginDest: dstOrigin x
+		yoriginDest: dstOrigin y
+		wDest: dstExtent x
+		hDest: dstExtent y
 		hdcSrc: aCanvas asParameter
-		nXOriginSrc: aRectangle left
-		nYOriginSrc: aRectangle top
-		nWidthSrc: aRectangle width
-		nHeightSrc: aRectangle height
-		blend: blendFunction!
+		xoriginSrc: aRectangle left
+		yoriginSrc: aRectangle top
+		wSrc: aRectangle width
+		hSrc: aRectangle height
+		ftn: blendFunction!
 
 alphaBlendBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent blend: blendFunction
 	"Private - Alpha blend the specified rectangle of aBitmap to the specified destination
@@ -263,7 +263,7 @@ fillRectangle: aRectangle color: aColor
 	self fillRectangle: aRectangle brush: fillBrush.
 	fillBrush free!
 
-fillRectangle: aRectangle startColor: startColor endColor: endColor verticalGradient: aBoolean 
+fillRectangle: aRectangle startColor: startColor endColor: endColor verticalGradient: aBoolean
 	| vertices gRect |
 	vertices := StructureArray length: 2 elementClass: TRIVERTEX.
 	vertices beUnfinalizable.
@@ -277,13 +277,13 @@ fillRectangle: aRectangle startColor: startColor endColor: endColor verticalGrad
 	gRect
 		upperLeft: 0;
 		lowerRight: 1.
-	^Msimg32Library default 
-		gradientFill: self asParameter
+	^GDILibrary default
+		gdiGradientFill: self asParameter
 		pVertex: vertices
-		dwNumVertex: 2
+		nVertex: 2
 		pMesh: gRect
-		dwNumMesh: 1
-		dwMode: (aBoolean ifTrue: [GRADIENT_FILL_RECT_V] ifFalse: [GRADIENT_FILL_RECT_H])!
+		nCount: 1
+		ulMode: (aBoolean ifTrue: [GRADIENT_FILL_RECT_V] ifFalse: [GRADIENT_FILL_RECT_H])!
 
 fillRegion: aRegion brush: aBrush
 	"Draw a filled region, aRegion, using aBrush."
