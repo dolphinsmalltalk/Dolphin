@@ -144,7 +144,11 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'Dolphin'
+	'..\System\Base64\Dolphin Base64'
 	'Dolphin Message Box').
+
+package setManualPrerequisites: #(
+	'Dolphin Base64').
 
 package!
 
