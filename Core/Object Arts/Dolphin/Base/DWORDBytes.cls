@@ -43,15 +43,8 @@ elementSize
 	^4
 !
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^DWORDField!
-
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress dwordAtOffset: 0! !
 !DWORDBytes class categoriesFor: #elementSize!constants!private! !
-!DWORDBytes class categoriesFor: #fieldType!constants!development!private! !
 !DWORDBytes class categoriesFor: #valueAtAddress:!helpers!private! !
 

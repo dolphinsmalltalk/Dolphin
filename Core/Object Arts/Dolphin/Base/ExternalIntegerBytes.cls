@@ -106,9 +106,6 @@ atAddress: anAddress
 
 	^self fromInteger: (self valueAtAddress: anAddress)!
 
-fieldType
-	^self subclassResponsibility!
-
 fromAddress: anAddress 
 	"Answer a new instance of the receiver with contents *copied* from
 	the external integer pointed at by anAddress (this is not a reference object
@@ -136,7 +133,6 @@ new
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
 !ExternalIntegerBytes class categoriesFor: #atAddress:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #fieldType!constants!development!private! !
 !ExternalIntegerBytes class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalIntegerBytes class categoriesFor: #fromInteger:!instance creation!public! !
 !ExternalIntegerBytes class categoriesFor: #initialize!development!initializing!private! !

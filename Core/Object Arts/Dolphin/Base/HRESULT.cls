@@ -136,16 +136,16 @@ value: anObject
 
 !HRESULT class methodsFor!
 
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
+
+	self defineField: #value type: SDWORDField new!
+
 fail
 	"Answer the generic failure HRESULT."
 
 	^Fail!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SDWORDField!
 
 fromUnsignedInteger: anUnsignedInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
@@ -204,8 +204,8 @@ win32Error: anInteger
 		severity: SEVERITY_ERROR
 		facility: FACILITY_WIN32
 		code: anInteger! !
+!HRESULT class categoriesFor: #defineFields!initializing!public! !
 !HRESULT class categoriesFor: #fail!constants!instance creation!public! !
-!HRESULT class categoriesFor: #fieldType!constants!development!private! !
 !HRESULT class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !HRESULT class categoriesFor: #initialize!development!initializing!private! !
 !HRESULT class categoriesFor: #notImplemented!constants!instance creation!public! !

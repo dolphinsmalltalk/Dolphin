@@ -87,15 +87,6 @@ printOn: aStream
 
 !ExternalInteger class methodsFor!
 
-defineFields
-	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
-	have a single value."
-
-	self defineField: #value type: self fieldType new beOverride!
-
-definesNewFields
-	^self ~= ##(self) and: [self class includesSelector: #fieldType]!
-
 defineTemplate
 	"Initialize the receiver class' structure template."
 
@@ -109,8 +100,6 @@ fromInteger: anInteger
 
 getFieldList
 	^#(#value)! !
-!ExternalInteger class categoriesFor: #defineFields!initializing!public! !
-!ExternalInteger class categoriesFor: #definesNewFields!private!testing! !
 !ExternalInteger class categoriesFor: #defineTemplate!development!initializing!public! !
 !ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
 !ExternalInteger class categoriesFor: #getFieldList!constants!private! !

@@ -47,11 +47,11 @@ value: anInteger
 
 !BYTE class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
-	structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^BYTEField!
+	self defineField: #value type: BYTEField new!
 
 getFieldList
 	^#(#value)!
@@ -67,7 +67,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!BYTE class categoriesFor: #fieldType!constants!development!private! !
+!BYTE class categoriesFor: #defineFields!initializing!public! !
 !BYTE class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !BYTE class categoriesFor: #initialize!development!initializing!private! !
 !BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !

@@ -30,11 +30,11 @@ value: anInteger
 
 !SBYTE class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^SBYTEField!
+	self defineField: #value type: SBYTEField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -47,7 +47,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SBYTE class categoriesFor: #fieldType!constants!development!private! !
+!SBYTE class categoriesFor: #defineFields!initializing!public! !
 !SBYTE class categoriesFor: #initialize!development!initializing!private! !
 !SBYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

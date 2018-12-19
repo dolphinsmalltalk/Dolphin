@@ -29,11 +29,11 @@ value: anObject
 
 !SWORD class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^SWORDField!
+	self defineField: #value type: SWORDField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.
@@ -46,7 +46,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SWORD class categoriesFor: #fieldType!constants!development!private! !
+!SWORD class categoriesFor: #defineFields!initializing!public! !
 !SWORD class categoriesFor: #initialize!development!initializing!private! !
 !SWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

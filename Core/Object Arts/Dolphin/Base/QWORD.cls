@@ -93,14 +93,7 @@ defineTemplate
 	"
 
 	super defineTemplate.
-	self assert: [self alignment = 8]!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^QWORDField! !
+	self assert: [self alignment = 8]! !
 !QWORD class categoriesFor: #defineFields!initializing!public! !
 !QWORD class categoriesFor: #defineTemplate!development!initializing!public! !
-!QWORD class categoriesFor: #fieldType!constants!development!private! !
 

@@ -24,14 +24,14 @@ value: aBoolean
 
 !BOOLEAN class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
-	structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^BOOLEANField!
+	self defineField: #value type: BOOLEANField new beOverride!
 
 fileOutStem
 	^super fileOutStem , '_struct'! !
-!BOOLEAN class categoriesFor: #fieldType!constants!development!private! !
+!BOOLEAN class categoriesFor: #defineFields!initializing!public! !
 !BOOLEAN class categoriesFor: #fileOutStem!development!private!source filing! !
 

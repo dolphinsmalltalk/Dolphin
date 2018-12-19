@@ -82,15 +82,8 @@ elementSize
 
 	^VMConstants.IntPtrSize!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^UINT_PTRField!
-
 valueAtAddress: anAddress 
 	^anAddress asExternalAddress uintPtrAtOffset: 0! !
 !UIntPtrBytes class categoriesFor: #elementSize!constants!private! !
-!UIntPtrBytes class categoriesFor: #fieldType!constants!development!private! !
 !UIntPtrBytes class categoriesFor: #valueAtAddress:!instance creation!private! !
 

@@ -421,12 +421,15 @@ package methodNames
 	add: 'AXTypeLibraryAnalyzer class' -> #registerTypeLib;
 	add: 'AXTypeLibraryAnalyzer class' -> #superclassClashSignal;
 	add: 'AXTypeLibraryAnalyzer class' -> #typeLibRegistrations;
+	add: 'BOOL class' -> #fieldType;
+	add: 'BOOLEAN class' -> #fieldType;
 	add: 'BSTR class' -> #newInstanceAspect:class:;
 	add: 'BSTR class' -> #printDefaultValue:on:;
 	add: 'BSTR class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'BSTR class' -> #printOptionalParameter:on:;
 	add: 'BSTR class' -> #unspecifiedParameterValue;
 	add: 'BYTE class' -> #arrayType;
+	add: 'BYTE class' -> #fieldType;
 	add: 'ByteArray class' -> #fieldType;
 	add: 'ByteArray class' -> #fieldType:indirections:;
 	add: 'ByteArray class' -> #pointerFieldType;
@@ -440,6 +443,9 @@ package methodNames
 	add: 'DOUBLE class' -> #arrayType;
 	add: 'DOUBLE class' -> #fieldType;
 	add: 'DWORD class' -> #arrayType;
+	add: 'DWORD class' -> #fieldType;
+	add: 'DWORDBytes class' -> #fieldType;
+	add: 'ExternalAddress class' -> #fieldType;
 	add: 'ExternalArray class' -> #arrayType;
 	add: 'ExternalArray class' -> #fieldType;
 	add: 'ExternalArray class' -> #fieldType:indirections:;
@@ -453,7 +459,9 @@ package methodNames
 	add: 'ExternalField class' -> #printVariable:type:indirections:on:;
 	add: 'ExternalField class' -> #warningMultiDimensionArray:;
 	add: 'ExternalHandle class' -> #arrayType:;
+	add: 'ExternalHandle class' -> #fieldType;
 	add: 'ExternalHandle class' -> #printMethodArgument:elemdesc:indirections:on:;
+	add: 'ExternalIntegerBytes class' -> #fieldType;
 	add: 'ExternalIntegerBytes class' -> #pointerFieldType;
 	add: 'ExternalIntegerBytes class' -> #printStructField:indirections:on:;
 	add: 'ExternalStructure class' -> #arrayType;
@@ -476,22 +484,28 @@ package methodNames
 	add: 'GUID class' -> #newToClipboard;
 	add: 'GUID class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'GUID class' -> #printStructField:indirections:on:;
+	add: 'HRESULT class' -> #fieldType;
 	add: 'IDispatch class' -> #example1;
 	add: 'IDispatch class' -> #example2;
 	add: 'IDispatch class' -> #example3;
 	add: 'IDispatch class' -> #example4;
 	add: 'INT_PTR class' -> #arrayType;
+	add: 'INT_PTR class' -> #fieldType;
+	add: 'LARGE_INTEGER class' -> #fieldType;
 	add: 'OLECountedArray class' -> #fieldType;
 	add: 'OLECountedArray class' -> #pointerFieldType;
 	add: 'PointerArray class' -> #fieldType;
 	add: 'PointerArray class' -> #pointerFieldType;
 	add: 'PointerArrayField class' -> #printVariable:type:indirections:on:;
 	add: 'PointerField class' -> #printVariable:type:indirections:on:;
+	add: 'QWORD class' -> #fieldType;
 	add: 'SAFEARRAY class' -> #fieldType;
 	add: 'SAFEARRAY class' -> #pointerFieldType;
 	add: 'SAFEARRAY class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'SBYTE class' -> #arrayType;
+	add: 'SBYTE class' -> #fieldType;
 	add: 'SDWORD class' -> #arrayType;
+	add: 'SDWORD class' -> #fieldType;
 	add: 'String class' -> #arrayType;
 	add: 'String class' -> #arrayType:;
 	add: 'String class' -> #elementType:;
@@ -503,6 +517,7 @@ package methodNames
 	add: 'StructureArrayPointerField class' -> #printVariable:type:indirections:on:;
 	add: 'StructureField class' -> #printVariable:type:indirections:on:;
 	add: 'SWORD class' -> #arrayType;
+	add: 'SWORD class' -> #fieldType;
 	add: 'TKindCoclassAnalyzer class' -> #publishedAspectsOfInstances;
 	add: 'TKindDispatchAnalyzer class' -> #icon;
 	add: 'TKindDispatchAnalyzer class' -> #publishedAspectsOfInstances;
@@ -510,6 +525,8 @@ package methodNames
 	add: 'TKindModuleAnalyzer class' -> #icon;
 	add: 'TKindModuleAnalyzer class' -> #publishedAspectsOfInstances;
 	add: 'UINT_PTR class' -> #arrayType;
+	add: 'UINT_PTR class' -> #fieldType;
+	add: 'UIntPtrBytes class' -> #fieldType;
 	add: 'Utf16String class' -> #printMethodArgument:elemdesc:indirections:on:;
 	add: 'VARIANT class' -> #example1;
 	add: 'VARIANT class' -> #printMethodArgument:elemdesc:indirections:on:;
@@ -519,6 +536,7 @@ package methodNames
 	add: 'VOID class' -> #fieldType;
 	add: 'VOID class' -> #pointerFieldType;
 	add: 'WORD class' -> #arrayType;
+	add: 'WORD class' -> #fieldType;
 	yourself.
 
 package binaryGlobalNames: (Set new
@@ -527,32 +545,29 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\ActiveX\Automation\ActiveX Automation';
-	add: '..\Base\Development System';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\MVP\Views\Cards\Dolphin Card Containers';
-	add: '..\..\MVP\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Base\Dolphin Conformant Array Fields';
-	add: '..\..\MVP\Models\List\Dolphin List Models';
-	add: '..\..\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Base\Dolphin Message Box';
-	add: '..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog';
-	add: '..\..\MVP\Presenters\Prompters\Dolphin Prompter';
-	add: '..\..\Registry\Dolphin Registry Access';
-	add: '..\..\Base\Dolphin SizeIs Fields';
-	add: '..\..\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\ActiveX\COM\OLE COM';
-	add: '..\..\System\Compiler\Smalltalk Parser';
-	add: '..\..\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\ActiveX\Automation\ActiveX Automation'
+	'..\Base\Development System'
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\MVP\Views\Cards\Dolphin Card Containers'
+	'..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\MVP\Models\List\Dolphin List Models'
+	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Base\Dolphin Message Box'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\MVP\Dialogs\Progress\Dolphin Progress Dialog'
+	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
+	'..\..\Registry\Dolphin Registry Access'
+	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\MVP\Models\Value\Dolphin Value Models'
+	'..\..\ActiveX\COM\OLE COM'
+	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\ActiveX\Shell\Windows Shell').
 
 package!
 
@@ -4189,6 +4204,24 @@ typeLibRegistrations
 !AXTypeLibraryAnalyzer class categoriesFor: #superclassClashSignal!constants!examples!public! !
 !AXTypeLibraryAnalyzer class categoriesFor: #typeLibRegistrations!enquiries!private! !
 
+!BOOL class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^BOOLField! !
+!BOOL class categoriesFor: #fieldType!constants!private! !
+
+!BOOLEAN class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
+	structures."
+
+	^BOOLEANField! !
+!BOOLEAN class categoriesFor: #fieldType!constants!private! !
+
 !BSTR class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -4250,8 +4283,15 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^ExternalArray! !
+	^ExternalArray!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
+	structures."
+
+	^BYTEField! !
 !BYTE class categoriesFor: #arrayType!constants!private! !
+!BYTE class categoriesFor: #fieldType!constants!private! !
 
 !ByteArray class methodsFor!
 
@@ -4380,8 +4420,24 @@ arrayType
 	represent arrays of the receiver's field type in other structures."
 
 	^DWORDArray
-! !
+!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^DWORDField! !
 !DWORD class categoriesFor: #arrayType!constants!private! !
+!DWORD class categoriesFor: #fieldType!constants!private! !
+
+!DWORDBytes class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^DWORDField! !
+!DWORDBytes class categoriesFor: #fieldType!constants!development!private! !
 
 !ELEMDESC methodsFor!
 
@@ -4391,6 +4447,15 @@ idlAttributes
 
 	^self paramdesc idlAttributes! !
 !ELEMDESC categoriesFor: #idlAttributes!printing-IDL!private! !
+
+!ExternalAddress class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^LPVOIDField! !
+!ExternalAddress class categoriesFor: #fieldType!constants!development!private! !
 
 !ExternalArray class methodsFor!
 
@@ -4461,7 +4526,7 @@ printConformantArrayLength: aVARDESC on: aPuttableStream
 			["Simple size_is expression which names another field, e.g. size_is(cbBytes)."
 			aPuttableStream
 				nextPutAll: ' arrayLength: (';
-				print: ConformantArrayFieldLength;
+				display: #ConformantArrayFieldLength;
 				space;
 				display: #lengthField;
 				space;
@@ -4478,7 +4543,7 @@ printConformantArrayLength: aVARDESC on: aPuttableStream
 					["Complex size_is expression, e.g. size_is(cbBytes >> 1 - 1)"
 					aPuttableStream
 						nextPutAll: ' arrayLength: (';
-						print: SizeIsArrayFieldLength;
+						display: #SizeIsArrayFieldLength;
 						space;
 						display: #sizeIs:;
 						space;
@@ -4531,6 +4596,12 @@ arrayType: indirs
 		ifTrue: [HandleArray]
 		ifFalse: [PointerArray]!
 
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^HANDLEField!
+
 printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target 
 	"Private - Generate an output argument instantiation statement onto the <puttableStream>, 
 	target, for the argument described by the <ELEMDESC>, elem, and descriptor, desc."
@@ -4551,9 +4622,13 @@ printMethodArgument: argName elemdesc: elemdesc indirections: indirs on: target
 				space;
 				display: #new]! !
 !ExternalHandle class categoriesFor: #arrayType:!constants!private! !
+!ExternalHandle class categoriesFor: #fieldType!constants!development!private! !
 !ExternalHandle class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
 
 !ExternalIntegerBytes class methodsFor!
+
+fieldType
+	^self subclassResponsibility!
 
 pointerFieldType
 	^PointerField!
@@ -4570,6 +4645,7 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 		type: self
 		indirections: anInteger
 		on: aPuttableStream! !
+!ExternalIntegerBytes class categoriesFor: #fieldType!constants!development!private! !
 !ExternalIntegerBytes class categoriesFor: #pointerFieldType!constants!private! !
 !ExternalIntegerBytes class categoriesFor: #printStructField:indirections:on:!private! !
 
@@ -4995,6 +5071,15 @@ printStructField: aVARDESC indirections: anInteger on: aPuttableStream
 !GUID class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
 !GUID class categoriesFor: #printStructField:indirections:on:!private! !
 
+!HRESULT class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^SDWORDField! !
+!HRESULT class categoriesFor: #fieldType!constants!private! !
+
 !IDispatch methodsFor!
 
 alternateInspectorClass
@@ -5221,8 +5306,15 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^INT_PTRArray! !
+	^INT_PTRArray!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^INT_PTRField! !
 !INT_PTR class categoriesFor: #arrayType!constants!private! !
+!INT_PTR class categoriesFor: #fieldType!constants!private! !
 
 !ITypeInfo methodsFor!
 
@@ -5251,6 +5343,15 @@ printOn: aStream
 		ifFalse: [aStream print: (self nameAt: 0 ifAbsent: ['<anon>'])].
 	aStream nextPut: $)! !
 !ITypeLib categoriesFor: #printOn:!printing!public! !
+
+!LARGE_INTEGER class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^SQWORDField! !
+!LARGE_INTEGER class categoriesFor: #fieldType!constants!private! !
 
 !OLECountedArray class methodsFor!
 
@@ -5338,6 +5439,15 @@ printVariable: aVARDESC type: extClass indirections: anInteger on: aPuttableStre
 	self printTypedField: extClass on: aPuttableStream! !
 !PointerField class categoriesFor: #printVariable:type:indirections:on:!private! !
 
+!QWORD class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^QWORDField! !
+!QWORD class categoriesFor: #fieldType!constants!private! !
+
 !SAFEARRAY class methodsFor!
 
 fieldType
@@ -5374,8 +5484,15 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^SBYTEArray! !
+	^SBYTEArray!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^SBYTEField! !
 !SBYTE class categoriesFor: #arrayType!constants!private! !
+!SBYTE class categoriesFor: #fieldType!constants!private! !
 
 !SDWORD class methodsFor!
 
@@ -5384,8 +5501,15 @@ arrayType
 	represent arrays of the receiver's field type in other structures."
 
 	^SDWORDArray
-! !
+!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^SDWORDField! !
 !SDWORD class categoriesFor: #arrayType!constants!private! !
+!SDWORD class categoriesFor: #fieldType!constants!private! !
 
 !String class methodsFor!
 
@@ -5562,8 +5686,15 @@ arrayType
 	represent arrays of the receiver's field type in other structures."
 
 	^SWORDArray
-! !
+!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^SWORDField! !
 !SWORD class categoriesFor: #arrayType!constants!private! !
+!SWORD class categoriesFor: #fieldType!constants!private! !
 
 !TKindAliasAnalyzer methodsFor!
 
@@ -7037,8 +7168,24 @@ arrayType
 	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
 	represent arrays of the receiver's field type in other structures."
 
-	^UINT_PTRArray! !
+	^UINT_PTRArray!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^UINT_PTRField! !
 !UINT_PTR class categoriesFor: #arrayType!constants!private! !
+!UINT_PTR class categoriesFor: #fieldType!constants!private! !
+
+!UIntPtrBytes class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^UINT_PTRField! !
+!UIntPtrBytes class categoriesFor: #fieldType!constants!development!private! !
 
 !Utf16String class methodsFor!
 
@@ -7213,8 +7360,15 @@ arrayType
 	represent arrays of the receiver's field type in other structures."
 
 	^WORDArray
-! !
+!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^WORDField! !
 !WORD class categoriesFor: #arrayType!constants!private! !
+!WORD class categoriesFor: #fieldType!constants!private! !
 
 "End of package definition"!
 

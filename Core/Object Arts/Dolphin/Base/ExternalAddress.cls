@@ -357,12 +357,6 @@ alignment
 
 	^VMConstants.IntPtrSize!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^LPVOIDField!
-
 fromAddress: anAddress
 	"Answer a new instance of the receiver with contents *copied* from
 	the DWORD pointed at by anAddress (this is not a reference object
@@ -382,7 +376,6 @@ fromInteger: anInteger
 
 	^VMLibrary default addressFromInteger: anInteger! !
 !ExternalAddress class categoriesFor: #alignment!constants!public! !
-!ExternalAddress class categoriesFor: #fieldType!constants!development!private! !
 !ExternalAddress class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalAddress class categoriesFor: #fromBytes:!instance creation!public! !
 !ExternalAddress class categoriesFor: #fromInteger:!instance creation!public! !
