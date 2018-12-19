@@ -268,11 +268,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Conformant Array Fields';
-	add: '..\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\COM\OLE COM').
 
 package!
 
@@ -290,7 +289,7 @@ Object subclass: #AXTypeLibDocumentation
 	classInstanceVariableNames: ''!
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
-	classVariableNames: 'TypeKindToClassMap VTtoIDLTypeMap'
+	classVariableNames: 'VTtoIDLTypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer

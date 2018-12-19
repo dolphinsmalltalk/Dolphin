@@ -2,7 +2,7 @@
 
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'
-	classVariableNames: 'TypeKindToClassMap VTtoIDLTypeMap'
+	classVariableNames: 'VTtoIDLTypeMap'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXTypeInfoAnalyzer guid: (GUID fromString: '{c06f3b64-0868-11d3-93af-00a024ca708a}')!
@@ -471,20 +471,7 @@ initialize
 		self initialize
 	"
 
-	self initializeVTtoIDLTypeMap.
-	TypeKindToClassMap := 
-		(Array new: 8)
-			at: TKIND_ENUM+1 put: TKindEnumAnalyzer;
-			at: TKIND_RECORD+1 put: TKindRecordAnalyzer;
-			at: TKIND_MODULE+1 put: TKindModuleAnalyzer;
-			at: TKIND_INTERFACE+1 put: TKindInterfaceAnalyzer;
-			at: TKIND_DISPATCH+1 put: TKindDispatchAnalyzer;
-			at: TKIND_COCLASS+1 put: TKindCoclassAnalyzer;
-			at: TKIND_ALIAS+1 put: TKindAliasAnalyzer;
-			at: TKIND_UNION+1 put: TKindUnionAnalyzer;
-			yourself
-
-!
+	self initializeVTtoIDLTypeMap!
 
 initializeVTtoIDLTypeMap
 	"Private - Initialize the map between VTs and the corresponding IDL type.
@@ -601,12 +588,16 @@ typeKindToClassMap
 	"Private - Answer a map between TKIND_XXX enumeration members and the appropriate subclass
 	to use to wrap an ITypeInfo of that typekind."
 
-	^TypeKindToClassMap!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system."
-
-	TypeKindToClassMap := nil! !
+	^##((Array new: 8)
+		at: TKIND_ENUM + 1 put: TKindEnumAnalyzer;
+		at: TKIND_RECORD + 1 put: TKindRecordAnalyzer;
+		at: TKIND_MODULE + 1 put: TKindModuleAnalyzer;
+		at: TKIND_INTERFACE + 1 put: TKindInterfaceAnalyzer;
+		at: TKIND_DISPATCH + 1 put: TKindDispatchAnalyzer;
+		at: TKIND_COCLASS + 1 put: TKindCoclassAnalyzer;
+		at: TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
+		at: TKIND_UNION + 1 put: TKindUnionAnalyzer;
+		yourself)! !
 !AXTypeInfoAnalyzer class categoriesFor: #initialize!initializing!private! !
 !AXTypeInfoAnalyzer class categoriesFor: #initializeVTtoIDLTypeMap!initializing!private! !
 !AXTypeInfoAnalyzer class categoriesFor: #onTypeInfo:!instance creation!public! !
@@ -617,5 +608,4 @@ uninitialize
 !AXTypeInfoAnalyzer class categoriesFor: #stbVersion!binary filing!constants!public! !
 !AXTypeInfoAnalyzer class categoriesFor: #typekind!constants!public! !
 !AXTypeInfoAnalyzer class categoriesFor: #typeKindToClassMap!constants!private! !
-!AXTypeInfoAnalyzer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

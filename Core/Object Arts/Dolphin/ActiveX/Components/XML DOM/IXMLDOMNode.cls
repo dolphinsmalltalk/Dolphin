@@ -206,7 +206,7 @@ downCast
 	with DOM nodes because there is a type id in the base interface."
 
 	| specializedClass |
-	^self class == (specializedClass := NodeTypes at: self nodeType ifAbsent: [IXMLDOMNode])
+	^self class == (specializedClass := self nodeTypes at: self nodeType ifAbsent: [IXMLDOMNode])
 		ifTrue: [self]
 		ifFalse: [self queryInterface: specializedClass]!
 
@@ -547,6 +547,22 @@ nodeTypedValue: typedValue
 
 	self put_nodeTypedValue: typedValue asVariant
 !
+
+nodeTypes
+	^##((Array new: 12)
+		at: NODE_ELEMENT put: IXMLDOMElement;
+		at: NODE_ATTRIBUTE put: IXMLDOMAttribute;
+		at: NODE_TEXT put: IXMLDOMText;
+		at: NODE_CDATA_SECTION put: IXMLDOMCDATASection;
+		at: NODE_ENTITY_REFERENCE put: IXMLDOMEntityReference;
+		at: NODE_ENTITY put: IXMLDOMEntity;
+		at: NODE_PROCESSING_INSTRUCTION put: IXMLDOMProcessingInstruction;
+		at: NODE_COMMENT put: IXMLDOMComment;
+		at: NODE_DOCUMENT put: IXMLDOMDocument;
+		at: NODE_DOCUMENT_TYPE put: IXMLDOMDocumentType;
+		at: NODE_DOCUMENT_FRAGMENT put: IXMLDOMDocumentFragment;
+		at: NODE_NOTATION put: IXMLDOMNotation;
+		yourself)!
 
 nodeTypeString
 	"Answer the <bstr> value of the 'nodeTypeString' property of the receiver.
@@ -925,6 +941,7 @@ xml
 !IXMLDOMNode categoriesFor: #nodeType!**auto generated**!properties!public! !
 !IXMLDOMNode categoriesFor: #nodeTypedValue!**auto generated**!properties!public! !
 !IXMLDOMNode categoriesFor: #nodeTypedValue:!**auto generated**!properties!public! !
+!IXMLDOMNode categoriesFor: #nodeTypes!constants!public! !
 !IXMLDOMNode categoriesFor: #nodeTypeString!**auto generated**!properties!public! !
 !IXMLDOMNode categoriesFor: #nodeValue!**auto generated**!properties!public! !
 !IXMLDOMNode categoriesFor: #nodeValue:!**auto generated**!properties!public! !
@@ -1043,20 +1060,6 @@ initialize
 	"
 
 	super initialize.	"COMInterfaces are unusual in that must supersend class initialize"
-	NodeTypes := Array new: 12.
-	NodeTypes
-		at: NODE_ELEMENT put: IXMLDOMElement;
-		at: NODE_ATTRIBUTE put: IXMLDOMAttribute;
-		at: NODE_TEXT put: IXMLDOMText;
-		at: NODE_CDATA_SECTION put: IXMLDOMCDATASection;
-		at: NODE_ENTITY_REFERENCE put: IXMLDOMEntityReference;
-		at: NODE_ENTITY put: IXMLDOMEntity;
-		at: NODE_PROCESSING_INSTRUCTION put: IXMLDOMProcessingInstruction;
-		at: NODE_COMMENT put: IXMLDOMComment;
-		at: NODE_DOCUMENT put: IXMLDOMDocument;
-		at: NODE_DOCUMENT_TYPE put: IXMLDOMDocumentType;
-		at: NODE_DOCUMENT_FRAGMENT put: IXMLDOMDocumentFragment;
-		at: NODE_NOTATION put: IXMLDOMNotation.
 	VarTypeToXMLDataType := IdentityDictionary new.
 	VarTypeToXMLDataType
 		at: VT_BOOL put: 'boolean';
