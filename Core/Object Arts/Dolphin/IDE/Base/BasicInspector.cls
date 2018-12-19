@@ -150,7 +150,7 @@ getFieldList
 	"Private - Answer an OrderedCollection of instance variable keys (string names for
 	named instance variables, and numeric indices for indexed instance variables)"
 
-	^self selfField class allInstVarNames , (1 to: self selfField basicSize)!
+	^self selfField basicClass allInstVarNames , (1 to: self selfField basicSize)!
 
 headerList
 	"Private - Answer an ordered collection of Associations. The key is the String variable
@@ -250,7 +250,7 @@ onVariableNameSelected
 	| var |
 	sourcePresenter text: (
 			[var := self variable.
-			var printString] on: Error
+			var debugPrintString] on: Error
 					do: 
 						[:e | 
 						| name |
