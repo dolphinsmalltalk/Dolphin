@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 STBCollectionProxy subclass: #STBSortedCollectionProxy
-	instanceVariableNames: 'sortBlock'
+	instanceVariableNames: 'sortAlgorithm'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -10,14 +10,14 @@ STBSortedCollectionProxy comment: ''!
 !STBSortedCollectionProxy categoriesForClass!System-Binary storage! !
 !STBSortedCollectionProxy methodsFor!
 
-sortBlock: aBlock
-	"Private - Set the sortBlock inst var to aBlock."
+sortAlgorithm
+	^sortAlgorithm!
 
-	sortBlock := aBlock
-!
+sortAlgorithm: aSortAlgorithm
+	sortAlgorithm := aSortAlgorithm!
 
 value
-	"Answer a new SortedCollection with elements, array, and sort block, sortBlock."
+	"Answer a new SortedCollection with elements, array, and SortAlgorithm, sortAlgorithm."
 
 	"Implementation Note: The collection is assumed to be sorted in the correct order, so the sort block
 	is not evaluated at all. This modification for 5.02 makes it safe to at least load an STB file containing a 
@@ -27,10 +27,11 @@ value
 	the destination image. Where this is possible the application must explicitly #reSort the collection."
 
 	^(class new: array size)
-		sortBlock: sortBlock;
+		setSortAlgorithm: sortAlgorithm;
 		addAllWithoutSorting: array;
 		yourself! !
-!STBSortedCollectionProxy categoriesFor: #sortBlock:!accessing!private! !
+!STBSortedCollectionProxy categoriesFor: #sortAlgorithm!accessing!private! !
+!STBSortedCollectionProxy categoriesFor: #sortAlgorithm:!accessing!private! !
 !STBSortedCollectionProxy categoriesFor: #value!converting!public! !
 
 !STBSortedCollectionProxy class methodsFor!
@@ -39,7 +40,28 @@ forCollection: aSortedCollection
 	"Answer a new instance representing aSortedCollection."
 
 	^(super forCollection: aSortedCollection)
-		sortBlock: aSortedCollection sortBlock;
-		yourself! !
+		sortAlgorithm: aSortedCollection algorithm;
+		yourself!
+
+stbConvertFrom: anSTBClassFormat 
+	"Convert from version 0 proxy - the sort algorithm is lost."
+
+	anSTBClassFormat version > self stbVersion 
+		ifTrue: [^super stbConvertFrom: anSTBClassFormat].
+	^
+	[:data | 
+	| convertedProxy |
+	convertedProxy := self basicNew.
+	1 to: data size do: [:i | convertedProxy instVarAt: i put: (data at: i)].
+	convertedProxy sortAlgorithm: (SortedCollection defaultSortAlgorithmClass sortBlock: convertedProxy sortAlgorithm).
+	convertedProxy]!
+
+stbVersion
+	"Answer the current binary filer version number for instances of the receiver.
+		1 - sortBlock becomes sortAlgorithm"
+
+	^1! !
 !STBSortedCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
+!STBSortedCollectionProxy class categoriesFor: #stbConvertFrom:!instance creation!public! !
+!STBSortedCollectionProxy class categoriesFor: #stbVersion!instance creation!public! !
 
