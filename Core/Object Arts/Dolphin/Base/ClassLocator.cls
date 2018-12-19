@@ -59,10 +59,8 @@ findAvailableClass
 	import. If the class referred to by the receiver is a foreign class that has not yet been imported
 	then answer nil."
 
-	| class |
-	(class := self findResidentClass) isNil
-		ifTrue: [class := ImportedClasses lookup: self fullClassKey].
-	^class!
+	^self findResidentClass
+		ifNil: [ImportedClasses notNil ifTrue: [ImportedClasses lookup: self fullClassKey]]!
 
 findResidentClass
 	"Private - Answer the class referred to by the receiver if it is
