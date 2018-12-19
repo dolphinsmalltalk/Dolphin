@@ -79,27 +79,26 @@ package globalAliases: (Set new
 	add: #ScintillaIndicatorDefinition;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\..\Base\Dolphin Additional Sort Algorithms';
-	add: '..\..\Base\Dolphin Basic Geometry';
-	add: '..\..\Presenters\Boolean\Dolphin Boolean Presenter';
-	add: '..\..\Presenters\Choice\Dolphin Choice Presenter';
-	add: '..\..\Presenters\Collection\Dolphin Collection Presenters';
-	add: '..\..\Presenters\Color\Dolphin Color Presenter';
-	add: '..\Common Controls\Dolphin Common Controls';
-	add: '..\..\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\Control Bars\Dolphin Control Bars';
-	add: '..\..\Presenters\Date Time\Dolphin Date Time Presenters';
-	add: '..\..\Models\List\Dolphin List Models';
-	add: '..\..\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Base\Dolphin MVP Base';
-	add: '..\..\Presenters\Number\Dolphin Number Presenter';
-	add: '..\SpinButton\Dolphin SpinButton Control';
-	add: '..\..\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Type Converters\Dolphin Type Converters';
-	add: '..\..\Models\Value\Dolphin Value Models';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+	'..\..\..\Base\Dolphin Additional Sort Algorithms'
+	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Presenters\Boolean\Dolphin Boolean Presenter'
+	'..\..\Presenters\Choice\Dolphin Choice Presenter'
+	'..\..\Presenters\Collection\Dolphin Collection Presenters'
+	'..\..\Presenters\Color\Dolphin Color Presenter'
+	'..\Common Controls\Dolphin Common Controls'
+	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Control Bars\Dolphin Control Bars'
+	'..\..\Presenters\Date Time\Dolphin Date Time Presenters'
+	'..\..\Models\List\Dolphin List Models'
+	'..\..\Presenters\List\Dolphin List Presenter'
+	'..\..\Base\Dolphin MVP Base'
+	'..\..\Presenters\Number\Dolphin Number Presenter'
+	'..\SpinButton\Dolphin SpinButton Control'
+	'..\..\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Type Converters\Dolphin Type Converters'
+	'..\..\Models\Value\Dolphin Value Models').
 
 package!
 

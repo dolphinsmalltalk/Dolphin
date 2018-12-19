@@ -872,7 +872,7 @@ whichNonVirtualCategoriesIncludeSelector: aSelector
 !ClassDescription categoriesFor: #removeProtocol:!private!protocols! !
 !ClassDescription categoriesFor: #removeProtocol:ifAbsent:!private!protocols! !
 !ClassDescription categoriesFor: #removeSelector:fromCategory:!categories-removing!private! !
-!ClassDescription categoriesFor: #removeSelector:ifAbsent:!development!methods-removing!public! !
+!ClassDescription categoriesFor: #removeSelector:ifAbsent:!development!methods-removing!must strip!public! !
 !ClassDescription categoriesFor: #removeSelectors:!development!methods-removing!public! !
 !ClassDescription categoriesFor: #removeSharedPool:!pool variables!public! !
 !ClassDescription categoriesFor: #removeUnsupportedProtocols:selector:!development!methods-removing!private!protocols! !

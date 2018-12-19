@@ -511,5 +511,5 @@ visibleCharacterGlyphs
 !ScintillaMarkerDefinition class categoriesFor: #plusMinus!constants!public! !
 !ScintillaMarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
 !ScintillaMarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !
-!ScintillaMarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!development!public! !
+!ScintillaMarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!public! !
 

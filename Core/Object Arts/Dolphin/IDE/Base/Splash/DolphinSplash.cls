@@ -88,6 +88,22 @@ canDisplay
 	| desktopCanvas |
 	desktopCanvas := Canvas forDesktop.
 	^(desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]) 
-		and: [SystemMetrics current supportsAlphaBlending]! !
+		and: [SystemMetrics current supportsAlphaBlending]!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspects
+		add: (Aspect boolean: #splashPlayTheGame);
+		yourself!
+
+splashPlayTheGame
+	^SeeingTheObjectsInside splashPlayTheGame!
+
+splashPlayTheGame: aBoolean 
+	SeeingTheObjectsInside splashPlayTheGame: aBoolean! !
 !DolphinSplash class categoriesFor: #canDisplay!accessing!public! !
+!DolphinSplash class categoriesFor: #publishedAspects!public! !
+!DolphinSplash class categoriesFor: #splashPlayTheGame!accessing!public! !
+!DolphinSplash class categoriesFor: #splashPlayTheGame:!accessing!public! !
 
