@@ -202,17 +202,7 @@ shellOn: anObject
 		yourself!
 
 toolsFolderHelpId
-	^10600!
-
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	(Smalltalk developmentSystem)
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+	^10600! !
 !FlipperInspector class categoriesFor: #defaultModel!models!public! !
 !FlipperInspector class categoriesFor: #defaultRenderers!constants!private! !
 !FlipperInspector class categoriesFor: #displayOn:!displaying!public! !
@@ -224,5 +214,4 @@ uninitialize
 !FlipperInspector class categoriesFor: #resource_Default_view!public!resources-views! !
 !FlipperInspector class categoriesFor: #shellOn:!instance creation!public! !
 !FlipperInspector class categoriesFor: #toolsFolderHelpId!public! !
-!FlipperInspector class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

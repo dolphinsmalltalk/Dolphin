@@ -216,10 +216,7 @@ uninitialize
 
 	| devsys |
 	devsys := Smalltalk developmentSystem.
-	devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil].
-	devsys
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+	devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]! !
 !SystemBrowserShell class categoriesFor: #autoSelectPackages!accessing!private! !
 !SystemBrowserShell class categoriesFor: #autoSelectPackages:!accessing!private! !
 !SystemBrowserShell class categoriesFor: #displayOn:!displaying!public! !

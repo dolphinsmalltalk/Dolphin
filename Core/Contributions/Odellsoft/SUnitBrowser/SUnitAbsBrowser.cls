@@ -318,18 +318,6 @@ toolsFolderIcon
 		description: self displayString
 		helpId: self toolsFolderHelpId!
 
-uninitializeToolClass: aClass 
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-	Un-register the system tools folder icon for the receiver.
-	Note: This method is in the 'must strip' category so that it is removed in the early
-	stages of image stripping. It is not required during stripping, because the system
-	folders are cleared down anyway, and it may generate an error if required parts
-	of the development system have already been removed."
-
-	(Smalltalk developmentSystem)
-		removeSystemFolderIconNamed: self displayString;
-		unregisterTool: aClass!
-
 useDisplayNames
 
 	^self  defaultModelClass useDisplayNames!
@@ -341,7 +329,6 @@ useDisplayNames: aBoolean
 !SUnitAbsBrowser class categoriesFor: #initializeToolClass:!initializing!must strip!private! !
 !SUnitAbsBrowser class categoriesFor: #publishedAspects!development!public! !
 !SUnitAbsBrowser class categoriesFor: #toolsFolderIcon!accessing!public! !
-!SUnitAbsBrowser class categoriesFor: #uninitializeToolClass:!initializing!must strip!private! !
 !SUnitAbsBrowser class categoriesFor: #useDisplayNames!configuring!public! !
 !SUnitAbsBrowser class categoriesFor: #useDisplayNames:!configuring!public! !
 

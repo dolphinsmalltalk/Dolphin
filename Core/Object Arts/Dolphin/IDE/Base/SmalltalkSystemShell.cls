@@ -172,6 +172,7 @@ onViewDestroyed
 
 	SessionManager current removeEventsTriggeredFor: self.
 	self unregisterHotKey.
+	self == Default ifTrue: [Default := nil].
 	super onViewDestroyed!
 
 onViewModeChanged
@@ -533,10 +534,11 @@ textcolor: aColorOrNil
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
+	| devsys |
 	Color removeNamed: #smalltalkSystem.
 	self free.
-	Smalltalk developmentSystem unregisterTool: self.
-!
+	devsys := Smalltalk developmentSystem.
+	devsys systemFolderClass == self ifTrue: [devsys systemFolderClass: nil]!
 
 viewMode
 	"Answer the view mode of the reciver.

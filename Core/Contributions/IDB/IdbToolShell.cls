@@ -27,15 +27,6 @@ initializeAfterLoad
 			[(Smalltalk developmentSystem)
 				addAdditionalToolsFolderIcon: self toolsFolderIcon;
 				registerTool: self].
-	super initializeAfterLoad!
-
-uninitializeBeforeRemove
-	self == ##(self)
-		ifFalse:
-			[(Smalltalk developmentSystem)
-				removeSystemFolderIcon: self toolsFolderIcon;
-				unregisterTool: self].
-	super uninitializeBeforeRemove! !
+	super initializeAfterLoad! !
 !IdbToolShell class categoriesFor: #initializeAfterLoad!initializing!public! !
-!IdbToolShell class categoriesFor: #uninitializeBeforeRemove!initializing!public! !
 

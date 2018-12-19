@@ -14,15 +14,15 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: 'SUnit';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'SUnit').
 
 package!
 
