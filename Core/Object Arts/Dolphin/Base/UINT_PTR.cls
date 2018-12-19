@@ -77,10 +77,10 @@ value: anObject
 
 !UINT_PTR class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^UINT_PTRField! !
-!UINT_PTR class categoriesFor: #fieldType!constants!development!private! !
+	self defineField: #value type: UINT_PTRField new! !
+!UINT_PTR class categoriesFor: #defineFields!initializing!public! !
 

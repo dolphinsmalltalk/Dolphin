@@ -42,13 +42,6 @@ defineFields
 	self defineField: #value
 		type: ((BOOLField new)
 				beOverride;
-				yourself)!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^BOOLField! !
+				yourself)! !
 !BOOL class categoriesFor: #defineFields!initializing!public! !
-!BOOL class categoriesFor: #fieldType!constants!development!private! !
 

@@ -31,10 +31,10 @@ value: anObject
 
 !INT_PTR class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^INT_PTRField! !
-!INT_PTR class categoriesFor: #fieldType!constants!development!private! !
+	self defineField: #value type: INT_PTRField new beOverride! !
+!INT_PTR class categoriesFor: #defineFields!initializing!public! !
 

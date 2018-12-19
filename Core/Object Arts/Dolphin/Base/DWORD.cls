@@ -97,11 +97,11 @@ value: anInteger
 
 !DWORD class methodsFor!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
+defineFields
+	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
+	have a single value."
 
-	^DWORDField!
+	self defineField: #value type: DWORDField new!
 
 fromPoint: aPoint
 	"Private - Answer a new instance of the receiver with high and low
@@ -125,7 +125,7 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!DWORD class categoriesFor: #fieldType!constants!development!private! !
+!DWORD class categoriesFor: #defineFields!initializing!public! !
 !DWORD class categoriesFor: #fromPoint:!instance creation!private! !
 !DWORD class categoriesFor: #initialize!development!initializing!private! !
 !DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !

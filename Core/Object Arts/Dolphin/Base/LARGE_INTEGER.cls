@@ -72,16 +72,9 @@ defineFields
 			type: DWORDField new
 			offset: 0;
 		defineField: #highPart
-			type: DWORDField new
+			type: SDWORDField new
 			offset: 4
 
-!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SQWORDField! !
+! !
 !LARGE_INTEGER class categoriesFor: #defineFields!initializing!public! !
-!LARGE_INTEGER class categoriesFor: #fieldType!constants!development!private! !
 

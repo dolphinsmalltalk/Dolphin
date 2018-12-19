@@ -47,12 +47,6 @@ defineFields
 				beOverride;
 				yourself)!
 
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^SDWORDField!
-
 fromUnsignedInteger: anUnsignedInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
@@ -70,7 +64,6 @@ uninitialize
 
 	VMLibrary default registryAt: self name put: nil! !
 !SDWORD class categoriesFor: #defineFields!initializing!public! !
-!SDWORD class categoriesFor: #fieldType!constants!development!private! !
 !SDWORD class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
 !SDWORD class categoriesFor: #initialize!development!initializing!private! !
 !SDWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !

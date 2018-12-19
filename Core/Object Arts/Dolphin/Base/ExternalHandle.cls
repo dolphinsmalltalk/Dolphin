@@ -29,12 +29,3 @@ stbSaveOn: anSTBOutFiler
 !ExternalHandle categoriesFor: #handle!accessing!private! !
 !ExternalHandle categoriesFor: #stbSaveOn:!binary filing!public! !
 
-!ExternalHandle class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^HANDLEField! !
-!ExternalHandle class categoriesFor: #fieldType!constants!development!private! !
-
