@@ -1355,11 +1355,6 @@ RelativeFileLocator subclass: #InstallRelativeFileLocator
 	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-RelativeFileLocator subclass: #PackageRelativeFileLocator
-	instanceVariableNames: 'packageName'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 InstructionInterpreter subclass: #MessageSendCollector
 	instanceVariableNames: 'messageBlock superMessageBlock'
 	classVariableNames: 'SendInstructions'

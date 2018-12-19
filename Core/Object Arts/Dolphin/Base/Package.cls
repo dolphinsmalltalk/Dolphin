@@ -456,9 +456,6 @@ fileInScript: aSymbol
 				beep;
 				resume]!
 
-fileLocator
-	^PackageRelativeFileLocator package: self!
-
 fileNameForBinaryGlobal: globalName
 	"Private - Answer a filename for storing the binary globalName."
 
@@ -1760,7 +1757,6 @@ If you experience subsequent problems please contact the package supplier for an
 !Package categoriesFor: #errorFileCorrupt!exceptions!private! !
 !Package categoriesFor: #fileInClasses!development!private!source filing! !
 !Package categoriesFor: #fileInScript:!private!source filing! !
-!Package categoriesFor: #fileLocator!accessing!public! !
 !Package categoriesFor: #fileNameForBinaryGlobal:!mapping!private! !
 !Package categoriesFor: #fileNameForSourceGlobal:!mapping!private! !
 !Package categoriesFor: #fileOutName!public!source filing! !

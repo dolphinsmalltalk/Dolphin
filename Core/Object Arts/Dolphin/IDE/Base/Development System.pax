@@ -87,6 +87,7 @@ package classNames
 	add: #PackageHierarchyModel;
 	add: #PackagePrerequisites;
 	add: #PackagePrompter;
+	add: #PackageRelativeFileLocator;
 	add: #PackageSelector;
 	add: #PackedReferencesCategory;
 	add: #PluggableEnvironment;
@@ -274,6 +275,7 @@ package methodNames
 	add: #Package -> #browse;
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
+	add: #Package -> #fileLocator;
 	add: #Package -> #hasImageStripper;
 	add: #Package -> #icon;
 	add: #Package -> #imageStripper;
@@ -666,7 +668,6 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
-	'Splash\Seeing the Objects Inside'
 	'..\..\System\Compiler\Smalltalk Compiler'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
@@ -829,6 +830,11 @@ Error subclass: #InvalidInstallationError
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
+RelativeFileLocator subclass: #PackageRelativeFileLocator
+	instanceVariableNames: 'packageName'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 Folder subclass: #PackageFolder
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -850,7 +856,7 @@ MethodSearch subclass: #MethodSourceSearch
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Model subclass: #SmalltalkSystem
-	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize'
+	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -3841,6 +3847,9 @@ defaultAboutBitmap
 			olePicture fromFile: bitmapFile usingLocator: (FolderRelativeFileLocator basePath: self path)]
 		ifFalse: [DIBSection width: 480 height: 360]!
 
+fileLocator
+	^PackageRelativeFileLocator package: self!
+
 hasImageStripper
 	^imageStripperBytes notNil and: [self imageStripper notNil]!
 
@@ -3873,6 +3882,7 @@ searchForInTool: aSmalltalkToolShell
 !Package categoriesFor: #browse!enumerating!public! !
 !Package categoriesFor: #defaultAbout!public! !
 !Package categoriesFor: #defaultAboutBitmap!constants!public! !
+!Package categoriesFor: #fileLocator!accessing!public! !
 !Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #icon!public! !
 !Package categoriesFor: #imageStripper!accessing!public! !
