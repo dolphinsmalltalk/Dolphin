@@ -113,6 +113,6 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
-!AXDllImageStripper class categoriesFor: #defaultOptions!constants!private! !
+!AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
 !AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
 

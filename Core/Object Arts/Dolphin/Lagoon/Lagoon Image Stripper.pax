@@ -20,7 +20,6 @@ package classNames
 	yourself.
 
 package methodNames
-	add: #Package -> #rehydrateImageStripper:;
 	add: #UserLibrary -> #messageBox:lpText:lpCaption:uType:;
 	add: 'ExternalStructure class' -> #fullyCompileDefinition;
 	add: 'ExternalStructure class' -> #removeTemplate;
@@ -33,9 +32,8 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\Base\Dolphin').
 
 package!
 
@@ -57,8 +55,8 @@ Object subclass: #VersionResource
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters _unused18'
-	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource potentialAspectSetters stubFilePath logStream elementStack developmentClasses preservedMessages snapshotType rootClasses supersentMethods potentialAspectGetters notifier'
+	classVariableNames: 'AllResourcesStripped ClearGuidsMask CompileStructsMask EmptyMethodDictsMask FoldBytecodesMask FoldMethodDictsMask FoldStringsMask IgnoreViewReferencesMask KeepImageMask LogLiveClassesMask LogPrerequisitesMask LogReferencesMask NoXPManifestMask PreserveAspectsMask PurgeStubbornClassesMask RetainDevSysMask RetainInstVarNamesMask RetainSubclassRespMask StripClassBuilderMask StripClassesMask StripClassInfoMask StripDeprecatedMask StripMethodsMask StripPackagesMask StripResourcesMask StripShouldNotImplMask ToGoMask UnattendedMask WriteLogMask'
 	poolDictionaries: 'MessageBoxConstants Win32Constants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
@@ -96,23 +94,6 @@ onPreStripImage
 	"Allows PropertyManager to be stripped if #propertyManager is never sent. If it is the method will still ref the var binding."
 	classPool removeKey: '_PropertyRegister'! !
 !Object class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-
-!Package methodsFor!
-
-rehydrateImageStripper: stripperClass 
-	| stripper |
-	stripper := imageStripperBytes notNil ifTrue: [Object fromBinaryStoreBytes: imageStripperBytes].
-	stripper isNil 
-		ifTrue: 
-			[stripper := (stripperClass new)
-						rootPackage: self;
-						stripRedundantClasses: true;
-						yourself]
-		ifFalse: 
-			["If the package has been renamed the STB'd image stripper might lose its root package"
-			stripper rootPackage isNil ifTrue: [stripper rootPackage: self]].
-	^stripper! !
-!Package categoriesFor: #rehydrateImageStripper:!accessing!private! !
 
 !UserLibrary methodsFor!
 

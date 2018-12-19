@@ -437,27 +437,20 @@ initialize
 	ProgressId := 1015.
 	ExplanationId := 1018.
 	StatusId := 1016.
-
 	MessageMap := LookupTable new.
 	MessageMap
-		at: WM_CREATE					put: #wmCreate:wParam:lParam:;
-"		at: WM_PAINT					put: #wmPaint:wParam:lParam:;"
-		at: WM_CLOSE					put: #wmClose:wParam:lParam:;
-"		at: WM_ERASEBKGND			put: #wmEraseBkGnd:wParam:lParam:;"
-		at: WM_NCDESTROY			put: #wmNcDestroy:wParam:lParam:;
-		at: WM_NOTIFY					put: #wmNotify:wParam:lParam:;
-		at: WM_PARENTNOTIFY			put: #wmParentNotify:wParam:lParam:;
-		at: WM_INITDIALOG				put: #wmInitDialog:wParam:lParam:;
-		at: WM_SETCURSOR				put: #wmSetCursor:wParam:lParam:;
-		at: WM_CTLCOLORMSGBOX	put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLOREDIT			put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORLISTBOX	put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORBTN			put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORDLG			put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSCROLLBAR	put: #wmCtlColor:wParam:lParam:;
-		at: WM_CTLCOLORSTATIC	put: #wmCtlColor:wParam:lParam:;
-		at: WM_GETDLGCODE			put: #wmGetDlgCode:wParam:lParam:
-!
+		at: WM_CREATE put: #wmCreate:wParam:lParam:;
+		at: WM_CLOSE put: #wmClose:wParam:lParam:;
+		at: WM_NCDESTROY put: #wmNcDestroy:wParam:lParam:;
+		at: WM_INITDIALOG put: #wmInitDialog:wParam:lParam:;
+		at: WM_SETCURSOR put: #wmSetCursor:wParam:lParam:;
+		at: WM_CTLCOLORMSGBOX put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLOREDIT put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORLISTBOX put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORBTN put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORDLG put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORSCROLLBAR put: #wmCtlColor:wParam:lParam:;
+		at: WM_CTLCOLORSTATIC put: #wmCtlColor:wParam:lParam:!
 
 onPreStripImage
 	self
@@ -466,7 +459,7 @@ onPreStripImage
 
 show
 	^self new show! !
-!ImageStripperProgress class categoriesFor: #initialize!initializing!public! !
+!ImageStripperProgress class categoriesFor: #initialize!initializing!must not strip!public! !
 !ImageStripperProgress class categoriesFor: #onPreStripImage!private! !
 !ImageStripperProgress class categoriesFor: #show!operations!public! !
 

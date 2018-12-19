@@ -991,8 +991,9 @@ perform: selector
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {}!
 
 perform: selector with: argument1
@@ -1005,8 +1006,9 @@ perform: selector with: argument1
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1}!
 
 perform: selector with: argument1 with: argument2
@@ -1019,8 +1021,9 @@ perform: selector with: argument1 with: argument2
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1. argument2}!
 
 perform: selector with: argument1 with: argument2 with: argument3
@@ -1033,8 +1036,9 @@ perform: selector with: argument1 with: argument2 with: argument3
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1. argument2. argument3}!
 
 perform: selector with: argument1 with: argument2 with: argument3 with: argument4
@@ -1047,8 +1051,9 @@ perform: selector with: argument1 with: argument2 with: argument3 with: argument
 
 	<primitive: 83>
 	^Error
-		perform: selector
-		failedFor: self
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
 		withArgs: {argument1. argument2. argument3. argument4}!
 
 perform: selector withArguments: arguments
@@ -1060,8 +1065,12 @@ perform: selector withArguments: arguments
 		0 -	The number of arguments expected with the selector is not the number supplied.
 		1 -	arguments is not an <Array>."
 
-	<primitive: 84> 
-	^Error perform: selector failedFor: self withArgs: arguments!
+	<primitive: 84>
+	^Error
+		performFailed: Processor activeProcess primitiveFailureCode
+		of: selector
+		for: self
+		withArgs: arguments!
 
 perform: aSymbol withArgumentsAt: anAddress descriptor: anExternalDescriptor 
 	"Private - Send message with selector, aSymbol, to anObject,

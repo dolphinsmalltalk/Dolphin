@@ -11,13 +11,12 @@ PackageClosureTests comment: ''!
 !PackageClosureTests methodsFor!
 
 consoleAppUnimplemented
-	"Private - Expected missing selectors in a console app with the image stripper (which actually causes all of these)
-		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
-		- instVars, viewClass - Sent to STBViewProxy instances built when reading view resources, but only when deploying GUI apps (which will prevent STBViewProxy being removed)
-		- recompileDefinition - sent before the development package which defines it is unloaded
+	"Private - Expected missing selectors in a console app with the image stripper (which is responsible for all of these)
+		- instVars, viewClass - Sent to STBViewProxy instances built when reading view resources, but only when deploying GUI apps (which will contain STBViewProxy)
+		- recompileDefinition - only sent before the development package which defines it is unloaded
 		- setWindowULong:&c - sent to subclass the application deployment progress dialog, before any packages are unloaded"
 
-	^#(#defaultSessionManagerClass #instVars #recompileDefinition #setWindowULong:nIndex:dwNewLong: #viewClass)!
+	^#(#instVars #recompileDefinition #setWindowULong:nIndex:dwNewLong: #viewClass)!
 
 environmentForPackageClosure: aCollectionOfPackages
 	| closure |
@@ -29,7 +28,12 @@ environmentForPackageClosure: aCollectionOfPackages
 	^BrowserEnvironment new forPackages: closure!
 
 simpleGuiAppUnimplementedMessages
-	^#(#createThumbnailExtent:mask: #defaultSessionManagerClass #recompileDefinition #ttmRelayEvent:)!
+	"Private - Answer the collection of selectors of methods expected to be missing in a simple GUI app with the image stripper:
+		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood.
+		- recompileDefinition - sent from ExternalStructure, but only before the development package which defines it is unloaded
+		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
+
+	^#(#createThumbnailExtent:mask: #recompileDefinition #ttmRelayEvent:)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log."
@@ -50,11 +54,7 @@ testHelloWorld
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
-	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods. In addition to the majority of the base package missing methods, the following additional methods are missing:
-		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood.
-		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
-		- recompileDefinition - sent from base package before the development package which defines it is unloaded
-		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
+	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods."
 
 	self verifyPackageClosure: {Notepad owningPackage. ImageStripper owningPackage}
 		missing: self simpleGuiAppUnimplementedMessages!

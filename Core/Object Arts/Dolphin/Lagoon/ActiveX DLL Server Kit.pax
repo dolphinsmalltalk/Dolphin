@@ -30,14 +30,14 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\ActiveX\Automation\ActiveX Automation';
-	add: '..\IDE\Base\Development System';
-	add: '..\Base\Dolphin';
-	add: '..\MVP\Base\Dolphin MVP Base';
-	add: 'Lagoon Image Stripper';
-	add: '..\ActiveX\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\ActiveX\Automation\ActiveX Automation'
+	'..\IDE\Base\Development System'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Message Box'
+	'..\MVP\Base\Dolphin MVP Base'
+	'Lagoon Image Stripper'
+	'..\ActiveX\COM\OLE COM').
 
 package setManualPrerequisites: #(
 	'ActiveX Automation').
@@ -46,6 +46,11 @@ package!
 
 "Class Definitions"!
 
+ImageStripper subclass: #AXDllImageStripper
+	instanceVariableNames: 'typeLibPath'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 COMInterfaceImp subclass: #IPDolphin
 	instanceVariableNames: 'plugHole coclasses'
 	classVariableNames: 'Current'
@@ -58,11 +63,6 @@ IUnknown subclass: #IIPDolphin
 	classInstanceVariableNames: ''!
 IUnknown subclass: #IIPPlugHole
 	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ImageStripper subclass: #AXDllImageStripper
-	instanceVariableNames: 'typeLibPath'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
