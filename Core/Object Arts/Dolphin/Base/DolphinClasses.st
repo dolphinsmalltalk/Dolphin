@@ -1631,7 +1631,7 @@ STBCollectionProxy subclass: #STBIdentityDictionaryProxy
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STBCollectionProxy subclass: #STBSortedCollectionProxy
-	instanceVariableNames: 'sortBlock'
+	instanceVariableNames: 'sortAlgorithm'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
