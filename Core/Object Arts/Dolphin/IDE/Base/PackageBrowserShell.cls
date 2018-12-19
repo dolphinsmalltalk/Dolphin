@@ -1455,15 +1455,6 @@ glob := Smalltalk at: x.
 toolsFolderHelpId
 	^10598!
 
-uninitialize
-	"Private - Uninitialize the receiver prior to remove from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self!
-
 wordWrapComment
 	"Answer true if instances of the receiver use comment word wrapping."
 
@@ -1479,7 +1470,6 @@ wordWrapComment: aBoolean
 !PackageBrowserShell class categoriesFor: #publishedAspects!public! !
 !PackageBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
 !PackageBrowserShell class categoriesFor: #toolsFolderHelpId!public! !
-!PackageBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !PackageBrowserShell class categoriesFor: #wordWrapComment!accessing!options!public! !
 !PackageBrowserShell class categoriesFor: #wordWrapComment:!accessing!options!public! !
 

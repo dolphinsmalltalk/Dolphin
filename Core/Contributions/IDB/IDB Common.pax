@@ -38,12 +38,11 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 

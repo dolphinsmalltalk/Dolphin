@@ -171,17 +171,7 @@ showAsToolboxFor: aView at: aPoint
 	^toolbox show!
 
 toolsFolderHelpId
-	^10594!
-
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+	^10594! !
 !ResourceBrowser class categoriesFor: #displayOn:!displaying!public! !
 !ResourceBrowser class categoriesFor: #icon!constants!public! !
 !ResourceBrowser class categoriesFor: #initialize!initializing!private! !
@@ -189,5 +179,4 @@ uninitialize
 !ResourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
 !ResourceBrowser class categoriesFor: #showAsToolboxFor:at:!instance creation!public! !
 !ResourceBrowser class categoriesFor: #toolsFolderHelpId!public! !
-!ResourceBrowser class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

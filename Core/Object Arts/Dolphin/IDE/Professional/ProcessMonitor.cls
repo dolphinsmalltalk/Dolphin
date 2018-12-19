@@ -334,17 +334,7 @@ reuseIfOpen
 !
 
 toolsFolderHelpId
-	^10597!
-
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+	^10597! !
 !ProcessMonitor class categoriesFor: #defaultUpdateInterval!options!public! !
 !ProcessMonitor class categoriesFor: #defaultUpdateInterval:!options!public! !
 !ProcessMonitor class categoriesFor: #displayOn:!displaying!public! !
@@ -354,5 +344,4 @@ uninitialize
 !ProcessMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
 !ProcessMonitor class categoriesFor: #reuseIfOpen!accessing!public! !
 !ProcessMonitor class categoriesFor: #toolsFolderHelpId!constants!public! !
-!ProcessMonitor class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

@@ -407,18 +407,7 @@ typeOfObject: aSourceObject
 
 	^(aSourceObject isKindOf: Class)
 		ifTrue: [ 'a Class']
-		ifFalse: [ aSourceObject basicPrintString ]!
-
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-
-	self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+		ifFalse: [ aSourceObject basicPrintString ]! !
 !SourceBrowser class categoriesFor: #displayOn:!displaying!public! !
 !SourceBrowser class categoriesFor: #forSourcesOfPackages:!instance creation!public! !
 !SourceBrowser class categoriesFor: #icon!constants!public! !
@@ -428,5 +417,4 @@ uninitialize
 !SourceBrowser class categoriesFor: #show!instance creation!public! !
 !SourceBrowser class categoriesFor: #toolsFolderHelpId!public! !
 !SourceBrowser class categoriesFor: #typeOfObject:!helpers!private! !
-!SourceBrowser class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

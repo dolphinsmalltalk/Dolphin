@@ -2198,8 +2198,7 @@ skipTable
 uninitialize
 	"Private - Uninitialize the receiver prior to remove from the system."
 
-	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: #unusedInterrupt:].
-	Smalltalk developmentSystem unregisterTool: self!
+	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: #unusedInterrupt:]!
 
 unskipSelector: aSymbol of: aClass
 	"Private - Remove the specified method to the set of those skipped by the debugger."

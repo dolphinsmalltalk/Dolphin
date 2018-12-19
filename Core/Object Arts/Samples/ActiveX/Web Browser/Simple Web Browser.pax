@@ -26,24 +26,23 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation';
-	add: '..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points';
-	add: '..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting';
-	add: '..\..\..\Dolphin\Base\Dolphin';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\..\Dolphin\MVP\Gdiplus\Gdiplus';
-	add: '..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer';
-	add: '..\..\..\Dolphin\ActiveX\COM\OLE COM';
-	add: '..\..\..\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
+	'..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points'
+	'..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
+	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\..\Dolphin\MVP\Gdiplus\Gdiplus'
+	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
+	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
 
 package setManualPrerequisites: #(
 	'Windows Shell').

@@ -259,16 +259,7 @@ toolsFolderIcon
 			(sysicon tool create)
 				caption: desc;
 				show]
-		helpId: self toolsFolderHelpId!
-
-uninitialize
-	"Private - Uninitialize the receiver prior to remove from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self toolDescription;
-		unregisterTool: self! !
+		helpId: self toolsFolderHelpId! !
 !EnvironmentBrowserShell class categoriesFor: #displayOn:!displaying!public! !
 !EnvironmentBrowserShell class categoriesFor: #icon!constants!public! !
 !EnvironmentBrowserShell class categoriesFor: #initialize!initializing!private! !
@@ -278,5 +269,4 @@ uninitialize
 !EnvironmentBrowserShell class categoriesFor: #toolDescription!constants!public! !
 !EnvironmentBrowserShell class categoriesFor: #toolsFolderHelpId!constants!public! !
 !EnvironmentBrowserShell class categoriesFor: #toolsFolderIcon!constants!public! !
-!EnvironmentBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

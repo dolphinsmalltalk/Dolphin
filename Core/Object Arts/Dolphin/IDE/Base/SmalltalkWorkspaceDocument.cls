@@ -626,16 +626,6 @@ toolsFolderIcon
 		description: self displayString
 		helpId: self toolsFolderHelpId!
 
-uninitialize
-	"Private - Un-register the system tools folder icon for the receiver to allow clean
-	removal of this class from the system.
-		self uninitialize
-	"
-
-	Smalltalk developmentSystem
-		removeSystemFolderIconNamed: self displayString;
-		unregisterTool: self!
-
 variableTips
 	^VariableTips!
 
@@ -691,7 +681,6 @@ workspaceClass
 !SmalltalkWorkspaceDocument class categoriesFor: #textStyles:!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #toolsFolderHelpId!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #toolsFolderIcon!constants!public! !
-!SmalltalkWorkspaceDocument class categoriesFor: #uninitialize!initializing!private! !
 !SmalltalkWorkspaceDocument class categoriesFor: #variableTips!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #variableTips:!accessing!public! !
 !SmalltalkWorkspaceDocument class categoriesFor: #wordWrap!accessing!options!public! !

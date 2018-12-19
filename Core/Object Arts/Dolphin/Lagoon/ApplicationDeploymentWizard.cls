@@ -521,21 +521,7 @@ toolsFolderIcon
 	"Answer an instance of SmalltalkSystemIcon suitable for representing the
 	receiver in the system folder."
 
-	^SmalltalkSystemIcon showModal: self description: self displayString!
-
-uninitialize
-	"Private - Uninitialize the receiver as it is about to be removed from the system.
-	Un-register the system tools folder icon for the receiver.
-
-		self uninitialize
-
-	Note: This method is in the 'must strip' category so that it is removed in the early
-	stages of image stripping. It is not required during stripping, because the system
-	folders are cleared down anyway, and it may generate an error if required parts
-	of the development system have already been removed.
-	"
-
-	Smalltalk developmentSystem unregisterTool: self! !
+	^SmalltalkSystemIcon showModal: self description: self displayString! !
 !ApplicationDeploymentWizard class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
 !ApplicationDeploymentWizard class categoriesFor: #defaultModel!models!public! !
 !ApplicationDeploymentWizard class categoriesFor: #displayOn:!displaying!public! !
@@ -546,5 +532,4 @@ uninitialize
 !ApplicationDeploymentWizard class categoriesFor: #saveImageOnDeploy!options!public! !
 !ApplicationDeploymentWizard class categoriesFor: #saveImageOnDeploy:!options!public! !
 !ApplicationDeploymentWizard class categoriesFor: #toolsFolderIcon!accessing!public! !
-!ApplicationDeploymentWizard class categoriesFor: #uninitialize!class hierarchy-removing!initializing!private! !
 

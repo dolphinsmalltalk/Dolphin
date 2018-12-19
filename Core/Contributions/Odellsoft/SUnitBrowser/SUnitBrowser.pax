@@ -90,23 +90,23 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Refactory\Refactoring Browser\Environments\RBEnvironments';
-	add: '..\..\Camp Smalltalk\SUnit\SUnit';
-	add: 'SUnitBrowserModelApp';
-	add: '..\..\Camp Smalltalk\SUnit\SUnitUI';
-	add: '..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\Camp Smalltalk\SUnit\SUnit'
+	'SUnitBrowserModelApp'
+	'..\..\Camp Smalltalk\SUnit\SUnitUI'
+	'..\..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
 
