@@ -116,12 +116,6 @@ commandLineParser
 				[self inputState queueDeferredAction: [startupSession == self sessionId ifTrue: [self quit]]];
 		yourself!
 
-dolphinNewsgroupUrl
-	^'http://groups.google.com/group/comp.lang.smalltalk.dolphin'!
-
-dolphinWikiUrl
-	^'https://github.com/dolphinsmalltalk/Dolphin/wiki'!
-
 free
 	"Free any artifacts of the current session.
 	WARNING: This may disable the development system, so use carefully."
@@ -143,24 +137,6 @@ getInstallationDirectory
 
 			folder := File splitPathFrom: VMLibrary default fileName].
 	^File appendPathDelimiter: folder!
-
-helpContentsTopic
-	^'Welcome_to_Dolphin'!
-
-helpFirstSplashTopic
-	^'First_Splash'!
-
-helpGuidedTourTopic
-	^'Guided_Tour'!
-
-helpRootUrl
-	^FileLocator installRelative localFileSpecFor: 'EducationCentre7.chm::/'!
-
-helpTutorialsTopic
-	^'Tutorials'!
-
-helpWhatsNewTopic
-	^'Whats_New'!
 
 imageStamp
 	"Answer the TimeStamp at which the image was saved."
@@ -301,11 +277,6 @@ mainShellClass
 myDolphinUrl
 	^'http://www.object-arts.com/content/mydolphin/mydolphin?serialNumberOnly=<1d>' 
 		expandMacrosWith: self registeredSerialNumber!
-
-objectArtsUrl
-	"Private - Answer the URL of the Object Arts home page"
-
-	^'http://www.object-arts.com'!
 
 onExit
 	"Perform pre-termination actions."
@@ -746,16 +717,8 @@ versionString
 !DevelopmentSessionManager categoriesFor: #canPlaySounds!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #closeAllHelp!operations!public! !
 !DevelopmentSessionManager categoriesFor: #commandLineParser!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #dolphinNewsgroupUrl!public! !
-!DevelopmentSessionManager categoriesFor: #dolphinWikiUrl!public! !
 !DevelopmentSessionManager categoriesFor: #free!public!realizing/unrealizing! !
 !DevelopmentSessionManager categoriesFor: #getInstallationDirectory!helpers!private! !
-!DevelopmentSessionManager categoriesFor: #helpContentsTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpFirstSplashTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpGuidedTourTopic!public! !
-!DevelopmentSessionManager categoriesFor: #helpRootUrl!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpTutorialsTopic!constants!public! !
-!DevelopmentSessionManager categoriesFor: #helpWhatsNewTopic!constants!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp!accessing!public! !
 !DevelopmentSessionManager categoriesFor: #imageStamp:!accessing!private! !
 !DevelopmentSessionManager categoriesFor: #imageVersionMinor:!accessing!private! !
@@ -773,7 +736,6 @@ versionString
 !DevelopmentSessionManager categoriesFor: #logError:!operations-logging!public! !
 !DevelopmentSessionManager categoriesFor: #mainShellClass!constants!public! !
 !DevelopmentSessionManager categoriesFor: #myDolphinUrl!private! !
-!DevelopmentSessionManager categoriesFor: #objectArtsUrl!constants!private! !
 !DevelopmentSessionManager categoriesFor: #onExit!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryEndSession:!event handling!public! !
 !DevelopmentSessionManager categoriesFor: #onQueryWindowsShutdown!event handling!public! !

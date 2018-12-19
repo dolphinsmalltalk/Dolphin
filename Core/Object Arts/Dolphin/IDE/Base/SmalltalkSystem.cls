@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
 Model subclass: #SmalltalkSystem
-	instanceVariableNames: 'workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize'
+	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize'
 	classVariableNames: 'Current FileDrops RegisteredTools'
 	poolDictionaries: 'CompilerFlags SmalltalkParseErrorCodes'
 	classInstanceVariableNames: ''!
@@ -25,7 +25,6 @@ Class Variables:
 aboutBoxClass
 	"Private - Answer the class of about box to display on request."
 
-	aboutBoxClass isNil ifTrue: [aboutBoxClass := DolphinSplash].
 	^aboutBoxClass
 !
 
@@ -37,16 +36,18 @@ aboutBoxClass: aSplash
 aboutDolphin
 	"Show the About box, or if the display is not capable a simple MessageBox with pertinent details."
 
-	self aboutBoxClass canDisplay 
-		ifTrue: [self aboutBoxClass new show]
+	| splashClass |
+	splashClass := self aboutBoxClass.
+	(splashClass notNil and: [splashClass canDisplay])
+		ifTrue: [splashClass new show]
 		ifFalse: 
 			[| msg version |
 			version := VMLibrary default versionInfo.
 			msg := 'Dolphin Smalltalk - <1s><n><n><2s>' expandMacrosWith: self sessionManager versionString
 						with: version legalCopyright.
-			(MessageBox new)
+			MessageBox new
 				caption: 'About Dolphin Smalltalk...';
-				icon: self icon;
+				icon: self sessionManager icon;
 				text: msg;
 				open]!
 
@@ -1753,10 +1754,16 @@ displayOn: aStream
 	aStream nextPutAll: 'Development System'!
 
 dolphinNewsgroup
-	self openUrl: self sessionManager dolphinNewsgroupUrl!
+	self openUrl: self dolphinNewsgroupUrl!
+
+dolphinNewsgroupUrl
+	^'http://groups.google.com/group/comp.lang.smalltalk.dolphin'!
+
+dolphinWikiUrl
+	^'https://github.com/dolphinsmalltalk/Dolphin/wiki'!
 
 dolphinWikiWeb
-	self openUrl: self sessionManager dolphinWikiUrl!
+	self openUrl: self dolphinWikiUrl!
 
 dropClassFile: aString
 	(MessageBox
@@ -1871,7 +1878,7 @@ findSelectorValidationBlock
 formatterClass
 	"Answer the <stParseNodeVisitor> that should be used for auto-formatting code in the system."
 
-	formatterClass isNil ifTrue: [formatterClass := self environment at: #RBFormatter].
+	formatterClass isNil ifTrue: [formatterClass := RBFormatter].
 	^formatterClass!
 
 formatterClass: anStParseNodeVisitor
@@ -1904,22 +1911,37 @@ hasUndoableOperations
 helpContents
 	"Open the contents page in the Education Centre"
 
-	self openHelpTopic: self sessionManager helpContentsTopic!
+	self openHelpTopic: self helpContentsTopic!
+
+helpContentsTopic
+	^'Welcome_to_Dolphin'!
 
 helpGuidedTour
 	"Open the Guided Tour page in the Education Centre"
 
-	self openHelpTopic: self sessionManager helpGuidedTourTopic!
+	self openHelpTopic: self helpGuidedTourTopic!
+
+helpGuidedTourTopic
+	^'Guided_Tour'!
+
+helpRootUrl
+	^FileLocator installRelative localFileSpecFor: 'EducationCentre7.chm::/'!
 
 helpTutorials
 	"Open the Tutorials page in the Education Centre"
 
-	self openHelpTopic: self sessionManager helpTutorialsTopic!
+	self openHelpTopic: self helpTutorialsTopic!
+
+helpTutorialsTopic
+	^'Tutorials'!
 
 helpWhatsNew
 	"Open the What's New page in the Education Centre"
 
-	self openHelpTopic: self sessionManager helpWhatsNewTopic!
+	self openHelpTopic: self helpWhatsNewTopic!
+
+helpWhatsNewTopic
+	^'Whats_New'!
 
 helpWhatsThis
 	"Displays a 'What This' help cursor and tracks the mouse until it is clicked over a particular object. 
@@ -1981,7 +2003,7 @@ initialize
 	preferAlternateInspectors := false.
 
 	"Set the development system Help/About dialog"
-	Object owningPackage aboutBlock: [:package | self aboutBoxClass show].
+	Object owningPackage aboutBlock: [:package | self aboutDolphin].
 
 	"Font for lists, trees, etc, in the dev tools - use the standard Windows font, Segoe UI, but
 	slightly larger than the normal icon title font. Note that there is a separate setting for
@@ -2338,7 +2360,12 @@ nukeChangeHistory
 	self changeManager class nuke!
 
 objectArtsHomePage
-	self openUrl: self sessionManager objectArtsUrl!
+	self openUrl: self objectArtsUrl!
+
+objectArtsUrl
+	"Private - Answer the URL of the Object Arts home page"
+
+	^'http://www.object-arts.com'!
 
 okToInstallPatchLevel: anInteger
 	"Private - Check to see if an attempt to upgrade to a patch level of anInteger is valid. 
@@ -2561,7 +2588,7 @@ openHelpTopic: topic
 	"Open the <readableString> Education Centre topic"
 
 	^self openHelpUrl: (File 
-				composePath: self sessionManager helpRootUrl
+				composePath: self helpRootUrl
 				stem: topic
 				extension: 'htm')!
 
@@ -3659,7 +3686,9 @@ removeSystemFolderIconsForClass: aClass
 	"Implementation Note: This method may be called during stripping when classes are removed, but after the system folder has been cleared, therefore we try and avoid lazily re-initializing the system folder!!"
 
 	systemFolder isNil ifTrue: [^self].
-	(systemFolder select: [:each | each tool == aClass]) do: [:each | systemFolder remove: each]!
+	(systemFolder select: [:each | each tool == aClass]) do: [:each | 
+		systemFolder remove: each].
+	self unregisterTool: aClass!
 
 renameClass: aClass 
 	"Rename aClass to a new name requested from the user."
@@ -3943,12 +3972,6 @@ sourceManager
 
 	^self class sourceManager!
 
-splashPlayTheGame
-	^SeeingTheObjectsInside splashPlayTheGame!
-
-splashPlayTheGame: aBoolean 
-	^SeeingTheObjectsInside splashPlayTheGame: aBoolean!
-
 splashShowAtStartup
 	^self sessionManager splashShowAtStartup!
 
@@ -3982,10 +4005,14 @@ systemFolder
 	^systemFolder!
 
 systemFolderClass
-	"Answer the class of System Folder (a <SmalltalkToolShell>)
-	to be used by default in the development environment."
+	"Answer the class of System Folder (a <SmalltalkToolShell>) to be used by default in the development environment."
 
-	^SmalltalkSystemShell!
+	^systemFolderClass!
+
+systemFolderClass: aSmalltalkToolShell
+	"Set the class of System Folder (a <SmalltalkToolShell>) to be used by default in the development environment."
+
+	systemFolderClass := aSmalltalkToolShell!
 
 systemFolderNamed: name 
 	^self systemFolder asOrderedCollection detect: [:each | each description = name]!
@@ -4353,6 +4380,8 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #disassemblyStylerClass!constants!public! !
 !SmalltalkSystem categoriesFor: #displayOn:!displaying!public! !
 !SmalltalkSystem categoriesFor: #dolphinNewsgroup!commands!public! !
+!SmalltalkSystem categoriesFor: #dolphinNewsgroupUrl!public! !
+!SmalltalkSystem categoriesFor: #dolphinWikiUrl!public! !
 !SmalltalkSystem categoriesFor: #dolphinWikiWeb!commands!public! !
 !SmalltalkSystem categoriesFor: #dropClassFile:!commands!private! !
 !SmalltalkSystem categoriesFor: #dropFile:!commands!private! !
@@ -4376,9 +4405,14 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #hasRedoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #hasUndoableOperations!public!testing! !
 !SmalltalkSystem categoriesFor: #helpContents!commands!operations!public! !
+!SmalltalkSystem categoriesFor: #helpContentsTopic!constants!public! !
 !SmalltalkSystem categoriesFor: #helpGuidedTour!commands!operations!public! !
+!SmalltalkSystem categoriesFor: #helpGuidedTourTopic!public! !
+!SmalltalkSystem categoriesFor: #helpRootUrl!constants!public! !
 !SmalltalkSystem categoriesFor: #helpTutorials!commands!operations!public! !
+!SmalltalkSystem categoriesFor: #helpTutorialsTopic!constants!public! !
 !SmalltalkSystem categoriesFor: #helpWhatsNew!commands!operations!public! !
+!SmalltalkSystem categoriesFor: #helpWhatsNewTopic!constants!public! !
 !SmalltalkSystem categoriesFor: #helpWhatsThis!commands!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass!options!public! !
 !SmalltalkSystem categoriesFor: #hierarchyBrowserClass:!options!public! !
@@ -4428,6 +4462,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #nonDefaultSystemOptionsLiteralsMap!private!theming! !
 !SmalltalkSystem categoriesFor: #nukeChangeHistory!private!refactoring! !
 !SmalltalkSystem categoriesFor: #objectArtsHomePage!commands!public! !
+!SmalltalkSystem categoriesFor: #objectArtsUrl!constants!private! !
 !SmalltalkSystem categoriesFor: #okToInstallPatchLevel:!patching!private! !
 !SmalltalkSystem categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
 !SmalltalkSystem categoriesFor: #onClassAdded:!event handling!public! !
@@ -4559,8 +4594,6 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #smalltalkExit!commands!public! !
 !SmalltalkSystem categoriesFor: #smalltalkFilesType!constants!private! !
 !SmalltalkSystem categoriesFor: #sourceManager!commands!public! !
-!SmalltalkSystem categoriesFor: #splashPlayTheGame!accessing!public! !
-!SmalltalkSystem categoriesFor: #splashPlayTheGame:!accessing!public! !
 !SmalltalkSystem categoriesFor: #splashShowAtStartup!accessing!public! !
 !SmalltalkSystem categoriesFor: #splashShowAtStartup:!accessing!public! !
 !SmalltalkSystem categoriesFor: #stbSaveOn:!binary filing!public! !
@@ -4568,6 +4601,7 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 !SmalltalkSystem categoriesFor: #systemEnvironment!commands!private! !
 !SmalltalkSystem categoriesFor: #systemFolder!accessing!public! !
 !SmalltalkSystem categoriesFor: #systemFolderClass!constants!public! !
+!SmalltalkSystem categoriesFor: #systemFolderClass:!constants!public! !
 !SmalltalkSystem categoriesFor: #systemFolderNamed:!accessing!private! !
 !SmalltalkSystem categoriesFor: #systemOptions!commands!public! !
 !SmalltalkSystem categoriesFor: #testBrowserClass!options!public! !
@@ -4639,9 +4673,9 @@ publishedAspectsOfInstances
 
 	| aspects |
 	aspects := super publishedAspectsOfInstances.
-	#(#hierarchyBrowserClass #protocolBrowserClass #debuggerClass #methodExplorerClass #packageBrowserClass #resourceBrowserClass #viewComposerClass #workspaceClass #workspaceShellClass #classChooserClass #resourceIdentifierDialogClass #defaultInspectorClass #testBrowserClass) 
+	#(#hierarchyBrowserClass #protocolBrowserClass #debuggerClass #methodExplorerClass #packageBrowserClass #resourceBrowserClass #viewComposerClass #workspaceClass #workspaceShellClass #classChooserClass #resourceIdentifierDialogClass #defaultInspectorClass #testBrowserClass #aboutBoxClass)
 		do: [:each | aspects add: (Aspect name: each)].
-	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup #splashPlayTheGame) 
+	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
 		add: ((Aspect font: #defaultFont) category: #appearence);
@@ -4652,11 +4686,9 @@ publishedAspectsOfInstances
 		add: (Aspect hotkey: #interruptHotKey);
 		add: (Aspect
 					choice: #toolbarBitmapSize
-					from: ##({16@16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
+					from: ##({16 @ 16. 20 @ 20. 24 @ 24. 32 @ 32. 40 @ 40. 48 @ 48. 64 @ 64})
 					andNil: nil);
-		add: (Aspect 
-				choice: #defaultMaxStack
-				from: #(32 64 96 128));
+		add: (Aspect choice: #defaultMaxStack from: #(32 64 96 128));
 		yourself!
 
 publishedEventsOfInstances
@@ -4693,16 +4725,19 @@ registerTool: aToolClass
 	(aToolClass class conformsToProtocol: #installableSystemTool) 
 		ifTrue: [aToolClass registerAsToolWith: self]!
 
+reset
+	Current notNil ifTrue: [Current uninitialize].
+	Current := nil.
+	RegisteredTools := nil!
+
 toolBackgroundColor
 	^self current toolBackgroundColor!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	Current notNil ifTrue: [Current uninitialize].
-	Color removeNamed: #toolBackground.
-	Current := nil.
-	RegisteredTools := nil!
+	self reset.
+	Color removeNamed: #toolBackground!
 
 unregisterTool: aToolClass
 	"Removes aToolClass from the collection of registered tools for the receiver."
@@ -4720,6 +4755,7 @@ unregisterTool: aToolClass
 !SmalltalkSystem class categoriesFor: #publishedEventsOfInstances!events!public! !
 !SmalltalkSystem class categoriesFor: #registeredTools!accessing!public! !
 !SmalltalkSystem class categoriesFor: #registerTool:!accessing!public! !
+!SmalltalkSystem class categoriesFor: #reset!initializing!public! !
 !SmalltalkSystem class categoriesFor: #toolBackgroundColor!accessing!public! !
 !SmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !SmalltalkSystem class categoriesFor: #unregisterTool:!accessing!public! !

@@ -608,7 +608,7 @@ writesInstVar: aString at: anInteger
 !CompiledCode categoriesFor: #accessesInstVar:!development!public!testing! !
 !CompiledCode categoriesFor: #accessesInstVar:at:!development!public!testing! !
 !CompiledCode categoriesFor: #allLiteralsDo:!enumerating!private! !
-!CompiledCode categoriesFor: #allSymbolLiterals!development!enumerating!private! !
+!CompiledCode categoriesFor: #allSymbolLiterals!enumerating!private! !
 !CompiledCode categoriesFor: #allSymbolLiteralsDo:!enumerating!private! !
 !CompiledCode categoriesFor: #argumentCount!method header!public! !
 !CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !

@@ -3,6 +3,10 @@ package := Package name: 'Seeing the Objects Inside'.
 package paxVersion: 1;
 	basicComment: ''.
 
+package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem aboutBoxClass: DolphinSplash'.
+package basicScriptAt: #preuninstall put: '| devsys |
+devsys := Smalltalk developmentSystem.
+devsys aboutBoxClass == DolphinSplash ifTrue: [devsys aboutBoxClass: nil]'.
 
 package classNames
 	add: #DolphinSplash;
@@ -16,15 +20,16 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\..\System\Random\Dolphin Random Stream';
-	add: '..\..\..\MVP\Views\Tooltips\Dolphin Tooltips';
-	add: '..\..\..\MVP\Gdiplus\Gdiplus';
-	add: '..\..\..\MVP\Icons\Internal Bitmaps and Icons';
-	yourself).
+package setPrerequisites: #(
+	'..\Development System'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Base\Dolphin Message Box'
+	'..\..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\..\System\Random\Dolphin Random Stream'
+	'..\..\..\MVP\Views\Tooltips\Dolphin Tooltips'
+	'..\..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\..\MVP\Icons\Internal Bitmaps and Icons').
 
 package!
 
