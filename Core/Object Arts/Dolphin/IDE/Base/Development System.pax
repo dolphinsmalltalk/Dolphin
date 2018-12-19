@@ -276,9 +276,7 @@ package methodNames
 	add: #Package -> #defaultAbout;
 	add: #Package -> #defaultAboutBitmap;
 	add: #Package -> #fileLocator;
-	add: #Package -> #hasImageStripper;
 	add: #Package -> #icon;
-	add: #Package -> #imageStripper;
 	add: #Package -> #publishedAspects;
 	add: #Package -> #searchForInTool:;
 	add: #PackageManager -> #getVersionInfoFor:;
@@ -3850,21 +3848,9 @@ defaultAboutBitmap
 fileLocator
 	^PackageRelativeFileLocator package: self!
 
-hasImageStripper
-	^imageStripperBytes notNil and: [self imageStripper notNil]!
-
 icon
 	self isBasePackage ifTrue: [^self class dolphinPackageIcon].
 	^super icon!
-
-imageStripper
-	"Answer an image stripper for the receiver, or nil ImageStripper class is not present.
-	Since we have to be able to load the receiver into images that do no necessarily have the 
-	ImageStripper class installed, we hold the stripper as a binary filed out ByteArray in imageStripperBytes.
-	We reconstitute this here."
-
-	^self environment at: #ImageStripper
-		ifPresent: [:stripperClass | self rehydrateImageStripper: stripperClass]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -3883,9 +3869,7 @@ searchForInTool: aSmalltalkToolShell
 !Package categoriesFor: #defaultAbout!public! !
 !Package categoriesFor: #defaultAboutBitmap!constants!public! !
 !Package categoriesFor: #fileLocator!accessing!public! !
-!Package categoriesFor: #hasImageStripper!private!testing! !
 !Package categoriesFor: #icon!public! !
-!Package categoriesFor: #imageStripper!accessing!public! !
 !Package categoriesFor: #publishedAspects!accessing!public! !
 !Package categoriesFor: #searchForInTool:!public! !
 

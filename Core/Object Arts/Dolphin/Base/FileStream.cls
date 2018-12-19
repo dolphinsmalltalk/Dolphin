@@ -201,7 +201,7 @@ bufferClassFor: aFile mode: modeSymbol type: encSymbol
 				ifTrue: [aFile size == 0 ifTrue: [#utf8] ifFalse: [String encodingName: aFile sniffEncoding]]
 				ifFalse: [encSymbol].
 	bufClass := BufferClasses lookup: encoding.
-	bufClass isNil ifTrue: [self error: 'Unsupported encoding ' , encSymbol].
+	bufClass isNil ifTrue: [self error: 'Unsupported encoding ' , encoding printString].
 	^bufClass!
 
 close
@@ -609,7 +609,7 @@ initialize
 	"The size of buffer used to hold part of the file contents in memory - chosen to be a
 	reasonably efficient compromise for serial and random I/O."
 	self addClassConstant: 'PageSize' value: 8192.
-	#todo.	"#utf->Utf16String and #utf32 ->Utf32String to be added when implemented."
+	#todo.	"#utf16le->Utf16String and #utf32 ->Utf32String to be added when implemented."
 	self addClassConstant: 'BufferClasses'
 		value: (IdentityDictionary new
 				at: #utf8 put: Utf8String;

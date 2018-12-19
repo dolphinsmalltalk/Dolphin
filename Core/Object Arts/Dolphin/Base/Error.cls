@@ -80,18 +80,20 @@ notYetImplemented
 	^self signal: 'Not implemented yet'
 !
 
-perform: selector failedFor: receiver withArgs: arguments
+performFailed: anInteger of: selector for: receiver withArgs: arguments
 	"Private - A primitive perform call failed, generate an appropriate error."
 
 	^(selector isMemberOf: Symbol)
 		ifTrue: 
 			[(arguments isMemberOf: Array)
 				ifTrue: 
-					["This should not fail, because if not understood does not fail primitive"
-					| argCount|
+					[| argCount |
+					"This should not fail, because if not understood does not fail primitive"
 					argCount := selector argumentCount.
 					argCount = arguments size
-						ifTrue: [receiver primitiveFailed	"unrecognised failure"]
+						ifTrue: 
+							[receiver
+								error: ('Primitive perform of <1p> failed (<2d>)' expandMacrosWith: selector with: anInteger)]
 						ifFalse: 
 							[receiver
 								error: ('Incorrect number of arguments: <1d>, expected <2d>' expandMacrosWith: arguments size
@@ -112,7 +114,7 @@ subclassResponsibility: selector
 !Error class categoriesFor: #nonIntegerIndex:!instance creation!private! !
 !Error class categoriesFor: #notIndexable:!instance creation!private! !
 !Error class categoriesFor: #notYetImplemented!instance creation!private! !
-!Error class categoriesFor: #perform:failedFor:withArgs:!instance creation!private! !
+!Error class categoriesFor: #performFailed:of:for:withArgs:!instance creation!private! !
 !Error class categoriesFor: #severityClass!constants!public! !
 !Error class categoriesFor: #subclassResponsibility:!instance creation!private! !
 
