@@ -146,7 +146,6 @@
       <CallingConvention>FastCall</CallingConvention>
       <CompileAs>Default</CompileAs>
       <Optimization>Disabled</Optimization>
-      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>true</SmallerTypeCheck>
     </ClCompile>
@@ -203,7 +202,6 @@
       <CallingConvention>FastCall</CallingConvention>
       <CompileAs>Default</CompileAs>
       <Optimization>Disabled</Optimization>
-      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <SmallerTypeCheck>true</SmallerTypeCheck>
     </ClCompile>
