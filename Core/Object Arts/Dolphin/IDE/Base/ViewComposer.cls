@@ -2727,6 +2727,9 @@ copyToClipboard: aView
 	self clearClipboard.
 	self addToClipboard: aView!
 
+defaultDefaultView
+	^'Vertical view'!
+
 defaultGridResolution
 	"Answers the default grid resolution to use in the receiver."
 
@@ -2753,15 +2756,14 @@ initialize
 	self initialize
 	"
 
-	(Smalltalk developmentSystem)
+	Smalltalk developmentSystem
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
 	ModifiedFlag := 16r1.
 	MouseClickFlag := 16r2.
 	AdornmentModifiedFlag := 16r4.
-	defaultView := 'Vertical view'.
 	self canUseIdeaSpace: true.
-	self defaultSlideyPinsMap: ##((IdentityDictionary new)
+	self defaultSlideyPinsMap: ##(IdentityDictionary new
 				at: #toolsSlidey put: false;
 				at: #toolbarsSlidey put: false;
 				yourself).
@@ -2804,6 +2806,7 @@ toolsFolderHelpId
 !ViewComposer class categoriesFor: #clipboard:!accessing!public! !
 !ViewComposer class categoriesFor: #copyAllToClipboard:!clipboard operations!public! !
 !ViewComposer class categoriesFor: #copyToClipboard:!clipboard operations!public! !
+!ViewComposer class categoriesFor: #defaultDefaultView!initializing!private! !
 !ViewComposer class categoriesFor: #defaultGridResolution!constants!public! !
 !ViewComposer class categoriesFor: #displayOn:!displaying!public! !
 !ViewComposer class categoriesFor: #extentImage!constants!private! !
