@@ -49,7 +49,9 @@ package methodNames
 	add: #SmalltalkSystem -> #openIdeaSpace;
 	add: #SmalltalkToolShell -> #addToNewIdeaSpace;
 	add: #SmalltalkToolShell -> #browseSystem;
+	add: #SmalltalkToolShell -> #destroy;
 	add: #SmalltalkToolShell -> #dragToolToIdeaSpace;
+	add: #SmalltalkToolShell -> #exit;
 	add: #SmalltalkWorkspaceDocument -> #addToNewIdeaSpace;
 	add: #SmalltalkWorkspaceDocument -> #browseSources;
 	add: #SmalltalkWorkspaceDocument -> #dragToolToIdeaSpace;
@@ -325,11 +327,25 @@ browseSystem
 
 	^self systemModel browseSystem!
 
+destroy
+	"Attempt to forcibly close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to destroy it."
+
+	self isIdeaSpaceCard ifTrue: [^self ideaSpace destroyCard: self].
+	^super destroy!
+
 dragToolToIdeaSpace
-	^self class dragToolToIdeaSpace: self! !
+	^self class dragToolToIdeaSpace: self!
+
+exit
+	"Attempt to close the receiver's view. If this is an IdeaSpace card then we ask the IdeaSpace to close it."
+
+	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
+	^super exit! !
 !SmalltalkToolShell categoriesFor: #addToNewIdeaSpace!public! !
 !SmalltalkToolShell categoriesFor: #browseSystem!commands!public! !
+!SmalltalkToolShell categoriesFor: #destroy!commands!public! !
 !SmalltalkToolShell categoriesFor: #dragToolToIdeaSpace!public! !
+!SmalltalkToolShell categoriesFor: #exit!commands!public! !
 
 !SmalltalkToolShell class methodsFor!
 
