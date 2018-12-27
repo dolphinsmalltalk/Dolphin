@@ -32,11 +32,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: 'Dolphin Overlapped IO';
-	add: '..\..\Base\Dolphin SizeIs Fields';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Overlapped IO'
+	'..\..\Base\Dolphin SizeIs Fields').
 
 package!
 

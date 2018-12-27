@@ -16,34 +16,34 @@ Instance Variables:
 !FLASHWINFO methodsFor!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
-dwTimeout: anObject 
-	"Set the receiver's dwTimeout field to the value of anObject."
+dwTimeout: anInteger
+	"Set the receiver's 'dwTimeout' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwTimeout) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwTimeout) put: anInteger!
 
-hwnd: anObject 
-	"Set the receiver's hwnd field to the value of anObject."
+hwnd: anExternalHandle
+	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwnd) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #hwnd) put: anExternalHandle!
 
-uCount: anObject 
-	"Set the receiver's uCount field to the value of anObject."
+uCount: anInteger
+	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #uCount) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #uCount) put: anInteger! !
 !FLASHWINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
 !FLASHWINFO categoriesFor: #dwFlags:!**compiled accessors**!public! !
 !FLASHWINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
@@ -72,6 +72,10 @@ defineFields
 		defineField: #hwnd		type: HANDLEField writeOnly;
 		defineField: #dwFlags		type: DWORDField new;
 		defineField: #uCount		type: DWORDField writeOnly;
-		defineField: #dwTimeout	type: DWORDField writeOnly! !
+		defineField: #dwTimeout	type: DWORDField writeOnly!
+
+getFieldNames
+	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
 !FLASHWINFO class categoriesFor: #defineFields!initializing!public! !
+!FLASHWINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

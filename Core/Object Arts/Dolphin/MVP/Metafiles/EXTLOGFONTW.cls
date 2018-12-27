@@ -176,6 +176,10 @@ defineFields
 		defineField: #elfVendorId type: (ArrayField type: ExternalArray length: 4) offset: 300;
 		defineField: #elfCulture type: DWORDField new beFiller offset: 304;
 		defineField: #elfPanose type: (StructureField type: PANOSE) offset: 308.
-	self byteSize: 320! !
+	self byteSize: 320!
+
+getFieldNames
+	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
 !EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EXTLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

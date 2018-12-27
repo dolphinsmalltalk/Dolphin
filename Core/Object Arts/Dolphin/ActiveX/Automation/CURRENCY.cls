@@ -23,14 +23,14 @@ asVariant
 		yourself!
 
 cy
-	"Answer the receiver's cy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cy' field."
 
 	^bytes sqwordAtOffset: 0!
 
-cy: anObject 
-	"Set the receiver's cy field to the value of anObject."
+cy: anInteger
+	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: 0 put: anObject!
+	bytes sqwordAtOffset: 0 put: anInteger!
 
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
@@ -78,6 +78,9 @@ epsilon
 	^0.0001
 !
 
+getFieldNames
+	^#(#cy)!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -103,6 +106,7 @@ vt
 	^VT_CY! !
 !CURRENCY class categoriesFor: #defineFields!initializing!public! !
 !CURRENCY class categoriesFor: #epsilon!constants!public! !
+!CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !CURRENCY class categoriesFor: #initialize!development!initializing!private! !
 !CURRENCY class categoriesFor: #maximum!constants!public! !
 !CURRENCY class categoriesFor: #minimum!constants!public! !

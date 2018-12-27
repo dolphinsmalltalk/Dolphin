@@ -243,16 +243,16 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\Base\Dolphin Basic Geometry';
-	add: '..\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Base\Dolphin Conformant Array Fields';
-	add: '..\Presenters\Image\Dolphin Image Presenter';
-	add: '..\Models\List\Dolphin List Models';
-	add: '..\Base\Dolphin MVP Base';
-	add: '..\..\ActiveX\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\Base\Dolphin Basic Geometry'
+	'..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\Presenters\Image\Dolphin Image Presenter'
+	'..\Models\List\Dolphin List Models'
+	'..\..\Base\Dolphin Message Box'
+	'..\Base\Dolphin MVP Base'
+	'..\..\ActiveX\Structured Storage\OLE Structured Storage').
 
 package!
 

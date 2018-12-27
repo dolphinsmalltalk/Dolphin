@@ -128,6 +128,10 @@ defineFields
 		defineField: #dmMediaType type: DWORDField new;
 		defineField: #dmDitherType type: DWORDField new;
 		defineField: #dmReserved1 type: DWORDField filler;
-		defineField: #dmReserved2 type: DWORDField filler! !
+		defineField: #dmReserved2 type: DWORDField filler!
+
+getFieldNames
+	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !
 !DEVMODE class categoriesFor: #defineFields!initializing!public! !
+!DEVMODE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

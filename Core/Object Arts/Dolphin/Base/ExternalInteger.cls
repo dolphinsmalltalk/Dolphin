@@ -96,11 +96,7 @@ defineTemplate
 fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"
 
-	^self new value: anInteger!
-
-getFieldList
-	^#(#value)! !
+	^self new value: anInteger! !
 !ExternalInteger class categoriesFor: #defineTemplate!development!initializing!public! !
 !ExternalInteger class categoriesFor: #fromInteger:!instance creation!public! !
-!ExternalInteger class categoriesFor: #getFieldList!constants!private! !
 

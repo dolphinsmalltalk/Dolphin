@@ -26,34 +26,34 @@ struct tagDTBGOPTS {
 !DTBGOPTS methodsFor!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
 
 dwSize
-	"Answer the receiver's dwSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwSize' field."
 
 	^bytes dwordAtOffset: 0!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 rcClip
-	"Answer the receiver's rcClip field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rcClip' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcClip)!
 
-rcClip: anObject 
-	"Set the receiver's rcClip field to the value of anObject."
+rcClip: aRECT
+	"Set the receiver's 'rcClip' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rcClip) + 1)
 		to: ##((self offsetOf: #rcClip) + RECT basicByteSize)
@@ -82,6 +82,10 @@ defineFields
 	self
 		defineField: #dwSize type: DWORDField new;
 		defineField: #dwFlags type: DWORDField new;
-		defineField: #rcClip type: (StructureField type: RECT)! !
+		defineField: #rcClip type: (StructureField type: RECT)!
+
+getFieldNames
+	^#(#dwSize #dwFlags #rcClip)! !
 !DTBGOPTS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!DTBGOPTS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

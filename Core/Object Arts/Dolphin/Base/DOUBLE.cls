@@ -38,9 +38,6 @@ defineFields
 
 	self defineField: #value type: DOUBLEField new!
 
-getFieldList
-	^#(#value)!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -53,7 +50,6 @@ uninitialize
 
 	VMLibrary default registryAt: self name put: nil! !
 !DOUBLE class categoriesFor: #defineFields!initializing!public! !
-!DOUBLE class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !DOUBLE class categoriesFor: #initialize!development!initializing!private! !
 !DOUBLE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

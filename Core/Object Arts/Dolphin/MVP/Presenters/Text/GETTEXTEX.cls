@@ -46,6 +46,10 @@ defineFields
 		defineField: #flags type: DWORDField writeOnly;
 		defineField: #codepage type: DWORDField writeOnly;
 		defineField: #lpDefaultChar type: (PointerField type: String) beFiller;
-		defineField: #lpUsedDefChar type: (PointerField type: BOOL) beFiller! !
+		defineField: #lpUsedDefChar type: (PointerField type: BOOL) beFiller!
+
+getFieldNames
+	^#(#cb #flags #codepage)! !
 !GETTEXTEX class categoriesFor: #defineFields!initializing!public! !
+!GETTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

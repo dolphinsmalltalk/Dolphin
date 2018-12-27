@@ -29,68 +29,68 @@ struct tagEMREXTCREATEPEN {
 !EMREXTCREATEPEN methodsFor!
 
 cbBits
-	"Answer the receiver's cbBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBits' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBits)!
 
-cbBits: anObject 
-	"Set the receiver's cbBits field to the value of anObject."
+cbBits: anInteger
+	"Set the receiver's 'cbBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBits) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBits) put: anInteger!
 
 cbBmi
-	"Answer the receiver's cbBmi field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmi' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBmi)!
 
-cbBmi: anObject 
-	"Set the receiver's cbBmi field to the value of anObject."
+cbBmi: anInteger
+	"Set the receiver's 'cbBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmi) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBmi) put: anInteger!
 
 elp
-	"Answer the receiver's elp field as a Smalltalk object."
+	"Answer the <EXTLOGPEN> value of the receiver's 'elp' field."
 
 	^EXTLOGPEN fromAddress: bytes yourAddress + ##(self offsetOf: #elp)!
 
-elp: anObject 
-	"Set the receiver's elp field to the value of anObject."
+elp: anEXTLOGPEN
+	"Set the receiver's 'elp' field to the value of the argument, anEXTLOGPEN"
 
-	anObject 
+	anEXTLOGPEN
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #elp) + 1)
 		to: ##((self offsetOf: #elp) + EXTLOGPEN basicByteSize)
 		startingAt: 1!
 
 ihPen
-	"Answer the receiver's ihPen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPen' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihPen)!
 
-ihPen: anObject 
-	"Set the receiver's ihPen field to the value of anObject."
+ihPen: anInteger
+	"Set the receiver's 'ihPen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPen) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihPen) put: anInteger!
 
 offBits
-	"Answer the receiver's offBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBits' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBits)!
 
-offBits: anObject 
-	"Set the receiver's offBits field to the value of anObject."
+offBits: anInteger
+	"Set the receiver's 'offBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBits) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBits) put: anInteger!
 
 offBmi
-	"Answer the receiver's offBmi field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmi' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBmi)!
 
-offBmi: anObject 
-	"Set the receiver's offBmi field to the value of anObject."
+offBmi: anInteger
+	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmi) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #offBmi) put: anInteger! !
 !EMREXTCREATEPEN categoriesFor: #cbBits!**compiled accessors**!public! !
 !EMREXTCREATEPEN categoriesFor: #cbBits:!**compiled accessors**!public! !
 !EMREXTCREATEPEN categoriesFor: #cbBmi!**compiled accessors**!public! !
@@ -133,10 +133,14 @@ defineFields
 		defineField: #elp type: (StructureField type: EXTLOGPEN) offset: 28.
 	self byteSize: 56!
 
+getFieldNames
+	^#(#iType #nSize #ihPen #offBmi #cbBmi #offBits #cbBits #elp)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTCREATEPEN! !
 !EMREXTCREATEPEN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREXTCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTCREATEPEN class categoriesFor: #iTypes!constants!public! !
 

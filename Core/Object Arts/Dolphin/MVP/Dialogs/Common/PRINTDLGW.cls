@@ -162,6 +162,9 @@ defineFields
 		defineField: #hPrintTemplate type: DWORDField filler;
 		defineField: #hSetupTemplate type: DWORDField filler!
 
+getFieldNames
+	^#(#dwSize #hwndOwner #hDevMode #hDevNames #hDC #flags #nFromPage #nToPage #nMinPage #nMaxPage #nCopies #lpfnHook)!
+
 packing
 	"Answer the default packing for instances of the receiver.
 	This is the maximum alignment to which members of the structure
@@ -173,5 +176,6 @@ packing
 
 	^1! !
 !PRINTDLGW class categoriesFor: #defineFields!initializing!public! !
+!PRINTDLGW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PRINTDLGW class categoriesFor: #packing!constants!public! !
 

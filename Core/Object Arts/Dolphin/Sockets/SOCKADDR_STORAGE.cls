@@ -45,6 +45,10 @@ defineFields
 		defineField: #__ss_pad1 type: (ArrayField type: ExternalArray length: 6) beFiller offset: 2;
 		defineField: #__ss_align type: SQWORDField new beFiller offset: 8;
 		defineField: #__ss_pad2 type: (ArrayField type: ExternalArray length: 112) beFiller offset: 16.
-	self byteSize: 128! !
+	self byteSize: 128!
+
+getFieldNames
+	^#()! !
 !SOCKADDR_STORAGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_STORAGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

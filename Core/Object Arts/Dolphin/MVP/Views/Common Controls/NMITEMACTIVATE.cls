@@ -11,37 +11,37 @@ NMITEMACTIVATE comment: ''!
 !NMITEMACTIVATE methodsFor!
 
 iItem
-	"Answer the receiver's iItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iItem)!
 
 iSubItem
-	"Answer the receiver's iSubItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
 
 ptAction
-	"Answer the receiver's ptAction field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptAction' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptAction)!
 
 uChanged
-	"Answer the receiver's uChanged field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uChanged' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uChanged)!
 
 uKeyFlags
-	"Answer the receiver's uKeyFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uKeyFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uKeyFlags)!
 
 uNewState
-	"Answer the receiver's uNewState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uNewState)!
 
 uOldState
-	"Answer the receiver's uOldState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uOldState)! !
 !NMITEMACTIVATE categoriesFor: #iItem!**compiled accessors**!public! !
@@ -79,6 +79,10 @@ defineFields
 		defineField: #uChanged type: DWORDField readOnly;
 		defineField: #ptAction type: (StructureField type: POINTL) beReadOnly;
 		defineField: #lParam type: INT_PTRField filler;
-		defineField: #uKeyFlags type: DWORDField readOnly! !
+		defineField: #uKeyFlags type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
 !NMITEMACTIVATE class categoriesFor: #defineFields!initializing!public! !
+!NMITEMACTIVATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

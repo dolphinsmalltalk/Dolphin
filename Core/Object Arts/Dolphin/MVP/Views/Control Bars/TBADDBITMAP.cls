@@ -10,15 +10,15 @@ TBADDBITMAP comment: ''!
 !TBADDBITMAP categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
 !TBADDBITMAP methodsFor!
 
-hInst: anObject 
-	"Set the receiver's hInst field to the value of anObject."
+hInst: anInteger
+	"Set the receiver's 'hInst' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
-nID: anObject 
-	"Set the receiver's nID field to the value of anObject."
+nID: anInteger
+	"Set the receiver's 'nID' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #nID) put: anObject! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #nID) put: anInteger! !
 !TBADDBITMAP categoriesFor: #hInst:!**compiled accessors**!public! !
 !TBADDBITMAP categoriesFor: #nID:!**compiled accessors**!public! !
 
@@ -36,6 +36,10 @@ defineFields
 
 	self
 		defineField: #hInst type: DWORDField writeOnly;
-		defineField: #nID type: UINT_PTRField writeOnly! !
+		defineField: #nID type: UINT_PTRField writeOnly!
+
+getFieldNames
+	^#(#hInst #nID)! !
 !TBADDBITMAP class categoriesFor: #defineFields!initializing!public! !
+!TBADDBITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

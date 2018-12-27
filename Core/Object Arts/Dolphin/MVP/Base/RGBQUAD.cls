@@ -31,34 +31,34 @@ asColor
 	^Color fromInteger: (bytes dwordAtOffset: 0)!
 
 rgbBlue
-	"Answer the receiver's rgbBlue field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'rgbBlue' field."
 
 	^bytes byteAtOffset: 0!
 
-rgbBlue: anObject 
-	"Set the receiver's rgbBlue field to the value of anObject."
+rgbBlue: anInteger
+	"Set the receiver's 'rgbBlue' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anObject!
+	bytes byteAtOffset: 0 put: anInteger!
 
 rgbGreen
-	"Answer the receiver's rgbGreen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'rgbGreen' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #rgbGreen)!
 
-rgbGreen: anObject 
-	"Set the receiver's rgbGreen field to the value of anObject."
+rgbGreen: anInteger
+	"Set the receiver's 'rgbGreen' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #rgbGreen) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #rgbGreen) put: anInteger!
 
 rgbRed
-	"Answer the receiver's rgbRed field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'rgbRed' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #rgbRed)!
 
-rgbRed: anObject 
-	"Set the receiver's rgbRed field to the value of anObject."
+rgbRed: anInteger
+	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #rgbRed) put: anObject! !
+	bytes byteAtOffset: ##(self offsetOf: #rgbRed) put: anInteger! !
 !RGBQUAD categoriesFor: #asColor!converting!public! !
 !RGBQUAD categoriesFor: #rgbBlue!**compiled accessors**!public! !
 !RGBQUAD categoriesFor: #rgbBlue:!**compiled accessors**!public! !
@@ -97,7 +97,11 @@ fromColor: aColor
 		rgbRed: rgb red;
 		rgbGreen: rgb green;
 		rgbBlue: rgb blue;
-		yourself! !
+		yourself!
+
+getFieldNames
+	^#(#rgbBlue #rgbGreen #rgbRed)! !
 !RGBQUAD class categoriesFor: #defineFields!initializing!public! !
 !RGBQUAD class categoriesFor: #fromColor:!instance creation!public! !
+!RGBQUAD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

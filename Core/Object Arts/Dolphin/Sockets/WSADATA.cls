@@ -97,6 +97,10 @@ defineFields
 		defineField: #iMaxSockets type: WORDField new beReadOnly offset: 390;
 		defineField: #iMaxUdpDg type: WORDField new beReadOnly offset: 392;
 		defineField: #lpVendorInfo type: LPVOIDField new beReadOnly offset: 396.
-	self byteSize: 400! !
+	self byteSize: 400!
+
+getFieldNames
+	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
 !WSADATA class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

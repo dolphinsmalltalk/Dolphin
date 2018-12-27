@@ -21,12 +21,12 @@ itemHandle
 	^self itemNew hItem!
 
 itemNew
-	"Answer the <TVITEM> value of the receiver's 'itemNew' field."
+	"Answer the <TVITEMW> value of the receiver's 'itemNew' field."
 
 	^TVITEMW fromAddress: bytes yourAddress + ##(self offsetOf: #itemNew)!
 
 itemOld
-	"Answer the <TVITEM> value of the receiver's 'itemOld' field."
+	"Answer the <TVITEMW> value of the receiver's 'itemOld' field."
 
 	^TVITEMW fromAddress: bytes yourAddress + ##(self offsetOf: #itemOld)!
 
@@ -52,6 +52,10 @@ defineFields
 		defineField: #action type: DWORDField readOnly offset: 12;
 		defineField: #itemOld type: (StructureField type: TVITEMW) beReadOnly offset: 16;
 		defineField: #itemNew type: (StructureField type: TVITEMW) beReadOnly offset: 56;
-		defineField: #ptDrag type: (StructureField type: POINTL) beReadOnly offset: 96! !
+		defineField: #ptDrag type: (StructureField type: POINTL) beReadOnly offset: 96!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #action #itemOld #itemNew #ptDrag)! !
 !NMTREEVIEWW class categoriesFor: #defineFields!initializing!public! !
+!NMTREEVIEWW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

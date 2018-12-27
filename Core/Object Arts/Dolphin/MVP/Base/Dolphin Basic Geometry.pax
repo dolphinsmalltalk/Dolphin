@@ -39,9 +39,8 @@ package globalAliases: (Set new
 	add: #RECTL;
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin').
 
 package!
 

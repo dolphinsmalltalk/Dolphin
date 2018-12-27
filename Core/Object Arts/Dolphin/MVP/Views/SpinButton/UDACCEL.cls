@@ -11,24 +11,24 @@ UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struct '
 !UDACCEL methodsFor!
 
 nInc
-	"Answer the receiver's nInc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nInc' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nInc)!
 
-nInc: anObject
-	"Set the receiver's nInc field to the value of anObject."
+nInc: anInteger
+	"Set the receiver's 'nInc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nInc) put: anInteger!
 
 nSec
-	"Answer the receiver's nSec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nSec' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: 0!
 
-nSec: anObject
-	"Set the receiver's nSec field to the value of anObject."
+nSec: anInteger
+	"Set the receiver's 'nSec' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !UDACCEL categoriesFor: #nInc!**compiled accessors**!public! !
 !UDACCEL categoriesFor: #nInc:!**compiled accessors**!public! !
 !UDACCEL categoriesFor: #nSec!**compiled accessors**!public! !
@@ -48,6 +48,10 @@ defineFields
 
 	self
 		defineField: #nSec type: DWORDField new;
-		defineField: #nInc type: DWORDField new! !
+		defineField: #nInc type: DWORDField new!
+
+getFieldNames
+	^#(#nSec #nInc)! !
 !UDACCEL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!UDACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

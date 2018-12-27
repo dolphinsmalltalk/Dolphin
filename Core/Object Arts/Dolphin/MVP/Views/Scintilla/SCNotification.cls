@@ -6,7 +6,7 @@ NMHDR subclass: #SCNotification
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 SCNotification guid: (GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
-SCNotification addClassConstant: 'ModificationTypeOffset' value: 24!
+SCNotification addClassConstant: 'ModificationTypeOffset' value: 16r18!
 SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
@@ -85,13 +85,13 @@ getValidFields
 	};
 	"
 
-	^#(#code) 
+	^#(#code)
 		, (##(| positionOnly positionXY positionModifiers listSelection |
 			positionOnly := #(#scPosition).
 			positionXY := #(#scPosition #x #y).
 			positionModifiers := #(#scPosition #modifiers).
 			listSelection := #(#scPosition #ch #text #listCompletionMethod).
-			(IdentityDictionary new)
+			IdentityDictionary new
 				at: SCN_AUTOCCANCELLED put: #();
 				at: SCN_AUTOCCHARDELETED put: #();
 				at: SCN_AUTOCCOMPLETED put: listSelection;
@@ -308,6 +308,10 @@ defineFields
 		defineField: #updated type: SDWORDField readOnly;
 		defineField: #listCompletionMethod type: SDWORDField readOnly.
 
-	self addClassConstant: 'ModificationTypeOffset' value: (self offsetOf: #modificationType)! !
+	self addClassConstant: 'ModificationTypeOffset' value: (self offsetOf: #modificationType)!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod)! !
 !SCNotification class categoriesFor: #defineFields!initializing!public! !
+!SCNotification class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

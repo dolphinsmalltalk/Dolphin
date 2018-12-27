@@ -24,24 +24,24 @@ struct tagGpColorMap {
 !GpColorMap methodsFor!
 
 newColor
-	"Answer the receiver's newColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'newColor' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: ##(self offsetOf: #newColor)!
 
-newColor: anObject
-	"Set the receiver's newColor field to the value of anObject."
+newColor: anInteger
+	"Set the receiver's 'newColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #newColor) put: anInteger!
 
 oldColor
-	"Answer the receiver's oldColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'oldColor' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: 0!
 
-oldColor: anObject
-	"Set the receiver's oldColor field to the value of anObject."
+oldColor: anInteger
+	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !GpColorMap categoriesFor: #newColor!**compiled accessors**!public! !
 !GpColorMap categoriesFor: #newColor:!**compiled accessors**!public! !
 !GpColorMap categoriesFor: #oldColor!**compiled accessors**!public! !
@@ -63,6 +63,10 @@ defineFields
 	self
 		defineField: #oldColor type: DWORDField new offset: 0;
 		defineField: #newColor type: DWORDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#oldColor #newColor)! !
 !GpColorMap class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpColorMap class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -23,24 +23,24 @@ typedef struct tagtimeval {
 !TIMEVAL methodsFor!
 
 tv_sec
-	"Answer the receiver's tv_sec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tv_sec' field."
 
-	^(bytes sdwordAtOffset: 0)!
+	^bytes sdwordAtOffset: 0!
 
-tv_sec: anObject
-	"Set the receiver's tv_sec field to the value of anObject."
+tv_sec: anInteger
+	"Set the receiver's 'tv_sec' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 tv_usec
-	"Answer the receiver's tv_usec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'tv_usec' field."
 
-	^(bytes sdwordAtOffset: 4)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #tv_usec)!
 
-tv_usec: anObject
-	"Set the receiver's tv_usec field to the value of anObject."
+tv_usec: anInteger
+	"Set the receiver's 'tv_usec' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 4 put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #tv_usec) put: anInteger! !
 !TIMEVAL categoriesFor: #tv_sec!**compiled accessors**!public! !
 !TIMEVAL categoriesFor: #tv_sec:!**compiled accessors**!public! !
 !TIMEVAL categoriesFor: #tv_usec!**compiled accessors**!public! !
@@ -60,6 +60,10 @@ defineFields
 
 	self
 		defineField: #tv_sec type: SDWORDField new;
-		defineField: #tv_usec type: SDWORDField new! !
+		defineField: #tv_usec type: SDWORDField new!
+
+getFieldNames
+	^#(#tv_sec #tv_usec)! !
 !TIMEVAL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!TIMEVAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

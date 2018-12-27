@@ -99,6 +99,10 @@ defineFields
 		defineField: #sin_port type: WORDField new offset: 2;
 		defineField: #sin_addr type: (StructureField type: IN_ADDR) offset: 4;
 		defineField: #sin_zero type: (ArrayField type: ExternalArray length: 8) beFiller offset: 8.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#sin_family #sin_port #sin_addr)! !
 !SOCKADDR_IN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_IN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

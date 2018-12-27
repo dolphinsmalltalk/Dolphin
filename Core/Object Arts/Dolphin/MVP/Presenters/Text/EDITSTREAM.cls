@@ -10,10 +10,10 @@ EDITSTREAM comment: ''!
 !EDITSTREAM categoriesForClass!External-Data-Structured-Win32! !
 !EDITSTREAM methodsFor!
 
-pfnCallback: anObject 
-	"Set the receiver's pfnCallback field to the value of anObject."
+pfnCallback: anExternalAddress
+	"Set the receiver's 'pfnCallback' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pfnCallback) put: anObject! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #pfnCallback) put: anExternalAddress! !
 !EDITSTREAM categoriesFor: #pfnCallback:!**compiled accessors**!public! !
 
 !EDITSTREAM class methodsFor!
@@ -32,6 +32,10 @@ defineFields
 	self 
 		defineField: #dwCookie			type: DWORDField filler;
 		defineField: #dwError			type: DWORDField filler;
-		defineField: #pfnCallback		type: LPVOIDField writeOnly! !
+		defineField: #pfnCallback		type: LPVOIDField writeOnly!
+
+getFieldNames
+	^#(#pfnCallback)! !
 !EDITSTREAM class categoriesFor: #defineFields!initializing!public! !
+!EDITSTREAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

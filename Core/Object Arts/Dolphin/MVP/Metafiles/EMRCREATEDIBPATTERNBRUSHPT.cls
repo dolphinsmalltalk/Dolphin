@@ -29,64 +29,64 @@ struct tagEMRCREATEDIBPATTERNBRUSHPT {
 !EMRCREATEDIBPATTERNBRUSHPT methodsFor!
 
 cbBits
-	"Answer the receiver's cbBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBits' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBits)!
 
-cbBits: anObject 
-	"Set the receiver's cbBits field to the value of anObject."
+cbBits: anInteger
+	"Set the receiver's 'cbBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBits) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBits) put: anInteger!
 
 cbBmi
-	"Answer the receiver's cbBmi field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmi' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBmi)!
 
-cbBmi: anObject 
-	"Set the receiver's cbBmi field to the value of anObject."
+cbBmi: anInteger
+	"Set the receiver's 'cbBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmi) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBmi) put: anInteger!
 
 ihBrush
-	"Answer the receiver's ihBrush field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihBrush)!
 
-ihBrush: anObject 
-	"Set the receiver's ihBrush field to the value of anObject."
+ihBrush: anInteger
+	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihBrush) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihBrush) put: anInteger!
 
 iUsage
-	"Answer the receiver's iUsage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iUsage' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iUsage)!
 
-iUsage: anObject 
-	"Set the receiver's iUsage field to the value of anObject."
+iUsage: anInteger
+	"Set the receiver's 'iUsage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsage) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iUsage) put: anInteger!
 
 offBits
-	"Answer the receiver's offBits field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBits' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBits)!
 
-offBits: anObject 
-	"Set the receiver's offBits field to the value of anObject."
+offBits: anInteger
+	"Set the receiver's 'offBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBits) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBits) put: anInteger!
 
 offBmi
-	"Answer the receiver's offBmi field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmi' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBmi)!
 
-offBmi: anObject 
-	"Set the receiver's offBmi field to the value of anObject."
+offBmi: anInteger
+	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmi) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #offBmi) put: anInteger! !
 !EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits!**compiled accessors**!public! !
 !EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits:!**compiled accessors**!public! !
 !EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi!**compiled accessors**!public! !
@@ -129,10 +129,14 @@ defineFields
 		defineField: #cbBits type: DWORDField new offset: 28.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #ihBrush #iUsage #offBmi #cbBmi #offBits #cbBits)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEDIBPATTERNBRUSHPT! !
 !EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #iTypes!constants!public! !
 

@@ -26,42 +26,42 @@ struct tagEMRARC {
 !EMRARC methodsFor!
 
 ptlEnd
-	"Answer the receiver's ptlEnd field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlEnd' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlEnd)!
 
-ptlEnd: anObject 
-	"Set the receiver's ptlEnd field to the value of anObject."
+ptlEnd: aPOINTL
+	"Set the receiver's 'ptlEnd' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptlEnd) + 1)
 		to: ##((self offsetOf: #ptlEnd) + POINTL basicByteSize)
 		startingAt: 1!
 
 ptlStart
-	"Answer the receiver's ptlStart field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlStart' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlStart)!
 
-ptlStart: anObject 
-	"Set the receiver's ptlStart field to the value of anObject."
+ptlStart: aPOINTL
+	"Set the receiver's 'ptlStart' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptlStart) + 1)
 		to: ##((self offsetOf: #ptlStart) + POINTL basicByteSize)
 		startingAt: 1!
 
 rclBox
-	"Answer the receiver's rclBox field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBox' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBox)!
 
-rclBox: anObject 
-	"Set the receiver's rclBox field to the value of anObject."
+rclBox: aRECT
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBox) + 1)
 		to: ##((self offsetOf: #rclBox) + RECT basicByteSize)
@@ -96,6 +96,9 @@ defineFields
 		defineField: #ptlEnd type: (StructureField type: POINTL) offset: 32.
 	self byteSize: 40!
 
+getFieldNames
+	^#(#iType #nSize #rclBox #ptlStart #ptlEnd)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -105,5 +108,6 @@ iTypes
 		with: EMR_CHORD
 		with: EMR_PIE! !
 !EMRARC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRARC class categoriesFor: #iTypes!constants!public! !
 

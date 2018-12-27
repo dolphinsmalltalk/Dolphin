@@ -42,12 +42,16 @@ item: aTVITEMEXW
 
 defineFields
 	"Define the layout of the Win32 TVINSERTSTRUCT structure.
-		TVINSERTSTRUCT compileDefinition
+		self compileDefinition
 	"
 
 	self
 		defineField: #hParent type: DWORDField writeOnly offset: 0;
 		defineField: #hInsertAfter type: DWORDField writeOnly offset: 4;
-		defineField: #item type: (StructureField type: TVITEMEXW) offset: 8 "read/write so can get pointer to embedded TVITEM"! !
+		defineField: #item type: (StructureField type: TVITEMEXW) offset: 8 "read/write so can get pointer to embedded TVITEM"!
+
+getFieldNames
+	^#(#hParent #hInsertAfter #item)! !
 !TVINSERTSTRUCTW class categoriesFor: #defineFields!initializing!public! !
+!TVINSERTSTRUCTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

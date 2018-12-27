@@ -29,24 +29,24 @@ asObject
 	^self cpMin to: self cpMax!
 
 cpMax
-	"Answer the receiver's cpMax field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cpMax' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cpMax)!
 
-cpMax: anObject 
-	"Set the receiver's cpMax field to the value of anObject."
+cpMax: anInteger
+	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cpMax) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cpMax) put: anInteger!
 
 cpMin
-	"Answer the receiver's cpMin field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cpMin' field."
 
 	^bytes sdwordAtOffset: 0!
 
-cpMin: anObject 
-	"Set the receiver's cpMin field to the value of anObject."
+cpMin: anInteger
+	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject! !
+	bytes sdwordAtOffset: 0 put: anInteger! !
 !CHARRANGE categoriesFor: #asObject!accessing!public! !
 !CHARRANGE categoriesFor: #cpMax!**compiled accessors**!public! !
 !CHARRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !
@@ -68,6 +68,10 @@ defineFields
 
 	self
 		defineField: #cpMin type: SDWORDField new;
-		defineField: #cpMax type: SDWORDField new! !
+		defineField: #cpMax type: SDWORDField new!
+
+getFieldNames
+	^#(#cpMin #cpMax)! !
 !CHARRANGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CHARRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

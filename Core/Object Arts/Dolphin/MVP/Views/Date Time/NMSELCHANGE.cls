@@ -11,14 +11,14 @@ NMSELCHANGE comment: ''!
 !NMSELCHANGE methodsFor!
 
 stSelEnd
-	"Answer the receiver's stSelEnd field as a Smalltalk object."
+	"Answer the <SYSTEMTIME> value of the receiver's 'stSelEnd' field."
 
-	^SYSTEMTIME fromAddress: (bytes yourAddress + 28)!
+	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #stSelEnd)!
 
 stSelStart
-	"Answer the receiver's stSelStart field as a Smalltalk object."
+	"Answer the <SYSTEMTIME> value of the receiver's 'stSelStart' field."
 
-	^SYSTEMTIME fromAddress: (bytes yourAddress + 12)! !
+	^SYSTEMTIME fromAddress: bytes yourAddress + ##(self offsetOf: #stSelStart)! !
 !NMSELCHANGE categoriesFor: #stSelEnd!**compiled accessors**!public! !
 !NMSELCHANGE categoriesFor: #stSelStart!**compiled accessors**!public! !
 
@@ -32,6 +32,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #stSelStart type: (StructureField type: SYSTEMTIME) beReadOnly;
-		defineField: #stSelEnd type: (StructureField type: SYSTEMTIME) beReadOnly! !
+		defineField: #stSelEnd type: (StructureField type: SYSTEMTIME) beReadOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
 !NMSELCHANGE class categoriesFor: #defineFields!initializing!public! !
+!NMSELCHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

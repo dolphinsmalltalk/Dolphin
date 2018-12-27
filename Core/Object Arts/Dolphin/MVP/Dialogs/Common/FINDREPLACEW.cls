@@ -157,7 +157,7 @@ wReplaceWithLen: anInteger
 defineFields
 	"Define the fields of the Win32 FINDREPLACE structure.
 
-		FINDREPLACE compileDefinition
+		self compileDefinition
 
 		typedef struct {// fr  
 			DWORD		lStructSize;
@@ -184,6 +184,10 @@ defineFields
 		defineField: #wReplaceWithLen type: WORDField writeOnly;
 		defineField: #lCustData type: INT_PTRField filler;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
-		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller! !
+		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller!
+
+getFieldNames
+	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
 !FINDREPLACEW class categoriesFor: #defineFields!initializing!public! !
+!FINDREPLACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -210,6 +210,10 @@ defineFields
 		defineField: #lpReserved2 type: LPVOIDField filler;
 		defineField: #hStdInput type: UINT_PTRField writeOnly;
 		defineField: #hStdOutput type: UINT_PTRField writeOnly;
-		defineField: #hStdError type: UINT_PTRField writeOnly! !
+		defineField: #hStdError type: UINT_PTRField writeOnly!
+
+getFieldNames
+	^#(#dwSize #lpDesktop #lpTitle #dwX #dwY #dwXSize #dwYSize #dwXCountChars #dwYCountChars #dwFillAttribute #dwFlags #wShowWindow #hStdInput #hStdOutput #hStdError)! !
 !STARTUPINFOW class categoriesFor: #defineFields!automatic generation!public! !
+!STARTUPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

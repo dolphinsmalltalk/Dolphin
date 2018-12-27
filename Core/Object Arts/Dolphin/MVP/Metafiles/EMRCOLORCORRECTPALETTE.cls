@@ -27,44 +27,44 @@ struct tagCOLORCORRECTPALETTE {
 !EMRCOLORCORRECTPALETTE methodsFor!
 
 ihPalette
-	"Answer the receiver's ihPalette field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPalette' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihPalette)!
 
-ihPalette: anObject 
-	"Set the receiver's ihPalette field to the value of anObject."
+ihPalette: anInteger
+	"Set the receiver's 'ihPalette' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPalette) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihPalette) put: anInteger!
 
 nFirstEntry
-	"Answer the receiver's nFirstEntry field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nFirstEntry' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry)!
 
-nFirstEntry: anObject 
-	"Set the receiver's nFirstEntry field to the value of anObject."
+nFirstEntry: anInteger
+	"Set the receiver's 'nFirstEntry' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry) put: anInteger!
 
 nPalEntries
-	"Answer the receiver's nPalEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
 
-nPalEntries: anObject 
-	"Set the receiver's nPalEntries field to the value of anObject."
+nPalEntries: anInteger
+	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anInteger!
 
 nReserved
-	"Answer the receiver's nReserved field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nReserved' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nReserved)!
 
-nReserved: anObject 
-	"Set the receiver's nReserved field to the value of anObject."
+nReserved: anInteger
+	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nReserved) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #nReserved) put: anInteger! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !
@@ -107,10 +107,14 @@ defineFields
 			offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #ihPalette #nFirstEntry #nPalEntries #nReserved)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORCORRECTPALETTE! !
 !EMRCOLORCORRECTPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCOLORCORRECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCOLORCORRECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

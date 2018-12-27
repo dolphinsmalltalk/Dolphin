@@ -117,6 +117,10 @@ defineFields
 		defineField: #uFlags type: DWORDField new;
 		defineField: #uCallbackMessage type: DWORDField writeOnly;
 		defineField: #hIcon type: HANDLEField writeOnly;
-		defineField: #szTip type: (StringField type: Utf16String length: 64)! !
+		defineField: #szTip type: (StringField type: Utf16String length: 64)!
+
+getFieldNames
+	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
 !NOTIFYICONDATAW class categoriesFor: #defineFields!initializing!public! !
+!NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

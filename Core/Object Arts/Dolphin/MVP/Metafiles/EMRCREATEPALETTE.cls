@@ -25,24 +25,24 @@ struct tagEMRCREATEPALETTE {
 !EMRCREATEPALETTE methodsFor!
 
 ihPal
-	"Answer the receiver's ihPal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
 
-ihPal: anObject 
-	"Set the receiver's ihPal field to the value of anObject."
+ihPal: anInteger
+	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anInteger!
 
 lgpl
-	"Answer the receiver's lgpl field as a Smalltalk object."
+	"Answer the <LOGPALETTE> value of the receiver's 'lgpl' field."
 
 	^LOGPALETTE fromAddress: bytes yourAddress + ##(self offsetOf: #lgpl)!
 
-lgpl: anObject 
-	"Set the receiver's lgpl field to the value of anObject."
+lgpl: aLOGPALETTE
+	"Set the receiver's 'lgpl' field to the value of the argument, aLOGPALETTE"
 
-	anObject 
+	aLOGPALETTE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #lgpl) + 1)
 		to: ##((self offsetOf: #lgpl) + LOGPALETTE basicByteSize)
@@ -77,10 +77,14 @@ defineFields
 			offset: 12.
 	self byteSize: 20!
 
+getFieldNames
+	^#(#iType #nSize #ihPal #lgpl)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPALETTE! !
 !EMRCREATEPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEPALETTE class categoriesFor: #iTypes!constants!public! !
 

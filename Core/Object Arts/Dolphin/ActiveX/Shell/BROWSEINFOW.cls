@@ -119,6 +119,10 @@ defineFields
 		defineField: #flags type: DWORDField new beOverride;
 		defineField: #lpfnHook type: LPVOIDField writeOnly beOverride;
 		defineField: #lParam type: INT_PTRField filler;
-		defineField: #iImage type: DWORDField filler! !
+		defineField: #iImage type: DWORDField filler!
+
+getFieldNames
+	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
 !BROWSEINFOW class categoriesFor: #defineFields!initializing!public! !
+!BROWSEINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

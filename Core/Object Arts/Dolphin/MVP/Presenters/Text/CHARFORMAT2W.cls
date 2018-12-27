@@ -529,7 +529,11 @@ defineFields
 fromChooseFont: aCHOOSEFRONT 
 	^(self new)
 		populateFromChooseFont: aCHOOSEFRONT;
-		yourself! !
+		yourself!
+
+getFieldNames
+	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlyineType #bAnimation #bRevAuthor #bUnderlineColor)! !
 !CHARFORMAT2W class categoriesFor: #defineFields!initializing!public! !
 !CHARFORMAT2W class categoriesFor: #fromChooseFont:!public! !
+!CHARFORMAT2W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

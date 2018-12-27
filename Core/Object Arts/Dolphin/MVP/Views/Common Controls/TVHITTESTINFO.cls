@@ -21,7 +21,7 @@ handle
 	^self hItem!
 
 hItem
-	"Answer the receiver's hItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hItem' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #hItem)!
 
@@ -49,6 +49,10 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #hItem type: DWORDField readOnly! !
+		defineField: #hItem type: DWORDField readOnly!
+
+getFieldNames
+	^#(#pt #flags #hItem)! !
 !TVHITTESTINFO class categoriesFor: #defineFields!initializing!public! !
+!TVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

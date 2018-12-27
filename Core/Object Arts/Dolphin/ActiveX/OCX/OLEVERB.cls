@@ -105,6 +105,10 @@ defineFields
 		defineField: #lVerb type: SDWORDField new;
 		defineField: #lpszVerbName type: (PointerField type: Utf16String);
 		defineField: #fuFlags type: DWORDField new;
-		defineField: #grfAttribs type: DWORDField new! !
+		defineField: #grfAttribs type: DWORDField new!
+
+getFieldNames
+	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
 !OLEVERB class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OLEVERB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

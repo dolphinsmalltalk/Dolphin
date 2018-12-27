@@ -16,7 +16,7 @@ iStart
 	^bytes sdwordAtOffset: ##(self offsetOf: #iStart)!
 
 lvfi
-	"Answer the <LVFINDINFO> value of the receiver's 'lvfi' field."
+	"Answer the <LVFINDINFOW> value of the receiver's 'lvfi' field."
 
 	^LVFINDINFOW fromAddress: bytes yourAddress + ##(self offsetOf: #lvfi)! !
 !NMLVFINDITEMW categoriesFor: #iStart!**compiled accessors**!public! !
@@ -26,12 +26,16 @@ lvfi
 
 defineFields
 	"Define the fields of the Win32 NMLVFINDITEM structure.
-		NMLVFINDITEM compileDefinition
+		self compileDefinition
 	"
 
 	super defineFields.
 	self
 		defineField: #iStart type: SDWORDField readOnly;
-		defineField: #lvfi type: (StructureField type: LVFINDINFOW) beReadOnly! !
+		defineField: #lvfi type: (StructureField type: LVFINDINFOW) beReadOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
 !NMLVFINDITEMW class categoriesFor: #defineFields!initializing!public! !
+!NMLVFINDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

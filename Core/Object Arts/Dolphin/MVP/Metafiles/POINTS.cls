@@ -38,24 +38,24 @@ asUIntPtr
 	^VMConstants.IsWin64 ifTrue: [self asPoint asUIntPtr] ifFalse: [bytes dwordAtOffset: 0]!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
 	^bytes swordAtOffset: 0!
 
-x: anObject 
-	"Set the receiver's x field to the value of anObject."
+x: anInteger
+	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anObject!
+	bytes swordAtOffset: 0 put: anInteger!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #y)!
 
-y: anObject 
-	"Set the receiver's y field to the value of anObject."
+y: anInteger
+	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #y) put: anObject! !
+	bytes swordAtOffset: ##(self offsetOf: #y) put: anInteger! !
 !POINTS categoriesFor: #asDword!converting!public! !
 !POINTS categoriesFor: #asUIntPtr!converting!public! !
 !POINTS categoriesFor: #x!**compiled accessors**!public! !

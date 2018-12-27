@@ -24,14 +24,14 @@ struct tagEMREXCLUDECLIPRECT {
 !EMREXCLUDECLIPRECT methodsFor!
 
 rclClip
-	"Answer the receiver's rclClip field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclClip' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclClip)!
 
-rclClip: anObject 
-	"Set the receiver's rclClip field to the value of anObject."
+rclClip: aRECT
+	"Set the receiver's 'rclClip' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclClip) + 1)
 		to: ##((self offsetOf: #rclClip) + RECT basicByteSize)
@@ -58,10 +58,14 @@ defineFields
 		defineField: #rclClip type: (StructureField type: RECT) offset: 8.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #rclClip)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXCLUDECLIPRECT with: EMR_INTERSECTCLIPRECT! !
 !EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !
 

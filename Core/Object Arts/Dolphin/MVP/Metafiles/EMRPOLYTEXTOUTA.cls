@@ -29,73 +29,74 @@ struct tagEMRPOLYTEXTOUTA {
 !EMRPOLYTEXTOUTA methodsFor!
 
 aemrtext
-	"Answer the receiver's aemrtext field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'aemrtext' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #aemrtext)
 		length: self cStrings
 		elementClass: EMRTEXT!
 
-aemrtext: anObject 
-	"Set the receiver's aemrtext field to the value of anObject."
+aemrtext: aStructureArrayOfEMRTEXT
+	"Set the receiver's 'aemrtext' field to the value of the argument, aStructureArrayOfEMRTEXT"
 
 	| size |
-	size := anObject byteSize min: self cStrings * ##(EMRTEXT basicByteSize).
-	anObject 
+	size := aStructureArrayOfEMRTEXT byteSize.
+	aStructureArrayOfEMRTEXT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #aemrtext) + 1)
 		to: ##(self offsetOf: #aemrtext) + size
-		startingAt: 1!
+		startingAt: 1.
+	self cStrings: aStructureArrayOfEMRTEXT size!
 
 cStrings
-	"Answer the receiver's cStrings field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cStrings' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cStrings)!
 
-cStrings: anObject 
-	"Set the receiver's cStrings field to the value of anObject."
+cStrings: anInteger
+	"Set the receiver's 'cStrings' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cStrings) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cStrings) put: anInteger!
 
 exScale
-	"Answer the receiver's exScale field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'exScale' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #exScale)!
 
-exScale: anObject 
-	"Set the receiver's exScale field to the value of anObject."
+exScale: aFloat
+	"Set the receiver's 'exScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #exScale) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #exScale) put: aFloat!
 
 eyScale
-	"Answer the receiver's eyScale field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eyScale' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eyScale)!
 
-eyScale: anObject 
-	"Set the receiver's eyScale field to the value of anObject."
+eyScale: aFloat
+	"Set the receiver's 'eyScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eyScale) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eyScale) put: aFloat!
 
 iGraphicsMode
-	"Answer the receiver's iGraphicsMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iGraphicsMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode)!
 
-iGraphicsMode: anObject 
-	"Set the receiver's iGraphicsMode field to the value of anObject."
+iGraphicsMode: anInteger
+	"Set the receiver's 'iGraphicsMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
@@ -153,10 +154,14 @@ defineFields
 			type: (StructureArrayField type: EMRTEXT lengthField: #cStrings)
 			offset: 40!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #iGraphicsMode #exScale #eyScale #cStrings #aemrtext)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYTEXTOUTA with: EMR_POLYTEXTOUTW! !
 !EMRPOLYTEXTOUTA class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYTEXTOUTA class categoriesFor: #iTypes!constants!public! !
 

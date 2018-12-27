@@ -87,6 +87,10 @@ defineFields
 		defineField: #dwSize type: DWORDField writeOnly beOverride;
 		defineField: #dwFlags type: DWORDField new;
 		defineField: #style type: SDWORDField new;
-		defineField: #dwDuration type: DWORDField new! !
+		defineField: #dwDuration type: DWORDField new!
+
+getFieldNames
+	^#(#dwSize #dwFlags #style #dwDuration)! !
 !BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!BP_ANIMATIONPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

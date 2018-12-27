@@ -29,14 +29,14 @@ asRectangle
 	^self x @ self y extent: self width @ self height!
 
 height
-	"Answer the receiver's height field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'height' field."
 
-	^(bytes floatAtOffset: 12)!
+	^bytes floatAtOffset: ##(self offsetOf: #height)!
 
-height: anObject
-	"Set the receiver's height field to the value of anObject."
+height: aFloat
+	"Set the receiver's 'height' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 12 put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #height) put: aFloat!
 
 left
 	^self x!
@@ -45,34 +45,34 @@ top
 	^self y!
 
 width
-	"Answer the receiver's width field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'width' field."
 
-	^(bytes floatAtOffset: 8)!
+	^bytes floatAtOffset: ##(self offsetOf: #width)!
 
-width: anObject
-	"Set the receiver's width field to the value of anObject."
+width: aFloat
+	"Set the receiver's 'width' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 8 put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #width) put: aFloat!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'x' field."
 
-	^(bytes floatAtOffset: 0)!
+	^bytes floatAtOffset: 0!
 
-x: anObject
-	"Set the receiver's x field to the value of anObject."
+x: aFloat
+	"Set the receiver's 'x' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: anObject!
+	bytes floatAtOffset: 0 put: aFloat!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'y' field."
 
-	^(bytes floatAtOffset: 4)!
+	^bytes floatAtOffset: ##(self offsetOf: #y)!
 
-y: anObject
-	"Set the receiver's y field to the value of anObject."
+y: aFloat
+	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 4 put: anObject! !
+	bytes floatAtOffset: ##(self offsetOf: #y) put: aFloat! !
 !RECTF categoriesFor: #asRectangle!converting!public! !
 !RECTF categoriesFor: #height!**compiled accessors**!public! !
 !RECTF categoriesFor: #height:!**compiled accessors**!public! !
@@ -115,6 +115,9 @@ fromRectangle: aRect
 		height: aRect height;
 		yourself!
 
+getFieldNames
+	^#(#x #y #width #height)!
+
 left: left top: top right: right bottom: bottom
 	"Answer a new instance of the receiver with the specified position corner positions."
 
@@ -135,20 +138,11 @@ left: left top: top width: width height: height
 				yourself)!
 
 newBuffer
-	^self basicNew bytes: (ByteArray newFixed: 16)!
-
-origin: newOrigin extent: newExtent
-	"Answer a new instance of the receiver with the specified origin and extent"
-
-	^self
-		left: newOrigin x
-		top: newOrigin y
-		width: newExtent x
-		height: newExtent y! !
+	^self basicNew bytes: (ByteArray newFixed: 16)! !
 !RECTF class categoriesFor: #defineFields!initializing!public! !
 !RECTF class categoriesFor: #fromRectangle:!instance creation!public! !
+!RECTF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !RECTF class categoriesFor: #left:top:right:bottom:!instance creation!public! !
 !RECTF class categoriesFor: #left:top:width:height:!instance creation!public! !
 !RECTF class categoriesFor: #newBuffer!instance creation!public! !
-!RECTF class categoriesFor: #origin:extent:!instance creation!public! !
 

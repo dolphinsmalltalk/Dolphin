@@ -67,6 +67,10 @@ defineFields
 		defineField: #lpszDocName type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszOutput type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lpszDatatype type: (PointerField type: Utf16String) beWriteOnly;
-		defineField: #fwType type: DWORDField writeOnly! !
+		defineField: #fwType type: DWORDField writeOnly!
+
+getFieldNames
+	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
 !DOCINFOW class categoriesFor: #defineFields!initializing!public! !
+!DOCINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

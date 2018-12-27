@@ -13,34 +13,34 @@ Arrays of MULTI_QI structures can be used to query multiple interface pointers i
 !MULTI_QI methodsFor!
 
 hr
-	"Answer the receiver's hr field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hr' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #hr)!
 
-hr: anObject 
-	"Set the receiver's hr field to the value of anObject."
+hr: anInteger
+	"Set the receiver's 'hr' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #hr) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #hr) put: anInteger!
 
 pIID
-	"Answer the receiver's pIID field as a Smalltalk object."
+	"Answer the <IID> value of the receiver's 'pIID' field."
 
 	^IID fromAddress: (bytes intPtrAtOffset: 0)!
 
-pIID: anObject 
-	"Set the receiver's pIID field to the value of anObject."
+pIID: anIID
+	"Set the receiver's 'pIID' field to the value of the argument, anIID"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress!
+	bytes uintPtrAtOffset: 0 put: anIID yourAddress!
 
 pItf
-	"Answer the receiver's pItf field as a Smalltalk object."
+	"Answer the <IUnknown> value of the receiver's 'pItf' field."
 
 	^IUnknown fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pItf))!
 
-pItf: anObject 
-	"Set the receiver's pItf field to the value of anObject."
+pItf: anIUnknown
+	"Set the receiver's 'pItf' field to the value of the argument, anIUnknown"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pItf) put: anObject yourAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #pItf) put: anIUnknown yourAddress! !
 !MULTI_QI categoriesFor: #hr!**compiled accessors**!public! !
 !MULTI_QI categoriesFor: #hr:!**compiled accessors**!public! !
 !MULTI_QI categoriesFor: #pIID!**compiled accessors**!public! !
@@ -75,7 +75,11 @@ defineFields
 	self
 		defineField: #pIID	type: (PointerField type: IID);
 		defineField: #pItf	type: (PointerField type: IUnknown);
-		defineField: #hr	type: SDWORDField new! !
+		defineField: #hr	type: SDWORDField new!
+
+getFieldNames
+	^#(#pIID #pItf #hr)! !
 !MULTI_QI class categoriesFor: #clear:!public!realizing/unrealizing! !
 !MULTI_QI class categoriesFor: #defineFields!initializing!public! !
+!MULTI_QI class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

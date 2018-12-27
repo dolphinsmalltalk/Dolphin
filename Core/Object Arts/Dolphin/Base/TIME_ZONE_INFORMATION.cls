@@ -124,8 +124,8 @@ defineFields
 		defineField: #daylightBias type: SDWORDField new beReadOnly offset: 168.
 	self byteSize: 172!
 
-getFieldList
+getFieldNames
 	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
 !TIME_ZONE_INFORMATION class categoriesFor: #defineFields!initializing!public! !
-!TIME_ZONE_INFORMATION class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!TIME_ZONE_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

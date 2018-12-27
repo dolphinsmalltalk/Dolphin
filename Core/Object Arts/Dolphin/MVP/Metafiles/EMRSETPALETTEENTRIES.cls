@@ -27,53 +27,54 @@ struct tagEMRSETPALETTEENTRIES {
 !EMRSETPALETTEENTRIES methodsFor!
 
 aPalEntries
-	"Answer the receiver's aPalEntries field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'aPalEntries' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #aPalEntries)
 		length: self cEntries
 		elementClass: PALETTEENTRY!
 
-aPalEntries: anObject 
-	"Set the receiver's aPalEntries field to the value of anObject."
+aPalEntries: aStructureArrayOfPALETTEENTRY
+	"Set the receiver's 'aPalEntries' field to the value of the argument, aStructureArrayOfPALETTEENTRY"
 
 	| size |
-	size := anObject byteSize min: self cEntries * ##(PALETTEENTRY basicByteSize).
-	anObject 
+	size := aStructureArrayOfPALETTEENTRY byteSize.
+	aStructureArrayOfPALETTEENTRY
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #aPalEntries) + 1)
 		to: ##(self offsetOf: #aPalEntries) + size
-		startingAt: 1!
+		startingAt: 1.
+	self cEntries: aStructureArrayOfPALETTEENTRY size!
 
 cEntries
-	"Answer the receiver's cEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cEntries' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cEntries)!
 
-cEntries: anObject 
-	"Set the receiver's cEntries field to the value of anObject."
+cEntries: anInteger
+	"Set the receiver's 'cEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cEntries) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cEntries) put: anInteger!
 
 ihPal
-	"Answer the receiver's ihPal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
 
-ihPal: anObject 
-	"Set the receiver's ihPal field to the value of anObject."
+ihPal: anInteger
+	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anInteger!
 
 iStart
-	"Answer the receiver's iStart field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iStart' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iStart)!
 
-iStart: anObject 
-	"Set the receiver's iStart field to the value of anObject."
+iStart: anInteger
+	"Set the receiver's 'iStart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iStart) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #iStart) put: anInteger! !
 !EMRSETPALETTEENTRIES categoriesFor: #aPalEntries!**compiled accessors**!public! !
 !EMRSETPALETTEENTRIES categoriesFor: #aPalEntries:!**compiled accessors**!public! !
 !EMRSETPALETTEENTRIES categoriesFor: #cEntries!**compiled accessors**!public! !
@@ -115,10 +116,14 @@ defineFields
 			type: (StructureArrayField type: PALETTEENTRY lengthField: #cEntries)
 			offset: 20!
 
+getFieldNames
+	^#(#iType #nSize #ihPal #iStart #cEntries #aPalEntries)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETPALETTEENTRIES! !
 !EMRSETPALETTEENTRIES class categoriesFor: #defineFields!initializing!public! !
+!EMRSETPALETTEENTRIES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETPALETTEENTRIES class categoriesFor: #iTypes!constants!public! !
 

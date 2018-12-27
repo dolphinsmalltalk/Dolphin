@@ -42,11 +42,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\InheritableFile\InheritableFile';
-	add: '..\KernelLibraryExtensions\KernelLibraryExtensions';
-	yourself).
+package setPrerequisites: #(
+	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\InheritableFile\InheritableFile'
+	'..\KernelLibraryExtensions\KernelLibraryExtensions').
 
 package!
 

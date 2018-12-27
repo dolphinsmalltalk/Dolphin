@@ -417,15 +417,16 @@ package methodNames
 	add: 'Dictionary class' -> #newInstanceAspect:class:;
 	add: 'DOUBLE class' -> #newInstanceAspect:class:;
 	add: 'ExternalArray class' -> #newInstanceAspect:class:;
+	add: 'ExternalArray class' -> #shouldOverrideGetFieldNames;
 	add: 'ExternalInteger class' -> #decompileDefinition;
 	add: 'ExternalInteger class' -> #newInstanceAspect:class:;
 	add: 'ExternalIntegerBytes class' -> #newInstanceAspect:class:;
 	add: 'ExternalMethod class' -> #publishedAspectsOfInstances;
-	add: 'ExternalScalar class' -> #shouldOverrideGetFieldList;
+	add: 'ExternalScalar class' -> #shouldOverrideGetFieldNames;
 	add: 'ExternalStructure class' -> #autoGenCategory;
 	add: 'ExternalStructure class' -> #compileAllDefinitions;
 	add: 'ExternalStructure class' -> #compileDefinition;
-	add: 'ExternalStructure class' -> #compileGetFieldList;
+	add: 'ExternalStructure class' -> #compileGetFieldNames;
 	add: 'ExternalStructure class' -> #compileGetMethod:forField:;
 	add: 'ExternalStructure class' -> #compileNewFields;
 	add: 'ExternalStructure class' -> #compileSetMethod:forField:;
@@ -434,7 +435,7 @@ package methodNames
 	add: 'ExternalStructure class' -> #hasHandCodedMethodFor:;
 	add: 'ExternalStructure class' -> #recompileDefinition;
 	add: 'ExternalStructure class' -> #shouldCompile:forField:;
-	add: 'ExternalStructure class' -> #shouldOverrideGetFieldList;
+	add: 'ExternalStructure class' -> #shouldOverrideGetFieldNames;
 	add: 'Float class' -> #newInstanceAspect:class:;
 	add: 'FLOAT class' -> #newInstanceAspect:class:;
 	add: 'FlowLayout class' -> #publishedAspectsOfInstances;
@@ -2670,8 +2671,12 @@ newInstanceAspect: aSymbol class: aspectClass
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
-	^aspectClass sequenceableCollection: aSymbol! !
+	^aspectClass sequenceableCollection: aSymbol!
+
+shouldOverrideGetFieldNames
+	^false! !
 !ExternalArray class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+!ExternalArray class categoriesFor: #shouldOverrideGetFieldNames!compiling!private! !
 
 !ExternalField methodsFor!
 
@@ -2729,9 +2734,9 @@ publishedAspectsOfInstances
 
 !ExternalScalar class methodsFor!
 
-shouldOverrideGetFieldList
+shouldOverrideGetFieldNames
 	^false! !
-!ExternalScalar class categoriesFor: #shouldOverrideGetFieldList!private! !
+!ExternalScalar class categoriesFor: #shouldOverrideGetFieldNames!compiling!private! !
 
 !ExternalStructure methodsFor!
 
@@ -2783,14 +2788,14 @@ compileDefinition
 		recompileDefinition;
 		shrink!
 
-compileGetFieldList
+compileGetFieldNames
 	"Private - Define a #getFieldList method for the structure class so that the field names are available even if the template is removed."
 
 	| methodText |
-	self shouldOverrideGetFieldList ifTrue: [^self].
+	self shouldOverrideGetFieldNames ifFalse: [^self].
 	methodText := String writeStream: 256.
 	methodText
-		nextPutAll: 'getFieldList';
+		nextPutAll: #getFieldNames;
 		crtab;
 		nextPutAll: '^#('.
 	self fieldNamesFromTemplate do: [:each | methodText print: each] separatedBy: [methodText space].
@@ -2851,7 +2856,7 @@ recompileDefinition
 
 	self decompileDefinition.
 	self compileNewFields.
-	self compileGetFieldList!
+	self compileGetFieldNames!
 
 shouldCompile: selector forField: anExternalField
 	"Private - Answer whether to compile an accessor method
@@ -2864,12 +2869,20 @@ shouldCompile: selector forField: anExternalField
 				anExternalField isOverride or: [
 					(self superclass template includesKey: (selector upTo: $:) asSymbol) not]]]!
 
-shouldOverrideGetFieldList
-	^self hasHandCodedMethodFor: #getFieldList! !
+shouldOverrideGetFieldNames
+	^self isNonInstantiable not and: 
+			[self definesNewFields and: 
+					[| categories |
+					categories := self class whichNonVirtualCategoriesIncludeSelector: #getFieldNames.
+					(categories isEmpty or: [categories includes: self autoGenCategory asMethodCategory]) and: 
+							[| inherited |
+							inherited := self superclass class lookupMethod: #getFieldNames.
+							inherited methodClass == ExternalStructure class
+								or: [self fieldNamesFromTemplate asSet ~= (inherited literalAt: 1) asSet]]]]! !
 !ExternalStructure class categoriesFor: #autoGenCategory!compiling!constants!private! !
 !ExternalStructure class categoriesFor: #compileAllDefinitions!compiling!public! !
 !ExternalStructure class categoriesFor: #compileDefinition!compiling!public! !
-!ExternalStructure class categoriesFor: #compileGetFieldList!compiling!private! !
+!ExternalStructure class categoriesFor: #compileGetFieldNames!compiling!private! !
 !ExternalStructure class categoriesFor: #compileGetMethod:forField:!compiling!private! !
 !ExternalStructure class categoriesFor: #compileNewFields!compiling!private! !
 !ExternalStructure class categoriesFor: #compileSetMethod:forField:!compiling!private! !
@@ -2878,7 +2891,7 @@ shouldOverrideGetFieldList
 !ExternalStructure class categoriesFor: #hasHandCodedMethodFor:!compiling!private! !
 !ExternalStructure class categoriesFor: #recompileDefinition!compiling!private! !
 !ExternalStructure class categoriesFor: #shouldCompile:forField:!compiling!private! !
-!ExternalStructure class categoriesFor: #shouldOverrideGetFieldList!compiling!private! !
+!ExternalStructure class categoriesFor: #shouldOverrideGetFieldNames!compiling!private! !
 
 !Float class methodsFor!
 
@@ -4515,18 +4528,22 @@ assign: resourceData
 
 	resourceData assignToResourceIdentifier: self!
 
-assignLiteralResourceData: aLiteralArray 
+assignLiteralResourceData: aLiteralArray
 	"Private - Assign aResource as the resource data represented by the receiver."
 
-	| stream source |
+	| stream source sel methodClass categories |
 	stream := String writeStream.
-	self emitMethodHeaderFor: self selector on: stream.
+	sel := self selector.
+	self emitMethodHeaderFor: sel on: stream.
 	stream
 		tab;
 		nextPut: $^.
 	self emit: aLiteralArray asStringOn: stream.
 	source := stream contents.
-	self owningClass class compile: source classified: self class viewResourceCategoryName!
+	methodClass := self owningClass class.
+	categories := Set with: self class viewResourceCategoryName.
+	(methodClass whichCategoriesIncludeSelector: sel) do: [:each | categories add: each name].
+	methodClass compile: source categories: categories!
 
 browse
 	^self edit!

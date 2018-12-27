@@ -782,14 +782,15 @@ suggestedPrivacyFor: aCompiledMethod
 	policy := Smalltalk lookup: #MethodCategorizationPolicy.
 	^policy notNil ifTrue: [policy default suggestedPrivacyFor: aCompiledMethod]!
 
-whichCategoriesIncludeSelector: aSelector 
+whichCategoriesIncludeSelector: aSelector
 	"Private - Answer a <collection> of the 'real' (i.e. non-pseudo or virtual) categories in the 
 	receiver's method catalogue which include the specified selector."
 
 	| answer |
 	answer := self whichNonVirtualCategoriesIncludeSelector: aSelector.
 	"The privacy category is considered 'real' because it is not calculated but based on a flag in the method header."
-	answer add: (self compiledMethodAt: aSelector) privacyCategory.
+	(self compiledMethodAt: aSelector ifAbsent: [])
+		ifNotNil: [:method | answer add: method privacyCategory].
 	^answer!
 
 whichClassDefinesClassVar: aString

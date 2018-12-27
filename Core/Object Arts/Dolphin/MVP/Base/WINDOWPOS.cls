@@ -11,32 +11,32 @@ WINDOWPOS comment: ''!
 !WINDOWPOS methodsFor!
 
 cx
-	"Answer the receiver's cx field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cx' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cx)!
 
-cx: anObject 
-	"Set the receiver's cx field to the value of anObject."
+cx: anInteger
+	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cx) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cx) put: anInteger!
 
 cy
-	"Answer the receiver's cy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cy' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cy)!
 
-cy: anObject 
-	"Set the receiver's cy field to the value of anObject."
+cy: anInteger
+	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anInteger!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
 
 hwndInsertAfter
-	"Answer the receiver's hwndInsertAfter field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hwndInsertAfter' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #hwndInsertAfter)!
 
@@ -72,12 +72,12 @@ rectangle
 	^self x @ self y extent: self cx @ self cy!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #x)!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #y)! !
 !WINDOWPOS categoriesFor: #cx!**compiled accessors**!public! !
@@ -117,6 +117,10 @@ defineFields
 		defineField: #cx type: SDWORDField new;
 		defineField: #cy type: SDWORDField new;
 		defineField: #flags type: DWORDField readOnly
-! !
+!
+
+getFieldNames
+	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
 !WINDOWPOS class categoriesFor: #defineFields!initializing!public! !
+!WINDOWPOS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

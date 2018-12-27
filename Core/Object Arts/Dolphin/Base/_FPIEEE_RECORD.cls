@@ -201,7 +201,7 @@ exceptionFlags: anInteger do: aMonadicValuable
 					(anInteger anyMask: mask) ifTrue: [aMonadicValuable value: each].
 					mask << 1]]!
 
-getFieldList
+getFieldNames
 	^#(#flags #cause #enable #status #operand1 #operand2)!
 
 operationCodes
@@ -228,7 +228,7 @@ roundingModes
 !_FPIEEE_RECORD class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
-!_FPIEEE_RECORD class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!_FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !_FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
 !_FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !

@@ -54,6 +54,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #lpOFN type: (PointerField type: OPENFILENAMEW) beReadOnly;
-		defineField: #pszFile type: (PointerField type: Utf16String) beReadOnly! !
+		defineField: #pszFile type: (PointerField type: Utf16String) beReadOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #lpOFN #pszFile)! !
 !OFNOTIFYW class categoriesFor: #defineFields!initializing!public! !
+!OFNOTIFYW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

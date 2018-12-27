@@ -76,14 +76,14 @@ description: errorDescription
 	self bstrDescription: bstr detach.!
 
 dwHelpContext
-	"Answer the receiver's dwHelpContext field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwHelpContext' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext)!
 
-dwHelpContext: anObject 
-	"Set the receiver's dwHelpContext field to the value of anObject."
+dwHelpContext: anInteger
+	"Set the receiver's 'dwHelpContext' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext) put: anInteger!
 
 helpFile
 	"Answer the receiver's bstrHelpFile field as a <readableString> Smalltalk object."
@@ -111,49 +111,49 @@ hresult
 			[wCode >= 16rFE00 ifTrue: [WCODE_HRESULT_LAST] ifFalse: [WCODE_HRESULT_FIRST + wCode]]!
 
 pfnDeferredFillIn
-	"Answer the receiver's pfnDeferredFillIn field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'pfnDeferredFillIn' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #pfnDeferredFillIn)) asExternalAddress!
 
 pwszDescription
-	"Answer the receiver's pwszDescription field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pwszDescription' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription)!
 
-pwszDescription: anObject 
-	"Set the receiver's pwszDescription field to the value of anObject."
+pwszDescription: anInteger
+	"Set the receiver's 'pwszDescription' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription) put: anInteger!
 
 pwszHelpFile
-	"Answer the receiver's pwszHelpFile field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pwszHelpFile' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile)!
 
-pwszHelpFile: anObject 
-	"Set the receiver's pwszHelpFile field to the value of anObject."
+pwszHelpFile: anInteger
+	"Set the receiver's 'pwszHelpFile' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile) put: anInteger!
 
 pwszSource
-	"Answer the receiver's pwszSource field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'pwszSource' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource)!
 
-pwszSource: anObject 
-	"Set the receiver's pwszSource field to the value of anObject."
+pwszSource: anInteger
+	"Set the receiver's 'pwszSource' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource) put: anInteger!
 
 scode
-	"Answer the receiver's scode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'scode' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #scode)!
 
-scode: anObject 
-	"Set the receiver's scode field to the value of anObject."
+scode: anInteger
+	"Set the receiver's 'scode' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #scode) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #scode) put: anInteger!
 
 source
 	"Answer a <readableString> description of the source of the error.
@@ -172,14 +172,14 @@ source: errorSourceString
 	self bstrSource: bstr detach.!
 
 wCode
-	"Answer the receiver's wCode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wCode' field."
 
 	^bytes wordAtOffset: 0!
 
-wCode: anObject 
-	"Set the receiver's wCode field to the value of anObject."
+wCode: anInteger
+	"Set the receiver's 'wCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: 0 put: anInteger!
 
 wstrDescription
 	"Answer the receiver's bstrDescription field as a <Utf16String>."
@@ -266,7 +266,11 @@ defineFields
 		defineField: #dwHelpContext type: DWORDField new;
 		defineField: #pvReserved type: LPVOIDField filler;
 		defineField: #pfnDeferredFillIn type: LPVOIDField readOnly;
-		defineField: #scode type: SDWORDField new! !
+		defineField: #scode type: SDWORDField new!
+
+getFieldNames
+	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
 !EXCEPINFO class categoriesFor: #clear:!public!realizing/unrealizing! !
 !EXCEPINFO class categoriesFor: #defineFields!initializing!public! !
+!EXCEPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -149,7 +149,11 @@ defineFields
 		defineField: #sin6_addr type: (StructureField type: IN6_ADDR) offset: 8;
 		defineField: #sin6_scope_id type: DWORDField new offset: 24;
 		defineField: #sin6_scope_struct type: DWORDField new beFiller offset: 24.
-	self byteSize: 28! !
+	self byteSize: 28!
+
+getFieldNames
+	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
 !SOCKADDR_IN6 class categoriesFor: #addressFamily!constants!public! !
 !SOCKADDR_IN6 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SOCKADDR_IN6 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

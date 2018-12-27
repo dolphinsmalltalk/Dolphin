@@ -158,6 +158,10 @@ defineFields
 		defineField: #pszImage type: (PointerField type: Utf16String);
 		defineField: #cchImageMax type: DWORDField writeOnly;
 		defineField: #xOffsetPercent type: SDWORDField new;
-		defineField: #yOffsetPercent type: SDWORDField new! !
+		defineField: #yOffsetPercent type: SDWORDField new!
+
+getFieldNames
+	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !
 !LVBKIMAGEW class categoriesFor: #defineFields!initializing!public! !
+!LVBKIMAGEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

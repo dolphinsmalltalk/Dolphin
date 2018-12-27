@@ -342,9 +342,13 @@ defineFields
 			offset: 56.
 	self byteSize: 60!
 
+getFieldNames
+	^#(#mask #iItem #iSubItem #dwState #stateMask #pszText #cchTextMax #iImage #lParam #iIndent #iGroupId #cColumns #puColumns #piColFmt #iGroup)!
+
 initialize
 	CallbackPrototype := self new allCallbacks; bytes! !
 !LVITEMW class categoriesFor: #allCallbacks!public! !
 !LVITEMW class categoriesFor: #defineFields!initializing!public! !
+!LVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LVITEMW class categoriesFor: #initialize!development!public! !
 

@@ -1034,18 +1034,18 @@ GetFieldNames: pcNames rgBstrNames: rgBstrNames
 	"
 
 	| names |
-	names := self getFieldList.
-	
+	names := self getFieldNames.
 	rgBstrNames isNull
 		ifTrue: [pcNames value: names size]
-		ifFalse: [ | namesArray maxNames end |
+		ifFalse: 
+			[| namesArray maxNames end |
 			maxNames := pcNames value.
 			namesArray := DWORDArray fromAddress: rgBstrNames yourAddress length: maxNames.
 			end := names size min: maxNames.
 			1 to: end do: [:i | namesArray at: i put: (names at: i) asBSTR detach].
-			end+1 to: maxNames do: [:i | namesArray at: i put: 0].
+			end + 1 to: maxNames do: [:i | namesArray at: i put: 0].
 			pcNames value: end].
-	^0 "S_OK"!
+	^0	"S_OK"!
 
 GetFieldNoCopy: pvData szFieldName: szFieldName pvarField: pvarField ppvDataCArray: ppvDataCArray
 	"Implement the IRecordInfo::GetFieldNoCopy() method for the UDT described by the receiver.

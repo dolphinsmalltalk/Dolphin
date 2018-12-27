@@ -110,6 +110,10 @@ defineFields
 		defineField: #cfType type: WORDField new;
 		defineField: #dwHint type: DWORDField new;
 		defineField: #pstrName type: (PointerField type: Utf16String);
-		defineField: #clsid type: (StructureField type: GUID)! !
+		defineField: #clsid type: (StructureField type: GUID)!
+
+getFieldNames
+	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
 !PROPBAG2 class categoriesFor: #defineFields!initializing!public! !
+!PROPBAG2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

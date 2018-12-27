@@ -39,34 +39,34 @@ hatch: aBitmapOrInteger
 	self lbHatch: aBitmapOrInteger asParameter!
 
 lbColor
-	"Answer the receiver's lbColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lbColor' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lbColor)!
 
-lbColor: anObject 
-	"Set the receiver's lbColor field to the value of anObject."
+lbColor: anInteger
+	"Set the receiver's 'lbColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lbColor) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #lbColor) put: anInteger!
 
 lbHatch
-	"Answer the receiver's lbHatch field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lbHatch' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lbHatch)!
 
-lbHatch: anObject 
-	"Set the receiver's lbHatch field to the value of anObject."
+lbHatch: anInteger
+	"Set the receiver's 'lbHatch' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lbHatch) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #lbHatch) put: anInteger!
 
 lbStyle
-	"Answer the receiver's lbStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lbStyle' field."
 
 	^bytes dwordAtOffset: 0!
 
-lbStyle: anObject 
-	"Set the receiver's lbStyle field to the value of anObject."
+lbStyle: anInteger
+	"Set the receiver's 'lbStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 printFieldsOn: aStream limit: anInteger 
 	aStream
@@ -118,6 +118,9 @@ defineFields
 		defineField: #lbColor type: DWORDField new;
 		defineField: #lbHatch type: UINT_PTRField new!
 
+getFieldNames
+	^#(#lbStyle #lbColor #lbHatch)!
+
 stbConvertFrom: anSTBClassFormat 
 	"Version 1 adds hatch instance variables to hold Bitmap preventing it being GC'd (#1052)."
 
@@ -131,6 +134,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !LOGBRUSH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LOGBRUSH class categoriesFor: #stbConvertFrom:!binary filing!public! !
 !LOGBRUSH class categoriesFor: #stbVersion!binary filing!public! !
 

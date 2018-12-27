@@ -28,64 +28,64 @@ struct tagXFORM {
 !XFORM methodsFor!
 
 eDx
-	"Answer the receiver's eDx field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eDx' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eDx)!
 
-eDx: anObject 
-	"Set the receiver's eDx field to the value of anObject."
+eDx: aFloat
+	"Set the receiver's 'eDx' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eDx) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eDx) put: aFloat!
 
 eDy
-	"Answer the receiver's eDy field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eDy' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eDy)!
 
-eDy: anObject 
-	"Set the receiver's eDy field to the value of anObject."
+eDy: aFloat
+	"Set the receiver's 'eDy' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eDy) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eDy) put: aFloat!
 
 eM11
-	"Answer the receiver's eM11 field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eM11' field."
 
 	^bytes floatAtOffset: 0!
 
-eM11: anObject 
-	"Set the receiver's eM11 field to the value of anObject."
+eM11: aFloat
+	"Set the receiver's 'eM11' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: anObject!
+	bytes floatAtOffset: 0 put: aFloat!
 
 eM12
-	"Answer the receiver's eM12 field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eM12' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eM12)!
 
-eM12: anObject 
-	"Set the receiver's eM12 field to the value of anObject."
+eM12: aFloat
+	"Set the receiver's 'eM12' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eM12) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eM12) put: aFloat!
 
 eM21
-	"Answer the receiver's eM21 field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eM21' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eM21)!
 
-eM21: anObject 
-	"Set the receiver's eM21 field to the value of anObject."
+eM21: aFloat
+	"Set the receiver's 'eM21' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eM21) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eM21) put: aFloat!
 
 eM22
-	"Answer the receiver's eM22 field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eM22' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eM22)!
 
-eM22: anObject 
-	"Set the receiver's eM22 field to the value of anObject."
+eM22: aFloat
+	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eM22) put: anObject! !
+	bytes floatAtOffset: ##(self offsetOf: #eM22) put: aFloat! !
 !XFORM categoriesFor: #eDx!**compiled accessors**!public! !
 !XFORM categoriesFor: #eDx:!**compiled accessors**!public! !
 !XFORM categoriesFor: #eDy!**compiled accessors**!public! !
@@ -123,6 +123,10 @@ defineFields
 		defineField: #eM21 type: FLOATField new;
 		defineField: #eM22 type: FLOATField new;
 		defineField: #eDx type: FLOATField new;
-		defineField: #eDy type: FLOATField new! !
+		defineField: #eDy type: FLOATField new!
+
+getFieldNames
+	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
 !XFORM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!XFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

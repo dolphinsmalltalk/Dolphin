@@ -57,6 +57,10 @@ defineFields
 		defineField: #iItem type: SDWORDField readOnly;
 		defineField: #tbButton type: (StructureField type: TBBUTTON) beReadOnly;
 		defineField: #cchText type: SDWORDField new beReadOnly;
-		defineField: #pszText type: (PointerField type: Utf16String) beReadOnly! !
+		defineField: #pszText type: (PointerField type: Utf16String) beReadOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
 !NMTOOLBARW class categoriesFor: #defineFields!initializing!public! !
+!NMTOOLBARW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

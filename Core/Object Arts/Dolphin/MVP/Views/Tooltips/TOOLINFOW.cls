@@ -136,20 +136,20 @@ uId: anInteger
 !TOOLINFOW class methodsFor!
 
 defineFields
-	"Define the fields of the TOOLINFOA structure.
-		TOOLINFOA compileDefinition
+	"Define the fields of the TOOLINFO structure.
+		self compileDefinition
 	
-		typedef 		struct tagTOOLINFOA {
+		typedef 		struct tagTOOLINFOW {
 			unsigned int cbSize;
 			unsigned int uFlags;
 			unsigned long hwnd;
 			UINT_PTR uId;
 			RECT rect;
 			HINSTANCE hinst;
-			LPSTR lpszText;
+			LPWSTR lpszText;
 			LPARAM lParam;
 			void* lpReserved;
-		} TOOLINFOA;
+		} TOOLINFOW;
 "
 
 	self
@@ -161,6 +161,10 @@ defineFields
 		defineField: #hinst type: HANDLEField readOnly;
 		defineField: #lpszText type: (PointerField type: Utf16String) beWriteOnly;
 		defineField: #lParam type: INT_PTRField readOnly;
-		defineField: #lpReserved type: LPVOIDField filler! !
+		defineField: #lpReserved type: LPVOIDField filler!
+
+getFieldNames
+	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
 !TOOLINFOW class categoriesFor: #defineFields!initializing!public! !
+!TOOLINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

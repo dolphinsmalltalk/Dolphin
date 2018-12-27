@@ -131,6 +131,9 @@ defineFields
 		defineField: #h_addr_list type: LPVOIDField new beReadOnly offset: 12.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#h_name #h_aliases #h_addrtype #h_length #h_addr_list)!
+
 host: aStringHostName
 	"Answer a new instance of the receiver describing a host with the name 
 	held in aStringHostName.
@@ -141,5 +144,6 @@ host: aStringHostName
 	answer := WS2_32Library default gethostbyname: aStringHostName asAnsiString.
 	^answer isNull ifTrue: [SocketError signalWith: Processor activeProcess lastError] ifFalse: [answer]! !
 !HOSTENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HOSTENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HOSTENT class categoriesFor: #host:!instance creation!public! !
 

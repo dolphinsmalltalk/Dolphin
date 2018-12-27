@@ -13,44 +13,44 @@ The `RECT` structure is used in many places in the Windows API to represent a re
 !RECT methodsFor!
 
 bottom
-	"Answer the receiver's bottom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bottom' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #bottom)!
 
-bottom: anObject 
-	"Set the receiver's bottom field to the value of anObject."
+bottom: anInteger
+	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #bottom) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #bottom) put: anInteger!
 
 left
-	"Answer the receiver's left field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'left' field."
 
 	^bytes sdwordAtOffset: 0!
 
-left: anObject 
-	"Set the receiver's left field to the value of anObject."
+left: anInteger
+	"Set the receiver's 'left' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 right
-	"Answer the receiver's right field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'right' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #right)!
 
-right: anObject 
-	"Set the receiver's right field to the value of anObject."
+right: anInteger
+	"Set the receiver's 'right' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #right) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #right) put: anInteger!
 
 top
-	"Answer the receiver's top field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'top' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #top)!
 
-top: anObject 
-	"Set the receiver's top field to the value of anObject."
+top: anInteger
+	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #top) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #top) put: anInteger! !
 !RECT categoriesFor: #bottom!**compiled accessors**!public! !
 !RECT categoriesFor: #bottom:!**compiled accessors**!public! !
 !RECT categoriesFor: #left!**compiled accessors**!public! !
@@ -89,6 +89,9 @@ extent: newExtent
 				sdwordAtOffset: 12 put: newExtent y;
 				yourself)!
 
+getFieldNames
+	^#(#left #top #right #bottom)!
+
 left: leftInteger top: topInteger right: rightInteger bottom: bottomInteger 
 	"Answer a new instance of the receiver with the specified position
 	corner positions."
@@ -110,6 +113,7 @@ uninitialize
 	self environment removeKey: #RECTL ifAbsent: []! !
 !RECT class categoriesFor: #defineFields!initializing!public! !
 !RECT class categoriesFor: #extent:!instance creation!public! !
+!RECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !RECT class categoriesFor: #left:top:right:bottom:!instance creation!public! !
 !RECT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 

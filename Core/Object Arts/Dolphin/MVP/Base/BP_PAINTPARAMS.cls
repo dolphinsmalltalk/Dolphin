@@ -18,39 +18,39 @@ blendFunction: aBLENDFUNCTION
 	self pBlendFunction: aBLENDFUNCTION yourAddress!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 pBlendFunction
-	"Answer the receiver's pBlendFunction field as a Smalltalk object."
+	"Answer the <BLENDFUNCTION> value of the receiver's 'pBlendFunction' field."
 
 	^BLENDFUNCTION fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pBlendFunction))!
 
-pBlendFunction: anObject 
-	"Set the receiver's pBlendFunction field to the value of anObject."
+pBlendFunction: aBLENDFUNCTION
+	"Set the receiver's 'pBlendFunction' field to the value of the argument, aBLENDFUNCTION"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pBlendFunction) put: anObject yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #pBlendFunction) put: aBLENDFUNCTION yourAddress!
 
 prcExclude
-	"Answer the receiver's prcExclude field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'prcExclude' field."
 
 	^RECT fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #prcExclude))!
 
-prcExclude: anObject 
-	"Set the receiver's prcExclude field to the value of anObject."
+prcExclude: aRECT
+	"Set the receiver's 'prcExclude' field to the value of the argument, aRECT"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #prcExclude) put: anObject yourAddress! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #prcExclude) put: aRECT yourAddress! !
 !BP_PAINTPARAMS categoriesFor: #blendFunction!accessing!public! !
 !BP_PAINTPARAMS categoriesFor: #blendFunction:!accessing!public! !
 !BP_PAINTPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
@@ -81,6 +81,10 @@ defineFields
 		defineField: #dwSize type: DWORDField writeOnly;
 		defineField: #dwFlags type: DWORDField new;
 		defineField: #prcExclude type: (PointerField type: RECT);
-		defineField: #pBlendFunction type: (PointerField type: BLENDFUNCTION)! !
+		defineField: #pBlendFunction type: (PointerField type: BLENDFUNCTION)!
+
+getFieldNames
+	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
 !BP_PAINTPARAMS class categoriesFor: #defineFields!initializing!public! !
+!BP_PAINTPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

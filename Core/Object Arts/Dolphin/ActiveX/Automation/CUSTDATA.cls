@@ -73,6 +73,9 @@ defineFields
 			type: (StructureArrayPointerField type: CUSTDATAITEM
 					arrayLength: (ConformantArrayFieldLength lengthField: #cCustData)) beReadOnly!
 
+getFieldNames
+	^#(#cCustData #prgCustData)!
+
 initialize
 	"Define some custom attributes to work around the limitiations of type libraries in not
 	supporting certain key IDL attributes that are required to correctly describe C structures;
@@ -86,5 +89,6 @@ initialize
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
 !CUSTDATA class categoriesFor: #defineFields!initializing!public! !
+!CUSTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !CUSTDATA class categoriesFor: #initialize!public! !
 

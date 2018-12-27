@@ -57,10 +57,14 @@ defineFields
 	super defineFields.
 	self defineField: #text type: (StringField type: AnsiString length: 1)!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #iGraphicsMode #exScale #eyScale #EMRTEXT #text)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTTEXTOUTA! !
 !EMREXTTEXTOUTA class categoriesFor: #defineFields!initializing!public! !
+!EMREXTTEXTOUTA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTTEXTOUTA class categoriesFor: #iTypes!constants!public! !
 

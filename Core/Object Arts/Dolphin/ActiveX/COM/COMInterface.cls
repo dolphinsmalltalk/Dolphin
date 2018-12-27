@@ -33,10 +33,10 @@ AddRef
 
 	^self subclassResponsibility!
 
-argSizes: anObject 
-	"Set the receiver's argSizes field to the value of anObject."
+argSizes: anExternalAddress
+	"Set the receiver's 'argSizes' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #argSizes) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #argSizes) put: anExternalAddress!
 
 asParameter
 	"Answer the receiver in a form suitable for passing
@@ -179,20 +179,20 @@ initializeAtAddress: anAddress
 	self beFinalizable.
 	self _addRef!
 
-interfaceCookie: anObject 
-	"Set the receiver's interfaceCookie field to the value of anObject."
+interfaceCookie: anInteger
+	"Set the receiver's 'interfaceCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #interfaceCookie) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #interfaceCookie) put: anInteger!
 
 isSameCOMObject: aCOMInterface
 	"Answer true if aCOMInterface has the same underlying COMObject as the receiver."
 
 	^self identity = aCOMInterface identity!
 
-objectCookie: anObject 
-	"Set the receiver's objectCookie field to the value of anObject."
+objectCookie: anInteger
+	"Set the receiver's 'objectCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #objectCookie) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #objectCookie) put: anInteger!
 
 onExit
 	"Clean up the external interface pointer on image exit to free external resources"
@@ -309,10 +309,10 @@ supportsInterface: anInterfaceClass
 
 	^self class == anInterfaceClass "isKindOf: anInterfaceClass"!
 
-vtbl: anObject 
-	"Set the receiver's vtbl field to the value of anObject."
+vtbl: anExternalAddress
+	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: 0 put: anObject! !
+	bytes uintPtrAtOffset: 0 put: anExternalAddress! !
 !COMInterface categoriesFor: #_addRef!methods!private! !
 !COMInterface categoriesFor: #=!comparing!public! !
 !COMInterface categoriesFor: #AddRef!methods!public! !
@@ -698,6 +698,9 @@ generatedFunctionCategories
 
 	^{'COM Interfaces', '-', self name. 'public'}!
 
+getFieldNames
+	^#()!
+
 getObject: aString
 	"Answer an instance or subinstance of the receiver on an instance of the COM component 
 	instantiated by binding the moniker with display name equivalent to the <readableString>
@@ -1076,6 +1079,7 @@ unregister
 !COMInterface class categoriesFor: #elementSize!accessing!public! !
 !COMInterface class categoriesFor: #functions!initializing!private! !
 !COMInterface class categoriesFor: #generatedFunctionCategories!constants!public! !
+!COMInterface class categoriesFor: #getFieldNames!constants!private! !
 !COMInterface class categoriesFor: #getObject:!instance creation!public! !
 !COMInterface class categoriesFor: #icon!constants!public! !
 !COMInterface class categoriesFor: #iid!accessing!public! !

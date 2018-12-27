@@ -24,14 +24,14 @@ struct tagEMRLINETO {
 !EMRLINETO methodsFor!
 
 ptl
-	"Answer the receiver's ptl field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptl' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptl)!
 
-ptl: anObject 
-	"Set the receiver's ptl field to the value of anObject."
+ptl: aPOINTL
+	"Set the receiver's 'ptl' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptl) + 1)
 		to: ##((self offsetOf: #ptl) + POINTL basicByteSize)
@@ -60,10 +60,14 @@ defineFields
 			offset: 8.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #ptl)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_LINETO with: EMR_MOVETOEX! !
 !EMRLINETO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRLINETO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRLINETO class categoriesFor: #iTypes!constants!public! !
 

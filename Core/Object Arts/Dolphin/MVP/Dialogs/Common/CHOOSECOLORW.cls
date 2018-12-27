@@ -114,7 +114,7 @@ rgbResult: anInteger
 defineFields
 	"Define the fields of the CHOOSECOLOR structure.
 
-	CHOOSECOLOR compileDefinition
+	self compileDefinition
 
 		typedef [uuid(87b4c5d1-026e-11d3-9fd7-00a0cc3e4a32), helpstring('CHOOSECOLOR is used in conjunction with <ColorDialog> to pop a common file dialog to select a colour.')]
 		struct tagCHOOSECOLOR {
@@ -140,6 +140,10 @@ defineFields
 		defineField: #lCustData type: INT_PTRField new beFiller offset: 24;
 		defineField: #lpfnHook type: LPVOIDField new beWriteOnly offset: 28;
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller offset: 32.
-	self byteSize: 36! !
+	self byteSize: 36!
+
+getFieldNames
+	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
 !CHOOSECOLORW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CHOOSECOLORW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

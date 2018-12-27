@@ -26,34 +26,34 @@ struct tagEMREXTFLOODFILL {
 !EMREXTFLOODFILL methodsFor!
 
 crColor
-	"Answer the receiver's crColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crColor' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #crColor)!
 
-crColor: anObject 
-	"Set the receiver's crColor field to the value of anObject."
+crColor: anInteger
+	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anInteger!
 
 iMode
-	"Answer the receiver's iMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iMode)!
 
-iMode: anObject 
-	"Set the receiver's iMode field to the value of anObject."
+iMode: anInteger
+	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anInteger!
 
 ptlStart
-	"Answer the receiver's ptlStart field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlStart' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlStart)!
 
-ptlStart: anObject 
-	"Set the receiver's ptlStart field to the value of anObject."
+ptlStart: aPOINTL
+	"Set the receiver's 'ptlStart' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptlStart) + 1)
 		to: ##((self offsetOf: #ptlStart) + POINTL basicByteSize)
@@ -88,10 +88,14 @@ defineFields
 		defineField: #iMode type: DWORDField new offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #ptlStart #crColor #iMode)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTFLOODFILL! !
 !EMREXTFLOODFILL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREXTFLOODFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTFLOODFILL class categoriesFor: #iTypes!constants!public! !
 

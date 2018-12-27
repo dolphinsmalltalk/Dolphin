@@ -199,7 +199,7 @@ title: aString
 defineFields
 	"Define the fields of the OPENFILENAME structure.
 
-	OPENFILENAME  compileDefinition
+	self compileDefinition
 
 		typedef [uuid(87B4C603-026E-11D3-9FD7-00A0CC3E4A32)]
 		struct tagOPENFILENAME {
@@ -252,6 +252,10 @@ defineFields
 		defineField: #lpTemplateName type: (PointerField type: Utf16String) beFiller;
 		defineField: #pvReserved type: LPVOIDField filler;
 		defineField: #dwReserved type: DWORDField filler;
-		defineField: #flagsEx type: DWORDField new! !
+		defineField: #flagsEx type: DWORDField new!
+
+getFieldNames
+	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
 !OPENFILENAMEW class categoriesFor: #defineFields!initializing!public! !
+!OPENFILENAMEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

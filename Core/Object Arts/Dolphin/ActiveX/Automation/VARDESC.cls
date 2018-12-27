@@ -69,9 +69,8 @@ getValidFields
 	structure, that are valid in this particular instance."
 
 	| fields |
-	fields := super getValidFields.
-	self isSymbolicConstant ifFalse: [fields remove: #lpvarValue].
-	^fields!
+	fields := self class getFieldNames.
+	^self isSymbolicConstant ifTrue: [fields] ifFalse: [fields copyWithout: #lpvarValue]!
 
 isAnonymous
 	"Answer whether the variable described by the receiver is anonymous (i.e. unnamed). This is
@@ -213,6 +212,10 @@ defineFields
 	self
 		defineField: #oInst
 		type: DWORDField readOnly
-		offset: (self offsetOf: #lpvarValue)! !
+		offset: (self offsetOf: #lpvarValue)!
+
+getFieldNames
+	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
 !VARDESC class categoriesFor: #defineFields!initializing!public! !
+!VARDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

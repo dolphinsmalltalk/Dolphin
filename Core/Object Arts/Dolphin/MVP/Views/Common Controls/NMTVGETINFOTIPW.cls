@@ -52,6 +52,10 @@ defineFields
 		defineField: #pszText type: LPVOIDField readOnly;
 		defineField: #cchTextMax type: SDWORDField readOnly;
 		defineField: #hItem type: UINT_PTRField readOnly;
-		defineField: #lParam type: UINT_PTRField readOnly! !
+		defineField: #lParam type: UINT_PTRField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
 !NMTVGETINFOTIPW class categoriesFor: #defineFields!initializing!public! !
+!NMTVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

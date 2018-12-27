@@ -84,6 +84,10 @@ defineFields
 		defineField: #dwPromptFlags type: DWORDField new offset: 4;
 		defineField: #hwndApp type: HANDLEField new offset: 8;
 		defineField: #szPrompt type: (PointerField type: Utf16String) offset: 12.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
 !CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CRYPTPROTECT_PROMPTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

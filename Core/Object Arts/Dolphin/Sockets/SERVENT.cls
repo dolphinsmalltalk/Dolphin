@@ -115,8 +115,12 @@ fromString: aString
 	| answer lib |
 	lib := WS2_32Library default.
 	answer := lib getservbyname: aString proto: nil.
-	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]! !
+	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+
+getFieldNames
+	^#(#s_name #s_port #s_proto)! !
 !SERVENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !SERVENT class categoriesFor: #fromInteger:!public! !
 !SERVENT class categoriesFor: #fromString:!public! !
+!SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

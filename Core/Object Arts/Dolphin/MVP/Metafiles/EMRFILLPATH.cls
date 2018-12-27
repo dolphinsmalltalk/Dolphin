@@ -24,14 +24,14 @@ struct tagEMRFILLPATH {
 !EMRFILLPATH methodsFor!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
@@ -60,6 +60,9 @@ defineFields
 			offset: 8.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -68,5 +71,6 @@ iTypes
 		with: EMR_STROKEANDFILLPATH
 		with: EMR_STROKEPATH! !
 !EMRFILLPATH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRFILLPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRFILLPATH class categoriesFor: #iTypes!constants!public! !
 

@@ -23,7 +23,7 @@ struct tagFINDTEXTEX {
 !FINDTEXTEX methodsFor!
 
 chrgText
-	"Answer the receiver's chrgText field as a Smalltalk object."
+	"Answer the <CHARRANGE> value of the receiver's 'chrgText' field."
 
 	^CHARRANGE fromAddress: bytes yourAddress + ##(self offsetOf: #chrgText)! !
 !FINDTEXTEX categoriesFor: #chrgText!**compiled accessors**!public! !
@@ -42,6 +42,10 @@ defineFields
 		} FINDTEXTEX;"
 
 	super defineFields.
-	self defineField: #chrgText type: (StructureField type: CHARRANGE) beReadOnly! !
+	self defineField: #chrgText type: (StructureField type: CHARRANGE) beReadOnly!
+
+getFieldNames
+	^#(#chrg #lpstrText #chrgText)! !
 !FINDTEXTEX class categoriesFor: #defineFields!initializing!public! !
+!FINDTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

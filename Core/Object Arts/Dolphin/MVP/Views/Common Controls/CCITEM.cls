@@ -74,14 +74,14 @@ lParam: anObject
 	self subclassResponsibility!
 
 mask
-	"Answer the receiver's mask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mask' field."
 
 	^bytes dwordAtOffset: 0!
 
-mask: anObject 
-	"Set the receiver's mask field to the value of anObject."
+mask: anInteger
+	"Set the receiver's 'mask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 maskIn: anInteger
 	"OR in to contents' mask member the bit flags represented by anInteger"

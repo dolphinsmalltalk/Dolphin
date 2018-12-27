@@ -12,6 +12,68 @@ BITMAPFILEHEADER comment: 'See [DolphinImageFolder]/Idb/Documentation for detail
 ian@idb.me.uk
 Public Domain Freeware'!
 !BITMAPFILEHEADER categoriesForClass!External-Data-Structured-Win32!IDB Goodies! !
+!BITMAPFILEHEADER methodsFor!
+
+bfOffBits
+	"Answer the <Integer> value of the receiver's 'bfOffBits' field."
+
+	^bytes dwordAtOffset: ##(self offsetOf: #bfOffBits)!
+
+bfOffBits: anInteger
+	"Set the receiver's 'bfOffBits' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: ##(self offsetOf: #bfOffBits) put: anInteger!
+
+bfReserved1
+	"Answer the <Integer> value of the receiver's 'bfReserved1' field."
+
+	^bytes wordAtOffset: ##(self offsetOf: #bfReserved1)!
+
+bfReserved1: anInteger
+	"Set the receiver's 'bfReserved1' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: ##(self offsetOf: #bfReserved1) put: anInteger!
+
+bfReserved2
+	"Answer the <Integer> value of the receiver's 'bfReserved2' field."
+
+	^bytes wordAtOffset: ##(self offsetOf: #bfReserved2)!
+
+bfReserved2: anInteger
+	"Set the receiver's 'bfReserved2' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: ##(self offsetOf: #bfReserved2) put: anInteger!
+
+bfSize
+	"Answer the <Integer> value of the receiver's 'bfSize' field."
+
+	^bytes dwordAtOffset: ##(self offsetOf: #bfSize)!
+
+bfSize: anInteger
+	"Set the receiver's 'bfSize' field to the value of the argument, anInteger"
+
+	bytes dwordAtOffset: ##(self offsetOf: #bfSize) put: anInteger!
+
+bfType
+	"Answer the <Integer> value of the receiver's 'bfType' field."
+
+	^bytes wordAtOffset: 0!
+
+bfType: anInteger
+	"Set the receiver's 'bfType' field to the value of the argument, anInteger"
+
+	bytes wordAtOffset: 0 put: anInteger! !
+!BITMAPFILEHEADER categoriesFor: #bfOffBits!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfOffBits:!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfReserved1!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfReserved1:!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfReserved2!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfReserved2:!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfSize!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfSize:!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfType!**compiled accessors**!public! !
+!BITMAPFILEHEADER categoriesFor: #bfType:!**compiled accessors**!public! !
+
 !BITMAPFILEHEADER class methodsFor!
 
 defineFields
@@ -32,6 +94,9 @@ defineFields
 		defineField: #bfReserved2 type: WORDField new;
 		defineField: #bfOffBits type: DWORDField new!
 
+getFieldNames
+	^#(#bfType #bfSize #bfReserved1 #bfReserved2 #bfOffBits)!
+
 packing
 	"Answer the default packing for instances of the receiver. 
 	BITMAPFILEHEADER is unusual for a Windows structure in being packed to 
@@ -39,5 +104,6 @@ packing
 
 	^1! !
 !BITMAPFILEHEADER class categoriesFor: #defineFields!initializing!public! !
+!BITMAPFILEHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !BITMAPFILEHEADER class categoriesFor: #packing!constants!public! !
 

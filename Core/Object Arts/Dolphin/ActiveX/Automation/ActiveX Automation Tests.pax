@@ -20,14 +20,13 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: 'ActiveX Automation';
-	add: '..\..\..\Samples\ActiveX\Random\COM Random Stream';
-	add: '..\..\Base\Dolphin';
-	add: '..\..\Base\Dolphin Base Tests';
-	add: '..\..\MVP\Base\Dolphin Basic Geometry';
-	add: '..\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'ActiveX Automation'
+	'..\..\..\Samples\ActiveX\Random\COM Random Stream'
+	'..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Tests'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\COM\OLE COM').
 
 package!
 

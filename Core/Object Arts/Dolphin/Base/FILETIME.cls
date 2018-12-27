@@ -137,7 +137,7 @@ fromUnixTime: time_t
 
 	^self fromInteger: UnixEpoch + (time_t * 10000000)!
 
-getFieldList
+getFieldNames
 	^#()!
 
 initialize
@@ -165,7 +165,7 @@ now
 !FILETIME class categoriesFor: #fromLocalTime:!instance creation!public! !
 !FILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
 !FILETIME class categoriesFor: #fromUnixTime:!instance creation!public! !
-!FILETIME class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!FILETIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FILETIME class categoriesFor: #initialize!development!initializing!private! !
 !FILETIME class categoriesFor: #now!instance creation!public! !
 

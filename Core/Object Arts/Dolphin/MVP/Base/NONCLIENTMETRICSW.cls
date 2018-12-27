@@ -102,6 +102,10 @@ defineFields
 		defineField: #lfMenuFont type: (StructureField type: LOGFONTW) beReadOnly;
 		defineField: #lfStatusFont type: (StructureField type: LOGFONTW) beUncompiled;
 		defineField: #lfMessageFont type: (StructureField type: LOGFONTW) beUncompiled;
-		defineField: #iPaddedBorderWidth type: SDWORDField readOnly! !
+		defineField: #iPaddedBorderWidth type: SDWORDField readOnly!
+
+getFieldNames
+	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
 !NONCLIENTMETRICSW class categoriesFor: #defineFields!initializing!public! !
+!NONCLIENTMETRICSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

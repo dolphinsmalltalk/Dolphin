@@ -62,7 +62,7 @@ vkDirection
 
 defineFields
 	"Define the fields of the Win32 LVFINDINFO structure.
-		LVFINDINFO compileDefinition
+		self compileDefinition
 	"
 
 	self
@@ -70,6 +70,10 @@ defineFields
 		defineField: #psz type: (PointerField type: Utf16String) beReadOnly;
 		defineField: #lParam type: UINT_PTRField readOnly;
 		defineField: #pt type: (StructureField type: POINTL) beReadOnly;
-		defineField: #vkDirection type: DWORDField readOnly! !
+		defineField: #vkDirection type: DWORDField readOnly!
+
+getFieldNames
+	^#(#flags #psz #lParam #pt #vkDirection)! !
 !LVFINDINFOW class categoriesFor: #defineFields!initializing!public! !
+!LVFINDINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

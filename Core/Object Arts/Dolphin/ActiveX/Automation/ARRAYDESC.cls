@@ -61,6 +61,10 @@ defineFields
 		defineField: #cDims type: WORDField readOnly beNonBrowsable;
 		defineField: #rgbounds
 			type: (StructureArrayField type: SAFEARRAYBOUND
-					arrayLength: (ConformantArrayFieldLength lengthField: #cDims)) beReadOnly! !
+					arrayLength: (ConformantArrayFieldLength lengthField: #cDims)) beReadOnly!
+
+getFieldNames
+	^#(#tdescElem #cDims #rgbounds)! !
 !ARRAYDESC class categoriesFor: #defineFields!initializing!public! !
+!ARRAYDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

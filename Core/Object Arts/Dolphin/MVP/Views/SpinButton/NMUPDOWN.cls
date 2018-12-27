@@ -32,14 +32,14 @@ allow: aBoolean
 	allow := aBoolean!
 
 iDelta
-	"Answer the receiver's iDelta field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iDelta' field."
 
-	^(bytes sdwordAtOffset: 16)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #iDelta)!
 
 iPos
-	"Answer the receiver's iPos field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iPos' field."
 
-	^(bytes sdwordAtOffset: 12)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #iPos)!
 
 newPosition
 	"Answer the position at which the <SpinButton> will end up should the nudge described by the
@@ -68,6 +68,10 @@ defineFields
 	super defineFields.
 	self
 		defineField: #iPos type: SDWORDField readOnly;
-		defineField: #iDelta type: SDWORDField readOnly! !
+		defineField: #iDelta type: SDWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
 !NMUPDOWN class categoriesFor: #defineFields!initializing!public! !
+!NMUPDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -21,12 +21,12 @@ handle
 	^self iItem + 1!
 
 iItem
-	"Answer the receiver's iItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iItem)!
 
 iSubItem
-	"Answer the receiver's iSubItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)! !
 !LVHITTESTINFO categoriesFor: #handle!accessing!private! !
@@ -51,6 +51,10 @@ defineFields
 	self
 		defineField: #iItem type: SDWORDField readOnly;
 		defineField: #iSubItem type: SDWORDField readOnly
-! !
+!
+
+getFieldNames
+	^#(#pt #flags #iItem #iSubItem)! !
 !LVHITTESTINFO class categoriesFor: #defineFields!development!public! !
+!LVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

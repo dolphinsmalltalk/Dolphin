@@ -246,6 +246,10 @@ defineFields
 		defineField: #dwItemData type: UINT_PTRField writeOnly;
 		defineField: #dwTypeData type: (PointerField type: Utf16String);
 		defineField: #cch type: DWORDField writeOnly;
-		defineField: #hbmpItem type: HANDLEField writeOnly! !
+		defineField: #hbmpItem type: HANDLEField writeOnly!
+
+getFieldNames
+	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
 !MENUITEMINFOW class categoriesFor: #defineFields!initializing!public! !
+!MENUITEMINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

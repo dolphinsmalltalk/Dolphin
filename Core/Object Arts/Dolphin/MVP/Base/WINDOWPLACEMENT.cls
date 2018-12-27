@@ -10,34 +10,34 @@ WINDOWPLACEMENT comment: ''!
 !WINDOWPLACEMENT categoriesForClass!External-Data-Structured-Win32! !
 !WINDOWPLACEMENT methodsFor!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 rcNormalPosition
-	"Answer the receiver's rcNormalPosition field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rcNormalPosition' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcNormalPosition)!
 
-rcNormalPosition: anObject 
-	"Set the receiver's rcNormalPosition field to the value of anObject."
+rcNormalPosition: aRECT
+	"Set the receiver's 'rcNormalPosition' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rcNormalPosition) + 1)
 		to: ##((self offsetOf: #rcNormalPosition) + RECT basicByteSize)
 		startingAt: 1!
 
 showCmd
-	"Answer the receiver's showCmd field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'showCmd' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #showCmd)!
 
-showCmd: anObject 
-	"Set the receiver's showCmd field to the value of anObject."
+showCmd: anInteger
+	"Set the receiver's 'showCmd' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #showCmd) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #showCmd) put: anInteger! !
 !WINDOWPLACEMENT categoriesFor: #dwSize:!**compiled accessors**!public! !
 !WINDOWPLACEMENT categoriesFor: #rcNormalPosition!**compiled accessors**!public! !
 !WINDOWPLACEMENT categoriesFor: #rcNormalPosition:!**compiled accessors**!public! !
@@ -69,6 +69,10 @@ defineFields
 		defineField: #ptMinPosition type: (StructureField type: POINTL) beFiller;
 		defineField: #ptMaxPosition type: (StructureField type: POINTL) beFiller;
 		defineField: #rcNormalPosition type: (StructureField type: RECT)
-! !
+!
+
+getFieldNames
+	^#(#dwSize #showCmd #rcNormalPosition)! !
 !WINDOWPLACEMENT class categoriesFor: #defineFields!initializing!public! !
+!WINDOWPLACEMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

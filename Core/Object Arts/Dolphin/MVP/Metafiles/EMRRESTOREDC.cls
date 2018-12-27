@@ -24,14 +24,14 @@ struct tagEMRRESTOREDC {
 !EMRRESTOREDC methodsFor!
 
 iRelative
-	"Answer the receiver's iRelative field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iRelative' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iRelative)!
 
-iRelative: anObject 
-	"Set the receiver's iRelative field to the value of anObject."
+iRelative: anInteger
+	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iRelative) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #iRelative) put: anInteger! !
 !EMRRESTOREDC categoriesFor: #iRelative!**compiled accessors**!public! !
 !EMRRESTOREDC categoriesFor: #iRelative:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #iRelative)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESTOREDC! !
 !EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
 

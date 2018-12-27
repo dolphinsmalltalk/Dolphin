@@ -447,6 +447,9 @@ defineFields
 		defineField: #elemdescFunc type: (StructureField type: ELEMDESC) beReadOnly;
 		defineField: #wFuncFlags type: WORDField readOnly!
 
+getFieldNames
+	^#(#memid #lprgscode #lprgelemdescParam #funckind #invkind #callconv #cParams #cParamsOpt #oVft #cScodes #elemdescFunc #wFuncFlags)!
+
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0 FUNCDESC.
 		1) Change of use, and name, of former keywordsAndArgs instance variable."
@@ -462,6 +465,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !FUNCDESC class categoriesFor: #defineFields!initializing!public! !
+!FUNCDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FUNCDESC class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
 !FUNCDESC class categoriesFor: #stbVersion!binary filing!development!public! !
 

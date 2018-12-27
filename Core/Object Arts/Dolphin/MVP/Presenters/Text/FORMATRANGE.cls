@@ -12,49 +12,49 @@ FORMATRANGE is used in conjunction with the Rich Edit control''s EM_FORMATRANGE 
 !FORMATRANGE categoriesForClass!Unclassified! !
 !FORMATRANGE methodsFor!
 
-cpMax: anObject 
-	"Set the receiver's cpMax field to the value of anObject."
+cpMax: anInteger
+	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cpMax) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cpMax) put: anInteger!
 
-cpMin: anObject 
-	"Set the receiver's cpMin field to the value of anObject."
+cpMin: anInteger
+	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cpMin) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cpMin) put: anInteger!
 
-hdc: anObject 
-	"Set the receiver's hdc field to the value of anObject."
+hdc: anExternalHandle
+	"Set the receiver's 'hdc' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: 0 put: anObject!
+	bytes uintPtrAtOffset: 0 put: anExternalHandle!
 
-hdcTarget: anObject 
-	"Set the receiver's hdcTarget field to the value of anObject."
+hdcTarget: anExternalHandle
+	"Set the receiver's 'hdcTarget' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hdcTarget) put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #hdcTarget) put: anExternalHandle!
 
 rc
-	"Answer the receiver's rc field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rc' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rc)!
 
-rc: anObject 
-	"Set the receiver's rc field to the value of anObject."
+rc: aRECT
+	"Set the receiver's 'rc' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rc) + 1)
 		to: ##((self offsetOf: #rc) + RECT basicByteSize)
 		startingAt: 1!
 
 rcPage
-	"Answer the receiver's rcPage field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rcPage' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcPage)!
 
-rcPage: anObject 
-	"Set the receiver's rcPage field to the value of anObject."
+rcPage: aRECT
+	"Set the receiver's 'rcPage' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rcPage) + 1)
 		to: ##((self offsetOf: #rcPage) + RECT basicByteSize)
@@ -85,6 +85,10 @@ defineFields
 		"Expand CHARRANGE inline"
 		defineField: #cpMin type: SDWORDField writeOnly;
 		defineField: #cpMax type: SDWORDField writeOnly
-! !
+!
+
+getFieldNames
+	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
 !FORMATRANGE class categoriesFor: #defineFields!initializing!public! !
+!FORMATRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -23,24 +23,24 @@ struct tagGdiplusStartupOutput {
 !GdiplusStartupOutput methodsFor!
 
 NotificationHook
-	"Answer the receiver's NotificationHook field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'NotificationHook' field."
 
-	^(bytes dwordAtOffset: 0) asExternalAddress!
+	^(bytes uintPtrAtOffset: 0) asExternalAddress!
 
-NotificationHook: anObject
-	"Set the receiver's NotificationHook field to the value of anObject."
+NotificationHook: anExternalAddress
+	"Set the receiver's 'NotificationHook' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes uintPtrAtOffset: 0 put: anExternalAddress!
 
 NotificationUnhook
-	"Answer the receiver's NotificationUnhook field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'NotificationUnhook' field."
 
-	^(bytes dwordAtOffset: 4) asExternalAddress!
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #NotificationUnhook)) asExternalAddress!
 
-NotificationUnhook: anObject
-	"Set the receiver's NotificationUnhook field to the value of anObject."
+NotificationUnhook: anExternalAddress
+	"Set the receiver's 'NotificationUnhook' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 4 put: anObject! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #NotificationUnhook) put: anExternalAddress! !
 !GdiplusStartupOutput categoriesFor: #NotificationHook!**compiled accessors**!public! !
 !GdiplusStartupOutput categoriesFor: #NotificationHook:!**compiled accessors**!public! !
 !GdiplusStartupOutput categoriesFor: #NotificationUnhook!**compiled accessors**!public! !
@@ -62,6 +62,10 @@ defineFields
 	self
 		defineField: #NotificationHook type: LPVOIDField new offset: 0;
 		defineField: #NotificationUnhook type: LPVOIDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#NotificationHook #NotificationUnhook)! !
 !GdiplusStartupOutput class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GdiplusStartupOutput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -86,6 +86,9 @@ defineFields
 			offset: 4.
 	self byteSize: 1028!
 
+getFieldNames
+	^#(#palVersion #palNumEntries #palPalEntry)!
+
 new
 	"Answer an instance of the receiver of sufficient size to hold 256 palette entries."
 
@@ -93,5 +96,6 @@ new
 		palNumEntries: 256;
 		yourself! !
 !LOGPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LOGPALETTE class categoriesFor: #new!instance creation!public! !
 

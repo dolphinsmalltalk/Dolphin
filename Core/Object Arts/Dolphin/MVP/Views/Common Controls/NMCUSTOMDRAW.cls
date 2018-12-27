@@ -54,12 +54,12 @@ canvas
 	^canvas!
 
 dwDrawStage
-	"Answer the receiver's dwDrawStage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwDrawStage' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwDrawStage)!
 
 dwItemSpec
-	"Answer the receiver's dwItemSpec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwItemSpec)!
 
@@ -96,7 +96,7 @@ hasFocus
 	^self uItemState allMask: CDIS_FOCUS!
 
 hdc
-	"Answer the receiver's hdc field as a Smalltalk object."
+	"Answer the <ExternalHandle> value of the receiver's 'hdc' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #hdc)) asExternalHandle!
 
@@ -158,17 +158,17 @@ itemHandle
 	^self dwItemSpec!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
 
 rc
-	"Answer the receiver's rc field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rc' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rc)!
 
 uItemState
-	"Answer the receiver's uItemState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uItemState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uItemState)!
 
@@ -227,6 +227,10 @@ defineFields
 		defineField: #rc type: (StructureField type: RECT) beReadOnly;
 		defineField: #dwItemSpec type: DWORDField readOnly;
 		defineField: #uItemState type: DWORDField readOnly;
-		defineField: #lParam type: UINT_PTRField readOnly! !
+		defineField: #lParam type: UINT_PTRField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
 !NMCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

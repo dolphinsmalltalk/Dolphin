@@ -14,17 +14,17 @@ NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. 
 !NMMOUSE methodsFor!
 
 dwHitInfo
-	"Answer the receiver's dwHitInfo field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwHitInfo' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwHitInfo)!
 
 dwItemData
-	"Answer the receiver's dwItemData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwItemData' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwItemData)!
 
 dwItemSpec
-	"Answer the receiver's dwItemSpec field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwItemSpec)!
 
@@ -38,7 +38,7 @@ position
 	^self pt asPoint!
 
 pt
-	"Answer the receiver's pt field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #pt)! !
 !NMMOUSE categoriesFor: #dwHitInfo!**compiled accessors**!public! !
@@ -60,6 +60,10 @@ defineFields
 		defineField: #dwItemSpec type: DWORDField readOnly;
 		defineField: #dwItemData type: DWORDField readOnly;
 		defineField: #pt type: (StructureField type: POINTL) beReadOnly;
-		defineField: #dwHitInfo type: DWORDField readOnly! !
+		defineField: #dwHitInfo type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
 !NMMOUSE class categoriesFor: #defineFields!initializing!public! !
+!NMMOUSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

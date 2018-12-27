@@ -11,49 +11,49 @@ MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win
 !MENUINFO methodsFor!
 
 cyMax
-	"Answer the receiver's cyMax field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cyMax' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cyMax)!
 
-cyMax: anObject 
-	"Set the receiver's cyMax field to the value of anObject."
+cyMax: anInteger
+	"Set the receiver's 'cyMax' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cyMax) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cyMax) put: anInteger!
 
 dwContextHelpID
-	"Answer the receiver's dwContextHelpID field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwContextHelpID' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID)!
 
-dwContextHelpID: anObject 
-	"Set the receiver's dwContextHelpID field to the value of anObject."
+dwContextHelpID: anInteger
+	"Set the receiver's 'dwContextHelpID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID) put: anInteger!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 dwStyle
-	"Answer the receiver's dwStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwStyle' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwStyle)!
 
-dwStyle: anObject 
-	"Set the receiver's dwStyle field to the value of anObject."
+dwStyle: anInteger
+	"Set the receiver's 'dwStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwStyle) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwStyle) put: anInteger!
 
 fMask
-	"Answer the receiver's fMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #fMask)!
 
-fMask: anObject 
-	"Set the receiver's fMask field to the value of anObject."
+fMask: anInteger
+	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anInteger!
 
 maskIn: anInteger 
 	self fMask: (self fMask bitOr: anInteger)!
@@ -99,6 +99,10 @@ defineFields
 		defineField: #cyMax type: DWORDField new;
 		defineField: #hbrBack type: HANDLEField filler;
 		defineField: #dwContextHelpID type: DWORDField new;
-		defineField: #dwMenuData type: UINT_PTRField filler! !
+		defineField: #dwMenuData type: UINT_PTRField filler!
+
+getFieldNames
+	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
 !MENUINFO class categoriesFor: #defineFields!initializing!public! !
+!MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

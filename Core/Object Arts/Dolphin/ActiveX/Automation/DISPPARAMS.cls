@@ -198,6 +198,9 @@ defineFields
 		defineField: #cArgs type: DWORDField new beNonBrowsable;
 		defineField: #cNamedArgs type: DWORDField new beNonBrowsable!
 
+getFieldNames
+	^#(#rgvarg #rgdispidNamedArgs #cArgs #cNamedArgs)!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		DISPPARAMS new
@@ -233,6 +236,7 @@ zeroArgs
 
 	^ZeroArgs! !
 !DISPPARAMS class categoriesFor: #defineFields!initializing!public! !
+!DISPPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
 !DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !DISPPARAMS class categoriesFor: #with:!instance creation!public! !

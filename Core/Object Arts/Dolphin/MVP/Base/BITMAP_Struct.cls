@@ -13,37 +13,37 @@ The BITMAP structure is used to describe bitmaps, containing attributes such as 
 !BITMAP methodsFor!
 
 bmBits
-	"Answer the receiver's bmBits field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'bmBits' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #bmBits)) asExternalAddress!
 
 bmBitsPixel
-	"Answer the receiver's bmBitsPixel field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bmBitsPixel' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #bmBitsPixel)!
 
 bmHeight
-	"Answer the receiver's bmHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bmHeight' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #bmHeight)!
 
 bmPlanes
-	"Answer the receiver's bmPlanes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bmPlanes' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #bmPlanes)!
 
 bmType
-	"Answer the receiver's bmType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bmType' field."
 
 	^bytes sdwordAtOffset: 0!
 
 bmWidth
-	"Answer the receiver's bmWidth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bmWidth' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #bmWidth)!
 
 bmWidthBytes
-	"Answer the receiver's bmWidthBytes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bmWidthBytes' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #bmWidthBytes)!
 
@@ -94,7 +94,11 @@ defineFields
 fileOutStem
 	"Private - Answer standard file name stem for the class to file out on."
 
-	^'BITMAP_Struct'! !
+	^'BITMAP_Struct'!
+
+getFieldNames
+	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
 !BITMAP class categoriesFor: #defineFields!initializing!public! !
 !BITMAP class categoriesFor: #fileOutStem!private!source filing! !
+!BITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

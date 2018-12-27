@@ -25,24 +25,24 @@ struct tagEMRSETPIXELV {
 !EMRSETPIXELV methodsFor!
 
 crColor
-	"Answer the receiver's crColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crColor' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #crColor)!
 
-crColor: anObject 
-	"Set the receiver's crColor field to the value of anObject."
+crColor: anInteger
+	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anInteger!
 
 ptlPixel
-	"Answer the receiver's ptlPixel field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlPixel' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlPixel)!
 
-ptlPixel: anObject 
-	"Set the receiver's ptlPixel field to the value of anObject."
+ptlPixel: aPOINTL
+	"Set the receiver's 'ptlPixel' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptlPixel) + 1)
 		to: ##((self offsetOf: #ptlPixel) + POINTL basicByteSize)
@@ -77,10 +77,14 @@ defineFields
 			offset: 16.
 	self byteSize: 20!
 
+getFieldNames
+	^#(#iType #nSize #ptlPixel #crColor)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETPIXELV! !
 !EMRSETPIXELV class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETPIXELV class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETPIXELV class categoriesFor: #iTypes!constants!public! !
 

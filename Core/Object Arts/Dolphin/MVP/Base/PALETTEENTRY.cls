@@ -106,6 +106,9 @@ defineFields
 		defineField: #peFlags type: BYTEField new offset: 3.
 	self byteSize: 4!
 
+getFieldNames
+	^#(#peRed #peGreen #peBlue #peFlags)!
+
 threeThreeTwo
 	"Answer a packed array palette entries to specify a default 332 palette."
 
@@ -126,5 +129,6 @@ threeThreeTwo
 Time millisecondsToRun: [PALETTEENTRY threeThreeTwo]
 "! !
 !PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !
 

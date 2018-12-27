@@ -31,24 +31,24 @@ isFixedWidth
 	^(self lfPitchAndFamily bitAnd: 16r3) == 1!
 
 lfCharSet
-	"Answer the receiver's lfCharSet field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfCharSet' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #lfCharSet)!
 
-lfCharSet: anObject 
-	"Set the receiver's lfCharSet field to the value of anObject."
+lfCharSet: anInteger
+	"Set the receiver's 'lfCharSet' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfCharSet) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #lfCharSet) put: anInteger!
 
 lfEscapement
-	"Answer the receiver's lfEscapement field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfEscapement' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #lfEscapement)!
 
-lfEscapement: anObject 
-	"Set the receiver's lfEscapement field to the value of anObject."
+lfEscapement: anInteger
+	"Set the receiver's 'lfEscapement' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lfEscapement) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #lfEscapement) put: anInteger!
 
 lfFaceName
 	"Answer the receiver's lfFaceName field as a Smalltalk object."
@@ -61,84 +61,84 @@ lfFaceName: anObject
 	^self subclassResponsibility!
 
 lfHeight
-	"Answer the receiver's lfHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfHeight' field."
 
 	^bytes sdwordAtOffset: 0!
 
-lfHeight: anObject 
-	"Set the receiver's lfHeight field to the value of anObject."
+lfHeight: anInteger
+	"Set the receiver's 'lfHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 lfItalic
-	"Answer the receiver's lfItalic field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfItalic' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #lfItalic)!
 
-lfItalic: anObject 
-	"Set the receiver's lfItalic field to the value of anObject."
+lfItalic: anInteger
+	"Set the receiver's 'lfItalic' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfItalic) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #lfItalic) put: anInteger!
 
 lfPitchAndFamily
-	"Answer the receiver's lfPitchAndFamily field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfPitchAndFamily' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #lfPitchAndFamily)!
 
-lfPitchAndFamily: anObject 
-	"Set the receiver's lfPitchAndFamily field to the value of anObject."
+lfPitchAndFamily: anInteger
+	"Set the receiver's 'lfPitchAndFamily' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfPitchAndFamily) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #lfPitchAndFamily) put: anInteger!
 
 lfQuality
-	"Answer the receiver's lfQuality field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfQuality' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #lfQuality)!
 
-lfQuality: anObject 
-	"Set the receiver's lfQuality field to the value of anObject."
+lfQuality: anInteger
+	"Set the receiver's 'lfQuality' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfQuality) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #lfQuality) put: anInteger!
 
 lfStrikeOut
-	"Answer the receiver's lfStrikeOut field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfStrikeOut' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #lfStrikeOut)!
 
-lfStrikeOut: anObject 
-	"Set the receiver's lfStrikeOut field to the value of anObject."
+lfStrikeOut: anInteger
+	"Set the receiver's 'lfStrikeOut' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfStrikeOut) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #lfStrikeOut) put: anInteger!
 
 lfUnderline
-	"Answer the receiver's lfUnderline field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfUnderline' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #lfUnderline)!
 
-lfUnderline: anObject 
-	"Set the receiver's lfUnderline field to the value of anObject."
+lfUnderline: anInteger
+	"Set the receiver's 'lfUnderline' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfUnderline) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #lfUnderline) put: anInteger!
 
 lfWeight
-	"Answer the receiver's lfWeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfWeight' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #lfWeight)!
 
-lfWeight: anObject 
-	"Set the receiver's lfWeight field to the value of anObject."
+lfWeight: anInteger
+	"Set the receiver's 'lfWeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lfWeight) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #lfWeight) put: anInteger!
 
 lfWidth
-	"Answer the receiver's lfWidth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lfWidth' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #lfWidth)!
 
-lfWidth: anObject 
-	"Set the receiver's lfWidth field to the value of anObject."
+lfWidth: anInteger
+	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lfWidth) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #lfWidth) put: anInteger! !
 !AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
 !AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
 !AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
@@ -187,6 +187,10 @@ defineFields
 		defineField: #lfOutPrecision type: BYTEField new beUncompiled;
 		defineField: #lfClipPrecision type: BYTEField new beUncompiled;
 		defineField: #lfQuality type: BYTEField new;
-		defineField: #lfPitchAndFamily type: BYTEField new! !
+		defineField: #lfPitchAndFamily type: BYTEField new!
+
+getFieldNames
+	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
 !AbstractLOGFONT class categoriesFor: #defineFields!initializing!public! !
+!AbstractLOGFONT class categoriesFor: #getFieldNames!constants!private! !
 

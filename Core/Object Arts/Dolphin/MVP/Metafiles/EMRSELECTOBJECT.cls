@@ -24,14 +24,14 @@ struct tagEMRSELECTOBJECT {
 !EMRSELECTOBJECT methodsFor!
 
 ihObject
-	"Answer the receiver's ihObject field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihObject' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihObject)!
 
-ihObject: anObject 
-	"Set the receiver's ihObject field to the value of anObject."
+ihObject: anInteger
+	"Set the receiver's 'ihObject' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihObject) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #ihObject) put: anInteger! !
 !EMRSELECTOBJECT categoriesFor: #ihObject!**compiled accessors**!public! !
 !EMRSELECTOBJECT categoriesFor: #ihObject:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #ihObject)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SELECTOBJECT with: EMR_DELETEOBJECT! !
 !EMRSELECTOBJECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTOBJECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTOBJECT class categoriesFor: #iTypes!constants!public! !
 

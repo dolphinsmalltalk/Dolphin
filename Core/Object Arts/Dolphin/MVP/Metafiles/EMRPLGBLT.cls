@@ -396,10 +396,14 @@ defineFields
 			offset: 136.
 	self byteSize: 140!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #aptlDest #xSrc #ySrc #cxSrc #cySrc #xformSrc #crBkColorSrc #iUsageSrc #offBmiSrc #cbBmiSrc #offBitsSrc #cbBitsSrc #xMask #yMask #iUsageMask #offBmiMask #cbBmiMask #offBitsMask #cbBitsMask)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_PLGBLT! !
 !EMRPLGBLT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRPLGBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPLGBLT class categoriesFor: #iTypes!constants!public! !
 

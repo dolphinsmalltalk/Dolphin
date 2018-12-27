@@ -122,9 +122,9 @@ defineFields
 		defineField: #CodePageName type: (StringField type: Utf16String length: 260) beReadOnly offset: 24.
 	self byteSize: 544!
 
-getFieldList
+getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
 !CPINFOEXW class categoriesFor: #codePage:!instance creation!public! !
 !CPINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
-!CPINFOEXW class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!CPINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

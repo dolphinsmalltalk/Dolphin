@@ -100,7 +100,11 @@ defineFields
 		defineField: #bmiHeader type: (StructureField type: BITMAPINFOHEADER);
 		defineField: #bmiColors
 			type: (StructureArrayField type: RGBQUAD
-					arrayLength: (ConformantArrayFieldLength lengthField: #numQuads))! !
+					arrayLength: (ConformantArrayFieldLength lengthField: #numQuads))!
+
+getFieldNames
+	^#(#bmiHeader #bmiColors)! !
 !BITMAPINFO class categoriesFor: #colorDepth:!instance creation!public! !
 !BITMAPINFO class categoriesFor: #defineFields!initializing!public! !
+!BITMAPINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

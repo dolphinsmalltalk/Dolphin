@@ -484,7 +484,7 @@ fromAddress: anAddress length: anInteger
 				initializeAtAddress: anAddress;
 				basicLength: anInteger]!
 
-getFieldList
+getFieldNames
 	^#()!
 
 length: count elementSize: bytes
@@ -522,7 +522,7 @@ withAll: newElements
 !ExternalArray class categoriesFor: #elementSize!instance creation!private! !
 !ExternalArray class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalArray class categoriesFor: #fromAddress:length:!instance creation!public! !
-!ExternalArray class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!ExternalArray class categoriesFor: #getFieldNames!constants!private! !
 !ExternalArray class categoriesFor: #length:elementSize:!instance creation!private! !
 !ExternalArray class categoriesFor: #new:!instance creation!public! !
 !ExternalArray class categoriesFor: #with:!instance creation!public! !

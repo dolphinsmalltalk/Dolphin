@@ -47,6 +47,10 @@ defineFields
 		defineField: #iIntegral type: SDWORDField uncompiled offset: 40;
 		defineField: #uStateEx type: DWORDField new offset: 44;
 		defineField: #hwnd type: HANDLEField uncompiled offset: 48;
-		defineField: #iExpandedImage type: SDWORDField new offset: 52! !
+		defineField: #iExpandedImage type: SDWORDField new offset: 52!
+
+getFieldNames
+	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam #iIntegral #uStateEx #hwnd #iExpandedImage)! !
 !TVITEMEXW class categoriesFor: #defineFields!initializing!public! !
+!TVITEMEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

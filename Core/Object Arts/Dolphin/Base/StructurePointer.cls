@@ -63,6 +63,9 @@ fromAddress: anAddress elementClass: elementClass
 			elementClass: elementClass;
 			yourself]!
 
+getFieldNames
+	^#(#value)!
+
 newNull: pointerClass elementClass: elementClass
 	"Answer a new instance of the receiver that contains an
 	initially null memory pointer of the specified class pointer to 
@@ -75,5 +78,6 @@ newNull: pointerClass elementClass: elementClass
 !StructurePointer class categoriesFor: #byteSize!accessing!public! !
 !StructurePointer class categoriesFor: #elementClass:!instance creation!public! !
 !StructurePointer class categoriesFor: #fromAddress:elementClass:!instance creation!public! !
+!StructurePointer class categoriesFor: #getFieldNames!constants!private! !
 !StructurePointer class categoriesFor: #newNull:elementClass:!instance creation!public! !
 

@@ -23,22 +23,22 @@ struct tagNEWTEXTMETRIC {
 !NEWTEXTMETRICW methodsFor!
 
 ntmAvgWidth
-	"Answer the receiver's ntmAvgWidth field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmAvgWidth' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ntmAvgWidth)!
 
 ntmCellHeight
-	"Answer the receiver's ntmCellHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmCellHeight' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ntmCellHeight)!
 
 ntmFlags
-	"Answer the receiver's ntmFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ntmFlags)!
 
 ntmSizeEM
-	"Answer the receiver's ntmSizeEM field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ntmSizeEM)! !
 !NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
@@ -50,7 +50,7 @@ ntmSizeEM
 
 defineFields
 	"Define the fields of the NEWTEXTMETRIC structure.
-		NEWTEXTMETRIC compileDefinition
+		self compileDefinition
 	
 		typedef 
 		struct tagNEWTEXTMETRICW {
@@ -67,6 +67,10 @@ defineFields
 		defineField: #ntmFlags type: DWORDField readOnly;
 		defineField: #ntmSizeEM type: DWORDField readOnly;
 		defineField: #ntmCellHeight type: DWORDField readOnly;
-		defineField: #ntmAvgWidth type: DWORDField readOnly! !
+		defineField: #ntmAvgWidth type: DWORDField readOnly!
+
+getFieldNames
+	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
 !NEWTEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

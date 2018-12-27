@@ -171,7 +171,11 @@ fromFont: font
 	fd fUnderline: lf lfUnderline.
 	fd fStrikethrough: lf lfStrikeOut.
 	fd pointSize: font pointSize.
-	^fd! !
+	^fd!
+
+getFieldNames
+	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
 !FONTDESC class categoriesFor: #defineFields!initializing!public! !
 !FONTDESC class categoriesFor: #fromFont:!instance creation!public! !
+!FONTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

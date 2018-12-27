@@ -39,27 +39,27 @@ basicFree
 	piTypeInfo asParameter ReleaseTypeAttr: self!
 
 cbAlignment
-	"Answer the receiver's cbAlignment field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbAlignment' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cbAlignment)!
 
 cbSizeInstance
-	"Answer the receiver's cbSizeInstance field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbSizeInstance' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbSizeInstance)!
 
 cbSizeVft
-	"Answer the receiver's cbSizeVft field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbSizeVft' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cbSizeVft)!
 
 cFuncs
-	"Answer the receiver's cFuncs field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cFuncs' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cFuncs)!
 
 cImplTypes
-	"Answer the receiver's cImplTypes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cImplTypes' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cImplTypes)!
 
@@ -71,17 +71,17 @@ classDesc
 	^self tdesc classDesc!
 
 cVars
-	"Answer the receiver's cVars field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cVars' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #cVars)!
 
 guid
-	"Answer the receiver's guid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'guid' field."
 
 	^GUID fromAddress: bytes yourAddress!
 
 idldescType
-	"Answer the receiver's idldescType field as a Smalltalk object."
+	"Answer the <IDLDESC> value of the receiver's 'idldescType' field."
 
 	^IDLDESC fromAddress: bytes yourAddress + ##(self offsetOf: #idldescType)!
 
@@ -143,17 +143,17 @@ isRestricted
 	^self wTypeFlags allMask: TYPEFLAG_FRESTRICTED!
 
 lcid
-	"Answer the receiver's lcid field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcid' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
 
 memidConstructor
-	"Answer the receiver's memidConstructor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'memidConstructor' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #memidConstructor)!
 
 memidDestructor
-	"Answer the receiver's memidDestructor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'memidDestructor' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #memidDestructor)!
 
@@ -172,27 +172,27 @@ tdesc
 		owner: self!
 
 tdescAlias
-	"Answer the receiver's tdescAlias field as a Smalltalk object."
+	"Answer the <TYPEDESC> value of the receiver's 'tdescAlias' field."
 
 	^TYPEDESC fromAddress: bytes yourAddress + ##(self offsetOf: #tdescAlias)!
 
 typekind
-	"Answer the receiver's typekind field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'typekind' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #typekind)!
 
 wMajorVerNum
-	"Answer the receiver's wMajorVerNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMajorVerNum' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wMajorVerNum)!
 
 wMinorVerNum
-	"Answer the receiver's wMinorVerNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wMinorVerNum)!
 
 wTypeFlags
-	"Answer the receiver's wTypeFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wTypeFlags)! !
 !TYPEATTR categoriesFor: #basicFree!private!realizing/unrealizing! !
@@ -274,6 +274,10 @@ defineFields
 		defineField: #wMajorVerNum	type: WORDField readOnly;
 		defineField: #wMinorVerNum	type: WORDField readOnly;
 		defineField: #tdescAlias		type: (StructureField type: TYPEDESC) beReadOnly;
-		defineField: #idldescType		type: (StructureField type: IDLDESC) beReadOnly! !
+		defineField: #idldescType		type: (StructureField type: IDLDESC) beReadOnly!
+
+getFieldNames
+	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
 !TYPEATTR class categoriesFor: #defineFields!initializing!public! !
+!TYPEATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
