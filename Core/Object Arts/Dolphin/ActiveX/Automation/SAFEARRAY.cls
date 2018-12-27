@@ -286,24 +286,6 @@ onStartup
 	data := bytes := nil.
 	length := 0!
 
-printOn: aStream
-	"Print a string representation of self on aStream.
-	Implementation Note: f multidimensioned then just print the dimensions rather 
-	than the contents."
-
-	(self isNull or: [self dimensions == 1]) 
-		ifTrue: [super printOn: aStream]
-		ifFalse: [
-			aStream basicPrint: self.
-			1 to: self dimensions do: [:d |
-				aStream 
-					nextPut: $[;
-					print: (self lowerBound: d); 
-					nextPutAll: '..';
-					print: (self upperBound: d);
-					nextPut: $]]]
-!
-
 pvData
 	"Answer the <ExternalAddress> value of the receiver's 'pvData' field."
 
@@ -436,7 +418,6 @@ vt
 !SAFEARRAY categoriesFor: #lowerBound:!accessing!public! !
 !SAFEARRAY categoriesFor: #newElementAt:!helpers!private! !
 !SAFEARRAY categoriesFor: #onStartup!event handling!private! !
-!SAFEARRAY categoriesFor: #printOn:!printing!private! !
 !SAFEARRAY categoriesFor: #pvData!**compiled accessors**!public! !
 !SAFEARRAY categoriesFor: #queryRecordInfo!helpers!private! !
 !SAFEARRAY categoriesFor: #recordClass!helpers!private! !

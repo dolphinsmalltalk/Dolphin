@@ -308,11 +308,7 @@ invalidCall
 	^self primitiveFailed!
 
 isFieldBrowsable: aSymbol
-	| field fields |
-	fields := self template.
-	^(fields notNil and: [(field := self template at: aSymbol ifAbsent: []) notNil])
-		ifTrue: [field isBrowsable]
-		ifFalse: [self respondsTo: aSymbol]!
+	^self class isFieldBrowsable: aSymbol!
 
 isNull
 	"Answer whether the receiver is a null external data item
@@ -346,69 +342,6 @@ pointerClass
 	"Private - Answer the default class to use as a pointer"
 
 	^ExternalAddress!
-
-printableFields
-	^self getValidFields!
-
-printArgumentTypeOn: aStream
-	"Private - Append a compilable argument type name, which is the receiver, to aStream."
-
-	self class displayOn: aStream.
-	self isPointer ifTrue: [aStream nextPut: $*]!
-
-printCyclicRefOn: aStream
-	"Private - Append to the argument, aStream, a String whose characters describe
-	a cyclic (or recursive) reference to the receiver. Used by some
-	printOn: methods (e.g. see Collection) to prevent an infinite recursion."
-
-	aStream nextPutAll: '... a cyclic ref to '.
-	self basicPrintOn: aStream.
-	aStream nextPutAll: '...'!
-
-printFields: aCollection on: aStream limit: anInteger
-	| sep |
-	sep := [sep := [aStream space]].
-	aCollection do: 
-			[:each |
-			aStream position > anInteger
-				ifTrue: 
-					[aStream nextPutAll: '... etc ...'.
-					^self].
-			(self isFieldBrowsable: each)
-				ifTrue: 
-					[sep value.
-					aStream
-						display: each;
-						nextPutAll: '=';
-						print: (self getField: each)]]!
-
-printFieldsOn: aStream limit: anInteger
-	self isNull
-		ifTrue: 
-			[aStream nextPutAll: 'NULL'.
-			^self].
-	self
-		printFields: self printableFields
-		on: aStream
-		limit: anInteger!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream.
-	We use the template definition to do this in a generic way for all correctly 
-	defined subclasses. Fields are printed in the order of their offset"
-
-	| printed |
-	printed := Processor activeProcess _alreadyPrinted.
-	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
-	printed add: self.
-	
-	[| tooMany |
-	tooMany := aStream position + self maxPrint.
-	self basicPrintOn: aStream.
-	aStream nextPut: $(.
-	self printFieldsOn: aStream limit: tooMany.
-	aStream nextPut: $)]
-			ensure: [printed remove: self ifAbsent: []]!
 
 replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	"Private - Standard method for transfering bytes from one variable
@@ -491,19 +424,13 @@ yourAddress
 !ExternalStructure categoriesFor: #initializePointer!initializing!private! !
 !ExternalStructure categoriesFor: #invalidArgErrorClass!constants!private! !
 !ExternalStructure categoriesFor: #invalidCall!exceptions!public! !
-!ExternalStructure categoriesFor: #isFieldBrowsable:!development!printing!private! !
+!ExternalStructure categoriesFor: #isFieldBrowsable:!printing!private! !
 !ExternalStructure categoriesFor: #isNull!public!testing! !
 !ExternalStructure categoriesFor: #isPointer!public!testing! !
 !ExternalStructure categoriesFor: #maxPrint!constants!private! !
 !ExternalStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
 !ExternalStructure categoriesFor: #notNull!public!testing! !
 !ExternalStructure categoriesFor: #pointerClass!constants!private! !
-!ExternalStructure categoriesFor: #printableFields!development!printing!private! !
-!ExternalStructure categoriesFor: #printArgumentTypeOn:!printing!private! !
-!ExternalStructure categoriesFor: #printCyclicRefOn:!printing!private! !
-!ExternalStructure categoriesFor: #printFields:on:limit:!development!printing!private! !
-!ExternalStructure categoriesFor: #printFieldsOn:limit:!development!printing!private! !
-!ExternalStructure categoriesFor: #printOn:!development!printing!public! !
 !ExternalStructure categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
 !ExternalStructure categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
 !ExternalStructure categoriesFor: #setField:value:!accessing!public! !
@@ -746,6 +673,11 @@ isCompiled
 	from the template)."
 
 	^flags anyMask: CompiledMask!
+
+isFieldBrowsable: aSymbol
+	template notNil
+		ifTrue: [(template at: aSymbol ifAbsent: []) ifNotNil: [:field | ^field isBrowsable]].
+	^self canUnderstand: aSymbol!
 
 libraryAndIndex
 	"Answer an <Asssociation> between an <AXTypeLibraryAnalyzer> on the receiver's type library
@@ -1012,6 +944,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #initializeAfterLoad!development!initializing!private! !
 !ExternalStructure class categoriesFor: #initializeTemplate!private!template definition! !
 !ExternalStructure class categoriesFor: #isCompiled!private!testing! !
+!ExternalStructure class categoriesFor: #isFieldBrowsable:!printing!private! !
 !ExternalStructure class categoriesFor: #libraryAndIndex!constants!public! !
 !ExternalStructure class categoriesFor: #new!instance creation!public! !
 !ExternalStructure class categoriesFor: #new:!instance creation!public! !

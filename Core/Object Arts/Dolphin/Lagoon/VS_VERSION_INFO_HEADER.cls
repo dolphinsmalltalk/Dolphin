@@ -25,17 +25,6 @@ key
 		key := self szKey].
 	^key!
 
-printOn: target
-	target
-		basicPrint: self;
-		nextPut: $(;
-		nextPutAll: self key;
-		nextPutAll: ', wLength = '; print: self wLength;
-		nextPutAll: ', wValueLength='; print: self wValueLength;
-		nextPutAll: ', wType='; print: self wType;
-		nextPut: $)
-	!
-
 szKey
 	^Utf16String fromAddress: self yourAddress asInteger + 6!
 
@@ -86,7 +75,6 @@ wValueLength
 	^bytes wordAtOffset: ##(self offsetOf: #wValueLength)! !
 !VS_VERSION_INFO_HEADER categoriesFor: #childrenOffset!accessing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #key!accessing!public! !
-!VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #szKey!accessing!private! !
 !VS_VERSION_INFO_HEADER categoriesFor: #valueBytes!accessing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #valueDWORDs!accessing!public! !

@@ -64,18 +64,7 @@ isNull
 	"Answer whether the receiver is Null (i.e. equal to 0). 
 	This message is useful way of testing for NULL pointers or handles."
 
-	^super isNull or: [self value == 0]!
-
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	| hex |
-	hex := self isNull
-			ifTrue: ['0']
-			ifFalse: [self value printStringRadix: 16].
-	aStream
-		basicPrint: self;
-		nextPut: $(; display: hex; nextPut: $)! !
+	^super isNull or: [self value == 0]! !
 !ExternalInteger categoriesFor: #asInteger!converting!public! !
 !ExternalInteger categoriesFor: #asSignedInteger!converting!public! !
 !ExternalInteger categoriesFor: #asString!converting!public! !
@@ -83,7 +72,6 @@ printOn: aStream
 !ExternalInteger categoriesFor: #asUnsignedInteger!converting!public! !
 !ExternalInteger categoriesFor: #hash!comparing!public! !
 !ExternalInteger categoriesFor: #isNull!public!testing! !
-!ExternalInteger categoriesFor: #printOn:!printing!public! !
 
 !ExternalInteger class methodsFor!
 

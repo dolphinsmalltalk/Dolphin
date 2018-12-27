@@ -46,15 +46,7 @@ lowPart
 lowPart: anInteger
 	"Set the receiver's 'lowPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
-
-printOn: aStream
-	"Append a debug text representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(; display: self; nextPut: $)
-! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !QWORD categoriesFor: #asSignedInteger!converting!public! !
 !QWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !QWORD categoriesFor: #displayOn:!displaying!public! !
@@ -62,7 +54,6 @@ printOn: aStream
 !QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
-!QWORD categoriesFor: #printOn:!printing!public! !
 
 !QWORD class methodsFor!
 

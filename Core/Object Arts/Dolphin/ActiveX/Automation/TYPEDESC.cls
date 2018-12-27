@@ -115,20 +115,6 @@ owner: struct
 
 	owner := struct!
 
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self isAnonymous
-		ifTrue: 
-			[aStream
-				nextPutAll: 'Anon: ';
-				print: self typeInfo name]
-		ifFalse: [aStream print: self typeName].
-	aStream nextPut: $)!
-
 realTypeInfo
 	"Answer an <AXTypeInfoAnalyzer> on the underlying type described by the receiver."
 
@@ -212,7 +198,6 @@ vtName
 !TYPEDESC categoriesFor: #lpadesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #lptdesc!**compiled accessors**!public! !
 !TYPEDESC categoriesFor: #owner:!accessing!private! !
-!TYPEDESC categoriesFor: #printOn:!development!printing!public! !
 !TYPEDESC categoriesFor: #realTypeInfo!accessing!public! !
 !TYPEDESC categoriesFor: #tdesc!accessing!public! !
 !TYPEDESC categoriesFor: #tdescArray!accessing!public! !

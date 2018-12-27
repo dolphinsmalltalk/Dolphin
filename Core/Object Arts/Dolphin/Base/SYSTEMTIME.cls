@@ -33,16 +33,6 @@ displayOn: aStream
 		nextPutAll: (lc printTime: self format: nil flags: 0)
 !
 
-printOn: aStream
-	"Append a debugging representation of the receiver to aStream."
-
-	aStream 
-		basicPrint: self;
-		nextPut: $(; 
-		display: self; 
-		nextPut: $)
-!
-
 wDay
 	"Answer the <Integer> value of the receiver's 'wDay' field."
 
@@ -125,7 +115,6 @@ wYear: anInteger
 !SYSTEMTIME categoriesFor: #asFILETIME!converting!public! !
 !SYSTEMTIME categoriesFor: #asTimeStamp!converting!public! !
 !SYSTEMTIME categoriesFor: #displayOn:!displaying!public! !
-!SYSTEMTIME categoriesFor: #printOn:!development!printing!public! !
 !SYSTEMTIME categoriesFor: #wDay!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wDay:!**compiled accessors**!public! !
 !SYSTEMTIME categoriesFor: #wDayOfWeek!**compiled accessors**!public! !

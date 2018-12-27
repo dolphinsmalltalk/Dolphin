@@ -149,7 +149,7 @@ Unadvise: dwCookie
 !IConnectionPoint categoriesFor: #GetConnectionInterface:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
 !IConnectionPoint categoriesFor: #getConnectionPointContainer!**auto generated**!methods!public! !
 !IConnectionPoint categoriesFor: #GetConnectionPointContainer:!**auto generated**!COM Interfaces-IConnectionPoint!private! !
-!IConnectionPoint categoriesFor: #printOn:!printing!public! !
+!IConnectionPoint categoriesFor: #printOn:!development!printing!public! !
 !IConnectionPoint categoriesFor: #unadvise:!**auto generated**!methods!public! !
 !IConnectionPoint categoriesFor: #Unadvise:!COM Interfaces-IConnectionPoint!private! !
 
