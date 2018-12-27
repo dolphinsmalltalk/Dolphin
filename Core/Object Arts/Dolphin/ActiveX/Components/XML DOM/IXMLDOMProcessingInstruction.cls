@@ -92,7 +92,7 @@ target
 !IXMLDOMProcessingInstruction categoriesFor: #data:!**auto generated**!properties!public! !
 !IXMLDOMProcessingInstruction categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
 !IXMLDOMProcessingInstruction categoriesFor: #get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #printOn:!printing!public! !
+!IXMLDOMProcessingInstruction categoriesFor: #printOn:!development!printing!public! !
 !IXMLDOMProcessingInstruction categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
 !IXMLDOMProcessingInstruction categoriesFor: #target!**auto generated**!properties!public! !
 

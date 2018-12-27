@@ -131,6 +131,8 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #_FPIEEE_RECORD -> #printFieldsOn:limit:;
+	add: #_FPIEEE_VALUE -> #printFieldsOn:limit:;
 	add: #AbstractDocumentShell -> #saveStateOn:;
 	add: #AndEnvironment -> #includesResource:;
 	add: #Array -> #assignToResourceIdentifier:;
@@ -231,20 +233,31 @@ package methodNames
 	add: #Dictionary -> #newBatchAccessor;
 	add: #Dictionary -> #publishedAspects;
 	add: #DOUBLEField -> #newAspect:class:;
+	add: #ExternalArray -> #printOn:;
 	add: #ExternalArray -> #publishedAspects;
 	add: #ExternalArray -> #publishedKeyedAspects;
 	add: #ExternalArray -> #publishedKeyedAspectsBatchSize;
 	add: #ExternalField -> #autoGenCategories;
+	add: #ExternalInteger -> #printOn:;
 	add: #ExternalIntegerBytes -> #debugPrintString;
 	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
+	add: #ExternalRectangle -> #printOn:;
 	add: #ExternalStructure -> #alternateInspectorClass;
+	add: #ExternalStructure -> #printableFields;
+	add: #ExternalStructure -> #printCyclicRefOn:;
+	add: #ExternalStructure -> #printFields:on:limit:;
+	add: #ExternalStructure -> #printFieldsOn:limit:;
+	add: #ExternalStructure -> #printOn:;
 	add: #ExternalStructure -> #publishedAspects;
+	add: #FILETIME -> #printOn:;
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
 	add: #Interval -> #newBatchAccessor;
 	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
 	add: #LayoutManager -> #arrangementAspect;
 	add: #ListControlView -> #visualObjectAtPoint:;
+	add: #LOGBRUSH -> #printFieldsOn:limit:;
+	add: #LOGPEN -> #printFieldsOn:limit:;
 	add: #LPVOIDField -> #newAspect:class:;
 	add: #Menu -> #edit;
 	add: #Menu -> #painterClass;
@@ -302,6 +315,7 @@ package methodNames
 	add: #ProtoObject -> #debugPrintString;
 	add: #ProtoObject -> #halt;
 	add: #ProtoObject -> #inspect;
+	add: #QWORD -> #printOn:;
 	add: #RefactoryChange -> #displayOn:;
 	add: #ReferenceView -> #visualObjectAtPoint:;
 	add: #RegKeyAbstract -> #debugPrintString;
@@ -349,6 +363,7 @@ package methodNames
 	add: #String -> #literalTextStyle;
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
+	add: #StructurePointer -> #printOn:;
 	add: #StSelfVariable -> #valueClass;
 	add: #StSelfVariableNode -> #valueClassIn:;
 	add: #StSequenceNode -> #displayOn:;
@@ -366,6 +381,7 @@ package methodNames
 	add: #Symbol -> #aspectDisplayOn:;
 	add: #Symbol -> #literalTextStyle;
 	add: #Symbol -> #searchForInTool:;
+	add: #SYSTEMTIME -> #printOn:;
 	add: #ToolbarBitmapButton -> #publishedAspects;
 	add: #ToolbarSystemButton -> #publishedAspects;
 	add: #TranscriptShell -> #help;
@@ -377,6 +393,7 @@ package methodNames
 	add: #View -> #aspectDisplayOn:;
 	add: #View -> #publishedAspects;
 	add: #View -> #visualObjectAtPoint:;
+	add: #WINDOWPOS -> #printOn:;
 	add: 'AbstractCardContainer class' -> #publishedAspectsOfInstances;
 	add: 'AbstractCardContainer class' -> #publishedEventsOfInstances;
 	add: 'AXControlSite class' -> #publishedAspectsOfInstances;
@@ -1273,6 +1290,63 @@ Inspector := BasicInspector!
 
 
 "Loose Methods"!
+
+!_FPIEEE_RECORD methodsFor!
+
+printFieldsOn: aStream limit: anInteger
+	self isNull
+		ifTrue: 
+			[aStream nextPutAll: 'NULL'.
+			^self].
+	aStream
+		display: #roundingMode;
+		nextPut: $=;
+		print: self roundingModeName;
+		space;
+		display: #precision;
+		nextPut: $=;
+		print: self precisionName;
+		space;
+		display: #operation;
+		nextPut: $=;
+		print: self operationName;
+		space.
+	#(#cause #enable #status) do: 
+			[:each |
+			aStream
+				space;
+				display: each;
+				nextPut: $=.
+			self class printFlags: (self getField: each) on: aStream].
+	#(#operand1 #operand2) do: 
+			[:each |
+			| value |
+			value := self getField: each.
+			value isValid
+				ifTrue: 
+					[aStream
+						space;
+						display: each;
+						nextPut: $=;
+						print: value]]! !
+!_FPIEEE_RECORD categoriesFor: #printFieldsOn:limit:!printing!private! !
+
+!_FPIEEE_VALUE methodsFor!
+
+printFieldsOn: aStream limit: anInteger
+	self isNull
+		ifTrue: 
+			[aStream nextPutAll: 'NULL'.
+			^self].
+	self isValid
+		ifTrue: 
+			[aStream
+				display: #format;
+				nextPut: $=;
+				print: self formatName
+			"Don't attempt to display the value as often this may result in overflow/underflow exceptions"]
+		ifFalse: [aStream nextPutAll: '<invalid>']! !
+!_FPIEEE_VALUE categoriesFor: #printFieldsOn:limit:!printing!private! !
 
 !AbstractCardContainer class methodsFor!
 
@@ -2634,6 +2708,27 @@ newAspect: aSymbol class: aspectClass
 
 !ExternalArray methodsFor!
 
+printOn: aStream
+	"Print a string representation of self on aStream."
+
+	| tooMany |
+	tooMany := aStream position + #() maxPrint.
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull 
+		ifTrue: [aStream nextPutAll: 'NULL']
+		ifFalse: 
+			[self do: 
+					[:each | 
+					aStream position > tooMany 
+						ifTrue: 
+							[aStream nextPutAll: '... etc ...'.
+							^self].
+					each printOn: aStream]
+				separatedBy: [aStream space]].
+	aStream nextPut: $)!
+
 publishedAspects
     	"Answer a <LookupTable> of the <Aspect>s published by the receiver.
     	Implementation Note: By adding superclass aspects to the keyed aspect
@@ -2661,6 +2756,7 @@ publishedKeyedAspectsBatchSize
     
     	^100
     ! !
+!ExternalArray categoriesFor: #printOn:!printing!public! !
 !ExternalArray categoriesFor: #publishedAspects!constants!public! !
 !ExternalArray categoriesFor: #publishedKeyedAspects!constants!public! !
 !ExternalArray categoriesFor: #publishedKeyedAspectsBatchSize!constants!private! !
@@ -2683,6 +2779,20 @@ shouldOverrideGetFieldNames
 autoGenCategories
 	^{ExternalStructure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}! !
 !ExternalField categoriesFor: #autoGenCategories!private! !
+
+!ExternalInteger methodsFor!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	| hex |
+	hex := self isNull
+			ifTrue: ['0']
+			ifFalse: [self value printStringRadix: 16].
+	aStream
+		basicPrint: self;
+		nextPut: $(; display: hex; nextPut: $)! !
+!ExternalInteger categoriesFor: #printOn:!printing!public! !
 
 !ExternalInteger class methodsFor!
 
@@ -2732,6 +2842,21 @@ publishedAspectsOfInstances
     ! !
 !ExternalMethod class categoriesFor: #publishedAspectsOfInstances!constants!public! !
 
+!ExternalRectangle methodsFor!
+
+printOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	self isNull ifTrue: [^super printOn: aStream].
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		print: self topLeft;
+		nextPutAll: ', ';
+		print: self bottomRight;
+		nextPut: $)! !
+!ExternalRectangle categoriesFor: #printOn:!printing!public! !
+
 !ExternalScalar class methodsFor!
 
 shouldOverrideGetFieldNames
@@ -2745,6 +2870,63 @@ alternateInspectorClass
     	the receiver with the Shift key held down."
 
 	^StructureInspector!
+
+printableFields
+	^self getValidFields!
+
+printCyclicRefOn: aStream
+	"Private - Append to the argument, aStream, a String whose characters describe
+	a cyclic (or recursive) reference to the receiver. Used by some
+	printOn: methods (e.g. see Collection) to prevent an infinite recursion."
+
+	aStream nextPutAll: '... a cyclic ref to '.
+	self basicPrintOn: aStream.
+	aStream nextPutAll: '...'!
+
+printFields: aCollection on: aStream limit: anInteger
+	| sep |
+	sep := [sep := [aStream space]].
+	aCollection do: 
+			[:each |
+			aStream position > anInteger
+				ifTrue: 
+					[aStream nextPutAll: '... etc ...'.
+					^self].
+			(self isFieldBrowsable: each)
+				ifTrue: 
+					[sep value.
+					aStream
+						display: each;
+						nextPutAll: '=';
+						print: (self getField: each)]]!
+
+printFieldsOn: aStream limit: anInteger
+	self isNull
+		ifTrue: 
+			[aStream nextPutAll: 'NULL'.
+			^self].
+	self
+		printFields: self printableFields
+		on: aStream
+		limit: anInteger!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream.
+	We use the template definition to do this in a generic way for all correctly 
+	defined subclasses. Fields are printed in the order of their offset"
+
+	| printed |
+	printed := Processor activeProcess _alreadyPrinted.
+	(printed includes: self) ifTrue: [^self printCyclicRefOn: aStream].
+	printed add: self.
+	
+	[| tooMany |
+	tooMany := aStream position + self maxPrint.
+	self basicPrintOn: aStream.
+	aStream nextPut: $(.
+	self printFieldsOn: aStream limit: tooMany.
+	aStream nextPut: $)]
+			ensure: [printed remove: self ifAbsent: []]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -2760,6 +2942,11 @@ publishedAspects
 					field isBrowsable ifTrue: [aspects add: (field newAspect: each class: Aspect)]]].
 	^aspects! !
 !ExternalStructure categoriesFor: #alternateInspectorClass!constants!public! !
+!ExternalStructure categoriesFor: #printableFields!printing!private! !
+!ExternalStructure categoriesFor: #printCyclicRefOn:!printing!private! !
+!ExternalStructure categoriesFor: #printFields:on:limit:!printing!private! !
+!ExternalStructure categoriesFor: #printFieldsOn:limit:!printing!private! !
+!ExternalStructure categoriesFor: #printOn:!printing!public! !
 !ExternalStructure categoriesFor: #publishedAspects!accessing!public! !
 
 !ExternalStructure class methodsFor!
@@ -2892,6 +3079,18 @@ shouldOverrideGetFieldNames
 !ExternalStructure class categoriesFor: #recompileDefinition!compiling!private! !
 !ExternalStructure class categoriesFor: #shouldCompile:forField:!compiling!private! !
 !ExternalStructure class categoriesFor: #shouldOverrideGetFieldNames!compiling!private! !
+
+!FILETIME methodsFor!
+
+printOn: aStream 
+	"Append a debug representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: self;
+		nextPut: $)! !
+!FILETIME categoriesFor: #printOn:!printing!public! !
 
 !Float class methodsFor!
 
@@ -3393,6 +3592,34 @@ publishedAspectsOfInstances
     		add: (Aspect block: #customDrawBlock);
     		yourself! !
 !ListViewColumn class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!LOGBRUSH methodsFor!
+
+printFieldsOn: aStream limit: anInteger 
+	aStream
+		display: 'style=';
+		print: self style;
+		space;
+		display: 'color=';
+		print: self color;
+		space;
+		display: 'hatch=';
+		print: self hatch! !
+!LOGBRUSH categoriesFor: #printFieldsOn:limit:!printing!private! !
+
+!LOGPEN methodsFor!
+
+printFieldsOn: aStream limit: anInteger 
+	aStream
+		display: 'style=';
+		print: self style;
+		space;
+		display: 'width=';
+		print: self width;
+		space;
+		display: 'color=';
+		print: self color! !
+!LOGPEN categoriesFor: #printFieldsOn:limit:!printing!private! !
 
 !LPVOIDField methodsFor!
 
@@ -4390,6 +4617,17 @@ publishedAspectsOfInstances
 		yourself.
 	^answer! !
 !PushButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!QWORD methodsFor!
+
+printOn: aStream
+	"Append a debug text representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(; display: self; nextPut: $)
+! !
+!QWORD categoriesFor: #printOn:!printing!public! !
 
 !RBConfigurableFormatter class methodsFor!
 
@@ -5520,6 +5758,20 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass string: aSymbol! !
 !StringField class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 
+!StructurePointer methodsFor!
+
+printOn: aStream
+	"Print a string representation of self on aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isNull 
+		ifTrue: [aStream nextPutAll: 'NULL']
+		ifFalse: [aStream print: self value].
+	aStream nextPut: $).! !
+!StructurePointer categoriesFor: #printOn:!printing!public! !
+
 !StSelfVariable methodsFor!
 
 valueClass
@@ -5711,6 +5963,19 @@ publishedEventsOfInstances
 		add: #protocolRemoved:;
 		yourself! !
 !SystemDictionary class categoriesFor: #publishedEventsOfInstances!events!public! !
+
+!SYSTEMTIME methodsFor!
+
+printOn: aStream
+	"Append a debugging representation of the receiver to aStream."
+
+	aStream 
+		basicPrint: self;
+		nextPut: $(; 
+		display: self; 
+		nextPut: $)
+! !
+!SYSTEMTIME categoriesFor: #printOn:!printing!public! !
 
 !TabView class methodsFor!
 
@@ -6448,6 +6713,34 @@ publishedEventsOfInstances
     		yourself.
     ! !
 !WeakSet class categoriesFor: #publishedEventsOfInstances!events!public! !
+
+!WINDOWPOS methodsFor!
+
+printOn: aStream 
+	"Append a textual representation of the receiver to aStream."
+
+	| flags first |
+	self isNull ifTrue: [^super printOn: aStream].
+	aStream
+		basicPrint: self;
+		nextPutAll: '(after ';
+		print: (View fromHandle: self hwndInsertAfter);
+		nextPutAll: ', '.
+	self isRectangleChanged 
+		ifTrue: 
+			[aStream
+				print: self rectangle;
+				nextPutAll: ', '].
+	flags := self flags.
+	first := true.
+	##((Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection 
+		asArray) do: 
+				[:each | 
+				(flags allMask: (Win32Constants at: each)) 
+					ifTrue: 
+						[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
+						aStream nextPutAll: each]]! !
+!WINDOWPOS categoriesFor: #printOn:!printing!public! !
 
 !WinImageList class methodsFor!
 

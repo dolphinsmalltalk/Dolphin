@@ -72,16 +72,7 @@ integerValue: anInteger
 	"Set the number of 100-nanosecond intervals the receiver represents since the
 	FILETIME epoch."
 
-	bytes qwordAtOffset: 0 put: anInteger!
-
-printOn: aStream 
-	"Append a debug representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		display: self;
-		nextPut: $)! !
+	bytes qwordAtOffset: 0 put: anInteger! !
 !FILETIME categoriesFor: #asFILETIME!converting!public! !
 !FILETIME categoriesFor: #asInteger!converting!public! !
 !FILETIME categoriesFor: #asLocalTime!converting!public! !
@@ -90,7 +81,6 @@ printOn: aStream
 !FILETIME categoriesFor: #basicAsSYSTEMTIME!converting!public! !
 !FILETIME categoriesFor: #displayOn:!printing!public! !
 !FILETIME categoriesFor: #integerValue:!accessing!public! !
-!FILETIME categoriesFor: #printOn:!development!printing!public! !
 
 !FILETIME class methodsFor!
 

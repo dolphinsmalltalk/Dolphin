@@ -102,43 +102,6 @@ precisionName
 
 	^self class precisionModes at: self precision + 1 ifAbsent: [#Unknown]!
 
-printFieldsOn: aStream limit: anInteger
-	self isNull
-		ifTrue: 
-			[aStream nextPutAll: 'NULL'.
-			^self].
-	aStream
-		display: #roundingMode;
-		nextPut: $=;
-		print: self roundingModeName;
-		space;
-		display: #precision;
-		nextPut: $=;
-		print: self precisionName;
-		space;
-		display: #operation;
-		nextPut: $=;
-		print: self operationName;
-		space.
-	#(#cause #enable #status) do: 
-			[:each |
-			aStream
-				space;
-				display: each;
-				nextPut: $=.
-			self class printFlags: (self getField: each) on: aStream].
-	#(#operand1 #operand2) do: 
-			[:each |
-			| value |
-			value := self getField: each.
-			value isValid
-				ifTrue: 
-					[aStream
-						space;
-						display: each;
-						nextPut: $=;
-						print: value]]!
-
 roundingMode
 	"Answer an <integer> which identifies the rounding mode configured at the time of the exception."
 
@@ -163,7 +126,6 @@ roundingModeName
 !_FPIEEE_RECORD categoriesFor: #operationName!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #printFieldsOn:limit:!printing!private! !
 !_FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
 !_FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
 

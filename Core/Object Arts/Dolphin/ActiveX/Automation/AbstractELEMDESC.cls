@@ -50,16 +50,6 @@ owner: struct
 
 	owner := struct!
 
-printFieldsOn: aStream limit: anInteger
-	self isNull
-		ifFalse: 
-			[aStream
-				display: #tdescElem;
-				nextPutAll: '=';
-				print: self tdesc;
-				space].
-	^super printFieldsOn: aStream limit: anInteger!
-
 tdesc
 	"Answer a <TYPEDESC> which is the type of the elmement described by the receiver.
 	Implementation Note: Set the back-pointer to be the same as the receiver's, since it
@@ -89,7 +79,6 @@ typeName
 !AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
 !AbstractELEMDESC categoriesFor: #owner!accessing!private! !
 !AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
-!AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!development!printing!private! !
 !AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
 !AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
 !AbstractELEMDESC categoriesFor: #typeName!accessing!public! !

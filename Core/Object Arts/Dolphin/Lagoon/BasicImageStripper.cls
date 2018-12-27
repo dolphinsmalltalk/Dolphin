@@ -73,7 +73,7 @@ compileExternalStructuresNow: aCollection
 	self startElement: 'CompileExternalStructures' attributes: #().
 	self systemPackageManager noEventsDo: 
 			[aCollection do: [:each | each fullyCompileDefinition].
-			"Lazy template definition is not required (or possible)"
+			"Lazy template definition is not required (or possible), so stub it out"
 			ExternalStructure class compile: 'ensureDefined'.
 			aCollection do: [:each | each removeTemplate].
 			"ExternalStructure DNU processing is no longer needed since fully compiled"
@@ -604,6 +604,7 @@ removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	Answers the count of methods stripped"
 
 	| redundantMessages redundantMethods sent implemented |
+	self stripRedundantMethods ifFalse: [^0].
 	self notify: 'Removing redundant methods...'.
 	self collectGarbage: 1.
 	sent := self messagesSentByClasses: aCollectionOfClasses.

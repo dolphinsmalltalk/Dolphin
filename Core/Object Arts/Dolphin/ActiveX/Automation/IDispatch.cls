@@ -559,15 +559,6 @@ newEnum
 
 	^self _newEnum queryInterface: IEnumVARIANT!
 
-printOn: aStream
-	"Append a developer friendly textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(.
-	self printValueOn: aStream.
-	aStream nextPut: $)!
-
 printValueOn: aStream
 	"Private - Append a developer friendly textual representation of the receiver's
 	'value' to aStream. This is intended to provide more information for the developer
@@ -725,7 +716,6 @@ value: value
 !IDispatch categoriesFor: #isExtensible!public!testing! !
 !IDispatch categoriesFor: #isVBCollection!public!testing! !
 !IDispatch categoriesFor: #newEnum!enumerating!public! !
-!IDispatch categoriesFor: #printOn:!printing!public! !
 !IDispatch categoriesFor: #printValueOn:!printing!private! !
 !IDispatch categoriesFor: #setProperty:item:value:!accessing!properties!public! !
 !IDispatch categoriesFor: #setProperty:value:!accessing!properties!public! !

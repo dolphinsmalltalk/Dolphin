@@ -43,31 +43,6 @@ hwndInsertAfter
 isRectangleChanged
 	^(self flags allMask: ##(SWP_NOMOVE | SWP_NOSIZE)) not!
 
-printOn: aStream 
-	"Append a textual representation of the receiver to aStream."
-
-	| flags first |
-	self isNull ifTrue: [^super printOn: aStream].
-	aStream
-		basicPrint: self;
-		nextPutAll: '(after ';
-		print: (View fromHandle: self hwndInsertAfter);
-		nextPutAll: ', '.
-	self isRectangleChanged 
-		ifTrue: 
-			[aStream
-				print: self rectangle;
-				nextPutAll: ', '].
-	flags := self flags.
-	first := true.
-	##((Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection 
-		asArray) do: 
-				[:each | 
-				(flags allMask: (Win32Constants at: each)) 
-					ifTrue: 
-						[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-						aStream nextPutAll: each]]!
-
 rectangle
 	^self x @ self y extent: self cx @ self cy!
 
@@ -87,7 +62,6 @@ y
 !WINDOWPOS categoriesFor: #flags!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #hwndInsertAfter!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #isRectangleChanged!public!testing! !
-!WINDOWPOS categoriesFor: #printOn:!development!printing!public! !
 !WINDOWPOS categoriesFor: #rectangle!accessing!public! !
 !WINDOWPOS categoriesFor: #x!**compiled accessors**!public! !
 !WINDOWPOS categoriesFor: #y!**compiled accessors**!public! !

@@ -17,16 +17,6 @@ asBoolean
 
 	^self value!
 
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	self isNull
-		ifTrue: [super printOn: aStream]
-		ifFalse: [
-			aStream nextPutAll: (self value	
-								ifTrue: ['VARIANT_TRUE']
-								ifFalse: ['VARIANT_FALSE'])]!
-
 value
 	"Answer the receiver's value field as a Smalltalk <Boolean>."
 
@@ -38,7 +28,6 @@ value: anObject
 
 	super value: (anObject asBoolean ifTrue: [-1] ifFalse: [0])! !
 !VARIANT_BOOL categoriesFor: #asBoolean!converting!public! !
-!VARIANT_BOOL categoriesFor: #printOn:!printing!public! !
 !VARIANT_BOOL categoriesFor: #value!accessing!public! !
 !VARIANT_BOOL categoriesFor: #value:!accessing!public! !
 

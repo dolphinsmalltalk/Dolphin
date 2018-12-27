@@ -312,10 +312,10 @@ checkedStubFilePath
 		ifTrue: [stubFile]
 		ifFalse: [self error: 'Stub file not found: ''' , stubFile , '''']!
 
-class: aClass overrides: aSymbol
-	^(aClass compiledMethodAt: aSymbol ifAbsent: []) notNil or: 
-			[aClass isNonInstantiable
-				and: [aClass subclasses allSatisfy: [:sub | self class: sub overrides: aSymbol]]]!
+class: aBehavior overrides: aSymbol
+	^(aBehavior compiledMethodAt: aSymbol ifAbsent: []) notNil or: 
+			[aBehavior instanceClass isNonInstantiable
+				and: [aBehavior subclasses allSatisfy: [:sub | self class: sub overrides: aSymbol]]]!
 
 classBuildingMethods
 	^#('class hierarchy-adding' 'class hierarchy-mutating')
@@ -1475,7 +1475,6 @@ removeRedundantMethods
 	Answers the count of methods stripped"
 
 	| sum classes |
-	self stripRedundantMethods ifFalse: [^0].
 	sum := 0.
 	classes := Class allClasses.
 	self logLiveClasses
@@ -1498,11 +1497,9 @@ removeRedundantMethods
 
 removeRedundantMethodsOnceFrom: aCollectionOfClasses
 	| removed unreachable |
-	"Any methods of non-instantiable classes overridden in all remaining subclasses are redundant if not  supersent."
 	removed := super removeRedundantMethodsOnceFrom: aCollectionOfClasses.
 	removed ~~ 0 ifTrue: [^removed].
-	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.
-	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
+	unreachable := self unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses.	"As the methods are unreachable, we can safely remove them whether or not they are potentially aspect setters"
 	^self
 		removeMethods: unreachable
 		reason: 'abstract unreachable'
@@ -1872,7 +1869,8 @@ stubFilePath
 		ifFalse: [FileLocator imageRelative localFileSpecFor: stubFilePath]!
 
 unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses
-	"Private - Any methods of non-instantiable classes overridden in all remaining subclasses are redundant if not supersent."
+	"Private - Any methods of non-instantiable classes overridden in all remaining subclasses are redundant if not supersent.
+	Note that we only include instance side methods, as there is a class instance (i.e. the metaclasses are never non-instantiable)."
 
 	| abstractClasses unreachable |
 	unreachable := Array writeStream.
@@ -1890,7 +1888,9 @@ unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses
 								ifTrue: 
 									[(supersends isNil or: [supersends isEmpty])
 										ifTrue: [unreachable nextPut: method]
-										ifFalse: ["Notification signal: method printString , ' is supersent'"]]]]].
+										ifFalse: 
+											["Notification signal: method printString , ' is supersent'"
+											]]]]].
 	^unreachable contents!
 
 updateIconResource: anExternalHandle
@@ -2101,7 +2101,7 @@ writeLogFile
 !ImageStripper categoriesFor: #logPreservedMessages!operations!private! !
 !ImageStripper categoriesFor: #logReference:!helpers!private! !
 !ImageStripper categoriesFor: #logReferencesToClass:!operations!private! !
-!ImageStripper categoriesFor: #logReferencesToClasses!helpers!public! !
+!ImageStripper categoriesFor: #logReferencesToClasses!public!testing! !
 !ImageStripper categoriesFor: #logRemainingClasses!operations!private! !
 !ImageStripper categoriesFor: #logRemainingPackages!operations!private! !
 !ImageStripper categoriesFor: #logRemainingResources!operations!private! !

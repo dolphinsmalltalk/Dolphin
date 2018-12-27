@@ -59,6 +59,7 @@ package methodNames
 	add: #Package -> #imageStripper;
 	add: #Package -> #rehydrateImageStripper:;
 	add: #PackageSelector -> #deploy;
+	add: #VS_VERSION_INFO_HEADER -> #printOn:;
 	add: 'ImageStripper class' -> #for:;
 	add: 'ImageStripper class' -> #publishedAspectsOfInstances;
 	add: 'ImageStripper class' -> #stbConvertFrom:;
@@ -521,6 +522,20 @@ publishedAspectsOfInstances
 		add: (Aspect name: #translations);
 		yourself! !
 !VersionResource class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+
+!VS_VERSION_INFO_HEADER methodsFor!
+
+printOn: target
+	target
+		basicPrint: self;
+		nextPut: $(;
+		nextPutAll: self key;
+		nextPutAll: ', wLength = '; print: self wLength;
+		nextPutAll: ', wValueLength='; print: self wValueLength;
+		nextPutAll: ', wType='; print: self wType;
+		nextPut: $)
+	! !
+!VS_VERSION_INFO_HEADER categoriesFor: #printOn:!printing!public! !
 
 "End of package definition"!
 

@@ -442,26 +442,6 @@ null: newValue
 	self ulVal: 0.
 	self vt: VT_NULL!
 
-printOn: target
-	"Append, to the <puttableStream>, target, a string whose characters are a 
-	the same as those which would result from sending a #printString
-	message to the receiver.
-	N.B. This is really intended for development use. #displayOn: and #displayString
-	are complementary methods for generating strings for presentation to an
-	end-user."
-
-	target
-		basicPrint: self;
-		nextPut: $(.
-	self isNull 
-		ifTrue: [target nextPutAll: 'NULL']
-		ifFalse: [
-			target 
-				nextPutAll: self typeName;
-				nextPutAll: ': ';
-				print: self value].
-	target nextPut: $)!
-
 qword
 	"Answer the unsigned 64-bit integer value from the receiver.
 	Assumes the receiver is of type VT_I8 (note that this is
@@ -770,7 +750,6 @@ word: newValue
 !VARIANT categoriesFor: #nil:!accessing!public! !
 !VARIANT categoriesFor: #null!accessing!public! !
 !VARIANT categoriesFor: #null:!accessing!public! !
-!VARIANT categoriesFor: #printOn:!development!printing!public! !
 !VARIANT categoriesFor: #qword!accessing!public! !
 !VARIANT categoriesFor: #qword:!accessing!public! !
 !VARIANT categoriesFor: #recordInfo!accessing!private! !

@@ -33,6 +33,7 @@ package classNames
 	yourself.
 
 package methodNames
+	add: #AbstractELEMDESC -> #printFieldsOn:limit:;
 	add: #AXAPIInfoAnalyzer -> #areWrappersRequired;
 	add: #AXAPIInfoAnalyzer -> #compileMethodWrapper:;
 	add: #AXAPIInfoAnalyzer -> #functionHasReturnValue:;
@@ -281,9 +282,12 @@ package methodNames
 	add: #AXTypeLibraryAnalyzer -> #resolveExistingPool:;
 	add: #AXTypeLibraryAnalyzer -> #sharedPoolNames;
 	add: #AXTypeLibraryAnalyzer -> #superclassClashSignal;
+	add: #CURRENCY -> #printOn:;
 	add: #CUSTDATAITEM -> #printIDLOn:;
+	add: #DECIMAL -> #printOn:;
 	add: #ELEMDESC -> #idlAttributes;
 	add: #ExternalLibrary -> #DllRegisterServer;
+	add: #ExternalPoint -> #printOn:;
 	add: #FUNCDESC -> #buildMethodName;
 	add: #FUNCDESC -> #displayOn:;
 	add: #FUNCDESC -> #generate;
@@ -300,10 +304,12 @@ package methodNames
 	add: #IDispatch -> #alternateInspectorClass;
 	add: #IDispatch -> #aspectDisplayOn:;
 	add: #IDispatch -> #debugPrintString;
+	add: #IDispatch -> #printOn:;
 	add: #IDispatch -> #publishedAspects;
 	add: #ITypeInfo -> #printOn:;
 	add: #ITypeLib -> #printOn:;
 	add: #PARAMDESC -> #idlAttributes;
+	add: #SAFEARRAY -> #printOn:;
 	add: #TKindAliasAnalyzer -> #generateGlobalDefinition:;
 	add: #TKindAliasAnalyzer -> #generateWrapper;
 	add: #TKindAliasAnalyzer -> #idlAttributes;
@@ -385,9 +391,12 @@ package methodNames
 	add: #TKindModuleAnalyzer -> #printRawMethodBody:name:on:;
 	add: #TKindRecordAnalyzer -> #idlKeyword;
 	add: #TKindUnionAnalyzer -> #idlKeyword;
+	add: #TYPEDESC -> #printOn:;
 	add: #VARDESC -> #printIDLOn:indent:;
 	add: #VARDESC -> #printOn:;
 	add: #VARIANT -> #printIDLOn:;
+	add: #VARIANT -> #printOn:;
+	add: #VARIANT_BOOL -> #printOn:;
 	add: 'ArrayField class' -> #printVariable:type:indirections:on:;
 	add: 'ArrayPointerField class' -> #printVariable:type:indirections:on:;
 	add: 'AXDispatchImpAbstract class' -> #icon;
@@ -618,6 +627,19 @@ BasicInspector subclass: #AXInspector
 
 
 "Loose Methods"!
+
+!AbstractELEMDESC methodsFor!
+
+printFieldsOn: aStream limit: anInteger
+	self isNull
+		ifFalse: 
+			[aStream
+				display: #tdescElem;
+				nextPutAll: '=';
+				print: self tdesc;
+				space].
+	^super printFieldsOn: aStream limit: anInteger! !
+!AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!printing!private! !
 
 !ArrayField class methodsFor!
 
@@ -4354,6 +4376,18 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 !COMInterface class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
 !COMInterface class categoriesFor: #printOptionalParameter:on:!helpers!private! !
 
+!CURRENCY methodsFor!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
+		nextPut: $)! !
+!CURRENCY categoriesFor: #printOn:!printing!public! !
+
 !CURRENCY class methodsFor!
 
 mustWrapOptionalArgument: anELEMDESC 
@@ -4395,6 +4429,18 @@ printDefaultValue: aVARIANT on: aPuttableStream
 	aVARIANT dblVal displayOn: aPuttableStream! !
 !DATE class categoriesFor: #newInstanceAspect:class:!adapters!private! !
 !DATE class categoriesFor: #printDefaultValue:on:!helpers!private! !
+
+!DECIMAL methodsFor!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
+		nextPut: $)! !
+!DECIMAL categoriesFor: #printOn:!printing!public! !
 
 !DOUBLE class methodsFor!
 
@@ -4655,6 +4701,16 @@ DllRegisterServer
 	<stdcall: hresult DllRegisterServer>
 	^self invalidCall! !
 !ExternalLibrary categoriesFor: #DllRegisterServer!operations!private! !
+
+!ExternalPoint methodsFor!
+
+printOn: aStream
+	"Append a short textual description of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(; print: self asPoint; nextPut: $)! !
+!ExternalPoint categoriesFor: #printOn:!printing!public! !
 
 !ExternalStructure class methodsFor!
 
@@ -5113,6 +5169,15 @@ debugPrintString
 		ifTrue: ['a null ' , self class name]
 		ifFalse: [self basicPrintString]!
 
+printOn: aStream
+	"Append a developer friendly textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self printValueOn: aStream.
+	aStream nextPut: $)!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -5125,6 +5190,7 @@ publishedAspects
 !IDispatch categoriesFor: #alternateInspectorClass!constants!public! !
 !IDispatch categoriesFor: #aspectDisplayOn:!private! !
 !IDispatch categoriesFor: #debugPrintString!printing!public! !
+!IDispatch categoriesFor: #printOn:!printing!public! !
 !IDispatch categoriesFor: #publishedAspects!constants!public! !
 
 !IDispatch class methodsFor!
@@ -5447,6 +5513,27 @@ fieldType
 
 	^QWORDField! !
 !QWORD class categoriesFor: #fieldType!constants!private! !
+
+!SAFEARRAY methodsFor!
+
+printOn: aStream
+	"Print a string representation of self on aStream.
+	Implementation Note: f multidimensioned then just print the dimensions rather 
+	than the contents."
+
+	(self isNull or: [self dimensions == 1]) 
+		ifTrue: [super printOn: aStream]
+		ifFalse: [
+			aStream basicPrint: self.
+			1 to: self dimensions do: [:d |
+				aStream 
+					nextPut: $[;
+					print: (self lowerBound: d); 
+					nextPutAll: '..';
+					print: (self upperBound: d);
+					nextPut: $]]]
+! !
+!SAFEARRAY categoriesFor: #printOn:!printing!private! !
 
 !SAFEARRAY class methodsFor!
 
@@ -7162,6 +7249,23 @@ idlKeyword
 	^'union'! !
 !TKindUnionAnalyzer categoriesFor: #idlKeyword!constants!private! !
 
+!TYPEDESC methodsFor!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	aStream
+		basicPrint: self;
+		nextPut: $(.
+	self isAnonymous
+		ifTrue: 
+			[aStream
+				nextPutAll: 'Anon: ';
+				print: self typeInfo name]
+		ifFalse: [aStream print: self typeName].
+	aStream nextPut: $)! !
+!TYPEDESC categoriesFor: #printOn:!development!printing!public! !
+
 !UINT_PTR class methodsFor!
 
 arrayType
@@ -7246,8 +7350,29 @@ printIDLOn: aPuttableStream
 				ifFalse: 
 					[vt == VT_R4 
 						ifTrue: [FLOAT printDefaultValue: self on: aPuttableStream]
-						ifFalse: [self value displayOn: aPuttableStream]]]! !
+						ifFalse: [self value displayOn: aPuttableStream]]]!
+
+printOn: target
+	"Append, to the <puttableStream>, target, a string whose characters are a 
+	the same as those which would result from sending a #printString
+	message to the receiver.
+	N.B. This is really intended for development use. #displayOn: and #displayString
+	are complementary methods for generating strings for presentation to an
+	end-user."
+
+	target
+		basicPrint: self;
+		nextPut: $(.
+	self isNull 
+		ifTrue: [target nextPutAll: 'NULL']
+		ifFalse: [
+			target 
+				nextPutAll: self typeName;
+				nextPutAll: ': ';
+				print: self value].
+	target nextPut: $)! !
 !VARIANT categoriesFor: #printIDLOn:!printing-IDL!public! !
+!VARIANT categoriesFor: #printOn:!development!printing!public! !
 
 !VARIANT class methodsFor!
 
@@ -7317,6 +7442,19 @@ printOptionalParameter: anELEMDESC on: aPuttableStream
 !VARIANT class categoriesFor: #example1!examples!public! !
 !VARIANT class categoriesFor: #printMethodArgument:elemdesc:indirections:on:!private! !
 !VARIANT class categoriesFor: #printOptionalParameter:on:!helpers!private! !
+
+!VARIANT_BOOL methodsFor!
+
+printOn: aStream
+	"Append a textual representation of the receiver to aStream."
+
+	self isNull
+		ifTrue: [super printOn: aStream]
+		ifFalse: [
+			aStream nextPutAll: (self value	
+								ifTrue: ['VARIANT_TRUE']
+								ifFalse: ['VARIANT_FALSE'])]! !
+!VARIANT_BOOL categoriesFor: #printOn:!printing!public! !
 
 !VARIANT_BOOL class methodsFor!
 

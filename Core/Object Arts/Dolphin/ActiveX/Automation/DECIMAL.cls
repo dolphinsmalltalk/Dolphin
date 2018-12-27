@@ -34,15 +34,6 @@ lo64: anInteger
 
 	bytes qwordAtOffset: ##(self offsetOf: #lo64) put: anInteger!
 
-printOn: aStream
-	"Append a textual representation of the receiver to aStream."
-
-	aStream
-		basicPrint: self;
-		nextPut: $(;
-		display: (self isNull ifTrue: ['NULL'] ifFalse: [self value]);
-		nextPut: $)!
-
 scale
 	"Answer the <Integer> value of the receiver's 'scale' field."
 
@@ -93,7 +84,6 @@ value: val
 !DECIMAL categoriesFor: #hi32:!**compiled accessors**!public! !
 !DECIMAL categoriesFor: #lo64!**compiled accessors**!public! !
 !DECIMAL categoriesFor: #lo64:!**compiled accessors**!public! !
-!DECIMAL categoriesFor: #printOn:!printing!public! !
 !DECIMAL categoriesFor: #scale!**compiled accessors**!public! !
 !DECIMAL categoriesFor: #scale:!**compiled accessors**!public! !
 !DECIMAL categoriesFor: #sign!**compiled accessors**!public! !
