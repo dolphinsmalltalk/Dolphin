@@ -12,7 +12,7 @@ BasicImageStripper comment: 'Base image stripping methods. These can safely be e
 !BasicImageStripper methodsFor!
 
 actualRequiredPackages
-	"Private - Answer the <collection> of  <Package>s to be included in the deployed application."
+	"Private - Answer the <collection> of <Package>s to be included in the deployed application."
 
 	^self systemPackageManager packages!
 
@@ -637,7 +637,15 @@ removeRedundantPackages
 	"Private - Strips the unwanted packages from the image."
 
 	| redundantPackages required pacman |
-	required := self actualRequiredPackages.
+	[required := self verifyRequiredPackages] on: Warning
+		do: 
+			[:warning |
+			warning resume: (UserLibrary default
+						messageBox: nil
+						lpText: warning description
+						lpCaption: SessionManager current applicationName
+						uType: ##(MessageBoxConstants.MB_OK | MessageBoxConstants.MB_TASKMODAL
+								| MessageBoxConstants.MB_SETFOREGROUND))].
 	self stripRedundantPackages ifFalse: [^required].
 	pacman := self systemPackageManager.
 	redundantPackages := pacman packages difference: required.
@@ -803,8 +811,16 @@ uncheckedRemoveClass: aClass
 				"self notify: notifier detail: (x stackTrace: 10)."
 				aClass primAllInstances do: [:each | Notification signal: each printString].
 				self purgeStubbornClass: aClass.
-				removed]! !
-!BasicImageStripper categoriesFor: #actualRequiredPackages!accessing!private! !
+				removed]!
+
+verifyRequiredPackages
+	"Private - Answer the <collection> of <Package>s to be included in the deployed application, verifying that they are deployable."
+
+	| packages |
+	packages := self actualRequiredPackages.
+	packages do: [:each | each okToSaveOrDeploy].
+	^packages! !
+!BasicImageStripper categoriesFor: #actualRequiredPackages!private! !
 !BasicImageStripper categoriesFor: #allMethodsInClasses:do:!helpers!private! !
 !BasicImageStripper categoriesFor: #allReferencedClasses!operations!private! !
 !BasicImageStripper categoriesFor: #basicRemoveClass:!helpers!private! !
@@ -881,6 +897,7 @@ uncheckedRemoveClass: aClass
 !BasicImageStripper categoriesFor: #stripRedundantResources!public!testing! !
 !BasicImageStripper categoriesFor: #systemPackageManager!accessing!private! !
 !BasicImageStripper categoriesFor: #uncheckedRemoveClass:!helpers!private! !
+!BasicImageStripper categoriesFor: #verifyRequiredPackages!accessing!private! !
 
 BasicImageStripper methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
