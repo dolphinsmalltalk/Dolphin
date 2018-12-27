@@ -36,13 +36,12 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\..\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Base\Dolphin Conformant Array Fields';
-	add: '..\COM\OLE COM';
-	add: 'Windows Shell';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\COM\OLE COM'
+	'Windows Shell').
 
 package!
 

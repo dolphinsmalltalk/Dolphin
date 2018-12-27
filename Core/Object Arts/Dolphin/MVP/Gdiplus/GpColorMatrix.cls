@@ -32,16 +32,20 @@ atPoint: aPoint put: aNumber
 		put: aNumber!
 
 m
-	"Answer the receiver's m field as a Smalltalk object."
+	"Answer the <FLOATArray> value of the receiver's 'm' field."
 
-	^FLOATArray fromAddress: (bytes yourAddress) length: 25!
+	^FLOATArray fromAddress: bytes yourAddress length: 25!
 
-m: anObject
-	"Set the receiver's m field to the value of anObject."
+m: aFLOATArray
+	"Set the receiver's 'm' field to the value of the argument, aFLOATArray"
 
 	| size |
-	size := anObject byteSize min: (25 * 4).
-	anObject replaceBytesOf: bytes from: 1 to: size startingAt: 1!
+	size := aFLOATArray byteSize min: ##(25 * FLOATArray elementSize).
+	aFLOATArray
+		replaceBytesOf: bytes
+		from: 1
+		to: size
+		startingAt: 1!
 
 row: rowInteger col: colInteger 
 	^self m at: (rowInteger - 1) * 5 + colInteger!
@@ -71,6 +75,9 @@ defineFields
 		defineField: #m type: (ArrayField type: FLOATArray length: 25) offset: 0.
 	self byteSize: 100!
 
+getFieldNames
+	^#(#m)!
+
 identity
 	"Answer an instance of the receiver that represents an identity matrix."
 
@@ -88,6 +95,7 @@ withAll: anArray
 
 	^self new m: (FLOATArray withAll: anArray)! !
 !GpColorMatrix class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpColorMatrix class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !GpColorMatrix class categoriesFor: #identity!instance creation!public! !
 !GpColorMatrix class categoriesFor: #identityArray!constants!public! !
 !GpColorMatrix class categoriesFor: #withAll:!instance creation!public! !

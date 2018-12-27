@@ -78,10 +78,9 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Base\Dolphin';
-	add: '..\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'..\COM\OLE COM').
 
 package!
 

@@ -73,6 +73,10 @@ defineFields
 		defineField: #szText type: (ArrayField type: Utf16String length: 80) beFiller;
 		defineField: #hinst type: HANDLEField filler;
 		defineField: #uFlags type: DWORDField readOnly;
-		defineField: #lParam type: INT_PTRField filler! !
+		defineField: #lParam type: INT_PTRField filler!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
 !NMTTDISPINFOW class categoriesFor: #defineFields!initializing!public! !
+!NMTTDISPINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -211,6 +211,9 @@ exampleWalkPath: aString
 
 	^self exampleWalkID: (ShellLibrary default getDesktopFolder idlFromPath: aString)!
 
+getFieldNames
+	^#()!
+
 initialize
 	"Private - Initialize the receiver.
 	Register with session events to clean up sub-instances on startup.
@@ -249,6 +252,7 @@ uninitialize
 !ITEMIDLIST class categoriesFor: #exampleWalkID:!examples!public! !
 !ITEMIDLIST class categoriesFor: #exampleWalking!examples!public! !
 !ITEMIDLIST class categoriesFor: #exampleWalkPath:!examples!public! !
+!ITEMIDLIST class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ITEMIDLIST class categoriesFor: #initialize!development!initializing!private! !
 !ITEMIDLIST class categoriesFor: #new!instance creation!public! !
 !ITEMIDLIST class categoriesFor: #onStartup!event handling!private! !

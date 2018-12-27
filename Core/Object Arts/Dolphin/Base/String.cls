@@ -1295,7 +1295,7 @@ coerceString: aString
 elementSize
 	"Answer the size of the elements of the receiver in bytes."
 
-	^1!
+	^self subclassResponsibility!
 
 empty
 	"Answer an empty String instance. It is shared and should not be modified.

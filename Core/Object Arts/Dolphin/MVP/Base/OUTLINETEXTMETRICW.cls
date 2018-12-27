@@ -298,6 +298,10 @@ defineFields
 		defineField: #otmpFaceName type: DWORDField readOnly;
 		defineField: #otmpStyleName type: DWORDField readOnly;
 		defineField: #otmpFullName type: DWORDField readOnly
-	"See MSDN article KB84132 - the otmp strings will be allocated after the above fields"! !
+	"See MSDN article KB84132 - the otmp strings will be allocated after the above fields"!
+
+getFieldNames
+	^#(#dwSize #otmTextMetrics #otmPanoseNumber #otmfsSelection #otmfsType #otmsCharSlopeRise #otmsCharSlopeRun #otmItalicAngle #otmEMSquare #otmAscent #otmDescent #otmLineGap #otmsCapEmHeight #otmsXHeight #otmrcFontBox #otmMacAscent #otmMacDescent #otmMacLineGap #otmusMinimumPPEM #otmptSubscriptSize #otmptSubscriptOffset #otmptSuperscriptSize #otmptSuperscriptOffset #otmsStrikeoutSize #otmsStrikeoutPosition #otmsUnderscoreSize #otmsUnderscorePosition #otmpFamilyName #otmpFaceName #otmpStyleName #otmpFullName)! !
 !OUTLINETEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!OUTLINETEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -24,14 +24,14 @@ struct tagEMRSETVIEWPORTORGEX {
 !EMRSETVIEWPORTORGEX methodsFor!
 
 ptlOrigin
-	"Answer the receiver's ptlOrigin field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlOrigin' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlOrigin)!
 
-ptlOrigin: anObject 
-	"Set the receiver's ptlOrigin field to the value of anObject."
+ptlOrigin: aPOINTL
+	"Set the receiver's 'ptlOrigin' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptlOrigin) + 1)
 		to: ##((self offsetOf: #ptlOrigin) + POINTL basicByteSize)
@@ -60,6 +60,9 @@ defineFields
 			offset: 8.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #ptlOrigin)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -68,5 +71,6 @@ iTypes
 		with: EMR_SETWINDOWORGEX
 		with: EMR_SETBRUSHORGEX! !
 !EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
 

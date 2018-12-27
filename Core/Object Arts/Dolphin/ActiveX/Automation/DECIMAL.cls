@@ -15,24 +15,24 @@ DECIMALs are mapped to/from Dolphin''s <ScaledDecimal> objects, although of cour
 !DECIMAL methodsFor!
 
 hi32
-	"Answer the receiver's hi32 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hi32' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #hi32)!
 
-hi32: anObject 
-	"Set the receiver's hi32 field to the value of anObject."
+hi32: anInteger
+	"Set the receiver's 'hi32' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hi32) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #hi32) put: anInteger!
 
 lo64
-	"Answer the receiver's lo64 field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lo64' field."
 
 	^bytes qwordAtOffset: ##(self offsetOf: #lo64)!
 
-lo64: anObject 
-	"Set the receiver's lo64 field to the value of anObject."
+lo64: anInteger
+	"Set the receiver's 'lo64' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #lo64) put: anObject!
+	bytes qwordAtOffset: ##(self offsetOf: #lo64) put: anInteger!
 
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
@@ -44,24 +44,24 @@ printOn: aStream
 		nextPut: $)!
 
 scale
-	"Answer the receiver's scale field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'scale' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #scale)!
 
-scale: anObject 
-	"Set the receiver's scale field to the value of anObject."
+scale: anInteger
+	"Set the receiver's 'scale' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #scale) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #scale) put: anInteger!
 
 sign
-	"Answer the receiver's sign field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'sign' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #sign)!
 
-sign: anObject 
-	"Set the receiver's sign field to the value of anObject."
+sign: anInteger
+	"Set the receiver's 'sign' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #sign) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #sign) put: anInteger!
 
 value
 	"Answer the receiver's value as a Smalltalk <ScaledDecimal>."
@@ -116,6 +116,9 @@ defineFields
 		defineField: #hi32		type: DWORDField new;
 		defineField: #lo64		type: QWORDField new!
 
+getFieldNames
+	^#(#scale #sign #hi32 #lo64)!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -134,6 +137,7 @@ vt
 
 	^VT_DECIMAL! !
 !DECIMAL class categoriesFor: #defineFields!initializing!public! !
+!DECIMAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !DECIMAL class categoriesFor: #initialize!development!initializing!private! !
 !DECIMAL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !DECIMAL class categoriesFor: #vt!constants!public! !

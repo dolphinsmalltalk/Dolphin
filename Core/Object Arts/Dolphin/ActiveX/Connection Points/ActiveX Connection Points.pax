@@ -27,11 +27,10 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\Automation\ActiveX Automation';
-	add: '..\..\Base\Dolphin';
-	add: '..\COM\OLE COM';
-	yourself).
+package setPrerequisites: #(
+	'..\Automation\ActiveX Automation'
+	'..\..\Base\Dolphin'
+	'..\COM\OLE COM').
 
 package!
 

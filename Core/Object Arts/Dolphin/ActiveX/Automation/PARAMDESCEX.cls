@@ -18,7 +18,7 @@ Fields:
 !PARAMDESCEX methodsFor!
 
 varDefaultValue
-	"Answer the receiver's varDefaultValue field as a Smalltalk object."
+	"Answer the <VARIANT> value of the receiver's 'varDefaultValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + ##(self offsetOf: #varDefaultValue)! !
 !PARAMDESCEX categoriesFor: #varDefaultValue!**compiled accessors**!public! !
@@ -41,6 +41,10 @@ defineFields
 	self
 		defineField: #cBytes			type: DWORDField filler;
 		defineField: #varDefaultValue	type: (StructureField type: VARIANT) beReadOnly
-! !
+!
+
+getFieldNames
+	^#(#varDefaultValue)! !
 !PARAMDESCEX class categoriesFor: #defineFields!initializing!public! !
+!PARAMDESCEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

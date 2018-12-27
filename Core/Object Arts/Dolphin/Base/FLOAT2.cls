@@ -46,9 +46,6 @@ fileOutStem
 	^'FLOAT2'
 !
 
-getFieldList
-	^#(#value)!
-
 initialize
 	"Private - Initialize the receiver's class variables.
 		self initialize
@@ -69,7 +66,6 @@ uninitialize
 	VMLibrary default registryAt: self name put: nil! !
 !FLOAT class categoriesFor: #defineFields!initializing!public! !
 !FLOAT class categoriesFor: #fileOutStem!private!source filing! !
-!FLOAT class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !FLOAT class categoriesFor: #initialize!development!initializing!private! !
 !FLOAT class categoriesFor: #maximum!constants!public! !
 !FLOAT class categoriesFor: #minimum!constants!public! !

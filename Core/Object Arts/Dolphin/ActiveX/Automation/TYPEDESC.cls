@@ -74,7 +74,7 @@ getRefType
 	^self analyzer getRefType: self hreftype!
 
 hreftype
-	"Answer the receiver's hreftype field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'hreftype' field."
 
 	^bytes dwordAtOffset: 0!
 
@@ -100,12 +100,12 @@ isUserDefined
 	^self vt = VT_USERDEFINED!
 
 lpadesc
-	"Answer the receiver's lpadesc field as a Smalltalk object."
+	"Answer the <ARRAYDESC> value of the receiver's 'lpadesc' field."
 
 	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: 0)!
 
 lptdesc
-	"Answer the receiver's lptdesc field as a Smalltalk object."
+	"Answer the <TYPEDESC> value of the receiver's 'lptdesc' field."
 
 	^TYPEDESC fromAddress: (bytes intPtrAtOffset: 0)!
 
@@ -191,7 +191,7 @@ vartype
 	^vt!
 
 vt
-	"Answer the receiver's vt field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'vt' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #vt)!
 
@@ -255,6 +255,9 @@ defineFields
 			type: DWORDField readOnly
 			offset: 0!
 
+getFieldNames
+	^#(#hreftype #lpadesc #lptdesc #vt)!
+
 initialize
 	"
 		self initialize
@@ -267,5 +270,6 @@ initialize
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
 !TYPEDESC class categoriesFor: #defineFields!initializing!public! !
+!TYPEDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !TYPEDESC class categoriesFor: #initialize!class initialization!development!public! !
 

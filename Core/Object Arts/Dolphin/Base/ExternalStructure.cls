@@ -193,12 +193,12 @@ doesNotUnderstand: aMessage
 		ifFalse: [field isWriteable ifTrue: [^field writeInto: self value: (args at: 1)]].
 	^super doesNotUnderstand: aMessage!
 
-fieldsDo: aMonadicValuable 
+fieldsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, operation, for each of the receiver's fields."
 
 	self getValidFields do: [:field | aMonadicValuable value: (self getField: field)]!
 
-fieldsDo: aMonadicValuable separatedBy: aNiladicValuable 
+fieldsDo: aMonadicValuable separatedBy: aNiladicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's fields, interspersed
 	with evaluations of the <niladicValuable> argument. The separator is first evaluated after
 	the first field, and is not evaluated after the last."
@@ -228,7 +228,7 @@ getValidFields
 	have a mask field which identifies which of the other fields have been 
 	initialized with a value)."
 
-	^self class getFieldList!
+	^self class getFieldNames!
 
 hash
 	"Answer the SmallInteger hash value for the receiver.
@@ -669,7 +669,12 @@ fieldNamesFromTemplate
 	| answer pairs |
 	pairs := self template associations.
 	answer := OrderedCollection new: pairs size.
-	(pairs asSortedCollection: [:x :y | x value offset <= y value offset])
+	(pairs asSortedCollection: 
+			[:x :y |
+			| xoff yoff |
+			xoff := x value offset.
+			yoff := y value offset.
+			xoff == yoff ifTrue: [x key <= y key] ifFalse: [xoff < yoff]])
 		do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
 	^answer!
 
@@ -692,8 +697,10 @@ fromBytes: aByteObject
 
 	^self new copyBytes: aByteObject!
 
-getFieldList
-	"Private - Answer a <sequencedReadableCollection> of <Symbol>, being the identifiers of the fields defined in the receiver's template, sorted in ascending order of offset from the start of the	structure."
+getFieldNames
+	"Private - Answer a <sequencedReadableCollection> of the fields defined 
+	in the receiver's template, sorted in ascending order of offset from the start of the
+	structure, that may be valid in this class of structure."
 
 	^self fieldNamesFromTemplate!
 
@@ -995,10 +1002,10 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #dynamicSelectorsDo:!compiling!methods-accessing!public! !
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
-!ExternalStructure class categoriesFor: #fieldNamesFromTemplate!accessing!compiling!private! !
+!ExternalStructure class categoriesFor: #fieldNamesFromTemplate!accessing!private! !
 !ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !
-!ExternalStructure class categoriesFor: #getFieldList!accessing!private! !
+!ExternalStructure class categoriesFor: #getFieldNames!accessing!private! !
 !ExternalStructure class categoriesFor: #inheritTemplate!private!template definition! !
 !ExternalStructure class categoriesFor: #init:!initializing!public! !
 !ExternalStructure class categoriesFor: #initialize!development!initializing!private! !

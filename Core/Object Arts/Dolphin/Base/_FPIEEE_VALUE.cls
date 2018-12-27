@@ -88,9 +88,9 @@ defineFields
 formatCodes
 	^#(#Fp32 #Fp64 #Fp80 #Fp128 #I16 #I32 #I64 #U16 #U32 #U64 #Bcd80 #Compare #String #Fp82)!
 
-getFieldList
+getFieldNames
 	^#(#flags)! !
 !_FPIEEE_VALUE class categoriesFor: #defineFields!initializing!public! !
 !_FPIEEE_VALUE class categoriesFor: #formatCodes!constants!public! !
-!_FPIEEE_VALUE class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!_FPIEEE_VALUE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

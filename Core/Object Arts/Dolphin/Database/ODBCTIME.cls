@@ -16,40 +16,34 @@ asTime
 	^Time fromSeconds: ((self hour * 60 + self minute) * 60 + self second)!
 
 hour
-	"Answer the receiver's hour field as a Smalltalk object.
-	Automatically generated get method - do not modify"
+	"Answer the <Integer> value of the receiver's 'hour' field."
 
-	^(bytes wordAtOffset: 0)!
+	^bytes wordAtOffset: 0!
 
-hour: anObject
-	"Set the receiver's hour field to the value of anObject.
-	Automatically generated set method - do not modify"
+hour: anInteger
+	"Set the receiver's 'hour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: 0 put: anInteger!
 
 minute
-	"Answer the receiver's minute field as a Smalltalk object.
-	Automatically generated get method - do not modify"
+	"Answer the <Integer> value of the receiver's 'minute' field."
 
-	^(bytes wordAtOffset: 2)!
+	^bytes wordAtOffset: ##(self offsetOf: #minute)!
 
-minute: anObject
-	"Set the receiver's minute field to the value of anObject.
-	Automatically generated set method - do not modify"
+minute: anInteger
+	"Set the receiver's 'minute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #minute) put: anInteger!
 
 second
-	"Answer the receiver's second field as a Smalltalk object.
-	Automatically generated get method - do not modify"
+	"Answer the <Integer> value of the receiver's 'second' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: ##(self offsetOf: #second)!
 
-second: anObject
-	"Set the receiver's second field to the value of anObject.
-	Automatically generated set method - do not modify"
+second: anInteger
+	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #second) put: anInteger! !
 !ODBCTIME categoriesFor: #asTime!converting!public! !
 !ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
 !ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !
@@ -82,7 +76,11 @@ fromTime: aTime
 		minute: aTime minutes;
 		second: aTime seconds;
 		yourself
-! !
+!
+
+getFieldNames
+	^#(#hour #minute #second)! !
 !ODBCTIME class categoriesFor: #defineFields!initializing!public! !
 !ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
+!ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

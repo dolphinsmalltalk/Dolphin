@@ -26,24 +26,24 @@ backcolor: aColor
 	self clrTextBk: aColor asColorRef asParameter!
 
 clrText
-	"Answer the receiver's clrText field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'clrText' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #clrText)!
 
-clrText: anObject 
-	"Set the receiver's clrText field to the value of anObject."
+clrText: anInteger
+	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #clrText) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #clrText) put: anInteger!
 
 clrTextBk
-	"Answer the receiver's clrTextBk field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #clrTextBk)!
 
-clrTextBk: anObject 
-	"Set the receiver's clrTextBk field to the value of anObject."
+clrTextBk: anInteger
+	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #clrTextBk) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #clrTextBk) put: anInteger!
 
 column
 	"Answer the <ListViewColumn> associated with the sub-item if this is a sub-item
@@ -68,7 +68,7 @@ forecolor: aColor
 	self clrText: aColor asColorRef asParameter!
 
 iSubItem
-	"Answer the receiver's iSubItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
 
@@ -116,6 +116,10 @@ defineFields
 	self 
 		defineField: #clrText type: DWORDField new;
 		defineField: #clrTextBk type: DWORDField new;
-		defineField: #iSubItem type: SDWORDField readOnly! !
+		defineField: #iSubItem type: SDWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
 !NMLVCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMLVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

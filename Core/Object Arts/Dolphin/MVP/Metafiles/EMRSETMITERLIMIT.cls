@@ -24,14 +24,14 @@ struct tagEMRSETMITERLIMIT {
 !EMRSETMITERLIMIT methodsFor!
 
 eMiterLimit
-	"Answer the receiver's eMiterLimit field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eMiterLimit' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eMiterLimit)!
 
-eMiterLimit: anObject 
-	"Set the receiver's eMiterLimit field to the value of anObject."
+eMiterLimit: aFloat
+	"Set the receiver's 'eMiterLimit' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eMiterLimit) put: anObject! !
+	bytes floatAtOffset: ##(self offsetOf: #eMiterLimit) put: aFloat! !
 !EMRSETMITERLIMIT categoriesFor: #eMiterLimit!**compiled accessors**!public! !
 !EMRSETMITERLIMIT categoriesFor: #eMiterLimit:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #eMiterLimit)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETMITERLIMIT! !
 !EMRSETMITERLIMIT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETMITERLIMIT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETMITERLIMIT class categoriesFor: #iTypes!constants!public! !
 

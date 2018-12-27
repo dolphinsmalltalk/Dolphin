@@ -15,24 +15,24 @@ Warning: This comment was automatically generated from the struct''s type inform
 !CONNECTDATA methodsFor!
 
 dwCookie
-	"Answer the receiver's dwCookie field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwCookie' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: ##(self offsetOf: #dwCookie)!
 
-dwCookie: anObject
-	"Set the receiver's dwCookie field to the value of anObject."
+dwCookie: anInteger
+	"Set the receiver's 'dwCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwCookie) put: anInteger!
 
 punk
-	"Answer the receiver's punk field as a Smalltalk object."
+	"Answer the <IUnknown> value of the receiver's 'punk' field."
 
 	^IUnknown fromAddress: (bytes intPtrAtOffset: 0)!
 
-punk: anObject 
-	"Set the receiver's punk field to the value of anObject."
+punk: anIUnknown
+	"Set the receiver's 'punk' field to the value of the argument, anIUnknown"
 
-	bytes uintPtrAtOffset: 0 put: anObject yourAddress! !
+	bytes uintPtrAtOffset: 0 put: anIUnknown yourAddress! !
 !CONNECTDATA categoriesFor: #dwCookie!**compiled accessors**!public! !
 !CONNECTDATA categoriesFor: #dwCookie:!**compiled accessors**!public! !
 !CONNECTDATA categoriesFor: #punk!**compiled accessors**!public! !
@@ -53,6 +53,10 @@ defineFields
 
 	self
 		defineField: #punk type: (PointerField type: IUnknown);
-		defineField: #dwCookie type: DWORDField new! !
+		defineField: #dwCookie type: DWORDField new!
+
+getFieldNames
+	^#(#punk #dwCookie)! !
 !CONNECTDATA class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CONNECTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

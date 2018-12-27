@@ -19,7 +19,7 @@ NMLINK accompanies link click notifications that are sent by the SysLink control
 !NMLINK methodsFor!
 
 item
-	"Answer the receiver's item field as a Smalltalk object."
+	"Answer the <LITEM> value of the receiver's 'item' field."
 
 	^LITEM fromAddress: bytes yourAddress + ##(self offsetOf: #item)! !
 !NMLINK categoriesFor: #item!**compiled accessors**!public! !
@@ -34,8 +34,12 @@ defineFields
 	super defineFields.	"NMHDR fields"
 	self defineField: #item type: (StructureField type: LITEM) beReadOnly!
 
+getFieldNames
+	^#(#hwndFrom #idFrom #code #item)!
+
 itemFromNMHDR: anExternalAddress
 	^LITEM fromAddress: anExternalAddress yourAddress + ##(self offsetOf: #item)! !
 !NMLINK class categoriesFor: #defineFields!initializing!public! !
+!NMLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !NMLINK class categoriesFor: #itemFromNMHDR:!public! !
 

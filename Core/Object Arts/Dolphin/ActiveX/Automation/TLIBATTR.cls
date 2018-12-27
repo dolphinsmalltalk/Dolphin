@@ -28,7 +28,7 @@ comparisonSize
 	^28!
 
 guid
-	"Answer the receiver's guid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'guid' field."
 
 	^GUID fromAddress: bytes yourAddress!
 
@@ -58,7 +58,7 @@ isRestricted
 	^self wLibFlags anyMask: LIBFLAG_FRESTRICTED!
 
 lcid
-	"Answer the receiver's lcid field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcid' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
 
@@ -68,17 +68,17 @@ version
 	^self wMajorVerNum displayString, '.', self wMinorVerNum displayString!
 
 wLibFlags
-	"Answer the receiver's wLibFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wLibFlags' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wLibFlags)!
 
 wMajorVerNum
-	"Answer the receiver's wMajorVerNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMajorVerNum' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wMajorVerNum)!
 
 wMinorVerNum
-	"Answer the receiver's wMinorVerNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wMinorVerNum)! !
 !TLIBATTR categoriesFor: #comparisonSize!accessing!private! !
@@ -131,6 +131,10 @@ defineFields
 		defineField: #syskind			type: SDWORDField filler;		"Always Win32"
 		defineField: #wMajorVerNum	type: WORDField readOnly;
 		defineField: #wMinorVerNum	type: WORDField readOnly;
-		defineField: #wLibFlags		type: WORDField readOnly! !
+		defineField: #wLibFlags		type: WORDField readOnly!
+
+getFieldNames
+	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
 !TLIBATTR class categoriesFor: #defineFields!initializing!public! !
+!TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

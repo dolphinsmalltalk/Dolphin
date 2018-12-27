@@ -26,28 +26,28 @@ typedef struct tagMINMAXINFO {
 !MINMAXINFO methodsFor!
 
 ptMaxTrackSize
-	"Answer the receiver's ptMaxTrackSize field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptMaxTrackSize' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptMaxTrackSize)!
 
-ptMaxTrackSize: anObject 
-	"Set the receiver's ptMaxTrackSize field to the value of anObject."
+ptMaxTrackSize: aPOINTL
+	"Set the receiver's 'ptMaxTrackSize' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptMaxTrackSize) + 1)
 		to: ##((self offsetOf: #ptMaxTrackSize) + POINTL basicByteSize)
 		startingAt: 1!
 
 ptMinTrackSize
-	"Answer the receiver's ptMinTrackSize field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptMinTrackSize' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptMinTrackSize)!
 
-ptMinTrackSize: anObject 
-	"Set the receiver's ptMinTrackSize field to the value of anObject."
+ptMinTrackSize: aPOINTL
+	"Set the receiver's 'ptMinTrackSize' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptMinTrackSize) + 1)
 		to: ##((self offsetOf: #ptMinTrackSize) + POINTL basicByteSize)
@@ -77,6 +77,10 @@ defineFields
 		defineField: #ptMaxSize type: (StructureField type: POINTL) beUncompiled;
 		defineField: #ptMaxPosition type: (StructureField type: POINTL) beUncompiled;
 		defineField: #ptMinTrackSize type: (StructureField type: POINTL);
-		defineField: #ptMaxTrackSize type: (StructureField type: POINTL)! !
+		defineField: #ptMaxTrackSize type: (StructureField type: POINTL)!
+
+getFieldNames
+	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
 !MINMAXINFO class categoriesFor: #defineFields!initializing!public! !
+!MINMAXINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

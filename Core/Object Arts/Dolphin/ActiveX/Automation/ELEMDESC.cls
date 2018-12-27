@@ -89,6 +89,10 @@ defineFields
 	"
 
 	super defineFields.
-	self defineField: #paramdesc type: (StructureField type: PARAMDESC) beReadOnly! !
+	self defineField: #paramdesc type: (StructureField type: PARAMDESC) beReadOnly!
+
+getFieldNames
+	^#(#tdescElem #paramdesc)! !
 !ELEMDESC class categoriesFor: #defineFields!initializing!public! !
+!ELEMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

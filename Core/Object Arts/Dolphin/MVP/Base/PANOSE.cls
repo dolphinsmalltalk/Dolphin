@@ -12,52 +12,52 @@ PANOSE comment: '<PANOSE> is an <ExternalStructure> class to wrap the struct ''W
 !PANOSE methodsFor!
 
 bArmStyle
-	"Answer the receiver's bArmStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bArmStyle' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bArmStyle)!
 
 bContrast
-	"Answer the receiver's bContrast field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bContrast' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bContrast)!
 
 bFamilyType
-	"Answer the receiver's bFamilyType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bFamilyType' field."
 
 	^bytes byteAtOffset: 0!
 
 bLetterform
-	"Answer the receiver's bLetterform field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bLetterform' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bLetterform)!
 
 bMidline
-	"Answer the receiver's bMidline field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bMidline' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bMidline)!
 
 bProportion
-	"Answer the receiver's bProportion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bProportion' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bProportion)!
 
 bSerifStyle
-	"Answer the receiver's bSerifStyle field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bSerifStyle' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bSerifStyle)!
 
 bStrokeVariation
-	"Answer the receiver's bStrokeVariation field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bStrokeVariation' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bStrokeVariation)!
 
 bWeight
-	"Answer the receiver's bWeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bWeight' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bWeight)!
 
 bXHeight
-	"Answer the receiver's bXHeight field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bXHeight' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #bXHeight)! !
 !PANOSE categoriesFor: #bArmStyle!**compiled accessors**!public! !
@@ -102,6 +102,10 @@ defineFields
 		defineField: #bArmStyle type: BYTEField readOnly;
 		defineField: #bLetterform type: BYTEField readOnly;
 		defineField: #bMidline type: BYTEField readOnly;
-		defineField: #bXHeight type: BYTEField readOnly! !
+		defineField: #bXHeight type: BYTEField readOnly!
+
+getFieldNames
+	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
 !PANOSE class categoriesFor: #defineFields!initializing!public! !
+!PANOSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

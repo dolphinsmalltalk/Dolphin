@@ -173,7 +173,7 @@ fromFILETIME: aFILETIME
 
 	^aFILETIME asSYSTEMTIME!
 
-getFieldList
+getFieldNames
 	^#(#wYear #wMonth #wDayOfWeek #wDay #wHour #wMinute #wSecond #wMilliseconds)!
 
 now
@@ -194,7 +194,7 @@ nowUTC
 !SYSTEMTIME class categoriesFor: #day:month:year:!instance creation!private! !
 !SYSTEMTIME class categoriesFor: #defineFields!initializing!public! !
 !SYSTEMTIME class categoriesFor: #fromFILETIME:!instance creation!public! !
-!SYSTEMTIME class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!SYSTEMTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !SYSTEMTIME class categoriesFor: #now!instance creation!private! !
 !SYSTEMTIME class categoriesFor: #nowUTC!instance creation!public! !
 

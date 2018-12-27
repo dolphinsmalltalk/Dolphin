@@ -113,7 +113,11 @@ defineFields
 	self byteSize: 8!
 
 fromBytes: aByteObject
-	^self new data: aByteObject! !
+	^self new data: aByteObject!
+
+getFieldNames
+	^#(#cbData #pbData)! !
 !CRYPTOAPI_BLOB class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !CRYPTOAPI_BLOB class categoriesFor: #fromBytes:!public! !
+!CRYPTOAPI_BLOB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

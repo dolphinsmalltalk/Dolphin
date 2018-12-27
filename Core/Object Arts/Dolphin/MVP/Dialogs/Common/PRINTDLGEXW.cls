@@ -299,7 +299,7 @@ nStartPage: anInteger
 defineFields
 	"Define the fields of the PRINTDLGEX structure.
 
-	PRINTDLGEX  compileDefinition
+	self compileDefinition
 
 		typedef [uuid(46F06E70-1BB5-4B02-98EE-6AB442F3B43F)]
 		struct tagPRINTDLGEX {
@@ -348,6 +348,10 @@ defineFields
 		defineField: #nPropertyPages type: DWORDField new;
 		defineField: #lphPropertyPages type: (PointerField type: ExternalHandle);
 		defineField: #nStartPage type: DWORDField new;
-		defineField: #dwResultAction type: DWORDField new! !
+		defineField: #dwResultAction type: DWORDField new!
+
+getFieldNames
+	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
 !PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!PRINTDLGEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

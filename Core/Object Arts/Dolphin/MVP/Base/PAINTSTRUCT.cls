@@ -11,12 +11,12 @@ PAINTSTRUCT comment: ''!
 !PAINTSTRUCT methodsFor!
 
 fErase
-	"Answer the receiver's fErase field as a Smalltalk object."
+	"Answer the <Boolean> value of the receiver's 'fErase' field."
 
 	^(bytes dwordAtOffset: ##(self offsetOf: #fErase)) asBoolean!
 
 rcPaint
-	"Answer the receiver's rcPaint field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rcPaint' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcPaint)! !
 !PAINTSTRUCT categoriesFor: #fErase!**compiled accessors**!public! !
@@ -36,6 +36,10 @@ defineFields
 		defineField: #fRestore type: BOOLField filler;
 		defineField: #fIncUpdate type: BOOLField filler;
 		"Help file wrongly species 16 bytes, header file says 32"
-		defineField: #rgbReserved type: (ArrayField type: ByteArray length: 32) beFiller! !
+		defineField: #rgbReserved type: (ArrayField type: ByteArray length: 32) beFiller!
+
+getFieldNames
+	^#(#hdc #fErase #rcPaint)! !
 !PAINTSTRUCT class categoriesFor: #defineFields!initializing!public! !
+!PAINTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

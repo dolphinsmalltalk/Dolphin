@@ -24,14 +24,14 @@ struct tagEMRELLIPSE {
 !EMRELLIPSE methodsFor!
 
 rclBox
-	"Answer the receiver's rclBox field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBox' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBox)!
 
-rclBox: anObject 
-	"Set the receiver's rclBox field to the value of anObject."
+rclBox: aRECT
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBox) + 1)
 		to: ##((self offsetOf: #rclBox) + RECT basicByteSize)
@@ -58,10 +58,14 @@ defineFields
 		defineField: #rclBox type: (StructureField type: RECT) offset: 8.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #rclBox)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ELLIPSE with: EMR_RECTANGLE! !
 !EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
 

@@ -24,14 +24,14 @@ struct tagEMRSETCOLORSPACE {
 !EMRSETCOLORSPACE methodsFor!
 
 ihCS
-	"Answer the receiver's ihCS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihCS)!
 
-ihCS: anObject 
-	"Set the receiver's ihCS field to the value of anObject."
+ihCS: anInteger
+	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anInteger! !
 !EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
 !EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #ihCS)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORSPACE with: EMR_DELETECOLORSPACE! !
 !EMRSETCOLORSPACE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETCOLORSPACE class categoriesFor: #iTypes!constants!public! !
 

@@ -109,6 +109,10 @@ defineFields
 		defineField: #OffsetHigh type: DWORDField new offset: 12;
 		defineField: #Pointer type: LPVOIDField new beFiller offset: 8;
 		defineField: #hEvent type: HANDLEField new offset: 16.
-	self byteSize: 20! !
+	self byteSize: 20!
+
+getFieldNames
+	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
 !OVERLAPPED class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!OVERLAPPED class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

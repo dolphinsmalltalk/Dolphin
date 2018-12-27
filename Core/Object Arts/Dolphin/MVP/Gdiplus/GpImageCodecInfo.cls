@@ -236,6 +236,10 @@ defineFields
 		defineField: #SigSize type: DWORDField new offset: 64;
 		defineField: #SigPattern type: (PointerField type: BYTE) offset: 68;
 		defineField: #SigMask type: (PointerField type: BYTE) offset: 72.
-	self byteSize: 76! !
+	self byteSize: 76!
+
+getFieldNames
+	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
 !GpImageCodecInfo class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpImageCodecInfo class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

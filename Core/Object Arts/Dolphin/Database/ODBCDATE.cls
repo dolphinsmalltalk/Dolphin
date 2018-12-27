@@ -19,40 +19,34 @@ asDate
 		year: self year!
 
 day
-	"Answer the receiver's day field as a Smalltalk object.
-	Automatically generated get method - do not modify"
+	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: ##(self offsetOf: #day)!
 
-day: anObject
-	"Set the receiver's day field to the value of anObject.
-	Automatically generated set method - do not modify"
+day: anInteger
+	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #day) put: anInteger!
 
 month
-	"Answer the receiver's month field as a Smalltalk object.
-	Automatically generated get method - do not modify"
+	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^(bytes wordAtOffset: 2)!
+	^bytes wordAtOffset: ##(self offsetOf: #month)!
 
-month: anObject
-	"Set the receiver's month field to the value of anObject.
-	Automatically generated set method - do not modify"
+month: anInteger
+	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #month) put: anInteger!
 
 year
-	"Answer the receiver's year field as a Smalltalk object.
-	Automatically generated get method - do not modify"
+	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^(bytes swordAtOffset: 0)!
+	^bytes swordAtOffset: 0!
 
-year: anObject
-	"Set the receiver's year field to the value of anObject.
-	Automatically generated set method - do not modify"
+year: anInteger
+	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anObject! !
+	bytes swordAtOffset: 0 put: anInteger! !
 !ODBCDATE categoriesFor: #asDate!converting!public! !
 !ODBCDATE categoriesFor: #day!**compiled accessors**!public! !
 !ODBCDATE categoriesFor: #day:!**compiled accessors**!public! !
@@ -85,7 +79,11 @@ fromDate: aDate
 		month: aDate monthIndex;
 		year: aDate year;
 		yourself
-! !
+!
+
+getFieldNames
+	^#(#year #month #day)! !
 !ODBCDATE class categoriesFor: #defineFields!constants!public! !
 !ODBCDATE class categoriesFor: #fromDate:!instance creation!public! !
+!ODBCDATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

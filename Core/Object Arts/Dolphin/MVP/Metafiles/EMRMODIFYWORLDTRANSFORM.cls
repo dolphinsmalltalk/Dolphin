@@ -25,24 +25,24 @@ struct tagEMRMODIFYWORLDTRANSFORM {
 !EMRMODIFYWORLDTRANSFORM methodsFor!
 
 iMode
-	"Answer the receiver's iMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iMode)!
 
-iMode: anObject 
-	"Set the receiver's iMode field to the value of anObject."
+iMode: anInteger
+	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anInteger!
 
 XFORM
-	"Answer the receiver's XFORM field as a Smalltalk object."
+	"Answer the <XFORM> value of the receiver's 'XFORM' field."
 
 	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #XFORM)!
 
-XFORM: anObject 
-	"Set the receiver's XFORM field to the value of anObject."
+XFORM: aXFORM
+	"Set the receiver's 'XFORM' field to the value of the argument, aXFORM"
 
-	anObject 
+	aXFORM
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #XFORM) + 1)
 		to: ##((self offsetOf: #XFORM) + XFORM basicByteSize)
@@ -77,10 +77,14 @@ defineFields
 			offset: 32.
 	self byteSize: 36!
 
+getFieldNames
+	^#(#iType #nSize #XFORM #iMode)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_MODIFYWORLDTRANSFORM! !
 !EMRMODIFYWORLDTRANSFORM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRMODIFYWORLDTRANSFORM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRMODIFYWORLDTRANSFORM class categoriesFor: #iTypes!constants!public! !
 

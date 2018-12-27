@@ -24,14 +24,14 @@ struct tagEMRSELECTPALETTE {
 !EMRSELECTPALETTE methodsFor!
 
 ihPal
-	"Answer the receiver's ihPal field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
 
-ihPal: anObject 
-	"Set the receiver's ihPal field to the value of anObject."
+ihPal: anInteger
+	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anInteger! !
 !EMRSELECTPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
 !EMRSELECTPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #ihPal)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SELECTPALETTE! !
 !EMRSELECTPALETTE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTPALETTE class categoriesFor: #iTypes!constants!public! !
 

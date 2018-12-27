@@ -28,54 +28,54 @@ struct tagGpBitmapData {
 !GpBitmapData methodsFor!
 
 Height
-	"Answer the receiver's Height field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Height' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: ##(self offsetOf: #Height)!
 
-Height: anObject
-	"Set the receiver's Height field to the value of anObject."
+Height: anInteger
+	"Set the receiver's 'Height' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #Height) put: anInteger!
 
 PixelFormat
-	"Answer the receiver's PixelFormat field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'PixelFormat' field."
 
-	^(bytes sdwordAtOffset: 12)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #PixelFormat)!
 
-PixelFormat: anObject
-	"Set the receiver's PixelFormat field to the value of anObject."
+PixelFormat: anInteger
+	"Set the receiver's 'PixelFormat' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 12 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #PixelFormat) put: anInteger!
 
 Scan0
-	"Answer the receiver's Scan0 field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'Scan0' field."
 
-	^(bytes dwordAtOffset: 16) asExternalAddress!
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #Scan0)) asExternalAddress!
 
-Scan0: anObject
-	"Set the receiver's Scan0 field to the value of anObject."
+Scan0: anExternalAddress
+	"Set the receiver's 'Scan0' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Scan0) put: anExternalAddress!
 
 Stride
-	"Answer the receiver's Stride field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Stride' field."
 
-	^(bytes sdwordAtOffset: 8)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #Stride)!
 
-Stride: anObject
-	"Set the receiver's Stride field to the value of anObject."
+Stride: anInteger
+	"Set the receiver's 'Stride' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 8 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #Stride) put: anInteger!
 
 Width
-	"Answer the receiver's Width field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Width' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: 0!
 
-Width: anObject
-	"Set the receiver's Width field to the value of anObject."
+Width: anInteger
+	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject! !
+	bytes dwordAtOffset: 0 put: anInteger! !
 !GpBitmapData categoriesFor: #Height!**compiled accessors**!public! !
 !GpBitmapData categoriesFor: #Height:!**compiled accessors**!public! !
 !GpBitmapData categoriesFor: #PixelFormat!**compiled accessors**!public! !
@@ -111,6 +111,10 @@ defineFields
 		defineField: #PixelFormat type: SDWORDField new offset: 12;
 		defineField: #Scan0 type: LPVOIDField new offset: 16;
 		defineField: #Reserved type: DWORDField filler offset: 20.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
 !GpBitmapData class categoriesFor: #defineFields!initializing!public! !
+!GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

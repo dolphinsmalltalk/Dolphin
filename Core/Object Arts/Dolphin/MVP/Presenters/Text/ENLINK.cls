@@ -27,22 +27,22 @@ struct tagENLINK {
 !ENLINK methodsFor!
 
 chrg
-	"Answer the receiver's chrg field as a Smalltalk object."
+	"Answer the <CHARRANGE> value of the receiver's 'chrg' field."
 
 	^CHARRANGE fromAddress: bytes yourAddress + ##(self offsetOf: #chrg)!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
 	^bytes intPtrAtOffset: ##(self offsetOf: #lParam)!
 
 msg
-	"Answer the receiver's msg field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'msg' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #msg)!
 
 wParam
-	"Answer the receiver's wParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #wParam)! !
 !ENLINK categoriesFor: #chrg!**compiled accessors**!public! !
@@ -72,6 +72,10 @@ defineFields
 		defineField: #msg type: DWORDField readOnly;
 		defineField: #wParam type: UINT_PTRField readOnly;
 		defineField: #lParam type: INT_PTRField readOnly;
-		defineField: #chrg type: (StructureField type: CHARRANGE) beReadOnly! !
+		defineField: #chrg type: (StructureField type: CHARRANGE) beReadOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
 !ENLINK class categoriesFor: #defineFields!initializing!public! !
+!ENLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

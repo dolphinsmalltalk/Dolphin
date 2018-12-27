@@ -1968,9 +1968,9 @@ publishedAspects
 
 	| aspects |
 	aspects := self class publishedAspectsOfInstances.
-	self isNull 
+	self isNull
 		ifFalse: 
-			[self getValidFields 
+			[self getValidFields
 				do: [:each | aspects add: ((self getField: each) newAspect: each class: AXRecordAspect)]].
 	^aspects! !
 !AXRecord categoriesFor: #publishedAspects!accessing!public! !

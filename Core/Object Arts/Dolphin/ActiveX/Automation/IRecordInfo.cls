@@ -66,7 +66,7 @@ getFieldNames
 	self GetFieldNames: cNames rgBstrNames: pNames yourAddress.
 	bstr := BSTR new.
 	^pNames collect: 
-			[:e | 
+			[:e |
 			| name |
 			bstr attach: e.
 			name := bstr asString.

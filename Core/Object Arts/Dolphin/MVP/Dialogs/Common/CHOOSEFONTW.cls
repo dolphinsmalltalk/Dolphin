@@ -148,6 +148,10 @@ defineFields
 		defineField: #lpszStyle type: (PointerField type: Utf16String) beUncompiled;
 		defineField: #nFontType type: WORDField readOnly beUncompiled;
 		defineField: #nSizeMin type: DWORDField writeOnly beUncompiled;
-		defineField: #nSizeMax type: DWORDField writeOnly beUncompiled! !
+		defineField: #nSizeMax type: DWORDField writeOnly beUncompiled!
+
+getFieldNames
+	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
 !CHOOSEFONTW class categoriesFor: #defineFields!initializing!public! !
+!CHOOSEFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

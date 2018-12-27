@@ -25,42 +25,42 @@ struct tagCIEXYZTRIPLE {
 !CIEXYZTRIPLE methodsFor!
 
 ciexyzBlue
-	"Answer the receiver's ciexyzBlue field as a Smalltalk object."
+	"Answer the <CIEXYZ> value of the receiver's 'ciexyzBlue' field."
 
 	^CIEXYZ fromAddress: bytes yourAddress + ##(self offsetOf: #ciexyzBlue)!
 
-ciexyzBlue: anObject 
-	"Set the receiver's ciexyzBlue field to the value of anObject."
+ciexyzBlue: aCIEXYZ
+	"Set the receiver's 'ciexyzBlue' field to the value of the argument, aCIEXYZ"
 
-	anObject 
+	aCIEXYZ
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ciexyzBlue) + 1)
 		to: ##((self offsetOf: #ciexyzBlue) + CIEXYZ basicByteSize)
 		startingAt: 1!
 
 ciexyzGreen
-	"Answer the receiver's ciexyzGreen field as a Smalltalk object."
+	"Answer the <CIEXYZ> value of the receiver's 'ciexyzGreen' field."
 
 	^CIEXYZ fromAddress: bytes yourAddress + ##(self offsetOf: #ciexyzGreen)!
 
-ciexyzGreen: anObject 
-	"Set the receiver's ciexyzGreen field to the value of anObject."
+ciexyzGreen: aCIEXYZ
+	"Set the receiver's 'ciexyzGreen' field to the value of the argument, aCIEXYZ"
 
-	anObject 
+	aCIEXYZ
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ciexyzGreen) + 1)
 		to: ##((self offsetOf: #ciexyzGreen) + CIEXYZ basicByteSize)
 		startingAt: 1!
 
 ciexyzRed
-	"Answer the receiver's ciexyzRed field as a Smalltalk object."
+	"Answer the <CIEXYZ> value of the receiver's 'ciexyzRed' field."
 
 	^CIEXYZ fromAddress: bytes yourAddress!
 
-ciexyzRed: anObject 
-	"Set the receiver's ciexyzRed field to the value of anObject."
+ciexyzRed: aCIEXYZ
+	"Set the receiver's 'ciexyzRed' field to the value of the argument, aCIEXYZ"
 
-	anObject 
+	aCIEXYZ
 		replaceBytesOf: bytes
 		from: 1
 		to: ##(CIEXYZ basicByteSize)
@@ -91,6 +91,10 @@ defineFields
 		defineField: #ciexyzRed type: (StructureField type: CIEXYZ) offset: 0;
 		defineField: #ciexyzGreen type: (StructureField type: CIEXYZ) offset: 12;
 		defineField: #ciexyzBlue type: (StructureField type: CIEXYZ) offset: 24.
-	self byteSize: 36! !
+	self byteSize: 36!
+
+getFieldNames
+	^#(#ciexyzRed #ciexyzGreen #ciexyzBlue)! !
 !CIEXYZTRIPLE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CIEXYZTRIPLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

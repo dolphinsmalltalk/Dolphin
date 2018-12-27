@@ -25,28 +25,28 @@ struct tagEMREXTCREATEFONTINDIRECT {
 !EMREXTCREATEFONTINDIRECTW methodsFor!
 
 elfw
-	"Answer the receiver's elfw field as a Smalltalk object."
+	"Answer the <EXTLOGFONTW> value of the receiver's 'elfw' field."
 
 	^EXTLOGFONTW fromAddress: bytes yourAddress + ##(self offsetOf: #elfw)!
 
-elfw: anObject 
-	"Set the receiver's elfw field to the value of anObject."
+elfw: anEXTLOGFONTW
+	"Set the receiver's 'elfw' field to the value of the argument, anEXTLOGFONTW"
 
-	anObject 
+	anEXTLOGFONTW
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #elfw) + 1)
 		to: ##((self offsetOf: #elfw) + EXTLOGFONTW basicByteSize)
 		startingAt: 1!
 
 ihFont
-	"Answer the receiver's ihFont field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihFont' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihFont)!
 
-ihFont: anObject 
-	"Set the receiver's ihFont field to the value of anObject."
+ihFont: anInteger
+	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihFont) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #ihFont) put: anInteger! !
 !EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw!**compiled accessors**!public! !
 !EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw:!**compiled accessors**!public! !
 !EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont!**compiled accessors**!public! !
@@ -73,10 +73,14 @@ defineFields
 		defineField: #elfw type: (StructureField type: EXTLOGFONTW) offset: 12.
 	self byteSize: 332!
 
+getFieldNames
+	^#(#iType #nSize #ihFont #elfw)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTCREATEFONTINDIRECTW! !
 !EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!initializing!public! !
+!EMREXTCREATEFONTINDIRECTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREXTCREATEFONTINDIRECTW class categoriesFor: #iTypes!constants!public! !
 

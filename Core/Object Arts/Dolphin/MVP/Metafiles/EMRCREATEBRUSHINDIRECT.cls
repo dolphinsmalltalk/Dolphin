@@ -25,24 +25,24 @@ struct tagEMRCREATEBRUSHINDIRECT {
 !EMRCREATEBRUSHINDIRECT methodsFor!
 
 ihBrush
-	"Answer the receiver's ihBrush field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihBrush)!
 
-ihBrush: anObject 
-	"Set the receiver's ihBrush field to the value of anObject."
+ihBrush: anInteger
+	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihBrush) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihBrush) put: anInteger!
 
 lb
-	"Answer the receiver's lb field as a Smalltalk object."
+	"Answer the <LOGBRUSH> value of the receiver's 'lb' field."
 
 	^LOGBRUSH fromAddress: bytes yourAddress + ##(self offsetOf: #lb)!
 
-lb: anObject 
-	"Set the receiver's lb field to the value of anObject."
+lb: aLOGBRUSH
+	"Set the receiver's 'lb' field to the value of the argument, aLOGBRUSH"
 
-	anObject 
+	aLOGBRUSH
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #lb) + 1)
 		to: ##((self offsetOf: #lb) + LOGBRUSH basicByteSize)
@@ -73,10 +73,14 @@ defineFields
 		defineField: #lb type: (StructureField type: LOGBRUSH) offset: 12.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #ihBrush #lb)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEBRUSHINDIRECT! !
 !EMRCREATEBRUSHINDIRECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEBRUSHINDIRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEBRUSHINDIRECT class categoriesFor: #iTypes!constants!public! !
 

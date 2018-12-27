@@ -38,7 +38,7 @@ value: anObject
 
 !ExternalScalar class methodsFor!
 
-getFieldList
+getFieldNames
 	^#(#value)! !
-!ExternalScalar class categoriesFor: #getFieldList!constants!private! !
+!ExternalScalar class categoriesFor: #getFieldNames!constants!private! !
 

@@ -76,38 +76,37 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\IDE\Base\Development System';
-	add: '..\Base\Dolphin';
-	add: '..\Base\Dolphin Base Tests';
-	add: 'Base\Dolphin Basic Geometry';
-	add: 'Presenters\Boolean\Dolphin Boolean Presenter';
-	add: 'Presenters\Choice\Dolphin Choice Presenter';
-	add: 'Presenters\Color\Dolphin Color Presenter';
-	add: 'Views\Common Controls\Dolphin Common Controls';
-	add: 'Presenters\Date Time\Dolphin Date Time Presenters';
-	add: 'Models\List\Dolphin List Models';
-	add: 'Presenters\List\Dolphin List Presenter';
-	add: '..\System\Filer\Dolphin Literal Filer';
-	add: '..\System\Filer\Dolphin Literal Filer Tests';
-	add: 'Views\MoenTree\Dolphin MoenTree View';
-	add: 'Deprecated\Dolphin MVP (Deprecated)';
-	add: 'Base\Dolphin MVP Base';
-	add: 'Presenters\Number\Dolphin Number Presenter';
-	add: 'Presenters\Radio\Dolphin Radio Buttons';
-	add: 'Presenters\Text\Dolphin Rich Text Presenter';
-	add: 'Views\Scintilla\Dolphin Scintilla View';
-	add: 'Views\Scrollbars\Dolphin Scrollbars';
-	add: 'Views\Slider\Dolphin Slider Control';
-	add: 'Views\Styled Views\Dolphin Styled Views';
-	add: 'Views\SysLink\Dolphin SysLink Control';
-	add: 'Presenters\Text\Dolphin Text Presenter';
-	add: 'Models\Tree\Dolphin Tree Models';
-	add: 'Presenters\Tree\Dolphin Tree Presenter';
-	add: 'Type Converters\Dolphin Type Converters';
-	add: 'Models\Value\Dolphin Value Models';
-	add: '..\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\IDE\Base\Development System'
+	'..\Base\Dolphin'
+	'..\Base\Dolphin Base Tests'
+	'Base\Dolphin Basic Geometry'
+	'Presenters\Boolean\Dolphin Boolean Presenter'
+	'Presenters\Choice\Dolphin Choice Presenter'
+	'Presenters\Color\Dolphin Color Presenter'
+	'Views\Common Controls\Dolphin Common Controls'
+	'Presenters\Date Time\Dolphin Date Time Presenters'
+	'Models\List\Dolphin List Models'
+	'Presenters\List\Dolphin List Presenter'
+	'..\System\Filer\Dolphin Literal Filer'
+	'..\System\Filer\Dolphin Literal Filer Tests'
+	'Views\MoenTree\Dolphin MoenTree View'
+	'Deprecated\Dolphin MVP (Deprecated)'
+	'Base\Dolphin MVP Base'
+	'Presenters\Number\Dolphin Number Presenter'
+	'Presenters\Radio\Dolphin Radio Buttons'
+	'Presenters\Text\Dolphin Rich Text Presenter'
+	'Views\Scintilla\Dolphin Scintilla View'
+	'Views\Scrollbars\Dolphin Scrollbars'
+	'Views\Slider\Dolphin Slider Control'
+	'Views\Styled Views\Dolphin Styled Views'
+	'Views\SysLink\Dolphin SysLink Control'
+	'Presenters\Text\Dolphin Text Presenter'
+	'Models\Tree\Dolphin Tree Models'
+	'Presenters\Tree\Dolphin Tree Presenter'
+	'Type Converters\Dolphin Type Converters'
+	'Models\Value\Dolphin Value Models'
+	'..\System\Compiler\Smalltalk Parser').
 
 package!
 

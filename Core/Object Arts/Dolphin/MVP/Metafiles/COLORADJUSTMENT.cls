@@ -34,124 +34,124 @@ struct tagCOLORADJUSTMENT {
 !COLORADJUSTMENT methodsFor!
 
 caBlueGamma
-	"Answer the receiver's caBlueGamma field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caBlueGamma' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caBlueGamma)!
 
-caBlueGamma: anObject 
-	"Set the receiver's caBlueGamma field to the value of anObject."
+caBlueGamma: anInteger
+	"Set the receiver's 'caBlueGamma' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caBlueGamma) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caBlueGamma) put: anInteger!
 
 caBrightness
-	"Answer the receiver's caBrightness field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caBrightness' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #caBrightness)!
 
-caBrightness: anObject 
-	"Set the receiver's caBrightness field to the value of anObject."
+caBrightness: anInteger
+	"Set the receiver's 'caBrightness' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #caBrightness) put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #caBrightness) put: anInteger!
 
 caColorfulness
-	"Answer the receiver's caColorfulness field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caColorfulness' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #caColorfulness)!
 
-caColorfulness: anObject 
-	"Set the receiver's caColorfulness field to the value of anObject."
+caColorfulness: anInteger
+	"Set the receiver's 'caColorfulness' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #caColorfulness) put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #caColorfulness) put: anInteger!
 
 caContrast
-	"Answer the receiver's caContrast field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caContrast' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #caContrast)!
 
-caContrast: anObject 
-	"Set the receiver's caContrast field to the value of anObject."
+caContrast: anInteger
+	"Set the receiver's 'caContrast' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #caContrast) put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #caContrast) put: anInteger!
 
 caFlags
-	"Answer the receiver's caFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caFlags' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caFlags)!
 
-caFlags: anObject 
-	"Set the receiver's caFlags field to the value of anObject."
+caFlags: anInteger
+	"Set the receiver's 'caFlags' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caFlags) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caFlags) put: anInteger!
 
 caGreenGamma
-	"Answer the receiver's caGreenGamma field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caGreenGamma' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caGreenGamma)!
 
-caGreenGamma: anObject 
-	"Set the receiver's caGreenGamma field to the value of anObject."
+caGreenGamma: anInteger
+	"Set the receiver's 'caGreenGamma' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caGreenGamma) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caGreenGamma) put: anInteger!
 
 caIlluminantIndex
-	"Answer the receiver's caIlluminantIndex field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caIlluminantIndex' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caIlluminantIndex)!
 
-caIlluminantIndex: anObject 
-	"Set the receiver's caIlluminantIndex field to the value of anObject."
+caIlluminantIndex: anInteger
+	"Set the receiver's 'caIlluminantIndex' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caIlluminantIndex) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caIlluminantIndex) put: anInteger!
 
 caRedGamma
-	"Answer the receiver's caRedGamma field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caRedGamma' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caRedGamma)!
 
-caRedGamma: anObject 
-	"Set the receiver's caRedGamma field to the value of anObject."
+caRedGamma: anInteger
+	"Set the receiver's 'caRedGamma' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caRedGamma) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caRedGamma) put: anInteger!
 
 caRedGreenTint
-	"Answer the receiver's caRedGreenTint field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caRedGreenTint' field."
 
 	^bytes swordAtOffset: ##(self offsetOf: #caRedGreenTint)!
 
-caRedGreenTint: anObject 
-	"Set the receiver's caRedGreenTint field to the value of anObject."
+caRedGreenTint: anInteger
+	"Set the receiver's 'caRedGreenTint' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #caRedGreenTint) put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #caRedGreenTint) put: anInteger!
 
 caReferenceBlack
-	"Answer the receiver's caReferenceBlack field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caReferenceBlack' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caReferenceBlack)!
 
-caReferenceBlack: anObject 
-	"Set the receiver's caReferenceBlack field to the value of anObject."
+caReferenceBlack: anInteger
+	"Set the receiver's 'caReferenceBlack' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caReferenceBlack) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caReferenceBlack) put: anInteger!
 
 caReferenceWhite
-	"Answer the receiver's caReferenceWhite field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caReferenceWhite' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #caReferenceWhite)!
 
-caReferenceWhite: anObject 
-	"Set the receiver's caReferenceWhite field to the value of anObject."
+caReferenceWhite: anInteger
+	"Set the receiver's 'caReferenceWhite' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #caReferenceWhite) put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #caReferenceWhite) put: anInteger!
 
 caSize
-	"Answer the receiver's caSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'caSize' field."
 
 	^bytes wordAtOffset: 0!
 
-caSize: anObject 
-	"Set the receiver's caSize field to the value of anObject."
+caSize: anInteger
+	"Set the receiver's 'caSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject! !
+	bytes wordAtOffset: 0 put: anInteger! !
 !COLORADJUSTMENT categoriesFor: #caBlueGamma!**compiled accessors**!public! !
 !COLORADJUSTMENT categoriesFor: #caBlueGamma:!**compiled accessors**!public! !
 !COLORADJUSTMENT categoriesFor: #caBrightness!**compiled accessors**!public! !
@@ -214,6 +214,10 @@ defineFields
 		defineField: #caBrightness type: SWORDField new offset: 18;
 		defineField: #caColorfulness type: SWORDField new offset: 20;
 		defineField: #caRedGreenTint type: SWORDField new offset: 22.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
 !COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!COLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

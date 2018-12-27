@@ -214,10 +214,14 @@ defineFields
 		defineField: #tmPitchAndFamily type: BYTEField readOnly;
 		defineField: #tmCharSet type: BYTEField readOnly!
 
+getFieldNames
+	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet)!
+
 packing
 	"Uses non-standard packing"
 
 	^4! !
 !TEXTMETRICW class categoriesFor: #defineFields!initializing!public! !
+!TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !TEXTMETRICW class categoriesFor: #packing!constants!public! !
 

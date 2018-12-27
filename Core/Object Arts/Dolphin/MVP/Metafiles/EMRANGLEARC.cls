@@ -27,44 +27,44 @@ struct tagEMRANGLEARC {
 !EMRANGLEARC methodsFor!
 
 eStartAngle
-	"Answer the receiver's eStartAngle field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eStartAngle' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eStartAngle)!
 
-eStartAngle: anObject 
-	"Set the receiver's eStartAngle field to the value of anObject."
+eStartAngle: aFloat
+	"Set the receiver's 'eStartAngle' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eStartAngle) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eStartAngle) put: aFloat!
 
 eSweepAngle
-	"Answer the receiver's eSweepAngle field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eSweepAngle' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eSweepAngle)!
 
-eSweepAngle: anObject 
-	"Set the receiver's eSweepAngle field to the value of anObject."
+eSweepAngle: aFloat
+	"Set the receiver's 'eSweepAngle' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eSweepAngle) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eSweepAngle) put: aFloat!
 
 nRadius
-	"Answer the receiver's nRadius field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nRadius' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nRadius)!
 
-nRadius: anObject 
-	"Set the receiver's nRadius field to the value of anObject."
+nRadius: anInteger
+	"Set the receiver's 'nRadius' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nRadius) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nRadius) put: anInteger!
 
 ptlCenter
-	"Answer the receiver's ptlCenter field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptlCenter' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlCenter)!
 
-ptlCenter: anObject 
-	"Set the receiver's ptlCenter field to the value of anObject."
+ptlCenter: aPOINTL
+	"Set the receiver's 'ptlCenter' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #ptlCenter) + 1)
 		to: ##((self offsetOf: #ptlCenter) + POINTL basicByteSize)
@@ -103,10 +103,14 @@ defineFields
 		defineField: #eSweepAngle type: FLOATField new offset: 24.
 	self byteSize: 28!
 
+getFieldNames
+	^#(#iType #nSize #ptlCenter #nRadius #eStartAngle #eSweepAngle)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ANGLEARC! !
 !EMRANGLEARC class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRANGLEARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRANGLEARC class categoriesFor: #iTypes!constants!public! !
 

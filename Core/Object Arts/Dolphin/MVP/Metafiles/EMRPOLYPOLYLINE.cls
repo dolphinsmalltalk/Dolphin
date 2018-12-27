@@ -28,20 +28,21 @@ struct tagEMRPOLYPOLYLINE {
 !EMRPOLYPOLYLINE methodsFor!
 
 aPolyCounts
-	"Answer the receiver's aPolyCounts field as a Smalltalk object."
+	"Answer the <DWORDArray> value of the receiver's 'aPolyCounts' field."
 
 	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #aPolyCounts) length: self nPolys!
 
-aPolyCounts: anObject 
-	"Set the receiver's aPolyCounts field to the value of anObject."
+aPolyCounts: aDWORDArray
+	"Set the receiver's 'aPolyCounts' field to the value of the argument, aDWORDArray"
 
 	| size |
-	size := anObject byteSize min: self nPolys * ##(DWORDArray elementSize).
-	anObject 
+	size := aDWORDArray byteSize.
+	aDWORDArray
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #aPolyCounts) + 1)
 		to: ##(self offsetOf: #aPolyCounts) + size
-		startingAt: 1!
+		startingAt: 1.
+	self nPolys: aDWORDArray size!
 
 aptl
 	"Answer the receiver's aptl field as a Smalltalk object."
@@ -71,34 +72,34 @@ aptlOffset
 	^##(self offsetOf: #aPolyCounts) + (4 * self nPolys)!
 
 cptl
-	"Answer the receiver's cptl field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cptl' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cptl)!
 
-cptl: anObject 
-	"Set the receiver's cptl field to the value of anObject."
+cptl: anInteger
+	"Set the receiver's 'cptl' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cptl) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cptl) put: anInteger!
 
 nPolys
-	"Answer the receiver's nPolys field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPolys' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nPolys)!
 
-nPolys: anObject 
-	"Set the receiver's nPolys field to the value of anObject."
+nPolys: anInteger
+	"Set the receiver's 'nPolys' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPolys) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nPolys) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
@@ -150,10 +151,14 @@ defineFields
 		defineField: #aptl type: (StructureArrayField type: POINTL lengthField: #cptl).
 	self byteSize: 40!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #nPolys #cptl #aPolyCounts #aptl)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYPOLYLINE with: EMR_POLYPOLYGON! !
 !EMRPOLYPOLYLINE class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYPOLYLINE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYPOLYLINE class categoriesFor: #iTypes!constants!public! !
 

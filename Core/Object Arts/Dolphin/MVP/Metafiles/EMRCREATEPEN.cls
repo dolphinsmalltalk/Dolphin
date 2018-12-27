@@ -25,24 +25,24 @@ struct tagEMRCREATEPEN {
 !EMRCREATEPEN methodsFor!
 
 ihPen
-	"Answer the receiver's ihPen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihPen' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihPen)!
 
-ihPen: anObject 
-	"Set the receiver's ihPen field to the value of anObject."
+ihPen: anInteger
+	"Set the receiver's 'ihPen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPen) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihPen) put: anInteger!
 
 lopn
-	"Answer the receiver's lopn field as a Smalltalk object."
+	"Answer the <LOGPEN> value of the receiver's 'lopn' field."
 
 	^LOGPEN fromAddress: bytes yourAddress + ##(self offsetOf: #lopn)!
 
-lopn: anObject 
-	"Set the receiver's lopn field to the value of anObject."
+lopn: aLOGPEN
+	"Set the receiver's 'lopn' field to the value of the argument, aLOGPEN"
 
-	anObject 
+	aLOGPEN
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #lopn) + 1)
 		to: ##((self offsetOf: #lopn) + LOGPEN basicByteSize)
@@ -73,10 +73,14 @@ defineFields
 		defineField: #lopn type: (StructureField type: LOGPEN) offset: 12.
 	self byteSize: 28!
 
+getFieldNames
+	^#(#iType #nSize #ihPen #lopn)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPEN! !
 !EMRCREATEPEN class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATEPEN class categoriesFor: #iTypes!constants!public! !
 

@@ -13,24 +13,24 @@ A SAFEARRAYBOUND describes one dimension of a SAFEARRAY, or C array when used to
 !SAFEARRAYBOUND methodsFor!
 
 cElements
-	"Answer the receiver's cElements field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cElements' field."
 
 	^bytes dwordAtOffset: 0!
 
-cElements: anObject 
-	"Set the receiver's cElements field to the value of anObject."
+cElements: anInteger
+	"Set the receiver's 'cElements' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 lLbound
-	"Answer the receiver's lLbound field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lLbound' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #lLbound)!
 
-lLbound: anObject 
-	"Set the receiver's lLbound field to the value of anObject."
+lLbound: anInteger
+	"Set the receiver's 'lLbound' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lLbound) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #lLbound) put: anInteger! !
 !SAFEARRAYBOUND categoriesFor: #cElements!**compiled accessors**!public! !
 !SAFEARRAYBOUND categoriesFor: #cElements:!**compiled accessors**!public! !
 !SAFEARRAYBOUND categoriesFor: #lLbound!**compiled accessors**!public! !
@@ -51,6 +51,10 @@ defineFields
 
 	self
 		defineField: #cElements type: DWORDField new;
-		defineField: #lLbound type: SDWORDField new! !
+		defineField: #lLbound type: SDWORDField new!
+
+getFieldNames
+	^#(#cElements #lLbound)! !
 !SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SAFEARRAYBOUND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

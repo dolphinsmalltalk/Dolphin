@@ -60,9 +60,6 @@ defineFields
 		defineField: #x type: SDWORDField new;
 		defineField: #y type: SDWORDField new!
 
-getFieldList
-	^#(#x #y)!
-
 uninitialize
 	"Private - Unitialize the receiver as it is about to be removed from the system.
 	Make sure our alias disappears with us."
@@ -82,7 +79,6 @@ x: x y: y
 				yourself)
 ! !
 !POINTL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
-!POINTL class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
 !POINTL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !POINTL class categoriesFor: #x:y:!instance creation!public! !
 

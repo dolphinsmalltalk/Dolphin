@@ -25,34 +25,34 @@ struct tagCIEXYZ {
 !CIEXYZ methodsFor!
 
 ciexyzX
-	"Answer the receiver's ciexyzX field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ciexyzX' field."
 
 	^bytes sdwordAtOffset: 0!
 
-ciexyzX: anObject 
-	"Set the receiver's ciexyzX field to the value of anObject."
+ciexyzX: anInteger
+	"Set the receiver's 'ciexyzX' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 ciexyzY
-	"Answer the receiver's ciexyzY field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ciexyzY' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #ciexyzY)!
 
-ciexyzY: anObject 
-	"Set the receiver's ciexyzY field to the value of anObject."
+ciexyzY: anInteger
+	"Set the receiver's 'ciexyzY' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ciexyzY) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #ciexyzY) put: anInteger!
 
 ciexyzZ
-	"Answer the receiver's ciexyzZ field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ciexyzZ' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #ciexyzZ)!
 
-ciexyzZ: anObject 
-	"Set the receiver's ciexyzZ field to the value of anObject."
+ciexyzZ: anInteger
+	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ciexyzZ) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #ciexyzZ) put: anInteger! !
 !CIEXYZ categoriesFor: #ciexyzX!**compiled accessors**!public! !
 !CIEXYZ categoriesFor: #ciexyzX:!**compiled accessors**!public! !
 !CIEXYZ categoriesFor: #ciexyzY!**compiled accessors**!public! !
@@ -79,6 +79,10 @@ defineFields
 		defineField: #ciexyzX type: SDWORDField new offset: 0;
 		defineField: #ciexyzY type: SDWORDField new offset: 4;
 		defineField: #ciexyzZ type: SDWORDField new offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
 !CIEXYZ class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!CIEXYZ class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

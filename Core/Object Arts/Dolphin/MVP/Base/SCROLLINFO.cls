@@ -10,20 +10,20 @@ SCROLLINFO comment: ''!
 !SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
 !SCROLLINFO methodsFor!
 
-dwSize: anObject 
-	"Set the receiver's dwSize field to the value of anObject."
+dwSize: anInteger
+	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 fMask
-	"Answer the receiver's fMask field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'fMask' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #fMask)!
 
-fMask: anObject 
-	"Set the receiver's fMask field to the value of anObject."
+fMask: anInteger
+	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anInteger!
 
 maskIn: anInteger
 	"OR in to contents' mask member the bit flags represented by anInteger.
@@ -32,47 +32,47 @@ maskIn: anInteger
 	self fMask: (self fMask bitOr: anInteger)!
 
 nMax
-	"Answer the receiver's nMax field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nMax' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #nMax)!
 
-nMax: anObject 
-	"Set the receiver's nMax field to the value of anObject."
+nMax: anInteger
+	"Set the receiver's 'nMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #nMax) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #nMax) put: anInteger!
 
 nMin
-	"Answer the receiver's nMin field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nMin' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #nMin)!
 
-nMin: anObject 
-	"Set the receiver's nMin field to the value of anObject."
+nMin: anInteger
+	"Set the receiver's 'nMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #nMin) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #nMin) put: anInteger!
 
 nPage
-	"Answer the receiver's nPage field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPage' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nPage)!
 
-nPage: anObject 
-	"Set the receiver's nPage field to the value of anObject."
+nPage: anInteger
+	"Set the receiver's 'nPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPage) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nPage) put: anInteger!
 
 nPos
-	"Answer the receiver's nPos field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPos' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #nPos)!
 
-nPos: anObject 
-	"Set the receiver's nPos field to the value of anObject."
+nPos: anInteger
+	"Set the receiver's 'nPos' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #nPos) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #nPos) put: anInteger!
 
 nTrackPos
-	"Answer the receiver's nTrackPos field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nTrackPos' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #nTrackPos)!
 
@@ -157,6 +157,10 @@ defineFields
 		defineField: #nMax type: SDWORDField new;
 		defineField: #nPage type: DWORDField new;
 		defineField: #nPos type: SDWORDField new;
-		defineField: #nTrackPos type: SDWORDField readOnly "cannot be set"! !
+		defineField: #nTrackPos type: SDWORDField readOnly "cannot be set"!
+
+getFieldNames
+	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
 !SCROLLINFO class categoriesFor: #defineFields!initializing!public! !
+!SCROLLINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

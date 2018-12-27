@@ -27,36 +27,36 @@ struct tagEMRSETICMPROFILE {
 !EMRSETICMPROFILE methodsFor!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbData' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
 
-cbData: anObject 
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anInteger!
 
 cbName
-	"Answer the receiver's cbName field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbName' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbName)!
 
-cbName: anObject 
-	"Set the receiver's cbName field to the value of anObject."
+cbName: anInteger
+	"Set the receiver's 'cbName' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbName) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbName) put: anInteger!
 
 Data
-	"Answer the receiver's Data field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
 	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self dataLength!
 
-Data: anObject 
-	"Set the receiver's Data field to the value of anObject."
+Data: anExternalArray
+	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self dataLength * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Data) + 1)
 		to: ##(self offsetOf: #Data) + size
@@ -66,14 +66,14 @@ dataLength
 	^self cbName + self cbData!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger! !
 !EMRSETICMPROFILE categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRSETICMPROFILE categoriesFor: #cbData:!**compiled accessors**!public! !
 !EMRSETICMPROFILE categoriesFor: #cbName!**compiled accessors**!public! !
@@ -117,10 +117,14 @@ defineFields
 			offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #dwFlags #cbName #cbData #Data)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETICMPROFILEA with: EMR_SETICMPROFILEW! !
 !EMRSETICMPROFILE class categoriesFor: #defineFields!initializing!public! !
+!EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !
 

@@ -96,7 +96,11 @@ fromString: aString
 	| answer lib |
 	lib := WS2_32Library default.
 	answer := lib getprotobyname: aString.
-	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]! !
+	^answer isNull ifTrue: [SocketError signalWith: lib wsaGetLastError] ifFalse: [answer]!
+
+getFieldNames
+	^#(#p_name #p_proto)! !
 !PROTOENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !PROTOENT class categoriesFor: #fromString:!public! !
+!PROTOENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

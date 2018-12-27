@@ -11,12 +11,12 @@ NMLISTVIEW comment: ''!
 !NMLISTVIEW methodsFor!
 
 iItem
-	"Answer the receiver's iItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iItem)!
 
 iSubItem
-	"Answer the receiver's iSubItem field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
 
@@ -26,27 +26,27 @@ itemHandle
 	^self iItem + 1!
 
 lParam
-	"Answer the receiver's lParam field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lParam' field."
 
 	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
 
 ptAction
-	"Answer the receiver's ptAction field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'ptAction' field."
 
 	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptAction)!
 
 uChanged
-	"Answer the receiver's uChanged field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uChanged' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uChanged)!
 
 uNewState
-	"Answer the receiver's uNewState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uNewState)!
 
 uOldState
-	"Answer the receiver's uOldState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uOldState)! !
 !NMLISTVIEW categoriesFor: #iItem!**compiled accessors**!public! !
@@ -73,6 +73,10 @@ defineFields
 		defineField: #uOldState type: DWORDField readOnly;
 		defineField: #uChanged type: DWORDField readOnly;
 		defineField: #ptAction type: (StructureField type: POINTL) beReadOnly;
-		defineField: #lParam type: UINT_PTRField readOnly! !
+		defineField: #lParam type: UINT_PTRField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
 !NMLISTVIEW class categoriesFor: #defineFields!initializing!public! !
+!NMLISTVIEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

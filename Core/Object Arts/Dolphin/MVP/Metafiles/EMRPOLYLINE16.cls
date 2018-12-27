@@ -26,43 +26,44 @@ struct tagEMRPOLYLINE16 {
 !EMRPOLYLINE16 methodsFor!
 
 apts
-	"Answer the receiver's apts field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'apts' field."
 
-	^StructureArray 
+	^StructureArray
 		fromAddress: bytes yourAddress + ##(self offsetOf: #apts)
 		length: self cpts
 		elementClass: POINTS!
 
-apts: anObject 
-	"Set the receiver's apts field to the value of anObject."
+apts: aStructureArrayOfPOINTS
+	"Set the receiver's 'apts' field to the value of the argument, aStructureArrayOfPOINTS"
 
 	| size |
-	size := anObject byteSize min: self cpts * ##(POINTS basicByteSize).
-	anObject 
+	size := aStructureArrayOfPOINTS byteSize.
+	aStructureArrayOfPOINTS
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #apts) + 1)
 		to: ##(self offsetOf: #apts) + size
-		startingAt: 1!
+		startingAt: 1.
+	self cpts: aStructureArrayOfPOINTS size!
 
 cpts
-	"Answer the receiver's cpts field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cpts' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cpts)!
 
-cpts: anObject 
-	"Set the receiver's cpts field to the value of anObject."
+cpts: anInteger
+	"Set the receiver's 'cpts' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cpts) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cpts) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
@@ -103,6 +104,9 @@ defineFields
 			offset: 28.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #cpts #apts)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -113,5 +117,6 @@ iTypes
 		with: EMR_POLYBEZIERTO16
 		with: EMR_POLYLINETO16! !
 !EMRPOLYLINE16 class categoriesFor: #defineFields!initializing!public! !
+!EMRPOLYLINE16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRPOLYLINE16 class categoriesFor: #iTypes!constants!public! !
 

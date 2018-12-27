@@ -24,14 +24,14 @@ struct tagEMRSETBKCOLOR {
 !EMRSETBKCOLOR methodsFor!
 
 crColor
-	"Answer the receiver's crColor field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'crColor' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #crColor)!
 
-crColor: anObject 
-	"Set the receiver's crColor field to the value of anObject."
+crColor: anInteger
+	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #crColor) put: anInteger! !
 !EMRSETBKCOLOR categoriesFor: #crColor!**compiled accessors**!public! !
 !EMRSETBKCOLOR categoriesFor: #crColor:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #crColor)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETBKCOLOR with: EMR_SETTEXTCOLOR! !
 !EMRSETBKCOLOR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETBKCOLOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETBKCOLOR class categoriesFor: #iTypes!constants!public! !
 

@@ -177,8 +177,8 @@ defineFields
 		defineField: #wReserved type: BYTEField new beFiller offset: 283.
 	self byteSize: 284!
 
-getFieldList
+getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
 !OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!initializing!public! !
-!OSVERSIONINFOEXW class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!OSVERSIONINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

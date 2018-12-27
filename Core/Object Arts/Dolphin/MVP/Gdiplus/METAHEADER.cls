@@ -29,74 +29,74 @@ struct tagMETAHEADER {
 !METAHEADER methodsFor!
 
 mtHeaderSize
-	"Answer the receiver's mtHeaderSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtHeaderSize' field."
 
-	^(bytes wordAtOffset: 2)!
+	^bytes wordAtOffset: ##(self offsetOf: #mtHeaderSize)!
 
-mtHeaderSize: anObject
-	"Set the receiver's mtHeaderSize field to the value of anObject."
+mtHeaderSize: anInteger
+	"Set the receiver's 'mtHeaderSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #mtHeaderSize) put: anInteger!
 
 mtMaxRecord
-	"Answer the receiver's mtMaxRecord field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtMaxRecord' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: ##(self offsetOf: #mtMaxRecord)!
 
-mtMaxRecord: anObject
-	"Set the receiver's mtMaxRecord field to the value of anObject."
+mtMaxRecord: anInteger
+	"Set the receiver's 'mtMaxRecord' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #mtMaxRecord) put: anInteger!
 
 mtNoObjects
-	"Answer the receiver's mtNoObjects field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtNoObjects' field."
 
-	^(bytes wordAtOffset: 12)!
+	^bytes wordAtOffset: ##(self offsetOf: #mtNoObjects)!
 
-mtNoObjects: anObject
-	"Set the receiver's mtNoObjects field to the value of anObject."
+mtNoObjects: anInteger
+	"Set the receiver's 'mtNoObjects' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 12 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #mtNoObjects) put: anInteger!
 
 mtNoParameters
-	"Answer the receiver's mtNoParameters field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtNoParameters' field."
 
-	^(bytes wordAtOffset: 20)!
+	^bytes wordAtOffset: ##(self offsetOf: #mtNoParameters)!
 
-mtNoParameters: anObject
-	"Set the receiver's mtNoParameters field to the value of anObject."
+mtNoParameters: anInteger
+	"Set the receiver's 'mtNoParameters' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 20 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #mtNoParameters) put: anInteger!
 
 mtSize
-	"Answer the receiver's mtSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtSize' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: ##(self offsetOf: #mtSize)!
 
-mtSize: anObject
-	"Set the receiver's mtSize field to the value of anObject."
+mtSize: anInteger
+	"Set the receiver's 'mtSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #mtSize) put: anInteger!
 
 mtType
-	"Answer the receiver's mtType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtType' field."
 
-	^(bytes wordAtOffset: 0)!
+	^bytes wordAtOffset: 0!
 
-mtType: anObject
-	"Set the receiver's mtType field to the value of anObject."
+mtType: anInteger
+	"Set the receiver's 'mtType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject!
+	bytes wordAtOffset: 0 put: anInteger!
 
 mtVersion
-	"Answer the receiver's mtVersion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'mtVersion' field."
 
-	^(bytes wordAtOffset: 4)!
+	^bytes wordAtOffset: ##(self offsetOf: #mtVersion)!
 
-mtVersion: anObject
-	"Set the receiver's mtVersion field to the value of anObject."
+mtVersion: anInteger
+	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #mtVersion) put: anInteger! !
 !METAHEADER categoriesFor: #mtHeaderSize!**compiled accessors**!public! !
 !METAHEADER categoriesFor: #mtHeaderSize:!**compiled accessors**!public! !
 !METAHEADER categoriesFor: #mtMaxRecord!**compiled accessors**!public! !
@@ -138,6 +138,10 @@ defineFields
 		defineField: #mtNoObjects type: WORDField new offset: 12;
 		defineField: #mtMaxRecord type: DWORDField new offset: 16;
 		defineField: #mtNoParameters type: WORDField new offset: 20.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
 !METAHEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!METAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

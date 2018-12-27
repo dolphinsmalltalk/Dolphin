@@ -15,48 +15,49 @@ Public Domain Freeware'!
 !ICONDIR methodsFor!
 
 idCount
-	"Answer the receiver's idCount field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'idCount' field."
 
-	^bytes wordAtOffset: 4!
+	^bytes wordAtOffset: ##(self offsetOf: #idCount)!
 
-idCount: anObject
-	"Set the receiver's idCount field to the value of anObject."
+idCount: anInteger
+	"Set the receiver's 'idCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 4 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #idCount) put: anInteger!
 
 idEntries
-	"Answer the receiver's idEntries field as a Smalltalk object."
+	"Answer the <StructureArray> value of the receiver's 'idEntries' field."
 
-	^StructureArray 
-		fromAddress: bytes yourAddress + 6
+	^StructureArray
+		fromAddress: bytes yourAddress + ##(self offsetOf: #idEntries)
 		length: self idCount
 		elementClass: ICONDIRENTRY!
 
-idEntries: anObject
-	"Set the receiver's idEntries field to the value of anObject."
+idEntries: aStructureArrayOfICONDIRENTRY
+	"Set the receiver's 'idEntries' field to the value of the argument, aStructureArrayOfICONDIRENTRY"
 
 	| size |
-	size := anObject byteSize min: self idCount * 0.
-	anObject 
+	size := aStructureArrayOfICONDIRENTRY byteSize.
+	aStructureArrayOfICONDIRENTRY
 		replaceBytesOf: bytes
-		from: 7
-		to: 6 + size
-		startingAt: 1!
+		from: ##((self offsetOf: #idEntries) + 1)
+		to: ##(self offsetOf: #idEntries) + size
+		startingAt: 1.
+	self idCount: aStructureArrayOfICONDIRENTRY size!
 
 idReserved
-	"Answer the receiver's idReserved field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'idReserved' field."
 
 	^bytes wordAtOffset: 0!
 
 idType
-	"Answer the receiver's idType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'idType' field."
 
-	^bytes wordAtOffset: 2!
+	^bytes wordAtOffset: ##(self offsetOf: #idType)!
 
-idType: anObject
-	"Set the receiver's idType field to the value of anObject."
+idType: anInteger
+	"Set the receiver's 'idType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 2 put: anObject! !
+	bytes wordAtOffset: ##(self offsetOf: #idType) put: anInteger! !
 !ICONDIR categoriesFor: #idCount!**compiled accessors**!public! !
 !ICONDIR categoriesFor: #idCount:!**compiled accessors**!public! !
 !ICONDIR categoriesFor: #idEntries!**compiled accessors**!public! !
@@ -85,9 +86,13 @@ for: anInteger
 
 	^self new: self byteSize + ((anInteger - 1) * ICONDIRENTRY byteSize)!
 
+getFieldNames
+	^#(#idReserved #idType #idCount #idEntries)!
+
 packing
 	^1! !
 !ICONDIR class categoriesFor: #defineFields!initializing!public! !
 !ICONDIR class categoriesFor: #for:!instance creation!public! !
+!ICONDIR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ICONDIR class categoriesFor: #packing!constants!public! !
 

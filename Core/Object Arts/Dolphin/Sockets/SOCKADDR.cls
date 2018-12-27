@@ -123,9 +123,13 @@ fromString: aString
 	family := buf Format.
 	^(family == NET_ADDRESS_IPV6
 		ifTrue: [buf Ipv6Address]
-		ifFalse: [family == NET_ADDRESS_IPV4 ifTrue: [buf Ipv4Address] ifFalse: [buf IpAddress]]) copy! !
+		ifFalse: [family == NET_ADDRESS_IPV4 ifTrue: [buf Ipv4Address] ifFalse: [buf IpAddress]]) copy!
+
+getFieldNames
+	^#(#sa_family)! !
 !SOCKADDR class categoriesFor: #addressFamily!constants!public! !
 !SOCKADDR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
 !SOCKADDR class categoriesFor: #fromString:!public! !
+!SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -56,14 +56,14 @@ lowPartSigned
 	^VMConstants.IsWin64 ifTrue: [bytes sdwordAtOffset: 0] ifFalse: [bytes swordAtOffset: 0]!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
 	^bytes uintPtrAtOffset: 0!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: 0 put: anObject! !
+	bytes uintPtrAtOffset: 0 put: anInteger! !
 !UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #highPart!accessing!public! !

@@ -26,44 +26,48 @@ struct tagGpEncoderParameter {
 !GpEncoderParameter methodsFor!
 
 Guid
-	"Answer the receiver's Guid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'Guid' field."
 
-	^GUID fromAddress: (bytes yourAddress)!
+	^GUID fromAddress: bytes yourAddress!
 
-Guid: anObject
-	"Set the receiver's Guid field to the value of anObject."
+Guid: aGUID
+	"Set the receiver's 'Guid' field to the value of the argument, aGUID"
 
-	anObject replaceBytesOf: bytes from: 1 to: 16 startingAt: 1!
+	aGUID
+		replaceBytesOf: bytes
+		from: 1
+		to: ##(GUID basicByteSize)
+		startingAt: 1!
 
 NumberOfValues
-	"Answer the receiver's NumberOfValues field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'NumberOfValues' field."
 
-	^(bytes dwordAtOffset: 16)!
+	^bytes dwordAtOffset: ##(self offsetOf: #NumberOfValues)!
 
-NumberOfValues: anObject
-	"Set the receiver's NumberOfValues field to the value of anObject."
+NumberOfValues: anInteger
+	"Set the receiver's 'NumberOfValues' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 16 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #NumberOfValues) put: anInteger!
 
 Type
-	"Answer the receiver's Type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^(bytes dwordAtOffset: 20)!
+	^bytes dwordAtOffset: ##(self offsetOf: #Type)!
 
-Type: anObject
-	"Set the receiver's Type field to the value of anObject."
+Type: anInteger
+	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 20 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #Type) put: anInteger!
 
 Value
-	"Answer the receiver's Value field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'Value' field."
 
-	^(bytes dwordAtOffset: 24) asExternalAddress!
+	^(bytes uintPtrAtOffset: ##(self offsetOf: #Value)) asExternalAddress!
 
-Value: anObject
-	"Set the receiver's Value field to the value of anObject."
+Value: anExternalAddress
+	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
-	bytes dwordAtOffset: 24 put: anObject! !
+	bytes uintPtrAtOffset: ##(self offsetOf: #Value) put: anExternalAddress! !
 !GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
 !GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
 !GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !
@@ -93,6 +97,10 @@ defineFields
 		defineField: #NumberOfValues type: DWORDField new offset: 16;
 		defineField: #Type type: DWORDField new offset: 20;
 		defineField: #Value type: LPVOIDField new offset: 24.
-	self byteSize: 28! !
+	self byteSize: 28!
+
+getFieldNames
+	^#(#Guid #NumberOfValues #Type #Value)! !
 !GpEncoderParameter class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpEncoderParameter class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

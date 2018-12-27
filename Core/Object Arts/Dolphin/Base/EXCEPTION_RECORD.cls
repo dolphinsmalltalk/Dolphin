@@ -117,8 +117,8 @@ defineFields
 		defineField: #ExceptionInformation type: (ArrayField type: UINT_PTRArray length: 15) beReadOnly beFiller offset: 20.
 	self byteSize: 80!
 
-getFieldList
+getFieldNames
 	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
 !EXCEPTION_RECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
-!EXCEPTION_RECORD class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!EXCEPTION_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -236,6 +236,9 @@ fromColumn: aListViewColumn in: aListView
 		alignment: aListViewColumn alignment;
 		yourself!
 
+getFieldNames
+	^#(#mask #fmt #cx #pszText #cchTextMax #iSubItem #iImage #iOrder #cxMin #cxDefault #cxIdeal)!
+
 initialize
 	"Private - Initialize the class variables of the receiver."
 
@@ -248,5 +251,6 @@ initialize
 			yourself)! !
 !LVCOLUMNW class categoriesFor: #defineFields!initializing!public! !
 !LVCOLUMNW class categoriesFor: #fromColumn:in:!instance creation!public! !
+!LVCOLUMNW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !LVCOLUMNW class categoriesFor: #initialize!development!initializing!private! !
 

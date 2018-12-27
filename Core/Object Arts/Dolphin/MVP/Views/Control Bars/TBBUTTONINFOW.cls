@@ -117,6 +117,10 @@ defineFields
 		defineField: #cx type: WORDField new;
 		defineField: #lParam type: UINT_PTRField filler;
 		defineField: #pszText type: (PointerField type: Utf16String) beFiller;
-		defineField: #cchText type: SDWORDField filler! !
+		defineField: #cchText type: SDWORDField filler!
+
+getFieldNames
+	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
 !TBBUTTONINFOW class categoriesFor: #defineFields!initializing!public! !
+!TBBUTTONINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

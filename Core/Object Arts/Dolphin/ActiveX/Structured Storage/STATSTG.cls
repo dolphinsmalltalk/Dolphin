@@ -202,7 +202,11 @@ defineFields
 		defineField: #grfLocksSupported type: DWORDField new;
 		defineField: #clsid type: (StructureField type: CLSID) beReadOnly;
 		defineField: #grfStateBits type: DWORDField readOnly;
-		defineField: #dwStgFmt type: DWORDField readOnly! !
+		defineField: #dwStgFmt type: DWORDField readOnly!
+
+getFieldNames
+	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
 !STATSTG class categoriesFor: #clear:!public!realizing/unrealizing! !
 !STATSTG class categoriesFor: #defineFields!initializing!public! !
+!STATSTG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -32,114 +32,114 @@ struct tagLOGCOLORSPACE {
 !LOGCOLORSPACE methodsFor!
 
 lcsCSType
-	"Answer the receiver's lcsCSType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsCSType' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #lcsCSType)!
 
-lcsCSType: anObject 
-	"Set the receiver's lcsCSType field to the value of anObject."
+lcsCSType: anInteger
+	"Set the receiver's 'lcsCSType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lcsCSType) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #lcsCSType) put: anInteger!
 
 lcsEndpoints
-	"Answer the receiver's lcsEndpoints field as a Smalltalk object."
+	"Answer the <CIEXYZTRIPLE> value of the receiver's 'lcsEndpoints' field."
 
 	^CIEXYZTRIPLE fromAddress: bytes yourAddress + ##(self offsetOf: #lcsEndpoints)!
 
-lcsEndpoints: anObject 
-	"Set the receiver's lcsEndpoints field to the value of anObject."
+lcsEndpoints: aCIEXYZTRIPLE
+	"Set the receiver's 'lcsEndpoints' field to the value of the argument, aCIEXYZTRIPLE"
 
-	anObject 
+	aCIEXYZTRIPLE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #lcsEndpoints) + 1)
 		to: ##((self offsetOf: #lcsEndpoints) + CIEXYZTRIPLE basicByteSize)
 		startingAt: 1!
 
 lcsFilename
-	"Answer the receiver's lcsFilename field as a Smalltalk object."
+	"Answer the <ByteArray> value of the receiver's 'lcsFilename' field."
 
 	^ByteArray fromAddress: bytes yourAddress + ##(self offsetOf: #lcsFilename) length: 260!
 
-lcsFilename: anObject 
-	"Set the receiver's lcsFilename field to the value of anObject."
+lcsFilename: aByteArray
+	"Set the receiver's 'lcsFilename' field to the value of the argument, aByteArray"
 
 	| size |
-	size := anObject byteSize min: ##(260 * ByteArray elementSize).
-	anObject 
+	size := aByteArray byteSize min: ##(260 * ByteArray elementSize).
+	aByteArray
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #lcsFilename) + 1)
 		to: ##(self offsetOf: #lcsFilename) + size
 		startingAt: 1!
 
 lcsGammaBlue
-	"Answer the receiver's lcsGammaBlue field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsGammaBlue' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcsGammaBlue)!
 
-lcsGammaBlue: anObject 
-	"Set the receiver's lcsGammaBlue field to the value of anObject."
+lcsGammaBlue: anInteger
+	"Set the receiver's 'lcsGammaBlue' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaBlue) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaBlue) put: anInteger!
 
 lcsGammaGreen
-	"Answer the receiver's lcsGammaGreen field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsGammaGreen' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcsGammaGreen)!
 
-lcsGammaGreen: anObject 
-	"Set the receiver's lcsGammaGreen field to the value of anObject."
+lcsGammaGreen: anInteger
+	"Set the receiver's 'lcsGammaGreen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaGreen) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaGreen) put: anInteger!
 
 lcsGammaRed
-	"Answer the receiver's lcsGammaRed field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsGammaRed' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcsGammaRed)!
 
-lcsGammaRed: anObject 
-	"Set the receiver's lcsGammaRed field to the value of anObject."
+lcsGammaRed: anInteger
+	"Set the receiver's 'lcsGammaRed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaRed) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaRed) put: anInteger!
 
 lcsIntent
-	"Answer the receiver's lcsIntent field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsIntent' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #lcsIntent)!
 
-lcsIntent: anObject 
-	"Set the receiver's lcsIntent field to the value of anObject."
+lcsIntent: anInteger
+	"Set the receiver's 'lcsIntent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lcsIntent) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #lcsIntent) put: anInteger!
 
 lcsSignature
-	"Answer the receiver's lcsSignature field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsSignature' field."
 
 	^bytes dwordAtOffset: 0!
 
-lcsSignature: anObject 
-	"Set the receiver's lcsSignature field to the value of anObject."
+lcsSignature: anInteger
+	"Set the receiver's 'lcsSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 lcsSize
-	"Answer the receiver's lcsSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcsSize)!
 
-lcsSize: anObject 
-	"Set the receiver's lcsSize field to the value of anObject."
+lcsSize: anInteger
+	"Set the receiver's 'lcsSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsSize) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #lcsSize) put: anInteger!
 
 lcsVersion
-	"Answer the receiver's lcsVersion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lcsVersion' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #lcsVersion)!
 
-lcsVersion: anObject 
-	"Set the receiver's lcsVersion field to the value of anObject."
+lcsVersion: anInteger
+	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsVersion) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #lcsVersion) put: anInteger! !
 !LOGCOLORSPACE categoriesFor: #lcsCSType!**compiled accessors**!public! !
 !LOGCOLORSPACE categoriesFor: #lcsCSType:!**compiled accessors**!public! !
 !LOGCOLORSPACE categoriesFor: #lcsEndpoints!**compiled accessors**!public! !
@@ -194,6 +194,10 @@ defineFields
 		defineField: #lcsGammaGreen type: DWORDField new offset: 60;
 		defineField: #lcsGammaBlue type: DWORDField new offset: 64;
 		defineField: #lcsFilename type: (ArrayField type: ByteArray length: 260) offset: 68.
-	self byteSize: 328! !
+	self byteSize: 328!
+
+getFieldNames
+	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
 !LOGCOLORSPACE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LOGCOLORSPACE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

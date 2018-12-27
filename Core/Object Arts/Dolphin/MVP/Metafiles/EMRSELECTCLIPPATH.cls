@@ -24,14 +24,14 @@ struct tagEMRSELECTCLIPPATH {
 !EMRSELECTCLIPPATH methodsFor!
 
 iMode
-	"Answer the receiver's iMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iMode)!
 
-iMode: anObject 
-	"Set the receiver's iMode field to the value of anObject."
+iMode: anInteger
+	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anInteger! !
 !EMRSELECTCLIPPATH categoriesFor: #iMode!**compiled accessors**!public! !
 !EMRSELECTCLIPPATH categoriesFor: #iMode:!**compiled accessors**!public! !
 
@@ -56,6 +56,9 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #iMode)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
@@ -70,5 +73,6 @@ iTypes
 					with: EMR_SETICMMODE
 					with: EMR_SETTEXTALIGN)! !
 !EMRSELECTCLIPPATH class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSELECTCLIPPATH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSELECTCLIPPATH class categoriesFor: #iTypes!constants!public! !
 

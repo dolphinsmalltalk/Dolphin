@@ -29,24 +29,24 @@ displayOn: aStream
 	aStream nextPutAll: self asString!
 
 highPart
-	"Answer the receiver's highPart field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'highPart' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #highPart)!
 
-highPart: anObject 
-	"Set the receiver's highPart field to the value of anObject."
+highPart: anInteger
+	"Set the receiver's 'highPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #highPart) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #highPart) put: anInteger!
 
 lowPart
-	"Answer the receiver's lowPart field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'lowPart' field."
 
 	^bytes dwordAtOffset: 0!
 
-lowPart: anObject 
-	"Set the receiver's lowPart field to the value of anObject."
+lowPart: anInteger
+	"Set the receiver's 'lowPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 printOn: aStream
 	"Append a debug text representation of the receiver to aStream."

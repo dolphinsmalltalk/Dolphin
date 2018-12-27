@@ -28,60 +28,61 @@ struct tagEMRCREATECOLORSPACEW {
 !EMRCREATECOLORSPACEW methodsFor!
 
 cbData
-	"Answer the receiver's cbData field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbData' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
 
-cbData: anObject 
-	"Set the receiver's cbData field to the value of anObject."
+cbData: anInteger
+	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anInteger!
 
 Data
-	"Answer the receiver's Data field as a Smalltalk object."
+	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
 	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self cbData!
 
-Data: anObject 
-	"Set the receiver's Data field to the value of anObject."
+Data: anExternalArray
+	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
 
 	| size |
-	size := anObject byteSize min: self cbData * ##(ExternalArray elementSize).
-	anObject 
+	size := anExternalArray byteSize.
+	anExternalArray
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #Data) + 1)
 		to: ##(self offsetOf: #Data) + size
-		startingAt: 1!
+		startingAt: 1.
+	self cbData: anExternalArray size!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
 
 ihCS
-	"Answer the receiver's ihCS field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #ihCS)!
 
-ihCS: anObject 
-	"Set the receiver's ihCS field to the value of anObject."
+ihCS: anInteger
+	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anInteger!
 
 lcs
-	"Answer the receiver's lcs field as a Smalltalk object."
+	"Answer the <LOGCOLORSPACEW> value of the receiver's 'lcs' field."
 
 	^LOGCOLORSPACEW fromAddress: bytes yourAddress + ##(self offsetOf: #lcs)!
 
-lcs: anObject 
-	"Set the receiver's lcs field to the value of anObject."
+lcs: aLOGCOLORSPACEW
+	"Set the receiver's 'lcs' field to the value of the argument, aLOGCOLORSPACEW"
 
-	anObject 
+	aLOGCOLORSPACEW
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #lcs) + 1)
 		to: ##((self offsetOf: #lcs) + LOGCOLORSPACEW basicByteSize)
@@ -133,10 +134,14 @@ defineFields
 			type: (ArrayField type: ExternalArray lengthField: #cbData)
 			offset: 348!
 
+getFieldNames
+	^#(#iType #nSize #ihCS #lcs #dwFlags #cbData #Data)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACEW! !
 !EMRCREATECOLORSPACEW class categoriesFor: #defineFields!initializing!public! !
+!EMRCREATECOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRCREATECOLORSPACEW class categoriesFor: #iTypes!constants!public! !
 

@@ -122,6 +122,10 @@ defineFields
 		defineField: #hCursor type: DWORDField writeOnly;
 		defineField: #hbrBackground type: DWORDField writeOnly;
 		defineField: #lpszMenuName type: (PointerField type: Utf16String);
-		defineField: #lpszClassName type: (PointerField type: Utf16String)! !
+		defineField: #lpszClassName type: (PointerField type: Utf16String)!
+
+getFieldNames
+	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
 !WNDCLASS class categoriesFor: #defineFields!initializing!public! !
+!WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

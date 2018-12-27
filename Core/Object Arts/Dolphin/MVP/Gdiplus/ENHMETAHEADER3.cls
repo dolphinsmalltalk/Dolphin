@@ -37,154 +37,170 @@ struct tagENHMETAHEADER3 {
 !ENHMETAHEADER3 methodsFor!
 
 dSignature
-	"Answer the receiver's dSignature field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dSignature' field."
 
-	^(bytes dwordAtOffset: 40)!
+	^bytes dwordAtOffset: ##(self offsetOf: #dSignature)!
 
-dSignature: anObject
-	"Set the receiver's dSignature field to the value of anObject."
+dSignature: anInteger
+	"Set the receiver's 'dSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 40 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #dSignature) put: anInteger!
 
 iType
-	"Answer the receiver's iType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^(bytes dwordAtOffset: 0)!
+	^bytes dwordAtOffset: 0!
 
-iType: anObject
-	"Set the receiver's iType field to the value of anObject."
+iType: anInteger
+	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 nBytes
-	"Answer the receiver's nBytes field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nBytes' field."
 
-	^(bytes dwordAtOffset: 48)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nBytes)!
 
-nBytes: anObject
-	"Set the receiver's nBytes field to the value of anObject."
+nBytes: anInteger
+	"Set the receiver's 'nBytes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 48 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nBytes) put: anInteger!
 
 nDescription
-	"Answer the receiver's nDescription field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nDescription' field."
 
-	^(bytes dwordAtOffset: 60)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nDescription)!
 
-nDescription: anObject
-	"Set the receiver's nDescription field to the value of anObject."
+nDescription: anInteger
+	"Set the receiver's 'nDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 60 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nDescription) put: anInteger!
 
 nHandles
-	"Answer the receiver's nHandles field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nHandles' field."
 
-	^(bytes wordAtOffset: 56)!
+	^bytes wordAtOffset: ##(self offsetOf: #nHandles)!
 
-nHandles: anObject
-	"Set the receiver's nHandles field to the value of anObject."
+nHandles: anInteger
+	"Set the receiver's 'nHandles' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 56 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #nHandles) put: anInteger!
 
 nPalEntries
-	"Answer the receiver's nPalEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^(bytes dwordAtOffset: 68)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
 
-nPalEntries: anObject
-	"Set the receiver's nPalEntries field to the value of anObject."
+nPalEntries: anInteger
+	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 68 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anInteger!
 
 nRecords
-	"Answer the receiver's nRecords field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nRecords' field."
 
-	^(bytes dwordAtOffset: 52)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nRecords)!
 
-nRecords: anObject
-	"Set the receiver's nRecords field to the value of anObject."
+nRecords: anInteger
+	"Set the receiver's 'nRecords' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 52 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nRecords) put: anInteger!
 
 nSize
-	"Answer the receiver's nSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nSize)!
 
-nSize: anObject
-	"Set the receiver's nSize field to the value of anObject."
+nSize: anInteger
+	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nSize) put: anInteger!
 
 nVersion
-	"Answer the receiver's nVersion field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nVersion' field."
 
-	^(bytes dwordAtOffset: 44)!
+	^bytes dwordAtOffset: ##(self offsetOf: #nVersion)!
 
-nVersion: anObject
-	"Set the receiver's nVersion field to the value of anObject."
+nVersion: anInteger
+	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 44 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nVersion) put: anInteger!
 
 offDescription
-	"Answer the receiver's offDescription field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offDescription' field."
 
-	^(bytes dwordAtOffset: 64)!
+	^bytes dwordAtOffset: ##(self offsetOf: #offDescription)!
 
-offDescription: anObject
-	"Set the receiver's offDescription field to the value of anObject."
+offDescription: anInteger
+	"Set the receiver's 'offDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 64 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offDescription) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: (bytes yourAddress + 8)!
+	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject replaceBytesOf: bytes from: 9 to: 24 startingAt: 1!
+	aRECT
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #rclBounds) + 1)
+		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		startingAt: 1!
 
 rclFrame
-	"Answer the receiver's rclFrame field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclFrame' field."
 
-	^RECT fromAddress: (bytes yourAddress + 24)!
+	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclFrame)!
 
-rclFrame: anObject
-	"Set the receiver's rclFrame field to the value of anObject."
+rclFrame: aRECT
+	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
 
-	anObject replaceBytesOf: bytes from: 25 to: 40 startingAt: 1!
+	aRECT
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #rclFrame) + 1)
+		to: ##((self offsetOf: #rclFrame) + RECT basicByteSize)
+		startingAt: 1!
 
 sReserved
-	"Answer the receiver's sReserved field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'sReserved' field."
 
-	^(bytes wordAtOffset: 58)!
+	^bytes wordAtOffset: ##(self offsetOf: #sReserved)!
 
-sReserved: anObject
-	"Set the receiver's sReserved field to the value of anObject."
+sReserved: anInteger
+	"Set the receiver's 'sReserved' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 58 put: anObject!
+	bytes wordAtOffset: ##(self offsetOf: #sReserved) put: anInteger!
 
 szlDevice
-	"Answer the receiver's szlDevice field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
 
-	^SIZE fromAddress: (bytes yourAddress + 72)!
+	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlDevice)!
 
-szlDevice: anObject
-	"Set the receiver's szlDevice field to the value of anObject."
+szlDevice: aSIZE
+	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
 
-	anObject replaceBytesOf: bytes from: 73 to: 80 startingAt: 1!
+	aSIZE
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #szlDevice) + 1)
+		to: ##((self offsetOf: #szlDevice) + SIZE basicByteSize)
+		startingAt: 1!
 
 szlMillimeters
-	"Answer the receiver's szlMillimeters field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
 
-	^SIZE fromAddress: (bytes yourAddress + 80)!
+	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlMillimeters)!
 
-szlMillimeters: anObject
-	"Set the receiver's szlMillimeters field to the value of anObject."
+szlMillimeters: aSIZE
+	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
 
-	anObject replaceBytesOf: bytes from: 81 to: 88 startingAt: 1! !
+	aSIZE
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #szlMillimeters) + 1)
+		to: ##((self offsetOf: #szlMillimeters) + SIZE basicByteSize)
+		startingAt: 1! !
 !ENHMETAHEADER3 categoriesFor: #dSignature!**compiled accessors**!public! !
 !ENHMETAHEADER3 categoriesFor: #dSignature:!**compiled accessors**!public! !
 !ENHMETAHEADER3 categoriesFor: #iType!**compiled accessors**!public! !
@@ -258,6 +274,10 @@ defineFields
 		defineField: #nPalEntries type: DWORDField new offset: 68;
 		defineField: #szlDevice type: (StructureField type: SIZE) offset: 72;
 		defineField: #szlMillimeters type: (StructureField type: SIZE) offset: 80.
-	self byteSize: 88! !
+	self byteSize: 88!
+
+getFieldNames
+	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
 !ENHMETAHEADER3 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!ENHMETAHEADER3 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

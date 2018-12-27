@@ -24,14 +24,14 @@ struct tagEMRSETCOLORADJUSTMENT {
 !EMRSETCOLORADJUSTMENT methodsFor!
 
 COLORADJUSTMENT
-	"Answer the receiver's COLORADJUSTMENT field as a Smalltalk object."
+	"Answer the <COLORADJUSTMENT> value of the receiver's 'COLORADJUSTMENT' field."
 
 	^COLORADJUSTMENT fromAddress: bytes yourAddress + ##(self offsetOf: #COLORADJUSTMENT)!
 
-COLORADJUSTMENT: anObject 
-	"Set the receiver's COLORADJUSTMENT field to the value of anObject."
+COLORADJUSTMENT: aCOLORADJUSTMENT
+	"Set the receiver's 'COLORADJUSTMENT' field to the value of the argument, aCOLORADJUSTMENT"
 
-	anObject 
+	aCOLORADJUSTMENT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #COLORADJUSTMENT) + 1)
 		to: ##((self offsetOf: #COLORADJUSTMENT) + COLORADJUSTMENT basicByteSize)
@@ -60,10 +60,14 @@ defineFields
 			offset: 8.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #COLORADJUSTMENT)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORADJUSTMENT! !
 !EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
 

@@ -28,13 +28,13 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Automation\ActiveX Automation';
-	add: '..\..\..\Base\Dolphin';
-	add: '..\..\..\MVP\Base\Dolphin MVP Base';
-	add: '..\..\COM\OLE COM';
-	add: '..\..\Structured Storage\OLE Structured Storage';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Automation\ActiveX Automation'
+	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\COM\OLE COM'
+	'..\..\Structured Storage\OLE Structured Storage').
 
 package!
 

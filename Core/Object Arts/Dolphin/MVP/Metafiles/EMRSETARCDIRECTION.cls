@@ -24,14 +24,14 @@ struct tagEMRSETARCDIRECTION {
 !EMRSETARCDIRECTION methodsFor!
 
 iArcDirection
-	"Answer the receiver's iArcDirection field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iArcDirection' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iArcDirection)!
 
-iArcDirection: anObject 
-	"Set the receiver's iArcDirection field to the value of anObject."
+iArcDirection: anInteger
+	"Set the receiver's 'iArcDirection' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iArcDirection) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #iArcDirection) put: anInteger! !
 !EMRSETARCDIRECTION categoriesFor: #iArcDirection!**compiled accessors**!public! !
 !EMRSETARCDIRECTION categoriesFor: #iArcDirection:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #iArcDirection)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETARCDIRECTION! !
 !EMRSETARCDIRECTION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETARCDIRECTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETARCDIRECTION class categoriesFor: #iTypes!constants!public! !
 

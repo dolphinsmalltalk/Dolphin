@@ -13,14 +13,14 @@ The COAUTHIDENTITY structure represents a user name and password.'!
 !COAUTHIDENTITY methodsFor!
 
 Domain
-	"Answer the receiver's Domain field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'Domain' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Domain))!
 
-Domain: aWORD
-	"Set the receiver's 'Domain' field to the value of the argument, aWORD"
+Domain: anUtf16String
+	"Set the receiver's 'Domain' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Domain) put: aWORD yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Domain) put: anUtf16String yourAddress!
 
 DomainLength
 	"Answer the <Integer> value of the receiver's 'DomainLength' field."
@@ -32,25 +32,25 @@ DomainLength: anInteger
 
 	bytes dwordAtOffset: ##(self offsetOf: #DomainLength) put: anInteger!
 
-flags
-	"Answer the <Integer> value of the receiver's 'flags' field."
+Flags
+	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
 
-flags: anInteger
-	"Set the receiver's 'flags' field to the value of the argument, anInteger"
+Flags: anInteger
+	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anInteger!
 
 Password
-	"Answer the receiver's Password field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'Password' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Password))!
 
-Password: aWORD
-	"Set the receiver's 'Password' field to the value of the argument, aWORD"
+Password: anUtf16String
+	"Set the receiver's 'Password' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Password) put: aWORD yourAddress!
+	bytes uintPtrAtOffset: ##(self offsetOf: #Password) put: anUtf16String yourAddress!
 
 PasswordLength
 	"Answer the <Integer> value of the receiver's 'PasswordLength' field."
@@ -63,14 +63,14 @@ PasswordLength: anInteger
 	bytes dwordAtOffset: ##(self offsetOf: #PasswordLength) put: anInteger!
 
 User
-	"Answer the receiver's User field as a Smalltalk object."
+	"Answer the <Utf16String> value of the receiver's 'User' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: 0)!
 
-User: aWORD
-	"Set the receiver's 'User' field to the value of the argument, aWORD"
+User: anUtf16String
+	"Set the receiver's 'User' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 0 put: aWORD yourAddress!
+	bytes uintPtrAtOffset: 0 put: anUtf16String yourAddress!
 
 UserLength
 	"Answer the <Integer> value of the receiver's 'UserLength' field."
@@ -85,8 +85,8 @@ UserLength: anInteger
 !COAUTHIDENTITY categoriesFor: #Domain:!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #DomainLength!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #DomainLength:!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #flags!**compiled accessors**!public! !
-!COAUTHIDENTITY categoriesFor: #flags:!**compiled accessors**!public! !
+!COAUTHIDENTITY categoriesFor: #Flags!**compiled accessors**!public! !
+!COAUTHIDENTITY categoriesFor: #Flags:!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #Password!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #Password:!**compiled accessors**!public! !
 !COAUTHIDENTITY categoriesFor: #PasswordLength!**compiled accessors**!public! !
@@ -121,6 +121,10 @@ defineFields
 		defineField: #DomainLength type: DWORDField new;
 		defineField: #Password type: (PointerField type: Utf16String);
 		defineField: #PasswordLength type: DWORDField new;
-		defineField: #Flags type: DWORDField new! !
+		defineField: #Flags type: DWORDField new!
+
+getFieldNames
+	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
 !COAUTHIDENTITY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!COAUTHIDENTITY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

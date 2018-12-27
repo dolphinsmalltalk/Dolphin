@@ -37,148 +37,148 @@ struct tagEMRSETDIBITSTODEVICE {
 !EMRSETDIBITSTODEVICE methodsFor!
 
 cbBitsSrc
-	"Answer the receiver's cbBitsSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc)!
 
-cbBitsSrc: anObject 
-	"Set the receiver's cbBitsSrc field to the value of anObject."
+cbBitsSrc: anInteger
+	"Set the receiver's 'cbBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anInteger!
 
 cbBmiSrc
-	"Answer the receiver's cbBmiSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cbBmiSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc)!
 
-cbBmiSrc: anObject 
-	"Set the receiver's cbBmiSrc field to the value of anObject."
+cbBmiSrc: anInteger
+	"Set the receiver's 'cbBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anInteger!
 
 cScans
-	"Answer the receiver's cScans field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cScans' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #cScans)!
 
-cScans: anObject 
-	"Set the receiver's cScans field to the value of anObject."
+cScans: anInteger
+	"Set the receiver's 'cScans' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cScans) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #cScans) put: anInteger!
 
 cxSrc
-	"Answer the receiver's cxSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cxSrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cxSrc)!
 
-cxSrc: anObject 
-	"Set the receiver's cxSrc field to the value of anObject."
+cxSrc: anInteger
+	"Set the receiver's 'cxSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anInteger!
 
 cySrc
-	"Answer the receiver's cySrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cySrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cySrc)!
 
-cySrc: anObject 
-	"Set the receiver's cySrc field to the value of anObject."
+cySrc: anInteger
+	"Set the receiver's 'cySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anInteger!
 
 iStartScan
-	"Answer the receiver's iStartScan field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iStartScan' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iStartScan)!
 
-iStartScan: anObject 
-	"Set the receiver's iStartScan field to the value of anObject."
+iStartScan: anInteger
+	"Set the receiver's 'iStartScan' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iStartScan) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iStartScan) put: anInteger!
 
 iUsageSrc
-	"Answer the receiver's iUsageSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iUsageSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc)!
 
-iUsageSrc: anObject 
-	"Set the receiver's iUsageSrc field to the value of anObject."
+iUsageSrc: anInteger
+	"Set the receiver's 'iUsageSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anInteger!
 
 offBitsSrc
-	"Answer the receiver's offBitsSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBitsSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc)!
 
-offBitsSrc: anObject 
-	"Set the receiver's offBitsSrc field to the value of anObject."
+offBitsSrc: anInteger
+	"Set the receiver's 'offBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anInteger!
 
 offBmiSrc
-	"Answer the receiver's offBmiSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offBmiSrc' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc)!
 
-offBmiSrc: anObject 
-	"Set the receiver's offBmiSrc field to the value of anObject."
+offBmiSrc: anInteger
+	"Set the receiver's 'offBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
 		startingAt: 1!
 
 xDest
-	"Answer the receiver's xDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xDest' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #xDest)!
 
-xDest: anObject 
-	"Set the receiver's xDest field to the value of anObject."
+xDest: anInteger
+	"Set the receiver's 'xDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xDest) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #xDest) put: anInteger!
 
 xSrc
-	"Answer the receiver's xSrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xSrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #xSrc)!
 
-xSrc: anObject 
-	"Set the receiver's xSrc field to the value of anObject."
+xSrc: anInteger
+	"Set the receiver's 'xSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anInteger!
 
 yDest
-	"Answer the receiver's yDest field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yDest' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #yDest)!
 
-yDest: anObject 
-	"Set the receiver's yDest field to the value of anObject."
+yDest: anInteger
+	"Set the receiver's 'yDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yDest) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #yDest) put: anInteger!
 
 ySrc
-	"Answer the receiver's ySrc field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'ySrc' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #ySrc)!
 
-ySrc: anObject 
-	"Set the receiver's ySrc field to the value of anObject."
+ySrc: anInteger
+	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anInteger! !
 !EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
 !EMRSETDIBITSTODEVICE categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
 !EMRSETDIBITSTODEVICE categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
@@ -281,10 +281,14 @@ defineFields
 			offset: 72.
 	self byteSize: 76!
 
+getFieldNames
+	^#(#iType #nSize #rclBounds #xDest #yDest #xSrc #ySrc #cxSrc #cySrc #offBmiSrc #cbBmiSrc #offBitsSrc #cbBitsSrc #iUsageSrc #iStartScan #cScans)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETDIBITSTODEVICE! !
 !EMRSETDIBITSTODEVICE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETDIBITSTODEVICE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETDIBITSTODEVICE class categoriesFor: #iTypes!constants!public! !
 

@@ -27,44 +27,44 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 !EMRSCALEVIEWPORTEXTEX methodsFor!
 
 xDenom
-	"Answer the receiver's xDenom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xDenom' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #xDenom)!
 
-xDenom: anObject 
-	"Set the receiver's xDenom field to the value of anObject."
+xDenom: anInteger
+	"Set the receiver's 'xDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xDenom) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #xDenom) put: anInteger!
 
 xNum
-	"Answer the receiver's xNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'xNum' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #xNum)!
 
-xNum: anObject 
-	"Set the receiver's xNum field to the value of anObject."
+xNum: anInteger
+	"Set the receiver's 'xNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xNum) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #xNum) put: anInteger!
 
 yDenom
-	"Answer the receiver's yDenom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yDenom' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #yDenom)!
 
-yDenom: anObject 
-	"Set the receiver's yDenom field to the value of anObject."
+yDenom: anInteger
+	"Set the receiver's 'yDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yDenom) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #yDenom) put: anInteger!
 
 yNum
-	"Answer the receiver's yNum field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'yNum' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #yNum)!
 
-yNum: anObject 
-	"Set the receiver's yNum field to the value of anObject."
+yNum: anInteger
+	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yNum) put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #yNum) put: anInteger! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !
@@ -107,10 +107,14 @@ defineFields
 			offset: 20.
 	self byteSize: 24!
 
+getFieldNames
+	^#(#iType #nSize #xNum #xDenom #yNum #yDenom)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SCALEVIEWPORTEXTEX with: EMR_SCALEWINDOWEXTEX! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSCALEVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSCALEVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
 

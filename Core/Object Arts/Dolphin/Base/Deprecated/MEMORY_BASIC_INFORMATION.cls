@@ -11,12 +11,12 @@ MEMORY_BASIC_INFORMATION comment: ''!
 !MEMORY_BASIC_INFORMATION methodsFor!
 
 AllocationBase
-	"Answer the receiver's AllocationBase field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'AllocationBase' field."
 
 	^(bytes uintPtrAtOffset: ##(self offsetOf: #AllocationBase)) asExternalAddress!
 
 BaseAddress
-	"Answer the receiver's BaseAddress field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'BaseAddress' field."
 
 	^(bytes uintPtrAtOffset: 0) asExternalAddress!
 
@@ -66,7 +66,11 @@ forAddress: anAddress
 	| answer |
 	answer := self new.
 	KernelLibrary default virtualQuery: anAddress lpBuffer: answer dwLength: answer size.
-	^answer! !
+	^answer!
+
+getFieldNames
+	^#(#BaseAddress #AllocationBase #AllocationProtect #RegionSize #State #Protect #Type)! !
 !MEMORY_BASIC_INFORMATION class categoriesFor: #defineFields!initializing!public! !
 !MEMORY_BASIC_INFORMATION class categoriesFor: #forAddress:!instance creation!public! !
+!MEMORY_BASIC_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

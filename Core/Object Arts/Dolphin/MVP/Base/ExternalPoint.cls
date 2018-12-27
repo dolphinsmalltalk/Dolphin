@@ -71,10 +71,10 @@ y: anObject
 !ExternalPoint categoriesFor: #printOn:!printing!public! !
 !ExternalPoint categoriesFor: #value!accessing!public! !
 !ExternalPoint categoriesFor: #value:!accessing!public! !
-!ExternalPoint categoriesFor: #x!**compiled accessors**!public! !
-!ExternalPoint categoriesFor: #x:!**compiled accessors**!public! !
-!ExternalPoint categoriesFor: #y!**compiled accessors**!public! !
-!ExternalPoint categoriesFor: #y:!**compiled accessors**!public! !
+!ExternalPoint categoriesFor: #x!accessing!public! !
+!ExternalPoint categoriesFor: #x:!accessing!public! !
+!ExternalPoint categoriesFor: #y!accessing!public! !
+!ExternalPoint categoriesFor: #y:!accessing!public! !
 
 !ExternalPoint class methodsFor!
 
@@ -82,6 +82,9 @@ fromPoint: aPoint
 	"Answer a new instance of the receiver representing aPoint."
 	
 	^self x: aPoint x y: aPoint y!
+
+getFieldNames
+	^#(#x #y)!
 
 icon
 	"Answer a suitable iconic representation for the receiver."
@@ -97,6 +100,7 @@ x: x y: y
 		y: y;
 		yourself! !
 !ExternalPoint class categoriesFor: #fromPoint:!instance creation!public! !
+!ExternalPoint class categoriesFor: #getFieldNames!constants!private! !
 !ExternalPoint class categoriesFor: #icon!constants!development!public! !
 !ExternalPoint class categoriesFor: #x:y:!instance creation!public! !
 

@@ -6,6 +6,7 @@ OLEStructure subclass: #AbstractELEMDESC
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AbstractELEMDESC guid: (GUID fromString: '{24cbeadb-8708-4bb1-a28d-207ebd2a8c8e}')!
+AbstractELEMDESC isAbstract: true!
 AbstractELEMDESC comment: ''!
 !AbstractELEMDESC categoriesForClass!External-Data-Structured-COM! !
 !AbstractELEMDESC methodsFor!
@@ -73,7 +74,7 @@ tdesc
 	^tdesc!
 
 tdescElem
-	"Answer the <TYPEDESC> value of the receiver's 'tdescElem' field."
+	"Private - Answer the <TYPEDESC> value of the receiver's 'tdescElem' field."
 
 	^TYPEDESC fromAddress: bytes yourAddress!
 
@@ -90,7 +91,7 @@ typeName
 !AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
 !AbstractELEMDESC categoriesFor: #printFieldsOn:limit:!development!printing!private! !
 !AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
-!AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!public! !
+!AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
 !AbstractELEMDESC categoriesFor: #typeName!accessing!public! !
 
 !AbstractELEMDESC class methodsFor!

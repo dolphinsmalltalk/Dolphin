@@ -120,8 +120,12 @@ from: startInteger to: stopInteger type: aStringClass
 	^self 
 		from: startInteger
 		to: stopInteger
-		text: (aStringClass newFixed: stopInteger - startInteger)! !
+		text: (aStringClass newFixed: stopInteger - startInteger)!
+
+getFieldNames
+	^#(#chrg #lpstrText)! !
 !TEXTRANGE class categoriesFor: #defineFields!initializing!public! !
 !TEXTRANGE class categoriesFor: #from:to:text:!instance creation!public! !
 !TEXTRANGE class categoriesFor: #from:to:type:!instance creation!public! !
+!TEXTRANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

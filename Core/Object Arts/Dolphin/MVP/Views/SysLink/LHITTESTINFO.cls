@@ -11,19 +11,19 @@ LHITTESTINFO comment: ''!
 !LHITTESTINFO methodsFor!
 
 item
-	"Answer the receiver's item field as a Smalltalk object."
+	"Answer the <LITEM> value of the receiver's 'item' field."
 
 	^LITEM fromAddress: bytes yourAddress + ##(self offsetOf: #item)!
 
 pt
-	"Answer the receiver's pt field as a Smalltalk object."
+	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress!
 
-pt: anObject 
-	"Set the receiver's pt field to the value of anObject."
+pt: aPOINTL
+	"Set the receiver's 'pt' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: 1
 		to: ##(POINTL basicByteSize)
@@ -42,6 +42,10 @@ defineFields
 
 	self
 		defineField: #pt type: (StructureField type:  POINTL);
-		defineField: #item type: (StructureField type: LITEM) beReadOnly! !
+		defineField: #item type: (StructureField type: LITEM) beReadOnly!
+
+getFieldNames
+	^#(#pt #item)! !
 !LHITTESTINFO class categoriesFor: #defineFields!initializing!public! !
+!LHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

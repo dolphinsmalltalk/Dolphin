@@ -26,44 +26,44 @@ struct tagGpWMFRect16 {
 !GpWMFRect16 methodsFor!
 
 bottom
-	"Answer the receiver's bottom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'bottom' field."
 
-	^(bytes swordAtOffset: 6)!
+	^bytes swordAtOffset: ##(self offsetOf: #bottom)!
 
-bottom: anObject
-	"Set the receiver's bottom field to the value of anObject."
+bottom: anInteger
+	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 6 put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #bottom) put: anInteger!
 
 left
-	"Answer the receiver's left field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'left' field."
 
-	^(bytes swordAtOffset: 0)!
+	^bytes swordAtOffset: 0!
 
-left: anObject
-	"Set the receiver's left field to the value of anObject."
+left: anInteger
+	"Set the receiver's 'left' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anObject!
+	bytes swordAtOffset: 0 put: anInteger!
 
 right
-	"Answer the receiver's right field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'right' field."
 
-	^(bytes swordAtOffset: 4)!
+	^bytes swordAtOffset: ##(self offsetOf: #right)!
 
-right: anObject
-	"Set the receiver's right field to the value of anObject."
+right: anInteger
+	"Set the receiver's 'right' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 4 put: anObject!
+	bytes swordAtOffset: ##(self offsetOf: #right) put: anInteger!
 
 top
-	"Answer the receiver's top field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'top' field."
 
-	^(bytes swordAtOffset: 2)!
+	^bytes swordAtOffset: ##(self offsetOf: #top)!
 
-top: anObject
-	"Set the receiver's top field to the value of anObject."
+top: anInteger
+	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 2 put: anObject! !
+	bytes swordAtOffset: ##(self offsetOf: #top) put: anInteger! !
 !GpWMFRect16 categoriesFor: #bottom!**compiled accessors**!public! !
 !GpWMFRect16 categoriesFor: #bottom:!**compiled accessors**!public! !
 !GpWMFRect16 categoriesFor: #left!**compiled accessors**!public! !
@@ -93,6 +93,10 @@ defineFields
 		defineField: #top type: SWORDField new offset: 2;
 		defineField: #right type: SWORDField new offset: 4;
 		defineField: #bottom type: SWORDField new offset: 6.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#left #top #right #bottom)! !
 !GpWMFRect16 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpWMFRect16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -197,10 +197,14 @@ defineFields
 		defineField: #cTabCount type: SWORDField new;
 		defineField: #rgxTabs type: (ArrayField type: DWORDArray length: 32)!
 
+getFieldNames
+	^#(#dwSize #dwMask #wNumbering #wEffects #dxStartIndent #dxRightIndent #dxOffset #wAlignment #cTabCount #rgxTabs)!
+
 packing
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [8] ifFalse: [4]! !
 !PARAFORMAT class categoriesFor: #defineFields!initializing!public! !
+!PARAFORMAT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !PARAFORMAT class categoriesFor: #packing!constants!public! !
 

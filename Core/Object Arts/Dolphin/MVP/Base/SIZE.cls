@@ -11,24 +11,24 @@ SIZE comment: '`SIZE` is an `ExternalStructure` class to wrap the standard Win32
 !SIZE methodsFor!
 
 cx
-	"Answer the receiver's cx field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cx' field."
 
 	^bytes sdwordAtOffset: 0!
 
-cx: anObject 
-	"Set the receiver's cx field to the value of anObject."
+cx: anInteger
+	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 cy
-	"Answer the receiver's cy field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cy' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #cy)!
 
-cy: anObject 
-	"Set the receiver's cy field to the value of anObject."
+cy: anInteger
+	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anInteger!
 
 height
 	^bytes sdwordAtOffset: ##(self offsetOf: #cy)!
@@ -67,6 +67,9 @@ defineFields
 		defineField: #cx type: SDWORDField new;
 		defineField: #cy type: SDWORDField new!
 
+getFieldNames
+	^#(#cx #cy)!
+
 uninitialize
 	"Private - Unitialize the receiver as it is about to be removed from the system.
 	Make sure our alias disappears with us."
@@ -85,6 +88,7 @@ width: cx height: cy
 				sdwordAtOffset: 4 put: cy;
 				yourself)! !
 !SIZE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!SIZE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !SIZE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
 !SIZE class categoriesFor: #width:height:!instance creation!public! !
 

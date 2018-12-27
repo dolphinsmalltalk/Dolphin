@@ -74,6 +74,10 @@ defineFields
 		defineField: #cchTextMax type: SDWORDField readOnly;
 		defineField: #iItem type: SDWORDField readOnly;
 		defineField: #iSubItem type: SDWORDField readOnly;
-		defineField: #lParam type: INT_PTRField filler! !
+		defineField: #lParam type: INT_PTRField filler!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
 !NMLVGETINFOTIPW class categoriesFor: #defineFields!initializing!public! !
+!NMLVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

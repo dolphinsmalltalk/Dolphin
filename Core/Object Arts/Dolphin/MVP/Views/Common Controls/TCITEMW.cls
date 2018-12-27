@@ -137,7 +137,7 @@ textPointerOffset
 defineFields
 	"Define the fields of the Win32 TCITEM structure.
 
-		TCITEM compileDefinition
+		self compileDefinition
 
 	typedef struct _TCITEM { 
 		UINT mask;			// value specifying which members to retrieve or set 
@@ -157,6 +157,10 @@ defineFields
 		defineField: #pszText type: (PointerField type: Utf16String) offset: 12;
 		defineField: #cchTextMax type: SDWORDField new offset: 16;
 		defineField: #iImage type: SDWORDField new offset: 20;
-		defineField: #lParam type: UINT_PTRField new offset: 24! !
+		defineField: #lParam type: UINT_PTRField new offset: 24!
+
+getFieldNames
+	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !
 !TCITEMW class categoriesFor: #defineFields!initializing!public! !
+!TCITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

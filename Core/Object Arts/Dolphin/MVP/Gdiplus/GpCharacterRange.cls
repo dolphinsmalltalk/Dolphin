@@ -24,24 +24,24 @@ struct tagGpCharacterRange {
 !GpCharacterRange methodsFor!
 
 First
-	"Answer the receiver's First field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'First' field."
 
-	^(bytes sdwordAtOffset: 0)!
+	^bytes sdwordAtOffset: 0!
 
-First: anObject
-	"Set the receiver's First field to the value of anObject."
+First: anInteger
+	"Set the receiver's 'First' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 length
-	"Answer the receiver's length field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^(bytes sdwordAtOffset: 4)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #length)!
 
-length: anObject
-	"Set the receiver's length field to the value of anObject."
+length: anInteger
+	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 4 put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #length) put: anInteger! !
 !GpCharacterRange categoriesFor: #First!**compiled accessors**!public! !
 !GpCharacterRange categoriesFor: #First:!**compiled accessors**!public! !
 !GpCharacterRange categoriesFor: #length!**compiled accessors**!public! !
@@ -63,6 +63,10 @@ defineFields
 	self
 		defineField: #First type: SDWORDField new offset: 0;
 		defineField: #length type: SDWORDField new offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#First #length)! !
 !GpCharacterRange class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!GpCharacterRange class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

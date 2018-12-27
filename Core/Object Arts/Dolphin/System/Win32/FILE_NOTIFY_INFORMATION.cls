@@ -74,8 +74,12 @@ defineFields
 		defineField: #FileName type: (StringField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'FileNameLength >> 1')) beReadOnly offset: 12.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#NextEntryOffset #Action #FileNameLength #FileName)!
+
 new
 	^self new: ##((self offsetOf: #FileName) + ((CRTConstants._MAX_PATH + 1) * 2))! !
 !FILE_NOTIFY_INFORMATION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!FILE_NOTIFY_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !FILE_NOTIFY_INFORMATION class categoriesFor: #new!public! !
 

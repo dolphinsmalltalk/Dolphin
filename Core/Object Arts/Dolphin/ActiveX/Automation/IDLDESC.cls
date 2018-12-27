@@ -34,7 +34,7 @@ isRetVal
 	^self wIDLFlags anyMask: IDLFLAG_FRETVAL!
 
 wIDLFlags
-	"Answer the receiver's wIDLFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wIDLFlags' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wIDLFlags)! !
 !IDLDESC categoriesFor: #isIn!public!testing! !
@@ -59,6 +59,10 @@ defineFields
 	self
 		defineField: #dwReserved		type: DWORDField filler;
 		defineField: #wIDLFlags		type: WORDField readOnly
-! !
+!
+
+getFieldNames
+	^#(#wIDLFlags)! !
 !IDLDESC class categoriesFor: #defineFields!initializing!public! !
+!IDLDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

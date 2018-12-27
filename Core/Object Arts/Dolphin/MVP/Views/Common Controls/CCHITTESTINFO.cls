@@ -12,7 +12,7 @@ CCHITTESTINFO comment: 'CCHITTESTINFO is an ExternalStructure class which implem
 !CCHITTESTINFO methodsFor!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
 
@@ -26,10 +26,10 @@ isItemHit
 
 	^self handle notNull!
 
-pt: anObject 
-	"Set the receiver's pt field to the value of anObject."
+pt: aPOINTL
+	"Set the receiver's 'pt' field to the value of the argument, aPOINTL"
 
-	anObject 
+	aPOINTL
 		replaceBytesOf: bytes
 		from: 1
 		to: ##(POINTL basicByteSize)
@@ -49,6 +49,10 @@ defineFields
 
 	self
 		defineField: #pt type: (StructureField type: POINTL) beWriteOnly;
-		defineField: #flags type: DWORDField readOnly! !
+		defineField: #flags type: DWORDField readOnly!
+
+getFieldNames
+	^#(#pt #flags)! !
 !CCHITTESTINFO class categoriesFor: #defineFields!development!public! !
+!CCHITTESTINFO class categoriesFor: #getFieldNames!constants!private! !
 

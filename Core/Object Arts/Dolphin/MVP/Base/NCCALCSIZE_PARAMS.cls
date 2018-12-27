@@ -72,6 +72,10 @@ defineFields
 
 	self
 		defineField: #rgrc type: (StructureArrayField type: RECT length: 3);
-		defineField: #lppos type: (PointerField type: WINDOWPOS)! !
+		defineField: #lppos type: (PointerField type: WINDOWPOS)!
+
+getFieldNames
+	^#(#rgrc #lppos)! !
 !NCCALCSIZE_PARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!NCCALCSIZE_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

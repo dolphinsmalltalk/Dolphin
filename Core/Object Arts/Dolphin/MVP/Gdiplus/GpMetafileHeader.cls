@@ -36,154 +36,162 @@ struct tagGpMetafileHeader {
 !GpMetafileHeader methodsFor!
 
 DpiX
-	"Answer the receiver's DpiX field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'DpiX' field."
 
-	^(bytes floatAtOffset: 16)!
+	^bytes floatAtOffset: ##(self offsetOf: #DpiX)!
 
-DpiX: anObject
-	"Set the receiver's DpiX field to the value of anObject."
+DpiX: aFloat
+	"Set the receiver's 'DpiX' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 16 put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #DpiX) put: aFloat!
 
 DpiY
-	"Answer the receiver's DpiY field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'DpiY' field."
 
-	^(bytes floatAtOffset: 20)!
+	^bytes floatAtOffset: ##(self offsetOf: #DpiY)!
 
-DpiY: anObject
-	"Set the receiver's DpiY field to the value of anObject."
+DpiY: aFloat
+	"Set the receiver's 'DpiY' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 20 put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #DpiY) put: aFloat!
 
 EmfHeader
-	"Answer the receiver's EmfHeader field as a Smalltalk object."
+	"Answer the <ENHMETAHEADER3> value of the receiver's 'EmfHeader' field."
 
-	^ENHMETAHEADER3 fromAddress: (bytes yourAddress + 40)!
+	^ENHMETAHEADER3 fromAddress: bytes yourAddress + ##(self offsetOf: #EmfHeader)!
 
-EmfHeader: anObject
-	"Set the receiver's EmfHeader field to the value of anObject."
+EmfHeader: anENHMETAHEADER3
+	"Set the receiver's 'EmfHeader' field to the value of the argument, anENHMETAHEADER3"
 
-	anObject replaceBytesOf: bytes from: 41 to: 128 startingAt: 1!
+	anENHMETAHEADER3
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #EmfHeader) + 1)
+		to: ##((self offsetOf: #EmfHeader) + ENHMETAHEADER3 basicByteSize)
+		startingAt: 1!
 
 EmfPlusFlags
-	"Answer the receiver's EmfPlusFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'EmfPlusFlags' field."
 
-	^(bytes dwordAtOffset: 12)!
+	^bytes dwordAtOffset: ##(self offsetOf: #EmfPlusFlags)!
 
-EmfPlusFlags: anObject
-	"Set the receiver's EmfPlusFlags field to the value of anObject."
+EmfPlusFlags: anInteger
+	"Set the receiver's 'EmfPlusFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 12 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #EmfPlusFlags) put: anInteger!
 
 EmfPlusHeaderSize
-	"Answer the receiver's EmfPlusHeaderSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'EmfPlusHeaderSize' field."
 
-	^(bytes sdwordAtOffset: 128)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #EmfPlusHeaderSize)!
 
-EmfPlusHeaderSize: anObject
-	"Set the receiver's EmfPlusHeaderSize field to the value of anObject."
+EmfPlusHeaderSize: anInteger
+	"Set the receiver's 'EmfPlusHeaderSize' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 128 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #EmfPlusHeaderSize) put: anInteger!
 
 height
-	"Answer the receiver's height field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'height' field."
 
-	^(bytes sdwordAtOffset: 36)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #height)!
 
-height: anObject
-	"Set the receiver's height field to the value of anObject."
+height: anInteger
+	"Set the receiver's 'height' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 36 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #height) put: anInteger!
 
 LogicalDpiX
-	"Answer the receiver's LogicalDpiX field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'LogicalDpiX' field."
 
-	^(bytes sdwordAtOffset: 132)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #LogicalDpiX)!
 
-LogicalDpiX: anObject
-	"Set the receiver's LogicalDpiX field to the value of anObject."
+LogicalDpiX: anInteger
+	"Set the receiver's 'LogicalDpiX' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 132 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #LogicalDpiX) put: anInteger!
 
 LogicalDpiY
-	"Answer the receiver's LogicalDpiY field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'LogicalDpiY' field."
 
-	^(bytes sdwordAtOffset: 136)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #LogicalDpiY)!
 
-LogicalDpiY: anObject
-	"Set the receiver's LogicalDpiY field to the value of anObject."
+LogicalDpiY: anInteger
+	"Set the receiver's 'LogicalDpiY' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 136 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #LogicalDpiY) put: anInteger!
 
 size
-	"Answer the receiver's size field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'size' field."
 
-	^(bytes dwordAtOffset: 4)!
+	^bytes dwordAtOffset: ##(self offsetOf: #size)!
 
-size: anObject
-	"Set the receiver's size field to the value of anObject."
+size: anInteger
+	"Set the receiver's 'size' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 4 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #size) put: anInteger!
 
 type
-	"Answer the receiver's type field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'type' field."
 
-	^(bytes sdwordAtOffset: 0)!
+	^bytes sdwordAtOffset: 0!
 
-type: anObject
-	"Set the receiver's type field to the value of anObject."
+type: anInteger
+	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: 0 put: anInteger!
 
 Version
-	"Answer the receiver's Version field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'Version' field."
 
-	^(bytes dwordAtOffset: 8)!
+	^bytes dwordAtOffset: ##(self offsetOf: #Version)!
 
-Version: anObject
-	"Set the receiver's Version field to the value of anObject."
+Version: anInteger
+	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 8 put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #Version) put: anInteger!
 
 width
-	"Answer the receiver's width field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'width' field."
 
-	^(bytes sdwordAtOffset: 32)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #width)!
 
-width: anObject
-	"Set the receiver's width field to the value of anObject."
+width: anInteger
+	"Set the receiver's 'width' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 32 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #width) put: anInteger!
 
 WmfHeader
-	"Answer the receiver's WmfHeader field as a Smalltalk object."
+	"Answer the <METAHEADER> value of the receiver's 'WmfHeader' field."
 
-	^METAHEADER fromAddress: (bytes yourAddress + 40)!
+	^METAHEADER fromAddress: bytes yourAddress + ##(self offsetOf: #WmfHeader)!
 
-WmfHeader: anObject
-	"Set the receiver's WmfHeader field to the value of anObject."
+WmfHeader: aMETAHEADER
+	"Set the receiver's 'WmfHeader' field to the value of the argument, aMETAHEADER"
 
-	anObject replaceBytesOf: bytes from: 41 to: 64 startingAt: 1!
+	aMETAHEADER
+		replaceBytesOf: bytes
+		from: ##((self offsetOf: #WmfHeader) + 1)
+		to: ##((self offsetOf: #WmfHeader) + METAHEADER basicByteSize)
+		startingAt: 1!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^(bytes sdwordAtOffset: 24)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #x)!
 
-x: anObject
-	"Set the receiver's x field to the value of anObject."
+x: anInteger
+	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 24 put: anObject!
+	bytes sdwordAtOffset: ##(self offsetOf: #x) put: anInteger!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^(bytes sdwordAtOffset: 28)!
+	^bytes sdwordAtOffset: ##(self offsetOf: #y)!
 
-y: anObject
-	"Set the receiver's y field to the value of anObject."
+y: anInteger
+	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 28 put: anObject! !
+	bytes sdwordAtOffset: ##(self offsetOf: #y) put: anInteger! !
 !GpMetafileHeader categoriesFor: #DpiX!**compiled accessors**!public! !
 !GpMetafileHeader categoriesFor: #DpiX:!**compiled accessors**!public! !
 !GpMetafileHeader categoriesFor: #DpiY!**compiled accessors**!public! !
@@ -289,6 +297,10 @@ defineFields
 		defineField: #LogicalDpiY
 			type: SDWORDField new
 			offset: 136.
-	self byteSize: 140! !
+	self byteSize: 140!
+
+getFieldNames
+	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
 !GpMetafileHeader class categoriesFor: #defineFields!initializing!public! !
+!GpMetafileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

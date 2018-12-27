@@ -52,6 +52,10 @@ defineFields
 	self
 		defineField: #dwSize type: DWORDField writeOnly;
 		defineField: #dwTime type: DWORDField new;
-		yourself.! !
+		yourself.!
+
+getFieldNames
+	^#(#dwSize #dwTime)! !
 !LASTINPUTINFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!LASTINPUTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

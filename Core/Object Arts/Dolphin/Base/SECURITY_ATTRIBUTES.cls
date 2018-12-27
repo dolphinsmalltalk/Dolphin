@@ -75,8 +75,8 @@ defineFields
 		defineField: #lpSecurityDescriptor type: LPVOIDField new;
 		defineField: #bInheritHandle type: BOOLField new!
 
-getFieldList
+getFieldNames
 	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
 !SECURITY_ATTRIBUTES class categoriesFor: #defineFields!initializing!public! !
-!SECURITY_ATTRIBUTES class categoriesFor: #getFieldList!**compiled accessors**!constants!private! !
+!SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

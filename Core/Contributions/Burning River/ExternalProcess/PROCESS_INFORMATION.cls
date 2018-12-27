@@ -52,6 +52,10 @@ defineFields
 		defineField: #hProcess type: DWORDField readOnly;
 		defineField: #hThread type: DWORDField readOnly;
 		defineField: #dwProcessId type: DWORDField readOnly;
-		defineField: #dwThreadId type: DWORDField readOnly! !
+		defineField: #dwThreadId type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hProcess #hThread #dwProcessId #dwThreadId)! !
 !PROCESS_INFORMATION class categoriesFor: #defineFields!initializing!public! !
+!PROCESS_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

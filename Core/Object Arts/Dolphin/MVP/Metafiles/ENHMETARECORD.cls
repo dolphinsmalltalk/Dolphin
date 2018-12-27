@@ -21,24 +21,24 @@ getField: fieldNameString
 	^self perform: selector!
 
 iType
-	"Answer the receiver's iType field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iType' field."
 
 	^bytes dwordAtOffset: 0!
 
-iType: anObject 
-	"Set the receiver's iType field to the value of anObject."
+iType: anInteger
+	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: 0 put: anInteger!
 
 nSize
-	"Answer the receiver's nSize field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nSize' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nSize)!
 
-nSize: anObject 
-	"Set the receiver's nSize field to the value of anObject."
+nSize: anInteger
+	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nSize) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #nSize) put: anInteger! !
 !ENHMETARECORD categoriesFor: #getField:!accessing!private! !
 !ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
 !ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !
@@ -63,6 +63,9 @@ defineFields
 		defineField: #iType type: DWORDField new offset: 0;
 		defineField: #nSize type: DWORDField new offset: 4.
 	self byteSize: 8!
+
+getFieldNames
+	^#(#iType #nSize)!
 
 initialize
 	RecordTypes := Array new: EMR_MAX!
@@ -102,6 +105,7 @@ uninitializeBeforeRemove
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
 !ENHMETARECORD class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!ENHMETARECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !ENHMETARECORD class categoriesFor: #initialize!public! !
 !ENHMETARECORD class categoriesFor: #initializeAfterLoad!initializing!public! !
 !ENHMETARECORD class categoriesFor: #iTypes!constants!public! !

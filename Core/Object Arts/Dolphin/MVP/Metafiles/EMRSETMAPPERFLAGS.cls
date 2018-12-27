@@ -24,14 +24,14 @@ struct tagEMRSETMAPPERFLAGS {
 !EMRSETMAPPERFLAGS methodsFor!
 
 dwFlags
-	"Answer the receiver's dwFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
 
-dwFlags: anObject 
-	"Set the receiver's dwFlags field to the value of anObject."
+dwFlags: anInteger
+	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger! !
 !EMRSETMAPPERFLAGS categoriesFor: #dwFlags!**compiled accessors**!public! !
 !EMRSETMAPPERFLAGS categoriesFor: #dwFlags:!**compiled accessors**!public! !
 
@@ -56,10 +56,14 @@ defineFields
 			offset: 8.
 	self byteSize: 12!
 
+getFieldNames
+	^#(#iType #nSize #dwFlags)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETMAPPERFLAGS! !
 !EMRSETMAPPERFLAGS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETMAPPERFLAGS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETMAPPERFLAGS class categoriesFor: #iTypes!constants!public! !
 

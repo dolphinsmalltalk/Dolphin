@@ -12,12 +12,12 @@ NMKEYDOWN comment: 'NMKEYDOWN is an ExternalStructure class to represent the Win
 !NMKEYDOWN methodsFor!
 
 flags
-	"Answer the receiver's flags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'flags' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
 
 wVKey
-	"Answer the receiver's wVKey field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'wVKey' field."
 
 	^bytes wordAtOffset: ##(self offsetOf: #wVKey)! !
 !NMKEYDOWN categoriesFor: #flags!**compiled accessors**!public! !
@@ -32,6 +32,10 @@ defineFields
 
 	super defineFields.		"NMHDR fields"
 	self defineField: #wVKey type: WORDField readOnly;
-		defineField: #flags type: DWORDField readOnly! !
+		defineField: #flags type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #wVKey #flags)! !
 !NMKEYDOWN class categoriesFor: #defineFields!initializing!public! !
+!NMKEYDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

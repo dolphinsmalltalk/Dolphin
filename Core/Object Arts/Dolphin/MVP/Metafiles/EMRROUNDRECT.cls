@@ -25,28 +25,28 @@ struct tagEMRROUNDRECT {
 !EMRROUNDRECT methodsFor!
 
 rclBox
-	"Answer the receiver's rclBox field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBox' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBox)!
 
-rclBox: anObject 
-	"Set the receiver's rclBox field to the value of anObject."
+rclBox: aRECT
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBox) + 1)
 		to: ##((self offsetOf: #rclBox) + RECT basicByteSize)
 		startingAt: 1!
 
 szlCorner
-	"Answer the receiver's szlCorner field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlCorner' field."
 
 	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlCorner)!
 
-szlCorner: anObject 
-	"Set the receiver's szlCorner field to the value of anObject."
+szlCorner: aSIZE
+	"Set the receiver's 'szlCorner' field to the value of the argument, aSIZE"
 
-	anObject 
+	aSIZE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #szlCorner) + 1)
 		to: ##((self offsetOf: #szlCorner) + SIZE basicByteSize)
@@ -81,10 +81,14 @@ defineFields
 			offset: 24.
 	self byteSize: 32!
 
+getFieldNames
+	^#(#iType #nSize #rclBox #szlCorner)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ROUNDRECT! !
 !EMRROUNDRECT class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRROUNDRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRROUNDRECT class categoriesFor: #iTypes!constants!public! !
 

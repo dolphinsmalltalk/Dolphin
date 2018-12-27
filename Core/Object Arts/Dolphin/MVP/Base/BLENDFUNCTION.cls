@@ -22,14 +22,14 @@ struct tagBLENDFUNCTION {
 !BLENDFUNCTION methodsFor!
 
 AlphaFormat
-	"Answer the receiver's AlphaFormat field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'AlphaFormat' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #AlphaFormat)!
 
-AlphaFormat: anObject 
-	"Set the receiver's AlphaFormat field to the value of anObject."
+AlphaFormat: anInteger
+	"Set the receiver's 'AlphaFormat' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #AlphaFormat) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #AlphaFormat) put: anInteger!
 
 blend: aNumber 
 	"Sets the fractional blend of the receiver to <Number> argument, which must be in the range 0..1"
@@ -37,24 +37,24 @@ blend: aNumber
 	self SourceConstantAlpha: (aNumber * 255) rounded!
 
 BlendFlags
-	"Answer the receiver's BlendFlags field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'BlendFlags' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #BlendFlags)!
 
-BlendFlags: anObject 
-	"Set the receiver's BlendFlags field to the value of anObject."
+BlendFlags: anInteger
+	"Set the receiver's 'BlendFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #BlendFlags) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #BlendFlags) put: anInteger!
 
 BlendOp
-	"Answer the receiver's BlendOp field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'BlendOp' field."
 
 	^bytes byteAtOffset: 0!
 
-BlendOp: anObject 
-	"Set the receiver's BlendOp field to the value of anObject."
+BlendOp: anInteger
+	"Set the receiver's 'BlendOp' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anObject!
+	bytes byteAtOffset: 0 put: anInteger!
 
 blendPercentage: aNumber 
 	"Sets the percentage blend of the receiver to <Number> argument, which must be in the range 0..100"
@@ -67,14 +67,14 @@ initialize
 	self BlendOp: AC_SRC_OVER!
 
 SourceConstantAlpha
-	"Answer the receiver's SourceConstantAlpha field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'SourceConstantAlpha' field."
 
 	^bytes byteAtOffset: ##(self offsetOf: #SourceConstantAlpha)!
 
-SourceConstantAlpha: anObject 
-	"Set the receiver's SourceConstantAlpha field to the value of anObject."
+SourceConstantAlpha: anInteger
+	"Set the receiver's 'SourceConstantAlpha' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #SourceConstantAlpha) put: anObject!
+	bytes byteAtOffset: ##(self offsetOf: #SourceConstantAlpha) put: anInteger!
 
 usePerPixelAlpha: aBoolean 
 	"Determines whether the source bitmaps alpha channel should be used when performing the
@@ -122,7 +122,11 @@ defineFields
 		defineField: #BlendOp type: BYTEField new;
 		defineField: #BlendFlags type: BYTEField new;
 		defineField: #SourceConstantAlpha type: BYTEField new;
-		defineField: #AlphaFormat type: BYTEField new! !
+		defineField: #AlphaFormat type: BYTEField new!
+
+getFieldNames
+	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
 !BLENDFUNCTION class categoriesFor: #blend:!instance creation!public! !
 !BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!BLENDFUNCTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

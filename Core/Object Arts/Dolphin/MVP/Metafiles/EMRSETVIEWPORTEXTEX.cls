@@ -24,14 +24,14 @@ struct tagEMRSETVIEWPORTEXTEX {
 !EMRSETVIEWPORTEXTEX methodsFor!
 
 szlExtent
-	"Answer the receiver's szlExtent field as a Smalltalk object."
+	"Answer the <SIZE> value of the receiver's 'szlExtent' field."
 
 	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlExtent)!
 
-szlExtent: anObject 
-	"Set the receiver's szlExtent field to the value of anObject."
+szlExtent: aSIZE
+	"Set the receiver's 'szlExtent' field to the value of the argument, aSIZE"
 
-	anObject 
+	aSIZE
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #szlExtent) + 1)
 		to: ##((self offsetOf: #szlExtent) + SIZE basicByteSize)
@@ -60,10 +60,14 @@ defineFields
 			offset: 8.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#iType #nSize #szlExtent)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETVIEWPORTEXTEX with: EMR_SETWINDOWEXTEX! !
 !EMRSETVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMRSETVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMRSETVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
 

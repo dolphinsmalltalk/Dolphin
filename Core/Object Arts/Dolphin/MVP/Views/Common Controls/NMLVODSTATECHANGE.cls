@@ -11,22 +11,22 @@ NMLVODSTATECHANGE comment: ''!
 !NMLVODSTATECHANGE methodsFor!
 
 iFrom
-	"Answer the receiver's iFrom field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iFrom' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iFrom)!
 
 iTo
-	"Answer the receiver's iTo field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iTo' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iTo)!
 
 uNewState
-	"Answer the receiver's uNewState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uNewState)!
 
 uOldState
-	"Answer the receiver's uOldState field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #uOldState)! !
 !NMLVODSTATECHANGE categoriesFor: #iFrom!**compiled accessors**!public! !
@@ -46,6 +46,10 @@ defineFields
 		defineField: #iFrom type: SDWORDField readOnly;
 		defineField: #iTo type: SDWORDField readOnly;
 		defineField: #uNewState type: DWORDField readOnly;
-		defineField: #uOldState type: DWORDField readOnly! !
+		defineField: #uOldState type: DWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !
 !NMLVODSTATECHANGE class categoriesFor: #defineFields!initializing!public! !
+!NMLVODSTATECHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -65,7 +65,11 @@ defineFields
 	self
 		defineField: #Bytes type: (ArrayField type: ExternalArray length: 16) offset: 0;
 		defineField: #Words type: (ArrayField type: WORDArray length: 8) beFiller offset: 0.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#Bytes)! !
 !IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
 !IN6_ADDR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!IN6_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

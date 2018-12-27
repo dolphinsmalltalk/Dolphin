@@ -6,63 +6,64 @@ ENHMETARECORD subclass: #EMREXTTEXTOUT
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTTEXTOUT guid: (GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
+EMREXTTEXTOUT isAbstract: true!
 EMREXTTEXTOUT comment: ''!
 !EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
 !EMREXTTEXTOUT methodsFor!
 
 EMRTEXT
-	"Answer the receiver's EMRTEXT field as a Smalltalk object."
+	"Answer the <EMRTEXT> value of the receiver's 'EMRTEXT' field."
 
 	^EMRTEXT fromAddress: bytes yourAddress + ##(self offsetOf: #EMRTEXT)!
 
-EMRTEXT: anObject 
-	"Set the receiver's EMRTEXT field to the value of anObject."
+EMRTEXT: anEMRTEXT
+	"Set the receiver's 'EMRTEXT' field to the value of the argument, anEMRTEXT"
 
-	anObject 
+	anEMRTEXT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #EMRTEXT) + 1)
 		to: ##((self offsetOf: #EMRTEXT) + EMRTEXT basicByteSize)
 		startingAt: 1!
 
 exScale
-	"Answer the receiver's exScale field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'exScale' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #exScale)!
 
-exScale: anObject 
-	"Set the receiver's exScale field to the value of anObject."
+exScale: aFloat
+	"Set the receiver's 'exScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #exScale) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #exScale) put: aFloat!
 
 eyScale
-	"Answer the receiver's eyScale field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'eyScale' field."
 
 	^bytes floatAtOffset: ##(self offsetOf: #eyScale)!
 
-eyScale: anObject 
-	"Set the receiver's eyScale field to the value of anObject."
+eyScale: aFloat
+	"Set the receiver's 'eyScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eyScale) put: anObject!
+	bytes floatAtOffset: ##(self offsetOf: #eyScale) put: aFloat!
 
 iGraphicsMode
-	"Answer the receiver's iGraphicsMode field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iGraphicsMode' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode)!
 
-iGraphicsMode: anObject 
-	"Set the receiver's iGraphicsMode field to the value of anObject."
+iGraphicsMode: anInteger
+	"Set the receiver's 'iGraphicsMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode) put: anInteger!
 
 rclBounds
-	"Answer the receiver's rclBounds field as a Smalltalk object."
+	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
 	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
 
-rclBounds: anObject 
-	"Set the receiver's rclBounds field to the value of anObject."
+rclBounds: aRECT
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
-	anObject 
+	aRECT
 		replaceBytesOf: bytes
 		from: ##((self offsetOf: #rclBounds) + 1)
 		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)

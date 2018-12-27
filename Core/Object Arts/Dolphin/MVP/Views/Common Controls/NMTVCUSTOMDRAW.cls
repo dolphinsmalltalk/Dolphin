@@ -25,24 +25,24 @@ backcolor: aColor
 	self clrTextBk: aColor asColorRef asParameter!
 
 clrText
-	"Answer the receiver's clrText field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'clrText' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #clrText)!
 
-clrText: anObject 
-	"Set the receiver's clrText field to the value of anObject."
+clrText: anInteger
+	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #clrText) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #clrText) put: anInteger!
 
 clrTextBk
-	"Answer the receiver's clrTextBk field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #clrTextBk)!
 
-clrTextBk: anObject 
-	"Set the receiver's clrTextBk field to the value of anObject."
+clrTextBk: anInteger
+	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #clrTextBk) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #clrTextBk) put: anInteger!
 
 forecolor
 	"Answer the foreground text colour."
@@ -57,7 +57,7 @@ forecolor: aColor
 	self clrText: aColor asColorRef asParameter!
 
 iLevel
-	"Answer the receiver's iLevel field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'iLevel' field."
 
 	^bytes sdwordAtOffset: ##(self offsetOf: #iLevel)! !
 !NMTVCUSTOMDRAW categoriesFor: #backcolor!accessing!public! !
@@ -81,6 +81,10 @@ defineFields
 	self 
 		defineField: #clrText type: DWORDField new;
 		defineField: #clrTextBk type: DWORDField new;
-		defineField: #iLevel type: SDWORDField readOnly! !
+		defineField: #iLevel type: SDWORDField readOnly!
+
+getFieldNames
+	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !
 !NMTVCUSTOMDRAW class categoriesFor: #defineFields!initializing!public! !
+!NMTVCUSTOMDRAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

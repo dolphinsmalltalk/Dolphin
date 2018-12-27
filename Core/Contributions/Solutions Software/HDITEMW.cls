@@ -238,6 +238,10 @@ defineFields
 		defineField: #pvFilter type: DWORDField new offset: 40;
 		defineField: #state type: DWORDField new offset: 44.
 
-	self byteSize: 48! !
+	self byteSize: 48!
+
+getFieldNames
+	^#(#mask #cxy #pszText #hbm #cchTextMax #fmt #lParam #iImage #iOrder #type #pvFilter #state)! !
 !HDITEMW class categoriesFor: #defineFields!initializing!public! !
+!HDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

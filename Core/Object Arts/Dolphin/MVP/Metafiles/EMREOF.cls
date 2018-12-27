@@ -26,34 +26,34 @@ struct tagEMREOF {
 !EMREOF methodsFor!
 
 nPalEntries
-	"Answer the receiver's nPalEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
 
-nPalEntries: anObject 
-	"Set the receiver's nPalEntries field to the value of anObject."
+nPalEntries: anInteger
+	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anInteger!
 
 nSizeLast
-	"Answer the receiver's nSizeLast field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'nSizeLast' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #nSizeLast)!
 
-nSizeLast: anObject 
-	"Set the receiver's nSizeLast field to the value of anObject."
+nSizeLast: anInteger
+	"Set the receiver's 'nSizeLast' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nSizeLast) put: anObject!
+	bytes dwordAtOffset: ##(self offsetOf: #nSizeLast) put: anInteger!
 
 offPalEntries
-	"Answer the receiver's offPalEntries field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'offPalEntries' field."
 
 	^bytes dwordAtOffset: ##(self offsetOf: #offPalEntries)!
 
-offPalEntries: anObject 
-	"Set the receiver's offPalEntries field to the value of anObject."
+offPalEntries: anInteger
+	"Set the receiver's 'offPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offPalEntries) put: anObject! !
+	bytes dwordAtOffset: ##(self offsetOf: #offPalEntries) put: anInteger! !
 !EMREOF categoriesFor: #nPalEntries!**compiled accessors**!public! !
 !EMREOF categoriesFor: #nPalEntries:!**compiled accessors**!public! !
 !EMREOF categoriesFor: #nSizeLast!**compiled accessors**!public! !
@@ -84,10 +84,14 @@ defineFields
 		defineField: #nSizeLast type: DWORDField new offset: 16.
 	self byteSize: 20!
 
+getFieldNames
+	^#(#iType #nSize #nPalEntries #offPalEntries #nSizeLast)!
+
 iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EOF! !
 !EMREOF class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!EMREOF class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !EMREOF class categoriesFor: #iTypes!constants!public! !
 

@@ -88,18 +88,16 @@ getValidFields
 	in the receiver's template, sorted in ascending order of offset from the start of the
 	structure, that are valid in this particular instance."
 
-	| mask bit notValid |
+	| mask fields |
 	mask := self mask.
-	bit := 1.
-	notValid := #(#pszText #iImage #lParam #dwState #hItem #iSelectedImage #cChildren) 
-				reject: 
-					[:each | 
-					| maskedIn |
-					maskedIn := mask allMask: bit.
-					bit := bit bitShift: 1.
-					maskedIn].
-	notValid first == #pszText ifTrue: [notValid := notValid copyWith: #cchTextMax].
-	^super getValidFields reject: [:each | notValid includes: each]!
+	fields := Array writeStream.
+	fields nextPutAll: #(#mask #hItem).
+	#(#pszText #iImage #lParam #dwState #hItem #iSelectedImage #cChildren) inject: 1
+		into: 
+			[:bit :each |
+			(mask allMask: bit) ifTrue: [fields nextPut: each].
+			bit bitShift: 1].
+	^fields contents!
 
 handle
 	"Answer the 'handle' of the item described by the receiver."
@@ -254,6 +252,10 @@ defineFields
 		defineField: #lParam
 			type: UINT_PTRField new
 			offset: 36.
-	self assert: [self byteSize = 40]! !
+	self assert: [self byteSize = 40]!
+
+getFieldNames
+	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
 !TVITEMW class categoriesFor: #defineFields!initializing!public! !
+!TVITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

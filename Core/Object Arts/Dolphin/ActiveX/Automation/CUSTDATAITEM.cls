@@ -13,12 +13,12 @@ CUSTDATAITEM is used to represent blocks of custom data stored in a type library
 !CUSTDATAITEM methodsFor!
 
 guid
-	"Answer the receiver's guid field as a Smalltalk object."
+	"Answer the <GUID> value of the receiver's 'guid' field."
 
 	^GUID fromAddress: bytes yourAddress!
 
 varValue
-	"Answer the receiver's varValue field as a Smalltalk object."
+	"Answer the <VARIANT> value of the receiver's 'varValue' field."
 
 	^VARIANT fromAddress: bytes yourAddress + ##(self offsetOf: #varValue)! !
 !CUSTDATAITEM categoriesFor: #guid!**compiled accessors**!public! !
@@ -39,6 +39,10 @@ defineFields
 
 	self
 		defineField: #guid type: (StructureField type: GUID) beReadOnly;
-		defineField: #varValue type: (StructureField type: VARIANT) beReadOnly! !
+		defineField: #varValue type: (StructureField type: VARIANT) beReadOnly!
+
+getFieldNames
+	^#(#guid #varValue)! !
 !CUSTDATAITEM class categoriesFor: #defineFields!initializing!public! !
+!CUSTDATAITEM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

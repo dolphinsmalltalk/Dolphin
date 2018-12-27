@@ -13,24 +13,24 @@ POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of 
 !POINTF methodsFor!
 
 x
-	"Answer the receiver's x field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'x' field."
 
-	^(bytes floatAtOffset: 0)!
+	^bytes floatAtOffset: 0!
 
-x: anObject
-	"Set the receiver's x field to the value of anObject."
+x: aFloat
+	"Set the receiver's 'x' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: anObject!
+	bytes floatAtOffset: 0 put: aFloat!
 
 y
-	"Answer the receiver's y field as a Smalltalk object."
+	"Answer the <Float> value of the receiver's 'y' field."
 
-	^(bytes floatAtOffset: 4)!
+	^bytes floatAtOffset: ##(self offsetOf: #y)!
 
-y: anObject
-	"Set the receiver's y field to the value of anObject."
+y: aFloat
+	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 4 put: anObject! !
+	bytes floatAtOffset: ##(self offsetOf: #y) put: aFloat! !
 !POINTF categoriesFor: #x!**compiled accessors**!public! !
 !POINTF categoriesFor: #x:!**compiled accessors**!public! !
 !POINTF categoriesFor: #y!**compiled accessors**!public! !

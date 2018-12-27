@@ -100,8 +100,12 @@ defineFields
 		defineField: #s_w1 type: WORDField new beFiller offset: 0;
 		defineField: #s_w2 type: WORDField new beFiller offset: 2;
 		defineField: #s_addr type: DWORDField new offset: 0.
-	self byteSize: 4! !
+	self byteSize: 4!
+
+getFieldNames
+	^#(#s_addr)! !
 !IN_ADDR class categoriesFor: #address:!instance creation!public! !
 !IN_ADDR class categoriesFor: #addressFamily!constants!public! !
 !IN_ADDR class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!IN_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 
