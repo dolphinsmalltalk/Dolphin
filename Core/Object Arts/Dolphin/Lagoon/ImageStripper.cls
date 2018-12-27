@@ -61,42 +61,20 @@ actualRequiredPackages
 	"Private - Answers a <Set> of the actual Packages required by the application taking account 
 	of those that are prerequisites of those explicitly listed as required."
 
-	| required found missing reqs pacman |
-	required := self requiredPackageNames.
-	required add: 'Lagoon Image Stripper'.	"Not a good idea to uninstall this"
+	| names required pacman |
+	names := self requiredPackageNames.
+	names add: 'Lagoon Image Stripper'.	"Not a good idea to uninstall this"
 	pacman := self systemPackageManager.
-	found := required select: [:each | pacman includesPackageNamed: each].
-	(missing := required - found) notEmpty 
-		ifTrue: 
-			["There were some required packages missing from the image"
-			| message |
-			message := String new writeStream.
-			message
-				nextPutAll: 'Not all of the packages required to deploy the application were present in the image. 
-The following packages were missing: ';
-				cr;
-				cr.
-			missing do: 
-					[:each | 
-					message
-						display: each;
-						cr].
-			message
-				cr;
-				nextPutAll: 'Click Ignore to continue with the deployment.'.
-			Warning signal: message contents].
-	required := found collect: 
-					[:each | 
-					(pacman packageNamed: each)
-						okToSaveOrDeploy;
-						yourself].
-	reqs := Set new.
-	required do: 
-			[:each | 
-			reqs
-				add: each;
-				addAll: each allPrerequisites].
-	^reqs!
+	required := Set new.
+	names do: 
+			[:each |
+			(pacman packageNamed: each ifNone: [])
+				ifNotNil: 
+					[:package |
+					required
+						add: package;
+						addAll: package allPrerequisites]].
+	^required!
 
 addClassesReferencedByClass: aClass to: aSet 
 	| addMethodRefs |
@@ -530,8 +508,7 @@ exeFileExtension
 
 externalStructureClasses
 	| packagedClasses |
-	packagedClasses := Set new.
-	self actualRequiredPackages do: [:eachPackage | eachPackage classesDo: [:eachClass | packagedClasses add: eachClass]]. 
+	packagedClasses := self packagedClasses.
 	^super externalStructureClasses intersection: packagedClasses!
 
 finalActions
@@ -657,7 +634,7 @@ initialTidy
 	self logReferencesToClasses
 		ifFalse: [self finishedWithAll: #(#logReferencesToClass: #logReference:)].
 	self
-		finishedWithAll: #(#actualRequiredPackages #buildRootClasses #disableDevelopmentSystem  #installRuntimeSessionManager #isConsoleApplication #logPreservedClasses #logRemainingPackages #removeRedundantPackages #requiredClasses #requiredPackageNames #rootClasses #rootPackage #runtimeSessionManagerClass #stripRedundantPackages #vmReferencedClasses)!
+		finishedWithAll: #(#actualRequiredPackages #buildRootClasses #disableDevelopmentSystem  #installRuntimeSessionManager #isConsoleApplication #logPreservedClasses #logRemainingPackages #packagedClasses #removeRedundantPackages #requiredClasses #requiredPackageNames #rootClasses #rootPackage #runtimeSessionManagerClass #stripRedundantPackages #verifyRequiredPackages #vmReferencedClasses)!
 
 installRuntimeSessionManager
 	"Private - Install the application <SessionManager>. For an application deployed with its
@@ -1189,6 +1166,13 @@ openLogFile
 	self startElement: 'Lagoon'
 		attributes: {'xmlns:xsi' -> 'http://www.w3.org/2001/XMLSchema-instance'.
 				'xsi:noNamespaceSchemaLocation' -> 'Lagoon.xsd'}!
+
+packagedClasses
+	| packagedClasses |
+	packagedClasses := Set new.
+	self actualRequiredPackages
+		do: [:eachPackage | eachPackage classesDo: [:eachClass | packagedClasses add: eachClass]].
+	^packagedClasses!
 
 packageDrivenStage
 	self prepareExternalStructures.
@@ -1973,6 +1957,32 @@ updateXPManifestResource: anExternalHandle
 		lpData: manifest
 		cbData: manifest size) ifFalse: [KernelLibrary default systemError]!
 
+verifyRequiredPackages
+	| packages required found missing  |
+	packages := super verifyRequiredPackages.
+	found := packages collect: [:each | each name].
+	required := self requiredPackageNames.
+	(missing := required - found) notEmpty
+		ifTrue: 
+			[| message |
+			"There were some required packages missing from the image"
+			message := String new writeStream.
+			message
+				nextPutAll: 'Not all of the packages required to deploy the application were present in the image. 
+The following packages were missing: ';
+				cr;
+				cr.
+			missing do: 
+					[:each |
+					message
+						display: each;
+						cr].
+			message
+				cr;
+				nextPutAll: 'Click Ignore to continue with the deployment.'.
+			Warning signal: message contents].
+	^packages!
+
 versionResource
 	"Answer the <VersionResource> describing the version resource to be built into	
 	the deployed application/dll."
@@ -1990,18 +2000,21 @@ versionResource
 	^versionResource!
 
 viewsToClose
-	| topViews |
+	| topViews shellClasses packagedClasses |
 	topViews := SessionManager inputState topLevelWindows.
-	^self isConsoleApplication
-		ifTrue: [topViews]
-		ifFalse: 
-			[| shellClasses |
-			shellClasses := Set new.
-			#(#SmalltalkToolShell #SmalltalkWorkspaceDocument #TestRunner) do: 
-					[:each |
-					Smalltalk at: each
-						ifPresent: [:class | class withAllSubclassesDo: [:shellClass | shellClasses add: shellClass]]].
-			topViews select: [:each | shellClasses includes: each presenter class]]!
+	self isConsoleApplication ifTrue: [^topViews].
+	shellClasses := Set new.
+	#(#SmalltalkToolShell #SmalltalkWorkspaceDocument #TestRunner) do: 
+			[:each |
+			Smalltalk at: each
+				ifPresent: [:class | class withAllSubclassesDo: [:shellClass | shellClasses add: shellClass]]].
+	"We want to close all views/presenters that are not in the required packages"
+	packagedClasses := self packagedClasses.
+	^topViews select: 
+			[:each |
+			| presenterType |
+			presenterType := each presenter class.
+			(shellClasses includes: presenterType) or: [(packagedClasses includes: presenterType) not]]!
 
 vmReferencedClasses
 	"Answer a <collection> of all the classes referenced directly by the VM.
@@ -2105,6 +2118,7 @@ writeLogFile
 !ImageStripper categoriesFor: #onError:!event handling!private! !
 !ImageStripper categoriesFor: #onNotification:!event handling!private! !
 !ImageStripper categoriesFor: #openLogFile!operations!private! !
+!ImageStripper categoriesFor: #packagedClasses!accessing!private! !
 !ImageStripper categoriesFor: #packageDrivenStage!must not strip!operations!private! !
 !ImageStripper categoriesFor: #prepareCycle1:!must not strip!operations!private! !
 !ImageStripper categoriesFor: #prepareCycle2:!must not strip!operations!private! !
@@ -2175,6 +2189,7 @@ writeLogFile
 !ImageStripper categoriesFor: #updateStubResources:!operations!private! !
 !ImageStripper categoriesFor: #updateVersionResource:!operations!public! !
 !ImageStripper categoriesFor: #updateXPManifestResource:!operations!private! !
+!ImageStripper categoriesFor: #verifyRequiredPackages!accessing!private! !
 !ImageStripper categoriesFor: #versionResource!accessing!private! !
 !ImageStripper categoriesFor: #viewsToClose!helpers!private! !
 !ImageStripper categoriesFor: #vmReferencedClasses!constants!public! !
