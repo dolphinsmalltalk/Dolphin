@@ -257,7 +257,7 @@ testSmalltalkTools
 		using: 
 			[:shell | 
 			shell
-				browseExecutableManfiestFile: (FileLocator installRelative 
+				browseExecutableManifestFile: (FileLocator installRelative 
 							localFileSpecFor: 'Help\Hello World.xml');
 				method: (HelloWorld compiledMethodAt: #onPaintRequired:);
 				ensureSourceVisible].
@@ -319,7 +319,7 @@ testSystemFolder
 	"Client only image"
 	folderPresenter resetSelection.
 	(folderPresenter view)
-		lvmSetBkImage: LVBKIMAGE new;
+		lvmSetBkImage: LVBKIMAGEW new;
 		backcolor: (Color 
 					red: 255
 					green: 255
