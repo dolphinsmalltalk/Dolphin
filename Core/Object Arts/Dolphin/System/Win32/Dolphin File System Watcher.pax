@@ -53,7 +53,7 @@ Object subclass: #FileSystemChangeReader
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Action _OffsetOf_FileName _OffsetOf_FileNameLength _OffsetOf_NextEntryOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FileSystemChangeReader subclass: #FileSystemChangeStream

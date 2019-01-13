@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #GpColorMap
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_newColor _OffsetOf_oldColor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpColorMap guid: (GUID fromString: '{16b02cc4-3683-4fdc-8bdc-c450ef3137b2}')!
+GpColorMap addClassConstant: '_OffsetOf_newColor' value: 16r4!
+GpColorMap addClassConstant: '_OffsetOf_oldColor' value: 16r0!
 GpColorMap comment: '<GpColorMap> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMap'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,22 +28,22 @@ struct tagGpColorMap {
 newColor
 	"Answer the <Integer> value of the receiver's 'newColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #newColor)!
+	^bytes dwordAtOffset: _OffsetOf_newColor!
 
 newColor: anInteger
 	"Set the receiver's 'newColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #newColor) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_newColor put: anInteger!
 
 oldColor
 	"Answer the <Integer> value of the receiver's 'oldColor' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_oldColor!
 
 oldColor: anInteger
 	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_oldColor put: anInteger! !
 !GpColorMap categoriesFor: #newColor!**compiled accessors**!public! !
 !GpColorMap categoriesFor: #newColor:!**compiled accessors**!public! !
 !GpColorMap categoriesFor: #oldColor!**compiled accessors**!public! !

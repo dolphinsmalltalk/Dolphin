@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETCOLORSPACE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihCS'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETCOLORSPACE guid: (GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
+EMRSETCOLORSPACE addClassConstant: '_OffsetOf_ihCS' value: 16r8!
 EMRSETCOLORSPACE comment: '<EMRSETCOLORSPACE> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETCOLORSPACE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,12 +27,12 @@ struct tagEMRSETCOLORSPACE {
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihCS)!
+	^bytes dwordAtOffset: _OffsetOf_ihCS!
 
 ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger! !
 !EMRSETCOLORSPACE categoriesFor: #ihCS!**compiled accessors**!public! !
 !EMRSETCOLORSPACE categoriesFor: #ihCS:!**compiled accessors**!public! !
 

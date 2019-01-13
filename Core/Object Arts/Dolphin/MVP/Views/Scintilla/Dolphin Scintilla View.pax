@@ -156,7 +156,7 @@ ExternalLibrary subclass: #ScintillaLibrary
 	classInstanceVariableNames: ''!
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
-	classVariableNames: 'ModificationTypeOffset'
+	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #ScintillaTextStylesDialog

@@ -2,10 +2,14 @@
 
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwHitInfo _OffsetOf_dwItemData _OffsetOf_dwItemSpec _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMMOUSE guid: (GUID fromString: '{e2a1ec3f-20b2-49cc-b90f-80f002a28204}')!
+NMMOUSE addClassConstant: '_OffsetOf_dwHitInfo' value: 16r1C!
+NMMOUSE addClassConstant: '_OffsetOf_dwItemData' value: 16r10!
+NMMOUSE addClassConstant: '_OffsetOf_dwItemSpec' value: 16rC!
+NMMOUSE addClassConstant: '_OffsetOf_pt' value: 16r14!
 NMMOUSE comment: 'NMMOUSE is the class of <ExternalStructure> which represent the Windows Common Control structure of the same name.
 
 NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. toolbars, statusbars) when a mouse action occurs such as a click.
@@ -16,17 +20,17 @@ NMMOUSE accompanies certain notifications that are sent by a control bars (e.g. 
 dwHitInfo
 	"Answer the <Integer> value of the receiver's 'dwHitInfo' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwHitInfo)!
+	^bytes dwordAtOffset: _OffsetOf_dwHitInfo!
 
 dwItemData
 	"Answer the <Integer> value of the receiver's 'dwItemData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwItemData)!
+	^bytes dwordAtOffset: _OffsetOf_dwItemData!
 
 dwItemSpec
 	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwItemSpec)!
+	^bytes dwordAtOffset: _OffsetOf_dwItemSpec!
 
 iItem
 	"Answer the item index (appropriate when originating from a control whose items
@@ -40,7 +44,7 @@ position
 pt
 	"Answer the <POINTL> value of the receiver's 'pt' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #pt)! !
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_pt! !
 !NMMOUSE categoriesFor: #dwHitInfo!**compiled accessors**!public! !
 !NMMOUSE categoriesFor: #dwItemData!**compiled accessors**!public! !
 !NMMOUSE categoriesFor: #dwItemSpec!**compiled accessors**!public! !

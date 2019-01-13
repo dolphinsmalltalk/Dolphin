@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #LOGPEN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lopnColor _OffsetOf_lopnStyle _OffsetOf_lopnWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGPEN guid: (GUID fromString: '{87b4c5fb-026e-11d3-9fd7-00a0cc3e4a32}')!
+LOGPEN addClassConstant: '_OffsetOf_lopnColor' value: 16rC!
+LOGPEN addClassConstant: '_OffsetOf_lopnStyle' value: 16r0!
+LOGPEN addClassConstant: '_OffsetOf_lopnWidth' value: 16r4!
 LOGPEN comment: '<LOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.LOGPEN'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -36,22 +39,22 @@ color: aColor
 lopnColor
 	"Answer the <Integer> value of the receiver's 'lopnColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lopnColor)!
+	^bytes dwordAtOffset: _OffsetOf_lopnColor!
 
 lopnColor: anInteger
 	"Set the receiver's 'lopnColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lopnColor) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lopnColor put: anInteger!
 
 lopnStyle
 	"Answer the <Integer> value of the receiver's 'lopnStyle' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_lopnStyle!
 
 lopnStyle: anInteger
 	"Set the receiver's 'lopnStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lopnStyle put: anInteger!
 
 style
 	^self lopnStyle!

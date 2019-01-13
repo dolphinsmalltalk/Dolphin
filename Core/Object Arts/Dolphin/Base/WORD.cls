@@ -32,14 +32,14 @@ unsignedValue: anInteger
 	bytes wordAtOffset: 0 put: anInteger!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anObject! !
+	bytes wordAtOffset: _OffsetOf_value put: anInteger! !
 !WORD categoriesFor: #asSignedInteger!converting!public! !
 !WORD categoriesFor: #asUnsignedInteger!converting!public! !
 !WORD categoriesFor: #unsignedValue:!accessing!public! !
@@ -52,7 +52,7 @@ defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: WORDField new!
+	self defineField: #value type: WORDField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.

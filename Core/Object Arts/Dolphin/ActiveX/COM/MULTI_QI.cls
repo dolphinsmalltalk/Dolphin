@@ -2,10 +2,13 @@
 
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hr _OffsetOf_pIID _OffsetOf_pItf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MULTI_QI guid: (GUID fromString: '{87b4c5c2-026e-11d3-9fd7-00a0cc3e4a32}')!
+MULTI_QI addClassConstant: '_OffsetOf_hr' value: 16r8!
+MULTI_QI addClassConstant: '_OffsetOf_pIID' value: 16r0!
+MULTI_QI addClassConstant: '_OffsetOf_pItf' value: 16r4!
 MULTI_QI comment: 'MULTI_QI is an <ExternalStructure> class to represent the Win32 COM structure of the same name.
 
 Arrays of MULTI_QI structures can be used to query multiple interface pointers in a single request. This is only really important for DCOM as it helps to minimize the number of network round-trips that are performed.'!
@@ -15,32 +18,32 @@ Arrays of MULTI_QI structures can be used to query multiple interface pointers i
 hr
 	"Answer the <Integer> value of the receiver's 'hr' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #hr)!
+	^bytes sdwordAtOffset: _OffsetOf_hr!
 
 hr: anInteger
 	"Set the receiver's 'hr' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #hr) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_hr put: anInteger!
 
 pIID
 	"Answer the <IID> value of the receiver's 'pIID' field."
 
-	^IID fromAddress: (bytes intPtrAtOffset: 0)!
+	^IID fromAddress: (bytes intPtrAtOffset: _OffsetOf_pIID)!
 
 pIID: anIID
 	"Set the receiver's 'pIID' field to the value of the argument, anIID"
 
-	bytes uintPtrAtOffset: 0 put: anIID yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pIID put: anIID yourAddress!
 
 pItf
 	"Answer the <IUnknown> value of the receiver's 'pItf' field."
 
-	^IUnknown fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pItf))!
+	^IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_pItf)!
 
 pItf: anIUnknown
 	"Set the receiver's 'pItf' field to the value of the argument, anIUnknown"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pItf) put: anIUnknown yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_pItf put: anIUnknown yourAddress! !
 !MULTI_QI categoriesFor: #hr!**compiled accessors**!public! !
 !MULTI_QI categoriesFor: #hr:!**compiled accessors**!public! !
 !MULTI_QI categoriesFor: #pIID!**compiled accessors**!public! !

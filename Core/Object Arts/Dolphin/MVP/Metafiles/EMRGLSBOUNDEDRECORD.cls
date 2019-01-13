@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMRGLSBOUNDEDRECORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRGLSBOUNDEDRECORD guid: (GUID fromString: '{0814602c-a45e-4098-9b9b-833717f75760}')!
+EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_cbData' value: 16r18!
+EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_Data' value: 16r1C!
+EMRGLSBOUNDEDRECORD addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRGLSBOUNDEDRECORD comment: '<EMRGLSBOUNDEDRECORD> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGLSBOUNDEDRECORD'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,17 +31,17 @@ struct tagEMRGLSBOUNDEDRECORD {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self cbData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
 
 Data: anExternalArray
 	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
@@ -47,23 +50,23 @@ Data: anExternalArray
 	size := anExternalArray byteSize.
 	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRGLSBOUNDEDRECORD categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRGLSBOUNDEDRECORD categoriesFor: #cbData:!**compiled accessors**!public! !

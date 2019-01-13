@@ -2,10 +2,11 @@
 
 ExternalStructure subclass: #GpColorMatrix
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_m'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpColorMatrix guid: (GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
+GpColorMatrix addClassConstant: '_OffsetOf_m' value: 16r0!
 GpColorMatrix comment: '<GpColorMatrix> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorMatrix'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -43,7 +44,7 @@ m: aFLOATArray
 	size := aFLOATArray byteSize min: ##(25 * FLOATArray elementSize).
 	aFLOATArray
 		replaceBytesOf: bytes
-		from: 1
+		from: ##(_OffsetOf_m + 1)
 		to: size
 		startingAt: 1!
 

@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMREOF
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_nPalEntries _OffsetOf_nSizeLast _OffsetOf_offPalEntries'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREOF guid: (GUID fromString: '{52606b1b-28c5-4ffa-b16d-13bcf0dd77b0}')!
+EMREOF addClassConstant: '_OffsetOf_nPalEntries' value: 16r8!
+EMREOF addClassConstant: '_OffsetOf_nSizeLast' value: 16r10!
+EMREOF addClassConstant: '_OffsetOf_offPalEntries' value: 16rC!
 EMREOF comment: '<EMREOF> is an <ExternalStructure> class to wrap the struct ''Win32.EMREOF'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,32 +31,32 @@ struct tagEMREOF {
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
+	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nSizeLast
 	"Answer the <Integer> value of the receiver's 'nSizeLast' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nSizeLast)!
+	^bytes dwordAtOffset: _OffsetOf_nSizeLast!
 
 nSizeLast: anInteger
 	"Set the receiver's 'nSizeLast' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nSizeLast) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nSizeLast put: anInteger!
 
 offPalEntries
 	"Answer the <Integer> value of the receiver's 'offPalEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offPalEntries)!
+	^bytes dwordAtOffset: _OffsetOf_offPalEntries!
 
 offPalEntries: anInteger
 	"Set the receiver's 'offPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offPalEntries) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_offPalEntries put: anInteger! !
 !EMREOF categoriesFor: #nPalEntries!**compiled accessors**!public! !
 !EMREOF categoriesFor: #nPalEntries:!**compiled accessors**!public! !
 !EMREOF categoriesFor: #nSizeLast!**compiled accessors**!public! !

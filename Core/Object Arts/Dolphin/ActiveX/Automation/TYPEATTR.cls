@@ -2,10 +2,28 @@
 
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbAlignment _OffsetOf_cbSizeInstance _OffsetOf_cbSizeVft _OffsetOf_cFuncs _OffsetOf_cImplTypes _OffsetOf_cVars _OffsetOf_dwReserved _OffsetOf_guid _OffsetOf_idldescType _OffsetOf_lcid _OffsetOf_lpstrSchema _OffsetOf_memidConstructor _OffsetOf_memidDestructor _OffsetOf_tdescAlias _OffsetOf_typekind _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum _OffsetOf_wTypeFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TYPEATTR guid: (GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
+TYPEATTR addClassConstant: '_OffsetOf_cbAlignment' value: 16r34!
+TYPEATTR addClassConstant: '_OffsetOf_cbSizeInstance' value: 16r24!
+TYPEATTR addClassConstant: '_OffsetOf_cbSizeVft' value: 16r32!
+TYPEATTR addClassConstant: '_OffsetOf_cFuncs' value: 16r2C!
+TYPEATTR addClassConstant: '_OffsetOf_cImplTypes' value: 16r30!
+TYPEATTR addClassConstant: '_OffsetOf_cVars' value: 16r2E!
+TYPEATTR addClassConstant: '_OffsetOf_dwReserved' value: 16r14!
+TYPEATTR addClassConstant: '_OffsetOf_guid' value: 16r0!
+TYPEATTR addClassConstant: '_OffsetOf_idldescType' value: 16r44!
+TYPEATTR addClassConstant: '_OffsetOf_lcid' value: 16r10!
+TYPEATTR addClassConstant: '_OffsetOf_lpstrSchema' value: 16r20!
+TYPEATTR addClassConstant: '_OffsetOf_memidConstructor' value: 16r18!
+TYPEATTR addClassConstant: '_OffsetOf_memidDestructor' value: 16r1C!
+TYPEATTR addClassConstant: '_OffsetOf_tdescAlias' value: 16r3C!
+TYPEATTR addClassConstant: '_OffsetOf_typekind' value: 16r28!
+TYPEATTR addClassConstant: '_OffsetOf_wMajorVerNum' value: 16r38!
+TYPEATTR addClassConstant: '_OffsetOf_wMinorVerNum' value: 16r3A!
+TYPEATTR addClassConstant: '_OffsetOf_wTypeFlags' value: 16r36!
 TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
 
 TYPEATTR contains a number of attributes describing a particular type info. element of a type library. Unfortunately it is overloaded (like its originator ITypeInfo) with the job of describing all of the different types of object for which type information may be present in the library (i.e. interfaces, typedefs, enums, coclasses, dispinterfaces, unions, structs, and modules). This means that some of the members may not be relevant to the programming element described. In general we access the members of this structure through the relevant subclass of AXTypeInfoAnalyzer, thus benefitting from the correct factoring of that hierarchy.
@@ -41,27 +59,27 @@ basicFree
 cbAlignment
 	"Answer the <Integer> value of the receiver's 'cbAlignment' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cbAlignment)!
+	^bytes wordAtOffset: _OffsetOf_cbAlignment!
 
 cbSizeInstance
 	"Answer the <Integer> value of the receiver's 'cbSizeInstance' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbSizeInstance)!
+	^bytes dwordAtOffset: _OffsetOf_cbSizeInstance!
 
 cbSizeVft
 	"Answer the <Integer> value of the receiver's 'cbSizeVft' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cbSizeVft)!
+	^bytes wordAtOffset: _OffsetOf_cbSizeVft!
 
 cFuncs
 	"Answer the <Integer> value of the receiver's 'cFuncs' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cFuncs)!
+	^bytes wordAtOffset: _OffsetOf_cFuncs!
 
 cImplTypes
 	"Answer the <Integer> value of the receiver's 'cImplTypes' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cImplTypes)!
+	^bytes wordAtOffset: _OffsetOf_cImplTypes!
 
 classDesc
 	"Private - Answer an <Association> between a Dolphin class suitable for representing
@@ -73,7 +91,7 @@ classDesc
 cVars
 	"Answer the <Integer> value of the receiver's 'cVars' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cVars)!
+	^bytes wordAtOffset: _OffsetOf_cVars!
 
 guid
 	"Answer the <GUID> value of the receiver's 'guid' field."
@@ -83,7 +101,7 @@ guid
 idldescType
 	"Answer the <IDLDESC> value of the receiver's 'idldescType' field."
 
-	^IDLDESC fromAddress: bytes yourAddress + ##(self offsetOf: #idldescType)!
+	^IDLDESC fromAddress: bytes yourAddress + _OffsetOf_idldescType!
 
 isAggregatable
 	"Answer whether the receiver is describing a coclass which
@@ -145,17 +163,17 @@ isRestricted
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
+	^bytes dwordAtOffset: _OffsetOf_lcid!
 
 memidConstructor
 	"Answer the <Integer> value of the receiver's 'memidConstructor' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #memidConstructor)!
+	^bytes sdwordAtOffset: _OffsetOf_memidConstructor!
 
 memidDestructor
 	"Answer the <Integer> value of the receiver's 'memidDestructor' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #memidDestructor)!
+	^bytes sdwordAtOffset: _OffsetOf_memidDestructor!
 
 name
 	"Answer the name of the variable described by the receiver."
@@ -174,27 +192,27 @@ tdesc
 tdescAlias
 	"Answer the <TYPEDESC> value of the receiver's 'tdescAlias' field."
 
-	^TYPEDESC fromAddress: bytes yourAddress + ##(self offsetOf: #tdescAlias)!
+	^TYPEDESC fromAddress: bytes yourAddress + _OffsetOf_tdescAlias!
 
 typekind
 	"Answer the <Integer> value of the receiver's 'typekind' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #typekind)!
+	^bytes sdwordAtOffset: _OffsetOf_typekind!
 
 wMajorVerNum
 	"Answer the <Integer> value of the receiver's 'wMajorVerNum' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMajorVerNum)!
+	^bytes wordAtOffset: _OffsetOf_wMajorVerNum!
 
 wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wMinorVerNum)!
+	^bytes wordAtOffset: _OffsetOf_wMinorVerNum!
 
 wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wTypeFlags)! !
+	^bytes wordAtOffset: _OffsetOf_wTypeFlags! !
 !TYPEATTR categoriesFor: #basicFree!private!realizing/unrealizing! !
 !TYPEATTR categoriesFor: #cbAlignment!**compiled accessors**!public! !
 !TYPEATTR categoriesFor: #cbSizeInstance!**compiled accessors**!public! !

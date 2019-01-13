@@ -51,17 +51,17 @@ package!
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_item _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #LITEM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iLink _OffsetOf_mask _OffsetOf_state _OffsetOf_stateMask _OffsetOf_szID _OffsetOf_szURL'
 	poolDictionaries: 'SysLinkConstants'
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommandButton subclass: #LinkButton

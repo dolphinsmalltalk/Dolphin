@@ -2,10 +2,31 @@
 
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwResultAction _OffsetOf_ExclusionFlags _OffsetOf_flags _OffsetOf_Flags2 _OffsetOf_hDC _OffsetOf_hDevMode _OffsetOf_hDevNames _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lpCallback _OffsetOf_lphPropertyPages _OffsetOf_lpPageRanges _OffsetOf_lpPrintTemplateName _OffsetOf_lStructSize _OffsetOf_nCopies _OffsetOf_nMaxPage _OffsetOf_nMaxPageRanges _OffsetOf_nMinPage _OffsetOf_nPageRanges _OffsetOf_nPropertyPages _OffsetOf_nStartPage'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PRINTDLGEXW guid: (GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
+PRINTDLGEXW addClassConstant: '_OffsetOf_dwResultAction' value: 16r50!
+PRINTDLGEXW addClassConstant: '_OffsetOf_ExclusionFlags' value: 16r1C!
+PRINTDLGEXW addClassConstant: '_OffsetOf_flags' value: 16r14!
+PRINTDLGEXW addClassConstant: '_OffsetOf_Flags2' value: 16r18!
+PRINTDLGEXW addClassConstant: '_OffsetOf_hDC' value: 16r10!
+PRINTDLGEXW addClassConstant: '_OffsetOf_hDevMode' value: 16r8!
+PRINTDLGEXW addClassConstant: '_OffsetOf_hDevNames' value: 16rC!
+PRINTDLGEXW addClassConstant: '_OffsetOf_hInstance' value: 16r38!
+PRINTDLGEXW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
+PRINTDLGEXW addClassConstant: '_OffsetOf_lpCallback' value: 16r40!
+PRINTDLGEXW addClassConstant: '_OffsetOf_lphPropertyPages' value: 16r48!
+PRINTDLGEXW addClassConstant: '_OffsetOf_lpPageRanges' value: 16r28!
+PRINTDLGEXW addClassConstant: '_OffsetOf_lpPrintTemplateName' value: 16r3C!
+PRINTDLGEXW addClassConstant: '_OffsetOf_lStructSize' value: 16r0!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nCopies' value: 16r34!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nMaxPage' value: 16r30!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nMaxPageRanges' value: 16r24!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nMinPage' value: 16r2C!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nPageRanges' value: 16r20!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nPropertyPages' value: 16r44!
+PRINTDLGEXW addClassConstant: '_OffsetOf_nStartPage' value: 16r4C!
 PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -45,212 +66,212 @@ struct tagPRINTDLGEX {
 dwResultAction
 	"Answer the <Integer> value of the receiver's 'dwResultAction' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwResultAction)!
+	^bytes dwordAtOffset: _OffsetOf_dwResultAction!
 
 dwResultAction: anInteger
 	"Set the receiver's 'dwResultAction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwResultAction) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwResultAction put: anInteger!
 
 ExclusionFlags
 	"Answer the <Integer> value of the receiver's 'ExclusionFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ExclusionFlags)!
+	^bytes dwordAtOffset: _OffsetOf_ExclusionFlags!
 
 ExclusionFlags: anInteger
 	"Set the receiver's 'ExclusionFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ExclusionFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ExclusionFlags put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
 
 Flags2
 	"Answer the <Integer> value of the receiver's 'Flags2' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Flags2)!
+	^bytes dwordAtOffset: _OffsetOf_Flags2!
 
 Flags2: anInteger
 	"Set the receiver's 'Flags2' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Flags2) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Flags2 put: anInteger!
 
 hDC
 	"Answer the <ExternalHandle> value of the receiver's 'hDC' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hDC)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hDC) asExternalHandle!
 
 hDC: anExternalHandle
 	"Set the receiver's 'hDC' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hDC) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDC put: anExternalHandle!
 
 hDevMode
 	"Answer the <ExternalHandle> value of the receiver's 'hDevMode' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hDevMode)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hDevMode) asExternalHandle!
 
 hDevMode: anExternalHandle
 	"Set the receiver's 'hDevMode' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hDevMode) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDevMode put: anExternalHandle!
 
 hDevNames
 	"Answer the <ExternalHandle> value of the receiver's 'hDevNames' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hDevNames)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hDevNames) asExternalHandle!
 
 hDevNames: anExternalHandle
 	"Set the receiver's 'hDevNames' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hDevNames) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDevNames put: anExternalHandle!
 
 hInstance
 	"Answer the <ExternalHandle> value of the receiver's 'hInstance' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hInstance)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hInstance) asExternalHandle!
 
 hInstance: anExternalHandle
 	"Set the receiver's 'hInstance' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hInstance) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hInstance put: anExternalHandle!
 
 hwndOwner
 	"Answer the <ExternalHandle> value of the receiver's 'hwndOwner' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hwndOwner)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hwndOwner) asExternalHandle!
 
 hwndOwner: anExternalHandle
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndOwner) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 lpCallback
 	"Answer the <IUnknown> value of the receiver's 'lpCallback' field."
 
-	^IUnknown fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpCallback))!
+	^IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpCallback)!
 
 lpCallback: anIUnknown
 	"Set the receiver's 'lpCallback' field to the value of the argument, anIUnknown"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpCallback) put: anIUnknown yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpCallback put: anIUnknown yourAddress!
 
 lphPropertyPages
 	"Answer the <ExternalHandle> value of the receiver's 'lphPropertyPages' field."
 
-	^ExternalHandle fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lphPropertyPages))!
+	^ExternalHandle fromAddress: (bytes intPtrAtOffset: _OffsetOf_lphPropertyPages)!
 
 lphPropertyPages: anExternalHandle
 	"Set the receiver's 'lphPropertyPages' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lphPropertyPages) put: anExternalHandle yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lphPropertyPages put: anExternalHandle yourAddress!
 
 lpPageRanges
 	"Answer the <PRINTPAGERANGE> value of the receiver's 'lpPageRanges' field."
 
-	^PRINTPAGERANGE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpPageRanges))!
+	^PRINTPAGERANGE fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpPageRanges)!
 
 lpPageRanges: aPRINTPAGERANGE
 	"Set the receiver's 'lpPageRanges' field to the value of the argument, aPRINTPAGERANGE"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpPageRanges) put: aPRINTPAGERANGE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpPageRanges put: aPRINTPAGERANGE yourAddress!
 
 lpPrintTemplateName
 	"Answer the <Utf16String> value of the receiver's 'lpPrintTemplateName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpPrintTemplateName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpPrintTemplateName)!
 
 lpPrintTemplateName: anUtf16String
 	"Set the receiver's 'lpPrintTemplateName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpPrintTemplateName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpPrintTemplateName put: anUtf16String yourAddress!
 
 lStructSize
 	"Answer the <Integer> value of the receiver's 'lStructSize' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_lStructSize!
 
 lStructSize: anInteger
 	"Set the receiver's 'lStructSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lStructSize put: anInteger!
 
 nCopies
 	"Answer the <Integer> value of the receiver's 'nCopies' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nCopies)!
+	^bytes dwordAtOffset: _OffsetOf_nCopies!
 
 nCopies: anInteger
 	"Set the receiver's 'nCopies' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nCopies) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nCopies put: anInteger!
 
 nMaxPage
 	"Answer the <Integer> value of the receiver's 'nMaxPage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nMaxPage)!
+	^bytes dwordAtOffset: _OffsetOf_nMaxPage!
 
 nMaxPage: anInteger
 	"Set the receiver's 'nMaxPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nMaxPage) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nMaxPage put: anInteger!
 
 nMaxPageRanges
 	"Answer the <Integer> value of the receiver's 'nMaxPageRanges' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nMaxPageRanges)!
+	^bytes dwordAtOffset: _OffsetOf_nMaxPageRanges!
 
 nMaxPageRanges: anInteger
 	"Set the receiver's 'nMaxPageRanges' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nMaxPageRanges) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nMaxPageRanges put: anInteger!
 
 nMinPage
 	"Answer the <Integer> value of the receiver's 'nMinPage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nMinPage)!
+	^bytes dwordAtOffset: _OffsetOf_nMinPage!
 
 nMinPage: anInteger
 	"Set the receiver's 'nMinPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nMinPage) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nMinPage put: anInteger!
 
 nPageRanges
 	"Answer the <Integer> value of the receiver's 'nPageRanges' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPageRanges)!
+	^bytes dwordAtOffset: _OffsetOf_nPageRanges!
 
 nPageRanges: anInteger
 	"Set the receiver's 'nPageRanges' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPageRanges) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nPageRanges put: anInteger!
 
 nPropertyPages
 	"Answer the <Integer> value of the receiver's 'nPropertyPages' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPropertyPages)!
+	^bytes dwordAtOffset: _OffsetOf_nPropertyPages!
 
 nPropertyPages: anInteger
 	"Set the receiver's 'nPropertyPages' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPropertyPages) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nPropertyPages put: anInteger!
 
 nStartPage
 	"Answer the <Integer> value of the receiver's 'nStartPage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nStartPage)!
+	^bytes dwordAtOffset: _OffsetOf_nStartPage!
 
 nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nStartPage) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_nStartPage put: anInteger! !
 !PRINTDLGEXW categoriesFor: #dwResultAction!**compiled accessors**!public! !
 !PRINTDLGEXW categoriesFor: #dwResultAction:!**compiled accessors**!public! !
 !PRINTDLGEXW categoriesFor: #ExclusionFlags!**compiled accessors**!public! !

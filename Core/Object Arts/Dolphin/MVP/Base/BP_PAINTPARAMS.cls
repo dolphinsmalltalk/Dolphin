@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #BP_PAINTPARAMS
 	instanceVariableNames: 'blendFunction'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_pBlendFunction _OffsetOf_prcExclude'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BP_PAINTPARAMS guid: (GUID fromString: '{caca75ff-b81a-424e-9ffe-ae0e691932d5}')!
+BP_PAINTPARAMS addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
+BP_PAINTPARAMS addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+BP_PAINTPARAMS addClassConstant: '_OffsetOf_pBlendFunction' value: 16rC!
+BP_PAINTPARAMS addClassConstant: '_OffsetOf_prcExclude' value: 16r8!
 BP_PAINTPARAMS comment: ''!
 !BP_PAINTPARAMS categoriesForClass!Win32-Structs! !
 !BP_PAINTPARAMS methodsFor!
@@ -20,37 +24,37 @@ blendFunction: aBLENDFUNCTION
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 pBlendFunction
 	"Answer the <BLENDFUNCTION> value of the receiver's 'pBlendFunction' field."
 
-	^BLENDFUNCTION fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pBlendFunction))!
+	^BLENDFUNCTION fromAddress: (bytes intPtrAtOffset: _OffsetOf_pBlendFunction)!
 
 pBlendFunction: aBLENDFUNCTION
 	"Set the receiver's 'pBlendFunction' field to the value of the argument, aBLENDFUNCTION"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pBlendFunction) put: aBLENDFUNCTION yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pBlendFunction put: aBLENDFUNCTION yourAddress!
 
 prcExclude
 	"Answer the <RECT> value of the receiver's 'prcExclude' field."
 
-	^RECT fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #prcExclude))!
+	^RECT fromAddress: (bytes intPtrAtOffset: _OffsetOf_prcExclude)!
 
 prcExclude: aRECT
 	"Set the receiver's 'prcExclude' field to the value of the argument, aRECT"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #prcExclude) put: aRECT yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_prcExclude put: aRECT yourAddress! !
 !BP_PAINTPARAMS categoriesFor: #blendFunction!accessing!public! !
 !BP_PAINTPARAMS categoriesFor: #blendFunction:!accessing!public! !
 !BP_PAINTPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !

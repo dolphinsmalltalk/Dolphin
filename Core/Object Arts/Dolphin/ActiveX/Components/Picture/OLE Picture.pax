@@ -52,7 +52,7 @@ IDispatch subclass: #IPictureDisp
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Image subclass: #OLEPicture

@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #NMHDR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_code _OffsetOf_hwndFrom _OffsetOf_idFrom'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 NMHDR guid: (GUID fromString: '{87b4c601-026e-11d3-9fd7-00a0cc3e4a32}')!
+NMHDR addClassConstant: '_OffsetOf_code' value: 16r8!
+NMHDR addClassConstant: '_OffsetOf_hwndFrom' value: 16r0!
+NMHDR addClassConstant: '_OffsetOf_idFrom' value: 16r4!
 NMHDR comment: 'NMHDR is a <Win32Structure> representing the NMHDR external Win32 API structure.'!
 !NMHDR categoriesForClass!External-Data-Structured-Win32! !
 !NMHDR methodsFor!
@@ -13,17 +16,17 @@ NMHDR comment: 'NMHDR is a <Win32Structure> representing the NMHDR external Win3
 code
 	"Answer the <Integer> value of the receiver's 'code' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #code)!
+	^bytes sdwordAtOffset: _OffsetOf_code!
 
 hwndFrom
 	"Answer the <Integer> value of the receiver's 'hwndFrom' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_hwndFrom!
 
 idFrom
 	"Answer the <Integer> value of the receiver's 'idFrom' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #idFrom)!
+	^bytes uintPtrAtOffset: _OffsetOf_idFrom!
 
 itemHandle
 	^self idFrom! !

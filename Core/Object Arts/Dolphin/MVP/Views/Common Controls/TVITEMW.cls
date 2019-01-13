@@ -2,10 +2,19 @@
 
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cChildren _OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_hItem _OffsetOf_iImage _OffsetOf_iSelectedImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TVITEMW guid: (GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
+TVITEMW addClassConstant: '_OffsetOf_cChildren' value: 16r20!
+TVITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r14!
+TVITEMW addClassConstant: '_OffsetOf_dwState' value: 16r8!
+TVITEMW addClassConstant: '_OffsetOf_hItem' value: 16r4!
+TVITEMW addClassConstant: '_OffsetOf_iImage' value: 16r18!
+TVITEMW addClassConstant: '_OffsetOf_iSelectedImage' value: 16r1C!
+TVITEMW addClassConstant: '_OffsetOf_lParam' value: 16r24!
+TVITEMW addClassConstant: '_OffsetOf_pszText' value: 16r10!
+TVITEMW addClassConstant: '_OffsetOf_stateMask' value: 16rC!
 TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 TVITEM is used to communicate information about the items (nodes) in a Tree View control such as the text, icon, state, etc.
@@ -29,9 +38,9 @@ allCallbacks
 	"Set up the receiver to specify that callbacks are required for image, children count, and label text."
 
 	bytes
-		sdwordAtOffset: ##(self offsetOf: #iImage) put: I_IMAGECALLBACK;
-		sdwordAtOffset: ##(self offsetOf: #cChildren) put: I_CHILDRENCALLBACK;
-		dwordAtOffset: ##(self offsetOf: #pszText) put: LPSTR_TEXTCALLBACK.
+		sdwordAtOffset: _OffsetOf_iImage put: I_IMAGECALLBACK;
+		sdwordAtOffset: _OffsetOf_cChildren put: I_CHILDRENCALLBACK;
+		dwordAtOffset: _OffsetOf_pszText put: LPSTR_TEXTCALLBACK.
 	self maskIn: ##(TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE)!
 
 beStateExpandedOnce
@@ -42,25 +51,25 @@ beStateExpandedOnce
 cChildren
 	"Answer the <Integer> value of the receiver's 'cChildren' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cChildren)!
+	^bytes sdwordAtOffset: _OffsetOf_cChildren!
 
 cChildren: anInteger
 	"Set the receiver's 'cChildren' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cChildren) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cChildren put: anInteger!
 
 cchTextMax
 	"Answer the <Integer> value of the receiver's 'cchTextMax' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax)!
+	^bytes sdwordAtOffset: _OffsetOf_cchTextMax!
 
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cchTextMaxOffset
-	^##(self offsetOf: #cchTextMax)!
+	^_OffsetOf_cchTextMax!
 
 children: anInteger
 	"Set contents' cChildren member from anInteger"
@@ -76,12 +85,12 @@ childrenCallback
 dwState
 	"Answer the <Integer> value of the receiver's 'dwState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwState)!
+	^bytes dwordAtOffset: _OffsetOf_dwState!
 
 dwState: anInteger
 	"Set the receiver's 'dwState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwState) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwState put: anInteger!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of the fields defined 
@@ -107,32 +116,32 @@ handle
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hItem)!
+	^bytes dwordAtOffset: _OffsetOf_hItem!
 
 hItem: anInteger
 	"Set the receiver's 'hItem' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hItem) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hItem put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iImage)!
+	^bytes sdwordAtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iImage) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
 
 iSelectedImage
 	"Answer the <Integer> value of the receiver's 'iSelectedImage' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iSelectedImage)!
+	^bytes sdwordAtOffset: _OffsetOf_iSelectedImage!
 
 iSelectedImage: anInteger
 	"Set the receiver's 'iSelectedImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iSelectedImage) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger!
 
 isStateExpandedOnce
 	"Answer whether the receiver has already been expanded"
@@ -142,22 +151,22 @@ isStateExpandedOnce
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 lParam: anInteger
 	"Set the receiver's 'lParam' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lParam) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_lParam put: anInteger!
 
 pszText
 	"Answer the <Utf16String> value of the receiver's 'pszText' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszText))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszText)!
 
 pszText: anUtf16String
 	"Set the receiver's 'pszText' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pszText) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
 
 saveDetails
 	"Private - Set the flag in the receiver's mask which informs the TreeView to save
@@ -174,17 +183,17 @@ selectedImage: anInteger
 stateMask
 	"Answer the <Integer> value of the receiver's 'stateMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #stateMask)!
+	^bytes dwordAtOffset: _OffsetOf_stateMask!
 
 stateMask: anInteger
 	"Set the receiver's 'stateMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #stateMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_stateMask put: anInteger!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
-	^##(self offsetOf: #pszText)! !
+	^_OffsetOf_pszText! !
 !TVITEMW categoriesFor: #allCallbacks!accessing!public! !
 !TVITEMW categoriesFor: #beStateExpandedOnce!accessing!public! !
 !TVITEMW categoriesFor: #cChildren!**compiled accessors**!public! !

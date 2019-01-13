@@ -10,43 +10,6 @@ StructureField comment: 'StructureField is an <ExternalField> type  for describe
 !StructureField categoriesForClass!External-Data-Types! !
 !StructureField methodsFor!
 
-printMutatorBody: aSymbol on: aWriteStream
-	"Private - Answer suitable method text for compiling a write-accessor method
-	to substitute for the receiver (does not include the selector).
-	N.B. In this case we overwrite the entire embedded structure with
-	a new one"
-
-	| keywords |
-	keywords := #replaceBytesOf:from:to:startingAt: keywords.
-	aWriteStream
-		nextPutAll: self valueParameterName;
-		space;
-		display: keywords first;
-		nextPutAll: ' bytes ';
-		display: keywords second;
-		space.
-	self
-		printOffsetExpression: aSymbol
-		on: aWriteStream
-		extra: 1.
-	aWriteStream
-		space;
-		display: keywords third;
-		space.
-	self
-		printOffsetExpression: aSymbol
-		on: aWriteStream
-		extra: ((String writeStream)
-				display: self fieldClassName;
-				space;
-				display: #basicByteSize;
-				contents).
-	aWriteStream
-		space;
-		display: keywords fourth;
-		space;
-		display: 1!
-
 readFrom: anExternalStructure
 	"Private - Answer an <ExternalStructure> of the receiver's field class that is a reference
 	to the data in the <ExternalStructure> argument at the receiver's offset."
@@ -61,7 +24,6 @@ writeInto: anExternal value: anExternalStructure
 		from: offset+1
 		to: offset+self byteSize
 		startingAt: 1! !
-!StructureField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
 !StructureField categoriesFor: #readFrom:!indirect accessing!private! !
 !StructureField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

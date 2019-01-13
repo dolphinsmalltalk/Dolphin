@@ -2,10 +2,11 @@
 
 HTTP_HEADERS subclass: #HTTP_RESPONSE_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_KnownHeaders'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_HEADERS guid: (GUID fromString: '{487fd2e3-1549-4dcf-8703-d45a2cbbcd85}')!
+HTTP_RESPONSE_HEADERS addClassConstant: '_OffsetOf_KnownHeaders' value: 16r10!
 HTTP_RESPONSE_HEADERS comment: '<HTTP_RESPONSE_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +29,7 @@ KnownHeaders
 	"Answer the <StructureArray> value of the receiver's 'KnownHeaders' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #KnownHeaders)
+		fromAddress: bytes yourAddress + _OffsetOf_KnownHeaders
 		length: 30
 		elementClass: HTTP_KNOWN_HEADER!
 
@@ -39,8 +40,8 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 	size := aStructureArrayOfHTTP_KNOWN_HEADER byteSize min: ##(30 * HTTP_KNOWN_HEADER basicByteSize).
 	aStructureArrayOfHTTP_KNOWN_HEADER
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #KnownHeaders) + 1)
-		to: ##(self offsetOf: #KnownHeaders) + size
+		from: ##(_OffsetOf_KnownHeaders + 1)
+		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
 !HTTP_RESPONSE_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
 !HTTP_RESPONSE_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
@@ -64,6 +65,9 @@ defineFields
 		defineField: #KnownHeaders type: (StructureArrayField type: HTTP_KNOWN_HEADER length: 30) offset: 16.
 	self byteSize: 256!
 
+getFieldNames
+	^#(#UnknownHeaderCount #pUnknownHeaders #KnownHeaders)!
+
 indexToHeaderMap
 	^##(LookupTable new
 		at: HttpHeaderAcceptRanges put: 'Accept-Ranges';
@@ -78,5 +82,6 @@ indexToHeaderMap
 		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
 		yourself)! !
 !HTTP_RESPONSE_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_RESPONSE_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 

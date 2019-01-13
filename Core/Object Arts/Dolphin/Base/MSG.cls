@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #MSG
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_message _OffsetOf_time _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MSG guid: (GUID fromString: '{87b4c5ff-026e-11d3-9fd7-00a0cc3e4a32}')!
+MSG addClassConstant: '_OffsetOf_hwnd' value: 16r0!
+MSG addClassConstant: '_OffsetOf_lParam' value: 16rC!
+MSG addClassConstant: '_OffsetOf_message' value: 16r4!
+MSG addClassConstant: '_OffsetOf_time' value: 16r10!
+MSG addClassConstant: '_OffsetOf_wParam' value: 16r8!
+MSG addClassConstant: '_OffsetOf_x' value: 16r14!
+MSG addClassConstant: '_OffsetOf_y' value: 16r18!
 MSG comment: 'MSG is an <ExternalStructure> to wrap the Win32 structure of the same name.
 
 MSG is an represents the state associated with a Windows message retrieved via GetMessage().'!
@@ -15,7 +22,7 @@ MSG is an represents the state associated with a Windows message retrieved via G
 hwnd
 	"Answer the <Integer> value of the receiver's 'hwnd' field."
 
-	^bytes uintPtrAtOffset: 0!
+	^bytes uintPtrAtOffset: _OffsetOf_hwnd!
 
 isInput
 	"Answer whether the receiver represents an input event."
@@ -43,12 +50,12 @@ isMouseInput
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 message
 	"Answer the <Integer> value of the receiver's 'message' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #message)!
+	^bytes dwordAtOffset: _OffsetOf_message!
 
 swParam
 	"Answer the <integer> value of the receiver's wParam field, treating
@@ -59,7 +66,7 @@ swParam
 wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #wParam)! !
+	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
 !MSG categoriesFor: #hwnd!**compiled accessors**!public! !
 !MSG categoriesFor: #isInput!public!testing! !
 !MSG categoriesFor: #isKeyboardInput!public!testing! !

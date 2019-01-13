@@ -2,10 +2,20 @@
 
 Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cAlternateFileName _OffsetOf_cFileName _OffsetOf_dwFileAttributes _OffsetOf_dwReserved0 _OffsetOf_dwReserved1 _OffsetOf_ftCreationTime _OffsetOf_ftLastAccessTime _OffsetOf_ftLastWriteTime _OffsetOf_nFileSizeHigh _OffsetOf_nFileSizeLow'
 	poolDictionaries: 'Win32Constants'
 	classInstanceVariableNames: ''!
 WIN32_FIND_DATAW guid: (GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_cAlternateFileName' value: 16r234!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_cFileName' value: 16r2C!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_dwFileAttributes' value: 16r0!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_dwReserved0' value: 16r24!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_dwReserved1' value: 16r28!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_ftCreationTime' value: 16r4!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_ftLastAccessTime' value: 16rC!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_ftLastWriteTime' value: 16r14!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_nFileSizeHigh' value: 16r1C!
+WIN32_FIND_DATAW addClassConstant: '_OffsetOf_nFileSizeLow' value: 16r20!
 WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
 
 See File class for example usage.'!
@@ -15,12 +25,12 @@ See File class for example usage.'!
 cAlternateFileName
 	"Answer the <Utf16String> value of the receiver's 'cAlternateFileName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #cAlternateFileName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_cAlternateFileName!
 
 cFileName
 	"Answer the <Utf16String> value of the receiver's 'cFileName' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #cFileName)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_cFileName!
 
 directory
 	^directory!
@@ -31,7 +41,7 @@ directory: aString
 dwFileAttributes
 	"Answer the <Integer> value of the receiver's 'dwFileAttributes' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_dwFileAttributes!
 
 fileName
 	"Answer the full filename from the receiver."
@@ -46,17 +56,17 @@ fileSize
 ftCreationTime
 	"Answer the <FILETIME> value of the receiver's 'ftCreationTime' field."
 
-	^FILETIME fromAddress: bytes yourAddress + ##(self offsetOf: #ftCreationTime)!
+	^FILETIME fromAddress: bytes yourAddress + _OffsetOf_ftCreationTime!
 
 ftLastAccessTime
 	"Answer the <FILETIME> value of the receiver's 'ftLastAccessTime' field."
 
-	^FILETIME fromAddress: bytes yourAddress + ##(self offsetOf: #ftLastAccessTime)!
+	^FILETIME fromAddress: bytes yourAddress + _OffsetOf_ftLastAccessTime!
 
 ftLastWriteTime
 	"Answer the <FILETIME> value of the receiver's 'ftLastWriteTime' field."
 
-	^FILETIME fromAddress: bytes yourAddress + ##(self offsetOf: #ftLastWriteTime)!
+	^FILETIME fromAddress: bytes yourAddress + _OffsetOf_ftLastWriteTime!
 
 isDirectory
 	"Answer whether the receiver describes a directory (as opposed to a file) 
@@ -73,12 +83,12 @@ isReadOnly
 nFileSizeHigh
 	"Answer the <Integer> value of the receiver's 'nFileSizeHigh' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nFileSizeHigh)!
+	^bytes dwordAtOffset: _OffsetOf_nFileSizeHigh!
 
 nFileSizeLow
 	"Answer the <Integer> value of the receiver's 'nFileSizeLow' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nFileSizeLow)!
+	^bytes dwordAtOffset: _OffsetOf_nFileSizeLow!
 
 path
 	"Answer the path of the file described by the receiver (assuming the 

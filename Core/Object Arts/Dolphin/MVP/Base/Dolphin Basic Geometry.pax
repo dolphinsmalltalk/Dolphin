@@ -63,12 +63,12 @@ ExternalStructure subclass: #ExternalRectangle
 	classInstanceVariableNames: ''!
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalRectangle subclass: #RECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ArithmeticValue subclass: #Point

@@ -82,37 +82,37 @@ Object subclass: #ListViewColumn
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #CCHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags _OffsetOf_pt'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #CCITEM
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_mask'
 	poolDictionaries: 'CommCtrlConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchImageMax _OffsetOf_hbm _OffsetOf_pszImage _OffsetOf_ulFlags _OffsetOf_xOffsetPercent _OffsetOf_yOffsetPercent'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cx _OffsetOf_cxDefault _OffsetOf_cxIdeal _OffsetOf_cxMin _OffsetOf_fmt _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_iSubItem _OffsetOf_mask _OffsetOf_pszText AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags _OffsetOf_lParam _OffsetOf_psz _OffsetOf_pt _OffsetOf_vkDirection'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TVINSERTSTRUCTW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hInsertAfter _OffsetOf_hParent _OffsetOf_item'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 CCHITTESTINFO subclass: #TCHITTESTINFO
@@ -122,32 +122,32 @@ CCHITTESTINFO subclass: #TCHITTESTINFO
 	classInstanceVariableNames: ''!
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CCITEM subclass: #LVITEMW
 	instanceVariableNames: ''
-	classVariableNames: 'CallbackPrototype'
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cColumns _OffsetOf_dwState _OffsetOf_iGroup _OffsetOf_iGroupId _OffsetOf_iImage _OffsetOf_iIndent _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_piColFmt _OffsetOf_pszText _OffsetOf_puColumns _OffsetOf_stateMask CallbackPrototype'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TabViewConstants'
 	classInstanceVariableNames: ''!
 CCITEM subclass: #TVITEMW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cChildren _OffsetOf_cchTextMax _OffsetOf_dwState _OffsetOf_hItem _OffsetOf_iImage _OffsetOf_iSelectedImage _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_stateMask'
 	poolDictionaries: 'TreeViewConstants'
 	classInstanceVariableNames: ''!
 TVITEMW subclass: #TVITEMEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hwnd _OffsetOf_iExpandedImage _OffsetOf_iIntegral _OffsetOf_uStateEx'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwDrawStage _OffsetOf_dwItemSpec _OffsetOf_hdc _OffsetOf_lParam _OffsetOf_rc _OffsetOf_uItemState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMGETINFOTIP
@@ -157,52 +157,52 @@ NMHDR subclass: #NMGETINFOTIP
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMITEMACTIVATE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_ptAction _OffsetOf_uChanged _OffsetOf_uKeyFlags _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMKEYDOWN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags _OffsetOf_wVKey'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLISTVIEW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_ptAction _OffsetOf_uChanged _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLVFINDITEMW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iStart _OffsetOf_lvfi'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMLVODSTATECHANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iFrom _OffsetOf_iTo _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMTREEVIEWW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_action _OffsetOf_itemNew _OffsetOf_itemOld _OffsetOf_ptDrag'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iSubItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW subclass: #NMTVCUSTOMDRAW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iLevel'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_dwFlags _OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMGETINFOTIP subclass: #NMTVGETINFOTIPW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_hItem _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ListControlView subclass: #IconicListAbstract

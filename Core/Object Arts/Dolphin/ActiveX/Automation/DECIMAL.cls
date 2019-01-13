@@ -2,10 +2,15 @@
 
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hi32 _OffsetOf_lo64 _OffsetOf_scale _OffsetOf_sign _OffsetOf_wReserved'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 DECIMAL guid: (GUID fromString: '{e6470841-9795-44b8-ba35-cccbab3e9a0c}')!
+DECIMAL addClassConstant: '_OffsetOf_hi32' value: 16r4!
+DECIMAL addClassConstant: '_OffsetOf_lo64' value: 16r8!
+DECIMAL addClassConstant: '_OffsetOf_scale' value: 16r2!
+DECIMAL addClassConstant: '_OffsetOf_sign' value: 16r3!
+DECIMAL addClassConstant: '_OffsetOf_wReserved' value: 16r0!
 DECIMAL comment: 'DECIMAL is an ExternalStructure class to represent the Automation structure of the same name.
 
 DECIMAL is a rather complex 16-byte fixed point value with 12-bytes to represent the absolute value, and a byte each for scale and sign, with the top two bytes unused so that a DECIMAL can be stored safely in a VARIANT without overwriting the vartype. DECIMAL corresponds to VT_DECIMAL.
@@ -17,42 +22,42 @@ DECIMALs are mapped to/from Dolphin''s <ScaledDecimal> objects, although of cour
 hi32
 	"Answer the <Integer> value of the receiver's 'hi32' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hi32)!
+	^bytes dwordAtOffset: _OffsetOf_hi32!
 
 hi32: anInteger
 	"Set the receiver's 'hi32' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #hi32) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_hi32 put: anInteger!
 
 lo64
 	"Answer the <Integer> value of the receiver's 'lo64' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #lo64)!
+	^bytes qwordAtOffset: _OffsetOf_lo64!
 
 lo64: anInteger
 	"Set the receiver's 'lo64' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #lo64) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_lo64 put: anInteger!
 
 scale
 	"Answer the <Integer> value of the receiver's 'scale' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #scale)!
+	^bytes byteAtOffset: _OffsetOf_scale!
 
 scale: anInteger
 	"Set the receiver's 'scale' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #scale) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_scale put: anInteger!
 
 sign
 	"Answer the <Integer> value of the receiver's 'sign' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #sign)!
+	^bytes byteAtOffset: _OffsetOf_sign!
 
 sign: anInteger
 	"Set the receiver's 'sign' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #sign) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_sign put: anInteger!
 
 value
 	"Answer the receiver's value as a Smalltalk <ScaledDecimal>."

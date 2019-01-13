@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #GdiplusStartupOutput
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_NotificationHook _OffsetOf_NotificationUnhook'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GdiplusStartupOutput guid: (GUID fromString: '{40bb7e65-cd3b-49aa-b850-f404c6d944fc}')!
+GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationHook' value: 16r0!
+GdiplusStartupOutput addClassConstant: '_OffsetOf_NotificationUnhook' value: 16r4!
 GdiplusStartupOutput comment: '<GdiplusStartupOutput> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GdiplusStartupOutput'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains the following helpstring for this struct
@@ -25,22 +27,22 @@ struct tagGdiplusStartupOutput {
 NotificationHook
 	"Answer the <ExternalAddress> value of the receiver's 'NotificationHook' field."
 
-	^(bytes uintPtrAtOffset: 0) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_NotificationHook) asExternalAddress!
 
 NotificationHook: anExternalAddress
 	"Set the receiver's 'NotificationHook' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: 0 put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_NotificationHook put: anExternalAddress!
 
 NotificationUnhook
 	"Answer the <ExternalAddress> value of the receiver's 'NotificationUnhook' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #NotificationUnhook)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_NotificationUnhook) asExternalAddress!
 
 NotificationUnhook: anExternalAddress
 	"Set the receiver's 'NotificationUnhook' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #NotificationUnhook) put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_NotificationUnhook put: anExternalAddress! !
 !GdiplusStartupOutput categoriesFor: #NotificationHook!**compiled accessors**!public! !
 !GdiplusStartupOutput categoriesFor: #NotificationHook:!**compiled accessors**!public! !
 !GdiplusStartupOutput categoriesFor: #NotificationUnhook!**compiled accessors**!public! !

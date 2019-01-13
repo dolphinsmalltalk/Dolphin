@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #METAHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_mtHeaderSize _OffsetOf_mtMaxRecord _OffsetOf_mtNoObjects _OffsetOf_mtNoParameters _OffsetOf_mtSize _OffsetOf_mtType _OffsetOf_mtVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 METAHEADER guid: (GUID fromString: '{0252c31a-1d28-4418-90fa-3243aff6de01}')!
+METAHEADER addClassConstant: '_OffsetOf_mtHeaderSize' value: 16r2!
+METAHEADER addClassConstant: '_OffsetOf_mtMaxRecord' value: 16r10!
+METAHEADER addClassConstant: '_OffsetOf_mtNoObjects' value: 16rC!
+METAHEADER addClassConstant: '_OffsetOf_mtNoParameters' value: 16r14!
+METAHEADER addClassConstant: '_OffsetOf_mtSize' value: 16r8!
+METAHEADER addClassConstant: '_OffsetOf_mtType' value: 16r0!
+METAHEADER addClassConstant: '_OffsetOf_mtVersion' value: 16r4!
 METAHEADER comment: '<METAHEADER> is an <ExternalStructure> class to wrap the struct ''Gdiplus.METAHEADER'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -31,72 +38,72 @@ struct tagMETAHEADER {
 mtHeaderSize
 	"Answer the <Integer> value of the receiver's 'mtHeaderSize' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #mtHeaderSize)!
+	^bytes wordAtOffset: _OffsetOf_mtHeaderSize!
 
 mtHeaderSize: anInteger
 	"Set the receiver's 'mtHeaderSize' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #mtHeaderSize) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_mtHeaderSize put: anInteger!
 
 mtMaxRecord
 	"Answer the <Integer> value of the receiver's 'mtMaxRecord' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #mtMaxRecord)!
+	^bytes dwordAtOffset: _OffsetOf_mtMaxRecord!
 
 mtMaxRecord: anInteger
 	"Set the receiver's 'mtMaxRecord' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #mtMaxRecord) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_mtMaxRecord put: anInteger!
 
 mtNoObjects
 	"Answer the <Integer> value of the receiver's 'mtNoObjects' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #mtNoObjects)!
+	^bytes wordAtOffset: _OffsetOf_mtNoObjects!
 
 mtNoObjects: anInteger
 	"Set the receiver's 'mtNoObjects' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #mtNoObjects) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_mtNoObjects put: anInteger!
 
 mtNoParameters
 	"Answer the <Integer> value of the receiver's 'mtNoParameters' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #mtNoParameters)!
+	^bytes wordAtOffset: _OffsetOf_mtNoParameters!
 
 mtNoParameters: anInteger
 	"Set the receiver's 'mtNoParameters' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #mtNoParameters) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_mtNoParameters put: anInteger!
 
 mtSize
 	"Answer the <Integer> value of the receiver's 'mtSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #mtSize)!
+	^bytes dwordAtOffset: _OffsetOf_mtSize!
 
 mtSize: anInteger
 	"Set the receiver's 'mtSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #mtSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_mtSize put: anInteger!
 
 mtType
 	"Answer the <Integer> value of the receiver's 'mtType' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_mtType!
 
 mtType: anInteger
 	"Set the receiver's 'mtType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_mtType put: anInteger!
 
 mtVersion
 	"Answer the <Integer> value of the receiver's 'mtVersion' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #mtVersion)!
+	^bytes wordAtOffset: _OffsetOf_mtVersion!
 
 mtVersion: anInteger
 	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #mtVersion) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_mtVersion put: anInteger! !
 !METAHEADER categoriesFor: #mtHeaderSize!**compiled accessors**!public! !
 !METAHEADER categoriesFor: #mtHeaderSize:!**compiled accessors**!public! !
 !METAHEADER categoriesFor: #mtMaxRecord!**compiled accessors**!public! !

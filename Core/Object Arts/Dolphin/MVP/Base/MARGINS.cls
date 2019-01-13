@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #MARGINS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cxLeftWidth _OffsetOf_cxRightWidth _OffsetOf_cyBottomHeight _OffsetOf_cyTopHeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MARGINS guid: (GUID fromString: '{d92a9b7d-a1dc-4ef4-97e5-869e7a720a83}')!
+MARGINS addClassConstant: '_OffsetOf_cxLeftWidth' value: 16r0!
+MARGINS addClassConstant: '_OffsetOf_cxRightWidth' value: 16r4!
+MARGINS addClassConstant: '_OffsetOf_cyBottomHeight' value: 16rC!
+MARGINS addClassConstant: '_OffsetOf_cyTopHeight' value: 16r8!
 MARGINS comment: '<MARGINS> is an <ExternalStructure> class to wrap the struct ''Win32.MARGINS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,42 +33,42 @@ struct tagMARGINS {
 cxLeftWidth
 	"Answer the <Integer> value of the receiver's 'cxLeftWidth' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_cxLeftWidth!
 
 cxLeftWidth: anInteger
 	"Set the receiver's 'cxLeftWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxLeftWidth put: anInteger!
 
 cxRightWidth
 	"Answer the <Integer> value of the receiver's 'cxRightWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxRightWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_cxRightWidth!
 
 cxRightWidth: anInteger
 	"Set the receiver's 'cxRightWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxRightWidth) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxRightWidth put: anInteger!
 
 cyBottomHeight
 	"Answer the <Integer> value of the receiver's 'cyBottomHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cyBottomHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_cyBottomHeight!
 
 cyBottomHeight: anInteger
 	"Set the receiver's 'cyBottomHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cyBottomHeight) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cyBottomHeight put: anInteger!
 
 cyTopHeight
 	"Answer the <Integer> value of the receiver's 'cyTopHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cyTopHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_cyTopHeight!
 
 cyTopHeight: anInteger
 	"Set the receiver's 'cyTopHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cyTopHeight) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_cyTopHeight put: anInteger! !
 !MARGINS categoriesFor: #cxLeftWidth!**compiled accessors**!public! !
 !MARGINS categoriesFor: #cxLeftWidth:!**compiled accessors**!public! !
 !MARGINS categoriesFor: #cxRightWidth!**compiled accessors**!public! !

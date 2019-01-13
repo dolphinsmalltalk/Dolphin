@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #TRIVERTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_alpha _OffsetOf_blue _OffsetOf_green _OffsetOf_red _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TRIVERTEX guid: (GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
+TRIVERTEX addClassConstant: '_OffsetOf_alpha' value: 16rE!
+TRIVERTEX addClassConstant: '_OffsetOf_blue' value: 16rC!
+TRIVERTEX addClassConstant: '_OffsetOf_green' value: 16rA!
+TRIVERTEX addClassConstant: '_OffsetOf_red' value: 16r8!
+TRIVERTEX addClassConstant: '_OffsetOf_x' value: 16r0!
+TRIVERTEX addClassConstant: '_OffsetOf_y' value: 16r4!
 TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,22 +37,22 @@ struct tagTRIVERTEX {
 alpha
 	"Answer the <Integer> value of the receiver's 'alpha' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #alpha)!
+	^bytes wordAtOffset: _OffsetOf_alpha!
 
 alpha: anInteger
 	"Set the receiver's 'alpha' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #alpha) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_alpha put: anInteger!
 
 blue
 	"Answer the <Integer> value of the receiver's 'blue' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #blue)!
+	^bytes wordAtOffset: _OffsetOf_blue!
 
 blue: anInteger
 	"Set the receiver's 'blue' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #blue) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_blue put: anInteger!
 
 color: aColor 
 	self
@@ -58,12 +64,12 @@ color: aColor
 green
 	"Answer the <Integer> value of the receiver's 'green' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #green)!
+	^bytes wordAtOffset: _OffsetOf_green!
 
 green: anInteger
 	"Set the receiver's 'green' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #green) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_green put: anInteger!
 
 position: aPoint 
 	self
@@ -73,32 +79,32 @@ position: aPoint
 red
 	"Answer the <Integer> value of the receiver's 'red' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #red)!
+	^bytes wordAtOffset: _OffsetOf_red!
 
 red: anInteger
 	"Set the receiver's 'red' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #red) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_red put: anInteger!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_x put: anInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #y)!
+	^bytes sdwordAtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #y) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
 !TRIVERTEX categoriesFor: #alpha!**compiled accessors**!public! !
 !TRIVERTEX categoriesFor: #alpha:!**compiled accessors**!public! !
 !TRIVERTEX categoriesFor: #blue!**compiled accessors**!public! !

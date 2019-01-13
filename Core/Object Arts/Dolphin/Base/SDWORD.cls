@@ -25,12 +25,12 @@ unsignedValue: anUnsigned
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
 !SDWORD categoriesFor: #unsignedValue:!accessing!public! !
 !SDWORD categoriesFor: #value!**compiled accessors**!public! !
 !SDWORD categoriesFor: #value:!**compiled accessors**!public! !

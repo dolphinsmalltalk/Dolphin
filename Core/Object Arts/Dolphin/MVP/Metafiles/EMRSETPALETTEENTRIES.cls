@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_aPalEntries _OffsetOf_cEntries _OffsetOf_ihPal _OffsetOf_iStart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETPALETTEENTRIES guid: (GUID fromString: '{e7bfc219-37e0-4690-bf26-61e47ef6ccfb}')!
+EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_aPalEntries' value: 16r14!
+EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_cEntries' value: 16r10!
+EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_ihPal' value: 16r8!
+EMRSETPALETTEENTRIES addClassConstant: '_OffsetOf_iStart' value: 16rC!
 EMRSETPALETTEENTRIES comment: '<EMRSETPALETTEENTRIES> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETPALETTEENTRIES'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,7 +34,7 @@ aPalEntries
 	"Answer the <StructureArray> value of the receiver's 'aPalEntries' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #aPalEntries)
+		fromAddress: bytes yourAddress + _OffsetOf_aPalEntries
 		length: self cEntries
 		elementClass: PALETTEENTRY!
 
@@ -41,40 +45,40 @@ aPalEntries: aStructureArrayOfPALETTEENTRY
 	size := aStructureArrayOfPALETTEENTRY byteSize.
 	aStructureArrayOfPALETTEENTRY
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #aPalEntries) + 1)
-		to: ##(self offsetOf: #aPalEntries) + size
+		from: ##(_OffsetOf_aPalEntries + 1)
+		to: _OffsetOf_aPalEntries + size
 		startingAt: 1.
 	self cEntries: aStructureArrayOfPALETTEENTRY size!
 
 cEntries
 	"Answer the <Integer> value of the receiver's 'cEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cEntries)!
+	^bytes dwordAtOffset: _OffsetOf_cEntries!
 
 cEntries: anInteger
 	"Set the receiver's 'cEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cEntries) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cEntries put: anInteger!
 
 ihPal
 	"Answer the <Integer> value of the receiver's 'ihPal' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPal)!
+	^bytes dwordAtOffset: _OffsetOf_ihPal!
 
 ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPal) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger!
 
 iStart
 	"Answer the <Integer> value of the receiver's 'iStart' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iStart)!
+	^bytes dwordAtOffset: _OffsetOf_iStart!
 
 iStart: anInteger
 	"Set the receiver's 'iStart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iStart) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_iStart put: anInteger! !
 !EMRSETPALETTEENTRIES categoriesFor: #aPalEntries!**compiled accessors**!public! !
 !EMRSETPALETTEENTRIES categoriesFor: #aPalEntries:!**compiled accessors**!public! !
 !EMRSETPALETTEENTRIES categoriesFor: #cEntries!**compiled accessors**!public! !

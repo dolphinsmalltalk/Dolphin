@@ -2,10 +2,13 @@
 
 OLEStructure subclass: #CATEGORYINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CATEGORYINFO guid: (GUID fromString: '{a8eebb01-0149-481c-8b90-1eeba6516286}')!
+CATEGORYINFO addClassConstant: '_OffsetOf_catid' value: 16r0!
+CATEGORYINFO addClassConstant: '_OffsetOf_lcid' value: 16r10!
+CATEGORYINFO addClassConstant: '_OffsetOf_szDescription' value: 16r14!
 CATEGORYINFO comment: '<CATEGORYINFO> is an <ExternalStructure> class to wrap the struct ''COMCAT.CATEGORYINFO'' from type information in the ''OLE Component Categories Library'' library.
 
 CATEGORYINFO is used in conjunction with ICatInformation>>EnumCategories() to enumerate details of the categories registered on the host machine.'!
@@ -22,8 +25,8 @@ catid: aGUID
 
 	aGUID
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(GUID basicByteSize)
+		from: ##(_OffsetOf_catid + 1)
+		to: ##(_OffsetOf_catid + GUID basicByteSize)
 		startingAt: 1!
 
 description
@@ -40,12 +43,12 @@ description: desc
 lcid
 	"Answer the <Integer> value of the receiver's 'lcid' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcid)!
+	^bytes dwordAtOffset: _OffsetOf_lcid!
 
 lcid: anInteger
 	"Set the receiver's 'lcid' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcid) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcid put: anInteger!
 
 locale: locale
 	"Set the receiver's lcid field to <integer> LCID of the <Locale>
@@ -56,7 +59,7 @@ locale: locale
 szDescription
 	"Answer the <Utf16String> value of the receiver's 'szDescription' field."
 
-	^Utf16String fromAddress: bytes yourAddress + ##(self offsetOf: #szDescription)!
+	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDescription!
 
 szDescription: anUtf16String
 	"Set the receiver's 'szDescription' field to the value of the argument, anUtf16String"
@@ -65,10 +68,10 @@ szDescription: anUtf16String
 	size := anUtf16String byteSize - 2 min: ##(127 * 2).
 	anUtf16String
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szDescription) + 1)
-		to: ##(self offsetOf: #szDescription) + size
+		from: ##(_OffsetOf_szDescription + 1)
+		to: _OffsetOf_szDescription + size
 		startingAt: 1.
-	bytes wordAtOffset: ##(self offsetOf: #szDescription) + size put: 0! !
+	bytes wordAtOffset: _OffsetOf_szDescription + size put: 0! !
 !CATEGORYINFO categoriesFor: #catid!**compiled accessors**!public! !
 !CATEGORYINFO categoriesFor: #catid:!**compiled accessors**!public! !
 !CATEGORYINFO categoriesFor: #description!accessing!public! !

@@ -40,7 +40,7 @@ testOutlineTextMetrics
 	"Although the TEXTMETRIC structure is of size 60 bytes, its last field is a BYTE so the 
 	last 3 bytes are actually padding. This means that they may contain random data, and
 	so the structures may not be strictly equal based on a byte-by-byte comparison."
-	last := (TEXTMETRICW offsetOf: #tmCharSet) + 1.
+	last := TEXTMETRICW._OffsetOf_tmCharSet + 1.
 	self assert: (canvas textMetrics bytes copyFrom: 1 to: last)
 		equals: (otm otmTextMetrics bytes copyFrom: 1 to: last).
 	"Canvas is no longer needed"

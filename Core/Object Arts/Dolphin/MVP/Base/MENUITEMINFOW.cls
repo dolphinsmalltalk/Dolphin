@@ -2,10 +2,22 @@
 
 Win32Structure subclass: #MENUITEMINFOW
 	instanceVariableNames: 'text bitmap'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cch _OffsetOf_dwItemData _OffsetOf_dwSize _OffsetOf_dwTypeData _OffsetOf_fMask _OffsetOf_fState _OffsetOf_fType _OffsetOf_hbmpChecked _OffsetOf_hbmpItem _OffsetOf_hbmpUnchecked _OffsetOf_hSubMenu _OffsetOf_wID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MENUITEMINFOW guid: (GUID fromString: '{d9f31567-d705-4885-9ed7-f92ae9fefbf2}')!
+MENUITEMINFOW addClassConstant: '_OffsetOf_cch' value: 16r28!
+MENUITEMINFOW addClassConstant: '_OffsetOf_dwItemData' value: 16r20!
+MENUITEMINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+MENUITEMINFOW addClassConstant: '_OffsetOf_dwTypeData' value: 16r24!
+MENUITEMINFOW addClassConstant: '_OffsetOf_fMask' value: 16r4!
+MENUITEMINFOW addClassConstant: '_OffsetOf_fState' value: 16rC!
+MENUITEMINFOW addClassConstant: '_OffsetOf_fType' value: 16r8!
+MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpChecked' value: 16r18!
+MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpItem' value: 16r2C!
+MENUITEMINFOW addClassConstant: '_OffsetOf_hbmpUnchecked' value: 16r1C!
+MENUITEMINFOW addClassConstant: '_OffsetOf_hSubMenu' value: 16r14!
+MENUITEMINFOW addClassConstant: '_OffsetOf_wID' value: 16r10!
 MENUITEMINFOW comment: '<MENUITEMINFOA> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 See the Win32 SDK documentation for further information.'!
@@ -23,7 +35,7 @@ basicText: aString
 cch: anInteger
 	"Set the receiver's 'cch' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cch) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cch put: anInteger!
 
 commandMenuItem: aCommandMenuItem 
 	| mask fType |
@@ -42,72 +54,72 @@ commandMenuItem: aCommandMenuItem
 dwItemData: anInteger
 	"Set the receiver's 'dwItemData' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #dwItemData) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_dwItemData put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTypeData
 	"Answer the <Utf16String> value of the receiver's 'dwTypeData' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #dwTypeData))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_dwTypeData)!
 
 dwTypeData: anUtf16String
 	"Set the receiver's 'dwTypeData' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #dwTypeData) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_dwTypeData put: anUtf16String yourAddress!
 
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fMask)!
+	^bytes dwordAtOffset: _OffsetOf_fMask!
 
 fMask: anInteger
 	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
 
 fState
 	"Answer the <Integer> value of the receiver's 'fState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fState)!
+	^bytes dwordAtOffset: _OffsetOf_fState!
 
 fState: anInteger
 	"Set the receiver's 'fState' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fState) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fState put: anInteger!
 
 fType
 	"Answer the <Integer> value of the receiver's 'fType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fType)!
+	^bytes dwordAtOffset: _OffsetOf_fType!
 
 fType: anInteger
 	"Set the receiver's 'fType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fType) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fType put: anInteger!
 
 hbmpChecked: anExternalHandle
 	"Set the receiver's 'hbmpChecked' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hbmpChecked) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpChecked put: anExternalHandle!
 
 hbmpItem: anExternalHandle
 	"Set the receiver's 'hbmpItem' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hbmpItem) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: anExternalHandle!
 
 hbmpUnchecked: anExternalHandle
 	"Set the receiver's 'hbmpUnchecked' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hbmpUnchecked) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpUnchecked put: anExternalHandle!
 
 hSubMenu: anExternalHandle
 	"Set the receiver's 'hSubMenu' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hSubMenu) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hSubMenu put: anExternalHandle!
 
 maskOut: anInteger
 	"Private - Reset the specified contents mask flags. This specifies to Windows which
@@ -181,12 +193,12 @@ type: flagsInteger text: aString id: idInteger
 wID
 	"Answer the <Integer> value of the receiver's 'wID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #wID)!
+	^bytes dwordAtOffset: _OffsetOf_wID!
 
 wID: anInteger
 	"Set the receiver's 'wID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #wID) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_wID put: anInteger! !
 !MENUITEMINFOW categoriesFor: #basicText:!accessing!private! !
 !MENUITEMINFOW categoriesFor: #cch:!**compiled accessors**!public! !
 !MENUITEMINFOW categoriesFor: #commandMenuItem:!initializing!private! !

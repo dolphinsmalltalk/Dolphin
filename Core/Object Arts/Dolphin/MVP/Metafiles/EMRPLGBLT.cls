@@ -2,10 +2,30 @@
 
 ENHMETARECORD subclass: #EMRPLGBLT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_aptlDest _OffsetOf_cbBitsMask _OffsetOf_cbBitsSrc _OffsetOf_cbBmiMask _OffsetOf_cbBmiSrc _OffsetOf_crBkColorSrc _OffsetOf_cxSrc _OffsetOf_cySrc _OffsetOf_iUsageMask _OffsetOf_iUsageSrc _OffsetOf_offBitsMask _OffsetOf_offBitsSrc _OffsetOf_offBmiMask _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xformSrc _OffsetOf_xMask _OffsetOf_xSrc _OffsetOf_yMask _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPLGBLT guid: (GUID fromString: '{cdae1f25-39c4-4555-985b-3b2cd197d3e0}')!
+EMRPLGBLT addClassConstant: '_OffsetOf_aptlDest' value: 16r18!
+EMRPLGBLT addClassConstant: '_OffsetOf_cbBitsMask' value: 16r88!
+EMRPLGBLT addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r6C!
+EMRPLGBLT addClassConstant: '_OffsetOf_cbBmiMask' value: 16r80!
+EMRPLGBLT addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r64!
+EMRPLGBLT addClassConstant: '_OffsetOf_crBkColorSrc' value: 16r58!
+EMRPLGBLT addClassConstant: '_OffsetOf_cxSrc' value: 16r38!
+EMRPLGBLT addClassConstant: '_OffsetOf_cySrc' value: 16r3C!
+EMRPLGBLT addClassConstant: '_OffsetOf_iUsageMask' value: 16r78!
+EMRPLGBLT addClassConstant: '_OffsetOf_iUsageSrc' value: 16r5C!
+EMRPLGBLT addClassConstant: '_OffsetOf_offBitsMask' value: 16r84!
+EMRPLGBLT addClassConstant: '_OffsetOf_offBitsSrc' value: 16r68!
+EMRPLGBLT addClassConstant: '_OffsetOf_offBmiMask' value: 16r7C!
+EMRPLGBLT addClassConstant: '_OffsetOf_offBmiSrc' value: 16r60!
+EMRPLGBLT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+EMRPLGBLT addClassConstant: '_OffsetOf_xformSrc' value: 16r40!
+EMRPLGBLT addClassConstant: '_OffsetOf_xMask' value: 16r70!
+EMRPLGBLT addClassConstant: '_OffsetOf_xSrc' value: 16r30!
+EMRPLGBLT addClassConstant: '_OffsetOf_yMask' value: 16r74!
+EMRPLGBLT addClassConstant: '_OffsetOf_ySrc' value: 16r34!
 EMRPLGBLT comment: '<EMRPLGBLT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPLGBLT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -46,7 +66,7 @@ aptlDest
 	"Answer the <StructureArray> value of the receiver's 'aptlDest' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #aptlDest)
+		fromAddress: bytes yourAddress + _OffsetOf_aptlDest
 		length: 3
 		elementClass: POINTL!
 
@@ -57,207 +77,207 @@ aptlDest: aStructureArrayOfPOINTL
 	size := aStructureArrayOfPOINTL byteSize min: ##(3 * POINTL basicByteSize).
 	aStructureArrayOfPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #aptlDest) + 1)
-		to: ##(self offsetOf: #aptlDest) + size
+		from: ##(_OffsetOf_aptlDest + 1)
+		to: _OffsetOf_aptlDest + size
 		startingAt: 1!
 
 cbBitsMask
 	"Answer the <Integer> value of the receiver's 'cbBitsMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsMask)!
+	^bytes dwordAtOffset: _OffsetOf_cbBitsMask!
 
 cbBitsMask: anInteger
 	"Set the receiver's 'cbBitsMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbBitsMask put: anInteger!
 
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc)!
+	^bytes dwordAtOffset: _OffsetOf_cbBitsSrc!
 
 cbBitsSrc: anInteger
 	"Set the receiver's 'cbBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbBitsSrc put: anInteger!
 
 cbBmiMask
 	"Answer the <Integer> value of the receiver's 'cbBmiMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiMask)!
+	^bytes dwordAtOffset: _OffsetOf_cbBmiMask!
 
 cbBmiMask: anInteger
 	"Set the receiver's 'cbBmiMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbBmiMask put: anInteger!
 
 cbBmiSrc
 	"Answer the <Integer> value of the receiver's 'cbBmiSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc)!
+	^bytes dwordAtOffset: _OffsetOf_cbBmiSrc!
 
 cbBmiSrc: anInteger
 	"Set the receiver's 'cbBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbBmiSrc put: anInteger!
 
 crBkColorSrc
 	"Answer the <Integer> value of the receiver's 'crBkColorSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc)!
+	^bytes dwordAtOffset: _OffsetOf_crBkColorSrc!
 
 crBkColorSrc: anInteger
 	"Set the receiver's 'crBkColorSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #crBkColorSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_crBkColorSrc put: anInteger!
 
 cxSrc
 	"Answer the <Integer> value of the receiver's 'cxSrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxSrc)!
+	^bytes sdwordAtOffset: _OffsetOf_cxSrc!
 
 cxSrc: anInteger
 	"Set the receiver's 'cxSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxSrc put: anInteger!
 
 cySrc
 	"Answer the <Integer> value of the receiver's 'cySrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cySrc)!
+	^bytes sdwordAtOffset: _OffsetOf_cySrc!
 
 cySrc: anInteger
 	"Set the receiver's 'cySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cySrc put: anInteger!
 
 iUsageMask
 	"Answer the <Integer> value of the receiver's 'iUsageMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iUsageMask)!
+	^bytes dwordAtOffset: _OffsetOf_iUsageMask!
 
 iUsageMask: anInteger
 	"Set the receiver's 'iUsageMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iUsageMask put: anInteger!
 
 iUsageSrc
 	"Answer the <Integer> value of the receiver's 'iUsageSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc)!
+	^bytes dwordAtOffset: _OffsetOf_iUsageSrc!
 
 iUsageSrc: anInteger
 	"Set the receiver's 'iUsageSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iUsageSrc put: anInteger!
 
 offBitsMask
 	"Answer the <Integer> value of the receiver's 'offBitsMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBitsMask)!
+	^bytes dwordAtOffset: _OffsetOf_offBitsMask!
 
 offBitsMask: anInteger
 	"Set the receiver's 'offBitsMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offBitsMask put: anInteger!
 
 offBitsSrc
 	"Answer the <Integer> value of the receiver's 'offBitsSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc)!
+	^bytes dwordAtOffset: _OffsetOf_offBitsSrc!
 
 offBitsSrc: anInteger
 	"Set the receiver's 'offBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offBitsSrc put: anInteger!
 
 offBmiMask
 	"Answer the <Integer> value of the receiver's 'offBmiMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBmiMask)!
+	^bytes dwordAtOffset: _OffsetOf_offBmiMask!
 
 offBmiMask: anInteger
 	"Set the receiver's 'offBmiMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offBmiMask put: anInteger!
 
 offBmiSrc
 	"Answer the <Integer> value of the receiver's 'offBmiSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc)!
+	^bytes dwordAtOffset: _OffsetOf_offBmiSrc!
 
 offBmiSrc: anInteger
 	"Set the receiver's 'offBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 xformSrc
 	"Answer the <XFORM> value of the receiver's 'xformSrc' field."
 
-	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #xformSrc)!
+	^XFORM fromAddress: bytes yourAddress + _OffsetOf_xformSrc!
 
 xformSrc: aXFORM
 	"Set the receiver's 'xformSrc' field to the value of the argument, aXFORM"
 
 	aXFORM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #xformSrc) + 1)
-		to: ##((self offsetOf: #xformSrc) + XFORM basicByteSize)
+		from: ##(_OffsetOf_xformSrc + 1)
+		to: ##(_OffsetOf_xformSrc + XFORM basicByteSize)
 		startingAt: 1!
 
 xMask
 	"Answer the <Integer> value of the receiver's 'xMask' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xMask)!
+	^bytes sdwordAtOffset: _OffsetOf_xMask!
 
 xMask: anInteger
 	"Set the receiver's 'xMask' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xMask) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xMask put: anInteger!
 
 xSrc
 	"Answer the <Integer> value of the receiver's 'xSrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xSrc)!
+	^bytes sdwordAtOffset: _OffsetOf_xSrc!
 
 xSrc: anInteger
 	"Set the receiver's 'xSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xSrc put: anInteger!
 
 yMask
 	"Answer the <Integer> value of the receiver's 'yMask' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yMask)!
+	^bytes sdwordAtOffset: _OffsetOf_yMask!
 
 yMask: anInteger
 	"Set the receiver's 'yMask' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yMask) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_yMask put: anInteger!
 
 ySrc
 	"Answer the <Integer> value of the receiver's 'ySrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #ySrc)!
+	^bytes sdwordAtOffset: _OffsetOf_ySrc!
 
 ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
 !EMRPLGBLT categoriesFor: #aptlDest!**compiled accessors**!public! !
 !EMRPLGBLT categoriesFor: #aptlDest:!**compiled accessors**!public! !
 !EMRPLGBLT categoriesFor: #cbBitsMask!**compiled accessors**!public! !

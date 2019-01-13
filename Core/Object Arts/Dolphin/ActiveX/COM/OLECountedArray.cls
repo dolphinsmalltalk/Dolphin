@@ -2,11 +2,13 @@
 
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cElems _OffsetOf_pElems'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLECountedArray guid: (GUID fromString: '{44a86404-b2fe-11d3-b376-080046056106}')!
 OLECountedArray isAbstract: true!
+OLECountedArray addClassConstant: '_OffsetOf_cElems' value: 16r0!
+OLECountedArray addClassConstant: '_OffsetOf_pElems' value: 16r4!
 OLECountedArray comment: 'OLECountedArray is an abstract base class for counted array structures used by various OLE/COM interfaces to input/output variable length arrays, where the array storage is allocated from COM task memory.'!
 !OLECountedArray categoriesForClass!Unclassified! !
 !OLECountedArray methodsFor!
@@ -22,14 +24,14 @@ basicLength: anInteger
 	self cElems: anInteger!
 
 cElems
-	"Answer the receiver's cElems field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'cElems' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_cElems!
 
-cElems: anObject 
-	"Set the receiver's cElems field to the value of anObject."
+cElems: anInteger
+	"Set the receiver's 'cElems' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes dwordAtOffset: _OffsetOf_cElems put: anInteger!
 
 elements
 	"Private - Answer the receiver's <ExternalArray> of elements."
@@ -72,14 +74,14 @@ onStartup
 		bytes := nil]!
 
 pElems
-	"Answer the receiver's pElems field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'pElems' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pElems)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_pElems) asExternalAddress!
 
-pElems: anObject 
-	"Set the receiver's pElems field to the value of anObject."
+pElems: anExternalAddress
+	"Set the receiver's 'pElems' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pElems) put: anObject!
+	bytes uintPtrAtOffset: _OffsetOf_pElems put: anExternalAddress!
 
 uncheckedAt: anInteger 
 	"Private - Answer the value at the specified index in the receiver."

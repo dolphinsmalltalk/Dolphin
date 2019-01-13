@@ -2,10 +2,14 @@
 
 ExternalStructure subclass: #GpWMFRect16
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bottom _OffsetOf_left _OffsetOf_right _OffsetOf_top'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpWMFRect16 guid: (GUID fromString: '{1713ca90-9e3e-465b-9c3d-3c7b201f00ee}')!
+GpWMFRect16 addClassConstant: '_OffsetOf_bottom' value: 16r6!
+GpWMFRect16 addClassConstant: '_OffsetOf_left' value: 16r0!
+GpWMFRect16 addClassConstant: '_OffsetOf_right' value: 16r4!
+GpWMFRect16 addClassConstant: '_OffsetOf_top' value: 16r2!
 GpWMFRect16 comment: '<GpWMFRect16> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWMFRect16'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -28,42 +32,42 @@ struct tagGpWMFRect16 {
 bottom
 	"Answer the <Integer> value of the receiver's 'bottom' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #bottom)!
+	^bytes swordAtOffset: _OffsetOf_bottom!
 
 bottom: anInteger
 	"Set the receiver's 'bottom' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #bottom) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_bottom put: anInteger!
 
 left
 	"Answer the <Integer> value of the receiver's 'left' field."
 
-	^bytes swordAtOffset: 0!
+	^bytes swordAtOffset: _OffsetOf_left!
 
 left: anInteger
 	"Set the receiver's 'left' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anInteger!
+	bytes swordAtOffset: _OffsetOf_left put: anInteger!
 
 right
 	"Answer the <Integer> value of the receiver's 'right' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #right)!
+	^bytes swordAtOffset: _OffsetOf_right!
 
 right: anInteger
 	"Set the receiver's 'right' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #right) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_right put: anInteger!
 
 top
 	"Answer the <Integer> value of the receiver's 'top' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #top)!
+	^bytes swordAtOffset: _OffsetOf_top!
 
 top: anInteger
 	"Set the receiver's 'top' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #top) put: anInteger! !
+	bytes swordAtOffset: _OffsetOf_top put: anInteger! !
 !GpWMFRect16 categoriesFor: #bottom!**compiled accessors**!public! !
 !GpWMFRect16 categoriesFor: #bottom:!**compiled accessors**!public! !
 !GpWMFRect16 categoriesFor: #left!**compiled accessors**!public! !

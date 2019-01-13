@@ -49,12 +49,12 @@ package!
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_chrg _OffsetOf_lpstrText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_chrgText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractDocumentShell subclass: #TextDocument

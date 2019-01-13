@@ -2,10 +2,42 @@
 
 ExternalStructure subclass: #DEVMODE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dmBitsPerPel _OffsetOf_dmCollate _OffsetOf_dmColor _OffsetOf_dmCopies _OffsetOf_dmDefaultSource _OffsetOf_dmDeviceName _OffsetOf_dmDisplayFlags _OffsetOf_dmDisplayFrequency _OffsetOf_dmDitherType _OffsetOf_dmDriverExtra _OffsetOf_dmDriverVersion _OffsetOf_dmDuplex _OffsetOf_dmFields _OffsetOf_dmFormName _OffsetOf_dmICMIntent _OffsetOf_dmICMMethod _OffsetOf_dmLogPixels _OffsetOf_dmMediaType _OffsetOf_dmOrientation _OffsetOf_dmPaperLength _OffsetOf_dmPaperSize _OffsetOf_dmPaperWidth _OffsetOf_dmPelsHeight _OffsetOf_dmPelsWidth _OffsetOf_dmPrintQuality _OffsetOf_dmReserved1 _OffsetOf_dmReserved2 _OffsetOf_dmScale _OffsetOf_dmSize _OffsetOf_dmSpecVersion _OffsetOf_dmTTOption _OffsetOf_dmYResolution'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DEVMODE guid: (GUID fromString: '{62ad7874-bbbf-4852-99d9-8040855ecb49}')!
+DEVMODE addClassConstant: '_OffsetOf_dmBitsPerPel' value: 16r68!
+DEVMODE addClassConstant: '_OffsetOf_dmCollate' value: 16r44!
+DEVMODE addClassConstant: '_OffsetOf_dmColor' value: 16r3C!
+DEVMODE addClassConstant: '_OffsetOf_dmCopies' value: 16r36!
+DEVMODE addClassConstant: '_OffsetOf_dmDefaultSource' value: 16r38!
+DEVMODE addClassConstant: '_OffsetOf_dmDeviceName' value: 16r0!
+DEVMODE addClassConstant: '_OffsetOf_dmDisplayFlags' value: 16r74!
+DEVMODE addClassConstant: '_OffsetOf_dmDisplayFrequency' value: 16r78!
+DEVMODE addClassConstant: '_OffsetOf_dmDitherType' value: 16r88!
+DEVMODE addClassConstant: '_OffsetOf_dmDriverExtra' value: 16r26!
+DEVMODE addClassConstant: '_OffsetOf_dmDriverVersion' value: 16r22!
+DEVMODE addClassConstant: '_OffsetOf_dmDuplex' value: 16r3E!
+DEVMODE addClassConstant: '_OffsetOf_dmFields' value: 16r28!
+DEVMODE addClassConstant: '_OffsetOf_dmFormName' value: 16r46!
+DEVMODE addClassConstant: '_OffsetOf_dmICMIntent' value: 16r80!
+DEVMODE addClassConstant: '_OffsetOf_dmICMMethod' value: 16r7C!
+DEVMODE addClassConstant: '_OffsetOf_dmLogPixels' value: 16r66!
+DEVMODE addClassConstant: '_OffsetOf_dmMediaType' value: 16r84!
+DEVMODE addClassConstant: '_OffsetOf_dmOrientation' value: 16r2C!
+DEVMODE addClassConstant: '_OffsetOf_dmPaperLength' value: 16r30!
+DEVMODE addClassConstant: '_OffsetOf_dmPaperSize' value: 16r2E!
+DEVMODE addClassConstant: '_OffsetOf_dmPaperWidth' value: 16r32!
+DEVMODE addClassConstant: '_OffsetOf_dmPelsHeight' value: 16r70!
+DEVMODE addClassConstant: '_OffsetOf_dmPelsWidth' value: 16r6C!
+DEVMODE addClassConstant: '_OffsetOf_dmPrintQuality' value: 16r3A!
+DEVMODE addClassConstant: '_OffsetOf_dmReserved1' value: 16r8C!
+DEVMODE addClassConstant: '_OffsetOf_dmReserved2' value: 16r90!
+DEVMODE addClassConstant: '_OffsetOf_dmScale' value: 16r34!
+DEVMODE addClassConstant: '_OffsetOf_dmSize' value: 16r24!
+DEVMODE addClassConstant: '_OffsetOf_dmSpecVersion' value: 16r20!
+DEVMODE addClassConstant: '_OffsetOf_dmTTOption' value: 16r42!
+DEVMODE addClassConstant: '_OffsetOf_dmYResolution' value: 16r40!
 DEVMODE comment: '<DEVMODE> is an <ExternalStructure> class to wrap the struct ''Win32.DEVMODE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct

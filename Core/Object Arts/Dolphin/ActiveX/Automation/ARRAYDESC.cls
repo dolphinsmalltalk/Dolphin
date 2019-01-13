@@ -2,10 +2,12 @@
 
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cDims _OffsetOf_rgbounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ARRAYDESC guid: (GUID fromString: '{c06f3b6c-0868-11d3-93af-00a024ca708a}')!
+ARRAYDESC addClassConstant: '_OffsetOf_cDims' value: 16r8!
+ARRAYDESC addClassConstant: '_OffsetOf_rgbounds' value: 16rC!
 ARRAYDESC comment: 'ARRAYDESC is an ExternalStructure class to represent the COM Automation structure of the same name.
 
 ARRAYDESC describes an Automation safe array, specifically the type of the elements, the number of dimensions, and the bounds for each dimension.
@@ -20,7 +22,7 @@ Member variables:
 cDims
 	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cDims)!
+	^bytes wordAtOffset: _OffsetOf_cDims!
 
 elementCount
 	"Private - Answer the total number of elements in all dimensions of the array
@@ -32,7 +34,7 @@ rgbounds
 	"Answer the <StructureArray> value of the receiver's 'rgbounds' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #rgbounds)
+		fromAddress: bytes yourAddress + _OffsetOf_rgbounds
 		length: self cDims
 		elementClass: SAFEARRAYBOUND! !
 !ARRAYDESC categoriesFor: #cDims!**compiled accessors**!private! !

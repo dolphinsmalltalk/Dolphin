@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lppos _OffsetOf_rgrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NCCALCSIZE_PARAMS guid: (GUID fromString: '{dbc3695f-4c20-411c-8110-539ce4be4b4a}')!
+NCCALCSIZE_PARAMS addClassConstant: '_OffsetOf_lppos' value: 16r30!
+NCCALCSIZE_PARAMS addClassConstant: '_OffsetOf_rgrc' value: 16r0!
 NCCALCSIZE_PARAMS comment: '<NCCALCSIZE_PARAMS> is an <ExternalStructure> class to wrap the struct ''Win32.NCCALCSIZE_PARAMS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,12 +28,12 @@ struct tagNCCALCSIZE_PARAMS {
 lppos
 	"Answer the <WINDOWPOS> value of the receiver's 'lppos' field."
 
-	^WINDOWPOS fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lppos))!
+	^WINDOWPOS fromAddress: (bytes intPtrAtOffset: _OffsetOf_lppos)!
 
 lppos: aWINDOWPOS
 	"Set the receiver's 'lppos' field to the value of the argument, aWINDOWPOS"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lppos) put: aWINDOWPOS yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lppos put: aWINDOWPOS yourAddress!
 
 rgrc
 	"Answer the <StructureArray> value of the receiver's 'rgrc' field."
@@ -48,7 +50,7 @@ rgrc: aStructureArrayOfRECT
 	size := aStructureArrayOfRECT byteSize min: ##(3 * RECT basicByteSize).
 	aStructureArrayOfRECT
 		replaceBytesOf: bytes
-		from: 1
+		from: ##(_OffsetOf_rgrc + 1)
 		to: size
 		startingAt: 1! !
 !NCCALCSIZE_PARAMS categoriesFor: #lppos!**compiled accessors**!public! !

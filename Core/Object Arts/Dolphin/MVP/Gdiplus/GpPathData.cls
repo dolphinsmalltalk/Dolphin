@@ -2,10 +2,13 @@
 
 ExternalStructure subclass: #GpPathData
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Count _OffsetOf_Points _OffsetOf_Types'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpPathData guid: (GUID fromString: '{411a9cb7-6abc-4f55-aa9a-82c7e0d44142}')!
+GpPathData addClassConstant: '_OffsetOf_Count' value: 16r0!
+GpPathData addClassConstant: '_OffsetOf_Points' value: 16r4!
+GpPathData addClassConstant: '_OffsetOf_Types' value: 16r8!
 GpPathData comment: '<GpPathData> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPathData'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -27,32 +30,32 @@ struct tagGpPathData {
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_Count!
 
 Count: anInteger
 	"Set the receiver's 'Count' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_Count put: anInteger!
 
 Points
 	"Answer the <POINTF> value of the receiver's 'Points' field."
 
-	^POINTF fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Points))!
+	^POINTF fromAddress: (bytes intPtrAtOffset: _OffsetOf_Points)!
 
 Points: aPOINTF
 	"Set the receiver's 'Points' field to the value of the argument, aPOINTF"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Points) put: aPOINTF yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_Points put: aPOINTF yourAddress!
 
 Types
 	"Answer the <BYTE> value of the receiver's 'Types' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Types))!
+	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_Types)!
 
 Types: aBYTE
 	"Set the receiver's 'Types' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Types) put: aBYTE yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_Types put: aBYTE yourAddress! !
 !GpPathData categoriesFor: #Count!**compiled accessors**!public! !
 !GpPathData categoriesFor: #Count:!**compiled accessors**!public! !
 !GpPathData categoriesFor: #Points!**compiled accessors**!public! !

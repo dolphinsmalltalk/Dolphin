@@ -2,10 +2,25 @@
 
 ENHMETARECORD subclass: #EMRSTRETCHDIBITS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbBitsSrc _OffsetOf_cbBmiSrc _OffsetOf_cxDest _OffsetOf_cxSrc _OffsetOf_cyDest _OffsetOf_cySrc _OffsetOf_dwRop _OffsetOf_iUsageSrc _OffsetOf_offBitsSrc _OffsetOf_offBmiSrc _OffsetOf_rclBounds _OffsetOf_xDest _OffsetOf_xSrc _OffsetOf_yDest _OffsetOf_ySrc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSTRETCHDIBITS guid: (GUID fromString: '{bfcc8077-e3d1-4f40-81c8-b36128972f7a}')!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cbBitsSrc' value: 16r3C!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cbBmiSrc' value: 16r34!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cxDest' value: 16r48!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cxSrc' value: 16r28!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cyDest' value: 16r4C!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_cySrc' value: 16r2C!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_dwRop' value: 16r44!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_iUsageSrc' value: 16r40!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_offBitsSrc' value: 16r38!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_offBmiSrc' value: 16r30!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_xDest' value: 16r18!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_xSrc' value: 16r20!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_yDest' value: 16r1C!
+EMRSTRETCHDIBITS addClassConstant: '_OffsetOf_ySrc' value: 16r24!
 EMRSTRETCHDIBITS comment: '<EMRSTRETCHDIBITS> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSTRETCHDIBITS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -40,156 +55,156 @@ struct tagEMRSTRETCHDIBITS {
 cbBitsSrc
 	"Answer the <Integer> value of the receiver's 'cbBitsSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc)!
+	^bytes dwordAtOffset: _OffsetOf_cbBitsSrc!
 
 cbBitsSrc: anInteger
 	"Set the receiver's 'cbBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBitsSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbBitsSrc put: anInteger!
 
 cbBmiSrc
 	"Answer the <Integer> value of the receiver's 'cbBmiSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc)!
+	^bytes dwordAtOffset: _OffsetOf_cbBmiSrc!
 
 cbBmiSrc: anInteger
 	"Set the receiver's 'cbBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbBmiSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbBmiSrc put: anInteger!
 
 cxDest
 	"Answer the <Integer> value of the receiver's 'cxDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxDest)!
+	^bytes sdwordAtOffset: _OffsetOf_cxDest!
 
 cxDest: anInteger
 	"Set the receiver's 'cxDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxDest) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxDest put: anInteger!
 
 cxSrc
 	"Answer the <Integer> value of the receiver's 'cxSrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxSrc)!
+	^bytes sdwordAtOffset: _OffsetOf_cxSrc!
 
 cxSrc: anInteger
 	"Set the receiver's 'cxSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxSrc) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxSrc put: anInteger!
 
 cyDest
 	"Answer the <Integer> value of the receiver's 'cyDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cyDest)!
+	^bytes sdwordAtOffset: _OffsetOf_cyDest!
 
 cyDest: anInteger
 	"Set the receiver's 'cyDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cyDest) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cyDest put: anInteger!
 
 cySrc
 	"Answer the <Integer> value of the receiver's 'cySrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cySrc)!
+	^bytes sdwordAtOffset: _OffsetOf_cySrc!
 
 cySrc: anInteger
 	"Set the receiver's 'cySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cySrc) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cySrc put: anInteger!
 
 dwRop
 	"Answer the <Integer> value of the receiver's 'dwRop' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwRop)!
+	^bytes dwordAtOffset: _OffsetOf_dwRop!
 
 dwRop: anInteger
 	"Set the receiver's 'dwRop' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwRop) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwRop put: anInteger!
 
 iUsageSrc
 	"Answer the <Integer> value of the receiver's 'iUsageSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc)!
+	^bytes dwordAtOffset: _OffsetOf_iUsageSrc!
 
 iUsageSrc: anInteger
 	"Set the receiver's 'iUsageSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iUsageSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iUsageSrc put: anInteger!
 
 offBitsSrc
 	"Answer the <Integer> value of the receiver's 'offBitsSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc)!
+	^bytes dwordAtOffset: _OffsetOf_offBitsSrc!
 
 offBitsSrc: anInteger
 	"Set the receiver's 'offBitsSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBitsSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offBitsSrc put: anInteger!
 
 offBmiSrc
 	"Answer the <Integer> value of the receiver's 'offBmiSrc' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc)!
+	^bytes dwordAtOffset: _OffsetOf_offBmiSrc!
 
 offBmiSrc: anInteger
 	"Set the receiver's 'offBmiSrc' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offBmiSrc) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offBmiSrc put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 xDest
 	"Answer the <Integer> value of the receiver's 'xDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xDest)!
+	^bytes sdwordAtOffset: _OffsetOf_xDest!
 
 xDest: anInteger
 	"Set the receiver's 'xDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xDest) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xDest put: anInteger!
 
 xSrc
 	"Answer the <Integer> value of the receiver's 'xSrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xSrc)!
+	^bytes sdwordAtOffset: _OffsetOf_xSrc!
 
 xSrc: anInteger
 	"Set the receiver's 'xSrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xSrc) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xSrc put: anInteger!
 
 yDest
 	"Answer the <Integer> value of the receiver's 'yDest' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yDest)!
+	^bytes sdwordAtOffset: _OffsetOf_yDest!
 
 yDest: anInteger
 	"Set the receiver's 'yDest' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yDest) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_yDest put: anInteger!
 
 ySrc
 	"Answer the <Integer> value of the receiver's 'ySrc' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #ySrc)!
+	^bytes sdwordAtOffset: _OffsetOf_ySrc!
 
 ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ySrc) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
 !EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
 !EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
 !EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc!**compiled accessors**!public! !

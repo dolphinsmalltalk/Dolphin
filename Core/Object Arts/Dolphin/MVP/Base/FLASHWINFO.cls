@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #FLASHWINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwTimeout _OffsetOf_hwnd _OffsetOf_uCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FLASHWINFO guid: (GUID fromString: '{2a5e4594-f531-486b-a082-17686b820cd4}')!
+FLASHWINFO addClassConstant: '_OffsetOf_dwFlags' value: 16r8!
+FLASHWINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+FLASHWINFO addClassConstant: '_OffsetOf_dwTimeout' value: 16r10!
+FLASHWINFO addClassConstant: '_OffsetOf_hwnd' value: 16r4!
+FLASHWINFO addClassConstant: '_OffsetOf_uCount' value: 16rC!
 FLASHWINFO comment: 'FLASHWINFO is the class of <ExternalStructure> which represent the Win32 structure of the same name.
 
 FLASHWINFO is used to pass parameters to the FlashWindowEx() API call.
@@ -18,32 +23,32 @@ Instance Variables:
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwTimeout: anInteger
 	"Set the receiver's 'dwTimeout' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwTimeout) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwTimeout put: anInteger!
 
 hwnd: anExternalHandle
 	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwnd) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwnd put: anExternalHandle!
 
 uCount: anInteger
 	"Set the receiver's 'uCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #uCount) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_uCount put: anInteger! !
 !FLASHWINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
 !FLASHWINFO categoriesFor: #dwFlags:!**compiled accessors**!public! !
 !FLASHWINFO categoriesFor: #dwSize:!**compiled accessors**!public! !

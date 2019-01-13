@@ -495,17 +495,9 @@ byteSize: anInteger
 	self extraInstanceSpec: anInteger!
 
 changedByteSizeFrom: oldByteSize
-	"Private - If the size of the receiver changes such that it fits into a different type for passing
-	/ returning structures by value , then we must recompile all existing referencing methods"
+	"Private - If the size of the receiver changes such that it fits into a different type for passing/returning structures by value, then we must recompile all existing referencing methods that might have a static literal snapshot of the byte size of the receiver."
 
-	| newByteSize recompileRefs |
-	newByteSize := self byteSize.
-	oldByteSize ~= newByteSize ifFalse: [^self].
-	"Recompile own methods so that they have the correct offsets encoded"
-	recompileRefs := [:each | (each refersToLiteral: #offsetOf:) ifTrue: [each recompile]].
-	self methodDictionary do: recompileRefs.
-	self class methodDictionary do: recompileRefs.
-	"Recompile any references that might have a static literal snapshot of the byte size of the receiver."
+	oldByteSize ~= self byteSize ifFalse: [^self].
 	self recompileReferences!
 
 clear: addressOrBytes
@@ -522,12 +514,13 @@ defineField: fieldName type: anExternalField
 	self defineField: fieldName type: anExternalField offset: offset.
 !
 
-defineField: fieldName type: anExternalField offset: offset 
+defineField: fieldName type: anExternalField offset: offset
 	"Add the argument anExternalField as the next field of the receiver's template, 
 	with the name, fieldName, and the <integer> byte offset in the structure, offset.
 	N.B. This should only be used where the offset is known, note also that the
 	byte size is updated if the field is added at the end."
 
+	| offsetConstant |
 	anExternalField structClass: self.
 	self isCompiled ifFalse: [anExternalField beUncompiled].
 	alignment := alignment max: anExternalField alignment.
@@ -536,7 +529,12 @@ defineField: fieldName type: anExternalField offset: offset
 	"We always retain the read selector in the template - this is needed to calc the field
 	offset when compiling methods, and might be required for evaluating size_is expressions."
 	template at: fieldName asSymbol put: anExternalField.
-	anExternalField isWriteable ifTrue: [template at: (fieldName , ':') asSymbol put: anExternalField]!
+	anExternalField isWriteable ifTrue: [template at: (fieldName , ':') asSymbol put: anExternalField].
+	"Define a class constant for the field offset, if needed"
+	offsetConstant := self fieldOffsetConstantPrefix , fieldName.
+	(self bindingFor: offsetConstant) ifNotNil: [:var | var value == offset ifTrue: [^self]].
+	"If the offset has changed, any referencing methods will be automatically recompiled by the standard mechanism for class constants"
+	self addClassConstant: offsetConstant value: offset!
 
 defineFields
 	"Set the structure template for the receiver. Implemented
@@ -553,24 +551,22 @@ definesNewFields
 
 defineTemplate
 	"Initialize the receiver class' structure template.
-	Implementation Note: We try and share a superclass template
-	if we don't directly implement #defineFields in a particular class.
-	This is a space saving measure, and is necessary because 'template' is
-	a class instance variable."
+	Implementation Note: We try and share a superclass template if we don't directly implement #defineFields in a particular class. This is a space saving measure, and is necessary because 'template' is a class instance variable."
 
 	| oldByteSize |
 	oldByteSize := self extraInstanceSpec.
-	self definesNewFields 
+	self definesNewFields
+		ifTrue: 
+			[self
+				initializeTemplate;
+				defineFields;
+				byteSize: (self structurePacker paddedSizeFor: self basicByteSize).
+			template shrink]
 		ifFalse: 
 			["Receiver doesn't define any new fields, so inherit the lot"
-			self inheritTemplate.
-			template notNil ifTrue: [^self changedByteSizeFrom: oldByteSize]].
-	self
-		initializeTemplate;
-		defineFields;
-		byteSize: (self structurePacker paddedSizeFor: self basicByteSize).
-	template shrink.
-	self changedByteSizeFrom: oldByteSize!
+			self inheritTemplate].
+	self removeRedundantOffsetConstants.
+	template notNil ifTrue: [self changedByteSizeFrom: oldByteSize]!
 
 descriptorClass
 	"Private - Return the class of external function descriptor associated with
@@ -604,6 +600,9 @@ fieldNamesFromTemplate
 			xoff == yoff ifTrue: [x key <= y key] ifFalse: [xoff < yoff]])
 		do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
 	^answer!
+
+fieldOffsetConstantPrefix
+	^'_OffsetOf_'!
 
 fromAddress: anAddress 
 	"Answer a new instance that points to the ExternalAddress 
@@ -748,8 +747,7 @@ newTemplate
 	new template."
 
 	template := IdentityDictionary new.
-	alignment := self baseAlignment.
-!
+	alignment := self baseAlignment!
 
 offsetFor: anExternalField base: anInteger 
 	"Answer the adjusted offset for the <ExternalField> from the base offset, anInteger.
@@ -762,11 +760,7 @@ offsetFor: anExternalField base: anInteger
 offsetOf: aSymbol
 	"Answer the offset of the named field, or -1 if there is no such field."
 
-	"Implementation Note: We want to avoid realising the template when compiling instance side
-	methods before the template definition is available on the class side, so access the inst
-	var directly"
-
-	template ifNotNil: [(template lookup: aSymbol) ifNotNil: [:field | ^field offset]].
+	self template ifNotNil: [:dict | (dict lookup: aSymbol) ifNotNil: [:field | ^field offset]].
 	^-1!
 
 packing
@@ -847,6 +841,26 @@ registerClass: structureClass forGUID: aGUID
 	existingKey isNil ifFalse: [RecordClasses removeKey: existingKey].
 	aGUID isNull ifFalse: [RecordClasses at: aGUID put: structureClass]!
 
+removeRedundantOffsetConstants
+	| prefix redundant |
+	classPool isNil ifTrue: [^self].
+	prefix := self fieldOffsetConstantPrefix.
+	redundant := OrderedCollection new.
+	classPool associationsDo: 
+			[:each |
+			| varName |
+			varName := each key.
+			((varName beginsWith: prefix) and: 
+					[template isNil or: 
+							[| fieldName |
+							fieldName := (varName copyFrom: prefix size + 1) asSymbol.
+							(template includesKey: fieldName) not or: 
+									[| binding |
+									binding := superclass bindingFor: varName.
+									binding notNil and: [binding value == each value]]]])
+				ifTrue: [redundant add: varName]].
+	redundant do: [:each | self removeClassVarName: each]!
+
 resetTemplate
 	self byteSize: 0.
 	flags := CompiledMask.
@@ -922,7 +936,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #beCompiled!modes!public!template definition! !
 !ExternalStructure class categoriesFor: #beUncompiled!modes!public!template definition! !
 !ExternalStructure class categoriesFor: #byteSize!accessing!public! !
-!ExternalStructure class categoriesFor: #byteSize:!accessing!private! !
+!ExternalStructure class categoriesFor: #byteSize:!initializing!private! !
 !ExternalStructure class categoriesFor: #changedByteSizeFrom:!private!template definition! !
 !ExternalStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
 !ExternalStructure class categoriesFor: #defineField:type:!public!template definition! !
@@ -935,6 +949,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #elementSize!accessing!public! !
 !ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
 !ExternalStructure class categoriesFor: #fieldNamesFromTemplate!accessing!private! !
+!ExternalStructure class categoriesFor: #fieldOffsetConstantPrefix!constants!private!template definition! !
 !ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
 !ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !
 !ExternalStructure class categoriesFor: #getFieldNames!accessing!private! !
@@ -963,6 +978,7 @@ withBytes: aByteObject
 !ExternalStructure class categoriesFor: #recompileReferences!private!template definition! !
 !ExternalStructure class categoriesFor: #register!adding!public! !
 !ExternalStructure class categoriesFor: #registerClass:forGUID:!adding!public! !
+!ExternalStructure class categoriesFor: #removeRedundantOffsetConstants!private!template definition! !
 !ExternalStructure class categoriesFor: #resetTemplate!public!template definition! !
 !ExternalStructure class categoriesFor: #setGuid:!accessing!private! !
 !ExternalStructure class categoriesFor: #shrink!compiling!private! !

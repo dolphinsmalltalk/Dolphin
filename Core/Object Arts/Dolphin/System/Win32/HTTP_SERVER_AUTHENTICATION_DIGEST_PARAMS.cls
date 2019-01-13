@@ -2,10 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_DomainName _OffsetOf_DomainNameLength _OffsetOf_Realm _OffsetOf_RealmLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS guid: (GUID fromString: '{eed513f2-c404-408c-9ddb-f5d39020d426}')!
+HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_DomainName' value: 16r4!
+HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_DomainNameLength' value: 16r0!
+HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_Realm' value: 16rC!
+HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS addClassConstant: '_OffsetOf_RealmLength' value: 16r8!
 HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS comment: '<HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -28,42 +32,42 @@ struct tagHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS {
 DomainName
 	"Answer the <Utf16String> value of the receiver's 'DomainName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DomainName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_DomainName)!
 
 DomainName: anUtf16String
 	"Set the receiver's 'DomainName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #DomainName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_DomainName put: anUtf16String yourAddress!
 
 DomainNameLength
 	"Answer the <Integer> value of the receiver's 'DomainNameLength' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_DomainNameLength!
 
 DomainNameLength: anInteger
 	"Set the receiver's 'DomainNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_DomainNameLength put: anInteger!
 
 Realm
 	"Answer the <Utf16String> value of the receiver's 'Realm' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Realm))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Realm)!
 
 Realm: anUtf16String
 	"Set the receiver's 'Realm' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Realm) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_Realm put: anUtf16String yourAddress!
 
 RealmLength
 	"Answer the <Integer> value of the receiver's 'RealmLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #RealmLength)!
+	^bytes wordAtOffset: _OffsetOf_RealmLength!
 
 RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #RealmLength) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength!**compiled accessors**!public! !
@@ -94,6 +98,10 @@ defineFields
 		defineField: #DomainName type: (PointerField type: Utf16String) offset: 4;
 		defineField: #RealmLength type: WORDField new offset: 8;
 		defineField: #Realm type: (PointerField type: Utf16String) offset: 12.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#DomainNameLength #DomainName #RealmLength #Realm)! !
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

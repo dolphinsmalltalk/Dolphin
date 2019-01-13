@@ -13,12 +13,12 @@ BOOLEAN comment: ''!
 value
 	"Answer the <Boolean> value of the receiver's 'value' field."
 
-	^(bytes byteAtOffset: 0) asBoolean!
+	^(bytes byteAtOffset: _OffsetOf_value) asBoolean!
 
 value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: 0 put: aBoolean asParameter! !
+	bytes byteAtOffset: _OffsetOf_value put: aBoolean asParameter! !
 !BOOLEAN categoriesFor: #value!**compiled accessors**!public! !
 !BOOLEAN categoriesFor: #value:!**compiled accessors**!public! !
 

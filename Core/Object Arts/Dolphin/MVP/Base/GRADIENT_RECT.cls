@@ -2,10 +2,12 @@
 
 Win32Structure subclass: #GRADIENT_RECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lowerRight _OffsetOf_upperLeft'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GRADIENT_RECT guid: (GUID fromString: '{01040b06-a9e6-4438-8a6b-a8502a2c7794}')!
+GRADIENT_RECT addClassConstant: '_OffsetOf_lowerRight' value: 16r4!
+GRADIENT_RECT addClassConstant: '_OffsetOf_upperLeft' value: 16r0!
 GRADIENT_RECT comment: '<GRADIENT_RECT> is an <ExternalStructure> class to wrap the struct ''Win32.GRADIENT_RECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,22 +29,22 @@ struct tagGRADIENT_RECT {
 lowerRight
 	"Answer the <Integer> value of the receiver's 'lowerRight' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lowerRight)!
+	^bytes dwordAtOffset: _OffsetOf_lowerRight!
 
 lowerRight: anInteger
 	"Set the receiver's 'lowerRight' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lowerRight) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lowerRight put: anInteger!
 
 upperLeft
 	"Answer the <Integer> value of the receiver's 'upperLeft' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_upperLeft!
 
 upperLeft: anInteger
 	"Set the receiver's 'upperLeft' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_upperLeft put: anInteger! !
 !GRADIENT_RECT categoriesFor: #lowerRight!**compiled accessors**!public! !
 !GRADIENT_RECT categoriesFor: #lowerRight:!**compiled accessors**!public! !
 !GRADIENT_RECT categoriesFor: #upperLeft!**compiled accessors**!public! !

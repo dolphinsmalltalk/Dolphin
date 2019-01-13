@@ -481,15 +481,15 @@ removeMethod: aCompiledMethod
 removeMethods: aCollection reason: aString force: aBoolean
 	"Private - Removes the <collection> of <CompiledMethod>s, methods, from the image."
 
-	| removed |
-	aCollection isEmpty ifTrue: [^0].
+	| toRemove |
+	toRemove := aBoolean
+				ifTrue: [aCollection]
+				ifFalse: [aCollection reject: [:each | self shouldPreserveMethod: each]].
+	toRemove isEmpty ifTrue: [^0].
 	self startElement: 'StripMethods' attributes: {'reason' -> aString}.
-	removed := aCollection asArray sort.
-	aBoolean
-		ifTrue: [removed do: [:each | self removeMethod: each]]
-		ifFalse: [removed := removed select: [:each | self removeMethodSoft: each]].
+	toRemove asArray sort do: [:each | self removeMethod: each].
 	self endElement: true.
-	^removed size!
+	^toRemove size!
 
 removeMethodSoft: aCompiledMethod
 	^false!
@@ -681,6 +681,7 @@ removeRedundantPackages
 	^required!
 
 removeRedundantResources: referencedClasses
+	^0
 	!
 
 removeResource: aResourceIdentifier
@@ -691,9 +692,11 @@ removeResource: aResourceIdentifier
 	ResourceIdentifier removeResource: aResourceIdentifier!
 
 removeResources: aCollection reason: aString
+	aCollection isEmpty ifTrue: [^0].
 	self startElement: 'StripResources' attributes: {'reason' -> aString}.
 	aCollection do: [:each | self removeResource: each].
-	self endElement: aCollection size > 0!
+	self endElement: true.
+	^aCollection size!
 
 removeSelectors: aCollectionOfSelectors of: aBehavior
 	| methods |
@@ -714,6 +717,9 @@ retainInstVarNames
 
 rootClasses
 	^#()!
+
+shouldPreserveMethod: aCompiledMethod
+	^true!
 
 shrinkEventsRegister
 	Object._EventsRegister keys do: [:each | each setEvents: each getEvents shrink]!
@@ -882,6 +888,7 @@ verifyRequiredPackages
 !BasicImageStripper categoriesFor: #removeSelectors:of:!operations!private! !
 !BasicImageStripper categoriesFor: #retainInstVarNames!public!testing! !
 !BasicImageStripper categoriesFor: #rootClasses!accessing!private! !
+!BasicImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
 !BasicImageStripper categoriesFor: #shrinkEventsRegister!private! !
 !BasicImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
 !BasicImageStripper categoriesFor: #startElement:attributes:!operations-logging!private! !

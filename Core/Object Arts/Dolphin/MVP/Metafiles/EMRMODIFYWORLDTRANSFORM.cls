@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRMODIFYWORLDTRANSFORM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iMode _OffsetOf_XFORM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRMODIFYWORLDTRANSFORM guid: (GUID fromString: '{2144962d-5610-4388-bb45-8b820efac2e7}')!
+EMRMODIFYWORLDTRANSFORM addClassConstant: '_OffsetOf_iMode' value: 16r20!
+EMRMODIFYWORLDTRANSFORM addClassConstant: '_OffsetOf_XFORM' value: 16r8!
 EMRMODIFYWORLDTRANSFORM comment: '<EMRMODIFYWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRMODIFYWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,25 +29,25 @@ struct tagEMRMODIFYWORLDTRANSFORM {
 iMode
 	"Answer the <Integer> value of the receiver's 'iMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iMode)!
+	^bytes dwordAtOffset: _OffsetOf_iMode!
 
 iMode: anInteger
 	"Set the receiver's 'iMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iMode) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iMode put: anInteger!
 
 XFORM
 	"Answer the <XFORM> value of the receiver's 'XFORM' field."
 
-	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #XFORM)!
+	^XFORM fromAddress: bytes yourAddress + _OffsetOf_XFORM!
 
 XFORM: aXFORM
 	"Set the receiver's 'XFORM' field to the value of the argument, aXFORM"
 
 	aXFORM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #XFORM) + 1)
-		to: ##((self offsetOf: #XFORM) + XFORM basicByteSize)
+		from: ##(_OffsetOf_XFORM + 1)
+		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
 !EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode!**compiled accessors**!public! !
 !EMRMODIFYWORLDTRANSFORM categoriesFor: #iMode:!**compiled accessors**!public! !

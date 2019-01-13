@@ -2,10 +2,23 @@
 
 Win32Structure subclass: #VS_FIXEDFILEINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFileDateLS _OffsetOf_dwFileDateMS _OffsetOf_dwFileFlags _OffsetOf_dwFileFlagsMask _OffsetOf_dwFileOS _OffsetOf_dwFileSubtype _OffsetOf_dwFileType _OffsetOf_dwFileVersionLS _OffsetOf_dwFileVersionMS _OffsetOf_dwProductVersionLS _OffsetOf_dwProductVersionMS _OffsetOf_dwSignature _OffsetOf_dwStrucVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VS_FIXEDFILEINFO guid: (GUID fromString: '{87b4c619-026e-11d3-9fd7-00a0cc3e4a32}')!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileDateLS' value: 16r30!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileDateMS' value: 16r2C!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileFlags' value: 16r1C!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileFlagsMask' value: 16r18!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileOS' value: 16r20!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileSubtype' value: 16r28!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileType' value: 16r24!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileVersionLS' value: 16rC!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwFileVersionMS' value: 16r8!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwProductVersionLS' value: 16r14!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwProductVersionMS' value: 16r10!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwSignature' value: 16r0!
+VS_FIXEDFILEINFO addClassConstant: '_OffsetOf_dwStrucVersion' value: 16r4!
 VS_FIXEDFILEINFO comment: 'VS_FIXEDFILEINFO is an ExternalStructure class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the Windows version information library (Version.DLL) to access standard version information such as the product major and minor version numbers from the resources of exes and dlls.
@@ -17,22 +30,22 @@ See also the VersionInfo and VersionLibrary classes.'!
 dwFileVersionLS
 	"Answer the <Integer> value of the receiver's 'dwFileVersionLS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFileVersionLS)!
+	^bytes dwordAtOffset: _OffsetOf_dwFileVersionLS!
 
 dwFileVersionMS
 	"Answer the <Integer> value of the receiver's 'dwFileVersionMS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFileVersionMS)!
+	^bytes dwordAtOffset: _OffsetOf_dwFileVersionMS!
 
 dwProductVersionLS
 	"Answer the <Integer> value of the receiver's 'dwProductVersionLS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwProductVersionLS)!
+	^bytes dwordAtOffset: _OffsetOf_dwProductVersionLS!
 
 dwProductVersionMS
 	"Answer the <Integer> value of the receiver's 'dwProductVersionMS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwProductVersionMS)!
+	^bytes dwordAtOffset: _OffsetOf_dwProductVersionMS!
 
 fileVersion
 	"Answer the 64-bit <integer> file version."

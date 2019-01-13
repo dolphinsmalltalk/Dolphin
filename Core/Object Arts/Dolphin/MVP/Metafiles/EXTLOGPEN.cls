@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #EXTLOGPEN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_elpBrushStyle _OffsetOf_elpColor _OffsetOf_elpHatch _OffsetOf_elpNumEntries _OffsetOf_elpPenStyle _OffsetOf_elpStyleEntry _OffsetOf_elpWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EXTLOGPEN guid: (GUID fromString: '{bfe902f1-81d2-4e1d-a5e3-1d0c3cef97e6}')!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpBrushStyle' value: 16r8!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpColor' value: 16rC!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpHatch' value: 16r10!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpNumEntries' value: 16r14!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpPenStyle' value: 16r0!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpStyleEntry' value: 16r18!
+EXTLOGPEN addClassConstant: '_OffsetOf_elpWidth' value: 16r4!
 EXTLOGPEN comment: '<EXTLOGPEN> is an <ExternalStructure> class to wrap the struct ''Win32.EXTLOGPEN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -31,58 +38,57 @@ struct tagEXTLOGPEN {
 elpBrushStyle
 	"Answer the <Integer> value of the receiver's 'elpBrushStyle' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpBrushStyle)!
+	^bytes dwordAtOffset: _OffsetOf_elpBrushStyle!
 
 elpBrushStyle: anInteger
 	"Set the receiver's 'elpBrushStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpBrushStyle) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_elpBrushStyle put: anInteger!
 
 elpColor
 	"Answer the <Integer> value of the receiver's 'elpColor' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpColor)!
+	^bytes dwordAtOffset: _OffsetOf_elpColor!
 
 elpColor: anInteger
 	"Set the receiver's 'elpColor' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpColor) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_elpColor put: anInteger!
 
 elpHatch
 	"Answer the <Integer> value of the receiver's 'elpHatch' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #elpHatch)!
+	^bytes sdwordAtOffset: _OffsetOf_elpHatch!
 
 elpHatch: anInteger
 	"Set the receiver's 'elpHatch' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #elpHatch) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_elpHatch put: anInteger!
 
 elpNumEntries
 	"Answer the <Integer> value of the receiver's 'elpNumEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpNumEntries)!
+	^bytes dwordAtOffset: _OffsetOf_elpNumEntries!
 
 elpNumEntries: anInteger
 	"Set the receiver's 'elpNumEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpNumEntries) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_elpNumEntries put: anInteger!
 
 elpPenStyle
 	"Answer the <Integer> value of the receiver's 'elpPenStyle' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_elpPenStyle!
 
 elpPenStyle: anInteger
 	"Set the receiver's 'elpPenStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_elpPenStyle put: anInteger!
 
 elpStyleEntry
 	"Answer the <DWORDArray> value of the receiver's 'elpStyleEntry' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #elpStyleEntry)
-		length: self elpNumEntries!
+	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_elpStyleEntry length: self elpNumEntries!
 
 elpStyleEntry: aDWORDArray
 	"Set the receiver's 'elpStyleEntry' field to the value of the argument, aDWORDArray"
@@ -91,20 +97,20 @@ elpStyleEntry: aDWORDArray
 	size := aDWORDArray byteSize.
 	aDWORDArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #elpStyleEntry) + 1)
-		to: ##(self offsetOf: #elpStyleEntry) + size
+		from: ##(_OffsetOf_elpStyleEntry + 1)
+		to: _OffsetOf_elpStyleEntry + size
 		startingAt: 1.
 	self elpNumEntries: aDWORDArray size!
 
 elpWidth
 	"Answer the <Integer> value of the receiver's 'elpWidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #elpWidth)!
+	^bytes dwordAtOffset: _OffsetOf_elpWidth!
 
 elpWidth: anInteger
 	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #elpWidth) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
 !EXTLOGPEN categoriesFor: #elpBrushStyle!**compiled accessors**!public! !
 !EXTLOGPEN categoriesFor: #elpBrushStyle:!**compiled accessors**!public! !
 !EXTLOGPEN categoriesFor: #elpColor!**compiled accessors**!public! !

@@ -46,7 +46,7 @@ package!
 
 Win32Structure subclass: #BITMAPFILEHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Bitmap subclass: #DeviceIndependentBitmap

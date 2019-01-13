@@ -2,10 +2,17 @@
 
 AbstractIN_ADDR subclass: #IN_ADDR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_s_addr _OffsetOf_s_b1 _OffsetOf_s_b2 _OffsetOf_s_b3 _OffsetOf_s_b4 _OffsetOf_s_w1 _OffsetOf_s_w2'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IN_ADDR guid: (GUID fromString: '{87b4c5f6-026e-11d3-9fd7-00a0cc3e4a32}')!
+IN_ADDR addClassConstant: '_OffsetOf_s_addr' value: 16r0!
+IN_ADDR addClassConstant: '_OffsetOf_s_b1' value: 16r0!
+IN_ADDR addClassConstant: '_OffsetOf_s_b2' value: 16r1!
+IN_ADDR addClassConstant: '_OffsetOf_s_b3' value: 16r2!
+IN_ADDR addClassConstant: '_OffsetOf_s_b4' value: 16r3!
+IN_ADDR addClassConstant: '_OffsetOf_s_w1' value: 16r0!
+IN_ADDR addClassConstant: '_OffsetOf_s_w2' value: 16r2!
 IN_ADDR comment: '<IN_ADDR> is an <ExternalStructure> class to wrap the struct ''Win32.IN_ADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -48,12 +55,12 @@ address: anInternetAddress
 s_addr
 	"Answer the <Integer> value of the receiver's 's_addr' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_s_addr!
 
 s_addr: anInteger
 	"Set the receiver's 's_addr' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_s_addr put: anInteger! !
 !IN_ADDR categoriesFor: #address!accessing!public! !
 !IN_ADDR categoriesFor: #address:!accessing!public! !
 !IN_ADDR categoriesFor: #s_addr!**compiled accessors**!public! !

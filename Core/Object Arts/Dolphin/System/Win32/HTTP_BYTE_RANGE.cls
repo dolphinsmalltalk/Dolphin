@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_BYTE_RANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Length _OffsetOf_StartingOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_BYTE_RANGE guid: (GUID fromString: '{3426318c-022f-4dd9-9e4e-a04febf70a10}')!
+HTTP_BYTE_RANGE addClassConstant: '_OffsetOf_Length' value: 16r8!
+HTTP_BYTE_RANGE addClassConstant: '_OffsetOf_StartingOffset' value: 16r0!
 HTTP_BYTE_RANGE comment: '<HTTP_BYTE_RANGE> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BYTE_RANGE'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,22 +29,22 @@ struct tagHTTP_BYTE_RANGE {
 Length
 	"Answer the <Integer> value of the receiver's 'Length' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #Length)!
+	^bytes qwordAtOffset: _OffsetOf_Length!
 
 Length: anInteger
 	"Set the receiver's 'Length' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #Length) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_Length put: anInteger!
 
 StartingOffset
 	"Answer the <Integer> value of the receiver's 'StartingOffset' field."
 
-	^bytes qwordAtOffset: 0!
+	^bytes qwordAtOffset: _OffsetOf_StartingOffset!
 
 StartingOffset: anInteger
 	"Set the receiver's 'StartingOffset' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: 0 put: anInteger! !
+	bytes qwordAtOffset: _OffsetOf_StartingOffset put: anInteger! !
 !HTTP_BYTE_RANGE categoriesFor: #Length!**compiled accessors**!public! !
 !HTTP_BYTE_RANGE categoriesFor: #Length:!**compiled accessors**!public! !
 !HTTP_BYTE_RANGE categoriesFor: #StartingOffset!**compiled accessors**!public! !
@@ -65,6 +67,10 @@ defineFields
 	self
 		defineField: #StartingOffset type: QWORDField new offset: 0;
 		defineField: #Length type: QWORDField new offset: 8.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#StartingOffset #Length)! !
 !HTTP_BYTE_RANGE class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_BYTE_RANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

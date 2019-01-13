@@ -2,10 +2,15 @@
 
 ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data _OffsetOf_dwFlags _OffsetOf_ihCS _OffsetOf_lcs'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCREATECOLORSPACEW guid: (GUID fromString: '{27b16b33-1f59-4046-ae08-0652f9c089f1}')!
+EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_cbData' value: 16r158!
+EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_Data' value: 16r15C!
+EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_dwFlags' value: 16r154!
+EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_ihCS' value: 16r8!
+EMRCREATECOLORSPACEW addClassConstant: '_OffsetOf_lcs' value: 16rC!
 EMRCREATECOLORSPACEW comment: '<EMRCREATECOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATECOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,17 +35,17 @@ struct tagEMRCREATECOLORSPACEW {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self cbData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
 
 Data: anExternalArray
 	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
@@ -49,43 +54,43 @@ Data: anExternalArray
 	size := anExternalArray byteSize.
 	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 ihCS
 	"Answer the <Integer> value of the receiver's 'ihCS' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihCS)!
+	^bytes dwordAtOffset: _OffsetOf_ihCS!
 
 ihCS: anInteger
 	"Set the receiver's 'ihCS' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihCS) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ihCS put: anInteger!
 
 lcs
 	"Answer the <LOGCOLORSPACEW> value of the receiver's 'lcs' field."
 
-	^LOGCOLORSPACEW fromAddress: bytes yourAddress + ##(self offsetOf: #lcs)!
+	^LOGCOLORSPACEW fromAddress: bytes yourAddress + _OffsetOf_lcs!
 
 lcs: aLOGCOLORSPACEW
 	"Set the receiver's 'lcs' field to the value of the argument, aLOGCOLORSPACEW"
 
 	aLOGCOLORSPACEW
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lcs) + 1)
-		to: ##((self offsetOf: #lcs) + LOGCOLORSPACEW basicByteSize)
+		from: ##(_OffsetOf_lcs + 1)
+		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW basicByteSize)
 		startingAt: 1! !
 !EMRCREATECOLORSPACEW categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRCREATECOLORSPACEW categoriesFor: #cbData:!**compiled accessors**!public! !

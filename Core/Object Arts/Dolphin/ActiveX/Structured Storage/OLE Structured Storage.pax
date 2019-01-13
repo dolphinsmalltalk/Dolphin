@@ -133,7 +133,7 @@ ISequentialStream subclass: #IStream
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_atime _OffsetOf_cbSize _OffsetOf_clsid _OffsetOf_ctime _OffsetOf_dwStgFmt _OffsetOf_grfLocksSupported _OffsetOf_grfMode _OffsetOf_grfStateBits _OffsetOf_mtime _OffsetOf_pwcsName _OffsetOf_type'
 	poolDictionaries: 'OLEStructuredStorageConstants'
 	classInstanceVariableNames: ''!
 

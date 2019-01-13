@@ -2,10 +2,12 @@
 
 Win32Structure subclass: #FILETIME
 	instanceVariableNames: ''
-	classVariableNames: 'UnixEpoch'
+	classVariableNames: '_OffsetOf_dwHighDateTime _OffsetOf_dwLowDateTime UnixEpoch'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FILETIME guid: (GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
+FILETIME addClassConstant: '_OffsetOf_dwHighDateTime' value: 16r4!
+FILETIME addClassConstant: '_OffsetOf_dwLowDateTime' value: 16r0!
 FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
 
 A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals since 01:00:00, 01 January 1601 UTC (i.e. not local time).

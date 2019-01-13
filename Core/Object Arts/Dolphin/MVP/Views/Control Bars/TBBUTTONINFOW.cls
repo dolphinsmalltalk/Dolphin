@@ -2,10 +2,20 @@
 
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TBBUTTONINFOW guid: (GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_cchText' value: 16r1C!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_cx' value: 16r12!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_dwMask' value: 16r4!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_fsState' value: 16r10!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_fsStyle' value: 16r11!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_idCommand' value: 16r8!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_iImage' value: 16rC!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_lParam' value: 16r14!
+TBBUTTONINFOW addClassConstant: '_OffsetOf_pszText' value: 16r18!
 TBBUTTONINFOW comment: ''!
 !TBBUTTONINFOW categoriesForClass!External-Data-Structured-Win32! !
 !TBBUTTONINFOW methodsFor!
@@ -13,67 +23,67 @@ TBBUTTONINFOW comment: ''!
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #cx)!
+	^bytes wordAtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #cx) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_cx put: anInteger!
 
 dwMask
 	"Answer the <Integer> value of the receiver's 'dwMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwMask)!
+	^bytes dwordAtOffset: _OffsetOf_dwMask!
 
 dwMask: anInteger
 	"Set the receiver's 'dwMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwMask put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 fsState
 	"Answer the <Integer> value of the receiver's 'fsState' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #fsState)!
+	^bytes byteAtOffset: _OffsetOf_fsState!
 
 fsState: anInteger
 	"Set the receiver's 'fsState' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #fsState) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_fsState put: anInteger!
 
 fsStyle
 	"Answer the <Integer> value of the receiver's 'fsStyle' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #fsStyle)!
+	^bytes byteAtOffset: _OffsetOf_fsStyle!
 
 fsStyle: anInteger
 	"Set the receiver's 'fsStyle' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #fsStyle) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_fsStyle put: anInteger!
 
 idCommand
 	"Answer the <Integer> value of the receiver's 'idCommand' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #idCommand)!
+	^bytes sdwordAtOffset: _OffsetOf_idCommand!
 
 idCommand: anInteger
 	"Set the receiver's 'idCommand' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #idCommand) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_idCommand put: anInteger!
 
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iImage)!
+	^bytes sdwordAtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iImage) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger! !
 !TBBUTTONINFOW categoriesFor: #cx!**compiled accessors**!public! !
 !TBBUTTONINFOW categoriesFor: #cx:!**compiled accessors**!public! !
 !TBBUTTONINFOW categoriesFor: #dwMask!**compiled accessors**!public! !

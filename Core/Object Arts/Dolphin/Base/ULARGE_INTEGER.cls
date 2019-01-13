@@ -14,17 +14,3 @@ The range of integer values that can be represented by instances of this class i
 	0 to: (2**64)-1
 '!
 !ULARGE_INTEGER categoriesForClass!External-Data-Unstructured! !
-!ULARGE_INTEGER methodsFor!
-
-value
-	"Answer the receiver's value field as a Smalltalk object."
-
-	^bytes qwordAtOffset: 0!
-
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
-
-	bytes qwordAtOffset: 0 put: anObject! !
-!ULARGE_INTEGER categoriesFor: #value!**compiled accessors**!public! !
-!ULARGE_INTEGER categoriesFor: #value:!**compiled accessors**!public! !
-

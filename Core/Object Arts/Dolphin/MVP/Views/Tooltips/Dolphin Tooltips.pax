@@ -48,7 +48,7 @@ Object subclass: #OneOffNoteBubble
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TOOLINFOW
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_hinst _OffsetOf_hwnd _OffsetOf_lParam _OffsetOf_lpReserved _OffsetOf_lpszText _OffsetOf_rect _OffsetOf_uFlags _OffsetOf_uId'
 	poolDictionaries: 'TooltipConstants'
 	classInstanceVariableNames: ''!
 MessageBoxAbstract subclass: #MessageBubble

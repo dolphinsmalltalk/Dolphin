@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cause _OffsetOf_enable _OffsetOf_flags _OffsetOf_operand1 _OffsetOf_operand2 _OffsetOf_result _OffsetOf_status'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 _FPIEEE_RECORD guid: (GUID fromString: '{87b4c590-026e-11d3-9fd7-00a0cc3e4a32}')!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_cause' value: 16r4!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_enable' value: 16r8!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_flags' value: 16r0!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_operand1' value: 16r10!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_operand2' value: 16r28!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_result' value: 16r40!
+_FPIEEE_RECORD addClassConstant: '_OffsetOf_status' value: 16rC!
 _FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to represent the Win32 structure of the same name. _FPIEEE_RECORD is used in the reporting of IEEE compliant floating point exceptions.'!
 !_FPIEEE_RECORD categoriesForClass!External-Data-Structured! !
 !_FPIEEE_RECORD methodsFor!
@@ -13,7 +20,7 @@ _FPIEEE_RECORD comment: '_FPIEEE_RECORD is an <ExternalStructure> class to repre
 cause
 	"Answer the <Integer> value of the receiver's 'cause' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cause)!
+	^bytes dwordAtOffset: _OffsetOf_cause!
 
 causeDescription
 	"Answer the symbolic names of the type of floating point exception the receiver represents."
@@ -34,12 +41,12 @@ causeNames
 enable
 	"Answer the <Integer> value of the receiver's 'enable' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #enable)!
+	^bytes dwordAtOffset: _OffsetOf_enable!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 isDivide
 	"Answer whether a division operation was being attemped when the exception occurred."
@@ -73,12 +80,12 @@ isZeroDivide
 operand1
 	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand1' field."
 
-	^_FPIEEE_VALUE fromAddress: bytes yourAddress + ##(self offsetOf: #operand1)!
+	^_FPIEEE_VALUE fromAddress: bytes yourAddress + _OffsetOf_operand1!
 
 operand2
 	"Answer the <_FPIEEE_VALUE> value of the receiver's 'operand2' field."
 
-	^_FPIEEE_VALUE fromAddress: bytes yourAddress + ##(self offsetOf: #operand2)!
+	^_FPIEEE_VALUE fromAddress: bytes yourAddress + _OffsetOf_operand2!
 
 operation
 	"Answer an <integer> which identifies the type of operation being attemped when the exception

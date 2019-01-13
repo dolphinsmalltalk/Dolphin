@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #MINMAXINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ptMaxPosition _OffsetOf_ptMaxSize _OffsetOf_ptMaxTrackSize _OffsetOf_ptMinTrackSize _OffsetOf_ptReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MINMAXINFO guid: (GUID fromString: '{76ebd637-6ab0-4d00-812c-fa6942e1318e}')!
+MINMAXINFO addClassConstant: '_OffsetOf_ptMaxPosition' value: 16r10!
+MINMAXINFO addClassConstant: '_OffsetOf_ptMaxSize' value: 16r8!
+MINMAXINFO addClassConstant: '_OffsetOf_ptMaxTrackSize' value: 16r20!
+MINMAXINFO addClassConstant: '_OffsetOf_ptMinTrackSize' value: 16r18!
+MINMAXINFO addClassConstant: '_OffsetOf_ptReserved' value: 16r0!
 MINMAXINFO comment: '<MINMAXINFO> is an <ExternalStructure> class to wrap the struct ''Win.MINMAXINFO'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -28,29 +33,29 @@ typedef struct tagMINMAXINFO {
 ptMaxTrackSize
 	"Answer the <POINTL> value of the receiver's 'ptMaxTrackSize' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptMaxTrackSize)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMaxTrackSize!
 
 ptMaxTrackSize: aPOINTL
 	"Set the receiver's 'ptMaxTrackSize' field to the value of the argument, aPOINTL"
 
 	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptMaxTrackSize) + 1)
-		to: ##((self offsetOf: #ptMaxTrackSize) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptMaxTrackSize + 1)
+		to: ##(_OffsetOf_ptMaxTrackSize + POINTL basicByteSize)
 		startingAt: 1!
 
 ptMinTrackSize
 	"Answer the <POINTL> value of the receiver's 'ptMinTrackSize' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptMinTrackSize)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptMinTrackSize!
 
 ptMinTrackSize: aPOINTL
 	"Set the receiver's 'ptMinTrackSize' field to the value of the argument, aPOINTL"
 
 	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptMinTrackSize) + 1)
-		to: ##((self offsetOf: #ptMinTrackSize) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptMinTrackSize + 1)
+		to: ##(_OffsetOf_ptMinTrackSize + POINTL basicByteSize)
 		startingAt: 1! !
 !MINMAXINFO categoriesFor: #ptMaxTrackSize!**compiled accessors**!public! !
 !MINMAXINFO categoriesFor: #ptMaxTrackSize:!**compiled accessors**!public! !

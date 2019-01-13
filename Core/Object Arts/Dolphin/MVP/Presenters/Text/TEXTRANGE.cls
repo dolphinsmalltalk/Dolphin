@@ -2,10 +2,12 @@
 
 Win32Structure subclass: #TEXTRANGE
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_chrg _OffsetOf_lpstrText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TEXTRANGE guid: (GUID fromString: '{87b4c615-026e-11d3-9fd7-00a0cc3e4a32}')!
+TEXTRANGE addClassConstant: '_OffsetOf_chrg' value: 16r0!
+TEXTRANGE addClassConstant: '_OffsetOf_lpstrText' value: 16r8!
 TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represents the Windows TEXTRANGE and TEXTRANGEW structures.
 
 Most of the ExternalStructures in Dolphin are now for wide character APIs only, and indeed TEXTRANGE is used with wide strings for the <RichTextEdit> control. However, it is also used with Scintilla, which only supports byte string encodings (including UTF-8). Scintilla also uses the structure to retrieve styling bytes, which aren''t characters at all.
@@ -40,7 +42,7 @@ cpMin: anObject
 lpstrText: anInteger
 	"Set the receiver's 'lpstrText' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpstrText) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_lpstrText put: anInteger!
 
 setFrom: start to: stop text: aString
 	"Initialize the receiver with the specified range and text.
@@ -73,10 +75,10 @@ text: buffer
 	Note that buffer should have been allocated from the fixed heap."
 
 	self lpstrText: (text := buffer) yourAddress! !
-!TEXTRANGE categoriesFor: #cpMax!public! !
-!TEXTRANGE categoriesFor: #cpMax:!public! !
-!TEXTRANGE categoriesFor: #cpMin!public! !
-!TEXTRANGE categoriesFor: #cpMin:!public! !
+!TEXTRANGE categoriesFor: #cpMax!accessing!public! !
+!TEXTRANGE categoriesFor: #cpMax:!accessing!public! !
+!TEXTRANGE categoriesFor: #cpMin!accessing!public! !
+!TEXTRANGE categoriesFor: #cpMin:!accessing!public! !
 !TEXTRANGE categoriesFor: #lpstrText:!**compiled accessors**!public! !
 !TEXTRANGE categoriesFor: #setFrom:to:text:!initializing!private! !
 !TEXTRANGE categoriesFor: #size!accessing!public! !

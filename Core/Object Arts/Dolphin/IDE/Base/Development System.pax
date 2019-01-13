@@ -137,6 +137,10 @@ package methodNames
 	add: #AndEnvironment -> #includesResource:;
 	add: #Array -> #assignToResourceIdentifier:;
 	add: #ArrayedCollection -> #newBatchAccessor;
+	add: #ArrayField -> #printAccessorExpressionSuffixOn:;
+	add: #ArrayField -> #printMutatorBody:on:;
+	add: #ArrayPointerField -> #printAccessorExpressionSuffixOn:;
+	add: #ArrayPointerField -> #printMutatorBody:on:;
 	add: #Association -> #debugPrintString;
 	add: #Behavior -> #changedMethods;
 	add: #Behavior -> #hasAbstractMethods;
@@ -154,6 +158,7 @@ package methodNames
 	add: #BlockFrame -> #mapInitialIpFrom:to:;
 	add: #Boolean -> #literalTextStyle;
 	add: #BOOLField -> #newAspect:class:;
+	add: #BOOLField -> #printAccessorExpressionSuffixOn:;
 	add: #BorderLayout -> #arrangementAspect;
 	add: #BrowserEnvironment -> #allMethods;
 	add: #BrowserEnvironment -> #allResourcesDo:;
@@ -171,6 +176,7 @@ package methodNames
 	add: #BrowserEnvironmentWrapper -> #includesResource:;
 	add: #BrowserEnvironmentWrapper -> #openEditor;
 	add: #Character -> #literalTextStyle;
+	add: #CHARField -> #printAccessorExpressionSuffixOn:;
 	add: #Class -> #changeIndex;
 	add: #Class -> #changeIndexValue:;
 	add: #Class -> #isAbstract;
@@ -233,11 +239,23 @@ package methodNames
 	add: #Dictionary -> #newBatchAccessor;
 	add: #Dictionary -> #publishedAspects;
 	add: #DOUBLEField -> #newAspect:class:;
+	add: #EmbeddedField -> #printAccessorExpression:on:;
 	add: #ExternalArray -> #printOn:;
 	add: #ExternalArray -> #publishedAspects;
 	add: #ExternalArray -> #publishedKeyedAspects;
 	add: #ExternalArray -> #publishedKeyedAspectsBatchSize;
 	add: #ExternalField -> #autoGenCategories;
+	add: #ExternalField -> #autoGenComment;
+	add: #ExternalField -> #makeInstanceName:;
+	add: #ExternalField -> #printAccessor:on:;
+	add: #ExternalField -> #printAccessorBody:on:;
+	add: #ExternalField -> #printAccessorExpression:on:;
+	add: #ExternalField -> #printAccessorExpressionSuffixOn:;
+	add: #ExternalField -> #printMutator:on:;
+	add: #ExternalField -> #printMutatorBody:on:;
+	add: #ExternalField -> #printOffsetExpression:on:;
+	add: #ExternalField -> #printOffsetExpression:on:extra:;
+	add: #ExternalField -> #valueParameterName;
 	add: #ExternalInteger -> #printOn:;
 	add: #ExternalIntegerBytes -> #debugPrintString;
 	add: #ExternalIntegerBytes -> #publishedKeyedAspects;
@@ -250,8 +268,11 @@ package methodNames
 	add: #ExternalStructure -> #printOn:;
 	add: #ExternalStructure -> #publishedAspects;
 	add: #FILETIME -> #printOn:;
+	add: #FillerField -> #printAccessorExpression:on:;
+	add: #FillerField -> #printMutatorBody:on:;
 	add: #FLOATField -> #newAspect:class:;
 	add: #FramingLayout -> #arrangementAspect;
+	add: #HANDLEField -> #printAccessorExpressionSuffixOn:;
 	add: #Interval -> #newBatchAccessor;
 	add: #KernelLibrary -> #queryThreadCycleTime:cycleTime:;
 	add: #LayoutManager -> #arrangementAspect;
@@ -259,6 +280,7 @@ package methodNames
 	add: #LOGBRUSH -> #printFieldsOn:limit:;
 	add: #LOGPEN -> #printFieldsOn:limit:;
 	add: #LPVOIDField -> #newAspect:class:;
+	add: #LPVOIDField -> #printAccessorExpressionSuffixOn:;
 	add: #Menu -> #edit;
 	add: #Menu -> #painterClass;
 	add: #MenuBar -> #painterClass;
@@ -295,6 +317,8 @@ package methodNames
 	add: #PackageManager -> #getVersionInfoFor:;
 	add: #PackageManager -> #isConnected;
 	add: #PackageManager -> #sourceControl;
+	add: #PointerField -> #printAccessorExpression:on:;
+	add: #PointerField -> #printMutatorBody:on:;
 	add: #PoolConstantsDictionary -> #aspectDisplayOn:;
 	add: #PoolConstantsDictionary -> #browse;
 	add: #PoolConstantsDictionary -> #errorModify:value:;
@@ -329,6 +353,8 @@ package methodNames
 	add: #ResourceIdentifier -> #publishedAspects;
 	add: #ResourceIdentifier -> #reassign;
 	add: #ScalarField -> #newAspect:class:;
+	add: #ScalarField -> #printAccessorExpression:on:;
+	add: #ScalarField -> #printMutatorBody:on:;
 	add: #ScintillaView -> #publishedAspects;
 	add: #SelectorEnvironment -> #addMethods:;
 	add: #Semaphore -> #debugPrintString;
@@ -363,6 +389,11 @@ package methodNames
 	add: #String -> #literalTextStyle;
 	add: #String -> #newAspect:class:;
 	add: #String -> #publishedAspects;
+	add: #StringField -> #printAccessorExpressionSuffixOn:;
+	add: #StringField -> #printMutatorBody:on:;
+	add: #StructureArrayField -> #printAccessorExpressionSuffixOn:;
+	add: #StructureArrayPointerField -> #printAccessorExpressionSuffixOn:;
+	add: #StructureField -> #printMutatorBody:on:;
 	add: #StructurePointer -> #printOn:;
 	add: #StSelfVariable -> #valueClass;
 	add: #StSelfVariableNode -> #valueClassIn:;
@@ -450,6 +481,7 @@ package methodNames
 	add: 'ExternalStructure class' -> #decompileDefinition;
 	add: 'ExternalStructure class' -> #formatAndCompile:categories:;
 	add: 'ExternalStructure class' -> #hasHandCodedMethodFor:;
+	add: 'ExternalStructure class' -> #inheritsFieldNamed:;
 	add: 'ExternalStructure class' -> #recompileDefinition;
 	add: 'ExternalStructure class' -> #shouldCompile:forField:;
 	add: 'ExternalStructure class' -> #shouldOverrideGetFieldNames;
@@ -1402,6 +1434,100 @@ newBatchAccessor
 	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
 !ArrayedCollection categoriesFor: #newBatchAccessor!public! !
 
+!ArrayField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	"We need to set the length of the array"
+
+	aWriteStream
+		space;
+		display: #length:;
+		space.
+	arrayLength printElementCountExpressionFor: self on: aWriteStream!
+
+printMutatorBody: aSymbol on: aWriteStream
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will write the value of this field into an isntance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	| keywords valueParam |
+	valueParam := self valueParameterName.
+	aWriteStream
+		nextPutAll: '| size |';
+		crtab;
+		nextPutAll: 'size := (';
+		nextPutAll: valueParam;
+		space;
+		display: #byteSize.
+	"Null terminator is included in the reported byteSize, but not the size/basicSize"
+	self arrayClass isNullTerminated
+		ifTrue: 
+			[aWriteStream nextPutAll: ' - '.
+			self printStaticElementSizeExpressionOn: aWriteStream].
+	self isFixedSize
+		ifTrue: 
+			[aWriteStream
+				nextPutAll: ') ';
+				display: #min:;
+				nextPutAll: ' ('.
+			self printFieldSizeExpressionOn: aWriteStream].
+	keywords := #replaceBytesOf:from:to:startingAt: keywords.
+	aWriteStream
+		nextPutAll: ').';
+		crtab;
+		nextPutAll: valueParam;
+		space;
+		display: keywords first;
+		nextPutAll: ' bytes ';
+		display: keywords second;
+		space.
+	self
+		printOffsetExpression: aSymbol
+		on: aWriteStream
+		extra: 1.
+	aWriteStream
+		space;
+		display: keywords third;
+		space.
+	self offset = 0
+		ifFalse: 
+			[self printOffsetExpression: aSymbol on: aWriteStream.
+			aWriteStream nextPutAll: ' + '].
+	aWriteStream
+		nextPutAll: 'size ';
+		display: keywords fourth;
+		nextPutAll: ' 1.';
+		crtab.
+	arrayLength printSetSizeFor: self on: aWriteStream! !
+!ArrayField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+!ArrayField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
+
+!ArrayPointerField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	"We need to set the length of the array"
+
+	aWriteStream
+		space;
+		display: #length:;
+		space.
+	arrayLength printElementCountExpressionFor: self on: aWriteStream!
+
+printMutatorBody: aSymbol on: aWriteStream
+	super printMutatorBody: aSymbol on: aWriteStream.
+	aWriteStream
+		nextPut: $.;
+		crtab.
+	arrayLength printSetSizeFor: self on: aWriteStream! !
+!ArrayPointerField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+!ArrayPointerField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
+
 !Association methodsFor!
 
 debugPrintString
@@ -1644,8 +1770,17 @@ newAspect: aSymbol class: aspectClass
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
-	^aspectClass boolean: aSymbol! !
+	^aspectClass boolean: aSymbol!
+
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	aWriteStream
+		space;
+		display: #asBoolean! !
 !BOOLField categoriesFor: #newAspect:class:!adapters!private! !
+!BOOLField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
 
 !BOOLField class methodsFor!
 
@@ -1828,6 +1963,17 @@ icon
 literalTextStyle
 	^#literalCharacter! !
 !Character categoriesFor: #literalTextStyle!constants!private! !
+
+!CHARField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	aWriteStream
+		space;
+		display: #asCharacter! !
+!CHARField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
 
 !CheckBox class methodsFor!
 
@@ -2706,6 +2852,35 @@ newAspect: aSymbol class: aspectClass
 	^aspectClass name: aSymbol! !
 !DOUBLEField categoriesFor: #newAspect:class:!adapters!private! !
 
+!EmbeddedField methodsFor!
+
+printAccessorExpression: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will read the value of this field from an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	"Note that if returning an ExternalStructure subclass, then the resulting object will be a
+	reference (an alias) to the original structure embedded in the contents of the receiving
+	ExternalStructure, and therefore modifications to it will also modify the complete
+	ExternalStructure. If, however, the structureClass is some other object which responds to
+	#fromAddress:, the answer may be a copy of the embedded structure (e.g. subclasses of
+	External) - so care is needed when updating the result."
+
+	aWriteStream
+		nextPutAll: self fieldClassName;
+		nextPutAll: ' fromAddress: (';
+		nextPutAll: 'bytes';
+		nextPutAll: ' yourAddress'.
+	self offset = 0 
+		ifFalse: 
+			[aWriteStream
+				space;
+				display: #+;
+				space.
+			self printOffsetExpression: aSymbol on: aWriteStream].
+	aWriteStream nextPut: $)! !
+!EmbeddedField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
+
 !ExternalArray methodsFor!
 
 printOn: aStream
@@ -2777,8 +2952,138 @@ shouldOverrideGetFieldNames
 !ExternalField methodsFor!
 
 autoGenCategories
-	^{ExternalStructure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}! !
+	^{ExternalStructure autoGenCategory. self isNonBrowsable ifTrue: ['private'] ifFalse: ['public']}!
+
+autoGenComment
+	"Private - Answer a suitable piece of comment to warn the user that a
+	method is automatically generated and should not be modified.
+	Implementation Note: As of v2.2 this is empty by default as otherwise
+	it tends to lead to rather bloated source files."
+
+	^''!
+
+makeInstanceName: className
+	^(className first isVowel ifTrue: ['an'] ifFalse: ['a']) , className!
+
+printAccessor: aSymbol on: aPuttableStream
+	| remark |
+	aPuttableStream
+		nextPutAll: aSymbol;
+		crtab;
+		nextPut: $".
+	self isNonBrowsable ifTrue: [aPuttableStream nextPutAll: 'Private - '].
+	aPuttableStream
+		nextPutAll: 'Answer the <';
+		nextPutAll: self fieldClassName;
+		nextPutAll: '> value of the receiver''s ''';
+		display: aSymbol;
+		nextPutAll: ''' field.'.
+	remark := self autoGenComment.
+	remark notEmpty
+		ifTrue: 
+			[aPuttableStream
+				crtab;
+				nextPutAll: remark].
+	aPuttableStream
+		nextPut: $";
+		cr;
+		crtab.
+	self printAccessorBody: aSymbol on: aPuttableStream!
+
+printAccessorBody: aSymbol on: aWriteStream 
+	"Private - Answer suitable method text for compiling a read-accessor method
+	to substitute for the receiver (does not include the selector)"
+
+	aWriteStream nextPut: $^.
+	self printAccessorExpression: aSymbol on: aWriteStream.
+	self printAccessorExpressionSuffixOn: aWriteStream!
+
+printAccessorExpression: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will read the value of this field from an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	^self subclassResponsibility!
+
+printAccessorExpressionSuffixOn: aWriteStream 
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	"By default, nothing is needed."
+
+	!
+
+printMutator: aSymbol on: aPuttableStream
+	| fieldName remark paramName |
+	fieldName := aSymbol allButLast asSymbol.
+	paramName := self valueParameterName.
+	aPuttableStream
+		nextPutAll: aSymbol;
+		space;
+		nextPutAll: paramName;
+		crtab;
+		nextPutAll: '"Set the receiver''s ''';
+		display: fieldName;
+		nextPutAll: ''' field to the value of the argument, ';
+		nextPutAll: paramName.
+	remark := self autoGenComment.
+	remark notEmpty
+		ifTrue: 
+			[aPuttableStream
+				crtab;
+				nextPutAll: remark].
+	aPuttableStream
+		nextPut: $";
+		cr;
+		crtab.
+	self printMutatorBody: fieldName on: aPuttableStream!
+
+printMutatorBody: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will write the value of this field into an isntance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	^self subclassResponsibility!
+
+printOffsetExpression: aSymbol on: aWriteStream 
+	self 
+		printOffsetExpression: aSymbol
+		on: aWriteStream
+		extra: 0!
+
+printOffsetExpression: aSymbol on: aWriteStream extra: anObject
+	anObject == 0
+		ifTrue: 
+			[aWriteStream
+				nextPutAll: ExternalStructure fieldOffsetConstantPrefix;
+				display: aSymbol]
+		ifFalse: 
+			[self emitStaticExpression: 
+					[:stream |
+					stream
+						nextPutAll: ExternalStructure fieldOffsetConstantPrefix;
+						display: aSymbol;
+						nextPutAll: ' + ';
+						display: anObject]
+				on: aWriteStream]!
+
+valueParameterName
+	"Private - Answer the name to use for the value parameter of a setter method generated for
+	the field described by the receiver."
+
+	^self makeInstanceName: self fieldClassName! !
 !ExternalField categoriesFor: #autoGenCategories!private! !
+!ExternalField categoriesFor: #autoGenComment!constants!private! !
+!ExternalField categoriesFor: #makeInstanceName:!automatic generation!private! !
+!ExternalField categoriesFor: #printAccessor:on:!automatic generation!private! !
+!ExternalField categoriesFor: #printAccessorBody:on:!automatic generation!private! !
+!ExternalField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
+!ExternalField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+!ExternalField categoriesFor: #printMutator:on:!automatic generation!private! !
+!ExternalField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
+!ExternalField categoriesFor: #printOffsetExpression:on:!automatic generation!private! !
+!ExternalField categoriesFor: #printOffsetExpression:on:extra:!automatic generation!private! !
+!ExternalField categoriesFor: #valueParameterName!automatic generation!constants!private! !
 
 !ExternalInteger methodsFor!
 
@@ -3038,6 +3343,11 @@ hasHandCodedMethodFor: selector
 	method := self compiledMethodAt: selector ifAbsent: [^false].
 	^(self autoGenCategory asMethodCategory includesMethod: method) not!
 
+inheritsFieldNamed: aSymbol
+	| base |
+	base := self superclass.
+	^base ~~ Object and: [(base template includesKey: aSymbol) or: [base inheritsFieldNamed: aSymbol]]!
+
 recompileDefinition
 	"Private - Recompiles the existing template for the receiver"
 
@@ -3050,11 +3360,10 @@ shouldCompile: selector forField: anExternalField
 	with the specified selector for the specified field in the
 	receiver."
 
-	^anExternalField canGenerateAccessors 
-		and: [(self hasHandCodedMethodFor: selector) not		"Don't overwrite manually written methods"
-			and: ["Don't generate inherited fields unless specifically marked for override"
-				anExternalField isOverride or: [
-					(self superclass template includesKey: (selector upTo: $:) asSymbol) not]]]!
+	^anExternalField canGenerateAccessors and: 
+			[(self hasHandCodedMethodFor: selector) not and: 
+					["Don't generate inherited fields unless specifically marked for override"
+					anExternalField isOverride or: [(self inheritsFieldNamed: (selector upTo: $:) asSymbol) not]]	"Don't overwrite manually written methods"]!
 
 shouldOverrideGetFieldNames
 	^self isNonInstantiable not and: 
@@ -3076,6 +3385,7 @@ shouldOverrideGetFieldNames
 !ExternalStructure class categoriesFor: #decompileDefinition!compiling!public! !
 !ExternalStructure class categoriesFor: #formatAndCompile:categories:!compiling!private! !
 !ExternalStructure class categoriesFor: #hasHandCodedMethodFor:!compiling!private! !
+!ExternalStructure class categoriesFor: #inheritsFieldNamed:!compiling!private! !
 !ExternalStructure class categoriesFor: #recompileDefinition!compiling!private! !
 !ExternalStructure class categoriesFor: #shouldCompile:forField:!compiling!private! !
 !ExternalStructure class categoriesFor: #shouldOverrideGetFieldNames!compiling!private! !
@@ -3091,6 +3401,24 @@ printOn: aStream
 		display: self;
 		nextPut: $)! !
 !FILETIME categoriesFor: #printOn:!printing!public! !
+
+!FillerField methodsFor!
+
+printAccessorExpression: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will read the value of this field from an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	^self shouldNotImplement!
+
+printMutatorBody: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will write the value of this field into an isntance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	^self shouldNotImplement! !
+!FillerField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
+!FillerField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
 
 !Float class methodsFor!
 
@@ -3292,6 +3620,17 @@ publishedAspectsOfInstances
 		removeKey: #forecolor;		"#1191: Windows BUTTON control doesn't support changing the foreground colour"
     		yourself! !
 !GroupBox class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!HANDLEField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	aWriteStream
+		space;
+		display: #asExternalHandle! !
+!HANDLEField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
 
 !HotKey class methodsFor!
 
@@ -3627,8 +3966,17 @@ newAspect: aSymbol class: aspectClass
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
-	^aspectClass name: aSymbol! !
+	^aspectClass name: aSymbol!
+
+printAccessorExpressionSuffixOn: aWriteStream
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	aWriteStream
+		space;
+		display: #asExternalAddress! !
 !LPVOIDField categoriesFor: #newAspect:class:!adapters!private! !
+!LPVOIDField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
 
 !Menu methodsFor!
 
@@ -4241,6 +4589,45 @@ publishedAspectsOfInstances
     		add: (Aspect integer: #z);
     		yourself! !
 !Point3D class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+
+!PointerField methodsFor!
+
+printAccessorExpression: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will read the value of this field from an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	aWriteStream
+		display: self pointerClass;
+		space;
+		display: #fromAddress:;
+		nextPutAll: ' (bytes ';
+		display: #intPtrAtOffset:;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream nextPut: $)!
+
+printMutatorBody: aSymbol on: aWriteStream
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will write the value of this field into an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	| keywords |
+	keywords := #uintPtrAtOffset:put: keywords.
+	aWriteStream
+		nextPutAll: 'bytes ';
+		display: keywords first;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream
+		space;
+		display: keywords second;
+		space;
+		nextPutAll: self valueParameterName;
+		space;
+		display: #yourAddress! !
+!PointerField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
+!PointerField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
 
 !PoolConstantsDictionary methodsFor!
 
@@ -4882,8 +5269,41 @@ newAspect: aSymbol class: aspectClass
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
-	^aspectClass integer: aSymbol! !
+	^aspectClass integer: aSymbol!
+
+printAccessorExpression: aSymbol on: aWriteStream 
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will read the value of this field from an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	aWriteStream
+		nextPutAll: '(bytes ';
+		display: self accessorMessage keywords first;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream nextPut: $)!
+
+printMutatorBody: aSymbol on: aWriteStream
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will write the value of this field into an instance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	| keywords |
+	keywords := self accessorMessage keywords.
+	aWriteStream
+		nextPutAll: 'bytes';
+		space;
+		display: keywords first;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream
+		space;
+		display: keywords second;
+		space.
+	self printMutatorValueOn: aWriteStream parameter: self valueParameterName! !
 !ScalarField categoriesFor: #newAspect:class:!adapters!private! !
+!ScalarField categoriesFor: #printAccessorExpression:on:!automatic generation!private! !
+!ScalarField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
 
 !ScalarField class methodsFor!
 
@@ -5749,6 +6169,41 @@ publishedAspects
 !String categoriesFor: #newAspect:class:!adapters!private! !
 !String categoriesFor: #publishedAspects!constants!public! !
 
+!StringField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream 
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	"If the length of the field is fixed, then assume we are reading a null-terminated string."
+	self isFixedSize ifFalse: [super printAccessorExpressionSuffixOn: aWriteStream]
+	!
+
+printMutatorBody: aSymbol on: aWriteStream
+	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
+	will write the value of this field into an isntance of the structure. The field in question
+	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
+
+	"Implementation Note: In this case we overwrite the embedded String, not forgetting to Null
+	Terminate it"
+
+	| keywords |
+	super printMutatorBody: aSymbol on: aWriteStream.
+	aWriteStream nextPutAll: 'bytes '.
+	keywords := (self elementSize == 2 ifTrue: [#wordAtOffset:put:] ifFalse: [#byteAtOffset:put:])
+				keywords.
+	aWriteStream
+		display: keywords first;
+		space.
+	self printOffsetExpression: aSymbol on: aWriteStream.
+	aWriteStream
+		nextPutAll: ' + size ';
+		display: keywords second;
+		space;
+		nextPut: $0! !
+!StringField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+!StringField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
+
 !StringField class methodsFor!
 
 newInstanceAspect: aSymbol class: aspectClass 
@@ -5757,6 +6212,78 @@ newInstanceAspect: aSymbol class: aspectClass
 
 	^aspectClass string: aSymbol! !
 !StringField class categoriesFor: #newInstanceAspect:class:!adapters!private! !
+
+!StructureArrayField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream 
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	"We need to set the length and element class of the structure array"
+
+	super printAccessorExpressionSuffixOn: aWriteStream.
+	aWriteStream
+		space;
+		display: #elementClass:;
+		space;
+		display: self fieldClass! !
+!StructureArrayField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+
+!StructureArrayPointerField methodsFor!
+
+printAccessorExpressionSuffixOn: aWriteStream 
+	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
+	configure the object being read from the structure instance."
+
+	"We need to set the length and element class of the structure array"
+
+	super printAccessorExpressionSuffixOn: aWriteStream.
+	aWriteStream
+		space;
+		display: #elementClass:;
+		space;
+		display: self elementClass! !
+!StructureArrayPointerField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!private! !
+
+!StructureField methodsFor!
+
+printMutatorBody: aSymbol on: aWriteStream
+	"Private - Answer suitable method text for compiling a write-accessor method
+	to substitute for the receiver (does not include the selector).
+	N.B. In this case we overwrite the entire embedded structure with
+	a new one"
+
+	| keywords |
+	keywords := #replaceBytesOf:from:to:startingAt: keywords.
+	aWriteStream
+		nextPutAll: self valueParameterName;
+		space;
+		display: keywords first;
+		nextPutAll: ' bytes ';
+		display: keywords second;
+		space.
+	self
+		printOffsetExpression: aSymbol
+		on: aWriteStream
+		extra: 1.
+	aWriteStream
+		space;
+		display: keywords third;
+		space.
+	self
+		printOffsetExpression: aSymbol
+		on: aWriteStream
+		extra: ((String writeStream)
+				display: self fieldClassName;
+				space;
+				display: #basicByteSize;
+				contents).
+	aWriteStream
+		space;
+		display: keywords fourth;
+		space;
+		display: 1! !
+!StructureField categoriesFor: #printMutatorBody:on:!automatic generation!private! !
 
 !StructurePointer methodsFor!
 

@@ -2,10 +2,13 @@
 
 NMCUSTOMDRAW subclass: #NMLVCUSTOMDRAW
 	instanceVariableNames: 'column'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_clrText _OffsetOf_clrTextBk _OffsetOf_iSubItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMLVCUSTOMDRAW guid: (GUID fromString: '{7fbf7515-c756-4b0e-8d4f-01debafa1178}')!
+NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_clrText' value: 16r30!
+NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_clrTextBk' value: 16r34!
+NMLVCUSTOMDRAW addClassConstant: '_OffsetOf_iSubItem' value: 16r38!
 NMLVCUSTOMDRAW comment: '`NMLVCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMLVCUSTOMDRAW` is sent by `ListView` controls to request custom draw information for the text of individual items (and optionally sub-items). We implement the `customDrawContext` protocol against it in order that it can be passed directly to the views customDrawBlock.'!
@@ -28,22 +31,22 @@ backcolor: aColor
 clrText
 	"Answer the <Integer> value of the receiver's 'clrText' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #clrText)!
+	^bytes dwordAtOffset: _OffsetOf_clrText!
 
 clrText: anInteger
 	"Set the receiver's 'clrText' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #clrText) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_clrText put: anInteger!
 
 clrTextBk
 	"Answer the <Integer> value of the receiver's 'clrTextBk' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #clrTextBk)!
+	^bytes dwordAtOffset: _OffsetOf_clrTextBk!
 
 clrTextBk: anInteger
 	"Set the receiver's 'clrTextBk' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #clrTextBk) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_clrTextBk put: anInteger!
 
 column
 	"Answer the <ListViewColumn> associated with the sub-item if this is a sub-item
@@ -70,7 +73,7 @@ forecolor: aColor
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
 
 itemHandle
 	"Answer the 'handle' of the receiver's item."

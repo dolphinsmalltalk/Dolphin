@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #CRYPTPROTECT_PROMPTSTRUCT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwPromptFlags _OffsetOf_dwSize _OffsetOf_hwndApp _OffsetOf_szPrompt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CRYPTPROTECT_PROMPTSTRUCT guid: (GUID fromString: '{870680a4-0d5d-45b2-88b4-74774c010bc5}')!
+CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_dwPromptFlags' value: 16r4!
+CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_hwndApp' value: 16r8!
+CRYPTPROTECT_PROMPTSTRUCT addClassConstant: '_OffsetOf_szPrompt' value: 16rC!
 CRYPTPROTECT_PROMPTSTRUCT comment: '<CRYPTPROTECT_PROMPTSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win32.CRYPTPROTECT_PROMPTSTRUCT'' from type information in the ''Win32 API'' library.
 
 The type library contains no documentation for this struct
@@ -24,37 +28,37 @@ struct tagCRYPTPROTECT_PROMPTSTRUCT {
 dwPromptFlags
 	"Answer the <Integer> value of the receiver's 'dwPromptFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwPromptFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwPromptFlags!
 
 dwPromptFlags: anInteger
 	"Set the receiver's 'dwPromptFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwPromptFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwPromptFlags put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 hwndApp
 	"Answer the <ExternalHandle> value of the receiver's 'hwndApp' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hwndApp)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hwndApp) asExternalHandle!
 
 hwndApp: anExternalHandle
 	"Set the receiver's 'hwndApp' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndApp) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwndApp put: anExternalHandle!
 
 szPrompt
 	"Answer the <Utf16String> value of the receiver's 'szPrompt' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #szPrompt))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_szPrompt)!
 
 szPrompt: anUtf16String
 	"Set the receiver's 'szPrompt' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #szPrompt) put: anUtf16String yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_szPrompt put: anUtf16String yourAddress! !
 !CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags!**compiled accessors**!public! !
 !CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwPromptFlags:!**compiled accessors**!public! !
 !CRYPTPROTECT_PROMPTSTRUCT categoriesFor: #dwSize:!**compiled accessors**!public! !

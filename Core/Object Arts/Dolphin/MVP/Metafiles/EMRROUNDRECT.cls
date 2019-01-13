@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRROUNDRECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_rclBox _OffsetOf_szlCorner'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRROUNDRECT guid: (GUID fromString: '{31c4124d-eff4-4b42-adfd-7ed8d589eade}')!
+EMRROUNDRECT addClassConstant: '_OffsetOf_rclBox' value: 16r8!
+EMRROUNDRECT addClassConstant: '_OffsetOf_szlCorner' value: 16r18!
 EMRROUNDRECT comment: '<EMRROUNDRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRROUNDRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,29 +29,29 @@ struct tagEMRROUNDRECT {
 rclBox
 	"Answer the <RECT> value of the receiver's 'rclBox' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBox)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
 rclBox: aRECT
 	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBox) + 1)
-		to: ##((self offsetOf: #rclBox) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBox + 1)
+		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1!
 
 szlCorner
 	"Answer the <SIZE> value of the receiver's 'szlCorner' field."
 
-	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlCorner)!
+	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlCorner!
 
 szlCorner: aSIZE
 	"Set the receiver's 'szlCorner' field to the value of the argument, aSIZE"
 
 	aSIZE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szlCorner) + 1)
-		to: ##((self offsetOf: #szlCorner) + SIZE basicByteSize)
+		from: ##(_OffsetOf_szlCorner + 1)
+		to: ##(_OffsetOf_szlCorner + SIZE basicByteSize)
 		startingAt: 1! !
 !EMRROUNDRECT categoriesFor: #rclBox!**compiled accessors**!public! !
 !EMRROUNDRECT categoriesFor: #rclBox:!**compiled accessors**!public! !

@@ -2,10 +2,12 @@
 
 ExternalSize subclass: #SIZE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cx _OffsetOf_cy'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SIZE guid: (GUID fromString: '{3bfb9cb3-8eba-450f-9479-ba75abeb8463}')!
+SIZE addClassConstant: '_OffsetOf_cx' value: 16r0!
+SIZE addClassConstant: '_OffsetOf_cy' value: 16r4!
 SIZE comment: '`SIZE` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name. `SIZE` is used in many places to represent a 2-dimensional distance where the x and y dimensions are expressed as 32-bit signed integers. `SIZEL` is an alias for the same class/structure.'!
 !SIZE categoriesForClass!Win32-Structs! !
 !SIZE methodsFor!
@@ -13,34 +15,34 @@ SIZE comment: '`SIZE` is an `ExternalStructure` class to wrap the standard Win32
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cx put: anInteger!
 
 cy
 	"Answer the <Integer> value of the receiver's 'cy' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cy)!
+	^bytes sdwordAtOffset: _OffsetOf_cy!
 
 cy: anInteger
 	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cy put: anInteger!
 
 height
-	^bytes sdwordAtOffset: ##(self offsetOf: #cy)!
+	^bytes sdwordAtOffset: _OffsetOf_cy!
 
 height: anObject
-	bytes sdwordAtOffset: ##(self offsetOf: #cy) put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_cy put: anObject!
 
 width
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_cx!
 
 width: anObject
-	bytes sdwordAtOffset: 0 put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_cx put: anObject! !
 !SIZE categoriesFor: #cx!**compiled accessors**!public! !
 !SIZE categoriesFor: #cx:!**compiled accessors**!public! !
 !SIZE categoriesFor: #cy!**compiled accessors**!public! !

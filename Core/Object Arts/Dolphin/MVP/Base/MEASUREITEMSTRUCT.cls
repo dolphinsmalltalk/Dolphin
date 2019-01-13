@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #MEASUREITEMSTRUCT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_CtlID _OffsetOf_CtlType _OffsetOf_itemData _OffsetOf_itemHeight _OffsetOf_itemID _OffsetOf_itemWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MEASUREITEMSTRUCT guid: (GUID fromString: '{0b195eeb-b134-493b-87f4-a70c213ac690}')!
+MEASUREITEMSTRUCT addClassConstant: '_OffsetOf_CtlID' value: 16r4!
+MEASUREITEMSTRUCT addClassConstant: '_OffsetOf_CtlType' value: 16r0!
+MEASUREITEMSTRUCT addClassConstant: '_OffsetOf_itemData' value: 16r14!
+MEASUREITEMSTRUCT addClassConstant: '_OffsetOf_itemHeight' value: 16r10!
+MEASUREITEMSTRUCT addClassConstant: '_OffsetOf_itemID' value: 16r8!
+MEASUREITEMSTRUCT addClassConstant: '_OffsetOf_itemWidth' value: 16rC!
 MEASUREITEMSTRUCT comment: '<MEASUREITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.MEASUREITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The MEASUREITEMSTRUCT structure informs the system of the dimensions of an owner-drawn control or menu item. This allows the system to process user interaction with the control correctly."'!
@@ -15,37 +21,37 @@ From MSDN: "The MEASUREITEMSTRUCT structure informs the system of the dimensions
 CtlID
 	"Answer the <Integer> value of the receiver's 'CtlID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #CtlID)!
+	^bytes dwordAtOffset: _OffsetOf_CtlID!
 
 CtlType
 	"Answer the <Integer> value of the receiver's 'CtlType' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_CtlType!
 
 itemHeight
 	"Answer the <Integer> value of the receiver's 'itemHeight' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #itemHeight)!
+	^bytes dwordAtOffset: _OffsetOf_itemHeight!
 
 itemHeight: anInteger
 	"Set the receiver's 'itemHeight' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #itemHeight) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_itemHeight put: anInteger!
 
 itemID
 	"Answer the <Integer> value of the receiver's 'itemID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #itemID)!
+	^bytes dwordAtOffset: _OffsetOf_itemID!
 
 itemWidth
 	"Answer the <Integer> value of the receiver's 'itemWidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #itemWidth)!
+	^bytes dwordAtOffset: _OffsetOf_itemWidth!
 
 itemWidth: anInteger
 	"Set the receiver's 'itemWidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #itemWidth) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_itemWidth put: anInteger! !
 !MEASUREITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
 !MEASUREITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
 !MEASUREITEMSTRUCT categoriesFor: #itemHeight!**compiled accessors**!public! !

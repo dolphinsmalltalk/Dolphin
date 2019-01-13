@@ -22,25 +22,6 @@ arrayLength: sizeObject
 
 	arrayLength := sizeObject!
 
-printAccessorExpressionSuffixOn: aWriteStream
-	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
-	configure the object being read from the structure instance."
-
-	"We need to set the length of the array"
-
-	aWriteStream
-		space;
-		display: #length:;
-		space.
-	arrayLength printElementCountExpressionFor: self on: aWriteStream!
-
-printMutatorBody: aSymbol on: aWriteStream
-	super printMutatorBody: aSymbol on: aWriteStream.
-	aWriteStream
-		nextPut: $.;
-		crtab.
-	arrayLength printSetSizeFor: self on: aWriteStream!
-
 readFrom: anExternalStructure
 	"Private - Answer an <ExternalArray> of the receiver's pointer class that is a reference to
 	the data pointed at by the corresponding pointer field of the <ExternalStructure> argument
@@ -67,8 +48,6 @@ writeInto: anExternalStructure value: anObject
 		in: anExternalStructure.
 	^answer! !
 !ArrayPointerField categoriesFor: #arrayLength:!accessing!private! !
-!ArrayPointerField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
-!ArrayPointerField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
 !ArrayPointerField categoriesFor: #readFrom:!accessing!private! !
 !ArrayPointerField categoriesFor: #writeInto:value:!indirect accessing!private! !
 

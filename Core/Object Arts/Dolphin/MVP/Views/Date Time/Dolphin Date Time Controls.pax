@@ -47,7 +47,7 @@ package!
 
 NMHDR subclass: #NMSELCHANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_stSelEnd _OffsetOf_stSelStart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueConvertingControlView subclass: #DateTimeCommonControl

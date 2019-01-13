@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #SOCKADDR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_sa_data _OffsetOf_sa_family'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
 SOCKADDR guid: (GUID fromString: '{0299d3de-9695-4177-9ce6-42ad495c8e57}')!
+SOCKADDR addClassConstant: '_OffsetOf_sa_data' value: 16r2!
+SOCKADDR addClassConstant: '_OffsetOf_sa_family' value: 16r0!
 SOCKADDR comment: '<SOCKADDR> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -54,12 +56,12 @@ printFieldsOn: aStream limit: anInteger
 sa_family
 	"Answer the <Integer> value of the receiver's 'sa_family' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_sa_family!
 
 sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_sa_family put: anInteger! !
 !SOCKADDR categoriesFor: #displayOn:!displaying!public! !
 !SOCKADDR categoriesFor: #initialize!initializing!private! !
 !SOCKADDR categoriesFor: #printFieldsOn:limit:!development!printing!private! !

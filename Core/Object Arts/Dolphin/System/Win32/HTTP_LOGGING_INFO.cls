@@ -2,10 +2,23 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: 'directoryName softwareName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_DirectoryName _OffsetOf_DirectoryNameLength _OffsetOf_Fields _OffsetOf_Format _OffsetOf_LoggingFlags _OffsetOf_MaxRecordSize _OffsetOf_NumOfExtFields _OffsetOf_pExtFields _OffsetOf_pSecurityDescriptor _OffsetOf_RolloverSize _OffsetOf_RolloverType _OffsetOf_SoftwareName _OffsetOf_SoftwareNameLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_LOGGING_INFO guid: (GUID fromString: '{41c67887-c529-4196-9c0f-5bb698324d32}')!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_DirectoryName' value: 16r10!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_DirectoryNameLength' value: 16rE!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_Fields' value: 16r18!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_Format' value: 16r14!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_LoggingFlags' value: 16r4!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_MaxRecordSize' value: 16r22!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_NumOfExtFields' value: 16r20!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_pExtFields' value: 16r1C!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_pSecurityDescriptor' value: 16r2C!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_RolloverSize' value: 16r28!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_RolloverType' value: 16r24!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_SoftwareName' value: 16r8!
+HTTP_LOGGING_INFO addClassConstant: '_OffsetOf_SoftwareNameLength' value: 16rC!
 HTTP_LOGGING_INFO comment: '<HTTP_LOGGING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_LOGGING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,106 +52,102 @@ struct tagHTTP_LOGGING_INFO {
 DirectoryName
 	"Answer the <Utf16String> value of the receiver's 'DirectoryName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DirectoryName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_DirectoryName)!
 
 DirectoryName: anUtf16String
 	"Set the receiver's 'DirectoryName' field to the value of the argument, anUtf16String"
 
-	directoryName := anUtf16String asUtf16String.
-	bytes uintPtrAtOffset: ##(self offsetOf: #DirectoryName) put: directoryName yourAddress.
-	self DirectoryNameLength: directoryName byteSize - 2!
+	bytes uintPtrAtOffset: _OffsetOf_DirectoryName put: anUtf16String yourAddress!
 
 DirectoryNameLength
 	"Answer the <Integer> value of the receiver's 'DirectoryNameLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #DirectoryNameLength)!
+	^bytes wordAtOffset: _OffsetOf_DirectoryNameLength!
 
 DirectoryNameLength: anInteger
 	"Set the receiver's 'DirectoryNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #DirectoryNameLength) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_DirectoryNameLength put: anInteger!
 
 Fields
 	"Answer the <Integer> value of the receiver's 'Fields' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Fields)!
+	^bytes dwordAtOffset: _OffsetOf_Fields!
 
 Fields: anInteger
 	"Set the receiver's 'Fields' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Fields) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Fields put: anInteger!
 
 Format
 	"Answer the <Integer> value of the receiver's 'Format' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #Format)!
+	^bytes sdwordAtOffset: _OffsetOf_Format!
 
 Format: anInteger
 	"Set the receiver's 'Format' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #Format) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_Format put: anInteger!
 
 LoggingFlags
 	"Answer the <Integer> value of the receiver's 'LoggingFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #LoggingFlags)!
+	^bytes dwordAtOffset: _OffsetOf_LoggingFlags!
 
 LoggingFlags: anInteger
 	"Set the receiver's 'LoggingFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #LoggingFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_LoggingFlags put: anInteger!
 
 pSecurityDescriptor
 	"Answer the <ExternalAddress> value of the receiver's 'pSecurityDescriptor' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pSecurityDescriptor)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_pSecurityDescriptor) asExternalAddress!
 
 pSecurityDescriptor: anExternalAddress
 	"Set the receiver's 'pSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSecurityDescriptor) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pSecurityDescriptor put: anExternalAddress!
 
 RolloverSize
 	"Answer the <Integer> value of the receiver's 'RolloverSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #RolloverSize)!
+	^bytes dwordAtOffset: _OffsetOf_RolloverSize!
 
 RolloverSize: anInteger
 	"Set the receiver's 'RolloverSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #RolloverSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_RolloverSize put: anInteger!
 
 RolloverType
 	"Answer the <Integer> value of the receiver's 'RolloverType' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #RolloverType)!
+	^bytes sdwordAtOffset: _OffsetOf_RolloverType!
 
 RolloverType: anInteger
 	"Set the receiver's 'RolloverType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #RolloverType) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_RolloverType put: anInteger!
 
 SoftwareName
 	"Answer the <Utf16String> value of the receiver's 'SoftwareName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #SoftwareName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_SoftwareName)!
 
 SoftwareName: anUtf16String
 	"Set the receiver's 'SoftwareName' field to the value of the argument, anUtf16String"
-	
-	softwareName := anUtf16String asUtf16String.
-	bytes uintPtrAtOffset: ##(self offsetOf: #SoftwareName) put: softwareName yourAddress.
-	self SoftwareNameLength: softwareName byteSize - 2!
+
+	bytes uintPtrAtOffset: _OffsetOf_SoftwareName put: anUtf16String yourAddress!
 
 SoftwareNameLength
 	"Answer the <Integer> value of the receiver's 'SoftwareNameLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #SoftwareNameLength)!
+	^bytes wordAtOffset: _OffsetOf_SoftwareNameLength!
 
 SoftwareNameLength: anInteger
 	"Set the receiver's 'SoftwareNameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #SoftwareNameLength) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_SoftwareNameLength put: anInteger! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryName!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryName:!**compiled accessors**!public! !
 !HTTP_LOGGING_INFO categoriesFor: #DirectoryNameLength!**compiled accessors**!public! !
@@ -203,8 +212,12 @@ defineFields
 		defineField: #pSecurityDescriptor type: LPVOIDField new offset: 44.
 	self byteSize: 48!
 
+getFieldNames
+	^#(#Present #LoggingFlags #SoftwareName #SoftwareNameLength #DirectoryNameLength #DirectoryName #Format #Fields #RolloverType #RolloverSize #pSecurityDescriptor)!
+
 propertyId
 	^HttpServerLoggingProperty! !
 !HTTP_LOGGING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_LOGGING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_LOGGING_INFO class categoriesFor: #propertyId!public! !
 

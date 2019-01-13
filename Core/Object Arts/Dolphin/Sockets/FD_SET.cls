@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #FD_SET
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_fd_array _OffsetOf_fd_count'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FD_SET guid: (GUID fromString: '{b99a7942-497e-4a39-97ef-9040c83d7829}')!
+FD_SET addClassConstant: '_OffsetOf_fd_array' value: 16r4!
+FD_SET addClassConstant: '_OffsetOf_fd_count' value: 16r0!
 FD_SET comment: '<FD_SET> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.fd_set'' from type information in the ''Windows Sockets 2 Type Library'' library.
 
 IDL definition follows:
@@ -21,17 +23,17 @@ typedef struct tagfd_set {
 fd_array
 	"Answer the <DWORDArray> value of the receiver's 'fd_array' field."
 
-	^DWORDArray fromAddress: bytes yourAddress + ##(self offsetOf: #fd_array) length: 64!
+	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_fd_array length: 64!
 
 fd_count
 	"Answer the <Integer> value of the receiver's 'fd_count' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_fd_count!
 
 fd_count: anInteger
 	"Set the receiver's 'fd_count' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_fd_count put: anInteger! !
 !FD_SET categoriesFor: #fd_array!**compiled accessors**!public! !
 !FD_SET categoriesFor: #fd_count!**compiled accessors**!public! !
 !FD_SET categoriesFor: #fd_count:!**compiled accessors**!public! !

@@ -2,10 +2,12 @@
 
 OLEStructure subclass: #CONNECTDATA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_punk'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CONNECTDATA guid: (GUID fromString: '{3438d2e1-01d6-446c-8102-5f238099585d}')!
+CONNECTDATA addClassConstant: '_OffsetOf_dwCookie' value: 16r4!
+CONNECTDATA addClassConstant: '_OffsetOf_punk' value: 16r0!
 CONNECTDATA comment: '<CONNECTDATA> is an <ExternalStructure> class to wrap the struct ''OBJIDL.CONNECTDATA'' from type information in the ''ObjIDL Library'' library.
 
 The type library contains no documentation for this struct
@@ -17,22 +19,22 @@ Warning: This comment was automatically generated from the struct''s type inform
 dwCookie
 	"Answer the <Integer> value of the receiver's 'dwCookie' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwCookie)!
+	^bytes dwordAtOffset: _OffsetOf_dwCookie!
 
 dwCookie: anInteger
 	"Set the receiver's 'dwCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwCookie) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwCookie put: anInteger!
 
 punk
 	"Answer the <IUnknown> value of the receiver's 'punk' field."
 
-	^IUnknown fromAddress: (bytes intPtrAtOffset: 0)!
+	^IUnknown fromAddress: (bytes intPtrAtOffset: _OffsetOf_punk)!
 
 punk: anIUnknown
 	"Set the receiver's 'punk' field to the value of the argument, anIUnknown"
 
-	bytes uintPtrAtOffset: 0 put: anIUnknown yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_punk put: anIUnknown yourAddress! !
 !CONNECTDATA categoriesFor: #dwCookie!**compiled accessors**!public! !
 !CONNECTDATA categoriesFor: #dwCookie:!**compiled accessors**!public! !
 !CONNECTDATA categoriesFor: #punk!**compiled accessors**!public! !

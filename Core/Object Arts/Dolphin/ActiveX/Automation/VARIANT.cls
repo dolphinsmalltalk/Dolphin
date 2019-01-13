@@ -2,10 +2,15 @@
 
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
-	classVariableNames: 'Unspecified VTClasses VTNames'
+	classVariableNames: '_OffsetOf_dblVal _OffsetOf_vt _OffsetOf_wReserved1 _OffsetOf_wReserved2 _OffsetOf_wReserved3 Unspecified VTClasses VTNames'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
 VARIANT guid: (GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
+VARIANT addClassConstant: '_OffsetOf_dblVal' value: 16r8!
+VARIANT addClassConstant: '_OffsetOf_vt' value: 16r0!
+VARIANT addClassConstant: '_OffsetOf_wReserved1' value: 16r2!
+VARIANT addClassConstant: '_OffsetOf_wReserved2' value: 16r4!
+VARIANT addClassConstant: '_OffsetOf_wReserved3' value: 16r6!
 VARIANT comment: 'VARIANT is an <ExternalStructure> to represent the OLE Automation VARIANT and VARIANTARG types.
 
 A VARIANT is basically a discriminated union which can represent all the parameter types which can be passed to and returned from member functions of Automation compatible (oleautomation) interfaces by Automation controllers and servers. These types are constrained by those which VB can handle, and hence there are no unsigned integers. A VARIANT''s type tag is stored as a 16-bit <integer> at the start of the structure, and is accessing with the #vt/vt: methods. Note that not all of the VT_XXX types are actually supported by the various variant manipulation functions provided by the Automation library, e.g. VT_LPSTR, as some are intended for type description and other purposes.
@@ -224,12 +229,12 @@ date: newValue
 dblVal
 	"Answer the <Float> value of the receiver's 'dblVal' field."
 
-	^bytes doubleAtOffset: ##(self offsetOf: #dblVal)!
+	^bytes doubleAtOffset: _OffsetOf_dblVal!
 
 dblVal: aFloat
 	"Set the receiver's 'dblVal' field to the value of the argument, aFloat"
 
-	bytes doubleAtOffset: ##(self offsetOf: #dblVal) put: aFloat!
+	bytes doubleAtOffset: _OffsetOf_dblVal put: aFloat!
 
 decimal
 	"Answer a <ScaledDecimal> which is the Variant Decimal value 
@@ -675,12 +680,12 @@ void
 vt
 	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_vt!
 
 vt: anInteger
 	"Set the receiver's 'vt' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_vt put: anInteger!
 
 word
 	"Answer the unsigned 16-bit <integer> value from the receiver.

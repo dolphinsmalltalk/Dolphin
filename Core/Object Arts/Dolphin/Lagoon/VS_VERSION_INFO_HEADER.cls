@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 VS_VERSION_INFO_HEADER guid: (GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
+VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wLength' value: 16r0!
+VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wType' value: 16r4!
+VS_VERSION_INFO_HEADER addClassConstant: '_OffsetOf_wValueLength' value: 16r2!
 VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
 
 See the VersionResource class.'!
@@ -62,17 +65,17 @@ valueString
 wLength
 	"Answer the <Integer> value of the receiver's 'wLength' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_wLength!
 
 wType
 	"Answer the <Integer> value of the receiver's 'wType' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wType)!
+	^bytes wordAtOffset: _OffsetOf_wType!
 
 wValueLength
 	"Answer the <Integer> value of the receiver's 'wValueLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wValueLength)! !
+	^bytes wordAtOffset: _OffsetOf_wValueLength! !
 !VS_VERSION_INFO_HEADER categoriesFor: #childrenOffset!accessing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #key!accessing!public! !
 !VS_VERSION_INFO_HEADER categoriesFor: #szKey!accessing!private! !

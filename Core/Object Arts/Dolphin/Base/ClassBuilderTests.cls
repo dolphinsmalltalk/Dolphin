@@ -326,34 +326,7 @@ testReshapeSubClass
 	self assert: testClass identicalTo: self classBuilderTestSubclass1.
 	"Dolphin's class builder fails because it does not become over the metaclasses."
 	(self runKnownBug: 'ClassBuilder does not "become" metaclass' test: #testReshapeSubClass)
-		ifTrue: [self assert: testMeta identicalTo: self classBuilderTestSubclass1 class]!
-
-testUnderscoreWarning
-	"#1419"
-
-	| testClass warning |
-	testClass := self classBuilderTestClass.
-	self assert: testClass classPool isEmpty.
-	
-	[testClass := Object
-				subclass: #ClassBuilderTestClass
-				instanceVariableNames: 'var1 var2'
-				classVariableNames: 'A'
-				poolDictionaries: ''
-				classInstanceVariableNames: '']
-			on: Warning
-			do: [:ex | warning := ex].
-	self assertIsNil: warning.
-	
-	[testClass := Object
-				subclass: #ClassBuilderTestClass
-				instanceVariableNames: 'var1 var2'
-				classVariableNames: '_A'
-				poolDictionaries: ''
-				classInstanceVariableNames: '']
-			on: Warning
-			do: [:ex | warning := ex].
-	self deny: warning isNil! !
+		ifTrue: [self assert: testMeta identicalTo: self classBuilderTestSubclass1 class]! !
 !ClassBuilderTests categoriesFor: #classBuilderTestClass!public!unit tests! !
 !ClassBuilderTests categoriesFor: #classBuilderTestSubclass1!public!unit tests! !
 !ClassBuilderTests categoriesFor: #classBuilderTestSubclass2!public!unit tests! !
@@ -369,7 +342,6 @@ testUnderscoreWarning
 !ClassBuilderTests categoriesFor: #testReshapeClass!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!Running! !
 !ClassBuilderTests categoriesFor: #testReshapeSubClass!public!Running! !
-!ClassBuilderTests categoriesFor: #testUnderscoreWarning!public!Running! !
 
 !ClassBuilderTests class methodsFor!
 

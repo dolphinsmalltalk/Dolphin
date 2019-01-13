@@ -65,32 +65,32 @@ Win32Structure subclass: #CommonDialogStructure
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpCustColors _OffsetOf_lpfnHook _OffsetOf_lpTemplateName _OffsetOf_rgbResult'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_iPointSize _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpLogFont _OffsetOf_lpszStyle _OffsetOf_lpTemplateName _OffsetOf_nFontType _OffsetOf_nSizeMax _OffsetOf_nSizeMin _OffsetOf_rgbColors'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #FINDREPLACEW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrFindWhat _OffsetOf_lpstrReplaceWith _OffsetOf_lpTemplateName _OffsetOf_wFindWhatLen _OffsetOf_wReplaceWithLen'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_dwSize _OffsetOf_flags _OffsetOf_flagsEx _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpstrCustomFilter _OffsetOf_lpstrDefExt _OffsetOf_lpstrFile _OffsetOf_lpstrFileTitle _OffsetOf_lpstrFilter _OffsetOf_lpstrInitialDir _OffsetOf_lpstrTitle _OffsetOf_lpTemplateName _OffsetOf_nFileExtension _OffsetOf_nFileOffset _OffsetOf_nFilterIndex _OffsetOf_nMaxCustFilter _OffsetOf_nMaxFile _OffsetOf_nMaxFileTitle _OffsetOf_pvReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pidl _OffsetOf_psf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pszFile'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueDialog subclass: #CommonDialog

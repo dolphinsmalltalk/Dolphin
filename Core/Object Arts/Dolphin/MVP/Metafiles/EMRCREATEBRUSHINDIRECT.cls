@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRCREATEBRUSHINDIRECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihBrush _OffsetOf_lb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCREATEBRUSHINDIRECT guid: (GUID fromString: '{491c3d56-fbf6-4cd9-8ea2-30cdf342f656}')!
+EMRCREATEBRUSHINDIRECT addClassConstant: '_OffsetOf_ihBrush' value: 16r8!
+EMRCREATEBRUSHINDIRECT addClassConstant: '_OffsetOf_lb' value: 16rC!
 EMRCREATEBRUSHINDIRECT comment: '<EMRCREATEBRUSHINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRCREATEBRUSHINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,25 +29,25 @@ struct tagEMRCREATEBRUSHINDIRECT {
 ihBrush
 	"Answer the <Integer> value of the receiver's 'ihBrush' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihBrush)!
+	^bytes dwordAtOffset: _OffsetOf_ihBrush!
 
 ihBrush: anInteger
 	"Set the receiver's 'ihBrush' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihBrush) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ihBrush put: anInteger!
 
 lb
 	"Answer the <LOGBRUSH> value of the receiver's 'lb' field."
 
-	^LOGBRUSH fromAddress: bytes yourAddress + ##(self offsetOf: #lb)!
+	^LOGBRUSH fromAddress: bytes yourAddress + _OffsetOf_lb!
 
 lb: aLOGBRUSH
 	"Set the receiver's 'lb' field to the value of the argument, aLOGBRUSH"
 
 	aLOGBRUSH
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lb) + 1)
-		to: ##((self offsetOf: #lb) + LOGBRUSH basicByteSize)
+		from: ##(_OffsetOf_lb + 1)
+		to: ##(_OffsetOf_lb + LOGBRUSH basicByteSize)
 		startingAt: 1! !
 !EMRCREATEBRUSHINDIRECT categoriesFor: #ihBrush!**compiled accessors**!public! !
 !EMRCREATEBRUSHINDIRECT categoriesFor: #ihBrush:!**compiled accessors**!public! !

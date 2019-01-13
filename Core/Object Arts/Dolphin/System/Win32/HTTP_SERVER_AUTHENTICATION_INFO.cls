@@ -2,10 +2,17 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AuthSchemes _OffsetOf_BasicParams _OffsetOf_DigestParams _OffsetOf_DisableNTLMCredentialCaching _OffsetOf_ExFlags _OffsetOf_ReceiveContextHandle _OffsetOf_ReceiveMutualAuth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVER_AUTHENTICATION_INFO guid: (GUID fromString: '{7f4599b6-bdfd-4a19-8a4a-a7fd55a9e207}')!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_AuthSchemes' value: 16r4!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_BasicParams' value: 16r1C!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_DigestParams' value: 16rC!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_DisableNTLMCredentialCaching' value: 16rA!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_ExFlags' value: 16rB!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_ReceiveContextHandle' value: 16r9!
+HTTP_SERVER_AUTHENTICATION_INFO addClassConstant: '_OffsetOf_ReceiveMutualAuth' value: 16r8!
 HTTP_SERVER_AUTHENTICATION_INFO comment: '<HTTP_SERVER_AUTHENTICATION_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -32,82 +39,80 @@ struct tagHTTP_SERVER_AUTHENTICATION_INFO {
 AuthSchemes
 	"Answer the <Integer> value of the receiver's 'AuthSchemes' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #AuthSchemes)!
+	^bytes dwordAtOffset: _OffsetOf_AuthSchemes!
 
 AuthSchemes: anInteger
 	"Set the receiver's 'AuthSchemes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #AuthSchemes) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_AuthSchemes put: anInteger!
 
 BasicParams
 	"Answer the <HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS> value of the receiver's 'BasicParams' field."
 
-	^HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
-		fromAddress: bytes yourAddress + ##(self offsetOf: #BasicParams)!
+	^HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS fromAddress: bytes yourAddress + _OffsetOf_BasicParams!
 
 BasicParams: aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	"Set the receiver's 'BasicParams' field to the value of the argument, aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS"
 
 	aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #BasicParams) + 1)
-		to: ##((self offsetOf: #BasicParams) + HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS basicByteSize)
+		from: ##(_OffsetOf_BasicParams + 1)
+		to: ##(_OffsetOf_BasicParams + HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS basicByteSize)
 		startingAt: 1!
 
 DigestParams
 	"Answer the <HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS> value of the receiver's 'DigestParams' field."
 
-	^HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
-		fromAddress: bytes yourAddress + ##(self offsetOf: #DigestParams)!
+	^HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS fromAddress: bytes yourAddress + _OffsetOf_DigestParams!
 
 DigestParams: aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	"Set the receiver's 'DigestParams' field to the value of the argument, aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS"
 
 	aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #DigestParams) + 1)
-		to: ##((self offsetOf: #DigestParams) + HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS basicByteSize)
+		from: ##(_OffsetOf_DigestParams + 1)
+		to: ##(_OffsetOf_DigestParams + HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS basicByteSize)
 		startingAt: 1!
 
 DisableNTLMCredentialCaching
 	"Answer the <Boolean> value of the receiver's 'DisableNTLMCredentialCaching' field."
 
-	^(bytes byteAtOffset: ##(self offsetOf: #DisableNTLMCredentialCaching)) asBoolean!
+	^(bytes byteAtOffset: _OffsetOf_DisableNTLMCredentialCaching) asBoolean!
 
 DisableNTLMCredentialCaching: aBoolean
 	"Set the receiver's 'DisableNTLMCredentialCaching' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: ##(self offsetOf: #DisableNTLMCredentialCaching) put: aBoolean asParameter!
+	bytes byteAtOffset: _OffsetOf_DisableNTLMCredentialCaching put: aBoolean asParameter!
 
 ExFlags
 	"Answer the <Integer> value of the receiver's 'ExFlags' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #ExFlags)!
+	^bytes byteAtOffset: _OffsetOf_ExFlags!
 
 ExFlags: anInteger
 	"Set the receiver's 'ExFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #ExFlags) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_ExFlags put: anInteger!
 
 ReceiveContextHandle
 	"Answer the <Boolean> value of the receiver's 'ReceiveContextHandle' field."
 
-	^(bytes byteAtOffset: ##(self offsetOf: #ReceiveContextHandle)) asBoolean!
+	^(bytes byteAtOffset: _OffsetOf_ReceiveContextHandle) asBoolean!
 
 ReceiveContextHandle: aBoolean
 	"Set the receiver's 'ReceiveContextHandle' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: ##(self offsetOf: #ReceiveContextHandle) put: aBoolean asParameter!
+	bytes byteAtOffset: _OffsetOf_ReceiveContextHandle put: aBoolean asParameter!
 
 ReceiveMutualAuth
 	"Answer the <Boolean> value of the receiver's 'ReceiveMutualAuth' field."
 
-	^(bytes byteAtOffset: ##(self offsetOf: #ReceiveMutualAuth)) asBoolean!
+	^(bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth) asBoolean!
 
 ReceiveMutualAuth: aBoolean
 	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
-	bytes byteAtOffset: ##(self offsetOf: #ReceiveMutualAuth) put: aBoolean asParameter! !
+	bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes:!**compiled accessors**!public! !
 !HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams!**compiled accessors**!public! !
@@ -154,8 +159,12 @@ defineFields
 		defineField: #BasicParams type: (StructureField type: HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS) offset: 28.
 	self byteSize: 36!
 
+getFieldNames
+	^#(#Present #AuthSchemes #ReceiveMutualAuth #ReceiveContextHandle #DisableNTLMCredentialCaching #ExFlags #DigestParams #BasicParams)!
+
 propertyId
 	^HttpServerAuthenticationProperty! !
 !HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #propertyId!public! !
 

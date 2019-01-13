@@ -2,10 +2,16 @@
 
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwDrawStage _OffsetOf_dwItemSpec _OffsetOf_hdc _OffsetOf_lParam _OffsetOf_rc _OffsetOf_uItemState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMCUSTOMDRAW guid: (GUID fromString: '{1123e900-72b4-46d6-81b5-8122b9e2393f}')!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwDrawStage' value: 16rC!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_dwItemSpec' value: 16r24!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_hdc' value: 16r10!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_lParam' value: 16r2C!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_rc' value: 16r14!
+NMCUSTOMDRAW addClassConstant: '_OffsetOf_uItemState' value: 16r28!
 NMCUSTOMDRAW comment: '`NMCUSTOMDRAW` is an `ExternalStructure` class to represent the Win32 structure of the same name.
 
 `NMCUSTOMDRAW` structures are sent as parameter blocks along with certain WM_NOTIFY messages from Windows common controls such as the `ListView` and `TreeView` to request custom draw information for individual items (and optionally sub-items).
@@ -56,12 +62,12 @@ canvas
 dwDrawStage
 	"Answer the <Integer> value of the receiver's 'dwDrawStage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwDrawStage)!
+	^bytes dwordAtOffset: _OffsetOf_dwDrawStage!
 
 dwItemSpec
 	"Answer the <Integer> value of the receiver's 'dwItemSpec' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwItemSpec)!
+	^bytes dwordAtOffset: _OffsetOf_dwItemSpec!
 
 evaluateDrawBlock: customDrawBlock
 	"Private - Evaluate the <monadicValuable>, customDrawBlock, and answer the appropriate instruction
@@ -98,7 +104,7 @@ hasFocus
 hdc
 	"Answer the <ExternalHandle> value of the receiver's 'hdc' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hdc)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hdc) asExternalHandle!
 
 isChecked
 	"Answer whether the item being draw is 'checked' (i.e. in a list with checkboxes it is ticked)."
@@ -160,17 +166,17 @@ itemHandle
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 rc
 	"Answer the <RECT> value of the receiver's 'rc' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rc)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rc!
 
 uItemState
 	"Answer the <Integer> value of the receiver's 'uItemState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uItemState)!
+	^bytes dwordAtOffset: _OffsetOf_uItemState!
 
 view
 	"Answer the sub-instance of <IconListAbstract> for which this is a <customDrawContext>."

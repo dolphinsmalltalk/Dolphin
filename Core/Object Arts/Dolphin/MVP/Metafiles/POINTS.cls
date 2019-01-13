@@ -1,11 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk 7"!
 
-POINTL subclass: #POINTS
+ExternalPoint subclass: #POINTS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 POINTS guid: (GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
+POINTS addClassConstant: '_OffsetOf_x' value: 16r0!
+POINTS addClassConstant: '_OffsetOf_y' value: 16r2!
 POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -40,22 +42,22 @@ asUIntPtr
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes swordAtOffset: 0!
+	^bytes swordAtOffset: _OffsetOf_x!
 
 x: anInteger
 	"Set the receiver's 'x' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anInteger!
+	bytes swordAtOffset: _OffsetOf_x put: anInteger!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #y)!
+	^bytes swordAtOffset: _OffsetOf_y!
 
 y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #y) put: anInteger! !
+	bytes swordAtOffset: _OffsetOf_y put: anInteger! !
 !POINTS categoriesFor: #asDword!converting!public! !
 !POINTS categoriesFor: #asUIntPtr!converting!public! !
 !POINTS categoriesFor: #x!**compiled accessors**!public! !
@@ -83,8 +85,8 @@ defineFields
 
 x: x y: y 
 	^self basicNew bytes: ((ByteArray newFixed: 4)
-				swordAtOffset: 0 put: x;
-				swordAtOffset: 2 put: y;
+				swordAtOffset: _OffsetOf_x put: x;
+				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !POINTS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
 !POINTS class categoriesFor: #x:y:!instance creation!public! !

@@ -16,14 +16,14 @@ The range of integer values that can be represented by instances of this class i
 !SWORD methodsFor!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes swordAtOffset: 0!
+	^bytes swordAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anObject! !
+	bytes swordAtOffset: _OffsetOf_value put: anInteger! !
 !SWORD categoriesFor: #value!**compiled accessors**!public! !
 !SWORD categoriesFor: #value:!**compiled accessors**!public! !
 

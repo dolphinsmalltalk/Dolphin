@@ -2,10 +2,11 @@
 
 HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_MaxConnections'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_CONNECTION_LIMIT_INFO guid: (GUID fromString: '{6fca5840-1e00-4065-ad55-203bd079a117}')!
+HTTP_CONNECTION_LIMIT_INFO addClassConstant: '_OffsetOf_MaxConnections' value: 16r4!
 HTTP_CONNECTION_LIMIT_INFO comment: '<HTTP_CONNECTION_LIMIT_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,12 +28,12 @@ struct tagHTTP_CONNECTION_LIMIT_INFO {
 MaxConnections
 	"Answer the <Integer> value of the receiver's 'MaxConnections' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #MaxConnections)!
+	^bytes dwordAtOffset: _OffsetOf_MaxConnections!
 
 MaxConnections: anInteger
 	"Set the receiver's 'MaxConnections' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #MaxConnections) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_MaxConnections put: anInteger!
 
 value
 	^self Present ifTrue: [self MaxConnections]!
@@ -71,6 +72,9 @@ defineFields
 		defineField: #MaxConnections type: DWORDField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#Present #MaxConnections)!
+
 maxConnections: anInteger
 	^(self new)
 		value: anInteger;
@@ -79,6 +83,7 @@ maxConnections: anInteger
 qosType
 	^HttpQosSettingTypeConnectionLimit! !
 !HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #maxConnections:!public! !
 !HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
 

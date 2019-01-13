@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRCOLORCORRECTPALETTE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ihPalette _OffsetOf_nFirstEntry _OffsetOf_nPalEntries _OffsetOf_nReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCOLORCORRECTPALETTE guid: (GUID fromString: '{b425fd3a-cd17-44a5-972f-7f4d44d06495}')!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_ihPalette' value: 16r8!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nFirstEntry' value: 16rC!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nPalEntries' value: 16r10!
+EMRCOLORCORRECTPALETTE addClassConstant: '_OffsetOf_nReserved' value: 16r14!
 EMRCOLORCORRECTPALETTE comment: '<COLORCORRECTPALETTE> is an <ExternalStructure> class to wrap the struct ''Win32.COLORCORRECTPALETTE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,42 +33,42 @@ struct tagCOLORCORRECTPALETTE {
 ihPalette
 	"Answer the <Integer> value of the receiver's 'ihPalette' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihPalette)!
+	^bytes dwordAtOffset: _OffsetOf_ihPalette!
 
 ihPalette: anInteger
 	"Set the receiver's 'ihPalette' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihPalette) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ihPalette put: anInteger!
 
 nFirstEntry
 	"Answer the <Integer> value of the receiver's 'nFirstEntry' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry)!
+	^bytes dwordAtOffset: _OffsetOf_nFirstEntry!
 
 nFirstEntry: anInteger
 	"Set the receiver's 'nFirstEntry' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nFirstEntry) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nFirstEntry put: anInteger!
 
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
+	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nReserved
 	"Answer the <Integer> value of the receiver's 'nReserved' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nReserved)!
+	^bytes dwordAtOffset: _OffsetOf_nReserved!
 
 nReserved: anInteger
 	"Set the receiver's 'nReserved' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nReserved) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_nReserved put: anInteger! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette!**compiled accessors**!public! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #ihPalette:!**compiled accessors**!public! !
 !EMRCOLORCORRECTPALETTE categoriesFor: #nFirstEntry!**compiled accessors**!public! !

@@ -9219,7 +9219,7 @@ scnModified: pSCNotification
 	overloaded notification."
 
 	| eventMask |
-	eventMask := pSCNotification sdwordAtOffset: SCNotification.ModificationTypeOffset.
+	eventMask := pSCNotification sdwordAtOffset: SCNotification._OffsetOf_modificationType.
 	(eventMask anyMask: ##(SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT))
 		ifTrue: 
 			["Text changed"

@@ -2,10 +2,16 @@
 
 ExternalStructure subclass: #GpWmfPlaceableFileHeader
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_BoundingBox _OffsetOf_Checksum _OffsetOf_Hmf _OffsetOf_Inch _OffsetOf_Key _OffsetOf_Reserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpWmfPlaceableFileHeader guid: (GUID fromString: '{e244edf0-9096-42dd-944d-3be54248689f}')!
+GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_BoundingBox' value: 16r6!
+GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Checksum' value: 16r14!
+GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Hmf' value: 16r4!
+GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Inch' value: 16rE!
+GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Key' value: 16r0!
+GpWmfPlaceableFileHeader addClassConstant: '_OffsetOf_Reserved' value: 16r10!
 GpWmfPlaceableFileHeader comment: '<GpWmfPlaceableFileHeader> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpWmfPlaceableFileHeader'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -30,66 +36,66 @@ struct tagGpWmfPlaceableFileHeader {
 BoundingBox
 	"Answer the <GpWMFRect16> value of the receiver's 'BoundingBox' field."
 
-	^GpWMFRect16 fromAddress: bytes yourAddress + ##(self offsetOf: #BoundingBox)!
+	^GpWMFRect16 fromAddress: bytes yourAddress + _OffsetOf_BoundingBox!
 
 BoundingBox: aGpWMFRect16
 	"Set the receiver's 'BoundingBox' field to the value of the argument, aGpWMFRect16"
 
 	aGpWMFRect16
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #BoundingBox) + 1)
-		to: ##((self offsetOf: #BoundingBox) + GpWMFRect16 basicByteSize)
+		from: ##(_OffsetOf_BoundingBox + 1)
+		to: ##(_OffsetOf_BoundingBox + GpWMFRect16 basicByteSize)
 		startingAt: 1!
 
 Checksum
 	"Answer the <Integer> value of the receiver's 'Checksum' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #Checksum)!
+	^bytes swordAtOffset: _OffsetOf_Checksum!
 
 Checksum: anInteger
 	"Set the receiver's 'Checksum' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #Checksum) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_Checksum put: anInteger!
 
 Hmf
 	"Answer the <Integer> value of the receiver's 'Hmf' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #Hmf)!
+	^bytes swordAtOffset: _OffsetOf_Hmf!
 
 Hmf: anInteger
 	"Set the receiver's 'Hmf' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #Hmf) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_Hmf put: anInteger!
 
 Inch
 	"Answer the <Integer> value of the receiver's 'Inch' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #Inch)!
+	^bytes swordAtOffset: _OffsetOf_Inch!
 
 Inch: anInteger
 	"Set the receiver's 'Inch' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: ##(self offsetOf: #Inch) put: anInteger!
+	bytes swordAtOffset: _OffsetOf_Inch put: anInteger!
 
 Key
 	"Answer the <Integer> value of the receiver's 'Key' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_Key!
 
 Key: anInteger
 	"Set the receiver's 'Key' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Key put: anInteger!
 
 Reserved
 	"Answer the <Integer> value of the receiver's 'Reserved' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Reserved)!
+	^bytes dwordAtOffset: _OffsetOf_Reserved!
 
 Reserved: anInteger
 	"Set the receiver's 'Reserved' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Reserved) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_Reserved put: anInteger! !
 !GpWmfPlaceableFileHeader categoriesFor: #BoundingBox!**compiled accessors**!public! !
 !GpWmfPlaceableFileHeader categoriesFor: #BoundingBox:!**compiled accessors**!public! !
 !GpWmfPlaceableFileHeader categoriesFor: #Checksum!**compiled accessors**!public! !

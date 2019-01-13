@@ -18,12 +18,12 @@ asFloat
 value
 	"Answer the <Float> value of the receiver's 'value' field."
 
-	^bytes doubleAtOffset: 0!
+	^bytes doubleAtOffset: _OffsetOf_value!
 
 value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
-	bytes doubleAtOffset: 0 put: aFloat! !
+	bytes doubleAtOffset: _OffsetOf_value put: aFloat! !
 !DOUBLE categoriesFor: #asFloat!converting!public! !
 !DOUBLE categoriesFor: #value!**compiled accessors**!public! !
 !DOUBLE categoriesFor: #value:!**compiled accessors**!public! !
@@ -36,7 +36,7 @@ defineFields
 		DOUBLE compileDefinition
 	"
 
-	self defineField: #value type: DOUBLEField new!
+	self defineField: #value type: DOUBLEField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.

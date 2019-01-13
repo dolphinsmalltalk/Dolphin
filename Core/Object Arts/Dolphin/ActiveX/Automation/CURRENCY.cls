@@ -2,10 +2,11 @@
 
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cy'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 CURRENCY guid: (GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
+CURRENCY addClassConstant: '_OffsetOf_cy' value: 16r0!
 CURRENCY comment: 'CURRENCY is an <ExternalStructure> class to represent the Automation structure of the same name.
 
 CURRENCY is a 64-bit fractional value scaled by 10000 to give 4 decimal places. It provides limited scaled decimal capabilities for simple scripting languages such as VB. It corresponds to the variant type VT_CY.
@@ -25,12 +26,12 @@ asVariant
 cy
 	"Answer the <Integer> value of the receiver's 'cy' field."
 
-	^bytes sqwordAtOffset: 0!
+	^bytes sqwordAtOffset: _OffsetOf_cy!
 
 cy: anInteger
 	"Set the receiver's 'cy' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: 0 put: anInteger!
+	bytes sqwordAtOffset: _OffsetOf_cy put: anInteger!
 
 value
 	"Answer the receiver's value as a Smalltalk <ScaledDecimal>."

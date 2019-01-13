@@ -2,10 +2,15 @@
 
 ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_cbName _OffsetOf_Data _OffsetOf_dwAction _OffsetOf_dwFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRCOLORMATCHTOTARGET guid: (GUID fromString: '{8408e62d-3e54-483c-8938-98e099d9d6a2}')!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_cbData' value: 16r14!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_cbName' value: 16r10!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_Data' value: 16r18!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_dwAction' value: 16r8!
+EMRCOLORMATCHTOTARGET addClassConstant: '_OffsetOf_dwFlags' value: 16rC!
 EMRCOLORMATCHTOTARGET comment: '<COLORMATCHTOTARGET> is an <ExternalStructure> class to wrap the struct ''Win32.COLORMATCHTOTARGET'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,27 +35,27 @@ struct tagCOLORMATCHTOTARGET {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 cbName
 	"Answer the <Integer> value of the receiver's 'cbName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbName)!
+	^bytes dwordAtOffset: _OffsetOf_cbName!
 
 cbName: anInteger
 	"Set the receiver's 'cbName' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbName) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbName put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self dataLength!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self dataLength!
 
 Data: anExternalArray
 	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
@@ -59,8 +64,8 @@ Data: anExternalArray
 	size := anExternalArray byteSize.
 	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
 		startingAt: 1!
 
 dataLength
@@ -71,22 +76,22 @@ dataLength
 dwAction
 	"Answer the <Integer> value of the receiver's 'dwAction' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwAction)!
+	^bytes dwordAtOffset: _OffsetOf_dwAction!
 
 dwAction: anInteger
 	"Set the receiver's 'dwAction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwAction) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwAction put: anInteger!
 
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
 !EMRCOLORMATCHTOTARGET categoriesFor: #cbData!**compiled accessors**!public! !
 !EMRCOLORMATCHTOTARGET categoriesFor: #cbData:!**compiled accessors**!public! !
 !EMRCOLORMATCHTOTARGET categoriesFor: #cbName!**compiled accessors**!public! !

@@ -58,12 +58,12 @@ lowPartSigned
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes uintPtrAtOffset: 0!
+	^bytes uintPtrAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: 0 put: anInteger! !
+	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
 !UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
 !UINT_PTR categoriesFor: #highPart!accessing!public! !
@@ -81,6 +81,6 @@ defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: UINT_PTRField new! !
+	self defineField: #value type: UINT_PTRField new beOverride! !
 !UINT_PTR class categoriesFor: #defineFields!initializing!public! !
 

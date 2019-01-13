@@ -2,10 +2,25 @@
 
 CommonDialogStructure subclass: #CHOOSEFONTW
 	instanceVariableNames: 'logFont'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_flags _OffsetOf_hDC _OffsetOf_hInstance _OffsetOf_hwndOwner _OffsetOf_iPointSize _OffsetOf_lCustData _OffsetOf_lpfnHook _OffsetOf_lpLogFont _OffsetOf_lpszStyle _OffsetOf_lpTemplateName _OffsetOf_nFontType _OffsetOf_nSizeMax _OffsetOf_nSizeMin _OffsetOf_rgbColors'
 	poolDictionaries: 'CommonDialogConstants'
 	classInstanceVariableNames: ''!
 CHOOSEFONTW guid: (GUID fromString: '{87b4c5d2-026e-11d3-9fd7-00a0cc3e4a32}')!
+CHOOSEFONTW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+CHOOSEFONTW addClassConstant: '_OffsetOf_flags' value: 16r14!
+CHOOSEFONTW addClassConstant: '_OffsetOf_hDC' value: 16r8!
+CHOOSEFONTW addClassConstant: '_OffsetOf_hInstance' value: 16r28!
+CHOOSEFONTW addClassConstant: '_OffsetOf_hwndOwner' value: 16r4!
+CHOOSEFONTW addClassConstant: '_OffsetOf_iPointSize' value: 16r10!
+CHOOSEFONTW addClassConstant: '_OffsetOf_lCustData' value: 16r1C!
+CHOOSEFONTW addClassConstant: '_OffsetOf_lpfnHook' value: 16r20!
+CHOOSEFONTW addClassConstant: '_OffsetOf_lpLogFont' value: 16rC!
+CHOOSEFONTW addClassConstant: '_OffsetOf_lpszStyle' value: 16r2C!
+CHOOSEFONTW addClassConstant: '_OffsetOf_lpTemplateName' value: 16r24!
+CHOOSEFONTW addClassConstant: '_OffsetOf_nFontType' value: 16r30!
+CHOOSEFONTW addClassConstant: '_OffsetOf_nSizeMax' value: 16r38!
+CHOOSEFONTW addClassConstant: '_OffsetOf_nSizeMin' value: 16r34!
+CHOOSEFONTW addClassConstant: '_OffsetOf_rgbColors' value: 16r18!
 CHOOSEFONTW comment: 'CHOOSEFONT is the class of <ExternalStructure> which represent the Windows Common Dialog structure of the same name.
 
 CHOOSEFONT is used in conjunction with <FontDialog> to pop a common file dialog to select a font.
@@ -22,22 +37,22 @@ color: aColor
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #flags)!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 flags: anInteger
 	"Set the receiver's 'flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
 
 hDC: anExternalHandle
 	"Set the receiver's 'hDC' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hDC) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hDC put: anExternalHandle!
 
 hookFlag
 	^CF_ENABLEHOOK!
@@ -45,12 +60,12 @@ hookFlag
 hwndOwner: anExternalHandle
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndOwner) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwndOwner put: anExternalHandle!
 
 iPointSize
 	"Answer the <Integer> value of the receiver's 'iPointSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iPointSize)!
+	^bytes dwordAtOffset: _OffsetOf_iPointSize!
 
 logFont
 	^logFont!
@@ -62,17 +77,17 @@ logFont: aLOGFONT
 lpfnHook: anExternalAddress
 	"Set the receiver's 'lpfnHook' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpfnHook) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpfnHook put: anExternalAddress!
 
 lpLogFont
 	"Answer the <LOGFONTW> value of the receiver's 'lpLogFont' field."
 
-	^LOGFONTW fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpLogFont))!
+	^LOGFONTW fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpLogFont)!
 
 lpLogFont: aLOGFONTW
 	"Set the receiver's 'lpLogFont' field to the value of the argument, aLOGFONTW"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpLogFont) put: aLOGFONTW yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpLogFont put: aLOGFONTW yourAddress!
 
 ownerView: aView
 	"Set the parent window for the dialog to aView."
@@ -84,12 +99,12 @@ ownerView: aView
 rgbColors
 	"Answer the <Integer> value of the receiver's 'rgbColors' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #rgbColors)!
+	^bytes dwordAtOffset: _OffsetOf_rgbColors!
 
 rgbColors: anInteger
 	"Set the receiver's 'rgbColors' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #rgbColors) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_rgbColors put: anInteger! !
 !CHOOSEFONTW categoriesFor: #color!public! !
 !CHOOSEFONTW categoriesFor: #color:!public! !
 !CHOOSEFONTW categoriesFor: #dwSize:!**compiled accessors**!public! !

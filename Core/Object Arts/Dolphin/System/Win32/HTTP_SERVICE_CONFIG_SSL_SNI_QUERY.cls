@@ -2,10 +2,12 @@
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_QUERY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwToken _OffsetOf_KeyDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_SNI_QUERY guid: (GUID fromString: '{4d8cbfdf-8766-4e01-a7f0-c775406dd04c}')!
+HTTP_SERVICE_CONFIG_SSL_SNI_QUERY addClassConstant: '_OffsetOf_dwToken' value: 16r90!
+HTTP_SERVICE_CONFIG_SSL_SNI_QUERY addClassConstant: '_OffsetOf_KeyDesc' value: 16r8!
 HTTP_SERVICE_CONFIG_SSL_SNI_QUERY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,25 +30,25 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_QUERY {
 dwToken
 	"Answer the <Integer> value of the receiver's 'dwToken' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwToken)!
+	^bytes dwordAtOffset: _OffsetOf_dwToken!
 
 dwToken: anInteger
 	"Set the receiver's 'dwToken' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwToken) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwToken put: anInteger!
 
 KeyDesc
 	"Answer the <HTTP_SERVICE_CONFIG_SSL_SNI_KEY> value of the receiver's 'KeyDesc' field."
 
-	^HTTP_SERVICE_CONFIG_SSL_SNI_KEY fromAddress: bytes yourAddress + ##(self offsetOf: #KeyDesc)!
+	^HTTP_SERVICE_CONFIG_SSL_SNI_KEY fromAddress: bytes yourAddress + _OffsetOf_KeyDesc!
 
 KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	"Set the receiver's 'KeyDesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_SNI_KEY"
 
 	aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #KeyDesc) + 1)
-		to: ##((self offsetOf: #KeyDesc) + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
+		from: ##(_OffsetOf_KeyDesc + 1)
+		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
 		startingAt: 1! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
@@ -72,6 +74,10 @@ defineFields
 	self
 		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_SNI_KEY) offset: 8;
 		defineField: #dwToken type: DWORDField new offset: 144.
-	self byteSize: 152! !
+	self byteSize: 152!
+
+getFieldNames
+	^#(#QueryDesc #KeyDesc #dwToken)! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

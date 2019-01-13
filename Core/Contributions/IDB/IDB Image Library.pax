@@ -117,12 +117,12 @@ Object subclass: #ILLibrary
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ILExport subclass: #ILExportBitmap

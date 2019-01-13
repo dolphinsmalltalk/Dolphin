@@ -2,10 +2,15 @@
 
 NMHDR subclass: #NMTTDISPINFOW
 	instanceVariableNames: 'text'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hinst _OffsetOf_lParam _OffsetOf_lpszText _OffsetOf_szText _OffsetOf_uFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMTTDISPINFOW guid: (GUID fromString: '{fd2f4864-6901-4633-8b54-accb5c28a265}')!
+NMTTDISPINFOW addClassConstant: '_OffsetOf_hinst' value: 16rB0!
+NMTTDISPINFOW addClassConstant: '_OffsetOf_lParam' value: 16rB8!
+NMTTDISPINFOW addClassConstant: '_OffsetOf_lpszText' value: 16rC!
+NMTTDISPINFOW addClassConstant: '_OffsetOf_szText' value: 16r10!
+NMTTDISPINFOW addClassConstant: '_OffsetOf_uFlags' value: 16rB4!
 NMTTDISPINFOW comment: ''!
 !NMTTDISPINFOW categoriesForClass!External-Data-Structured-Win32! !
 !NMTTDISPINFOW methodsFor!
@@ -19,12 +24,12 @@ idIsHandle
 lpszText
 	"Answer the <Utf16String> value of the receiver's 'lpszText' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszText))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpszText)!
 
 lpszText: anUtf16String
 	"Set the receiver's 'lpszText' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszText) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpszText put: anUtf16String yourAddress!
 
 text
 	^text!
@@ -43,7 +48,7 @@ text: aString
 uFlags
 	"Answer the <Integer> value of the receiver's 'uFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uFlags)! !
+	^bytes dwordAtOffset: _OffsetOf_uFlags! !
 !NMTTDISPINFOW categoriesFor: #idIsHandle!private!testing! !
 !NMTTDISPINFOW categoriesFor: #lpszText!**compiled accessors**!public! !
 !NMTTDISPINFOW categoriesFor: #lpszText:!**compiled accessors**!public! !

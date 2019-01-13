@@ -62,27 +62,27 @@ Object subclass: #ToolbarItem
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TBADDBITMAP
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hInst _OffsetOf_nID'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TBBUTTON
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwData _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_iBitmap _OffsetOf_idCommand _OffsetOf_iString'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchText _OffsetOf_cx _OffsetOf_dwMask _OffsetOf_dwSize _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_idCommand _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_pszText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwHitInfo _OffsetOf_dwItemData _OffsetOf_dwItemSpec _OffsetOf_pt'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMTOOLBARW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchText _OffsetOf_iItem _OffsetOf_pszText _OffsetOf_tbButton'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 StatusBarItemAbstract subclass: #StatusBarItem

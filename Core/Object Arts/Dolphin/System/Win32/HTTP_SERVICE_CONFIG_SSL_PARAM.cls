@@ -2,10 +2,20 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AppId _OffsetOf_DefaultCertCheckMode _OffsetOf_DefaultFlags _OffsetOf_DefaultRevocationFreshnessTime _OffsetOf_DefaultRevocationUrlRetrievalTimeout _OffsetOf_pDefaultSslCtlIdentifier _OffsetOf_pDefaultSslCtlStoreName _OffsetOf_pSslCertStoreName _OffsetOf_pSslHash _OffsetOf_SslHashLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_PARAM guid: (GUID fromString: '{7fe46aef-bb33-40ac-a388-846c53efde1d}')!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_AppId' value: 16r8!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultCertCheckMode' value: 16r1C!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultFlags' value: 16r30!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultRevocationFreshnessTime' value: 16r20!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_DefaultRevocationUrlRetrievalTimeout' value: 16r24!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pDefaultSslCtlIdentifier' value: 16r28!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pDefaultSslCtlStoreName' value: 16r2C!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pSslCertStoreName' value: 16r18!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_pSslHash' value: 16r4!
+HTTP_SERVICE_CONFIG_SSL_PARAM addClassConstant: '_OffsetOf_SslHashLength' value: 16r0!
 HTTP_SERVICE_CONFIG_SSL_PARAM comment: '<HTTP_SERVICE_CONFIG_SSL_PARAM> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -35,108 +45,107 @@ struct tagHTTP_SERVICE_CONFIG_SSL_PARAM {
 AppId
 	"Answer the <GUID> value of the receiver's 'AppId' field."
 
-	^GUID fromAddress: bytes yourAddress + ##(self offsetOf: #AppId)!
+	^GUID fromAddress: bytes yourAddress + _OffsetOf_AppId!
 
 AppId: aGUID
 	"Set the receiver's 'AppId' field to the value of the argument, aGUID"
 
 	aGUID
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #AppId) + 1)
-		to: ##((self offsetOf: #AppId) + GUID basicByteSize)
+		from: ##(_OffsetOf_AppId + 1)
+		to: ##(_OffsetOf_AppId + GUID basicByteSize)
 		startingAt: 1!
 
 DefaultCertCheckMode
 	"Answer the <Integer> value of the receiver's 'DefaultCertCheckMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #DefaultCertCheckMode)!
+	^bytes dwordAtOffset: _OffsetOf_DefaultCertCheckMode!
 
 DefaultCertCheckMode: anInteger
 	"Set the receiver's 'DefaultCertCheckMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultCertCheckMode) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_DefaultCertCheckMode put: anInteger!
 
 DefaultFlags
 	"Answer the <Integer> value of the receiver's 'DefaultFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #DefaultFlags)!
+	^bytes dwordAtOffset: _OffsetOf_DefaultFlags!
 
 DefaultFlags: anInteger
 	"Set the receiver's 'DefaultFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_DefaultFlags put: anInteger!
 
 DefaultRevocationFreshnessTime
 	"Answer the <Integer> value of the receiver's 'DefaultRevocationFreshnessTime' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationFreshnessTime)!
+	^bytes dwordAtOffset: _OffsetOf_DefaultRevocationFreshnessTime!
 
 DefaultRevocationFreshnessTime: anInteger
 	"Set the receiver's 'DefaultRevocationFreshnessTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationFreshnessTime) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_DefaultRevocationFreshnessTime put: anInteger!
 
 DefaultRevocationUrlRetrievalTimeout
 	"Answer the <Integer> value of the receiver's 'DefaultRevocationUrlRetrievalTimeout' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationUrlRetrievalTimeout)!
+	^bytes dwordAtOffset: _OffsetOf_DefaultRevocationUrlRetrievalTimeout!
 
 DefaultRevocationUrlRetrievalTimeout: anInteger
 	"Set the receiver's 'DefaultRevocationUrlRetrievalTimeout' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #DefaultRevocationUrlRetrievalTimeout) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_DefaultRevocationUrlRetrievalTimeout put: anInteger!
 
 pDefaultSslCtlIdentifier
 	"Answer the <Utf16String> value of the receiver's 'pDefaultSslCtlIdentifier' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlIdentifier))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pDefaultSslCtlIdentifier)!
 
 pDefaultSslCtlIdentifier: anUtf16String
 	"Set the receiver's 'pDefaultSslCtlIdentifier' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlIdentifier) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pDefaultSslCtlIdentifier put: anUtf16String yourAddress!
 
 pDefaultSslCtlStoreName
 	"Answer the <Utf16String> value of the receiver's 'pDefaultSslCtlStoreName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlStoreName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pDefaultSslCtlStoreName)!
 
 pDefaultSslCtlStoreName: anUtf16String
 	"Set the receiver's 'pDefaultSslCtlStoreName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pDefaultSslCtlStoreName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pDefaultSslCtlStoreName put: anUtf16String yourAddress!
 
 pSslCertStoreName
 	"Answer the <Utf16String> value of the receiver's 'pSslCertStoreName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pSslCertStoreName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pSslCertStoreName)!
 
 pSslCertStoreName: anUtf16String
 	"Set the receiver's 'pSslCertStoreName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSslCertStoreName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pSslCertStoreName put: anUtf16String yourAddress!
 
 pSslHash
 	"Answer the <ExternalArray> value of the receiver's 'pSslHash' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pSslHash))
-		length: self SslHashLength!
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_pSslHash) length: self SslHashLength!
 
 pSslHash: anExternalArray
 	"Set the receiver's 'pSslHash' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSslHash) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pSslHash put: anExternalArray yourAddress.
 	self SslHashLength: anExternalArray size!
 
 SslHashLength
 	"Private - Answer the <Integer> value of the receiver's 'SslHashLength' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_SslHashLength!
 
 SslHashLength: anInteger
 	"Set the receiver's 'SslHashLength' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_SslHashLength put: anInteger! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #AppId!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #AppId:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultCertCheckMode!**compiled accessors**!public! !
@@ -191,6 +200,10 @@ defineFields
 		defineField: #pDefaultSslCtlIdentifier type: (PointerField type: Utf16String) offset: 40;
 		defineField: #pDefaultSslCtlStoreName type: (PointerField type: Utf16String) offset: 44;
 		defineField: #DefaultFlags type: DWORDField new offset: 48.
-	self byteSize: 52! !
+	self byteSize: 52!
+
+getFieldNames
+	^#(#SslHashLength #pSslHash #AppId #pSslCertStoreName #DefaultCertCheckMode #DefaultRevocationFreshnessTime #DefaultRevocationUrlRetrievalTimeout #pDefaultSslCtlIdentifier #pDefaultSslCtlStoreName #DefaultFlags)! !
 !HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -439,7 +439,7 @@ ITypeLib subclass: #ITypeLib2
 	classInstanceVariableNames: ''!
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbElements _OffsetOf_cDims _OffsetOf_cLocks _OffsetOf_fFeatures _OffsetOf_pvData _OffsetOf_rgsabound'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
 DOUBLE subclass: #DATE
@@ -459,72 +459,72 @@ LPVOID subclass: #LPBSTR
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_tdescElem'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cy'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #CUSTDATAITEM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_guid _OffsetOf_varValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #DECIMAL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hi32 _OffsetOf_lo64 _OffsetOf_scale _OffsetOf_sign _OffsetOf_wReserved'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
-	classVariableNames: 'ZeroArgs'
+	classVariableNames: '_OffsetOf_cArgs _OffsetOf_cNamedArgs _OffsetOf_rgdispidNamedArgs _OffsetOf_rgvarg ZeroArgs'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cySize _OffsetOf_dwSize _OffsetOf_fItalic _OffsetOf_fStrikethrough _OffsetOf_fUnderline _OffsetOf_lpstrName _OffsetOf_sCharset _OffsetOf_sWeight'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #IDLDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwReserved _OffsetOf_wIDLFlags'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_pparamdescex _OffsetOf_wParamFlags'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #PARAMDESCEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cBytes _OffsetOf_varDefaultValue'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #SAFEARRAYBOUND
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cElements _OffsetOf_lLbound'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_guid _OffsetOf_lcid _OffsetOf_syskind _OffsetOf_wLibFlags _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
-	classVariableNames: 'VTIndirections'
+	classVariableNames: '_OffsetOf_hreftype _OffsetOf_lpadesc _OffsetOf_lptdesc _OffsetOf_vt VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 AbstractELEMDESC subclass: #ARRAYDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cDims _OffsetOf_rgbounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_paramdesc'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #AXRecord
@@ -539,12 +539,12 @@ OLEFinalizableStructure subclass: #AXTypeInfoStructure
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
-	classVariableNames: 'WellKnownCustomAttributes'
+	classVariableNames: '_OffsetOf_cCustData _OffsetOf_prgCustData WellKnownCustomAttributes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
-	classVariableNames: 'Unspecified VTClasses VTNames'
+	classVariableNames: '_OffsetOf_dblVal _OffsetOf_vt _OffsetOf_wReserved1 _OffsetOf_wReserved2 _OffsetOf_wReserved3 Unspecified VTClasses VTNames'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors Win32Constants'
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure subclass: #AXMemberDesc
@@ -554,17 +554,17 @@ AXTypeInfoStructure subclass: #AXMemberDesc
 	classInstanceVariableNames: ''!
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbAlignment _OffsetOf_cbSizeInstance _OffsetOf_cbSizeVft _OffsetOf_cFuncs _OffsetOf_cImplTypes _OffsetOf_cVars _OffsetOf_dwReserved _OffsetOf_guid _OffsetOf_idldescType _OffsetOf_lcid _OffsetOf_lpstrSchema _OffsetOf_memidConstructor _OffsetOf_memidDestructor _OffsetOf_tdescAlias _OffsetOf_typekind _OffsetOf_wMajorVerNum _OffsetOf_wMinorVerNum _OffsetOf_wTypeFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_callconv _OffsetOf_cParams _OffsetOf_cParamsOpt _OffsetOf_cScodes _OffsetOf_elemdescFunc _OffsetOf_funckind _OffsetOf_invkind _OffsetOf_lprgelemdescParam _OffsetOf_lprgscode _OffsetOf_memid _OffsetOf_oVft _OffsetOf_wFuncFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AXMemberDesc subclass: #VARDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_elemdesc _OffsetOf_lpstrSchema _OffsetOf_lpvarValue _OffsetOf_memid _OffsetOf_oInst _OffsetOf_varkind _OffsetOf_wVarFlags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

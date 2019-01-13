@@ -2,10 +2,26 @@
 
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_iBorderWidth _OffsetOf_iCaptionHeight _OffsetOf_iCaptionWidth _OffsetOf_iMenuHeight _OffsetOf_iMenuWidth _OffsetOf_iPaddedBorderWidth _OffsetOf_iScrollHeight _OffsetOf_iScrollWidth _OffsetOf_iSmCaptionHeight _OffsetOf_iSmCaptionWidth _OffsetOf_lfCationFont _OffsetOf_lfMenuFont _OffsetOf_lfMessageFont _OffsetOf_lfSmCaptionFont _OffsetOf_lfStatusFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NONCLIENTMETRICSW guid: (GUID fromString: '{87b4c602-026e-11d3-9fd7-00a0cc3e4a32}')!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iBorderWidth' value: 16r4!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iCaptionHeight' value: 16r14!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iCaptionWidth' value: 16r10!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iMenuHeight' value: 16rDC!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iMenuWidth' value: 16rD8!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iPaddedBorderWidth' value: 16r1F4!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iScrollHeight' value: 16rC!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iScrollWidth' value: 16r8!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iSmCaptionHeight' value: 16r78!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_iSmCaptionWidth' value: 16r74!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfCationFont' value: 16r18!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMenuFont' value: 16rE0!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfMessageFont' value: 16r198!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfSmCaptionFont' value: 16r7C!
+NONCLIENTMETRICSW addClassConstant: '_OffsetOf_lfStatusFont' value: 16r13C!
 NONCLIENTMETRICSW comment: '<NONCLIENTMETRICSW> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
 From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associated with the nonclient area of a nonminimized window. This structure is used by the SPI_GETNONCLIENTMETRICS and SPI_SETNONCLIENTMETRICS actions of SystemParametersInfo."'!
@@ -15,42 +31,42 @@ From MSDN: "The NONCLIENTMETRICS structure contains the scalable metrics associa
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 iCaptionHeight
 	"Answer the <Integer> value of the receiver's 'iCaptionHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iCaptionHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_iCaptionHeight!
 
 iMenuHeight
 	"Answer the <Integer> value of the receiver's 'iMenuHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iMenuHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_iMenuHeight!
 
 iMenuWidth
 	"Answer the <Integer> value of the receiver's 'iMenuWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iMenuWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_iMenuWidth!
 
 iPaddedBorderWidth
 	"Answer the <Integer> value of the receiver's 'iPaddedBorderWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iPaddedBorderWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_iPaddedBorderWidth!
 
 iScrollHeight
 	"Answer the <Integer> value of the receiver's 'iScrollHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iScrollHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_iScrollHeight!
 
 iScrollWidth
 	"Answer the <Integer> value of the receiver's 'iScrollWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iScrollWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_iScrollWidth!
 
 lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
-	^LOGFONTW fromAddress: bytes yourAddress + ##(self offsetOf: #lfMenuFont)! !
+	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
 !NONCLIENTMETRICSW categoriesFor: #dwSize:!**compiled accessors**!public! !
 !NONCLIENTMETRICSW categoriesFor: #iCaptionHeight!**compiled accessors**!public! !
 !NONCLIENTMETRICSW categoriesFor: #iMenuHeight!**compiled accessors**!public! !

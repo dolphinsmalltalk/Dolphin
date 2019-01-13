@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_rclClip'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXCLUDECLIPRECT guid: (GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
+EMREXCLUDECLIPRECT addClassConstant: '_OffsetOf_rclClip' value: 16r8!
 EMREXCLUDECLIPRECT comment: '<EMREXCLUDECLIPRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXCLUDECLIPRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,15 +27,15 @@ struct tagEMREXCLUDECLIPRECT {
 rclClip
 	"Answer the <RECT> value of the receiver's 'rclClip' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclClip)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclClip!
 
 rclClip: aRECT
 	"Set the receiver's 'rclClip' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclClip) + 1)
-		to: ##((self offsetOf: #rclClip) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclClip + 1)
+		to: ##(_OffsetOf_rclClip + RECT basicByteSize)
 		startingAt: 1! !
 !EMREXCLUDECLIPRECT categoriesFor: #rclClip!**compiled accessors**!public! !
 !EMREXCLUDECLIPRECT categoriesFor: #rclClip:!**compiled accessors**!public! !

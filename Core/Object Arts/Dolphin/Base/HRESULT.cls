@@ -110,14 +110,14 @@ unsignedValue: anUnsigned
 	bytes dwordAtOffset: 0 put: anUnsigned!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_value!
 
-value: anObject
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anObject! !
+	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
 !HRESULT categoriesFor: #asSignedInteger!converting!public! !
 !HRESULT categoriesFor: #asUnsignedInteger!converting!public! !
 !HRESULT categoriesFor: #displayOn:!displaying!public! !
@@ -140,7 +140,7 @@ defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: SDWORDField new!
+	self defineField: #value type: SDWORDField new beOverride!
 
 fail
 	"Answer the generic failure HRESULT."

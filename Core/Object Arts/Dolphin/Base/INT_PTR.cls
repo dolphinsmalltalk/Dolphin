@@ -17,14 +17,14 @@ unsignedValue: anUnsigned
 	bytes uintPtrAtOffset: 0 put: anUnsigned!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes intPtrAtOffset: 0!
+	^bytes intPtrAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes intPtrAtOffset: 0 put: anObject! !
+	bytes intPtrAtOffset: _OffsetOf_value put: anInteger! !
 !INT_PTR categoriesFor: #unsignedValue:!accessing!public! !
 !INT_PTR categoriesFor: #value!**compiled accessors**!public! !
 !INT_PTR categoriesFor: #value:!**compiled accessors**!public! !

@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_KNOWN_HEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_pRawValue _OffsetOf_RawValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_KNOWN_HEADER guid: (GUID fromString: '{787c501e-95b2-4a23-9f7c-2dd856b8d51d}')!
+HTTP_KNOWN_HEADER addClassConstant: '_OffsetOf_pRawValue' value: 16r4!
+HTTP_KNOWN_HEADER addClassConstant: '_OffsetOf_RawValueLength' value: 16r0!
 HTTP_KNOWN_HEADER comment: '<HTTP_KNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_KNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,24 +29,23 @@ struct tagHTTP_KNOWN_HEADER {
 pRawValue
 	"Answer the <String> value of the receiver's 'pRawValue' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRawValue))
-		length: self RawValueLength!
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawValue) length: self RawValueLength!
 
 pRawValue: aString
 	"Set the receiver's 'pRawValue' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pRawValue) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pRawValue put: aString yourAddress.
 	self RawValueLength: aString size!
 
 RawValueLength
 	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_RawValueLength!
 
 RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
 !HTTP_KNOWN_HEADER categoriesFor: #pRawValue!**compiled accessors**!public! !
 !HTTP_KNOWN_HEADER categoriesFor: #pRawValue:!**compiled accessors**!public! !
 !HTTP_KNOWN_HEADER categoriesFor: #RawValueLength!**compiled accessors**!private! !
@@ -67,6 +68,10 @@ defineFields
 	self
 		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 0;
 		defineField: #pRawValue type: (ArrayPointerField type: String lengthField: #RawValueLength) offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#RawValueLength #pRawValue)! !
 !HTTP_KNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_KNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

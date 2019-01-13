@@ -18,14 +18,6 @@ accessorMessage
 fieldClassName
 	^Boolean name!
 
-printAccessorExpressionSuffixOn: aWriteStream
-	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
-	configure the object being read from the structure instance."
-
-	aWriteStream
-		space;
-		display: #asBoolean!
-
 printMutatorValueOn: aWriteStream parameter: aString
 	"Private - Print a suitable expression onto the specified <puttableStream> which will
 	evaluate to the the value to be stored into this field in an instance of the structure when
@@ -51,7 +43,6 @@ writeInto: anExternalStructure value: anObject
 	anExternalStructure bytes dwordAtOffset: offset put: anObject asParameter! !
 !BOOLField categoriesFor: #accessorMessage!automatic generation!private! !
 !BOOLField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!BOOLField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !BOOLField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
 !BOOLField categoriesFor: #readFrom:!indirect accessing!private! !
 !BOOLField categoriesFor: #writeInto:value:!indirect accessing!private! !

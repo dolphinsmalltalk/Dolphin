@@ -2,10 +2,17 @@
 
 ExternalStructure subclass: #ODBCTIMESTAMP
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_day _OffsetOf_fraction _OffsetOf_hour _OffsetOf_minute _OffsetOf_month _OffsetOf_second _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ODBCTIMESTAMP guid: (GUID fromString: '{87b4c599-026e-11d3-9fd7-00a0cc3e4a32}')!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_day' value: 16r4!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_fraction' value: 16rC!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_hour' value: 16r6!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_minute' value: 16r8!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_month' value: 16r2!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_second' value: 16rA!
+ODBCTIMESTAMP addClassConstant: '_OffsetOf_year' value: 16r0!
 ODBCTIMESTAMP comment: 'ODBCTIMESTAMP is a representation of the same named Win32 ODBC structure.
 
 The fraction field is the number of billionths of a second, i.e. a value of 1,000,000 is one millisecond.'!
@@ -30,32 +37,32 @@ asTimeStamp
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #day)!
+	^bytes wordAtOffset: _OffsetOf_day!
 
 day: anInteger
 	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #day) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_day put: anInteger!
 
 fraction
 	"Answer the <Integer> value of the receiver's 'fraction' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fraction)!
+	^bytes dwordAtOffset: _OffsetOf_fraction!
 
 fraction: anInteger
 	"Set the receiver's 'fraction' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fraction) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fraction put: anInteger!
 
 hour
 	"Answer the <Integer> value of the receiver's 'hour' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #hour)!
+	^bytes wordAtOffset: _OffsetOf_hour!
 
 hour: anInteger
 	"Set the receiver's 'hour' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #hour) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_hour put: anInteger!
 
 milliseconds
 	"Answer the number of whole milliseconds in the fraction part of
@@ -66,42 +73,42 @@ milliseconds
 minute
 	"Answer the <Integer> value of the receiver's 'minute' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #minute)!
+	^bytes wordAtOffset: _OffsetOf_minute!
 
 minute: anInteger
 	"Set the receiver's 'minute' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #minute) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_minute put: anInteger!
 
 month
 	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #month)!
+	^bytes wordAtOffset: _OffsetOf_month!
 
 month: anInteger
 	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #month) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_month put: anInteger!
 
 second
 	"Answer the <Integer> value of the receiver's 'second' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #second)!
+	^bytes wordAtOffset: _OffsetOf_second!
 
 second: anInteger
 	"Set the receiver's 'second' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #second) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_second put: anInteger!
 
 year
 	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^bytes swordAtOffset: 0!
+	^bytes swordAtOffset: _OffsetOf_year!
 
 year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anInteger! !
+	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
 !ODBCTIMESTAMP categoriesFor: #asTimeStamp!converting!public! !
 !ODBCTIMESTAMP categoriesFor: #day!**compiled accessors**!public! !
 !ODBCTIMESTAMP categoriesFor: #day:!**compiled accessors**!public! !

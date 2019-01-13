@@ -61,7 +61,7 @@ BasicImageStripper subclass: #ImageStripper
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #VS_VERSION_INFO_HEADER
 	instanceVariableNames: 'key valueOffset'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_wLength _OffsetOf_wType _OffsetOf_wValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRSETWORLDTRANSFORM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_XFORM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSETWORLDTRANSFORM guid: (GUID fromString: '{025ef1a8-7714-4e3c-bcf0-755137290843}')!
+EMRSETWORLDTRANSFORM addClassConstant: '_OffsetOf_XFORM' value: 16r8!
 EMRSETWORLDTRANSFORM comment: '<EMRSETWORLDTRANSFORM> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSETWORLDTRANSFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,15 +27,15 @@ struct tagEMRSETWORLDTRANSFORM {
 XFORM
 	"Answer the <XFORM> value of the receiver's 'XFORM' field."
 
-	^XFORM fromAddress: bytes yourAddress + ##(self offsetOf: #XFORM)!
+	^XFORM fromAddress: bytes yourAddress + _OffsetOf_XFORM!
 
 XFORM: aXFORM
 	"Set the receiver's 'XFORM' field to the value of the argument, aXFORM"
 
 	aXFORM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #XFORM) + 1)
-		to: ##((self offsetOf: #XFORM) + XFORM basicByteSize)
+		from: ##(_OffsetOf_XFORM + 1)
+		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
 		startingAt: 1! !
 !EMRSETWORLDTRANSFORM categoriesFor: #XFORM!**compiled accessors**!public! !
 !EMRSETWORLDTRANSFORM categoriesFor: #XFORM:!**compiled accessors**!public! !

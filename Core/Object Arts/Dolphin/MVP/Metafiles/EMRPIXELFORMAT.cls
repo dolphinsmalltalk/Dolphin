@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMRPIXELFORMAT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_pfd'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPIXELFORMAT guid: (GUID fromString: '{d3d01d9c-95db-40f4-9304-d212a548def1}')!
+EMRPIXELFORMAT addClassConstant: '_OffsetOf_pfd' value: 16r8!
 EMRPIXELFORMAT comment: '<EMRPIXELFORMAT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPIXELFORMAT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,15 +27,15 @@ struct tagEMRPIXELFORMAT {
 pfd
 	"Answer the <PIXELFORMATDESCRIPTOR> value of the receiver's 'pfd' field."
 
-	^PIXELFORMATDESCRIPTOR fromAddress: bytes yourAddress + ##(self offsetOf: #pfd)!
+	^PIXELFORMATDESCRIPTOR fromAddress: bytes yourAddress + _OffsetOf_pfd!
 
 pfd: aPIXELFORMATDESCRIPTOR
 	"Set the receiver's 'pfd' field to the value of the argument, aPIXELFORMATDESCRIPTOR"
 
 	aPIXELFORMATDESCRIPTOR
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #pfd) + 1)
-		to: ##((self offsetOf: #pfd) + PIXELFORMATDESCRIPTOR basicByteSize)
+		from: ##(_OffsetOf_pfd + 1)
+		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR basicByteSize)
 		startingAt: 1! !
 !EMRPIXELFORMAT categoriesFor: #pfd!**compiled accessors**!public! !
 !EMRPIXELFORMAT categoriesFor: #pfd:!**compiled accessors**!public! !

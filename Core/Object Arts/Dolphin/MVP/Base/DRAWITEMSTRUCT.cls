@@ -2,10 +2,19 @@
 
 Win32Structure subclass: #DRAWITEMSTRUCT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_CtlID _OffsetOf_CtlType _OffsetOf_hDC _OffsetOf_hwndItem _OffsetOf_itemAction _OffsetOf_itemData _OffsetOf_itemID _OffsetOf_itemState _OffsetOf_rcItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DRAWITEMSTRUCT guid: (GUID fromString: '{87b4c5e9-026e-11d3-9fd7-00a0cc3e4a32}')!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_CtlID' value: 16r4!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_CtlType' value: 16r0!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_hDC' value: 16r18!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_hwndItem' value: 16r14!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemAction' value: 16rC!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemData' value: 16r2C!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemID' value: 16r8!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_itemState' value: 16r10!
+DRAWITEMSTRUCT addClassConstant: '_OffsetOf_rcItem' value: 16r1C!
 DRAWITEMSTRUCT comment: '<DRAWITEMSTRUCT> is an <ExternalStructure> class to wrap the struct ''Win.DRAWITEMSTRUCT'' from type information in the ''Windows API (ANSI)'' library.
 
 From MSDN: "The DRAWITEMSTRUCT structure provides information the owner window must have to determine how to paint an owner-drawn control or menu item. The owner window of the owner-drawn control or menu item receives a pointer to this structure as the lParam parameter of the WM_DRAWITEM message."
@@ -16,22 +25,22 @@ From MSDN: "The DRAWITEMSTRUCT structure provides information the owner window m
 CtlID
 	"Answer the <Integer> value of the receiver's 'CtlID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #CtlID)!
+	^bytes dwordAtOffset: _OffsetOf_CtlID!
 
 CtlType
 	"Answer the <Integer> value of the receiver's 'CtlType' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_CtlType!
 
 hDC
 	"Answer the <Integer> value of the receiver's 'hDC' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hDC)!
+	^bytes dwordAtOffset: _OffsetOf_hDC!
 
 hwndItem
 	"Answer the <Integer> value of the receiver's 'hwndItem' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hwndItem)!
+	^bytes dwordAtOffset: _OffsetOf_hwndItem!
 
 isGrayed
 	"Answer whether the drawn menu item should be grayed. Only applicable when drawing menus."
@@ -46,22 +55,22 @@ isSelected
 itemAction
 	"Answer the <Integer> value of the receiver's 'itemAction' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #itemAction)!
+	^bytes dwordAtOffset: _OffsetOf_itemAction!
 
 itemID
 	"Answer the <Integer> value of the receiver's 'itemID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #itemID)!
+	^bytes dwordAtOffset: _OffsetOf_itemID!
 
 itemState
 	"Answer the <Integer> value of the receiver's 'itemState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #itemState)!
+	^bytes dwordAtOffset: _OffsetOf_itemState!
 
 rcItem
 	"Answer the <RECT> value of the receiver's 'rcItem' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rcItem)! !
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcItem! !
 !DRAWITEMSTRUCT categoriesFor: #CtlID!**compiled accessors**!public! !
 !DRAWITEMSTRUCT categoriesFor: #CtlType!**compiled accessors**!public! !
 !DRAWITEMSTRUCT categoriesFor: #hDC!**compiled accessors**!public! !
