@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_SET
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_SNI_SET guid: (GUID fromString: '{4c2fb659-18f1-4258-beb7-2283ed27e94b}')!
+HTTP_SERVICE_CONFIG_SSL_SNI_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
+HTTP_SERVICE_CONFIG_SSL_SNI_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r88!
 HTTP_SERVICE_CONFIG_SSL_SNI_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -34,22 +36,22 @@ KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 
 	aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
+		from: ##(_OffsetOf_KeyDesc + 1)
+		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
 		startingAt: 1!
 
 ParamDesc
 	"Answer the <HTTP_SERVICE_CONFIG_SSL_PARAM> value of the receiver's 'ParamDesc' field."
 
-	^HTTP_SERVICE_CONFIG_SSL_PARAM fromAddress: bytes yourAddress + ##(self offsetOf: #ParamDesc)!
+	^HTTP_SERVICE_CONFIG_SSL_PARAM fromAddress: bytes yourAddress + _OffsetOf_ParamDesc!
 
 ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 	"Set the receiver's 'ParamDesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_PARAM"
 
 	aHTTP_SERVICE_CONFIG_SSL_PARAM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ParamDesc) + 1)
-		to: ##((self offsetOf: #ParamDesc) + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
+		from: ##(_OffsetOf_ParamDesc + 1)
+		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
 		startingAt: 1! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
@@ -73,6 +75,10 @@ defineFields
 	self
 		defineField: #KeyDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_SNI_KEY) offset: 0;
 		defineField: #ParamDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_PARAM) offset: 136.
-	self byteSize: 192! !
+	self byteSize: 192!
+
+getFieldNames
+	^#(#KeyDesc #ParamDesc)! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

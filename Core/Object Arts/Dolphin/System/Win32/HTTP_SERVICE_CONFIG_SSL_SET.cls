@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SET
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_SET guid: (GUID fromString: '{f2c9434b-739e-4905-bcf3-d552724f69ff}')!
+HTTP_SERVICE_CONFIG_SSL_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
+HTTP_SERVICE_CONFIG_SSL_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_SSL_SET comment: '<HTTP_SERVICE_CONFIG_SSL_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,25 +29,25 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SET {
 KeyDesc
 	"Answer the <SOCKADDR> value of the receiver's 'KeyDesc' field."
 
-	^SOCKADDR fromAddress: (bytes intPtrAtOffset: 0)!
+	^SOCKADDR fromAddress: (bytes intPtrAtOffset: _OffsetOf_KeyDesc)!
 
 KeyDesc: aSOCKADDR
 	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR"
 
-	bytes uintPtrAtOffset: 0 put: aSOCKADDR yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_KeyDesc put: aSOCKADDR yourAddress!
 
 ParamDesc
 	"Answer the <HTTP_SERVICE_CONFIG_SSL_PARAM> value of the receiver's 'ParamDesc' field."
 
-	^HTTP_SERVICE_CONFIG_SSL_PARAM fromAddress: bytes yourAddress + ##(self offsetOf: #ParamDesc)!
+	^HTTP_SERVICE_CONFIG_SSL_PARAM fromAddress: bytes yourAddress + _OffsetOf_ParamDesc!
 
 ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 	"Set the receiver's 'ParamDesc' field to the value of the argument, aHTTP_SERVICE_CONFIG_SSL_PARAM"
 
 	aHTTP_SERVICE_CONFIG_SSL_PARAM
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ParamDesc) + 1)
-		to: ##((self offsetOf: #ParamDesc) + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
+		from: ##(_OffsetOf_ParamDesc + 1)
+		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
 		startingAt: 1! !
 !HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
@@ -69,6 +71,10 @@ defineFields
 	self
 		defineField: #KeyDesc type: (PointerField type: SOCKADDR) offset: 0;
 		defineField: #ParamDesc type: (StructureField type: HTTP_SERVICE_CONFIG_SSL_PARAM) offset: 4.
-	self byteSize: 56! !
+	self byteSize: 56!
+
+getFieldNames
+	^#(#KeyDesc #ParamDesc)! !
 !HTTP_SERVICE_CONFIG_SSL_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

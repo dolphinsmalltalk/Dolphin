@@ -2,10 +2,11 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Level'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_PROTECTION_LEVEL_INFO guid: (GUID fromString: '{e1881388-d03e-4ea0-8e39-8f1439753299}')!
+HTTP_PROTECTION_LEVEL_INFO addClassConstant: '_OffsetOf_Level' value: 16r4!
 HTTP_PROTECTION_LEVEL_INFO comment: '<HTTP_PROTECTION_LEVEL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_PROTECTION_LEVEL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,12 +28,12 @@ struct tagHTTP_PROTECTION_LEVEL_INFO {
 Level
 	"Answer the <Integer> value of the receiver's 'Level' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #Level)!
+	^bytes sdwordAtOffset: _OffsetOf_Level!
 
 Level: anInteger
 	"Set the receiver's 'Level' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #Level) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_Level put: anInteger! !
 !HTTP_PROTECTION_LEVEL_INFO categoriesFor: #Level!**compiled accessors**!public! !
 !HTTP_PROTECTION_LEVEL_INFO categoriesFor: #Level:!**compiled accessors**!public! !
 
@@ -55,8 +56,12 @@ defineFields
 		defineField: #Level type: SDWORDField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#Present #Level)!
+
 propertyId
 	^HttpServerProtectionLevelProperty! !
 !HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #propertyId!public! !
 

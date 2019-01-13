@@ -356,7 +356,7 @@ uninitialize
 !OLELibrary categoriesFor: #coInitialize:!**auto generated**!OLE Functions-COM!public! !
 !OLELibrary categoriesFor: #coInitializeEx:dwCoInit:!**auto generated**!OLE Functions-COM!public! !
 !OLELibrary categoriesFor: #comOnly!accessing!public! !
-!OLELibrary categoriesFor: #comOnly:!accessing!private! !
+!OLELibrary categoriesFor: #comOnly:!initializing!private! !
 !OLELibrary categoriesFor: #coRegisterClassObject:pUnk:dwClsContext:flags:lpdwRegister:!OLE Functions-COM!public! !
 !OLELibrary categoriesFor: #coRevokeClassObject:!OLE Functions-COM!public! !
 !OLELibrary categoriesFor: #coTaskMemAlloc:!**auto generated**!OLE Functions-COM!public! !

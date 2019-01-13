@@ -2,10 +2,16 @@
 
 ExternalStructure subclass: #XFORM
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_eDx _OffsetOf_eDy _OffsetOf_eM11 _OffsetOf_eM12 _OffsetOf_eM21 _OffsetOf_eM22'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 XFORM guid: (GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
+XFORM addClassConstant: '_OffsetOf_eDx' value: 16r10!
+XFORM addClassConstant: '_OffsetOf_eDy' value: 16r14!
+XFORM addClassConstant: '_OffsetOf_eM11' value: 16r0!
+XFORM addClassConstant: '_OffsetOf_eM12' value: 16r4!
+XFORM addClassConstant: '_OffsetOf_eM21' value: 16r8!
+XFORM addClassConstant: '_OffsetOf_eM22' value: 16rC!
 XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,62 +36,62 @@ struct tagXFORM {
 eDx
 	"Answer the <Float> value of the receiver's 'eDx' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eDx)!
+	^bytes floatAtOffset: _OffsetOf_eDx!
 
 eDx: aFloat
 	"Set the receiver's 'eDx' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eDx) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eDx put: aFloat!
 
 eDy
 	"Answer the <Float> value of the receiver's 'eDy' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eDy)!
+	^bytes floatAtOffset: _OffsetOf_eDy!
 
 eDy: aFloat
 	"Set the receiver's 'eDy' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eDy) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eDy put: aFloat!
 
 eM11
 	"Answer the <Float> value of the receiver's 'eM11' field."
 
-	^bytes floatAtOffset: 0!
+	^bytes floatAtOffset: _OffsetOf_eM11!
 
 eM11: aFloat
 	"Set the receiver's 'eM11' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eM11 put: aFloat!
 
 eM12
 	"Answer the <Float> value of the receiver's 'eM12' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eM12)!
+	^bytes floatAtOffset: _OffsetOf_eM12!
 
 eM12: aFloat
 	"Set the receiver's 'eM12' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eM12) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eM12 put: aFloat!
 
 eM21
 	"Answer the <Float> value of the receiver's 'eM21' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eM21)!
+	^bytes floatAtOffset: _OffsetOf_eM21!
 
 eM21: aFloat
 	"Set the receiver's 'eM21' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eM21) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eM21 put: aFloat!
 
 eM22
 	"Answer the <Float> value of the receiver's 'eM22' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eM22)!
+	^bytes floatAtOffset: _OffsetOf_eM22!
 
 eM22: aFloat
 	"Set the receiver's 'eM22' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eM22) put: aFloat! !
+	bytes floatAtOffset: _OffsetOf_eM22 put: aFloat! !
 !XFORM categoriesFor: #eDx!**compiled accessors**!public! !
 !XFORM categoriesFor: #eDx:!**compiled accessors**!public! !
 !XFORM categoriesFor: #eDy!**compiled accessors**!public! !

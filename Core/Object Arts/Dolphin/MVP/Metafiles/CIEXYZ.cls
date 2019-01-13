@@ -2,10 +2,13 @@
 
 ExternalStructure subclass: #CIEXYZ
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ciexyzX _OffsetOf_ciexyzY _OffsetOf_ciexyzZ'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CIEXYZ guid: (GUID fromString: '{bf6d67a4-8fbc-4f17-825f-465254239f8b}')!
+CIEXYZ addClassConstant: '_OffsetOf_ciexyzX' value: 16r0!
+CIEXYZ addClassConstant: '_OffsetOf_ciexyzY' value: 16r4!
+CIEXYZ addClassConstant: '_OffsetOf_ciexyzZ' value: 16r8!
 CIEXYZ comment: '<CIEXYZ> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZ'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,32 +30,32 @@ struct tagCIEXYZ {
 ciexyzX
 	"Answer the <Integer> value of the receiver's 'ciexyzX' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_ciexyzX!
 
 ciexyzX: anInteger
 	"Set the receiver's 'ciexyzX' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_ciexyzX put: anInteger!
 
 ciexyzY
 	"Answer the <Integer> value of the receiver's 'ciexyzY' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #ciexyzY)!
+	^bytes sdwordAtOffset: _OffsetOf_ciexyzY!
 
 ciexyzY: anInteger
 	"Set the receiver's 'ciexyzY' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ciexyzY) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_ciexyzY put: anInteger!
 
 ciexyzZ
 	"Answer the <Integer> value of the receiver's 'ciexyzZ' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #ciexyzZ)!
+	^bytes sdwordAtOffset: _OffsetOf_ciexyzZ!
 
 ciexyzZ: anInteger
 	"Set the receiver's 'ciexyzZ' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #ciexyzZ) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_ciexyzZ put: anInteger! !
 !CIEXYZ categoriesFor: #ciexyzX!**compiled accessors**!public! !
 !CIEXYZ categoriesFor: #ciexyzX:!**compiled accessors**!public! !
 !CIEXYZ categoriesFor: #ciexyzY!**compiled accessors**!public! !

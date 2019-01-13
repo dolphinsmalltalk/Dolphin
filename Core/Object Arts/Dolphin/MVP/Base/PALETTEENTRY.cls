@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #PALETTEENTRY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_peBlue _OffsetOf_peFlags _OffsetOf_peGreen _OffsetOf_peRed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PALETTEENTRY guid: (GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
+PALETTEENTRY addClassConstant: '_OffsetOf_peBlue' value: 16r2!
+PALETTEENTRY addClassConstant: '_OffsetOf_peFlags' value: 16r3!
+PALETTEENTRY addClassConstant: '_OffsetOf_peGreen' value: 16r1!
+PALETTEENTRY addClassConstant: '_OffsetOf_peRed' value: 16r0!
 PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -37,42 +41,42 @@ asColor
 peBlue
 	"Answer the <Integer> value of the receiver's 'peBlue' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #peBlue)!
+	^bytes byteAtOffset: _OffsetOf_peBlue!
 
 peBlue: anInteger
 	"Set the receiver's 'peBlue' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #peBlue) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_peBlue put: anInteger!
 
 peFlags
 	"Answer the <Integer> value of the receiver's 'peFlags' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #peFlags)!
+	^bytes byteAtOffset: _OffsetOf_peFlags!
 
 peFlags: anInteger
 	"Set the receiver's 'peFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #peFlags) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_peFlags put: anInteger!
 
 peGreen
 	"Answer the <Integer> value of the receiver's 'peGreen' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #peGreen)!
+	^bytes byteAtOffset: _OffsetOf_peGreen!
 
 peGreen: anInteger
 	"Set the receiver's 'peGreen' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #peGreen) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_peGreen put: anInteger!
 
 peRed
 	"Answer the <Integer> value of the receiver's 'peRed' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_peRed!
 
 peRed: anInteger
 	"Set the receiver's 'peRed' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anInteger! !
+	bytes byteAtOffset: _OffsetOf_peRed put: anInteger! !
 !PALETTEENTRY categoriesFor: #asColor!converting!public! !
 !PALETTEENTRY categoriesFor: #peBlue!**compiled accessors**!public! !
 !PALETTEENTRY categoriesFor: #peBlue:!**compiled accessors**!public! !

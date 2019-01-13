@@ -2,11 +2,16 @@
 
 ENHMETARECORD subclass: #EMREXTTEXTOUT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_EMRTEXT _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTTEXTOUT guid: (GUID fromString: '{2fee36e2-d281-4200-9f3f-7aa01d54e452}')!
 EMREXTTEXTOUT isAbstract: true!
+EMREXTTEXTOUT addClassConstant: '_OffsetOf_EMRTEXT' value: 16r24!
+EMREXTTEXTOUT addClassConstant: '_OffsetOf_exScale' value: 16r1C!
+EMREXTTEXTOUT addClassConstant: '_OffsetOf_eyScale' value: 16r20!
+EMREXTTEXTOUT addClassConstant: '_OffsetOf_iGraphicsMode' value: 16r18!
+EMREXTTEXTOUT addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMREXTTEXTOUT comment: ''!
 !EMREXTTEXTOUT categoriesForClass!Win32-Structs! !
 !EMREXTTEXTOUT methodsFor!
@@ -14,59 +19,59 @@ EMREXTTEXTOUT comment: ''!
 EMRTEXT
 	"Answer the <EMRTEXT> value of the receiver's 'EMRTEXT' field."
 
-	^EMRTEXT fromAddress: bytes yourAddress + ##(self offsetOf: #EMRTEXT)!
+	^EMRTEXT fromAddress: bytes yourAddress + _OffsetOf_EMRTEXT!
 
 EMRTEXT: anEMRTEXT
 	"Set the receiver's 'EMRTEXT' field to the value of the argument, anEMRTEXT"
 
 	anEMRTEXT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #EMRTEXT) + 1)
-		to: ##((self offsetOf: #EMRTEXT) + EMRTEXT basicByteSize)
+		from: ##(_OffsetOf_EMRTEXT + 1)
+		to: ##(_OffsetOf_EMRTEXT + EMRTEXT basicByteSize)
 		startingAt: 1!
 
 exScale
 	"Answer the <Float> value of the receiver's 'exScale' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #exScale)!
+	^bytes floatAtOffset: _OffsetOf_exScale!
 
 exScale: aFloat
 	"Set the receiver's 'exScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #exScale) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_exScale put: aFloat!
 
 eyScale
 	"Answer the <Float> value of the receiver's 'eyScale' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eyScale)!
+	^bytes floatAtOffset: _OffsetOf_eyScale!
 
 eyScale: aFloat
 	"Set the receiver's 'eyScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eyScale) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eyScale put: aFloat!
 
 iGraphicsMode
 	"Answer the <Integer> value of the receiver's 'iGraphicsMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode)!
+	^bytes dwordAtOffset: _OffsetOf_iGraphicsMode!
 
 iGraphicsMode: anInteger
 	"Set the receiver's 'iGraphicsMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iGraphicsMode put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMREXTTEXTOUT categoriesFor: #EMRTEXT!**compiled accessors**!public! !
 !EMREXTTEXTOUT categoriesFor: #EMRTEXT:!**compiled accessors**!public! !

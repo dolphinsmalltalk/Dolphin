@@ -2,10 +2,11 @@
 
 HttpServerStructure subclass: #HttpServiceConfigQuery
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_QueryDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HttpServiceConfigQuery guid: (GUID fromString: '{38f6548e-ee39-4262-9f31-96ce0e8c6cb7}')!
+HttpServiceConfigQuery addClassConstant: '_OffsetOf_QueryDesc' value: 16r0!
 HttpServiceConfigQuery comment: '<HttpServiceConfigQuery> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HttpServiceConfigQuery'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -25,12 +26,12 @@ struct tagHttpServiceConfigQuery {
 QueryDesc
 	"Answer the <Integer> value of the receiver's 'QueryDesc' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_QueryDesc!
 
 QueryDesc: anInteger
 	"Set the receiver's 'QueryDesc' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_QueryDesc put: anInteger! !
 !HttpServiceConfigQuery categoriesFor: #QueryDesc!**compiled accessors**!public! !
 !HttpServiceConfigQuery categoriesFor: #QueryDesc:!**compiled accessors**!public! !
 
@@ -49,6 +50,10 @@ defineFields
 
 	self
 		defineField: #QueryDesc type: SDWORDField new offset: 0.
-	self byteSize: 4! !
+	self byteSize: 4!
+
+getFieldNames
+	^#(#QueryDesc)! !
 !HttpServiceConfigQuery class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HttpServiceConfigQuery class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

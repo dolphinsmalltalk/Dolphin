@@ -33,12 +33,12 @@ unsignedValue: anInteger
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anInteger! !
+	bytes byteAtOffset: _OffsetOf_value put: anInteger! !
 !BYTE categoriesFor: #asSignedInteger!converting!public! !
 !BYTE categoriesFor: #asUnsignedInteger!converting!public! !
 !BYTE categoriesFor: #unsignedValue:!accessing!public! !
@@ -51,7 +51,7 @@ defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: BYTEField new!
+	self defineField: #value type: BYTEField new beOverride!
 
 initialize
 	"Private - Initialize the receiver's class variables.

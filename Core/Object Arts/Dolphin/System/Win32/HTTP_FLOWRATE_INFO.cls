@@ -2,10 +2,13 @@
 
 HttpQosSetting subclass: #HTTP_FLOWRATE_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_BurstSize _OffsetOf_MaxBandwidth _OffsetOf_MaxPeakBandwidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_FLOWRATE_INFO guid: (GUID fromString: '{c2fad8f6-f179-4bbb-a5f2-073c416f6704}')!
+HTTP_FLOWRATE_INFO addClassConstant: '_OffsetOf_BurstSize' value: 16rC!
+HTTP_FLOWRATE_INFO addClassConstant: '_OffsetOf_MaxBandwidth' value: 16r4!
+HTTP_FLOWRATE_INFO addClassConstant: '_OffsetOf_MaxPeakBandwidth' value: 16r8!
 HTTP_FLOWRATE_INFO comment: '<HTTP_FLOWRATE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_FLOWRATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,32 +32,32 @@ struct tagHTTP_FLOWRATE_INFO {
 BurstSize
 	"Answer the <Integer> value of the receiver's 'BurstSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #BurstSize)!
+	^bytes dwordAtOffset: _OffsetOf_BurstSize!
 
 BurstSize: anInteger
 	"Set the receiver's 'BurstSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #BurstSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_BurstSize put: anInteger!
 
 MaxBandwidth
 	"Answer the <Integer> value of the receiver's 'MaxBandwidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #MaxBandwidth)!
+	^bytes dwordAtOffset: _OffsetOf_MaxBandwidth!
 
 MaxBandwidth: anInteger
 	"Set the receiver's 'MaxBandwidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #MaxBandwidth) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_MaxBandwidth put: anInteger!
 
 MaxPeakBandwidth
 	"Answer the <Integer> value of the receiver's 'MaxPeakBandwidth' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #MaxPeakBandwidth)!
+	^bytes dwordAtOffset: _OffsetOf_MaxPeakBandwidth!
 
 MaxPeakBandwidth: anInteger
 	"Set the receiver's 'MaxPeakBandwidth' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #MaxPeakBandwidth) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_MaxPeakBandwidth put: anInteger! !
 !HTTP_FLOWRATE_INFO categoriesFor: #BurstSize!**compiled accessors**!public! !
 !HTTP_FLOWRATE_INFO categoriesFor: #BurstSize:!**compiled accessors**!public! !
 !HTTP_FLOWRATE_INFO categoriesFor: #MaxBandwidth!**compiled accessors**!public! !
@@ -85,6 +88,9 @@ defineFields
 		defineField: #BurstSize type: DWORDField new offset: 12.
 	self byteSize: 16!
 
+getFieldNames
+	^#(#Present #MaxBandwidth #MaxPeakBandwidth #BurstSize)!
+
 maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 	^(self new)
 		BurstSize: burstInteger;
@@ -96,6 +102,7 @@ maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 qosType
 	^HttpQosSettingTypeFlowRate! !
 !HTTP_FLOWRATE_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_FLOWRATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_FLOWRATE_INFO class categoriesFor: #maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !
 !HTTP_FLOWRATE_INFO class categoriesFor: #qosType!constants!public! !
 

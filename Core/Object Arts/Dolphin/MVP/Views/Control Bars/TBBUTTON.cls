@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #TBBUTTON
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwData _OffsetOf_fsState _OffsetOf_fsStyle _OffsetOf_iBitmap _OffsetOf_idCommand _OffsetOf_iString'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TBBUTTON guid: (GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
+TBBUTTON addClassConstant: '_OffsetOf_dwData' value: 16rC!
+TBBUTTON addClassConstant: '_OffsetOf_fsState' value: 16r8!
+TBBUTTON addClassConstant: '_OffsetOf_fsStyle' value: 16r9!
+TBBUTTON addClassConstant: '_OffsetOf_iBitmap' value: 16r0!
+TBBUTTON addClassConstant: '_OffsetOf_idCommand' value: 16r4!
+TBBUTTON addClassConstant: '_OffsetOf_iString' value: 16r10!
 TBBUTTON comment: ''!
 !TBBUTTON categoriesForClass!External-Data-Structured!External-Data-Structured-Win32! !
 !TBBUTTON methodsFor!
@@ -13,62 +19,62 @@ TBBUTTON comment: ''!
 dwData
 	"Answer the <Integer> value of the receiver's 'dwData' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #dwData)!
+	^bytes uintPtrAtOffset: _OffsetOf_dwData!
 
 dwData: anInteger
 	"Set the receiver's 'dwData' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #dwData) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_dwData put: anInteger!
 
 fsState
 	"Answer the <Integer> value of the receiver's 'fsState' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #fsState)!
+	^bytes byteAtOffset: _OffsetOf_fsState!
 
 fsState: anInteger
 	"Set the receiver's 'fsState' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #fsState) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_fsState put: anInteger!
 
 fsStyle
 	"Answer the <Integer> value of the receiver's 'fsStyle' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #fsStyle)!
+	^bytes byteAtOffset: _OffsetOf_fsStyle!
 
 fsStyle: anInteger
 	"Set the receiver's 'fsStyle' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #fsStyle) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_fsStyle put: anInteger!
 
 iBitmap
 	"Answer the <Integer> value of the receiver's 'iBitmap' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_iBitmap!
 
 iBitmap: anInteger
 	"Set the receiver's 'iBitmap' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iBitmap put: anInteger!
 
 idCommand
 	"Answer the <Integer> value of the receiver's 'idCommand' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #idCommand)!
+	^bytes sdwordAtOffset: _OffsetOf_idCommand!
 
 idCommand: anInteger
 	"Set the receiver's 'idCommand' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #idCommand) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_idCommand put: anInteger!
 
 iString
 	"Answer the <Integer> value of the receiver's 'iString' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #iString)!
+	^bytes intPtrAtOffset: _OffsetOf_iString!
 
 iString: anInteger
 	"Set the receiver's 'iString' field to the value of the argument, anInteger"
 
-	bytes intPtrAtOffset: ##(self offsetOf: #iString) put: anInteger! !
+	bytes intPtrAtOffset: _OffsetOf_iString put: anInteger! !
 !TBBUTTON categoriesFor: #dwData!**compiled accessors**!public! !
 !TBBUTTON categoriesFor: #dwData:!**compiled accessors**!public! !
 !TBBUTTON categoriesFor: #fsState!**compiled accessors**!public! !

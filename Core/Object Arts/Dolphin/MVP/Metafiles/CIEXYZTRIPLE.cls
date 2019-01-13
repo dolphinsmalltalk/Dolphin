@@ -2,10 +2,13 @@
 
 ExternalStructure subclass: #CIEXYZTRIPLE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ciexyzBlue _OffsetOf_ciexyzGreen _OffsetOf_ciexyzRed'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CIEXYZTRIPLE guid: (GUID fromString: '{2fd9d553-f2b2-4bfb-9dca-4c245bbff3d2}')!
+CIEXYZTRIPLE addClassConstant: '_OffsetOf_ciexyzBlue' value: 16r18!
+CIEXYZTRIPLE addClassConstant: '_OffsetOf_ciexyzGreen' value: 16rC!
+CIEXYZTRIPLE addClassConstant: '_OffsetOf_ciexyzRed' value: 16r0!
 CIEXYZTRIPLE comment: '<CIEXYZTRIPLE> is an <ExternalStructure> class to wrap the struct ''Win32.CIEXYZTRIPLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,29 +30,29 @@ struct tagCIEXYZTRIPLE {
 ciexyzBlue
 	"Answer the <CIEXYZ> value of the receiver's 'ciexyzBlue' field."
 
-	^CIEXYZ fromAddress: bytes yourAddress + ##(self offsetOf: #ciexyzBlue)!
+	^CIEXYZ fromAddress: bytes yourAddress + _OffsetOf_ciexyzBlue!
 
 ciexyzBlue: aCIEXYZ
 	"Set the receiver's 'ciexyzBlue' field to the value of the argument, aCIEXYZ"
 
 	aCIEXYZ
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ciexyzBlue) + 1)
-		to: ##((self offsetOf: #ciexyzBlue) + CIEXYZ basicByteSize)
+		from: ##(_OffsetOf_ciexyzBlue + 1)
+		to: ##(_OffsetOf_ciexyzBlue + CIEXYZ basicByteSize)
 		startingAt: 1!
 
 ciexyzGreen
 	"Answer the <CIEXYZ> value of the receiver's 'ciexyzGreen' field."
 
-	^CIEXYZ fromAddress: bytes yourAddress + ##(self offsetOf: #ciexyzGreen)!
+	^CIEXYZ fromAddress: bytes yourAddress + _OffsetOf_ciexyzGreen!
 
 ciexyzGreen: aCIEXYZ
 	"Set the receiver's 'ciexyzGreen' field to the value of the argument, aCIEXYZ"
 
 	aCIEXYZ
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ciexyzGreen) + 1)
-		to: ##((self offsetOf: #ciexyzGreen) + CIEXYZ basicByteSize)
+		from: ##(_OffsetOf_ciexyzGreen + 1)
+		to: ##(_OffsetOf_ciexyzGreen + CIEXYZ basicByteSize)
 		startingAt: 1!
 
 ciexyzRed
@@ -62,8 +65,8 @@ ciexyzRed: aCIEXYZ
 
 	aCIEXYZ
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(CIEXYZ basicByteSize)
+		from: ##(_OffsetOf_ciexyzRed + 1)
+		to: ##(_OffsetOf_ciexyzRed + CIEXYZ basicByteSize)
 		startingAt: 1! !
 !CIEXYZTRIPLE categoriesFor: #ciexyzBlue!**compiled accessors**!public! !
 !CIEXYZTRIPLE categoriesFor: #ciexyzBlue:!**compiled accessors**!public! !

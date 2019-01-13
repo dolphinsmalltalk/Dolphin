@@ -2,10 +2,20 @@
 
 ExternalStructure subclass: #LOGCOLORSPACEW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lcsCSType _OffsetOf_lcsEndpoints _OffsetOf_lcsFilename _OffsetOf_lcsGammaBlue _OffsetOf_lcsGammaGreen _OffsetOf_lcsGammaRed _OffsetOf_lcsIntent _OffsetOf_lcsSignature _OffsetOf_lcsSize _OffsetOf_lcsVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 LOGCOLORSPACEW guid: (GUID fromString: '{8b3e3016-08e0-4e61-835b-ff4cfbcec91a}')!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsCSType' value: 16rC!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsEndpoints' value: 16r14!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsFilename' value: 16r44!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsGammaBlue' value: 16r40!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsGammaGreen' value: 16r3C!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsGammaRed' value: 16r38!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsIntent' value: 16r10!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsSignature' value: 16r0!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsSize' value: 16r8!
+LOGCOLORSPACEW addClassConstant: '_OffsetOf_lcsVersion' value: 16r4!
 LOGCOLORSPACEW comment: '<LOGCOLORSPACEW> is an <ExternalStructure> class to wrap the struct ''Win32.LOGCOLORSPACEW'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -34,31 +44,31 @@ struct tagLOGCOLORSPACEW {
 lcsCSType
 	"Answer the <Integer> value of the receiver's 'lcsCSType' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #lcsCSType)!
+	^bytes sdwordAtOffset: _OffsetOf_lcsCSType!
 
 lcsCSType: anInteger
 	"Set the receiver's 'lcsCSType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lcsCSType) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_lcsCSType put: anInteger!
 
 lcsEndpoints
 	"Answer the <CIEXYZTRIPLE> value of the receiver's 'lcsEndpoints' field."
 
-	^CIEXYZTRIPLE fromAddress: bytes yourAddress + ##(self offsetOf: #lcsEndpoints)!
+	^CIEXYZTRIPLE fromAddress: bytes yourAddress + _OffsetOf_lcsEndpoints!
 
 lcsEndpoints: aCIEXYZTRIPLE
 	"Set the receiver's 'lcsEndpoints' field to the value of the argument, aCIEXYZTRIPLE"
 
 	aCIEXYZTRIPLE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lcsEndpoints) + 1)
-		to: ##((self offsetOf: #lcsEndpoints) + CIEXYZTRIPLE basicByteSize)
+		from: ##(_OffsetOf_lcsEndpoints + 1)
+		to: ##(_OffsetOf_lcsEndpoints + CIEXYZTRIPLE basicByteSize)
 		startingAt: 1!
 
 lcsFilename
 	"Answer the <ByteArray> value of the receiver's 'lcsFilename' field."
 
-	^ByteArray fromAddress: bytes yourAddress + ##(self offsetOf: #lcsFilename) length: 260!
+	^ByteArray fromAddress: bytes yourAddress + _OffsetOf_lcsFilename length: 260!
 
 lcsFilename: aByteArray
 	"Set the receiver's 'lcsFilename' field to the value of the argument, aByteArray"
@@ -67,79 +77,79 @@ lcsFilename: aByteArray
 	size := aByteArray byteSize min: ##(260 * ByteArray elementSize).
 	aByteArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #lcsFilename) + 1)
-		to: ##(self offsetOf: #lcsFilename) + size
+		from: ##(_OffsetOf_lcsFilename + 1)
+		to: _OffsetOf_lcsFilename + size
 		startingAt: 1!
 
 lcsGammaBlue
 	"Answer the <Integer> value of the receiver's 'lcsGammaBlue' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcsGammaBlue)!
+	^bytes dwordAtOffset: _OffsetOf_lcsGammaBlue!
 
 lcsGammaBlue: anInteger
 	"Set the receiver's 'lcsGammaBlue' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaBlue) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcsGammaBlue put: anInteger!
 
 lcsGammaGreen
 	"Answer the <Integer> value of the receiver's 'lcsGammaGreen' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcsGammaGreen)!
+	^bytes dwordAtOffset: _OffsetOf_lcsGammaGreen!
 
 lcsGammaGreen: anInteger
 	"Set the receiver's 'lcsGammaGreen' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaGreen) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcsGammaGreen put: anInteger!
 
 lcsGammaRed
 	"Answer the <Integer> value of the receiver's 'lcsGammaRed' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcsGammaRed)!
+	^bytes dwordAtOffset: _OffsetOf_lcsGammaRed!
 
 lcsGammaRed: anInteger
 	"Set the receiver's 'lcsGammaRed' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsGammaRed) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcsGammaRed put: anInteger!
 
 lcsIntent
 	"Answer the <Integer> value of the receiver's 'lcsIntent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #lcsIntent)!
+	^bytes sdwordAtOffset: _OffsetOf_lcsIntent!
 
 lcsIntent: anInteger
 	"Set the receiver's 'lcsIntent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lcsIntent) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_lcsIntent put: anInteger!
 
 lcsSignature
 	"Answer the <Integer> value of the receiver's 'lcsSignature' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_lcsSignature!
 
 lcsSignature: anInteger
 	"Set the receiver's 'lcsSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcsSignature put: anInteger!
 
 lcsSize
 	"Answer the <Integer> value of the receiver's 'lcsSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcsSize)!
+	^bytes dwordAtOffset: _OffsetOf_lcsSize!
 
 lcsSize: anInteger
 	"Set the receiver's 'lcsSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_lcsSize put: anInteger!
 
 lcsVersion
 	"Answer the <Integer> value of the receiver's 'lcsVersion' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #lcsVersion)!
+	^bytes dwordAtOffset: _OffsetOf_lcsVersion!
 
 lcsVersion: anInteger
 	"Set the receiver's 'lcsVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #lcsVersion) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_lcsVersion put: anInteger! !
 !LOGCOLORSPACEW categoriesFor: #lcsCSType!**compiled accessors**!public! !
 !LOGCOLORSPACEW categoriesFor: #lcsCSType:!**compiled accessors**!public! !
 !LOGCOLORSPACEW categoriesFor: #lcsEndpoints!**compiled accessors**!public! !

@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_elfw _OffsetOf_ihFont'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMREXTCREATEFONTINDIRECTW guid: (GUID fromString: '{29743add-8da1-4573-9b6b-8a3d2c5ac799}')!
+EMREXTCREATEFONTINDIRECTW addClassConstant: '_OffsetOf_elfw' value: 16rC!
+EMREXTCREATEFONTINDIRECTW addClassConstant: '_OffsetOf_ihFont' value: 16r8!
 EMREXTCREATEFONTINDIRECTW comment: '<EMREXTCREATEFONTINDIRECT> is an <ExternalStructure> class to wrap the struct ''Win32.EMREXTCREATEFONTINDIRECT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,26 +29,26 @@ struct tagEMREXTCREATEFONTINDIRECT {
 elfw
 	"Answer the <EXTLOGFONTW> value of the receiver's 'elfw' field."
 
-	^EXTLOGFONTW fromAddress: bytes yourAddress + ##(self offsetOf: #elfw)!
+	^EXTLOGFONTW fromAddress: bytes yourAddress + _OffsetOf_elfw!
 
 elfw: anEXTLOGFONTW
 	"Set the receiver's 'elfw' field to the value of the argument, anEXTLOGFONTW"
 
 	anEXTLOGFONTW
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #elfw) + 1)
-		to: ##((self offsetOf: #elfw) + EXTLOGFONTW basicByteSize)
+		from: ##(_OffsetOf_elfw + 1)
+		to: ##(_OffsetOf_elfw + EXTLOGFONTW basicByteSize)
 		startingAt: 1!
 
 ihFont
 	"Answer the <Integer> value of the receiver's 'ihFont' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ihFont)!
+	^bytes dwordAtOffset: _OffsetOf_ihFont!
 
 ihFont: anInteger
 	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ihFont) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_ihFont put: anInteger! !
 !EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw!**compiled accessors**!public! !
 !EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw:!**compiled accessors**!public! !
 !EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont!**compiled accessors**!public! !

@@ -2,10 +2,12 @@
 
 HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_pResponseInfo _OffsetOf_ResponseInfoCount'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_RESPONSE_V2 guid: (GUID fromString: '{5e3a97da-7345-49a7-a5a9-1ddea2366eb2}')!
+HTTP_RESPONSE_V2 addClassConstant: '_OffsetOf_pResponseInfo' value: 16r11C!
+HTTP_RESPONSE_V2 addClassConstant: '_OffsetOf_ResponseInfoCount' value: 16r118!
 HTTP_RESPONSE_V2 comment: '<HTTP_RESPONSE_V2> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_RESPONSE_V2'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,25 +31,25 @@ pResponseInfo
 	"Answer the <StructureArray> value of the receiver's 'pResponseInfo' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pResponseInfo))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pResponseInfo)
 		length: self ResponseInfoCount
 		elementClass: HTTP_RESPONSE_INFO!
 
 pResponseInfo: aStructureArray
 	"Set the receiver's 'pResponseInfo' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pResponseInfo) put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pResponseInfo put: aStructureArray yourAddress.
 	self ResponseInfoCount: aStructureArray size!
 
 ResponseInfoCount
 	"Private - Answer the <Integer> value of the receiver's 'ResponseInfoCount' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #ResponseInfoCount)!
+	^bytes wordAtOffset: _OffsetOf_ResponseInfoCount!
 
 ResponseInfoCount: anInteger
 	"Set the receiver's 'ResponseInfoCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #ResponseInfoCount) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_ResponseInfoCount put: anInteger! !
 !HTTP_RESPONSE_V2 categoriesFor: #pResponseInfo!**compiled accessors**!public! !
 !HTTP_RESPONSE_V2 categoriesFor: #pResponseInfo:!**compiled accessors**!public! !
 !HTTP_RESPONSE_V2 categoriesFor: #ResponseInfoCount!**compiled accessors**!private! !
@@ -72,6 +74,10 @@ defineFields
 	self
 		defineField: #ResponseInfoCount type: WORDField new beNonBrowsable offset: 280;
 		defineField: #pResponseInfo type: (StructureArrayPointerField type: HTTP_RESPONSE_INFO lengthField: #ResponseInfoCount) offset: 284.
-	self byteSize: 288! !
+	self byteSize: 288!
+
+getFieldNames
+	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks #ResponseInfoCount #pResponseInfo)! !
 !HTTP_RESPONSE_V2 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_RESPONSE_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,11 @@
 
 TEXTRANGE subclass: #FINDTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_chrgText'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 FINDTEXTEX guid: (GUID fromString: '{be0e52c5-c59b-4277-ac2a-cb775eac3904}')!
+FINDTEXTEX addClassConstant: '_OffsetOf_chrgText' value: 16rC!
 FINDTEXTEX comment: '<FINDTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win.FINDTEXTEX'' from type information in the ''Windows API (ANSI)'' library.
 
 This structure is used in conjunction with the RichEdit control''s EM_FINDTEXTEX message, but is defined in the base as it is also used by Scintilla.
@@ -25,7 +26,7 @@ struct tagFINDTEXTEX {
 chrgText
 	"Answer the <CHARRANGE> value of the receiver's 'chrgText' field."
 
-	^CHARRANGE fromAddress: bytes yourAddress + ##(self offsetOf: #chrgText)! !
+	^CHARRANGE fromAddress: bytes yourAddress + _OffsetOf_chrgText! !
 !FINDTEXTEX categoriesFor: #chrgText!**compiled accessors**!public! !
 
 !FINDTEXTEX class methodsFor!

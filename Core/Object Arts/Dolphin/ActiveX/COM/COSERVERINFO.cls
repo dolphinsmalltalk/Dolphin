@@ -2,10 +2,14 @@
 
 OLEStructure subclass: #COSERVERINFO
 	instanceVariableNames: 'hostName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwReserved1 _OffsetOf_dwReserved2 _OffsetOf_pAuthInfo _OffsetOf_pwszName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 COSERVERINFO guid: (GUID fromString: '{87b4c5b4-026e-11d3-9fd7-00a0cc3e4a32}')!
+COSERVERINFO addClassConstant: '_OffsetOf_dwReserved1' value: 16r0!
+COSERVERINFO addClassConstant: '_OffsetOf_dwReserved2' value: 16rC!
+COSERVERINFO addClassConstant: '_OffsetOf_pAuthInfo' value: 16r8!
+COSERVERINFO addClassConstant: '_OffsetOf_pwszName' value: 16r4!
 COSERVERINFO comment: 'COSERVERINFO is an ExternalStructure class to represent the DCOM structure of the same name.
 
 COSERVERINFO is used to explicitly identify a remote machine when instantiating COM objects (i.e. it is used in conjunction with CoCreateInstanceEx)..
@@ -30,22 +34,22 @@ hostName: aString
 pAuthInfo
 	"Answer the <COAUTHINFO> value of the receiver's 'pAuthInfo' field."
 
-	^COAUTHINFO fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAuthInfo))!
+	^COAUTHINFO fromAddress: (bytes intPtrAtOffset: _OffsetOf_pAuthInfo)!
 
 pAuthInfo: aCOAUTHINFO
 	"Set the receiver's 'pAuthInfo' field to the value of the argument, aCOAUTHINFO"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pAuthInfo) put: aCOAUTHINFO yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pAuthInfo put: aCOAUTHINFO yourAddress!
 
 pwszName
 	"Answer the <Utf16String> value of the receiver's 'pwszName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pwszName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pwszName)!
 
 pwszName: anUtf16String
 	"Set the receiver's 'pwszName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszName) put: anUtf16String yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_pwszName put: anUtf16String yourAddress! !
 !COSERVERINFO categoriesFor: #hostName!accessing!public! !
 !COSERVERINFO categoriesFor: #hostName:!accessing!public! !
 !COSERVERINFO categoriesFor: #pAuthInfo!**compiled accessors**!public! !

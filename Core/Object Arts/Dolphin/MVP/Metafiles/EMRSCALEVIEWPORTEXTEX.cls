@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRSCALEVIEWPORTEXTEX
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_xDenom _OffsetOf_xNum _OffsetOf_yDenom _OffsetOf_yNum'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRSCALEVIEWPORTEXTEX guid: (GUID fromString: '{cb3c696e-59b6-4d1f-9413-f0a1fd89aaeb}')!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xDenom' value: 16rC!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_xNum' value: 16r8!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yDenom' value: 16r14!
+EMRSCALEVIEWPORTEXTEX addClassConstant: '_OffsetOf_yNum' value: 16r10!
 EMRSCALEVIEWPORTEXTEX comment: '<EMRSCALEVIEWPORTEXTEX> is an <ExternalStructure> class to wrap the struct ''Win32.EMRSCALEVIEWPORTEXTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -29,42 +33,42 @@ struct tagEMRSCALEVIEWPORTEXTEX {
 xDenom
 	"Answer the <Integer> value of the receiver's 'xDenom' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xDenom)!
+	^bytes sdwordAtOffset: _OffsetOf_xDenom!
 
 xDenom: anInteger
 	"Set the receiver's 'xDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xDenom) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xDenom put: anInteger!
 
 xNum
 	"Answer the <Integer> value of the receiver's 'xNum' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xNum)!
+	^bytes sdwordAtOffset: _OffsetOf_xNum!
 
 xNum: anInteger
 	"Set the receiver's 'xNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xNum) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xNum put: anInteger!
 
 yDenom
 	"Answer the <Integer> value of the receiver's 'yDenom' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yDenom)!
+	^bytes sdwordAtOffset: _OffsetOf_yDenom!
 
 yDenom: anInteger
 	"Set the receiver's 'yDenom' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yDenom) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_yDenom put: anInteger!
 
 yNum
 	"Answer the <Integer> value of the receiver's 'yNum' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yNum)!
+	^bytes sdwordAtOffset: _OffsetOf_yNum!
 
 yNum: anInteger
 	"Set the receiver's 'yNum' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yNum) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_yNum put: anInteger! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom!**compiled accessors**!public! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xDenom:!**compiled accessors**!public! !
 !EMRSCALEVIEWPORTEXTEX categoriesFor: #xNum!**compiled accessors**!public! !

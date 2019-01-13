@@ -2,10 +2,13 @@
 
 ExternalStructure subclass: #GpColorPalette
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Count _OffsetOf_Entries _OffsetOf_Flags'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpColorPalette guid: (GUID fromString: '{585419f2-d5ab-4e85-bf56-56d115cbe7b2}')!
+GpColorPalette addClassConstant: '_OffsetOf_Count' value: 16r4!
+GpColorPalette addClassConstant: '_OffsetOf_Entries' value: 16r8!
+GpColorPalette addClassConstant: '_OffsetOf_Flags' value: 16r0!
 GpColorPalette comment: '<GpColorPalette> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpColorPalette'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -27,12 +30,12 @@ struct tagGpColorPalette {
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Count)!
+	^bytes dwordAtOffset: _OffsetOf_Count!
 
 Count: anInteger
 	"Set the receiver's 'Count' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Count) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Count put: anInteger!
 
 Entries
 	"Answer the receiver's Entries field as a Smalltalk object."
@@ -59,12 +62,12 @@ Entries: anObject
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger! !
 !GpColorPalette categoriesFor: #Count!**compiled accessors**!public! !
 !GpColorPalette categoriesFor: #Count:!**compiled accessors**!public! !
 !GpColorPalette categoriesFor: #Entries!accessing!public! !

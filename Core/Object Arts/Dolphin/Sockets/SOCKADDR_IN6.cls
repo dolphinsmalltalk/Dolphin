@@ -2,10 +2,16 @@
 
 SOCKADDR subclass: #SOCKADDR_IN6
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_sin6_addr _OffsetOf_sin6_family _OffsetOf_sin6_flowinfo _OffsetOf_sin6_port _OffsetOf_sin6_scope_id _OffsetOf_sin6_scope_struct'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SOCKADDR_IN6 guid: (GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
+SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_addr' value: 16r8!
+SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_family' value: 16r0!
+SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_flowinfo' value: 16r4!
+SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_port' value: 16r2!
+SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_scope_id' value: 16r18!
+SOCKADDR_IN6 addClassConstant: '_OffsetOf_sin6_scope_struct' value: 16r18!
 SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -53,56 +59,56 @@ port: anInteger
 sin6_addr
 	"Answer the <IN6_ADDR> value of the receiver's 'sin6_addr' field."
 
-	^IN6_ADDR fromAddress: bytes yourAddress + ##(self offsetOf: #sin6_addr)!
+	^IN6_ADDR fromAddress: bytes yourAddress + _OffsetOf_sin6_addr!
 
 sin6_addr: anIN6_ADDR
 	"Set the receiver's 'sin6_addr' field to the value of the argument, anIN6_ADDR"
 
 	anIN6_ADDR
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #sin6_addr) + 1)
-		to: ##((self offsetOf: #sin6_addr) + IN6_ADDR basicByteSize)
+		from: ##(_OffsetOf_sin6_addr + 1)
+		to: ##(_OffsetOf_sin6_addr + IN6_ADDR basicByteSize)
 		startingAt: 1!
 
 sin6_family
 	"Answer the <Integer> value of the receiver's 'sin6_family' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_sin6_family!
 
 sin6_family: anInteger
 	"Set the receiver's 'sin6_family' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_sin6_family put: anInteger!
 
 sin6_flowinfo
 	"Answer the <Integer> value of the receiver's 'sin6_flowinfo' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #sin6_flowinfo)!
+	^bytes dwordAtOffset: _OffsetOf_sin6_flowinfo!
 
 sin6_flowinfo: anInteger
 	"Set the receiver's 'sin6_flowinfo' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #sin6_flowinfo) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_sin6_flowinfo put: anInteger!
 
 sin6_port
 	"Answer the <Integer> value of the receiver's 'sin6_port' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #sin6_port)!
+	^bytes wordAtOffset: _OffsetOf_sin6_port!
 
 sin6_port: anInteger
 	"Set the receiver's 'sin6_port' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #sin6_port) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_sin6_port put: anInteger!
 
 sin6_scope_id
 	"Answer the <Integer> value of the receiver's 'sin6_scope_id' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #sin6_scope_id)!
+	^bytes dwordAtOffset: _OffsetOf_sin6_scope_id!
 
 sin6_scope_id: anInteger
 	"Set the receiver's 'sin6_scope_id' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #sin6_scope_id) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_sin6_scope_id put: anInteger! !
 !SOCKADDR_IN6 categoriesFor: #flowInfo!accessing!public! !
 !SOCKADDR_IN6 categoriesFor: #flowInfo:!accessing!public! !
 !SOCKADDR_IN6 categoriesFor: #port!accessing!public! !

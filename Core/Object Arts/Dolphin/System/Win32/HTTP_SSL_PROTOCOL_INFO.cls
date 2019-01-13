@@ -2,10 +2,17 @@
 
 HttpServerStructure subclass: #HTTP_SSL_PROTOCOL_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_CipherStrength _OffsetOf_CipherType _OffsetOf_HashStrength _OffsetOf_HashType _OffsetOf_KeyExchangeStrength _OffsetOf_KeyExchangeType _OffsetOf_Protocol'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SSL_PROTOCOL_INFO guid: (GUID fromString: '{73784afd-f4e5-464e-b716-46ebb0c8c6d1}')!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_CipherStrength' value: 16r8!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_CipherType' value: 16r4!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_HashStrength' value: 16r10!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_HashType' value: 16rC!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_KeyExchangeStrength' value: 16r18!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_KeyExchangeType' value: 16r14!
+HTTP_SSL_PROTOCOL_INFO addClassConstant: '_OffsetOf_Protocol' value: 16r0!
 HTTP_SSL_PROTOCOL_INFO comment: '<HTTP_SSL_PROTOCOL_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SSL_PROTOCOL_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -32,37 +39,37 @@ struct tagHTTP_SSL_PROTOCOL_INFO {
 CipherStrength
 	"Answer the <Integer> value of the receiver's 'CipherStrength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #CipherStrength)!
+	^bytes dwordAtOffset: _OffsetOf_CipherStrength!
 
 CipherType
 	"Answer the <Integer> value of the receiver's 'CipherType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #CipherType)!
+	^bytes dwordAtOffset: _OffsetOf_CipherType!
 
 HashStrength
 	"Answer the <Integer> value of the receiver's 'HashStrength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #HashStrength)!
+	^bytes dwordAtOffset: _OffsetOf_HashStrength!
 
 HashType
 	"Answer the <Integer> value of the receiver's 'HashType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #HashType)!
+	^bytes dwordAtOffset: _OffsetOf_HashType!
 
 KeyExchangeStrength
 	"Answer the <Integer> value of the receiver's 'KeyExchangeStrength' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #KeyExchangeStrength)!
+	^bytes dwordAtOffset: _OffsetOf_KeyExchangeStrength!
 
 KeyExchangeType
 	"Answer the <Integer> value of the receiver's 'KeyExchangeType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #KeyExchangeType)!
+	^bytes dwordAtOffset: _OffsetOf_KeyExchangeType!
 
 Protocol
 	"Answer the <Integer> value of the receiver's 'Protocol' field."
 
-	^bytes dwordAtOffset: 0! !
+	^bytes dwordAtOffset: _OffsetOf_Protocol! !
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherStrength!**compiled accessors**!public! !
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #CipherType!**compiled accessors**!public! !
 !HTTP_SSL_PROTOCOL_INFO categoriesFor: #HashStrength!**compiled accessors**!public! !
@@ -98,6 +105,10 @@ defineFields
 		defineField: #HashStrength type: DWORDField new beReadOnly offset: 16;
 		defineField: #KeyExchangeType type: DWORDField new beReadOnly offset: 20;
 		defineField: #KeyExchangeStrength type: DWORDField new beReadOnly offset: 24.
-	self byteSize: 28! !
+	self byteSize: 28!
+
+getFieldNames
+	^#(#Protocol #CipherType #CipherStrength #HashType #HashStrength #KeyExchangeType #KeyExchangeStrength)! !
 !HTTP_SSL_PROTOCOL_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SSL_PROTOCOL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

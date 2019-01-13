@@ -26,37 +26,6 @@ byteSize
 fieldClassName
 	^Integer name!
 
-printAccessorExpression: aSymbol on: aWriteStream 
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will read the value of this field from an instance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	aWriteStream
-		nextPutAll: '(bytes ';
-		display: self accessorMessage keywords first;
-		space.
-	self printOffsetExpression: aSymbol on: aWriteStream.
-	aWriteStream nextPut: $)!
-
-printMutatorBody: aSymbol on: aWriteStream
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will write the value of this field into an instance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	| keywords |
-	keywords := self accessorMessage keywords.
-	aWriteStream
-		nextPutAll: 'bytes';
-		space;
-		display: keywords first;
-		space.
-	self printOffsetExpression: aSymbol on: aWriteStream.
-	aWriteStream
-		space;
-		display: keywords second;
-		space.
-	self printMutatorValueOn: aWriteStream parameter: self valueParameterName!
-
 printMutatorValueOn: aWriteStream parameter: aString
 	"Private - Print a suitable expression onto the specified <puttableStream> which will
 	evaluate to the the value to be stored into this field in an instance of the structure when
@@ -66,8 +35,6 @@ printMutatorValueOn: aWriteStream parameter: aString
 !ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
 !ScalarField categoriesFor: #byteSize!constants!private! !
 !ScalarField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!ScalarField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !
-!ScalarField categoriesFor: #printMutatorBody:on:!automatic generation!development!private! !
 !ScalarField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
 
 !ScalarField class methodsFor!

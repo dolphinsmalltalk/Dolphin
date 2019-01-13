@@ -2,10 +2,12 @@
 
 ExternalPoint subclass: #POINTF
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 POINTF guid: (GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
+POINTF addClassConstant: '_OffsetOf_x' value: 16r0!
+POINTF addClassConstant: '_OffsetOf_y' value: 16r4!
 POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
 
 `POINTF` is a cartesian coordinate with single precision floating point x and y values.'!
@@ -15,22 +17,22 @@ POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of 
 x
 	"Answer the <Float> value of the receiver's 'x' field."
 
-	^bytes floatAtOffset: 0!
+	^bytes floatAtOffset: _OffsetOf_x!
 
 x: aFloat
 	"Set the receiver's 'x' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: aFloat!
+	bytes floatAtOffset: _OffsetOf_x put: aFloat!
 
 y
 	"Answer the <Float> value of the receiver's 'y' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #y)!
+	^bytes floatAtOffset: _OffsetOf_y!
 
 y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #y) put: aFloat! !
+	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 !POINTF categoriesFor: #x!**compiled accessors**!public! !
 !POINTF categoriesFor: #x:!**compiled accessors**!public! !
 !POINTF categoriesFor: #y!**compiled accessors**!public! !

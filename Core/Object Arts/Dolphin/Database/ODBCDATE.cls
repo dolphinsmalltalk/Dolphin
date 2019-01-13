@@ -2,10 +2,13 @@
 
 ExternalStructure subclass: #ODBCDATE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_day _OffsetOf_month _OffsetOf_year'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ODBCDATE guid: (GUID fromString: '{87b4c597-026e-11d3-9fd7-00a0cc3e4a32}')!
+ODBCDATE addClassConstant: '_OffsetOf_day' value: 16r4!
+ODBCDATE addClassConstant: '_OffsetOf_month' value: 16r2!
+ODBCDATE addClassConstant: '_OffsetOf_year' value: 16r0!
 ODBCDATE comment: 'ODBCDATE is a representation of the same named Win32 ODBC structure.'!
 !ODBCDATE categoriesForClass!External-Data-Structured-ODBC!ODBC Interface! !
 !ODBCDATE methodsFor!
@@ -21,32 +24,32 @@ asDate
 day
 	"Answer the <Integer> value of the receiver's 'day' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #day)!
+	^bytes wordAtOffset: _OffsetOf_day!
 
 day: anInteger
 	"Set the receiver's 'day' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #day) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_day put: anInteger!
 
 month
 	"Answer the <Integer> value of the receiver's 'month' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #month)!
+	^bytes wordAtOffset: _OffsetOf_month!
 
 month: anInteger
 	"Set the receiver's 'month' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #month) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_month put: anInteger!
 
 year
 	"Answer the <Integer> value of the receiver's 'year' field."
 
-	^bytes swordAtOffset: 0!
+	^bytes swordAtOffset: _OffsetOf_year!
 
 year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
-	bytes swordAtOffset: 0 put: anInteger! !
+	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
 !ODBCDATE categoriesFor: #asDate!converting!public! !
 !ODBCDATE categoriesFor: #day!**compiled accessors**!public! !
 !ODBCDATE categoriesFor: #day:!**compiled accessors**!public! !

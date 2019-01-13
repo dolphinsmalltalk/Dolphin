@@ -2,10 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_UNKNOWN_HEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_NameLength _OffsetOf_pName _OffsetOf_pRawValue _OffsetOf_RawValueLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_UNKNOWN_HEADER guid: (GUID fromString: '{98a27339-73e3-4d54-baf2-915b818916b1}')!
+HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_NameLength' value: 16r0!
+HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_pName' value: 16r4!
+HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_pRawValue' value: 16r8!
+HTTP_UNKNOWN_HEADER addClassConstant: '_OffsetOf_RawValueLength' value: 16r2!
 HTTP_UNKNOWN_HEADER comment: '<HTTP_UNKNOWN_HEADER> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_UNKNOWN_HEADER'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -29,45 +33,44 @@ struct tagHTTP_UNKNOWN_HEADER {
 NameLength
 	"Private - Answer the <Integer> value of the receiver's 'NameLength' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_NameLength!
 
 NameLength: anInteger
 	"Set the receiver's 'NameLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_NameLength put: anInteger!
 
 pName
 	"Answer the <String> value of the receiver's 'pName' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pName)) length: self NameLength!
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pName) length: self NameLength!
 
 pName: aString
 	"Set the receiver's 'pName' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pName) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pName put: aString yourAddress.
 	self NameLength: aString size!
 
 pRawValue
 	"Answer the <String> value of the receiver's 'pRawValue' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRawValue))
-		length: self RawValueLength!
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawValue) length: self RawValueLength!
 
 pRawValue: aString
 	"Set the receiver's 'pRawValue' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pRawValue) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pRawValue put: aString yourAddress.
 	self RawValueLength: aString size!
 
 RawValueLength
 	"Private - Answer the <Integer> value of the receiver's 'RawValueLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #RawValueLength)!
+	^bytes wordAtOffset: _OffsetOf_RawValueLength!
 
 RawValueLength: anInteger
 	"Set the receiver's 'RawValueLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #RawValueLength) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_RawValueLength put: anInteger! !
 !HTTP_UNKNOWN_HEADER categoriesFor: #NameLength!**compiled accessors**!private! !
 !HTTP_UNKNOWN_HEADER categoriesFor: #NameLength:!**compiled accessors**!private! !
 !HTTP_UNKNOWN_HEADER categoriesFor: #pName!**compiled accessors**!public! !
@@ -98,6 +101,10 @@ defineFields
 		defineField: #RawValueLength type: WORDField new beNonBrowsable offset: 2;
 		defineField: #pName type: (ArrayPointerField type: String lengthField: #NameLength) offset: 4;
 		defineField: #pRawValue type: (ArrayPointerField type: String lengthField: #RawValueLength) offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#NameLength #RawValueLength #pName #pRawValue)! !
 !HTTP_UNKNOWN_HEADER class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_UNKNOWN_HEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

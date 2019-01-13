@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMRARC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ptlEnd _OffsetOf_ptlStart _OffsetOf_rclBox'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRARC guid: (GUID fromString: '{a4d8acff-7c86-450e-ab37-011f1b1a9754}')!
+EMRARC addClassConstant: '_OffsetOf_ptlEnd' value: 16r20!
+EMRARC addClassConstant: '_OffsetOf_ptlStart' value: 16r18!
+EMRARC addClassConstant: '_OffsetOf_rclBox' value: 16r8!
 EMRARC comment: '<EMRARC> is an <ExternalStructure> class to wrap the struct ''Win32.EMRARC'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,43 +31,43 @@ struct tagEMRARC {
 ptlEnd
 	"Answer the <POINTL> value of the receiver's 'ptlEnd' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlEnd)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlEnd!
 
 ptlEnd: aPOINTL
 	"Set the receiver's 'ptlEnd' field to the value of the argument, aPOINTL"
 
 	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlEnd) + 1)
-		to: ##((self offsetOf: #ptlEnd) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlEnd + 1)
+		to: ##(_OffsetOf_ptlEnd + POINTL basicByteSize)
 		startingAt: 1!
 
 ptlStart
 	"Answer the <POINTL> value of the receiver's 'ptlStart' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlStart)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlStart!
 
 ptlStart: aPOINTL
 	"Set the receiver's 'ptlStart' field to the value of the argument, aPOINTL"
 
 	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlStart) + 1)
-		to: ##((self offsetOf: #ptlStart) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlStart + 1)
+		to: ##(_OffsetOf_ptlStart + POINTL basicByteSize)
 		startingAt: 1!
 
 rclBox
 	"Answer the <RECT> value of the receiver's 'rclBox' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBox)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
 rclBox: aRECT
 	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBox) + 1)
-		to: ##((self offsetOf: #rclBox) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBox + 1)
+		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1! !
 !EMRARC categoriesFor: #ptlEnd!**compiled accessors**!public! !
 !EMRARC categoriesFor: #ptlEnd:!**compiled accessors**!public! !

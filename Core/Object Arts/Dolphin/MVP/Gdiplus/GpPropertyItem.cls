@@ -2,10 +2,14 @@
 
 ExternalStructure subclass: #GpPropertyItem
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_id _OffsetOf_length _OffsetOf_Type _OffsetOf_Value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpPropertyItem guid: (GUID fromString: '{dad9cd42-c61c-4040-bcd2-2f2e8d725fca}')!
+GpPropertyItem addClassConstant: '_OffsetOf_id' value: 16r0!
+GpPropertyItem addClassConstant: '_OffsetOf_length' value: 16r4!
+GpPropertyItem addClassConstant: '_OffsetOf_Type' value: 16r8!
+GpPropertyItem addClassConstant: '_OffsetOf_Value' value: 16rC!
 GpPropertyItem comment: '<GpPropertyItem> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpPropertyItem'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -28,22 +32,22 @@ struct tagGpPropertyItem {
 id
 	"Answer the <Integer> value of the receiver's 'id' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_id!
 
 id: anInteger
 	"Set the receiver's 'id' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_id put: anInteger!
 
 length
 	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #length)!
+	^bytes dwordAtOffset: _OffsetOf_length!
 
 length: anInteger
 	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #length) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_length put: anInteger!
 
 name
 	"Answer the receiver's id (property tag) as a string.  If unknown, answer the receiver's id as a hex string."
@@ -57,12 +61,12 @@ name
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #Type)!
+	^bytes wordAtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #Type) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_Type put: anInteger!
 
 typeName
 	"Answer the receiver's type (property tag type) as a string."
@@ -73,12 +77,12 @@ typeName
 Value
 	"Answer the <ExternalAddress> value of the receiver's 'Value' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #Value)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_Value) asExternalAddress!
 
 Value: anExternalAddress
 	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Value) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress!
 
 valueArray
 	"Answer the array pointed at by the receiver's Value. The receiver's type gives a hint at

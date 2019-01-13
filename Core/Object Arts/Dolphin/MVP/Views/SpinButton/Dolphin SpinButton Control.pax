@@ -49,12 +49,12 @@ package!
 
 Win32Structure subclass: #UDACCEL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_nInc _OffsetOf_nSec'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iDelta _OffsetOf_iPos'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueConvertingControlView subclass: #SpinButton

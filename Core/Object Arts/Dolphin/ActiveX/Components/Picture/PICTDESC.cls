@@ -2,10 +2,15 @@
 
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dw1 _OffsetOf_dw2 _OffsetOf_dwSize _OffsetOf_handle _OffsetOf_picType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PICTDESC guid: (GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
+PICTDESC addClassConstant: '_OffsetOf_dw1' value: 16rC!
+PICTDESC addClassConstant: '_OffsetOf_dw2' value: 16r10!
+PICTDESC addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+PICTDESC addClassConstant: '_OffsetOf_handle' value: 16r8!
+PICTDESC addClassConstant: '_OffsetOf_picType' value: 16r4!
 PICTDESC comment: ''!
 !PICTDESC categoriesForClass!Unclassified! !
 !PICTDESC methodsFor!
@@ -13,47 +18,47 @@ PICTDESC comment: ''!
 dw1
 	"Answer the <Integer> value of the receiver's 'dw1' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dw1)!
+	^bytes dwordAtOffset: _OffsetOf_dw1!
 
 dw1: anInteger
 	"Set the receiver's 'dw1' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dw1) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dw1 put: anInteger!
 
 dw2
 	"Answer the <Integer> value of the receiver's 'dw2' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dw2)!
+	^bytes dwordAtOffset: _OffsetOf_dw2!
 
 dw2: anInteger
 	"Set the receiver's 'dw2' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dw2) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dw2 put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 handle
 	"Answer the <Integer> value of the receiver's 'handle' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #handle)!
+	^bytes dwordAtOffset: _OffsetOf_handle!
 
 handle: anInteger
 	"Set the receiver's 'handle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #handle) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_handle put: anInteger!
 
 picType
 	"Answer the <Integer> value of the receiver's 'picType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #picType)!
+	^bytes dwordAtOffset: _OffsetOf_picType!
 
 picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #picType) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
 !PICTDESC categoriesFor: #dw1!**compiled accessors**!public! !
 !PICTDESC categoriesFor: #dw1:!**compiled accessors**!public! !
 !PICTDESC categoriesFor: #dw2!**compiled accessors**!public! !

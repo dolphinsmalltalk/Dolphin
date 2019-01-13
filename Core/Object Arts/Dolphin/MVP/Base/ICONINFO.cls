@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #ICONINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_fIcon _OffsetOf_hbmColor _OffsetOf_hbmMask _OffsetOf_xHotspot _OffsetOf_yHotspot'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICONINFO guid: (GUID fromString: '{87b4c5f5-026e-11d3-9fd7-00a0cc3e4a32}')!
+ICONINFO addClassConstant: '_OffsetOf_fIcon' value: 16r0!
+ICONINFO addClassConstant: '_OffsetOf_hbmColor' value: 16r10!
+ICONINFO addClassConstant: '_OffsetOf_hbmMask' value: 16rC!
+ICONINFO addClassConstant: '_OffsetOf_xHotspot' value: 16r4!
+ICONINFO addClassConstant: '_OffsetOf_yHotspot' value: 16r8!
 ICONINFO comment: ''!
 !ICONINFO categoriesForClass!External-Data-Structured-Win32! !
 !ICONINFO methodsFor!
@@ -43,22 +48,22 @@ free
 hbmColor
 	"Answer the <ExternalHandle> value of the receiver's 'hbmColor' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hbmColor)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hbmColor) asExternalHandle!
 
 hbmColor: anExternalHandle
 	"Set the receiver's 'hbmColor' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hbmColor) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmColor put: anExternalHandle!
 
 hbmMask
 	"Answer the <ExternalHandle> value of the receiver's 'hbmMask' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hbmMask)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hbmMask) asExternalHandle!
 
 hbmMask: anExternalHandle
 	"Set the receiver's 'hbmMask' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hbmMask) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmMask put: anExternalHandle!
 
 initialize
 	"Private - Initialize the receiver.
@@ -70,12 +75,12 @@ initialize
 xHotspot
 	"Answer the <Integer> value of the receiver's 'xHotspot' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #xHotspot)!
+	^bytes dwordAtOffset: _OffsetOf_xHotspot!
 
 yHotspot
 	"Answer the <Integer> value of the receiver's 'yHotspot' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #yHotspot)! !
+	^bytes dwordAtOffset: _OffsetOf_yHotspot! !
 !ICONINFO categoriesFor: #extent!accessing!public! !
 !ICONINFO categoriesFor: #free!public!realizing/unrealizing! !
 !ICONINFO categoriesFor: #hbmColor!**compiled accessors**!public! !

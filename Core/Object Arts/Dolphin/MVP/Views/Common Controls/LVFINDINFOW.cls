@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #LVFINDINFOW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags _OffsetOf_lParam _OffsetOf_psz _OffsetOf_pt _OffsetOf_vkDirection'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 LVFINDINFOW guid: (GUID fromString: '{87b4c5fd-026e-11d3-9fd7-00a0cc3e4a32}')!
+LVFINDINFOW addClassConstant: '_OffsetOf_flags' value: 16r0!
+LVFINDINFOW addClassConstant: '_OffsetOf_lParam' value: 16r8!
+LVFINDINFOW addClassConstant: '_OffsetOf_psz' value: 16r4!
+LVFINDINFOW addClassConstant: '_OffsetOf_pt' value: 16rC!
+LVFINDINFOW addClassConstant: '_OffsetOf_vkDirection' value: 16r14!
 LVFINDINFOW comment: 'LVFINDINFO is an <ExternalStructure> class which represents the Windows common control structure of the same name.
 
 LVFINDINFO is used to contain information to search for items in a List View.
@@ -18,12 +23,12 @@ Instance Variables:
 flags
 	"Answer the <Integer> value of the receiver's 'flags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_flags!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 maskIn: anInteger
 	"OR in to contents' mask member the bit flags represented by anInteger"
@@ -39,17 +44,17 @@ param: findId
 psz
 	"Answer the <Utf16String> value of the receiver's 'psz' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #psz))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_psz)!
 
 pt
 	"Answer the <POINTL> value of the receiver's 'pt' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #pt)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_pt!
 
 vkDirection
 	"Answer the <Integer> value of the receiver's 'vkDirection' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #vkDirection)! !
+	^bytes dwordAtOffset: _OffsetOf_vkDirection! !
 !LVFINDINFOW categoriesFor: #flags!**compiled accessors**!public! !
 !LVFINDINFOW categoriesFor: #lParam!**compiled accessors**!public! !
 !LVFINDINFOW categoriesFor: #maskIn:!accessing!public! !

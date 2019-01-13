@@ -2,10 +2,12 @@
 
 ENHMETARECORD subclass: #EMRGDICOMMENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbData _OffsetOf_Data'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRGDICOMMENT guid: (GUID fromString: '{5b2c2616-4205-49f8-86dc-fa73c7092f5b}')!
+EMRGDICOMMENT addClassConstant: '_OffsetOf_cbData' value: 16r8!
+EMRGDICOMMENT addClassConstant: '_OffsetOf_Data' value: 16rC!
 EMRGDICOMMENT comment: '<EMRGDICOMMENT> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGDICOMMENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -27,17 +29,17 @@ struct tagEMRGDICOMMENT {
 cbData
 	"Answer the <Integer> value of the receiver's 'cbData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbData)!
+	^bytes dwordAtOffset: _OffsetOf_cbData!
 
 cbData: anInteger
 	"Set the receiver's 'cbData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbData) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbData put: anInteger!
 
 Data
 	"Answer the <ExternalArray> value of the receiver's 'Data' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #Data) length: self cbData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_Data length: self cbData!
 
 Data: anExternalArray
 	"Set the receiver's 'Data' field to the value of the argument, anExternalArray"
@@ -46,8 +48,8 @@ Data: anExternalArray
 	size := anExternalArray byteSize.
 	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Data) + 1)
-		to: ##(self offsetOf: #Data) + size
+		from: ##(_OffsetOf_Data + 1)
+		to: _OffsetOf_Data + size
 		startingAt: 1.
 	self cbData: anExternalArray size! !
 !EMRGDICOMMENT categoriesFor: #cbData!**compiled accessors**!public! !

@@ -2,10 +2,13 @@
 
 ENHMETARECORD subclass: #EMRINVERTRGN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbRgnData _OffsetOf_rclBounds _OffsetOf_RGNDATA'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRINVERTRGN guid: (GUID fromString: '{a68394ef-a64a-4b77-b81a-36b71800d05f}')!
+EMRINVERTRGN addClassConstant: '_OffsetOf_cbRgnData' value: 16r18!
+EMRINVERTRGN addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+EMRINVERTRGN addClassConstant: '_OffsetOf_RGNDATA' value: 16r1C!
 EMRINVERTRGN comment: '<EMRINVERTRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMRINVERTRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,31 +31,31 @@ struct tagEMRINVERTRGN {
 cbRgnData
 	"Answer the <Integer> value of the receiver's 'cbRgnData' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbRgnData)!
+	^bytes dwordAtOffset: _OffsetOf_cbRgnData!
 
 cbRgnData: anInteger
 	"Set the receiver's 'cbRgnData' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cbRgnData) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cbRgnData put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 RGNDATA
 	"Answer the <ExternalArray> value of the receiver's 'RGNDATA' field."
 
-	^ExternalArray fromAddress: bytes yourAddress + ##(self offsetOf: #RGNDATA) length: self cbRgnData!
+	^ExternalArray fromAddress: bytes yourAddress + _OffsetOf_RGNDATA length: self cbRgnData!
 
 RGNDATA: anExternalArray
 	"Set the receiver's 'RGNDATA' field to the value of the argument, anExternalArray"
@@ -61,8 +64,8 @@ RGNDATA: anExternalArray
 	size := anExternalArray byteSize.
 	anExternalArray
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #RGNDATA) + 1)
-		to: ##(self offsetOf: #RGNDATA) + size
+		from: ##(_OffsetOf_RGNDATA + 1)
+		to: _OffsetOf_RGNDATA + size
 		startingAt: 1.
 	self cbRgnData: anExternalArray size! !
 !EMRINVERTRGN categoriesFor: #cbRgnData!**compiled accessors**!public! !

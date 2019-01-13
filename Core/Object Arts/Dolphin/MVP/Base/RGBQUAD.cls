@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #RGBQUAD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_rgbBlue _OffsetOf_rgbGreen _OffsetOf_rgbRed _OffsetOf_rgbReserved'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RGBQUAD guid: (GUID fromString: '{87b4c60d-026e-11d3-9fd7-00a0cc3e4a32}')!
+RGBQUAD addClassConstant: '_OffsetOf_rgbBlue' value: 16r0!
+RGBQUAD addClassConstant: '_OffsetOf_rgbGreen' value: 16r1!
+RGBQUAD addClassConstant: '_OffsetOf_rgbRed' value: 16r2!
+RGBQUAD addClassConstant: '_OffsetOf_rgbReserved' value: 16r3!
 RGBQUAD comment: '<RGBQUAD> is an <ExternalStructure> class to wrap the struct ''Win.RGBQUAD'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -33,32 +37,32 @@ asColor
 rgbBlue
 	"Answer the <Integer> value of the receiver's 'rgbBlue' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_rgbBlue!
 
 rgbBlue: anInteger
 	"Set the receiver's 'rgbBlue' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anInteger!
+	bytes byteAtOffset: _OffsetOf_rgbBlue put: anInteger!
 
 rgbGreen
 	"Answer the <Integer> value of the receiver's 'rgbGreen' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #rgbGreen)!
+	^bytes byteAtOffset: _OffsetOf_rgbGreen!
 
 rgbGreen: anInteger
 	"Set the receiver's 'rgbGreen' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #rgbGreen) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_rgbGreen put: anInteger!
 
 rgbRed
 	"Answer the <Integer> value of the receiver's 'rgbRed' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #rgbRed)!
+	^bytes byteAtOffset: _OffsetOf_rgbRed!
 
 rgbRed: anInteger
 	"Set the receiver's 'rgbRed' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #rgbRed) put: anInteger! !
+	bytes byteAtOffset: _OffsetOf_rgbRed put: anInteger! !
 !RGBQUAD categoriesFor: #asColor!converting!public! !
 !RGBQUAD categoriesFor: #rgbBlue!**compiled accessors**!public! !
 !RGBQUAD categoriesFor: #rgbBlue:!**compiled accessors**!public! !

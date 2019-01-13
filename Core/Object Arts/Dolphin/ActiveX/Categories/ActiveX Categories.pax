@@ -61,7 +61,7 @@ IUnknown subclass: #ICatRegister
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #CATEGORYINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_catid _OffsetOf_lcid _OffsetOf_szDescription'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

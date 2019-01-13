@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 	instanceVariableNames: 'setting'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_QosSetting _OffsetOf_QosType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_QOS_SETTING_INFO guid: (GUID fromString: '{a0bcefe3-d299-4e8a-9c7a-6e753a441ad6}')!
+HTTP_QOS_SETTING_INFO addClassConstant: '_OffsetOf_QosSetting' value: 16r4!
+HTTP_QOS_SETTING_INFO addClassConstant: '_OffsetOf_QosType' value: 16r0!
 HTTP_QOS_SETTING_INFO comment: '<HTTP_QOS_SETTING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_QOS_SETTING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -33,22 +35,22 @@ propertyId
 QosSetting
 	"Answer the <ExternalAddress> value of the receiver's 'QosSetting' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #QosSetting)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_QosSetting) asExternalAddress!
 
 QosSetting: anExternalAddress
 	"Set the receiver's 'QosSetting' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #QosSetting) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_QosSetting put: anExternalAddress!
 
 QosType
 	"Answer the <Integer> value of the receiver's 'QosType' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_QosType!
 
 QosType: anInteger
 	"Set the receiver's 'QosType' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_QosType put: anInteger!
 
 value
 	^setting
@@ -92,6 +94,9 @@ defineFields
 		defineField: #QosSetting type: LPVOIDField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#QosType #QosSetting)!
+
 maxBandwidth: anInteger
 	^self qosSetting: (HTTP_BANDWIDTH_LIMIT_INFO maxBandwidth: anInteger)!
 
@@ -106,6 +111,7 @@ qosSetting: anHttpQosSetting
 		value: anHttpQosSetting;
 		yourself! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_QOS_SETTING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #maxBandwidth:!instance creation!public! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #maxConnections:!instance creation!public! !
 !HTTP_QOS_SETTING_INFO class categoriesFor: #propertyId!constants!public! !

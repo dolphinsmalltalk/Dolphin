@@ -11,7 +11,7 @@ PackageClosureTests comment: ''!
 !PackageClosureTests methodsFor!
 
 consoleAppUnimplemented
-	"Private - Expected missing selectors in a console app with the image stripper (which is responsible for all of these)
+	"Private - Expected missing selectors in a console app with the image stripper. The image stripper is responsible for all of these:
 		- instVars, viewClass - Sent to STBViewProxy instances built when reading view resources, but only when deploying GUI apps (which will contain STBViewProxy)
 		- recompileDefinition - only sent before the development package which defines it is unloaded
 		- setWindowULong:&c - sent to subclass the application deployment progress dialog, before any packages are unloaded"
@@ -36,7 +36,7 @@ simpleGuiAppUnimplementedMessages
 	^#(#createThumbnailExtent:mask: #recompileDefinition #ttmRelayEvent:)!
 
 testCommandLineHelloWorld
-	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log."
+	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."
 
 	self verifyPackageClosure: {CommandLineHelloWorld owningPackage. ImageStripper owningPackage}
 		missing: self consoleAppUnimplemented!

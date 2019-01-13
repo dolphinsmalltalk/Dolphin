@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AlphaFormat _OffsetOf_BlendFlags _OffsetOf_BlendOp _OffsetOf_SourceConstantAlpha'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BLENDFUNCTION guid: (GUID fromString: '{18e4db2f-bc13-4088-8c0d-df249d0bb979}')!
+BLENDFUNCTION addClassConstant: '_OffsetOf_AlphaFormat' value: 16r3!
+BLENDFUNCTION addClassConstant: '_OffsetOf_BlendFlags' value: 16r1!
+BLENDFUNCTION addClassConstant: '_OffsetOf_BlendOp' value: 16r0!
+BLENDFUNCTION addClassConstant: '_OffsetOf_SourceConstantAlpha' value: 16r2!
 BLENDFUNCTION comment: '<BLENDFUNCTION> is an <ExternalStructure> class to wrap the struct ''Win32.BLENDFUNCTION'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 IDL definition follows:
@@ -24,12 +28,12 @@ struct tagBLENDFUNCTION {
 AlphaFormat
 	"Answer the <Integer> value of the receiver's 'AlphaFormat' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #AlphaFormat)!
+	^bytes byteAtOffset: _OffsetOf_AlphaFormat!
 
 AlphaFormat: anInteger
 	"Set the receiver's 'AlphaFormat' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #AlphaFormat) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_AlphaFormat put: anInteger!
 
 blend: aNumber 
 	"Sets the fractional blend of the receiver to <Number> argument, which must be in the range 0..1"
@@ -39,22 +43,22 @@ blend: aNumber
 BlendFlags
 	"Answer the <Integer> value of the receiver's 'BlendFlags' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #BlendFlags)!
+	^bytes byteAtOffset: _OffsetOf_BlendFlags!
 
 BlendFlags: anInteger
 	"Set the receiver's 'BlendFlags' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #BlendFlags) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_BlendFlags put: anInteger!
 
 BlendOp
 	"Answer the <Integer> value of the receiver's 'BlendOp' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_BlendOp!
 
 BlendOp: anInteger
 	"Set the receiver's 'BlendOp' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anInteger!
+	bytes byteAtOffset: _OffsetOf_BlendOp put: anInteger!
 
 blendPercentage: aNumber 
 	"Sets the percentage blend of the receiver to <Number> argument, which must be in the range 0..100"
@@ -69,12 +73,12 @@ initialize
 SourceConstantAlpha
 	"Answer the <Integer> value of the receiver's 'SourceConstantAlpha' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #SourceConstantAlpha)!
+	^bytes byteAtOffset: _OffsetOf_SourceConstantAlpha!
 
 SourceConstantAlpha: anInteger
 	"Set the receiver's 'SourceConstantAlpha' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #SourceConstantAlpha) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_SourceConstantAlpha put: anInteger!
 
 usePerPixelAlpha: aBoolean 
 	"Determines whether the source bitmaps alpha channel should be used when performing the

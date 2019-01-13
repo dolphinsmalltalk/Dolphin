@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #ENHMETARECORD
 	instanceVariableNames: ''
-	classVariableNames: 'RecordTypes'
+	classVariableNames: '_OffsetOf_iType _OffsetOf_nSize RecordTypes'
 	poolDictionaries: 'EnhancedMetafileRecordTypes'
 	classInstanceVariableNames: ''!
 ENHMETARECORD guid: (GUID fromString: '{5a360b92-6a3d-40d5-9d88-972ffd1416e6}')!
+ENHMETARECORD addClassConstant: '_OffsetOf_iType' value: 16r0!
+ENHMETARECORD addClassConstant: '_OffsetOf_nSize' value: 16r4!
 ENHMETARECORD comment: '<ENHMETARECORD> is an <ExternalStructure> class to wrap the base struct for all the Enhanced Metafile record structs.'!
 !ENHMETARECORD categoriesForClass!Win32-Structs! !
 !ENHMETARECORD methodsFor!
@@ -23,22 +25,22 @@ getField: fieldNameString
 iType
 	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_iType!
 
 iType: anInteger
 	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
 
 nSize
 	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nSize)!
+	^bytes dwordAtOffset: _OffsetOf_nSize!
 
 nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nSize) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger! !
 !ENHMETARECORD categoriesFor: #getField:!accessing!private! !
 !ENHMETARECORD categoriesFor: #iType!**compiled accessors**!public! !
 !ENHMETARECORD categoriesFor: #iType:!**compiled accessors**!public! !

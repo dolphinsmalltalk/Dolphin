@@ -2,11 +2,15 @@
 
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
-	classVariableNames: 'InterfaceClasses'
+	classVariableNames: '_OffsetOf_argSizes _OffsetOf_interfaceCookie _OffsetOf_objectCookie _OffsetOf_vtbl InterfaceClasses'
 	poolDictionaries: 'OLEConstants Win32Constants Win32Errors'
 	classInstanceVariableNames: 'argSizes functions typeLib'!
 COMInterface guid: (IID fromString: '{87B4C591-026E-11D3-9FD7-00A0CC3E4A32}')!
 COMInterface isAbstract: true!
+COMInterface addClassConstant: '_OffsetOf_argSizes' value: 16r4!
+COMInterface addClassConstant: '_OffsetOf_interfaceCookie' value: 16rC!
+COMInterface addClassConstant: '_OffsetOf_objectCookie' value: 16r8!
+COMInterface addClassConstant: '_OffsetOf_vtbl' value: 16r0!
 COMInterface comment: ''!
 !COMInterface categoriesForClass!External-Data-Structured-COM! !
 !COMInterface methodsFor!
@@ -36,7 +40,7 @@ AddRef
 argSizes: anExternalAddress
 	"Set the receiver's 'argSizes' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #argSizes) put: anExternalAddress!
+	bytes uintPtrAtOffset: _OffsetOf_argSizes put: anExternalAddress!
 
 asParameter
 	"Answer the receiver in a form suitable for passing
@@ -182,7 +186,7 @@ initializeAtAddress: anAddress
 interfaceCookie: anInteger
 	"Set the receiver's 'interfaceCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #interfaceCookie) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_interfaceCookie put: anInteger!
 
 isSameCOMObject: aCOMInterface
 	"Answer true if aCOMInterface has the same underlying COMObject as the receiver."
@@ -192,7 +196,7 @@ isSameCOMObject: aCOMInterface
 objectCookie: anInteger
 	"Set the receiver's 'objectCookie' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #objectCookie) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_objectCookie put: anInteger!
 
 onExit
 	"Clean up the external interface pointer on image exit to free external resources"
@@ -312,7 +316,7 @@ supportsInterface: anInterfaceClass
 vtbl: anExternalAddress
 	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: 0 put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anExternalAddress! !
 !COMInterface categoriesFor: #_addRef!methods!private! !
 !COMInterface categoriesFor: #=!comparing!public! !
 !COMInterface categoriesFor: #AddRef!methods!public! !

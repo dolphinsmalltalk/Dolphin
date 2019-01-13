@@ -579,9 +579,9 @@ finishedWithStripping
 	These will mainly be methods that are used by the stripping algorithm itself, and which
 	it cannot therefore remove."
 
-	potentialAspectGetters := potentialAspectSetters := nil.
+	potentialAspectGetters := potentialAspectSetters := #().
 	self
-		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #removeMethod: #removeMethodSoft: #removeMethods:reason:force: #logMethod: #speciallySentMessages #finishedWithStripping).
+		finishedWithAll: #(#allMethodsInClasses:do: #allResourcesStripped #ignoreViewReferences #messagesSentByClasses: #resourcesForClasses: #removeMethod: #removeMethods:reason:force: #logMethod: #speciallySentMessages #finishedWithStripping).
 	self shrinkHashedCollections!
 
 foldDuplicatesConstants
@@ -1437,10 +1437,9 @@ removeDevelopmentObjects: devMethods
 	"developmentClasses inst. var. must be nilled later as still needed for reporting purposes"
 	^totalRemoved + 2!
 
-removeMethodSoft: aCompiledMethod
+removeMethod: aCompiledMethod
 	| getSelector |
-	(potentialAspectSetters identityIncludes: aCompiledMethod) ifTrue: [^false].
-	self removeMethod: aCompiledMethod.
+	super removeMethod: aCompiledMethod.
 	"If removed a method that was previously identified as an aspect getter, we can stop preversing the corresponding setters"
 	(potentialAspectGetters identityIncludes: aCompiledMethod) ifFalse: [^true].
 	potentialAspectGetters remove: aCompiledMethod.
@@ -1522,8 +1521,7 @@ removeRedundantResources: referencedClasses
 
 	"Remove all but the live resources"
 	deadResources := ResourceIdentifier allResourceIdentifiers difference: liveResources.
-	self removeResources: deadResources reason: 'unreferenced'.
-	^deadResources size!
+	^self removeResources: deadResources reason: 'unreferenced'!
 
 requiredClasses
 	"Answer a <set> of Classes that are known to be required and that
@@ -1687,6 +1685,9 @@ scanResourcesForViewReferences: aCollectionOfResourceIdentifiers
 	aCollectionOfResourceIdentifiers 
 		do: [:each | (refd includes: each) ifFalse: [self addReferencedViews: each to: refd]].
 	^refd!
+
+shouldPreserveMethod: aCompiledMethod
+	^(potentialAspectSetters identityIncludes: aCompiledMethod) !
 
 shrinkHashedCollections
 	"Private - Minimize set of hashed collections."
@@ -2140,7 +2141,7 @@ writeLogFile
 !ImageStripper categoriesFor: #removeClassBuilder:!operations!private! !
 !ImageStripper categoriesFor: #removeClassGuids!operations!private! !
 !ImageStripper categoriesFor: #removeDevelopmentObjects:!operations!private! !
-!ImageStripper categoriesFor: #removeMethodSoft:!private!removing! !
+!ImageStripper categoriesFor: #removeMethod:!private!removing! !
 !ImageStripper categoriesFor: #removeMyClass!operations!private! !
 !ImageStripper categoriesFor: #removeRedundantMethods!operations!private! !
 !ImageStripper categoriesFor: #removeRedundantMethodsOnceFrom:!operations!private! !
@@ -2158,6 +2159,7 @@ writeLogFile
 !ImageStripper categoriesFor: #saveBlock:!accessing!private! !
 !ImageStripper categoriesFor: #saveExecutable:keepImage:!operations!private! !
 !ImageStripper categoriesFor: #scanResourcesForViewReferences:!helpers!private! !
+!ImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
 !ImageStripper categoriesFor: #shrinkHashedCollections!operations!private! !
 !ImageStripper categoriesFor: #shrinkSymbolTable!operations!private! !
 !ImageStripper categoriesFor: #snapshotDevelopmentClasses!configuration!private! !

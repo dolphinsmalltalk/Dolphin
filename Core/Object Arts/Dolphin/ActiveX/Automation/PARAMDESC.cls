@@ -2,10 +2,12 @@
 
 OLEStructure subclass: #PARAMDESC
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_pparamdescex _OffsetOf_wParamFlags'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 PARAMDESC guid: (GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
+PARAMDESC addClassConstant: '_OffsetOf_pparamdescex' value: 16r0!
+PARAMDESC addClassConstant: '_OffsetOf_wParamFlags' value: 16r4!
 PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
 
 The PARAMDESC structure is used, one per argument, to describe the parameters to a function belonging to either an [disp]interface or a module in a type library. The information includes certain (but not all) IDL flags, as well as the argument
@@ -62,12 +64,12 @@ isRetVal
 pparamdescex
 	"Answer the <PARAMDESCEX> value of the receiver's 'pparamdescex' field."
 
-	^PARAMDESCEX fromAddress: (bytes intPtrAtOffset: 0)!
+	^PARAMDESCEX fromAddress: (bytes intPtrAtOffset: _OffsetOf_pparamdescex)!
 
 wParamFlags
 	"Answer the <Integer> value of the receiver's 'wParamFlags' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wParamFlags)! !
+	^bytes wordAtOffset: _OffsetOf_wParamFlags! !
 !PARAMDESC categoriesFor: #defaultValue!accessing!public! !
 !PARAMDESC categoriesFor: #directionFlags!public!testing! !
 !PARAMDESC categoriesFor: #hasDefaultValue!public!testing! !

@@ -2,10 +2,14 @@
 
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
-	classVariableNames: 'ZeroArgs'
+	classVariableNames: '_OffsetOf_cArgs _OffsetOf_cNamedArgs _OffsetOf_rgdispidNamedArgs _OffsetOf_rgvarg ZeroArgs'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 DISPPARAMS guid: (GUID fromString: '{c06f3b6f-0868-11d3-93af-00a024ca708a}')!
+DISPPARAMS addClassConstant: '_OffsetOf_cArgs' value: 16r8!
+DISPPARAMS addClassConstant: '_OffsetOf_cNamedArgs' value: 16rC!
+DISPPARAMS addClassConstant: '_OffsetOf_rgdispidNamedArgs' value: 16r4!
+DISPPARAMS addClassConstant: '_OffsetOf_rgvarg' value: 16r0!
 DISPPARAMS comment: 'DISPPARAMS is an <ExternalStructure> to represent the OLE Automation structure DISPPARAMS.
 
 DISPPARAMS is the parameter block used in calls to IDispatch::Invoke. It contains an array of VARIANTARG structures (which are actually represented by the identical <VARIANT> structure in Dolphin), a count of the total number of arguments, an array of the <integer> DISPIDs of the so called "named" arguments, and a count of the number of named arguments in that array. The named arguments are assumed to appear first in the rgvarg array.
@@ -51,22 +55,22 @@ args: arguments
 cArgs
 	"Private - Answer the <Integer> value of the receiver's 'cArgs' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cArgs)!
+	^bytes dwordAtOffset: _OffsetOf_cArgs!
 
 cArgs: anInteger
 	"Set the receiver's 'cArgs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cArgs) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cArgs put: anInteger!
 
 cNamedArgs
 	"Private - Answer the <Integer> value of the receiver's 'cNamedArgs' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cNamedArgs)!
+	^bytes dwordAtOffset: _OffsetOf_cNamedArgs!
 
 cNamedArgs: anInteger
 	"Set the receiver's 'cNamedArgs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cNamedArgs) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cNamedArgs put: anInteger!
 
 names: names named: namedArgs args: unnamedArgs
 	"Set the receiver's arguments to be the <sequencedReadableCollection> of named arguments,
@@ -130,27 +134,27 @@ propertyPutValue: argument
 rgdispidNamedArgs
 	"Answer the <SDWORDArray> value of the receiver's 'rgdispidNamedArgs' field."
 
-	^SDWORDArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #rgdispidNamedArgs))
+	^SDWORDArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgdispidNamedArgs)
 		length: self cNamedArgs!
 
 rgdispidNamedArgs: aSDWORDArray
 	"Set the receiver's 'rgdispidNamedArgs' field to the value of the argument, aSDWORDArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #rgdispidNamedArgs) put: aSDWORDArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_rgdispidNamedArgs put: aSDWORDArray yourAddress.
 	self cNamedArgs: aSDWORDArray size!
 
 rgvarg
 	"Answer the <StructureArray> value of the receiver's 'rgvarg' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: 0)
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_rgvarg)
 		length: self cArgs
 		elementClass: VARIANT!
 
 rgvarg: aStructureArray
 	"Set the receiver's 'rgvarg' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: 0 put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_rgvarg put: aStructureArray yourAddress.
 	self cArgs: aStructureArray size!
 
 singleArg

@@ -2,10 +2,12 @@
 
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_highPart _OffsetOf_lowPart'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 QWORD guid: (GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
+QWORD addClassConstant: '_OffsetOf_highPart' value: 16r4!
+QWORD addClassConstant: '_OffsetOf_lowPart' value: 16r0!
 QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
 
 This class of structures is useful for communication with Win32 services that require 64-bit integer parameters. They also provide for easy access to the high and low 32-bit constituents of the integer''s native representation (Intel format 2''s complement).'!
@@ -31,22 +33,32 @@ displayOn: aStream
 highPart
 	"Answer the <Integer> value of the receiver's 'highPart' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #highPart)!
+	^bytes dwordAtOffset: _OffsetOf_highPart!
 
 highPart: anInteger
 	"Set the receiver's 'highPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #highPart) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_highPart put: anInteger!
 
 lowPart
 	"Answer the <Integer> value of the receiver's 'lowPart' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_lowPart!
 
 lowPart: anInteger
 	"Set the receiver's 'lowPart' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_lowPart put: anInteger!
+
+value
+	"Answer the <Integer> value of the receiver's 'value' field."
+
+	^bytes qwordAtOffset: _OffsetOf_value!
+
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
+
+	bytes qwordAtOffset: _OffsetOf_value put: anInteger! !
 !QWORD categoriesFor: #asSignedInteger!converting!public! !
 !QWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !QWORD categoriesFor: #displayOn:!displaying!public! !
@@ -54,6 +66,8 @@ lowPart: anInteger
 !QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
 !QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
+!QWORD categoriesFor: #value!**compiled accessors**!public! !
+!QWORD categoriesFor: #value:!**compiled accessors**!public! !
 
 !QWORD class methodsFor!
 
@@ -68,8 +82,10 @@ defineFields
 		QWORD compileDefinition
 	"
 
-	super defineFields.
 	self
+		defineField: #value
+			type: QWORDField new beOverride
+			offset: 0;
 		defineField: #lowPart
 			type: DWORDField new
 			offset: 0;

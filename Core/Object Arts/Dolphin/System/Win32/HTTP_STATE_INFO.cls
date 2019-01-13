@@ -2,10 +2,11 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_State'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_STATE_INFO guid: (GUID fromString: '{5dc84435-3eb8-42fe-94bf-25f253e612fd}')!
+HTTP_STATE_INFO addClassConstant: '_OffsetOf_State' value: 16r4!
 HTTP_STATE_INFO comment: '<HTTP_STATE_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_STATE_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -39,12 +40,12 @@ printFields: aCollection on: aStream limit: anInteger
 State
 	"Answer the <Integer> value of the receiver's 'State' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #State)!
+	^bytes sdwordAtOffset: _OffsetOf_State!
 
 State: anInteger
 	"Set the receiver's 'State' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #State) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_State put: anInteger!
 
 value
 	^self Present ifTrue: [self State]!
@@ -91,6 +92,9 @@ defineFields
 		defineField: #State type: SDWORDField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#Present #State)!
+
 inactive
 	^(self new)
 		value: HttpEnabledStateInactive;
@@ -100,6 +104,7 @@ propertyId
 	^HttpServerStateProperty! !
 !HTTP_STATE_INFO class categoriesFor: #active!instance creation!public! !
 !HTTP_STATE_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_STATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_STATE_INFO class categoriesFor: #inactive!instance creation!public! !
 !HTTP_STATE_INFO class categoriesFor: #propertyId!constants!public! !
 

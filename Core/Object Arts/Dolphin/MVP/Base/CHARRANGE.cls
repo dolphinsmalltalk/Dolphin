@@ -2,10 +2,12 @@
 
 Win32Structure subclass: #CHARRANGE
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cpMax _OffsetOf_cpMin'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CHARRANGE guid: (GUID fromString: '{3fd4e349-a730-484e-afb1-5f2fd9036259}')!
+CHARRANGE addClassConstant: '_OffsetOf_cpMax' value: 16r4!
+CHARRANGE addClassConstant: '_OffsetOf_cpMin' value: 16r0!
 CHARRANGE comment: '<CHARRANGE> is an <ExternalStructure> class to wrap the struct ''Win.CHARRANGE'' from type information in the ''Windows API (ANSI)'' library.
 
 The type library contains no documentation for this struct
@@ -31,22 +33,22 @@ asObject
 cpMax
 	"Answer the <Integer> value of the receiver's 'cpMax' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cpMax)!
+	^bytes sdwordAtOffset: _OffsetOf_cpMax!
 
 cpMax: anInteger
 	"Set the receiver's 'cpMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cpMax) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cpMax put: anInteger!
 
 cpMin
 	"Answer the <Integer> value of the receiver's 'cpMin' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_cpMin!
 
 cpMin: anInteger
 	"Set the receiver's 'cpMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_cpMin put: anInteger! !
 !CHARRANGE categoriesFor: #asObject!accessing!public! !
 !CHARRANGE categoriesFor: #cpMax!**compiled accessors**!public! !
 !CHARRANGE categoriesFor: #cpMax:!**compiled accessors**!public! !

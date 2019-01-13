@@ -2,11 +2,31 @@
 
 NMHDR subclass: #SCNotification
 	instanceVariableNames: 'view textString'
-	classVariableNames: 'ModificationTypeOffset'
+	classVariableNames: '_OffsetOf_annotationLinesAdded _OffsetOf_ch _OffsetOf_foldLevelNow _OffsetOf_foldLevelPrev _OffsetOf_length _OffsetOf_linesAdded _OffsetOf_listCompletionMethod _OffsetOf_listType _OffsetOf_lParam _OffsetOf_margin _OffsetOf_message _OffsetOf_modificationType _OffsetOf_modifiers _OffsetOf_scLine _OffsetOf_scPosition _OffsetOf_text _OffsetOf_token _OffsetOf_updated _OffsetOf_wParam _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: 'ScintillaConstants'
 	classInstanceVariableNames: ''!
 SCNotification guid: (GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
-SCNotification addClassConstant: 'ModificationTypeOffset' value: 16r18!
+SCNotification addClassConstant: '_OffsetOf_annotationLinesAdded' value: 16r54!
+SCNotification addClassConstant: '_OffsetOf_ch' value: 16r10!
+SCNotification addClassConstant: '_OffsetOf_foldLevelNow' value: 16r38!
+SCNotification addClassConstant: '_OffsetOf_foldLevelPrev' value: 16r3C!
+SCNotification addClassConstant: '_OffsetOf_length' value: 16r20!
+SCNotification addClassConstant: '_OffsetOf_linesAdded' value: 16r24!
+SCNotification addClassConstant: '_OffsetOf_listCompletionMethod' value: 16r5C!
+SCNotification addClassConstant: '_OffsetOf_listType' value: 16r44!
+SCNotification addClassConstant: '_OffsetOf_lParam' value: 16r30!
+SCNotification addClassConstant: '_OffsetOf_margin' value: 16r40!
+SCNotification addClassConstant: '_OffsetOf_message' value: 16r28!
+SCNotification addClassConstant: '_OffsetOf_modificationType' value: 16r18!
+SCNotification addClassConstant: '_OffsetOf_modifiers' value: 16r14!
+SCNotification addClassConstant: '_OffsetOf_scLine' value: 16r34!
+SCNotification addClassConstant: '_OffsetOf_scPosition' value: 16rC!
+SCNotification addClassConstant: '_OffsetOf_text' value: 16r1C!
+SCNotification addClassConstant: '_OffsetOf_token' value: 16r50!
+SCNotification addClassConstant: '_OffsetOf_updated' value: 16r58!
+SCNotification addClassConstant: '_OffsetOf_wParam' value: 16r2C!
+SCNotification addClassConstant: '_OffsetOf_x' value: 16r48!
+SCNotification addClassConstant: '_OffsetOf_y' value: 16r4C!
 SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
 
 Note that the ''text'' field is not null terminated (the number of characters is specified by the ''length'' field), and is only valid for SCN_MODIFIED notifications where the SC_MOD_DELETETEXT or SC_MOD_INSERTTEXT ''modificationType'' is specified.'!
@@ -16,12 +36,12 @@ Note that the ''text'' field is not null terminated (the number of characters is
 annotationLinesAdded
 	"Answer the <Integer> value of the receiver's 'annotationLinesAdded' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #annotationLinesAdded)!
+	^bytes intPtrAtOffset: _OffsetOf_annotationLinesAdded!
 
 ch
 	"Answer the <Integer> value of the receiver's 'ch' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #ch)!
+	^bytes sdwordAtOffset: _OffsetOf_ch!
 
 character
 	"Answer the receiver's <Character> who's codePoint is stored in the 'ch' field."
@@ -31,12 +51,12 @@ character
 foldLevelNow
 	"Answer the <Integer> value of the receiver's 'foldLevelNow' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #foldLevelNow)!
+	^bytes sdwordAtOffset: _OffsetOf_foldLevelNow!
 
 foldLevelPrev
 	"Answer the <Integer> value of the receiver's 'foldLevelPrev' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #foldLevelPrev)!
+	^bytes sdwordAtOffset: _OffsetOf_foldLevelPrev!
 
 getValidFields
 	"Private - Answer a <sequencedReadableCollection> of the fields defined 
@@ -145,7 +165,7 @@ isShiftDown
 length
 	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #length)!
+	^bytes intPtrAtOffset: _OffsetOf_length!
 
 line
 	"Answer the one-based <integer> line number associated with the notification."
@@ -155,42 +175,42 @@ line
 linesAdded
 	"Answer the <Integer> value of the receiver's 'linesAdded' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #linesAdded)!
+	^bytes intPtrAtOffset: _OffsetOf_linesAdded!
 
 listCompletionMethod
 	"Answer the <Integer> value of the receiver's 'listCompletionMethod' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #listCompletionMethod)!
+	^bytes sdwordAtOffset: _OffsetOf_listCompletionMethod!
 
 listType
 	"Answer the <Integer> value of the receiver's 'listType' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #listType)!
+	^bytes sdwordAtOffset: _OffsetOf_listType!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes intPtrAtOffset: _OffsetOf_lParam!
 
 margin
 	"Answer the <Integer> value of the receiver's 'margin' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #margin)!
+	^bytes sdwordAtOffset: _OffsetOf_margin!
 
 message
 	"Answer the <Integer> value of the receiver's 'message' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #message)!
+	^bytes sdwordAtOffset: _OffsetOf_message!
 
 modificationType
 	"Answer the <Integer> value of the receiver's 'modificationType' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #modificationType)!
+	^bytes sdwordAtOffset: _OffsetOf_modificationType!
 
 modifiers
 	"Answer the <Integer> value of the receiver's 'modifiers' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #modifiers)!
+	^bytes sdwordAtOffset: _OffsetOf_modifiers!
 
 point
 	^self x @ self y!
@@ -203,17 +223,17 @@ position
 scLine
 	"Answer the <Integer> value of the receiver's 'scLine' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #scLine)!
+	^bytes intPtrAtOffset: _OffsetOf_scLine!
 
 scPosition
 	"Answer the <Integer> value of the receiver's 'scPosition' field."
 
-	^bytes intPtrAtOffset: ##(self offsetOf: #scPosition)!
+	^bytes intPtrAtOffset: _OffsetOf_scPosition!
 
 text
 	"Answer the <Integer> value of the receiver's 'text' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #text)!
+	^bytes uintPtrAtOffset: _OffsetOf_text!
 
 textString
 	^textString ifNil: [textString := view stringClass fromAddress: self text]!
@@ -221,12 +241,12 @@ textString
 token
 	"Answer the <Integer> value of the receiver's 'token' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #token)!
+	^bytes sdwordAtOffset: _OffsetOf_token!
 
 updated
 	"Answer the <Integer> value of the receiver's 'updated' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #updated)!
+	^bytes sdwordAtOffset: _OffsetOf_updated!
 
 view: aScintillaView
 	view := aScintillaView!
@@ -234,17 +254,17 @@ view: aScintillaView
 wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #wParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_wParam!
 
 x
 	"Answer the <Integer> value of the receiver's 'x' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #x)!
+	^bytes sdwordAtOffset: _OffsetOf_x!
 
 y
 	"Answer the <Integer> value of the receiver's 'y' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #y)! !
+	^bytes sdwordAtOffset: _OffsetOf_y! !
 !SCNotification categoriesFor: #annotationLinesAdded!**compiled accessors**!public! !
 !SCNotification categoriesFor: #ch!**compiled accessors**!public! !
 !SCNotification categoriesFor: #character!accessing!public! !
@@ -306,9 +326,7 @@ defineFields
 		defineField: #token type: SDWORDField readOnly;
 		defineField: #annotationLinesAdded type: INT_PTRField readOnly;
 		defineField: #updated type: SDWORDField readOnly;
-		defineField: #listCompletionMethod type: SDWORDField readOnly.
-
-	self addClassConstant: 'ModificationTypeOffset' value: (self offsetOf: #modificationType)!
+		defineField: #listCompletionMethod type: SDWORDField readOnly.!
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod)! !

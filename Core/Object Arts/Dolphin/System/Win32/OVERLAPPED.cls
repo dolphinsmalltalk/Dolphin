@@ -2,10 +2,16 @@
 
 ExternalStructure subclass: #OVERLAPPED
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hEvent _OffsetOf_Internal _OffsetOf_InternalHigh _OffsetOf_Offset _OffsetOf_OffsetHigh _OffsetOf_Pointer'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OVERLAPPED guid: (GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
+OVERLAPPED addClassConstant: '_OffsetOf_hEvent' value: 16r10!
+OVERLAPPED addClassConstant: '_OffsetOf_Internal' value: 16r0!
+OVERLAPPED addClassConstant: '_OffsetOf_InternalHigh' value: 16r4!
+OVERLAPPED addClassConstant: '_OffsetOf_Offset' value: 16r8!
+OVERLAPPED addClassConstant: '_OffsetOf_OffsetHigh' value: 16rC!
+OVERLAPPED addClassConstant: '_OffsetOf_Pointer' value: 16r8!
 OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -35,42 +41,42 @@ struct tagOVERLAPPED {
 hEvent
 	"Answer the <ExternalHandle> value of the receiver's 'hEvent' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hEvent)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hEvent) asExternalHandle!
 
 hEvent: anExternalHandle
 	"Set the receiver's 'hEvent' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hEvent) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hEvent put: anExternalHandle!
 
 Internal
 	"Answer the <Integer> value of the receiver's 'Internal' field."
 
-	^bytes uintPtrAtOffset: 0!
+	^bytes uintPtrAtOffset: _OffsetOf_Internal!
 
 InternalHigh
 	"Answer the <Integer> value of the receiver's 'InternalHigh' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #InternalHigh)!
+	^bytes uintPtrAtOffset: _OffsetOf_InternalHigh!
 
 Offset
 	"Answer the <Integer> value of the receiver's 'Offset' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Offset)!
+	^bytes dwordAtOffset: _OffsetOf_Offset!
 
 Offset: anInteger
 	"Set the receiver's 'Offset' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Offset) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Offset put: anInteger!
 
 OffsetHigh
 	"Answer the <Integer> value of the receiver's 'OffsetHigh' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #OffsetHigh)!
+	^bytes dwordAtOffset: _OffsetOf_OffsetHigh!
 
 OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #OffsetHigh) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_OffsetHigh put: anInteger! !
 !OVERLAPPED categoriesFor: #hEvent!**compiled accessors**!public! !
 !OVERLAPPED categoriesFor: #hEvent:!**compiled accessors**!public! !
 !OVERLAPPED categoriesFor: #Internal!**compiled accessors**!public! !

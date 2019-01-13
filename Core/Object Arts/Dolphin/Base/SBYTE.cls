@@ -19,12 +19,12 @@ The range of integer values that can be represented by instances of this class i
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sbyteAtOffset: 0!
+	^bytes sbyteAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sbyteAtOffset: 0 put: anInteger! !
+	bytes sbyteAtOffset: _OffsetOf_value put: anInteger! !
 !SBYTE categoriesFor: #value!**compiled accessors**!public! !
 !SBYTE categoriesFor: #value:!**compiled accessors**!public! !
 

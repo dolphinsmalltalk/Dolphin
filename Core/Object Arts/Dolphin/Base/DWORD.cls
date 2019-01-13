@@ -76,12 +76,12 @@ lowWord: anInteger
 value
 	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_value!
 
 value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_value put: anInteger! !
 !DWORD categoriesFor: #asSignedInteger!converting!public! !
 !DWORD categoriesFor: #asUnsignedInteger!converting!public! !
 !DWORD categoriesFor: #highSWord!accessing!public! !
@@ -101,7 +101,7 @@ defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
-	self defineField: #value type: DWORDField new!
+	self defineField: #value type: DWORDField new beOverride!
 
 fromPoint: aPoint
 	"Private - Answer a new instance of the receiver with high and low

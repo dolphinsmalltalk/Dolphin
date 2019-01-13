@@ -2,10 +2,28 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_V1
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Address _OffsetOf_BytesReceived _OffsetOf_ConnectionId _OffsetOf_CookedUrl _OffsetOf_EntityChunkCount _OffsetOf_Flags _OffsetOf_Headers _OffsetOf_pEntityChunks _OffsetOf_pRawUrl _OffsetOf_pSslInfo _OffsetOf_pUnknownVerb _OffsetOf_RawConnectionId _OffsetOf_RawUrlLength _OffsetOf_RequestId _OffsetOf_UnknownVerbLength _OffsetOf_UrlContext _OffsetOf_Verb _OffsetOf_Version'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_V1 guid: (GUID fromString: '{7927a79c-8c4e-423a-bf24-f1b36b4df5c4}')!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Address' value: 16r4C!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_BytesReceived' value: 16r1B0!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_ConnectionId' value: 16r8!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_CookedUrl' value: 16r34!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_EntityChunkCount' value: 16r1B8!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Flags' value: 16r0!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Headers' value: 16r54!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pEntityChunks' value: 16r1BC!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pRawUrl' value: 16r30!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pSslInfo' value: 16r1C8!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_pUnknownVerb' value: 16r2C!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_RawConnectionId' value: 16r1C0!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_RawUrlLength' value: 16r2A!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_RequestId' value: 16r10!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_UnknownVerbLength' value: 16r28!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_UrlContext' value: 16r18!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Verb' value: 16r24!
+HTTP_REQUEST_V1 addClassConstant: '_OffsetOf_Version' value: 16r20!
 HTTP_REQUEST_V1 comment: '<HTTP_REQUEST_V1> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_V1'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -44,7 +62,7 @@ Address
 	"Answer the <PointerArray> value of the receiver's 'Address' field."
 
 	^PointerArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #Address)
+		fromAddress: bytes yourAddress + _OffsetOf_Address
 		length: 2
 		elementClass: SOCKADDR!
 
@@ -55,76 +73,76 @@ Address: aStructureArrayOfSOCKADDR
 	size := aStructureArrayOfSOCKADDR byteSize min: ##(2 * SOCKADDR basicByteSize).
 	aStructureArrayOfSOCKADDR
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Address) + 1)
-		to: ##(self offsetOf: #Address) + size
+		from: ##(_OffsetOf_Address + 1)
+		to: _OffsetOf_Address + size
 		startingAt: 1!
 
 BytesReceived
 	"Answer the <Integer> value of the receiver's 'BytesReceived' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #BytesReceived)!
+	^bytes qwordAtOffset: _OffsetOf_BytesReceived!
 
 BytesReceived: anInteger
 	"Set the receiver's 'BytesReceived' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #BytesReceived) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_BytesReceived put: anInteger!
 
 ConnectionId
 	"Answer the <Integer> value of the receiver's 'ConnectionId' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #ConnectionId)!
+	^bytes qwordAtOffset: _OffsetOf_ConnectionId!
 
 ConnectionId: anInteger
 	"Set the receiver's 'ConnectionId' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #ConnectionId) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_ConnectionId put: anInteger!
 
 CookedUrl
 	"Answer the <HTTP_COOKED_URL> value of the receiver's 'CookedUrl' field."
 
-	^HTTP_COOKED_URL fromAddress: bytes yourAddress + ##(self offsetOf: #CookedUrl)!
+	^HTTP_COOKED_URL fromAddress: bytes yourAddress + _OffsetOf_CookedUrl!
 
 CookedUrl: aHTTP_COOKED_URL
 	"Set the receiver's 'CookedUrl' field to the value of the argument, aHTTP_COOKED_URL"
 
 	aHTTP_COOKED_URL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #CookedUrl) + 1)
-		to: ##((self offsetOf: #CookedUrl) + HTTP_COOKED_URL basicByteSize)
+		from: ##(_OffsetOf_CookedUrl + 1)
+		to: ##(_OffsetOf_CookedUrl + HTTP_COOKED_URL basicByteSize)
 		startingAt: 1!
 
 EntityChunkCount
 	"Private - Answer the <Integer> value of the receiver's 'EntityChunkCount' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount)!
+	^bytes wordAtOffset: _OffsetOf_EntityChunkCount!
 
 EntityChunkCount: anInteger
 	"Set the receiver's 'EntityChunkCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #EntityChunkCount) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_EntityChunkCount put: anInteger!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
 
 Headers
 	"Answer the <HTTP_REQUEST_HEADERS> value of the receiver's 'Headers' field."
 
-	^HTTP_REQUEST_HEADERS fromAddress: bytes yourAddress + ##(self offsetOf: #Headers)!
+	^HTTP_REQUEST_HEADERS fromAddress: bytes yourAddress + _OffsetOf_Headers!
 
 Headers: aHTTP_REQUEST_HEADERS
 	"Set the receiver's 'Headers' field to the value of the argument, aHTTP_REQUEST_HEADERS"
 
 	aHTTP_REQUEST_HEADERS
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Headers) + 1)
-		to: ##((self offsetOf: #Headers) + HTTP_REQUEST_HEADERS basicByteSize)
+		from: ##(_OffsetOf_Headers + 1)
+		to: ##(_OffsetOf_Headers + HTTP_REQUEST_HEADERS basicByteSize)
 		startingAt: 1!
 
 maxPrint
@@ -158,31 +176,31 @@ pEntityChunks
 	"Answer the <StructureArray> value of the receiver's 'pEntityChunks' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pEntityChunks))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pEntityChunks)
 		length: self EntityChunkCount
 		elementClass: HTTP_DATA_CHUNK!
 
 pEntityChunks: aStructureArray
 	"Set the receiver's 'pEntityChunks' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pEntityChunks) put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pEntityChunks put: aStructureArray yourAddress.
 	self EntityChunkCount: aStructureArray size!
 
 pRawUrl
 	"Private - Answer the <String> value of the receiver's 'pRawUrl' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pRawUrl)) length: self RawUrlLength!
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pRawUrl) length: self RawUrlLength!
 
 pRawUrl: aString
 	"Set the receiver's 'pRawUrl' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pRawUrl) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pRawUrl put: aString yourAddress.
 	self RawUrlLength: aString size!
 
 printableFields
 	| printable |
 	printable := super printableFields.
-	(bytes intPtrAtOffset: ##(self offsetOf: #pSslInfo)) == 0 ifTrue: [printable remove: #pSslInfo].
+	(bytes intPtrAtOffset: _OffsetOf_pSslInfo) == 0 ifTrue: [printable remove: #pSslInfo].
 	self EntityChunkCount == 0 ifTrue: [printable remove: #pEntityChunks].
 	^printable
 		removeAll: #(#Verb #pUnknownVerb);
@@ -200,74 +218,73 @@ printFields: aCollection on: aStream limit: anInteger
 pSslInfo
 	"Answer the <HTTP_SSL_INFO> value of the receiver's 'pSslInfo' field."
 
-	^HTTP_SSL_INFO fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pSslInfo))!
+	^HTTP_SSL_INFO fromAddress: (bytes intPtrAtOffset: _OffsetOf_pSslInfo)!
 
 pSslInfo: aHTTP_SSL_INFO
 	"Set the receiver's 'pSslInfo' field to the value of the argument, aHTTP_SSL_INFO"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pSslInfo) put: aHTTP_SSL_INFO yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pSslInfo put: aHTTP_SSL_INFO yourAddress!
 
 pUnknownVerb
 	"Answer the <String> value of the receiver's 'pUnknownVerb' field."
 
-	^String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pUnknownVerb))
-		length: self UnknownVerbLength!
+	^String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pUnknownVerb) length: self UnknownVerbLength!
 
 pUnknownVerb: aString
 	"Set the receiver's 'pUnknownVerb' field to the value of the argument, aString"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pUnknownVerb) put: aString yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pUnknownVerb put: aString yourAddress.
 	self UnknownVerbLength: aString size!
 
 RawConnectionId
 	"Answer the <Integer> value of the receiver's 'RawConnectionId' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #RawConnectionId)!
+	^bytes qwordAtOffset: _OffsetOf_RawConnectionId!
 
 RawConnectionId: anInteger
 	"Set the receiver's 'RawConnectionId' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #RawConnectionId) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_RawConnectionId put: anInteger!
 
 RawUrlLength
 	"Private - Answer the <Integer> value of the receiver's 'RawUrlLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #RawUrlLength)!
+	^bytes wordAtOffset: _OffsetOf_RawUrlLength!
 
 RawUrlLength: anInteger
 	"Set the receiver's 'RawUrlLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #RawUrlLength) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_RawUrlLength put: anInteger!
 
 RequestId
 	"Answer the <Integer> value of the receiver's 'RequestId' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #RequestId)!
+	^bytes qwordAtOffset: _OffsetOf_RequestId!
 
 RequestId: anInteger
 	"Set the receiver's 'RequestId' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #RequestId) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_RequestId put: anInteger!
 
 UnknownVerbLength
 	"Private - Answer the <Integer> value of the receiver's 'UnknownVerbLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #UnknownVerbLength)!
+	^bytes wordAtOffset: _OffsetOf_UnknownVerbLength!
 
 UnknownVerbLength: anInteger
 	"Set the receiver's 'UnknownVerbLength' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #UnknownVerbLength) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_UnknownVerbLength put: anInteger!
 
 UrlContext
 	"Answer the <Integer> value of the receiver's 'UrlContext' field."
 
-	^bytes qwordAtOffset: ##(self offsetOf: #UrlContext)!
+	^bytes qwordAtOffset: _OffsetOf_UrlContext!
 
 UrlContext: anInteger
 	"Set the receiver's 'UrlContext' field to the value of the argument, anInteger"
 
-	bytes qwordAtOffset: ##(self offsetOf: #UrlContext) put: anInteger!
+	bytes qwordAtOffset: _OffsetOf_UrlContext put: anInteger!
 
 verb
 	| verb |
@@ -277,25 +294,25 @@ verb
 Verb
 	"Answer the <Integer> value of the receiver's 'Verb' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #Verb)!
+	^bytes sdwordAtOffset: _OffsetOf_Verb!
 
 Verb: anInteger
 	"Set the receiver's 'Verb' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #Verb) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_Verb put: anInteger!
 
 Version
 	"Answer the <HTTP_VERSION> value of the receiver's 'Version' field."
 
-	^HTTP_VERSION fromAddress: bytes yourAddress + ##(self offsetOf: #Version)!
+	^HTTP_VERSION fromAddress: bytes yourAddress + _OffsetOf_Version!
 
 Version: aHTTP_VERSION
 	"Set the receiver's 'Version' field to the value of the argument, aHTTP_VERSION"
 
 	aHTTP_VERSION
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Version) + 1)
-		to: ##((self offsetOf: #Version) + HTTP_VERSION basicByteSize)
+		from: ##(_OffsetOf_Version + 1)
+		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
 !HTTP_REQUEST_V1 categoriesFor: #Address!**compiled accessors**!public! !
 !HTTP_REQUEST_V1 categoriesFor: #Address:!**compiled accessors**!public! !
@@ -388,6 +405,10 @@ defineFields
 		defineField: #pEntityChunks type: (StructureArrayPointerField type: HTTP_DATA_CHUNK lengthField: #EntityChunkCount) offset: 444;
 		defineField: #RawConnectionId type: QWORDField new offset: 448;
 		defineField: #pSslInfo type: (PointerField type: HTTP_SSL_INFO) offset: 456.
-	self byteSize: 464! !
+	self byteSize: 464!
+
+getFieldNames
+	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo)! !
 !HTTP_REQUEST_V1 class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

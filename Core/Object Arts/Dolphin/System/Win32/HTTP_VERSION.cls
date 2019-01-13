@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_VERSION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_MajorVersion _OffsetOf_MinorVersion'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_VERSION guid: (GUID fromString: '{f6a0c406-b01a-4701-aa8c-d4c1a0d2b1a5}')!
+HTTP_VERSION addClassConstant: '_OffsetOf_MajorVersion' value: 16r0!
+HTTP_VERSION addClassConstant: '_OffsetOf_MinorVersion' value: 16r2!
 HTTP_VERSION comment: '<HTTP_VERSION> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_VERSION'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,12 +29,12 @@ struct tagHTTP_VERSION {
 MajorVersion
 	"Answer the <Integer> value of the receiver's 'MajorVersion' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_MajorVersion!
 
 MinorVersion
 	"Answer the <Integer> value of the receiver's 'MinorVersion' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #MinorVersion)!
+	^bytes wordAtOffset: _OffsetOf_MinorVersion!
 
 printFields: aCollection on: aStream limit: anInteger
 	aStream
@@ -60,6 +62,10 @@ defineFields
 	self
 		defineField: #MajorVersion type: WORDField new beReadOnly offset: 0;
 		defineField: #MinorVersion type: WORDField new beReadOnly offset: 2.
-	self byteSize: 4! !
+	self byteSize: 4!
+
+getFieldNames
+	^#(#MajorVersion #MinorVersion)! !
 !HTTP_VERSION class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_VERSION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

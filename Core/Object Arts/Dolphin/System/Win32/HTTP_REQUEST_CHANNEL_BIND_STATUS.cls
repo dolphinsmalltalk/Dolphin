@@ -2,10 +2,14 @@
 
 HttpServerStructure subclass: #HTTP_REQUEST_CHANNEL_BIND_STATUS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ChannelToken _OffsetOf_ChannelTokenSize _OffsetOf_Flags _OffsetOf_ServiceName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_CHANNEL_BIND_STATUS guid: (GUID fromString: '{2fc21c2a-e0c8-4c4c-a68f-e8270f8fbd2a}')!
+HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_ChannelToken' value: 16r4!
+HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_ChannelTokenSize' value: 16r8!
+HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_Flags' value: 16rC!
+HTTP_REQUEST_CHANNEL_BIND_STATUS addClassConstant: '_OffsetOf_ServiceName' value: 16r0!
 HTTP_REQUEST_CHANNEL_BIND_STATUS comment: '<HTTP_REQUEST_CHANNEL_BIND_STATUS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -28,34 +32,34 @@ struct tagHTTP_REQUEST_CHANNEL_BIND_STATUS {
 ChannelToken
 	"Answer the <ExternalArray> value of the receiver's 'ChannelToken' field."
 
-	^ExternalArray fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ChannelToken))
+	^ExternalArray fromAddress: (bytes intPtrAtOffset: _OffsetOf_ChannelToken)
 		length: self ChannelTokenSize!
 
 ChannelToken: anExternalArray
 	"Set the receiver's 'ChannelToken' field to the value of the argument, anExternalArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ChannelToken) put: anExternalArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_ChannelToken put: anExternalArray yourAddress.
 	self ChannelTokenSize: anExternalArray size!
 
 ChannelTokenSize
 	"Private - Answer the <Integer> value of the receiver's 'ChannelTokenSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ChannelTokenSize)!
+	^bytes dwordAtOffset: _OffsetOf_ChannelTokenSize!
 
 ChannelTokenSize: anInteger
 	"Set the receiver's 'ChannelTokenSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ChannelTokenSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ChannelTokenSize put: anInteger!
 
 ServiceName
 	"Answer the <HTTP_SERVICE_BINDING_BASE> value of the receiver's 'ServiceName' field."
 
-	^HTTP_SERVICE_BINDING_BASE fromAddress: (bytes intPtrAtOffset: 0)!
+	^HTTP_SERVICE_BINDING_BASE fromAddress: (bytes intPtrAtOffset: _OffsetOf_ServiceName)!
 
 ServiceName: aHTTP_SERVICE_BINDING_BASE
 	"Set the receiver's 'ServiceName' field to the value of the argument, aHTTP_SERVICE_BINDING_BASE"
 
-	bytes uintPtrAtOffset: 0 put: aHTTP_SERVICE_BINDING_BASE yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_ServiceName put: aHTTP_SERVICE_BINDING_BASE yourAddress! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken!**compiled accessors**!public! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelToken:!**compiled accessors**!public! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS categoriesFor: #ChannelTokenSize!**compiled accessors**!private! !
@@ -84,6 +88,10 @@ defineFields
 		defineField: #ChannelToken type: (ArrayPointerField type: ExternalArray lengthField: #ChannelTokenSize) offset: 4;
 		defineField: #ChannelTokenSize type: DWORDField new beNonBrowsable offset: 8;
 		defineField: #Flags type: DWORDField new beFiller offset: 12.
-	self byteSize: 16! !
+	self byteSize: 16!
+
+getFieldNames
+	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
 !HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

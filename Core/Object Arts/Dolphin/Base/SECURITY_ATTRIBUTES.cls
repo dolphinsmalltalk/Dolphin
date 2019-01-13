@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #SECURITY_ATTRIBUTES
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bInheritHandle _OffsetOf_dwSize _OffsetOf_lpSecurityDescriptor'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SECURITY_ATTRIBUTES guid: (GUID fromString: '{f44c9145-2b3f-11d3-8368-7a8b5a000000}')!
+SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_bInheritHandle' value: 16r8!
+SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+SECURITY_ATTRIBUTES addClassConstant: '_OffsetOf_lpSecurityDescriptor' value: 16r4!
 SECURITY_ATTRIBUTES comment: '<SECURITY_ATTRIBUTES> is an <ExternalStructure> class to wrap the struct ''Win32.SECURITY_ATTRIBUTES'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,27 +31,27 @@ struct tagSECURITY_ATTRIBUTES {
 bInheritHandle
 	"Answer the <Boolean> value of the receiver's 'bInheritHandle' field."
 
-	^(bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle)) asBoolean!
+	^(bytes dwordAtOffset: _OffsetOf_bInheritHandle) asBoolean!
 
 bInheritHandle: aBoolean
 	"Set the receiver's 'bInheritHandle' field to the value of the argument, aBoolean"
 
-	bytes dwordAtOffset: ##(self offsetOf: #bInheritHandle) put: aBoolean asParameter!
+	bytes dwordAtOffset: _OffsetOf_bInheritHandle put: aBoolean asParameter!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 lpSecurityDescriptor
 	"Answer the <ExternalAddress> value of the receiver's 'lpSecurityDescriptor' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor) asExternalAddress!
 
 lpSecurityDescriptor: anExternalAddress
 	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpSecurityDescriptor) put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
 !SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
 !SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
 !SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !

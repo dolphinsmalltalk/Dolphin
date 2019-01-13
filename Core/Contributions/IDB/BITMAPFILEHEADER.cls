@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #BITMAPFILEHEADER
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BITMAPFILEHEADER guid: (GUID fromString: '{48f23680-5426-11d3-998b-bca753d3b065}')!
+BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfOffBits' value: 16rA!
+BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfReserved1' value: 16r6!
+BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfReserved2' value: 16r8!
+BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfSize' value: 16r2!
+BITMAPFILEHEADER addClassConstant: '_OffsetOf_bfType' value: 16r0!
 BITMAPFILEHEADER comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
@@ -17,52 +22,52 @@ Public Domain Freeware'!
 bfOffBits
 	"Answer the <Integer> value of the receiver's 'bfOffBits' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #bfOffBits)!
+	^bytes dwordAtOffset: _OffsetOf_bfOffBits!
 
 bfOffBits: anInteger
 	"Set the receiver's 'bfOffBits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #bfOffBits) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_bfOffBits put: anInteger!
 
 bfReserved1
 	"Answer the <Integer> value of the receiver's 'bfReserved1' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #bfReserved1)!
+	^bytes wordAtOffset: _OffsetOf_bfReserved1!
 
 bfReserved1: anInteger
 	"Set the receiver's 'bfReserved1' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #bfReserved1) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_bfReserved1 put: anInteger!
 
 bfReserved2
 	"Answer the <Integer> value of the receiver's 'bfReserved2' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #bfReserved2)!
+	^bytes wordAtOffset: _OffsetOf_bfReserved2!
 
 bfReserved2: anInteger
 	"Set the receiver's 'bfReserved2' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #bfReserved2) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_bfReserved2 put: anInteger!
 
 bfSize
 	"Answer the <Integer> value of the receiver's 'bfSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #bfSize)!
+	^bytes dwordAtOffset: _OffsetOf_bfSize!
 
 bfSize: anInteger
 	"Set the receiver's 'bfSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #bfSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_bfSize put: anInteger!
 
 bfType
 	"Answer the <Integer> value of the receiver's 'bfType' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_bfType!
 
 bfType: anInteger
 	"Set the receiver's 'bfType' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_bfType put: anInteger! !
 !BITMAPFILEHEADER categoriesFor: #bfOffBits!**compiled accessors**!public! !
 !BITMAPFILEHEADER categoriesFor: #bfOffBits:!**compiled accessors**!public! !
 !BITMAPFILEHEADER categoriesFor: #bfReserved1!**compiled accessors**!public! !

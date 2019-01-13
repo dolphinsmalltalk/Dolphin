@@ -2,10 +2,14 @@
 
 ExternalStructure subclass: #GpEncoderParameter
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Guid _OffsetOf_NumberOfValues _OffsetOf_Type _OffsetOf_Value'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpEncoderParameter guid: (GUID fromString: '{d4caa392-ba63-47ec-9ae5-093a1081a016}')!
+GpEncoderParameter addClassConstant: '_OffsetOf_Guid' value: 16r0!
+GpEncoderParameter addClassConstant: '_OffsetOf_NumberOfValues' value: 16r10!
+GpEncoderParameter addClassConstant: '_OffsetOf_Type' value: 16r14!
+GpEncoderParameter addClassConstant: '_OffsetOf_Value' value: 16r18!
 GpEncoderParameter comment: '<GpEncoderParameter> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpEncoderParameter'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -35,39 +39,39 @@ Guid: aGUID
 
 	aGUID
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(GUID basicByteSize)
+		from: ##(_OffsetOf_Guid + 1)
+		to: ##(_OffsetOf_Guid + GUID basicByteSize)
 		startingAt: 1!
 
 NumberOfValues
 	"Answer the <Integer> value of the receiver's 'NumberOfValues' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #NumberOfValues)!
+	^bytes dwordAtOffset: _OffsetOf_NumberOfValues!
 
 NumberOfValues: anInteger
 	"Set the receiver's 'NumberOfValues' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #NumberOfValues) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_NumberOfValues put: anInteger!
 
 Type
 	"Answer the <Integer> value of the receiver's 'Type' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Type)!
+	^bytes dwordAtOffset: _OffsetOf_Type!
 
 Type: anInteger
 	"Set the receiver's 'Type' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Type) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Type put: anInteger!
 
 Value
 	"Answer the <ExternalAddress> value of the receiver's 'Value' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #Value)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_Value) asExternalAddress!
 
 Value: anExternalAddress
 	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Value) put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress! !
 !GpEncoderParameter categoriesFor: #Guid!**compiled accessors**!public! !
 !GpEncoderParameter categoriesFor: #Guid:!**compiled accessors**!public! !
 !GpEncoderParameter categoriesFor: #NumberOfValues!**compiled accessors**!public! !

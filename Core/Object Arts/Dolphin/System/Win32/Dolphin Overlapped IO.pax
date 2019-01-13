@@ -36,7 +36,7 @@ package!
 
 ExternalStructure subclass: #OVERLAPPED
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hEvent _OffsetOf_Internal _OffsetOf_InternalHigh _OffsetOf_Offset _OffsetOf_OffsetHigh _OffsetOf_Pointer'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 

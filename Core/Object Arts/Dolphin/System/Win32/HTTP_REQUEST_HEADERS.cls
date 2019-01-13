@@ -2,10 +2,11 @@
 
 HTTP_HEADERS subclass: #HTTP_REQUEST_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_KnownHeaders'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_REQUEST_HEADERS guid: (GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
+HTTP_REQUEST_HEADERS addClassConstant: '_OffsetOf_KnownHeaders' value: 16r10!
 HTTP_REQUEST_HEADERS comment: '<HTTP_REQUEST_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_REQUEST_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,7 +29,7 @@ KnownHeaders
 	"Answer the <StructureArray> value of the receiver's 'KnownHeaders' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #KnownHeaders)
+		fromAddress: bytes yourAddress + _OffsetOf_KnownHeaders
 		length: 41
 		elementClass: HTTP_KNOWN_HEADER!
 
@@ -39,8 +40,8 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 	size := aStructureArrayOfHTTP_KNOWN_HEADER byteSize min: ##(41 * HTTP_KNOWN_HEADER basicByteSize).
 	aStructureArrayOfHTTP_KNOWN_HEADER
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #KnownHeaders) + 1)
-		to: ##(self offsetOf: #KnownHeaders) + size
+		from: ##(_OffsetOf_KnownHeaders + 1)
+		to: _OffsetOf_KnownHeaders + size
 		startingAt: 1! !
 !HTTP_REQUEST_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
 !HTTP_REQUEST_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
@@ -63,6 +64,9 @@ defineFields
 	self
 		defineField: #KnownHeaders type: (StructureArrayField type: HTTP_KNOWN_HEADER length: 41) offset: 16.
 	self byteSize: 344!
+
+getFieldNames
+	^#(#UnknownHeaderCount #pUnknownHeaders #KnownHeaders)!
 
 indexToHeaderMap
 	^##(LookupTable new
@@ -109,5 +113,6 @@ indexToHeaderMap
 		at: HttpHeaderUserAgent put: 'User-Agent';
 		yourself)! !
 !HTTP_REQUEST_HEADERS class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_REQUEST_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_REQUEST_HEADERS class categoriesFor: #indexToHeaderMap!public! !
 

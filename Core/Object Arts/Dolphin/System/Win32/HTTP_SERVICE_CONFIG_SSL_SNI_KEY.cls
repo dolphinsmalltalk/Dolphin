@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Host _OffsetOf_IpPort'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_SSL_SNI_KEY guid: (GUID fromString: '{32358de8-2f95-48e9-8b5e-72900a0e6f36}')!
+HTTP_SERVICE_CONFIG_SSL_SNI_KEY addClassConstant: '_OffsetOf_Host' value: 16r80!
+HTTP_SERVICE_CONFIG_SSL_SNI_KEY addClassConstant: '_OffsetOf_IpPort' value: 16r0!
 HTTP_SERVICE_CONFIG_SSL_SNI_KEY comment: '<HTTP_SERVICE_CONFIG_SSL_SNI_KEY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains no documentation for this struct
@@ -26,12 +28,12 @@ struct tagHTTP_SERVICE_CONFIG_SSL_SNI_KEY {
 Host
 	"Answer the <Utf16String> value of the receiver's 'Host' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Host))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Host)!
 
 Host: anUtf16String
 	"Set the receiver's 'Host' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Host) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_Host put: anUtf16String yourAddress!
 
 IpPort
 	"Answer the <SOCKADDR_STORAGE> value of the receiver's 'IpPort' field."
@@ -43,8 +45,8 @@ IpPort: aSOCKADDR_STORAGE
 
 	aSOCKADDR_STORAGE
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(SOCKADDR_STORAGE basicByteSize)
+		from: ##(_OffsetOf_IpPort + 1)
+		to: ##(_OffsetOf_IpPort + SOCKADDR_STORAGE basicByteSize)
 		startingAt: 1! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #Host!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #Host:!**compiled accessors**!public! !
@@ -68,6 +70,10 @@ defineFields
 	self
 		defineField: #IpPort type: (StructureField type: SOCKADDR_STORAGE) offset: 0;
 		defineField: #Host type: (PointerField type: Utf16String) offset: 128.
-	self byteSize: 136! !
+	self byteSize: 136!
+
+getFieldNames
+	^#(#IpPort #Host)! !
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

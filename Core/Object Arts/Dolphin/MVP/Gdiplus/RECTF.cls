@@ -2,10 +2,14 @@
 
 ExternalRectangle subclass: #RECTF
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_height _OffsetOf_width _OffsetOf_x _OffsetOf_y'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RECTF guid: (GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
+RECTF addClassConstant: '_OffsetOf_height' value: 16rC!
+RECTF addClassConstant: '_OffsetOf_width' value: 16r8!
+RECTF addClassConstant: '_OffsetOf_x' value: 16r0!
+RECTF addClassConstant: '_OffsetOf_y' value: 16r4!
 RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -31,12 +35,12 @@ asRectangle
 height
 	"Answer the <Float> value of the receiver's 'height' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #height)!
+	^bytes floatAtOffset: _OffsetOf_height!
 
 height: aFloat
 	"Set the receiver's 'height' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #height) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_height put: aFloat!
 
 left
 	^self x!
@@ -47,32 +51,32 @@ top
 width
 	"Answer the <Float> value of the receiver's 'width' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #width)!
+	^bytes floatAtOffset: _OffsetOf_width!
 
 width: aFloat
 	"Set the receiver's 'width' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #width) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_width put: aFloat!
 
 x
 	"Answer the <Float> value of the receiver's 'x' field."
 
-	^bytes floatAtOffset: 0!
+	^bytes floatAtOffset: _OffsetOf_x!
 
 x: aFloat
 	"Set the receiver's 'x' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: aFloat!
+	bytes floatAtOffset: _OffsetOf_x put: aFloat!
 
 y
 	"Answer the <Float> value of the receiver's 'y' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #y)!
+	^bytes floatAtOffset: _OffsetOf_y!
 
 y: aFloat
 	"Set the receiver's 'y' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #y) put: aFloat! !
+	bytes floatAtOffset: _OffsetOf_y put: aFloat! !
 !RECTF categoriesFor: #asRectangle!converting!public! !
 !RECTF categoriesFor: #height!**compiled accessors**!public! !
 !RECTF categoriesFor: #height:!**compiled accessors**!public! !

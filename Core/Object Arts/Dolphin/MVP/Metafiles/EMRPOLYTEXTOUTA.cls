@@ -2,10 +2,16 @@
 
 ENHMETARECORD subclass: #EMRPOLYTEXTOUTA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_aemrtext _OffsetOf_cStrings _OffsetOf_exScale _OffsetOf_eyScale _OffsetOf_iGraphicsMode _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYTEXTOUTA guid: (GUID fromString: '{7c11c025-67e0-44de-87ab-e4f1377a4314}')!
+EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_aemrtext' value: 16r28!
+EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_cStrings' value: 16r24!
+EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_exScale' value: 16r1C!
+EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_eyScale' value: 16r20!
+EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_iGraphicsMode' value: 16r18!
+EMRPOLYTEXTOUTA addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYTEXTOUTA comment: '<EMRPOLYTEXTOUTA> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYTEXTOUTA'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -32,7 +38,7 @@ aemrtext
 	"Answer the <StructureArray> value of the receiver's 'aemrtext' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #aemrtext)
+		fromAddress: bytes yourAddress + _OffsetOf_aemrtext
 		length: self cStrings
 		elementClass: EMRTEXT!
 
@@ -43,63 +49,63 @@ aemrtext: aStructureArrayOfEMRTEXT
 	size := aStructureArrayOfEMRTEXT byteSize.
 	aStructureArrayOfEMRTEXT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #aemrtext) + 1)
-		to: ##(self offsetOf: #aemrtext) + size
+		from: ##(_OffsetOf_aemrtext + 1)
+		to: _OffsetOf_aemrtext + size
 		startingAt: 1.
 	self cStrings: aStructureArrayOfEMRTEXT size!
 
 cStrings
 	"Answer the <Integer> value of the receiver's 'cStrings' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cStrings)!
+	^bytes sdwordAtOffset: _OffsetOf_cStrings!
 
 cStrings: anInteger
 	"Set the receiver's 'cStrings' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cStrings) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cStrings put: anInteger!
 
 exScale
 	"Answer the <Float> value of the receiver's 'exScale' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #exScale)!
+	^bytes floatAtOffset: _OffsetOf_exScale!
 
 exScale: aFloat
 	"Set the receiver's 'exScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #exScale) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_exScale put: aFloat!
 
 eyScale
 	"Answer the <Float> value of the receiver's 'eyScale' field."
 
-	^bytes floatAtOffset: ##(self offsetOf: #eyScale)!
+	^bytes floatAtOffset: _OffsetOf_eyScale!
 
 eyScale: aFloat
 	"Set the receiver's 'eyScale' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: ##(self offsetOf: #eyScale) put: aFloat!
+	bytes floatAtOffset: _OffsetOf_eyScale put: aFloat!
 
 iGraphicsMode
 	"Answer the <Integer> value of the receiver's 'iGraphicsMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode)!
+	^bytes dwordAtOffset: _OffsetOf_iGraphicsMode!
 
 iGraphicsMode: anInteger
 	"Set the receiver's 'iGraphicsMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #iGraphicsMode) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iGraphicsMode put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRPOLYTEXTOUTA categoriesFor: #aemrtext!**compiled accessors**!public! !
 !EMRPOLYTEXTOUTA categoriesFor: #aemrtext:!**compiled accessors**!public! !

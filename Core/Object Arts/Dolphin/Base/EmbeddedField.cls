@@ -45,32 +45,6 @@ fieldClassName
 
 	^self fieldClass name!
 
-printAccessorExpression: aSymbol on: aWriteStream 
-	"Private - Print a suitable statement or statement onto the specified <puttableStream> which
-	will read the value of this field from an instance of the structure. The field in question
-	is after the fields in the <sequencedReadableCollection> that is the 2nd argument."
-
-	"Note that if returning an ExternalStructure subclass, then the resulting object will be a
-	reference (an alias) to the original structure embedded in the contents of the receiving
-	ExternalStructure, and therefore modifications to it will also modify the complete
-	ExternalStructure. If, however, the structureClass is some other object which responds to
-	#fromAddress:, the answer may be a copy of the embedded structure (e.g. subclasses of
-	External) - so care is needed when updating the result."
-
-	aWriteStream
-		nextPutAll: self fieldClassName;
-		nextPutAll: ' fromAddress: (';
-		nextPutAll: 'bytes';
-		nextPutAll: ' yourAddress'.
-	self offset = 0 
-		ifFalse: 
-			[aWriteStream
-				space;
-				display: #+;
-				space.
-			self printOffsetExpression: aSymbol on: aWriteStream].
-	aWriteStream nextPut: $)!
-
 printOn: aStream
 	"Append a representation of the receiver to aStream."
 
@@ -87,7 +61,6 @@ printOn: aStream
 !EmbeddedField categoriesFor: #fieldClass!accessing!private! !
 !EmbeddedField categoriesFor: #fieldClass:!accessing!private! !
 !EmbeddedField categoriesFor: #fieldClassName!accessing!private! !
-!EmbeddedField categoriesFor: #printAccessorExpression:on:!automatic generation!development!private! !
 !EmbeddedField categoriesFor: #printOn:!printing!public! !
 
 !EmbeddedField class methodsFor!

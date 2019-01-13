@@ -22,14 +22,14 @@ asExternalAddress
 	^self value!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <ExternalAddress> value of the receiver's 'value' field."
 
-	^(bytes uintPtrAtOffset: 0) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_value) asExternalAddress!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anExternalAddress
+	"Set the receiver's 'value' field to the value of the argument, anExternalAddress"
 
-	bytes uintPtrAtOffset: 0 put: anObject! !
+	bytes uintPtrAtOffset: _OffsetOf_value put: anExternalAddress! !
 !LPVOID categoriesFor: #asExternalAddress!converting!public! !
 !LPVOID categoriesFor: #value!**compiled accessors**!public! !
 !LPVOID categoriesFor: #value:!**compiled accessors**!public! !
@@ -41,7 +41,7 @@ defineFields
 		LPVOID compileDefinition
 	"
 
-	self defineField: #value type: LPVOIDField new!
+	self defineField: #value type: LPVOIDField new beOverride!
 
 new
 	"Answer a new instance of the receiver.

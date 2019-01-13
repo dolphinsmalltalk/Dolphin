@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AddrCount _OffsetOf_AddrList'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY guid: (GUID fromString: '{3eebcb9d-9dc3-4701-a044-c16df022085b}')!
+HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY addClassConstant: '_OffsetOf_AddrCount' value: 16r0!
+HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY addClassConstant: '_OffsetOf_AddrList' value: 16r8!
 HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY comment: '<HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,18 +29,18 @@ struct tagHTTP_SERVICE_CONFIG_IP_LISTEN_QUERY {
 AddrCount
 	"Private - Answer the <Integer> value of the receiver's 'AddrCount' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_AddrCount!
 
 AddrCount: anInteger
 	"Set the receiver's 'AddrCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_AddrCount put: anInteger!
 
 AddrList
 	"Answer the <StructureArray> value of the receiver's 'AddrList' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #AddrList)
+		fromAddress: bytes yourAddress + _OffsetOf_AddrList
 		length: self AddrCount
 		elementClass: SOCKADDR_STORAGE!
 
@@ -49,8 +51,8 @@ AddrList: aStructureArrayOfSOCKADDR_STORAGE
 	size := aStructureArrayOfSOCKADDR_STORAGE byteSize.
 	aStructureArrayOfSOCKADDR_STORAGE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #AddrList) + 1)
-		to: ##(self offsetOf: #AddrList) + size
+		from: ##(_OffsetOf_AddrList + 1)
+		to: _OffsetOf_AddrList + size
 		startingAt: 1.
 	self AddrCount: aStructureArrayOfSOCKADDR_STORAGE size! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY categoriesFor: #AddrCount!**compiled accessors**!private! !
@@ -75,6 +77,10 @@ defineFields
 	self
 		defineField: #AddrCount type: DWORDField new beNonBrowsable offset: 0;
 		defineField: #AddrList type: (StructureArrayField type: SOCKADDR_STORAGE lengthField: #AddrCount) offset: 8.
-	self byteSize: 136! !
+	self byteSize: 136!
+
+getFieldNames
+	^#(#AddrCount #AddrList)! !
 !HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -142,7 +142,7 @@ IAxWinAmbientDispatch subclass: #IAxWinAmbientDispatchEx
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #OLEVERB
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_fuFlags _OffsetOf_grfAttribs _OffsetOf_lpszVerbName _OffsetOf_lVerb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ControlView subclass: #AXControlSite

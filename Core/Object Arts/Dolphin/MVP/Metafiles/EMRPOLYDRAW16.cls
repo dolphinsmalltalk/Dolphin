@@ -2,10 +2,14 @@
 
 ENHMETARECORD subclass: #EMRPOLYDRAW16
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_abTypes _OffsetOf_apts _OffsetOf_cpts _OffsetOf_rclBounds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRPOLYDRAW16 guid: (GUID fromString: '{f3d1f8c2-c73d-4ae7-9717-b798c4956a06}')!
+EMRPOLYDRAW16 addClassConstant: '_OffsetOf_abTypes' value: 16r20!
+EMRPOLYDRAW16 addClassConstant: '_OffsetOf_apts' value: 16r1C!
+EMRPOLYDRAW16 addClassConstant: '_OffsetOf_cpts' value: 16r18!
+EMRPOLYDRAW16 addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
 EMRPOLYDRAW16 comment: '<EMRPOLYDRAW16> is an <ExternalStructure> class to wrap the struct ''Win32.EMRPOLYDRAW16'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -50,7 +54,7 @@ apts
 	"Answer the <StructureArray> value of the receiver's 'apts' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #apts)
+		fromAddress: bytes yourAddress + _OffsetOf_apts
 		length: self cpts
 		elementClass: POINTS!
 
@@ -61,33 +65,33 @@ apts: aStructureArrayOfPOINTS
 	size := aStructureArrayOfPOINTS byteSize.
 	aStructureArrayOfPOINTS
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #apts) + 1)
-		to: ##(self offsetOf: #apts) + size
+		from: ##(_OffsetOf_apts + 1)
+		to: _OffsetOf_apts + size
 		startingAt: 1.
 	self cpts: aStructureArrayOfPOINTS size!
 
 cpts
 	"Answer the <Integer> value of the receiver's 'cpts' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cpts)!
+	^bytes dwordAtOffset: _OffsetOf_cpts!
 
 cpts: anInteger
 	"Set the receiver's 'cpts' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cpts) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cpts put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
 !EMRPOLYDRAW16 categoriesFor: #abTypes!public! !
 !EMRPOLYDRAW16 categoriesFor: #abTypes:!public! !

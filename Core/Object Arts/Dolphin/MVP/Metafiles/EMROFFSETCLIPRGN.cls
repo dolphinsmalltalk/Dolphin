@@ -2,10 +2,11 @@
 
 ENHMETARECORD subclass: #EMROFFSETCLIPRGN
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_ptlOffset'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMROFFSETCLIPRGN guid: (GUID fromString: '{a0baa6e7-981f-4e05-8c52-19525eb0e92e}')!
+EMROFFSETCLIPRGN addClassConstant: '_OffsetOf_ptlOffset' value: 16r8!
 EMROFFSETCLIPRGN comment: '<EMROFFSETCLIPRGN> is an <ExternalStructure> class to wrap the struct ''Win32.EMROFFSETCLIPRGN'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -26,15 +27,15 @@ struct tagEMROFFSETCLIPRGN {
 ptlOffset
 	"Answer the <POINTL> value of the receiver's 'ptlOffset' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptlOffset)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptlOffset!
 
 ptlOffset: aPOINTL
 	"Set the receiver's 'ptlOffset' field to the value of the argument, aPOINTL"
 
 	aPOINTL
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #ptlOffset) + 1)
-		to: ##((self offsetOf: #ptlOffset) + POINTL basicByteSize)
+		from: ##(_OffsetOf_ptlOffset + 1)
+		to: ##(_OffsetOf_ptlOffset + POINTL basicByteSize)
 		startingAt: 1! !
 !EMROFFSETCLIPRGN categoriesFor: #ptlOffset!**compiled accessors**!public! !
 !EMROFFSETCLIPRGN categoriesFor: #ptlOffset:!**compiled accessors**!public! !

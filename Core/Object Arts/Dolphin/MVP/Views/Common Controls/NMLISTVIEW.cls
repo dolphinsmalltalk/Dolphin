@@ -2,10 +2,17 @@
 
 NMHDR subclass: #NMLISTVIEW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_iItem _OffsetOf_iSubItem _OffsetOf_lParam _OffsetOf_ptAction _OffsetOf_uChanged _OffsetOf_uNewState _OffsetOf_uOldState'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 NMLISTVIEW guid: (GUID fromString: '{87b4c624-026e-11d3-9fd7-00a0cc3e4a32}')!
+NMLISTVIEW addClassConstant: '_OffsetOf_iItem' value: 16rC!
+NMLISTVIEW addClassConstant: '_OffsetOf_iSubItem' value: 16r10!
+NMLISTVIEW addClassConstant: '_OffsetOf_lParam' value: 16r28!
+NMLISTVIEW addClassConstant: '_OffsetOf_ptAction' value: 16r20!
+NMLISTVIEW addClassConstant: '_OffsetOf_uChanged' value: 16r1C!
+NMLISTVIEW addClassConstant: '_OffsetOf_uNewState' value: 16r14!
+NMLISTVIEW addClassConstant: '_OffsetOf_uOldState' value: 16r18!
 NMLISTVIEW comment: ''!
 !NMLISTVIEW categoriesForClass!External-Data-Structured-Win32! !
 !NMLISTVIEW methodsFor!
@@ -13,12 +20,12 @@ NMLISTVIEW comment: ''!
 iItem
 	"Answer the <Integer> value of the receiver's 'iItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iItem!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
 
 itemHandle
 	"Answer the 'handle' of the receiver's item."
@@ -28,27 +35,27 @@ itemHandle
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #lParam)!
+	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 ptAction
 	"Answer the <POINTL> value of the receiver's 'ptAction' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #ptAction)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptAction!
 
 uChanged
 	"Answer the <Integer> value of the receiver's 'uChanged' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uChanged)!
+	^bytes dwordAtOffset: _OffsetOf_uChanged!
 
 uNewState
 	"Answer the <Integer> value of the receiver's 'uNewState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uNewState)!
+	^bytes dwordAtOffset: _OffsetOf_uNewState!
 
 uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #uOldState)! !
+	^bytes dwordAtOffset: _OffsetOf_uOldState! !
 !NMLISTVIEW categoriesFor: #iItem!**compiled accessors**!public! !
 !NMLISTVIEW categoriesFor: #iSubItem!**compiled accessors**!public! !
 !NMLISTVIEW categoriesFor: #itemHandle!accessing!public! !

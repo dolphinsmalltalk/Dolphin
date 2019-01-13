@@ -2,10 +2,16 @@
 
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cbElements _OffsetOf_cDims _OffsetOf_cLocks _OffsetOf_fFeatures _OffsetOf_pvData _OffsetOf_rgsabound'
 	poolDictionaries: 'AXAutomationConstants AXAutomationErrors'
 	classInstanceVariableNames: ''!
 SAFEARRAY guid: (GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
+SAFEARRAY addClassConstant: '_OffsetOf_cbElements' value: 16r4!
+SAFEARRAY addClassConstant: '_OffsetOf_cDims' value: 16r0!
+SAFEARRAY addClassConstant: '_OffsetOf_cLocks' value: 16r8!
+SAFEARRAY addClassConstant: '_OffsetOf_fFeatures' value: 16r2!
+SAFEARRAY addClassConstant: '_OffsetOf_pvData' value: 16rC!
+SAFEARRAY addClassConstant: '_OffsetOf_rgsabound' value: 16r10!
 SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
 
 SAFEARRAYs are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
@@ -71,17 +77,17 @@ base
 cbElements
 	"Answer the <Integer> value of the receiver's 'cbElements' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cbElements)!
+	^bytes dwordAtOffset: _OffsetOf_cbElements!
 
 cDims
 	"Private - Answer the <Integer> value of the receiver's 'cDims' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_cDims!
 
 cLocks
 	"Answer the <Integer> value of the receiver's 'cLocks' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cLocks)!
+	^bytes dwordAtOffset: _OffsetOf_cLocks!
 
 copy
 	"Answer a suitable copy of the receiver, which does not share the same 
@@ -198,7 +204,7 @@ elementSize
 fFeatures
 	"Answer the <Integer> value of the receiver's 'fFeatures' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #fFeatures)!
+	^bytes wordAtOffset: _OffsetOf_fFeatures!
 
 free
 	"Free external resources owned by the receiver."
@@ -289,7 +295,7 @@ onStartup
 pvData
 	"Answer the <ExternalAddress> value of the receiver's 'pvData' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pvData)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_pvData) asExternalAddress!
 
 queryRecordInfo
 	| recInfo |
@@ -331,7 +337,7 @@ rgsabound
 	"Answer the <StructureArray> value of the receiver's 'rgsabound' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #rgsabound)
+		fromAddress: bytes yourAddress + _OffsetOf_rgsabound
 		length: self cDims
 		elementClass: SAFEARRAYBOUND!
 

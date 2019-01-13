@@ -180,7 +180,7 @@ StructureArrayPointerField subclass: #ConformantStructureArrayPointerField
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OSVERSIONINFOEXW subclass: #OSVERSIONINFO

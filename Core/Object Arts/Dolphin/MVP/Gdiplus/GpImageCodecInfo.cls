@@ -2,10 +2,23 @@
 
 ExternalStructure subclass: #GpImageCodecInfo
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Clsid _OffsetOf_CodecName _OffsetOf_DllName _OffsetOf_FilenameExtension _OffsetOf_Flags _OffsetOf_FormatDescription _OffsetOf_FormatID _OffsetOf_MimeType _OffsetOf_SigCount _OffsetOf_SigMask _OffsetOf_SigPattern _OffsetOf_SigSize _OffsetOf_Version'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpImageCodecInfo guid: (GUID fromString: '{059e6e3a-2877-4ea7-a11c-7e5c1ac62165}')!
+GpImageCodecInfo addClassConstant: '_OffsetOf_Clsid' value: 16r0!
+GpImageCodecInfo addClassConstant: '_OffsetOf_CodecName' value: 16r20!
+GpImageCodecInfo addClassConstant: '_OffsetOf_DllName' value: 16r24!
+GpImageCodecInfo addClassConstant: '_OffsetOf_FilenameExtension' value: 16r2C!
+GpImageCodecInfo addClassConstant: '_OffsetOf_Flags' value: 16r34!
+GpImageCodecInfo addClassConstant: '_OffsetOf_FormatDescription' value: 16r28!
+GpImageCodecInfo addClassConstant: '_OffsetOf_FormatID' value: 16r10!
+GpImageCodecInfo addClassConstant: '_OffsetOf_MimeType' value: 16r30!
+GpImageCodecInfo addClassConstant: '_OffsetOf_SigCount' value: 16r3C!
+GpImageCodecInfo addClassConstant: '_OffsetOf_SigMask' value: 16r48!
+GpImageCodecInfo addClassConstant: '_OffsetOf_SigPattern' value: 16r44!
+GpImageCodecInfo addClassConstant: '_OffsetOf_SigSize' value: 16r40!
+GpImageCodecInfo addClassConstant: '_OffsetOf_Version' value: 16r38!
 GpImageCodecInfo comment: '<GpImageCodecInfo> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpImageCodecInfo'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -44,133 +57,133 @@ Clsid: aGUID
 
 	aGUID
 		replaceBytesOf: bytes
-		from: 1
-		to: ##(GUID basicByteSize)
+		from: ##(_OffsetOf_Clsid + 1)
+		to: ##(_OffsetOf_Clsid + GUID basicByteSize)
 		startingAt: 1!
 
 CodecName
 	"Answer the <Utf16String> value of the receiver's 'CodecName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #CodecName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_CodecName)!
 
 CodecName: anUtf16String
 	"Set the receiver's 'CodecName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #CodecName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_CodecName put: anUtf16String yourAddress!
 
 DllName
 	"Answer the <Utf16String> value of the receiver's 'DllName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #DllName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_DllName)!
 
 DllName: anUtf16String
 	"Set the receiver's 'DllName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #DllName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_DllName put: anUtf16String yourAddress!
 
 FilenameExtension
 	"Answer the <Utf16String> value of the receiver's 'FilenameExtension' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FilenameExtension))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_FilenameExtension)!
 
 FilenameExtension: anUtf16String
 	"Set the receiver's 'FilenameExtension' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #FilenameExtension) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_FilenameExtension put: anUtf16String yourAddress!
 
 Flags
 	"Answer the <Integer> value of the receiver's 'Flags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Flags)!
+	^bytes dwordAtOffset: _OffsetOf_Flags!
 
 Flags: anInteger
 	"Set the receiver's 'Flags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Flags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_Flags put: anInteger!
 
 FormatDescription
 	"Answer the <Utf16String> value of the receiver's 'FormatDescription' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #FormatDescription))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_FormatDescription)!
 
 FormatDescription: anUtf16String
 	"Set the receiver's 'FormatDescription' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #FormatDescription) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_FormatDescription put: anUtf16String yourAddress!
 
 FormatID
 	"Answer the <GUID> value of the receiver's 'FormatID' field."
 
-	^GUID fromAddress: bytes yourAddress + ##(self offsetOf: #FormatID)!
+	^GUID fromAddress: bytes yourAddress + _OffsetOf_FormatID!
 
 FormatID: aGUID
 	"Set the receiver's 'FormatID' field to the value of the argument, aGUID"
 
 	aGUID
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #FormatID) + 1)
-		to: ##((self offsetOf: #FormatID) + GUID basicByteSize)
+		from: ##(_OffsetOf_FormatID + 1)
+		to: ##(_OffsetOf_FormatID + GUID basicByteSize)
 		startingAt: 1!
 
 MimeType
 	"Answer the <Utf16String> value of the receiver's 'MimeType' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #MimeType))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_MimeType)!
 
 MimeType: anUtf16String
 	"Set the receiver's 'MimeType' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #MimeType) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_MimeType put: anUtf16String yourAddress!
 
 SigCount
 	"Answer the <Integer> value of the receiver's 'SigCount' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #SigCount)!
+	^bytes dwordAtOffset: _OffsetOf_SigCount!
 
 SigCount: anInteger
 	"Set the receiver's 'SigCount' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #SigCount) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_SigCount put: anInteger!
 
 SigMask
 	"Answer the <BYTE> value of the receiver's 'SigMask' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #SigMask))!
+	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigMask)!
 
 SigMask: aBYTE
 	"Set the receiver's 'SigMask' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #SigMask) put: aBYTE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_SigMask put: aBYTE yourAddress!
 
 SigPattern
 	"Answer the <BYTE> value of the receiver's 'SigPattern' field."
 
-	^BYTE fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #SigPattern))!
+	^BYTE fromAddress: (bytes intPtrAtOffset: _OffsetOf_SigPattern)!
 
 SigPattern: aBYTE
 	"Set the receiver's 'SigPattern' field to the value of the argument, aBYTE"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #SigPattern) put: aBYTE yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_SigPattern put: aBYTE yourAddress!
 
 SigSize
 	"Answer the <Integer> value of the receiver's 'SigSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #SigSize)!
+	^bytes dwordAtOffset: _OffsetOf_SigSize!
 
 SigSize: anInteger
 	"Set the receiver's 'SigSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #SigSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_SigSize put: anInteger!
 
 Version
 	"Answer the <Integer> value of the receiver's 'Version' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #Version)!
+	^bytes dwordAtOffset: _OffsetOf_Version!
 
 Version: anInteger
 	"Set the receiver's 'Version' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #Version) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_Version put: anInteger! !
 !GpImageCodecInfo categoriesFor: #Clsid!**compiled accessors**!public! !
 !GpImageCodecInfo categoriesFor: #Clsid:!**compiled accessors**!public! !
 !GpImageCodecInfo categoriesFor: #CodecName!**compiled accessors**!public! !

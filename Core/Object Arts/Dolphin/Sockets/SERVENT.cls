@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #SERVENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_s_aliases _OffsetOf_s_name _OffsetOf_s_port _OffsetOf_s_proto'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SERVENT guid: (GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
+SERVENT addClassConstant: '_OffsetOf_s_aliases' value: 16r4!
+SERVENT addClassConstant: '_OffsetOf_s_name' value: 16r0!
+SERVENT addClassConstant: '_OffsetOf_s_port' value: 16r8!
+SERVENT addClassConstant: '_OffsetOf_s_proto' value: 16rC!
 SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -32,7 +36,7 @@ aliases
 	| i addresses list each |
 	addresses := Array writeStream.
 	i := 0.
-	list := (bytes uintPtrAtOffset: ##(self offsetOf: #s_aliases)) asExternalAddress.
+	list := (bytes uintPtrAtOffset: _OffsetOf_s_aliases) asExternalAddress.
 	
 	[each := list uintPtrAtOffset: i.
 	each isNull] whileFalse: 
@@ -54,17 +58,17 @@ printFieldsOn: aStream limit: anInteger
 s_name
 	"Answer the <AnsiString> value of the receiver's 's_name' field."
 
-	^AnsiString fromAddress: (bytes intPtrAtOffset: 0)!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_name)!
 
 s_port
 	"Answer the <Integer> value of the receiver's 's_port' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #s_port)!
+	^bytes swordAtOffset: _OffsetOf_s_port!
 
 s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
-	^AnsiString fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #s_proto))! !
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
 !SERVENT categoriesFor: #aliases!public! !
 !SERVENT categoriesFor: #port!accessing!public! !
 !SERVENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !

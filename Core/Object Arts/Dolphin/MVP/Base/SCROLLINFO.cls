@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #SCROLLINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_fMask _OffsetOf_nMax _OffsetOf_nMin _OffsetOf_nPage _OffsetOf_nPos _OffsetOf_nTrackPos'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SCROLLINFO guid: (GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
+SCROLLINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+SCROLLINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
+SCROLLINFO addClassConstant: '_OffsetOf_nMax' value: 16rC!
+SCROLLINFO addClassConstant: '_OffsetOf_nMin' value: 16r8!
+SCROLLINFO addClassConstant: '_OffsetOf_nPage' value: 16r10!
+SCROLLINFO addClassConstant: '_OffsetOf_nPos' value: 16r14!
+SCROLLINFO addClassConstant: '_OffsetOf_nTrackPos' value: 16r18!
 SCROLLINFO comment: ''!
 !SCROLLINFO categoriesForClass!External-Data-Structured-Win32! !
 !SCROLLINFO methodsFor!
@@ -13,17 +20,17 @@ SCROLLINFO comment: ''!
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fMask)!
+	^bytes dwordAtOffset: _OffsetOf_fMask!
 
 fMask: anInteger
 	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
 
 maskIn: anInteger
 	"OR in to contents' mask member the bit flags represented by anInteger.
@@ -34,47 +41,47 @@ maskIn: anInteger
 nMax
 	"Answer the <Integer> value of the receiver's 'nMax' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #nMax)!
+	^bytes sdwordAtOffset: _OffsetOf_nMax!
 
 nMax: anInteger
 	"Set the receiver's 'nMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #nMax) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_nMax put: anInteger!
 
 nMin
 	"Answer the <Integer> value of the receiver's 'nMin' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #nMin)!
+	^bytes sdwordAtOffset: _OffsetOf_nMin!
 
 nMin: anInteger
 	"Set the receiver's 'nMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #nMin) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_nMin put: anInteger!
 
 nPage
 	"Answer the <Integer> value of the receiver's 'nPage' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPage)!
+	^bytes dwordAtOffset: _OffsetOf_nPage!
 
 nPage: anInteger
 	"Set the receiver's 'nPage' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPage) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nPage put: anInteger!
 
 nPos
 	"Answer the <Integer> value of the receiver's 'nPos' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #nPos)!
+	^bytes sdwordAtOffset: _OffsetOf_nPos!
 
 nPos: anInteger
 	"Set the receiver's 'nPos' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #nPos) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_nPos put: anInteger!
 
 nTrackPos
 	"Answer the <Integer> value of the receiver's 'nTrackPos' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #nTrackPos)!
+	^bytes sdwordAtOffset: _OffsetOf_nTrackPos!
 
 page
 	"Answer the page size of a proportional scroll bar."

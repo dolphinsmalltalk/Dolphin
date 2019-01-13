@@ -2,10 +2,42 @@
 
 Win32Structure subclass: #OUTLINETEXTMETRICW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwSize _OffsetOf_otmAscent _OffsetOf_otmDescent _OffsetOf_otmEMSquare _OffsetOf_otmFiller _OffsetOf_otmfsSelection _OffsetOf_otmfsType _OffsetOf_otmItalicAngle _OffsetOf_otmLineGap _OffsetOf_otmMacAscent _OffsetOf_otmMacDescent _OffsetOf_otmMacLineGap _OffsetOf_otmPanoseNumber _OffsetOf_otmpFaceName _OffsetOf_otmpFamilyName _OffsetOf_otmpFullName _OffsetOf_otmpStyleName _OffsetOf_otmptSubscriptOffset _OffsetOf_otmptSubscriptSize _OffsetOf_otmptSuperscriptOffset _OffsetOf_otmptSuperscriptSize _OffsetOf_otmrcFontBox _OffsetOf_otmsCapEmHeight _OffsetOf_otmsCharSlopeRise _OffsetOf_otmsCharSlopeRun _OffsetOf_otmsStrikeoutPosition _OffsetOf_otmsStrikeoutSize _OffsetOf_otmsUnderscorePosition _OffsetOf_otmsUnderscoreSize _OffsetOf_otmsXHeight _OffsetOf_otmTextMetrics _OffsetOf_otmusMinimumPPEM'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OUTLINETEXTMETRICW guid: (GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmAscent' value: 16r64!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmDescent' value: 16r68!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmEMSquare' value: 16r60!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmFiller' value: 16r40!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmfsSelection' value: 16r4C!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmfsType' value: 16r50!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmItalicAngle' value: 16r5C!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmLineGap' value: 16r6C!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmMacAscent' value: 16r88!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmMacDescent' value: 16r8C!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmMacLineGap' value: 16r90!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmPanoseNumber' value: 16r41!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpFaceName' value: 16rCC!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpFamilyName' value: 16rC8!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpFullName' value: 16rD4!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmpStyleName' value: 16rD0!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSubscriptOffset' value: 16rA0!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSubscriptSize' value: 16r98!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSuperscriptOffset' value: 16rB0!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmptSuperscriptSize' value: 16rA8!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmrcFontBox' value: 16r78!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsCapEmHeight' value: 16r70!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsCharSlopeRise' value: 16r54!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsCharSlopeRun' value: 16r58!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsStrikeoutPosition' value: 16rBC!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsStrikeoutSize' value: 16rB8!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsUnderscorePosition' value: 16rC4!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsUnderscoreSize' value: 16rC0!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmsXHeight' value: 16r74!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmTextMetrics' value: 16r4!
+OUTLINETEXTMETRICW addClassConstant: '_OffsetOf_otmusMinimumPPEM' value: 16r94!
 OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
 !OUTLINETEXTMETRICW categoriesForClass!Win-Structs! !
 !OUTLINETEXTMETRICW methodsFor!
@@ -13,7 +45,7 @@ OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 faceName
 	"Answer the receiver's <readableString> font face name."
@@ -33,152 +65,152 @@ fullName
 otmAscent
 	"Answer the <Integer> value of the receiver's 'otmAscent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmAscent)!
+	^bytes sdwordAtOffset: _OffsetOf_otmAscent!
 
 otmDescent
 	"Answer the <Integer> value of the receiver's 'otmDescent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmDescent)!
+	^bytes sdwordAtOffset: _OffsetOf_otmDescent!
 
 otmEMSquare
 	"Answer the <Integer> value of the receiver's 'otmEMSquare' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmEMSquare)!
+	^bytes dwordAtOffset: _OffsetOf_otmEMSquare!
 
 otmfsSelection
 	"Answer the <Integer> value of the receiver's 'otmfsSelection' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmfsSelection)!
+	^bytes dwordAtOffset: _OffsetOf_otmfsSelection!
 
 otmfsType
 	"Answer the <Integer> value of the receiver's 'otmfsType' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmfsType)!
+	^bytes dwordAtOffset: _OffsetOf_otmfsType!
 
 otmItalicAngle
 	"Answer the <Integer> value of the receiver's 'otmItalicAngle' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmItalicAngle)!
+	^bytes sdwordAtOffset: _OffsetOf_otmItalicAngle!
 
 otmLineGap
 	"Answer the <Integer> value of the receiver's 'otmLineGap' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmLineGap)!
+	^bytes dwordAtOffset: _OffsetOf_otmLineGap!
 
 otmMacAscent
 	"Answer the <Integer> value of the receiver's 'otmMacAscent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmMacAscent)!
+	^bytes sdwordAtOffset: _OffsetOf_otmMacAscent!
 
 otmMacDescent
 	"Answer the <Integer> value of the receiver's 'otmMacDescent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmMacDescent)!
+	^bytes sdwordAtOffset: _OffsetOf_otmMacDescent!
 
 otmMacLineGap
 	"Answer the <Integer> value of the receiver's 'otmMacLineGap' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmMacLineGap)!
+	^bytes dwordAtOffset: _OffsetOf_otmMacLineGap!
 
 otmPanoseNumber
 	"Answer the <PANOSE> value of the receiver's 'otmPanoseNumber' field."
 
-	^PANOSE fromAddress: bytes yourAddress + ##(self offsetOf: #otmPanoseNumber)!
+	^PANOSE fromAddress: bytes yourAddress + _OffsetOf_otmPanoseNumber!
 
 otmpFaceName
 	"Answer the <Integer> value of the receiver's 'otmpFaceName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmpFaceName)!
+	^bytes dwordAtOffset: _OffsetOf_otmpFaceName!
 
 otmpFamilyName
 	"Answer the <Integer> value of the receiver's 'otmpFamilyName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmpFamilyName)!
+	^bytes dwordAtOffset: _OffsetOf_otmpFamilyName!
 
 otmpFullName
 	"Answer the <Integer> value of the receiver's 'otmpFullName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmpFullName)!
+	^bytes dwordAtOffset: _OffsetOf_otmpFullName!
 
 otmpStyleName
 	"Answer the <Integer> value of the receiver's 'otmpStyleName' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmpStyleName)!
+	^bytes dwordAtOffset: _OffsetOf_otmpStyleName!
 
 otmptSubscriptOffset
 	"Answer the <POINTL> value of the receiver's 'otmptSubscriptOffset' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #otmptSubscriptOffset)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_otmptSubscriptOffset!
 
 otmptSubscriptSize
 	"Answer the <POINTL> value of the receiver's 'otmptSubscriptSize' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #otmptSubscriptSize)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_otmptSubscriptSize!
 
 otmptSuperscriptOffset
 	"Answer the <POINTL> value of the receiver's 'otmptSuperscriptOffset' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #otmptSuperscriptOffset)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_otmptSuperscriptOffset!
 
 otmptSuperscriptSize
 	"Answer the <POINTL> value of the receiver's 'otmptSuperscriptSize' field."
 
-	^POINTL fromAddress: bytes yourAddress + ##(self offsetOf: #otmptSuperscriptSize)!
+	^POINTL fromAddress: bytes yourAddress + _OffsetOf_otmptSuperscriptSize!
 
 otmrcFontBox
 	"Answer the <RECT> value of the receiver's 'otmrcFontBox' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #otmrcFontBox)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_otmrcFontBox!
 
 otmsCapEmHeight
 	"Answer the <Integer> value of the receiver's 'otmsCapEmHeight' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmsCapEmHeight)!
+	^bytes dwordAtOffset: _OffsetOf_otmsCapEmHeight!
 
 otmsCharSlopeRise
 	"Answer the <Integer> value of the receiver's 'otmsCharSlopeRise' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmsCharSlopeRise)!
+	^bytes sdwordAtOffset: _OffsetOf_otmsCharSlopeRise!
 
 otmsCharSlopeRun
 	"Answer the <Integer> value of the receiver's 'otmsCharSlopeRun' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmsCharSlopeRun)!
+	^bytes sdwordAtOffset: _OffsetOf_otmsCharSlopeRun!
 
 otmsStrikeoutPosition
 	"Answer the <Integer> value of the receiver's 'otmsStrikeoutPosition' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmsStrikeoutPosition)!
+	^bytes sdwordAtOffset: _OffsetOf_otmsStrikeoutPosition!
 
 otmsStrikeoutSize
 	"Answer the <Integer> value of the receiver's 'otmsStrikeoutSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmsStrikeoutSize)!
+	^bytes dwordAtOffset: _OffsetOf_otmsStrikeoutSize!
 
 otmsUnderscorePosition
 	"Answer the <Integer> value of the receiver's 'otmsUnderscorePosition' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmsUnderscorePosition)!
+	^bytes sdwordAtOffset: _OffsetOf_otmsUnderscorePosition!
 
 otmsUnderscoreSize
 	"Answer the <Integer> value of the receiver's 'otmsUnderscoreSize' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #otmsUnderscoreSize)!
+	^bytes sdwordAtOffset: _OffsetOf_otmsUnderscoreSize!
 
 otmsXHeight
 	"Answer the <Integer> value of the receiver's 'otmsXHeight' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmsXHeight)!
+	^bytes dwordAtOffset: _OffsetOf_otmsXHeight!
 
 otmTextMetrics
 	"Answer the <TEXTMETRICW> value of the receiver's 'otmTextMetrics' field."
 
-	^TEXTMETRICW fromAddress: bytes yourAddress + ##(self offsetOf: #otmTextMetrics)!
+	^TEXTMETRICW fromAddress: bytes yourAddress + _OffsetOf_otmTextMetrics!
 
 otmusMinimumPPEM
 	"Answer the <Integer> value of the receiver's 'otmusMinimumPPEM' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #otmusMinimumPPEM)!
+	^bytes dwordAtOffset: _OffsetOf_otmusMinimumPPEM!
 
 styleName
 	"Answer the receiver's <readableString> style name.

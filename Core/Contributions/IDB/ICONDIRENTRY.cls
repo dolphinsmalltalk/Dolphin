@@ -2,10 +2,18 @@
 
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICONDIRENTRY guid: (GUID fromString: '{c37d878b-52cb-41c6-a356-cc780f4eac95}')!
+ICONDIRENTRY addClassConstant: '_OffsetOf_bColorCount' value: 16r2!
+ICONDIRENTRY addClassConstant: '_OffsetOf_bHeight' value: 16r1!
+ICONDIRENTRY addClassConstant: '_OffsetOf_bReserved' value: 16r3!
+ICONDIRENTRY addClassConstant: '_OffsetOf_bWidth' value: 16r0!
+ICONDIRENTRY addClassConstant: '_OffsetOf_dwBytesInRes' value: 16r8!
+ICONDIRENTRY addClassConstant: '_OffsetOf_dwImageOffset' value: 16rC!
+ICONDIRENTRY addClassConstant: '_OffsetOf_wBitCount' value: 16r6!
+ICONDIRENTRY addClassConstant: '_OffsetOf_wPlanes' value: 16r4!
 ICONDIRENTRY comment: 'See [DolphinImageFolder]/Idb/Documentation for details
 
 (C) 2005 Ian Bartholomew
@@ -17,77 +25,77 @@ Public Domain Freeware'!
 bColorCount
 	"Answer the <Integer> value of the receiver's 'bColorCount' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bColorCount)!
+	^bytes byteAtOffset: _OffsetOf_bColorCount!
 
 bColorCount: anInteger
 	"Set the receiver's 'bColorCount' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bColorCount) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bColorCount put: anInteger!
 
 bHeight
 	"Answer the <Integer> value of the receiver's 'bHeight' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bHeight)!
+	^bytes byteAtOffset: _OffsetOf_bHeight!
 
 bHeight: anInteger
 	"Set the receiver's 'bHeight' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #bHeight) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bHeight put: anInteger!
 
 bReserved
 	"Answer the <Integer> value of the receiver's 'bReserved' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #bReserved)!
+	^bytes byteAtOffset: _OffsetOf_bReserved!
 
 bWidth
 	"Answer the <Integer> value of the receiver's 'bWidth' field."
 
-	^bytes byteAtOffset: 0!
+	^bytes byteAtOffset: _OffsetOf_bWidth!
 
 bWidth: anInteger
 	"Set the receiver's 'bWidth' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: 0 put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bWidth put: anInteger!
 
 dwBytesInRes
 	"Answer the <Integer> value of the receiver's 'dwBytesInRes' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwBytesInRes)!
+	^bytes dwordAtOffset: _OffsetOf_dwBytesInRes!
 
 dwBytesInRes: anInteger
 	"Set the receiver's 'dwBytesInRes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwBytesInRes) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwBytesInRes put: anInteger!
 
 dwImageOffset
 	"Answer the <Integer> value of the receiver's 'dwImageOffset' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwImageOffset)!
+	^bytes dwordAtOffset: _OffsetOf_dwImageOffset!
 
 dwImageOffset: anInteger
 	"Set the receiver's 'dwImageOffset' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwImageOffset) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwImageOffset put: anInteger!
 
 wBitCount
 	"Answer the <Integer> value of the receiver's 'wBitCount' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wBitCount)!
+	^bytes wordAtOffset: _OffsetOf_wBitCount!
 
 wBitCount: anInteger
 	"Set the receiver's 'wBitCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wBitCount) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wBitCount put: anInteger!
 
 wPlanes
 	"Answer the <Integer> value of the receiver's 'wPlanes' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #wPlanes)!
+	^bytes wordAtOffset: _OffsetOf_wPlanes!
 
 wPlanes: anInteger
 	"Set the receiver's 'wPlanes' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #wPlanes) put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_wPlanes put: anInteger! !
 !ICONDIRENTRY categoriesFor: #bColorCount!**compiled accessors**!public! !
 !ICONDIRENTRY categoriesFor: #bColorCount:!**compiled accessors**!public! !
 !ICONDIRENTRY categoriesFor: #bHeight!**compiled accessors**!public! !

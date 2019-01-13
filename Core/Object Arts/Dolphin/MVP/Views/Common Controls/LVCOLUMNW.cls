@@ -2,10 +2,21 @@
 
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
-	classVariableNames: 'AlignmentMap'
+	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cx _OffsetOf_cxDefault _OffsetOf_cxIdeal _OffsetOf_cxMin _OffsetOf_fmt _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_iSubItem _OffsetOf_mask _OffsetOf_pszText AlignmentMap'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 LVCOLUMNW guid: (GUID fromString: '{87b4c5fc-026e-11d3-9fd7-00a0cc3e4a32}')!
+LVCOLUMNW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
+LVCOLUMNW addClassConstant: '_OffsetOf_cx' value: 16r8!
+LVCOLUMNW addClassConstant: '_OffsetOf_cxDefault' value: 16r24!
+LVCOLUMNW addClassConstant: '_OffsetOf_cxIdeal' value: 16r28!
+LVCOLUMNW addClassConstant: '_OffsetOf_cxMin' value: 16r20!
+LVCOLUMNW addClassConstant: '_OffsetOf_fmt' value: 16r4!
+LVCOLUMNW addClassConstant: '_OffsetOf_iImage' value: 16r18!
+LVCOLUMNW addClassConstant: '_OffsetOf_iOrder' value: 16r1C!
+LVCOLUMNW addClassConstant: '_OffsetOf_iSubItem' value: 16r14!
+LVCOLUMNW addClassConstant: '_OffsetOf_mask' value: 16r0!
+LVCOLUMNW addClassConstant: '_OffsetOf_pszText' value: 16rC!
 LVCOLUMNW comment: 'LVCOLUMN is an <ExternalStructure> class which represents the Windows List View common control structure of the same name.
 
 LVCOLUMN is used in conjunction with the ListView to specify the details of individual columns when in report mode.
@@ -24,57 +35,57 @@ alignment: alignmentSymbol
 cchTextMax: anInteger
 	"Set the receiver's 'cchTextMax' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cchTextMax) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cchTextMax put: anInteger!
 
 cx
 	"Answer the <Integer> value of the receiver's 'cx' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cx)!
+	^bytes sdwordAtOffset: _OffsetOf_cx!
 
 cx: anInteger
 	"Set the receiver's 'cx' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cx) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cx put: anInteger!
 
 cxDefault
 	"Answer the <Integer> value of the receiver's 'cxDefault' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxDefault)!
+	^bytes sdwordAtOffset: _OffsetOf_cxDefault!
 
 cxDefault: anInteger
 	"Set the receiver's 'cxDefault' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxDefault) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxDefault put: anInteger!
 
 cxIdeal
 	"Answer the <Integer> value of the receiver's 'cxIdeal' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxIdeal)!
+	^bytes sdwordAtOffset: _OffsetOf_cxIdeal!
 
 cxIdeal: anInteger
 	"Set the receiver's 'cxIdeal' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxIdeal) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxIdeal put: anInteger!
 
 cxMin
 	"Answer the <Integer> value of the receiver's 'cxMin' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #cxMin)!
+	^bytes sdwordAtOffset: _OffsetOf_cxMin!
 
 cxMin: anInteger
 	"Set the receiver's 'cxMin' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #cxMin) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_cxMin put: anInteger!
 
 fmt
 	"Answer the <Integer> value of the receiver's 'fmt' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #fmt)!
+	^bytes sdwordAtOffset: _OffsetOf_fmt!
 
 fmt: anInteger
 	"Set the receiver's 'fmt' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #fmt) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_fmt put: anInteger!
 
 format: anInteger
 	self fmt: anInteger; maskIn: LVCF_FMT!
@@ -82,12 +93,12 @@ format: anInteger
 iImage
 	"Answer the <Integer> value of the receiver's 'iImage' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iImage)!
+	^bytes sdwordAtOffset: _OffsetOf_iImage!
 
 iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iImage) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
 
 image: anIntegerIndex
 	"Set the image of the column to be that with anIntegerIndex in the list view's
@@ -98,32 +109,32 @@ image: anIntegerIndex
 iOrder
 	"Answer the <Integer> value of the receiver's 'iOrder' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iOrder)!
+	^bytes sdwordAtOffset: _OffsetOf_iOrder!
 
 iOrder: anInteger
 	"Set the receiver's 'iOrder' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iOrder) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iOrder put: anInteger!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #iSubItem)!
+	^bytes sdwordAtOffset: _OffsetOf_iSubItem!
 
 iSubItem: anInteger
 	"Set the receiver's 'iSubItem' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #iSubItem) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_iSubItem put: anInteger!
 
 mask
 	"Answer the <Integer> value of the receiver's 'mask' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_mask!
 
 mask: anInteger
 	"Set the receiver's 'mask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
 	"OR in to contents' mask member the bit flags represented by anInteger"
@@ -147,12 +158,12 @@ order: anIntegerIndex
 pszText
 	"Answer the <Utf16String> value of the receiver's 'pszText' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszText))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszText)!
 
 pszText: anUtf16String
 	"Set the receiver's 'pszText' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pszText) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
 
 text
 	"Answer the text of the receiver"

@@ -2,10 +2,12 @@
 
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
-	classVariableNames: 'WellKnownCustomAttributes'
+	classVariableNames: '_OffsetOf_cCustData _OffsetOf_prgCustData WellKnownCustomAttributes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CUSTDATA guid: (GUID fromString: '{c06f3b7b-0868-11d3-93af-00a024ca708a}')!
+CUSTDATA addClassConstant: '_OffsetOf_cCustData' value: 16r0!
+CUSTDATA addClassConstant: '_OffsetOf_prgCustData' value: 16r4!
 CUSTDATA comment: '<CUSTDATA> is an <ExternalStructure> class to wrap the struct ''OAIDL.CUSTDATA'' from type information in the ''Ole Automation Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -32,7 +34,7 @@ buildContents
 cCustData
 	"Private - Answer the <Integer> value of the receiver's 'cCustData' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_cCustData!
 
 contents
 	"Answer a <LookupTable> containing the custom attribute entries in the receiver. The keys of
@@ -45,7 +47,7 @@ prgCustData
 	"Answer the <StructureArray> value of the receiver's 'prgCustData' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #prgCustData))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_prgCustData)
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
 !CUSTDATA categoriesFor: #basicFree!private!realizing/unrealizing! !

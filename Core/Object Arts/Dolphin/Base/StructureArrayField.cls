@@ -39,19 +39,6 @@ fieldClassName
 
 	^self arrayClass name!
 
-printAccessorExpressionSuffixOn: aWriteStream 
-	"Private - Print any extra messages/statements onto the <puttableStream> argument that are required to
-	configure the object being read from the structure instance."
-
-	"We need to set the length and element class of the structure array"
-
-	super printAccessorExpressionSuffixOn: aWriteStream.
-	aWriteStream
-		space;
-		display: #elementClass:;
-		space;
-		display: self fieldClass!
-
 printElementSizeExpressionBodyOn: aWriteStream 
 	aWriteStream
 		display: self elementClass;
@@ -77,7 +64,6 @@ valueParameterName
 !StructureArrayField categoriesFor: #elementClass!accessing!private! !
 !StructureArrayField categoriesFor: #elementSize!accessing!private! !
 !StructureArrayField categoriesFor: #fieldClassName!accessing!private! !
-!StructureArrayField categoriesFor: #printAccessorExpressionSuffixOn:!automatic generation!development!private! !
 !StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
 !StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
 !StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !

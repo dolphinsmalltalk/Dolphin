@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cyMax _OffsetOf_dwContextHelpID _OffsetOf_dwMenuData _OffsetOf_dwSize _OffsetOf_dwStyle _OffsetOf_fMask _OffsetOf_hbrBack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MENUINFO guid: (GUID fromString: '{d51f8f53-401e-4f12-9712-28458e3c48ca}')!
+MENUINFO addClassConstant: '_OffsetOf_cyMax' value: 16rC!
+MENUINFO addClassConstant: '_OffsetOf_dwContextHelpID' value: 16r14!
+MENUINFO addClassConstant: '_OffsetOf_dwMenuData' value: 16r18!
+MENUINFO addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+MENUINFO addClassConstant: '_OffsetOf_dwStyle' value: 16r8!
+MENUINFO addClassConstant: '_OffsetOf_fMask' value: 16r4!
+MENUINFO addClassConstant: '_OffsetOf_hbrBack' value: 16r10!
 MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win32 structure of the same name. The MENUINFO structure suprises by containing information about a menu.'!
 !MENUINFO categoriesForClass!External-Data-Structured-Win32! !
 !MENUINFO methodsFor!
@@ -13,47 +20,47 @@ MENUINFO comment: 'MENUINFO is an <ExternalStructure> class to represent the Win
 cyMax
 	"Answer the <Integer> value of the receiver's 'cyMax' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #cyMax)!
+	^bytes dwordAtOffset: _OffsetOf_cyMax!
 
 cyMax: anInteger
 	"Set the receiver's 'cyMax' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cyMax) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cyMax put: anInteger!
 
 dwContextHelpID
 	"Answer the <Integer> value of the receiver's 'dwContextHelpID' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID)!
+	^bytes dwordAtOffset: _OffsetOf_dwContextHelpID!
 
 dwContextHelpID: anInteger
 	"Set the receiver's 'dwContextHelpID' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwContextHelpID) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwContextHelpID put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 dwStyle
 	"Answer the <Integer> value of the receiver's 'dwStyle' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwStyle)!
+	^bytes dwordAtOffset: _OffsetOf_dwStyle!
 
 dwStyle: anInteger
 	"Set the receiver's 'dwStyle' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwStyle) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwStyle put: anInteger!
 
 fMask
 	"Answer the <Integer> value of the receiver's 'fMask' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fMask)!
+	^bytes dwordAtOffset: _OffsetOf_fMask!
 
 fMask: anInteger
 	"Set the receiver's 'fMask' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fMask) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
 
 maskIn: anInteger 
 	self fMask: (self fMask bitOr: anInteger)!

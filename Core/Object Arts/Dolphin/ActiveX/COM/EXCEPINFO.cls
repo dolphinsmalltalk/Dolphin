@@ -2,10 +2,19 @@
 
 OLEFinalizableStructure subclass: #EXCEPINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwHelpContext _OffsetOf_pfnDeferredFillIn _OffsetOf_pvReserved _OffsetOf_pwszDescription _OffsetOf_pwszHelpFile _OffsetOf_pwszSource _OffsetOf_scode _OffsetOf_wCode _OffsetOf_wReserved'
 	poolDictionaries: 'Win32Errors'
 	classInstanceVariableNames: ''!
 EXCEPINFO guid: (GUID fromString: '{c06f3b63-0868-11d3-93af-00a024ca708a}')!
+EXCEPINFO addClassConstant: '_OffsetOf_dwHelpContext' value: 16r10!
+EXCEPINFO addClassConstant: '_OffsetOf_pfnDeferredFillIn' value: 16r18!
+EXCEPINFO addClassConstant: '_OffsetOf_pvReserved' value: 16r14!
+EXCEPINFO addClassConstant: '_OffsetOf_pwszDescription' value: 16r8!
+EXCEPINFO addClassConstant: '_OffsetOf_pwszHelpFile' value: 16rC!
+EXCEPINFO addClassConstant: '_OffsetOf_pwszSource' value: 16r4!
+EXCEPINFO addClassConstant: '_OffsetOf_scode' value: 16r1C!
+EXCEPINFO addClassConstant: '_OffsetOf_wCode' value: 16r0!
+EXCEPINFO addClassConstant: '_OffsetOf_wReserved' value: 16r2!
 EXCEPINFO comment: 'EXCEPINFO is the class of <ExternalStructure>s representing the OLE Automation structure of the same name. EXCEPINFO is used to return exception details from IDispatch::Invoke().'!
 !EXCEPINFO categoriesForClass!External-Data-Structured-COM! !
 !EXCEPINFO methodsFor!
@@ -78,12 +87,12 @@ description: errorDescription
 dwHelpContext
 	"Answer the <Integer> value of the receiver's 'dwHelpContext' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext)!
+	^bytes dwordAtOffset: _OffsetOf_dwHelpContext!
 
 dwHelpContext: anInteger
 	"Set the receiver's 'dwHelpContext' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwHelpContext) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwHelpContext put: anInteger!
 
 helpFile
 	"Answer the receiver's bstrHelpFile field as a <readableString> Smalltalk object."
@@ -113,47 +122,47 @@ hresult
 pfnDeferredFillIn
 	"Answer the <ExternalAddress> value of the receiver's 'pfnDeferredFillIn' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pfnDeferredFillIn)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_pfnDeferredFillIn) asExternalAddress!
 
 pwszDescription
 	"Answer the <Integer> value of the receiver's 'pwszDescription' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription)!
+	^bytes uintPtrAtOffset: _OffsetOf_pwszDescription!
 
 pwszDescription: anInteger
 	"Set the receiver's 'pwszDescription' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszDescription) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_pwszDescription put: anInteger!
 
 pwszHelpFile
 	"Answer the <Integer> value of the receiver's 'pwszHelpFile' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile)!
+	^bytes uintPtrAtOffset: _OffsetOf_pwszHelpFile!
 
 pwszHelpFile: anInteger
 	"Set the receiver's 'pwszHelpFile' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszHelpFile) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_pwszHelpFile put: anInteger!
 
 pwszSource
 	"Answer the <Integer> value of the receiver's 'pwszSource' field."
 
-	^bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource)!
+	^bytes uintPtrAtOffset: _OffsetOf_pwszSource!
 
 pwszSource: anInteger
 	"Set the receiver's 'pwszSource' field to the value of the argument, anInteger"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pwszSource) put: anInteger!
+	bytes uintPtrAtOffset: _OffsetOf_pwszSource put: anInteger!
 
 scode
 	"Answer the <Integer> value of the receiver's 'scode' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #scode)!
+	^bytes sdwordAtOffset: _OffsetOf_scode!
 
 scode: anInteger
 	"Set the receiver's 'scode' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #scode) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_scode put: anInteger!
 
 source
 	"Answer a <readableString> description of the source of the error.
@@ -174,12 +183,12 @@ source: errorSourceString
 wCode
 	"Answer the <Integer> value of the receiver's 'wCode' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_wCode!
 
 wCode: anInteger
 	"Set the receiver's 'wCode' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger!
+	bytes wordAtOffset: _OffsetOf_wCode put: anInteger!
 
 wstrDescription
 	"Answer the receiver's bstrDescription field as a <Utf16String>."

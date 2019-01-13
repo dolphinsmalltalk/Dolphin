@@ -2,10 +2,11 @@
 
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_hItem'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TVHITTESTINFO guid: (GUID fromString: '{87b4c61f-026e-11d3-9fd7-00a0cc3e4a32}')!
+TVHITTESTINFO addClassConstant: '_OffsetOf_hItem' value: 16rC!
 TVHITTESTINFO comment: 'TVHITTESTINFO is an ExternalStructure class to represent the Win32 common control structure of the same name.
 
 TVHISTTESTINFO is used for hit-testing with Tree View controls.
@@ -23,7 +24,7 @@ handle
 hItem
 	"Answer the <Integer> value of the receiver's 'hItem' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #hItem)!
+	^bytes dwordAtOffset: _OffsetOf_hItem!
 
 item
 	"Answer the 'item' which has been hit (in this case the handle of node)."

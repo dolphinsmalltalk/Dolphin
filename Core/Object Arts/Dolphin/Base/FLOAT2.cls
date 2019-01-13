@@ -20,12 +20,12 @@ asFloat
 value
 	"Answer the <Float> value of the receiver's 'value' field."
 
-	^bytes floatAtOffset: 0!
+	^bytes floatAtOffset: _OffsetOf_value!
 
 value: aFloat
 	"Set the receiver's 'value' field to the value of the argument, aFloat"
 
-	bytes floatAtOffset: 0 put: aFloat! !
+	bytes floatAtOffset: _OffsetOf_value put: aFloat! !
 !FLOAT categoriesFor: #asFloat!converting!public! !
 !FLOAT categoriesFor: #value!**compiled accessors**!public! !
 !FLOAT categoriesFor: #value:!**compiled accessors**!public! !
@@ -38,7 +38,7 @@ defineFields
 		FLOAT  compileDefinition
 	"
 
-	self defineField: #value type: FLOATField new!
+	self defineField: #value type: FLOATField new beOverride!
 
 fileOutStem
 	"Private - Answer standard file name stem for the class to file out on."

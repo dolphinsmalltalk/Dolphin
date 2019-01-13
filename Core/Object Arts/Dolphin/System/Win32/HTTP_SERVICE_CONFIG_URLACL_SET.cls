@@ -2,10 +2,12 @@
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_URLACL_SET
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_KeyDesc _OffsetOf_ParamDesc'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_CONFIG_URLACL_SET guid: (GUID fromString: '{8144c4ca-dfd3-4ed0-a83b-ad096bd611a4}')!
+HTTP_SERVICE_CONFIG_URLACL_SET addClassConstant: '_OffsetOf_KeyDesc' value: 16r0!
+HTTP_SERVICE_CONFIG_URLACL_SET addClassConstant: '_OffsetOf_ParamDesc' value: 16r4!
 HTTP_SERVICE_CONFIG_URLACL_SET comment: '<HTTP_SERVICE_CONFIG_URLACL_SET> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_CONFIG_URLACL_SET'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,22 +29,22 @@ struct tagHTTP_SERVICE_CONFIG_URLACL_SET {
 KeyDesc
 	"Answer the <Utf16String> value of the receiver's 'KeyDesc' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: 0)!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_KeyDesc)!
 
 KeyDesc: anUtf16String
 	"Set the receiver's 'KeyDesc' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: 0 put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_KeyDesc put: anUtf16String yourAddress!
 
 ParamDesc
 	"Answer the <Utf16String> value of the receiver's 'ParamDesc' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #ParamDesc))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_ParamDesc)!
 
 ParamDesc: anUtf16String
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #ParamDesc) put: anUtf16String yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_ParamDesc put: anUtf16String yourAddress! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
 !HTTP_SERVICE_CONFIG_URLACL_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
@@ -65,6 +67,10 @@ defineFields
 	self
 		defineField: #KeyDesc type: (PointerField type: Utf16String) offset: 0;
 		defineField: #ParamDesc type: (PointerField type: Utf16String) offset: 4.
-	self byteSize: 8! !
+	self byteSize: 8!
+
+getFieldNames
+	^#(#KeyDesc #ParamDesc)! !
 !HTTP_SERVICE_CONFIG_URLACL_SET class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_CONFIG_URLACL_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

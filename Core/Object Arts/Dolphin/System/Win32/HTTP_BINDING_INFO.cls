@@ -2,10 +2,11 @@
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_BINDING_INFO
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_RequestQueueHandle'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_BINDING_INFO guid: (GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
+HTTP_BINDING_INFO addClassConstant: '_OffsetOf_RequestQueueHandle' value: 16r4!
 HTTP_BINDING_INFO comment: '<HTTP_BINDING_INFO> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_BINDING_INFO'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -30,7 +31,7 @@ requestQueueHandle
 RequestQueueHandle
 	"Answer the <ExternalHandle> value of the receiver's 'RequestQueueHandle' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #RequestQueueHandle)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_RequestQueueHandle) asExternalHandle!
 
 requestQueueHandle: anExternalHandle
 	anExternalHandle
@@ -46,7 +47,7 @@ requestQueueHandle: anExternalHandle
 RequestQueueHandle: anExternalHandle
 	"Set the receiver's 'RequestQueueHandle' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #RequestQueueHandle) put: anExternalHandle! !
+	bytes uintPtrAtOffset: _OffsetOf_RequestQueueHandle put: anExternalHandle! !
 !HTTP_BINDING_INFO categoriesFor: #requestQueueHandle!accessing!public! !
 !HTTP_BINDING_INFO categoriesFor: #RequestQueueHandle!**compiled accessors**!public! !
 !HTTP_BINDING_INFO categoriesFor: #requestQueueHandle:!accessing!public! !
@@ -71,8 +72,12 @@ defineFields
 		defineField: #RequestQueueHandle type: HANDLEField new offset: 4.
 	self byteSize: 8!
 
+getFieldNames
+	^#(#Present #RequestQueueHandle)!
+
 propertyId
 	^HttpServerBindingProperty! !
 !HTTP_BINDING_INFO class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_BINDING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 !HTTP_BINDING_INFO class categoriesFor: #propertyId!public! !
 

@@ -2,10 +2,13 @@
 
 Win32Structure subclass: #PROTOENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_p_aliases _OffsetOf_p_name _OffsetOf_p_proto'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 PROTOENT guid: (GUID fromString: '{87b4c60a-026e-11d3-9fd7-00a0cc3e4a32}')!
+PROTOENT addClassConstant: '_OffsetOf_p_aliases' value: 16r4!
+PROTOENT addClassConstant: '_OffsetOf_p_name' value: 16r0!
+PROTOENT addClassConstant: '_OffsetOf_p_proto' value: 16r8!
 PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -31,7 +34,7 @@ aliases
 	| i addresses list each |
 	addresses := Array writeStream.
 	i := 0.
-	list := (bytes uintPtrAtOffset: ##(self offsetOf: #p_aliases)) asExternalAddress.
+	list := (bytes uintPtrAtOffset: _OffsetOf_p_aliases) asExternalAddress.
 	
 	[each := list uintPtrAtOffset: i.
 	each isNull] whileFalse: 
@@ -42,12 +45,12 @@ aliases
 p_name
 	"Answer the <AnsiString> value of the receiver's 'p_name' field."
 
-	^AnsiString fromAddress: (bytes intPtrAtOffset: 0)!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_p_name)!
 
 p_proto
 	"Answer the <Integer> value of the receiver's 'p_proto' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #p_proto)!
+	^bytes swordAtOffset: _OffsetOf_p_proto!
 
 printFieldsOn: aStream limit: anInteger
 	super printFieldsOn: aStream limit: anInteger.

@@ -2,10 +2,16 @@
 
 Win32Structure subclass: #LVBKIMAGEW
 	instanceVariableNames: 'buf'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_cchImageMax _OffsetOf_hbm _OffsetOf_pszImage _OffsetOf_ulFlags _OffsetOf_xOffsetPercent _OffsetOf_yOffsetPercent'
 	poolDictionaries: 'ListViewConstants'
 	classInstanceVariableNames: ''!
 LVBKIMAGEW guid: (GUID fromString: '{33fccb1a-f5ba-4ae8-93ad-63d00b9aa869}')!
+LVBKIMAGEW addClassConstant: '_OffsetOf_cchImageMax' value: 16rC!
+LVBKIMAGEW addClassConstant: '_OffsetOf_hbm' value: 16r4!
+LVBKIMAGEW addClassConstant: '_OffsetOf_pszImage' value: 16r8!
+LVBKIMAGEW addClassConstant: '_OffsetOf_ulFlags' value: 16r0!
+LVBKIMAGEW addClassConstant: '_OffsetOf_xOffsetPercent' value: 16r10!
+LVBKIMAGEW addClassConstant: '_OffsetOf_yOffsetPercent' value: 16r14!
 LVBKIMAGEW comment: ''!
 !LVBKIMAGEW categoriesForClass!External-Data-Structured-Win32! !
 !LVBKIMAGEW methodsFor!
@@ -22,17 +28,17 @@ bitmap: aBitmapOrNil
 cchImageMax: anInteger
 	"Set the receiver's 'cchImageMax' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #cchImageMax) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_cchImageMax put: anInteger!
 
 hbm
 	"Answer the <ExternalHandle> value of the receiver's 'hbm' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hbm)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hbm) asExternalHandle!
 
 hbm: anExternalHandle
 	"Set the receiver's 'hbm' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hbm) put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hbm put: anExternalHandle!
 
 imageSource: anInteger 
 	self ulFlags: ((self ulFlags maskClear: LVBKIF_SOURCE_MASK) maskSet: anInteger)!
@@ -87,42 +93,42 @@ position: aPoint
 pszImage
 	"Answer the <Utf16String> value of the receiver's 'pszImage' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pszImage))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszImage)!
 
 pszImage: anUtf16String
 	"Set the receiver's 'pszImage' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pszImage) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_pszImage put: anUtf16String yourAddress!
 
 ulFlags
 	"Answer the <Integer> value of the receiver's 'ulFlags' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_ulFlags!
 
 ulFlags: anInteger
 	"Set the receiver's 'ulFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ulFlags put: anInteger!
 
 xOffsetPercent
 	"Answer the <Integer> value of the receiver's 'xOffsetPercent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #xOffsetPercent)!
+	^bytes sdwordAtOffset: _OffsetOf_xOffsetPercent!
 
 xOffsetPercent: anInteger
 	"Set the receiver's 'xOffsetPercent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #xOffsetPercent) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_xOffsetPercent put: anInteger!
 
 yOffsetPercent
 	"Answer the <Integer> value of the receiver's 'yOffsetPercent' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #yOffsetPercent)!
+	^bytes sdwordAtOffset: _OffsetOf_yOffsetPercent!
 
 yOffsetPercent: anInteger
 	"Set the receiver's 'yOffsetPercent' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #yOffsetPercent) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_yOffsetPercent put: anInteger! !
 !LVBKIMAGEW categoriesFor: #bitmap:!accessing!public! !
 !LVBKIMAGEW categoriesFor: #cchImageMax:!**compiled accessors**!public! !
 !LVBKIMAGEW categoriesFor: #hbm!**compiled accessors**!public! !

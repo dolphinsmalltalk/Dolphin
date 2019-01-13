@@ -2,10 +2,25 @@
 
 ExternalStructure subclass: #ENHMETAHEADER3
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dSignature _OffsetOf_iType _OffsetOf_nBytes _OffsetOf_nDescription _OffsetOf_nHandles _OffsetOf_nPalEntries _OffsetOf_nRecords _OffsetOf_nSize _OffsetOf_nVersion _OffsetOf_offDescription _OffsetOf_rclBounds _OffsetOf_rclFrame _OffsetOf_sReserved _OffsetOf_szlDevice _OffsetOf_szlMillimeters'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ENHMETAHEADER3 guid: (GUID fromString: '{1b5c3dcf-8ea0-47df-b752-442dd272a353}')!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_dSignature' value: 16r28!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_iType' value: 16r0!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nBytes' value: 16r30!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nDescription' value: 16r3C!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nHandles' value: 16r38!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nPalEntries' value: 16r44!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nRecords' value: 16r34!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nSize' value: 16r4!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_nVersion' value: 16r2C!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_offDescription' value: 16r40!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_rclFrame' value: 16r18!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_sReserved' value: 16r3A!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_szlDevice' value: 16r48!
+ENHMETAHEADER3 addClassConstant: '_OffsetOf_szlMillimeters' value: 16r50!
 ENHMETAHEADER3 comment: '<ENHMETAHEADER3> is an <ExternalStructure> class to wrap the struct ''Gdiplus.ENHMETAHEADER3'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -39,167 +54,167 @@ struct tagENHMETAHEADER3 {
 dSignature
 	"Answer the <Integer> value of the receiver's 'dSignature' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dSignature)!
+	^bytes dwordAtOffset: _OffsetOf_dSignature!
 
 dSignature: anInteger
 	"Set the receiver's 'dSignature' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dSignature) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dSignature put: anInteger!
 
 iType
 	"Answer the <Integer> value of the receiver's 'iType' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_iType!
 
 iType: anInteger
 	"Set the receiver's 'iType' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_iType put: anInteger!
 
 nBytes
 	"Answer the <Integer> value of the receiver's 'nBytes' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nBytes)!
+	^bytes dwordAtOffset: _OffsetOf_nBytes!
 
 nBytes: anInteger
 	"Set the receiver's 'nBytes' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nBytes) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nBytes put: anInteger!
 
 nDescription
 	"Answer the <Integer> value of the receiver's 'nDescription' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nDescription)!
+	^bytes dwordAtOffset: _OffsetOf_nDescription!
 
 nDescription: anInteger
 	"Set the receiver's 'nDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nDescription) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nDescription put: anInteger!
 
 nHandles
 	"Answer the <Integer> value of the receiver's 'nHandles' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #nHandles)!
+	^bytes wordAtOffset: _OffsetOf_nHandles!
 
 nHandles: anInteger
 	"Set the receiver's 'nHandles' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #nHandles) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_nHandles put: anInteger!
 
 nPalEntries
 	"Answer the <Integer> value of the receiver's 'nPalEntries' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nPalEntries)!
+	^bytes dwordAtOffset: _OffsetOf_nPalEntries!
 
 nPalEntries: anInteger
 	"Set the receiver's 'nPalEntries' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nPalEntries) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nPalEntries put: anInteger!
 
 nRecords
 	"Answer the <Integer> value of the receiver's 'nRecords' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nRecords)!
+	^bytes dwordAtOffset: _OffsetOf_nRecords!
 
 nRecords: anInteger
 	"Set the receiver's 'nRecords' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nRecords) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nRecords put: anInteger!
 
 nSize
 	"Answer the <Integer> value of the receiver's 'nSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nSize)!
+	^bytes dwordAtOffset: _OffsetOf_nSize!
 
 nSize: anInteger
 	"Set the receiver's 'nSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nSize) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nSize put: anInteger!
 
 nVersion
 	"Answer the <Integer> value of the receiver's 'nVersion' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nVersion)!
+	^bytes dwordAtOffset: _OffsetOf_nVersion!
 
 nVersion: anInteger
 	"Set the receiver's 'nVersion' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nVersion) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nVersion put: anInteger!
 
 offDescription
 	"Answer the <Integer> value of the receiver's 'offDescription' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #offDescription)!
+	^bytes dwordAtOffset: _OffsetOf_offDescription!
 
 offDescription: anInteger
 	"Set the receiver's 'offDescription' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #offDescription) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_offDescription put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 rclFrame
 	"Answer the <RECT> value of the receiver's 'rclFrame' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclFrame)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
 
 rclFrame: aRECT
 	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclFrame) + 1)
-		to: ##((self offsetOf: #rclFrame) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclFrame + 1)
+		to: ##(_OffsetOf_rclFrame + RECT basicByteSize)
 		startingAt: 1!
 
 sReserved
 	"Answer the <Integer> value of the receiver's 'sReserved' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #sReserved)!
+	^bytes wordAtOffset: _OffsetOf_sReserved!
 
 sReserved: anInteger
 	"Set the receiver's 'sReserved' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: ##(self offsetOf: #sReserved) put: anInteger!
+	bytes wordAtOffset: _OffsetOf_sReserved put: anInteger!
 
 szlDevice
 	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
 
-	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlDevice)!
+	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
 
 szlDevice: aSIZE
 	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
 
 	aSIZE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szlDevice) + 1)
-		to: ##((self offsetOf: #szlDevice) + SIZE basicByteSize)
+		from: ##(_OffsetOf_szlDevice + 1)
+		to: ##(_OffsetOf_szlDevice + SIZE basicByteSize)
 		startingAt: 1!
 
 szlMillimeters
 	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
 
-	^SIZE fromAddress: bytes yourAddress + ##(self offsetOf: #szlMillimeters)!
+	^SIZE fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
 
 szlMillimeters: aSIZE
 	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
 
 	aSIZE
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #szlMillimeters) + 1)
-		to: ##((self offsetOf: #szlMillimeters) + SIZE basicByteSize)
+		from: ##(_OffsetOf_szlMillimeters + 1)
+		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
 		startingAt: 1! !
 !ENHMETAHEADER3 categoriesFor: #dSignature!**compiled accessors**!public! !
 !ENHMETAHEADER3 categoriesFor: #dSignature:!**compiled accessors**!public! !

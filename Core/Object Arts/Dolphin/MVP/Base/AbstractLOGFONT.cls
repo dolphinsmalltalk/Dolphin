@@ -2,11 +2,24 @@
 
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lfCharSet _OffsetOf_lfClipPrecision _OffsetOf_lfEscapement _OffsetOf_lfHeight _OffsetOf_lfItalic _OffsetOf_lfOrientation _OffsetOf_lfOutPrecision _OffsetOf_lfPitchAndFamily _OffsetOf_lfQuality _OffsetOf_lfStrikeOut _OffsetOf_lfUnderline _OffsetOf_lfWeight _OffsetOf_lfWidth'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 AbstractLOGFONT guid: (GUID fromString: '{8f358ad9-379c-415d-a076-730db113b289}')!
 AbstractLOGFONT isAbstract: true!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfCharSet' value: 16r17!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfClipPrecision' value: 16r19!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfEscapement' value: 16r8!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfHeight' value: 16r0!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfItalic' value: 16r14!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfOrientation' value: 16rC!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfOutPrecision' value: 16r18!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfPitchAndFamily' value: 16r1B!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfQuality' value: 16r1A!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfStrikeOut' value: 16r16!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfUnderline' value: 16r15!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfWeight' value: 16r10!
+AbstractLOGFONT addClassConstant: '_OffsetOf_lfWidth' value: 16r4!
 AbstractLOGFONT comment: ''!
 !AbstractLOGFONT categoriesForClass!DxVBLibA-Structs! !
 !AbstractLOGFONT methodsFor!
@@ -33,22 +46,22 @@ isFixedWidth
 lfCharSet
 	"Answer the <Integer> value of the receiver's 'lfCharSet' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #lfCharSet)!
+	^bytes byteAtOffset: _OffsetOf_lfCharSet!
 
 lfCharSet: anInteger
 	"Set the receiver's 'lfCharSet' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfCharSet) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_lfCharSet put: anInteger!
 
 lfEscapement
 	"Answer the <Integer> value of the receiver's 'lfEscapement' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #lfEscapement)!
+	^bytes sdwordAtOffset: _OffsetOf_lfEscapement!
 
 lfEscapement: anInteger
 	"Set the receiver's 'lfEscapement' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lfEscapement) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_lfEscapement put: anInteger!
 
 lfFaceName
 	"Answer the receiver's lfFaceName field as a Smalltalk object."
@@ -63,82 +76,82 @@ lfFaceName: anObject
 lfHeight
 	"Answer the <Integer> value of the receiver's 'lfHeight' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_lfHeight!
 
 lfHeight: anInteger
 	"Set the receiver's 'lfHeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_lfHeight put: anInteger!
 
 lfItalic
 	"Answer the <Integer> value of the receiver's 'lfItalic' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #lfItalic)!
+	^bytes byteAtOffset: _OffsetOf_lfItalic!
 
 lfItalic: anInteger
 	"Set the receiver's 'lfItalic' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfItalic) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_lfItalic put: anInteger!
 
 lfPitchAndFamily
 	"Answer the <Integer> value of the receiver's 'lfPitchAndFamily' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #lfPitchAndFamily)!
+	^bytes byteAtOffset: _OffsetOf_lfPitchAndFamily!
 
 lfPitchAndFamily: anInteger
 	"Set the receiver's 'lfPitchAndFamily' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfPitchAndFamily) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_lfPitchAndFamily put: anInteger!
 
 lfQuality
 	"Answer the <Integer> value of the receiver's 'lfQuality' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #lfQuality)!
+	^bytes byteAtOffset: _OffsetOf_lfQuality!
 
 lfQuality: anInteger
 	"Set the receiver's 'lfQuality' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfQuality) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_lfQuality put: anInteger!
 
 lfStrikeOut
 	"Answer the <Integer> value of the receiver's 'lfStrikeOut' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #lfStrikeOut)!
+	^bytes byteAtOffset: _OffsetOf_lfStrikeOut!
 
 lfStrikeOut: anInteger
 	"Set the receiver's 'lfStrikeOut' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfStrikeOut) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_lfStrikeOut put: anInteger!
 
 lfUnderline
 	"Answer the <Integer> value of the receiver's 'lfUnderline' field."
 
-	^bytes byteAtOffset: ##(self offsetOf: #lfUnderline)!
+	^bytes byteAtOffset: _OffsetOf_lfUnderline!
 
 lfUnderline: anInteger
 	"Set the receiver's 'lfUnderline' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: ##(self offsetOf: #lfUnderline) put: anInteger!
+	bytes byteAtOffset: _OffsetOf_lfUnderline put: anInteger!
 
 lfWeight
 	"Answer the <Integer> value of the receiver's 'lfWeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #lfWeight)!
+	^bytes sdwordAtOffset: _OffsetOf_lfWeight!
 
 lfWeight: anInteger
 	"Set the receiver's 'lfWeight' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lfWeight) put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_lfWeight put: anInteger!
 
 lfWidth
 	"Answer the <Integer> value of the receiver's 'lfWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #lfWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_lfWidth!
 
 lfWidth: anInteger
 	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #lfWidth) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_lfWidth put: anInteger! !
 !AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
 !AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
 !AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !

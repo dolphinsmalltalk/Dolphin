@@ -2,10 +2,14 @@
 
 Win32Structure subclass: #TRACKMOUSEEVENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwFlags _OffsetOf_dwHoverTime _OffsetOf_dwSize _OffsetOf_hwndTrack'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 TRACKMOUSEEVENT guid: (GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwFlags' value: 16r4!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwHoverTime' value: 16rC!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_dwSize' value: 16r0!
+TRACKMOUSEEVENT addClassConstant: '_OffsetOf_hwndTrack' value: 16r8!
 TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains the following helpstring for this struct
@@ -27,37 +31,37 @@ struct tagTRACKMOUSEEVENT {
 dwFlags
 	"Answer the <Integer> value of the receiver's 'dwFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwFlags)!
+	^bytes dwordAtOffset: _OffsetOf_dwFlags!
 
 dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger!
 
 dwHoverTime
 	"Answer the <Integer> value of the receiver's 'dwHoverTime' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #dwHoverTime)!
+	^bytes dwordAtOffset: _OffsetOf_dwHoverTime!
 
 dwHoverTime: anInteger
 	"Set the receiver's 'dwHoverTime' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #dwHoverTime) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwHoverTime put: anInteger!
 
 dwSize: anInteger
 	"Set the receiver's 'dwSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: 0 put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 hwndTrack
 	"Answer the <ExternalHandle> value of the receiver's 'hwndTrack' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #hwndTrack)) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hwndTrack) asExternalHandle!
 
 hwndTrack: anExternalHandle
 	"Set the receiver's 'hwndTrack' field to the value of the argument, anExternalHandle"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #hwndTrack) put: anExternalHandle! !
+	bytes uintPtrAtOffset: _OffsetOf_hwndTrack put: anExternalHandle! !
 !TRACKMOUSEEVENT categoriesFor: #dwFlags!**compiled accessors**!public! !
 !TRACKMOUSEEVENT categoriesFor: #dwFlags:!**compiled accessors**!public! !
 !TRACKMOUSEEVENT categoriesFor: #dwHoverTime!**compiled accessors**!public! !

@@ -2,10 +2,15 @@
 
 ENHMETARECORD subclass: #EMRGRADIENTFILL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_nTri _OffsetOf_nVer _OffsetOf_rclBounds _OffsetOf_ulMode _OffsetOf_Ver'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 EMRGRADIENTFILL guid: (GUID fromString: '{1302823f-242e-4301-b5eb-ee7a20a4b787}')!
+EMRGRADIENTFILL addClassConstant: '_OffsetOf_nTri' value: 16r1C!
+EMRGRADIENTFILL addClassConstant: '_OffsetOf_nVer' value: 16r18!
+EMRGRADIENTFILL addClassConstant: '_OffsetOf_rclBounds' value: 16r8!
+EMRGRADIENTFILL addClassConstant: '_OffsetOf_ulMode' value: 16r20!
+EMRGRADIENTFILL addClassConstant: '_OffsetOf_Ver' value: 16r24!
 EMRGRADIENTFILL comment: '<EMRGRADIENTFILL> is an <ExternalStructure> class to wrap the struct ''Win32.EMRGRADIENTFILL'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -30,52 +35,52 @@ struct tagEMRGRADIENTFILL {
 nTri
 	"Answer the <Integer> value of the receiver's 'nTri' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nTri)!
+	^bytes dwordAtOffset: _OffsetOf_nTri!
 
 nTri: anInteger
 	"Set the receiver's 'nTri' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nTri) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nTri put: anInteger!
 
 nVer
 	"Answer the <Integer> value of the receiver's 'nVer' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #nVer)!
+	^bytes dwordAtOffset: _OffsetOf_nVer!
 
 nVer: anInteger
 	"Set the receiver's 'nVer' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #nVer) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_nVer put: anInteger!
 
 rclBounds
 	"Answer the <RECT> value of the receiver's 'rclBounds' field."
 
-	^RECT fromAddress: bytes yourAddress + ##(self offsetOf: #rclBounds)!
+	^RECT fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
 rclBounds: aRECT
 	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
 
 	aRECT
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #rclBounds) + 1)
-		to: ##((self offsetOf: #rclBounds) + RECT basicByteSize)
+		from: ##(_OffsetOf_rclBounds + 1)
+		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1!
 
 ulMode
 	"Answer the <Integer> value of the receiver's 'ulMode' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #ulMode)!
+	^bytes dwordAtOffset: _OffsetOf_ulMode!
 
 ulMode: anInteger
 	"Set the receiver's 'ulMode' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #ulMode) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_ulMode put: anInteger!
 
 Ver
 	"Answer the <StructureArray> value of the receiver's 'Ver' field."
 
 	^StructureArray
-		fromAddress: bytes yourAddress + ##(self offsetOf: #Ver)
+		fromAddress: bytes yourAddress + _OffsetOf_Ver
 		length: self nVer
 		elementClass: TRIVERTEX!
 
@@ -86,8 +91,8 @@ Ver: aStructureArrayOfTRIVERTEX
 	size := aStructureArrayOfTRIVERTEX byteSize.
 	aStructureArrayOfTRIVERTEX
 		replaceBytesOf: bytes
-		from: ##((self offsetOf: #Ver) + 1)
-		to: ##(self offsetOf: #Ver) + size
+		from: ##(_OffsetOf_Ver + 1)
+		to: _OffsetOf_Ver + size
 		startingAt: 1.
 	self nVer: aStructureArrayOfTRIVERTEX size! !
 !EMRGRADIENTFILL categoriesFor: #nTri!**compiled accessors**!public! !

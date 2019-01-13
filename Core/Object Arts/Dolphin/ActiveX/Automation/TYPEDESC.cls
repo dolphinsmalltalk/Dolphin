@@ -2,10 +2,14 @@
 
 OLEStructure subclass: #TYPEDESC
 	instanceVariableNames: 'owner classDesc typeInfo'
-	classVariableNames: 'VTIndirections'
+	classVariableNames: '_OffsetOf_hreftype _OffsetOf_lpadesc _OffsetOf_lptdesc _OffsetOf_vt VTIndirections'
 	poolDictionaries: 'AXAutomationConstants'
 	classInstanceVariableNames: ''!
 TYPEDESC guid: (GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
+TYPEDESC addClassConstant: '_OffsetOf_hreftype' value: 16r0!
+TYPEDESC addClassConstant: '_OffsetOf_lpadesc' value: 16r0!
+TYPEDESC addClassConstant: '_OffsetOf_lptdesc' value: 16r0!
+TYPEDESC addClassConstant: '_OffsetOf_vt' value: 16r4!
 TYPEDESC addClassConstant: 'VTIndirections' value: #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 ]!
 TYPEDESC comment: 'TYPEDESC is an ExternalStructure class to represent the AX Automation structure, TYPEDESC.
 
@@ -76,7 +80,7 @@ getRefType
 hreftype
 	"Answer the <Integer> value of the receiver's 'hreftype' field."
 
-	^bytes dwordAtOffset: 0!
+	^bytes dwordAtOffset: _OffsetOf_hreftype!
 
 isAnonymous
 	"Answer whether the type described by the receiver is an anonymous (i.e. unnamed)
@@ -102,12 +106,12 @@ isUserDefined
 lpadesc
 	"Answer the <ARRAYDESC> value of the receiver's 'lpadesc' field."
 
-	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: 0)!
+	^ARRAYDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpadesc)!
 
 lptdesc
 	"Answer the <TYPEDESC> value of the receiver's 'lptdesc' field."
 
-	^TYPEDESC fromAddress: (bytes intPtrAtOffset: 0)!
+	^TYPEDESC fromAddress: (bytes intPtrAtOffset: _OffsetOf_lptdesc)!
 
 owner: struct
 	"Private - Set the value of the receiver's 'owner' instance variable to the <AXTypeInfoStructure> 
@@ -179,7 +183,7 @@ vartype
 vt
 	"Answer the <Integer> value of the receiver's 'vt' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #vt)!
+	^bytes wordAtOffset: _OffsetOf_vt!
 
 vtName
 	"Private - Answer the Dolphin external type name for the receiver's variant type."

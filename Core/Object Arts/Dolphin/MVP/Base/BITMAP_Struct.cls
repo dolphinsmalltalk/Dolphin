@@ -2,10 +2,17 @@
 
 Win32Structure subclass: #BITMAP
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_bmBits _OffsetOf_bmBitsPixel _OffsetOf_bmHeight _OffsetOf_bmPlanes _OffsetOf_bmType _OffsetOf_bmWidth _OffsetOf_bmWidthBytes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 BITMAP guid: (GUID fromString: '{f44c9143-2b3f-11d3-8368-7a8b5a000000}')!
+BITMAP addClassConstant: '_OffsetOf_bmBits' value: 16r14!
+BITMAP addClassConstant: '_OffsetOf_bmBitsPixel' value: 16r12!
+BITMAP addClassConstant: '_OffsetOf_bmHeight' value: 16r8!
+BITMAP addClassConstant: '_OffsetOf_bmPlanes' value: 16r10!
+BITMAP addClassConstant: '_OffsetOf_bmType' value: 16r0!
+BITMAP addClassConstant: '_OffsetOf_bmWidth' value: 16r4!
+BITMAP addClassConstant: '_OffsetOf_bmWidthBytes' value: 16rC!
 BITMAP comment: 'BITMAP is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 The BITMAP structure is used to describe bitmaps, containing attributes such as the width, height, and color format, and a pointer to the bitmap''s bits.'!
@@ -15,37 +22,37 @@ The BITMAP structure is used to describe bitmaps, containing attributes such as 
 bmBits
 	"Answer the <ExternalAddress> value of the receiver's 'bmBits' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #bmBits)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_bmBits) asExternalAddress!
 
 bmBitsPixel
 	"Answer the <Integer> value of the receiver's 'bmBitsPixel' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #bmBitsPixel)!
+	^bytes wordAtOffset: _OffsetOf_bmBitsPixel!
 
 bmHeight
 	"Answer the <Integer> value of the receiver's 'bmHeight' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #bmHeight)!
+	^bytes sdwordAtOffset: _OffsetOf_bmHeight!
 
 bmPlanes
 	"Answer the <Integer> value of the receiver's 'bmPlanes' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #bmPlanes)!
+	^bytes wordAtOffset: _OffsetOf_bmPlanes!
 
 bmType
 	"Answer the <Integer> value of the receiver's 'bmType' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_bmType!
 
 bmWidth
 	"Answer the <Integer> value of the receiver's 'bmWidth' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #bmWidth)!
+	^bytes sdwordAtOffset: _OffsetOf_bmWidth!
 
 bmWidthBytes
 	"Answer the <Integer> value of the receiver's 'bmWidthBytes' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #bmWidthBytes)!
+	^bytes sdwordAtOffset: _OffsetOf_bmWidthBytes!
 
 depth
 	"Answer the colour depth of the bitmap described by the receiver."

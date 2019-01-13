@@ -64,12 +64,12 @@ OLEStructure subclass: #ITEMIDLIST
 	classInstanceVariableNames: ''!
 Win32Structure subclass: #SHITEMID
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_abID _OffsetOf_cb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommonDialogStructure subclass: #BROWSEINFOW
 	instanceVariableNames: 'title displayName'
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_flags _OffsetOf_hwndOwner _OffsetOf_iImage _OffsetOf_lParam _OffsetOf_lpfnHook _OffsetOf_lpszTitle _OffsetOf_pidlRoot _OffsetOf_pszDisplayName'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CommonDialog subclass: #BrowseFolderDialog

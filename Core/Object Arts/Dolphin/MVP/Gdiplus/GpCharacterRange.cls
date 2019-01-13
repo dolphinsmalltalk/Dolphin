@@ -2,10 +2,12 @@
 
 ExternalStructure subclass: #GpCharacterRange
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_First _OffsetOf_length'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 GpCharacterRange guid: (GUID fromString: '{01079d38-5861-45b6-8de5-d2165b5de26b}')!
+GpCharacterRange addClassConstant: '_OffsetOf_First' value: 16r0!
+GpCharacterRange addClassConstant: '_OffsetOf_length' value: 16r4!
 GpCharacterRange comment: '<GpCharacterRange> is an <ExternalStructure> class to wrap the struct ''Gdiplus.GpCharacterRange'' from type information in the ''GDI+ Library 1.0'' library.
 
 The type library contains no documentation for this struct
@@ -26,22 +28,22 @@ struct tagGpCharacterRange {
 First
 	"Answer the <Integer> value of the receiver's 'First' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_First!
 
 First: anInteger
 	"Set the receiver's 'First' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_First put: anInteger!
 
 length
 	"Answer the <Integer> value of the receiver's 'length' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #length)!
+	^bytes sdwordAtOffset: _OffsetOf_length!
 
 length: anInteger
 	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #length) put: anInteger! !
+	bytes sdwordAtOffset: _OffsetOf_length put: anInteger! !
 !GpCharacterRange categoriesFor: #First!**compiled accessors**!public! !
 !GpCharacterRange categoriesFor: #First:!**compiled accessors**!public! !
 !GpCharacterRange categoriesFor: #length!**compiled accessors**!public! !

@@ -18,38 +18,26 @@ The range of integer values that can be represented by instances of this class i
 !LARGE_INTEGER methodsFor!
 
 highPart
-	"Answer the receiver's highPart field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'highPart' field."
 
-	^bytes sdwordAtOffset: ##(self offsetOf: #highPart)!
+	^bytes sdwordAtOffset: _OffsetOf_highPart!
 
-highPart: anObject 
-	"Set the receiver's highPart field to the value of anObject."
+highPart: anInteger
+	"Set the receiver's 'highPart' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: ##(self offsetOf: #highPart) put: anObject!
-
-lowPart
-	"Answer the receiver's lowPart field as a Smalltalk object."
-
-	^bytes dwordAtOffset: 0!
-
-lowPart: anObject 
-	"Set the receiver's lowPart field to the value of anObject."
-
-	bytes dwordAtOffset: 0 put: anObject!
+	bytes sdwordAtOffset: _OffsetOf_highPart put: anInteger!
 
 value
-	"Answer the receiver's value field as a Smalltalk object."
+	"Answer the <Integer> value of the receiver's 'value' field."
 
-	^bytes sqwordAtOffset: 0!
+	^bytes sqwordAtOffset: _OffsetOf_value!
 
-value: anObject 
-	"Set the receiver's value field to the value of anObject."
+value: anInteger
+	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
-	bytes sqwordAtOffset: 0 put: anObject! !
+	bytes sqwordAtOffset: _OffsetOf_value put: anInteger! !
 !LARGE_INTEGER categoriesFor: #highPart!**compiled accessors**!public! !
 !LARGE_INTEGER categoriesFor: #highPart:!**compiled accessors**!public! !
-!LARGE_INTEGER categoriesFor: #lowPart!**compiled accessors**!public! !
-!LARGE_INTEGER categoriesFor: #lowPart:!**compiled accessors**!public! !
 !LARGE_INTEGER categoriesFor: #value!**compiled accessors**!public! !
 !LARGE_INTEGER categoriesFor: #value:!**compiled accessors**!public! !
 
@@ -68,13 +56,11 @@ defineFields
 
 	super defineFields.
 	self
-		defineField: #lowPart
-			type: DWORDField new
+		defineField: #value
+			type: SQWORDField new beOverride
 			offset: 0;
 		defineField: #highPart
-			type: SDWORDField new
-			offset: 4
-
-! !
+			type: SDWORDField new beOverride
+			offset: 4! !
 !LARGE_INTEGER class categoriesFor: #defineFields!initializing!public! !
 

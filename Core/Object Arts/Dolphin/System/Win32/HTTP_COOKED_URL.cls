@@ -2,10 +2,18 @@
 
 HttpServerStructure subclass: #HTTP_COOKED_URL
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_AbsPathLength _OffsetOf_FullUrlLength _OffsetOf_HostLength _OffsetOf_pAbsPath _OffsetOf_pFullUrl _OffsetOf_pHost _OffsetOf_pQueryString _OffsetOf_QueryStringLength'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_COOKED_URL guid: (GUID fromString: '{24928162-1798-46a3-b2c1-3c6ee66c08be}')!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_AbsPathLength' value: 16r4!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_FullUrlLength' value: 16r0!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_HostLength' value: 16r2!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_pAbsPath' value: 16r10!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_pFullUrl' value: 16r8!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_pHost' value: 16rC!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_pQueryString' value: 16r14!
+HTTP_COOKED_URL addClassConstant: '_OffsetOf_QueryStringLength' value: 16r6!
 HTTP_COOKED_URL comment: '<HTTP_COOKED_URL> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_COOKED_URL'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -33,46 +41,43 @@ struct tagHTTP_COOKED_URL {
 AbsPathLength
 	"Private - Answer the <Integer> value of the receiver's 'AbsPathLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #AbsPathLength)!
+	^bytes wordAtOffset: _OffsetOf_AbsPathLength!
 
 FullUrlLength
 	"Private - Answer the <Integer> value of the receiver's 'FullUrlLength' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_FullUrlLength!
 
 HostLength
 	"Private - Answer the <Integer> value of the receiver's 'HostLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #HostLength)!
+	^bytes wordAtOffset: _OffsetOf_HostLength!
 
 pAbsPath
 	"Answer the <Utf16String> value of the receiver's 'pAbsPath' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pAbsPath))
-		length: self AbsPathLength >> 1!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pAbsPath) length: self AbsPathLength >> 1!
 
 pFullUrl
 	"Answer the <Utf16String> value of the receiver's 'pFullUrl' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pFullUrl))
-		length: self FullUrlLength / 2!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pFullUrl) length: self FullUrlLength / 2!
 
 pHost
 	"Answer the <Utf16String> value of the receiver's 'pHost' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pHost))
-		length: self HostLength >> 1!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pHost) length: self HostLength >> 1!
 
 pQueryString
 	"Answer the <Utf16String> value of the receiver's 'pQueryString' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pQueryString))
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pQueryString)
 		length: self QueryStringLength >> 1!
 
 QueryStringLength
 	"Private - Answer the <Integer> value of the receiver's 'QueryStringLength' field."
 
-	^bytes wordAtOffset: ##(self offsetOf: #QueryStringLength)! !
+	^bytes wordAtOffset: _OffsetOf_QueryStringLength! !
 !HTTP_COOKED_URL categoriesFor: #AbsPathLength!**compiled accessors**!private! !
 !HTTP_COOKED_URL categoriesFor: #FullUrlLength!**compiled accessors**!private! !
 !HTTP_COOKED_URL categoriesFor: #HostLength!**compiled accessors**!private! !
@@ -111,6 +116,10 @@ defineFields
 		defineField: #pHost type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'HostLength >> 1')) beReadOnly offset: 12;
 		defineField: #pAbsPath type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'AbsPathLength >> 1')) beReadOnly offset: 16;
 		defineField: #pQueryString type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: 'QueryStringLength >> 1')) beReadOnly offset: 20.
-	self byteSize: 24! !
+	self byteSize: 24!
+
+getFieldNames
+	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
 !HTTP_COOKED_URL class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_COOKED_URL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

@@ -2,10 +2,13 @@
 
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_lpOFN _OffsetOf_pidl _OffsetOf_psf'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OFNOTIFYEXW guid: (GUID fromString: '{4c069709-5fae-4af1-ab44-f69e79128090}')!
+OFNOTIFYEXW addClassConstant: '_OffsetOf_lpOFN' value: 16rC!
+OFNOTIFYEXW addClassConstant: '_OffsetOf_pidl' value: 16r14!
+OFNOTIFYEXW addClassConstant: '_OffsetOf_psf' value: 16r10!
 OFNOTIFYEXW comment: '<OFNOTIFYEX> is an <ExternalStructure> class to wrap the struct ''Win32.OFNOTIFYEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,17 +31,17 @@ struct tagOFNOTIFYEX {
 lpOFN
 	"Answer the <OPENFILENAMEW> value of the receiver's 'lpOFN' field."
 
-	^OPENFILENAMEW fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpOFN))!
+	^OPENFILENAMEW fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpOFN)!
 
 pidl
 	"Answer the <ExternalAddress> value of the receiver's 'pidl' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #pidl)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_pidl) asExternalAddress!
 
 psf
 	"Answer the <ExternalAddress> value of the receiver's 'psf' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #psf)) asExternalAddress! !
+	^(bytes uintPtrAtOffset: _OffsetOf_psf) asExternalAddress! !
 !OFNOTIFYEXW categoriesFor: #lpOFN!**compiled accessors**!public! !
 !OFNOTIFYEXW categoriesFor: #pidl!**compiled accessors**!public! !
 !OFNOTIFYEXW categoriesFor: #psf!**compiled accessors**!public! !

@@ -2,10 +2,12 @@
 
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_Buffer _OffsetOf_BufferSize'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HTTP_SERVICE_BINDING_W guid: (GUID fromString: '{9cd42842-29b3-4e02-b9dc-306b51f0166d}')!
+HTTP_SERVICE_BINDING_W addClassConstant: '_OffsetOf_Buffer' value: 16r4!
+HTTP_SERVICE_BINDING_W addClassConstant: '_OffsetOf_BufferSize' value: 16r8!
 HTTP_SERVICE_BINDING_W comment: '<HTTP_SERVICE_BINDING_W> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_SERVICE_BINDING_W'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -28,23 +30,23 @@ struct tagHTTP_SERVICE_BINDING_W {
 Buffer
 	"Answer the <Utf16String> value of the receiver's 'Buffer' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #Buffer)) length: self BufferSize!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_Buffer) length: self BufferSize!
 
 Buffer: anUtf16String
 	"Set the receiver's 'Buffer' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #Buffer) put: anUtf16String yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_Buffer put: anUtf16String yourAddress.
 	self BufferSize: anUtf16String size!
 
 BufferSize
 	"Private - Answer the <Integer> value of the receiver's 'BufferSize' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #BufferSize)!
+	^bytes dwordAtOffset: _OffsetOf_BufferSize!
 
 BufferSize: anInteger
 	"Set the receiver's 'BufferSize' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #BufferSize) put: anInteger! !
+	bytes dwordAtOffset: _OffsetOf_BufferSize put: anInteger! !
 !HTTP_SERVICE_BINDING_W categoriesFor: #Buffer!**compiled accessors**!public! !
 !HTTP_SERVICE_BINDING_W categoriesFor: #Buffer:!**compiled accessors**!public! !
 !HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize!**compiled accessors**!private! !
@@ -69,6 +71,10 @@ defineFields
 	self
 		defineField: #Buffer type: (ArrayPointerField type: Utf16String lengthField: #BufferSize) offset: 4;
 		defineField: #BufferSize type: DWORDField new beNonBrowsable offset: 8.
-	self byteSize: 12! !
+	self byteSize: 12!
+
+getFieldNames
+	^#(#Type #Buffer #BufferSize)! !
 !HTTP_SERVICE_BINDING_W class categoriesFor: #defineFields!**auto generated**!initializing!public! !
+!HTTP_SERVICE_BINDING_W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
 

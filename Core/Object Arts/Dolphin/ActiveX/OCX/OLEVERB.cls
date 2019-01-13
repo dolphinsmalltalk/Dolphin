@@ -2,10 +2,14 @@
 
 OLEStructure subclass: #OLEVERB
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_fuFlags _OffsetOf_grfAttribs _OffsetOf_lpszVerbName _OffsetOf_lVerb'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OLEVERB guid: (GUID fromString: '{33eb8491-3919-4df6-8dbe-d88c4be8d413}')!
+OLEVERB addClassConstant: '_OffsetOf_fuFlags' value: 16r8!
+OLEVERB addClassConstant: '_OffsetOf_grfAttribs' value: 16rC!
+OLEVERB addClassConstant: '_OffsetOf_lpszVerbName' value: 16r4!
+OLEVERB addClassConstant: '_OffsetOf_lVerb' value: 16r0!
 OLEVERB comment: '<OLEVERB> is an <ExternalStructure> class to wrap the struct ''Win32.OLEVERB'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
 The type library contains no documentation for this struct
@@ -28,42 +32,42 @@ struct tagOLEVERB {
 fuFlags
 	"Answer the <Integer> value of the receiver's 'fuFlags' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #fuFlags)!
+	^bytes dwordAtOffset: _OffsetOf_fuFlags!
 
 fuFlags: anInteger
 	"Set the receiver's 'fuFlags' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #fuFlags) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_fuFlags put: anInteger!
 
 grfAttribs
 	"Answer the <Integer> value of the receiver's 'grfAttribs' field."
 
-	^bytes dwordAtOffset: ##(self offsetOf: #grfAttribs)!
+	^bytes dwordAtOffset: _OffsetOf_grfAttribs!
 
 grfAttribs: anInteger
 	"Set the receiver's 'grfAttribs' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: ##(self offsetOf: #grfAttribs) put: anInteger!
+	bytes dwordAtOffset: _OffsetOf_grfAttribs put: anInteger!
 
 lpszVerbName
 	"Answer the <Utf16String> value of the receiver's 'lpszVerbName' field."
 
-	^Utf16String fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #lpszVerbName))!
+	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_lpszVerbName)!
 
 lpszVerbName: anUtf16String
 	"Set the receiver's 'lpszVerbName' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #lpszVerbName) put: anUtf16String yourAddress!
+	bytes uintPtrAtOffset: _OffsetOf_lpszVerbName put: anUtf16String yourAddress!
 
 lVerb
 	"Answer the <Integer> value of the receiver's 'lVerb' field."
 
-	^bytes sdwordAtOffset: 0!
+	^bytes sdwordAtOffset: _OffsetOf_lVerb!
 
 lVerb: anInteger
 	"Set the receiver's 'lVerb' field to the value of the argument, anInteger"
 
-	bytes sdwordAtOffset: 0 put: anInteger!
+	bytes sdwordAtOffset: _OffsetOf_lVerb put: anInteger!
 
 printOn: aStream 
 	"Append a textual representation of the receiver to aStream."

@@ -2,10 +2,15 @@
 
 Win32Structure subclass: #HOSTENT
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_h_addr_list _OffsetOf_h_addrtype _OffsetOf_h_aliases _OffsetOf_h_length _OffsetOf_h_name'
 	poolDictionaries: 'WinSocketConstants'
 	classInstanceVariableNames: ''!
 HOSTENT guid: (GUID fromString: '{87b4c5f4-026e-11d3-9fd7-00a0cc3e4a32}')!
+HOSTENT addClassConstant: '_OffsetOf_h_addr_list' value: 16rC!
+HOSTENT addClassConstant: '_OffsetOf_h_addrtype' value: 16r8!
+HOSTENT addClassConstant: '_OffsetOf_h_aliases' value: 16r4!
+HOSTENT addClassConstant: '_OffsetOf_h_length' value: 16rA!
+HOSTENT addClassConstant: '_OffsetOf_h_name' value: 16r0!
 HOSTENT comment: '<HOSTENT> is an <ExternalStructure> class to wrap the struct ''Win32.HOSTENT'' from type information in the ''Win32 API'' library.
 
 The type library contains the following helpstring for this struct
@@ -55,27 +60,27 @@ h_addr
 h_addr_list
 	"Answer the <ExternalAddress> value of the receiver's 'h_addr_list' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #h_addr_list)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_h_addr_list) asExternalAddress!
 
 h_addrtype
 	"Answer the <Integer> value of the receiver's 'h_addrtype' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #h_addrtype)!
+	^bytes swordAtOffset: _OffsetOf_h_addrtype!
 
 h_aliases
 	"Answer the <ExternalAddress> value of the receiver's 'h_aliases' field."
 
-	^(bytes uintPtrAtOffset: ##(self offsetOf: #h_aliases)) asExternalAddress!
+	^(bytes uintPtrAtOffset: _OffsetOf_h_aliases) asExternalAddress!
 
 h_length
 	"Answer the <Integer> value of the receiver's 'h_length' field."
 
-	^bytes swordAtOffset: ##(self offsetOf: #h_length)!
+	^bytes swordAtOffset: _OffsetOf_h_length!
 
 h_name
 	"Answer the <AnsiString> value of the receiver's 'h_name' field."
 
-	^AnsiString fromAddress: (bytes intPtrAtOffset: 0)!
+	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_h_name)!
 
 host
 	"Answer the host name embedded in the receiver, trimming trailing nulls."

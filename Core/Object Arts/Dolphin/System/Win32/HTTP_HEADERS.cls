@@ -2,11 +2,15 @@
 
 HttpServerStructure subclass: #HTTP_HEADERS
 	instanceVariableNames: ''
-	classVariableNames: 'HeaderToIndexMap'
+	classVariableNames: '_OffsetOf_pTrailers _OffsetOf_pUnknownHeaders _OffsetOf_TrailerCount _OffsetOf_UnknownHeaderCount HeaderToIndexMap'
 	poolDictionaries: 'WinHttpServerConsts'
 	classInstanceVariableNames: ''!
 HTTP_HEADERS guid: (GUID fromString: '{739d04bb-0a15-47ea-8a7d-20b4fd31cc96}')!
 HTTP_HEADERS isAbstract: true!
+HTTP_HEADERS addClassConstant: '_OffsetOf_pTrailers' value: 16rC!
+HTTP_HEADERS addClassConstant: '_OffsetOf_pUnknownHeaders' value: 16r4!
+HTTP_HEADERS addClassConstant: '_OffsetOf_TrailerCount' value: 16r8!
+HTTP_HEADERS addClassConstant: '_OffsetOf_UnknownHeaderCount' value: 16r0!
 HTTP_HEADERS comment: '<HTTP_HEADERS> is an <ExternalStructure> class to wrap the struct ''WinHttpServer.HTTP_HEADERS'' from type information in the ''Windows Http Server API'' library.
 
 The type library contains the following helpstring for this struct
@@ -74,25 +78,25 @@ pUnknownHeaders
 	"Answer the <StructureArray> value of the receiver's 'pUnknownHeaders' field."
 
 	^StructureArray
-		fromAddress: (bytes intPtrAtOffset: ##(self offsetOf: #pUnknownHeaders))
+		fromAddress: (bytes intPtrAtOffset: _OffsetOf_pUnknownHeaders)
 		length: self UnknownHeaderCount
 		elementClass: HTTP_UNKNOWN_HEADER!
 
 pUnknownHeaders: aStructureArray
 	"Set the receiver's 'pUnknownHeaders' field to the value of the argument, aStructureArray"
 
-	bytes uintPtrAtOffset: ##(self offsetOf: #pUnknownHeaders) put: aStructureArray yourAddress.
+	bytes uintPtrAtOffset: _OffsetOf_pUnknownHeaders put: aStructureArray yourAddress.
 	self UnknownHeaderCount: aStructureArray size!
 
 UnknownHeaderCount
 	"Private - Answer the <Integer> value of the receiver's 'UnknownHeaderCount' field."
 
-	^bytes wordAtOffset: 0!
+	^bytes wordAtOffset: _OffsetOf_UnknownHeaderCount!
 
 UnknownHeaderCount: anInteger
 	"Set the receiver's 'UnknownHeaderCount' field to the value of the argument, anInteger"
 
-	bytes wordAtOffset: 0 put: anInteger! !
+	bytes wordAtOffset: _OffsetOf_UnknownHeaderCount put: anInteger! !
 !HTTP_HEADERS categoriesFor: #knownHeaderIndex:!constants!public! !
 !HTTP_HEADERS categoriesFor: #knownHeaderName:!constants!public! !
 !HTTP_HEADERS categoriesFor: #KnownHeaders!accessing!public! !

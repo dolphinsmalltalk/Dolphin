@@ -58,7 +58,7 @@ IEnumUnknown subclass: #IEnumConnectionPoints
 	classInstanceVariableNames: ''!
 OLEStructure subclass: #CONNECTDATA
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: '_OffsetOf_dwCookie _OffsetOf_punk'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
