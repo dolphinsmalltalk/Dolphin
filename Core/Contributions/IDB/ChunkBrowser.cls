@@ -108,6 +108,9 @@ fileOpenPatch
 			self updateChunkList].
 	self caption: ('ChunkBrowser - <1s>' expandMacrosWith: (File splitFilenameFrom: pathname))!
 
+helpFileStem
+	^'idbchunkbrowser'!
+
 idbAbout
 	"Display the about view"
 
@@ -117,7 +120,7 @@ idbAbout
 				expandMacros!
 
 idbHelp
-	self idbHelp: 'idbchunkbrowser'!
+	self idbHelp: self helpFileStem!
 
 onActionPerformed
 	chunkList selections do: [:each | each picked: each picked not].
@@ -158,76 +161,82 @@ printableView
 
 queryCommand: aCommandQuery
 	aCommandQuery commandSymbol == #toggleChunkType:
-		ifTrue:
+		ifTrue: 
 			[| argument |
 			aCommandQuery isEnabled: true.
 			argument := aCommandQuery commandDescription command arguments first.
 			aCommandQuery isChecked: (filter isChunkTypeSelected: argument).
 			^true].
 	aCommandQuery commandSymbol == #toggleComparisonType:
-		ifTrue:
+		ifTrue: 
 			[| argument |
 			aCommandQuery isEnabled: true.
 			argument := aCommandQuery commandDescription command arguments first.
 			aCommandQuery isChecked: (filter isComparisonTypeSelected: argument).
 			^true].
 	aCommandQuery commandSymbol == #restrictionRange
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: chunkList hasSelection.
 			^true].
 	aCommandQuery commandSymbol == #restrictionSave
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: model hasChunks.
 			^true].
 	aCommandQuery commandSymbol == #restrictionClear
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: filter isRestrictingRange.
 			^true].
 	aCommandQuery commandSymbol == #restrictionClass
-		ifTrue:
-			[aCommandQuery
-				isEnabled:
-					filter isRestrictingClass
+		ifTrue: 
+			[aCommandQuery isEnabled: filter isRestrictingClass
 						| (chunkList selections size = 1 and: [chunkList selection chunkClass notNil]).
 			aCommandQuery isChecked: filter isRestrictingClass.
 			^true].
 	aCommandQuery commandSymbol == #toggleRestrictingMostRecent
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			aCommandQuery isChecked: filter isRestrictingMostRecent.
 			^true].
 	aCommandQuery commandSymbol == #toggleRestrictingPicked
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			aCommandQuery isChecked: filter isRestrictingPicked.
 			^true].
 	aCommandQuery commandSymbol == #showDifferences
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: self canShowDifferences.
 			^true].
 	aCommandQuery commandSymbol == #copyText
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: chunkList selections size = 1.
 			^true].
 	aCommandQuery commandSymbol == #browseChunk
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: self canBrowse.
 			^true].
 	(#(#print #printPreview) identityIncludes: aCommandQuery command)
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: self canPrint.
 			^true].
 	(#(#pickSelection #unpickSelection #restoreSelection) identityIncludes: aCommandQuery command)
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: chunkList hasSelection.
 			^true].
 	aCommandQuery commandSymbol == #restorePicked
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: model hasAnyChunksPicked.
 			^true].
 	aCommandQuery commandSymbol == #clipboardOpen
-		ifTrue:
+		ifTrue: 
 			[aCommandQuery isEnabled: (Clipboard current isFormatIdAvailable: CF_TEXT).
+			^true].
+	#idbHelp == aCommandQuery command
+		ifTrue: 
+			[aCommandQuery
+				isEnabled: (File exists: (File
+								composePath: SessionManager current idbDocumentationFolder
+								stem: self helpFileStem
+								extension: 'html')).
 			^true].
 	^super queryCommand: aCommandQuery!
 
@@ -372,6 +381,7 @@ updateStatus
 !ChunkBrowser categoriesFor: #createSchematicWiring!initializing!public! !
 !ChunkBrowser categoriesFor: #fileOpen!commands!public! !
 !ChunkBrowser categoriesFor: #fileOpenPatch!commands!public! !
+!ChunkBrowser categoriesFor: #helpFileStem!constants!private! !
 !ChunkBrowser categoriesFor: #idbAbout!commands!enquiries!public! !
 !ChunkBrowser categoriesFor: #idbHelp!commands!enquiries!public! !
 !ChunkBrowser categoriesFor: #onActionPerformed!event handling!public! !
