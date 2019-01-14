@@ -50,28 +50,28 @@ package binaryGlobalNames: (Set new
 package globalAliases: (Set new
 	yourself).
 
-package setPrerequisites: (IdentitySet new
-	add: '..\..\Object Arts\Dolphin\IDE\Base\Development System';
-	add: '..\..\Object Arts\Dolphin\Base\Dolphin';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls';
-	add: '..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base';
-	add: '..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View';
-	add: '..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter';
-	add: '..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons';
-	add: '..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters';
-	add: '..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models';
-	add: '..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus';
-	add: 'IDB Common';
-	add: 'IDB Method History';
-	add: '..\..\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons';
-	add: '..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser';
-	yourself).
+package setPrerequisites: #(
+	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
+	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Object Arts\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Difference\Dolphin Differences Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
+	'..\..\Object Arts\Dolphin\MVP\Views\Scintilla\Dolphin Scintilla View'
+	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
+	'..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
+	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
+	'..\..\Object Arts\Dolphin\MVP\Gdiplus\Gdiplus'
+	'IDB Common'
+	'IDB Method History'
+	'..\..\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
+	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser').
 
 package!
 
